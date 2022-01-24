@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_negative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/pi.hpp>
 
 namespace eve::detail
 {
@@ -29,7 +25,7 @@ namespace eve::detail
       return apply_over(arg, a);
     }
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>

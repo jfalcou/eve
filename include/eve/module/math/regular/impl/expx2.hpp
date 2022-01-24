@@ -7,27 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sub.hpp>
-#include <type_traits>
-#include <eve/platform.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/math/regular/exp.hpp>
 
 namespace eve::detail
 {

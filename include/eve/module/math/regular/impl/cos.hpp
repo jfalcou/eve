@@ -7,25 +7,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/twoopi.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/binarize.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/rempio2.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/trigo_tags.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/atan2.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
+#include <eve/module/math/constant/twoopi.hpp>
+#include <eve/module/math/regular/rempio2.hpp>
+#include <eve/module/math/regular/sincos.hpp>
+#include <eve/module/math/regular/trigo_tags.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 

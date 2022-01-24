@@ -7,14 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/acos.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/acos.hpp>
 
 namespace eve::detail
 {

@@ -7,14 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/div_180.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/function/regular.hpp>
-
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/regular/cospi.hpp>
 
 namespace eve::detail
 {

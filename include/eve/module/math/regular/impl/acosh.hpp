@@ -7,19 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/log_2.hpp>
-#include <eve/constant/oneotwoeps.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/log1p.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/log_2.hpp>
+#include <eve/module/math/constant/oneotwoeps.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/log1p.hpp>
 
 namespace eve::detail
 {

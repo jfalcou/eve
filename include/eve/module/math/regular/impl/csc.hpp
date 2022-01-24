@@ -7,12 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/trigo_tags.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sin.hpp>
+#include <eve/module/math/regular/trigo_tags.hpp>
 
 namespace eve::detail
 {
@@ -34,4 +32,3 @@ namespace eve::detail
       return apply_over(csc, a0);
   }
 }
-

@@ -7,20 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_even.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve::detail
 {
