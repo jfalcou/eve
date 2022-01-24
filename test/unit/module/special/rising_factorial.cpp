@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/special.hpp>
 #include <cmath>
@@ -17,7 +18,7 @@ EVE_TEST_TYPES( "Check return types of eve::rising_factorial"
               , eve::test::simd::ieee_reals)
 <typename T>(eve::as<T>)
 {
-  TTS_EXPR_IS(eve::raw(eve::lrising_factorial)(int(), T()), T);
+  TTS_EXPR_IS(eve::raw(eve::rising_factorial)(int(), T()), T);
 
 };
 

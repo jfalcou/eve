@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/special/regular/lrising_factorial.hpp>
-#include <eve/module/special/regular/tgamma.hpp>
+#include <eve/module/special/pedantic/lrising_factorial.hpp>
 #include <eve/module/special/regular/digamma.hpp>
 
 namespace eve::detail
