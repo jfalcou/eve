@@ -37,15 +37,13 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuf
 
   auto actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<1>);
 
-#if 0
-  std::cout << std::hex << "a : " << a << std::endl;
-  std::cout << std::hex << "b : " << b << std::endl;
-  std::cout << std::hex << "e : " << expected << std::endl;
-  std::cout << std::hex << "r : " << actual << std::endl;
-  std::cout << std::dec << std::endl;
-#endif
-
-  TTS_EQUAL(expected, actual);
+  TTS_EQUAL(expected, actual)
+    << std::hex
+    << "\na : " << a
+    << "\nb : " << b
+    << "\ne : " << expected
+    << "\nr : " << actual
+    << '\n' << std::dec;
 };
 
 // This is identity
@@ -92,16 +90,14 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffl
 
       auto r = eve::deinterleave_groups_shuffle(a, b, eve::lane<G>);
 
-#if 0
-      std::cout << "G: "    << G << std::endl;
-      std::cout << std::hex << "a : " << a << std::endl;
-      std::cout << std::hex << "b : " << b << std::endl;
-      std::cout << std::hex << "e : " << expected << std::endl;
-      std::cout << std::hex << "r : " << r << std::endl;
-      std::cout << std::dec << std::endl;
-#endif
-
-      TTS_EQUAL(expected, r);
+      TTS_EQUAL(expected, r)
+          << "\nG: " << G
+          << std::hex
+          << "\na : " << a
+          << "\nb : " << b
+          << "\ne : " << expected
+          << "\nr : " << r << "\n"
+          << '\n' << std::dec;
     };
 
     (test( eve::lane<1 << I> ), ... );
