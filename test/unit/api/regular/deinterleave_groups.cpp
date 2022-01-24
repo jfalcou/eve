@@ -9,6 +9,8 @@
 
 #include <eve/function/deinterleave_groups.hpp>
 
+#include <eve/function/interleave.hpp>
+
 #include <array>
 #include <numeric>
 
@@ -96,6 +98,12 @@ void deinterleave_groups_test()
     << "\nsoa: " << soa_ts
     << "\nres: " << res << "\n"
     << std::dec;
+
+  if constexpr ( G == 1 )
+  {
+    auto back = kumi::apply(eve::interleave, res);
+    TTS_EXPECT( eve::all(aos_ts == back) );
+  }
 }
 
 // To increase the number of cases,
