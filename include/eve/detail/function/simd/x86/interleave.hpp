@@ -134,6 +134,22 @@ namespace eve::detail
         return kumi::make_tuple(eve::bit_cast(lo, eve::as(v0)), eve::bit_cast(lo, eve::as(v1)));
       }
     }
+    else if constexpr ( match(c, category::int8x32, category::uint8x32) && current_api >= avx2 )
+    {
+      type ul_lanes = _mm256_unpacklo_epi8(v0, v1);
+      type uh_lanes = _mm256_unpackhi_epi8(v0, v1);
+      type ul       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x20);
+      type uh       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x31);
+      return kumi::make_tuple(ul, uh);
+    }
+    else if constexpr ( match(c, category::int8x32, category::uint8x32) )
+    {
+      auto [a0, a1] = v0.slice();
+      auto [b0, b1] = v1.slice();
+      auto [ab00, ab01] = interleave(a0, b0);
+      auto [ab10, ab11] = interleave(a1, b1);
+      return kumi::make_tuple(type(ab00, ab01), type(ab10, ab11));
+    }
     else
     {
       return interleave_(EVE_RETARGET(cpu_),v0,v1);
