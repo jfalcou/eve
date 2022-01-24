@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/combinatorial/regular/lfactorial.hpp>
+#include <eve/module/special/regular/lfactorial.hpp>

@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/exp_int.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/dec.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special/regular/exp_int.hpp>
 
 namespace eve::detail
 {

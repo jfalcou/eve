@@ -6,33 +6,24 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/rising_factorial.hpp>
-#include <eve/function/pedantic/rising_factorial.hpp>
-#include <eve/function/diff/rising_factorial.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
 
-
-
 //==================================================================================================
-// Types tests
+//== Types tests
 //==================================================================================================
 EVE_TEST_TYPES( "Check return types of eve::rising_factorial"
               , eve::test::simd::ieee_reals)
 <typename T>(eve::as<T>)
 {
-  TTS_EXPR_IS(eve::raw(eve::lrising_factorial)(int(), T()), T);
+  TTS_EXPR_IS(eve::raw(eve::rising_factorial)(int(), T()), T);
 
 };
 
 //==================================================================================================
-// Test for corner-cases values
+//== Test for corner-cases values
 //==================================================================================================
 EVE_TEST_TYPES( "Check corner-cases behavior of eve::rising_factorial wide"
         , eve::test::simd::ieee_reals
@@ -40,7 +31,7 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::rising_factorial wide"
   <typename T>(eve::as<T>)
 {
   using eve::as;
-  auto ulp = sizeof(eve::element_type_t<T>) == 4 ? 70 : 40;
+   auto ulp = sizeof(eve::element_type_t<T>) == 4 ? 70 : 40;
   TTS_ULP_EQUAL(eve::rising_factorial(T( 20),   T(2.0))   , T(420), ulp);
   TTS_ULP_EQUAL(eve::rising_factorial(10, T(0.1))         , T(1.253198719801548e+00), ulp);
   TTS_ULP_EQUAL(eve::rising_factorial(5,  T(0.1))         , T(1.163823072432015e+00) , ulp);
@@ -75,7 +66,7 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::rising_factorial wide"
   TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(T(5), 10*eve::eps(eve::as<T>())), T(1.000000000000003e+00), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::rising_factorial)(T(-20.5),  T(-1.0))   , T(-4.651162790697673e-02), ulp);
 
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);
+ TTS_ULP_EQUAL(eve::diff_2nd(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);
   TTS_ULP_EQUAL(eve::diff_1st(eve::rising_factorial)(T( 20),   T(2.0))   , T(4.100000000000004e+01), ulp);
   TTS_ULP_EQUAL(eve::pedantic(eve::diff_2nd)(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);
   TTS_ULP_EQUAL(               eve::diff_2nd(eve::rising_factorial)(T( 20),   T(2.0))   , T(1.288620076741702e+03), ulp);

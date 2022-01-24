@@ -8,10 +8,8 @@
 #define BOOST_MATH_OVERFLOW_ERROR_POLICY ignore_error
 #include "test.hpp"
 #include <boost/math/special_functions/legendre.hpp>
-#include <eve/function/legendre.hpp>
-#include <eve/function/diff/legendre.hpp>
-#include <eve/function/is_odd.hpp>
-#include <cmath>
+#include <eve/module/polynomial.hpp>
+#include <eve/module/arithmetic.hpp>
 
  //==================================================================================================
  //== Types tests

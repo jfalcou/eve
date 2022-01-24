@@ -12,7 +12,7 @@
 #include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/function/normal_distribution.hpp>
+#include <eve/module/proba/regular/normal_distribution.hpp>
 
 namespace eve
 {

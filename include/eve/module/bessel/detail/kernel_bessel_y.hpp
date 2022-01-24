@@ -10,7 +10,6 @@
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
-#include <eve/function/lfactorial.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_y0.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_y1.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>

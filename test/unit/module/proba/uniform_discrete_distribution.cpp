@@ -6,9 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/uniform_discrete_distribution.hpp>
+#include <eve/module/proba.hpp>
 #include <eve/platform.hpp>
-
 
 EVE_TEST_TYPES("Check eve::uniform_discrete_distribution_distribution behavior"
               , eve::test::simd::ieee_reals

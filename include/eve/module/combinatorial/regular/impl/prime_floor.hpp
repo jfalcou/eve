@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/combinatorial/regular/nth_prime.hpp>
-#include <eve/function/if_else.hpp>
 #include <type_traits>
 
 namespace eve::detail

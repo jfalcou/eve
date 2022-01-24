@@ -6,11 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/lognormal_distribution.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/log_2.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/proba.hpp>
 #include <eve/platform.hpp>
+#include <cmath>
 
 EVE_TEST_TYPES("Check eve::lognormal_distribution behavior"
               , eve::test::simd::ieee_reals

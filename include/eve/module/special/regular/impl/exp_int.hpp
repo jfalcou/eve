@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
-#include <eve/function/maximum.hpp>
 
 namespace eve::detail
 {

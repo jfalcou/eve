@@ -9,8 +9,7 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
-#include <eve/function/horner.hpp>
-#include <eve/function/reverse_horner.hpp>
+#include <eve/module/polynomial.hpp>
 
 namespace eve::detail
 {

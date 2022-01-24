@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/erf.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/special/regular/erf.hpp>
 
 namespace eve::detail
 {

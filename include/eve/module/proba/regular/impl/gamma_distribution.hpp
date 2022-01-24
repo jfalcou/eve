@@ -12,7 +12,7 @@
 #include <eve/module/special.hpp>
 #include <eve/module/proba/detail/attributes.hpp>
 #include <eve/module/proba/detail/urg01.hpp>
-#include <eve/function/exponential_distribution.hpp>
+#include <eve/module/proba/regular/exponential_distribution.hpp>
 
 namespace eve
 {

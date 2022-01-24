@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/combinatorial/lfactorial.cpp}
+  //! @godbolt{doc/special/lfactorial.cpp}
   //!
   //!  @}
   //================================================================================================
@@ -64,4 +64,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lfactorial_, lfactorial);
 }
 
-#include <eve/module/combinatorial/regular/impl/lfactorial.hpp>
+#include <eve/module/special/regular/impl/lfactorial.hpp>

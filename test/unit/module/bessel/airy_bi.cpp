@@ -6,15 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/airy_bi.hpp>
-#include <eve/function/diff/airy_bi.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
-#include <cmath>
+#include <eve/module/bessel.hpp>
 #include <boost/math/special_functions/airy.hpp>
+
 
 EVE_TEST_TYPES( "Check return types of airy_bi"
             , eve::test::simd::ieee_reals

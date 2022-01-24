@@ -7,8 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <boost/math/special_functions/gegenbauer.hpp>
-#include <eve/function/gegenbauer.hpp>
-#include <eve/function/diff/gegenbauer.hpp>
+#include <eve/module/polynomial.hpp>
 
 //==================================================================================================
 //== Types tests

@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/betainc_inv.hpp>
-#include <eve/function/diff/betainc.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special/regular/betainc_inv.hpp>
+#include <eve/module/special/diff/betainc.hpp>
 
 namespace eve::detail
 {

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_y1.hpp>
 

@@ -7,8 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <boost/math/special_functions/laguerre.hpp>
-#include <eve/function/laguerre.hpp>
-#include <eve/function/diff/laguerre.hpp>
+#include <eve/module/polynomial.hpp>
 
 //==================================================================================================
 //== Types tests

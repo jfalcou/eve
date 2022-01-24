@@ -6,35 +6,28 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/lrising_factorial.hpp>
-#include <eve/function/pedantic/lrising_factorial.hpp>
-#include <eve/function/diff/lrising_factorial.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
-
-
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::fibonacci"
+EVE_TEST_TYPES( "Check return types of eve::lrising_factorial"
               , eve::test::simd::ieee_reals)
 <typename T>(eve::as<T>)
 {
   TTS_EXPR_IS(eve::raw(eve::lrising_factorial)(int(), T()), T);
+  TTS_EXPR_IS(eve::lrising_factorial(int(), T()), T);
+  TTS_EXPR_IS(eve::pedantic(eve::lrising_factorial)(int(), T()), T);
 
 };
 
 //==================================================================================================
-// Test for corner-cases values
+//==  Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check corner-cases behavior of eve::fibonacci on wide"
+EVE_TEST_TYPES( "Check corner-cases behavior of eve::lrising_factorial on wide"
         , eve::test::simd::ieee_reals
          )
   <typename T>(eve::as<T>)
@@ -83,5 +76,5 @@ EVE_TEST_TYPES( "Check corner-cases behavior of eve::fibonacci on wide"
   TTS_ULP_EQUAL(eve::diff_1st(eve::lrising_factorial)(10, T(0.1))         , T(1.046176802742682e-02), ulp);
   TTS_ULP_EQUAL(eve::diff_2nd(eve::lrising_factorial)(10, T(0.1))         , T(2.262214357094148e+00), ulp);;
   TTS_ULP_EQUAL(eve::pedantic(eve::diff_1st)(eve::lrising_factorial)(10, T(0.1))         , T(1.046176802742682e-02), ulp);
-  TTS_ULP_EQUAL(eve::pedantic(eve::diff_2nd)(eve::lrising_factorial)(10, T(0.1))         , T(2.262214357094148e+00), ulp);;
+ TTS_ULP_EQUAL(eve::pedantic(eve::diff_2nd)(eve::lrising_factorial)(10, T(0.1))         , T(2.262214357094148e+00), ulp);;
 };

@@ -6,10 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/ev_distribution.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/log_2.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/proba.hpp>
 #include <eve/platform.hpp>
 
 

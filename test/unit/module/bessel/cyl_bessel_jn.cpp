@@ -6,14 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/cyl_bessel_jn.hpp>
-#include <eve/function/diff/cyl_bessel_jn.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
-#include <cmath>
+#include <eve/module/bessel.hpp>
 #include <boost/math/special_functions/bessel.hpp>
 #include <boost/math/special_functions/bessel_prime.hpp>
 

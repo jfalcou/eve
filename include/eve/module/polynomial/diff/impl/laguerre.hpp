@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/polynomial/regular/hermite.hpp>
+#include <eve/module/polynomial/regular/laguerre.hpp>
 
 
 namespace eve::detail

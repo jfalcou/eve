@@ -6,21 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/dawson.hpp>
-#include <eve/function/diff/dawson.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/platform.hpp>
 #include <eve/detail/diff_div.hpp>
 
 //==================================================================================================

@@ -6,20 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/beta.hpp>
-#include <eve/function/diff/beta.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/digamma.hpp>
-#include <type_traits>
+#include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
-
 
 //==================================================================================================
 // Types tests

@@ -6,14 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/lambert.hpp>
-#include <eve/function/diff/lambert.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
+#include <cmath>
 #include <boost/math/special_functions/lambert_w.hpp>
 
 //==================================================================================================

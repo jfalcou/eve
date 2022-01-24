@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/erf_inv.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/erf_inv.hpp>
 
 namespace eve::detail
 {

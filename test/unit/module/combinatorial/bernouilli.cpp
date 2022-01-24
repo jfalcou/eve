@@ -6,17 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/bernouilli.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/logical.hpp>
-#include <cmath>
-
-
+#include <eve/module/combinatorial.hpp>
 
 //==================================================================================================
 // Types tests

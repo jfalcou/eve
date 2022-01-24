@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_j1.hpp>
 
 namespace eve::detail

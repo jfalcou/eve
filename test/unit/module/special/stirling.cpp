@@ -6,17 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/stirling.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/platform.hpp>
 
 //==================================================================================================
 // Types tests

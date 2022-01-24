@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/erfcx.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special/regular/erfcx.hpp>
 
 namespace eve::detail
 {

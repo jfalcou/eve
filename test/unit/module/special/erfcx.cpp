@@ -6,23 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/erfcx.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/function/diff/erfcx.hpp>
-#include <type_traits>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/platform.hpp>
 
 //==================================================================================================
 // Types tests

@@ -6,14 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/airy_ai.hpp>
-#include <eve/function/diff/airy_ai.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/platform.hpp>
-#include <cmath>
+#include <eve/module/core.hpp>
+#include <eve/module/bessel.hpp>
 #include <boost/math/special_functions/airy.hpp>
 
 EVE_TEST_TYPES( "Check return types of airy_ai"

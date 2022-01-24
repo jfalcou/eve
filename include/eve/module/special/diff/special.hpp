@@ -21,7 +21,8 @@
 #include <eve/module/special/diff/lambert.hpp>
 #include <eve/module/special/diff/lbeta.hpp>
 #include <eve/module/special/diff/lgamma.hpp>
+#include <eve/module/special/diff/lrising_factorial.hpp>
 #include <eve/module/special/diff/omega.hpp>
+#include <eve/module/special/diff/rising_factorial.hpp>
 #include <eve/module/special/diff/signgam.hpp>
-#include <eve/module/special/diff/stirling.hpp>
 #include <eve/module/special/diff/tgamma.hpp>
