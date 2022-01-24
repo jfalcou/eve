@@ -124,6 +124,16 @@ namespace eve::detail
         }
       }
     }
+    else if constexpr( match(c,category::int8x16, category::uint8x16) )
+    {
+      if constexpr (N() == 16) return kumi::make_tuple(type(_mm_unpacklo_epi8(v0, v1)), type(_mm_unpackhi_epi8(v0, v1)));
+      else
+      {
+        type combined = _mm_unpacklo_epi8(v0, v1);
+        auto [lo, hi] = combined.slice();
+        return kumi::make_tuple(eve::bit_cast(lo, eve::as(v0)), eve::bit_cast(lo, eve::as(v1)));
+      }
+    }
     else
     {
       return interleave_(EVE_RETARGET(cpu_),v0,v1);
