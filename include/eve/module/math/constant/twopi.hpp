@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/constant.hpp>
-#include <eve/as.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve
 {
