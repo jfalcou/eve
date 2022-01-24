@@ -111,7 +111,8 @@ EVE_TEST_TYPES( "Check behavior of deinterleave on arithmetic data"
 <typename T>(eve::as<T>)
 {
   constexpr std::ptrdiff_t max_fields_count = 5;
-  constexpr unsigned max_group_size = (T::size() >= 64) ? 4 : T::size();
+  // maybe unsused for gcc bug
+  [[maybe_unused]] constexpr unsigned max_group_size = (T::size() >= 64) ? 4 : T::size();
 
   eve::detail::for_<1, 1, max_fields_count + 1>([](auto fields) {
    eve::detail::for_<0, 1, std::countr_zero(max_group_size) + 1>([&](auto group_size_log) {
