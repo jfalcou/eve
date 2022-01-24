@@ -36,52 +36,15 @@ namespace eve::detail
         return kumi::apply(*this, t);
       }
     };
-  }
 
-  template<std::ptrdiff_t G, simd_value T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE
-  kumi::tuple<T, Ts...>
-  deinterleave_groups_(EVE_SUPPORTS(cpu_), eve::fixed<G> g, T v0, Ts... vs) noexcept
-    requires ( T::size() >= G)
-  {
-    auto const values = kumi::make_tuple(v0,vs...);
-    constexpr std::size_t n_vs      = sizeof...(Ts) + 1;
-    constexpr std::size_t t_g_size  = T::size() / g;
-
-         // The number of fields is determined by the number of total registers.
-         // We have one register.
-         if constexpr ( n_vs == 1 ) return values;
-    else if constexpr ( n_vs == 2 )
+    template<std::ptrdiff_t G, typename T, typename... Ts>
+    EVE_FORCEINLINE
+    kumi::tuple<T, Ts...>
+    emulate(eve::fixed<G>, T v0, Ts... vs)
     {
-      auto [l, h] = deinterleave_groups_shuffle(v0, get<1>(values), g).slice();
-      return {l, h};
-    }
-    else if constexpr ( T::size() == G) return values;
-    else if constexpr ( n_vs > t_g_size && (n_vs & 1) == 0 )  // we can select every other
-    {
-      auto even = _deinterleave_groups::select_every_step_from_tuple<0, 2>(values);
-      auto odd  = _deinterleave_groups::select_every_step_from_tuple<1, 2>(values);
-      _deinterleave_groups::recurse<G> r;
+      auto const values = kumi::make_tuple(v0,vs...);
+      constexpr std::size_t n_vs = sizeof...(Ts) + 1;
 
-      return kumi::cat(r(even), r(odd));
-    }
-    else if constexpr ( T::size() == G ) return {v0, vs...};
-    else if constexpr ( n_vs == 4 && !has_emulated_abi_v<T> )
-    {
-      T v1 = get<1>(values);
-      T v2 = get<2>(values);
-      T v3 = get<3>(values);
-
-      kumi::tie(v0, v1) = deinterleave_groups(g, v0, v1);
-      kumi::tie(v2, v3) = deinterleave_groups(g, v2, v3);
-      // acac bdbd acac bdbd
-
-      kumi::tie(v0, v2) = deinterleave_groups(g, v0, v2);
-      kumi::tie(v1, v3) = deinterleave_groups(g, v1, v3);
-      return {v0, v1, v2, v3};
-    }
-    else
-    {
       constexpr auto prev_idx = [](std::size_t field_idx, std::size_t in_idx)
       {
         int group_in_field   = in_idx / G;
@@ -104,5 +67,48 @@ namespace eve::detail
         return kumi::make_tuple(one_field(std::integral_constant<std::size_t, fields>{}) ...);
       }(std::make_index_sequence<n_vs> {});
     }
+  }
+
+  template<std::ptrdiff_t G, simd_value T, std::same_as<T>... Ts>
+  EVE_FORCEINLINE
+  kumi::tuple<T, Ts...>
+  deinterleave_groups_(EVE_SUPPORTS(cpu_), eve::fixed<G> g, T v0, Ts... vs) noexcept
+    requires ( T::size() >= G)
+  {
+    auto const values = kumi::make_tuple(v0,vs...);
+    constexpr std::size_t n_vs      = sizeof...(Ts) + 1;
+    constexpr std::size_t t_g_size  = T::size() / g;
+
+         if constexpr ( n_vs == 1 || T::size() == G ) return values;
+    else if constexpr ( has_emulated_abi_v<T>       ) return _deinterleave_groups::emulate(lane<G>, v0, vs...);
+    else if constexpr ( n_vs == 2                   )
+    {
+      auto [l, h] = deinterleave_groups_shuffle(v0, get<1>(values), g).slice();
+      return {l, h};
+    }
+    else if constexpr ( n_vs > t_g_size && (n_vs & 1) == 0 )  // we can select every other
+    {
+      auto even = _deinterleave_groups::select_every_step_from_tuple<0, 2>(values);
+      auto odd  = _deinterleave_groups::select_every_step_from_tuple<1, 2>(values);
+      _deinterleave_groups::recurse<G> r;
+
+      return kumi::cat(r(even), r(odd));
+    }
+    else if constexpr ( T::size() == G ) return {v0, vs...};
+    else if constexpr ( n_vs == 4 && !has_emulated_abi_v<T> )
+    {
+      T v1 = get<1>(values);
+      T v2 = get<2>(values);
+      T v3 = get<3>(values);
+
+      // acac bdbd acac bdbd
+      kumi::tie(v0, v1) = deinterleave_groups(g, v0, v1);
+      kumi::tie(v2, v3) = deinterleave_groups(g, v2, v3);
+
+      kumi::tie(v0, v2) = deinterleave_groups(g, v0, v2);
+      kumi::tie(v1, v3) = deinterleave_groups(g, v1, v3);
+      return {v0, v1, v2, v3};
+    }
+    else return _deinterleave_groups::emulate(lane<G>, v0, vs...);
   }
 }
