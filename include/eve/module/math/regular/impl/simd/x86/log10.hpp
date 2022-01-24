@@ -7,32 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/invsqrt_2.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/frexp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_ngez.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/plain.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/invsqrt_2.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
