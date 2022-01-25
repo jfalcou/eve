@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/acos.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/rsqrt.hpp>
 
 namespace eve::detail
 {

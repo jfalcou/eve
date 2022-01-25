@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sindcosd.hpp>
-#include <eve/function/derivative.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
+#include <eve/module/math/regular/sindcosd.hpp>
 
 namespace eve::detail
 {
@@ -21,7 +22,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       auto [s, c] = sindcosd(x);
-      return {c, -s};
+      return {deginrad(c), -deginrad(s)};
     }
     else
     {

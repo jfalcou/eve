@@ -7,12 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/rec.hpp>
-#include <eve/function/pedantic/lpnorm.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/concept/compatible.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/pedantic/lpnorm.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve::detail
 {

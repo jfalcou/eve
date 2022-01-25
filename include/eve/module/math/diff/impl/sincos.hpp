@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sincos.hpp>
-#include <eve/function/derivative.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sincos.hpp>
+#include <eve/detail/kumi.hpp>
 
 namespace eve::detail
 {

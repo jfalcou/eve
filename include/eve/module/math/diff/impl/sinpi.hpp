@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/cospi.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/constant/pi.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/cospi.hpp>
+#include <eve/module/math/constant/pi.hpp>
 
 
 namespace eve::detail

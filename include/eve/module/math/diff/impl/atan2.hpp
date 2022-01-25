@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sqr.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

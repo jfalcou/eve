@@ -7,13 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/asech.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {
@@ -23,6 +18,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return -rec(x*sqrt(oneminus(sqr(x)))); 
+    return -rec(x*sqrt(oneminus(sqr(x))));
   }
 }

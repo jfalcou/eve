@@ -7,8 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/pow.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/diff/pow.hpp>
 
 namespace eve::detail
 {
