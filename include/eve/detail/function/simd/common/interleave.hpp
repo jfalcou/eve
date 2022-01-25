@@ -22,8 +22,11 @@ namespace eve::detail
     auto const values = kumi::make_tuple(v0,vs...);
     constexpr auto nb   = 1 + sizeof...(Ts);
 
+    using ABI = abi_t<element_type_t<T>, eve::fixed<T::size()>>;
+    constexpr bool is_bit_logical = logical_simd_value<T> && !ABI::is_wide_logical;
+
          if constexpr (T::size() == 1) return values;
-    else if constexpr ( nb == 4 && (sizeof(eve::element_type_t<T>) < 8) )
+    else if constexpr ( nb == 4 && (sizeof(eve::element_type_t<T>) < 8) && !is_bit_logical )
     {
       auto a = v0;
       auto b = get<1>(values);

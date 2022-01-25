@@ -150,6 +150,20 @@ namespace eve::detail
       auto [ab10, ab11] = interleave(a1, b1);
       return kumi::make_tuple(type(ab00, ab01), type(ab10, ab11));
     }
+    else if constexpr ( match(c, category::int8x64, category::uint8x64) )
+    {
+      type ul_lanes = _mm512_unpacklo_epi8(v0, v1);
+      type uh_lanes = _mm512_unpackhi_epi8(v0, v1);
+
+      // Can't use shuffle_i32x4, only applies within lanes
+      using idx_t = typename type::template rebind<std::uint64_t, fixed<8>>;
+      idx_t lo_idx { 0, 1,  8,  9, 2, 3, 10, 11 };
+      idx_t hi_idx { 4, 5, 12, 13, 6, 7, 14, 15 };
+
+      type ul = _mm512_permutex2var_epi64(ul_lanes, lo_idx, uh_lanes);
+      type uh = _mm512_permutex2var_epi64(ul_lanes, hi_idx, uh_lanes);
+      return kumi::make_tuple(ul, uh);
+    }
     else
     {
       return interleave_(EVE_RETARGET(cpu_),v0,v1);

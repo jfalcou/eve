@@ -50,7 +50,8 @@ EVE_TEST_TYPES( "Check behavior of interleave on arithmetic data"
       TTS_EXPECT( eve::all(interleaved == reference) )
         << "\ni: " << inputs
         << "\ne: " << reference
-        << "\nr: " << interleaved;
+        << "\nr: " << interleaved
+        << '\n';
     };
 
     ((rep( std::integral_constant<std::size_t,Rs>{} )),...);
