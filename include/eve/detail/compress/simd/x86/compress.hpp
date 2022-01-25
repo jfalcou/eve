@@ -14,7 +14,6 @@ namespace eve::detail
   template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE
   auto compress_(EVE_SUPPORTS(avx512_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
-    requires (min_scalar_size_v<T> >= 4)
   {
     return compress_using_bmi[c](v, mask);
   }
