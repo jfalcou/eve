@@ -6,14 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/sinc.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/diff/sinc.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

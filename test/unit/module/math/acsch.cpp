@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include "test.hpp"
-#include <eve/function/acsch.hpp>
-#include <eve/function/diff/acsch.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

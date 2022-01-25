@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math/regular/csc.hpp>
-#include <eve/module/math/cot.hpp>
+#include <eve/module/math/regular/cot.hpp>
 
 namespace eve::detail
 {

@@ -6,14 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/function/sinhc.hpp>
-#include <eve/function/sinhcosh.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/diff/sinhc.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 
 //==================================================================================================
 // Types tests

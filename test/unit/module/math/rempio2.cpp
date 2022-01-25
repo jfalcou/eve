@@ -6,14 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/function/rempio2.hpp>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <eve/function/rem_pio2.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
+#include <cmath>
 
 //==================================================================================================
 // Types tests

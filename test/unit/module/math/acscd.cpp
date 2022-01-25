@@ -6,9 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/acscd.hpp>
-#include <eve/function/radindeg.hpp>
-#include <eve/function/diff/acscd.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

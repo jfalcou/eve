@@ -6,21 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/function/atan2.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/pedantic/atan2.hpp>
-#include <eve/function/diff/atan2.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================
