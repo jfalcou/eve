@@ -7,13 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/sinpicospi.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/pi.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sinpicospi.hpp>
+#include <eve/module/math/constant/pi.hpp>
 
 namespace eve::detail
 {

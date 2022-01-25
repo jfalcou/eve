@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/assert.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/all.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve
 {
