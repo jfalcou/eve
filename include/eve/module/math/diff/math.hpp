@@ -44,6 +44,7 @@
 #include <eve/module/math/diff/coth.hpp>
 #include <eve/module/math/diff/cot.hpp>
 #include <eve/module/math/diff/cotpi.hpp>
+#include <eve/module/math/diff/csc.hpp>
 #include <eve/module/math/diff/cscd.hpp>
 #include <eve/module/math/diff/csch.hpp>
 #include <eve/module/math/diff/cscpi.hpp>

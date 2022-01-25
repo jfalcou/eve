@@ -56,5 +56,5 @@ EVE_TEST( "Check behavior of csc on wide"
   TTS_ULP_EQUAL(csc(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(csc(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(diff(csc)(a0), map([](auto e) -> v_t { return  -csc(e)*eve::cot(e); }, a0), 2);
+  TTS_ULP_EQUAL(diff(csc)(a0), map([](auto e) -> v_t { return  -eve::csc(e)*eve::cot(e);}, a0), 2);
 };
