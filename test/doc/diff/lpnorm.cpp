@@ -1,6 +1,5 @@
-#include <eve/function/lpnorm.hpp>
-#include <eve/function/pedantic/lpnorm.hpp>
-#include <eve/wide.hpp>
+//#include <eve/function/pedantic/lpnorm.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 #include <iomanip>
 
@@ -25,7 +24,7 @@ int main()
   double        xf = 10.0;
   double        yf = 1.0;
   double        zf = 111.0;
-  double        pf = 2.0; //eve::inf(eve::as(xf));
+  double        pf = 2.0;
 
   std::cout << "---- scalar" << '\n'
             << "<- pf                               = " << pf << '\n'
