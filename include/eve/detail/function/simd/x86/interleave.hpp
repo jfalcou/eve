@@ -134,10 +134,12 @@ namespace eve::detail
         return kumi::make_tuple(eve::bit_cast(lo, eve::as(v0)), eve::bit_cast(lo, eve::as(v1)));
       }
     }
-    else if constexpr ( match(c, category::int8x32, category::uint8x32) && current_api >= avx2 )
+    else if constexpr ( match(c,category::int8x32,  category::uint8x32,
+                                category::int16x16, category::uint16x16)
+                        && current_api >= avx2 )
     {
-      type ul_lanes = _mm256_unpacklo_epi8(v0, v1);
-      type uh_lanes = _mm256_unpackhi_epi8(v0, v1);
+      type ul_lanes = sizeof(T) == 2 ? _mm256_unpacklo_epi16(v0, v1) : _mm256_unpacklo_epi8(v0, v1);
+      type uh_lanes = sizeof(T) == 2 ? _mm256_unpackhi_epi16(v0, v1) : _mm256_unpackhi_epi8(v0, v1);
       type ul       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x20);
       type uh       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x31);
       return kumi::make_tuple(ul, uh);
