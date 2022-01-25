@@ -47,7 +47,11 @@ EVE_TEST_TYPES( "Check behavior of interleave on arithmetic data"
       auto reference    = loader(ref , card_t{}, rep_t{});
       auto interleaved  = kumi::apply( [](auto... m) { return eve::interleave(m...); }, inputs);
 
-      TTS_EXPECT( eve::all(interleaved == reference) );
+      TTS_EXPECT( eve::all(interleaved == reference) )
+        << "\ni: " << inputs
+        << "\ne: " << reference
+        << "\nr: " << interleaved
+        << '\n';
     };
 
     ((rep( std::integral_constant<std::size_t,Rs>{} )),...);

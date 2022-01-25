@@ -20,14 +20,37 @@ namespace eve::detail
   EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(cpu_),T v0, Ts... vs) noexcept
   {
     auto const values = kumi::make_tuple(v0,vs...);
+    constexpr auto nb   = 1 + sizeof...(Ts);
 
-    if constexpr(T::size() == 1)
+    using ABI = abi_t<element_type_t<T>, eve::fixed<T::size()>>;
+    constexpr bool is_bit_logical = logical_simd_value<T> && !ABI::is_wide_logical;
+
+         if constexpr (T::size() == 1) return values;
+    else if constexpr ( nb == 4 && (sizeof(eve::element_type_t<T>) < 8) && !is_bit_logical )
     {
-      return values;
+      auto a = v0;
+      auto b = get<1>(values);
+      auto c = get<2>(values);
+      auto d = get<3>(values);
+
+      auto [ab0, ab1] = interleave(a, b);
+      auto [cd0, cd1] = interleave(c, d);
+
+      using up_e_t = upgrade_t<eve::element_type_t<T>>;
+      using up_t   = wide<up_e_t, eve::fixed<T::size() / 2>>;
+
+      auto [abcd00, abcd01] = interleave(bit_cast(ab0, as<up_t>()), bit_cast(cd0, as<up_t>()));
+      auto [abcd10, abcd11] = interleave(bit_cast(ab1, as<up_t>()), bit_cast(cd1, as<up_t>()));
+
+      return kumi::make_tuple (
+        bit_cast(abcd00, as(v0)),
+        bit_cast(abcd01, as(v0)),
+        bit_cast(abcd10, as(v0)),
+        bit_cast(abcd11, as(v0))
+      );
     }
     else
     {
-      constexpr auto nb   = 1 + sizeof...(Ts);
       constexpr auto card = T::size();
 
       return [&]<std::size_t... J>(std::index_sequence<J...>)
