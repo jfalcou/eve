@@ -7,13 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/pedantic/atan2.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/pedantic/atan2.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve::detail
 {

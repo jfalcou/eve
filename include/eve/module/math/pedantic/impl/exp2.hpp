@@ -7,39 +7,14 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/log_2.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/maxlog2.hpp>
-#include <eve/constant/minlog2.hpp>
-#include <eve/constant/minlog2denormal.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_greater_equal.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/sqr.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/log_2.hpp>
+#include <eve/module/math/constant/maxlog2.hpp>
+#include <eve/module/math/constant/minlog2.hpp>
+#include <eve/module/math/constant/minlog2denormal.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
-#include <type_traits>
+#include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
 {
