@@ -144,7 +144,8 @@ namespace eve::detail
       type uh       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x31);
       return kumi::make_tuple(ul, uh);
     }
-    else if constexpr ( match(c, category::int8x32, category::uint8x32) )
+    else if constexpr ( match(c, category::int8x32 , category::uint8x32,
+                                 category::int16x16, category::uint16x16) )
     {
       auto [a0, a1] = v0.slice();
       auto [b0, b1] = v1.slice();
@@ -152,10 +153,11 @@ namespace eve::detail
       auto [ab10, ab11] = interleave(a1, b1);
       return kumi::make_tuple(type(ab00, ab01), type(ab10, ab11));
     }
-    else if constexpr ( match(c, category::int8x64, category::uint8x64) )
+    else if constexpr ( match(c, category::int8x64 , category::uint8x64,
+                                 category::int16x32, category::uint16x32) )
     {
-      type ul_lanes = _mm512_unpacklo_epi8(v0, v1);
-      type uh_lanes = _mm512_unpackhi_epi8(v0, v1);
+      type ul_lanes = sizeof(T) == 2 ? _mm512_unpacklo_epi16(v0, v1) : _mm512_unpacklo_epi8(v0, v1);
+      type uh_lanes = sizeof(T) == 2 ? _mm512_unpackhi_epi16(v0, v1) : _mm512_unpackhi_epi8(v0, v1);
 
       // Can't use shuffle_i32x4, only applies within lanes
       using idx_t = typename type::template rebind<std::uint64_t, fixed<8>>;
