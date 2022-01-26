@@ -20,7 +20,7 @@ namespace eve::detail
     {
       auto ct = one(eve::as(v0));
       auto es = raw(rsqrt)(v0);
-      auto xn = sqr(es);
+      auto xn = es*es;
       auto he = es * half(eve::as(v0));
 
       xn = vec_nmsub(v0.storage(), xn.storage(), ct.storage());
