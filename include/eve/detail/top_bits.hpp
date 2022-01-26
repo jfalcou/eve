@@ -241,7 +241,7 @@ struct top_bits
 
     template<std::size_t Slice>
     EVE_FORCEINLINE
-    top_bits<half_logical> slice(slice_t<Slice> s) const
+    top_bits<half_logical> slice(slice_t<Slice>) const
     {
       auto [l, h] = slice();
 
