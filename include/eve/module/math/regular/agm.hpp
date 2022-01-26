@@ -65,11 +65,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/agm.cpp}
+  //! @godbolt{doc/math/agm.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(agm_, agm);
 }
 
-#include <eve/module/arithmetic/regular/impl/agm.hpp>
+#include <eve/module/math/regular/impl/agm.hpp>

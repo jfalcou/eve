@@ -7,26 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/exponent.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

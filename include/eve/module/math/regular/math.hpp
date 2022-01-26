@@ -19,6 +19,7 @@
 #include <eve/module/math/regular/acsch.hpp>
 #include <eve/module/math/regular/acsc.hpp>
 #include <eve/module/math/regular/acscpi.hpp>
+#include <eve/module/math/regular/agm.hpp>
 #include <eve/module/math/regular/arg.hpp>
 #include <eve/module/math/regular/asecd.hpp>
 #include <eve/module/math/regular/asech.hpp>

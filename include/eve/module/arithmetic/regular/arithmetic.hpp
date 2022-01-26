@@ -11,7 +11,6 @@
 #include <eve/module/arithmetic/regular/absmax.hpp>
 #include <eve/module/arithmetic/regular/absmin.hpp>
 #include <eve/module/arithmetic/regular/add.hpp>
-#include <eve/module/arithmetic/regular/agm.hpp>
 #include <eve/module/arithmetic/regular/average.hpp>
 #include <eve/module/arithmetic/regular/binarize.hpp>
 #include <eve/module/arithmetic/regular/binarize_not.hpp>

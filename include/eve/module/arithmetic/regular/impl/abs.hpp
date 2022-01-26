@@ -7,15 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_andnot.hpp>
-#include <eve/function/max.hpp>
-
-#include <concepts>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 
 namespace eve::detail
 {
