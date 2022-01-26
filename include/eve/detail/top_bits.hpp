@@ -208,6 +208,47 @@ struct top_bits
       operator&=(top_bits(ignore));
     }
 
+    // -- slicing
+
+    EVE_FORCEINLINE explicit top_bits(top_bits<half_logical> l, top_bits<half_logical> h)
+    {
+           if constexpr ( is_aggregated     ) storage = {{ l, h }};
+      else if constexpr ( is_avx512_logical ) *this = top_bits(Logical{ to_logical(l), to_logical(h) });
+      else                                    storage = (h.storage << static_bits_size / 2) | l.storage;
+    }
+
+    EVE_FORCEINLINE
+    kumi::tuple<top_bits<half_logical>, top_bits<half_logical>>
+    slice() const
+    {
+           if constexpr ( is_aggregated     ) return {storage[0], storage[1]};
+      else if constexpr ( is_avx512_logical )
+      {
+        auto [l, h] = to_logical(*this).slice();
+        return { top_bits<half_logical>{l}, top_bits<half_logical>{h} };
+      }
+      else
+      {
+        top_bits<half_logical> l, h;
+        using half_storage = typename top_bits<half_logical>::storage_type;
+
+        l.storage = set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
+        h.storage = storage >> (static_bits_size / 2);
+
+        return {l, h};
+      }
+    }
+
+    template<std::size_t Slice>
+    EVE_FORCEINLINE
+    top_bits<half_logical> slice(slice_t<Slice> s) const
+    {
+      auto [l, h] = slice();
+
+      if constexpr (Slice == 0) return l;
+      else                      return h;
+    }
+
     // getters/setter ----------------------
 
     EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
