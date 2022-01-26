@@ -14,7 +14,13 @@ namespace eve::detail
   template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE
   auto compress_(EVE_SUPPORTS(avx512_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
+    requires (N() >= 4)
   {
-    return compress_using_bmi[c](v, mask);
+    if constexpr ( C::is_complete && !C::is_inverted )
+    {
+      kumi::tuple cur{ v, (std::ptrdiff_t) 0 };
+      return kumi::tuple<decltype(cur)> { cur };
+    }
+    else return compress_using_bmi(v, top_bits{mask, c});
   }
 }

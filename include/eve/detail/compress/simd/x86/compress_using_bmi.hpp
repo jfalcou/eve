@@ -66,7 +66,7 @@ namespace eve::detail
   template <typename U, typename N>
   struct do_compress_bmi
   {
-    logical<wide<U, N>> mask;
+    top_bits<logical<wide<U, N>>> mask;
 
     template <kumi::product_type T>
     EVE_FORCEINLINE
@@ -81,7 +81,7 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-      auto m = mask.storage().value;
+      auto m = mask.as_int();
 
            if constexpr ( match(c, category::float32x4                     ) ) return _mm_maskz_compress_ps      (m, v);
       else if constexpr ( match(c, category::float32x8                     ) ) return _mm256_maskz_compress_ps   (m, v);
@@ -107,7 +107,7 @@ namespace eve::detail
       }
       else if constexpr ( match(c, category::int8x16, category::uint8x16 ) )
       {
-        do_compress_bmi_avx2<U, N> avx2_impl { top_bits{mask} };
+        do_compress_bmi_avx2<U, N> avx2_impl { mask };
         return  avx2_impl(v);
       }
     }
@@ -123,50 +123,27 @@ namespace eve::detail
     else                  return false;
   }
 
-  template<relative_conditional_expr C, typename T, typename U, typename N>
+  template<typename T, typename U, typename N>
   EVE_FORCEINLINE
   auto compress_using_bmi_(EVE_SUPPORTS(avx512_),
-                           C c,
                            wide<T, N> v,
-                           logical<wide<U, N>> mask) noexcept
+                           top_bits<logical<wide<U, N>>> mask) noexcept
+    requires (N() >= 4)
   {
-    if constexpr ( C::is_complete && !C::is_inverted )
-    {
-      kumi::tuple cur{ v, (std::ptrdiff_t) 0 };
-      return kumi::tuple<decltype(cur)> { cur };
-    }
-    else if constexpr ( !C::is_complete )
-    {
-      mask = mask && c.mask(as(mask));
-      return compress_using_bmi(ignore_none, v, mask);
-    }
-    else if constexpr ( N() == 1 )
-    {
-      kumi::tuple cur{ v, (std::ptrdiff_t) mask.get(0) };
-      return kumi::tuple<decltype(cur)> { cur };
-    }
-    else if constexpr ( N() == 2 )
-    {
-      auto to_left     = eve::slide_left( v, eve::index<1> );
-      auto compressed  = eve::if_else[mask]( v, to_left );
-
-      kumi::tuple cur{ compressed, eve::count_true(mask) };
-      return kumi::tuple<decltype(cur)> { cur };
-    }
-    else if constexpr ( compress_bmi_should_split<T, N>() )
+    if constexpr ( compress_bmi_should_split<T, N>() )
     {
       auto [l, h] = v.slice();
       auto [ml, mh] = mask.slice();
 
-      auto lr = compress_using_bmi(ignore_none, l, ml);
-      auto hr = compress_using_bmi(ignore_none, h, mh);
+      auto lr = compress_using_bmi(l, ml);
+      auto hr = compress_using_bmi(h, mh);
 
       return kumi::cat(lr, hr);
     }
     else
     {
       v = do_compress_bmi<U, N>{mask}(v);
-      kumi::tuple cur {v, eve::count_true(mask)};
+      kumi::tuple cur {v, detail::count_true(mask)};
       return kumi::tuple<decltype(cur)>{ cur };
     }
   }
