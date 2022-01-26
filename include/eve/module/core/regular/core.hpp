@@ -40,6 +40,7 @@
 #include <eve/module/core/regular/gather.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/maximum.hpp>
