@@ -288,9 +288,20 @@ struct top_bits
     }
 
     EVE_FORCEINLINE constexpr auto as_int() const
-      requires ( !is_aggregated )
+      requires ( static_bits_size <= 64 )
     {
-      if constexpr(!Logical::abi_type::is_wide_logical) return storage.value; else return storage;
+      if constexpr ( is_aggregated )
+      {
+        std::uint64_t lo = storage[0].as_int();
+        std::uint64_t hi = storage[1].as_int();
+        hi <<=  (static_bits_size / 2);
+        std::uint64_t res = hi | lo;
+
+        if constexpr ( static_bits_size < 64 ) return (std::uint32_t) res;
+        else                                   return res;
+      }
+      else if constexpr(!Logical::abi_type::is_wide_logical) return storage.value;
+      else return storage;
     }
 
     EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
