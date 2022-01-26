@@ -7,12 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/trunc.hpp>
 
 namespace eve::detail
 {

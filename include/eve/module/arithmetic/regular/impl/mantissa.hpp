@@ -7,19 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/platform.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/logical_not.hpp>
-#include <eve/constant/mantissamask.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_not_finite.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/logical_or.hpp>
+#include <eve/module/arithmetic/regular/logical_not.hpp>
 
 namespace eve::detail
 {

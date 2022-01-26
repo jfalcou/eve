@@ -7,18 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_notand.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/traits/is_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
 
 namespace eve::detail
 {

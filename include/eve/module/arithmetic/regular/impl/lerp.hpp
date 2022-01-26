@@ -7,14 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/raw.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
+#include <eve/module/arithmetic/regular/fnma.hpp>
+
 
 #include <type_traits>
 

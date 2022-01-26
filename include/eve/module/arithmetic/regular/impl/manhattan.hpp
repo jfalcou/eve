@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_infinite.hpp>
 
 namespace eve::detail
 {

@@ -7,22 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/convert.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <string>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
 
 namespace eve::detail
 {

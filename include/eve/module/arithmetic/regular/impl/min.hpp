@@ -7,13 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
 
 namespace eve::detail
 {
