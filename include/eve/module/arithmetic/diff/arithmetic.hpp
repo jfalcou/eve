@@ -49,6 +49,7 @@
 #include <eve/module/arithmetic/diff/plus.hpp>
 #include <eve/module/arithmetic/diff/rec.hpp>
 #include <eve/module/arithmetic/diff/round.hpp>
+#include <eve/module/arithmetic/diff/rsqrt.hpp>
 #include <eve/module/arithmetic/diff/sign.hpp>
 #include <eve/module/arithmetic/diff/signnz.hpp>
 #include <eve/module/arithmetic/diff/sqr_abs.hpp>

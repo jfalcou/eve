@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/regular/impl/simd/x86/rsqrt.hpp>
+#include <eve/module/arithmetic/regular/impl/simd/x86/rsqrt.hpp>
 
 
 namespace eve::detail

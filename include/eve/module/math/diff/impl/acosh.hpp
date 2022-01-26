@@ -10,7 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math/regular/acosh.hpp>
-#include <eve/module/math/regular/rsqrt.hpp>
 
 namespace eve::detail
 {

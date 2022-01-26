@@ -77,7 +77,6 @@ make_unit("unit.math"  powm1.cpp                 )
 make_unit("unit.math"  pow1p.cpp                 )
 make_unit("unit.math"  radindeg.cpp              )
 make_unit("unit.math"  radinpi.cpp               )
-
 #make_unit("unit.math"  rempio2.cpp               )
 make_unit("unit.math"  sec.cpp                   )
 make_unit("unit.math"  secd.cpp                  )

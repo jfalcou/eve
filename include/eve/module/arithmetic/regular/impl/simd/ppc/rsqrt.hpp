@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/arithmetic/sqr.hpp>
 
 namespace eve::detail
 {
@@ -20,7 +20,7 @@ namespace eve::detail
     {
       auto ct = one(eve::as(v0));
       auto es = raw(rsqrt)(v0);
-      auto xn = es*es;
+      auto xn = sqr(es);
       auto he = es * half(eve::as(v0));
 
       xn = vec_nmsub(v0.storage(), xn.storage(), ct.storage());
@@ -39,7 +39,7 @@ namespace eve::detail
       auto refine = [](auto sw0, auto w0)
       {
         wide<T, N> hest = sw0 * half(eve::as(w0));
-        wide<T, N> w02  = w0*w0;
+        wide<T, N> w02  = sqr(w0);
         wide<T, N> tmp  = vec_nmsub(w0.storage(), w02.storage(), one(eve::as(w0)).storage());
         return fma(tmp, hest, sw0);
       };

@@ -74,7 +74,6 @@
 #include <eve/module/math/regular/radinpi.hpp>
 #include <eve/module/math/regular/rem_pio2.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
-#include <eve/module/math/regular/rsqrt.hpp>
 #include <eve/module/math/regular/secd.hpp>
 #include <eve/module/math/regular/sech.hpp>
 #include <eve/module/math/regular/sec.hpp>
