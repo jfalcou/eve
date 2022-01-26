@@ -119,7 +119,11 @@ namespace eve::detail
       {
         if constexpr(current_api >= asimd)  return vcvtq_f64_s64(v); else return map(convert,v,tgt);
       }
+<<<<<<< HEAD
       else                                  return convert_integers_chain(v,tgt);
+=======
+      else                                  return convert_integers(v,tgt);
+>>>>>>> ARM convert
     }
     else  if constexpr( c_i == category::uint64x2 )
     {
@@ -129,7 +133,11 @@ namespace eve::detail
       {
         if constexpr(current_api >= asimd)  return vcvtq_f64_u64(v); else return map(convert,v,tgt);
       }
+<<<<<<< HEAD
       else                                  return convert_integers_chain(v,tgt);
+=======
+      else                                  return convert_integers(v,tgt);
+>>>>>>> ARM convert
     }
     else  if constexpr( current_api >= asimd && c_o == category::float64x1)
     {
@@ -155,7 +163,11 @@ namespace eve::detail
     // Conversion to double is emulated
           if constexpr( std::same_as<double,U> ) return map(convert,v,tgt);
     // Conversion to ?<8>xN is is a chain of conversion
+<<<<<<< HEAD
     else  if constexpr( sizeof(U) == 1        ) return convert_integers_chain(v,tgt);
+=======
+    else  if constexpr( sizeof(U) == 1        ) return convert_integers(v,tgt);
+>>>>>>> ARM convert
     // Other conversions use intrinsics
     else  if constexpr( c_i == category::int32x2  )
     {
@@ -234,7 +246,11 @@ namespace eve::detail
     // Conversion to double is emulated
     if constexpr( std::same_as<double,U> ) return map(convert,v,tgt);
     // Conversion to ?<64>xN is is a chain of conversion
+<<<<<<< HEAD
     else  if constexpr( sizeof(U) == 8  ) return convert_integers_chain(v,tgt);
+=======
+    else  if constexpr( sizeof(U) == 8  ) return convert_integers(v,tgt);
+>>>>>>> ARM convert
     // Conversion to ?<32>x4 is manual slicing
     else  if constexpr( N::value == 8 && sizeof(U) == 4 )
     {
