@@ -19,6 +19,18 @@
 
 namespace eve::detail
 {
+  //================================================================================================
+  //  scalar<->scalar convert
+  template<scalar_value In, scalar_value Out>
+  requires( !product_type<In> && !product_type<Out>)
+  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), In const &v0, as<Out> const&) noexcept
+  {
+    if constexpr(std::same_as<In, Out>) return v0;
+    else                                return static_cast<Out>(v0);
+  }
+
+  //================================================================================================
+  // tuple<->tuple convert
   struct convert_lambda
   {
     template<typename T, typename M>
@@ -50,66 +62,34 @@ namespace eve::detail
     }
   }
 
-  template<value T, scalar_value U>
-  requires( !product_type<T> && !product_type<U>)
-  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), T const &v0, as<U> const &tgt) noexcept
-  {
-    if constexpr(std::same_as<element_type_t<T>, U>)
-    {
-      return v0;
-    }
-    else
-    {
-      if constexpr( scalar_value<T> )
-      {
-        return static_cast<U>(v0);
-      }
-      else
-      {
-        using out_t = as_wide_t<U, cardinal_t<T>>;
-
-        // If input or output are aggregated, we can slice and combine without lose of performance
-        if constexpr( has_aggregated_abi_v<T> || has_aggregated_abi_v<out_t> )
-        {
-          auto[l,h] = v0.slice();
-          auto ll = eve::convert(l,tgt);
-          auto hh = eve::convert(h,tgt);
-          return out_t{ll,hh};
-        }
-        else
-        {
-          return map(convert, v0, tgt);
-        }
-      }
-    }
-  }
-
-  template<value T, scalar_value U>
+  //================================================================================================
+  // logical<->logical convert
+  template<value In, scalar_value Out>
   EVE_FORCEINLINE auto convert_ ( EVE_SUPPORTS(cpu_)
-                                , logical<T> const &v0
-                                , [[maybe_unused]] as<logical<U>> const & tgt
+                                , logical<In> const &v0
+                                , [[maybe_unused]] as<logical<Out>> const & tgt
                                 ) noexcept
   {
-    if constexpr(std::same_as<element_type_t<T>, U>)
+    if constexpr(std::same_as<element_type_t<In>, Out>)
     {
       return v0;
     }
     else
     {
-      if constexpr( scalar_value<T> )
+      if constexpr( scalar_value<In> )
       {
-        return static_cast<logical<U>>(v0.bits());
+        return static_cast<logical<Out>>(v0.bits());
       }
       else
       {
-        using abi_t = typename T::abi_type;
-        using out_t = as_wide_t<logical<U>, cardinal_t<logical<T>>>;
+        using abi_t = typename In::abi_type;
+        using out_t = as_wide_t<logical<Out>, cardinal_t<logical<In>>>;
 
         // If input or output are aggregated, we can slice and combine without lose of performance
         if constexpr( !abi_t::is_wide_logical)
         {
           // If input or output are aggregated, we can slice and combine without lose of performance
-          if constexpr( has_aggregated_abi_v<T> || has_aggregated_abi_v<out_t> )
+          if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
           {
             auto[l,h] = v0.slice();
             auto ll = eve::convert(l,tgt);
@@ -125,9 +105,9 @@ namespace eve::detail
         }
         else
         {
-          using s_in_t  = std::make_signed_t<typename logical<T>::bits_type::value_type>;
-          using v_int_t = typename logical<T>::bits_type::template rebind<s_in_t, cardinal_t<out_t>>;
-          using s_out_t = std::make_signed_t<typename logical<U>::bits_type>;
+          using s_in_t  = std::make_signed_t<typename logical<In>::bits_type::value_type>;
+          using v_int_t = typename logical<In>::bits_type::template rebind<s_in_t, cardinal_t<out_t>>;
+          using s_out_t = std::make_signed_t<typename logical<Out>::bits_type>;
 
           // Just convert the bit and bitcast back to the proper output
           return bit_cast ( convert ( bit_cast(v0.bits(),as<v_int_t>{})
@@ -137,6 +117,85 @@ namespace eve::detail
                           );
         }
       }
+    }
+  }
+
+  //================================================================================================
+  // wide<->wide convert
+
+  //================================================================================================
+  // wide<->wide default convert implementation
+  template<typename In, typename Out>
+  EVE_FORCEINLINE auto convert_impl(EVE_SUPPORTS(cpu_), In const &v0, as<Out> const &tgt) noexcept
+  requires
+  {
+    using out_t = as_wide_t<Out, cardinal_t<In>>;
+
+    if constexpr(has_aggregated_abi_v<In>)
+    {
+      // If input is aggregated, we can slice and combine without lose of performance
+      auto[l,h] = v0.slice();
+      auto ll = eve::convert(l,tgt);
+      auto hh = eve::convert(h,tgt);
+      return out_t{ll,hh};
+    }
+    else
+    {
+      return map(convert,v0,tgt);
+    }
+  }
+
+  template<simd_value In, scalar_value Out>
+  requires( !product_type<In> && !product_type<Out>)
+  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), In const &v0, as<Out> const &tgt) noexcept
+  {
+    using in_t  = element_type_t<In>;
+    using out_t = element_type_t<Out>;
+
+    // Converting T to T is identity
+    if constexpr(std::same_as<in_t, Out>)
+    {
+      return v0;
+    }
+    // Converting between integral of different signs is just a bit_cast away
+    else if constexpr ( std::signed_integral<in_t> && std::unsigned_integral<out_t> )
+    {
+      auto s_res = convert(v0, eve::as<std::make_signed_t<out_t>>{});
+      return bit_cast(s_res, eve::as<wide<Out, cardinal_t<In>>>{});
+    }
+    else if constexpr ( std::unsigned_integral<in_t> && std::signed_integral<out_t> )
+    {
+      auto u_res = convert(v0, eve::as<std::make_unsigned_t<out_t>>{});
+      return bit_cast(u_res, eve::as<wide<Out, cardinal_t<In>>>{});
+    }
+    else
+    {
+      // Fallbacks to architecture-specific cases
+      return convert_impl(EVE_RETARGET(EVE_CURRENT_API), v0, tgt);
+    }
+  }
+
+  //
+  // Convert helpers : large/small integers
+  template<integral_simd_value In, integral_scalar_value Out>
+  EVE_FORCEINLINE auto convert_integers(In const &v0, as<Out> const &tgt) noexcept
+  {
+    using in_t  = element_type_t<In>;
+    using out_t = element_type_t<Out>;
+
+    // Convert from large to very small is a chain of downward convert
+    if constexpr(sizeof(in_t)/sizeof(out_t) > 2)
+    {
+      using s_t = std::conditional_t<std::is_signed_v<in_t>,signed,unsigned>;
+      using next_t = make_integer_t<sizeof(in_t)/2,s_t>;
+      return convert( convert(v0, as<next_t>{}), tgt);
+    }
+    // Convert from small to very large is a chain of upward convert
+    else  if constexpr(sizeof(out_t)/sizeof(in_t) > 2)
+    {
+      using s_t = std::conditional_t<std::is_signed_v<in_t>,signed,unsigned>;
+      using next_t = make_integer_t<sizeof(in_t)*2,s_t>;
+      return convert( convert(v0, as<next_t>{}), tgt);
     }
   }
 }
