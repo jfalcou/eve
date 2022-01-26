@@ -7,15 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_not_equal.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/compatible.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

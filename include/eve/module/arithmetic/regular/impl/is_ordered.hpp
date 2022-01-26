@@ -7,12 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/compatible.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {
