@@ -7,18 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_not_equal.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_flint.hpp>
+#include <eve/module/arithmetic/regular/is_not_equal.hpp>
 
 namespace eve::detail
 {

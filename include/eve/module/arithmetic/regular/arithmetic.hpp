@@ -48,6 +48,8 @@
 #include <eve/module/arithmetic/regular/is_finite.hpp>
 #include <eve/module/arithmetic/regular/is_flint.hpp>
 #include <eve/module/arithmetic/regular/is_gez.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
+#include <eve/module/arithmetic/regular/is_greater_equal.hpp>
 #include <eve/module/arithmetic/regular/is_gtz.hpp>
 #include <eve/module/arithmetic/regular/is_imag.hpp>
 #include <eve/module/arithmetic/regular/is_infinite.hpp>

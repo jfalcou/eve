@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
 #include <eve/concept/properly_convertible.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/regular.hpp>
 
 namespace eve::detail
 {

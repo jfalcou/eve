@@ -7,27 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/exponentmask.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/maxexponentm1.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/twotonmb.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/add.hpp>
+#include <eve/module/arithmetic/regular/predicates.hpp>
+// #include <eve/concept/value.hpp>
+// #include <eve/constant/exponentmask.hpp>
+// #include <eve/constant/half.hpp>
+// #include <eve/constant/maxexponentm1.hpp>
+// #include <eve/constant/nbmantissabits.hpp>
+// #include <eve/constant/twotonmb.hpp>
+// #include <eve/detail/apply_over.hpp>
+// #include <eve/detail/kumi.hpp>
+// #include <eve/detail/implementation.hpp>
+// #include <eve/function/add.hpp>
+// #include <eve/function/bit_and.hpp>
+// #include <eve/function/bit_notand.hpp>
+// #include <eve/function/bit_shr.hpp>
+// #include <eve/function/is_denormal.hpp>
+// #include <eve/function/is_eqz.hpp>
+// #include <eve/function/is_greater.hpp>
+// #include <eve/function/is_nez.hpp>
+// #include <eve/function/is_not_finite.hpp>
+// #include <eve/function/logical_notand.hpp>
+// #include <eve/function/raw.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_notand.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/logical_notand.hpp>
-#include <eve/function/raw.hpp>
-
 namespace eve::detail
 {
   template<floating_real_value T>

@@ -7,14 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/iceil.hpp>
-#include <eve/function/ifloor.hpp>
-#include <eve/function/inearest.hpp>
-#include <eve/function/itrunc.hpp>
-#include <eve/function/roundings.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/iceil.hpp>
+#include <eve/module/arithmetic/regular/ifloor.hpp>
+#include <eve/module/arithmetic/regular/inearest.hpp>
+#include <eve/module/arithmetic/regular/itrunc.hpp>
 
 namespace eve::detail
 {
@@ -44,4 +41,3 @@ namespace eve::detail
   }
 
 }
-

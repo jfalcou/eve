@@ -7,17 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/constant/exponentmask.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/predicates.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
 
 namespace eve::detail
 {

@@ -7,13 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/traits/as_logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
 
 namespace eve::detail
 {

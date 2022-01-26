@@ -8,19 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/saturate.hpp>
-#include <eve/function/saturated/div.hpp>
-#include <eve/function/saturated/convert.hpp>
-#include <eve/function/is_odd.hpp>
+#include <eve/module/arithmetic/regular/predicates.hpp>
 
 namespace eve::detail
 {

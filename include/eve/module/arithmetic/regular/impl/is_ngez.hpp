@@ -7,15 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_greater_equal.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_ltz.hpp>
+#include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
 
 namespace eve::detail
 {
