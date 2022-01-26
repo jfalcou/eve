@@ -36,4 +36,11 @@ namespace eve
   inline constexpr bool supports_avx512vbmi2_       = spy::supports::avx512::vbmi2_;
   inline constexpr bool supports_avx512vnni_        = spy::supports::avx512::vnni_;
   inline constexpr bool supports_avx512vpintersect_ = spy::supports::avx512::vpintersect_;
+
+#ifdef EVE_USE_BMI
+  inline constexpr bool supports_bmi_well           = true;
+#else
+  inline constexpr bool supports_bmi_well           = false;
+#endif
+
 }

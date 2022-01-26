@@ -52,7 +52,7 @@ namespace eve::detail
       else if constexpr ( sizeof(T) == 2 && is_1_bits ) return _pdep_u64(m, 0x0101010101010101LL) * 0xff;
       else if constexpr ( sizeof(T) == 2 && is_2_bits ) return _pdep_u64(m, 0x1111111111111111LL) * 0xf;
       else if constexpr ( sizeof(T) == 4 && is_1_bits ) return _pdep_u64(m, 0x0001000100010001LL) * 0xffff;
-      else if constexpr ( sizeof(T) == 4 && is_2_bits ) return _pdep_u64(m, 0x0101010101010101LL) * 0xffff;
+      else if constexpr ( sizeof(T) == 4 && is_2_bits ) return _pdep_u64(m, 0x0101010101010101LL) * 0xff;
     }
 
     template <typename T>
