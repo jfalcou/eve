@@ -27,6 +27,7 @@
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/compress_store.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/countl_one.hpp>
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/module/core/regular/countr_one.hpp>
@@ -49,6 +50,7 @@
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/module/core/regular/plain.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/module/core/regular/raw.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/regular.hpp>
 #include <eve/module/core/regular/reverse.hpp>

@@ -7,21 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/clamp.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/as.hpp>
-#include <concepts>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/clamp.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/regular/is_gtz.hpp>
+#include <eve/module/arithmetic/regular/is_infinite.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
 
 namespace eve::detail
 {

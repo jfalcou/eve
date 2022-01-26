@@ -7,15 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
 
 namespace eve::detail
 {
@@ -29,7 +23,7 @@ namespace eve::detail
       else if constexpr(floating_value<T>)
       {
         auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
-             if constexpr(scalar_value<T>) return already_integral ? a0 :raw(trunc)(a0);
+             if constexpr(scalar_value<T>) return already_integral ? a0 : raw(trunc)(a0);
         else if constexpr(simd_value<T>)   return if_else(already_integral, a0, eve::raw(trunc)(a0));
       }
     }

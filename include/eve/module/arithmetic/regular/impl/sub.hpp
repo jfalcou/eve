@@ -7,12 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/operators.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

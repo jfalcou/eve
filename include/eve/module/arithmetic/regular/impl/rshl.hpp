@@ -7,17 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_gtz.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/arithmetic/regular/minus.hpp>
+#include <eve/module/arithmetic/regular/shr.hpp>
+#include <eve/module/arithmetic/regular/shl.hpp>
 
 namespace eve::detail
 {

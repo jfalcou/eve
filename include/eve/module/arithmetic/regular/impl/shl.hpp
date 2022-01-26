@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

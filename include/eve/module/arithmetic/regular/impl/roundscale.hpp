@@ -7,12 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/round.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/skeleton_calls.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/ldexp.hpp>
+#include <eve/module/arithmetic/regular/round.hpp>
 
 namespace eve::detail
 {
