@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/is_even.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/module/arithmetic/regular/dec.hpp>
 
 namespace eve::detail

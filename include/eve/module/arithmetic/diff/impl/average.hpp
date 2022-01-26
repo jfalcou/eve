@@ -7,11 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/half.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

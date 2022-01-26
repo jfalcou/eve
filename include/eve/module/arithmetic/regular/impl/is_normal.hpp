@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/module/arithmetic/regular/is_finite.hpp>
 #include <eve/module/arithmetic/regular/is_greater_equal.hpp>
 #include <eve/module/arithmetic/regular/abs.hpp>

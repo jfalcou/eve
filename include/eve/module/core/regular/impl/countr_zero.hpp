@@ -7,11 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nez.hpp>
 #include <eve/function/inc.hpp>
 
 #include <bit>
@@ -62,7 +61,7 @@ namespace eve::detail
         c -= if_else (is_nez(x & T(0x3333333333333333)), T( 2), zero);
         c -= if_else (is_nez(x & T(0x5555555555555555)), T( 1), zero);
       }
-      return if_else(is_eqz(x), sizeof(elt_t)*8, c);
+      return if_else(is_nez(x), c, sizeof(elt_t)*8);
     }
     else
       return apply_over(countr_zero, x);

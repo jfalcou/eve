@@ -33,6 +33,7 @@
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/first_true.hpp>

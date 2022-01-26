@@ -7,11 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

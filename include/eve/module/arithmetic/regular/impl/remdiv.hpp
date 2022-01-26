@@ -11,7 +11,6 @@
 #include <eve/module/arithmetic/regular/div.hpp>
 #include <eve/module/arithmetic/regular/fnma.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/module/arithmetic/regular/is_unordered.hpp>
 #include <eve/module/arithmetic/regular/trunc.hpp>
 #include <eve/detail/kumi.hpp>

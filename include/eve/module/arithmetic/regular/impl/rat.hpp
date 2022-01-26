@@ -11,7 +11,6 @@
 #include <eve/module/arithmetic/regular/fma.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_infinite.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/module/arithmetic/regular/rec.hpp>
 #include <eve/module/arithmetic/regular/round.hpp>
 #include <eve/module/arithmetic/saturated/abs.hpp>

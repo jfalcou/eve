@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
 
 namespace eve::detail
 {
