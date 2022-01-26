@@ -9,10 +9,8 @@
 
 #include <eve/module/core.hpp>
 #include <eve/assert.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/decorator.hpp>
-#include <eve/assert.hpp>
+#include <eve/module/arithmetic/regular/div.hpp>
+#include <eve/module/arithmetic/regular/mul.hpp>
 
 namespace eve::detail
 {
