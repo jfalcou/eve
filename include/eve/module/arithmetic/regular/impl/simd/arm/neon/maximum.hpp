@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/function/max.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 
 namespace eve::detail
 {

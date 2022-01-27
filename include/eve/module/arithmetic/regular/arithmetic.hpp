@@ -96,9 +96,11 @@
 #include <eve/module/arithmetic/regular/mantissa.hpp>
 #include <eve/module/arithmetic/regular/maxabs.hpp>
 #include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/arithmetic/regular/maximum.hpp>
 #include <eve/module/arithmetic/regular/maxmag.hpp>
 #include <eve/module/arithmetic/regular/minabs.hpp>
 #include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/arithmetic/regular/minimum.hpp>
 #include <eve/module/arithmetic/regular/minmag.hpp>
 #include <eve/module/arithmetic/regular/minus.hpp>
 #include <eve/module/arithmetic/regular/modf.hpp>

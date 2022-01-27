@@ -72,8 +72,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/maximum.hpp>
+#include <eve/module/arithmetic/regular/impl/maximum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/maximum.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/maximum.hpp>
 #endif

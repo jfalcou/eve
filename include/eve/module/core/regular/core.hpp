@@ -43,8 +43,6 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
-#include <eve/module/core/regular/maximum.hpp>
-#include <eve/module/core/regular/minimum.hpp>
 #include <eve/module/core/regular/musl.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/none.hpp>
@@ -55,6 +53,7 @@
 #include <eve/module/core/regular/raw.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/regular.hpp>
+#include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/reverse.hpp>
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/slide_left.hpp>

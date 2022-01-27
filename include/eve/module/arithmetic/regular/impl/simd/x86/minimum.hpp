@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/replace.hpp>
-#include <eve/function/min.hpp>
 
 namespace eve::detail
 {
@@ -42,11 +38,10 @@ namespace eve::detail
       {
         constexpr auto fix = [](auto w)
         {
-          if constexpr(N::value < 8)  return replace_ignored( wide<T,fixed<8>>(w.storage())
-                                                            , ignore_last(8-N::value)
-                                                            , T(~0)
-                                                            );
-          else                        return w;
+          if constexpr(N::value < 8) //this was replae_ignored
+            return eve::if_else[ignore_last(8-N::value)](wide<T,fixed<8>>(w.storage()), T(~0));
+          else
+            return w;
         };
 
         // minupos return a vector like [0 0 0 0 0 0 p m] where m is the minimum and p its position
