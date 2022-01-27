@@ -13,7 +13,7 @@
 #include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
 #include <eve/module/arithmetic/pedantic/minabs.hpp>
 #include <eve/module/arithmetic/numeric/minabs.hpp>
-#include <eve/function/min.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
 
 namespace eve::detail
 {

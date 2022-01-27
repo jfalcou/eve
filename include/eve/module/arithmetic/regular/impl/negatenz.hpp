@@ -7,15 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/traits/common_compatible.hpp>
-
-#include <concepts>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/signnz.hpp>
 
 namespace eve::detail
 {

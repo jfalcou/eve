@@ -7,15 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/memory.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/spy.hpp>
-#include <eve/function/unsafe.hpp>
-#include <eve/function/replace.hpp>
-#include <eve/memory/aligned_ptr.hpp>
-#include <eve/memory/pointer.hpp>
-#include <eve/wide.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
 
 #ifdef SPY_COMPILER_IS_GCC
 #pragma GCC diagnostic push

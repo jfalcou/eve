@@ -8,8 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-//#include <eve/detail/function/reduce.hpp>
-//#include <eve/function/splat.hpp>
 #include <eve/module/arithmetic/regular/min.hpp>
 
 namespace eve::detail
