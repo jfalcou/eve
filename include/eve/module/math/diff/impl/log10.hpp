@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/log.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve::detail
 {

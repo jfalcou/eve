@@ -6,18 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/function/tanpi.hpp>
-#include <eve/function/secpi.hpp>
-#include <eve/function/diff/tanpi.hpp>
-#include <eve/function/deginrad.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 

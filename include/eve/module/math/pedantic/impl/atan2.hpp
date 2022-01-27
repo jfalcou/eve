@@ -7,28 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/platform.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/detail/generic/atan_kernel.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

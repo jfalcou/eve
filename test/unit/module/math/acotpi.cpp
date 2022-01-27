@@ -6,12 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/acotpi.hpp>
-#include <eve/function/radinpi.hpp>
-#include <eve/function/diff/acotpi.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

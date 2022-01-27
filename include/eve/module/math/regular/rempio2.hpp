@@ -6,10 +6,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_nltz.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 namespace eve
 {

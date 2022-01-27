@@ -6,14 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/minlog10.hpp>
-#include <eve/constant/minlog2denormal.hpp>
-#include <eve/constant/maxlog2.hpp>
-#include <eve/function/pedantic/exp2.hpp>
-#include <eve/function/diff/exp2.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/prev.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

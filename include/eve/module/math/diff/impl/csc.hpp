@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/csc.hpp>
-#include <eve/function/cot.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/csc.hpp>
+#include <eve/module/math/regular/cot.hpp>
 
 namespace eve::detail
 {

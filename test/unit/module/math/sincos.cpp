@@ -6,17 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/function/cos.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/diff/cos.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 
 //==================================================================================================
 // Types tests

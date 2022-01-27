@@ -7,31 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/acos.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 #include <eve/detail/branch.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/sqrteps.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
+#include <eve/module/math/constant/sqrteps.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <type_traits>
 
 namespace eve::detail
 {
@@ -103,4 +88,3 @@ namespace eve::detail
     else return apply_over(eve::asin, a0);
   }
 }
-

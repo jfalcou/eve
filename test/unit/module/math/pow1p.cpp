@@ -6,18 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/pow1p.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/diff/pow1p.hpp>
-#include <eve/function/log1p.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

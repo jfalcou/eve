@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/math/regular/geommean.hpp>
 
 namespace eve::detail
 {

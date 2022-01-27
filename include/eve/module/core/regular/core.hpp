@@ -42,10 +42,12 @@
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/maximum.hpp>
 #include <eve/module/core/regular/minimum.hpp>
+#include <eve/module/core/regular/musl.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/numeric.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/regular/plain.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/regular.hpp>

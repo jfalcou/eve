@@ -7,23 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/numeric/max.hpp>
-#include <eve/function/maxabs.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/pedantic/manhattan.hpp>
-#include <eve/function/pedantic/hypot.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
 {

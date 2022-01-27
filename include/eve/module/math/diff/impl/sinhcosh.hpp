@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinhcosh.hpp>
-#include <eve/function/derivative.hpp>
-
+#include <eve/module/math/regular/sinhcosh.hpp>
 
 namespace eve::detail
 {

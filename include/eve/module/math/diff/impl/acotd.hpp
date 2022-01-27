@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/diff/acot.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/diff/acot.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve::detail
 {

@@ -9,7 +9,7 @@
 
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/math/detail/generic/erf_kernel.hpp>
+#include <eve/module/special/detail/erf_kernel.hpp>
 
 namespace eve::detail
 {

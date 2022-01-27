@@ -7,12 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sincos.hpp>
 
 namespace eve::detail
 {

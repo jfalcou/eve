@@ -7,22 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/manhattan.hpp>
-#include <eve/function/maxabs.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/hypot.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve::detail
 {

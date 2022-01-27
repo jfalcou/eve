@@ -7,28 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/pedantic/ifrexp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/half.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/sqr.hpp>
+#include <eve/module/arithmetic/regular/fnma.hpp>
+#include <eve/module/arithmetic/regular/ifrexp.hpp>
 
 namespace eve::detail
 {

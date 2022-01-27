@@ -7,11 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/asin.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/asin.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve::detail
 {
@@ -25,4 +24,3 @@ namespace eve::detail
   }
 
 }
-

@@ -7,21 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/maxlog.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/half.hpp>
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 
 namespace eve::detail
 {

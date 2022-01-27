@@ -7,16 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/traits.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/rec.hpp>
+#include <eve/module/arithmetic/regular/sqrt.hpp>
 
 namespace eve::detail
 {

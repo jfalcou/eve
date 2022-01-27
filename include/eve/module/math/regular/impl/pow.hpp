@@ -7,31 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/logical_andnot.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/function/pow_abs.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/abs.hpp>
-
-#include <concepts>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve::detail
 {

@@ -7,10 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/log1p.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/inc.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/diff/log.hpp>
 
 namespace eve::detail
 {
@@ -20,6 +19,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return rec(inc(x));
+    return diff(log)(inc(x));
   }
 }

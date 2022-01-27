@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sinpi.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/constant/pi.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/sinpi.hpp>
+#include <eve/module/math/constant/pi.hpp>
 
 namespace eve::detail
 {

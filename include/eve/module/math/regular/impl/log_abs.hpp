@@ -7,10 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/abs.hpp>
-#include <eve/function/log.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/log.hpp>
 
 namespace eve::detail
 {

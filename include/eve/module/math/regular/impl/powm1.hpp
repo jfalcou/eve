@@ -7,24 +7,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/function/pow.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-
-#include <concepts>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/pow.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T, floating_real_value U>
-  /*EVE_FORCEINLINE*/ auto powm1_(EVE_SUPPORTS(cpu_),
+  auto powm1_(EVE_SUPPORTS(cpu_),
                               T const &a, U const &b) noexcept
   requires compatible_values<T, U>
   {
@@ -32,7 +23,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  /*EVE_FORCEINLINE*/ auto powm1_(EVE_SUPPORTS(cpu_),
+  auto powm1_(EVE_SUPPORTS(cpu_),
                               T const &x, T const &y) noexcept
   {
     if constexpr(has_native_abi_v<T>)

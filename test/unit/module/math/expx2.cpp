@@ -6,11 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/function/diff/expx2.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

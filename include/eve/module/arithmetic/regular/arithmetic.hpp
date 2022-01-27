@@ -126,6 +126,7 @@
 #include <eve/module/arithmetic/regular/roundscale.hpp>
 #include <eve/module/arithmetic/regular/rshl.hpp>
 #include <eve/module/arithmetic/regular/rshr.hpp>
+#include <eve/module/arithmetic/regular/rsqrt.hpp>
 #include <eve/module/arithmetic/regular/saturate.hpp>
 #include <eve/module/arithmetic/regular/shl.hpp>
 #include <eve/module/arithmetic/regular/shr.hpp>

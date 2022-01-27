@@ -6,17 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/function/csc.hpp>
-#include <eve/function/cot.hpp>
-#include <eve/function/sin.hpp>
-#include <eve/function/diff/csc.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 
 //==================================================================================================
 // Types tests
@@ -63,5 +56,5 @@ EVE_TEST( "Check behavior of csc on wide"
   TTS_ULP_EQUAL(csc(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(csc(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(diff(csc)(a0), map([](auto e) -> v_t { return  -csc(e)*eve::cot(e); }, a0), 2);
+  TTS_ULP_EQUAL(diff(csc)(a0), map([](auto e) -> v_t { return  -eve::csc(e)*eve::cot(e);}, a0), 2);
 };

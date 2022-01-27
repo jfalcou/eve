@@ -7,23 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/kumi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/exp.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <type_traits>
+#include <eve/detail/kumi.hpp>
 
 namespace eve::detail
 {

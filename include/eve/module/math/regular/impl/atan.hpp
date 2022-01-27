@@ -7,14 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <eve/module/math/detail/generic/atan_kernel.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {
@@ -30,4 +25,3 @@ namespace eve::detail
     else return apply_over(atan, a);
   }
 }
-

@@ -7,17 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/trigo_tags.hpp>
-#include <eve/function/next.hpp>
-#include <eve/constant/ieee_constant.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/pio_2.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/as.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/trigo_tags.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pi.hpp>
 
 namespace eve::detail
 {

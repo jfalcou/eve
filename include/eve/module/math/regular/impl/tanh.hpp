@@ -7,18 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/half.hpp>
-#include <type_traits>
-#include <eve/detail/apply_over.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/expm1.hpp>
+
 
 namespace eve::detail
 {
@@ -56,4 +48,3 @@ namespace eve::detail
     }
   }
 }
-

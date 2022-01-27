@@ -40,4 +40,5 @@
 #include <eve/module/arithmetic/pedantic/prev.hpp>
 #include <eve/module/arithmetic/pedantic/remdiv.hpp>
 #include <eve/module/arithmetic/pedantic/rem.hpp>
+#include <eve/module/arithmetic/pedantic/rsqrt.hpp>
 #include <eve/module/arithmetic/pedantic/signnz.hpp>

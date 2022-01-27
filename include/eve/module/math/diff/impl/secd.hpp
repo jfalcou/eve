@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/secd.hpp>
-#include <eve/function/tand.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/deginrad.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/secd.hpp>
+#include <eve/module/math/regular/tand.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
 
 namespace eve::detail
 {

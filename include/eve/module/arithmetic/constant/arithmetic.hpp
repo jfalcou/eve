@@ -24,4 +24,5 @@
 #include <eve/constant/mindenormal.hpp>
 #include <eve/constant/minexponent.hpp>
 #include <eve/constant/nbmantissabits.hpp>
+#include <eve/constant/smallestposval.hpp>
 #include <eve/constant/twotonmb.hpp>

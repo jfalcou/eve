@@ -7,14 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/expm1.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 
 namespace eve::detail
 {
@@ -32,4 +27,3 @@ namespace eve::detail
     else return apply_over(coth, a0);
   }
 }
-

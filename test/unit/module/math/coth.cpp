@@ -6,11 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/function/coth.hpp>
-#include <eve/function/diff/coth.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 //==================================================================================================

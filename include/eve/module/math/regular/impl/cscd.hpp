@@ -7,16 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/div_180.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_flint.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/cscpi.hpp>
-#include <eve/function/sind.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/regular/sind.hpp>
+#include <eve/module/math/regular/cscpi.hpp>
 
 namespace eve::detail
 {

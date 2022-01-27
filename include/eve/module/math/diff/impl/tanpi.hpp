@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/secpi.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/constant/pi.hpp>
+
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/regular/secpi.hpp>
 
 namespace eve::detail
 {

@@ -7,9 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/regular/rsqrt.hpp>
-#include <eve/module/math/pedantic/impl/rsqrt.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/math/pedantic/impl/simd/x86/rsqrt.hpp>
-#endif
+#include <eve/module/arithmetic/regular/rsqrt.hpp>
+#include <eve/module/arithmetic/diff/impl/rsqrt.hpp>
