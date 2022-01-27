@@ -13,15 +13,13 @@ int main()
                eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                                = " << pf << '\n'
-            << "-> eve::diff(eve::inc)(pf)     = " << eve::diff(eve::inc)(pf) << '\n'
-            << "-> eve::diff(eve::inc)(pf, 2u) = " << eve::diff(eve::inc)(pf, 2u) << '\n'
-            << "-> eve::diff(eve::inc)(pf, 3u) = " << eve::diff(eve::inc)(pf, 3u) << '\n';
+            << "<- pf                          = " << pf << '\n'
+            << "-> eve::diff(eve::inc)(pf)     = " << eve::diff(eve::inc)(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf                            = " << xf << '\n'
+            << "<- xf                      = " << xf << '\n'
             << "-> eve::diff(eve::inc)(xf) = " << eve::diff(eve::inc)(xf) << '\n';
   return 0;
 }
