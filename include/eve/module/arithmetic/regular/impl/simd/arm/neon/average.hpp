@@ -7,14 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/detail/category.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
 
 namespace eve::detail
 {

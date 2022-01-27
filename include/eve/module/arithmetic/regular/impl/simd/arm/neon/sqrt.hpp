@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/category.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_not_finite.hpp>
+#include <eve/module/arithmetic/regular/rsqrt.hpp>
 
 namespace eve::detail
 {

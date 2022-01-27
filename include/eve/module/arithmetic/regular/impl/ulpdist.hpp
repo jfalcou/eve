@@ -7,19 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/dist.hpp>
-#include <eve/function/numeric/is_equal.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/numeric/is_equal.hpp>
-#include <eve/function/nb_values.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
+#include <eve/module/arithmetic/regular/is_equal.hpp>
+#include <eve/module/arithmetic/regular/dist.hpp>
+#include <eve/module/arithmetic/regular/is_unordered.hpp>
 
 namespace eve::detail
 {
