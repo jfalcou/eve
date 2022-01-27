@@ -22,7 +22,7 @@ namespace eve::algo
   //!
   //!  @brief SIMD version of std::reverse
   //!    * default unrolling is 1.
-  //!    * will align by default.
+  //!    * will won't align because it makes the logic more complex and does not win.
   //!
   //!   **Required header:** `#include <eve/algo/reverse.hpp>`
   //!
@@ -35,24 +35,43 @@ namespace eve::algo
     template <relaxed_range Rng>
     EVE_FORCEINLINE void operator()(Rng&& rng) const
     {
+      using Traits = typename TraitsSupport::traits_type;
+      static_assert(Traits::contains(no_aligning));
+
       if (rng.begin() == rng.end()) return;
 
       // To utilize extra information from range prerprocessing.
       auto processed = eve::algo::preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
-      auto f = processed.begin();
-      auto l = processed.end();
+      auto f  = processed.begin();
+      auto l  = processed.end();
+      auto rl = views::reverse(l);
 
-      std::ptrdiff_t n = l - f;
-      auto m = unalign(f) + n / 2;
+      std::ptrdiff_t const n        = l - f;
+      std::ptrdiff_t const cardinal = iterator_cardinal_v<decltype(f)>;
 
-      // Just because the whole thing is divisible_by_cardinal does not mean
-      // the halve will be.
-      auto tr = drop_key(divisible_by_cardinal, processed.traits());
-      swap_ranges[tr](as_range(f, m), views::reverse(l));
+      std::ptrdiff_t two_register_steps = n / (2 * cardinal);
+      std::ptrdiff_t left = n - cardinal * 2 * two_register_steps;
+
+      // We will read the overlapping middle twice if we can
+      // [          (  m  )          ]
+      // This way we can treat the range as divisible by cardinal
+
+      if (left >= cardinal) ++two_register_steps;
+      else
+      {
+        auto f_m      = f  + two_register_steps * cardinal;
+        auto rl_m     = rl + two_register_steps * cardinal;
+        auto loaded   = load[keep_first(left)](f_m);
+        eve::store[keep_first(left)](loaded, rl_m);
+      }
+
+      auto m = f + two_register_steps * cardinal;
+
+      swap_ranges[processed.traits()][divisible_by_cardinal](as_range(f, m), rl);
     }
   };
 
-  inline constexpr auto reverse = function_with_traits<reverse_>[algo::unroll<1>];
+  inline constexpr auto reverse = function_with_traits<reverse_>[algo::unroll<1>][no_aligning];
 
   //================================================================================================
   //! @addtogroup algo
