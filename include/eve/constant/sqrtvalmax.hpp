@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/constant/sqrtvalmax.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>

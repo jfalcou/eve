@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
 #include <cmath>
 
 namespace eve::detail
