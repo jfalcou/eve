@@ -127,7 +127,6 @@ namespace eve::detail
   // wide<->wide default convert implementation
   template<typename In, typename Out>
   EVE_FORCEINLINE auto convert_impl(EVE_SUPPORTS(cpu_), In const &v0, as<Out> const &tgt) noexcept
-  requires
   {
     using out_t = as_wide_t<Out, cardinal_t<In>>;
 
