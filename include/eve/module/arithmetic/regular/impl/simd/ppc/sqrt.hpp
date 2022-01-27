@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/impl/simd/ppc/rsqrt.hpp>
+#include <eve/module/arithmetic/regular/rsqrt.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/constant/inf.hpp>
 #include <type_traits>

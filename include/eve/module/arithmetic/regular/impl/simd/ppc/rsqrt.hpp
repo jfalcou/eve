@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/sqr.hpp>
+#include <eve/module/arithmetic/regular/sqr.hpp>
 
 namespace eve::detail
 {
@@ -36,25 +36,7 @@ namespace eve::detail
     }
     else
     {
-      auto refine = [](auto sw0, auto w0)
-      {
-        wide<T, N> hest = sw0 * half(eve::as(w0));
-        wide<T, N> w02  = sqr(w0);
-        wide<T, N> tmp  = vec_nmsub(w0.storage(), w02.storage(), one(eve::as(w0)).storage());
-        return fma(tmp, hest, sw0);
-      };
-
-      auto est = raw(rsqrt)(v0);
-      auto xn  = refine(est, v0);
-      xn       = refine(xn, v0);
-
-      if(platform::supports_infinites)
-      {
-        auto i = inf(eve::as(v0));
-        xn     = if_else(is_eqz(v0), i, if_else(v0 == i, eve::zero, xn));
-      }
-
-      return xn;
+      return map(rsqrt, v0);
     }
   }
 
