@@ -13,6 +13,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/bits.hpp>
 #include <eve/traits/as_arithmetic.hpp>
+#include <eve/detail/function/slice.hpp>
 
 #include <eve/detail/function/movemask.hpp>
 
@@ -211,15 +212,24 @@ struct top_bits
     // -- slicing
 
     EVE_FORCEINLINE explicit top_bits(top_bits<half_logical> l, top_bits<half_logical> h)
+      requires ( Logical::size() > 1 ) &&
+        (bits_per_element == top_bits<half_logical>::bits_per_element)
     {
            if constexpr ( is_aggregated     ) storage = {{ l, h }};
       else if constexpr ( is_avx512_logical ) *this = top_bits(Logical{ to_logical(l), to_logical(h) });
-      else                                    storage = (h.storage << static_bits_size / 2) | l.storage;
+      else
+      {
+        storage = h.storage;
+        storage <<= static_bits_size / 2;
+        storage |= l.storage;
+      }
     }
 
     EVE_FORCEINLINE
     kumi::tuple<top_bits<half_logical>, top_bits<half_logical>>
     slice() const
+      requires ( Logical::size() > 1 )
+             && (bits_per_element == top_bits<half_logical>::bits_per_element)
     {
            if constexpr ( is_aggregated     ) return {storage[0], storage[1]};
       else if constexpr ( is_avx512_logical )
