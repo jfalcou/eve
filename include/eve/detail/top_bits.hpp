@@ -13,6 +13,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/bits.hpp>
 #include <eve/traits/as_arithmetic.hpp>
+#include <eve/detail/function/slice.hpp>
 
 #include <eve/detail/function/movemask.hpp>
 
@@ -208,6 +209,56 @@ struct top_bits
       operator&=(top_bits(ignore));
     }
 
+    // -- slicing
+
+    EVE_FORCEINLINE explicit top_bits(top_bits<half_logical> l, top_bits<half_logical> h)
+      requires ( Logical::size() > 1 ) &&
+        (bits_per_element == top_bits<half_logical>::bits_per_element)
+    {
+           if constexpr ( is_aggregated     ) storage = {{ l, h }};
+      else if constexpr ( is_avx512_logical ) *this = top_bits(Logical{ to_logical(l), to_logical(h) });
+      else
+      {
+        storage = h.storage;
+        storage <<= static_bits_size / 2;
+        storage |= l.storage;
+      }
+    }
+
+    EVE_FORCEINLINE
+    kumi::tuple<top_bits<half_logical>, top_bits<half_logical>>
+    slice() const
+      requires ( Logical::size() > 1 )
+             && (bits_per_element == top_bits<half_logical>::bits_per_element)
+    {
+           if constexpr ( is_aggregated     ) return {storage[0], storage[1]};
+      else if constexpr ( is_avx512_logical )
+      {
+        auto [l, h] = to_logical(*this).slice();
+        return { top_bits<half_logical>{l}, top_bits<half_logical>{h} };
+      }
+      else
+      {
+        top_bits<half_logical> l, h;
+        using half_storage = typename top_bits<half_logical>::storage_type;
+
+        l.storage = set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
+        h.storage = storage >> (static_bits_size / 2);
+
+        return {l, h};
+      }
+    }
+
+    template<std::size_t Slice>
+    EVE_FORCEINLINE
+    top_bits<half_logical> slice(slice_t<Slice>) const
+    {
+      auto [l, h] = slice();
+
+      if constexpr (Slice == 0) return l;
+      else                      return h;
+    }
+
     // getters/setter ----------------------
 
     EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
@@ -247,9 +298,20 @@ struct top_bits
     }
 
     EVE_FORCEINLINE constexpr auto as_int() const
-      requires ( !is_aggregated )
+      requires ( static_bits_size <= 64 )
     {
-      if constexpr(!Logical::abi_type::is_wide_logical) return storage.value; else return storage;
+      if constexpr ( is_aggregated )
+      {
+        std::uint64_t lo = storage[0].as_int();
+        std::uint64_t hi = storage[1].as_int();
+        hi <<=  (static_bits_size / 2);
+        std::uint64_t res = hi | lo;
+
+        if constexpr ( static_bits_size < 64 ) return (std::uint32_t) res;
+        else                                   return res;
+      }
+      else if constexpr(!Logical::abi_type::is_wide_logical) return storage.value;
+      else return storage;
     }
 
     EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;

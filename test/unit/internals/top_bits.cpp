@@ -308,3 +308,45 @@ EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
     TTS_EQUAL(0u, (~top_bits<logical>{logical{true}}).storage);
   }
 };
+
+//==================================================================================================
+// Check the behavior of top_bits slicing
+//==================================================================================================
+EVE_TEST_TYPES("Check top_bits slicing", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  using logical = eve::logical<T>;
+
+  if constexpr( T::size() == 1 ||
+                top_bits<logical>::bits_per_element)
+  {
+    TTS_PASS("Can't slice 1");
+  }
+  else
+  {
+    using half_logical = typename top_bits<logical>::half_logical;
+
+    if constexpr (top_bits<half_logical>::bits_per_element != top_bits<logical>::bits_per_element)
+    {
+      TTS_PASS("FIX-1209: slice top bits");
+    }
+    else
+    {
+      for( int i = 0; i != T::size() - 1; ++i )
+      {
+        logical v([=](auto e, auto) { return e > i; });
+        auto [vl, vh] = v.slice();
+
+        top_bits together {v};
+
+        top_bits lo {vl};
+        top_bits hi {vh};
+
+        TTS_EQUAL(together, (top_bits<logical> {lo, hi}));
+        TTS_EQUAL(together.slice(), (kumi::tuple{lo, hi}));
+        TTS_EQUAL(together.slice(eve::lower_), lo);
+        TTS_EQUAL(together.slice(eve::upper_), hi);
+      }
+    }
+  }
+};

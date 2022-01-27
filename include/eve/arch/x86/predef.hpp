@@ -51,4 +51,10 @@
 #   endif
 #  endif
 
+# if defined(EVE_INCOMPLETE_AVX512_SUPPORT) || \
+     defined(SPY_SIMD_IS_X86_AVX512)        || \
+     (defined(SPY_SIMD_IS_X86_AVX2) && defined(EVE_USE_BMI_ON_AVX2))
+#define EVE_USE_BMI
+#endif
+
 #endif

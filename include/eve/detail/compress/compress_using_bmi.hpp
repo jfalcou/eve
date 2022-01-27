@@ -10,6 +10,12 @@
 #include <eve/arch.hpp>
 #include <eve/detail/implementation.hpp>
 
+// Based on: https://stackoverflow.com/a/36951611/5021064
+// Explanation (a bit outdated): https://stackoverflow.com/a/61431303/5021064
+// Mask functions return the compressed indexes and the popcount.
+//
+// Credit for the idea goes to @PeterCordes
+
 namespace eve
 {
   EVE_REGISTER_CALLABLE(compress_using_bmi_)
