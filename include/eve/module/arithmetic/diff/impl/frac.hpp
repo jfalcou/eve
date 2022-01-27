@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/derivative.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {
@@ -18,7 +17,6 @@ namespace eve::detail
                                     , diff_type<1> const &
                                     , T x) noexcept
   {
-
     return one(as(x));
   }
 }

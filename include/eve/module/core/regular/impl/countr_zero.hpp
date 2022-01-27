@@ -8,13 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/is_nez.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/inc.hpp>
-
-#include <bit>
-#include <type_traits>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {
@@ -29,7 +23,7 @@ namespace eve::detail
 //      return map(countr_zero, x); // TO DO
       constexpr auto siz = sizeof(eve::element_type_t<T>)*8;
       using elt_t = element_type_t<T>;
-      x &= eve::inc(~x);
+      x &= ~x+one(as(x)); //eve::inc(~x);
       T c(sizeof(elt_t)*8-1);
       if constexpr(siz == 8)
       {

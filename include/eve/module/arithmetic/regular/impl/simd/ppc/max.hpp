@@ -7,10 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/forward.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

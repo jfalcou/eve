@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

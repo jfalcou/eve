@@ -7,12 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/abs.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/sign.hpp>
 
 namespace eve::detail
 {

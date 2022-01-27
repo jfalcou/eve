@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/module/core.hpp>
 
-#include <type_traits>
 
 namespace eve::detail
 {

@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/is_not_less.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_not_less.hpp>
 
 namespace eve::detail
 {

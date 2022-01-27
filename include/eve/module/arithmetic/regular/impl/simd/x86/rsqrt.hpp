@@ -9,8 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/sqr.hpp>
-#include <eve/module/arithmetic/regular/fnma.hpp>
-#include <eve/module/arithmetic/regular/ifrexp.hpp>
 
 namespace eve::detail
 {

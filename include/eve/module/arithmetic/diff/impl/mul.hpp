@@ -7,12 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/one.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/diff/plus.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/traits/common_compatible.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/plus.hpp>
 
 namespace eve::detail
 {

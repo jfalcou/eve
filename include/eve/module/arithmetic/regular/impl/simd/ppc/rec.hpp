@@ -7,16 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/platform.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

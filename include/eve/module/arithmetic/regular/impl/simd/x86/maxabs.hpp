@@ -7,13 +7,10 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 */
+#include <eve/module/core.hpp>
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/category.hpp>
-#include <eve/detail/function/simd/x86/flags.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {

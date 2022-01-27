@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {
