@@ -75,7 +75,8 @@ namespace eve
   //!   * eve::saturated
   //!
   //!
-  //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
+  //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to
+  //!     the type wrapped by `t`.
   //!
   //! #### Example
   //!
@@ -92,11 +93,11 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/convert.hpp>
 #endif
+*/
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/core/regular/impl/simd/ppc/convert.hpp>
 #endif
-*/
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/convert.hpp>
