@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/ceil.hpp>
 #include <eve/module/arithmetic/regular/predicates.hpp>
 
 namespace eve::detail
@@ -32,7 +33,7 @@ namespace eve::detail
         if constexpr( std::is_same_v<elt_t, std::int64_t> )
         {
           auto q =  div(a, b);
-          auto r = fms(q, b, a);
+          auto r = q*b-a; 
           auto test = if_else(is_gtz(b), is_ltz(r), is_gtz(r));
           return inc[test](q);
         }
@@ -44,7 +45,7 @@ namespace eve::detail
       else if constexpr( unsigned_value<T> )
       {
         auto q  = div(a, b);
-        return inc[is_nez(fms(q, b, a))](q);
+        return inc[is_nez(q*b-a)](q);
       }
     }
   }

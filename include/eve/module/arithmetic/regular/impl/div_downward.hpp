@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/floor.hpp>
 #include <eve/module/arithmetic/regular/predicates.hpp>
 
 namespace eve::detail
@@ -32,7 +33,7 @@ namespace eve::detail
         if constexpr( std::is_same_v<elt_t, std::int64_t> )
         {
           auto q =  div(a, b);
-          auto r = fms(q, b, a);
+          auto r = q*b-a; //fms(q, b, a);
           auto test = if_else(is_ltz(b), is_ltz(r), is_gtz(r));
           return dec[test](q);
         }

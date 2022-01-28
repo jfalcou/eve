@@ -7,11 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/function/unsafe.hpp>
-#include <eve/function/replace.hpp>
+//#include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/wide.hpp>
@@ -58,7 +59,6 @@ namespace eve::detail
     using e_t = typename pointer_traits<Pack>::value_type;
     using r_t = Pack;
     using c_t = cardinal_t<Pack>;
-
     if constexpr( !std::is_pointer_v<Ptr> )
     {
       static constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= Ptr::alignment();
@@ -66,8 +66,12 @@ namespace eve::detail
       if constexpr (!sanitizers_are_on && is_aligned_enough)
       {
         auto that = eve::unsafe(eve::load)(ptr, tgt);
-        if constexpr( C::has_alternative )  return replace_ignored(that, cond, cond.alternative);
-        else                                return that;
+        if constexpr( C::has_alternative )
+        {
+          auto ri =  [](auto ignore, auto x,  auto with) { return eve::if_else(ignore, x, with);};
+          return ri(that, cond, cond.alternative);
+        }
+        else return that;
       }
       else
       {

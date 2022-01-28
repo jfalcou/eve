@@ -14,6 +14,7 @@
 
 #include <eve/algo/views/detail/preprocess_zip_range.hpp>
 
+#include <eve/function/replace.hpp>
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
@@ -327,7 +328,7 @@ namespace eve::algo::views
     {
       if constexpr (C::has_alternative)
       {
-        v = eve::replace_ignored(v, c, c.alternative);
+        v = replace_ignored(v, c, c.alternative);
         eve::store(v, self);
       }
       else

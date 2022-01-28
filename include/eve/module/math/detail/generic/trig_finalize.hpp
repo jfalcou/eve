@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/module/math/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
 

@@ -12,7 +12,6 @@
 #include <eve/module/arithmetic/regular/is_nan.hpp>
 #include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
 #include <eve/module/arithmetic/regular/maxabs.hpp>
-#include <eve/module/arithmetic/regular/minus.hpp>
 
 namespace eve::detail
 {

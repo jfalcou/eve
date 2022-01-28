@@ -7,24 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/fuzzy.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/function/prev.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/fuzzy/floor.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+
+#include <eve/module/arithmetic/regular/copysign.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
+#include <eve/module/arithmetic/regular/is_lez.hpp>
+#include <eve/module/arithmetic/regular/is_ltz.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/arithmetic/regular/oneminus.hpp>
+#include <eve/module/arithmetic/regular/prev.hpp>
 
 namespace eve::detail
 {

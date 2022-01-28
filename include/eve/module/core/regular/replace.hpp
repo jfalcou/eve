@@ -23,9 +23,9 @@ namespace eve
     EVE_FORCEINLINE auto replace_ignored_ ( EVE_SUPPORTS(cpu_)
                                           , Wide x, Ignore ignore, Other with
                                           ) noexcept
-                    -> decltype( eve::if_else[ignore](x, with) )
+    -> decltype( eve::if_else(ignore, x, with) )
     {
-      return eve::if_else[ignore](x, with);
+      return eve::if_else(ignore, x, with);
     }
   }
 }

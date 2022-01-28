@@ -42,8 +42,6 @@
 #include <eve/module/arithmetic/regular/ifrexp.hpp>
 #include <eve/module/arithmetic/regular/inc.hpp>
 #include <eve/module/arithmetic/regular/is_denormal.hpp>
-#include <eve/module/arithmetic/regular/is_equal.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_even.hpp>
 #include <eve/module/arithmetic/regular/is_finite.hpp>
 #include <eve/module/arithmetic/regular/is_flint.hpp>
@@ -66,7 +64,6 @@
 #include <eve/module/arithmetic/regular/is_nltz.hpp>
 #include <eve/module/arithmetic/regular/is_normal.hpp>
 #include <eve/module/arithmetic/regular/is_not_denormal.hpp>
-#include <eve/module/arithmetic/regular/is_not_equal.hpp>
 #include <eve/module/arithmetic/regular/is_not_finite.hpp>
 #include <eve/module/arithmetic/regular/is_not_flint.hpp>
 #include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
@@ -102,7 +99,6 @@
 #include <eve/module/arithmetic/regular/min.hpp>
 #include <eve/module/arithmetic/regular/minimum.hpp>
 #include <eve/module/arithmetic/regular/minmag.hpp>
-#include <eve/module/arithmetic/regular/minus.hpp>
 #include <eve/module/arithmetic/regular/modf.hpp>
 #include <eve/module/arithmetic/regular/mul.hpp>
 #include <eve/module/arithmetic/regular/nearest.hpp>
@@ -116,6 +112,7 @@
 #include <eve/module/arithmetic/regular/next.hpp>
 #include <eve/module/arithmetic/regular/oneminus.hpp>
 #include <eve/module/arithmetic/regular/plus.hpp>
+#include <eve/module/arithmetic/regular/predicates.hpp>
 #include <eve/module/arithmetic/regular/prev.hpp>
 #include <eve/module/arithmetic/regular/rat.hpp>
 #include <eve/module/arithmetic/regular/rec.hpp>

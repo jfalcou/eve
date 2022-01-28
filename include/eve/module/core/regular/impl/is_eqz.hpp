@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/is_equal.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
 
 namespace eve::detail
 {

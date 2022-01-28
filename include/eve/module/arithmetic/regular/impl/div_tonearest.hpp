@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/nearest.hpp>
 #include <eve/module/arithmetic/regular/predicates.hpp>
 
 namespace eve::detail
@@ -34,7 +35,7 @@ namespace eve::detail
         if constexpr( unsigned_value<T> )
         {
           auto q =  div(a, b);
-          auto r1 = fnma(b, q, a);
+          auto r1 = -b*q+a;
           auto r2 = b-r1;
           return inc[(r1 > r2)||((r1 == r2)&&is_odd(q))](q);
         }
@@ -45,7 +46,7 @@ namespace eve::detail
           b = minus[ltza](b);
           auto ltzb = is_ltz(b);
           auto q =  div(a, b);
-          auto r1 = fnma(b, q, a);
+          auto r1 = -b*q+a; 
           auto r2 = minus[ltzb](b)-r1;
           auto cond = (r1 > r2)||((r1 == r2)&&is_odd(q));
           return if_else(is_ltz(b), dec[cond](q), inc[cond](q));

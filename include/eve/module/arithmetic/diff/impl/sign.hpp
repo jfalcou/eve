@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/sign.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

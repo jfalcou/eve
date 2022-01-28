@@ -7,16 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/saturated/sub.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

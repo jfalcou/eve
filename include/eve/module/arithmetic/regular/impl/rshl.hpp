@@ -10,7 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/is_gtz.hpp>
 #include <eve/module/arithmetic/regular/max.hpp>
-#include <eve/module/arithmetic/regular/minus.hpp>
 #include <eve/module/arithmetic/regular/shr.hpp>
 #include <eve/module/arithmetic/regular/shl.hpp>
 

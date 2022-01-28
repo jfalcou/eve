@@ -14,7 +14,6 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/memory/soa_ptr.hpp>
-#include <eve/function/replace.hpp>
 #include <eve/function/safe.hpp>
 #include <eve/function/unsafe.hpp>
 #include <eve/function/unalign.hpp>

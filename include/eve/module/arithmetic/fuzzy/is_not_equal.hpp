@@ -8,4 +8,5 @@
 #pragma once
 
 #include <eve/module/arithmetic/regular/is_not_equal.hpp>
+#include <eve/module/arithmetic/numericéis_not_equal.hpp>
 #include <eve/module/arithmetic/fuzzy/impl/is_not_equal.hpp>

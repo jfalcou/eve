@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>

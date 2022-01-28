@@ -7,10 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/one.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/minus.hpp>
-#include <eve/constant/mone.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {
@@ -31,7 +28,6 @@ namespace eve::detail
                             , T const &a
                             , T const &b
                             , T const &c) noexcept
-  //  requires(has_native_abi_v<T>)
   {
     if constexpr(N == 1) return mone(as(a));
     else if constexpr(N == 2) return minus(c);

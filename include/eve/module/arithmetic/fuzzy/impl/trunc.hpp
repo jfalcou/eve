@@ -7,20 +7,14 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/fuzzy/floor.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/is_not_less_equal.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/fuzzy.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/arithmetic/fuzzy/floor.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/arithmetic/regular/is_ltz.hpp>
+#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>
 
 namespace eve::detail
 {

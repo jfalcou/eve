@@ -90,4 +90,4 @@ namespace eve
   EVE_MAKE_CALLABLE(minus_, minus);
 }
 
-#include <eve/module/arithmetic/regular/impl/minus.hpp>
+#include <eve/module/core/regular/impl/minus.hpp>

@@ -16,6 +16,7 @@
 #pragma once
 
 #include <eve/constant/bitincrement.hpp>
+#include <eve/constant/eps.hpp>
 #include <eve/constant/exponentmask.hpp>
 #include <eve/constant/mantissamask.hpp>
 #include <eve/constant/maxexponent.hpp>

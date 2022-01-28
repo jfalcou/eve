@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/is_not_equal.hpp>
 #include <eve/module/arithmetic/regular/is_ordered.hpp>
 
 namespace eve::detail

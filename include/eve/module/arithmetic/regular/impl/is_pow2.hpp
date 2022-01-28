@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/is_gtz.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/dec.hpp>
 
 namespace eve::detail

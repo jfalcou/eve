@@ -7,7 +7,7 @@
 #pragma once
 
 #include <eve/detail/function/to_logical.hpp>
-#include <eve/module/arithmetic/regular/is_not_equal.hpp>
+#include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

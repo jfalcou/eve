@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/is_less_equal.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

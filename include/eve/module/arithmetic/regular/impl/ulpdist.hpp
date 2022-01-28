@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/module/arithmetic/regular/is_equal.hpp>
 #include <eve/module/arithmetic/regular/dist.hpp>
 #include <eve/module/arithmetic/regular/is_unordered.hpp>
 

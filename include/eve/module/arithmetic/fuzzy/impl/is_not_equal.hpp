@@ -7,20 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/dist.hpp>
-#include <eve/function/fuzzy.hpp>
-#include <eve/function/is_not_equal.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/nb_values.hpp>
-#include <eve/traits/as_logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/dist.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
 
 namespace eve::detail
 {

@@ -12,6 +12,7 @@
 
 #include "iterator_concept_test.hpp"
 
+#include <eve/module/core/regular/replace.hpp>
 #include <array>
 #include <numeric>
 

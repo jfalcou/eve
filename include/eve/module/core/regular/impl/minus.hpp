@@ -7,7 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/constant/signmask.hpp>
 
 namespace eve::detail
 {

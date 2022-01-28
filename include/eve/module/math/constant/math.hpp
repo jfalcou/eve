@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/constant/eps.hpp>
 #include <eve/module/math/constant/halfeps.hpp>
 #include <eve/module/math/constant/invlog10_2.hpp>
 #include <eve/module/math/constant/invlog_10.hpp>

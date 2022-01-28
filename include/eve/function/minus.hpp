@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/minus.hpp>
+#include <eve/module/core/regular/minus.hpp>

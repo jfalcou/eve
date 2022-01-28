@@ -7,14 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/constant/maxflint.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/frac.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic/regular/frac.hpp>
 
 namespace eve::detail
 {
