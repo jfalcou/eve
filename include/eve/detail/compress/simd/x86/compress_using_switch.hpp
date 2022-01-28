@@ -12,15 +12,15 @@
 namespace eve::detail
 {
 
-  template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE
-  T* compress_store_impl_switch_(EVE_SUPPORTS(sse2_),
+  auto compress_using_switch_(EVE_SUPPORTS(sse2_),
                                  C c,
                                  wide<T, N> v,
-                                 logical<wide<U, N>> mask,
-                                 Ptr ptr) noexcept
+                                 logical<wide<U, N>> mask) noexcept
     requires (sizeof(U) == 2)
   {
-    return compress_store_impl_switch(c, v, convert(mask, as<logical<std::uint8_t>>{}), ptr);
+    // make 1 bit top bits
+    return compress_using_switch(c, v, convert(mask, as<logical<std::uint8_t>>{}));
   }
 }

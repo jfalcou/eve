@@ -17,28 +17,35 @@
 
 namespace eve::detail
 {
-  template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<relative_conditional_expr C, typename T, typename U, typename N>
   EVE_FORCEINLINE
-  T* compress_store_impl_switch_(EVE_SUPPORTS(cpu_),
-                                 C c,
-                                 wide<T, N> v,
-                                 logical<wide<U, N>> mask,
-                                 Ptr ptr) noexcept
+  auto compress_using_switch_(EVE_SUPPORTS(cpu_),
+                              C c,
+                              wide<T, N> v,
+                              logical<wide<U, N>> mask) noexcept
   {
     constexpr bool like_aggregate = has_aggregated_abi_v<wide<T, N>> || has_aggregated_abi_v<wide<U, N>> || N() > 8;
 
-         if constexpr ( C::is_complete  && !C::is_inverted ) return unalign(ptr);
+    if constexpr ( C::is_complete && !C::is_inverted )
+    {
+      kumi::tuple cur{ v, (std::ptrdiff_t) 0 };
+      return kumi::tuple<decltype(cur)> { cur };
+    }
     else if constexpr ( like_aggregate && !C::is_complete )
     {
-      return compress_store_impl_switch(ignore_none, v, mask && c.mask(as(mask)), ptr);
+      mask = mask && c.mask(as(mask));
+
+      return compress_using_switch(ignore_none, v, mask);
     }
     else if constexpr ( like_aggregate )
     {
       auto [l, h] = v.slice();
       auto [ml, mh] = mask.slice();
 
-      T* ptr1 = compress_store_impl_switch(ignore_none, l, ml, ptr);
-      return compress_store_impl_switch(ignore_none, h, mh, ptr1);
+      auto lr = compress_using_switch(ignore_none, l, ml);
+      auto hr = compress_using_switch(ignore_none, h, mh);
+
+      return kumi::cat(lr, hr);
     }
     else
     {
@@ -49,17 +56,16 @@ namespace eve::detail
 
       if constexpr ( N() == 1 )
       {
-        eve::store(v, ptr);
-        return unalign(ptr) + mmask;
+        kumi::tuple cur{ v, (std::ptrdiff_t) mmask & 1 };
+        return kumi::tuple<decltype(cur)> { cur };
       }
       else if constexpr ( N() == 2 )
       {
         if (mmask == 2) v = eve::slide_left( v, eve::index<1> );
-        eve::store(v, ptr);
-        T* res = unalign(ptr);
-        res += mmask & 1;
-        res += (mmask & 2) >> 1;
-        return res;
+        std::ptrdiff_t count = mmask & 1;
+        count += (mmask & 2) >> 1;
+        kumi::tuple cur { v, count };
+        return kumi::tuple<decltype(cur)> { cur };
       }
       else if constexpr ( N() == 4 )
       {
@@ -76,14 +82,16 @@ namespace eve::detail
           case 0b100: { count = 1; v = shuffle(v,pattern<2, 3, 0, 0>); break; }
           case 0b101: { count = 2; v = shuffle(v,pattern<0, 2, 3, 0>); break; }
           case 0b110: { count = 2; v = shuffle(v,pattern<1, 2, 3, 0>); break; }
-          case 0b111: { count = 3;                             break; }
+          case 0b111: { count = 3;                                     break; }
           #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();
           #endif
         }
         count += last_set ? 1 : 0;
-        store(v, ptr);
-        return unalign(ptr) + count;
+
+        kumi::tuple cur { v, count };
+
+        return kumi::tuple<decltype(cur)> { cur };
       }
       else if constexpr ( N() == 8 )
       {
@@ -121,11 +129,12 @@ namespace eve::detail
           #endif
         }
 
-        eve::store(v, ptr);
-        T* after_first = unalign(ptr) + count1 + (last_set1 ? 1 : 0);
+        auto [l, h] = v.slice();
 
-        eve::store(v.slice(upper_), after_first);
-        return after_first + count2 + (last_set2 ? 1 : 0);
+        kumi::tuple l_half { l, count1 };
+        kumi::tuple h_half { h, count2 };
+
+        return kumi::tuple{ l_half, h_half };
       }
     }
   }
