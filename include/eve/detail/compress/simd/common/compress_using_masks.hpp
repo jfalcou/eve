@@ -169,9 +169,12 @@ namespace eve::detail
   template <typename T, typename N, typename U>
   constexpr bool compress_using_masks_should_aggregate()
   {
-         if constexpr ( max_scalar_size_v<T> * N() <= 16 && N() <= 8 ) return false;
-    else if constexpr ( current_api == avx2              && N() == 4 ) return false;
-    else return true;
+    constexpr std::size_t reg_size = max_scalar_size_v<T> * N();
+
+         if constexpr ( N() > 8                               ) return true;
+    else if constexpr ( reg_size <= 16                        ) return false;
+    else if constexpr ( reg_size <= 32 && current_api == avx2 ) return false;
+    else                                                        return true;
   }
 
   template<relative_conditional_expr C, typename T, typename U, typename N>

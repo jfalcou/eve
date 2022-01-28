@@ -90,7 +90,7 @@ namespace eve::detail
 
   template <typename T, typename N>
   EVE_FORCEINLINE
-  auto compress_using_masks_to_left_(EVE_SUPPORTS(avx_), wide<T, N> v)
+  wide<T, N> compress_using_masks_to_left_(EVE_SUPPORTS(avx_), wide<T, N> v)
     requires ( std::same_as<abi_t<T, N>, x86_256_> && sizeof(T) <= 4 )
   {
          if constexpr ( std::floating_point<T>                ) return _mm256_permute_ps   (v, _MM_SHUFFLE(0, 3, 2, 1));
@@ -106,7 +106,7 @@ namespace eve::detail
       auto [l, h] = v.slice();
       l = _mm_bsrli_si128(l, 2);
       h = _mm_bsrli_si128(h, 2);
-      return wide<T, N>{l, h};
+      return {l, h};
     }
     else compress_using_masks_to_left_(EVE_RETARGET(cpu_), v);
   }
