@@ -36,7 +36,7 @@ namespace eve::algo
         using out_t = eve::element_type_t<decltype(processed)>;
         auto cvt_and_store_it = views::convert(store_it, as<out_t>{});
 
-        eve::store[ignore](op(xs), cvt_and_store_it);
+        eve::store[ignore](processed, cvt_and_store_it);
       }
     };
   }
