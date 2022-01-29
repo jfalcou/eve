@@ -44,7 +44,7 @@ namespace eve
   //!@warning
   //!   Take care that for  [floating real values](@ref eve::value) bitofsign does NOT return
   //!   a [logical value](@ref eve::value) that can be tested, but `mzero(as(x))` if `x` is negative
-  //!   and  `zero(as(x))` if `x` is positive, which both satisfy the `is_eqz` predicate.
+  //!   and  `zero(as(x))` if `x` is positive, which both satisfy the `x == 0` predicate.
   //!
   //! ---
   //!

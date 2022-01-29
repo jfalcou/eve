@@ -7,9 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {
@@ -28,35 +27,35 @@ namespace eve::detail
       T c(sizeof(elt_t)*8-1);
       if constexpr(siz == 8)
       {
-        c -= if_else (is_nez(x & T(0x0F)), T( 4), zero);
-        c -= if_else (is_nez(x & T(0x33)), T( 2), zero);
-        c -= if_else (is_nez(x & T(0x55)), T( 1), zero);
+        c -= if_else (to_logical(x & T(0x0F)), T( 4), zero);
+        c -= if_else (to_logical(x & T(0x33)), T( 2), zero);
+        c -= if_else (to_logical(x & T(0x55)), T( 1), zero);
       }
       else if constexpr(siz <= 16)
       {
-        c -= if_else (is_nez(x & T(0x00FF)), T( 8), zero);
-        c -= if_else (is_nez(x & T(0x0F0F)), T( 4), zero);
-        c -= if_else (is_nez(x & T(0x3333)), T( 2), zero);
-        c -= if_else (is_nez(x & T(0x5555)), T( 1), zero);
+        c -= if_else (to_logical(x & T(0x00FF)), T( 8), zero);
+        c -= if_else (to_logical(x & T(0x0F0F)), T( 4), zero);
+        c -= if_else (to_logical(x & T(0x3333)), T( 2), zero);
+        c -= if_else (to_logical(x & T(0x5555)), T( 1), zero);
       }
       else if constexpr(siz == 32)
       {
-        c -= if_else (is_nez(x & T(0x0000FFFF)), T(16), zero);
-        c -= if_else (is_nez(x & T(0x00FF00FF)), T( 8), zero);
-        c -= if_else (is_nez(x & T(0x0F0F0F0F)), T( 4), zero);
-        c -= if_else (is_nez(x & T(0x33333333)), T( 2), zero);
-        c -= if_else (is_nez(x & T(0x55555555)), T( 1), zero);
+        c -= if_else (to_logical(x & T(0x0000FFFF)), T(16), zero);
+        c -= if_else (to_logical(x & T(0x00FF00FF)), T( 8), zero);
+        c -= if_else (to_logical(x & T(0x0F0F0F0F)), T( 4), zero);
+        c -= if_else (to_logical(x & T(0x33333333)), T( 2), zero);
+        c -= if_else (to_logical(x & T(0x55555555)), T( 1), zero);
       }
       else if constexpr(siz == 64)
       {
-        c -= if_else (is_nez(x & T(0x00000000FFFFFFFF)), T(32), zero);
-        c -= if_else (is_nez(x & T(0x0000FFFF0000FFFF)), T(16), zero);
-        c -= if_else (is_nez(x & T(0x00FF00FF00FF00FF)), T( 8), zero);
-        c -= if_else (is_nez(x & T(0x0F0F0F0F0F0F0F0F)), T( 4), zero);
-        c -= if_else (is_nez(x & T(0x3333333333333333)), T( 2), zero);
-        c -= if_else (is_nez(x & T(0x5555555555555555)), T( 1), zero);
+        c -= if_else (to_logical(x & T(0x00000000FFFFFFFF)), T(32), zero);
+        c -= if_else (to_logical(x & T(0x0000FFFF0000FFFF)), T(16), zero);
+        c -= if_else (to_logical(x & T(0x00FF00FF00FF00FF)), T( 8), zero);
+        c -= if_else (to_logical(x & T(0x0F0F0F0F0F0F0F0F)), T( 4), zero);
+        c -= if_else (to_logical(x & T(0x3333333333333333)), T( 2), zero);
+        c -= if_else (to_logical(x & T(0x5555555555555555)), T( 1), zero);
       }
-      return if_else(is_nez(x), c, sizeof(elt_t)*8);
+      return if_else(to_logical(x), c, sizeof(elt_t)*8);
     }
     else
       return apply_over(countr_zero, x);

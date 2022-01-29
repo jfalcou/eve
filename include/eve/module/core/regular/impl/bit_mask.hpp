@@ -10,12 +10,14 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_nez.hpp>
+#include <eve/detail/function/to_logical.hpp>
+
 
 namespace eve::detail
 {
   template<value T> EVE_FORCEINLINE auto bit_mask_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
-    return is_nez(v).mask();
+    return to_logical(v).mask();
   }
 
 

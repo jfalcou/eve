@@ -7,10 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

@@ -45,7 +45,7 @@ namespace eve
   //!logical<T> r = is_flint(x);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!is semantically  equivalent to: `eve::is_eqz(eve::frac(x))`;
+  //!is semantically  equivalent to: `eve::frac(x) == 0`;
   //!
   //!This means that x is a [floating real value](@ref eve::floating_real_value) representing an integer
   //!(flint is a shorcut for 'floating integer').

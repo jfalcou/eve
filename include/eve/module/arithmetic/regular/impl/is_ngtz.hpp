@@ -11,6 +11,7 @@
 #include <eve/module/arithmetic/regular/is_nan.hpp>
 #include <eve/module/arithmetic/regular/is_lez.hpp>
 #include <eve/module/arithmetic/regular/is_not_greater.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

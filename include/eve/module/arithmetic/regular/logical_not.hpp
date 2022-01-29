@@ -42,7 +42,7 @@ namespace eve
   //!
   //!Computes  the logical NOT of the parameter.
   //!
-  //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)`. Infix notation can be used with `!x`
+  //!the call `logical_not(x)` is semantically equivalent to `x == 0`. Infix notation can be used with `!x`
   //!
   //!
   //! #### Supported decorators

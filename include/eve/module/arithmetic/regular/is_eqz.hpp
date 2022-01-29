@@ -1,3 +1,4 @@
+//==================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -6,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/to_logical.hpp>
-#include <eve/module/core/regular/is_not_equal.hpp>
+//#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -15,23 +15,23 @@ namespace eve
   //================================================================================================
   //! @addtogroup comparisons
   //! @{
-  //! @var is_nez
+  //! @var is_eqz
   //!
-  //! @brief Callable object computing the "not equal to zero" predicate.
+  //! @brief Callable object computing the equality to zero predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_nez.hpp>`
+  //! **Required header:** `#include <eve/function/is_eqz.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "not equal to zero" predicate   |
+  //! | `operator()` | the equality to zero predicate                             |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value x) const noexcept;
+  //!  auto operator()( value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -40,7 +40,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) inequality test result
+  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
   //!between `x` and 0.
   //!
   //!The result type is `logical< T >`.
@@ -51,7 +51,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::is_nez
+  //!  Higher-order function generating a masked version of eve::is_eqz
   //!
   //!  **Parameters**
   //!
@@ -59,8 +59,8 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `is_nez[cond](x)` is equivalent to
-  //! `if_else(cond,is_nez(x),false(as(is_nez(x))))`
+  //!  A Callable object so that the expression `is_eqz[cond](x)` is equivalent to
+  //! `if_else(cond,is_eqz(x),false(as(is_eqz(x))))`
   //!
   //! ---
   //!
@@ -70,28 +70,24 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/is_nez.cpp}
+  //! @godbolt{doc/arithmetic/is_eqz.cpp}
   //!
   //!  @}
   //================================================================================================
 
-  EVE_MAKE_CALLABLE(is_nez_, is_nez);
+  EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
+
+//   namespace detail
+//   {
+//     // -----------------------------------------------------------------------------------------------
+//     // Masked case
+//     template<conditional_expr C, real_value U>
+//     EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond
+//                                 ,  U const &t) noexcept
+//     {
+//       return mask_op(  cond, eve::is_eqz, t);
+//     }
+//  }
 }
 
-namespace eve::detail
-{
-  template<value T>
-  EVE_FORCEINLINE constexpr auto is_nez_(EVE_SUPPORTS(cpu_), T const &a) noexcept
-  {
-    return detail::to_logical(a);
-  }
-
-
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
-  {
-    return is_not_equal[cond](u, zero(as(u)));
-  }
-}
+#include <eve/module/arithmetic/regular/impl/is_eqz.hpp>

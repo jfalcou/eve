@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core/regular/is_equal.hpp>
 
 namespace eve::detail
 {
@@ -26,9 +25,9 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // logical masked case
-  template<conditional_expr C, real_value U>
+  template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
   {
-    return is_equal[cond](u, zero(as(u)));
+    return logical_mask_op(cond, is_eqz, u);
   }
 }

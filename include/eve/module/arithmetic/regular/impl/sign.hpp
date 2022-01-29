@@ -12,6 +12,7 @@
 #include <eve/module/arithmetic/regular/is_gtz.hpp>
 #include <eve/module/arithmetic/regular/is_ltz.hpp>
 #include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

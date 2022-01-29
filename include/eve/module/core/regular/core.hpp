@@ -41,10 +41,6 @@
 #include <eve/module/core/regular/gather.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
-#include <eve/module/core/regular/is_equal.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/minus.hpp>
@@ -58,7 +54,7 @@
 #include <eve/module/core/regular/raw.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/regular.hpp>
-//#include <eve/module/core/regular/replace.hpp>
+#include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/reverse.hpp>
 #include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/scan.hpp>

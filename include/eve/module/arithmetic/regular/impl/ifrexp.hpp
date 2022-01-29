@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/add.hpp>
 #include <eve/module/arithmetic/regular/predicates.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve::detail

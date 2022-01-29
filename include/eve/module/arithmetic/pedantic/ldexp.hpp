@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/ldexp.hpp>
-#include <eve/function/pedantic.hpp>
 
 namespace eve::detail
 {

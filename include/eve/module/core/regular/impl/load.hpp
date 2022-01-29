@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
+//#include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
 #include <eve/function/unsafe.hpp>
-//#include <eve/function/replace.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/wide.hpp>
@@ -68,8 +68,8 @@ namespace eve::detail
         auto that = eve::unsafe(eve::load)(ptr, tgt);
         if constexpr( C::has_alternative )
         {
-          auto ri =  [](auto ignore, auto x,  auto with) { return eve::if_else(ignore, x, with);};
-          return ri(that, cond, cond.alternative);
+//          auto ri =  [](auto ignore, auto x,  auto with) { return eve::if_else(ignore, x, with);};
+          return replace_ignored(that, cond, cond.alternative);
         }
         else return that;
       }

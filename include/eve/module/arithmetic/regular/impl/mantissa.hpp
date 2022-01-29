@@ -11,6 +11,7 @@
 #include <eve/module/arithmetic/regular/is_not_finite.hpp>
 #include <eve/module/arithmetic/regular/logical_or.hpp>
 #include <eve/module/arithmetic/regular/logical_not.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

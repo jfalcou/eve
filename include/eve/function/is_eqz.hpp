@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>

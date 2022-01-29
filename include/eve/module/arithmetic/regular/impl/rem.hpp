@@ -14,6 +14,7 @@
 #include <eve/module/arithmetic/regular/fnma.hpp>
 #include <eve/module/arithmetic/regular/is_unordered.hpp>
 #include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

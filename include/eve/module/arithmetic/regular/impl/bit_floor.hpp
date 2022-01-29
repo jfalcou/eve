@@ -7,21 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/function/bit_width.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/ifrexp.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/ldexp.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
+#include <eve/module/arithmetic/regular/ldexp.hpp>
+#include <eve/module/arithmetic/regular/ifrexp.hpp>
 
 namespace eve::detail
 {

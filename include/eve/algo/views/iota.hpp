@@ -10,10 +10,9 @@
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/views/convert.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/read.hpp>
-//#include <eve/function/replace.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/function/unalign.hpp>
 
 namespace eve::algo::views
@@ -123,8 +122,7 @@ namespace eve::algo::views
       if constexpr ( !C::has_alternative ) return self.wide_cur;
       else
       {
-        auto ri =  [](auto ignore, auto x,  auto with) { return eve::if_else(ignore, x, with);};
-        return ri(self.wide_cur, c, c.alternative);
+        return replace_ignored(self.wide_cur, c, c.alternative);
       }
     }
   };

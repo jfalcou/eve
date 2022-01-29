@@ -12,6 +12,7 @@
 #include <eve/module/arithmetic/regular/fnma.hpp>
 #include <eve/module/arithmetic/regular/is_unordered.hpp>
 #include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve::detail

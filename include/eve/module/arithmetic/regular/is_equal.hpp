@@ -8,10 +8,6 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/function/friends.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve
 {
@@ -118,5 +114,5 @@ namespace eve
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_equal.hpp>
+#  include <eve/module/arithmetic/regular/impl/simd/x86/is_equal.hpp>
 #endif

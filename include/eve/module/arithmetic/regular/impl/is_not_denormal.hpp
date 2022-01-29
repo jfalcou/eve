@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/is_not_less.hpp>
 #include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

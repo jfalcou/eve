@@ -42,6 +42,8 @@
 #include <eve/module/arithmetic/regular/ifrexp.hpp>
 #include <eve/module/arithmetic/regular/inc.hpp>
 #include <eve/module/arithmetic/regular/is_denormal.hpp>
+#include <eve/module/arithmetic/regular/is_equal.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_even.hpp>
 #include <eve/module/arithmetic/regular/is_finite.hpp>
 #include <eve/module/arithmetic/regular/is_flint.hpp>
@@ -58,12 +60,14 @@
 #include <eve/module/arithmetic/regular/is_ltz.hpp>
 #include <eve/module/arithmetic/regular/is_nan.hpp>
 #include <eve/module/arithmetic/regular/is_negative.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/module/arithmetic/regular/is_ngez.hpp>
 #include <eve/module/arithmetic/regular/is_ngtz.hpp>
 #include <eve/module/arithmetic/regular/is_nlez.hpp>
 #include <eve/module/arithmetic/regular/is_nltz.hpp>
 #include <eve/module/arithmetic/regular/is_normal.hpp>
 #include <eve/module/arithmetic/regular/is_not_denormal.hpp>
+#include <eve/module/arithmetic/regular/is_not_equal.hpp>
 #include <eve/module/arithmetic/regular/is_not_finite.hpp>
 #include <eve/module/arithmetic/regular/is_not_flint.hpp>
 #include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>

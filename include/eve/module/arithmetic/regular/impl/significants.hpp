@@ -20,6 +20,7 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

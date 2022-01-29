@@ -9,6 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/regular/frac.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
 {

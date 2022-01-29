@@ -7,21 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/platform.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

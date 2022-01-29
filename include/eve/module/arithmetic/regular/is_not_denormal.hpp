@@ -47,7 +47,7 @@ namespace eve
   //!is semantically  equivalent to:
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
-  //!if   constexpr(floating_real_value<T>) r = is_not_less(abs(x), Smallestposval(as(x))) || is_eqz(x);
+  //!if   constexpr(floating_real_value<T>) r = is_not_less(abs(x), Smallestposval(as(x))) || (x == 0);
   //!else constexpr(integral_real_value<T>) r = false_(as(x));
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!

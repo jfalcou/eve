@@ -14,6 +14,7 @@
 #include <eve/module/arithmetic/regular/round.hpp>
 #include <eve/module/arithmetic/saturated/abs.hpp>
 #include <eve/module/arithmetic/regular/sign.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve::detail

@@ -7,13 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/function/bit_cast.hpp>
-//#include <eve/function/replace.hpp>
+#include <eve/function/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
@@ -118,8 +117,8 @@ namespace eve::detail
          if constexpr ( C::is_complete && C::is_inverted ) store(value, ptr);
     else if constexpr ( C::has_alternative )
     {
-      auto ri =  [](auto ignore, auto x,  auto with) { return eve::if_else(ignore, x, with);};
-      store(ri(value, cond, cond.alternative), ptr);
+//      auto ri =  [](auto ignore, auto x,  auto with) { return eve::if_else(ignore, x, with);};
+      store(replace_ignored(value, cond, cond.alternative), ptr);
     }
     else if constexpr ( C::is_complete ) return;
     else if constexpr ( logical_simd_value<T> )
