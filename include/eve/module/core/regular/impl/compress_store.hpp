@@ -13,7 +13,7 @@
 
 #include <eve/function/unalign.hpp>
 #include <eve/function/safe.hpp>
-#include <eve/memory/soa_ptr.hpp>
+#include <eve/memory/stack_buffer.hpp>
 
 namespace eve::detail
 {
@@ -21,38 +21,42 @@ namespace eve::detail
            real_scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(cpu_),
+  unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
                     C c,
                     safe_type,
                     wide<T, N> v,
                     logical<wide<U, N>> mask,
                     Ptr ptr) noexcept
   {
-    alignas(sizeof(v)) std::array<element_type_t<T>, N{}()> buffer;
-    T* up_to = compress_store_impl(c, v, mask, buffer.begin());
-    std::ptrdiff_t n = up_to - buffer.begin();
+    if ( C::is_complete && !C::is_inverted ) return unalign(ptr);
+    else
+    {
+      stack_buffer<wide<T, N>> buffer;
+      unaligned_t<Ptr> up_to = compress_store_impl(c, v, mask, buffer.ptr());
+      std::ptrdiff_t n = up_to - buffer.ptr();
 
-    auto* out = unalign(ptr) + c.offset(as(mask));
+      unaligned_t<Ptr> out = unalign(ptr) + c.offset(as(mask));
 
-    wide<T, N> compressed{aligned_ptr<T, N>{buffer.begin()}};
+      wide<T, N> compressed{buffer.ptr()};
 
-    store[keep_first(n)](compressed, out);
-    return out + n;
+      store[keep_first(n)](compressed, out);
+      return out + n;
+    }
   }
 
   template<relative_conditional_expr C,
            real_scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_(EVE_SUPPORTS(cpu_),
+  unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
                      C c,
                      unsafe_type,
                      wide<T, N> v,
                      logical<wide<U, N>> mask,
                      Ptr ptr) noexcept
   {
-    if (!C::is_complete) return safe(compress_store[c])(v, mask, ptr);
-    else                 return compress_store_impl(c, v, mask, ptr);
+    if ( !C::is_complete || !C::is_inverted ) return safe(compress_store[c])(v, mask, ptr);
+    else                                      return compress_store_impl(c, v, mask, ptr);
   }
 
   template< relative_conditional_expr C, decorator Decorator
