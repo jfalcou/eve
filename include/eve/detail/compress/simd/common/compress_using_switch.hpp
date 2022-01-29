@@ -131,8 +131,8 @@ namespace eve::detail
 
         auto [l, h] = v.slice();
 
-        kumi::tuple l_half { l, count1 };
-        kumi::tuple h_half { h, count2 };
+        kumi::tuple l_half { l, count1 + last_set1 };
+        kumi::tuple h_half { h, count2 + last_set2 };
 
         return kumi::tuple{ l_half, h_half };
       }
