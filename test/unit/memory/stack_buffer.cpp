@@ -62,11 +62,11 @@ void stack_buffer_load_store_test(T x)
 {
   // Trying to mess with alignment a bit
   eve::stack_buffer<T> buf1;
-  int volatile bla; (void) bla;
+  int volatile bla{}; (void) bla;
   eve::stack_buffer<T> buf2;
-  char volatile bla1; (void) bla1;
+  char volatile bla1{}; (void) bla1;
   eve::stack_buffer<T> buf3;
-  char volatile bla3; (void) bla3;
+  char volatile bla3{}; (void) bla3;
   eve::stack_buffer<T> buf4;
 
   eve::store(x, buf1.ptr());
