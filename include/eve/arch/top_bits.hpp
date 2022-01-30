@@ -26,31 +26,46 @@
 namespace eve
 {
 
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup simd_types
+  //! @{
+  //================================================================================================
+  //! @brief The cheapest to get bitset for simd logical.
+  //!
+  //! One value in top bits can be represented by multiple bits (bits_per_element member constant).
+  //!
+  //! NOTE: this is a generalization of `movemask` instructions from x86
+  //!
+  //! Typical usage: created with CTAD: `top_bits{logical}`.
+  //!
+  //! @tparam Logical simd value.
+  //================================================================================================
+  template <logical_simd_value Logical>
+  struct top_bits
+  {
+    //! The associated wide logical.
+    using logical_type = Logical;
 
-  // Abstraction representing getting bits from logical on x86
-  // For most cases - it's just 1 bit per value.
-  // For shorts before AVX512 - it's 2 bits per value.
+    //! For top_bits<logical<wide<T, N>>> this is T;
+    using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
 
-//================================================================================================
+    //! Abi of the underlying simd value
+    using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
 
-// top_bits ---------------------------------
+    //! logical_type::size();
+    static constexpr std::ptrdiff_t static_size = logical_type::size();
 
-template <logical_simd_value Logical>
-struct top_bits
-{
-  using logical_type = Logical;
-  using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
-  using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
+    //! is stored as an array of 2 halves
+    static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
+                                          (has_emulated_abi_v<logical_type> && static_size > 64);
 
-  static constexpr std::ptrdiff_t static_size = logical_type::size();
-  static constexpr bool is_emulated_aggregated = has_emulated_abi_v<logical_type> && static_size > 64;
-  static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
-  static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
+    //! shortcut for !abi_type::is_wide_logical
+    static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
 
-  using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
+    //! logical or half size
+    using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
 
-  private:
+   private:
     EVE_FORCEINLINE static auto storage_type_impl()
     {
       if constexpr ( is_aggregated )  return std::array<top_bits<half_logical>, 2>{};
@@ -62,7 +77,6 @@ struct top_bits
       if constexpr ( is_aggregated ) return top_bits<half_logical>::bits_per_element;
       else                           return decltype(movemask(logical_type{}).second){}();
     }
-
 
     static constexpr bool is_cheap_impl()
     {
@@ -85,14 +99,20 @@ struct top_bits
       return false;
     }
 
-  public:
+   public:
+    //! type of the underlying storage
     using storage_type = decltype(top_bits::storage_type_impl());
+
+    //! how many bits do we store per one element
     static constexpr std::ptrdiff_t bits_per_element = bits_per_element_impl();
+
+    //! how many bits are used
     static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
+
+    //! is it considered a cheap operation (~1 instruction) to get top_bits from a logical.
     static constexpr bool is_cheap = is_cheap_impl();
 
     storage_type storage;
-
 
     // constructors ---------------------------------
 
@@ -254,6 +274,7 @@ struct top_bits
 
     // getters/setter ----------------------
 
+    //! setter
     EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
     {
       if constexpr ( !is_aggregated )
@@ -269,6 +290,7 @@ struct top_bits
       }
     }
 
+    // getter
     EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return (storage & (storage_type{1} << (i * bits_per_element))) != 0;
@@ -281,6 +303,7 @@ struct top_bits
 
     // miscellaneous -----------------------------------
 
+    // test
     EVE_FORCEINLINE constexpr explicit operator bool()
     {
       if constexpr ( !is_aggregated ) return storage != storage_type{0};
@@ -290,6 +313,7 @@ struct top_bits
       }
     }
 
+    // if possible, return top_bits as an int.
     EVE_FORCEINLINE constexpr auto as_int() const
       requires ( static_bits_size <= 64 )
     {
