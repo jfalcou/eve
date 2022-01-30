@@ -1,6 +1,5 @@
-#include <eve/function/diff/fnma.hpp>
+//#include <eve/function/diff/fnma.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;

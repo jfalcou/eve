@@ -1,11 +1,5 @@
-#include <eve/function/maxmag.hpp>
+//#include <eve/function/maxabs.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/function/pedantic/maxabs.hpp>
-#include <eve/function/numeric/maxabs.hpp>
-#include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

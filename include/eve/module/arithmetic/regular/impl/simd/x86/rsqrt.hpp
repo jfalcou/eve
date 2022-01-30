@@ -9,8 +9,11 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
 #include <eve/module/arithmetic/regular/sqr.hpp>
+#include <eve/module/arithmetic/regular/mul.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/pedantic/ifrexp.hpp>
 
 namespace eve::detail
 {

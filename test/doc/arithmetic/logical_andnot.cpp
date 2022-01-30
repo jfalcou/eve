@@ -1,8 +1,5 @@
-#include <eve/function/logical.hpp>
+//#include <eve/function/logical.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/is_even.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;

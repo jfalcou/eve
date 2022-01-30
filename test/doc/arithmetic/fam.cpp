@@ -1,10 +1,5 @@
-#include <eve/function/fma.hpp>
+//#include <eve/function/fma.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/function/pedantic/fam.hpp>
-#include <eve/function/numeric/fam.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>
 

@@ -1,4 +1,3 @@
-#include <eve/function/predicate.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
