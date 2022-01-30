@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/function/conditional.hpp>
 
 namespace eve
 {

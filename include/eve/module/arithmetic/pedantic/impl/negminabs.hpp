@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/saturated/abs.hpp>
 #include <eve/module/arithmetic/pedantic/minabs.hpp>
 
 namespace eve::detail
