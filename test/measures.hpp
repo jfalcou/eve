@@ -35,7 +35,7 @@ namespace eve
   }
 
   template<typename T>
-  inline std::string to_string(detail::top_bits<T> const &l)
+  inline std::string to_string(top_bits<T> const &l)
   {
     std::ostringstream str;
     str << l;

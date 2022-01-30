@@ -79,7 +79,7 @@ EVE_TEST_TYPES("Check eve::count_true top_bits", eve::test::simd::all_types)
     std::ptrdiff_t expected = 0;
     for (int i = 0; i != x.size(); ++i) expected += x.get(i);
 
-    eve::detail::top_bits mmask{x};
+    eve::top_bits mmask{x};
     TTS_EQUAL(expected, eve::count_true(mmask));
   };
 

@@ -135,11 +135,11 @@ EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using logical = eve::logical<T>;
-  TTS_EXPECT(eve::all(eve::detail::top_bits(logical(true))));
+  TTS_EXPECT(eve::all(eve::top_bits(logical(true))));
 
   for (int i = 0; i != T::size(); ++i)
   {
     logical v([=](auto e, auto) { return e != i; } );
-    TTS_EXPECT_NOT(eve::all(eve::detail::top_bits(v)));
+    TTS_EXPECT_NOT(eve::all(eve::top_bits(v)));
   }
 };

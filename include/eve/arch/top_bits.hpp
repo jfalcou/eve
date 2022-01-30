@@ -23,7 +23,7 @@
 #include <optional>
 #include <ostream>
 
-namespace eve::detail
+namespace eve
 {
 
 //================================================================================================
@@ -121,7 +121,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr explicit top_bits(ignore_none_ i)
     {
-      if constexpr( !is_aggregated )  storage = set_lower_n_bits<storage_type>(static_bits_size);
+      if constexpr( !is_aggregated )  storage = detail::set_lower_n_bits<storage_type>(static_bits_size);
       else                            storage[0] = storage[1] = top_bits<half_logical>{i};
     }
 
@@ -135,8 +135,8 @@ struct top_bits
     {
       if constexpr( !is_aggregated )
       {
-        storage = ~set_lower_n_bits<storage_type>((static_size - ignore.count_) * bits_per_element);
-        storage &= set_lower_n_bits<storage_type>(static_bits_size);
+        storage = ~detail::set_lower_n_bits<storage_type>((static_size - ignore.count_) * bits_per_element);
+        storage &= detail::set_lower_n_bits<storage_type>(static_bits_size);
         operator&=(top_bits(ignore_none));
       }
       else
@@ -152,8 +152,8 @@ struct top_bits
     {
       if constexpr( !is_aggregated )
       {
-        storage = ~set_lower_n_bits<storage_type>(0);
-        storage &= set_lower_n_bits<storage_type>(ignore.count_ * bits_per_element);
+        storage = ~detail::set_lower_n_bits<storage_type>(0);
+        storage &= detail::set_lower_n_bits<storage_type>(ignore.count_ * bits_per_element);
         operator&=(top_bits(ignore_none));
       }
       else
@@ -218,20 +218,6 @@ struct top_bits
 
     // -- slicing
 
-    EVE_FORCEINLINE explicit top_bits(top_bits<half_logical> l, top_bits<half_logical> h)
-      requires ( Logical::size() > 1 ) &&
-        (bits_per_element == top_bits<half_logical>::bits_per_element)
-    {
-           if constexpr ( is_aggregated     ) storage = {{ l, h }};
-      else if constexpr ( is_avx512_logical ) *this = top_bits(Logical{ to_logical(l), to_logical(h) });
-      else
-      {
-        storage = h.storage;
-        storage <<= static_bits_size / 2;
-        storage |= l.storage;
-      }
-    }
-
     EVE_FORCEINLINE
     kumi::tuple<top_bits<half_logical>, top_bits<half_logical>>
     slice() const
@@ -249,7 +235,7 @@ struct top_bits
         top_bits<half_logical> l, h;
         using half_storage = typename top_bits<half_logical>::storage_type;
 
-        l.storage = set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
+        l.storage = detail::set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
         h.storage = storage >> (static_bits_size / 2);
 
         return {l, h};
@@ -272,7 +258,7 @@ struct top_bits
     {
       if constexpr ( !is_aggregated )
       {
-        storage_type bit_mask = set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
+        storage_type bit_mask = detail::set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
         if ( x ) storage |= bit_mask;
         else     storage &= ~bit_mask;
       }
@@ -403,14 +389,18 @@ struct top_bits
     }
 };
 
+}  // namespace eve
+
 // ---------------------------------------------------------------------------------
 // to_logical(top_bits)
 //
 
+namespace eve::detail {
+
 template <logical_simd_value Logical>
-EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
+EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask)
 {
-  using abi = typename top_bits<Logical>::abi_type;
+  using abi = typename eve::top_bits<Logical>::abi_type;
 
        if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
@@ -431,7 +421,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
 
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
-    static constexpr auto element_mask = set_lower_n_bits<bits_et>(bits_per_element);
+    static constexpr auto element_mask = detail::set_lower_n_bits<bits_et>(bits_per_element);
 
     fit_wide true_mmask([&](int i, int) {
       int shift = 0;

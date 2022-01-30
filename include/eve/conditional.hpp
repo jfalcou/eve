@@ -34,16 +34,16 @@
 //==================================================================================================
 namespace eve
 {
+  template <logical_simd_value Logical> struct top_bits;
+
   namespace detail
   {
-    template <logical_simd_value Logical> struct top_bits;
-
     template<typename T, relative_conditional_expr C>
     EVE_FORCEINLINE as_logical_t<T> to_non_wide_logical(C cond, eve::as<T> const&)
     {
       using type  = as_logical_t<T>;
 
-      auto value = detail::top_bits<type>(cond).storage;
+      auto value = top_bits<type>(cond).storage;
 
       if constexpr(has_aggregated_abi_v<T>)
       {

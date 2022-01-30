@@ -11,8 +11,6 @@
 #include <eve/function/all.hpp>
 #include <array>
 
-using eve::detail::top_bits;
-
 template <typename T, typename Test> void test_over_top_bits(Test test)
 {
   using logical = eve::logical<T>;
@@ -44,7 +42,7 @@ EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::all_types)
 {
   using v_t         = eve::element_type_t<T>;
   using logical     = eve::logical<T>;
-  using tb_storage  = typename top_bits<logical>::storage_type;
+  using tb_storage  = typename eve::top_bits<logical>::storage_type;
   using ABI         = typename logical::abi_type;
 
        if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(tb_storage{}));
@@ -77,7 +75,7 @@ EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::all_types)
   for (std::ptrdiff_t i = 0; i != T::size(); ++i)
   {
     logical test = [=](auto e, auto) { return e == i;};
-    top_bits mmask {test};
+    eve::top_bits mmask {test};
     for (std::ptrdiff_t j = 0; j != T::size(); ++j)  TTS_EQUAL(test.get(j), mmask.get(j));
   }
 };
@@ -87,7 +85,7 @@ EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::all_types)
 {
   using logical = eve::logical<T>;
   logical expected(true);
-  top_bits actual(expected, eve::ignore_first(1));
+  eve::top_bits actual(expected, eve::ignore_first(1));
   expected.set(0, false);
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 };
@@ -97,7 +95,7 @@ EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::all_types)
 {
   test_over_top_bits<T>([&](auto x)
   {
-    top_bits mmask {x};
+    eve::top_bits mmask {x};
     TTS_EQUAL(x, eve::detail::to_logical(mmask));
   });
 };
@@ -110,7 +108,7 @@ EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::all_types)
 {
   using logical = eve::logical<T>;
 
-  top_bits<logical> actual(eve::ignore_all);
+  eve::top_bits<logical> actual(eve::ignore_all);
 
   for (std::ptrdiff_t i = 0; i != T::size(); ++i)
   {
@@ -139,13 +137,13 @@ EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::all_types)
   logical test(false);
   test.set(0, true);
 
-  if constexpr( top_bits<logical>::is_aggregated )
+  if constexpr( eve::top_bits<logical>::is_aggregated )
   {
     TTS_PASS("no test for aggregated");
   }
   else
   {
-    top_bits test_top(test);
+    eve::top_bits test_top(test);
     TTS_EXPECT((test_top.storage & 1u));
   }
 };
@@ -160,13 +158,13 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
 
   // ignore all
   {
-    top_bits<logical> mmask(eve::ignore_all);
+    eve::top_bits<logical> mmask(eve::ignore_all);
     TTS_EQUAL(logical(false), eve::detail::to_logical(mmask));
   }
 
   // ignore none
   {
-    top_bits<logical> mmask(eve::ignore_none);
+    eve::top_bits<logical> mmask(eve::ignore_none);
     TTS_EQUAL(logical(true), eve::detail::to_logical(mmask));
   }
 
@@ -177,10 +175,10 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
       for (int j = logical::size() - i; j ; --j)
       {
         logical expected([&](int k, int) { return (k >= i) && (logical::size() - k) > j; });
-        top_bits<logical> actual(eve::ignore_extrema(i, j));
+        eve::top_bits<logical> actual(eve::ignore_extrema(i, j));
         TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
-        actual = top_bits<logical>(eve::keep_between(i, logical::size() - j));
+        actual = eve::top_bits<logical>(eve::keep_between(i, logical::size() - j));
         TTS_EQUAL(expected, eve::detail::to_logical(actual));
       }
     }
@@ -191,10 +189,10 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
     for (int i = 0; i < logical::size() + 1; ++i)
     {
       logical expected([&](int j, int) { return j >= i; });
-      top_bits<logical> actual(eve::ignore_first{i});
+      eve::top_bits<logical> actual(eve::ignore_first{i});
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
-      actual = top_bits<logical>(eve::keep_last(logical::size() - i));
+      actual = eve::top_bits<logical>(eve::keep_last(logical::size() - i));
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
     }
   }
@@ -204,10 +202,10 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
     for (int i = 0; i < logical::size() + 1; ++i)
     {
       logical expected([&](int j, int) { return (logical::size() - j) > i; });
-      top_bits<logical> actual(eve::ignore_last{i});
+      eve::top_bits<logical> actual(eve::ignore_last{i});
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
-      actual = top_bits<logical>(eve::keep_first(logical::size() - i));
+      actual = eve::top_bits<logical>(eve::keep_first(logical::size() - i));
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
     }
   }
@@ -230,19 +228,19 @@ EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
 
   for (auto x : test_inputs) {
     for (auto y : test_inputs) {
-      TTS_EQUAL(top_bits{x && y}, (top_bits{x} & top_bits{y}));
-      TTS_EQUAL(top_bits{x || y}, (top_bits{x} | top_bits{y}));
-      TTS_EQUAL(top_bits{x != y}, (top_bits{x} ^ top_bits{y}));
+      TTS_EQUAL(eve::top_bits{x && y}, (eve::top_bits{x} & eve::top_bits{y}));
+      TTS_EQUAL(eve::top_bits{x || y}, (eve::top_bits{x} | eve::top_bits{y}));
+      TTS_EQUAL(eve::top_bits{x != y}, (eve::top_bits{x} ^ eve::top_bits{y}));
 
-      TTS_EQUAL(top_bits{!x}, ~top_bits<logical>(x));
+      TTS_EQUAL(eve::top_bits{!x}, ~eve::top_bits<logical>(x));
     }
   }
 
-  TTS_EQUAL(top_bits<logical>{eve::ignore_none}, ~top_bits<logical>{eve::ignore_all});
+  TTS_EQUAL(eve::top_bits<logical>{eve::ignore_none}, ~eve::top_bits<logical>{eve::ignore_all});
 
-  if constexpr( !top_bits<logical>::is_aggregated )
+  if constexpr( !eve::top_bits<logical>::is_aggregated )
   {
-    TTS_EQUAL(0u, (~top_bits<logical>{logical{true}}).storage);
+    TTS_EQUAL(0u, (~eve::top_bits<logical>{logical{true}}).storage);
   }
 };
 
@@ -260,14 +258,14 @@ EVE_TEST_TYPES("Check top_bits slicing", eve::test::simd::all_types)
   }
   else
   {
-    using half_logical = typename top_bits<logical>::half_logical;
+    using half_logical = typename eve::top_bits<logical>::half_logical;
 
     if constexpr ( eve::current_api == eve::avx2 )
     {
-      static_assert(top_bits<half_logical>::bits_per_element == top_bits<logical>::bits_per_element);
+      static_assert(eve::top_bits<half_logical>::bits_per_element == eve::top_bits<logical>::bits_per_element);
     }
 
-    if constexpr (top_bits<half_logical>::bits_per_element != top_bits<logical>::bits_per_element)
+    if constexpr (eve::top_bits<half_logical>::bits_per_element != eve::top_bits<logical>::bits_per_element)
     {
       TTS_PASS("FIX-1209: slice top bits");
     }
@@ -278,12 +276,11 @@ EVE_TEST_TYPES("Check top_bits slicing", eve::test::simd::all_types)
         logical v([=](auto e, auto) { return e > i; });
         auto [vl, vh] = v.slice();
 
-        top_bits together {v};
+        eve::top_bits together {v};
 
-        top_bits lo {vl};
-        top_bits hi {vh};
+        eve::top_bits lo {vl};
+        eve::top_bits hi {vh};
 
-        TTS_EQUAL(together, (top_bits<logical> {lo, hi}));
         TTS_EQUAL(together.slice(), (kumi::tuple{lo, hi}));
         TTS_EQUAL(together.slice(eve::lower_), lo);
         TTS_EQUAL(together.slice(eve::upper_), hi);

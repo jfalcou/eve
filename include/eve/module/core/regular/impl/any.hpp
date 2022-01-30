@@ -42,7 +42,7 @@ namespace eve::detail
         if ( !eve::any[ignore_none](v) ) return false;
       }
 
-      return eve::any(eve::detail::top_bits{v, cond});
+      return eve::any(eve::top_bits{v, cond});
     }
   }
 
