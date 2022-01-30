@@ -5,15 +5,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/manhattan.hpp>
-#include <eve/function/pedantic/manhattan.hpp>
-#include <eve/function/diff/manhattan.hpp>
-#include <eve/function/sign.hpp>
 #include <algorithm>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 // Types tests

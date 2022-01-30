@@ -6,13 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/function/diff/signnz.hpp>
-#include <eve/function/pedantic/signnz.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <cmath>
 
 //==================================================================================================

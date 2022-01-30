@@ -6,13 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/is_not_flint.hpp>
-#include <eve/function/pedantic/is_not_flint.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <cmath>
 
 //==================================================================================================

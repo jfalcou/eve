@@ -6,7 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/lookup.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <utility>
 
 //==================================================================================================

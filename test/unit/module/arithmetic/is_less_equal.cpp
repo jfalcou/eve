@@ -6,13 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/fuzzy/is_less_equal.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 //== Types tests

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/constant/oneosqrteps.hpp>
+#include <eve/module/arithmetic/constant/oneosqrteps.hpp>

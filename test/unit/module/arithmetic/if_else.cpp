@@ -6,18 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/meta.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 // Types tests

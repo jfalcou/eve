@@ -6,14 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/function/dist.hpp>
-#include <eve/function/saturated/dist.hpp>
-#include <eve/function/diff/dist.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 //== Types tests

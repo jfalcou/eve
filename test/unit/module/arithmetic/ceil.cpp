@@ -6,15 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/ceil.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/ceil.hpp>
-#include <eve/function/diff/ceil.hpp>
-#include <eve/function/fuzzy/ceil.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <type_traits>
 #include <cmath>
 

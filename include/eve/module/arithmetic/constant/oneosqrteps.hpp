@@ -44,7 +44,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneosqrteps.cpp}
+  //! @godbolt{doc/arithmetic/oneosqrteps.cpp}
   //!
   //! @}
   //================================================================================================

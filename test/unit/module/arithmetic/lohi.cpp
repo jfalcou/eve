@@ -5,15 +5,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/meta.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/function/lohi.hpp>
-#include <eve/function/lohi.hpp>
 
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 //==================================================================================================
 // Types tests
 //==================================================================================================

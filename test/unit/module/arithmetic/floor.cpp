@@ -6,16 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/diff/floor.hpp>
-#include <eve/function/fuzzy/floor.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <type_traits>
 #include <cmath>
 

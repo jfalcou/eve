@@ -6,8 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/module/math.hpp>
 
 EVE_TEST_TYPES( "Check ieee754 constants"
             , eve::test::simd::ieee_reals

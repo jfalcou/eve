@@ -6,11 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/smallestposval.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/diff/rec.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <cmath>
 
 //==================================================================================================

@@ -6,21 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/erfc_inv.hpp>
-#include <eve/function/diff/erfc_inv.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <type_traits>
-#include <cmath>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/platform.hpp>
+#include <eve/module/special.hpp>
 #include <boost/math/special_functions/erf.hpp>
 
 //==================================================================================================

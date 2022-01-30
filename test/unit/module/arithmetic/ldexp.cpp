@@ -6,14 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/function/pedantic/ldexp.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/trunc.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <type_traits>
 
 

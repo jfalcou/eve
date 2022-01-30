@@ -6,12 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/copysign.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <type_traits>
 
 //==================================================================================================

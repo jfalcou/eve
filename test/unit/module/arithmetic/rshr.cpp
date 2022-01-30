@@ -5,10 +5,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/function/rshr.hpp>
 
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 //==================================================================================================
 // Types tests
 //==================================================================================================

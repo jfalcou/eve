@@ -6,10 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/nan.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/function/is_ordered.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 //== Types tests

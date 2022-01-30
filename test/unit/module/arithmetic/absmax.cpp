@@ -5,19 +5,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/absmax.hpp>
-#include <eve/function/pedantic/absmax.hpp>
-#include <eve/function/numeric/absmax.hpp>
-#include <eve/function/saturated/absmax.hpp>
-#include <eve/function/diff/absmax.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/function/is_positive.hpp>
 #include <algorithm>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 // Types tests

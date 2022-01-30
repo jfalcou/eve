@@ -11,7 +11,7 @@
 #include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/module/arithmetic/regular/abs.hpp>
 #include <eve/module/arithmetic/regular/is_greater_equal.hpp>
-#include <eve/module/arithmetic/regular/saturated/prev.hpp>
+#include <eve/module/arithmetic/saturated/prev.hpp>
 #include <eve/module/arithmetic/saturated/sub.hpp>
 
 namespace eve::detail

@@ -6,14 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 
 //==================================================================================================
 // Types tests

@@ -6,12 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/minlog2denormal.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/function/frexp.hpp>
-#include <eve/function/pedantic/frexp.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
 #include <tuple>
 #include <cmath>
 

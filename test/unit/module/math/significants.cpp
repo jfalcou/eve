@@ -6,12 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/significants.hpp>
-#include <type_traits>
+#include <eve/module/regular/significants.hpp>
 
 //==================================================================================================
 // Types tests
