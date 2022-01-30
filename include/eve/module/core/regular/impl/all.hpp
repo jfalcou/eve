@@ -11,7 +11,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/to_logical.hpp>
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 
 namespace eve::detail
 {

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/wide.hpp>
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 #include <eve/function/all.hpp>
 
 namespace eve

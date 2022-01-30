@@ -12,7 +12,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 
 namespace eve::detail
 {

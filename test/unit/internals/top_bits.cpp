@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/all.hpp>
 #include <array>
@@ -56,14 +56,14 @@ EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::all_types)
          if constexpr(T::size() == 1)                      TTS_TYPE_IS(tb_storage, std::uint8_t);
     else if constexpr(T::size() == 2 && sizeof(v_t) == 1)  TTS_TYPE_IS(tb_storage, std::uint16_t);
     else if constexpr(T::size() * sizeof(v_t) == 4)        TTS_TYPE_IS(tb_storage, std::uint32_t);
-    else if constexpr(eve::current_api == eve::asimd)           TTS_TYPE_IS(tb_storage, std::uint64_t);
+    else if constexpr(eve::current_api == eve::asimd)      TTS_TYPE_IS(tb_storage, std::uint64_t);
     else if constexpr(T::size() == 16 && sizeof(v_t) == 1) TTS_TYPE_IS(tb_storage, std::uint64_t);
-    else                                                        TTS_TYPE_IS(tb_storage, std::uint32_t);
+    else                                                   TTS_TYPE_IS(tb_storage, std::uint32_t);
   }
   else
   {
     if constexpr (logical::size() < 64)  TTS_TYPE_IS(tb_storage, std::uint32_t);
-    else                                      TTS_EXPECT(expect_array(tb_storage{}));
+    else                                 TTS_EXPECT(expect_array(tb_storage{}));
   }
 };
 
