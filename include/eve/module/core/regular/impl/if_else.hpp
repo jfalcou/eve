@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/top_bits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/generator.hpp>
