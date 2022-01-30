@@ -46,7 +46,7 @@ namespace eve::detail
 
       mmask |= ~ignore_mmask; // we need 1 in ignored elements;
 
-      return detail::all(mmask);
+      return all(mmask);
     }
   }
 
@@ -62,4 +62,9 @@ namespace eve::detail
     else                            return eve::all[ignore_none](v);
   }
 
+  template<logical_simd_value Logical>
+  EVE_FORCEINLINE bool all_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
+  {
+    return mmask == top_bits<Logical>(ignore_none);
+  }
 }

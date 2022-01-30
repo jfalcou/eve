@@ -151,22 +151,6 @@ EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::all_types)
 };
 
 //==================================================================================================
-// Check the behavior of top_bits all()/any()
-//==================================================================================================
-EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
-{
-  using logical = eve::logical<T>;
-  TTS_EXPECT(eve::detail::all(top_bits(logical(true))));
-
-  for (int i = 0; i != T::size(); ++i)
-  {
-    logical v([=](auto e, auto) { return e != i; } );
-    TTS_EXPECT_NOT(eve::detail::all(top_bits(v)));
-  }
-};
-
-//==================================================================================================
 // Check the behavior of top_bits over ignore masks
 //==================================================================================================
 EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)

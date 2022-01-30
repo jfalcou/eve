@@ -484,13 +484,4 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
   }
 }
 
-// ---------------------------------------------------------------------------------
-// all/any/first_true
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE bool all(top_bits<Logical> mmask)
-{
-  return mmask == top_bits<Logical>(ignore_none);
-}
-
 }  // namespace eve::detail
