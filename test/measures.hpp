@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/wide.hpp>
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 #include <eve/function/all.hpp>
 
 namespace eve
@@ -35,7 +35,7 @@ namespace eve
   }
 
   template<typename T>
-  inline std::string to_string(detail::top_bits<T> const &l)
+  inline std::string to_string(top_bits<T> const &l)
   {
     std::ostringstream str;
     str << l;

@@ -29,11 +29,13 @@ namespace eve
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  int operator()(value auto x) const noexcept;
+  //!  int operator()(instance_of<top_bits> auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
   //!`x`:   [value](@ref eve::value).
+  //!`x`:   [top_bits](@ref eve::top_bits)
   //!
   //! **Return value**
   //!

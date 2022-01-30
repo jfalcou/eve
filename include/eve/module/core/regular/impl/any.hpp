@@ -12,7 +12,7 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 
 namespace eve::detail
 {
@@ -42,7 +42,7 @@ namespace eve::detail
         if ( !eve::any[ignore_none](v) ) return false;
       }
 
-      return eve::detail::any(eve::detail::top_bits{v, cond});
+      return eve::any(eve::top_bits{v, cond});
     }
   }
 
@@ -56,5 +56,11 @@ namespace eve::detail
   {
     if constexpr ( scalar_value<T> ) return bool(v);
     else                             return eve::any[ignore_none](v);
+  }
+
+  template<logical_simd_value Logical>
+  EVE_FORCEINLINE bool any_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
+  {
+    return (bool)mmask;
   }
 }

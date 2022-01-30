@@ -23,34 +23,49 @@
 #include <optional>
 #include <ostream>
 
-namespace eve::detail
+namespace eve
 {
 
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup simd_types
+  //! @{
+  //================================================================================================
+  //! @brief The cheapest to get bitset for simd logical.
+  //!
+  //! One value in top bits can be represented by multiple bits (bits_per_element member constant).
+  //!
+  //! NOTE: this is a generalization of `movemask` instructions from x86
+  //!
+  //! Typical usage: created with CTAD: `top_bits{logical}`.
+  //!
+  //! @tparam Logical simd value.
+  //================================================================================================
+  template <logical_simd_value Logical>
+  struct top_bits
+  {
+    //! The associated wide logical.
+    using logical_type = Logical;
 
-  // Abstraction representing getting bits from logical on x86
-  // For most cases - it's just 1 bit per value.
-  // For shorts before AVX512 - it's 2 bits per value.
+    //! For top_bits<logical<wide<T, N>>> this is T;
+    using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
 
-//================================================================================================
+    //! Abi of the underlying simd value
+    using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
 
-// top_bits ---------------------------------
+    //! logical_type::size();
+    static constexpr std::ptrdiff_t static_size = logical_type::size();
 
-template <logical_simd_value Logical>
-struct top_bits
-{
-  using logical_type = Logical;
-  using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
-  using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
+    //! is stored as an array of 2 halves
+    static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
+                                          (has_emulated_abi_v<logical_type> && static_size > 64);
 
-  static constexpr std::ptrdiff_t static_size = logical_type::size();
-  static constexpr bool is_emulated_aggregated = has_emulated_abi_v<logical_type> && static_size > 64;
-  static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
-  static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
+    //! shortcut for !abi_type::is_wide_logical
+    static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
 
-  using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
+    //! logical or half size
+    using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
 
-  private:
+   private:
     EVE_FORCEINLINE static auto storage_type_impl()
     {
       if constexpr ( is_aggregated )  return std::array<top_bits<half_logical>, 2>{};
@@ -62,7 +77,6 @@ struct top_bits
       if constexpr ( is_aggregated ) return top_bits<half_logical>::bits_per_element;
       else                           return decltype(movemask(logical_type{}).second){}();
     }
-
 
     static constexpr bool is_cheap_impl()
     {
@@ -85,14 +99,20 @@ struct top_bits
       return false;
     }
 
-  public:
+   public:
+    //! type of the underlying storage
     using storage_type = decltype(top_bits::storage_type_impl());
+
+    //! how many bits do we store per one element
     static constexpr std::ptrdiff_t bits_per_element = bits_per_element_impl();
+
+    //! how many bits are used
     static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
+
+    //! is it considered a cheap operation (~1 instruction) to get top_bits from a logical.
     static constexpr bool is_cheap = is_cheap_impl();
 
     storage_type storage;
-
 
     // constructors ---------------------------------
 
@@ -121,7 +141,7 @@ struct top_bits
 
     EVE_FORCEINLINE constexpr explicit top_bits(ignore_none_ i)
     {
-      if constexpr( !is_aggregated )  storage = set_lower_n_bits<storage_type>(static_bits_size);
+      if constexpr( !is_aggregated )  storage = detail::set_lower_n_bits<storage_type>(static_bits_size);
       else                            storage[0] = storage[1] = top_bits<half_logical>{i};
     }
 
@@ -135,8 +155,8 @@ struct top_bits
     {
       if constexpr( !is_aggregated )
       {
-        storage = ~set_lower_n_bits<storage_type>((static_size - ignore.count_) * bits_per_element);
-        storage &= set_lower_n_bits<storage_type>(static_bits_size);
+        storage = ~detail::set_lower_n_bits<storage_type>((static_size - ignore.count_) * bits_per_element);
+        storage &= detail::set_lower_n_bits<storage_type>(static_bits_size);
         operator&=(top_bits(ignore_none));
       }
       else
@@ -152,8 +172,8 @@ struct top_bits
     {
       if constexpr( !is_aggregated )
       {
-        storage = ~set_lower_n_bits<storage_type>(0);
-        storage &= set_lower_n_bits<storage_type>(ignore.count_ * bits_per_element);
+        storage = ~detail::set_lower_n_bits<storage_type>(0);
+        storage &= detail::set_lower_n_bits<storage_type>(ignore.count_ * bits_per_element);
         operator&=(top_bits(ignore_none));
       }
       else
@@ -218,20 +238,6 @@ struct top_bits
 
     // -- slicing
 
-    EVE_FORCEINLINE explicit top_bits(top_bits<half_logical> l, top_bits<half_logical> h)
-      requires ( Logical::size() > 1 ) &&
-        (bits_per_element == top_bits<half_logical>::bits_per_element)
-    {
-           if constexpr ( is_aggregated     ) storage = {{ l, h }};
-      else if constexpr ( is_avx512_logical ) *this = top_bits(Logical{ to_logical(l), to_logical(h) });
-      else
-      {
-        storage = h.storage;
-        storage <<= static_bits_size / 2;
-        storage |= l.storage;
-      }
-    }
-
     EVE_FORCEINLINE
     kumi::tuple<top_bits<half_logical>, top_bits<half_logical>>
     slice() const
@@ -249,7 +255,7 @@ struct top_bits
         top_bits<half_logical> l, h;
         using half_storage = typename top_bits<half_logical>::storage_type;
 
-        l.storage = set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
+        l.storage = detail::set_lower_n_bits<half_storage>(static_bits_size / 2) & storage;
         h.storage = storage >> (static_bits_size / 2);
 
         return {l, h};
@@ -268,11 +274,12 @@ struct top_bits
 
     // getters/setter ----------------------
 
+    //! setter
     EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
     {
       if constexpr ( !is_aggregated )
       {
-        storage_type bit_mask = set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
+        storage_type bit_mask = detail::set_lower_n_bits<storage_type>(bits_per_element) << (i * bits_per_element);
         if ( x ) storage |= bit_mask;
         else     storage &= ~bit_mask;
       }
@@ -283,6 +290,7 @@ struct top_bits
       }
     }
 
+    // getter
     EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return (storage & (storage_type{1} << (i * bits_per_element))) != 0;
@@ -295,6 +303,7 @@ struct top_bits
 
     // miscellaneous -----------------------------------
 
+    // test
     EVE_FORCEINLINE constexpr explicit operator bool()
     {
       if constexpr ( !is_aggregated ) return storage != storage_type{0};
@@ -304,6 +313,7 @@ struct top_bits
       }
     }
 
+    // if possible, return top_bits as an int.
     EVE_FORCEINLINE constexpr auto as_int() const
       requires ( static_bits_size <= 64 )
     {
@@ -401,16 +411,23 @@ struct top_bits
       if constexpr ( is_aggregated ) return o << '[' << x.storage[0] << ", " << x.storage[1] << ']';
       else                           return o << x.storage;
     }
-};
+  };
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
+}  // namespace eve
 
 // ---------------------------------------------------------------------------------
 // to_logical(top_bits)
 //
 
+namespace eve::detail {
+
 template <logical_simd_value Logical>
-EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
+EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask)
 {
-  using abi = typename top_bits<Logical>::abi_type;
+  using abi = typename eve::top_bits<Logical>::abi_type;
 
        if constexpr ( top_bits<Logical>::is_aggregated )         return Logical{to_logical(mmask.storage[0]), to_logical(mmask.storage[1])};
   else if constexpr ( top_bits<Logical>::is_avx512_logical )     return Logical(mmask.storage);
@@ -431,7 +448,7 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
     using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
 
     static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
-    static constexpr auto element_mask = set_lower_n_bits<bits_et>(bits_per_element);
+    static constexpr auto element_mask = detail::set_lower_n_bits<bits_et>(bits_per_element);
 
     fit_wide true_mmask([&](int i, int) {
       int shift = 0;
@@ -481,64 +498,6 @@ EVE_FORCEINLINE Logical to_logical(top_bits<Logical> mmask)
       fit_wide mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
       return bit_cast( mask, as<Logical>{} );
     }
-  }
-}
-
-// ---------------------------------------------------------------------------------
-// all/any/first_true
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE bool all(top_bits<Logical> mmask)
-{
-  return mmask == top_bits<Logical>(ignore_none);
-}
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE bool any(top_bits<Logical> mmask)
-{
-  return (bool)mmask;
-}
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
-{
-  if constexpr ( !top_bits<Logical>::is_aggregated )
-  {
-    return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
-  }
-  else
-  {
-    auto half_mmask = mmask.storage[1];
-    int offset = Logical::size() / 2;
-
-    // trying to make a cmove (otherwise does not cmove, I think I tested)
-    if (mmask.storage[0])
-    {
-      offset = 0;
-      half_mmask = mmask.storage[0];
-    }
-
-    return first_true_guaranteed(half_mmask) + offset;
-  }
-}
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true(top_bits<Logical> mmask)
-{
-  if ( !detail::any(mmask) ) return {};
-  return first_true_guaranteed(mmask);
-}
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t count_true(top_bits<Logical> mmask)
-{
-  if constexpr ( !top_bits<Logical>::is_aggregated )
-  {
-    return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
-  }
-  else
-  {
-    return count_true(mmask.storage[0]) + count_true(mmask.storage[1]);
   }
 }
 

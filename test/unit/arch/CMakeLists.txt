@@ -9,6 +9,7 @@ set(  SOURCES
       current_api.cpp
       expected_cardinal.cpp
       fundamental_cardinal.cpp
+      top_bits.cpp
    )
 
 make_unit( "unit.arch" ${SOURCES} )

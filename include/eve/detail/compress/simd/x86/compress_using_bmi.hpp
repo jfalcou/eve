@@ -12,7 +12,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/slide_left.hpp>
 
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 
 namespace eve::detail
 {
@@ -189,7 +189,7 @@ namespace eve::detail
     {
       if constexpr ( current_api >= avx512 ) v = do_compress_bmi_avx512<U, N>{mask}(v);
       else                                   v = do_compress_bmi_avx2  <U, N>{mask}(v);
-      kumi::tuple cur {v, detail::count_true(mask)};
+      kumi::tuple cur {v, count_true(mask)};
       return kumi::tuple<decltype(cur)>{ cur };
     }
   }

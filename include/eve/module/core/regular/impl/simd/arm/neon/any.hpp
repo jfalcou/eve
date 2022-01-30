@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/convert.hpp>
-#include <eve/detail/top_bits.hpp>
+#include <eve/arch/top_bits.hpp>
 
 namespace eve::detail
 {

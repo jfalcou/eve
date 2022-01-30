@@ -109,3 +109,22 @@ EVE_TEST_TYPES("Check eve::first_true", eve::test::simd::all_types)
     TTS_EQUAL(eve::first_true[eve::ignore_first(T::size())](x), std::nullopt);
   }
 };
+
+EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  using logical = eve::logical<T>;
+  TTS_EQUAL(0, eve::first_true(eve::top_bits(logical(true))));
+
+  for (int i = 0; i != T::size() - 1; ++i)
+  {
+    logical v([=](auto e, auto) { return e > i; } );
+    std::optional res = eve::first_true(eve::top_bits(v));
+    TTS_EXPECT(res);
+
+    int expected = i + 1;
+    TTS_EQUAL(expected, *res);
+  }
+
+  TTS_EXPECT_NOT(eve::first_true(eve::top_bits(logical(false))));
+};

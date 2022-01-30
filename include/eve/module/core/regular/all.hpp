@@ -36,6 +36,7 @@ namespace eve
   //! **Parameters**
   //!
   //!`x`:   [value](@ref eve::value).
+  //!`x`:   [value](@ref eve::top_bits).
   //!
   //! **Return value**
   //!
