@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/module/arithmetic/min.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
 
 namespace eve::detail
 {
