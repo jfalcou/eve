@@ -529,17 +529,4 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true(top_bits<Logical> mmask
   return first_true_guaranteed(mmask);
 }
 
-template <logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t count_true(top_bits<Logical> mmask)
-{
-  if constexpr ( !top_bits<Logical>::is_aggregated )
-  {
-    return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
-  }
-  else
-  {
-    return count_true(mmask.storage[0]) + count_true(mmask.storage[1]);
-  }
-}
-
 }  // namespace eve::detail

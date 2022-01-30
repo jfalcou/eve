@@ -32,6 +32,19 @@ namespace eve::detail
                                             , logical<T> v
                                             ) noexcept
   {
-    return eve::detail::count_true(eve::detail::top_bits{v,cond});
+    return count_true(top_bits{v,cond});
+  }
+
+  template<logical_simd_value Logical>
+  EVE_FORCEINLINE std::ptrdiff_t count_true_( EVE_SUPPORTS(cpu_), top_bits<Logical> mmask ) noexcept
+  {
+    if constexpr ( !top_bits<Logical>::is_aggregated )
+    {
+      return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
+    }
+    else
+    {
+      return count_true(mmask.storage[0]) + count_true(mmask.storage[1]);
+    }
   }
 }

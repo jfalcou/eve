@@ -69,3 +69,32 @@ EVE_TEST_TYPES("Check eve::count_true behavior with ignore", eve::test::simd::al
     //   TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
   }
 };
+
+EVE_TEST_TYPES("Check eve::count_true top_bits", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  eve::logical<T> x(false);
+
+  auto test = [&] {
+    std::ptrdiff_t expected = 0;
+    for (int i = 0; i != x.size(); ++i) expected += x.get(i);
+
+    eve::detail::top_bits mmask{x};
+    TTS_EQUAL(expected, eve::count_true(mmask));
+  };
+
+  for (int i = 0; i != x.size(); ++i)
+  {
+    x.set(i, true);
+    test();
+
+    for (int j = i + 1; j < x.size(); ++j)
+    {
+      x.set(j, true);
+      test();
+      x.set(j, false);
+    }
+
+    x.set(i, false);
+  }
+};

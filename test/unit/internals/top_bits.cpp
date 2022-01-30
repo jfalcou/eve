@@ -209,7 +209,7 @@ EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::all_types)
     for (int i = 0; i != x.size(); ++i) expected += x.get(i);
 
     top_bits mmask{x};
-    TTS_EQUAL(expected, eve::detail::count_true(mmask));
+    TTS_EQUAL(expected, eve::count_true(mmask));
   });
 };
 
