@@ -7,8 +7,9 @@
 //==================================================================================================
 #pragma once
 
-//#include <eve/module/core.hpp>
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/detail/function/conditional.hpp>
 
 namespace eve
 {
@@ -77,17 +78,17 @@ namespace eve
 
   EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
 
-//   namespace detail
-//   {
-//     // -----------------------------------------------------------------------------------------------
-//     // Masked case
-//     template<conditional_expr C, real_value U>
-//     EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond
-//                                 ,  U const &t) noexcept
-//     {
-//       return mask_op(  cond, eve::is_eqz, t);
-//     }
-//  }
+  namespace detail
+  {
+    // -----------------------------------------------------------------------------------------------
+    // Masked case
+    template<conditional_expr C, real_value U>
+    EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond
+                                ,  U const &t) noexcept
+    {
+      return mask_op(  cond, eve::is_eqz, t);
+    }
+ }
 }
 
 #include <eve/module/arithmetic/regular/impl/is_eqz.hpp>

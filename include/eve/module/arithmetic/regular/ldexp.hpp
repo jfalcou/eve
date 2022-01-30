@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/function/is_flint.hpp>
+#include <eve/module/arithmetic/regular/is_flint.hpp>
 
 namespace eve
 {

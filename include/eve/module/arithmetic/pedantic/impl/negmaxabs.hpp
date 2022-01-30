@@ -7,17 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/saturated/abs.hpp>
-#include <eve/function/pedantic/maxabs.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/platform.hpp>
-
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/saturated/abs.hpp>
+#include <eve/module/arithmetic/pedantic/maxabs.hpp>
 
 namespace eve::detail
 {

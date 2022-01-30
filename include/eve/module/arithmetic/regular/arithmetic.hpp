@@ -135,7 +135,6 @@
 #include <eve/module/arithmetic/regular/shl.hpp>
 #include <eve/module/arithmetic/regular/shr.hpp>
 #include <eve/module/arithmetic/regular/sign.hpp>
-#include <eve/module/arithmetic/regular/significants.hpp>
 #include <eve/module/arithmetic/regular/signnz.hpp>
 #include <eve/module/arithmetic/regular/sqr_abs.hpp>
 #include <eve/module/arithmetic/regular/sqr.hpp>

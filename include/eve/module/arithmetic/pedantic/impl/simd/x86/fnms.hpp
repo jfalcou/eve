@@ -7,13 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/detail/skeleton.hpp>
-#include <eve/forward.hpp>
-#include <type_traits>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

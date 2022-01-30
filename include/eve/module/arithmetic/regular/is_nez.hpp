@@ -6,9 +6,10 @@
 //==================================================================================================
 #pragma once
 
-//#include <eve/module/core.hpp>
+#include <eve/module/core.hpp>
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/detail/function/conditional.hpp>
 
 namespace eve
 {
@@ -86,11 +87,11 @@ namespace eve::detail
     return to_logical(a);
   }
 
-//   // -----------------------------------------------------------------------------------------------
-//   // logical masked case
-//   template<conditional_expr C, real_value U, real_value V>
-//   EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
-//   {
-//     return logical_mask_op(cond, is_nez, u);
-//   }
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U, real_value V>
+  EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return logical_mask_op(cond, is_nez, u);
+  }
 }

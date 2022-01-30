@@ -7,19 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/function/pedantic.hpp>
-
-#include <concepts>
-#include <type_traits>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_unordered.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>
+#include <eve/module/arithmetic/regular/prev.hpp>
 
 namespace eve::detail
 {

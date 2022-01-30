@@ -7,14 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/arithmetic/regular/is_unordered.hpp>
+#include <eve/module/arithmetic/regular/is_infinite.hpp>
 
 namespace eve::detail
 {

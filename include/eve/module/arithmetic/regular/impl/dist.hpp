@@ -7,12 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/max.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/skeleton_calls.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 
 namespace eve::detail
 {

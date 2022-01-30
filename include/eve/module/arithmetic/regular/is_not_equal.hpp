@@ -7,12 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/function/friends.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/detail/function/simd/common/friends.hpp>
+#include <eve/detail/function/conditional.hpp>
 
 namespace eve
 {

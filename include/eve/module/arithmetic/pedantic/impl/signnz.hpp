@@ -7,16 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/platform.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_nan.hpp>
 
 namespace eve::detail
 {

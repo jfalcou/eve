@@ -7,20 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/exp10.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/ceil.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/log10.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic.hpp>
+#include <eve/module/math/regular/exp10.hpp>
+#include <eve/module/math/regular/log10.hpp>
 
 namespace eve::detail
 {

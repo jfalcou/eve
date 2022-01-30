@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
 

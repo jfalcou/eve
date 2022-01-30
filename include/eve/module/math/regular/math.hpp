@@ -79,6 +79,7 @@
 #include <eve/module/math/regular/sech.hpp>
 #include <eve/module/math/regular/sec.hpp>
 #include <eve/module/math/regular/secpi.hpp>
+#include <eve/module/math/regular/significants.hpp>
 #include <eve/module/math/regular/sinc.hpp>
 #include <eve/module/math/regular/sincos.hpp>
 #include <eve/module/math/regular/sindcosd.hpp>

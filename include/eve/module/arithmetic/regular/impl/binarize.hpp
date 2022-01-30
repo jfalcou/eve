@@ -7,16 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/logical.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/if_else.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

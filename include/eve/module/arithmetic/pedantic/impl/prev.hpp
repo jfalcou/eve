@@ -7,29 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/function/is_positive.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/function/saturated/dec.hpp>
-#include <eve/function/saturated/sub.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>
+#include <eve/module/arithmetic/saturated/dec.hpp>
+#include <eve/module/arithmetic/saturated/sub.hpp>
 
 namespace eve::detail
 {

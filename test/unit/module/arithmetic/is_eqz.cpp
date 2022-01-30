@@ -41,5 +41,5 @@ EVE_TEST( "Check behavior of eve::is_eqz(simd)"
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::is_eqz(a0), map([](auto e) -> eve::logical<v_t> { return  e == 0; }, a0));
-//  TTS_EQUAL(eve::is_eqz[t](a0), eve::if_else(t, eve::is_eqz(a0), eve::false_(eve::as(a0))));
+// TTS_EQUAL(eve::is_eqz[t](a0), eve::if_else(t, eve::is_eqz(a0), eve::false_(eve::as(a0))));
 };

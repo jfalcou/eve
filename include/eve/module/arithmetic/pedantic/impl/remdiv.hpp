@@ -7,17 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/binarize_not.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/roundings.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/binarize_not.hpp>
+#include <eve/module/arithmetic/regular/div.hpp>
+#include <eve/module/arithmetic/regular/fnma.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
 
 namespace eve::detail
 {

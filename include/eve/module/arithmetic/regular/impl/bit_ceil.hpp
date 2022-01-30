@@ -7,19 +7,14 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/bit_floor.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/ifrexp.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/is_less_equal.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/max.hpp>
-#include <eve/constant/one.hpp>
-#include <type_traits>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/bit_floor.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/arithmetic/regular/ifrexp.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
+#include <eve/module/arithmetic/regular/is_less_equal.hpp>
+#include <eve/module/arithmetic/regular/ldexp.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 
 namespace eve::detail
 {

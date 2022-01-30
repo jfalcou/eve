@@ -7,18 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/function/add.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/add.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
+#include <eve/module/arithmetic/regular/rec.hpp>
 
 namespace eve::detail
 {

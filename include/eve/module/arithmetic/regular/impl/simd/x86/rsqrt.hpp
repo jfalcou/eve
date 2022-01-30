@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include <eve/module/arithmetic/regular/sqr.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 
