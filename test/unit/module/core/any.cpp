@@ -119,3 +119,16 @@ EVE_TEST_TYPES("Check eve::any[ignore]", eve::test::simd::all_types)
     }
   }
 };
+
+EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::all_types)
+<typename T>(eve::as<T>)
+{
+  using logical = eve::logical<T>;
+  TTS_EXPECT_NOT(eve::any(eve::detail::top_bits(logical(false))));
+
+  for (int i = 0; i != T::size(); ++i)
+  {
+    logical v([=](auto e, auto) { return e == i; } );
+    TTS_EXPECT(eve::any(eve::detail::top_bits(v)));
+  }
+};

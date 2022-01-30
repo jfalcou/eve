@@ -493,40 +493,4 @@ EVE_FORCEINLINE bool all(top_bits<Logical> mmask)
   return mmask == top_bits<Logical>(ignore_none);
 }
 
-template <logical_simd_value Logical>
-EVE_FORCEINLINE bool any(top_bits<Logical> mmask)
-{
-  return (bool)mmask;
-}
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
-{
-  if constexpr ( !top_bits<Logical>::is_aggregated )
-  {
-    return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
-  }
-  else
-  {
-    auto half_mmask = mmask.storage[1];
-    int offset = Logical::size() / 2;
-
-    // trying to make a cmove (otherwise does not cmove, I think I tested)
-    if (mmask.storage[0])
-    {
-      offset = 0;
-      half_mmask = mmask.storage[0];
-    }
-
-    return first_true_guaranteed(half_mmask) + offset;
-  }
-}
-
-template <logical_simd_value Logical>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true(top_bits<Logical> mmask)
-{
-  if ( !detail::any(mmask) ) return {};
-  return first_true_guaranteed(mmask);
-}
-
 }  // namespace eve::detail

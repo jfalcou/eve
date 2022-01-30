@@ -166,53 +166,6 @@ EVE_TEST_TYPES("Check all(top_bits)", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
-{
-  using logical = eve::logical<T>;
-  TTS_EXPECT_NOT(eve::detail::any(top_bits(logical(false))));
-
-  for (int i = 0; i != T::size(); ++i)
-  {
-    logical v([=](auto e, auto) { return e == i; } );
-    TTS_EXPECT(eve::detail::any(top_bits(v)));
-  }
-};
-
-//==================================================================================================
-// Check the behavior of top_bits first_true/count_true
-//==================================================================================================
-EVE_TEST_TYPES("Check first_true(top_bits)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
-{
-  using logical = eve::logical<T>;
-  TTS_EQUAL(0, eve::detail::first_true(top_bits(logical(true))));
-
-  for (int i = 0; i != T::size() - 1; ++i)
-  {
-    logical v([=](auto e, auto) { return e > i; } );
-    std::optional res = eve::detail::first_true(top_bits(v));
-    TTS_EXPECT(res);
-
-    int expected = i + 1;
-    TTS_EQUAL(expected, *res);
-  }
-
-  TTS_EXPECT_NOT(eve::detail::first_true(top_bits(logical(false))));
-};
-
-EVE_TEST_TYPES("Check count_true(top_bits)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
-{
-  test_over_top_bits<T>([&](auto x) {
-    std::ptrdiff_t expected = 0;
-    for (int i = 0; i != x.size(); ++i) expected += x.get(i);
-
-    top_bits mmask{x};
-    TTS_EQUAL(expected, eve::count_true(mmask));
-  });
-};
-
 //==================================================================================================
 // Check the behavior of top_bits over ignore masks
 //==================================================================================================

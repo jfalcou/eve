@@ -41,13 +41,13 @@ namespace eve::detail
       if ( !eve::any(v) ) return {};
 
       top_bits mmask{v, cond};
-      if constexpr ( C::is_complete ) return *detail::first_true(mmask); // optimizes a check on clang
-      else                            return detail::first_true(mmask);
+      if constexpr ( C::is_complete ) return *first_true(mmask); // optimizes a check on clang
+      else                            return first_true(mmask);
     }
     else
     {
       top_bits mmask{v, cond};
-      return detail::first_true(mmask);
+      return first_true(mmask);
     }
   }
 
@@ -66,6 +66,37 @@ namespace eve::detail
       if (!v) return std::nullopt;
       return 0;
     }
+  }
+
+  // Internal helper
+  template <logical_simd_value Logical>
+  EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
+  {
+    if constexpr ( !top_bits<Logical>::is_aggregated )
+    {
+      return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
+    }
+    else
+    {
+      auto half_mmask = mmask.storage[1];
+      int offset = Logical::size() / 2;
+
+      // trying to make a cmove (otherwise does not cmove, I think I tested)
+      if (mmask.storage[0])
+      {
+        offset = 0;
+        half_mmask = mmask.storage[0];
+      }
+
+      return first_true_guaranteed(half_mmask) + offset;
+    }
+  }
+
+  template <logical_simd_value Logical>
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
+  {
+    if (!any(mmask)) return {};
+    return first_true_guaranteed(mmask);
   }
 
 }  // namespace eve
