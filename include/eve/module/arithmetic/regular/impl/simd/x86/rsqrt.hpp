@@ -14,6 +14,7 @@
 #include <eve/module/arithmetic/regular/mul.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/pedantic/ifrexp.hpp>
+#include <eve/module/arithmetic/pedantic/ldexp.hpp>
 
 namespace eve::detail
 {
