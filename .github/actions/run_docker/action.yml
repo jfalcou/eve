@@ -21,3 +21,4 @@ runs:
     - ${{ inputs.options }}
     - ${{ inputs.cmake-options }}
     - ${{ inputs.status }}
+    - ${{ inputs.cpu }}

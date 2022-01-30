@@ -31,7 +31,8 @@ jobs:
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:        '${{ matrix.cfg.status }}'
+          status:         '${{ matrix.cfg.status }}'
+          cpu:            8
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
@@ -88,3 +89,4 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
+          cpu:            3
