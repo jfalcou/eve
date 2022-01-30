@@ -7,18 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/is_not_greater_equal.hpp>
-#include <eve/function/saturated/abs.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/saturated.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
+#include <eve/module/arithmetic/saturated/abs.hpp>
 
 namespace eve::detail
 {

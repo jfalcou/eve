@@ -7,17 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/has_abi.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/saturated.hpp>
-
-#include <concepts>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 
 namespace eve::detail
 {

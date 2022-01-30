@@ -7,11 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/function/saturated.hpp>
-
-#include <concepts>
+#include <eve/module/core.hpp>
 
 namespace eve::detail
 {

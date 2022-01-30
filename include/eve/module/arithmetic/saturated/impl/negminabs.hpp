@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/minabs.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/minabs.hpp>
 
 namespace eve::detail
 {
@@ -25,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto negminabs_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &a, T const &b) noexcept
   requires has_native_abi_v<T>
   {
-    return  -saturated(minabs(a, b));
+    return  -saturated(minabs)(a, b);
   }
 
   //================================================================================================

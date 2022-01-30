@@ -7,16 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/saturated/add.hpp>
-#include <eve/function/saturated/inc.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>
+#include <eve/module/arithmetic/saturated/add.hpp>
+#include <eve/module/arithmetic/saturated/inc.hpp>
 
 namespace eve::detail
 {

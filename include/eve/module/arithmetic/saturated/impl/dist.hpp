@@ -7,13 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/function/is_ltz.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/skeleton_calls.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/is_ltz.hpp>
 
 namespace eve::detail
 {

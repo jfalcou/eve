@@ -8,17 +8,10 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include  <eve/module/arithmetic/detail/multi_div.hpp>
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/function/saturated/mul.hpp>
+#include <eve/module/arithmetic/detail/multi_div.hpp>
+#include <eve/module/arithmetic/regular/add.hpp>
+#include <eve/module/arithmetic/regular/shr.hpp>
+#include <eve/module/arithmetic/saturated/mul.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
