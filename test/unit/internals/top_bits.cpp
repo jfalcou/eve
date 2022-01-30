@@ -317,14 +317,18 @@ EVE_TEST_TYPES("Check top_bits slicing", eve::test::simd::all_types)
 {
   using logical = eve::logical<T>;
 
-  if constexpr( T::size() == 1 ||
-                top_bits<logical>::bits_per_element)
+  if constexpr( T::size() == 1 )
   {
     TTS_PASS("Can't slice 1");
   }
   else
   {
     using half_logical = typename top_bits<logical>::half_logical;
+
+    if constexpr ( eve::current_api == eve::avx2 )
+    {
+      static_assert(top_bits<half_logical>::bits_per_element == top_bits<logical>::bits_per_element);
+    }
 
     if constexpr (top_bits<half_logical>::bits_per_element != top_bits<logical>::bits_per_element)
     {

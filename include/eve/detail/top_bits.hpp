@@ -47,8 +47,6 @@ struct top_bits
   static constexpr bool is_emulated_aggregated = has_emulated_abi_v<logical_type> && static_size > 64;
   static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> || is_emulated_aggregated;
   static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
-  static constexpr std::ptrdiff_t bits_per_element = typename decltype(movemask(logical_type{}))::second_type{}();
-  static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
 
   using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
 
@@ -58,6 +56,13 @@ struct top_bits
       if constexpr ( is_aggregated )  return std::array<top_bits<half_logical>, 2>{};
       else                            return movemask(logical_type{}).first;
     }
+
+    EVE_FORCEINLINE static constexpr std::ptrdiff_t bits_per_element_impl()
+    {
+      if constexpr ( is_aggregated ) return top_bits<half_logical>::bits_per_element;
+      else                           return decltype(movemask(logical_type{}).second){}();
+    }
+
 
     static constexpr bool is_cheap_impl()
     {
@@ -82,10 +87,12 @@ struct top_bits
 
   public:
     using storage_type = decltype(top_bits::storage_type_impl());
+    static constexpr std::ptrdiff_t bits_per_element = bits_per_element_impl();
+    static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
+    static constexpr bool is_cheap = is_cheap_impl();
 
     storage_type storage;
 
-    static constexpr bool is_cheap = is_cheap_impl();
 
     // constructors ---------------------------------
 
