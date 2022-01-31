@@ -88,7 +88,6 @@ namespace eve::detail
     using res_t = wide<T, typename N::combined_type>;
 
          if constexpr ( G       >= N()                    ) return eve::combine(v0, v1);
-    else if constexpr ( N() * 2 <= expected_cardinal_v<T> ) return deinterleave_groups_shuffle( eve::combine(v0, v1), lane<G> );
     else if constexpr ( is_bundle_v<abi_t<T, N>>          )
     {
       return res_t(kumi::map([](auto _v0, auto _v1) { return deinterleave_groups_shuffle(_v0, _v1, lane<G>); }
