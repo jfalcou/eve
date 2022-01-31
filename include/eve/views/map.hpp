@@ -1,0 +1,35 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#pragma once
+
+#include <eve/algo/views/map.hpp>
+
+namespace eve::views
+{
+  //================================================================================================
+  //! @addtogroup eve.views
+  //! @{
+  //!    @var map
+  //!    @brief a shorthand for `eve::algo::views::map`.
+  //!
+  //!    @var map_convert
+  //!    @brief a shorthand for `eve::algo::views::map_convert`
+  //!
+  //!    @struct map_iterator
+  //!    @brief a shorthand for `eve::algo::views::map_iterator`
+  //!
+  //!    @struct map_range
+  //!    @brief a shorthand for `eve::algo::views::map_range`
+  //! @}
+  //================================================================================================
+
+  using eve::algo::views::map;
+  using eve::algo::views::map_convert;
+  using eve::algo::views::map_iterator;
+  using eve::algo::views::map_range;
+}
