@@ -19,7 +19,7 @@ namespace eve::detail
   EVE_FORCEINLINE  auto is_lessgreater_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , U const &b) noexcept
-  //  requires compatible_values<T, U>
+  requires compatible_values<T, U>
   {
     return arithmetic_call(is_lessgreater, a, b);
   }
@@ -28,9 +28,11 @@ namespace eve::detail
   EVE_FORCEINLINE  auto is_lessgreater_(EVE_SUPPORTS(cpu_)
                             , T const &a
                             , T const &b) noexcept
-  //  requires has_native_abi_v<T>
   {
-    return  (is_not_equal(a, b) && is_ordered(a, b));
+    if constexpr(has_native_abi<T>)
+      return  (is_not_equal(a, b) && is_ordered(a, b));
+    else
+      return apply_over(is_lessgreater, a, b);
   }
 
   // -----------------------------------------------------------------------------------------------
