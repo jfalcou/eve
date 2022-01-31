@@ -1,4 +1,4 @@
-//#include <eve/function/predicate.hpp>
+//#include <eve/function/is_not_inf.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/wide.hpp>
 #include <eve/constant/inf.hpp>
