@@ -10,12 +10,16 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
+#include <eve/function/interleave.hpp>
 #include <eve/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <bit>
 
 namespace eve::detail
 {
@@ -174,10 +178,9 @@ namespace eve::detail
     }
   }
 
-  //
-  // Convert helpers : large/small integers
+  // Convert helpers : large<->small integers via chain
   template<integral_simd_value In, integral_scalar_value Out>
-  EVE_FORCEINLINE auto convert_integers(In const &v0, as<Out> const &tgt) noexcept
+  EVE_FORCEINLINE auto convert_integers_chain(In const &v0, as<Out> const &tgt) noexcept
   {
     using in_t  = element_type_t<In>;
     using out_t = element_type_t<Out>;
@@ -195,6 +198,62 @@ namespace eve::detail
       using s_t = std::conditional_t<std::is_signed_v<in_t>,signed,unsigned>;
       using next_t = make_integer_t<sizeof(in_t)*2,s_t>;
       return convert( convert(v0, as<next_t>{}), tgt);
+    }
+  }
+
+  // Convert helpers : large->small integers via a single shuffle
+  template<integral_scalar_value T, integral_scalar_value U, typename N>
+  EVE_FORCEINLINE auto convert_integers_shuffle(wide<T,N> v, as<U> const &) noexcept
+  {
+    static_assert ( (sizeof(T)/sizeof(U) >= 2)
+                  , "[eve::convert] - Shuffle conversion requires ration of 1:2^n between types"
+                  );
+
+    constexpr auto shuffler = as_pattern{[](auto i, auto c)
+    {
+      // Take one element out of every sizing step + endian support
+      constexpr auto factor = sizeof(T)/sizeof(U);
+      constexpr auto shift  = (std::endian::native == std::endian::little) ? 0 : (factor-1);
+      std::ptrdiff_t idx = (i*factor)+shift;
+      return (idx < c) ? idx : i;
+    } };
+
+    return bit_cast(shuffle(bit_cast(v,as<wide<U>>{}), shuffler), as<wide<U,N>>{});
+  }
+
+  // Convert integer from 2^n -> 2^n+1
+  template<typename T, typename N, typename U>
+  auto convert_integers_interleave(wide<T,N> v, as<U> const&)
+  {
+    static_assert ( (sizeof(U)/sizeof(T) == 2)
+                  , "[eve::convert] - Interleave conversion requires ration of 2:1 between types"
+                  );
+
+    if constexpr(N::value == 1)
+    {
+      return wide<U,N>{static_cast<U>(v.get(0))};
+    }
+    else
+    {
+      auto pieces = [](auto w)
+      {
+        if constexpr(std::endian::native == std::endian::little)
+        {
+          if constexpr(std::is_signed_v<T>) return eve::interleave( w, (w<0).mask() );
+          else                              return eve::interleave( w, zero(as(w))  );
+        }
+        else
+        {
+          if constexpr(std::is_signed_v<T>) return eve::interleave( (w<0).mask(), w );
+          else                              return eve::interleave( zero(as(w)) , w );
+        }
+      };
+
+      auto[l,h] = pieces(v);
+      eve::wide<U,N> that { eve::bit_cast(l, eve::as<eve::wide<U,typename N::split_type>>{})
+                          , eve::bit_cast(h, eve::as<eve::wide<U,typename N::split_type>>{})
+                          };
+      return that;
     }
   }
 }

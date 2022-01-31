@@ -11,8 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/interleave.hpp>
-#include <eve/constant/zero.hpp>
+#include <bit>
 
 namespace eve::detail
 {
@@ -58,48 +57,11 @@ namespace eve::detail
     else  if constexpr(std::is_integral_v<U>)
     {
       // k->2.k integral conversion use interleave
-      if constexpr(sizeof(U)/sizeof(T) == 2)
-      {
-        if constexpr(N::value == 1)
-        {
-          return wide<U,N>{static_cast<U>(v.get(0))};
-        }
-        else
-        {
-          auto il = [](auto w)
-          {
-            if constexpr(std::is_signed_v<T>) return eve::interleave((w<0).mask(),w);
-            else                              return eve::interleave(zero(as(w)),w);
-          };
-
-          auto[l,h] = il(v);
-          eve::wide<U,N> that { eve::bit_cast(l, eve::as<eve::wide<U,typename N::split_type>>{})
-                              , eve::bit_cast(h, eve::as<eve::wide<U,typename N::split_type>>{})
-                              };
-          return that;
-        }
-      }
-      // k->2^n.k integral conversion use computed vec_perm
-      else if constexpr(sizeof(T)/sizeof(U) >= 2)
-      {
-        // Compute the byte index from the relative sizeof
-        constexpr auto idx = [](auto I)
-        {
-          return ((1+I/sizeof(U)) * sizeof(T))-sizeof(U) + I%sizeof(U);
-        };
-
-        // Use a raw mask
-        auto mask = [&]<std::size_t... I>(std::index_sequence<I...>)
-        {
-          using type = __vector unsigned char;
-          return type{(idx(I)<16 ? idx(I) : 128)...};
-        }(std::make_index_sequence<16>{});
-
-        // Extract relevant bytes from the largest integer
-        auto bv = bit_cast(v, as<typename wide<T,N>::template rebind<std::uint8_t>>{});
-        return bit_cast( vec_perm(bv.storage(),bv.storage(), mask), as<wide<U,N>>{} );
-      }
-      else return convert_integers(v,tgt);
+      if constexpr(sizeof(U)/sizeof(T) == 2)      return convert_integers_interleave(v,tgt);
+      // k->2^-n.k integral conversion use computed vec_perm
+      else if constexpr(sizeof(T)/sizeof(U) >= 2) return convert_integers_shuffle(v,tgt);
+      // otherwise, go down convert chains
+      else                                        return convert_integers_chain(v,tgt);
     }
   }
 }
