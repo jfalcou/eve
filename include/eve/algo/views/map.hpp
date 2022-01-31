@@ -171,6 +171,10 @@ namespace eve::algo::views
   struct map_iterator : operations_with_distance
   {
     using value_type = detail::map_value_type_t<LoadOp, I>;
+
+    // need to define this to workaround a clang bug.
+    using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_t<I>>;
+
     using unaligned_me = map_iterator<unaligned_t<I>, LoadOp, StoreOp>;
 
     I base;
@@ -283,7 +287,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
                                                 C c,
                                                 S s,
-                                                eve::as<wide_value_type_t<map_iterator>>,
+                                                eve::as<vw_type>,
                                                 map_iterator self)
     {
       auto loaded =  self.load_op(eve::load(drop_alternative(c), s,

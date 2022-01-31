@@ -22,7 +22,7 @@ struct load_op
 
 struct store_op
 {
-  auto operator()(auto x) const
+  auto operator()(auto x, eve::as<int>) const
   {
     return eve::convert(x / 2.0, eve::as<int>{});
   }
@@ -60,20 +60,18 @@ TTS_CASE("eve::views::map, preprocess")
   using ap = eve::aligned_ptr<int>;
 
   // double because the map operation returns double
-  using ui     = eve::algo::unaligned_ptr_iterator<int, eve::fixed<eve::expected_cardinal_v<double>>>;
-  using ai     = eve::algo::aligned_ptr_iterator  <int, eve::fixed<eve::expected_cardinal_v<double>>>;
+  using N      = eve::fixed<eve::expected_cardinal_v<double>>;
+  using ui     = eve::algo::ptr_iterator<int*, N>;
+  using ai     = eve::algo::ptr_iterator<eve::aligned_ptr<int, N>, N>;
   using map_ui = eve::views::map_iterator<ui, load_op, store_op>;
   using map_ai = eve::views::map_iterator<ai, load_op, store_op>;
 
-  TTS_TYPE_IS(eve::algo::value_type_t<map_ui>, double);
+  TTS_TYPE_IS(eve::value_type_t<map_ui>, double);
 
   eve::views::map_range mapped = eve::views::map_convert(eve::algo::as_range(ap{}, up{}), load_op{}, store_op{});
   auto processed = eve::algo::preprocess_range(eve::algo::traits{}, mapped);
 
   TTS_TYPE_IS(decltype(processed.begin()), map_ai);
   TTS_TYPE_IS(decltype(processed.end()), map_ui);
-
-  // (void)eve::load(processed.begin());
-
-  // TTS_TYPE_IS(decltype(eve::load(processed.begin())), eve::wide<double>);
+  TTS_TYPE_IS(decltype(eve::load(processed.begin())), eve::wide<double>);
 };
