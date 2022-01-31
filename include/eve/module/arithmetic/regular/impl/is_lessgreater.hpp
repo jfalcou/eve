@@ -29,7 +29,7 @@ namespace eve::detail
                             , T const &a
                             , T const &b) noexcept
   {
-    if constexpr(has_native_abi<T>)
+    if constexpr(has_native_abi_v<T>)
       return  (is_not_equal(a, b) && is_ordered(a, b));
     else
       return apply_over(is_lessgreater, a, b);
