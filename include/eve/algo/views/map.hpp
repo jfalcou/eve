@@ -39,7 +39,7 @@ namespace eve::algo::views
   //!    @struct map_range
   //!    @brief A range for `map`, `map_covnert`.
   //!    Should be created via one of those functions.
-  //!    If one of the operations is not avaliable, it's `eve::algo::nothing_t`.
+  //!    If the store operation is not avaliable, it's `eve::algo::nothing_t`.
   //!
   //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
   //!
@@ -57,8 +57,11 @@ namespace eve::algo::views
   //!    relaxed iterator/range that applies the first operation before load
   //!    and the second operation before store.
   //!
-  //!    operation has to be a template and accept scalar and all width wides for the value type
+  //!    operations has to be a template and accept scalar and all width wides for the value type
   //!    of the underlying iterator/range.
+  //!
+  //!    store operation, for conviniece accepts the as<underlying_type> as a second parameter.
+  //!    (this allows to define load/store ops without knowing the underlying iterator).
   //!
   //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
   //!
@@ -117,6 +120,23 @@ namespace eve::algo::views
     template <typename LoadOp, typename Base>
     using map_types_to_consider = kumi::result::cat_t<kumi::tuple<map_value_type_t<LoadOp, Base>>,
                                                      types_to_consider_for_t<Base>>;
+
+    template <typename Base, typename StoreOp>
+    struct bound_store_op
+    {
+      StoreOp store_op;
+
+      EVE_FORCEINLINE auto operator()(auto v) const
+      {
+        return store_op(v, as<value_type_t<Base>>{});
+      }
+    };
+
+    template <typename Base, typename StoreOp>
+    auto bind_store_op(StoreOp store_op)
+    {
+      return bound_store_op<Base, StoreOp>{store_op};
+    }
   }
 
   template <non_owning_range R, typename LoadOp, typename StoreOp>
@@ -185,7 +205,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, map_iterator self, auto v)
       requires (!std::same_as<StoreOp, nothing_t>)
     {
-      eve::write(self.base, self.store_op(v));
+      eve::write(self.base, detail::bind_store_op<I>(self.store_op)(v));
     }
 
     template <relaxed_sentinel_for<I> I1>
@@ -266,8 +286,8 @@ namespace eve::algo::views
                                                 eve::as<wide_value_type_t<map_iterator>>,
                                                 map_iterator self)
     {
-      auto loaded =  self.load_op(eve::load(drop_alternative(c),
-                                            s, eve::as<wide_value_type_t<I>>{}));
+      auto loaded =  self.load_op(eve::load(drop_alternative(c), s,
+                                            self.base, eve::as<wide_value_type_t<I>>{}));
       if constexpr (C::has_alternative)
       {
         loaded = eve::replace_ignored(loaded, c, c.alternative);
@@ -282,8 +302,9 @@ namespace eve::algo::views
                                                 map_iterator self)
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
-      auto c1 = map_alternative( c, self.store_op );
-      eve::store[c1](self.store_op(v), self.base);
+      auto bound_store = detail::bind_store_op<I>(self.store_op);
+      auto c1 = map_alternative( c, bound_store );
+      eve::store[c1](bound_store(v), self.base);
     }
 
     EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
@@ -291,11 +312,10 @@ namespace eve::algo::views
                                                 map_iterator self)
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
-      eve::store(self.store_op(v), self.base);
+      eve::store(detail::bind_store_op<I>(self.store_op)(v), self.base);
     }
 
-
-    template<relative_conditional_expr C, decorator Decorator, typename U>
+    template<relative_conditional_expr C, decorator Decorator>
     EVE_FORCEINLINE friend auto
     tagged_dispatch(eve::tag::compress_store_,
                     C                c,
@@ -306,7 +326,7 @@ namespace eve::algo::views
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
       // No alternative support in compress_store
-      auto raw_res = d(eve::compress_store[c])(self.store_op(v), m, self.base);
+      auto raw_res = d(eve::compress_store[c])(detail::bind_store_op<I>(self.store_op)(v), m, self.base);
       return map_convert(raw_res, self.load_op, self.store_op);
     }
   };

@@ -482,3 +482,9 @@ TTS_CASE("conditional/reverse")
 
   TTS_CONSTEXPR_EQUAL(rev(eve::keep_first(1).else_(0)), eve::keep_last(1).else_(0));
 };
+
+TTS_CASE("conditional/drop_alternative")
+{
+  TTS_CONSTEXPR_EQUAL(eve::drop_alternative(eve::keep_first(3)), eve::keep_first(3));
+  TTS_CONSTEXPR_EQUAL(eve::drop_alternative(eve::keep_first(3).else_(1)), eve::keep_first(3));
+};

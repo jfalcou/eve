@@ -92,6 +92,8 @@ namespace eve
       return or_<C,T>{static_cast<C const&>(*this), v};
     }
 
+    constexpr C drop_alternative() const { return *this; }
+
     constexpr auto map_alternative(auto op) const
     {
       auto mapped = op(alternative);
@@ -689,6 +691,21 @@ namespace eve
   constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
   {
     return a && b;
+  }
+
+  //================================================================================================
+  //! @brief Returns a conditional without an alternative
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //!
+  //! @param  c   eve::conditional_expr
+  //================================================================================================
+
+  template <eve::relative_conditional_expr C>
+  constexpr auto drop_alternative(C c) {
+    if constexpr (!C::has_alternative) return c;
+    else                               return c.drop_alternative();
   }
 
   //================================================================================================
