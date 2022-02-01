@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/signmask.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/signmask.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/saturated.hpp>

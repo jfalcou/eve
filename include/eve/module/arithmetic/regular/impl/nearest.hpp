@@ -14,7 +14,7 @@
 #include <eve/function/converter.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_xor.hpp>
-#include <eve/constant/twotonmb.hpp>
+#include <eve/module/arithmetic/constant/twotonmb.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

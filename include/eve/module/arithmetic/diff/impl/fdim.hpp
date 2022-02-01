@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mone.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/function/is_not_less.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/derivative.hpp>

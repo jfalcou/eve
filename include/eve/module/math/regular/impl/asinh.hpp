@@ -15,8 +15,6 @@
 #include <eve/module/math/regular/log1p.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/constant/oneosqrteps.hpp>
-#include <eve/module/math/constant/sqrteps.hpp>
 
 namespace eve::detail
 {

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/copysign.hpp>
 #include <eve/function/dec.hpp>

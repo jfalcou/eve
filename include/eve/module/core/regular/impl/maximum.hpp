@@ -14,7 +14,7 @@
 #include <eve/function/if_else.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/any.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 
 namespace eve::detail
 {

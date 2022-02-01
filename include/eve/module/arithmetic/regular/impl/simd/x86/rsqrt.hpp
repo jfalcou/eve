@@ -11,6 +11,8 @@
 #include <eve/module/arithmetic/regular/sqr.hpp>
 #include <eve/module/arithmetic/regular/fnma.hpp>
 #include <eve/module/arithmetic/regular/ifrexp.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/arithmetic/regular/mul.hpp>
 
 namespace eve::detail
 {

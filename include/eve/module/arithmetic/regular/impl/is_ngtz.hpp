@@ -12,7 +12,7 @@
 #include <eve/function/is_lez.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

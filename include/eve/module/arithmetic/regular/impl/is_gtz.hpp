@@ -9,7 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_greater.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

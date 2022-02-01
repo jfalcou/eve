@@ -15,14 +15,19 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/constant/bitincrement.hpp>
-#include <eve/constant/exponentmask.hpp>
-#include <eve/constant/mantissamask.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/maxexponentm1.hpp>
-#include <eve/constant/maxexponentp1.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
-#include <eve/constant/twotonmb.hpp>
+#include <eve/module/arithmetic/constant/bitincrement.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/exponentmask.hpp>
+#include <eve/module/arithmetic/constant/logeps.hpp>
+#include <eve/module/arithmetic/constant/mantissamask.hpp>
+#include <eve/module/arithmetic/constant/maxexponent.hpp>
+#include <eve/module/arithmetic/constant/maxexponentm1.hpp>
+#include <eve/module/arithmetic/constant/maxexponentp1.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/arithmetic/constant/minexponent.hpp>
+#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
+#include <eve/module/arithmetic/constant/oneosqrteps.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/arithmetic/constant/sqrteps.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/arithmetic/constant/twotonmb.hpp>

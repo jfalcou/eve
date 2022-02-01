@@ -12,8 +12,8 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_not_less.hpp>
 #include <eve/function/logical_or.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/module/core/constant/true.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

@@ -10,7 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/arithmetic.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/constant/logeps.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 

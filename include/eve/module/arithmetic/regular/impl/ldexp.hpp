@@ -16,9 +16,9 @@
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/module/arithmetic/constant/maxexponent.hpp>
+#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_shr.hpp>
 #include <eve/function/bit_width.hpp>

@@ -10,7 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/regular/rsqrt.hpp>
 #include <eve/function/if_else.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 

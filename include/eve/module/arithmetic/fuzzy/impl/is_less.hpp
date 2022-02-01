@@ -16,7 +16,7 @@
 #include <eve/function/saturated/sub.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 

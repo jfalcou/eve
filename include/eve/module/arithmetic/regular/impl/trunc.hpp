@@ -13,7 +13,7 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/is_not_less_equal.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

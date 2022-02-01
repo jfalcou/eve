@@ -10,8 +10,8 @@
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/raw.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/concept/value.hpp>
 #include <cmath>
 

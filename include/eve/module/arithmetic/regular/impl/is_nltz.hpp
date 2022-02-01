@@ -12,8 +12,8 @@
 #include <eve/function/is_gez.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_less.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/true.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

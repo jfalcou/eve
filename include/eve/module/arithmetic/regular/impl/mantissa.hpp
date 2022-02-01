@@ -15,8 +15,8 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/logical_or.hpp>
 #include <eve/function/logical_not.hpp>
-#include <eve/constant/mantissamask.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/arithmetic/constant/mantissamask.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

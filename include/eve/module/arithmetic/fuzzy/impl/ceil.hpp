@@ -13,7 +13,7 @@
 #include <eve/function/fuzzy/floor.hpp>
 #include <eve/function/fuzzy.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

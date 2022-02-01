@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/memory.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 

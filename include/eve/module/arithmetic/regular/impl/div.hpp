@@ -12,7 +12,7 @@
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_nez.hpp>

@@ -21,9 +21,9 @@
 #include <eve/function/is_positive.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>
+#include <eve/module/core/constant/allbits.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/mzero.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>

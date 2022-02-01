@@ -20,11 +20,11 @@
 #include <eve/function/trunc.hpp>
 #include <eve/function/pedantic.hpp>
 #include <eve/function/sub.hpp>
-#include <eve/constant/maxexponentp1.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/maxexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/module/arithmetic/constant/maxexponentp1.hpp>
+#include <eve/module/arithmetic/constant/minexponent.hpp>
+#include <eve/module/arithmetic/constant/maxexponent.hpp>
+#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

@@ -14,7 +14,7 @@
 #include <eve/function/next.hpp>
 #include <eve/function/saturated/sub.hpp>
 #include <eve/function/saturated/dec.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

@@ -16,7 +16,7 @@
 #include <eve/traits/is_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/module/core/constant/true.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail

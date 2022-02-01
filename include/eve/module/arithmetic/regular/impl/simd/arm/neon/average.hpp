@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/constant/half.hpp>
+#include <eve/module/core/constant/half.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
 
