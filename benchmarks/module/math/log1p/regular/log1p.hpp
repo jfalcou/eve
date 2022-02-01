@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/log1p.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
 #include <cmath>
 
 int main()

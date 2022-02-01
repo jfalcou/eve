@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/gcd.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/max.hpp>
 #include <eve/function/min.hpp>
 #include <eve/function/trunc.hpp>

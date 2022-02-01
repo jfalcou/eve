@@ -7,9 +7,9 @@
 //==================================================================================================
 #include <eve/function/rec.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/constant/oneotwoeps.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/math/constant/oneotwoeps.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <cmath>
 
 int main()
