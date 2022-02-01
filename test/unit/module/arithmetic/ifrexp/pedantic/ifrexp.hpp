@@ -6,12 +6,12 @@
 */
 //==================================================================================================
 #include <eve/function/pedantic/ifrexp.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minexponent.hpp>
-#include <eve/constant/nbmantissabits.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/arithmetic/constant/minexponent.hpp>
+#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
 #include <tuple>
 
 TTS_CASE_TPL("Check ifrexp return type", EVE_TYPE)

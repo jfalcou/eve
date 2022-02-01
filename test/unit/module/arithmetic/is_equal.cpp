@@ -6,12 +6,12 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/is_equal.hpp>
 #include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/fuzzy/is_equal.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

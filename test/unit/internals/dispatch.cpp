@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/function/add.hpp>
 #include <eve/function/pedantic.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <string>
 
 struct use_friend

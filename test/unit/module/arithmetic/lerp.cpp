@@ -5,11 +5,11 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/sqrtvalmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/lerp.hpp>
 #include <eve/function/pedantic/lerp.hpp>

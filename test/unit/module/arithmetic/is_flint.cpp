@@ -6,12 +6,12 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/pedantic/is_flint.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

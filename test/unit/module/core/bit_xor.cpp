@@ -7,8 +7,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/traits/as_integer.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/function/bit_xor.hpp>
 #include <eve/function/bit_cast.hpp>
 

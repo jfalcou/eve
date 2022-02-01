@@ -7,10 +7,10 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/function/binarize_not.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>

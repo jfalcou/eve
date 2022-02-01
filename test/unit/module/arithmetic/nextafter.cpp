@@ -7,10 +7,10 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/pedantic/nextafter.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/function/nextafter.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/inc.hpp>

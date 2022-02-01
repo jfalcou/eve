@@ -6,8 +6,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/detail/meta.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/function/two_split.hpp>
 
 //==================================================================================================

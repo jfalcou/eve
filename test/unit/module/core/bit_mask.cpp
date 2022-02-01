@@ -5,10 +5,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/allbits.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/function/bit_mask.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/is_gtz.hpp>

@@ -11,8 +11,8 @@
 
 // #include <eve/wide.hpp>
 
-// #include <eve/constant/constant.hpp>
-// #include <eve/constant/nan.hpp>
+// #include <eve/module/core/constant/constant.hpp>
+// #include <eve/module/core/constant/nan.hpp>
 
 using eve::fixed;
 
