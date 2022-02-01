@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/logical.hpp>
-#include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/constant/mone.hpp>
-#include <eve/module/core/constant/allbits.hpp>
 #include <eve/function/bit_andnot.hpp>
 #include <eve/function/bit_not.hpp>
 #include <eve/function/if_else.hpp>

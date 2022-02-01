@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gez.hpp>
-#include <eve/module/core/constant/signmask.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 

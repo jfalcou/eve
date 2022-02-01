@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/function/raw.hpp>
@@ -18,7 +19,6 @@
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/fuzzy.hpp>
-#include <eve/module/core/constant/maxflint.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

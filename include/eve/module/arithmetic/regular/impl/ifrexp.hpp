@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/arithmetic/constant/exponentmask.hpp>
-#include <eve/module/core/constant/half.hpp>
 #include <eve/module/arithmetic/constant/maxexponentm1.hpp>
 #include <eve/module/arithmetic/constant/nbmantissabits.hpp>
 #include <eve/module/arithmetic/constant/twotonmb.hpp>

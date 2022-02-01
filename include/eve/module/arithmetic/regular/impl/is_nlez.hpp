@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/is_gtz.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_less_equal.hpp>
-#include <eve/module/core/constant/zero.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

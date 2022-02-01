@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/bit_notor.hpp>
@@ -16,7 +17,6 @@
 #include <eve/traits/is_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/module/core/constant/true.hpp>
 #include <eve/detail/apply_over.hpp>
 
 namespace eve::detail

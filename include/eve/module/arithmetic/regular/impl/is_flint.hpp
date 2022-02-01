@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/constant/true.hpp>
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/frac.hpp>
 #include <eve/concept/value.hpp>
