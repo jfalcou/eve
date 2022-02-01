@@ -6,9 +6,9 @@
 */
 //==================================================================================================
 #include <eve/function/radinpi.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/math/constant/invpi.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on inpi", EVE_TYPE)

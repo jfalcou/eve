@@ -7,8 +7,8 @@
 //==================================================================================================
 #include <eve/function/sech.hpp>
 #include <eve/function/cosh.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/maxlog.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
 #include "producers.hpp"
 #include <cmath>
 

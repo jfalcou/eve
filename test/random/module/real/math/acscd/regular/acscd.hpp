@@ -5,8 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/function/acscd.hpp>
 #include <eve/function/radindeg.hpp>
 #include <eve/function/rec.hpp>

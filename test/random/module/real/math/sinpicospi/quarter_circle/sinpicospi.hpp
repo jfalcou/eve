@@ -8,7 +8,7 @@
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>
-#include <eve/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sinpicospi", EVE_TYPE)

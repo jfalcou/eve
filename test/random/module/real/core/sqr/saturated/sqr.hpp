@@ -6,9 +6,9 @@
 */
 //==================================================================================================
 #include <eve/function/saturated/sqr.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sqr", EVE_TYPE)

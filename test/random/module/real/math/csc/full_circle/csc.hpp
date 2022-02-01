@@ -7,7 +7,7 @@
 //==================================================================================================
 #include <eve/function/csc.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include <eve/platform.hpp>
 #include "producers.hpp"
 #include <cmath>

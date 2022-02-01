@@ -7,8 +7,8 @@
 //==================================================================================================
 #include <eve/function/popcount.hpp>
 #include <eve/function/bit_shr.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/function/bit_shr.hpp>
 #include "producers.hpp"
 

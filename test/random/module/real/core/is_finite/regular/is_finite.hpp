@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/is_finite.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/traits/as_logical.hpp>
 #include "producers.hpp"
 #include <cmath>
