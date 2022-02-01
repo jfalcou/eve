@@ -8,10 +8,10 @@
 #include <eve/function/radindeg.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/sqrt.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/pi.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/math/constant/pi.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on radindeg", EVE_TYPE)

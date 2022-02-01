@@ -7,8 +7,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/saturate.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 
 EVE_TEST_TYPES( "Check eve::saturate return type", eve::test::simd::all_types)
 <typename T>(eve::as<T>)

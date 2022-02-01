@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #include <eve/function/log.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <cmath>
 
 int main()

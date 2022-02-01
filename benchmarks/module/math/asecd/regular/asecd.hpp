@@ -7,8 +7,8 @@
 //==================================================================================================
 #include <eve/function/asecd.hpp>
 #include <eve/function/radindeg.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/oneotwoeps.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/math/constant/oneotwoeps.hpp>
 #include <cmath>
 
 int main()

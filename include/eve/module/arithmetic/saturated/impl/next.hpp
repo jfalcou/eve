@@ -15,7 +15,7 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/saturated/add.hpp>
 #include <eve/function/saturated/inc.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

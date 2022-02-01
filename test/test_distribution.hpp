@@ -6,10 +6,10 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/constant/half.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/half.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/saturated/abs.hpp>
 #include <eve/function/average.hpp>
 #include <eve/function/log2.hpp>

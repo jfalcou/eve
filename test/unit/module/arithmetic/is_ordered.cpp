@@ -6,9 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/nan.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/constant/false.hpp>
 #include <eve/function/is_ordered.hpp>
 
 //==================================================================================================

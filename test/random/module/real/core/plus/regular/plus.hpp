@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/plus.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on plus", EVE_TYPE)

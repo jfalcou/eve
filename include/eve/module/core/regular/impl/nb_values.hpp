@@ -16,7 +16,7 @@
 #include <eve/function/inc.hpp>
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/signnz.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <type_traits>

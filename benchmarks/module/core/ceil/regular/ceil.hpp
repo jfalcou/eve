@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/ceil.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <cmath>
 
 int main()

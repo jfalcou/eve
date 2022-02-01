@@ -6,11 +6,11 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/function/negatenz.hpp>
 #include <eve/function/signnz.hpp>
 #include <eve/function/diff/negatenz.hpp>

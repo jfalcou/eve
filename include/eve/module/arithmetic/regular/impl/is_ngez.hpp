@@ -11,8 +11,8 @@
 #include <eve/function/is_ltz.hpp>
 #include <eve/function/is_nan.hpp>
 #include <eve/function/is_not_greater_equal.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

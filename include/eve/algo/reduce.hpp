@@ -13,8 +13,8 @@
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/constant/as_value.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/as_value.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/reduce.hpp>
 #include <eve/traits.hpp>

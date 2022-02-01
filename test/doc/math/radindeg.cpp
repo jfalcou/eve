@@ -1,11 +1,11 @@
 //#include <eve/function/radindeg.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/pio_2.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<8>>;

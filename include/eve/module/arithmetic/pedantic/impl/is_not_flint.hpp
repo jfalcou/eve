@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core/constant/true.hpp>
 #include <eve/function/is_nez.hpp>
 #include <eve/function/frac.hpp>
 #include <eve/function/pedantic.hpp>

@@ -6,14 +6,14 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/is_not_equal.hpp>
 #include <eve/function/numeric/is_not_equal.hpp>
 #include <eve/function/fuzzy/is_not_equal.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include <eve/module/core/constant/false.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

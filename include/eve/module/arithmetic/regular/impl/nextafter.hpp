@@ -9,7 +9,7 @@
 
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/constant/allbits.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/if_else.hpp>

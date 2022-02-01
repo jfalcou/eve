@@ -7,7 +7,7 @@
 //==================================================================================================
 #include <eve/function/cot.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <cmath>
 
 int main()

@@ -5,9 +5,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/mone.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/minmag.hpp>
 #include <eve/function/pedantic/minmag.hpp>

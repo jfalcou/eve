@@ -5,11 +5,11 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mone.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/function/all.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/pedantic/fnma.hpp>

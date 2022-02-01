@@ -10,8 +10,8 @@
 #include "test.hpp"
 #include <cstddef>
 
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/constant/true.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/wide.hpp>
 

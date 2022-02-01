@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {

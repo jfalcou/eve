@@ -7,10 +7,10 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/function/count_true.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
+#include <eve/module/core/constant/mzero.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/constant/false.hpp>
 #include <eve/platform.hpp>
 #include <eve/logical.hpp>
 

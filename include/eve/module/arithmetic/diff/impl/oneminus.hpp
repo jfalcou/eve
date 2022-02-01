@@ -10,7 +10,7 @@
 #include <eve/function/oneminus.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/diff/plus.hpp>
-#include <eve/constant/mone.hpp>
+#include <eve/module/core/constant/mone.hpp>
 
 namespace eve::detail
 {

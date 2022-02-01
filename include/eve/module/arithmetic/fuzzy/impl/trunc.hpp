@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/convert.hpp>
@@ -18,7 +18,7 @@
 #include <eve/function/is_not_less_equal.hpp>
 #include <eve/function/next.hpp>
 #include <eve/function/fuzzy.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

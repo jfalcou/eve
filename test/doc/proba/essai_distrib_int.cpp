@@ -2,10 +2,10 @@
 #include <eve/module/proba.hpp>
 #include <generator.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/minf.hpp>
 #include <iostream>
 #include <vector>
 #include <random>

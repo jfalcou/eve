@@ -10,8 +10,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/function/ldexp.hpp>
 #include <eve/function/exponent.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/ieee_constant.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/ieee_constant.hpp>
 
 
 namespace eve::detail

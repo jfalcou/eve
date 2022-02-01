@@ -68,7 +68,7 @@ void check_polar()
 //! [simd-test]
 
 #include "test.hpp"
-#include <eve/constant/sqrt_2.hpp>
+#include <eve/module/math/constant/sqrt_2.hpp>
 
 TTS_CASE("Check scalar to_polar")
 {

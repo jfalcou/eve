@@ -6,9 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/mone.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/function/minus.hpp>
 #include <eve/function/saturated/minus.hpp>
 #include <eve/function/diff/minus.hpp>

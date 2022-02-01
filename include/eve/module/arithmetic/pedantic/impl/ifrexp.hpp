@@ -8,12 +8,12 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/exponentmask.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/maxexponentp1.hpp>
-#include <eve/constant/maxexponentm1.hpp>
-#include <eve/constant/nbmantissabits.hpp>
-#include <eve/constant/twotonmb.hpp>
+#include <eve/module/arithmetic/constant/exponentmask.hpp>
+#include <eve/module/core/constant/half.hpp>
+#include <eve/module/arithmetic/constant/maxexponentp1.hpp>
+#include <eve/module/arithmetic/constant/maxexponentm1.hpp>
+#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
+#include <eve/module/arithmetic/constant/twotonmb.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>

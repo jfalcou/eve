@@ -1,9 +1,9 @@
 //#include <eve/function/exponent.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

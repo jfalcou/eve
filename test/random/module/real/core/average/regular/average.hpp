@@ -6,9 +6,9 @@
 */
 //==================================================================================================
 #include <eve/function/average.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 #include <cmath>
 

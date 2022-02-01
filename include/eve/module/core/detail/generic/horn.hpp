@@ -9,8 +9,8 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/function/fma.hpp>
-#include <eve/constant/constant.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/constant.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/detail/abi.hpp>
 
 namespace eve::detail

@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/expm1.hpp>
-#include <eve/constant/minlog.hpp>
-#include <eve/constant/maxlog.hpp>
+#include <eve/module/math/constant/minlog.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
 #include "producers.hpp"
 #include <cmath>
 

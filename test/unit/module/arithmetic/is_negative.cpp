@@ -9,11 +9,11 @@
 #include <eve/function/is_negative.hpp>
 #include <eve/function/bit_or.hpp>
 #include <eve/function/bitofsign.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

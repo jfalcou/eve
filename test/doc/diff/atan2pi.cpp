@@ -1,6 +1,6 @@
 #include <eve/function/diff/atan2pi.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

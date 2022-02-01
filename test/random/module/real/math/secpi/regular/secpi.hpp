@@ -8,10 +8,10 @@
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
 #include <eve/function/secpi.hpp>
 #include <eve/function/abs.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_infinite.hpp>
 #include <eve/function/is_odd.hpp>

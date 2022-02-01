@@ -6,10 +6,10 @@
 */
 //==================================================================================================
 #include <eve/function/sinhcosh.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/log_2.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/math/constant/log_2.hpp>
 #include "producers.hpp"
 #include <cmath>
 

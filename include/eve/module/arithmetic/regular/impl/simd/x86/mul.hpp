@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
 
 namespace eve::detail

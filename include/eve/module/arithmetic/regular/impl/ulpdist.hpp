@@ -15,8 +15,8 @@
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/nb_values.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core/constant/half.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>

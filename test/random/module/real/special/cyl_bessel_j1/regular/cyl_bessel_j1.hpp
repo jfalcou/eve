@@ -8,8 +8,8 @@
 #include <cmath>
 #include <boost/math/special_functions/bessel.hpp>
 #include <eve/function/cyl_bessel_j1.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 #include <cmath>
 

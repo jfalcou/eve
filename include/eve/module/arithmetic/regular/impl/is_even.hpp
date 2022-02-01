@@ -12,10 +12,10 @@
 #include <eve/function/is_eqz.hpp>
 #include <eve/function/is_flint.hpp>
 #include <eve/function/is_not_equal.hpp>
-#include <eve/constant/half.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/module/core/constant/half.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

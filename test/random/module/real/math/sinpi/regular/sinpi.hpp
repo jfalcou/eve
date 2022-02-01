@@ -7,8 +7,8 @@
 //==================================================================================================
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/function/sinpi.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sinpi", EVE_TYPE)

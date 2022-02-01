@@ -9,16 +9,16 @@
 #include "test_distribution.hpp"
 #include "types.hpp"
 #include <eve/arch/fundamental_cardinal.hpp>
-#include <eve/constant/constant.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/constant.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/mzero.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <tuple>
 
 namespace eve::test

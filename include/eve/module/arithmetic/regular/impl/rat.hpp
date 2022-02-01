@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/one.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/fma.hpp>

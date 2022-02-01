@@ -1,4 +1,4 @@
-#include <eve/constant/invlog_2.hpp>
+#include <eve/module/math/constant/invlog_2.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

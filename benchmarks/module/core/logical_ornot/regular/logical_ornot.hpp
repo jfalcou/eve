@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/logical_ornot.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/concept/value.hpp>
 #include <cmath>
 

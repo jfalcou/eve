@@ -9,7 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 
-#include <eve/constant/as_value.hpp>
+#include <eve/module/core/constant/as_value.hpp>
 #include <eve/function/broadcast.hpp>
 
 namespace eve::detail

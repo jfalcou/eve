@@ -7,10 +7,10 @@
 //==================================================================================================
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/function/cscpi.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/math/constant/invpi.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/function/is_flint.hpp>
 #include "producers.hpp"
 #include <cmath>

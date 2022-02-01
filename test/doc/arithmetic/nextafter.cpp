@@ -1,7 +1,7 @@
 //#include <eve/function/nextafter.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

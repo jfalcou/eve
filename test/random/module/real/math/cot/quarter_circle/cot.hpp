@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/cot.hpp>
-#include <eve/constant/pio_4.hpp>
-#include <eve/constant/smallestposval.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
+#include <eve/module/arithmetic/constant/smallestposval.hpp>
 #include "producers.hpp"
 #include <cmath>
 

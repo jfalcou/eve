@@ -14,7 +14,7 @@
 #include <eve/function/minus.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>

@@ -3,9 +3,9 @@
 #include <eve/function/pedantic/absmax.hpp>
 #include <eve/function/numeric/absmax.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

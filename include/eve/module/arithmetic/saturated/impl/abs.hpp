@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>

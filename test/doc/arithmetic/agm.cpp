@@ -1,6 +1,6 @@
 //#include <eve/function/agm.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <vector>
 #include <iostream>

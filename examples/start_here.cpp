@@ -132,7 +132,7 @@ void reverse_parallel_arrays(std::vector<int>& a, std::vector<std::uint8_t>& b)
 
 #include "test.hpp"
 
-#include <eve/constant/pi.hpp>
+#include <eve/module/math/constant/pi.hpp>
 #include <eve/function/abs.hpp>
 
 #include <vector>

@@ -11,8 +11,8 @@
 #include  <eve/module/arithmetic/detail/multi_div.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/function/if_else.hpp>

@@ -7,8 +7,8 @@
 //==================================================================================================
 #include <eve/function/secd.hpp>
 #include <eve/function/radindeg.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include <cmath>
 
 int main()

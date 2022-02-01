@@ -1,5 +1,5 @@
 #include <eve/function/countr_one.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

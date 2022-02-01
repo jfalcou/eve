@@ -22,9 +22,9 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/saturated/inc.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/mzero.hpp>
+#include <eve/module/core/constant/allbits.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/mzero.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/value.hpp>
 

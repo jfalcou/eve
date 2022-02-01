@@ -13,7 +13,7 @@
 #include <eve/function/sqr.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/constant/half.hpp>
+#include <eve/module/core/constant/half.hpp>
 
 namespace eve::detail
 {

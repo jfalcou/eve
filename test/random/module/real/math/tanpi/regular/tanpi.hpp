@@ -10,12 +10,12 @@
 #include <eve/function/tanpi.hpp>
 #include <eve/function/abs.hpp>
 #include <eve/function/trunc.hpp>
-#include <eve/constant/invpi.hpp>
+#include <eve/module/math/constant/invpi.hpp>
 #include <eve/function/is_infinite.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/function/is_odd.hpp>
 #include "producers.hpp"
 

@@ -7,23 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/module/core/constant/constant.hpp>
+#include <eve/detail/implementation.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/as.hpp>
+#include <type_traits>
 
 namespace eve
 {
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var oneosqrteps
+  //! @var logeps
   //!
-  //! @brief Callable object computing the inverse of the square root of the machine epsilon.
+  //! @brief Callable object computing the logaritm of the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/oneosqrteps.hpp>`
+  //! **Required header:** `#include <eve/function/logeps.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the oneosqrteps constant                          |
+  //! | `operator()` | Computes the logeps constant                               |
   //!
   //! ---
   //!
@@ -37,28 +41,27 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::oneosqrteps(as<T>())` is semantically equivalent to
-  //! `eve::rec(eve::sqrt(eve::eps(as<T>())))`
+  //! the call `eve::logeps(as<T>())` is semantically equivalent to `eve::log(eve::eps(as<T>()))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneosqrteps.cpp}
+  //! @godbolt{doc/arithmetic/logeps.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(oneosqrteps_, oneosqrteps);
+  EVE_MAKE_CALLABLE(logeps_, logeps);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto oneosqrteps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X453504F3U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4190000000000000UL>();
+         if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0XC17F1402U>();
+    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0XC04205966F2B4F12ULL>();
     }
   }
 }

@@ -9,7 +9,7 @@
 
 #include <eve/function/derivative.hpp>
 #include <eve/function/min.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/module/arithmetic/diff/detail/minmax_kernel.hpp>
 
 

@@ -8,8 +8,8 @@
 #include <eve/function/sinpicospi.hpp>
 #include <eve/function/cospi.hpp>
 #include <eve/function/sinpi.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 
 TTS_CASE_TPL("wide random check on sinpicospipi", EVE_TYPE)
