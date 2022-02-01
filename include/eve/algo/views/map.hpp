@@ -12,106 +12,12 @@
 #include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/conditional.hpp>
+#include <eve/traits/as_wide.hpp>
 
 #include <eve/function/unalign.hpp>
 
 namespace eve::algo::views
 {
-  //================================================================================================
-  //! @addtogroup eve.algo.views
-  //! @{
-  //!    @struct map_iterator
-  //!    @brief An iterator for `map`, `map_convert`.
-  //!    Should be created with one of those functions.
-  //!    If one of the operations is not avaliable, it's `eve::algo::nothing_t`.
-  //!
-  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
-  //!
-  //!    Has a shorthand `eve::views::map_iterator` in `<eve/views/map.hpp>`
-  //! @}
-  //================================================================================================
-  template <relaxed_iterator I, typename LoadOp, typename StoreOp>
-  struct map_iterator;
-
-  //================================================================================================
-  //! @addtogroup eve.algo.views
-  //! @{
-  //!    @struct map_range
-  //!    @brief A range for `map`, `map_covnert`.
-  //!    Should be created via one of those functions.
-  //!    If the store operation is not avaliable, it's `eve::algo::nothing_t`.
-  //!
-  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
-  //!
-  //!    Has a shorthand `eve::views::map_iterator` in `<eve/views/map.hpp>`
-  //! @}
-  //================================================================================================
-  template <non_owning_range R, typename LoadOp, typename StoreOp>
-  struct map_range;
-
-  //================================================================================================
-  //! @addtogroup eve.algo.views
-  //! @{
-  //!    @var map_convert
-  //!    @brief Given a relaxed iterator/range and 2 operations return
-  //!    relaxed iterator/range that applies the first operation before load
-  //!    and the second operation before store.
-  //!
-  //!    operations has to be a template and accept scalar and all width wides for the value type
-  //!    of the underlying iterator/range.
-  //!
-  //!    store operation, for conviniece accepts the as<underlying_type> as a second parameter.
-  //!    (this allows to define load/store ops without knowing the underlying iterator).
-  //!
-  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
-  //!
-  //!    Has a shorthand `eve::views::map_convert` in `<eve/views/map.hpp>`
-  //! @}
-  //================================================================================================
-  struct
-  {
-    template <typename Wrapped, typename LoadOp, typename StoreOp>
-    auto operator()(Wrapped &&wrapped, LoadOp load_op, StoreOp store_op) const
-    {
-      if constexpr( relaxed_range<Wrapped> )
-      {
-        auto rng = range_ref(std::forward<Wrapped>(wrapped));
-        using Rng = decltype(rng);
-
-        return map_range<Rng, LoadOp, StoreOp>{rng, load_op, store_op};
-      }
-      else
-      {
-        using I = std::remove_cvref_t<Wrapped>;
-        return map_iterator<I, LoadOp, StoreOp>(wrapped, load_op, store_op);
-      }
-    }
-  } map_convert;
-
-  //================================================================================================
-  //! @addtogroup eve.algo.views
-  //! @{
-  //!    @var map
-  //!    @brief Given a relaxed iterator/range and an operation return
-  //!    relaxed iterator/range that has no store and applies provided operation on read/load.
-  //!
-  //!    operation has to be a template and accept scalar and all width wides for the value type
-  //!    of the underlying iterator/range.
-  //!
-  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
-  //!
-  //!    Has a shorthand `eve::views::map` in `<eve/views/map.hpp>`
-  //! @}
-  //================================================================================================
-  struct
-  {
-    template <typename Wrapped, typename LoadOp>
-    auto operator()(Wrapped &&wrapped, LoadOp load_op) const
-    {
-      return map_convert(std::forward<Wrapped>(wrapped), load_op, nothing_t{});
-    }
-  } inline constexpr map;
-
   namespace detail
   {
     template <typename LoadOp, typename Base>
@@ -139,7 +45,148 @@ namespace eve::algo::views
     }
   }
 
-  template <non_owning_range R, typename LoadOp, typename StoreOp>
+  //================================================================================================
+  //! @addtogroup algo_concepts
+  //! @{
+  //!  @struct map_load_op
+  //!  @brief requirement for the operation applied on read/load in map.
+  //!         should work on both scalar and wide for the underlying iterator
+  //!         for any cardinal.
+  //!
+  //!   **Required header:** #include <eve/algo/views/map.hpp>
+  //!
+  //!   Has a shorthand `eve::views::map_load_op` in `<eve/views/map.hpp>`
+  //!
+  //! @}
+  //================================================================================================
+
+  template <typename Op, typename Base>
+  concept map_load_op = std::copyable<Op>
+    && std::regular_invocable<Op, value_type_t<Base>>
+    && std::regular_invocable<Op, as_wide_t<value_type_t<Base>>>;
+
+  //================================================================================================
+  //! @addtogroup algo_concepts
+  //! @{
+  //!  @struct map_store_op
+  //!  @brief requirement for the operation applied on store in map.
+  //!         should work on both scalar and wide for the underlying iterator
+  //!         for any cardinal.
+  //!
+  //!         accepts the `as<value_type_t<Base>>` for convinience
+  //!         (so that it can be defined without knowing the underlying type).
+  //!
+  //!   **Required header:** #include <eve/algo/views/map.hpp>
+  //!
+  //!   Has a shorthand `eve::views::map_store_op` in `<eve/views/map.hpp>`
+  //! @}
+  //================================================================================================
+
+  template <typename Op, typename LoadOp, typename Base>
+  concept map_store_op = std::same_as<nothing_t, Op> || (
+       std::copyable<Op>
+    && map_load_op<LoadOp, Base>
+    && std::regular_invocable<Op, detail::map_value_type_t<LoadOp, Base>, as<value_type_t<Base>>>
+    && std::regular_invocable<Op, as_wide_t<detail::map_value_type_t<LoadOp, Base>>, as<value_type_t<Base>>>);
+
+  //================================================================================================
+  //! @addtogroup views
+  //! @{
+  //!    @struct map_iterator
+  //!    @brief An iterator for `map`, `map_convert`.
+  //!    Should be created with one of those functions.
+  //!    If one of the operations is not avaliable, it's `eve::algo::nothing_t`.
+  //!
+  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::map_iterator` in `<eve/views/map.hpp>`
+  //! @}
+  //================================================================================================
+  template <relaxed_iterator I, map_load_op<I> LoadOp, map_store_op<LoadOp, I> StoreOp>
+  struct map_iterator;
+
+  //================================================================================================
+  //! @addtogroup views
+  //! @{
+  //!    @struct map_range
+  //!    @brief A range for `map`, `map_covnert`.
+  //!    Should be created via one of those functions.
+  //!    If the store operation is not avaliable, it's `eve::algo::nothing_t`.
+  //!
+  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::map_iterator` in `<eve/views/map.hpp>`
+  //! @}
+  //================================================================================================
+  template <non_owning_range R, map_load_op<R> LoadOp, map_store_op<LoadOp, R> StoreOp>
+  struct map_range;
+
+  //================================================================================================
+  //! @addtogroup views
+  //! @{
+  //!    @var map_convert
+  //!    @brief Given a relaxed iterator/range and 2 operations return
+  //!    relaxed iterator/range that applies the first operation before load
+  //!    and the second operation before store.
+  //!
+  //!    operations has to be a template and accept scalar and all width wides for the value type
+  //!    of the underlying iterator/range.
+  //!
+  //!    store operation, for conviniece accepts the as<underlying_type> as a second parameter.
+  //!    (this allows to define load/store ops without knowing the underlying iterator).
+  //!
+  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::map_convert` in `<eve/views/map.hpp>`
+  //! @}
+  //================================================================================================
+  struct
+  {
+    template <typename Wrapped,
+              map_load_op<std::remove_cvref_t<Wrapped>> LoadOp,
+              map_store_op<LoadOp, std::remove_cvref_t<Wrapped>> StoreOp>
+    auto operator()(Wrapped &&wrapped, LoadOp load_op, StoreOp store_op) const
+    {
+      if constexpr( relaxed_range<Wrapped> )
+      {
+        auto rng = range_ref(std::forward<Wrapped>(wrapped));
+        using Rng = decltype(rng);
+
+        return map_range<Rng, LoadOp, StoreOp>{rng, load_op, store_op};
+      }
+      else
+      {
+        using I = std::remove_cvref_t<Wrapped>;
+        return map_iterator<I, LoadOp, StoreOp>(wrapped, load_op, store_op);
+      }
+    }
+  } map_convert;
+
+  //================================================================================================
+  //! @addtogroup views
+  //! @{
+  //!    @var map
+  //!    @brief Given a relaxed iterator/range and an operation return
+  //!    relaxed iterator/range that has no store and applies provided operation on read/load.
+  //!
+  //!    operation has to be a template and accept scalar and all width wides for the value type
+  //!    of the underlying iterator/range.
+  //!
+  //!    **Required header:** `#incude <eve/algo/views/map.hpp>`
+  //!
+  //!    Has a shorthand `eve::views::map` in `<eve/views/map.hpp>`
+  //! @}
+  //================================================================================================
+  struct
+  {
+    template <typename Wrapped, map_load_op<std::remove_cvref_t<Wrapped>> LoadOp>
+    auto operator()(Wrapped &&wrapped, LoadOp load_op) const
+    {
+      return map_convert(std::forward<Wrapped>(wrapped), load_op, nothing_t{});
+    }
+  } inline constexpr map;
+
+  template <non_owning_range R, map_load_op<R> LoadOp, map_store_op<LoadOp, R> StoreOp>
   struct map_range
   {
     R base;
@@ -167,7 +214,7 @@ namespace eve::algo::views
     }
   };
 
-  template <relaxed_iterator I, typename LoadOp, typename StoreOp>
+  template <relaxed_iterator I, map_load_op<I> LoadOp, map_store_op<LoadOp, I> StoreOp>
   struct map_iterator : operations_with_distance
   {
     using value_type = detail::map_value_type_t<LoadOp, I>;

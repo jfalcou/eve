@@ -14,6 +14,13 @@ namespace eve::views
   //================================================================================================
   //! @addtogroup eve.views
   //! @{
+  //!
+  //!    @var map_load_op
+  //!    @brief a shorthand for `eve::algo::views::map_load_op`.
+  //!
+  //!    @var map_store_op
+  //!    @brief a shorthand for `eve::algo::views::map_store_op`.
+  //!
   //!    @var map
   //!    @brief a shorthand for `eve::algo::views::map`.
   //!
@@ -27,7 +34,8 @@ namespace eve::views
   //!    @brief a shorthand for `eve::algo::views::map_range`
   //! @}
   //================================================================================================
-
+  using eve::algo::views::map_load_op;
+  using eve::algo::views::map_store_op;
   using eve::algo::views::map;
   using eve::algo::views::map_convert;
   using eve::algo::views::map_iterator;
