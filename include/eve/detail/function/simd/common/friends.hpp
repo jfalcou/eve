@@ -9,8 +9,8 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/constant/allbits.hpp>
-#include <eve/constant/signmask.hpp>
+#include <eve/module/core/constant/allbits.hpp>
+#include <eve/module/core/constant/signmask.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
