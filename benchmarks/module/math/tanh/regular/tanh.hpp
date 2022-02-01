@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/function/tanh.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/minlog.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/math/constant/minlog.hpp>
 #include <cmath>
 
 int main()
