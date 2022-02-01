@@ -1,4 +1,4 @@
-#include <eve/constant/invsqrt_2.hpp>
+#include <eve/module/math/constant/invsqrt_2.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

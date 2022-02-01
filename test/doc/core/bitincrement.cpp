@@ -1,4 +1,4 @@
-#include <eve/constant/bitincrement.hpp>
+#include <eve/module/arithmetic/constant/bitincrement.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

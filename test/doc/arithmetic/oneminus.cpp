@@ -2,10 +2,10 @@
 #include <eve/module/arithmetic.hpp>
 #include <eve/function/saturated/oneminus.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/arithmetic/constant/mindenormal.hpp>
 #include <iostream>
 
 using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;

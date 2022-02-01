@@ -1,4 +1,4 @@
-#include <eve/constant/log_2.hpp>
+#include <eve/module/math/constant/log_2.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

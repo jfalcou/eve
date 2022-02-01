@@ -1,4 +1,4 @@
-#include <eve/constant/minlog2.hpp>
+#include <eve/module/math/constant/minlog2.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

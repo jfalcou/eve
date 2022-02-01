@@ -1,7 +1,7 @@
 //#include <eve/function/frac.hpp>
 #include <eve/module/arithmetic.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

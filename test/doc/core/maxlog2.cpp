@@ -1,4 +1,4 @@
-#include <eve/constant/maxlog2.hpp>
+#include <eve/module/math/constant/maxlog2.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
