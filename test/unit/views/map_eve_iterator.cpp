@@ -9,6 +9,9 @@
 
 struct load_op
 {
+  load_op() = delete;
+  load_op(int) {}
+
   auto operator()(auto x) const
   {
     return eve::convert(x, eve::as<double>{}) * 2.0;
@@ -17,6 +20,9 @@ struct load_op
 
 struct store_op
 {
+  store_op() = delete;
+  store_op(int) {}
+
   auto operator()(auto x, auto tgt) const
   {
     return eve::convert(x / 2.0, tgt);
@@ -29,14 +35,14 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
   std::iota(data.begin(), data.end(), 0);
 
-  auto values = load_op{}(T{[](int i, int) { return i; }});
+  auto values = load_op{0}(T{[](int i, int) { return i; }});
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, decltype(v){0}); };
 
   auto run_test_one_pair = [&](auto f_, auto l_) {
-    auto map_r = eve::views::map_convert(eve::algo::as_range(f_, l_), load_op{}, store_op{});
+    auto map_r = eve::views::map_convert(eve::algo::as_range(f_, l_), load_op{0}, store_op{0});
     algo_test::iterator_sentinel_test(map_r.begin(), map_r.end(), values, replace);
 
-    auto map_read_only = eve::views::map(eve::algo::as_range(f_, l_), load_op{});
+    auto map_read_only = eve::views::map(eve::algo::as_range(f_, l_), load_op{0});
     algo_test::iterator_sentinel_test(map_read_only.begin(), map_read_only.end(), values, replace);
   };
 
@@ -59,8 +65,8 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
 
     if constexpr (!std::is_const_v<U>)
     {
-      auto map_a_f = eve::views::map_convert(a_f, load_op{}, store_op{});
-      auto map_u_f = eve::views::map_convert(u_f, load_op{}, store_op{});
+      auto map_a_f = eve::views::map_convert(a_f, load_op{0}, store_op{0});
+      auto map_u_f = eve::views::map_convert(u_f, load_op{0}, store_op{0});
 
       algo_test::writeable_readable_iterator(map_a_f, values, replace);
       algo_test::writeable_readable_iterator(map_u_f, values, replace);
