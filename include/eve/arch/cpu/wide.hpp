@@ -148,6 +148,7 @@ namespace eve
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
+    requires requires(S v) { static_cast<Type>(v); }
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
                             : storage_base(detail::make(eve::as<wide>{}, static_cast<Type>(v)))
     {}
@@ -782,6 +783,7 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator==(wide v, S w) noexcept
     {
       return v == wide{w};
@@ -789,6 +791,7 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator==(S v, wide w) noexcept
     {
       return w == v;
@@ -802,6 +805,7 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator!=(wide v, S w) noexcept
     {
       return v != wide{w};
@@ -809,6 +813,7 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept
     {
       return w != v;
