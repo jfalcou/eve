@@ -67,8 +67,13 @@ TTS_CASE("eve::views::map, preprocess")
   using map_ai = eve::views::map_iterator<ai, load_op, store_op>;
 
   TTS_TYPE_IS(eve::value_type_t<map_ui>, double);
+  TTS_TYPE_IS(eve::algo::types_to_consider_for_t<map_ui>, (kumi::tuple<double, int>));
 
   eve::views::map_range mapped = eve::views::map_convert(eve::algo::as_range(ap{}, up{}), load_op{}, store_op{});
+
+  TTS_TYPE_IS(eve::value_type_t<decltype(mapped)>, double);
+  TTS_TYPE_IS(eve::algo::types_to_consider_for_t<decltype(mapped)>, (kumi::tuple<double, int>));
+
   auto processed = eve::algo::preprocess_range(eve::algo::traits{}, mapped);
 
   TTS_TYPE_IS(decltype(processed.begin()), map_ai);

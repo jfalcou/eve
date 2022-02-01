@@ -171,6 +171,7 @@ namespace eve::algo::views
   struct map_iterator : operations_with_distance
   {
     using value_type = detail::map_value_type_t<LoadOp, I>;
+    using types_to_consider = typename detail::map_types_to_consider<LoadOp, I>;
 
     // need to define this to workaround a clang bug.
     using vw_type    = eve::as_wide_t<value_type, iterator_cardinal_t<I>>;
