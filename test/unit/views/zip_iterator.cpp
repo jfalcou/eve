@@ -190,12 +190,7 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
   using t1 = std::int8_t;
   using t2 = eve::element_type_t<T>;
   using t3 = std::uint64_t;
-  constexpr std::ptrdiff_t test_cardinal = []{
-    if constexpr ( eve::current_api != eve::avx512           ) return T::size();
-    if constexpr ( T::size() <= eve::expected_cardinal_v<t3> ) return T::size();
-    return eve::expected_cardinal_v<t3>;
-  }();
-  using N  = eve::fixed<test_cardinal>;
+  using N  = eve::fixed<T::size()>;
 
   using tuple_t = kumi::tuple<t1, t2, t3>;
 

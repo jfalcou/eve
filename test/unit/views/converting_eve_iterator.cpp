@@ -21,12 +21,9 @@ EVE_TEST_TYPES("Check converting_iterator", algo_test::selected_types)
     algo_test::iterator_sentinel_test(eve::views::convert(f, eve::as<char>{}),
                                       eve::views::convert(l, eve::as<char>{}),
                                       char_values, replace);
-    if constexpr (eve::current_api != eve::avx512 || !eve::has_aggregated_abi_v<decltype(int64_values)>)
-    {
-      algo_test::iterator_sentinel_test(eve::views::convert(f, eve::as<std::uint64_t>{}),
-                                        eve::views::convert(l, eve::as<std::uint64_t>{}),
-                                        int64_values, replace);
-    }
+    algo_test::iterator_sentinel_test(eve::views::convert(f, eve::as<std::uint64_t>{}),
+                                      eve::views::convert(l, eve::as<std::uint64_t>{}),
+                                      int64_values, replace);
   };
 
   auto run_test_writeable = [&](auto f) {
