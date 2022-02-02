@@ -124,7 +124,7 @@ namespace eve::detail
       {
         if constexpr( std::same_as<Constant, callable_one_> )
         {
-          return -bit_ornot(-u, bit_mask(convert(cond, cvt{})));
+          return -bit_ornot(U(-u), bit_mask(convert(cond, cvt{})));
         }
         else if constexpr( std::same_as<Constant, callable_mone_> )
         {
