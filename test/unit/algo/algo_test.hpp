@@ -41,11 +41,9 @@ namespace algo_test
     , eve::wide<kumi::tuple<std::int32_t, std::uint16_t>>
     , eve::wide<kumi::tuple<float, double>, eve::fixed<2>>
     , eve::wide<kumi::tuple<float, double>>
-#if !defined(SPY_SIMD_IS_X86_AVX512)
     , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>,
                 eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
                 >
-#endif
     > selected_pairs_types;
 
 
@@ -142,7 +140,7 @@ namespace algo_test
 
   template <typename N>
   auto select_offsets() {
-    if constexpr ( N{}() <= 8 )
+    if constexpr ( N{}() <= 7 )
     {
       std::array<int, N{}()> res;
       std::iota(res.begin(), res.end(), 0);
@@ -150,7 +148,7 @@ namespace algo_test
     }
     else
     {
-      std::array<int, 8> res;
+      std::array<int, 7> res;
       std::iota(res.begin(), res.end(), 0);
       res.back() = N{}();
       return res;
