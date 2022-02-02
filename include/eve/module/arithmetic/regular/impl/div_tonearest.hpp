@@ -15,6 +15,7 @@
 #include <eve/function/dec.hpp>
 #include <eve/function/fnma.hpp>
 #include <eve/function/is_ltz.hpp>
+#include <eve/function/minus.hpp>
 #include <eve/function/nearest.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/saturate.hpp>
