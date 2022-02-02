@@ -38,22 +38,17 @@ namespace eve
 
   namespace detail
   {
+    template <logical_simd_value Logical>
+    Logical to_logical(eve::top_bits<Logical> mmask);
+
     template<typename T, relative_conditional_expr C>
     EVE_FORCEINLINE as_logical_t<T> to_non_wide_logical(C cond, eve::as<T> const&)
     {
       using type  = as_logical_t<T>;
 
-      auto value = top_bits<type>(cond).storage;
+      auto value = top_bits<type>(cond);
 
-      if constexpr(has_aggregated_abi_v<T>)
-      {
-        using sub_t = typename type::template rescale<typename cardinal_t<T>::split_type>;
-        return type( sub_t(value[0].storage), sub_t(value[1].storage));
-      }
-      else
-      {
-        return type{value};
-      }
+      return detail::to_logical(value);
     }
   }
 
