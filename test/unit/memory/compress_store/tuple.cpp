@@ -19,8 +19,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
-  // No aggregated on avx512 support
-  using N = eve::fixed< eve::current_api == eve::avx512 ? 8 : T::size() >;
+  using N   = eve::fixed<T::size()>;
   using e_t = eve::element_type_t<T>;
   using s_t = tuple_t<e_t>;
   using w_t = eve::wide<s_t, N>;

@@ -38,22 +38,17 @@ namespace eve
 
   namespace detail
   {
+    template <logical_simd_value Logical>
+    Logical to_logical(eve::top_bits<Logical> mmask);
+
     template<typename T, relative_conditional_expr C>
     EVE_FORCEINLINE as_logical_t<T> to_non_wide_logical(C cond, eve::as<T> const&)
     {
       using type  = as_logical_t<T>;
 
-      auto value = top_bits<type>(cond).storage;
+      auto value = top_bits<type>(cond);
 
-      if constexpr(has_aggregated_abi_v<T>)
-      {
-        using sub_t = typename type::template rescale<typename cardinal_t<T>::split_type>;
-        return type( sub_t(value[0].storage), sub_t(value[1].storage));
-      }
-      else
-      {
-        return type{value};
-      }
+      return detail::to_logical(value);
     }
   }
 
@@ -91,6 +86,8 @@ namespace eve
     {
       return or_<C,T>{static_cast<C const&>(*this), v};
     }
+
+    constexpr C drop_alternative() const { return *this; }
 
     constexpr auto map_alternative(auto op) const
     {
@@ -689,6 +686,21 @@ namespace eve
   constexpr EVE_FORCEINLINE ignore_extrema operator&&( ignore_last b, ignore_first a) noexcept
   {
     return a && b;
+  }
+
+  //================================================================================================
+  //! @brief Returns a conditional without an alternative
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //!
+  //! @param  c   eve::conditional_expr
+  //================================================================================================
+
+  template <eve::relative_conditional_expr C>
+  constexpr auto drop_alternative(C c) {
+    if constexpr (!C::has_alternative) return c;
+    else                               return c.drop_alternative();
   }
 
   //================================================================================================
