@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/saturated.hpp>
 #include <eve/function/if_else.hpp>
@@ -14,7 +15,6 @@
 #include <eve/function/next.hpp>
 #include <eve/function/saturated/sub.hpp>
 #include <eve/function/saturated/dec.hpp>
-#include <eve/module/core/constant/allbits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

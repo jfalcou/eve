@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/derivative.hpp>
 

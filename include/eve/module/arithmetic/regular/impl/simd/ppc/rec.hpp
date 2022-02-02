@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <eve/function/raw.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/function/fnma.hpp>

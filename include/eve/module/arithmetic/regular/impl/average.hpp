@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/constant/half.hpp>
 #include <eve/function/add.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/function/inc.hpp>

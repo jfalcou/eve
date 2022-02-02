@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
 #include <eve/function/saturated.hpp>
@@ -22,9 +23,6 @@
 #include <eve/function/is_nan.hpp>
 #include <eve/function/saturated/inc.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/module/core/constant/allbits.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/constant/mzero.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/value.hpp>
 

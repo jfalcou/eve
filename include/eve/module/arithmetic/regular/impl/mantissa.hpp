@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/platform.hpp>
 #include <eve/function/bit_and.hpp>
@@ -16,7 +17,6 @@
 #include <eve/function/logical_or.hpp>
 #include <eve/function/logical_not.hpp>
 #include <eve/module/arithmetic/constant/mantissamask.hpp>
-#include <eve/module/core/constant/one.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

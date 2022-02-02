@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_eqz.hpp>
-#include <eve/module/core/constant/mone.hpp>
 
 namespace eve::detail
 {

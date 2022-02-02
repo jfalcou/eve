@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/constant/signmask.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/bitofsign.hpp>
 #include <eve/function/bit_or.hpp>

@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/module/core/constant/false.hpp>
 #include <eve/function/is_less.hpp>
 
 namespace eve::detail

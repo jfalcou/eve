@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/core/constant/half.hpp>
 #include <eve/function/fma.hpp>
 #include <eve/forward.hpp>
 #include <eve/detail/skeleton.hpp>

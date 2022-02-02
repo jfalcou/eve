@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/function/converter.hpp>
 #include <eve/function/diff/rec.hpp>
 #include <eve/function/derivative.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/rec.hpp>
-#include <eve/module/core/constant/mone.hpp>
 
 namespace eve::detail
 {

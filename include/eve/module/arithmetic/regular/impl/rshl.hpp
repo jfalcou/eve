@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_gtz.hpp>
@@ -14,7 +15,6 @@
 #include <eve/function/minus.hpp>
 #include <eve/function/shr.hpp>
 #include <eve/function/shl.hpp>
-#include <eve/module/core/constant/zero.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
