@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
@@ -14,9 +15,9 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/logical_and.hpp>
+#include <eve/module/arithmetic/regular/is_finite.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/arithmetic/regular/logical_and.hpp>
 
 namespace eve::detail
 {
