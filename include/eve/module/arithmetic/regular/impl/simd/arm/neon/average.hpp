@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
 #include <eve/forward.hpp>
 #include <type_traits>
 
