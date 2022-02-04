@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_not_nan.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/numeric.hpp>
+#include <eve/module/arithmetic/regular/is_not_nan.hpp>
+#include <eve/module/arithmetic/regular/logical_or.hpp>
+#include <eve/module/arithmetic/regular/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
