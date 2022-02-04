@@ -37,6 +37,7 @@
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/first_true.hpp>
+#include <eve/module/core/regular/fuzzy.hpp>
 #include <eve/module/core/regular/gather.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
