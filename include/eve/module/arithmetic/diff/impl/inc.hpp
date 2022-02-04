@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/inc.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 
 namespace eve::detail
