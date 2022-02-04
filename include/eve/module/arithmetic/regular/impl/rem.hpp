@@ -7,20 +7,18 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/binarize_not.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/next.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_unordered.hpp>
-#include <eve/function/decorator.hpp>
-#include <eve/function/trunc.hpp>
+#include <eve/module/arithmetic/regular/binarize_not.hpp>
+#include <eve/module/arithmetic/regular/div.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>
+#include <eve/module/arithmetic/regular/fnma.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_unordered.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/apply_over.hpp>
 

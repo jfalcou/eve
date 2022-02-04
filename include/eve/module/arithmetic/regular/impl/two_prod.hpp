@@ -7,14 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_not_finite.hpp>
+#include <eve/module/arithmetic/regular/is_not_finite.hpp>
 #include <eve/function/two_split.hpp>
-#include <eve/platform.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

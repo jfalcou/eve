@@ -8,9 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/arithmetic/regular/rec.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail

@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_finite.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/logical_not.hpp>
+#include <eve/module/arithmetic/regular/is_finite.hpp>
+#include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/arithmetic/regular/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <type_traits>
 

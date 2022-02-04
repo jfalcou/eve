@@ -8,8 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/derivative.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail

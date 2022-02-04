@@ -8,9 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/diff/min.hpp>
-#include <eve/function/diff/max.hpp>
+#include <eve/module/arithmetic/diff/min.hpp>
+#include <eve/module/arithmetic/diff/max.hpp>
 
 namespace eve::detail
 {

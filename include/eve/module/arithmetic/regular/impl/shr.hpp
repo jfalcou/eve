@@ -6,6 +6,9 @@
 */
 //==================================================================================================
 #pragma once
+
+
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/assert.hpp>

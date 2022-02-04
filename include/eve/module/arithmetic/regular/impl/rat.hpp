@@ -11,16 +11,14 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/none.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/round.hpp>
-#include <eve/function/saturated/abs.hpp>
-#include <eve/function/sign.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_infinite.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/arithmetic/regular/rec.hpp>
+#include <eve/module/arithmetic/regular/round.hpp>
+#include <eve/module/arithmetic/saturated/abs.hpp>
+#include <eve/module/arithmetic/regular/sign.hpp>
 
 namespace eve::detail
 {

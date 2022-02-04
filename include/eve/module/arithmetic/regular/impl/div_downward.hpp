@@ -7,18 +7,16 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/fms.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_gtz.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/saturate.hpp>
+#include <eve/module/arithmetic/regular/floor.hpp>
+#include <eve/module/arithmetic/regular/fms.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_gtz.hpp>
+#include <eve/module/arithmetic/regular/is_lez.hpp>
+#include <eve/module/arithmetic/regular/saturate.hpp>
 
 namespace eve::detail
 {
