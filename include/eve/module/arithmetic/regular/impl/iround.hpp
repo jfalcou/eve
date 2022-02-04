@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -14,7 +15,6 @@
 #include <eve/function/ifloor.hpp>
 #include <eve/function/inearest.hpp>
 #include <eve/function/itrunc.hpp>
-#include <eve/function/roundings.hpp>
 
 namespace eve::detail
 {
@@ -44,4 +44,3 @@ namespace eve::detail
   }
 
 }
-

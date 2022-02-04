@@ -7,14 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/bit_andnot.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

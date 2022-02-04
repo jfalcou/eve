@@ -9,9 +9,9 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/next.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
+#include <eve/module/arithmetic/regular/next.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

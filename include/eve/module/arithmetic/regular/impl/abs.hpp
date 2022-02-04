@@ -12,8 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_andnot.hpp>
-#include <eve/function/max.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 
 #include <concepts>
 

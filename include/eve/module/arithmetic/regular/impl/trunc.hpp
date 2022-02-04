@@ -9,11 +9,8 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/is_not_less_equal.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

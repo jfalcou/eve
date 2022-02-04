@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/arithmetic/regular/is_not_finite.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
 #include <eve/module/arithmetic/constant/exponentmask.hpp>
 #include <eve/module/arithmetic/constant/maxexponent.hpp>
 #include <eve/module/arithmetic/constant/nbmantissabits.hpp>

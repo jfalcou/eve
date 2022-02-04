@@ -27,11 +27,13 @@
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/compress_store.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/countl_one.hpp>
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/first_true.hpp>
@@ -49,9 +51,11 @@
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/module/core/regular/plain.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/module/core/regular/raw.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/regular.hpp>
 #include <eve/module/core/regular/reverse.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>

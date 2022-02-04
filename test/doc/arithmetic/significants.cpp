@@ -1,5 +1,5 @@
 //#include <eve/function/significants.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/arithmetic/constant/mindenormal.hpp>
 #include <eve/module/core/constant/minf.hpp>

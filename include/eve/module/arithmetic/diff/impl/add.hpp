@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/derivative.hpp>
+#include <eve/module/arithmetic/regular/add.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail

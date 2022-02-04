@@ -7,13 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
 
