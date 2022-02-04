@@ -7,13 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/fuzzy.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/saturated/next.hpp>
-#include <eve/function/saturated/add.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
+#include <eve/module/arithmetic/regular/saturated/next.hpp>
+#include <eve/module/arithmetic/regular/saturated/add.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/module/arithmetic/constant/eps.hpp>
