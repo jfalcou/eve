@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/function/numeric/absmax.hpp>
+#include <eve/module/arithmetic/numeric/absmax.hpp>
 
 
 namespace eve::detail

@@ -12,7 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/numeric/fnms.hpp>
+#include <eve/module/arithmetic/numeric/fnms.hpp>
 
 #include <type_traits>
 

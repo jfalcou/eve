@@ -9,10 +9,10 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/odule/arithmetic/regular/abs.hpp>
-#include <eve/odule/arithmetic/regular/is_not_less_equal.hpp>
-#include <eve/odule/arithmetic/saturated/next.hpp>
-#include <eve/odule/arithmetic/saturated/add.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
+#include <eve/module/arithmetic/saturated/next.hpp>
+#include <eve/module/arithmetic/saturated/add.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/module/arithmetic/constant/eps.hpp>

@@ -9,8 +9,8 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/odule/arithmetic/regular/abs.hpp>
-#include <eve/odule/arithmetic/regular/is_not_less.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/is_not_less.hpp>
 #include <eve/module/arithmetic/saturated/prev.hpp>
 #include <eve/module/arithmetic/saturated/sub.hpp>
 #include <eve/concept/value.hpp>

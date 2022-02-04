@@ -7,18 +7,16 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_nan.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/function/numeric/min.hpp>
-#include <eve/function/numeric.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/arithmetic/numeric/min.hpp>
 #include <eve/platform.hpp>
 
 #include <type_traits>
