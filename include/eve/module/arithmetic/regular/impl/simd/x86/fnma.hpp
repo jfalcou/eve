@@ -7,12 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
 
 #include <type_traits>
 
