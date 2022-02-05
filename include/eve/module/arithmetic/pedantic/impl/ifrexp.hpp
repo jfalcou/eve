@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/arithmetic/constant/exponentmask.hpp>
 #include <eve/module/arithmetic/constant/maxexponentp1.hpp>
@@ -17,15 +18,12 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/bit_notand.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/function/is_denormal.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/is_not_finite.hpp>
-#include <eve/function/logical_notand.hpp>
-#include <eve/function/pedantic.hpp>
+#include <eve/module/arithmetic/regular/add.hpp>
+#include <eve/module/arithmetic/regular/is_denormal.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/arithmetic/regular/is_not_finite.hpp>
+#include <eve/module/arithmetic/regular/logical_notand.hpp>
 
 namespace eve::detail
 {

@@ -7,14 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/pedantic/signnz.hpp>
-#include <eve/function/pedantic.hpp>
-
+#include <eve/module/arithmetic/pedantic/signnz.hpp>
 #include <concepts>
 
 namespace eve::detail

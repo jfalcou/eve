@@ -7,22 +7,19 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/ldexp.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/arithmetic/regular/ldexp.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/exponent.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/maxmag.hpp>
-#include <eve/function/minmag.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/two_add.hpp>
-#include <eve/function/two_prod.hpp>
+#include <eve/module/arithmetic/regular/exponent.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/arithmetic/regular/maxmag.hpp>
+#include <eve/module/arithmetic/regular/minmag.hpp>
+#include <eve/module/arithmetic/regular/two_add.hpp>
+#include <eve/module/arithmetic/regular/two_prod.hpp>
 
 #include <type_traits>
 

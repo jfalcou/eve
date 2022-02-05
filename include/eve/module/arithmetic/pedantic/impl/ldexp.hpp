@@ -7,19 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
 #include <eve/module/arithmetic/constant/maxexponentp1.hpp>
 #include <eve/module/arithmetic/constant/minexponent.hpp>
 #include <eve/module/arithmetic/constant/maxexponent.hpp>
