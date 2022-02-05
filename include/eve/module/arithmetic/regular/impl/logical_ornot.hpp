@@ -9,9 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_ornot.hpp>
-#include <eve/function/is_nez.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/concept/value.hpp>

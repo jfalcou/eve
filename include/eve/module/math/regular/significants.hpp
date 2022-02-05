@@ -71,11 +71,11 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/significants.cpp}
+  //! @godbolt{doc/math/significants.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(significants_, significants);
 }
 
-#include <eve/module/arithmetic/regular/impl/significants.hpp>
+#include <eve/module/math/regular/impl/significants.hpp>

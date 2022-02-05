@@ -9,7 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/function/rem.hpp>
+#include <eve/module/arithmetic/regular/rem.hpp>
 
 namespace eve::detail
 {

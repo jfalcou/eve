@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/max.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>

@@ -8,20 +8,17 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/arithmetic/detail/multi_mul.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/regular.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_nez.hpp>
 #include <eve/function/replace.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/mul.hpp>
-#include <eve/function/logical_andnot.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/arithmetic/regular/mul.hpp>
+#include <eve/module/arithmetic/regular/logical_andnot.hpp>
 #include <eve/assert.hpp>
 
 #ifdef EVE_COMP_IS_MSVC

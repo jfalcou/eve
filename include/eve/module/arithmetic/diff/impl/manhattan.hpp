@@ -8,10 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/diff/sub.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/sign.hpp>
+#include <eve/module/arithmetic/diff/sub.hpp>
+#include <eve/module/arithmetic/regular/sign.hpp>
 #include <eve/concept/compatible.hpp>
 
 namespace eve::detail

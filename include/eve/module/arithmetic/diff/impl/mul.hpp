@@ -8,9 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/diff/plus.hpp>
-#include <eve/function/mul.hpp>
+#include <eve/module/arithmetic/diff/plus.hpp>
+#include <eve/module/arithmetic/regular/mul.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 

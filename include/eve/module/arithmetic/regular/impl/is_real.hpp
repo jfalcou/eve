@@ -21,4 +21,3 @@ namespace eve::detail
     return true_(eve::as(a));
   }
 }
-

@@ -8,12 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-
-#include <eve/function/if_else.hpp>
-#include <eve/function/derivative.hpp>
-#include <eve/function/sqr.hpp>
-#include <eve/function/rsqrt.hpp>
-#include <eve/function/rec.hpp>
+#include <eve/module/arithmetic/regular/rsqrt.hpp>
 
 namespace eve::detail
 {

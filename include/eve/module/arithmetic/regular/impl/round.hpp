@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/ceil.hpp>
-#include <eve/function/floor.hpp>
-#include <eve/function/nearest.hpp>
-#include <eve/function/roundings.hpp>
-#include <eve/function/trunc.hpp>
+#include <eve/module/arithmetic/regular/ceil.hpp>
+#include <eve/module/arithmetic/regular/floor.hpp>
+#include <eve/module/arithmetic/regular/nearest.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
 
 namespace eve::detail
 {
