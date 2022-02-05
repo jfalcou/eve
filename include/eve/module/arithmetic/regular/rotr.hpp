@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/assert.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/module/arithmetic/regular/abs.hpp>
 #include <type_traits>
 
 namespace eve

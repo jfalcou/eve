@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/binarize.hpp>
+#include <eve/module/arithmetic/regular/binarize.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 

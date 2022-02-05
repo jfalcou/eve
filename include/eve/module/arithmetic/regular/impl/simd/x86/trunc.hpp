@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
-#include <eve/function/raw.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

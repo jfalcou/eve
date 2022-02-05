@@ -13,7 +13,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/regular/is_not_finite.hpp>
-#include <eve/function/two_split.hpp>
+#include <eve/module/arithmetic/regular/two_split.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

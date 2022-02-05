@@ -8,11 +8,9 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/converter.hpp>
-#include <eve/function/fuzzy/floor.hpp>
-#include <eve/function/fuzzy.hpp>
-#include <eve/function/trunc.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/fuzzy/floor.hpp>
+#include <eve/module/arithmetic/regular/trunc.hpp>
 #include <eve/module/arithmetic/constant/eps.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

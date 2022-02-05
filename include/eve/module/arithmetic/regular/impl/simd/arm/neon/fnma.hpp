@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/fma.hpp>
+#include <eve/module:arithmetic/regular/fma.hpp>
 
 namespace eve::detail
 {

@@ -15,7 +15,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/regular/is_eqz.hpp>
 #include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/function/replace.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/arithmetic/regular/mul.hpp>
 #include <eve/module/arithmetic/regular/logical_andnot.hpp>

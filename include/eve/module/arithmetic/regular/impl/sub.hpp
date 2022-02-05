@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/function/derivative.hpp>
 
 namespace eve::detail
 {

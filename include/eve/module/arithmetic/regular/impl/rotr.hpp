@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/rotl.hpp>
+#include <eve/module/arithmetic/regular/rotl.hpp>
 
 namespace eve::detail
 {

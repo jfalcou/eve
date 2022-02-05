@@ -14,7 +14,6 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/convert.hpp>
 
 namespace eve::detail
 {

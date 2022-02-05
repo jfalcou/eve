@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/function/absmin.hpp>
 #include <eve/module/arithmetic/regular/sign.hpp>
 #include <eve/module/arithmetic/diff/detail/minmax_kernel.hpp>
 

@@ -10,12 +10,10 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/fnma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/is_infinite.hpp>
+#include <eve/module/arithmetic/regular/fma.hpp>
+#include <eve/module/arithmetic/regular/fnma.hpp>
+#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/arithmetic/regular/is_infinite.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

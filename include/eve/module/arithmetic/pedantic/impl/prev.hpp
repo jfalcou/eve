@@ -21,8 +21,8 @@
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/module:arithmetic/saturated/dec.hpp>
-#include <eve/module:arithmetic/saturated/sub.hpp>
+#include <eve/module/arithmetic/saturated/dec.hpp>
+#include <eve/module/arithmetic/saturated/sub.hpp>
 
 namespace eve::detail
 {
