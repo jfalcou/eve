@@ -11,8 +11,8 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/regular/abs.hpp>
 #include <eve/module/arithmetic/regular/is_greater.hpp>
-#include <eve/module/arithmetic/regular/saturated/next.hpp>
-#include <eve/module/arithmetic/regular/saturated/add.hpp>
+#include <eve/module/arithmetic/saturated/next.hpp>
+#include <eve/module/arithmetic/saturated/add.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/module/arithmetic/constant/eps.hpp>

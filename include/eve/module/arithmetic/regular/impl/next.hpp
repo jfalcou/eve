@@ -12,6 +12,7 @@
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
 #include <eve/module/arithmetic/regular/inc.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/apply_over.hpp>
 
 namespace eve::detail
 {

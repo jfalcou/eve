@@ -7,11 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/arithmetic/detail/next_kernel.hpp>
 #include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/sub.hpp>
-#include <eve/module/arithmetic/regular/next.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
@@ -55,7 +54,7 @@ namespace eve::detail
       }
       else if constexpr(integral_value<T>)
       {
-        return sub(a, to_<T>(n));
+        return to_<T>(a-to_<T>(n));
       }
     }
     else  { return apply_over(prev, a, n);    }
