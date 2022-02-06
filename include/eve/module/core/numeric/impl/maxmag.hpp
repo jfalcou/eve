@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
