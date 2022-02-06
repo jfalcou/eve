@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/saturated.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/inc.hpp>

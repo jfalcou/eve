@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/pedantic.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

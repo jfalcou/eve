@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
+#include <eve/module/core/saturated.hpp>
 #include  <eve/module/core/detail/multi_div.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

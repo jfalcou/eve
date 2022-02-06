@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/pedantic.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>

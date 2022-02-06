@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>

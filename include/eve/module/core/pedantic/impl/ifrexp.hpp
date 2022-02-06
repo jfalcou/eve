@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/pedantic.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/exponentmask.hpp>
 #include <eve/module/core/constant/maxexponentp1.hpp>

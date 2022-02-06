@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/saturated.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/saturated/abs.hpp>
