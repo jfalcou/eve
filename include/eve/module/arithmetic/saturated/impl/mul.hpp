@@ -11,17 +11,10 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/function/operators.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/saturate.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/converter.hpp>
+#include <eve/module/arithmetic/regular/saturate.hpp>
 
 namespace eve::detail
 {

@@ -9,9 +9,9 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/splat.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/min.hpp>
+#include <eve/module/core/regular/splat.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/all.hpp>
 

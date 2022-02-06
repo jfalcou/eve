@@ -7,11 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/saturated/abs.hpp>
-#include <eve/function/min.hpp>
+#include <eve/module/arithmetic/saturated/abs.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
 
 namespace eve::detail
 {

@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/maxabs.hpp>
+#include <eve/module/arithmetic/regular/maxabs.hpp>
 
 namespace eve::detail
 {

@@ -10,10 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/saturated/sub.hpp>
-#include <eve/function/bit_xor.hpp>
+#include <eve/module/arithmetic/saturated/sub.hpp>
 #include <type_traits>
 
 namespace eve::detail

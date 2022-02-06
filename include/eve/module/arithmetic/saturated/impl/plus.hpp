@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/saturated/add.hpp>
+#include <eve/module/arithmetic/saturated/add.hpp>
 
 namespace eve::detail
 {

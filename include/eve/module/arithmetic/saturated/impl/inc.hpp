@@ -10,9 +10,8 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/is_not_equal.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/module/arithmetic/regular/inc.hpp>
+#include <eve/module/arithmetic/regular/is_not_equal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

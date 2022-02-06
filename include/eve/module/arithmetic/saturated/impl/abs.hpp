@@ -12,10 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/saturated.hpp>
-
+#include <eve/module/arithmetic/regular/max.hpp>
 #include <concepts>
 
 namespace eve::detail

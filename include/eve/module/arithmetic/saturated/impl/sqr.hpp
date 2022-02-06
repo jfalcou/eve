@@ -9,8 +9,8 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_greater.hpp>
-#include <eve/function/saturated/abs.hpp>
+#include <eve/module/arithmetic/regular/is_greater.hpp>
+#include <eve/module/arithmetic/saturated/abs.hpp>
 #include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
 #include <eve/concept/value.hpp>
 

@@ -16,22 +16,15 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_ornot.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/function/bit_xor.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_gez.hpp>
-#include <eve/function/is_lez.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/saturate.hpp>
-#include <eve/function/saturated.hpp>
-#include <eve/function/sub.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/is_ltz.hpp>
+#include <eve/module/arithmetic/regular/is_gez.hpp>
+#include <eve/module/arithmetic/regular/is_lez.hpp>
+#include <eve/module/arithmetic/regular/is_less.hpp>
+#include <eve/module/arithmetic/regular/saturate.hpp>
+#include <eve/module/arithmetic/regular/sub.hpp>
+#include <eve/module/arithmetic/regular/add.hpp>
+#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/arithmetic/regular/is_ltz.hpp>
 
 #include <limits>
 
