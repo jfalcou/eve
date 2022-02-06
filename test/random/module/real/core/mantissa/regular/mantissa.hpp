@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #include <eve/function/mantissa.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 #include <cmath>

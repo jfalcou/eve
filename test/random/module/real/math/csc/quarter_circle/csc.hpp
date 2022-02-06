@@ -7,7 +7,7 @@
 //==================================================================================================
 #include <eve/function/csc.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include "producers.hpp"
 #include <cmath>
 
