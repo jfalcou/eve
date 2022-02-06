@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/compatible.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {
