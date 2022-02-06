@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/fuzzy.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_not_less.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/saturated/prev.hpp>
 #include <eve/module/core/saturated/sub.hpp>
 #include <eve/concept/value.hpp>
