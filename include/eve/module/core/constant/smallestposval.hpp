@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -19,20 +19,20 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var twotonmb
+  //! @var smallestposval
   //!
-  //! @brief Callable object computing the 2 power of the number of mantissa bits.
+  //! @brief Callable object computing the smallest normal positive value.
   //!
-  //! **Required header:** `#include <eve/function/twotonmb.hpp>`
+  //! **Required header:** `#include <eve/function/smallestposval.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the two to the nbmantissabits power               |
+  //! | `operator()` | Computes the smallestposval constant                       |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,32 +41,39 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::twotonmb(as<T>())` is semantically equivalent to
-  //! `eve::exp2(T(eve::nbmantissabits(as<eve::element_type_t<T>>())))`
+  //! the call `eve::smallestposval(as<T>())` is semantically equivalent to:
+  //!   - T(1) if eve::element_type_t<T> is integral
+  //!   - T(1.1754944e-38f)if eve::element_type_t<T> is float
+  //!   - T(2.225073858507201e-308) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/twotonmb.cpp}
+  //! @godbolt{doc/core/smallestposval.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(twotonmb_, twotonmb);
+  EVE_MAKE_CALLABLE(smallestposval_, smallestposval);
 
   namespace detail
   {
-    template<floating_value T>
-    EVE_FORCEINLINE auto twotonmb_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
+    template<typename T>
+    EVE_FORCEINLINE auto smallestposval_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
       using t_t = element_type_t<T>;
+
       if constexpr(std::is_same_v<t_t, float>)
       {
-        return Constant<T, 0X4B000000U>();
+        return Constant<T, 0X00800000U>();
       }
       else if constexpr(std::is_same_v<t_t, double>)
       {
-        return Constant<T, 0X4330000000000000ULL>();
+        return Constant<T, 0X0010000000000000ULL>();
+      }
+      else if constexpr(std::is_integral_v<t_t>)
+      {
+        return T(1);
       }
     }
   }

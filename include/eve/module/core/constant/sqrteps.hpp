@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -19,20 +19,20 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var bitincrement
+  //! @var sqrteps
   //!
-  //! @brief Callable object computing the bit increment.
+  //! @brief Callable object computing the square root of the machine epsilon value.
   //!
-  //! **Required header:** `#include <eve/function/bitincrement.hpp>`
+  //! **Required header:** `#include <eve/function/sqrteps.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the bitincrement constant                               |
+  //! | `operator()` | Computes the sqrteps constant                               |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,29 +41,36 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::bitincrement(as<T>())` returns a value of type T such as each element has all
-  //! bits exept the lowest set to zero.
+  //! the call `eve::sqrteps(as<T>())` is semantically equivalent to  `eve::sqrt(eve::eps(as<T>()))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/bitincrement.cpp}
+  //! @godbolt{doc/core/sqrteps.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(bitincrement_, bitincrement);
+  EVE_MAKE_CALLABLE(sqrteps_, sqrteps);
 
   namespace detail
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto bitincrement_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    EVE_FORCEINLINE auto sqrteps_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
-      using t_t           = element_type_t<T>;
-
-      if constexpr(std::is_integral_v<t_t>) return T(1);
-      else if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X1U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x1ULL>();
+      using t_t =  element_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        return Constant<T, 0x39B504F3U >();
+      }
+      else if constexpr(std::is_same_v<t_t, double>)
+      {
+        return Constant<T, 0x3E50000000000000ULL>();
+      }
+      else if constexpr(std::is_integral_v<t_t>)
+      {
+        return T(1);
+      }
     }
   }
 }

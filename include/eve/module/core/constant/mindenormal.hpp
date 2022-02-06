@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -19,20 +19,20 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var smallestposval
+  //! @var mindenormal
   //!
-  //! @brief Callable object computing the smallest normal positive value.
+  //! @brief Callable object computing the least denormal positive value.
   //!
-  //! **Required header:** `#include <eve/function/smallestposval.hpp>`
+  //! **Required header:** `#include <eve/function/mindenormal.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the smallestposval constant                       |
+  //! | `operator()` | Computes the mindenormal constant                          |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,40 +41,29 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::smallestposval(as<T>())` is semantically equivalent to:
-  //!   - T(1) if eve::element_type_t<T> is integral
-  //!   - T(1.1754944e-38f)if eve::element_type_t<T> is float
-  //!   - T(2.225073858507201e-308) if eve::element_type_t<T> is double
+  //! the call `eve::mindenormal(as<T>())` is semantically equivalent to:
+  //!   - T(1.4013e-45f) if eve::element_type_t<T> is float
+  //!   - T(4.94066e-324) if eve::element_type_t<T> is double
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/smallestposval.cpp}
+  //! @godbolt{doc/core/mindenormal.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(smallestposval_, smallestposval);
+  EVE_MAKE_CALLABLE(mindenormal_, mindenormal);
 
   namespace detail
   {
-    template<typename T>
-    EVE_FORCEINLINE auto smallestposval_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto mindenormal_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t = element_type_t<T>;
+      using t_t           = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>)
-      {
-        return Constant<T, 0X00800000U>();
-      }
-      else if constexpr(std::is_same_v<t_t, double>)
-      {
-        return Constant<T, 0X0010000000000000ULL>();
-      }
-      else if constexpr(std::is_integral_v<t_t>)
-      {
-        return T(1);
-      }
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0x1U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x1ULL>();
     }
   }
 }

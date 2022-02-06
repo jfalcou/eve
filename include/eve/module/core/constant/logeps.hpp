@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -19,20 +19,20 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var eps
+  //! @var logeps
   //!
-  //! @brief Callable object computing the machine epsilon.
+  //! @brief Callable object computing the logaritm of the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/eps.hpp>`
+  //! **Required header:** `#include <eve/function/logeps.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the eps constant                               |
+  //! | `operator()` | Computes the logeps constant                               |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < real_value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -41,34 +41,27 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
-  //! positive value `x` of the type such that `1+x !=  x`.
-  //!
-  //!  * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one
-  //!  * If T is a  [floating real value](@ref eve::floating_real_value) the elements returned are equal to
-  //!        - 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is float
-  //!        - 1.1920929e-07f        if the [elements type](@ref eve::element_type) is double
+  //! the call `eve::logeps(as<T>())` is semantically equivalent to `eve::log(eve::eps(as<T>()))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/eps.cpp}
+  //! @godbolt{doc/arithmetic/logeps.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(eps_, eps);
+  EVE_MAKE_CALLABLE(logeps_, logeps);
 
   namespace detail
   {
-    template<typename T>
-    EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
       using t_t           = element_type_t<T>;
 
-      if constexpr(std::is_integral_v<t_t>) return T(1);
-      else if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X34000000U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x3CB0000000000000ULL>();
+         if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0XC17F1402U>();
+    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0XC04205966F2B4F12ULL>();
     }
   }
 }

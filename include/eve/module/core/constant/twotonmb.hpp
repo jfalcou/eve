@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -19,15 +19,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var logeps
+  //! @var twotonmb
   //!
-  //! @brief Callable object computing the logaritm of the machine epsilon.
+  //! @brief Callable object computing the 2 power of the number of mantissa bits.
   //!
-  //! **Required header:** `#include <eve/function/logeps.hpp>`
+  //! **Required header:** `#include <eve/function/twotonmb.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the logeps constant                               |
+  //! | `operator()` | Computes the two to the nbmantissabits power               |
   //!
   //! ---
   //!
@@ -41,27 +41,33 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::logeps(as<T>())` is semantically equivalent to `eve::log(eve::eps(as<T>()))`
+  //! the call `eve::twotonmb(as<T>())` is semantically equivalent to
+  //! `eve::exp2(T(eve::nbmantissabits(as<eve::element_type_t<T>>())))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logeps.cpp}
+  //! @godbolt{doc/core/twotonmb.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(logeps_, logeps);
+  EVE_MAKE_CALLABLE(twotonmb_, twotonmb);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    EVE_FORCEINLINE auto twotonmb_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
-      using t_t           = element_type_t<T>;
-
-         if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0XC17F1402U>();
-    else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0XC04205966F2B4F12ULL>();
+      using t_t = element_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        return Constant<T, 0X4B000000U>();
+      }
+      else if constexpr(std::is_same_v<t_t, double>)
+      {
+        return Constant<T, 0X4330000000000000ULL>();
+      }
     }
   }
 }
