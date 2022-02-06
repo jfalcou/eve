@@ -105,8 +105,8 @@ namespace eve
   EVE_MAKE_CALLABLE(negminabs_, negminabs);
 }
 
-#include <eve/module/arithmetic/regular/impl/negminabs.hpp>
+#include <eve/module/core/regular/impl/negminabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/negminabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/negminabs.hpp>
 #endif

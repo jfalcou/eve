@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/saturated/impl/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/saturated/impl/abs.hpp>

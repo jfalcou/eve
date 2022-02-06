@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
 }
 
-#include <eve/module/arithmetic/regular/impl/ulpdist.hpp>
+#include <eve/module/core/regular/impl/ulpdist.hpp>

@@ -13,12 +13,12 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
-#include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
-#include <eve/module/arithmetic/regular/maxabs.hpp>
-#include <eve/module/arithmetic/pedantic/maxabs.hpp>
-#include <eve/module/arithmetic/numeric/maxabs.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/is_not_greater_equal.hpp>
+#include <eve/module/core/regular/maxabs.hpp>
+#include <eve/module/core/pedantic/maxabs.hpp>
+#include <eve/module/core/numeric/maxabs.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>

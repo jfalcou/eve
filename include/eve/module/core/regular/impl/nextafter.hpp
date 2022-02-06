@@ -12,9 +12,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/is_unordered.hpp>
-#include <eve/module/arithmetic/regular/next.hpp>
-#include <eve/module/arithmetic/regular/prev.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/prev.hpp>
 
 #include <concepts>
 #include <type_traits>

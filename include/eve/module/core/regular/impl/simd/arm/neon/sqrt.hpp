@@ -10,8 +10,8 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/module/arithmetic/regular/rsqrt.hpp>
-#include <eve/module/arithmetic/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/rsqrt.hpp>
+#include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

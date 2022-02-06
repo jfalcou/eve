@@ -8,18 +8,18 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/ldexp.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/exponent.hpp>
-#include <eve/module/arithmetic/regular/max.hpp>
-#include <eve/module/arithmetic/regular/maxmag.hpp>
-#include <eve/module/arithmetic/regular/minmag.hpp>
-#include <eve/module/arithmetic/regular/two_add.hpp>
-#include <eve/module/arithmetic/regular/two_prod.hpp>
+#include <eve/module/core/regular/exponent.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/maxmag.hpp>
+#include <eve/module/core/regular/minmag.hpp>
+#include <eve/module/core/regular/two_add.hpp>
+#include <eve/module/core/regular/two_prod.hpp>
 
 #include <type_traits>
 

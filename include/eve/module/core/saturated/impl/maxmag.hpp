@@ -13,8 +13,8 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/saturated/abs.hpp>
-#include <eve/module/arithmetic/regular/is_not_greater_equal.hpp>
+#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/is_not_greater_equal.hpp>
 
 namespace eve::detail
 {

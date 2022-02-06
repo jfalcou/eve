@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/rec.hpp>
-#include <eve/module/arithmetic/regular/sqrt.hpp>
+#include <eve/module/core/regular/rec.hpp>
+#include <eve/module/core/regular/sqrt.hpp>
 
 namespace eve::detail
 {

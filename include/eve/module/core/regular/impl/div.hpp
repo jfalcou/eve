@@ -8,16 +8,16 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/detail/multi_mul.hpp>
+#include <eve/module/core/detail/multi_mul.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/mul.hpp>
-#include <eve/module/arithmetic/regular/logical_andnot.hpp>
+#include <eve/module/core/regular/mul.hpp>
+#include <eve/module/core/regular/logical_andnot.hpp>
 #include <eve/assert.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
@@ -25,9 +25,9 @@
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
 
-#include <eve/module/arithmetic/regular/impl/div_downward.hpp>
-#include <eve/module/arithmetic/regular/impl/div_tonearest.hpp>
-#include <eve/module/arithmetic/regular/impl/div_upward.hpp>
+#include <eve/module/core/regular/impl/div_downward.hpp>
+#include <eve/module/core/regular/impl/div_tonearest.hpp>
+#include <eve/module/core/regular/impl/div_upward.hpp>
 
 namespace eve::detail
 {

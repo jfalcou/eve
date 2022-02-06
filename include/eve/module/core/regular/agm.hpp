@@ -72,4 +72,4 @@ namespace eve
   EVE_MAKE_CALLABLE(agm_, agm);
 }
 
-#include <eve/module/arithmetic/regular/impl/agm.hpp>
+#include <eve/module/core/regular/impl/agm.hpp>

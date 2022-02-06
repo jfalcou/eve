@@ -9,11 +9,11 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/add.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/fma.hpp>
-#include <eve/module/arithmetic/regular/rec.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/rec.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>

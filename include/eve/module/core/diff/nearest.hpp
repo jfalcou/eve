@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/nearest.hpp>
-#include <eve/module/arithmetic/diff/impl/nearest.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/diff/impl/nearest.hpp>

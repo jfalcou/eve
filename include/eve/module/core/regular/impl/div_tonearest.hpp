@@ -10,15 +10,15 @@
 #include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/fnma.hpp>
-#include <eve/module/arithmetic/regular/is_ltz.hpp>
-#include <eve/module/arithmetic/regular/minus.hpp>
-#include <eve/module/arithmetic/regular/nearest.hpp>
-#include <eve/module/arithmetic/regular/saturate.hpp>
-#include <eve/module/arithmetic/saturated/div.hpp>
-#include <eve/module/arithmetic/regular/is_odd.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/saturate.hpp>
+#include <eve/module/core/saturated/div.hpp>
+#include <eve/module/core/regular/is_odd.hpp>
 
 namespace eve::detail
 {

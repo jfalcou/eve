@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

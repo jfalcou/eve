@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_ltz.hpp>
+#include <eve/module/core/regular/impl/is_ltz.hpp>

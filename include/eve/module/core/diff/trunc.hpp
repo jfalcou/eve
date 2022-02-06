@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/trunc.hpp>
-#include <eve/module/arithmetic/diff/impl/trunc.hpp>
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/diff/impl/trunc.hpp>

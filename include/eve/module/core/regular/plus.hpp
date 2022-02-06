@@ -79,4 +79,4 @@ namespace eve
   EVE_MAKE_CALLABLE(plus_, plus);
 }
 
-#include <eve/module/arithmetic/regular/impl/plus.hpp>
+#include <eve/module/core/regular/impl/plus.hpp>

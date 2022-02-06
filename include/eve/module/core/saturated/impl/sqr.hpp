@@ -9,9 +9,9 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_greater.hpp>
-#include <eve/module/arithmetic/saturated/abs.hpp>
-#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/constant/sqrtvalmax.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

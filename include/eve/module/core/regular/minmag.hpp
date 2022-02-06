@@ -102,8 +102,8 @@ namespace eve
   EVE_MAKE_CALLABLE(minmag_, minmag);
 }
 
-#include <eve/module/arithmetic/regular/impl/minmag.hpp>
+#include <eve/module/core/regular/impl/minmag.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/minmag.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/minmag.hpp>
 #endif

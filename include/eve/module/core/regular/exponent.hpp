@@ -77,8 +77,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/exponent.hpp>
+#include <eve/module/core/regular/impl/exponent.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/exponent.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/exponent.hpp>
 #endif

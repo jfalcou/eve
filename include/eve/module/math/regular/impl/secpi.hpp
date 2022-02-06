@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/regular/cospi.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>

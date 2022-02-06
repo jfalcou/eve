@@ -14,7 +14,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/function/operators.hpp>
-#include <eve/module/arithmetic/regular/saturate.hpp>
+#include <eve/module/core/regular/saturate.hpp>
 
 namespace eve::detail
 {

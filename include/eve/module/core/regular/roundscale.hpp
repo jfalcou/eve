@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
-#include <eve/module/arithmetic/regular/fracscale.hpp>
+#include <eve/module/core/regular/fracscale.hpp>
 
 namespace eve
 {
@@ -102,8 +102,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/roundscale.hpp>
+#include <eve/module/core/regular/impl/roundscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/roundscale.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/roundscale.hpp>
 #endif

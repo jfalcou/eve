@@ -9,7 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>
 
@@ -103,8 +103,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/rshl.hpp>
+#include <eve/module/core/regular/impl/rshl.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/rshl.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/rshl.hpp>
 #endif

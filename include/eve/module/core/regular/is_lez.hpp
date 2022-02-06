@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_lez_, is_lez);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_lez.hpp>
+#include <eve/module/core/regular/impl/is_lez.hpp>

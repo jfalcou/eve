@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_notor_, logical_notor);
 }
 
-#include <eve/module/arithmetic/regular/impl/logical_notor.hpp>
+#include <eve/module/core/regular/impl/logical_notor.hpp>

@@ -74,4 +74,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_ngez_, is_ngez);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_ngez.hpp>
+#include <eve/module/core/regular/impl/is_ngez.hpp>

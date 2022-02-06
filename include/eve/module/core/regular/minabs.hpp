@@ -104,8 +104,8 @@ namespace eve
   EVE_MAKE_CALLABLE(minabs_, minabs);
 }
 
-#include <eve/module/arithmetic/regular/impl/minabs.hpp>
+#include <eve/module/core/regular/impl/minabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/minabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/minabs.hpp>
 #endif

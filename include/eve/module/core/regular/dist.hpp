@@ -97,4 +97,4 @@ namespace eve
   EVE_MAKE_CALLABLE(dist_, dist);
 }
 
-#include <eve/module/arithmetic/regular/impl/dist.hpp>
+#include <eve/module/core/regular/impl/dist.hpp>

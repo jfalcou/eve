@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/sqr.hpp>
+#include <eve/module/core/regular/sqr.hpp>
 
 namespace eve::detail
 {

@@ -88,8 +88,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/is_not_greater_equal.hpp>
+#include <eve/module/core/regular/impl/is_not_greater_equal.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/is_not_greater_equal.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_not_greater_equal.hpp>
 #endif

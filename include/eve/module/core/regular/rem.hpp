@@ -112,4 +112,4 @@ namespace eve
   EVE_MAKE_CALLABLE(rem_, rem);
 }
 
-#include <eve/module/arithmetic/regular/impl/rem.hpp>
+#include <eve/module/core/regular/impl/rem.hpp>

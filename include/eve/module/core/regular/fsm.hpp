@@ -100,8 +100,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/fsm.hpp>
+#include <eve/module/core/regular/impl/fsm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/fsm.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>
 #endif

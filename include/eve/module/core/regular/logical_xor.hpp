@@ -62,4 +62,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_xor_, logical_xor);
 }
 
-#include <eve/module/arithmetic/regular/impl/logical_xor.hpp>
+#include <eve/module/core/regular/impl/logical_xor.hpp>

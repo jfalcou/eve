@@ -73,4 +73,4 @@ namespace eve
   EVE_MAKE_CALLABLE(inc_, inc);
 }
 
-#include <eve/module/arithmetic/regular/impl/inc.hpp>
+#include <eve/module/core/regular/impl/inc.hpp>

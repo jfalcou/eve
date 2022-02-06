@@ -9,8 +9,8 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/saturated/sub.hpp>
-#include <eve/module/arithmetic/saturated/dec.hpp>
+#include <eve/module/core/saturated/sub.hpp>
+#include <eve/module/core/saturated/dec.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

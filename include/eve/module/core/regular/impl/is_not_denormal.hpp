@@ -9,11 +9,11 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_not_less.hpp>
-#include <eve/module/arithmetic/regular/logical_or.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_not_less.hpp>
+#include <eve/module/core/regular/logical_or.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

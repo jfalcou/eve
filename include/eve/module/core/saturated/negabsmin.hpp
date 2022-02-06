@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/negabsmin.hpp>
-#include <eve/module/arithmetic/saturated/impl/negabsmin.hpp>
+#include <eve/module/core/regular/negabsmin.hpp>
+#include <eve/module/core/saturated/impl/negabsmin.hpp>

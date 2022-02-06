@@ -11,9 +11,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_gtz.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve::detail

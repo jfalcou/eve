@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/detail/next_kernel.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/bit_cast.hpp>

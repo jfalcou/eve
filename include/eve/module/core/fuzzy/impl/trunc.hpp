@@ -9,12 +9,12 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/fuzzy/floor.hpp>
-#include <eve/module/arithmetic/regular/is_ltz.hpp>
-#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
-#include <eve/module/arithmetic/regular/next.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/fuzzy/floor.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_not_less_equal.hpp>
+#include <eve/module/core/regular/next.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

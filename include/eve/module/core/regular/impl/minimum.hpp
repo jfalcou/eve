@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/splat.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/all.hpp>
 

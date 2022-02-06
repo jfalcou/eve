@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/add.hpp>
-#include <eve/module/arithmetic/diff/impl/add.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/diff/impl/add.hpp>

@@ -104,8 +104,8 @@ namespace eve
   EVE_MAKE_CALLABLE(maxabs_, maxabs);
 }
 
-#include <eve/module/arithmetic/regular/impl/maxabs.hpp>
+#include <eve/module/core/regular/impl/maxabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/maxabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/maxabs.hpp>
 #endif

@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/fanm.hpp>
-#include <eve/module/arithmetic/diff/impl/fanm.hpp>
+#include <eve/module/core/regular/fanm.hpp>
+#include <eve/module/core/diff/impl/fanm.hpp>

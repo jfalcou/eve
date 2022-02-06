@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/rsqrt.hpp>
+#include <eve/module/core/regular/rsqrt.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 

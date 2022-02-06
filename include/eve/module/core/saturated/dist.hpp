@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/dist.hpp>
-#include <eve/module/arithmetic/saturated/impl/dist.hpp>
+#include <eve/module/core/regular/dist.hpp>
+#include <eve/module/core/saturated/impl/dist.hpp>

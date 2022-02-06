@@ -83,4 +83,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_normal_, is_normal);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_normal.hpp>
+#include <eve/module/core/regular/impl/is_normal.hpp>

@@ -99,8 +99,8 @@ namespace eve
   EVE_MAKE_CALLABLE(absmax_, absmax);
 }
 
-#include <eve/module/arithmetic/regular/impl/absmax.hpp>
+#include <eve/module/core/regular/impl/absmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/absmax.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/absmax.hpp>
 #endif

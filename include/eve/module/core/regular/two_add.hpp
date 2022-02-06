@@ -64,4 +64,4 @@ namespace eve
   EVE_MAKE_CALLABLE(two_add_, two_add);
 }
 
-#include <eve/module/arithmetic/regular/impl/two_add.hpp>
+#include <eve/module/core/regular/impl/two_add.hpp>

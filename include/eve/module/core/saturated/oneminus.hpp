@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/oneminus.hpp>
-#include <eve/module/arithmetic/saturated/impl/oneminus.hpp>
+#include <eve/module/core/regular/oneminus.hpp>
+#include <eve/module/core/saturated/impl/oneminus.hpp>

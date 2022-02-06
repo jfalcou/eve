@@ -13,7 +13,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/numeric/absmax.hpp>
+#include <eve/module/core/numeric/absmax.hpp>
 
 
 namespace eve::detail

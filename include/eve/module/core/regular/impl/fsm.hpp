@@ -14,7 +14,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/fms.hpp>
+#include <eve/module/core/regular/fms.hpp>
 
 namespace eve::detail
 {

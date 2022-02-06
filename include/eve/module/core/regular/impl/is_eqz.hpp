@@ -11,8 +11,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/logical_not.hpp>
-#include <eve/module/arithmetic/regular/is_equal.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve::detail

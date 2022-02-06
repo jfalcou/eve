@@ -11,9 +11,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/module/arithmetic/regular/is_unordered.hpp>
-#include <eve/module/arithmetic/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
 
 namespace eve::detail
 {

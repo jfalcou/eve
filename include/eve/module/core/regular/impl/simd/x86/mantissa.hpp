@@ -15,9 +15,9 @@
 #include <eve/forward.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-#include <eve/module/arithmetic/regular/is_finite.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/module/arithmetic/regular/logical_and.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 
 namespace eve::detail
 {

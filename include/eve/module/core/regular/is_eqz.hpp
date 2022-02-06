@@ -88,4 +88,4 @@ namespace eve
   }
 }
 
-#include <eve/module/arithmetic/regular/impl/is_eqz.hpp>
+#include <eve/module/core/regular/impl/is_eqz.hpp>

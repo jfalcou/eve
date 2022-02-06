@@ -83,4 +83,4 @@ namespace eve
   EVE_MAKE_CALLABLE(binarize_, binarize);
 }
 
-#include <eve/module/arithmetic/regular/impl/binarize.hpp>
+#include <eve/module/core/regular/impl/binarize.hpp>

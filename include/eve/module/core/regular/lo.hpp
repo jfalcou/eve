@@ -59,4 +59,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lo_, lo);
 }
 
-#include <eve/module/arithmetic/regular/impl/lo.hpp>
+#include <eve/module/core/regular/impl/lo.hpp>

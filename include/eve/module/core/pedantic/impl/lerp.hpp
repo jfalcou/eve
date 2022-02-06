@@ -13,8 +13,8 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/pedantic/fma.hpp>
-#include <eve/module/arithmetic/pedantic/fnma.hpp>
+#include <eve/module/core/pedantic/fma.hpp>
+#include <eve/module/core/pedantic/fnma.hpp>
 #include <type_traits>
 
 namespace eve::detail

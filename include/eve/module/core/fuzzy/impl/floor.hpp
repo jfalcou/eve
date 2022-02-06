@@ -9,20 +9,20 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
-#include <eve/module/arithmetic/regular/copysign.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/is_greater.hpp>
-#include <eve/module/arithmetic/regular/is_lez.hpp>
-#include <eve/module/arithmetic/regular/is_ltz.hpp>
-#include <eve/module/arithmetic/regular/max.hpp>
-#include <eve/module/arithmetic/regular/min.hpp>
-#include <eve/module/arithmetic/regular/oneminus.hpp>
-#include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/regular/copysign.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_lez.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/oneminus.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/module/arithmetic/regular/prev.hpp>
+#include <eve/module/core/regular/prev.hpp>
 
 namespace eve::detail
 {

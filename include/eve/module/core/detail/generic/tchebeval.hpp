@@ -8,4 +8,4 @@
 #pragma once
 
 
-#include <eve/module/arithmetic/detail/tchebeval.hpp>
+#include <eve/module/core/detail/tchebeval.hpp>

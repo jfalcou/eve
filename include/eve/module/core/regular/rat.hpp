@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(rat_, rat);
 }
 
-#include <eve/module/arithmetic/regular/impl/rat.hpp>
+#include <eve/module/core/regular/impl/rat.hpp>

@@ -9,23 +9,23 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
-#include  <eve/module/arithmetic/detail/multi_div.hpp>
+#include  <eve/module/core/detail/multi_div.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/add.hpp>
-#include <eve/module/arithmetic/regular/shr.hpp>
-#include <eve/module/arithmetic/saturated/mul.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/shr.hpp>
+#include <eve/module/core/saturated/mul.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4723) // potential divide by 0
 #endif
 
-#include <eve/module/arithmetic/regular/impl/div_downward.hpp>
-#include <eve/module/arithmetic/regular/impl/div_tonearest.hpp>
-#include <eve/module/arithmetic/regular/impl/div_upward.hpp>
+#include <eve/module/core/regular/impl/div_downward.hpp>
+#include <eve/module/core/regular/impl/div_tonearest.hpp>
+#include <eve/module/core/regular/impl/div_upward.hpp>
 
 namespace eve::detail
 {

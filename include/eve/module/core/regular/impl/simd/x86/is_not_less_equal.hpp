@@ -12,7 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
-#include <eve/module/arithmetic/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
 #include <type_traits>
 
 namespace eve::detail

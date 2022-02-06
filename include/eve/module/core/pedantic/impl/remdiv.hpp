@@ -11,10 +11,10 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/binarize_not.hpp>
-#include <eve/module/arithmetic/regular/div.hpp>
-#include <eve/module/arithmetic/regular/fnma.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/core/regular/binarize_not.hpp>
+#include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 
 namespace eve::detail
 {

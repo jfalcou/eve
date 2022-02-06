@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_gez_, is_gez);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_gez.hpp>
+#include <eve/module/core/regular/impl/is_gez.hpp>

@@ -86,8 +86,8 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_not_less_equal.hpp>
+#include <eve/module/core/regular/impl/is_not_less_equal.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/is_not_less.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_not_less.hpp>
 #endif

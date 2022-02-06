@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/fam.hpp>
-#include <eve/module/arithmetic/numeric/impl/fam.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/numeric/impl/fam.hpp>

@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/ceil.hpp>
-#include <eve/module/arithmetic/fuzzy/impl/ceil.hpp>
+#include <eve/module/core/regular/ceil.hpp>
+#include <eve/module/core/fuzzy/impl/ceil.hpp>

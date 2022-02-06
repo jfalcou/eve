@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(remdiv_, remdiv);
 }
 
-#include <eve/module/arithmetic/regular/impl/remdiv.hpp>
+#include <eve/module/core/regular/impl/remdiv.hpp>

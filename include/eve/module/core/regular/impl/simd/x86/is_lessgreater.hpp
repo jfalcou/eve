@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/module/arithmetic/regular/is_not_equal.hpp>
+#include <eve/module/core/regular/is_not_equal.hpp>
 
 namespace eve::detail
 {

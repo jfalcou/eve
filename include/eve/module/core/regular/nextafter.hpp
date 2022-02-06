@@ -59,4 +59,4 @@ namespace eve
   EVE_MAKE_CALLABLE(nextafter_, nextafter);
 }
 
-#include <eve/module/arithmetic/regular/impl/nextafter.hpp>
+#include <eve/module/core/regular/impl/nextafter.hpp>

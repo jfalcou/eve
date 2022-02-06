@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(signnz_, signnz);
 }
 
-#include <eve/module/arithmetic/regular/impl/signnz.hpp>
+#include <eve/module/core/regular/impl/signnz.hpp>

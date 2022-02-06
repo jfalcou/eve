@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/absmin.hpp>
-#include <eve/module/arithmetic/diff/impl/absmin.hpp>
+#include <eve/module/core/regular/absmin.hpp>
+#include <eve/module/core/diff/impl/absmin.hpp>

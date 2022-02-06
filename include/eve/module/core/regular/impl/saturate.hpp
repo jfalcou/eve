@@ -11,12 +11,12 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/clamp.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/is_gtz.hpp>
-#include <eve/module/arithmetic/regular/is_infinite.hpp>
-#include <eve/module/arithmetic/regular/is_less.hpp>
-#include <eve/module/arithmetic/regular/logical_and.hpp>
+#include <eve/module/core/regular/clamp.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 #include <concepts>
 
 namespace eve::detail

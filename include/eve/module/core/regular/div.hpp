@@ -119,16 +119,16 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/div.hpp>
+#include <eve/module/core/regular/impl/div.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/div.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/div.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/ppc/div.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/div.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/div.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/div.hpp>
 #endif

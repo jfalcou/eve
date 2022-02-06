@@ -73,4 +73,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_ngtz_, is_ngtz);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_ngtz.hpp>
+#include <eve/module/core/regular/impl/is_ngtz.hpp>

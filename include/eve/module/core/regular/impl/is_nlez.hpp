@@ -9,10 +9,10 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/module/arithmetic/regular/is_gtz.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
-#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/is_not_less_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

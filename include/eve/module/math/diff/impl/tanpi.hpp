@@ -9,7 +9,7 @@
 
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/secpi.hpp>
 

@@ -9,11 +9,11 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/module/arithmetic/regular/dist.hpp>
-#include <eve/module/arithmetic/numeric/is_equal.hpp>
-#include <eve/module/arithmetic/regular/is_unordered.hpp>
-#include <eve/module/arithmetic/numeric/is_equal.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
+#include <eve/module/core/regular/dist.hpp>
+#include <eve/module/core/numeric/is_equal.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/numeric/is_equal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>

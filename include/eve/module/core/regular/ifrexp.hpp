@@ -85,4 +85,4 @@ namespace eve
   EVE_MAKE_CALLABLE(ifrexp_, ifrexp);
 }
 
-#include <eve/module/arithmetic/regular/impl/ifrexp.hpp>
+#include <eve/module/core/regular/impl/ifrexp.hpp>

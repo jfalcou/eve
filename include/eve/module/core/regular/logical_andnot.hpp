@@ -63,4 +63,4 @@ namespace eve
   EVE_MAKE_CALLABLE(logical_andnot_, logical_andnot);
 }
 
-#include <eve/module/arithmetic/regular/impl/logical_andnot.hpp>
+#include <eve/module/core/regular/impl/logical_andnot.hpp>

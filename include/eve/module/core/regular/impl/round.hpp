@@ -10,10 +10,10 @@
 #include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/ceil.hpp>
-#include <eve/module/arithmetic/regular/floor.hpp>
-#include <eve/module/arithmetic/regular/nearest.hpp>
-#include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/core/regular/ceil.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 
 namespace eve::detail
 {

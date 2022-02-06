@@ -12,7 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/core/regular/max.hpp>
 #include <concepts>
 
 namespace eve::detail

@@ -8,15 +8,15 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/sqr.hpp>
-#include <eve/module/arithmetic/regular/fma.hpp>
-#include <eve/module/arithmetic/regular/fnma.hpp>
-#include <eve/module/arithmetic/pedantic/ifrexp.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_odd.hpp>
-#include <eve/module/arithmetic/pedantic/ldexp.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/mul.hpp>
+#include <eve/module/core/regular/sqr.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/pedantic/ifrexp.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_odd.hpp>
+#include <eve/module/core/pedantic/ldexp.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/mul.hpp>
 
 namespace eve::detail
 {

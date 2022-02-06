@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_ij_small.hpp>

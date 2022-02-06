@@ -13,7 +13,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/numeric/minabs.hpp>
+#include <eve/module/core/numeric/minabs.hpp>
 
 
 namespace eve::detail

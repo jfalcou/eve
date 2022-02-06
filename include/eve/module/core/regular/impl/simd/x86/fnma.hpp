@@ -13,7 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
-#include <eve/module/arithmetic/regular/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 #include <type_traits>
 

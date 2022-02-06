@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/assert.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 #include <type_traits>
 
 namespace eve
@@ -39,8 +39,8 @@ namespace eve
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/arithmetic/regular/impl/rotl.hpp>
+#include <eve/module/core/regular/impl/rotl.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/rotl.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/rotl.hpp>
 #endif

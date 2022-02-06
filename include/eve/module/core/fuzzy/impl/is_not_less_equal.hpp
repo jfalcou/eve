@@ -9,13 +9,13 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/regular/is_not_less_equal.hpp>
-#include <eve/module/arithmetic/saturated/next.hpp>
-#include <eve/module/arithmetic/saturated/add.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_not_less_equal.hpp>
+#include <eve/module/core/saturated/next.hpp>
+#include <eve/module/core/saturated/add.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 

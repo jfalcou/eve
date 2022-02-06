@@ -89,4 +89,4 @@ namespace eve
   EVE_MAKE_CALLABLE(manhattan_, manhattan);
 }
 
-#include <eve/module/arithmetic/regular/impl/manhattan.hpp>
+#include <eve/module/core/regular/impl/manhattan.hpp>

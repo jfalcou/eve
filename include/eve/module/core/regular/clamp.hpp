@@ -105,4 +105,4 @@ namespace eve
 
 }
 
-#include <eve/module/arithmetic/regular/impl/clamp.hpp>
+#include <eve/module/core/regular/impl/clamp.hpp>

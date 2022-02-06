@@ -75,4 +75,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_real_, is_not_real);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_not_real.hpp>
+#include <eve/module/core/regular/impl/is_not_real.hpp>

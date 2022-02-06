@@ -77,8 +77,8 @@ namespace eve
   EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_lessgreater.hpp>
+#include <eve/module/core/regular/impl/is_lessgreater.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/is_lessgreater.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_lessgreater.hpp>
 #endif

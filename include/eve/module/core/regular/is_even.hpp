@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_even_, is_even);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_even.hpp>
+#include <eve/module/core/regular/impl/is_even.hpp>

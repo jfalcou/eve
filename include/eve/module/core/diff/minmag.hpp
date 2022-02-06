@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/minmag.hpp>
-#include <eve/module/arithmetic/diff/impl/minmag.hpp>
+#include <eve/module/core/regular/minmag.hpp>
+#include <eve/module/core/diff/impl/minmag.hpp>

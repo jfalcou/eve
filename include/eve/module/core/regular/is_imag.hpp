@@ -81,4 +81,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_imag_, is_imag);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_imag.hpp>
+#include <eve/module/core/regular/impl/is_imag.hpp>

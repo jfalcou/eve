@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/sqr.hpp>
+#include <eve/module/core/regular/sqr.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

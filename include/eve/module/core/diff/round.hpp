@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/round.hpp>
-#include <eve/module/arithmetic/diff/impl/round.hpp>
+#include <eve/module/core/regular/round.hpp>
+#include <eve/module/core/diff/impl/round.hpp>

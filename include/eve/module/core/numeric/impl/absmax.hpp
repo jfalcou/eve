@@ -13,10 +13,10 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/regular/max.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
-#include <eve/module/arithmetic/numeric/max.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/numeric/max.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

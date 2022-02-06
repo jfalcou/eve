@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 #include <eve/module/math/constant/minlog.hpp>
 #include <eve/module/math/constant/minlogdenormal.hpp>

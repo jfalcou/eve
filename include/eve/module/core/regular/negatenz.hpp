@@ -78,4 +78,4 @@ namespace eve
   EVE_MAKE_CALLABLE(negatenz_, negatenz);
 }
 
-#include <eve/module/arithmetic/regular/impl/negatenz.hpp>
+#include <eve/module/core/regular/impl/negatenz.hpp>

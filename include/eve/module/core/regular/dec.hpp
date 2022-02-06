@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(dec_, dec);
 }
 
-#include <eve/module/arithmetic/regular/impl/dec.hpp>
+#include <eve/module/core/regular/impl/dec.hpp>

@@ -105,4 +105,4 @@ namespace eve
   EVE_MAKE_CALLABLE(shl_, shl);
 }
 
-#include <eve/module/arithmetic/regular/impl/shl.hpp>
+#include <eve/module/core/regular/impl/shl.hpp>

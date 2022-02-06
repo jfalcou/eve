@@ -16,15 +16,15 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/is_gez.hpp>
-#include <eve/module/arithmetic/regular/is_lez.hpp>
-#include <eve/module/arithmetic/regular/is_less.hpp>
-#include <eve/module/arithmetic/regular/saturate.hpp>
-#include <eve/module/arithmetic/regular/sub.hpp>
-#include <eve/module/arithmetic/regular/add.hpp>
-#include <eve/module/arithmetic/regular/max.hpp>
-#include <eve/module/arithmetic/regular/min.hpp>
-#include <eve/module/arithmetic/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_gez.hpp>
+#include <eve/module/core/regular/is_lez.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/saturate.hpp>
+#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
 
 #include <limits>
 

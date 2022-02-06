@@ -9,15 +9,15 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/module/arithmetic/saturated/add.hpp>
-#include <eve/module/arithmetic/regular/logical_and.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_negative.hpp>
-#include <eve/module/arithmetic/regular/is_positive.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
-#include <eve/module/arithmetic/saturated/inc.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
+#include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_negative.hpp>
+#include <eve/module/core/regular/is_positive.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/saturated/inc.hpp>
+#include <eve/module/core/regular/dec.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/value.hpp>
 

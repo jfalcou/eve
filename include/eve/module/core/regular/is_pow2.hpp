@@ -72,4 +72,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_pow2_, is_pow2);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_pow2.hpp>
+#include <eve/module/core/regular/impl/is_pow2.hpp>

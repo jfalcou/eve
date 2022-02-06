@@ -87,4 +87,4 @@ namespace eve
   EVE_MAKE_CALLABLE(oneminus_, oneminus);
 }
 
-#include <eve/module/arithmetic/regular/impl/oneminus.hpp>
+#include <eve/module/core/regular/impl/oneminus.hpp>

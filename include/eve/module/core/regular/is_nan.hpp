@@ -85,4 +85,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_nan_, is_nan);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_nan.hpp>
+#include <eve/module/core/regular/impl/is_nan.hpp>

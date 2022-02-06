@@ -73,4 +73,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_nltz_, is_nltz);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_nltz.hpp>
+#include <eve/module/core/regular/impl/is_nltz.hpp>

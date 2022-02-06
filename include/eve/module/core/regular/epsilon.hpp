@@ -14,4 +14,4 @@ namespace eve
   EVE_MAKE_CALLABLE(epsilon_, epsilon);
 }
 
-#include <eve/module/arithmetic/regular/impl/epsilon.hpp>
+#include <eve/module/core/regular/impl/epsilon.hpp>

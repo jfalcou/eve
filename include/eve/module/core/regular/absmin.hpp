@@ -98,8 +98,8 @@ namespace eve
   EVE_MAKE_CALLABLE(absmin_, absmin);
 }
 
-#include <eve/module/arithmetic/regular/impl/absmin.hpp>
+#include <eve/module/core/regular/impl/absmin.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/absmin.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/absmin.hpp>
 #endif

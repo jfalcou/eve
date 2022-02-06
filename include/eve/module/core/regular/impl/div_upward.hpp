@@ -10,11 +10,11 @@
 #include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/ceil.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_gez.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/core/regular/ceil.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_gez.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 
 namespace eve::detail
 {

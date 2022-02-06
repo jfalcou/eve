@@ -9,11 +9,11 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/ifrexp.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_less.hpp>
-#include <eve/module/arithmetic/regular/ldexp.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

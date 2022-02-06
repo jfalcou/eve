@@ -105,8 +105,8 @@ namespace eve
   EVE_MAKE_CALLABLE(negmaxabs_, negmaxabs);
 }
 
-#include <eve/module/arithmetic/regular/impl/negmaxabs.hpp>
+#include <eve/module/core/regular/impl/negmaxabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/negmaxabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/negmaxabs.hpp>
 #endif

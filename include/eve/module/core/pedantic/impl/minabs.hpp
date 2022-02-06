@@ -13,8 +13,8 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/pedantic/min.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
+#include <eve/module/core/pedantic/min.hpp>
+#include <eve/module/core/regular/abs.hpp>
 #include <eve/platform.hpp>
 
 namespace eve::detail

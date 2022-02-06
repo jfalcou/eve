@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/abs.hpp>
-#include <eve/module/arithmetic/regular/sign.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/sign.hpp>
 #include <eve/concept/compatible.hpp>
 
 namespace eve::detail

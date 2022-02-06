@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/arithmetic/regular/is_flint.hpp>
+#include <eve/module/core/regular/is_flint.hpp>
 
 namespace eve
 {
@@ -89,8 +89,8 @@ namespace eve
   EVE_MAKE_CALLABLE(ldexp_, ldexp);
 }
 
-#include <eve/module/arithmetic/regular/impl/ldexp.hpp>
+#include <eve/module/core/regular/impl/ldexp.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/ldexp.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/ldexp.hpp>
 #endif

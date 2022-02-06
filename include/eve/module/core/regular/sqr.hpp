@@ -95,4 +95,4 @@ namespace eve
   EVE_MAKE_CALLABLE(sqr_, sqr);
 }
 
-#include <eve/module/arithmetic/regular/impl/sqr.hpp>
+#include <eve/module/core/regular/impl/sqr.hpp>

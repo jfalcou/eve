@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-#include <eve/module/arithmetic/regular/impl/simd/x86/fracscale.hpp>
+#include <eve/module/core/regular/impl/simd/x86/fracscale.hpp>
 
 namespace eve::detail
 {

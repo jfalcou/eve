@@ -11,8 +11,8 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/saturated/abs.hpp>
-#include <eve/module/arithmetic/regular/min.hpp>
+#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/min.hpp>
 
 namespace eve::detail
 {

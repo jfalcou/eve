@@ -86,16 +86,16 @@ namespace eve
   EVE_MAKE_CALLABLE(floor_, floor);
 }
 
-#include <eve/module/arithmetic/regular/impl/floor.hpp>
+#include <eve/module/core/regular/impl/floor.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/ppc/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/floor.hpp>
 #endif

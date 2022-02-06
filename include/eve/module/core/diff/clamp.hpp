@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/clamp.hpp>
-#include <eve/module/arithmetic/diff/impl/clamp.hpp>
+#include <eve/module/core/regular/clamp.hpp>
+#include <eve/module/core/diff/impl/clamp.hpp>

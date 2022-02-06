@@ -9,10 +9,10 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/detail/next_kernel.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
-#include <eve/module/arithmetic/saturated/add.hpp>
-#include <eve/module/arithmetic/saturated/inc.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/saturated/inc.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail

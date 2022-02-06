@@ -8,12 +8,12 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/binarize.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_gtz.hpp>
-#include <eve/module/arithmetic/regular/is_ltz.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/module/arithmetic/regular/is_nan.hpp>
+#include <eve/module/core/regular/binarize.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
 #include <eve/platform.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

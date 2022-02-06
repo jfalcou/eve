@@ -66,4 +66,4 @@ namespace eve
   EVE_MAKE_CALLABLE(frexp_, frexp);
 }
 
-#include <eve/module/arithmetic/regular/impl/frexp.hpp>
+#include <eve/module/core/regular/impl/frexp.hpp>

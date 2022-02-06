@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/floor.hpp>
-#include <eve/module/arithmetic/diff/impl/floor.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/diff/impl/floor.hpp>

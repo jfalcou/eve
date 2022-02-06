@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/special/regular/betainc_inv.hpp>
 #include <eve/module/special/diff/betainc.hpp>
 

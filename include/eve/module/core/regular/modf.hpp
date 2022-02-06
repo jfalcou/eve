@@ -68,4 +68,4 @@ namespace eve
   EVE_MAKE_CALLABLE(modf_, modf);
 }
 
-#include <eve/module/arithmetic/regular/impl/modf.hpp>
+#include <eve/module/core/regular/impl/modf.hpp>

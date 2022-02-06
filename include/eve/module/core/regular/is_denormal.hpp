@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_denormal.hpp>
+#include <eve/module/core/regular/impl/is_denormal.hpp>

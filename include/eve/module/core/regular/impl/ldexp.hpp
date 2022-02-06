@@ -9,14 +9,14 @@
 
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/regular/is_less.hpp>
-#include <eve/module/arithmetic/regular/trunc.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/constant/maxexponent.hpp>
-#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/constant/maxexponent.hpp>
+#include <eve/module/core/constant/nbmantissabits.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

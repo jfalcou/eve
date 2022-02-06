@@ -74,4 +74,4 @@ namespace eve
   EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
-#include <eve/module/arithmetic/regular/impl/copysign.hpp>
+#include <eve/module/core/regular/impl/copysign.hpp>

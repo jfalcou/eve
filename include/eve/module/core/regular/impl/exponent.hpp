@@ -9,12 +9,12 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_not_finite.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/module/arithmetic/regular/sub.hpp>
-#include <eve/module/arithmetic/constant/exponentmask.hpp>
-#include <eve/module/arithmetic/constant/maxexponent.hpp>
-#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
+#include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/constant/exponentmask.hpp>
+#include <eve/module/core/constant/maxexponent.hpp>
+#include <eve/module/core/constant/nbmantissabits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

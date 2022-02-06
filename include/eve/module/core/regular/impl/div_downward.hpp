@@ -10,13 +10,13 @@
 #include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/floor.hpp>
-#include <eve/module/arithmetic/regular/fms.hpp>
-#include <eve/module/arithmetic/regular/dec.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
-#include <eve/module/arithmetic/regular/is_gtz.hpp>
-#include <eve/module/arithmetic/regular/is_lez.hpp>
-#include <eve/module/arithmetic/regular/saturate.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/fms.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/is_lez.hpp>
+#include <eve/module/core/regular/saturate.hpp>
 
 namespace eve::detail
 {

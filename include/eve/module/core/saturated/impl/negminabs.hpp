@@ -11,7 +11,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/minabs.hpp>
+#include <eve/module/core/regular/minabs.hpp>
 
 namespace eve::detail
 {

@@ -10,8 +10,8 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/ldexp.hpp>
-#include <eve/module/arithmetic/regular/round.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/round.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 

@@ -76,8 +76,8 @@ namespace eve
   EVE_MAKE_CALLABLE(mantissa_, mantissa);
 }
 
-#include <eve/module/arithmetic/regular/impl/mantissa.hpp>
+#include <eve/module/core/regular/impl/mantissa.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/mantissa.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/mantissa.hpp>
 #endif

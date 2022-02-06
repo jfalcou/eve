@@ -80,4 +80,4 @@ namespace eve
   EVE_MAKE_CALLABLE(fdim_, fdim);
 }
 
-#include <eve/module/arithmetic/regular/impl/fdim.hpp>
+#include <eve/module/core/regular/impl/fdim.hpp>

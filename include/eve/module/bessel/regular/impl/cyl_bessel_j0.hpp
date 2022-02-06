@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/core/detail/generic/poleval.hpp>

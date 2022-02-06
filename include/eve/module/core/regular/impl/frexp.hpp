@@ -12,7 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/ifrexp.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
 
 namespace eve::detail
 {

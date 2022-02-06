@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/concept/value.hpp>

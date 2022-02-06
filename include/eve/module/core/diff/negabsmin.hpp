@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/negabsmin.hpp>
-#include <eve/module/arithmetic/diff/impl/negabsmin.hpp>
+#include <eve/module/core/regular/negabsmin.hpp>
+#include <eve/module/core/diff/impl/negabsmin.hpp>

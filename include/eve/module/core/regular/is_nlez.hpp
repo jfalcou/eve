@@ -75,4 +75,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_nlez_, is_nlez);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_nlez.hpp>
+#include <eve/module/core/regular/impl/is_nlez.hpp>

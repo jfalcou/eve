@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/detail/generic/cos_kernel.hpp>
 #include <eve/module/math/detail/generic/sin_kernel.hpp>
 #include <eve/detail/kumi>

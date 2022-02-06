@@ -76,4 +76,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_gtz_, is_gtz);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_gtz.hpp>
+#include <eve/module/core/regular/impl/is_gtz.hpp>

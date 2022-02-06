@@ -83,4 +83,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_nan_, is_not_nan);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_not_nan.hpp>
+#include <eve/module/core/regular/impl/is_not_nan.hpp>

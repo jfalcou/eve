@@ -100,16 +100,16 @@ namespace eve
   EVE_MAKE_CALLABLE(average_, average);
 }
 
-#include <eve/module/arithmetic/regular/impl/average.hpp>
+#include <eve/module/core/regular/impl/average.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/average.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/average.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/ppc/average.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/average.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/arm/neon/average.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/average.hpp>
 #endif

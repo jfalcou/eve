@@ -10,20 +10,20 @@
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/module/arithmetic/constant/exponentmask.hpp>
-#include <eve/module/arithmetic/constant/maxexponentp1.hpp>
-#include <eve/module/arithmetic/constant/maxexponentm1.hpp>
-#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
-#include <eve/module/arithmetic/constant/twotonmb.hpp>
+#include <eve/module/core/constant/exponentmask.hpp>
+#include <eve/module/core/constant/maxexponentp1.hpp>
+#include <eve/module/core/constant/maxexponentm1.hpp>
+#include <eve/module/core/constant/nbmantissabits.hpp>
+#include <eve/module/core/constant/twotonmb.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/add.hpp>
-#include <eve/module/arithmetic/regular/is_denormal.hpp>
-#include <eve/module/arithmetic/regular/is_greater.hpp>
-#include <eve/module/arithmetic/regular/is_nez.hpp>
-#include <eve/module/arithmetic/regular/is_not_finite.hpp>
-#include <eve/module/arithmetic/regular/logical_notand.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/is_denormal.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/logical_notand.hpp>
 
 namespace eve::detail
 {

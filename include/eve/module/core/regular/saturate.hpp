@@ -94,4 +94,4 @@ namespace eve
   EVE_MAKE_CALLABLE(saturate_, saturate);
 }
 
-#include <eve/module/arithmetic/regular/impl/saturate.hpp>
+#include <eve/module/core/regular/impl/saturate.hpp>

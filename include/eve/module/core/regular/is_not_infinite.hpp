@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_infinite_, is_not_infinite);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_not_infinite.hpp>
+#include <eve/module/core/regular/impl/is_not_infinite.hpp>

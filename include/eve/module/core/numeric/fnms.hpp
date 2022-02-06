@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/fnms.hpp>
-#include <eve/module/arithmetic/numeric/impl/fnms.hpp>
+#include <eve/module/core/regular/fnms.hpp>
+#include <eve/module/core/numeric/impl/fnms.hpp>
 
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/numeric/impl/simd/x86/fnms.hpp>
+#  include <eve/module/core/numeric/impl/simd/x86/fnms.hpp>
 #endif

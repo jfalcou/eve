@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_odd_, is_odd);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_odd.hpp>
+#include <eve/module/core/regular/impl/is_odd.hpp>

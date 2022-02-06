@@ -80,4 +80,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_positive_, is_positive);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_positive.hpp>
+#include <eve/module/core/regular/impl/is_positive.hpp>

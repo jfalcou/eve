@@ -9,9 +9,9 @@
 
 #include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_greater_equal.hpp>
-#include <eve/module/arithmetic/regular/is_unordered.hpp>
-#include <eve/module/arithmetic/regular/logical_or.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/logical_or.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>

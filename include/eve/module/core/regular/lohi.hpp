@@ -72,4 +72,4 @@ namespace eve
   EVE_MAKE_CALLABLE(lohi_, lohi);
 }
 
-#include <eve/module/arithmetic/regular/impl/lohi.hpp>
+#include <eve/module/core/regular/impl/lohi.hpp>

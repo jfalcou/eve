@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/regular/secd.hpp>
 #include <eve/module/math/regular/tand.hpp>
 #include <eve/module/math/regular/deginrad.hpp>

@@ -83,4 +83,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_not_imag_, is_not_imag);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_not_imag.hpp>
+#include <eve/module/core/regular/impl/is_not_imag.hpp>

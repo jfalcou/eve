@@ -12,7 +12,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/arithmetic/regular/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 namespace eve::detail
 {

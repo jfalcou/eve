@@ -85,9 +85,9 @@ namespace eve
   EVE_MAKE_CALLABLE(is_unordered_, is_unordered);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_unordered.hpp>
+#include <eve/module/core/regular/impl/is_unordered.hpp>
 #include <eve/arch.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/regular/impl/simd/x86/is_unordered.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_unordered.hpp>
 #endif

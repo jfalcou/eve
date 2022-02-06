@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_ltz.hpp>
-#include <eve/module/arithmetic/regular/min.hpp>
-#include <eve/module/arithmetic/regular/max.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/max.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 

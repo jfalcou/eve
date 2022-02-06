@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/detail/poleval.hpp>
+#include <eve/module/core/detail/poleval.hpp>

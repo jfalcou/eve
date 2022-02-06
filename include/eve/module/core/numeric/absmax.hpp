@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/absmax.hpp>
-#include <eve/module/arithmetic/numeric/impl/absmax.hpp>
+#include <eve/module/core/regular/absmax.hpp>
+#include <eve/module/core/numeric/impl/absmax.hpp>

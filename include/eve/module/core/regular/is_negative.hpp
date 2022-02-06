@@ -80,4 +80,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_negative_, is_negative);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_negative.hpp>
+#include <eve/module/core/regular/impl/is_negative.hpp>

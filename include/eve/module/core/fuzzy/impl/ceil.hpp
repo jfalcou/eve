@@ -8,10 +8,10 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/inc.hpp>
-#include <eve/module/arithmetic/fuzzy/floor.hpp>
-#include <eve/module/arithmetic/regular/trunc.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/fuzzy/floor.hpp>
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 

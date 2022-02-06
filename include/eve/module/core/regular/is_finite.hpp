@@ -84,4 +84,4 @@ namespace eve
   EVE_MAKE_CALLABLE(is_finite_, is_finite);
 }
 
-#include <eve/module/arithmetic/regular/impl/is_finite.hpp>
+#include <eve/module/core/regular/impl/is_finite.hpp>

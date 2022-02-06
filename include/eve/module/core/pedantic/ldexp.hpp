@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/is_flint.hpp>
+#include <eve/module/core/regular/is_flint.hpp>
 
 namespace eve::detail
 {
@@ -24,4 +24,4 @@ namespace eve::detail
   }
 }
 
-#include <eve/module/arithmetic/pedantic/impl/ldexp.hpp>
+#include <eve/module/core/pedantic/impl/ldexp.hpp>

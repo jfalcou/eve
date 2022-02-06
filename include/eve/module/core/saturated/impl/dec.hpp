@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/regular/is_not_equal.hpp>
+#include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 
