@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <cmath>
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>

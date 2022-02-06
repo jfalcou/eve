@@ -9,7 +9,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/is_gtz.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

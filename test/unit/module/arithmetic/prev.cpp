@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/function/prev.hpp>
 #include <eve/function/dec.hpp>
 #include <eve/function/saturated/prev.hpp>

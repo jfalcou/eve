@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
 #include <cmath>
 

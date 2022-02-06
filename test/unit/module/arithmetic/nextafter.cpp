@@ -10,7 +10,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/function/nextafter.hpp>
 #include <eve/function/sign.hpp>
 #include <eve/function/inc.hpp>

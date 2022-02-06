@@ -10,8 +10,8 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/arithmetic/constant/mindenormal.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/function/rsqrt.hpp>
 #include <eve/function/pedantic/rsqrt.hpp>
 #include <eve/function/diff/rsqrt.hpp>

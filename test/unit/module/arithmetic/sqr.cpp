@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/sqrtvalmax.hpp>
 #include <eve/function/sqr.hpp>
 #include <eve/function/saturated/abs.hpp>
 #include <eve/function/diff/sqr.hpp>

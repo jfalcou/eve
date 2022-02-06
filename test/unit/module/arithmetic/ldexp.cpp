@@ -8,8 +8,8 @@
 #include "test.hpp"
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/arithmetic/constant/mindenormal.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/function/pedantic/ldexp.hpp>
 #include <eve/function/is_negative.hpp>
 #include <eve/function/is_positive.hpp>

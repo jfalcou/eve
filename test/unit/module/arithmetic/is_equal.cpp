@@ -11,7 +11,7 @@
 #include <eve/function/is_equal.hpp>
 #include <eve/function/numeric/is_equal.hpp>
 #include <eve/function/fuzzy/is_equal.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

@@ -10,8 +10,8 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/function/is_less_equal.hpp>
 #include <eve/function/fuzzy/is_less_equal.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
-#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

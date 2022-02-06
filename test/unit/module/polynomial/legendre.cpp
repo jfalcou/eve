@@ -9,7 +9,7 @@
 #include "test.hpp"
 #include <boost/math/special_functions/legendre.hpp>
 #include <eve/module/polynomial.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 
  //==================================================================================================
  //== Types tests
