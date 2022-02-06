@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/floor.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {

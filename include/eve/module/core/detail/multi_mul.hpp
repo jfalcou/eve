@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/assert.hpp>
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/mul.hpp>
+#include <eve/module/core/regular/mul.hpp>
 
 namespace eve::detail
 {

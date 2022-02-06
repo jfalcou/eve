@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/rsqrt.hpp>
+#include <eve/module/core/regular/rsqrt.hpp>
+#include <eve/module/core/constant/half.hpp>
 
 namespace eve::detail
 {

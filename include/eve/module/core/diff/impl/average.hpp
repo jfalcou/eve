@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/rec.hpp>
+#include <eve/module/core/regular/rec.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {

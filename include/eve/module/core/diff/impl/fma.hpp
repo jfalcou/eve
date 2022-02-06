@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {
@@ -28,7 +28,6 @@ namespace eve::detail
                             , T const &a
                             , T const &b
                             , T const &c) noexcept
-  //  requires(has_native_abi_v<T>)
   {
     if constexpr(N == 1) return b;
     else if constexpr(N == 2) return a;

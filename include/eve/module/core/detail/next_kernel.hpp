@@ -7,9 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/arithmetic/regular/is_gez.hpp>
+#include <eve/module/core/regular/is_gez.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 

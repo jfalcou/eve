@@ -7,9 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/sqr.hpp>
-#include <eve/module/arithmetic/regular/is_eqz.hpp>
+#include <eve/module/core/regular/sqr.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {

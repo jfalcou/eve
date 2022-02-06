@@ -7,9 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/diff/sub.hpp>
-#include <eve/module/arithmetic/regular/sign.hpp>
+#include <eve/module/core/diff/sub.hpp>
+#include <eve/module/core/regular/sign.hpp>
 #include <eve/concept/compatible.hpp>
 
 namespace eve::detail

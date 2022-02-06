@@ -7,8 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/zmone.hpp>
 
 namespace eve::detail
 {

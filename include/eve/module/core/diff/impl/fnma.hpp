@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/minus.hpp>
+#include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {

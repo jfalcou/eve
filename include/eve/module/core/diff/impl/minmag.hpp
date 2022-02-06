@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/minmag.hpp>
-#include <eve/module/arithmetic/diff/detail/minmax_kernel.hpp>
+#include <eve/module/core/regular/minmag.hpp>
+#include <eve/module/core/diff/detail/minmax_kernel.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {

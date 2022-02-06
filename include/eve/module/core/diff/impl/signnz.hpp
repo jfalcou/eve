@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/signnz.hpp>
+#include <eve/module/core/regular/signnz.hpp>
 
 namespace eve::detail
 {

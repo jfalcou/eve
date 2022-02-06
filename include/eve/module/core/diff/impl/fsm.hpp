@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
+#include <eve/module/core/constant/mone.hpp>
 
 namespace eve::detail
 {

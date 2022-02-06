@@ -7,10 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/arithmetic/regular/minabs.hpp>
-#include <eve/module/arithmetic/regular/sign.hpp>
-#include <eve/module/arithmetic/diff/detail/minmax_kernel.hpp>
+#include <eve/module/core/regular/minabs.hpp>
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/diff/detail/minmax_kernel.hpp>
 
 namespace eve::detail
 {
