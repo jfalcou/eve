@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
