@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/div.hpp>
+#include <eve/module/core/regular/div.hpp>

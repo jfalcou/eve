@@ -1,5 +1,5 @@
 #include <eve/function/maxmag.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/pedantic/absmax.hpp>
 #include <eve/function/numeric/absmax.hpp>
 #include <eve/wide.hpp>

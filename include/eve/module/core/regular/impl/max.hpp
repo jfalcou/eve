@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/max.hpp>

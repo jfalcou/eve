@@ -30,4 +30,4 @@
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/plus.hpp>
 #include <eve/module/core/regular/sqr.hpp>
-#include <eve/module/
+#include <eve/module/core/regular/sub.hpp>

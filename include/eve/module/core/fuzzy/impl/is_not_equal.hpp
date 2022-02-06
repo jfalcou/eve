@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/fuzzy.hpp>
+#include <eve/module/core/regular/fuzzy.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/module/core/constant/eps.hpp>

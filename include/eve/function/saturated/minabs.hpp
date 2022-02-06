@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/minabs.hpp>
-#include <eve/module/arithmetic/saturated/impl/minabs.hpp>
+#include <eve/module/core/saturated/impl/minabs.hpp>

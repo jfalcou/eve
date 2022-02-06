@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/module/core/detail/multi_mul.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/pedantic.hpp>
+#include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/logical_and.hpp>

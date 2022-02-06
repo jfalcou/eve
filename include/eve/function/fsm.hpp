@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/fsm.hpp>
+#include <eve/module/core/regular/fsm.hpp>

@@ -1,5 +1,5 @@
 //#include <eve/function/dist.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/saturated/dist.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/core/constant/valmax.hpp>

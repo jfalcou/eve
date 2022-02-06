@@ -1,4 +1,4 @@
-#include <eve/module/arithmetic/constant/minexponent.hpp>
+#include <eve/module/core/constant/minexponent.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

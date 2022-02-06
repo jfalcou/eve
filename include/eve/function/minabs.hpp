@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/minabs.hpp>
+#include <eve/module/core/regular/minabs.hpp>

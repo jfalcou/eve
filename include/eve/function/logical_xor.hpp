@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/logical_xor.hpp>
+#include <eve/module/core/regular/logical_xor.hpp>

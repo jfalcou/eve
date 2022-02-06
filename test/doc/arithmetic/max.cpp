@@ -1,5 +1,5 @@
 //#include <eve/function/max.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/pedantic/max.hpp>
 #include <eve/function/numeric/max.hpp>
 #include <eve/wide.hpp>

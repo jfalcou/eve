@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/arithmetic/regular/prev.hpp>
+#include <eve/module/core/regular/prev.hpp>

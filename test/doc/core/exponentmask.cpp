@@ -1,4 +1,4 @@
-#include <eve/module/arithmetic/constant/exponentmask.hpp>
+#include <eve/module/core/constant/exponentmask.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

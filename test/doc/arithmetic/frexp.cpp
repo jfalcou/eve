@@ -1,7 +1,7 @@
 //#include <eve/function/pedantic/frexp.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/nan.hpp>

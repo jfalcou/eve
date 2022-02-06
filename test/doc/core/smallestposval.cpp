@@ -1,4 +1,4 @@
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

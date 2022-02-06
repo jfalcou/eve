@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/negatenz.hpp>
+#include <eve/module/core/pedantic/negatenz.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/absmin.hpp>
-#include <eve/module/arithmetic/saturated/impl/absmin.hpp>
+#include <eve/module/core/saturated/impl/absmin.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/numeric/min.hpp>
+#include <eve/module/core/numeric/min.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/minus.hpp>
-#include <eve/module/arithmetic/saturated/impl/minus.hpp>
+#include <eve/module/core/saturated/impl/minus.hpp>

@@ -9,4 +9,4 @@
  
 #include <eve/arch.hpp>
  
-#include <eve/module/arithmetic/regular/is_ordered.hpp>
+#include <eve/module/core/regular/is_ordered.hpp>

@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>

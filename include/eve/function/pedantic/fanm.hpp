@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/fanm.hpp>
+#include <eve/module/core/pedantic/fanm.hpp>

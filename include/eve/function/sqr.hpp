@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/sqr.hpp>
+#include <eve/module/core/regular/sqr.hpp>

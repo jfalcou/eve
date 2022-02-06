@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/floor.hpp>
-#include <eve/module/arithmetic/fuzzy/impl/floor.hpp>
+#include <eve/module/core/fuzzy/impl/floor.hpp>

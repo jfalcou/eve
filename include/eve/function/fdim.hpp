@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/fdim.hpp>
+#include <eve/module/core/regular/fdim.hpp>

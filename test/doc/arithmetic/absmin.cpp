@@ -1,5 +1,5 @@
 //#include <eve/function/absmin.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/pedantic/absmin.hpp>
 #include <eve/function/numeric/absmin.hpp>
 #include <eve/wide.hpp>

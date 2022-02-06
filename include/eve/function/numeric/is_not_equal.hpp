@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/numeric/is_not_equal.hpp>
+#include <eve/module/core/numeric/is_not_equal.hpp>

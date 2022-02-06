@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/hi.hpp>
+#include <eve/module/core/regular/hi.hpp>

@@ -1,4 +1,4 @@
-#include <eve/module/arithmetic/constant/mantissamask.hpp>
+#include <eve/module/core/constant/mantissamask.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

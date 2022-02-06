@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/remdiv.hpp>
+#include <eve/module/core/regular/remdiv.hpp>

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/negmaxabs.hpp>
-#include <eve/module/arithmetic/saturated/impl/negmaxabs.hpp>
+#include <eve/module/core/saturated/impl/negmaxabs.hpp>

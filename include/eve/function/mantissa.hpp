@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/arithmetic/regular/mantissa.hpp>
+#include <eve/module/core/regular/mantissa.hpp>

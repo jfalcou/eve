@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/numeric/lerp.hpp>
+#include <eve/module/core/numeric/lerp.hpp>

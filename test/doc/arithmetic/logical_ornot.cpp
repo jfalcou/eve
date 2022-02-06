@@ -1,5 +1,5 @@
 //#include <eve/function/logical_ornot.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/is_odd.hpp>
 #include <eve/function/is_even.hpp>
 #include <eve/wide.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/mul.hpp>
+#include <eve/module/core/regular/mul.hpp>

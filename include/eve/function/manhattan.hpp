@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/manhattan.hpp>
+#include <eve/module/core/regular/manhattan.hpp>

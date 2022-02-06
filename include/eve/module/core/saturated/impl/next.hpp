@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/saturated.hpp>
+#include <eve/module/core/regular/saturated.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/is_nan.hpp>

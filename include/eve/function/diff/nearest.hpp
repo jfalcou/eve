@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/nearest.hpp>
+#include <eve/module/core/diff/nearest.hpp>

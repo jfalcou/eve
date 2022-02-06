@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/saturated.hpp>
+#include <eve/module/core/regular/saturated.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/constant/valmax.hpp<
+#include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <concepts>
 

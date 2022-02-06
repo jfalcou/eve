@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/fuzzy.hpp>
+#include <eve/module/core/regular/fuzzy.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>

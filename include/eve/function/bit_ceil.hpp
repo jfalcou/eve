@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/bit_ceil.hpp>
+#include <eve/module/core/regular/bit_ceil.hpp>

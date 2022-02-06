@@ -8,7 +8,6 @@
 #pragma once
 
 
-#include <eve/module/core.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/trunc.hpp>
