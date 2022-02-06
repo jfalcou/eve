@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/bit_notand.hpp>
 
 namespace eve::detail
 {

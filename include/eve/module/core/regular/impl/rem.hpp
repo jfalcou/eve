@@ -18,6 +18,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/apply_over.hpp>
 

@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/concept/value.hpp>

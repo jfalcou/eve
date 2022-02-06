@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
+#include <eve/module/core/regular/all.hpp>
 
 namespace eve
 {

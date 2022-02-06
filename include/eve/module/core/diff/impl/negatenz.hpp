@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/derivative.hpp>
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/constant/zero.hpp>
 

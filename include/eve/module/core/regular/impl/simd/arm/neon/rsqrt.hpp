@@ -7,9 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
-
 namespace eve::detail
 {
   template<floating_real_scalar_value T, typename N>

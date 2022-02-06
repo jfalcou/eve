@@ -7,8 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/derivative.hpp>
 
 namespace eve::detail
 {

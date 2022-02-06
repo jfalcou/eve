@@ -9,6 +9,7 @@
 
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/is_less.hpp>

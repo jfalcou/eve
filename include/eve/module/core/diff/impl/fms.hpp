@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/constant/mone.hpp>
 
 namespace eve::detail

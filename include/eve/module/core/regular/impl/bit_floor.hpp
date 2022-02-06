@@ -13,6 +13,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/bit_width.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

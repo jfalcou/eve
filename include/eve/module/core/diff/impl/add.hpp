@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/traits/common_compatible.hpp>

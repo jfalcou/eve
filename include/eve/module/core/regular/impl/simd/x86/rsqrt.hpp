@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/pedantic/ifrexp.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_odd.hpp>

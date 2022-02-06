@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>

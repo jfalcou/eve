@@ -15,6 +15,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/is_lez.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 
 namespace eve::detail

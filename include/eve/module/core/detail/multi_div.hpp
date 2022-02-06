@@ -10,6 +10,7 @@
 #include <eve/assert.hpp>
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/mul.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/assert.hpp>
 
 namespace eve::detail

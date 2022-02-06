@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/module/core/regular/raw.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 

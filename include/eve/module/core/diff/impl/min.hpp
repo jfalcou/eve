@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/diff/detail/minmax_kernel.hpp>
 #include <eve/module/core/constant/one.hpp>
