@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/numeric.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/if_else.hpp>

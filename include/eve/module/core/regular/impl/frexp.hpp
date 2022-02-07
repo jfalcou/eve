@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/raw.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
