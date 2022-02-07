@@ -13,6 +13,7 @@
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_lez.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>

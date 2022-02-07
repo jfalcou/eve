@@ -9,6 +9,7 @@
 
 #include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/sqr_abs.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/zero.hpp>

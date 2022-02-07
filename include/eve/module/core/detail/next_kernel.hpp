@@ -8,7 +8,10 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
+#include <eve/module/core/constant/signmask.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 

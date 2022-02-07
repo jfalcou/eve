@@ -12,6 +12,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/module/core/constant/zero.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
