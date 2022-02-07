@@ -7,7 +7,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/nan.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 

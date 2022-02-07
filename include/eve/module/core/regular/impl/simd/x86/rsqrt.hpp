@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/valmax.hpp>
-#include <eve/module/core/regular/one.hpp>
-#include <eve/module/core/regular/inf.hpp>
-#include <eve/module/core/regular/half.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/abs.hpp>

@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/one.hpp>
-#include <eve/module/core/regular/inf.hpp>
-#include <eve/module/core/regular/half.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/fma.hpp>

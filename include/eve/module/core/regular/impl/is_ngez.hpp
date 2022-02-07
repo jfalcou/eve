@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/zero.hpp>
-#include <eve/module/core/regular/nan.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/is_nan.hpp>

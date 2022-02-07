@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/one.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/constant/zero.hpp>

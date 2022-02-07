@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/zero.hpp>
-#include <eve/module/core/regular/one.hpp>
-#include <eve/module/core/regular/mone.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>

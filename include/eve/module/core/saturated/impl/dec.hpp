@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/valmin.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturated.hpp>
 #include <eve/detail/function/conditional.hpp>

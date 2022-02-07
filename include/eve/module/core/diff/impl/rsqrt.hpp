@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/mhalf.hpp>
-#include <eve/module/core/regular/half.hpp>
+#include <eve/module/core/constant/mhalf.hpp>
+#include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/rec.hpp>

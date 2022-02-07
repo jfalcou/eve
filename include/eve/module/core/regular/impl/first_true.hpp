@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/zero.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/concept/value.hpp>

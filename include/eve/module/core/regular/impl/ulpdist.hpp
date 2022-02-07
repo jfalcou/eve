@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/nan.hpp>
-#include <eve/module/core/regular/half.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/numeric.hpp>
 #include <eve/module/core/regular/nb_values.hpp>

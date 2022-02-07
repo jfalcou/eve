@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/nan.hpp>
+#include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/regular/numeric.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/bit_or.hpp>

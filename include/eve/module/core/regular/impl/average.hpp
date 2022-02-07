@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/half.hpp>
+#include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/raw.hpp>

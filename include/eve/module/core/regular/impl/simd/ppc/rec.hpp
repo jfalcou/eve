@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/zero.hpp>
-#include <eve/module/core/regular/one.hpp>
-#include <eve/module/core/regular/mzero.hpp>
-#include <eve/module/core/regular/inf.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/mzero.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/regular/refine_rec.hpp>
 #include <eve/module/core/regular/raw.hpp>
 #include <eve/module/core/regular/if_else.hpp>
