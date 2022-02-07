@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/add.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>

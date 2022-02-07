@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/sqrt.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/constant/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>

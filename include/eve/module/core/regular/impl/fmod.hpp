@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/pedantic/rem.hpp>

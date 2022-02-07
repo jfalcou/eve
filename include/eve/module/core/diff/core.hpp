@@ -48,7 +48,7 @@
 #include <eve/module/core/diff/oneminus.hpp>
 #include <eve/module/core/diff/plus.hpp>
 #include <eve/module/core/diff/rec.hpp>
-#include <eve/module/core/diff/round.hpp>
+//#include <eve/module/core/diff/round.hpp>
 #include <eve/module/core/diff/rsqrt.hpp>
 #include <eve/module/core/diff/sign.hpp>
 #include <eve/module/core/diff/signnz.hpp>

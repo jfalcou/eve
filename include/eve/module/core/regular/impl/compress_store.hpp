@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/store.hpp>
 #include <eve/detail/function/compress_store_impl.hpp>
 
 #include <eve/detail/kumi.hpp>

@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/exponent.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/any.hpp>

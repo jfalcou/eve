@@ -7,6 +7,10 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_not_less.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve
 {

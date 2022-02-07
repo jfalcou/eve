@@ -7,6 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/saturated.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/min.hpp>

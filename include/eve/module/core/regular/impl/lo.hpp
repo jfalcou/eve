@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/lohi.hpp>
 
 namespace eve::detail

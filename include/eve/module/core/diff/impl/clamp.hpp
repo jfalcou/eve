@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/diff/min.hpp>
 #include <eve/module/core/diff/max.hpp>

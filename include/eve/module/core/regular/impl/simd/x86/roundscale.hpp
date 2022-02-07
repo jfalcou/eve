@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
+//#include <eve/module/core/regular/impl/simd/x86/fracscale.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
-#include <eve/module/core/regular/impl/simd/x86/fracscale.hpp>
 
 namespace eve::detail
 {
@@ -58,33 +59,33 @@ namespace eve::detail
     return to_nearest(roundscale[cx])(a0, s);
   }
 
-//   template < int R, typename WT> struct  m_imm_choice
-//   {
-//     m_imm_choice(){}
+  template < int R, typename WT> struct  rm_imm_choice
+  {
+    rm_imm_choice(){}
 
-//     template < typename F> EVE_FORCEINLINE auto operator()(WT src, auto m, WT a, int s, F f) const noexcept
-//     {
-//       switch ((s)){
-//       case 0  : return f(src, m, a, std::integral_constant<int, (0  << 4) + R>()); break;
-//       case 1  : return f(src, m, a, std::integral_constant<int, (1  << 4) + R>()); break;
-//       case 2  : return f(src, m, a, std::integral_constant<int, (2  << 4) + R>()); break;
-//       case 3  : return f(src, m, a, std::integral_constant<int, (3  << 4) + R>()); break;
-//       case 4  : return f(src, m, a, std::integral_constant<int, (4  << 4) + R>()); break;
-//       case 5  : return f(src, m, a, std::integral_constant<int, (5  << 4) + R>()); break;
-//       case 6  : return f(src, m, a, std::integral_constant<int, (6  << 4) + R>()); break;
-//       case 7  : return f(src, m, a, std::integral_constant<int, (7  << 4) + R>()); break;
-//       case 8  : return f(src, m, a, std::integral_constant<int, (8  << 4) + R>()); break;
-//       case 9  : return f(src, m, a, std::integral_constant<int, (9  << 4) + R>()); break;
-//       case 10 : return f(src, m, a, std::integral_constant<int, (10 << 4) + R>()); break;
-//       case 11 : return f(src, m, a, std::integral_constant<int, (11 << 4) + R>()); break;
-//       case 12 : return f(src, m, a, std::integral_constant<int, (12 << 4) + R>()); break;
-//       case 13 : return f(src, m, a, std::integral_constant<int, (13 << 4) + R>()); break;
-//       case 14 : return f(src, m, a, std::integral_constant<int, (14 << 4) + R>()); break;
-//       case 15 : return f(src, m, a, std::integral_constant<int, (15 << 4) + R>()); break;
-//       default : return f(src, m, a, std::integral_constant<int, (15 << 4) + R>());
-//       }
-//     }
-//   };
+    template < typename F> EVE_FORCEINLINE auto operator()(WT src, auto m, WT a, int s, F f) const noexcept
+    {
+      switch ((s)){
+      case 0  : return f(src, m, a, std::integral_constant<int, (0  << 4) + R>()); break;
+      case 1  : return f(src, m, a, std::integral_constant<int, (1  << 4) + R>()); break;
+      case 2  : return f(src, m, a, std::integral_constant<int, (2  << 4) + R>()); break;
+      case 3  : return f(src, m, a, std::integral_constant<int, (3  << 4) + R>()); break;
+      case 4  : return f(src, m, a, std::integral_constant<int, (4  << 4) + R>()); break;
+      case 5  : return f(src, m, a, std::integral_constant<int, (5  << 4) + R>()); break;
+      case 6  : return f(src, m, a, std::integral_constant<int, (6  << 4) + R>()); break;
+      case 7  : return f(src, m, a, std::integral_constant<int, (7  << 4) + R>()); break;
+      case 8  : return f(src, m, a, std::integral_constant<int, (8  << 4) + R>()); break;
+      case 9  : return f(src, m, a, std::integral_constant<int, (9  << 4) + R>()); break;
+      case 10 : return f(src, m, a, std::integral_constant<int, (10 << 4) + R>()); break;
+      case 11 : return f(src, m, a, std::integral_constant<int, (11 << 4) + R>()); break;
+      case 12 : return f(src, m, a, std::integral_constant<int, (12 << 4) + R>()); break;
+      case 13 : return f(src, m, a, std::integral_constant<int, (13 << 4) + R>()); break;
+      case 14 : return f(src, m, a, std::integral_constant<int, (14 << 4) + R>()); break;
+      case 15 : return f(src, m, a, std::integral_constant<int, (15 << 4) + R>()); break;
+      default : return f(src, m, a, std::integral_constant<int, (15 << 4) + R>());
+      }
+    }
+  };
 
   template<conditional_expr C, floating_real_scalar_value T, typename N>
   EVE_FORCEINLINE
@@ -111,7 +112,7 @@ namespace eve::detail
       auto src  = alternative(cx,a0,as<wide<T, N>>{});
       auto m    = expand_mask(cx,as<wide<T, N>>{}).storage().value;
       using r_t = wide<T, N>;
-      m_imm_choice<D::base_type::value, r_t> ic;
+      rm_imm_choice<D::base_type::value, r_t> ic;
 
             if constexpr(c == category::float32x16 )  return ic(src, m, a0, s, [](auto src, auto m, auto a, auto b){return _mm512_mask_roundscale_ps(src, m, a, decltype(b)::value); });
       else  if constexpr(c == category::float64x8  )  return ic(src, m, a0, s, [](auto src, auto m, auto a, auto b){return _mm512_mask_roundscale_pd(src, m, a, decltype(b)::value); });

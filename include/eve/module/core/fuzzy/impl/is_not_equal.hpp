@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/nb_values.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/fuzzy.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>

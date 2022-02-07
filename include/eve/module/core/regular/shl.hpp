@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/assert.hpp>

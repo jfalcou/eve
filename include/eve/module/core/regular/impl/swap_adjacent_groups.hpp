@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/bit_width.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/detail/meta.hpp>

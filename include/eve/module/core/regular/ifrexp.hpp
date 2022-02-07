@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/frexp.hpp>
+#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

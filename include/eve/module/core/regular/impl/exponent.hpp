@@ -7,15 +7,17 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/is_not_finite.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/constant/exponentmask.hpp>
 #include <eve/module/core/constant/maxexponent.hpp>
 #include <eve/module/core/constant/nbmantissabits.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/sub.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/detail/implementation.hpp>
 
 
 namespace eve::detail

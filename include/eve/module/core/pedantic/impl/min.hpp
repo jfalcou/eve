@@ -7,11 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
-#include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/logical_and.hpp>

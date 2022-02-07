@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/numeric.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/regular/logical_or.hpp>

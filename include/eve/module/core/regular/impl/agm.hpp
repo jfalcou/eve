@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/module/core/constant/eps.hpp>

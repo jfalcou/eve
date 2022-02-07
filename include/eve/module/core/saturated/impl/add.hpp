@@ -7,6 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_mask.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/saturated.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

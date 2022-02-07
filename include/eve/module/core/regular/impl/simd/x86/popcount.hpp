@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/shr.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>

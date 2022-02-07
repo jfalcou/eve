@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/detail/multi_mul.hpp>
 #include <eve/assert.hpp>
 #include <eve/concept/compatible.hpp>

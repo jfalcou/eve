@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/countr_zero.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/logical.hpp>
 #include <eve/detail/has_abi.hpp>

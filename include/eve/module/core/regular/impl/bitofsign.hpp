@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/bit_and.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/signmask.hpp>

@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/exponent.hpp>
+#include <eve/module/core/regular/convert.hpp>
 
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/is_less.hpp>

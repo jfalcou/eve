@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/all.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/bit_cast.hpp>

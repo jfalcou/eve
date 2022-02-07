@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/pedantic.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
 #include <eve/module/core/regular/all.hpp>
 

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/is_not_less_equal.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>

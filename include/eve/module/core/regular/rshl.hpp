@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/shr.hpp>
+#include <eve/module/core/regular/shl.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/module/core/regular/abs.hpp>

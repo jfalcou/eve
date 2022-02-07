@@ -7,6 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/bit_select.hpp>
+#include <eve/module/core/regular/bit_ornot.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_mask.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
 #include <eve/arch/top_bits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/compatible.hpp>

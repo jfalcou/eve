@@ -7,6 +7,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve
 {

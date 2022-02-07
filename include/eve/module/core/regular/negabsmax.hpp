@@ -7,6 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/absmax.hpp>
+#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/regular/numeric.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/arch/top_bits.hpp>
 #include <eve/function/any.hpp>
 #include <eve/function/convert.hpp>

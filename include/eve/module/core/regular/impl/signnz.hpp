@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

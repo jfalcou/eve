@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/detail/generic/lookup_helpers.hpp>
 #include <eve/detail/function/bit_cast.hpp>

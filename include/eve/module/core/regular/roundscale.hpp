@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/round.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/assert.hpp>
 #include <type_traits>

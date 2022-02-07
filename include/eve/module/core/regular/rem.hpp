@@ -7,6 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_not.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/logical.hpp>
 #include <type_traits>

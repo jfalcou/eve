@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/max.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
@@ -33,7 +34,7 @@ namespace eve::detail
                             , T const &a
                             , T const &b) noexcept
   {
-    return if_else(is_less(a, b), b, a);
+    return if_else(a < b, b, a);
   }
 
   template<real_simd_value T>

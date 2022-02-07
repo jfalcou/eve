@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/raw.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>

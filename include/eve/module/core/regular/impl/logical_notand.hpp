@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/bit_notand.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>

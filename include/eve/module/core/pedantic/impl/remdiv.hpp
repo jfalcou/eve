@@ -7,6 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>

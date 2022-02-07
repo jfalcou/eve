@@ -7,6 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/shr.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_notand.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/exponentmask.hpp>
 #include <eve/module/core/constant/maxexponentm1.hpp>

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/popcount.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/implementation.hpp>

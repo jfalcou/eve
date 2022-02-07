@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/logical_andnot.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

@@ -7,6 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/regular/bitofsign.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/saturated.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

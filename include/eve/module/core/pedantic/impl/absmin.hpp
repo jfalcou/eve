@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

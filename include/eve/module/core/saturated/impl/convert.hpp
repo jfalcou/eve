@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/saturated.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>

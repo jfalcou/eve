@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/sqr.hpp>
