@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
-//#include <eve/module/core/regular/impl/simd/x86/fracscale.hpp>
 #include <eve/module/core/regular/roundings.hpp>
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/module/core/constant/true.hpp>
 
 namespace eve::detail
 {

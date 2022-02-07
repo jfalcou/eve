@@ -12,6 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/constant/false.hpp>
 
 namespace eve::detail
 {

@@ -9,6 +9,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/constant/false.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

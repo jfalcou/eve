@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/traits/as_integer.hpp>
+#include <eve/module/core/constant/true.hpp>
 
 namespace eve::detail
 {

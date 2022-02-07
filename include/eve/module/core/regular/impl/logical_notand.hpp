@@ -16,6 +16,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/module/core/constant/false.hpp>
 
 namespace eve::detail
 {

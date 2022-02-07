@@ -11,6 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <type_traits>
 #include <eve/concept/value.hpp>
+#include <eve/module/core/constant/true.hpp>
 
 namespace eve::detail
 {

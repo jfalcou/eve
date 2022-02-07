@@ -12,6 +12,8 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
+#include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {
@@ -35,4 +37,3 @@ namespace eve::detail
     return is_greater_equal[cond](u, zero(as(u)));
   }
 }
-

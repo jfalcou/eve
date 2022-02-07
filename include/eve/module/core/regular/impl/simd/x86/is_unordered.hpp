@@ -12,6 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/constant/false.hpp>
 
 namespace eve::detail
 {
