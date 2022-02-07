@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/zero.hpp>
+#include <eve/module/core/regular/valmin.hpp>
+#include <eve/module/core/regular/valmax.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/min.hpp>

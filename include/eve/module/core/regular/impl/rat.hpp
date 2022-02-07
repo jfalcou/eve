@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/zero.hpp>
+#include <eve/module/core/regular/one.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/if_else.hpp>

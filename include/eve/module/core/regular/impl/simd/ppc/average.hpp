@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/half.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/regular/fma.hpp>

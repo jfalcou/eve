@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/maxflint.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/detail/implementation.hpp>

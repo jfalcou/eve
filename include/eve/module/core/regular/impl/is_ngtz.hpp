@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/zero.hpp>
+#include <eve/module/core/regular/nan.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_lez.hpp>

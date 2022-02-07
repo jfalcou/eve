@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/inf.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>

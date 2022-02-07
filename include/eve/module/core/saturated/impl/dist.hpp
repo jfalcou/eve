@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/valmax.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/all.hpp>

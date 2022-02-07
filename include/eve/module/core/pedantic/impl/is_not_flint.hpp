@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/maxflint.hpp>
 #include <eve/module/core/regular/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_nez.hpp>

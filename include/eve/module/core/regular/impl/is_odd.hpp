@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/one.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/is_even.hpp>

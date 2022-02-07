@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/nan.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_finite.hpp>
 #include <eve/module/core/regular/is_nan.hpp>

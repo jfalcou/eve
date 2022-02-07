@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/zero.hpp>
+#include <eve/module/core/regular/nan.hpp>
+#include <eve/module/core/regular/mzero.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/dec.hpp>

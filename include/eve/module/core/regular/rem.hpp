@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/zero.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/div.hpp>
