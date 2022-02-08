@@ -33,7 +33,7 @@ namespace eve::detail
     else
     {
       stack_buffer<wide<T, N>> buffer;
-      unaligned_t<Ptr> up_to = compress_store_impl(c, v, mask, buffer.ptr());
+      auto up_to = compress_store_impl(c, v, mask, buffer.ptr());
       std::ptrdiff_t n = up_to - buffer.ptr();
 
       unaligned_t<Ptr> out = unalign(ptr) + c.offset(as(mask));
