@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/convert.hpp>
-
+#include <eve/module/core/regular/converter.hpp>   
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/trunc.hpp>

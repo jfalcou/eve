@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/detail/generic/pow_kernel.hpp>
