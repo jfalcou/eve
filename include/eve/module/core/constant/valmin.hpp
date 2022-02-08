@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/min.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/as.hpp>
