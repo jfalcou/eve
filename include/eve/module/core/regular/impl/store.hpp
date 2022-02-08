@@ -171,12 +171,12 @@ namespace eve::detail
   template<simd_value T, relative_conditional_expr C, simd_compatible_ptr<T> Ptr>
     requires has_store_equivalent<T, Ptr>
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
-                              C const &cond,
+                              C const &c,
                               T const &v,
                               Ptr ptr) noexcept
   {
-    auto [v1, ptr1] = store_equivalent(v, ptr);
-    return store[cond](v1, ptr1);
+    auto [c1, v1, ptr1] = store_equivalent(c, v, ptr);
+    return store[c1](v1, ptr1);
   }
 
   template<simd_value T, simd_compatible_ptr<T> Ptr>

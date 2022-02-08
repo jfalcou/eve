@@ -15,9 +15,8 @@
 #include <eve/function/convert.hpp>
 #include <eve/function/read.hpp>
 #include <eve/function/write.hpp>
-#include <eve/function/compress_store.hpp>
+#include <eve/function/store_equivalent.hpp>
 #include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
 #include <eve/function/unalign.hpp>
 #include <eve/traits.hpp>
 
@@ -257,42 +256,19 @@ namespace eve::algo::views
                           );
     }
 
-    template<relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                C                                      c,
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,
+                                                relative_conditional_expr auto c,
                                                 wide_value_type_t<converting_iterator> v,
                                                 converting_iterator self)
-      requires iterator<I>
     {
       auto c1 = map_alternative(
         c,
         [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
       );
 
-      eve::store[c1](eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
-    }
+      auto v1 = eve::convert(v, eve::as<value_type_t<I>>{});
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                wide_value_type_t<converting_iterator> v,
-                                                converting_iterator self)
-      requires iterator<I>
-    {
-      eve::store(eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
-    }
-
-    template<relative_conditional_expr C, decorator Decorator, typename U>
-    EVE_FORCEINLINE friend auto
-    tagged_dispatch(eve::tag::compress_store_,
-                    C                                                  c,
-                    Decorator                                          d,
-                    wide_value_type_t<converting_iterator>             v,
-                    eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
-                    converting_iterator                                self)
-      requires iterator<I>
-    {
-      // No alternative support in compress_store
-      auto raw_res = d(eve::compress_store[c])(eve::convert(v, eve::as<value_type_t<I>>{}), m, self.base);
-      return unaligned_t<converting_iterator>{raw_res};
+      return kumi::make_tuple(c1, v1, self.base);
     }
   };
 }

@@ -25,9 +25,9 @@ struct my_ptr
   using value_type = std::uint32_t;
 
   EVE_FORCEINLINE friend
-  auto tagged_dispatch(eve::tag::store_equivalent_, u32s, my_ptr self)
+  auto tagged_dispatch(eve::tag::store_equivalent_, auto ignore, u32s, my_ptr self)
   {
-    return  kumi::make_tuple(u8s{3}, self.equivalent);
+    return kumi::make_tuple(ignore, u8s{3}, self.equivalent);
   }
 
   EVE_FORCEINLINE friend
@@ -42,6 +42,7 @@ TTS_CASE("store_equivalent")
   eve::stack_buffer<u8s> buf;
 
   static_assert(eve::has_store_equivalent<u32s, my_ptr>);
+  static_assert(!eve::has_store_equivalent<u32s, std::uint32_t*>);
 
   {
     eve::store(u8s(0), buf.ptr());

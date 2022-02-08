@@ -72,8 +72,8 @@ namespace eve::detail
                                    logical<U> mask,
                                    Ptr ptr) noexcept
   {
-    auto [v1, ptr1] = store_equivalent(v, ptr);
-    auto res1 = compress_store(c, d, v1, mask, ptr1);
+    auto [c1, v1, ptr1] = store_equivalent(c, v, ptr);
+    auto res1 = compress_store(c1, d, v1, mask, ptr1);
     return unalign(ptr) + (res1 - ptr1);
   }
 

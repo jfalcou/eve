@@ -22,9 +22,9 @@ namespace eve
   //!   If an iterator's store operation can be done as a store to some other
   //!   iterator/pointer - this is a transformation to customize.
   //!
-  //!   Should return new value to store and a new pointer.
+  //!   Should return new ignore/value/pointer triplep
   //!
-  //!   By default returns self and value.
+  //!   By default returns ignore/value/pointer tuple, unchanged.
   //!
   //! @}
   //================================================================================================
@@ -42,15 +42,15 @@ namespace eve
   template <typename T, typename Ptr>
   concept has_store_equivalent =
     simd_compatible_ptr<Ptr, T> &&
-    (!std::same_as<kumi::tuple<T, Ptr>,
-                   decltype(store_equivalent(std::declval<T>(), std::declval<Ptr>()))>);
+    (!std::same_as<kumi::tuple<ignore_none_, T, Ptr>,
+                   decltype(store_equivalent(ignore_none, std::declval<T>(), std::declval<Ptr>()))>);
 }
 
 namespace eve::detail
 {
-  template<typename T, simd_compatible_ptr<T> Ptr>
-  EVE_FORCEINLINE kumi::tuple<T, Ptr> store_equivalent_(EVE_SUPPORTS(cpu_), T v, Ptr ptr)
+  template<relative_conditional_expr C, typename T, simd_compatible_ptr<T> Ptr>
+  EVE_FORCEINLINE kumi::tuple<C, T, Ptr> store_equivalent_(EVE_SUPPORTS(cpu_), C c, T v, Ptr ptr)
   {
-    return {v, ptr};
+    return {c, v, ptr};
   }
 }
