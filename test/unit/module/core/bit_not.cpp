@@ -5,12 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/function/bit_not.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/is_gtz.hpp>
 
+#include <eve/module/core.hpp>
 //==================================================================================================
 // Types tests
 //==================================================================================================

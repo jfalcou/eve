@@ -6,13 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/count_true.hpp>
-#include <eve/module/core/constant/mzero.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/constant/false.hpp>
-#include <eve/platform.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
 
 EVE_TEST_TYPES("Check eve::count_true return type", eve::test::simd::all_types)
 <typename T>(eve::as<T>)

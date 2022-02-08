@@ -6,11 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/is_pow2.hpp>
-#include <eve/function/firstbitset.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 //==================================================================================================

@@ -6,11 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/platform.hpp>
-#include <eve/logical.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/is_negative.hpp>
-#include <eve/module/core/constant/core.hpp>
+#include <eve/module/core.hpp>
 
 EVE_TEST_TYPES("Check basic constants behavior"
               , eve::test::simd::ieee_reals

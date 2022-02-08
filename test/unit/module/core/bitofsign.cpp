@@ -6,12 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/signmask.hpp>
-#include <eve/function/bitofsign.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 //==================================================================================================

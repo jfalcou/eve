@@ -20,6 +20,7 @@
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bit_ornot.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
+#include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
@@ -39,6 +40,7 @@
 #include <eve/module/core/regular/first_true.hpp>
 #include <eve/module/core/regular/fuzzy.hpp>
 #include <eve/module/core/regular/gather.hpp>
+#include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
 #include <eve/module/core/regular/load.hpp>

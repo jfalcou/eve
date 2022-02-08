@@ -6,9 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/firstbitunset.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Types tests

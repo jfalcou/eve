@@ -7,27 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/shl.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/assert.hpp>
 
 namespace eve
 {
   //================================================================================================
   //! @addtogroup bits
   //! @{
-  //! @var bit_shr
+  //! @var bit_shl
   //!
-  //! @brief Callable object computing the logical right shift operation.
+  //! @brief Callable object computing the logical left shift operation.
   //!
-  //! **Required header:** `#include <eve/function/bit_shr.hpp>`
+  //! **Required header:** `#include <eve/function/bit_shl.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logical right shift operation                          |
+  //! | `operator()` | the logical left shift operation   |
   //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
@@ -38,18 +36,19 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   An instance of a [value](@ref eve::value).
   //!
-  //!`n`:   [integral value](@ref eve::value).
+  //!`n`:   An instance of an [integral_value](@ref eve::integral_value).
   //!
   //! **Return value**
   //!
-  //!Computes the [elementwise](@ref glossary_elementwise) logical right shift of the first parameter by the second one.
+  //!Computes the [elementwise](@ref glossary_elementwise) logical left shift of the first parameter
+  //!by the second one.
   //!
-  //!the call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is an  [simd value](@ref eve::simd_value).
+  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an [simd value](@ref eve::simd_value).
   //!
   //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
-  //!all  [elements](@ref glossary_elementwise) of n must belong to the
+  //!all elements of n must belong to the
   //!interval: \f$[0, N[\f$ or the result is undefined.
   //!
   //! ---
@@ -58,7 +57,7 @@ namespace eve
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
-  //!  Higher-order function generating a masked version of eve::bit_shr
+  //!  Higher-order function generating a masked version of eve::bit_shl
   //!
   //!  **Parameters**
   //!
@@ -66,7 +65,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `bit_shr[cond](x, ...)` is equivalent to `if_else(cond,bit_shr(x, ...),x)`
+  //!  A Callable object so that the expression `bit_shl[cond](x, ...)` is equivalent to `if_else(cond,bit_shl(x, ...),x)`
   //!
   //! ---
   //!
@@ -76,32 +75,9 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/bit_shr.cpp}
+  //! @godbolt{doc/core/bit_shl.cpp}
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct bit_shr_; }
-
-  namespace detail
-  {
-    template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::bit_shr_), T const&,  [[maybe_unused]] S const& s)
-    {
-      EVE_ASSERT( assert_good_shift<T>(s),
-                  "[eve::bit_shr] Shifting by " << s
-                                                << " is out of the range [0, "
-                                                << sizeof(element_type_t<T>) * 8
-                                                << "[."
-                );
-    }
-  }
-
-  EVE_MAKE_CALLABLE(bit_shr_, bit_shr);
+  EVE_ALIAS_CALLABLE(shl_, bit_shl);
 }
-
-#include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/bit_shr.hpp>
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/bit_shr.hpp>
-#endif

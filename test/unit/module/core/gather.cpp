@@ -6,8 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/gather.hpp>
-#include <eve/memory/aligned_ptr.hpp>
+#include <eve/module/core.hpp>
 
 EVE_TEST_TYPES( "Check eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
