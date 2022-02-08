@@ -133,8 +133,7 @@ namespace udt
 #include <vector>
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
-#include <eve/function/cos.hpp>
-#include <eve/function/sin.hpp>
+#include <eve/module/math.hpp>
 
 namespace udt
 {
