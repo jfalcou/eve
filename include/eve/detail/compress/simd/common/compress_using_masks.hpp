@@ -118,7 +118,7 @@ namespace eve::detail
   {
     if constexpr ( kumi::product_type<T> )
     {
-      return wide<T, N>{ kumi::map(compress_using_masks_shuffle, v, num) };
+      return wide<T, N>{ kumi::map([num](auto v_) { return compress_using_masks_shuffle(v_, num); }, v) };
     }
     else
     {
@@ -195,7 +195,7 @@ namespace eve::detail
     else if constexpr ( (treat_like_aggregate || N() != 4) && !C::is_complete )
     {
       mask = mask && c.mask(as(mask));
-      return compress_using_masks(ignore_none, v, mask);
+      return compress_using_masks_(EVE_RETARGET(cpu_), ignore_none, v, mask);
     }
     else if constexpr ( treat_like_aggregate )
     {
