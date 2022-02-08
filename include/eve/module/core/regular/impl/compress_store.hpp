@@ -20,6 +20,7 @@ namespace eve::detail
   template<relative_conditional_expr C,
            scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
+    requires (!has_store_equivalent<wide<T, N>, Ptr>)
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
                     C c,
@@ -47,6 +48,7 @@ namespace eve::detail
   template<relative_conditional_expr C,
            scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
+    requires (!has_store_equivalent<wide<T, N>, Ptr>)
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
                      C c,
@@ -57,6 +59,22 @@ namespace eve::detail
   {
     if ( !C::is_complete || !C::is_inverted ) return safe(compress_store[c])(v, mask, ptr);
     else                                      return compress_store_impl(c, v, mask, ptr);
+  }
+
+  template <relative_conditional_expr C,
+            decorator Decorator, simd_value T, simd_value U, typename Ptr>
+    requires has_store_equivalent<T, Ptr>
+  EVE_FORCEINLINE
+  unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
+                                   C c,
+                                   Decorator d,
+                                   T v,
+                                   logical<U> mask,
+                                   Ptr ptr) noexcept
+  {
+    auto [v1, ptr1] = store_equivalent(v, ptr);
+    auto res1 = compress_store(c, d, v1, mask, ptr1);
+    return unalign(ptr) + (res1 - ptr1);
   }
 
   template<relative_conditional_expr C, decorator Decorator,
