@@ -65,8 +65,7 @@ struct std::tuple_element<I,adapt::polar_coords>
 
 //! [simd-udt-to_polar]
 #include <eve/wide.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/module/math.hpp>
 
 namespace adapt
 {
@@ -106,8 +105,7 @@ namespace udt
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/module/math.hpp>
 
 namespace udt
 {
