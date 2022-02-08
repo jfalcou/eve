@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<relative_conditional_expr C,
-           real_scalar_value T, real_scalar_value U, typename N,
+           scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
@@ -45,7 +45,7 @@ namespace eve::detail
   }
 
   template<relative_conditional_expr C,
-           real_scalar_value T, real_scalar_value U, typename N,
+           scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
@@ -58,25 +58,6 @@ namespace eve::detail
     if ( !C::is_complete || !C::is_inverted ) return safe(compress_store[c])(v, mask, ptr);
     else                                      return compress_store_impl(c, v, mask, ptr);
   }
-
-  template< relative_conditional_expr C, decorator Decorator
-          , kumi::product_type T, real_scalar_value U, typename N
-          , typename ... Ptrs
-          >
-  EVE_FORCEINLINE
-  auto compress_store_(EVE_SUPPORTS(cpu_),
-                       C c,
-                       Decorator d,
-                       wide<T, N> vs,
-                       logical<wide<U, N>> mask,
-                       soa_ptr<Ptrs...> ptrs) noexcept
-  {
-    return soa_ptr<unaligned_t<Ptrs>...>{
-      kumi::map ( [&] (auto v, auto p) { return compress_store(c, d, v, mask, p); },
-                  vs.storage(), ptrs)
-    };
-  }
-
 
   template<relative_conditional_expr C, decorator Decorator,
            real_scalar_value T, real_scalar_value U, typename N,
