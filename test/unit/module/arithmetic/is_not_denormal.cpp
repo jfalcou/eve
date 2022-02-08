@@ -6,12 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/is_not_denormal.hpp>
-#include <eve/function/prev.hpp>
-#include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 //==================================================================================================

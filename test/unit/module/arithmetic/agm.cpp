@@ -6,10 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/math/constant/pio_4.hpp>
-#include <eve/function/agm.hpp>
-#include <eve/function/ellint_1.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/elliptic.hpp>
 #include <numeric>
 
 //==================================================================================================

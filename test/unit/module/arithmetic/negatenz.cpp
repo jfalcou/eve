@@ -6,14 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/function/negatenz.hpp>
-#include <eve/function/signnz.hpp>
-#include <eve/function/diff/negatenz.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 //== Types tests

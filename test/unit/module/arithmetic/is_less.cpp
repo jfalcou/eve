@@ -6,15 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/false.hpp>
-#include <eve/function/is_less.hpp>
-#include <eve/function/fuzzy/is_less.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 //== Types tests

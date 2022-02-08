@@ -5,13 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/function/clamp.hpp>
-#include <eve/function/diff/clamp.hpp>
-#include <eve/function/diff/min.hpp>
-#include <eve/function/diff/max.hpp>
 #include <algorithm>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Types tests

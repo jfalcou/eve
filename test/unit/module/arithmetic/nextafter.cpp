@@ -6,16 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/pedantic/nextafter.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/function/nextafter.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 //==================================================================================================

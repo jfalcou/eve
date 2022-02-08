@@ -6,8 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/function/is_unordered.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 //== Types tests

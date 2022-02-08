@@ -6,11 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/one.hpp>
-#include <eve/function/frac.hpp>
-#include <eve/function/diff/frac.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 //==================================================================================================

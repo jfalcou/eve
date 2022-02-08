@@ -6,14 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/diff/inc.hpp>
-#include <eve/function/saturated/inc.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 //==================================================================================================

@@ -6,13 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/function/remdiv.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/is_eqz.hpp>
-#include <eve/function/rem.hpp>
-#include <eve/function/div.hpp>
+#include <eve/module/core.hpp>
 
 
 //==================================================================================================

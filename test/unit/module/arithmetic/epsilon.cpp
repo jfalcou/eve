@@ -6,16 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/bit_floor.hpp>
-#include <eve/function/epsilon.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/platform.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 //==================================================================================================

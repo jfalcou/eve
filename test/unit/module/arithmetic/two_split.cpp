@@ -5,11 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/sqrtvalmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/function/two_split.hpp>
 
+#include <eve/module/core.hpp>
 //==================================================================================================
 // Types tests
 //==================================================================================================

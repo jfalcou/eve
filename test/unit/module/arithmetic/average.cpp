@@ -6,11 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/half.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/diff/average.hpp>
+#include <eve/module/core.hpp>
 #include <numeric>
 
 //==================================================================================================

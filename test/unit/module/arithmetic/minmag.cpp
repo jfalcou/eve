@@ -5,18 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/mone.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/function/minmag.hpp>
-#include <eve/function/pedantic/minmag.hpp>
-#include <eve/function/numeric/minmag.hpp>
-#include <eve/function/saturated/minmag.hpp>
-#include <eve/function/diff/minmag.hpp>
-#include <eve/function/sign.hpp>
-#include <eve/function/is_negative.hpp>
 #include <algorithm>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Types tests

@@ -5,19 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/sqrtvalmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/constant/mone.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/lerp.hpp>
-#include <eve/function/pedantic/lerp.hpp>
-#include <eve/function/numeric/lerp.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/round.hpp>
 #include <algorithm>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Types tests

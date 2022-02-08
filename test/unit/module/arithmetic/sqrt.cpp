@@ -6,12 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/rec.hpp>
-#include <eve/function/diff/sqrt.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 #include <cmath>
 

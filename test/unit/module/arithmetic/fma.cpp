@@ -5,20 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/constant/mone.hpp>
-#include <eve/function/all.hpp>
-#include <eve/function/fma.hpp>
-#include <eve/function/pedantic/fma.hpp>
-#include <eve/function/numeric/fma.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/oneminus.hpp>
-#include <eve/function/round.hpp>
 #include <algorithm>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Types tests
