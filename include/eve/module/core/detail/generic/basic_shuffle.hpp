@@ -40,6 +40,15 @@ namespace eve::detail
     return bit_cast( shuffle(v.mask(),p), as<logical<wide<T,fixed<sz>>>>() );
   }
 
+  template<typename T, typename N, std::ptrdiff_t... I>
+  EVE_FORCEINLINE auto basic_shuffle_emulated(wide<T,N> const& v, pattern_t<I...>)
+  {
+    constexpr auto sz = pattern_t<I...>::size();
+    using that_t      = as_wide_t<wide<T,N>,fixed<sz>>;
+
+    return that_t{ (I == na_ ? T{0} : v.get(I))... };
+  }
+
   //================================================================================================
   // Emulation
   //================================================================================================
@@ -51,11 +60,6 @@ namespace eve::detail
     using that_t      = as_wide_t<wide<T,N>,fixed<sz>>;
 
     constexpr Pattern q = {};
-
-    [[maybe_unused]] auto do_shuffle = [=]<std::ptrdiff_t... I>(pattern_t<I...> const&)
-    {
-      return that_t{ (I == na_ ? T{0} : v.get(I))... };
-    };
 
     // We're swizzling so much we aggregate the output
     if constexpr( has_bundle_abi_v<that_t> )
@@ -101,12 +105,12 @@ namespace eve::detail
       }
       else
       {
-        return do_shuffle(q);
+        return basic_shuffle_emulated(v, q);
       }
     }
     else
     {
-      return do_shuffle(q);
+      return basic_shuffle_emulated(v, q);
     }
   }
 }
