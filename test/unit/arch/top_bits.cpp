@@ -16,12 +16,12 @@ template <typename T, typename Test> void test_over_top_bits(Test test)
   using logical = eve::logical<T>;
   logical x(false);
 
-  for (int i = 0; i != logical::size(); ++i)
+  for (std::ptrdiff_t i = 0; i != logical::size(); ++i)
   {
     x.set(i, true);
     test(x);
 
-    for (int j = i + 1; j < logical::size(); ++j)
+    for (std::ptrdiff_t j = i + 1; j < logical::size(); ++j)
     {
       x.set(j, true);
       test(x);
@@ -170,11 +170,11 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
 
   // ignore_extrema / keep_between
   {
-    for (int i = 0; i < logical::size() + 1; ++i)
+    for (std::ptrdiff_t i = 0; i < logical::size() + 1; ++i)
     {
-      for (int j = logical::size() - i; j ; --j)
+      for (std::ptrdiff_t j = logical::size() - i; j ; --j)
       {
-        logical expected([&](int k, int) { return (k >= i) && (logical::size() - k) > j; });
+        logical expected([&](auto k, auto) { return (k >= i) && (logical::size() - k) > j; });
         eve::top_bits<logical> actual(eve::ignore_extrema(i, j));
         TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
@@ -186,9 +186,9 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
 
   // ignore first / keep_last
   {
-    for (int i = 0; i < logical::size() + 1; ++i)
+    for (std::ptrdiff_t i = 0; i < logical::size() + 1; ++i)
     {
-      logical expected([&](int j, int) { return j >= i; });
+      logical expected([&](auto j, auto) { return j >= i; });
       eve::top_bits<logical> actual(eve::ignore_first{i});
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
@@ -199,9 +199,9 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
 
   // ignore last / keep_first
   {
-    for (int i = 0; i < logical::size() + 1; ++i)
+    for (std::ptrdiff_t i = 0; i < logical::size() + 1; ++i)
     {
-      logical expected([&](int j, int) { return (logical::size() - j) > i; });
+      logical expected([&](auto j, auto) { return (logical::size() - j) > i; });
       eve::top_bits<logical> actual(eve::ignore_last{i});
       TTS_EQUAL(expected, eve::detail::to_logical(actual));
 
@@ -220,8 +220,8 @@ EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
   using logical = eve::logical<T>;
 
   logical test_inputs[] {
-    logical([](int i, int) { return i & 1; }),
-    logical([](int i, int) { return i & 2; }),
+    logical([](auto i, auto) { return i & 1; }),
+    logical([](auto i, auto) { return i & 2; }),
     logical(false),
     logical(true)
   };
@@ -271,7 +271,7 @@ EVE_TEST_TYPES("Check top_bits slicing", eve::test::simd::all_types)
     }
     else
     {
-      for( int i = 0; i != T::size() - 1; ++i )
+      for( std::ptrdiff_t i = 0; i != T::size() - 1; ++i )
       {
         logical v([=](auto e, auto) { return e > i; });
         auto [vl, vh] = v.slice();

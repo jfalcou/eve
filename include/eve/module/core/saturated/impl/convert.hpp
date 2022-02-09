@@ -18,9 +18,9 @@ namespace eve::detail
   //////////////////////////////////////////////////////////////////////////////////////
   // saturated case
   //////////////////////////////////////////////////////////////////////////////////////
-  template<value IN, scalar_value OUT>
-  EVE_FORCEINLINE auto
-  convert_(EVE_SUPPORTS(cpu_), saturated_type const &, IN const &v0, as<OUT> const &tgt) noexcept
+  template<value T, scalar_value U>
+  EVE_FORCEINLINE
+  auto convert_(EVE_SUPPORTS(cpu_), saturated_type const &, T const &v0, as<U> const &tgt) noexcept
   {
     return convert(saturate(v0, tgt), tgt);
   }
