@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logical OR operation.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the inverse of the square root.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

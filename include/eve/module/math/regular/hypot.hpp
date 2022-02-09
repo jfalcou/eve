@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the hypot operation.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

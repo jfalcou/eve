@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing coth: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing  \f$10^x\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

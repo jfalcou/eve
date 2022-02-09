@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing acoth: \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

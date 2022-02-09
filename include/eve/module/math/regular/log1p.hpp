@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

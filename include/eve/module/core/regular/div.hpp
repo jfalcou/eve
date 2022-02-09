@@ -27,7 +27,7 @@ namespace eve
   //!
   //! @brief Callable object performing the division of multiple values.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

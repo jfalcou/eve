@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing acosh;  \f$\log(x+\sqrt{x^2-1})\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

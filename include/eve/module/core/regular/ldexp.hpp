@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the ldexp operation: \f$\textstyle x 2^n\f$.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

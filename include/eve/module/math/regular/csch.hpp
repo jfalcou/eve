@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing csch: \f$\frac2{e^x+e^{-x}}\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

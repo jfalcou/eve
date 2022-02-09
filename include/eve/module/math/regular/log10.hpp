@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the base 10  logarithm: \f$\log_{10} x\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing a bit mask.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

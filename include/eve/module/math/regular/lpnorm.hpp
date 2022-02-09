@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the simultaneous computations of sinh and cosh.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

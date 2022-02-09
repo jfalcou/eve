@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the distance between two values.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

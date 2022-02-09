@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the natural logarithm of the absolute value of the input.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

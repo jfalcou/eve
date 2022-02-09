@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing pow1p: \f$x^y-1\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

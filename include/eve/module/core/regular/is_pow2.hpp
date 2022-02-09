@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_pow2 predicate.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

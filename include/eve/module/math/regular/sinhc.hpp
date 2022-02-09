@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing sinhc: \f$\frac{e^x-e^{-x}}{2x}\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

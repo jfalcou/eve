@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing cosd.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

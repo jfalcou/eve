@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the higher part of the values.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

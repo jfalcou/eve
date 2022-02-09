@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object converting a value to another type.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_not_infinite logical value.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

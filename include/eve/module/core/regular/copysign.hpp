@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the sign copying operation.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing asech: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

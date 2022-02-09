@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fractional scaled part.
   //!
-  //! **Required header:** #include <eve/module/core.hpp>
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
