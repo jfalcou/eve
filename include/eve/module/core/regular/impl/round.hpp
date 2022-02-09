@@ -28,7 +28,7 @@ namespace eve::detail
       return eve::floor(a);
     else if constexpr( std::is_same_v<D, eve::toward_zero_type> )
       return eve::trunc(a);
-    else if constexpr( std::is_same_v<D, eve::toward_zero_type> )
+    else if constexpr( std::is_same_v<D, eve::to_nearest_type> )
       return eve::nearest(a);
     else return zero(as(a));
   }
