@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
   //!
-  //! **Required header:** `#include <eve/function/cyl_bessel_j1.hpp>`
+  //! **Required header:** #include <eve/module/bessel.hpp>
   //!
   //! #### Members Functions
   //!
@@ -49,7 +49,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_j1.hpp>`
   //!
   //!     The expression `eve::diff(eve::cyl_bessel_j1)(x)` computes the derivative of the function at `x`.
   //!

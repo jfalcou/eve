@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the cyl_bessel_kn function, \f$ K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
   //!
-  //! **Required header:** `#include <eve/function/cyl_bessel_kn.hpp>`
+  //! **Required header:** #include <eve/module/bessel.hpp>
   //!
   //! #### Members Functions
   //!
@@ -51,7 +51,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_kn.hpp>`
   //!
   //!     The expression `eve::diff(eve::cyl_bessel_kn)(n, x)` computes the derivative of the function at `x`.
   //!

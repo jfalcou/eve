@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing atanh: \f$\frac{1}{2}\log((1+x)/(1-x))\f$.
   //!
-  //! **Required header:** `#include <eve/function/atanh.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -70,7 +70,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/atanh.hpp>`
   //!
   //!     The expression `diff(atanh)(x)` computes the derivative of the function at `x`.
   //!

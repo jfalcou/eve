@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the nth root: \f$x^{1/n}\f$.
   //!
-  //! **Required header:** `#include <eve/function/nthroot.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -68,14 +68,12 @@ namespace eve
   //!
   //!  * eve::raw
   //!
-  //!     **Required header:** `#include <eve/function/diff/nthroot.hpp>`
   //!
   //!     The expression `raw(nthroot)(x,n)` does not care about limiting values and gives less accurate values.
   //!      for instance `nthroot(64.0,3)` is not exactly four but is `3.9999999999999991118` with a 0.5ulp error.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/nthroot.hpp>`
   //!
   //!     The expression `diff_1st(nthroot)(x,n)`
   //!      diff of \f$f\f$, where \f$f\f$ is the function \f$x \rightarrow \ x^{1/n}\f$.

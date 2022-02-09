@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing sinhc: \f$\frac{e^x-e^{-x}}{2x}\f$.
   //!
-  //! **Required header:** `#include <eve/function/sinhc.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -69,7 +69,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sinhc.hpp>`
   //!
   //!     The expression `diff(sinhc)(x)` computes the derivative of the function at `x`.
   //!

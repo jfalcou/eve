@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the cyl_bessel_in function,  \f$ I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$.
   //!
-  //! **Required header:** `#include <eve/function/cyl_bessel_in.hpp>`
+  //! **Required header:** #include <eve/module/bessel.hpp>
   //!
   //! #### Members Functions
   //!
@@ -50,7 +50,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_in.hpp>`
   //!
   //!     The expression `eve::diff(eve::cyl_bessel_in)(n, x)` computes the derivative of the function at `x`.
   //!

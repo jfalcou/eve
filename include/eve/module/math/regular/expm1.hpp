@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$e^x-1\f$.
   //!
-  //! **Required header:** `#include <eve/function/expm1.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -68,7 +68,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/expm1.hpp>`
   //!
   //!     The expression `diff(expm1)(x)` computes the derivative of the function at `x`.
   //!

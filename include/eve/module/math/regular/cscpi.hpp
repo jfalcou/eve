@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing cscpi.
   //!
-  //! **Required header:** `#include <eve/function/cscpi.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -57,7 +57,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cscpi.hpp>`
   //!
   //!     The expression `diff(cscpi)(x)` computes the derivative of the function at `x`.
   //!

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing  \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}{\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
   //!
-  //! **Required header:** `#include <eve/function/cyl_bessel_k0.hpp>`
+  //! **Required header:** #include <eve/module/bessel.hpp>
   //!
   //! #### Members Functions
   //!
@@ -49,7 +49,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_k0.hpp>`
   //!
   //!     The expression `eve::diff(eve::cyl_bessel_k0)(x)` computes the derivative of the function at `x`.
   //!

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing sin.
   //!
-  //! **Required header:** `#include <eve/function/sin.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -56,7 +56,6 @@ namespace eve
   //!  
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sin.hpp>`
   //!  
   //!     The expression `diff(sin)(x)` computes the derivative of the function at `x`.
   //!

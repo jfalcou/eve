@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing atand.
   //!
-  //! **Required header:** `#include <eve/function/atand.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -53,7 +53,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/atand.hpp>`
   //!  
   //!     The expression `diff(atand)(x)` computes the derivative of the function at `x`.
   //!

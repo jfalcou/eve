@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing powm1: \f$x^y-1\f$.
   //!
-  //! **Required header:** `#include <eve/function/powm1.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/pow.hpp>`
   //!
   //!     The expression `diff_1st(powm1)(x,y)` and `diff_2nd(powm1)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ x^y-1\f$.

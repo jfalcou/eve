@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the atan2pi operation.
   //!
-  //! **Required header:** `#include <eve/function/atan2pi.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! #### Members Functions
   //!
@@ -66,7 +66,6 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/atan2pi.hpp>`
   //!
   //!     The call `pedantic(atan2pi)(`x`,`y`)` returns the same results as the regular call, but all
   //!      **IEEE** limiting values are satisfied :
@@ -78,7 +77,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/atan2pi.hpp>`
   //!
   //!     The expression `diff_1st(atan2pi)(x,y)` and `diff_2nd(atan2pi)(x,y)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2pi}(x,y)\f$.
