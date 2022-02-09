@@ -16,7 +16,7 @@ namespace eve::detail
           , simd_compatible_ptr<wide<T, N>> Ptr
           >
   EVE_FORCEINLINE void store_(EVE_SUPPORTS(vmx_), wide<T, N> const &value, Ptr ptr) noexcept
-    requires ppc_abi<abi_t<T, N>>
+    requires ppc_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {
