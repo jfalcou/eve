@@ -85,7 +85,7 @@ namespace tag { struct TAG {}; }                                                
       EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
-        return  [cond = if_(to_logical(c))](auto const&... args) EVE_LAMBDA_FORCEINLINE            \
+        return  [cond = if_(to_logical(c))](auto const&... args)                                   \
                 {                                                                                  \
                   return callable_object::call(cond, args...);                                     \
                 };                                                                                 \
@@ -95,7 +95,7 @@ namespace tag { struct TAG {}; }                                                
       EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
-        return  [c](auto const&... args) EVE_LAMBDA_FORCEINLINE                                    \
+        return  [c](auto const&... args)                                                           \
                 {                                                                                  \
                   return callable_object::call(c, args...);                                        \
                 };                                                                                 \
