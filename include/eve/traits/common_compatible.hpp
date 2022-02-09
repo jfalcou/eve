@@ -8,7 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/traits/as_floating_point.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/traits.hpp>
 
 namespace eve::detail
 {
@@ -33,17 +34,32 @@ namespace eve::detail
     friend cmn<B,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
   };
 
-  template<typename... Ts>
-  using cmn_t = decltype( (detail::cmn< Ts
-                                      , scalar_value<Ts>
-                                      , simd_value<Ts>
-                                      >{}
-                          % ... )
-                        );
+  //  Use a layer of enable_if_t to make common_compatible SFINAE-friendly
+  //  All the intermediary types are here so that :
+  //  - SFINAE friendly behavior works on all compilers
+  //  - MSVC doesn't get lost with too many ...
+  template<typename L, typename Enable = void>
+  struct  common_compatible_impl
+  {};
+
+  template<typename T>
+  using cmn_t = detail::cmn<T, scalar_value<T> , simd_value<T>>;
 
   template<typename... Ts>
-  requires( cmn_t<Ts...>::is_valid )
-  struct  common_compatible_impl : cmn_t<Ts...>
+  using cmns_t = decltype( (cmn_t<Ts>{} % ... ) );
+
+  template<typename L> struct  validate;
+
+  template<typename... Ts>
+  struct  validate<eve::detail::types<Ts...>>
+  {
+    static constexpr bool value = cmns_t<Ts...>::is_valid;
+    using type = decltype( (cmn_t<Ts>{} % ... ) );
+  };
+
+  template<typename L>
+  struct  common_compatible_impl<L, std::enable_if_t<validate<L>::value>>
+        : validate<L>::type
   {};
 }
 
@@ -101,7 +117,7 @@ namespace eve
   };
 
   template<typename T0, typename... Ts>
-  struct common_compatible<T0,Ts...> : detail::common_compatible_impl<detail::types<T0,Ts...>>
+  struct common_compatible<T0,Ts...> : detail::common_compatible_impl<eve::detail::types<T0,Ts...>>
   {};
 
   template<typename... Ts>
