@@ -89,13 +89,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/round.hpp>`
   //!
   //!     The expression `diff(round)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/round.cpp}
+  //! @godbolt{doc/core/round.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -73,7 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/nearest.cpp}
+  //! @godbolt{doc/core/nearest.cpp}
   //!
   //!  @}
   //================================================================================================

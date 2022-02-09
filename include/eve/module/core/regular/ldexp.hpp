@@ -71,7 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/ldexp.cpp}
+  //! @godbolt{doc/core/ldexp.cpp}
   //!
   //!  @}
   //================================================================================================

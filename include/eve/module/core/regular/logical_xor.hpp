@@ -51,7 +51,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_xor.cpp}
+  //! @godbolt{doc/core/logical_xor.cpp}
   //!
   //!  @}
   //================================================================================================

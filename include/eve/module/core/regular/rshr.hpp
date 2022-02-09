@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/rshr.cpp}
+  //! @godbolt{doc/core/rshr.cpp}
   //!
   //!  @}
   //================================================================================================

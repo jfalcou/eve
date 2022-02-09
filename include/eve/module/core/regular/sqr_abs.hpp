@@ -46,13 +46,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sqr_abs.hpp>`
   //!
   //!     The expression `diff(sqr_abs)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/sqr_abs.cpp}
+  //! @godbolt{doc/core/sqr_abs.cpp}
   //!
   //!  @}
   //================================================================================================

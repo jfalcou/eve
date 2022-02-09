@@ -69,21 +69,19 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
   //!
   //!     The expression `eve::saturated(eve::sub)(xs...)` computes the saturated difference of
   //!     all `xs`.
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sub.hpp>`
   //!
   //!     The expression `eve::diff_nth<N>(eve::sub)(xs...)` computes the derivative of the difference
   //!     of `xs...` over the Nth parameters.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/sub.cpp}
+  //! @godbolt{doc/core/sub.cpp}
   //!
   //!  @}
   //================================================================================================

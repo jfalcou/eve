@@ -68,7 +68,6 @@ namespace eve
   //!
   //!   * eve::splat
   //!
-  //!     **Required header:** `#include <eve/function/reduce.hpp>`
   //!
   //!     The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
   //!     using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result

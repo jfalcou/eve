@@ -78,7 +78,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/roundscale.cpp}
+  //! @godbolt{doc/core/roundscale.cpp}
   //!
   //!  @}
   //================================================================================================

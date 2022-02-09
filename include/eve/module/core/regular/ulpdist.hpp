@@ -54,7 +54,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/ulpdist.cpp}
+  //! @godbolt{doc/core/ulpdist.cpp}
   //!
   //!  @}
   //================================================================================================

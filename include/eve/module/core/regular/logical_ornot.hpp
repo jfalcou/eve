@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_ornot.cpp}
+  //! @godbolt{doc/core/logical_ornot.cpp}
   //!
   //!  @}
   //================================================================================================

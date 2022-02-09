@@ -77,7 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/binarize.cpp}
+  //! @godbolt{doc/core/binarize.cpp}
   //!
   //!  @}
   //================================================================================================

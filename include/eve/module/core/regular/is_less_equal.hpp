@@ -92,7 +92,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_less_equal.cpp}
+  //! @godbolt{doc/core/is_less_equal.cpp}
   //!
   //!  @}
   //================================================================================================

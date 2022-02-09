@@ -68,7 +68,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/negate.cpp}
+  //! @godbolt{doc/core/negate.cpp}
   //!
   //!  @}
   //================================================================================================

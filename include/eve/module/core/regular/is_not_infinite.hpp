@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_not_infinite.cpp}
+  //! @godbolt{doc/core/is_not_infinite.cpp}
   //!
   //!  @}
   //================================================================================================

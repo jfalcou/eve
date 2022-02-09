@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_ltz.cpp}
+  //! @godbolt{doc/core/is_ltz.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -75,7 +75,6 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
   //!
   //!     The expression `eve::saturated(eve::abs)(x)` computes the saturated absolute value of `x`.
   //!     More specifically, for any signed integer value `x`, the expression
@@ -83,13 +82,12 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/abs.hpp>`
   //!
   //!     The expression `eve::diff( eve::abs )(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/abs.cpp}
+  //! @godbolt{doc/core/abs.cpp}
   //!
   //!  @}
   //================================================================================================

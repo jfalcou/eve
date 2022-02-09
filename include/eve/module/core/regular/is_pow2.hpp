@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_pow2.cpp}
+  //! @godbolt{doc/core/is_pow2.cpp}
   //!
   //!  @}
   //================================================================================================

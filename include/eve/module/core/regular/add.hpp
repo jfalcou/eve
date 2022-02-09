@@ -70,20 +70,18 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/abs.hpp>`
   //!
   //!     The expression `eve::saturated(eve::add)(xs...)` computes the saturated sum of all `xs`.
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/add.hpp>`
   //!
   //!     The expression `eve::diff_nth<N>(eve::add)(xs...)` computes the derivative of the sum
   //!     of `xs...` over the Nth parameters.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/add.cpp}
+  //! @godbolt{doc/core/add.cpp}
   //!
   //!  @}
   //================================================================================================

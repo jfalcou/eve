@@ -68,13 +68,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/frac.hpp>`
   //!
   //!     The expression `diff(frac)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/frac.cpp}
+  //! @godbolt{doc/core/frac.cpp}
   //!
   //!  @}
   //================================================================================================

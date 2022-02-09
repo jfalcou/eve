@@ -76,7 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/fracscale.cpp}
+  //! @godbolt{doc/core/fracscale.cpp}
   //!
   //!  @}
   //================================================================================================

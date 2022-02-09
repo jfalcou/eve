@@ -77,19 +77,16 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:**  `#include <eve/function/pedantic/absmax.hpp>`
   //!
   //!     The call `eve::pedantic(eve::absmax)(x, args...)` is equivalent to `eve::abs(eve::pedantic(eve::max)(x, args...))`
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:**  `#include <eve/function/numeric/absmax.hpp>`
   //!
   //!     The call `eve::numeric(eve::absmax)(x, args...) is equivalent to `eve::abs(eve::numeric(eve::max)(x, args...))`
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** ` #include <eve/function/diff/absmax.hpp>`
   //!
   //!     The expression `diff_nth<N>(absmax)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
@@ -97,7 +94,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/absmax.cpp}
+  //! @godbolt{doc/core/absmax.cpp}
   //!
   //!  @}
   //================================================================================================

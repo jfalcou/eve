@@ -70,7 +70,6 @@ namespace eve
   //!
   //!  * `tolerant`
   //!
-  //!     **Required header:** `#include <eve/function/tolerant/trunc.hpp>`
   //!  
   //!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated value for `x`, where `x` must be a floating value.
   //!  
@@ -80,13 +79,12 @@ namespace eve
   //!  
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/trunc.hpp>`
   //!  
   //!     The expression `diff(trunc)(x)` computes the derivative of the function at `x` .
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/trunc.cpp}
+  //! @godbolt{doc/core/trunc.cpp}
   //!
   //!  @}
   //================================================================================================

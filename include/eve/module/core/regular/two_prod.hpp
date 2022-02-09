@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/two_prod.cpp}
+  //! @godbolt{doc/core/two_prod.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/lohi.cpp}
+  //! @godbolt{doc/core/lohi.cpp}
   //!
   //!  @}
   //================================================================================================

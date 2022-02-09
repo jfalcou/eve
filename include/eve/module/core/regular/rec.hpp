@@ -74,13 +74,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/rec.hpp>`
   //!
   //!     The expression `diff(rec)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/rec.cpp}
+  //! @godbolt{doc/core/rec.cpp}
   //!
   //!  @}
   //================================================================================================

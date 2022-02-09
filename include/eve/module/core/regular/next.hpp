@@ -74,21 +74,19 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/next.hpp>`
   //!
   //!     The call `pedantic(next)(x)` distinguish `-0.0` and `+0.0` for floating point point inputs.
   //!      So `pedantic(next)(-0.0)` is `+0.0`.
   //!
   //!  * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/next.hpp>`
   //!
   //!     The call `pedantic(next)(x)` ensures for integral enties that `next(x, n) >= x`.
   //!     (equality is obtained only if `n == 0` or `x =  eve::valmax(as(x))`)
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/next.cpp}
+  //! @godbolt{doc/core/next.cpp}
   //!
   //!  @}
   //================================================================================================

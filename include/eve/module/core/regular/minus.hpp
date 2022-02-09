@@ -71,20 +71,18 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:** `#include <eve/function/saturated/minus.hpp>`
   //!
   //!     The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
   //!      for integral signed type T  `saturated(minus)(eve::valmin< T >())` returns `eve::valmax< T >()` and is not u.b.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/minus.hpp>`
   //!
   //!     The expression `diff(minus)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/minus.cpp}
+  //! @godbolt{doc/core/minus.cpp}
   //!
   //!  @}
   //================================================================================================

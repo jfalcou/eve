@@ -90,7 +90,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/saturate.cpp}
+  //! @godbolt{doc/core/saturate.cpp}
   //!
   //!  @}
   //================================================================================================

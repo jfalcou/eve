@@ -76,19 +76,16 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/absmin.hpp>`
   //!
   //!     The call `pedantic(absmin)(x, args...)` is equivalent to `abs(pedantic(min)(x, args...))`
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/absmin.hpp>`
   //!
   //!     The call `numeric(absmin)(x, args...) is equivalent to `abs(numeric(min)(x, args...))`
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/absmin.hpp>`
   //!
   //!     The expression `diff< N >(absmin)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
@@ -96,7 +93,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/absmin.cpp}
+  //! @godbolt{doc/core/absmin.cpp}
   //!
   //!  @}
   //================================================================================================

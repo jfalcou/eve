@@ -74,7 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_imag.cpp}
+  //! @godbolt{doc/core/is_imag.cpp}
   //!
   //!  @}
   //================================================================================================

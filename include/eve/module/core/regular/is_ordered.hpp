@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_ordered.cpp}
+  //! @godbolt{doc/core/is_ordered.cpp}
   //!
   //!  @}
   //================================================================================================

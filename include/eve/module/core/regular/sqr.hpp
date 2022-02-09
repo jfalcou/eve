@@ -70,7 +70,6 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:** `#include <eve/function/saturated/sqr.hpp>`
   //!
   //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the non-decorated case, this guarantees
   //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More specifically, for any signed integer value
@@ -85,13 +84,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sqr.hpp>`
   //!
   //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/sqr.cpp}
+  //! @godbolt{doc/core/sqr.cpp}
   //!
   //!  @}
   //================================================================================================

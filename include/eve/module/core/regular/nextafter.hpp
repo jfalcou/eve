@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/nextafter.cpp}
+  //! @godbolt{doc/core/nextafter.cpp}
   //!
   //!  @}
   //================================================================================================

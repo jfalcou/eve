@@ -72,13 +72,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sign.hpp>`
   //!
   //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/sign.cpp}
+  //! @godbolt{doc/core/sign.cpp}
   //!
   //!  @}
   //================================================================================================

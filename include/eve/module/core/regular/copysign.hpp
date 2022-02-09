@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/copysign.cpp}
+  //! @godbolt{doc/core/copysign.cpp}
   //!
   //!  @}
   //================================================================================================

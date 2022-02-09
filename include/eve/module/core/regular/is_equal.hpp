@@ -76,13 +76,11 @@ namespace eve
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/is_equal.hpp>`
   //!
   //!     The expression `numeric(is_equal)(x,y)` considers that Nan values are equal.
   //!
   //!  * `almost`
   //!
-  //!     **Required header:** `#include <eve/function/fuzzy/is_equal.hpp>`
   //!
   //!     The expression `almost(is_equal)(x, y, t)` where `x` and `y` must be floating point values, evals to
   //!      true if and only if `x` is almost equal to `y`.
@@ -94,7 +92,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_equal.cpp}
+  //! @godbolt{doc/core/is_equal.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_not.cpp}
+  //! @godbolt{doc/core/logical_not.cpp}
   //!
   //!  @}
   //================================================================================================

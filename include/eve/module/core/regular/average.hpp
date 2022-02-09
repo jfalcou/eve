@@ -81,7 +81,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/average.hpp>`
   //!
   //!     The expression `diff_nth< N >(average)(x,args...)` computes the partial
   //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
@@ -95,7 +94,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/average.cpp}
+  //! @godbolt{doc/core/average.cpp}
   //!
   //!  @}
   //================================================================================================
