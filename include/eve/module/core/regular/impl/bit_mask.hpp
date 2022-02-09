@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_nez.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 
 namespace eve::detail
 {

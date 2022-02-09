@@ -13,7 +13,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
-#include <eve/function/combine.hpp>
+#include <eve/module/core/regular/combine.hpp>
 #include <eve/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
 

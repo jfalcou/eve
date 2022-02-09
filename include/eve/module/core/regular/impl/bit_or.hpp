@@ -15,9 +15,9 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/function/bit_ornot.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/core/regular/bit_ornot.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 

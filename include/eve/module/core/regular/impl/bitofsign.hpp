@@ -14,7 +14,7 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/bit_and.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
 
 namespace eve::detail
 {

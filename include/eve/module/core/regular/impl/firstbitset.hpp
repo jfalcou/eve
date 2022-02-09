@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/inc.hpp>
+#include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

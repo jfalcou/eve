@@ -13,9 +13,9 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/function/bit_andnot.hpp>
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_or.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
