@@ -112,13 +112,23 @@ namespace eve::detail
   constexpr auto pattern_8_elements_bytes_v alignas(sizeof(T) * 8) =
     pattern_8_elements(idxs_bytes<T>);
 
+  struct compress_using_masks_shuffle_recurse
+  {
+    std::ptrdiff_t num;
+
+    EVE_FORCEINLINE auto operator()(auto v) const
+    {
+      return compress_using_masks_shuffle(v, num);
+    }
+  };
+
   template <typename T, typename N>
   EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, std::ptrdiff_t num) noexcept
   {
     if constexpr ( kumi::product_type<T> )
     {
-      return wide<T, N>{ kumi::map([num](auto v_) { return compress_using_masks_shuffle(v_, num); }, v) };
+      return wide<T, N>{ kumi::map(compress_using_masks_shuffle_recurse{num}, v) };
     }
     else
     {
