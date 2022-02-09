@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the scaled rouding.
   //!
-  //! **Required header:** `#include <eve/function/roundscale.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

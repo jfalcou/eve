@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the sqr operation.
   //!
-  //! **Required header:** `#include <eve/function/sqr.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

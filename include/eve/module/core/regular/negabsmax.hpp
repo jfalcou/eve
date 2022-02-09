@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the negabsmax operation.
   //!
-  //! **Required header:** `#include <eve/function/negabsmax.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

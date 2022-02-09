@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_not_flint logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_not_flint.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

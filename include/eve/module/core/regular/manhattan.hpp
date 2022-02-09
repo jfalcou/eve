@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the manhattan operation.
   //!
-  //! **Required header:** `#include <eve/function/manhattan.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the saturation of a value in a type.
   //!
-  //! **Required header:** `#include <eve/function/saturate.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

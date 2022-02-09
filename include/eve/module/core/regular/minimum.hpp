@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing minimal element.
   //!
-  //! **Required header:** `#include <eve/function/minimum.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

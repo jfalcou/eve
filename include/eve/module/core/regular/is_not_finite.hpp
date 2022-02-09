@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_not_finite logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_not_finite.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

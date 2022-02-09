@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the bitwise ORNOT operation.
   //!
-  //! **Required header:** `#include <eve/function/bit_ornot.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

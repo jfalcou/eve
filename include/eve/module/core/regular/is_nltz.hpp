@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "not less than zero" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_nltz.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the number of consecutive 1 bits right.
   //!
-  //! **Required header:** `#include <eve/function/countr_one.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

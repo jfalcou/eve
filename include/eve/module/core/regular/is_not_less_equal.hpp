@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "not less or equal to" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_not_less_equal.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

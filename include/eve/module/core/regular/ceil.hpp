@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the ceil operation.
   //!
-  //! **Required header:** `#include <eve/function/ceil.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "not greater than" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_not_greater.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

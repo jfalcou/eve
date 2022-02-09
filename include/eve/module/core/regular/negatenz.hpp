@@ -19,7 +19,7 @@ namespace eve
   //!
   //!  @brief Callable object computing the negatenz function.
   //!
-  //! **Required header:** `#include <eve/function/negatenz.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

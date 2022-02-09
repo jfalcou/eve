@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the negate operation.
   //!
-  //! **Required header:** `#include <eve/function/negate.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

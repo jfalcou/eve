@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the two_prod operation.
   //!
-  //! **Required header:** `#include <eve/function/two_prod.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

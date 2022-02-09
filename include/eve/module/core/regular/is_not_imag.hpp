@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_not_imag logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_not_imag.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

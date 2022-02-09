@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the dec unary operation.
   //!
-  //! **Required header:** `#include <eve/function/dec.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

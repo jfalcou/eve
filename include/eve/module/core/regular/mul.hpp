@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the mul operation.
   //!
-  //! **Required header:** `#include <eve/function/mul.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the bitofsign value.
   //!
-  //! **Required header:** `#include <eve/function/bitofsign.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

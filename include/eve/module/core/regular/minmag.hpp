@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the minmag operation.
   //!
-  //! **Required header:** `#include <eve/function/minmag.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

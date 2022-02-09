@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the absmin operation.
   //!
-  //! **Required header:** `#include <eve/function/absmin.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

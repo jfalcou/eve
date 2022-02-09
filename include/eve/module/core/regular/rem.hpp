@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the rem operation.
   //!
-  //! **Required header:** `#include <eve/function/rem.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fused sub-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fsm.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

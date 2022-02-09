@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing maximal element.
   //!
-  //! **Required header:** `#include <eve/function/maximum.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

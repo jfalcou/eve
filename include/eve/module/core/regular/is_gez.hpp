@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greater or equal to zero predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_gez.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

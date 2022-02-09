@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fused negate-multiply-substract operation.
   //!
-  //! **Required header:** `#include <eve/function/fnms.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the maxmag operation.
   //!
-  //! **Required header:** `#include <eve/function/maxmag.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

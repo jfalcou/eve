@@ -26,7 +26,7 @@ namespace eve
   //!
   //! @brief Callable object computing the equality predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_not_equal.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

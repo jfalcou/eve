@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the lower part of the values.
   //!
-  //! **Required header:** `#include <eve/function/lo.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

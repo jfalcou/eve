@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the rational approximation.
   //!
-  //! **Required header:** `#include <eve/function/rat.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

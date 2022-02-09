@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fused add-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fam.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

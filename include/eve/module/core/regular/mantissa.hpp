@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the mantissa value.
   //!
-  //! **Required header:** `#include <eve/function/mantissa.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

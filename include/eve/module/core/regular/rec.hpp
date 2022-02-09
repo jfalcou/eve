@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the rec operation.
   //!
-  //! **Required header:** `#include <eve/function/rec.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

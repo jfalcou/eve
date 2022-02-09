@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_nan logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_nan.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

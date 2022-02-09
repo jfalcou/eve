@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the ifrexp pair of values.
   //!
-  //! **Required header:** `#include <eve/function/ifrexp.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

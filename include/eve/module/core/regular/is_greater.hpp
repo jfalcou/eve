@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "greater than" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_greater.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the max operation.
   //!
-  //! **Required header:** `#include <eve/function/max.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

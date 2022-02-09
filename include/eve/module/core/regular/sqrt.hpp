@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the square root.
   //!
-  //! **Required header:** `#include <eve/function/sqrt.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

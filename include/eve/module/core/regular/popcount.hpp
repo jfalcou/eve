@@ -17,7 +17,7 @@ namespace eve
   //!
   //! @brief Callable object computing the number of bits set.
   //!
-  //! **Required header:** `#include <eve/function/popcount.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

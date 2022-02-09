@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the absolute value.
   //!
-  //! **Required header:** `#include <eve/function/abs.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!

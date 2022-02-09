@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fused multiply-substract operation.
   //!
-  //! **Required header:** `#include <eve/function/fms.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! #### Members Functions
   //!
