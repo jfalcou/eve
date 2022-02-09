@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the negative infinity value.
   //!
-  //! **Required header:** `#include <eve/function/minf.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

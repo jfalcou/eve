@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greatest representable value.
   //!
-  //! **Required header:** `#include <eve/function/valmax.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

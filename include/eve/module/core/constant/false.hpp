@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logical false_ value.
   //!
-  //! **Required header:** `#include <eve/function/false.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

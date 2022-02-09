@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greatest positive value.
   //!
-  //! **Required header:** `#include <eve/function/half.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

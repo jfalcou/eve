@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing a floating constant from its scalar hexadecimal integral representations |
   //!
-  //! **Required header:** `#include <eve/function/ieee_constant.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

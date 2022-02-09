@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the number of mantissa bits.
   //!
-  //! **Required header:** `#include <eve/function/nbmantissabits.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

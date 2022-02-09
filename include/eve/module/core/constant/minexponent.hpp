@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the least exponent value.
   //!
-  //! **Required header:** `#include <eve/function/minexponent.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

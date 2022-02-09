@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/eps.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/eps.cpp}
+  //! @godbolt{doc/core/eps.cpp}
   //!
   //! @}
   //================================================================================================

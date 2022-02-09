@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the lowest representable value.
   //!
-  //! **Required header:** `#include <eve/function/valmin.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

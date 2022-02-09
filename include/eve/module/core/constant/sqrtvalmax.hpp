@@ -28,7 +28,7 @@ namespace eve
   //! @brief Callable object computing the greatest value less
   //! than the square root of the greatest value.
   //!
-  //! **Required header:** `#include <eve/function/sqrtvalmax.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

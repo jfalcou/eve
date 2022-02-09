@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the  value negated half value.
   //!
-  //! **Required header:** `#include <eve/function/mhalf.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

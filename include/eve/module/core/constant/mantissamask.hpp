@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the mantissa bit mask.
   //!
-  //! **Required header:** `#include <eve/function/mantissamask.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

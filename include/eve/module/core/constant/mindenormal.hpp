@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the least denormal positive value.
   //!
-  //! **Required header:** `#include <eve/function/mindenormal.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

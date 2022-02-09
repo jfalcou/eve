@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the infinity ieee value.
   //!
-  //! **Required header:** `#include <eve/function/inf.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

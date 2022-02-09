@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the smallest normal positive value.
   //!
-  //! **Required header:** `#include <eve/function/smallestposval.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

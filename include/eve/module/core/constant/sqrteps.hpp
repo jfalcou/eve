@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the square root of the machine epsilon value.
   //!
-  //! **Required header:** `#include <eve/function/sqrteps.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

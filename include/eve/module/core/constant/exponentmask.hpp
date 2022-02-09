@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the exponent bit mask.
   //!
-  //! **Required header:** `#include <eve/function/exponentmask.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

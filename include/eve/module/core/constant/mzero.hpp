@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the negative zero value.
   //!
-  //! **Required header:** `#include <eve/function/mzero.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

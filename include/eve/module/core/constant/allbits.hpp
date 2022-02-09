@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the allbits value.
   //!
-  //! **Required header:** `#include <eve/function/allbits.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

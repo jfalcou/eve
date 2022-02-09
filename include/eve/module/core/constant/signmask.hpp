@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the sign mask value.
   //!
-  //! **Required header:** `#include <eve/function/signmask.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

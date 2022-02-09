@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the O value.
   //!
-  //! **Required header:** `#include <eve/function/zero.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

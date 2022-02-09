@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing -1 value.
   //!
-  //! **Required header:** `#include <eve/function/mone.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

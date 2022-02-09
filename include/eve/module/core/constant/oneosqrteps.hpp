@@ -25,7 +25,7 @@ namespace eve
   //!
   //! @brief Callable object computing the inverse of the square root of the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/oneosqrteps.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/oneosqrteps.cpp}
+  //! @godbolt{doc/core/oneosqrteps.cpp}
   //!
   //! @}
   //================================================================================================

@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the nan value.
   //!
-  //! **Required header:** `#include <eve/function/nan.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

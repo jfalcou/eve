@@ -24,7 +24,7 @@ namespace eve
   //! @brief Callable object computing the greatest real n representing an integer and
   //! such that n != n+1.
   //!
-  //! **Required header:** `#include <eve/function/maxflint.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

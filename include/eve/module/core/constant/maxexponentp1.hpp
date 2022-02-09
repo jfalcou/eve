@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greatest exponent value plus one.
   //!
-  //! **Required header:** `#include <eve/function/maxexponentp1.hpp>`
+  //! **Required header:** #include <eve/module/core.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
