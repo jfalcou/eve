@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/rsqrt.hpp>
-#include <eve/module/arithmetic/diff/impl/rsqrt.hpp>
+#include <eve/module/core/diff/impl/rsqrt.hpp>

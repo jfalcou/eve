@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/sinpi.hpp>
 

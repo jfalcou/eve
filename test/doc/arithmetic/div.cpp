@@ -1,5 +1,5 @@
 //#include <eve/function/div.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

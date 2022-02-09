@@ -1,5 +1,5 @@
 //#include <eve/function/average.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <vector>
 #include <iostream>

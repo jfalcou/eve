@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/maxabs.hpp>
-#include <eve/module/arithmetic/saturated/impl/maxabs.hpp>
+#include <eve/module/core/saturated/impl/maxabs.hpp>

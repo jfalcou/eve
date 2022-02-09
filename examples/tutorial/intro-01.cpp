@@ -25,8 +25,8 @@ float theta(float x, float y)
 
 //! [simd-function]
 #include <eve/wide.hpp>
-#include <eve/function/sqrt.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 
 eve::wide<float> rho(eve::wide<float> x, eve::wide<float> y)
 {
@@ -42,7 +42,7 @@ eve::wide<float> theta(eve::wide<float> x, eve::wide<float> y)
 
 //! [hypot-variant]
 #include <eve/wide.hpp>
-#include <eve/function/hypot.hpp>
+#include <eve/module/math.hpp>
 
 eve::wide<float> better_rho(eve::wide<float> x, eve::wide<float> y)
 {
@@ -68,7 +68,7 @@ void check_polar()
 //! [simd-test]
 
 #include "test.hpp"
-#include <eve/module/math/constant/sqrt_2.hpp>
+#include <eve/module/math.hpp>
 
 TTS_CASE("Check scalar to_polar")
 {

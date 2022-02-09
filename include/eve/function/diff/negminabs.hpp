@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/negminabs.hpp>
+#include <eve/module/core/diff/negminabs.hpp>

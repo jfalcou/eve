@@ -25,3 +25,20 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/zero.hpp>
+
+#include <eve/module/core/constant/bitincrement.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/constant/exponentmask.hpp>
+#include <eve/module/core/constant/logeps.hpp>
+#include <eve/module/core/constant/mantissamask.hpp>
+#include <eve/module/core/constant/maxexponent.hpp>
+#include <eve/module/core/constant/maxexponentm1.hpp>
+#include <eve/module/core/constant/maxexponentp1.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
+#include <eve/module/core/constant/minexponent.hpp>
+#include <eve/module/core/constant/nbmantissabits.hpp>
+#include <eve/module/core/constant/oneosqrteps.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
+#include <eve/module/core/constant/sqrteps.hpp>
+#include <eve/module/core/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/twotonmb.hpp>

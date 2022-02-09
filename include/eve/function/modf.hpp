@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/modf.hpp>
+#include <eve/module/core/regular/modf.hpp>

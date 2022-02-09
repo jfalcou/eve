@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/constant/invlog_2.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/regular/exp10.hpp>
 #include <eve/module/math/regular/log10.hpp>
 #include <eve/detail/skeleton_calls.hpp>

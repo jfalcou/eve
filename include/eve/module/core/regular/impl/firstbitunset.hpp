@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/bit_notand.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/bit_notand.hpp>
 #include <eve/function/inc.hpp>

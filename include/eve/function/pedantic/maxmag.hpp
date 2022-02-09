@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/maxmag.hpp>
+#include <eve/module/core/pedantic/maxmag.hpp>

@@ -7,12 +7,16 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/countr_zero.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/logical.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/arch/top_bits.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/function/any.hpp>
+#include <eve/module/core/constant/true.hpp>
 
 #include <optional>
 

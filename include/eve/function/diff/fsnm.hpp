@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/fsnm.hpp>
+#include <eve/module/core/diff/fsnm.hpp>

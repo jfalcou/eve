@@ -1,5 +1,5 @@
 //==================================================================================================
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers

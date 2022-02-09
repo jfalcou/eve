@@ -9,7 +9,7 @@
 
 //TO PUT IN DETAIL
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/constant/invpi.hpp>
 #include <eve/module/math/constant/twoopi.hpp>
 #include <eve/detail/kumi.hpp>

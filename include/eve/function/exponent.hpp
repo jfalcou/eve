@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/exponent.hpp>
+#include <eve/module/core/regular/exponent.hpp>

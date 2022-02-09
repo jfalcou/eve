@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/bit_width.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/product_type.hpp>
 

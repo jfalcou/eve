@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/rsqrt.hpp>
+#include <eve/module/core/regular/rsqrt.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/maxabs.hpp>
+#include <eve/module/core/regular/maxabs.hpp>

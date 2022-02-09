@@ -11,8 +11,7 @@
 
 #include <cmath>
 #include <eve/wide.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/module/math.hpp>
 
 float rho(float x, float y)
 {
@@ -76,7 +75,7 @@ namespace scalar
 
 //! [simd-transform]
 #include <vector>
-#include <eve/function/hypot.hpp>
+#include <eve/module/math.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
@@ -99,7 +98,7 @@ namespace simd
 
 //! [simd-transform-traits]
 #include <vector>
-#include <eve/function/hypot.hpp>
+#include <eve/module/math.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 

@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/mul.hpp>
-#include <eve/module/arithmetic/saturated/impl/mul.hpp>
+#include <eve/module/core/saturated/impl/mul.hpp>

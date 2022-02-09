@@ -10,7 +10,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/polynomial/regular/successor.hpp>
 
 namespace eve::detail

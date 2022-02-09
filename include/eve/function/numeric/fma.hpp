@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/numeric/fma.hpp>
+#include <eve/module/core/numeric/fma.hpp>

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <eve/detail/function/load.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/impl/load.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

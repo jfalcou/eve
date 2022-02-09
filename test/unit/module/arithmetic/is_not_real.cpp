@@ -10,7 +10,7 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/function/is_not_real.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/logical.hpp>
 
 //==================================================================================================

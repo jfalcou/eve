@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/negate.hpp>
+#include <eve/module/core/regular/negate.hpp>

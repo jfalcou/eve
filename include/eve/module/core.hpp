@@ -19,4 +19,8 @@
 //==================================================================================================
 #include <eve/module/core/constant/core.hpp>
 #include <eve/module/core/regular/core.hpp>
+#include <eve/module/core/diff/core.hpp>
+#include <eve/module/core/fuzzy/core.hpp>
+#include <eve/module/core/numeric/core.hpp>
+#include <eve/module/core/pedantic/core.hpp>
 #include <eve/module/core/saturated/core.hpp>

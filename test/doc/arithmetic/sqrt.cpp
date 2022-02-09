@@ -1,5 +1,5 @@
 //#include <eve/function/sqrt.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

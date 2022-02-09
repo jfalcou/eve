@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/average.hpp>
+#include <eve/module/core/regular/average.hpp>

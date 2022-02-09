@@ -1,7 +1,7 @@
 //#include <eve/function/two_prod.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <iostream>
 #include <iomanip>
 

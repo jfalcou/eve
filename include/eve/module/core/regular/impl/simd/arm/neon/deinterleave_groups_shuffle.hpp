@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/function/swap_adjacent_groups.hpp>
 
 #include <eve/detail/function/simd/arm/neon/neon_struct_to_wide.hpp>

@@ -1,5 +1,5 @@
 //#include <eve/function/negabsmin.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/pedantic/negabsmin.hpp>
 #include <eve/function/numeric/negabsmin.hpp>
 #include <eve/wide.hpp>

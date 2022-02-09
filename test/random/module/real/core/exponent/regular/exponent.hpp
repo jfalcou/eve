@@ -7,7 +7,7 @@
 //==================================================================================================
 #include <eve/function/exponent.hpp>
 #include <eve/function/dec.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include "producers.hpp"
 #include <cmath>

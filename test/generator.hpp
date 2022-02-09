@@ -12,7 +12,7 @@
 #include <eve/module/core/constant/constant.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/arithmetic/constant/mindenormal.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/mzero.hpp>
 #include <eve/module/core/constant/nan.hpp>

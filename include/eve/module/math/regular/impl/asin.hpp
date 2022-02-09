@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/regular/acos.hpp>
 #include <eve/module/math/regular/radindeg.hpp>
 #include <eve/detail/branch.hpp>

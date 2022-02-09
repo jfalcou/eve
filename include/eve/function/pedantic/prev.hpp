@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/prev.hpp>
+#include <eve/module/core/pedantic/prev.hpp>

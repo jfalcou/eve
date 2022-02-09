@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/minabs.hpp>
+#include <eve/module/core/diff/minabs.hpp>

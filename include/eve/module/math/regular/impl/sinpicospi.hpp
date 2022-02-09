@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/sincos.hpp>
 #include <eve/module/math/regular/trigo_tags.hpp>

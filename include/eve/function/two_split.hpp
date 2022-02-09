@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/arithmetic/regular/two_split.hpp>
+#include <eve/module/core/regular/two_split.hpp>

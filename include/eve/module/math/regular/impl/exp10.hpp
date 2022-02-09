@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
-#include <eve/module/arithmetic/regular/sqr.hpp> // THIS IS A PROBLEM SUPPRESS
+#include <eve/module/core.hpp>
+#include <eve/module/core/regular/sqr.hpp> // THIS IS A PROBLEM SUPPRESS
 #include <eve/module/math/constant/maxlog10.hpp>
 #include <eve/module/math/constant/minlog10.hpp>
 #include <eve/module/math/constant/minlog10denormal.hpp>

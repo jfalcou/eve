@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/div.hpp>
-#include <eve/module/arithmetic/saturated/impl/div.hpp>
+#include <eve/module/core/saturated/impl/div.hpp>

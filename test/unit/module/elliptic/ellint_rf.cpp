@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/elliptic.hpp>
 #include <boost/math/special_functions/ellint_rf.hpp>

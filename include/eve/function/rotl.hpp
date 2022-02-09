@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/rotl.hpp>
+#include <eve/module/core/regular/rotl.hpp>

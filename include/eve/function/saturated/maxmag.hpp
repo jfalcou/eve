@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/maxmag.hpp>
-#include <eve/module/arithmetic/saturated/impl/maxmag.hpp>
+#include <eve/module/core/saturated/impl/maxmag.hpp>

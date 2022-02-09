@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/special/regular/factorial.hpp>
 #include <eve/module/special/regular/lgamma.hpp>
 

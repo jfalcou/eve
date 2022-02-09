@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/max.hpp>
+#include <eve/module/core/diff/max.hpp>

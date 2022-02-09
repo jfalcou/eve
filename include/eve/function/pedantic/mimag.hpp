@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/function/minmag.hpp>
-#include <eve/module/arithmetic/pedantic/impl/minmag.hpp>
+#include <eve/module/core/pedantic/impl/minmag.hpp>

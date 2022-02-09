@@ -1,8 +1,8 @@
 //#include <eve/function/fnms.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/pedantic/fnms.hpp>
 #include <eve/function/numeric/fnms.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

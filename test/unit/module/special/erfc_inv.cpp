@@ -19,7 +19,7 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/arithmetic/constant/smallestposval.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/platform.hpp>
 #include <boost/math/special_functions/erf.hpp>
 

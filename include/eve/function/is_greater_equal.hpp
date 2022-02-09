@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/is_greater_equal.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>

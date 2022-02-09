@@ -1,6 +1,6 @@
 //#include <eve/function/pedantic/is_flint.hpp>
-#include <eve/module/arithmetic.hpp>
-#include <eve/module/arithmetic/regular/is_flint.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/regular/is_flint.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/maxflint.hpp>

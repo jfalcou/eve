@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/fnma.hpp>
+#include <eve/module/core/pedantic/fnma.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/arithmetic/pedantic/impl/simd/x86/fnma.hpp>
+#  include <eve/module/core/pedantic/impl/simd/x86/fnma.hpp>
 #endif

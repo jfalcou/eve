@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/pedantic/lpnorm.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 

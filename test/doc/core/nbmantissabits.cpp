@@ -1,4 +1,4 @@
-#include <eve/module/arithmetic/constant/nbmantissabits.hpp>
+#include <eve/module/core/constant/nbmantissabits.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

@@ -1,5 +1,5 @@
 //#include <eve/function/minmag.hpp>
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/function/saturated/minmag.hpp>
 #include <eve/function/numeric/minmag.hpp>
 #include <eve/wide.hpp>

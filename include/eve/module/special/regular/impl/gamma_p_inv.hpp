@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
 #include <eve/module/special/diff/gamma_p.hpp>

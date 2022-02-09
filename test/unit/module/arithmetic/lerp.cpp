@@ -5,9 +5,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/arithmetic/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/sqrtvalmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/function/all.hpp>

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/constant/half.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/constant.hpp>
 #include <eve/detail/implementation.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/lo.hpp>
+#include <eve/module/core/regular/lo.hpp>

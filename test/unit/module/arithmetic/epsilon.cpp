@@ -13,8 +13,8 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/arithmetic/constant/mindenormal.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
 

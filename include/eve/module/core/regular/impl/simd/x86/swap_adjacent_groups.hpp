@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/function/convert.hpp>

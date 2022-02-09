@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/binarize_not.hpp>
+#include <eve/module/core/regular/binarize_not.hpp>

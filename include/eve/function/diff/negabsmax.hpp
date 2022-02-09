@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/diff/negabsmax.hpp>
+#include <eve/module/core/diff/negabsmax.hpp>

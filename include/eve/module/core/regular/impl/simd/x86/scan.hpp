@@ -7,7 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/slide_right.hpp>
+#include <eve/module/core/regular/broadcast.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/constant/true.hpp>
 
 #include <eve/module/core/constant/as_value.hpp>
 #include <eve/function/broadcast.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/regular/copysign.hpp>
+#include <eve/module/core/regular/copysign.hpp>

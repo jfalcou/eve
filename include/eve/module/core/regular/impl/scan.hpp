@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/slide_right.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/function/plus.hpp>
 #include <eve/function/slide_right.hpp>

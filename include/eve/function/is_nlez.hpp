@@ -6,4 +6,4 @@
 //==================================================================================================
 #pragma once
  
-#include <eve/module/arithmetic/regular/is_nlez.hpp>
+#include <eve/module/core/regular/is_nlez.hpp>

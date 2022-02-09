@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/broadcast.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/function/broadcast.hpp>
 #include <eve/pattern.hpp>

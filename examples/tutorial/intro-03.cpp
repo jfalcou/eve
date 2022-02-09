@@ -23,8 +23,7 @@ std::tuple<float,float> to_polar(float x, float y)
 
 //! [simd-std-tuple]
 #include <eve/wide.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/module/math.hpp>
 #include <tuple>
 
 std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::wide<float> y)
@@ -36,8 +35,7 @@ std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::
 //! [simd-std-tuple]
 
 //! [simd-kumi-tuple]
-#include <eve/function/hypot.hpp>
-#include <eve/function/atan2.hpp>
+#include <eve/module/math.hpp>
 #include <eve/product_type.hpp>
 
 namespace simd

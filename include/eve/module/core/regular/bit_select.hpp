@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

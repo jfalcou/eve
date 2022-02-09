@@ -7,8 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/signnz.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/dist.hpp>
+#include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/arithmetic/detail/next_kernel.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/function/if_else.hpp>
 #include <eve/function/is_unordered.hpp>
 #include <eve/function/bit_cast.hpp>

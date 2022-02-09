@@ -1,6 +1,6 @@
 #pragma once
 
-#include <eve/module/arithmetic.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 #include <eve/detail/hz_device.hpp>

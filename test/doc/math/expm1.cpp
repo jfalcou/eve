@@ -1,7 +1,7 @@
 //#include <eve/function/expm1.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/arithmetic/constant/eps.hpp>
+#include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/nan.hpp>

@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/arithmetic/pedantic/max.hpp>
+#include <eve/module/core/pedantic/max.hpp>
 
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/arithmetic/pedantic/impl/simd/arm/neon/max.hpp>
+#  include <eve/module/core/pedantic/impl/simd/arm/neon/max.hpp>
 #endif
