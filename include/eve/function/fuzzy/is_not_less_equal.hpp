@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/is_not_less_equal.hpp>
+#include <eve/module/core/is_not_less_equal.hpp>
 #include <eve/module/core/fuzzy/impl/is_not_less_equal.hpp>

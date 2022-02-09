@@ -12,6 +12,7 @@
 #include <type_traits>
 #include <cmath>
 #include <eve/platform.hpp>
+#include <boost/math/special_functions/erf.hpp>
 
 //==================================================================================================
 // Types tests

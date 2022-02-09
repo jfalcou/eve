@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/stirling.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/minlog.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include "producers.hpp"
 #include <cmath>
 

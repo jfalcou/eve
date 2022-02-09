@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/if_else.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve::detail
 {
@@ -31,4 +31,3 @@ namespace eve::detail
     else                return [t, f](auto&&... x) { return f(x...); };
   }
 }
-

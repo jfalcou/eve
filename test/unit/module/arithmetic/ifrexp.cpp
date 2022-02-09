@@ -19,7 +19,9 @@ EVE_TEST_TYPES( "Check return types of eve::ifrexp(simd)"
   TTS_EXPR_IS(eve::pedantic(eve::ifrexp)(T()), (kumi::tuple<T,eve::as_integer_t<T,signed>>));
 };
 
-EVE_TEST_TYPES("Check (eve::ifrexp behavior", EVE_TYPE)
+EVE_TEST_TYPES("Check (eve::ifrexp behavior"
+              , eve::test::simd::ieee_reals
+              )
   <typename T>(eve::as<T>)
 {
   using i_t = eve::as_integer_t<T,signed>;

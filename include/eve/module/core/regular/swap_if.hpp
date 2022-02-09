@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <utility>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve
 {
@@ -19,7 +19,7 @@ namespace eve
   //!   @fn swap_if(Mask const& mask, Value& lhs, Value& rhs)
   //!   @brief Conditional swap
   //!
-  //!   **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Required header:** `#include <eve/function/swap_if.hpp>`
   //!
   //!   Swaps the [SIMD values](@ref eve::simd_value) `lhs` and `rhs` wherever `mask` evaluates to
   //!   `true`.

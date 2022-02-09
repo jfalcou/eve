@@ -13,9 +13,9 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/false.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/logical_notand.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/logical_notand.hpp>
 #include <eve/detail/select_over.hpp>
 
 // This is a help for programming efiicient horizontal branching

@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/stirling.hpp>
+#include <eve/module/core/stirling.hpp>
 #include <eve/module/core/function/diff/generic/stirling.hpp>

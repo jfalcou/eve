@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/function/ldexp.hpp>
-#include <eve/function/exponent.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/constant/ieee_constant.hpp>
 
