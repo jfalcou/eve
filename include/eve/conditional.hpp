@@ -293,7 +293,8 @@ namespace eve
       }
       else
       {
-        using i_t   = typename as_integer<typename type::mask_type>::type;
+        using m_t = typename type::mask_type;
+        using i_t = as_integer_t<m_t>;
         if constexpr(eve::use_complete_storage<type>)
         {
           return bit_cast(detail::linear_ramp(eve::as<i_t>()) < i_t(count_), as<type>());
@@ -428,7 +429,8 @@ namespace eve
       }
       else
       {
-        using i_t   = typename as_integer<typename type::mask_type>::type;
+        using m_t = typename type::mask_type;
+        using i_t = as_integer_t<m_t>;
         constexpr std::ptrdiff_t card = cardinal_v<T>;
         if constexpr(eve::use_complete_storage<type>)
         {
@@ -568,7 +570,8 @@ namespace eve
       }
       else
       {
-        using i_t   = typename as_integer<typename type::mask_type>::type;
+        using m_t = typename type::mask_type;
+        using i_t = as_integer_t<m_t>;
         if constexpr(eve::use_complete_storage<type>)
         {
           auto const i = detail::linear_ramp(eve::as<i_t>());
