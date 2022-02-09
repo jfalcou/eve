@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing factorial of  unsigned integers \f$\displaystyle n! = \prod_{i=1}^n i\f$.
   //!
-  //! **Required header:** `#include <eve/function/factorial.hpp>`
+  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

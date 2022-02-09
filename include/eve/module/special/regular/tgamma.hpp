@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the (true) \f$\Gamma\f$ function:
   //!        \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
   //!
-  //! **Required header:** `#include <eve/function/tgamma.hpp>`
+  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!
@@ -66,7 +66,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/tgamma.hpp>`
   //!
   //!     The expression `diff(tgamma)(x)` computes the derivative of the function at `x`.
   //!

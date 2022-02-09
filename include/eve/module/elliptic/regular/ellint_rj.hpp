@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the the Carlson's elliptic integral
   //!        \f$\frac32 \int_{0}^{\infty}\scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$
   //!
-  //! **Required header:** `#include <eve/function/ellint_rj.hpp>`
+  //! **Required header:** #include <eve/module/elliptic.hpp>
   //!
   //! #### Members Functions
   //!

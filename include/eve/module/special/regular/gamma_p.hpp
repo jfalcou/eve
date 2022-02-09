@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the normalized lower incomplete \f$\Gamma\f$ function :
   //!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
   //!
-  //! **Required header:** `#include <eve/function/gamma_p.hpp>`
+  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/cbrt.hpp>
+#include <eve/module/math/regular/cbrt.hpp>
 #include <eve/module/math/diff/impl/cbrt.hpp>

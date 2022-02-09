@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing rising_factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}\f$.
   //!
-  //! **Required header:** `#include <eve/function/rising_factorial.hpp>`
+  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!
@@ -63,14 +63,12 @@ namespace eve
   //!
   //!  * eve::raw
   //!
-  //!     **Required header:** `#include <eve/function/rising_factorial.hpp>`
   //!
   //!     The expression `raw(rising_factorial)(a,x)` uses the crude formula with all its limitations and
   //!      inacurracies and return a Nan if `a` and `a+x` are not both positive
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/rising_factorial.hpp>`
   //!
   //!     The expression `pedantic(rising_factorial)(a,x)` uses reflection tricks and computes the function for all real `a` and `x`,
   //!      and in fact computes the Pochammer symbol  \f$x^{\overline a}=\frac{\Gamma(x+a)}{\Gamma(a)}\f$
@@ -78,7 +76,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/rising_factorial.hpp>`
   //!
   //!     The expression `diff_1st(rising_factorial)(a,x)` and `diff_2nd(rising_factorial)(a,x)` computes
   //!      the derivative of the function relative to the first or second parameter respectively.

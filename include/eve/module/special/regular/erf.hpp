@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the eroror function. \f$ \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
   //!
-  //! **Required header:** `#include <eve/function/erf.hpp>`
+  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/erf.hpp>`
   //!
   //!     The expression `diff(erf)(x)` computes the derivative of the function at `x`.
   //!

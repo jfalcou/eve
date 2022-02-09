@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the complementary error function \f$1-\mbox{erf}(x)\f$.
   //!
-  //! **Required header:** `#include <eve/function/erfc.hpp>`
+  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/erfc.hpp>`
   //!
   //!     The expression `diff(erfc)(x)` computes the derivative of the function at `x`.
   //!
