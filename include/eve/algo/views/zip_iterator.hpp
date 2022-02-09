@@ -17,6 +17,7 @@
 #include <eve/function/compress_store.hpp>
 #include <eve/function/load.hpp>
 #include <eve/function/store.hpp>
+#include <eve/function/store_equivalent.hpp>
 #include <eve/function/unalign.hpp>
 
 #include <eve/detail/kumi.hpp>
@@ -242,6 +243,61 @@ namespace eve::algo::views
         return detail::convert_zipped(self, tgt);
       }
 
+      // store_ has to be in common and not in iterator, because
+      // of the model breaking on making `compress_store` an alogirhtm.
+      //
+      // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
+
+      template <relative_conditional_expr C, typename N>
+      EVE_FORCEINLINE friend void tagged_dispatch(
+        eve::tag::store_, C c, wide<value_type, N> v, zip_iterator<Is...> self )
+      {
+        if constexpr (C::has_alternative)
+        {
+          v = eve::replace_ignored(v, c, c.alternative);
+          eve::store(v, self);
+        }
+        else
+        {
+          kumi::for_each([&](auto what, auto i) { return  eve::store[c](what, i); },
+                         v, self.storage);
+        }
+      }
+
+      template <typename N>
+      EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_,
+                                                   wide<value_type, N> v,
+                                                   zip_iterator<Is...> self )
+      {
+        kumi::for_each([&](auto what, auto i) { return  eve::store(what, i); },
+                       v, self.storage);
+      }
+
+      template <relative_conditional_expr C, typename N>
+      EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::store_equivalent_,
+                                                   C c,
+                                                   wide<value_type, N> v,
+                                                   zip_iterator<Is...> self )
+      {
+        static_assert(!C::has_alternative, "not supported, unclear semantics");
+
+        auto recursed = kumi::map([c]( auto v_, auto self_ ) {
+          auto [_, v1_, self1_] = store_equivalent(c, v_, self_);
+          return kumi::make_tuple(v1_, self1_);
+        }, v, self);
+
+        auto self1_tuple = kumi::map([](auto v1_self1) { return kumi::get<1>(v1_self1); }, recursed );
+
+        auto self1 = []<std::size_t ... is>(auto tup, std::index_sequence<is...>)
+        { return zip_iterator<std::tuple_element_t<is, decltype(tup)>...> { get<is>(tup) ... }; }
+        ( self1_tuple, std::make_index_sequence<std::tuple_size_v<decltype(self1_tuple)>>{} );
+
+        wide<value_type_t<decltype(self1)>, N> v1;
+        kumi::for_each([](auto& v1_res, auto v1_self1) { v1_res = get<0>(v1_self1); }, v1, recursed);
+
+        return kumi::make_tuple(c, v1, self1);
+      }
+
       tuple_type storage;
     };
   }
@@ -353,43 +409,6 @@ namespace eve::algo::views
                       , self.storage, res);
       }
       return res;
-    }
-
-    template <relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(
-      eve::tag::store_, C c, wide_value_type_t<zip_iterator> v, zip_iterator self )
-    {
-      if constexpr (C::has_alternative)
-      {
-        v = eve::replace_ignored(v, c, c.alternative);
-        eve::store(v, self);
-      }
-      else
-      {
-        kumi::for_each([&](auto what, auto i) { return  eve::store[c](what, i); },
-                       v, self.storage);
-      }
-    }
-
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_,
-                                                 wide_value_type_t<zip_iterator> v,
-                                                 zip_iterator self )
-    {
-      kumi::for_each([&](auto what, auto i) { return  eve::store(what, i); },
-                     v, self.storage);
-    }
-
-    template <relative_conditional_expr C, decorator Decorator, typename U>
-    EVE_FORCEINLINE friend auto tagged_dispatch(
-      eve::tag::compress_store_,
-      C c, Decorator d, wide_value_type_t<zip_iterator> v,
-      eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
-      zip_iterator self)
-    {
-      auto raw_res = kumi::map(
-        [&](auto what, auto i) { return d(eve::compress_store[c])(what, m, i); },
-        v, self.storage);
-      return unaligned_t<zip_iterator>{raw_res};
     }
   };
 
