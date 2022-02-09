@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object evaluating the legendre functions.
   //!
-  //! **Required header:** #include <eve/module/polynomial.hpp>
+  //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
   //! #### Members Functions
   //!

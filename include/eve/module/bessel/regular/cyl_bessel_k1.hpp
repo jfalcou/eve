@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$ K_1(x)=x\int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{3/2}}\,\mathrm{d}\tau\f$.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

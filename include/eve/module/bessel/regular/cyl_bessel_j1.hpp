@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

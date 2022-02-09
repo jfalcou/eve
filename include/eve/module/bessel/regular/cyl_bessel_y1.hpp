@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$ Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

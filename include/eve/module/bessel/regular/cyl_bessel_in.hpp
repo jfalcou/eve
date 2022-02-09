@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the cyl_bessel_in function,  \f$ I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greater prime integer less or equal to the input.
   //!
-  //! **Required header:** #include <eve/module/combinatorial.hpp>
+  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
   //!
   //! #### Members Functions
   //!

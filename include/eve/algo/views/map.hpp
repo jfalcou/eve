@@ -76,7 +76,7 @@ namespace eve::algo::views
   //!         accepts the `as<value_type_t<Base>>` for convinience
   //!         (so that it can be defined without knowing the underlying type).
   //!
-  //!   **Required header:** #include <eve/algo/views/map.hpp>
+  //!   **Required header:** `#include <eve/algo/views/map.hpp>`
   //!
   //!   Has a shorthand `eve::views::map_store_op` in `<eve/views/map.hpp>`
   //! @}

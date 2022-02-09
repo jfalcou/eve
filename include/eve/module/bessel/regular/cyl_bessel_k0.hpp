@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing  \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}{\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

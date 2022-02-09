@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/combinatorial/double_factorial.cpp}
+  //! @godbolt{doc/special/double_factorial.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$2^{-1/2}\f$.
   //!
-  //! **Required header:** #include <eve/module/math.hpp>
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

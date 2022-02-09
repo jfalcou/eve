@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the degenerate Carlson's elliptic integral
   //!  \f$ \frac12 \int_{0}^{\infty} \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\f$
   //!
-  //! **Required header:** #include <eve/module/elliptic.hpp>
+  //! **Required header:** `#include <eve/module/elliptic.hpp>`
   //!
   //! #### Members Functions
   //!

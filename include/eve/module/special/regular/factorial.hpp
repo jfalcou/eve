@@ -55,7 +55,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/combinatorial/factorial.cpp}
+  //! @godbolt{doc/special/factorial.cpp}
   //!
   //!  @}
   //================================================================================================

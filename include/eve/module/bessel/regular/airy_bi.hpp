@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the airy_bi function.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -88,7 +88,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/combinatorial/lrising_factorial.cpp}
+  //! @godbolt{doc/special/lrising_factorial.cpp}
   //!
   //!  @}
   //================================================================================================

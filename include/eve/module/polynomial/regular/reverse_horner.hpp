@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the reverse_horner operation.
   //!
-  //! **Required header:** #include <eve/module/polynomial.hpp>
+  //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the cyl_bessel_jn function,  \f$ J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
   //!
-  //! **Required header:** #include <eve/module/bessel.hpp>
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!

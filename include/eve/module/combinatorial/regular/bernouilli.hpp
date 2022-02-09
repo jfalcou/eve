@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing bernouilli numbers sequence.
   //!
-  //! **Required header:** #include <eve/module/combinatorial.hpp>
+  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
   //!
   //! #### Members Functions
   //!

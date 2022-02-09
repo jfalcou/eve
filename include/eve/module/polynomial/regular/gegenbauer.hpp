@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the gegenbauer operation.
   //!
-  //! **Required header:** #include <eve/module/polynomial.hpp>
+  //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
   //! #### Members Functions
   //!

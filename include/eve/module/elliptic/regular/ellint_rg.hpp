@@ -21,7 +21,7 @@ namespace eve
   //!                                    +y\sin^2\theta\sin^2\phi
   //!                                    +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$
   //!
-  //! **Required header:** #include <eve/module/elliptic.hpp>
+  //! **Required header:** `#include <eve/module/elliptic.hpp>`
   //!
   //! #### Members Functions
   //!
