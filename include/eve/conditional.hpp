@@ -14,7 +14,7 @@
 #include <eve/detail/function/iota.hpp>
 #include <eve/detail/bits.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits.hpp>
 #include <type_traits>
 #include <ostream>
 #include <compare>
@@ -293,7 +293,7 @@ namespace eve
       }
       else
       {
-        using i_t   = as_integer_t<typename type::mask_type>;
+        using i_t   = typename as_integer<typename type::mask_type>::type;
         if constexpr(eve::use_complete_storage<type>)
         {
           return bit_cast(detail::linear_ramp(eve::as<i_t>()) < i_t(count_), as<type>());
@@ -428,7 +428,7 @@ namespace eve
       }
       else
       {
-        using i_t   = as_integer_t<typename type::mask_type>;
+        using i_t   = typename as_integer<typename type::mask_type>::type;
         constexpr std::ptrdiff_t card = cardinal_v<T>;
         if constexpr(eve::use_complete_storage<type>)
         {
@@ -568,8 +568,7 @@ namespace eve
       }
       else
       {
-        using i_t = as_integer_t<typename type::mask_type>;
-
+        using i_t   = typename as_integer<typename type::mask_type>::type;
         if constexpr(eve::use_complete_storage<type>)
         {
           auto const i = detail::linear_ramp(eve::as<i_t>());
