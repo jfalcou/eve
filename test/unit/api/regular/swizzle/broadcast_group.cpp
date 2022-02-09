@@ -50,6 +50,7 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
                   return logicals.get(p(i,c));
                 };
 
+      constexpr auto grp = (T::size()/(1<<g));
       TTS_EQUAL ( eve::broadcast_group( simd, eve::lane<grp>
                                       , eve::index<Index::value>, eve::lane<T::size()>
                                       )
