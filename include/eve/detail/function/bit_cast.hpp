@@ -27,7 +27,7 @@ namespace eve
   //!
   //! @brief Callable object computing a bitwise reinterpretation of the object.
   //!
-  //! **Required header:** `#include <eve/function/bit_cast.hpp>`
+  //! **Required header:** `#include <eve/module/core/regular/bit_cast.hpp>`
   //!
   //! #### Members Functions
   //!

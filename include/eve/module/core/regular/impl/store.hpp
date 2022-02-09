@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/function/store_equivalent.hpp>
+#include <eve/module/core/regular/store_equivalent.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>

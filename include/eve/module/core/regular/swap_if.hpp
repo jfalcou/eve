@@ -19,7 +19,7 @@ namespace eve
   //!   @fn swap_if(Mask const& mask, Value& lhs, Value& rhs)
   //!   @brief Conditional swap
   //!
-  //!   **Required header:** `#include <eve/function/swap_if.hpp>`
+  //!   **Required header:** `#include <eve/module/core.hpp>`
   //!
   //!   Swaps the [SIMD values](@ref eve::simd_value) `lhs` and `rhs` wherever `mask` evaluates to
   //!   `true`.

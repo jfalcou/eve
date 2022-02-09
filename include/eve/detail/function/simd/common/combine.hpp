@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/bit_cast.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail

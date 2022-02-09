@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object reading single value from memory
   //!
-  //! **Required header:** `#include <eve/function/read.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! `operator*` based interface used in the standard has notorious issues with proxy references.
   //! To prevent those issues when dealing with complex, potentially SIMD-aware iterators, `eve::read`

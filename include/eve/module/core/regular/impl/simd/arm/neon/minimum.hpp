@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/function/min.hpp>
+#include <eve/module/core/regular/min.hpp>
 
 namespace eve::detail
 {

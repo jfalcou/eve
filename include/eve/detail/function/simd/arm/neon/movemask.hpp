@@ -9,7 +9,7 @@
 
 #include <eve/arch/logical.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/module/core/regular/convert.hpp>
 
 #include <bit>
 

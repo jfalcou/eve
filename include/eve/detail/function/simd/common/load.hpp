@@ -14,10 +14,10 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/memory/soa_ptr.hpp>
-#include <eve/function/replace.hpp>
-#include <eve/function/safe.hpp>
-#include <eve/function/unsafe.hpp>
-#include <eve/function/unalign.hpp>
+#include <eve/module/core/regular/replace.hpp>
+#include <eve/module/core/regular/safe.hpp>
+#include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 #include <eve/traits/wide_value_type.hpp>
 
 #include <iterator>

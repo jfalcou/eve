@@ -12,8 +12,6 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/saturate.hpp>
-#include <eve/function/saturated.hpp>
 
 namespace eve::detail
 {

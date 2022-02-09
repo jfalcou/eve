@@ -10,9 +10,9 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/detail/generic/lookup_helpers.hpp>
-#include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/module/core/regular/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail

@@ -9,7 +9,6 @@
 
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/function/swap_adjacent_groups.hpp>
 
 namespace eve::detail
 {

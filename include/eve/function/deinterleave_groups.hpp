@@ -36,7 +36,7 @@ namespace eve
   //!      ABCA BCAB CABC       => [AAAA BBBB CCCC]
   //!      ABCD'EABC DEAB'CDEA BCDE'ABCD EABC'DEA BCDE'ABCD => [Ax8 Bx8 Cx8 Dx8 Ex8]
   //!
-  //!    **Required header:** `#include <eve/function/deinterleave_groups.hpp>`
+  //!    **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! @}
   //================================================================================================

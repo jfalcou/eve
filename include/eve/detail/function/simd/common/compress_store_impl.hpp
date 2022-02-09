@@ -10,11 +10,11 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/slide_left.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/unalign.hpp>
-#include <eve/function/unsafe.hpp>
+#include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/slide_left.hpp>
+#include <eve/module/core/regular/store.hpp>
+#include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/unsafe.hpp>
 #include <eve/memory/pointer.hpp>
 
 #include <eve/detail/compress/compress.hpp>

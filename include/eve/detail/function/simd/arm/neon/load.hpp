@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
-#include <eve/function/unalign.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 namespace eve::detail
