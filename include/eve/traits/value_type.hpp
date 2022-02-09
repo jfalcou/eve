@@ -67,5 +67,6 @@ namespace eve
   //================================================================================================
 
   template <typename T>
+    requires (!value<T>)
   using value_type_t = typename decltype(detail::value_type_impl<T>())::type;
 }

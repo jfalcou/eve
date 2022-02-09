@@ -19,8 +19,9 @@
 namespace eve::detail
 {
   template<relative_conditional_expr C,
-           real_scalar_value T, real_scalar_value U, typename N,
+           scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
+    requires (!has_store_equivalent<wide<T, N>, Ptr>)
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
                     C c,
@@ -33,7 +34,7 @@ namespace eve::detail
     else
     {
       stack_buffer<wide<T, N>> buffer;
-      unaligned_t<Ptr> up_to = compress_store_impl(c, v, mask, buffer.ptr());
+      auto up_to = compress_store_impl(c, v, mask, buffer.ptr());
       std::ptrdiff_t n = up_to - buffer.ptr();
 
       unaligned_t<Ptr> out = unalign(ptr) + c.offset(as(mask));
@@ -46,8 +47,9 @@ namespace eve::detail
   }
 
   template<relative_conditional_expr C,
-           real_scalar_value T, real_scalar_value U, typename N,
+           scalar_value T, real_scalar_value U, typename N,
            simd_compatible_ptr<wide<T, N>> Ptr>
+    requires (!has_store_equivalent<wide<T, N>, Ptr>)
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
                      C c,
@@ -60,24 +62,21 @@ namespace eve::detail
     else                                      return compress_store_impl(c, v, mask, ptr);
   }
 
-  template< relative_conditional_expr C, decorator Decorator
-          , kumi::product_type T, real_scalar_value U, typename N
-          , typename ... Ptrs
-          >
+  template <relative_conditional_expr C,
+            decorator Decorator, simd_value T, simd_value U, typename Ptr>
+    requires has_store_equivalent<T, Ptr>
   EVE_FORCEINLINE
-  auto compress_store_(EVE_SUPPORTS(cpu_),
-                       C c,
-                       Decorator d,
-                       wide<T, N> vs,
-                       logical<wide<U, N>> mask,
-                       soa_ptr<Ptrs...> ptrs) noexcept
+  unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
+                                   C c,
+                                   Decorator d,
+                                   T v,
+                                   logical<U> mask,
+                                   Ptr ptr) noexcept
   {
-    return soa_ptr<unaligned_t<Ptrs>...>{
-      kumi::map ( [&] (auto v, auto p) { return compress_store(c, d, v, mask, p); },
-                  vs.storage(), ptrs)
-    };
+    auto [c1, v1, ptr1] = store_equivalent(c, v, ptr);
+    auto res1 = compress_store(c1, d, v1, mask, ptr1);
+    return unalign(ptr) + (res1 - ptr1);
   }
-
 
   template<relative_conditional_expr C, decorator Decorator,
            real_scalar_value T, real_scalar_value U, typename N,

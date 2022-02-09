@@ -10,6 +10,8 @@
 #include <eve/algo/iterator_helpers.hpp>
 
 #include <eve/function/load.hpp>
+#include <eve/function/store_equivalent.hpp>
+#include <eve/function/compress_store.hpp>
 #include <eve/function/store.hpp>
 #include <eve/function/unalign.hpp>
 
@@ -125,28 +127,9 @@ namespace eve::algo
       return eve::load(c, s, self.ptr, Cardinal{});
     }
 
-    template <relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                C cond, wv_type v,
-                                                ptr_iterator self )
-      requires (!std::is_const_v<cv_value_type>)
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_, relative_conditional_expr auto c, wv_type v, ptr_iterator self)
     {
-      eve::store[cond](v, self.ptr);
-    }
-
-    EVE_FORCEINLINE friend void tagged_dispatch( eve::tag::store_, wv_type v, ptr_iterator self )
-      requires (!std::is_const_v<cv_value_type>)
-    {
-      eve::store(v, self.ptr);
-    }
-
-    template <relative_conditional_expr C, decorator Decorator, typename U>
-      requires (!std::is_const_v<cv_value_type>)
-    EVE_FORCEINLINE friend auto tagged_dispatch(
-      eve::tag::compress_store_, C c, Decorator d, wv_type v,
-      logical<wide<U, Cardinal>> m, ptr_iterator self)
-    {
-      return unaligned_me{eve::compress_store(c, d, v, m, self.ptr)};
+      return kumi::make_tuple(c, v, self.ptr);
     }
 
     Ptr ptr;

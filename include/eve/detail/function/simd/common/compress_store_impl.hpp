@@ -23,11 +23,11 @@ namespace eve::detail
 {
   template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_impl_(EVE_SUPPORTS(cpu_),
-                          C c,
-                          wide<T, N> v,
-                          logical<wide<U, N>> mask,
-                          Ptr ptr) noexcept
+  unaligned_t<Ptr> compress_store_impl_(EVE_SUPPORTS(cpu_),
+                                        C c,
+                                        wide<T, N> v,
+                                        logical<wide<U, N>> mask,
+                                        Ptr ptr) noexcept
   {
     if constexpr ( has_emulated_abi_v<wide<T, N>> )
     {
@@ -59,10 +59,10 @@ namespace eve::detail
 
   template<real_scalar_value T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
-  T* compress_store_impl_(EVE_SUPPORTS(cpu_),
-                          wide<T, N> v,
-                          logical<wide<U, N>> mask,
-                          Ptr ptr) noexcept
+  unaligned_t<Ptr> compress_store_impl_(EVE_SUPPORTS(cpu_),
+                                        wide<T, N> v,
+                                        logical<wide<U, N>> mask,
+                                        Ptr ptr) noexcept
   {
     return compress_store_impl(ignore_none, v, mask, ptr);
   }

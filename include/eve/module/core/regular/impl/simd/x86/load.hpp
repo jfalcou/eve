@@ -25,7 +25,7 @@ namespace eve::detail
                             , eve::as<Pack> const& tgt
                             , Ptr p
                             ) noexcept
-  requires simd_compatible_ptr<Ptr, Pack>
+  requires simd_compatible_ptr<Ptr, Pack> && (!has_bundle_abi_v<Pack>)
   {
     using b_t   = std::remove_cvref_t<decltype(*p)>;
     using r_t   = Pack;

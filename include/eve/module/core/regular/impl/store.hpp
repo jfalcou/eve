@@ -13,6 +13,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/function/bit_cast.hpp>
 #include <eve/function/replace.hpp>
+#include <eve/function/store_equivalent.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
@@ -165,5 +166,25 @@ namespace eve::detail
   {
     using mask_type_t = typename logical<T>::mask_type;
     store(value.mask(), aligned_ptr<mask_type_t, Lanes>{(mask_type_t*)ptr.get()});
+  }
+
+  template<simd_value T, relative_conditional_expr C, simd_compatible_ptr<T> Ptr>
+    requires has_store_equivalent<T, Ptr>
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
+                              C const &c,
+                              T const &v,
+                              Ptr ptr) noexcept
+  {
+    auto [c1, v1, ptr1] = store_equivalent(c, v, ptr);
+    return store[c1](v1, ptr1);
+  }
+
+  template<simd_value T, simd_compatible_ptr<T> Ptr>
+    requires has_store_equivalent<T, Ptr>
+  EVE_FORCEINLINE void store_(EVE_SUPPORTS(cpu_),
+                              T const &v,
+                              Ptr ptr) noexcept
+  {
+    return store[ignore_none](v, ptr);
   }
 }

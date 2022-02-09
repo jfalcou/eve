@@ -23,6 +23,7 @@
 
 #include <array>
 #include <concepts>
+#include <utility>
 
 namespace eve::algo::views
 {
@@ -41,9 +42,42 @@ namespace eve::algo::views
   //! @}
   //================================================================================================
 
-  template <typename ...Is>
-  struct zip_iterator;
+  template <typename ...Is> struct zip_iterator;
 
+  namespace detail
+  {
+    template<typename... Is> struct zip_iterator_common;
+  }
+}
+
+// tuple opt in
+namespace std
+{
+  template<std::size_t idx, typename ...Is>
+  struct  tuple_element<idx, eve::algo::views::zip_iterator<Is...>> : tuple_element<idx, kumi::tuple<Is...>>
+  {
+  };
+
+  template<typename ...Is>
+  struct tuple_size<eve::algo::views::zip_iterator<Is...>> : std::tuple_size<kumi::tuple<Is...>>
+  {
+  };
+
+  template<std::size_t idx, typename ...Is>
+  struct tuple_element<idx, eve::algo::views::detail::zip_iterator_common<Is...>>
+    : tuple_element<idx, kumi::tuple<Is...>>
+  {
+  };
+
+  template<typename ...Is>
+  struct tuple_size<eve::algo::views::detail::zip_iterator_common<Is...>>
+    : std::tuple_size<kumi::tuple<Is...>>
+  {
+  };
+}
+
+namespace eve::algo::views
+{
   namespace detail
   {
     // Don't take always aligned if possible.
@@ -369,16 +403,6 @@ namespace eve::algo::views
 // tuple opt in
 namespace std
 {
-  template<std::size_t I, eve::algo::views::detail::derived_from_zip_iterator_common U>
-  struct  tuple_element<I, U> : tuple_element<I, typename U::tuple_type>
-  {
-  };
-
-  template<eve::algo::views::detail::derived_from_zip_iterator_common U>
-  struct tuple_size<U> : std::tuple_size<typename U::tuple_type>
-  {
-  };
-
   // I'm so not sure I'm doing this right
   template< typename ...Is, typename ZipI2, template<class> class TQual, template<class> class UQual >
     requires eve::algo::views::compatible_zip_iterators<eve::algo::views::zip_iterator<Is...>, ZipI2>

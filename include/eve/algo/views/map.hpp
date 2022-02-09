@@ -359,27 +359,16 @@ namespace eve::algo::views
       eve::store[c1](bound_store(v), self.base);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,
+                                                relative_conditional_expr auto c,
                                                 auto v,
                                                 map_iterator self)
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
-      eve::store(detail::bind_store_op<I>(self.store_op)(v), self.base);
-    }
-
-    template<relative_conditional_expr C, decorator Decorator>
-    EVE_FORCEINLINE friend auto
-    tagged_dispatch(eve::tag::compress_store_,
-                    C                c,
-                    Decorator        d,
-                    auto             v,
-                    auto             m,
-                    map_iterator     self)
-      requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
-    {
-      // No alternative support in compress_store
-      auto raw_res = d(eve::compress_store[c])(detail::bind_store_op<I>(self.store_op)(v), m, self.base);
-      return map_convert(raw_res, self.load_op, self.store_op);
+      auto bound_store = detail::bind_store_op<I>(self.store_op);
+      auto c1 = map_alternative( c, bound_store );
+      auto v1 = bound_store(v);
+      return kumi::make_tuple(c1, v1, self.base);
     }
   };
 }
