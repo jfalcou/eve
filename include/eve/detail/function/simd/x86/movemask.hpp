@@ -37,8 +37,8 @@ namespace eve::detail
       {
         if constexpr( std::is_same_v<T, float > )     return (std::uint32_t)_mm256_movemask_ps(v);
         else if constexpr( std::is_same_v<T, double>) return (std::uint32_t)_mm256_movemask_pd(v);
-        else  if constexpr(sizeof(T) == 8)            return (std::uint32_t)_mm256_movemask_pd(_mm256_castsi256_pd(p.storage()));
-        else  if constexpr(sizeof(T) == 4)            return (std::uint32_t)_mm256_movemask_ps(_mm256_castsi256_ps(p.storage()));        else if constexpr( current_api == avx2 )       return (std::uint32_t)_mm256_movemask_epi8(v);
+        else  if constexpr(sizeof(T) == 8)            return (std::uint32_t)_mm256_movemask_pd(_mm256_castsi256_pd(v.storage()));
+        else  if constexpr(sizeof(T) == 4)            return (std::uint32_t)_mm256_movemask_ps(_mm256_castsi256_ps(v.storage()));        else if constexpr( current_api == avx2 )       return (std::uint32_t)_mm256_movemask_epi8(v);
         else if constexpr( current_api == avx )
         {
           auto [l, h] = v.slice();
