@@ -19,7 +19,6 @@ namespace eve
   //! @brief Callable object computing the (true) \f$\Gamma\f$ function:
   //!        \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

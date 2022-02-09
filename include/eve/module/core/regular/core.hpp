@@ -68,6 +68,7 @@
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/unsafe.hpp>
 
 
 #include <eve/module/core/regular/abs.hpp>

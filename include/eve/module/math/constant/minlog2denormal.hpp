@@ -20,7 +20,7 @@ namespace eve
   //! @brief Callable object computing the least value for which eve::exp2
   //! returns a non zero result
   //!
-  //! **Required header:** `#include <eve/function/minlog2denormal.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

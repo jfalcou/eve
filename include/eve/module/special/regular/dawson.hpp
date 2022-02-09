@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the dawson function. \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

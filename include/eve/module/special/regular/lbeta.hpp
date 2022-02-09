@@ -17,7 +17,6 @@ namespace eve
   //!
   //! @brief Callable object computing the logarithm of the beta function.
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!
@@ -65,9 +64,8 @@ namespace eve
   //!
   //!  *  eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
-  //!:   **Required header:** `#include <eve/function/diff/lbeta.hpp>`
   //!
-  //!:   The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
+  //!    The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
   //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
   //!
   //! #### Example

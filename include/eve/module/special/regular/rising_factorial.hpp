@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing rising_factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(a)}\f$.
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

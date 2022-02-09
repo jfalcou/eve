@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the \f$\pi/4\f$ value.
   //!
-  //! **Required header:** `#include <eve/function/pio_4.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

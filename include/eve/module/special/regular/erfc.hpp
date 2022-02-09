@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the complementary error function \f$1-\mbox{erf}(x)\f$.
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

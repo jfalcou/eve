@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the lambert function inverse of \f$ x-> xe^x \f$
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

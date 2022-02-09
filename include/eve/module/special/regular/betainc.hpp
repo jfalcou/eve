@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the beta incomplete function. \f$\mbox{B}(s,x,y)=\frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

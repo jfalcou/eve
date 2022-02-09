@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the gegenbauer operation.
   //!
-  //! **Required header:** `#include <eve/function/gegenbauer.hpp>`
+  //! **Required header:** #include <eve/module/polynomial.hpp>
   //!
   //! #### Members Functions
   //!
@@ -74,7 +74,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/diff/gegenbauer.hpp>`
   //!
   //!     The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function relative to `x`.
   //!

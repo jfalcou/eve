@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing logarithmic derivative of the \f$\Gamma\f$ function.
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

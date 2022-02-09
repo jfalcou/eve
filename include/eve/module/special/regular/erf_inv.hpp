@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the inverse of the \f$\mbox{erf}\f$ function.
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

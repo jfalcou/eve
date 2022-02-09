@@ -20,7 +20,7 @@ namespace eve
   //! \f$\displaystyle \mbox{L}_{n} = \frac{e^x}{n!}\frac{d^n}{dx^n}(x^ne^{-x})\f$
   //! or the associated laguerre operation \f$\displaystyle \mbox{L}_{n}^{m} = (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\f$
   //!
-  //! **Required header:** `#include <eve/function/laguerre.hpp>`
+  //! **Required header:** #include <eve/module/polynomial.hpp>
   //!
   //! #### Members Functions
   //!
@@ -71,7 +71,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/diff/laguerre.hpp>`
   //!
   //!     The expression `diff(laguerre)(...,x)` computes the derivative of the function relative to `x`.
   //!

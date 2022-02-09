@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing 1/log10(2).
   //!
-  //! **Required header:** `#include <eve/function/invlog10_2.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the Wright \f$\omega\f$ function inverse of \f$ x-> \log x+x\f$
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

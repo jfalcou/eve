@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the halfed square root of 2 value.
   //!
-  //! **Required header:** `#include <eve/function/sqrt_2o_2.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

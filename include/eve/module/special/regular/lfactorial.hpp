@@ -19,7 +19,6 @@ namespace eve
   //! @brief Callable object computing natural logarithm of the factorial of  unsigned integers
   //! \f$\displaystyle \log n! = \sum_{i=1}^n \log i\f$.
   //!
-  //! **Required header:** #include <eve/module/special.hpp>
   //!
   //! #### Members Functions
   //!

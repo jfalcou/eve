@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the hermite operation.
   //!
-  //! **Required header:** `#include <eve/function/hermite.hpp>`
+  //! **Required header:** #include <eve/module/polynomial.hpp>
   //!
   //! #### Members Functions
   //!
@@ -50,7 +50,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/diff/hermite.hpp>`
   //!
   //!     The expression `diff(hermite)(n,x)` computes the derivative of the function relative to `x`.
   //!

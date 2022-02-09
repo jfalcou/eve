@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the the half of the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/halfeps.hpp>`
+  //! **Required header:** #include <eve/module/math.hpp>
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
