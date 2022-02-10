@@ -16,7 +16,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup predicates
+  //! @addtogroup core
   //! @{
   //! @var is_infinite
   //!

@@ -10,7 +10,8 @@
 //==================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup elliptic elliptic functions
+//! @defgroup elliptic elliptic function
+//! @brief elliptic functions
 //!
 //! This module provides implementation for
 //! scalar and SIMD versions of elliptic functions.

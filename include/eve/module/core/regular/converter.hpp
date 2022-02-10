@@ -97,19 +97,7 @@ namespace eve
   template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 
   //================================================================================================
-  //! @addtogroup conversion
-  //! @{
-  //! @defgroup converter Conversion decorators
-  //!
-  //! These functions imbues other functions with conversion semantic
-  //!
-  //! **Required header:** @code{.cpp} #include <eve/module/core.hpp> @endcode
-  //!
-  //!@}
-  //================================================================================================
-
-  //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var float32
   //!
@@ -133,7 +121,7 @@ namespace eve
   inline constexpr converter_type<float>              const float32  = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var float64
   //!
@@ -157,7 +145,7 @@ namespace eve
   inline constexpr converter_type<double>             const float64  = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var uint8
   //!
@@ -181,7 +169,7 @@ namespace eve
   inline constexpr converter_type<std::uint8_t >      const uint8    = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var uint16
   //!
@@ -205,7 +193,7 @@ namespace eve
   inline constexpr converter_type<std::uint16_t>      const uint16   = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var uint32
   //!
@@ -229,7 +217,7 @@ namespace eve
   inline constexpr converter_type<std::uint32_t>      const uint32   = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var uint64
   //!
@@ -253,7 +241,7 @@ namespace eve
   inline constexpr converter_type<std::uint64_t>      const uint64   = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var int8
   //!
@@ -277,7 +265,7 @@ namespace eve
   inline constexpr converter_type<std::int8_t >       const int8     = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var int16
   //!
@@ -301,7 +289,7 @@ namespace eve
   inline constexpr converter_type<std::int16_t>       const int16    = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var int32
   //!
@@ -325,7 +313,7 @@ namespace eve
   inline constexpr converter_type<std::int32_t>       const int32    = {};
 
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var int64
   //!
@@ -353,7 +341,7 @@ namespace eve
 
   using int_converter       = decorated<convert_by_<as_integer>()>;
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var int_
   //!
@@ -380,7 +368,7 @@ namespace eve
 
   using uint_converter      = decorated<convert_by_<as_uinteger>()>;
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var uint_
   //!
@@ -407,7 +395,7 @@ namespace eve
 
   using floating_converter  = decorated<convert_by_<as_floating_point>()>;
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var floating_
   //!
@@ -434,7 +422,7 @@ namespace eve
 
   using upgrade_converter   = decorated<convert_by_<detail::upgrade,false>()>;
   //================================================================================================
-  //! @addtogroup converter
+  //! @addtogroup core
   //! @{
   //! @var upgrade_
   //!

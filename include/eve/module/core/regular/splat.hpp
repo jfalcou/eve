@@ -21,7 +21,7 @@ namespace eve
   using splat_type = decorated<splat_()>;
 
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var splat
   //!

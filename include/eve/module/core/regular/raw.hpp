@@ -21,7 +21,7 @@ namespace eve
 
   using raw_type = decorated<raw_()>;
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var raw
   //!

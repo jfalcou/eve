@@ -11,7 +11,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup rounding
+  //! @addtogroup math
   //! @{
   //! @var significants
   //!
