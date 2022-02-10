@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/sqrt.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/constant/constant.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
@@ -72,6 +72,21 @@ namespace eve
       {
         return T(1);
       }
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto sqrteps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      using t_t =  element_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        if constexpr(std::is_same_v<D, upward_type>)
+          return sqrteps(as<T>());
+        else
+          return Constant<T, 0x39B504F2U >();
+      }
+      else return sqrteps(as<T>());
     }
   }
 }

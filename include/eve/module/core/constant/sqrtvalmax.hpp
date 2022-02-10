@@ -87,5 +87,37 @@ namespace eve
       else if constexpr(std::is_same_v<t_t, std::int64_t>)  {
         return T(3037000499LL); }
     }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto sqrtvalmax_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type>{}))
+    {
+      if constexpr(std::is_same_v<D, upward_type> )
+      {
+        using t_t = element_type_t<T>;
+        if constexpr(std::is_same_v<t_t, float>)              {
+          return Constant<T, 0x5f7FFFFFU>(); }
+        else if constexpr(std::is_same_v<t_t, double>)        {
+          return Constant<T, 0X5FF0000000000000ULL>(); }
+        else if constexpr(std::is_same_v<t_t, std::uint8_t>)  {
+          return T(16); }
+        else if constexpr(std::is_same_v<t_t, std::uint16_t>) {
+          return T(256); }
+        else if constexpr(std::is_same_v<t_t, std::uint32_t>) {
+          return T(65536); }
+        else if constexpr(std::is_same_v<t_t, std::uint64_t>) {
+          return T(4294967297ULL); }
+        else if constexpr(std::is_same_v<t_t, std::int8_t>)   {
+          return T(12); }
+        else if constexpr(std::is_same_v<t_t, std::int16_t>)  {
+          return T(182); }
+        else if constexpr(std::is_same_v<t_t, std::int32_t>)  {
+          return T(46341); }
+        else if constexpr(std::is_same_v<t_t, std::int64_t>)  {
+          return T(3037000500LL); }
+      }
+      else
+        return eps(as<T>());
+    }
   }
 }
