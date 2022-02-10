@@ -81,7 +81,12 @@ namespace eve
     //! @brief Deallocates aligned storage
     void deallocate(value_type *p, std::size_t) noexcept
     {
+      #if defined(SPY_COMPILER_IS_MSVC)
+      _aligned_free((void *)p)
+      #else
       std::free((void *)p);
+      #endif
+
     }
   };
   //================================================================================================
