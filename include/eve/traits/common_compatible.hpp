@@ -8,8 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/traits.hpp>
+#include <eve/traits/as_floating_point.hpp>
 
 namespace eve::detail
 {
@@ -17,50 +16,44 @@ namespace eve::detail
   {
     using type = T;
     static constexpr bool is_valid = (V==1) || (V==0 && S==1);
-
-    template<value A, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<A,S2,V2>);
-
-    template<simd_value A, simd_value B, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2),std::max(V1,V2)+1> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
-
-    template<scalar_value A, scalar_value B, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2)+1,std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
-
-    template<simd_value A, scalar_value B, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
-
-    template<scalar_value A, simd_value B, int S1, int V1, int S2, int V2>
-    friend cmn<B,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
   };
 
-  //  Use a layer of enable_if_t to make common_compatible SFINAE-friendly
-  //  All the intermediary types are here so that :
-  //  - SFINAE friendly behavior works on all compilers
-  //  - MSVC doesn't get lost with too many ...
+    template<typename A, typename B, int S1, int V1, int S2, int V2>
+    constexpr auto operator%(cmn<A,S1,V1>, cmn<B,S2,V2>)
+    {
+      constexpr bool sa = scalar_value<A> , sb  = scalar_value<B>;
+      constexpr bool va = simd_value<A>   , vb  = simd_value<B>;
+      constexpr int mxs = std::max(S1,S2) , mxv = std::max(V1,V2);
+
+            if constexpr(std::same_as<A,B>) return cmn<A,mxs  ,mxv  >{};
+      else  if constexpr(va && vb)          return cmn<A,mxs  ,mxv+1>{};
+      else  if constexpr(sa && sb)          return cmn<A,mxs+1,mxv  >{};
+      else  if constexpr(va && sb)          return cmn<A,mxs  ,mxv  >{};
+      else  if constexpr(sa && vb)          return cmn<B,mxs  ,mxv  >{};
+      else  if constexpr(value<A>)          return cmn<A,S1,V1>{};
+      else                                  return cmn<B,S2,V2>{};
+    }
+
+  // Use a layer of std::void_t to make common_compatible SFINAE-friendly
   template<typename L, typename Enable = void>
   struct  common_compatible_impl
   {};
 
   template<typename T>
-  using cmn_t = detail::cmn<T, scalar_value<T> , simd_value<T>>;
+  using cmn_t = detail::cmn<T, scalar_value<T>, simd_value<T>>;
 
   template<typename... Ts>
-  using cmns_t = decltype( (cmn_t<Ts>{} % ... ) );
-
-  template<typename L> struct  validate;
+  auto compact(){ return (cmn_t<Ts>{} % ... ); }
 
   template<typename... Ts>
-  struct  validate<eve::detail::types<Ts...>>
+  struct  common_compatible_impl
+          < types<Ts...>
+          , std::enable_if_t<decltype( compact<Ts...>() )::is_valid>
+          >
   {
-    static constexpr bool value = cmns_t<Ts...>::is_valid;
-    using type = decltype( (cmn_t<Ts>{} % ... ) );
+    using base = decltype(compact<Ts...>());
+    using type = typename base::type;
   };
-
-  template<typename L>
-  struct  common_compatible_impl<L, std::enable_if_t<validate<L>::value>>
-        : validate<L>::type
-  {};
 }
 
 namespace eve
@@ -117,7 +110,7 @@ namespace eve
   };
 
   template<typename T0, typename... Ts>
-  struct common_compatible<T0,Ts...> : detail::common_compatible_impl<eve::detail::types<T0,Ts...>>
+  struct common_compatible<T0,Ts...> : detail::common_compatible_impl<detail::types<T0,Ts...>>
   {};
 
   template<typename... Ts>
