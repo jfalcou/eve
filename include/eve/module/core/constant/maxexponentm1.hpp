@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+ #include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
@@ -66,5 +67,12 @@ namespace eve
       if constexpr(std::is_same_v<t_t, float>) return i_t(126);
       else if constexpr(std::is_same_v<t_t, double >) return i_t(1022);
     }
+ 
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto maxexponentm1_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    return maxexponentm1(as<T>());
+  }
   }
 }

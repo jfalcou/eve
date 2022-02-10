@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>

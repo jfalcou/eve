@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+ #include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
@@ -72,5 +73,12 @@ namespace eve
         return i_t(52);
       }
     }
+ 
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto nbmantissabits_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    return nbmantissabits(as<T>());
+  }
   }
 }

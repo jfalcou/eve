@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/floor.hpp>
