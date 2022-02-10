@@ -31,7 +31,7 @@ namespace eve
   //!
   //!  if numeric(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/numeric/fname.hpp>
+  //!  #include <eve/module/core.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!

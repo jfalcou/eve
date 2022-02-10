@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/convert.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/slide_left.hpp>
+#include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/slide_left.hpp>
 
 #include <eve/arch/top_bits.hpp>
 

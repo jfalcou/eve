@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the natural logarithm of the absolute value of the input.
   //!
-  //! **Required header:** `#include <eve/function/log_abs.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/log.hpp>`
   //!
   //!     The expression `diff(log_abs)(x)` computes the derivative of the function at `x`.
   //!

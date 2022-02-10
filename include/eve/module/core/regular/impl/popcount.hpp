@@ -14,7 +14,7 @@
 #include <eve/traits.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
-#include <eve/function/bit_cast.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <bit>
 
 #if defined(SPY_COMPILER_IS_MSVC)

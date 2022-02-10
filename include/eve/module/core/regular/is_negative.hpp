@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_negative logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_negative.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -73,7 +73,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_negative.cpp}
+  //! @godbolt{doc/core/is_negative.cpp}
   //!
   //!  @}
   //================================================================================================

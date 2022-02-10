@@ -13,9 +13,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 #if defined(SPY_COMPILER_IS_MSVC)
 #  include <intrin.h>

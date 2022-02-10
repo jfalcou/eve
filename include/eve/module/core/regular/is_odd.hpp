@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_odd logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_odd.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_odd.cpp}
+  //! @godbolt{doc/core/is_odd.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing cosd.
   //!
-  //! **Required header:** `#include <eve/function/cosd.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -56,7 +56,6 @@ namespace eve
   //!  
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cosd.hpp>`
   //!  
   //!     The expression `diff(cosd)(x)` computes the derivative of the function at `x`.
   //!

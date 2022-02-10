@@ -36,7 +36,7 @@ namespace eve
   //!
   //!  if diff is to be applied to eve::fname then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/diff/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!
   //!  if diff is to be applied to eve::fname then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/diff/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
@@ -102,7 +102,7 @@ namespace eve
   //!
   //!  if diff is to be applied to eve::fname then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/diff/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
@@ -135,7 +135,7 @@ namespace eve
   //!
   //!  if diff is to be applied to eve::fname then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/diff/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
@@ -168,7 +168,7 @@ namespace eve
   //!
   //!  if diff_nth is to be applied to eve::fname then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/diff/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!

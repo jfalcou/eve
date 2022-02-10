@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logical AND operation.
   //!
-  //! **Required header:** `#include <eve/function/logical_and.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +54,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_and.cpp}
+  //! @godbolt{doc/core/logical_and.cpp}
   //!
   //!  @}
   //================================================================================================

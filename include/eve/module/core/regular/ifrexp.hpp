@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the ifrexp pair of values.
   //!
-  //! **Required header:** `#include <eve/function/ifrexp.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -70,14 +70,13 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/ifrexp.hpp>`
   //!
   //!     The call `pedantic(ifrexp)(x)` takes also properly care of the cases where \f$x = \pm0, \pm\infty\f$ or is a Nan,
   //!      where \f$m=x\f$ and \f$e=0\f$ and of the denormal cases.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/ifrexp.cpp}
+  //! @godbolt{doc/core/ifrexp.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the Wright \f$\omega\f$ function inverse of \f$ x-> \log x+x\f$
   //!
-  //! **Required header:** `#include <eve/function/omega.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -46,7 +45,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/omega.hpp>`
   //!
   //!     The expression `diff(omega)(x)` computes the derivative  of the function at `x`.
   //!

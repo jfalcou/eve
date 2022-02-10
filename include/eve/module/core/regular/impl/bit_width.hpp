@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/countl_zero.hpp>
+#include <eve/module/core/regular/countl_zero.hpp>
 
 #include <bit>
 

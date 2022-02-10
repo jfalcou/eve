@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object clamping a value between two others.
   //!
-  //! **Required header:** `#include <eve/function/clamp.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -78,14 +78,13 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/clamp.hpp>`
   //!
   //!     The expression `diff_1st(clamp)(x,y,z)`, `diff_2nd(clam)(x,y,z)` and `diff_3rd(clam)(x,y,z)` computes the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)\f$.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/clamp.cpp}
+  //! @godbolt{doc/core/clamp.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -10,8 +10,8 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/conditional.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/arch/top_bits.hpp>
 
 namespace eve::detail

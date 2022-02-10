@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the minabs operation.
   //!
-  //! **Required header:** `#include <eve/function/minabs.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -82,19 +82,16 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/minabs.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/minabs.hpp>`
   //!
   //!      The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/minabs.hpp>`
   //!
   //!     The expression `diff< N >(minabs)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
@@ -102,7 +99,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/minabs.cpp}
+  //! @godbolt{doc/core/minabs.cpp}
   //!
   //!  @}
   //================================================================================================

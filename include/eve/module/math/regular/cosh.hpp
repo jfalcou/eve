@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing cosh: \f$\frac{e^x+e^{-x}}2\f$.
   //!
-  //! **Required header:** `#include <eve/function/cosh.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,7 +69,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cosh.hpp>`
   //!
   //!     The expression `diff(cosh)(x)` computes the derivative of the function at `x`.
   //!

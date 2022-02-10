@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the bitwise ANDNOT operation.
   //!
-  //! **Required header:** `#include <eve/function/bit_andnot.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

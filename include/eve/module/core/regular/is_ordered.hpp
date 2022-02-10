@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_ordered logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_ordered.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_ordered.cpp}
+  //! @godbolt{doc/core/is_ordered.cpp}
   //!
   //!  @}
   //================================================================================================

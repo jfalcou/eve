@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_not_infinite logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_not_infinite.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_not_infinite.cpp}
+  //! @godbolt{doc/core/is_not_infinite.cpp}
   //!
   //!  @}
   //================================================================================================

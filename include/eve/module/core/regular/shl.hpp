@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the arithmetic left shift operation.
   //!
-  //! **Required header:** `#include <eve/function/shl.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -83,7 +83,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/shl.cpp}
+  //! @godbolt{doc/core/shl.cpp}
   //!
   //!  @}
   //================================================================================================

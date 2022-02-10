@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the cyl_bessel_jn function,  \f$ J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
   //!
-  //! **Required header:** `#include <eve/function/cyl_bessel_jn.hpp>`
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -50,7 +50,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_jn.hpp>`
   //!
   //!     The expression `eve::diff(eve::cyl_bessel_jn)(n, x)` computes the derivative of the function at `x`.
   //!

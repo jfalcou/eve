@@ -13,7 +13,7 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/operators.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve::detail
 {

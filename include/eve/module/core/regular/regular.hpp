@@ -37,7 +37,7 @@ namespace eve
   //! #### Synopsis
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/regular.hpp>
+  //!  #include <eve/module/core.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! #### Members Functions

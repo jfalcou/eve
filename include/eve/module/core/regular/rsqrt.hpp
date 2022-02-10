@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the inverse of the square root.
   //!
-  //! **Required header:** `#include <eve/function/rsqrt.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -70,13 +70,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/rsqrt.hpp>`
   //!
   //!     The expression `diff(rsqrt)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/rsqrt.cpp}
+  //! @godbolt{doc/core/rsqrt.cpp}
   //!
   //!  @}
   //================================================================================================

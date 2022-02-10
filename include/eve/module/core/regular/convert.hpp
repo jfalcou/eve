@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object converting a value to another type.
   //!
-  //! **Required header:** `#include <eve/function/convert.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -74,7 +74,6 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/convert.hpp>`
   //!
   //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
   //!

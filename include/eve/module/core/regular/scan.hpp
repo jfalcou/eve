@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing a generalized scan operation.
   //!
-  //! **Required header:** `#include <eve/function/scan.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Member Functions
   //!

@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the manhattan operation.
   //!
-  //! **Required header:** `#include <eve/function/manhattan.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -66,14 +66,12 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/manhattan.hpp>`
   //!
   //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
   //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/manhattan.hpp>`
   //!
   //!     The expression `diff_< N >(manhattan)(x,args...)` computes the partial
   //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
@@ -84,7 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/manhattan.cpp}
+  //! @godbolt{doc/core/manhattan.cpp}
   //!
   //!  @}
   //================================================================================================

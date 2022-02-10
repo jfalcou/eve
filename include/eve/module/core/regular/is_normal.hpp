@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_normal logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_normal.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -78,7 +78,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_normal.cpp}
+  //! @godbolt{doc/core/is_normal.cpp}
   //!
   //!  @}
   //================================================================================================

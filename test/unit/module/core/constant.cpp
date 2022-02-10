@@ -6,13 +6,11 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
+#include <eve/module/core.hpp>
 //==================================================================================================
 #include "test.hpp"
 
-// #include <eve/wide.hpp>
 
-// #include <eve/module/core/constant/constant.hpp>
-// #include <eve/module/core/constant/nan.hpp>
 
 using eve::fixed;
 

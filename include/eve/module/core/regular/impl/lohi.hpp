@@ -12,7 +12,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 #include <bit>
 
 namespace eve::detail

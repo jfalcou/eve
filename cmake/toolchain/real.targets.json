@@ -1,6 +1,5 @@
 {
-   "unit.arithmetic.exe": "^unit.arithmetic.*.exe"
-,  "unit.bessel.exe": "^unit.bessel.*.exe"
+   "unit.bessel.exe": "^unit.bessel.*.exe"
 ,  "unit.combinatorial.exe": "^unit.combinatorial.*.exe"
 ,  "unit.elliptic.exe": "^unit.elliptic.*.exe"
 ,  "unit.math.exe": "^unit.math.*.exe"

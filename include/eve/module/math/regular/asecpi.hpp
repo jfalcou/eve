@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing asecpi.
   //!
-  //! **Required header:** `#include <eve/function/asecpi.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +54,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/asecpi.hpp>`
   //!  
   //!     The expression `diff(asecpi)(x)` computes the derivative of the function at `x`.
   //!

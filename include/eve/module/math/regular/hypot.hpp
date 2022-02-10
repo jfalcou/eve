@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the hypot operation.
   //!
-  //! **Required header:** `#include <eve/function/hypot.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -65,7 +65,6 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/hypot.hpp>`
   //!
   //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the squares of the parameters
   //!      without undue overflow or underflow at intermediate stages of the computation
@@ -75,7 +74,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/hypot.hpp>`
   //!
   //!     The expression `diff_< N >(hypot)(x,args...)` computes the partial
   //!      derivativ of the function relative to its Nth parameter. The returned value is 0 if N is

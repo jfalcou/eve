@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing acospi.
   //!
-  //! **Required header:** `#include <eve/function/acospi.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -53,7 +53,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/acospi.hpp>`
   //!  
   //!     The expression `diff(acospi)(x)` computes the derivative of the function at `x`.
   //!

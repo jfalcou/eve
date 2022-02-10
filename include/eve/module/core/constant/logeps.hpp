@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logaritm of the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/logeps.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -47,7 +47,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logeps.cpp}
+  //! @godbolt{doc/core/logeps.cpp}
   //!
   //! @}
   //================================================================================================

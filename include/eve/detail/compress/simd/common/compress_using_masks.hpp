@@ -12,10 +12,10 @@
 #include <eve/detail/compress/compress_mask_num.hpp>
 #include <eve/detail/function/byte_16_runtime_shuffle.hpp>
 
-#include <eve/function/count_true.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/slide_left.hpp>
-#include <eve/function/zip.hpp>
+#include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/slide_left.hpp>
+#include <eve/module/core/regular/zip.hpp>
 
 #include <bit>
 

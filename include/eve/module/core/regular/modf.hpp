@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the modf operation.
   //!
-  //! **Required header:** `#include <eve/function/modf.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -52,13 +52,12 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/modf.hpp>`
   //!
   //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/modf.cpp}
+  //! @godbolt{doc/core/modf.cpp}
   //!
   //!  @}
   //================================================================================================

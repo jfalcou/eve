@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object performing the computation the nth prime integer.
   //!
-  //! **Required header:** `#include <eve/function/nth_prime.hpp>`
+  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
   //!
   //! #### Members Functions
   //!

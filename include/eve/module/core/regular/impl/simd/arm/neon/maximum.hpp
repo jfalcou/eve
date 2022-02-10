@@ -10,8 +10,8 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/reduce.hpp>
-#include <eve/function/max.hpp>
+#include <eve/module/core/regular/reduce.hpp>
+#include <eve/module/core/regular/max.hpp>
 
 namespace eve::detail
 {

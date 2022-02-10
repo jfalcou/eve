@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greter than zero predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_gtz.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_gtz.cpp}
+  //! @godbolt{doc/core/is_gtz.cpp}
   //!
   //!  @}
   //================================================================================================

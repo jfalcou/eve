@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the negabsmin operation.
   //!
-  //! **Required header:** `#include <eve/function/negabsmin.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -83,19 +83,16 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/negabsmin.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x|` or `|y|` is a nan, `pedantic(max)` is used.
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/negabsmin.hpp>`
   //!
   //!      The behaviour is the same except that if   `|x|` or `|y|` is a nan, `numeric(max)` is used.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/negabsmin.hpp>`
   //!
   //!     The expression `diff< N >(negabsmin)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
@@ -103,7 +100,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/negabsmin.cpp}
+  //! @godbolt{doc/core/negabsmin.cpp}
   //!
   //!  @}
   //================================================================================================

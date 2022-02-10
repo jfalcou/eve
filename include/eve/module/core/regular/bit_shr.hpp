@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/shr.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
@@ -22,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logical right shift operation.
   //!
-  //! **Required header:** `#include <eve/function/bit_shr.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

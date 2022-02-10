@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the rempio2 value.
   //!
-  //! **Required header:** `#include <eve/function/rempio2.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

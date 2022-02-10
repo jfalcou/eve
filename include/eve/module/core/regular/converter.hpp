@@ -103,7 +103,7 @@ namespace eve
   //!
   //! These functions imbues other functions with conversion semantic
   //!
-  //! **Convenience header:** @code{.cpp} #include <eve/function/converter.hpp> @endcode
+  //! **Required header:** @code{.cpp} #include <eve/module/core.hpp> @endcode
   //!
   //!@}
   //================================================================================================

@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the plus unary operation.
   //!
-  //! **Required header:** `#include <eve/function/plus.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/plus.cpp}
+  //! @godbolt{doc/core/plus.cpp}
   //!
   //!  @}
   //================================================================================================

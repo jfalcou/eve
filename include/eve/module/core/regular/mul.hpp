@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the mul operation.
   //!
-  //! **Required header:** `#include <eve/function/mul.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -75,7 +75,6 @@ namespace eve
   //!
   //!  * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/mul.hpp>`
   //!
   //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `args...`. The saturation is obtained in the
   //!     [common compatible type](@ref common_compatible) of the N parameters. The computation is done as if all arguments were
@@ -83,7 +82,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/mul.hpp>`
   //!
   //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
   //!      diff of the function relative to the Nth parameter.
@@ -97,7 +95,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/mul.cpp}
+  //! @godbolt{doc/core/mul.cpp}
   //!
   //!  @}
   //================================================================================================

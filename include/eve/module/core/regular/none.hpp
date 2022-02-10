@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the none value.
   //!
-  //! **Required header:** `#include <eve/function/none.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

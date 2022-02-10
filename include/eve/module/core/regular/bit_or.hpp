@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the bitwise OR operation.
   //!
-  //! **Required header:** `#include <eve/function/bit_or.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

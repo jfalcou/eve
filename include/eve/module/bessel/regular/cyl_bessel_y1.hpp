@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing \f$ Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
   //!
-  //! **Required header:** `#include <eve/function/cyl_bessel_y1.hpp>`
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -50,7 +50,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cyl_bessel_y1.hpp>`
   //!
   //!     The expression `eve::diff(eve::cyl_bessel_y1)(x)` computes the derivative of the function at `x`.
   //!

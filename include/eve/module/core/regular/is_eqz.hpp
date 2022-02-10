@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the equality to zero predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_eqz.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -70,7 +70,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_eqz.cpp}
+  //! @godbolt{doc/core/is_eqz.cpp}
   //!
   //!  @}
   //================================================================================================

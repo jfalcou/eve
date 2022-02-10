@@ -20,7 +20,7 @@ namespace eve
   //! @brief Callable object computing the greatest positive value for which eve::exp
   //! returns a finite result
   //!
-  //! **Required header:** `#include <eve/function/maxlog.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/lbeta.hpp>
+#include <eve/module/core/lbeta.hpp>
 #include <eve/module/special/diff/impl/lbeta.hpp>

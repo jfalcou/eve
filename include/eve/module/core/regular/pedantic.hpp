@@ -35,7 +35,7 @@ namespace eve
   //!
   //!  if pedantic(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/pedantic/fname.hpp>
+  //!  #include <eve/module/corenu.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!

@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "not less or equal to" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_not_less_equal.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -68,7 +68,6 @@ namespace eve
   //!
   //!  * `definitely`
   //!
-  //!     **Required header:** `#include <eve/function/fuzzy/is_not_less_equal.hpp>`
   //!
   //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
@@ -80,7 +79,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_not_less_equal.cpp}
+  //! @godbolt{doc/core/is_not_less_equal.cpp}
   //!
   //!  @}
   //================================================================================================

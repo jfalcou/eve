@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_pow2 predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_pow2.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_pow2.cpp}
+  //! @godbolt{doc/core/is_pow2.cpp}
   //!
   //!  @}
   //================================================================================================

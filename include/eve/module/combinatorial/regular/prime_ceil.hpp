@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the least prime greater or equal to the input.
   //!
-  //! **Required header:** `#include <eve/function/prime_ceil.hpp>`
+  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
   //!
   //! #### Members Functions
   //!

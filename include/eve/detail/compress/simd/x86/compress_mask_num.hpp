@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/convert.hpp>
+#include <eve/module/core/regular/convert.hpp>
 
 namespace eve::detail
 {

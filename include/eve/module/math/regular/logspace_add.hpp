@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n e^{x_i}\right)\f$
   //!
-  //! **Required header:** `#include <eve/function/logspace_add.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -68,7 +68,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/logspace_add.hpp>`
   //!
   //!     The expression `diff_nth< N >(logspace_add)(arg0,arg1,args...)` computes the partial
   //!     diff of the function relative to its Nth parameter. The returned value is 0 if N is

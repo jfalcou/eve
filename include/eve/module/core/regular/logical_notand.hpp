@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the elementwise NOTAND operation.
   //!
-  //! **Required header:** `#include <eve/function/logical_notand.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_notand.cpp}
+  //! @godbolt{doc/core/logical_notand.cpp}
   //!
   //!  @}
   //================================================================================================

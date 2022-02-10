@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_imag logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_imag.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -74,7 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_imag.cpp}
+  //! @godbolt{doc/core/is_imag.cpp}
   //!
   //!  @}
   //================================================================================================

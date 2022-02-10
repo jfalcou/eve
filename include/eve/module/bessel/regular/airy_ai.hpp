@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the airy_ai function.
   //!
-  //! **Required header:** `#include <eve/function/airy_ai.hpp>`
+  //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -50,7 +50,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/airy_ai.hpp>`
   //!
   //!     The expression `eve::diff(eve::airy_ai)(x)` computes the derivative of the function at `x`.
   //!

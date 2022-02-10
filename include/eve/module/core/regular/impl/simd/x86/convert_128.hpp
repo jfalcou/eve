@@ -11,8 +11,6 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/is_less.hpp>
-
 #include <type_traits>
 
 namespace eve::detail

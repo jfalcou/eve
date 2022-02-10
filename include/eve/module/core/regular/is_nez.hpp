@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "not equal to zero" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_nez.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -74,7 +74,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_nez.cpp}
+  //! @godbolt{doc/core/is_nez.cpp}
   //!
   //!  @}
   //================================================================================================

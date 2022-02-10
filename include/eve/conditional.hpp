@@ -13,7 +13,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
 #include <eve/detail/bits.hpp>
-#include <eve/function/bit_cast.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <type_traits>
 #include <ostream>

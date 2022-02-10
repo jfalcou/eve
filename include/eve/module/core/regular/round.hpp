@@ -7,12 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/trunc.hpp>
-#include <eve/module/core/regular/nearest.hpp>
-#include <eve/module/core/regular/floor.hpp>
-#include <eve/module/core/regular/ceil.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -24,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the round operation.
   //!
-  //! **Required header:** `#include <eve/function/round.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -89,13 +83,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/round.hpp>`
   //!
   //!     The expression `diff(round)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/round.cpp}
+  //! @godbolt{doc/core/round.cpp}
   //!
   //!  @}
   //================================================================================================

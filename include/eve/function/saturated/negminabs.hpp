@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/negminabs.hpp>
 #include <eve/module/core/saturated/impl/negminabs.hpp>

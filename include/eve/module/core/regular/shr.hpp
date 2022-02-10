@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the arithmetic right shift operation.
   //!
-  //! **Required header:** `#include <eve/function/shr.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -82,7 +82,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/shr.cpp}
+  //! @godbolt{doc/core/shr.cpp}
   //!
   //!  @}
   //================================================================================================

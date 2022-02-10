@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing cotpi.
   //!
-  //! **Required header:** `#include <eve/function/cotpi.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -57,7 +57,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/cotpi.hpp>`
   //!
   //!     The expression `diff(cotpi)(x)` computes the derivative of the function at `x`.
   //!

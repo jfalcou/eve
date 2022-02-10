@@ -11,7 +11,7 @@
 #define ANKERL_NANOBENCH_IMPLEMENT
 #include "nanobench.h"
 
-#include <eve/function/load.hpp>
+#include <eve/module/core/regular/load.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <algorithm>
 #include <iostream>

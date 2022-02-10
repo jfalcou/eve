@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the machine epsilon.
   //!
-  //! **Required header:** `#include <eve/function/eps.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < real_value T > T operator()( as<T> const & t) const noexcept;
+  //!  template < real_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/eps.cpp}
+  //! @godbolt{doc/core/eps.cpp}
   //!
   //! @}
   //================================================================================================

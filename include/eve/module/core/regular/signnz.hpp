@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the signnz function.
   //!
-  //! **Required header:** `#include <eve/function/signnz.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -72,13 +72,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/signnz.hpp>`
   //!
   //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/signnz.cpp}
+  //! @godbolt{doc/core/signnz.cpp}
   //!
   //!  @}
   //================================================================================================

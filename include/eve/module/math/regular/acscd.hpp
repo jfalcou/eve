@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing acscd.
   //!
-  //! **Required header:** `#include <eve/function/acscd.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +54,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/acscd.hpp>`
   //!  
   //!     The expression `diff(acscd)(x)` computes the derivative of the function at `x`.
   //!

@@ -9,8 +9,8 @@
 
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/arch/top_bits.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/convert.hpp>
 
 namespace eve::detail
 {

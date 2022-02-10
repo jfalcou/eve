@@ -5,13 +5,10 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/first_true.hpp>
 
+#include <eve/module/core.hpp>
 #include "test.hpp"
-#include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/constant/false.hpp>
 
-#include <eve/conditional.hpp>
 
 EVE_TEST_TYPES("Check eve::first_true return type", eve::test::simd::all_types)
 <typename T>(eve::as<T>)

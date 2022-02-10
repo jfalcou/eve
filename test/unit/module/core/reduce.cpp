@@ -6,9 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/reduce.hpp>
-#include <eve/function/plus.hpp>
-#include <eve/function/add.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Types tests

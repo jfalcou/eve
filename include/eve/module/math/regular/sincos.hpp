@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the simultaneous  computation of sin an cos.
   //!
-  //! **Required header:** `#include <eve/function/sincos.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!

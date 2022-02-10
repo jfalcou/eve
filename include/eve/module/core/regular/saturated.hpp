@@ -31,7 +31,7 @@ namespace eve
   //!
   //!  if saturated(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/saturated/fname.hpp>
+  //!  #include <eve/module/core.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!

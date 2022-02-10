@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_even logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_even.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -79,7 +79,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_even.cpp}
+  //! @godbolt{doc/core/is_even.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the ceil operation.
   //!
-  //! **Required header:** `#include <eve/function/ceil.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //!  * eve::tolerant
   //!
-  //!     **Required header:** `#include <eve/function/tolerant/ceil.hpp>`
   //!
   //!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
   //!
@@ -74,13 +73,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/ceil.hpp>`
   //!
   //!     The expression `diff(ceil)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/ceil.cpp}
+  //! @godbolt{doc/core/ceil.cpp}
   //!
   //!  @}
   //================================================================================================

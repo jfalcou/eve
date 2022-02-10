@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing a generalized fold operation.
   //!
-  //! **Required header:** `#include <eve/function/reduce.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Member Functions
   //!
@@ -68,7 +68,6 @@ namespace eve
   //!
   //!   * eve::splat
   //!
-  //!     **Required header:** `#include <eve/function/reduce.hpp>`
   //!
   //!     The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
   //!     using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result

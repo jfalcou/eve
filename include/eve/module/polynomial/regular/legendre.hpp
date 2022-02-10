@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object evaluating the legendre functions.
   //!
-  //! **Required header:** `#include <eve/function/legendre.hpp>`
+  //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -63,7 +63,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/diff/legendre.hpp>`
   //!
   //!     The expression `diff(legendre)(...,x)` computes the derivative of the p_kind function relative to `x`.
   //!

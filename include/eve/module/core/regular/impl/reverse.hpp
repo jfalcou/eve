@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/function/bit_cast.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail

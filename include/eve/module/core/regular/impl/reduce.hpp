@@ -11,14 +11,14 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
 #include <eve/detail/function/sum.hpp>
-#include <eve/function/swap_adjacent_groups.hpp>
-#include <eve/function/logical_and.hpp>
-#include <eve/function/logical_or.hpp>
-#include <eve/function/minimum.hpp>
-#include <eve/function/maximum.hpp>
-#include <eve/function/splat.hpp>
-#include <eve/function/plus.hpp>
-#include <eve/function/add.hpp>
+#include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/module/core/regular/logical_or.hpp>
+#include <eve/module/core/regular/minimum.hpp>
+#include <eve/module/core/regular/maximum.hpp>
+#include <eve/module/core/regular/splat.hpp>
+#include <eve/module/core/regular/plus.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/all.hpp>
 

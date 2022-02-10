@@ -11,7 +11,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/function/slide_right.hpp>
+#include <eve/module/core/regular/slide_right.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve::detail

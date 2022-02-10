@@ -8,13 +8,13 @@
 #pragma once
 
 #include <eve/module/core/detail/basic_shuffle.hpp>
-#include <eve/function/broadcast_group.hpp>
-#include <eve/function/broadcast.hpp>
-#include <eve/function/deinterleave_groups_shuffle.hpp>
-#include <eve/function/reverse.hpp>
-#include <eve/function/slide_left.hpp>
-#include <eve/function/slide_right.hpp>
-#include <eve/function/swap_adjacent_groups.hpp>
+#include <eve/module/core/regular/broadcast_group.hpp>
+#include <eve/module/core/regular/broadcast.hpp>
+#include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
+#include <eve/module/core/regular/reverse.hpp>
+#include <eve/module/core/regular/slide_left.hpp>
+#include <eve/module/core/regular/slide_right.hpp>
+#include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/pattern.hpp>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/combine.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {

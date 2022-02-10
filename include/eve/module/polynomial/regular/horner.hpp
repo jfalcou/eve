@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the horner operation.
   //!
-  //! **Required header:** `#include <eve/function/horner.hpp>`
+  //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -86,14 +86,12 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/pedantic/horner.hpp>`
   //!
   //!     The expression `pedantic(horner)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/numeric/horner.hpp>`
   //!
   //!     The expression `numeric(horner)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.

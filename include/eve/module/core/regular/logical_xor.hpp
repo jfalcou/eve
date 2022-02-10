@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logical XOR operation.
   //!
-  //! **Required header:** `#include <eve/function/logical_xor.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -51,7 +51,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_xor.cpp}
+  //! @godbolt{doc/core/logical_xor.cpp}
   //!
   //!  @}
   //================================================================================================

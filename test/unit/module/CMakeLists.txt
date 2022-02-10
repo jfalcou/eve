@@ -5,8 +5,7 @@
 ##==================================================================================================
 add_subdirectory(core)
 
-## New Modules
-add_subdirectory(arithmetic)
+## Modules
 add_subdirectory(polynomial)
 add_subdirectory(proba)
 

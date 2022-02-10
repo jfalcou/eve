@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fractional scaled part.
   //!
-  //! **Required header:** `#include <eve/function/fracscale.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -76,7 +76,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/fracscale.cpp}
+  //! @godbolt{doc/core/fracscale.cpp}
   //!
   //!  @}
   //================================================================================================

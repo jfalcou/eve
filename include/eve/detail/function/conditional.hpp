@@ -11,8 +11,8 @@
 #include <eve/as.hpp>
 #include <eve/conditional.hpp>
 #include <eve/module/core/constant/false.hpp>
-#include <eve/function/convert.hpp>
-#include <eve/function/if_else.hpp>
+#include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve::detail
 {

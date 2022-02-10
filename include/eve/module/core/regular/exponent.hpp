@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the exponent value.
   //!
-  //! **Required header:** `#include <eve/function/exponent.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -70,7 +70,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/exponent.cpp}
+  //! @godbolt{doc/core/exponent.cpp}
   //!
   //!  @}
   //================================================================================================

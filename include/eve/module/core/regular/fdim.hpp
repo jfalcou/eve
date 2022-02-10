@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the positive difference.
   //!
-  //! **Required header:** `#include <eve/function/fdim.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -68,14 +68,13 @@ namespace eve
   //! #### Supported decorators
   //!
   //!  * eve::diff<br>
-  //!     **Required header:** `#include <eve/function/diff/fdim.hpp>`
   //!
   //!       The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
   //!       derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/fdim.cpp}
+  //! @godbolt{doc/core/fdim.cpp}
   //!
   //!  @}
   //================================================================================================

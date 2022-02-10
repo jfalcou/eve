@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the phase angle (in radians).
   //!
-  //! **Required header:** `#include <eve/function/arg.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,13 +69,11 @@ namespace eve
   //!  <span class="smallskip"></span>
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/arg.hpp>`
   //!
   //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/arg.hpp>`
   //!
   //!     The expression `diff(arg)(x)` computes the derivative of the function at `x`.
   //!

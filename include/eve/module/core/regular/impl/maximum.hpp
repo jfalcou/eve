@@ -13,10 +13,10 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/function/splat.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/any.hpp>
+#include <eve/module/core/regular/splat.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 
 namespace eve::detail

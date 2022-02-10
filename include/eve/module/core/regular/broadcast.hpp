@@ -20,7 +20,7 @@ namespace eve
   //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/broadcast.hpp>
+  //!  #include <eve/module/core.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! <br/>Callable object performing a broadcast shuffling.

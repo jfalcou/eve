@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the binarize_not operation.
   //!
-  //! **Required header:** `#include <eve/function/binarize_not.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -77,7 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/binarize_not.cpp}
+  //! @godbolt{doc/core/binarize_not.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -25,7 +25,7 @@ namespace eve
   //!
   //! @brief Callable object computing the arithmetic left/right shift operation according to shift sign.
   //!
-  //! **Required header:** `#include <eve/function/rshr.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -80,7 +80,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/rshr.cpp}
+  //! @godbolt{doc/core/rshr.cpp}
   //!
   //!  @}
   //================================================================================================

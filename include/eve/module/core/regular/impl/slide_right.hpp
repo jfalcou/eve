@@ -10,7 +10,7 @@
 #include <eve/concept/abi.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 
 namespace eve::detail
 {

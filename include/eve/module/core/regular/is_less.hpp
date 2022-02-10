@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "less than" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_less.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -76,7 +76,6 @@ namespace eve
   //!
   //!  * `definitely`
   //!
-  //!     **Required header:** `#include <eve/function/fuzzy/is_less.hpp>`
   //!
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if and only if `x` is definitely less than `y`.
@@ -88,7 +87,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_less.cpp}
+  //! @godbolt{doc/core/is_less.cpp}
   //!
   //!  @}
   //================================================================================================

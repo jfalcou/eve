@@ -17,7 +17,7 @@ namespace eve
   //!
   //! @brief Callable object computing the count_true value.
   //!
-  //! **Required header:** `#include <eve/function/count_true.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

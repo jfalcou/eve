@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the binarize operation.
   //!
-  //! **Required header:** `#include <eve/function/binarize.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -77,7 +77,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/binarize.cpp}
+  //! @godbolt{doc/core/binarize.cpp}
   //!
   //!  @}
   //================================================================================================

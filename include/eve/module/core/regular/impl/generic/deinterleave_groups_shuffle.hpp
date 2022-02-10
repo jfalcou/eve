@@ -13,7 +13,7 @@
 
 #include <eve/module/core/detail/basic_shuffle.hpp>
 
-#include <eve/function/combine.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {

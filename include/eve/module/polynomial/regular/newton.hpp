@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the newton operation: \f$\sum_{i = 0}^n c_i\prod_{j = 0}^i (x-n_i)\f$.
   //!
-  //! **Required header:** `#include <eve/function/newton.hpp>`
+  //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -78,14 +78,12 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/pedantic/newton.hpp>`
   //!
   //!     The expression `pedantic(newton)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/numeric/newton.hpp>`
   //!
   //!     The expression `numeric(newton)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   //!      `fma(a,x,b)`.

@@ -5,13 +5,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/constant/mone.hpp>
-#include <eve/function/bit_select.hpp>
 
+#include <eve/module/core.hpp>
 //==================================================================================================
 //== Types tests
 //==================================================================================================

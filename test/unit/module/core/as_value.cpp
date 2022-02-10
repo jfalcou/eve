@@ -6,12 +6,9 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "test.hpp"
 
-#include <eve/module/core/constant/as_value.hpp>
-#include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/zero.hpp>
 
 EVE_TEST_TYPES( "Check behavior of arithmetic as_value", eve::test::simd::all_types)
 <typename T>(eve::as<T>)

@@ -19,7 +19,6 @@ namespace eve
   //!        \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12} e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$,
   //!        where \f$P\f$ is a polynomial.
   //!
-  //! **Required header:** `#include <eve/function/stirling.hpp>`
   //!
   //! #### Members Functions
   //!

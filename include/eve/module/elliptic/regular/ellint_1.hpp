@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the elliptic integrals of the first kind :
   //!        \f$\int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\f$.
   //!
-  //! **Required header:** `#include <eve/function/ellint_1.hpp>`
+  //! **Required header:** `#include <eve/module/elliptic.hpp>`
   //!
   //! #### Members Functions
   //!

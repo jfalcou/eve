@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object performing the sign copying operation.
   //!
-  //! **Required header:** `#include <eve/function/copysign.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/copysign.cpp}
+  //! @godbolt{doc/core/copysign.cpp}
   //!
   //!  @}
   //================================================================================================

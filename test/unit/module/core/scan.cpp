@@ -6,10 +6,8 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "test.hpp"
-#include <eve/function/scan.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/min.hpp>
 
 #include <algorithm>
 #include <array>

@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the lambert function inverse of \f$ x-> xe^x \f$
   //!
-  //! **Required header:** `#include <eve/function/lambert.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -50,7 +49,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/lambert.hpp>`
   //!
   //!     The expression `diff(lambert)(x)` computes the derivative of each branch of the function at `x`.
   //!

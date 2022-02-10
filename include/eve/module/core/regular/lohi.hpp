@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the lohi pair of values.
   //!
-  //! **Required header:** `#include <eve/function/lohi.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -67,7 +67,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/lohi.cpp}
+  //! @godbolt{doc/core/lohi.cpp}
   //!
   //!  @}
   //================================================================================================

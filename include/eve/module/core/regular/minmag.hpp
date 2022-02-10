@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the minmag operation.
   //!
-  //! **Required header:** `#include <eve/function/minmag.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -79,19 +79,16 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/minmag.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
   //!
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/minmag.hpp>`
   //!
   //!     The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/minmag.hpp>`
   //!
   //!     The expression `diff< N >(minmag)(x,args,...)` computes the partial
   //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
@@ -99,7 +96,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/minmag.cpp}
+  //! @godbolt{doc/core/minmag.cpp}
   //!
   //!  @}
   //================================================================================================

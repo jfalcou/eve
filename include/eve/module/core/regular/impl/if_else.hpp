@@ -25,11 +25,11 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
-#include <eve/function/bit_andnot.hpp>
-#include <eve/function/bit_mask.hpp>
-#include <eve/function/bit_ornot.hpp>
-#include <eve/function/bit_select.hpp>
-#include <eve/function/convert.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
+#include <eve/module/core/regular/bit_mask.hpp>
+#include <eve/module/core/regular/bit_ornot.hpp>
+#include <eve/module/core/regular/bit_select.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <type_traits>
 

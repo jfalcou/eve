@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "greater than" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_greater.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -75,7 +75,6 @@ namespace eve
   //!
   //!  * `definitely`
   //!
-  //!     **Required header:** `#include <eve/function/fuzzy/is_greater.hpp>`
   //!
   //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
   //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
@@ -87,7 +86,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arirhmetic/is_greater.cpp}
+  //! @godbolt{doc/core/is_greater.cpp}
   //!
   //!  @}
   //================================================================================================

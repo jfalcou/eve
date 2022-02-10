@@ -27,7 +27,7 @@ namespace eve
   //!
   //! @brief Callable object performing the division of multiple values.
   //!
-  //! **Required header:** `#include <eve/function/div.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -83,7 +83,6 @@ namespace eve
   //!
   //!   * eve::saturated
   //!
-  //!     **Required header:** `#include <eve/function/saturated/div.hpp>`
   //!
   //!     The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated division of `x` by
   //!     all `xs`. The result is semantically equivalent to `x/saturated(mul)(xs...)` but is always defined even
@@ -113,14 +112,13 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/div.hpp>`
   //!
   //!     The expression `eve::diff_nth<N>(eve::div)(x, xs...)` computes the derivative of the division
   //!     over the Nth parameter.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/div.cpp}
+  //! @godbolt{doc/core/div.cpp}
   //!
   //!  @}
   //================================================================================================

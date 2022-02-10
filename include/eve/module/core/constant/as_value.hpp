@@ -23,7 +23,7 @@ namespace eve
   //! @brief Callable object that converts eve constant or just a value to a type.
   //! Useful in a generic context
   //!
-  //! **Required header:** `#include <eve/function/as_value.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -32,7 +32,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < typename From, value T > T operator()( From from, as<T> const & t) const noexcept;
+  //!  template < typename From, value T > T operator()( From from, as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

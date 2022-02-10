@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the inverse of the \f$\mbox{erf}\f$ function.
   //!
-  //! **Required header:** `#include <eve/function/erf_inv.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -66,7 +65,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/erf_inv.hpp>`
   //!
   //!     The expression `diff(erf_inv)(x)` computes the derivative of the function at `x`.
   //!

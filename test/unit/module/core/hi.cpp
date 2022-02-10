@@ -6,14 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/value.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/hi.hpp>
-#include <eve/function/hi.hpp>
-#include <eve/function/shl.hpp>
-#include <eve/function/shr.hpp>
-#include <eve/function/combine.hpp>
+#include <eve/module/core.hpp>
 #include <bit>
 
 //==================================================================================================

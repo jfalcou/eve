@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the elliptic integrals of the second kind :
   //!        \f$ \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t} \scriptstyle\;\mathrm{d}t\f$
   //!
-  //! **Required header:** `#include <eve/function/ellint_2.hpp>`
+  //! **Required header:** `#include <eve/module/elliptic.hpp>`
   //!
   //! #### Members Functions
   //!

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/rsqrt.hpp>
 #include <eve/module/core/pedantic/rsqrt.hpp>

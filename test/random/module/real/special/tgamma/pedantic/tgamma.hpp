@@ -5,10 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/minlog.hpp>
-#include <eve/function/pedantic/tgamma.hpp>
-#include "producers.hpp"
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
 #include <cmath>
 
 TTS_CASE_TPL("wide random check on gamma", EVE_TYPE)

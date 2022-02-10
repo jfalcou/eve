@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the logical NOTOR operation.
   //!
-  //! **Required header:** `#include <eve/function/logical_notor.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -52,7 +52,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/logical_notor.cpp}
+  //! @godbolt{doc/core/logical_notor.cpp}
   //!
   //!  @}
   //================================================================================================

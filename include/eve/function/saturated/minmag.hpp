@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/minmag.hpp>
 #include <eve/module/core/saturated/impl/minmag.hpp>

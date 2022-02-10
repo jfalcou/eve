@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing   //!  description NOT FOUND.
   //!
-  //! **Required header:** `#include <eve/function/store.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

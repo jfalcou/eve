@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the greater or equal to zero predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_lez.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,7 +69,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_lez.cpp}
+  //! @godbolt{doc/core/is_lez.cpp}
   //!
   //!  @}
   //================================================================================================

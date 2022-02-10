@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the "less or greater to" predicate.
   //!
-  //! **Required header:** `#include <eve/function/is_lessgreater.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -70,7 +70,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_lessgreater.cpp}
+  //! @godbolt{doc/core/is_lessgreater.cpp}
   //!
   //!  @}
   //================================================================================================

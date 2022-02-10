@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing least common multiple.
   //!
-  //! **Required header:** `#include <eve/function/gcd.hpp>`
+  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
   //!
   //! #### Members Functions
   //!

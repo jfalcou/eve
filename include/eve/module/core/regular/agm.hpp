@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the agm of two floating values.
   //!
-  //! **Required header:** `#include <eve/function/agm.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -38,7 +38,7 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`, `y`:   [floating point values](@ref eve::floating_real_values).
+  //!`x`, `y`:   [floating point values](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
@@ -66,7 +66,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/agm.cpp}
+  //! @godbolt{doc/core/agm.cpp}
   //!
   //!  @}
   //================================================================================================

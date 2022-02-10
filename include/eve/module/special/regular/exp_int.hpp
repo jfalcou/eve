@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the exp_int function.
   //!
-  //! **Required header:** `#include <eve/function/exp_int.hpp>`
   //!
   //! #### Members Functions
   //!

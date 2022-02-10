@@ -19,7 +19,7 @@ namespace eve
   //!
   //! @brief Callable object computing the is_denormal logical value.
   //!
-  //! **Required header:** `#include <eve/function/is_denormal.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -78,7 +78,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/is_denormal.cpp}
+  //! @godbolt{doc/core/is_denormal.cpp}
   //!
   //!  @}
   //================================================================================================

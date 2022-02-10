@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fused sub-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fsm.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -75,27 +75,24 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/fsm.hpp>`
   //!
   //!     The call `pedantic(fsm)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/fsm.hpp>`
   //!
   //!     The call `numeric(fsm)(x,y,z)` ensures the full compliance to fsm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/fsm.hpp>`
   //!
   //!     The expression `diff_1st(fsm)(x,y,z)`, `diff_2nd(fsm)(x,y,z)` and `diff_3rd(fsm)(x,y,z)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ -x+y z\f$.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/fsm.cpp}
+  //! @godbolt{doc/core/fsm.cpp}
   //!
   //!  @}
   //================================================================================================

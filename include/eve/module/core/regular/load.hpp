@@ -21,7 +21,7 @@
   //!
   //! @brief Callable object computing **TODO: FILL THIS BLANK**.
   //!
-  //! **Required header:** `#include <eve/function/load.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

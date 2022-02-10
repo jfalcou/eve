@@ -8,10 +8,10 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/function/slide_left.hpp>
-#include <eve/function/count_true.hpp>
-#include <eve/function/unalign.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/module/core/regular/slide_left.hpp>
+#include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 
 #include <eve/arch/top_bits.hpp>
 

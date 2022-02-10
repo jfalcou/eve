@@ -22,7 +22,7 @@ namespace eve
   //!
   //! @brief Callable object computing the mantissa bit mask.
   //!
-  //! **Required header:** `#include <eve/function/mantissamask.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -31,7 +31,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**

@@ -6,11 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/popcount.hpp>
+#include <eve/module/core.hpp>
 #include <bit>
-#include <eve/function/bit_cast.hpp>
 //==================================================================================================
 // Types tests
 //==================================================================================================

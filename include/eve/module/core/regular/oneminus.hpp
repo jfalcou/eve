@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the oneminus operation.
   //!
-  //! **Required header:** `#include <eve/function/oneminus.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -69,20 +69,18 @@ namespace eve
   //!
   //!  * `saturated`
   //!
-  //!     **Required header:** `#include <eve/function/saturated/oneminus.hpp>`
   //!  
   //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
   //!      and is never undefined.
   //!  
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/oneminus.hpp>`
   //!  
   //!     The expression `diff(oneminus)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/oneminus.cpp}
+  //! @godbolt{doc/core/oneminus.cpp}
   //!
   //!  @}
   //================================================================================================

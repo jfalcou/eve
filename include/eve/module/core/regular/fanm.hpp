@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the fused add-negate-multiply operation.
   //!
-  //! **Required header:** `#include <eve/function/fanm.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -75,27 +75,24 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/fanm.hpp>`
   //!
   //!     The call `pedantic(fanm)(x,y,z)` ensures the one rounding property. This can be very expensive if the
   //!      system has no hardware capability.
   //!  * eve::numeric
   //!
-  //!     **Required header:** `#include <eve/function/numeric/fanm.hpp>`
   //!
   //!     The call `numeric(fanm)(x,y,z)` ensures the full compliance to fanm properties. This can be very expensive if the
   //!      system has no hardware capability.
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/fanm.hpp>`
   //!
   //!     The expression `diff_1st(fanm)(x,y,z)`, `diff_2nd(fanm)(x,y,z)` and `diff_3rd(fanm)(x,y,z)` compute the partial
   //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ x-y z\f$.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/fanm.cpp}
+  //! @godbolt{doc/core/fanm.cpp}
   //!
   //!  @}
   //================================================================================================

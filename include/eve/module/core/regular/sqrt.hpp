@@ -21,7 +21,7 @@ namespace eve
   //!
   //! @brief Callable object computing the square root.
   //!
-  //! **Required header:** `#include <eve/function/sqrt.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -70,13 +70,12 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sqrt.hpp>`
   //!
   //!     The expression `diff(sqrt)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/sqrt.cpp}
+  //! @godbolt{doc/core/sqrt.cpp}
   //!
   //!  @}
   //================================================================================================

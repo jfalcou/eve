@@ -17,7 +17,6 @@ namespace eve
   //!
   //! @brief Callable object computing the beta function. \f$\mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
   //!
-  //! **Required header:** `#include <eve/function/beta.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -64,7 +63,6 @@ namespace eve
   //!
   //! * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
   //!
-  //!:   **Required header:** `#include <eve/function/diff/beta.hpp>`
   //!
   //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
   //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{B}(x,y)\f$.

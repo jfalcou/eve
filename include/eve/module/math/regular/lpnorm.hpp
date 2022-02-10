@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
   //!
-  //! **Required header:** `#include <eve/function/lpnorm.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //!  * eve::pedantic
   //!
-  //!     **Required header:** `#include <eve/function/pedantic/lpnorm.hpp>`
   //!
   //!     The call `pedantic(lpnorm)(x,args...)`  computes the \f$l_p\f$ norm
   //!      without undue overflow or underflow at intermediate stages of the computation
@@ -74,7 +73,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/lpnorm.hpp>`
   //!
   //!     The expression `diff_< N >(lpnorm)(x,args...)` computes the partial
   //!      diff of the function relative to its Nth parameter. The returned value is 0 if N is

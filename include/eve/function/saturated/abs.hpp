@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/abs.hpp>
 #include <eve/module/core/saturated/impl/abs.hpp>

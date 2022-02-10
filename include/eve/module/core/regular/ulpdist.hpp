@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the ulpdistt operation.
   //!
-  //! **Required header:** `#include <eve/function/ulpdist.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +54,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/ulpdist.cpp}
+  //! @godbolt{doc/core/ulpdist.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -37,7 +37,7 @@ namespace eve
   //!
   //!  if almost(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fuzzy/fname.hpp>
+  //!  #include <eve/module/core.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
@@ -85,7 +85,7 @@ namespace eve
   //!
   //!  if definitely(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fuzzy/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!
@@ -134,7 +134,7 @@ namespace eve
   //!
   //!  if tolerant(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/function/fuzzy/fname.hpp>
+  //!  #include <eve:module/core.hpp.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!  must be included.
   //!

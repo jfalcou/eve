@@ -19,7 +19,7 @@ namespace eve
   //!
   //!  @brief Callable object computing the negatenz function.
   //!
-  //! **Required header:** `#include <eve/function/negatenz.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -64,7 +64,6 @@ namespace eve
   //!
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!:   **Required header:** `#include <eve/function/diff/negatenz.hpp>`
   //!
   //!    The expression `diff(negatenz)(x)` computes the derivative of the function relative to `x`.
   //!
@@ -72,7 +71,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/negatenz.cpp}
+  //! @godbolt{doc/core/negatenz.cpp}
   //!
   //!  @}
   //================================================================================================

@@ -19,7 +19,6 @@ namespace eve
   //! @brief Callable object computing the inverse relative to the first parameter
   //!        of the beta incomplete function.
   //!
-  //! **Required header:** `#include <eve/function/betainc_inv.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -67,7 +66,6 @@ namespace eve
   //!
   //! * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!:   **Required header:** `#include <eve/function/diff/betainc_inv.hpp>`
   //!
   //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
   //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.

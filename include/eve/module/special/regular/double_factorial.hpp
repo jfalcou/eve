@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing unsigned integral double_factorial.
   //!
-  //! **Required header:** `#include <eve/function/double_factorial.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -54,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/combinatorial/double_factorial.cpp}
+  //! @godbolt{doc/special/double_factorial.cpp}
   //!
   //!  @}
   //================================================================================================

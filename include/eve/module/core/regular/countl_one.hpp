@@ -20,7 +20,7 @@ namespace eve
   //!
   //! @brief Callable object computing the number of consecutive 1 bits left.
   //!
-  //! **Required header:** `#include <eve/function/countl_one.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!

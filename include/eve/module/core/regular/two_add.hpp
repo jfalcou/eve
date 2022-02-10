@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the two_add operation.
   //!
-  //! **Required header:** `#include <eve/function/two_add.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/two_add.cpp}
+  //! @godbolt{doc/core/two_add.cpp}
   //!
   //!  @}
   //================================================================================================

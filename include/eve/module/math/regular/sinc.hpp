@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the sine cardinal.
   //!
-  //! **Required header:** `#include <eve/function/sinc.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -52,7 +52,6 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     **Required header:** `#include <eve/function/diff/sinc.hpp>`
   //!
   //!     The expression `diff(sinc)(x)` computes the derivative of the function at `x`.
   //!

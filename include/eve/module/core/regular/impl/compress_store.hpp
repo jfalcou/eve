@@ -12,8 +12,8 @@
 
 #include <eve/detail/kumi.hpp>
 
-#include <eve/function/unalign.hpp>
-#include <eve/function/safe.hpp>
+#include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/safe.hpp>
 #include <eve/memory/stack_buffer.hpp>
 
 namespace eve::detail

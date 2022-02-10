@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the nextafter operation.
   //!
-  //! **Required header:** `#include <eve/function/nextafter.hpp>`
+  //! **Required header:** `#include <eve/module/core.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/arithmetic/nextafter.cpp}
+  //! @godbolt{doc/core/nextafter.cpp}
   //!
   //!  @}
   //================================================================================================
