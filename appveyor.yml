@@ -1,0 +1,15 @@
+version: 1.0.{build}
+os: Visual Studio 2022
+
+environment:
+  matrix:
+  - ARCH: x86
+
+build_script:
+- mkdir build
+- cd build
+- cmake -G "Visual Studio 17 2022" -A x64 ..
+- cmake --build . --target unit.arch.exe --verbose --config Release
+
+test_script:
+- ctest -C Release   -VV -R ^unit.arch.*.exe
