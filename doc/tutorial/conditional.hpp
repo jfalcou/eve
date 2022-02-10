@@ -81,7 +81,7 @@ If required, the callable object produced by the conditional syntax can be store
 ## Conditional Expressions
 If passing a simple logical expression is the most common use-case of the conditional syntax, one
 may requires more flexibility. To do so, **EVE** provides various objects to express more
-interesting conditions.
+elaborated conditions.
 
 ### Mask with alternative
 One may want to use the conditional syntax to call a function but instead of returning the first

@@ -10,8 +10,8 @@ behaviors **EVE** functions can exhibit.
 
 @subsection glossary_access Generalized Element Access
 
-**EVE** functions' semantics rely on a generic way to access an element of a [value](@ref eve::value)
-in a generic way, be it [scalar](@ref eve::scalar_value) or [SIMD](@ref eve::simd_value).
+**EVE** functions' semantics rely on a generic way to access an element of a [value](@ref eve::value),
+be it [scalar](@ref eve::scalar_value) or [SIMD](@ref eve::simd_value).
 
 To do so, we define a synthetic function `at(v,i)` that retrieve the `i`th element of a value `v`.
 
@@ -47,7 +47,7 @@ Elementwise operations in **EVE** describe functions that operates over all elem
 [value](@ref eve::value) to produce a single [scalar result](@ref eve::scalar_value).
 
 For any [value](@ref eve::value) `x` of type `T`, a Callable Object `f` returning a
-[scalar value](@ref eve::scalar_value) of type `eve::elemet_type<T>` is said to be a **Reduction**.
+[scalar value](@ref eve::scalar_value) of type `eve::element_type<T>` is said to be a **Reduction**.
 
 @section glossary_function_semantic Function Semantic
 

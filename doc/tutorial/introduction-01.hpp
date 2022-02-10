@@ -39,7 +39,7 @@ computing \f$\rho\f$ this way is maybe sub-optimal. We will address those concer
 ## From scalar to SIMD using eve::wide
 
 The next step is to work a SIMD version of those functions. When dealing with SIMD data types,
-one has to remember that a single operation has to be performed on multiple value. There, we will
+one has to remember that a single operation has to be performed on multiple values. There, we will
 be working on multiple `x`and `y` to computes multiple \f$\rho\f$ and \f$\theta\f$.
 
 SIMD instructions sets provides architecture-specific types for SIMD register along with ISA

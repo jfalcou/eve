@@ -5,7 +5,7 @@
 
 @tableofcontents
 
-In the previous tutorial, we laid out how **EVE** can use SIMD-aware tuple to handle more complex
+In the previous tutorial, we laid out how **EVE** can use SIMD-aware tuples to handle more complex
 cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.
 
 @snippet tutorial/intro-04.cpp  empty
