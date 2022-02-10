@@ -112,9 +112,9 @@ namespace eve::detail
     {
             if constexpr(std::is_same_v<T, float >) return _mm_movemask_ps(p.storage());
       else  if constexpr(std::is_same_v<T, double>) return _mm_movemask_pd(p.storage());
-      else  if constexpr(sizeof(T) == 8)            return _mm_movemask_pd((__m128d)p.storage());
-      else  if constexpr(sizeof(T) == 4)            return _mm_movemask_ps((__m128)p.storage());
-      else  if constexpr(sizeof(T) == 2)
+      else  if constexpr( sizeof(T) == 8 )          return _mm_movemask_pd(_mm_castsi128_pd(p.storage()));
+      else  if constexpr( sizeof(T) == 4 )          return _mm_movemask_ps(_mm_castsi128_ps((p.storage())));
+      else  if constexpr( sizeof(T) == 2 )
       {
         return _mm_movemask_epi8(_mm_packs_epi16(p.storage(), _mm_setzero_si128()));
       }
@@ -124,8 +124,8 @@ namespace eve::detail
     {
             if constexpr(std::is_same_v<T, float >) return _mm256_movemask_ps(p.storage());
       else  if constexpr(std::is_same_v<T, double>) return _mm256_movemask_pd(p.storage());
-      else  if constexpr(sizeof(T) == 8)            return _mm256_movemask_pd((__m256d)p.storage());
-      else  if constexpr(sizeof(T) == 4)            return _mm256_movemask_ps((__m256)p.storage());
+      else  if constexpr(sizeof(T) == 8)            return _mm256_movemask_pd(_mm256_castsi256_pd(p.storage()));
+      else  if constexpr(sizeof(T) == 4)            return _mm256_movemask_ps(_mm256_castsi256_ps(p.storage()));
       else  if constexpr(sizeof(T) == 2)
       {
         auto [l, h] = p.slice();

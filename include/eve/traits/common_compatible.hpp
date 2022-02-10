@@ -16,40 +16,44 @@ namespace eve::detail
   {
     using type = T;
     static constexpr bool is_valid = (V==1) || (V==0 && S==1);
-
-    template<value A, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<A,S2,V2>);
-
-    template<simd_value A, simd_value B, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2),std::max(V1,V2)+1> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
-
-    template<scalar_value A, scalar_value B, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2)+1,std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
-
-    template<simd_value A, scalar_value B, int S1, int V1, int S2, int V2>
-    friend cmn<A,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
-
-    template<scalar_value A, simd_value B, int S1, int V1, int S2, int V2>
-    friend cmn<B,std::max(S1,S2),std::max(V1,V2)> operator%(cmn<A,S1,V1>, cmn<B,S2,V2>);
   };
+
+    template<typename A, typename B, int S1, int V1, int S2, int V2>
+    constexpr auto operator%(cmn<A,S1,V1>, cmn<B,S2,V2>)
+    {
+      constexpr bool sa = scalar_value<A> , sb  = scalar_value<B>;
+      constexpr bool va = simd_value<A>   , vb  = simd_value<B>;
+      constexpr int mxs = std::max(S1,S2) , mxv = std::max(V1,V2);
+
+            if constexpr(std::same_as<A,B>) return cmn<A,mxs  ,mxv  >{};
+      else  if constexpr(va && vb)          return cmn<A,mxs  ,mxv+1>{};
+      else  if constexpr(sa && sb)          return cmn<A,mxs+1,mxv  >{};
+      else  if constexpr(va && sb)          return cmn<A,mxs  ,mxv  >{};
+      else  if constexpr(sa && vb)          return cmn<B,mxs  ,mxv  >{};
+      else  if constexpr(value<A>)          return cmn<A,S1,V1>{};
+      else                                  return cmn<B,S2,V2>{};
+    }
 
   // Use a layer of std::void_t to make common_compatible SFINAE-friendly
   template<typename L, typename Enable = void>
   struct  common_compatible_impl
   {};
 
+  template<typename T>
+  using cmn_t = detail::cmn<T, scalar_value<T>, simd_value<T>>;
+
   template<typename... Ts>
-  struct  common_compatible_impl< types<Ts...>
-                                , std::enable_if_t< decltype( (detail::cmn< Ts
-                                                                          , scalar_value<Ts>
-                                                                          , simd_value<Ts>
-                                                                          >{}
-                                                              % ... )
-                                                            )::is_valid
-                                                  >
-                                >
-        : decltype( (detail::cmn<Ts,scalar_value<Ts>,simd_value<Ts>>{} % ... ) )
-  {};
+  auto compact(){ return (cmn_t<Ts>{} % ... ); }
+
+  template<typename... Ts>
+  struct  common_compatible_impl
+          < types<Ts...>
+          , std::enable_if_t<decltype( compact<Ts...>() )::is_valid>
+          >
+  {
+    using base = decltype(compact<Ts...>());
+    using type = typename base::type;
+  };
 }
 
 namespace eve
