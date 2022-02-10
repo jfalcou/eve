@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup invtrigonometric
+  //! @addtogroup math
   //! @{
   //! @var acscd
   //!

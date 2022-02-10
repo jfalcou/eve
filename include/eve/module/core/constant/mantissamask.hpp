@@ -16,7 +16,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup constant
+  //! @addtogroup core
   //! @{
   //! @var mantissamask
   //!

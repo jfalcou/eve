@@ -15,8 +15,9 @@
 //!
 //! This module provides implementation for probability distribution functions and generators.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/module/proba.hpp> @endcode
+//! **Required header:** @code{.cpp} #include <eve/module/proba.hpp> @endcode
 //!
 //! @}
 //==================================================================================================
+
 #include <eve/module/proba/regular/proba.hpp>

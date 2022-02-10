@@ -15,7 +15,7 @@
 //!
 //! This module provides implementation for various special functions
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/module/special.hpp> @endcode
+//! **Required header:** @code{.cpp} #include <eve/module/special.hpp> @endcode
 //!
 //! @}
 //==================================================================================================

@@ -13,7 +13,7 @@
 //! @defgroup math  math functions
 //!
 //! This module provides implementation for
-//! scalar and SIMD versions of basic math functions.
+//! scalar and SIMD versions of basic mathematical functions.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/module/math.hpp> @endcode
 //!

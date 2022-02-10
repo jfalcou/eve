@@ -11,9 +11,9 @@
 //! @addtogroup functions
 //! @{
 //! @defgroup core core function
-//! @brief Bessel function
+//! @brief core functions
 //!
-//! Temporary module to include core functions
+//!  This module provides implementation for various fundamental functions
 //!
 //! @}
 //==================================================================================================

@@ -11,7 +11,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup trigonometric
+  //! @addtogroup math
   //! @{
   //! @var quadrant
   //!
