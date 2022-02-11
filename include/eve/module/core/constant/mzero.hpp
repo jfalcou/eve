@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
- #include <eve/module/core/regular/roundings.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
@@ -71,12 +71,12 @@ namespace eve
         return T(0);
       }
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto mzero_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return mzero(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto mzero_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return mzero(as<T>());
+    }
   }
 }

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
- #include <eve/module/core/regular/roundings.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_integer.hpp>
@@ -66,12 +66,12 @@ namespace eve
       if constexpr(std::is_same_v<t_t, float>) return i_t(128);
       else if constexpr(std::is_same_v<t_t, double >) return i_t(1024);
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto maxexponentp1_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return maxexponentp1(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto maxexponentp1_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return maxexponentp1(as<T>());
+    }
   }
 }

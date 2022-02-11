@@ -70,13 +70,6 @@ namespace eve
 
     template<typename T, typename D>
     EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type, to_nearest_type, toward_zero_type > {}))
-    {
-      return allbits(as<T>());
-    }
-
-    template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       return allbits(as<T>());

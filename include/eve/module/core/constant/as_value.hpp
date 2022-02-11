@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
- #include <eve/module/core/regular/roundings.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
@@ -55,12 +54,5 @@ namespace eve
       else if constexpr ( std::integral<T> || std::floating_point<T> ) return (T)from;
       else                                                             return T{from};
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto as_value_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return as_value(as<T>());
-  }
   }
 }
