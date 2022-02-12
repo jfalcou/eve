@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/roundings.hpp>.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/module/core/regular/roundings.hpp>.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 
