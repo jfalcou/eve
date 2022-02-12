@@ -41,6 +41,8 @@ namespace eve
   //!   - T(-103.972f) if eve::element_type_t<T> is float
   //!   - T(-745.133) if eve::element_type_t<T> is double
   //!
+  //! This is the greatest value for which `eve::pedantic(eve::exp)` is  zero
+  //!
   //! ---
   //!
   //! #### Example

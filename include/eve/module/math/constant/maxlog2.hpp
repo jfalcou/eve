@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 
-
 namespace eve
 {
   //================================================================================================
@@ -61,6 +60,13 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42fe0000U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x408ff80000000000ULL>();
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return maxlog2(as<T>());
     }
   }
 }

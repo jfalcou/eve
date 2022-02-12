@@ -41,6 +41,8 @@ namespace eve
   //!   - T(88.37630f) if eve::element_type_t<T> is float
   //!   - T(709.436) if eve::element_type_t<T> is double
   //!
+  //! this is the smallest value for which `eve::exp` overflows
+  //!
   //! ---
   //!
   //! #### Example
@@ -60,6 +62,13 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42b0c0a5U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x40862b7d369a5aa7ULL>();
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto maxlog_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return maxlog(as<T>());
     }
   }
 }

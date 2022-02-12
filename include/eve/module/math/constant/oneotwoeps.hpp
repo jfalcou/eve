@@ -60,5 +60,12 @@ namespace eve
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4320000000000000ULL>();
       else return T(1);
     }
+ 
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    return oneotwoeps(as<T>());
+  }
   }
 }

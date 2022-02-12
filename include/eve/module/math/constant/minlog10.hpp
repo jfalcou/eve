@@ -19,7 +19,7 @@ namespace eve
   //! @brief Callable object computing the least value for which eve::exp10
   //! returns a non zero result.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //! **Required header:** `#include <eve/function/minlog10.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -41,7 +41,9 @@ namespace eve
   //!   - T(-37.9298f) if eve::element_type_t<T> is float
   //!   - T(-307.653) if eve::element_type_t<T> is double
   //!
-  //! ---
+  //! This is the greatest value for which `eve::exp10` is  zero
+  //!
+   //! ---
   //!
   //! #### Example
   //!
@@ -60,6 +62,13 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>)  return Constant<T, 0xc217b818U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc0733a7146f72a42ULL>();
+    }
+
+    template<floating_value T, typename D>
+    EVE_FORCEINLINE constexpr auto minlog2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return minlog10(as<T>());
     }
   }
 }

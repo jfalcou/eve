@@ -41,6 +41,8 @@ namespace eve
   //!   - T(-150.0f) if eve::element_type_t<T> is float
   //!   - T(-1075.0) if eve::element_type_t<T> is double
   //!
+  //! This is the greatest value for which `eve::pedantic(eve::exp2)` is  zero
+  //!
   //! ---
   //!
   //! #### Example
@@ -60,6 +62,13 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>)  return T(-150);
       else if constexpr(std::is_same_v<t_t, double>) return T(-1075);
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto minlog2denormal_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return minlog2denormal(as<T>());
     }
   }
 }

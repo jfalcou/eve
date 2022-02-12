@@ -1,0 +1,42 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+**/
+//==================================================================================================
+#include "test.hpp"
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <cmath>
+#include <iomanip>
+
+//==================================================================================================
+// Types tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check return types of minlogdenormal"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(eve::as<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using eve::as;
+
+  TTS_EXPR_IS( eve::minlogdenormal(as<T>())  , T);
+  TTS_EXPR_IS( eve::minlogdenormal(as<v_t>()), v_t);
+};
+
+//==================================================================================================
+// minlogdenormal  tests
+//==================================================================================================
+EVE_TEST_TYPES( "Check behavior of minlogdenormal on wide"
+        , eve::test::simd::ieee_reals
+        )
+<typename T>(eve::as<T>)
+{
+  using eve::as;
+  TTS_ULP_EQUAL(eve::exp(eve::minlogdenormal(as<T>())), eve::zero(as<T>()), 0.0);
+  std::cout << eve::minlogdenormal(as<T>()) << std::endl;
+  std::cout << eve::minlog        (as<T>()) << std::endl;
+  TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp)(eve::next(eve::minlogdenormal(as<T>()))))));
+};
