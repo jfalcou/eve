@@ -9,12 +9,11 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <cmath>
-#include <iomanip>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of invsqrt_2"
+EVE_TEST_TYPES( "Check return types of logeps"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
@@ -22,14 +21,14 @@ EVE_TEST_TYPES( "Check return types of invsqrt_2"
   using v_t = eve::element_type_t<T>;
   using eve::as;
 
-  TTS_EXPR_IS( eve::invsqrt_2(as<T>())  , T);
-  TTS_EXPR_IS( eve::invsqrt_2(as<v_t>()), v_t);
+  TTS_EXPR_IS( eve::logeps(as<T>())  , T);
+  TTS_EXPR_IS( eve::logeps(as<v_t>()), v_t);
 };
 
 //==================================================================================================
-// invsqrt_2  tests
+// logeps  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of invsqrt_2 on wide"
+EVE_TEST_TYPES( "Check behavior of logeps on wide"
         , eve::test::simd::ieee_reals
         )
 <typename T>(eve::as<T>)
@@ -37,7 +36,9 @@ EVE_TEST_TYPES( "Check behavior of invsqrt_2 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  TTS_ULP_EQUAL(eve::invsqrt_2(as<T>()), T(1.0l/(std::sqrt(2.0l))), 0.0);
-  TTS_EXPECT(eve::all(downward(eve::invsqrt_2)(as<T>()) <= eve::invsqrt_2(as<T>())));
-  TTS_EXPECT(eve::all(eve::invsqrt_2(as<T>()) <= upward(eve::invsqrt_2)(as<T>())));
+
+  TTS_EQUAL(eve::logeps(as<T>()), T(std::log(eve::eps(as<eve::element_type_t<T>>()))));
+  TTS_EXPECT(eve::all(downward(eve::logeps)(as<T>()) <= eve::logeps(as<T>())));
+  TTS_EXPECT(eve::all(eve::logeps(as<T>()) <= upward(eve::logeps)(as<T>())));
+  TTS_ULP_EQUAL(downward(eve::logeps)(as<T>()), upward(eve::logeps)(as<T>()), 0.5);
 };
