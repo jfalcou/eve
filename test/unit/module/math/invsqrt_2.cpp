@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check behavior of invsqrt_2 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  TTS_ULP_EQUAL(eve::invsqrt_2(as<T>()), T(1.0l/(std::sqrt(2.0l))), 0.0);
+  TTS_ULP_EQUAL(eve::invsqrt_2(as<T>()), T(1.0l/(std::sqrt(2.0l))), 0.5);
   TTS_EXPECT(eve::all(downward(eve::invsqrt_2)(as<T>()) <= eve::invsqrt_2(as<T>())));
   TTS_EXPECT(eve::all(eve::invsqrt_2(as<T>()) <= upward(eve::invsqrt_2)(as<T>())));
 };
