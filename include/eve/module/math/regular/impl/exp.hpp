@@ -22,7 +22,7 @@ namespace eve::detail
     {
       if constexpr(has_emulated_abi_v<wide<T>>)
       {
-        return (x < = eve::minlog(as(x)))? T(0) : ((x >= eve::maxlog(as(x)))? inf(as(x)): std::exp(x));
+        return (x <= eve::minlog(as(x)))? T(0) : ((x >= eve::maxlog(as(x)))? inf(as(x)): std::exp(x));
       }
       else
       {
