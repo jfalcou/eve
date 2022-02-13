@@ -122,9 +122,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="group__simd.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
       <li><a href="group__functions.html"><span>Functions</span></a></li>
-      <li><a href="group__constant.html"><span>Constants</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
       <li><a href="group__traits.html"><span>Traits</span></a></li>
     </ul>
   </div>
@@ -147,7 +147,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Views<div class="ingroups"><a class="el" href="group__algo.html">Algorithms and Views</a></div></div></div>
+  <div class="headertitle"><div class="title">Views<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__algorithm.html">Algorithms and Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -172,6 +172,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1base__plus__offset__iterator.html">eve::algo::views::base_plus_offset_iterator&lt; T, N &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator for all values from base to offset. Should be created with <code>iota_scaled</code> or <code>iota</code>. Not OK to compare two iterators generated from a different base.  <a href="structeve_1_1algo_1_1views_1_1base__plus__offset__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1map__iterator.html">eve::algo::views::map_iterator&lt; I, LoadOp, StoreOp &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator for <code>map</code>, <code>map_convert</code>. Should be created with one of those functions. If one of the operations is not avaliable, it's <code><a class="el" href="structeve_1_1algo_1_1nothing__t.html" title="a type to indicate that there is nothing there">eve::algo::nothing_t</a></code>.  <a href="structeve_1_1algo_1_1views_1_1map__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1map__range.html">eve::algo::views::map_range&lt; R, LoadOp, StoreOp &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A range for <code>map</code>, <code>map_covnert</code>. Should be created via one of those functions. If the store operation is not avaliable, it's <code><a class="el" href="structeve_1_1algo_1_1nothing__t.html" title="a type to indicate that there is nothing there">eve::algo::nothing_t</a></code>.  <a href="structeve_1_1algo_1_1views_1_1map__range.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1reverse__iterator.html">eve::algo::views::reverse_iterator&lt; I &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An adapter over a <code><a class="el" href="structrelaxed__iterator.html" title="anything that can be reasonably converted to an iterator: std::contigious_iterator,...">relaxed_iterator</a></code> that allows to iterate in the reverse order. Should be created by a call to <code>eve::algo::views::reverse</code>.  <a href="structeve_1_1algo_1_1views_1_1reverse__iterator.html#details">More...</a><br /></td></tr>
@@ -199,6 +205,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbase__plus__offset__iterator.html">base_plus_offset_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1base__plus__offset__iterator.html" title="An iterator for all values from base to offset. Should be created with iota_scaled or iota....">eve::algo::views::base_plus_offset_iterator</a></code>  <a href="structbase__plus__offset__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap__iterator.html">map_iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1map__iterator.html" title="An iterator for map, map_convert. Should be created with one of those functions. If one of the operat...">eve::algo::views::map_iterator</a></code>  <a href="structmap__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap__range.html">map_range</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1map__range.html" title="A range for map, map_covnert. Should be created via one of those functions. If the store operation is...">eve::algo::views::map_range</a></code>  <a href="structmap__range.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structreverse__iterator.html">reverse_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1reverse__iterator.html" title="An adapter over a relaxed_iterator that allows to iterate in the reverse order. Should be created by ...">eve::algo::views::reverse_iterator</a></code>  <a href="structreverse__iterator.html#details">More...</a><br /></td></tr>
@@ -229,6 +241,14 @@ Variables</h2></td></tr>
 <tr class="memitem:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5">eve::algo::views::iota</a></td></tr>
 <tr class="memdesc:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fuction to generate an <code>iota</code> iterator/view like [0, 1, 2, 3, ...]. To generate an iterator pass T base. For a range pass a range size as ptrdiff_t as a 2rd parameter.  <a href="group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5">More...</a><br /></td></tr>
 <tr class="separator:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga439554904906de9ac78acd434166848a"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:ga439554904906de9ac78acd434166848a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_ga439554904906de9ac78acd434166848a.html#ga439554904906de9ac78acd434166848a">eve::algo::views::map_convert</a></td></tr>
+<tr class="memdesc:ga439554904906de9ac78acd434166848a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a relaxed iterator/range and 2 operations return relaxed iterator/range that applies the first operation before load and the second operation before store.  <a href="group__views_ga439554904906de9ac78acd434166848a.html#ga439554904906de9ac78acd434166848a">More...</a><br /></td></tr>
+<tr class="separator:ga439554904906de9ac78acd434166848a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d242249cc89dfa9637ae866b9df151a"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:ga9d242249cc89dfa9637ae866b9df151a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a">eve::algo::views::map</a></td></tr>
+<tr class="memdesc:ga9d242249cc89dfa9637ae866b9df151a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and applies provided operation on read/load.  <a href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a">More...</a><br /></td></tr>
+<tr class="separator:ga9d242249cc89dfa9637ae866b9df151a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaac86f874e3f90c117f6495f0ea1b782a"><td class="memItemLeft" align="right" valign="top">struct eve::algo::views::reverse_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_gaac86f874e3f90c117f6495f0ea1b782a.html#gaac86f874e3f90c117f6495f0ea1b782a">eve::algo::views::reverse</a></td></tr>
 <tr class="memdesc:gaac86f874e3f90c117f6495f0ea1b782a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes an iterator or a range and returns an adapter for reverse iteration.  <a href="group__views_gaac86f874e3f90c117f6495f0ea1b782a.html#gaac86f874e3f90c117f6495f0ea1b782a">More...</a><br /></td></tr>
 <tr class="separator:gaac86f874e3f90c117f6495f0ea1b782a"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -221,7 +221,7 @@ namespace eve
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
-    EVE_FORCEINLINE constexpr auto else_(V) const  {  return *this;  }
+    EVE_FORCEINLINE constexpr auto else_([[maybe_unused]] V v) const  {  return *this;  }
 
     //! Compute the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const

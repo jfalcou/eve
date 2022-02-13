@@ -21,7 +21,7 @@ namespace eve
 
   using p_kind_type = decorated<p_kind_()>;
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup polynomial
   //! @{
   //! @var p_kind
   //!
@@ -49,7 +49,7 @@ namespace eve
 
   using q_kind_type = decorated<q_kind_()>;
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup polynomial
   //! @{
   //! @var q_kind
   //!

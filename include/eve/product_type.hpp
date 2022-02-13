@@ -14,7 +14,7 @@
 #include <type_traits>
 
 //==================================================================================================
-//! @addtogroup simd
+//! @addtogroup traits
 //! @{
 //!   @defgroup struct Structured Types Management
 //!   @brief Traits and functions to handle user defined types in SIMD registers

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['decorators_0',['Decorators',['../group__decorator.html',1,'']]]
+  ['elliptic_20function_0',['elliptic function',['../group__elliptic.html',1,'']]],
+  ['eve_1',['EVE',['../group__simd.html',1,'']]]
 ];

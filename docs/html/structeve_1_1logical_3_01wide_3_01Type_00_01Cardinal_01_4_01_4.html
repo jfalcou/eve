@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">SIMD Types and Helpers</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -375,30 +375,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="e
 <a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1logical.html">logical</a> v, <a class="el" href="structeve_1_1logical.html">logical</a> w) noexcept</td></tr>
 <tr class="memdesc:a7045100ab4bb27a393a7f62d827aaf88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of two <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
 <tr class="separator:a7045100ab4bb27a393a7f62d827aaf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a049a2ae3f1793d4feb76a05f0982bd36"><td class="memTemplParams" colspan="2"><a id="a049a2ae3f1793d4feb76a05f0982bd36" name="a049a2ae3f1793d4feb76a05f0982bd36"></a>
-template&lt;scalar_value S&gt; </td></tr>
-<tr class="memitem:a049a2ae3f1793d4feb76a05f0982bd36"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1logical.html">logical</a> v, S w) noexcept</td></tr>
-<tr class="memdesc:a049a2ae3f1793d4feb76a05f0982bd36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a> and a scalar value. <br /></td></tr>
-<tr class="separator:a049a2ae3f1793d4feb76a05f0982bd36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c5d69f2a08afb6849c50c473b0b61aa"><td class="memTemplParams" colspan="2"><a id="a7c5d69f2a08afb6849c50c473b0b61aa" name="a7c5d69f2a08afb6849c50c473b0b61aa"></a>
-template&lt;scalar_value S&gt; </td></tr>
-<tr class="memitem:a7c5d69f2a08afb6849c50c473b0b61aa"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (S v, <a class="el" href="structeve_1_1logical.html">logical</a> w) noexcept</td></tr>
-<tr class="memdesc:a7c5d69f2a08afb6849c50c473b0b61aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a scalar value and a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
-<tr class="separator:a7c5d69f2a08afb6849c50c473b0b61aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dea17246f2631c0b6e1107d35860b64"><td class="memTemplParams" colspan="2"><a id="a8dea17246f2631c0b6e1107d35860b64" name="a8dea17246f2631c0b6e1107d35860b64"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1logical.html">logical</a>{s}; }</td></tr>
+<tr class="memitem:a8dea17246f2631c0b6e1107d35860b64"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1logical.html">logical</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a8dea17246f2631c0b6e1107d35860b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a> and a scalar value. <br /></td></tr>
+<tr class="separator:a8dea17246f2631c0b6e1107d35860b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad89cc4a35e1888c99b7a20ba9e09322a"><td class="memTemplParams" colspan="2"><a id="ad89cc4a35e1888c99b7a20ba9e09322a" name="ad89cc4a35e1888c99b7a20ba9e09322a"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1logical.html">logical</a>{s}; }</td></tr>
+<tr class="memitem:ad89cc4a35e1888c99b7a20ba9e09322a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (S v, <a class="el" href="structeve_1_1logical.html">logical</a> w) noexcept</td></tr>
+<tr class="memdesc:ad89cc4a35e1888c99b7a20ba9e09322a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a scalar value and a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
+<tr class="separator:ad89cc4a35e1888c99b7a20ba9e09322a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ffb9eef782dce13e60236a7caeac1d0"><td class="memItemLeft" align="right" valign="top"><a id="a5ffb9eef782dce13e60236a7caeac1d0" name="a5ffb9eef782dce13e60236a7caeac1d0"></a>
 <a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structeve_1_1logical.html">logical</a> v, <a class="el" href="structeve_1_1logical.html">logical</a> w) noexcept</td></tr>
 <tr class="memdesc:a5ffb9eef782dce13e60236a7caeac1d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of two <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
 <tr class="separator:a5ffb9eef782dce13e60236a7caeac1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab19acd598b6b5d15e2540448ac10148b"><td class="memTemplParams" colspan="2"><a id="ab19acd598b6b5d15e2540448ac10148b" name="ab19acd598b6b5d15e2540448ac10148b"></a>
-template&lt;scalar_value S&gt; </td></tr>
-<tr class="memitem:ab19acd598b6b5d15e2540448ac10148b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structeve_1_1logical.html">logical</a> v, S w) noexcept</td></tr>
-<tr class="memdesc:ab19acd598b6b5d15e2540448ac10148b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a> and a scalar value. <br /></td></tr>
-<tr class="separator:ab19acd598b6b5d15e2540448ac10148b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01ba973495ebc44f29a970260f52ad71"><td class="memTemplParams" colspan="2"><a id="a01ba973495ebc44f29a970260f52ad71" name="a01ba973495ebc44f29a970260f52ad71"></a>
-template&lt;scalar_value S&gt; </td></tr>
-<tr class="memitem:a01ba973495ebc44f29a970260f52ad71"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (S v, <a class="el" href="structeve_1_1logical.html">logical</a> w) noexcept</td></tr>
-<tr class="memdesc:a01ba973495ebc44f29a970260f52ad71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a scalar value and a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
-<tr class="separator:a01ba973495ebc44f29a970260f52ad71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6472dde6325ad44e896cc76798855f20"><td class="memTemplParams" colspan="2"><a id="a6472dde6325ad44e896cc76798855f20" name="a6472dde6325ad44e896cc76798855f20"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1logical.html">logical</a>{s}; }</td></tr>
+<tr class="memitem:a6472dde6325ad44e896cc76798855f20"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structeve_1_1logical.html">logical</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a6472dde6325ad44e896cc76798855f20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a> and a scalar value. <br /></td></tr>
+<tr class="separator:a6472dde6325ad44e896cc76798855f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e508ccb49c3afb74d9f7c0e1ad72468"><td class="memTemplParams" colspan="2"><a id="a3e508ccb49c3afb74d9f7c0e1ad72468" name="a3e508ccb49c3afb74d9f7c0e1ad72468"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1logical.html">logical</a>{s}; }</td></tr>
+<tr class="memitem:a3e508ccb49c3afb74d9f7c0e1ad72468"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1logical.html">logical</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (S v, <a class="el" href="structeve_1_1logical.html">logical</a> w) noexcept</td></tr>
+<tr class="memdesc:a3e508ccb49c3afb74d9f7c0e1ad72468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a scalar value and a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. <br /></td></tr>
+<tr class="separator:a3e508ccb49c3afb74d9f7c0e1ad72468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a517ff9e640d1ead16cc41eecdce7fd5c"><td class="memItemLeft" align="right" valign="top"><a id="a517ff9e640d1ead16cc41eecdce7fd5c" name="a517ff9e640d1ead16cc41eecdce7fd5c"></a>
 std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, <a class="el" href="structeve_1_1logical.html">logical</a> const &amp;p)</td></tr>
 <tr class="memdesc:a517ff9e640d1ead16cc41eecdce7fd5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into a output stream. <br /></td></tr>

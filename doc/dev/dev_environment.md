@@ -4,7 +4,7 @@ Development Environment {#dev_environment}
 @tableofcontents
 
 When adding feature or fixing bugs within **EVE**, you may want to locally test your code for a
-non-trivial amount of architecture and instruction sets. As you may not have access to all the
+non-trivial amount of architecture and instructions sets. As you may not have access to all the
 compilers or hardware necessary, **EVE** continuous integration and testing environment can be
 recreated locally.
 

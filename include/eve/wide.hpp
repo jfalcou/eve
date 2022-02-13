@@ -7,12 +7,5 @@
 //==================================================================================================
 #pragma once
 
-//================================================================================================
-//! @addtogroup simd
-//! @{
-//!   @defgroup simd_types  SIMD related types
-//!   @brief Types and functions wrappers for SIMD registers and related operations
-//! @}
-//================================================================================================
 #include <eve/arch/spec.hpp>
 #include <eve/arch/wide.hpp>

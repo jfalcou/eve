@@ -56,7 +56,7 @@ We decided against those options because:
   - extra function names would have cluttered the API.
 
 The use of callable object to modify another callable object also plays nicely with a purely
-functional view of the library in which everything is a value, including function.
+functional view of the library in which everything is a value, including functions.
 
 @section rationale-mask Masked operations support
 

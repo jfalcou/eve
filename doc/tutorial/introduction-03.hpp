@@ -55,7 +55,7 @@ a [**kumi::tuple**](https://jfalcou.github.io/kumi/) of eve::wide of each tuple'
 words, it performs automatic Array of Structure to Structure of Array conversion.
 
 Now that our function is able to return a type compatible with **EVE** SIMD model, we can amend the
-SIMD algorithm call tu use eve::views::zip for both the input and output ranges.
+SIMD algorithm call to use eve::views::zip for both the input and output ranges.
 
 @snippet tutorial/intro-03.cpp  simd-transform_zip
 
@@ -64,6 +64,6 @@ In this tutorial, we managed to:
   - handle tuple in SIMD context using eve::wide and [**kumi::tuple**](https://jfalcou.github.io/kumi/)
   - process SIMD-aware tuple with **EVE** algorithms
 
-[In the next tutorial](@ref intro-04), we'll investigate how such tuple can be replaced by SIMD
+[In the next tutorial](@ref intro-04), we'll investigate how such tuples can be replaced by SIMD
 aware user-defined types which can then be efficiently stored and processed.
 **/

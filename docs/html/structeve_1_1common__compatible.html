@@ -139,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">eve::common_compatible&lt; Ts &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__traits.html">Type traits</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::common_compatible&lt; Ts &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__traits.html">Type traits</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -158,7 +158,7 @@ struct eve::common_compatible&lt; Ts &gt;</div><p >Computes the type compatible 
   </table>
   </dd>
 </dl>
-<h4><a class="anchor" id="autotoc_md1941"></a>
+<h4><a class="anchor" id="autotoc_md2010"></a>
 Member types</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -168,13 +168,13 @@ Member types</h4>
 </table>
 <p ><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md1942"></a>
+<h4><a class="anchor" id="autotoc_md2011"></a>
 Helper types</h4>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ts...&gt;</div>
 <div class="line"><span class="keyword">using</span> common_compatible_t = <span class="keyword">typename</span> common_compatible&lt;Ts...&gt;::type;</div>
 </div><!-- fragment --><p ><br  />
  </p>
-<h4><a class="anchor" id="autotoc_md1943"></a>
+<h4><a class="anchor" id="autotoc_md2012"></a>
 Example</h4>
 <p ><a href="https://godbolt.org/z/h8eePWxn3"><b>See it live on Compiler Explorer</b></a></p>
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -192,7 +192,7 @@ Example</h4>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            &lt;&lt; std::is_same&lt;wide_float_type, eve::wide&lt;float&gt;&gt;::value &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            &lt;&lt; std::is_same&lt;mixed_type, eve::wide&lt;float&gt;&gt;::value      &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
-<div class="ttc" id="astructeve_1_1common__compatible_html"><div class="ttname"><a href="structeve_1_1common__compatible.html">eve::common_compatible</a></div><div class="ttdoc">Computes the type compatible with a list of values.</div><div class="ttdef"><b>Definition:</b> common_compatible.hpp:101</div></div>
+<div class="ttc" id="astructeve_1_1common__compatible_html"><div class="ttname"><a href="structeve_1_1common__compatible.html">eve::common_compatible</a></div><div class="ttdoc">Computes the type compatible with a list of values.</div><div class="ttdef"><b>Definition:</b> common_compatible.hpp:105</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->

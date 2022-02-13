@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup comparisons
+  //! @addtogroup core
   //! @{
   //! @var is_not_less_equal
   //!

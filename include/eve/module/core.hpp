@@ -10,10 +10,10 @@
 //==================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup core core function
-//! @brief Bessel function
+//! @defgroup core Core functions
+//! @brief Core functions
 //!
-//! Temporary module to include core functions
+//!  This module provides implementation for various fundamental functions
 //!
 //! @}
 //==================================================================================================

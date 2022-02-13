@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="generator" content="Doxygen 1.9.4"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>E.V.E: Algorithms and Views</title>
+  <title>E.V.E: Algorithms</title>
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,9 +122,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="group__simd.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
       <li><a href="group__functions.html"><span>Functions</span></a></li>
-      <li><a href="group__constant.html"><span>Constants</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
       <li><a href="group__traits.html"><span>Traits</span></a></li>
     </ul>
   </div>
@@ -145,10 +145,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Algorithms and Views</div></div>
+  <div class="headertitle"><div class="title">Algorithms<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__algorithm.html">Algorithms and Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -157,15 +156,6 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Provides SIMD implementation of standard algorithms. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:group__algo__concepts"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo__concepts.html">Concepts</a></td></tr>
-<tr class="memdesc:group__algo__concepts"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides Concepts for algorithms and related components. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__views"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views.html">Views</a></td></tr>
-<tr class="memdesc:group__views"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides views to work with SIMD algorihms. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1ptr__iterator.html">eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt;</a></td></tr>
@@ -196,7 +186,7 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>eve::algo::
 <tr class="memitem:ga85190bd1728e1754c114f5b18fc5a524"><td class="memItemLeft" align="right" valign="top">constexpr range_ref_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524">eve::algo::range_ref</a></td></tr>
 <tr class="memdesc:ga85190bd1728e1754c114f5b18fc5a524"><td class="mdescLeft">&#160;</td><td class="mdescRight">for a <code>non_owning_range</code> returns it, otherwise returns a <code><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html" title="a non_owning_range wrapper around owning range. Should be created via range_ref">range_ref_wrapper</a></code>.  <a href="group__algo_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524">More...</a><br /></td></tr>
 <tr class="separator:ga85190bd1728e1754c114f5b18fc5a524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga887770a88fdcec5759f14329062c4771"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771">eve::algo::reverse</a> = function_with_traits&lt;reverse_&gt;[algo::unroll&lt;1&gt;]</td></tr>
+<tr class="memitem:ga887770a88fdcec5759f14329062c4771"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771">eve::algo::reverse</a> = function_with_traits&lt;reverse_&gt;[algo::unroll&lt;1&gt;][no_aligning]</td></tr>
 <tr class="memdesc:ga887770a88fdcec5759f14329062c4771"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD version of std::reverse.  <a href="group__algo_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771">More...</a><br /></td></tr>
 <tr class="separator:ga887770a88fdcec5759f14329062c4771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacabefd0775fc30272c8707c63e3b62a3"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo_gacabefd0775fc30272c8707c63e3b62a3.html#gacabefd0775fc30272c8707c63e3b62a3">eve::algo::reverse_copy</a> = function_with_traits&lt;reverse_copy_&gt;[algo::unroll&lt;1&gt;]</td></tr>

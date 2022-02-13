@@ -38,7 +38,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var upward
   //!
@@ -69,7 +69,7 @@ namespace eve
   using upward_type      = decorated<upward_()>;
 
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var downward
   //!
@@ -98,7 +98,7 @@ namespace eve
   //================================================================================================
   using downward_type    = decorated<downward_()>;
 
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var to_nearest
   //!
@@ -128,7 +128,7 @@ namespace eve
   using to_nearest_type  = decorated<to_nearest_()>;
 
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var toward_zero
   //!

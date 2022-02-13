@@ -178,7 +178,7 @@ Callable Function Objects as main API</h1>
 <p >This choice is driven by multiple reasons:</p>
 <ul>
 <li>It makes all <b>EVE</b> functions directly usable as an argument to another function. Contrary to template functions, function objects can be easily passed as parameters to algorithms or other higher-order functions.</li>
-<li>It enables the definition of <a class="el" href="group__decorator.html">function decorators</a> that acts as lightweight wrapper for modifying the behavior of a function at compile-time.</li>
+<li>It enables the definition of function decorators that acts as lightweight wrapper for modifying the behavior of a function at compile-time.</li>
 </ul>
 <h1><a class="anchor" id="rationale-decorator"></a>
 Function customization via higher-order decorator</h1>
@@ -188,7 +188,7 @@ Function customization via higher-order decorator</h1>
 <li>extra namespaces may have required code duplication when combining multiple decorators or decorator and masking.</li>
 <li>extra function names would have cluttered the API.</li>
 </ul>
-<p >The use of callable object to modify another callable object also plays nicely with a purely functional view of the library in which everything is a value, including function.</p>
+<p >The use of callable object to modify another callable object also plays nicely with a purely functional view of the library in which everything is a value, including functions.</p>
 <h1><a class="anchor" id="rationale-mask"></a>
 Masked operations support</h1>
 <p >Some SIMD instruction sets provides intrinsics that can mask which lanes of the register are affected by the operations. Those so-called <b>Masked operations</b> are accessible in <b>EVE</b> via the following protocol:</p>

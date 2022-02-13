@@ -25,7 +25,7 @@ namespace eve
 
   using pedantic_type = decorated<pedantic_()>;
   //================================================================================================
-  //! @addtogroup decorator
+  //! @addtogroup core
   //! @{
   //! @var pedantic
   //!

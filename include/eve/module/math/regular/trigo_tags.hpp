@@ -17,7 +17,7 @@ namespace eve
     template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
   };
   //================================================================================================
-  //! @addtogroup trigonometric
+  //! @addtogroup math
   //! @{
   //! @var quarter_circle
   //!
@@ -47,7 +47,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup trigonometric
+  //! @addtogroup math
   //! @{
   //! @var half_circle
   //!

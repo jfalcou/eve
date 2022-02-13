@@ -141,12 +141,14 @@ That's it, **EVE** is properly installed and ready to use.
 
 If you want to dig a bit further, you can pass additional options to `cmake` to activate additional features.
 
-| Option | Effect     | Target              |
-|:-------|:-----------|:--------------------|
-| `EVE_USE_BMI_ON_AVX2` | Enables using bmi instructions on avx2: for intel it's benefitial, for amd it is a disaster |
-| `EVE_USE_PCH`    | Enable using precompiled headers for **EVE**. This is `ON` by default  |                     |
-| `EVE_BUILD_TEST` | Enable unit tests for **EVE** (`ON` by default).  | `ninja unit`        |
-| `EVE_BUILD_BENCHMARKS`    | Enable benchmark tests for **EVE** (`OFF` by default). | `ninja benchmarks`  |
-| `EVE_BUILD_RANDOM`        | Enable random tests for **EVE** (`OFF` by default). | `ninja random`      |
+
+| Option | Effect       | Target               |
+|--------|:-------------|:---------------------|
+| `EVE_USE_BMI_ON_AVX2` | Enables using bmi instructions on avx2                 | for intel it's benefitial, for amd it's a disaster |
+| `EVE_USE_PCH`         | Enable using precompiled headers for **EVE**.          | This is `ON` by default  |
+| `EVE_BUILD_TEST`      | Enable unit tests for **EVE** (`ON` by default).       | `ninja unit`        |
+| `EVE_BUILD_BENCHMARKS`| Enable benchmark tests for **EVE** (`OFF` by default). | `ninja benchmarks`  |
+| `EVE_BUILD_RANDOM`    | Enable random tests for **EVE** (`OFF` by default).    | `ninja random`      |
+
 
 There is currently over 2000 tests, so compiling all unit tests may require a large machine or some time. We recommend compiling in parallel using `-j`.

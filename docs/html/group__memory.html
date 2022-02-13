@@ -122,9 +122,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="group__simd.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
       <li><a href="group__functions.html"><span>Functions</span></a></li>
-      <li><a href="group__constant.html"><span>Constants</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
       <li><a href="group__traits.html"><span>Traits</span></a></li>
     </ul>
   </div>
@@ -150,7 +150,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Memory Management<div class="ingroups"><a class="el" href="group__simd.html">SIMD Types and Helpers</a></div></div></div>
+  <div class="headertitle"><div class="title">Memory Management<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__arch.html">Architecture related Types and Helpers</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -177,6 +177,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__ptr.html">eve::aligned_ptr&lt; Type, Lanes &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for non-owning aligned pointers.  <a href="structeve_1_1aligned__ptr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1stack__buffer.html">eve::stack_buffer&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A stack buffer for a simd-value.  <a href="structeve_1_1stack__buffer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1soa__ptr.html">eve::soa_ptr&lt; Ptrs &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a low level abstruction that is like a tuple of pointers to parallel arrays. We think that in code one should use <code>views::zip_iterator</code> instead, it can do everything <code><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstruction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></code> can and more. We are still trying to figure out how/where these abstructions should live.  <a href="structeve_1_1soa__ptr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,7 +188,7 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">eve::unaligned_t</a> = decltype(<a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">unalign</a>(std::declval&lt; T &gt;()))</td></tr>
-<tr class="memdesc:ga33eaeb7216e54812993e44457de2c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Required header:</b> <code>#include &lt;eve/function/unalign.hpp&gt;</code>  <a href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">More...</a><br /></td></tr>
+<tr class="memdesc:ga33eaeb7216e54812993e44457de2c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code>  <a href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">More...</a><br /></td></tr>
 <tr class="separator:ga33eaeb7216e54812993e44457de2c34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
@@ -232,21 +235,24 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="memItemLeft" align="right" valign="top">constexpr callable_gather_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">eve::gather</a> = {}</td></tr>
-<tr class="memdesc:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing <b>TODO: FILL THIS BLANK</b>.  <a href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">More...</a><br /></td></tr>
-<tr class="separator:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="memItemLeft" align="right" valign="top">constexpr callable_read_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a> = {}</td></tr>
 <tr class="memdesc:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object reading single value from memory.  <a href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">More...</a><br /></td></tr>
 <tr class="separator:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga92b6c322f7422825155c2a590be84f09"><td class="memItemLeft" align="right" valign="top">constexpr callable_store_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a> = {}</td></tr>
-<tr class="memdesc:ga92b6c322f7422825155c2a590be84f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing //! description NOT FOUND.  <a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">More...</a><br /></td></tr>
-<tr class="separator:ga92b6c322f7422825155c2a590be84f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecf2b55e1403fdb96d6128ede314779a"><td class="memItemLeft" align="right" valign="top">constexpr callable_unalign_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">eve::unalign</a> = {}</td></tr>
-<tr class="memdesc:gaecf2b55e1403fdb96d6128ede314779a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for computing an unaligned version of a relaxed iterator.  <a href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">More...</a><br /></td></tr>
-<tr class="separator:gaecf2b55e1403fdb96d6128ede314779a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3914bc9a9604e1c20021fdb28557141d"><td class="memItemLeft" align="right" valign="top">constexpr callable_write_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d">eve::write</a> = {}</td></tr>
 <tr class="memdesc:ga3914bc9a9604e1c20021fdb28557141d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object writing single value from memory.  <a href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d">More...</a><br /></td></tr>
 <tr class="separator:ga3914bc9a9604e1c20021fdb28557141d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="memItemLeft" align="right" valign="top">constexpr callable_gather_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">eve::gather</a> = {}</td></tr>
+<tr class="memdesc:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing <b>TODO: FILL THIS BLANK</b>.  <a href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">More...</a><br /></td></tr>
+<tr class="separator:ga1104bd95e3b6b1a682c2fd9c290034d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92b6c322f7422825155c2a590be84f09"><td class="memItemLeft" align="right" valign="top">constexpr callable_store_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a> = {}</td></tr>
+<tr class="memdesc:ga92b6c322f7422825155c2a590be84f09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing //! description NOT FOUND.  <a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">More...</a><br /></td></tr>
+<tr class="separator:ga92b6c322f7422825155c2a590be84f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72e1a8955910c7a2453b517afe7cde4e"><td class="memItemLeft" align="right" valign="top">constexpr callable_store_equivalent_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga72e1a8955910c7a2453b517afe7cde4e.html#ga72e1a8955910c7a2453b517afe7cde4e">eve::store_equivalent</a> = {}</td></tr>
+<tr class="memdesc:ga72e1a8955910c7a2453b517afe7cde4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object, customisation point. If an iterator's store operation can be done as a store to some other iterator/pointer - this is a transformation to customize.  <a href="group__memory_ga72e1a8955910c7a2453b517afe7cde4e.html#ga72e1a8955910c7a2453b517afe7cde4e">More...</a><br /></td></tr>
+<tr class="separator:ga72e1a8955910c7a2453b517afe7cde4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecf2b55e1403fdb96d6128ede314779a"><td class="memItemLeft" align="right" valign="top">constexpr callable_unalign_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">eve::unalign</a> = {}</td></tr>
+<tr class="memdesc:gaecf2b55e1403fdb96d6128ede314779a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for computing an unaligned version of a relaxed iterator.  <a href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">More...</a><br /></td></tr>
+<tr class="separator:gaecf2b55e1403fdb96d6128ede314779a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->

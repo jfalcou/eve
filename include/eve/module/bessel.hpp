@@ -11,12 +11,12 @@
 //! @addtogroup functions
 //! @{
 //! @defgroup bessel Bessel function
-//! @brief Bessel function
+//! @brief Bessel functions
 //!
 //! This module provides implementation for the
 //! [Bessel functions](https://en.wikipedia.org/wiki/Bessel_function) and related operations.
 //!
-//! **Convenience header:** @code{.cpp} #include <eve/module/bessel.hpp> @endcode
+//! **Required header:** @code{.cpp} #include <eve/module/bessel.hpp> @endcode
 //!
 //! @}
 //==================================================================================================

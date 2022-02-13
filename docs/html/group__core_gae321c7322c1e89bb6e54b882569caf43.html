@@ -1,0 +1,703 @@
+<!-- HTML header for doxygen 1.8.20-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="generator" content="Doxygen 1.9.4"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>E.V.E: eve::fdim</title>
+  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="doxystrap.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Custom input to switch branches -->
+  <script>
+    function switchBranchAction() {
+      var branch = document.getElementById("branch_input").value;
+      var form = this;
+      window.location.href = window.location.hostname + '/en/' + branch;
+    }
+  </script>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+</head>
+<body>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
+      </div>
+    </div>
+  </nav>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+    <div class="content" id="content">
+      <div class="container">
+        <div id="titlearea">
+          <table cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr style="height: 56px;">
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
+                <td id="projectalign" style="padding-left: 0.5em;">
+                  <div id="projectname">E.V.E
+                    &#160;<span id="projectnumber">v2021.10.0</span>
+                  </div>
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
+            <div style="margin-bottom: 15px;">
+              <!-- DOXYSTRAP BLOCK CHANGE END -->
+              <!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>References</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="contents">
+<table cellspacing="0" cellpadding="0" border="0">
+  <tr>
+   <td valign="top">
+      <div class="navtab">
+        <table>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga166acc1f0809dd5181999e09379c8dbe.html#ga166acc1f0809dd5181999e09379c8dbe">absmax</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga52e358ea1c9b4df51da813110fd09a30.html#ga52e358ea1c9b4df51da813110fd09a30">absmin</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gac046f0bc4a97b845c5dc86dacec11727.html#gac046f0bc4a97b845c5dc86dacec11727">acos</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga46c6d32a2e7f8ae96c5af9053f093b59.html#ga46c6d32a2e7f8ae96c5af9053f093b59">acosd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaacfc8bf8fd140b1283300e614c0382b4.html#gaacfc8bf8fd140b1283300e614c0382b4">acosh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab2552ad4688f72f40efa1374ec8ec86f.html#gab2552ad4688f72f40efa1374ec8ec86f">acospi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf26eace785637f18f7c14bb14b5b4964.html#gaf26eace785637f18f7c14bb14b5b4964">acot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaee28d4da1b9c05b252828db73ee5d803.html#gaee28d4da1b9c05b252828db73ee5d803">acotd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga6dae92bc35a35cf866c19228b6d5e694.html#ga6dae92bc35a35cf866c19228b6d5e694">acoth</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga864565ce196adf9c2aba4d3d37dac033.html#ga864565ce196adf9c2aba4d3d37dac033">acotpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaec81cb638c6fb481fb61a896fbffd015.html#gaec81cb638c6fb481fb61a896fbffd015">acsc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf0747610ab5565034b4f67e90537541d.html#gaf0747610ab5565034b4f67e90537541d">acscd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">acsch</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaad2bdaa39988370b7910d041af662efa.html#gaad2bdaa39988370b7910d041af662efa">acscpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">add</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">agm</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga0d2106f4e47e7108be8477907a41b014.html#ga0d2106f4e47e7108be8477907a41b014">airy</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gaf4f1b45f0366483f8e2ac431344269b2.html#gaf4f1b45f0366483f8e2ac431344269b2">airy_bi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_gae685b8647a1587dd880773310538c3c3.html#gae685b8647a1587dd880773310538c3c3">align</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_gac4423607571a261fa6db058e09195c93.html#gac4423607571a261fa6db058e09195c93">align</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga545d28f7a8a147f33980c2fdd00a3eec.html#ga545d28f7a8a147f33980c2fdd00a3eec">align</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga0c5c814e7f47fcfe1e38e2436afc7203.html#ga0c5c814e7f47fcfe1e38e2436afc7203">align</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">all</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga55b591d755a02c9219c36c5603de6dc2.html#ga55b591d755a02c9219c36c5603de6dc2">allbits</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">almost</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def">any</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">arg</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="namespaceeve.html#a0280fa32cdcf6ac1877275412df23158">as_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="namespaceeve.html#a5c8abb85533f462eaf77e6b4bc945b7f">as_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga69e080db8cbb21e850e7c57f3eb776ff.html#ga69e080db8cbb21e850e7c57f3eb776ff">as_value</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga8b18ae3c66963dd65a5301dafa426cd6.html#ga8b18ae3c66963dd65a5301dafa426cd6">asec</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gae23e11941a656b1ee90ad98e0bf2c4af.html#gae23e11941a656b1ee90ad98e0bf2c4af">asecd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gad4b8c129553c90d5604003a1e6f711c5.html#gad4b8c129553c90d5604003a1e6f711c5">asech</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">asecpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">asin</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga2d341ed325943bd79fa090d9eba75d9c.html#ga2d341ed325943bd79fa090d9eba75d9c">asind</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gafdd0b4e5414191db4ce95026fdd4efad.html#gafdd0b4e5414191db4ce95026fdd4efad">asinh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gac0eea7b91e7d3786328d605b19a44d1d.html#gac0eea7b91e7d3786328d605b19a44d1d">asinpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaa4962fd095ca6aa9191e290f27d7f16d.html#gaa4962fd095ca6aa9191e290f27d7f16d">atan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">atan2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc">atan2d</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c">atan2pi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0">atand</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256">atanh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb">atanpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">bernouilli</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">beta</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gadacbd0d20c7b6a3f2a0cbd0c4e14ae78.html#gadacbd0d20c7b6a3f2a0cbd0c4e14ae78">betainc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf682b1982dca12b59434101b59aa2a68.html#gaf682b1982dca12b59434101b59aa2a68">binarize</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9167cbfa40259bc04e22ee3d40e27c9a.html#ga9167cbfa40259bc04e22ee3d40e27c9a">binarize_not</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga91eb277cc0e6eb27b52000c719917395.html#ga91eb277cc0e6eb27b52000c719917395">bit_and</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga694507ee45226b1c33898f0bb4393575.html#ga694507ee45226b1c33898f0bb4393575">bit_andnot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga593db7047a7d438f4967e8515dd20c3c.html#ga593db7047a7d438f4967e8515dd20c3c">bit_ceil</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">bit_floor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa01b0c4d87a092ea30f0517fde44898e.html#gaa01b0c4d87a092ea30f0517fde44898e">bit_mask</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gabffd912afb59c22c5e51f35becdc4d94.html#gabffd912afb59c22c5e51f35becdc4d94">bit_not</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga70e5c20a60e3ed6f146abcf971b7b488.html#ga70e5c20a60e3ed6f146abcf971b7b488">bit_notand</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2b4fed649fc2407cbacc82390c215d7e.html#ga2b4fed649fc2407cbacc82390c215d7e">bit_notor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad17f49d0aa8a13d742091ed5490bf999.html#gad17f49d0aa8a13d742091ed5490bf999">bit_or</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad0a437aa5d4f510c8b57fe889732c783.html#gad0a437aa5d4f510c8b57fe889732c783">bit_ornot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa920ed91dcfe6fc7ec9d977dd4aa2c8b.html#gaa920ed91dcfe6fc7ec9d977dd4aa2c8b">bit_select</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9f6327b5e9978f3905e8ad3c4c711a77.html#ga9f6327b5e9978f3905e8ad3c4c711a77">bit_shl</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf996698e31643fc5a631c460bce725fd.html#gaf996698e31643fc5a631c460bce725fd">bit_shr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1fdf2e92b8ef8b2824b3513057ccf2a4.html#ga1fdf2e92b8ef8b2824b3513057ccf2a4">bit_width</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaeabb8dbb9fe8afe4e47d6a8543cc4399.html#gaeabb8dbb9fe8afe4e47d6a8543cc4399">bit_xor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">bitincrement</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">bitofsign</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d">broadcast</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga5520218c452db7b34e883bf0f7a14488.html#ga5520218c452db7b34e883bf0f7a14488">cbrt</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">ceil</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">clamp</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0">combine</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">conj</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">convert</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga22a598ef861dbecf0613706ecb60c7fb.html#ga22a598ef861dbecf0613706ecb60c7fb">copysign</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000">cosd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab52648ab8990c126fd024ddf8badb536.html#gab52648ab8990c126fd024ddf8badb536">cosh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga03482f35c4921d89499b1034eee99be0.html#ga03482f35c4921d89499b1034eee99be0">cospi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gad0a09342c6bb010028e1686a0b1f599c.html#gad0a09342c6bb010028e1686a0b1f599c">cot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga1c0c27c3a93a40a2fa91c42b02040e62.html#ga1c0c27c3a93a40a2fa91c42b02040e62">cotd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab2e9ac37145ddd832e76a2ed724194c9.html#gab2e9ac37145ddd832e76a2ed724194c9">coth</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222">cotpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">count_true</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac3ea8b4c98c60b7969d5204c18e24107.html#gac3ea8b4c98c60b7969d5204c18e24107">countl_one</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga29c9c15fec7733014b176d759adecc62.html#ga29c9c15fec7733014b176d759adecc62">countl_zero</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0f2c79073c4fd02eba8f003f2809013a.html#ga0f2c79073c4fd02eba8f003f2809013a">countr_one</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga5c020eebe010e653d992031c6508b55c.html#ga5c020eebe010e653d992031c6508b55c">countr_zero</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga664582204f1e5e323b88bf429706c77f.html#ga664582204f1e5e323b88bf429706c77f">csc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">csch</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">cscpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gad1f7e9c00fa0ad229c612b230059a9d7.html#gad1f7e9c00fa0ad229c612b230059a9d7">cyl_bessel_i0</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga75fe8112cf1f1d8d3bc3c13e796f4fff.html#ga75fe8112cf1f1d8d3bc3c13e796f4fff">cyl_bessel_i1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga93b97cdd2985f7fdffda38a1c2660d38.html#ga93b97cdd2985f7fdffda38a1c2660d38">cyl_bessel_in</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34">cyl_bessel_j0</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga8d5c8c6360854651827324aff64e9ab9.html#ga8d5c8c6360854651827324aff64e9ab9">cyl_bessel_j1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga958eeb8c42f0a2e63fc0e1d7aa3706ca.html#ga958eeb8c42f0a2e63fc0e1d7aa3706ca">cyl_bessel_jn</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gaf2b4c47b143db0674b5b658464f3621c.html#gaf2b4c47b143db0674b5b658464f3621c">cyl_bessel_k0</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_ga5e2dd2d1f2e62bbee606e3194db9352b.html#ga5e2dd2d1f2e62bbee606e3194db9352b">cyl_bessel_k1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gac43789c4ff60e930fef12912520a8a12.html#gac43789c4ff60e930fef12912520a8a12">cyl_bessel_kn</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gac25060705be353ebf0747ef780fe3362.html#gac25060705be353ebf0747ef780fe3362">cyl_bessel_y0</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gabb11447069fcb923604e1c08489e3193.html#gabb11447069fcb923604e1c08489e3193">cyl_bessel_y1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__bessel_gab49ce5283b3eccf7e436b2307dc44072.html#gab49ce5283b3eccf7e436b2307dc44072">cyl_bessel_yn</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga1edb346d12d2e1bd27c63712d0e06a5d.html#ga1edb346d12d2e1bd27c63712d0e06a5d">dawson</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0909b456d35f4111012b71e9bba92ede.html#ga0909b456d35f4111012b71e9bba92ede">dec</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">definitely</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5">deinterleave_groups</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3">deinterleave_groups_shuffle</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">diff</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">diff_1st</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">diff_2nd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0">diff_3rd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d">diff_nth</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga9eae818e09cb161b0209418f0b1166f0.html#ga9eae818e09cb161b0209418f0b1166f0">digamma</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaeff40f4fe2a2e24a0b2337002530c452.html#gaeff40f4fe2a2e24a0b2337002530c452">dist</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5">div</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58">double_factorial</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">downward</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b">drop_alternative</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_ga5d9679ef9ad8f51745ca3ec29ba89c88.html#ga5d9679ef9ad8f51745ca3ec29ba89c88">ellint_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_ga399581902e638b91ced137b1673ab42e.html#ga399581902e638b91ced137b1673ab42e">ellint_d</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_gac988dfdbc128cb466584e60b61c1eeef.html#gac988dfdbc128cb466584e60b61c1eeef">ellint_rc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_gaf90bbb98375d43dd1c8a3c6c77f66d28.html#gaf90bbb98375d43dd1c8a3c6c77f66d28">ellint_rd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14">ellint_rf</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_gae014d130bf719deafe7b2879e5d8ac0e.html#gae014d130bf719deafe7b2879e5d8ac0e">ellint_rg</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">ellint_rj</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eps</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">erf</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga389ba76da33441489ce62a08b142f782.html#ga389ba76da33441489ce62a08b142f782">erf_inv</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga6bfb7aac40dbbabe2a4ca4f1aa8df71f.html#ga6bfb7aac40dbbabe2a4ca4f1aa8df71f">erfc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga8e65b8bc50b054bdbd94fa277898dde3.html#ga8e65b8bc50b054bdbd94fa277898dde3">erfc_inv</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga42d5ac21f0704af15f1a621f8b10f086.html#ga42d5ac21f0704af15f1a621f8b10f086">erfcx</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">exp</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a">exp10</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">exp2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gae3e83c43d4d111542f98b45ff2205134.html#gae3e83c43d4d111542f98b45ff2205134">exp_int</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745">expm1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga720ef267847ac42c18eb45878ccf32b5.html#ga720ef267847ac42c18eb45878ccf32b5">exponent</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9c49e96e0543e6b6719260adde8cca87.html#ga9c49e96e0543e6b6719260adde8cca87">exponentmask</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011">expx2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">false_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2d39b164847cc7f9beaf56659102ed94.html#ga2d39b164847cc7f9beaf56659102ed94">fam</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga4f4ca543d5f16fa535a0307128ec27aa.html#ga4f4ca543d5f16fa535a0307128ec27aa">fanm</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="group__core_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43">fdim</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">fibonacci</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad440bea367cdc362a6e90919cc601e35.html#gad440bea367cdc362a6e90919cc601e35">firstbitset</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8bc33d70eb0f0eb36126b95e06588748.html#ga8bc33d70eb0f0eb36126b95e06588748">firstbitunset</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">float32</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gabe14f9b1a3924cee1ca3676c2a7846b8.html#gabe14f9b1a3924cee1ca3676c2a7846b8">float64</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaed175cd947b502a735e216cd1fce6d90.html#gaed175cd947b502a735e216cd1fce6d90">floating_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9f22991052abdd78ebc5e87e31631540.html#ga9f22991052abdd78ebc5e87e31631540">floor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">fma</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaae2ebed60c826b5686a2599a37bc1a88.html#gaae2ebed60c826b5686a2599a37bc1a88">fms</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga074ab3f337c7af4c8d8cb430ac4e1cc5.html#ga074ab3f337c7af4c8d8cb430ac4e1cc5">fnma</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga7d02a108e868c1deaa0143f6377c7c3f.html#ga7d02a108e868c1deaa0143f6377c7c3f">fnms</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">frac</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf">fracscale</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb">frexp</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401">fsm</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">fsnm</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gae09a3d5ef50adfebd1d42611611cae5a.html#gae09a3d5ef50adfebd1d42611611cae5a">gamma_p</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gaf5fcadaf8004e085bda70f80d2a649fc.html#gaf5fcadaf8004e085bda70f80d2a649fc">gamma_p_inv</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0">gather</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_gac21a6f747ae2df1d45db58a58cbba588.html#gac21a6f747ae2df1d45db58a58cbba588">gcd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">gegenbauer</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8">geommean</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5">half</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">half_circle</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga722c967a20debd9ffe04b325134395ba.html#ga722c967a20debd9ffe04b325134395ba">halfeps</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">hermite</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">horner</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">hypot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">if_else</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga363ef2755547b60b16b00bfb58ef21e9.html#ga363ef2755547b60b16b00bfb58ef21e9">ifnot_else</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0a4068143a6b59cc0167d6b0eda590c3.html#ga0a4068143a6b59cc0167d6b0eda590c3">ifrexp</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__conditional.html#ga6ce7ac450593ee98fe8ca0d9cf65e4b4">ignore_all</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">ignore_none</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">inf</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga5062b84ed3dd16e3b6e72045f66414f6.html#ga5062b84ed3dd16e3b6e72045f66414f6">int16</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga380d6bd2870197f160dda570b1eefc2d.html#ga380d6bd2870197f160dda570b1eefc2d">int32</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8b31dfbeb3cff7a3f1e766c03e19a6f0.html#ga8b31dfbeb3cff7a3f1e766c03e19a6f0">int64</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga03a0c0686af192634c7b6e0896ba663b.html#ga03a0c0686af192634c7b6e0896ba663b">int8</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac9beb69d543a5e978d1edae85069feb6.html#gac9beb69d543a5e978d1edae85069feb6">int_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga37d9537aa6f66240bd5b8b4e61269ee9.html#ga37d9537aa6f66240bd5b8b4e61269ee9">invlog10_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gae22a65c2fd3fabbb0223e51d9a38a47c.html#gae22a65c2fd3fabbb0223e51d9a38a47c">invlog_10</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaeb667b96225f1f9d9e6a5b480d960344.html#gaeb667b96225f1f9d9e6a5b480d960344">invlog_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga95e24f644925e19a6b356fa1c28f9799.html#ga95e24f644925e19a6b356fa1c28f9799">invpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga49667d76f54c0c7753c703215266975f.html#ga49667d76f54c0c7753c703215266975f">invsqrt_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">is_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">is_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga3c06e236e6195d1a36a43e0fcc7c5eca.html#ga3c06e236e6195d1a36a43e0fcc7c5eca">is_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858">is_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6e7a64c2a6bf2fc626451e81cc749c2a.html#ga6e7a64c2a6bf2fc626451e81cc749c2a">is_denormal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">is_equal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">is_eqz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf47a88cced054b2d5bc4b4f4ed8debd1.html#gaf47a88cced054b2d5bc4b4f4ed8debd1">is_even</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gadb59eac8d4aed0fa759b6feadcefc406.html#gadb59eac8d4aed0fa759b6feadcefc406">is_finite</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga16303c73443e6529324a75e251ce8a6f.html#ga16303c73443e6529324a75e251ce8a6f">is_gez</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">is_greater</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8687ec8d4e16c23dcb5a836e0d1d02cb.html#ga8687ec8d4e16c23dcb5a836e0d1d02cb">is_greater_equal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga7885f935549bf908f247982900555357.html#ga7885f935549bf908f247982900555357">is_gtz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac7357b852948396d38469bc6fa05a066.html#gac7357b852948396d38469bc6fa05a066">is_imag</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gab4ac6581bc12221d6bca09ed24835060.html#gab4ac6581bc12221d6bca09ed24835060">is_infinite</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">is_less</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa8a0ea2b80fef1303a313d1b46fa9394.html#gaa8a0ea2b80fef1303a313d1b46fa9394">is_lessgreater</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9d53c4cb0975665b1da0ed9c637c8b36.html#ga9d53c4cb0975665b1da0ed9c637c8b36">is_lez</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8590bd92bfd11ad943fc8f143e07442a.html#ga8590bd92bfd11ad943fc8f143e07442a">is_ltz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784">is_nan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9138a027fc4acf4517e8e1f2b898ed2d.html#ga9138a027fc4acf4517e8e1f2b898ed2d">is_nez</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0e4486901aa47bcb1fb5f7304060387a.html#ga0e4486901aa47bcb1fb5f7304060387a">is_ngez</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">is_ngtz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga05739b961c00e13aae340001fd18fd0e.html#ga05739b961c00e13aae340001fd18fd0e">is_nlez</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2bd76380375d1e9e8b125f61c1c85829.html#ga2bd76380375d1e9e8b125f61c1c85829">is_nltz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad8c0f5b1fcc6893e05d6460f7846006e.html#gad8c0f5b1fcc6893e05d6460f7846006e">is_normal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae4625c98cb401e459e64f3ef3574c56c.html#gae4625c98cb401e459e64f3ef3574c56c">is_not_denormal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">is_not_equal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1a048a713642bb0aa9c32d2492e0a14d.html#ga1a048a713642bb0aa9c32d2492e0a14d">is_not_finite</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8769c9b7cb829f6cb787848e5cd35e05.html#ga8769c9b7cb829f6cb787848e5cd35e05">is_not_flint</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2016ad6adb1b63cb02162cb75b17ac9e.html#ga2016ad6adb1b63cb02162cb75b17ac9e">is_not_greater</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">is_not_greater_equal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga916b353f1b02f20cfda5c1f0e30481a2.html#ga916b353f1b02f20cfda5c1f0e30481a2">is_not_imag</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga629dd840e2cfda148550657259dcb18c.html#ga629dd840e2cfda148550657259dcb18c">is_not_infinite</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaae43e7c0594bdcbbc612427d3322c1df.html#gaae43e7c0594bdcbbc612427d3322c1df">is_not_less</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga7ff690d0806cf05be796bdc45cf47801.html#ga7ff690d0806cf05be796bdc45cf47801">is_not_less_equal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d">is_not_nan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga4cae3be0b087d2f772d987e3b1cff4d1.html#ga4cae3be0b087d2f772d987e3b1cff4d1">is_not_real</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e">is_odd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce">is_ordered</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1">is_positive</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306">is_pow2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga38314db2a1da99c8bdec146b4ed56c9b.html#ga38314db2a1da99c8bdec146b4ed56c9b">is_real</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413">is_unordered</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">iterator_cardinal_t</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga822f2a858b5cbde1bfb5aba13bdd4629.html#ga822f2a858b5cbde1bfb5aba13bdd4629">lambert</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">lbeta</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">lcm</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga3b2f3edbfac7f9e75a410245b728d96d.html#ga3b2f3edbfac7f9e75a410245b728d96d">ldexp</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">lfactorial</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga9a67ba4913e40836c0c90b1853faa9b5.html#ga9a67ba4913e40836c0c90b1853faa9b5">lgamma</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab1d7c29149e2041dbf869bc56fad863f.html#gab1d7c29149e2041dbf869bc56fad863f">log</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga913f29b7780e1e90dd19d13ec8c971f9.html#ga913f29b7780e1e90dd19d13ec8c971f9">log10</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga5105272ae2219a74e27f57f0b687893f.html#ga5105272ae2219a74e27f57f0b687893f">log1p</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gacf37f58fc6f7208ae058241b6b542ced.html#gacf37f58fc6f7208ae058241b6b542ced">log2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga647cf7c845fb8a1139aebeb3d1342f8a.html#ga647cf7c845fb8a1139aebeb3d1342f8a">log_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab3a3243853d722c3340cdcb02083265e.html#gab3a3243853d722c3340cdcb02083265e">log_abs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga048089d9f72f2fecb4dffab41ae615aa.html#ga048089d9f72f2fecb4dffab41ae615aa">logeps</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gab60c3fe8652d6a2e7b8538c37784c9df.html#gab60c3fe8652d6a2e7b8538c37784c9df">logical_and</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2b90210c1df2b4ba664a2c92c6482fac.html#ga2b90210c1df2b4ba664a2c92c6482fac">logical_andnot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf5b68d06dfc2c5d7f19fd067c8c7aa18.html#gaf5b68d06dfc2c5d7f19fd067c8c7aa18">logical_not</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga15fbbc6e9bb28066c3f3a13d2e0ce4b4.html#ga15fbbc6e9bb28066c3f3a13d2e0ce4b4">logical_notand</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga87c6af7531a1c2adc94d0947357cc417.html#ga87c6af7531a1c2adc94d0947357cc417">logical_notor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga4eadf093443d36b1e0fea9462d64d452.html#ga4eadf093443d36b1e0fea9462d64d452">logical_or</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga7ba7ab421719275f96d76882a4b7097c.html#ga7ba7ab421719275f96d76882a4b7097c">logical_ornot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa37feb8e6153eb0ac5e256ba632b232e.html#gaa37feb8e6153eb0ac5e256ba632b232e">logical_xor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9556715e0b694c52d69058582bc47aa3.html#ga9556715e0b694c52d69058582bc47aa3">logspace_add</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga6c85541a3e60b50506e87d18c2e88b34.html#ga6c85541a3e60b50506e87d18c2e88b34">logspace_sub</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga5fa01768959ec399cb0a910af345dd8b.html#ga5fa01768959ec399cb0a910af345dd8b">lohi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">lpnorm</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">lrising_factorial</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaae09e7397cee784b81e66dad3f912cc1.html#gaae09e7397cee784b81e66dad3f912cc1">manhattan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad7abe741b69d3032a4c4bd5e66e5524e.html#gad7abe741b69d3032a4c4bd5e66e5524e">mantissa</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga040465fe0ba98419d6ce5397bc60def0.html#ga040465fe0ba98419d6ce5397bc60def0">mantissamask</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1">map_alternative</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga4e27a35e809af26649f8591ebfc48590.html#ga4e27a35e809af26649f8591ebfc48590">max</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__traits_ga66d8722c860708cf70e38ecedac9a94d.html#ga66d8722c860708cf70e38ecedac9a94d">max_scalar_size_v</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga39f118f0d4e80751556b9252dd9c7f3d.html#ga39f118f0d4e80751556b9252dd9c7f3d">maxabs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga08c97899074a949e8ee122d483d77a85.html#ga08c97899074a949e8ee122d483d77a85">maxexponent</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga054fe483e5b5ded0727b05b181360709.html#ga054fe483e5b5ded0727b05b181360709">maxexponentm1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga66c99607ec733c84d626d11de350ab4e.html#ga66c99607ec733c84d626d11de350ab4e">maxexponentp1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga27166fb22ddd73e9cb6c19b9ab7054a6.html#ga27166fb22ddd73e9cb6c19b9ab7054a6">maxflint</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8470a6fd7f9d7393c92ec63ca8ef050e.html#ga8470a6fd7f9d7393c92ec63ca8ef050e">maximum</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga1261b05fe986985da2f916752eeadf57.html#ga1261b05fe986985da2f916752eeadf57">maxlog</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gadbdc6ed408ab2a2b8d6270f04f19798b.html#gadbdc6ed408ab2a2b8d6270f04f19798b">maxlog10</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga65e61db3f5dad150ee147383c4a8096e.html#ga65e61db3f5dad150ee147383c4a8096e">maxlog2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">maxmag</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf7d9ac8179e7fa1b3cdbaf16f215bb3d.html#gaf7d9ac8179e7fa1b3cdbaf16f215bb3d">mhalf</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">min</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga974ba9a4f4aabf173558a6abedeb518f.html#ga974ba9a4f4aabf173558a6abedeb518f">minabs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e">mindenormal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gafc9c7a5e7b96dcb0d2bfb2ef5e323aaa.html#gafc9c7a5e7b96dcb0d2bfb2ef5e323aaa">minexponent</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">minf</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4">minimum</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga03181e9677d0f1f28da82a94140f7496.html#ga03181e9677d0f1f28da82a94140f7496">minlog</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9ab3341d4b8bf02105e3142b250ade19.html#ga9ab3341d4b8bf02105e3142b250ade19">minlog10</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga68563805ada81165afbd62684a872bc1.html#ga68563805ada81165afbd62684a872bc1">minlog10denormal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga7f0e34202816b0108d0d4a31ede311a7.html#ga7f0e34202816b0108d0d4a31ede311a7">minlog2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1">minlog2denormal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga1f2d0ce99a16b97d851663795179afcf.html#ga1f2d0ce99a16b97d851663795179afcf">minlogdenormal</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gabac32915710c56d7dba2bf23e9bcdbcc.html#gabac32915710c56d7dba2bf23e9bcdbcc">minmag</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8b7bbe9ef3171d65271795ff14c98cc9.html#ga8b7bbe9ef3171d65271795ff14c98cc9">minus</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga42fa342353439f0b23e8fab241eecdfc.html#ga42fa342353439f0b23e8fab241eecdfc">modf</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaad7c9ef60300e0df1ef588da7db5bb17.html#gaad7c9ef60300e0df1ef588da7db5bb17">mone</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">mul</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad55e4457095a43c4efb949e5ba495113.html#gad55e4457095a43c4efb949e5ba495113">mzero</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__simd__types.html#ga11b65eff854b205c9f9ef8dbd559bb9b">na_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">nan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">nb_values</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0db30e636a617665260fe6ef9afba989.html#ga0db30e636a617665260fe6ef9afba989">nbmantissabits</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga3fe2cd9f450620121afe84a493f45aa7.html#ga3fe2cd9f450620121afe84a493f45aa7">nearest</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga5fd9c911ac5d067dc2d7b6cd819b05a9.html#ga5fd9c911ac5d067dc2d7b6cd819b05a9">negabsmax</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad0dd8ae2cec6f99c1523ec4871efce3c.html#gad0dd8ae2cec6f99c1523ec4871efce3c">negate</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga386ab1703063915f4b07a18314626ace.html#ga386ab1703063915f4b07a18314626ace">negatenz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga596c156a6748b0fd395fa08f28e66b7f.html#ga596c156a6748b0fd395fa08f28e66b7f">negmaxabs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9014bc919ce5fc1ed1db4775671df597.html#ga9014bc919ce5fc1ed1db4775671df597">negminabs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">newton</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gabd39aa0f7b4d3220b9af85691fb09a8c.html#gabd39aa0f7b4d3220b9af85691fb09a8c">next</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf1ba6612bfd82759bf6150e2e353e7d3.html#gaf1ba6612bfd82759bf6150e2e353e7d3">nextafter</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6bac192090779b76bc7ffe5425fcabc8.html#ga6bac192090779b76bc7ffe5425fcabc8">none</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">nth_prime</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">nthroot</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">numeric</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">omega</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">one</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gacf950f83c49a8875b30ecf506fbaa85c.html#gacf950f83c49a8875b30ecf506fbaa85c">oneminus</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370">oneosqrteps</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gac0cd00964886659218db19f7dea18b17.html#gac0cd00964886659218db19f7dea18b17">oneotwoeps</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555">over</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab">p_kind</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd">pattern</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">pedantic</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gabbdbd5a281cc068cba8e4551671a8561.html#gabbdbd5a281cc068cba8e4551671a8561">pio_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga5b056b1123bc80ac58687b3d6abfbec6.html#ga5b056b1123bc80ac58687b3d6abfbec6">pio_4</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad742f5ce084044535470a38bca2d1cc5.html#gad742f5ce084044535470a38bca2d1cc5">plus</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322">popcount</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9e50f660c1ffa0aec9d549a822e5d2fb.html#ga9e50f660c1ffa0aec9d549a822e5d2fb">pow</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf5caf2f837c183fa5924d05b64b24def.html#gaf5caf2f837c183fa5924d05b64b24def">pow1p</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga7dc798b64cf565837240f4d135722cbe.html#ga7dc798b64cf565837240f4d135722cbe">pow_abs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">powm1</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad1c74accad79dc78f0147991c3e2b9ae.html#gad1c74accad79dc78f0147991c3e2b9ae">prev</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">prime_ceil</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_ga88c5c11a1583d1787e367f08385a7dc8.html#ga88c5c11a1583d1787e367f08385a7dc8">prime_floor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599.html#gaa4853888b0e6be1fdbc24c9f6b372599">q_kind</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f">quadrant</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">quarter_circle</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga66698fa1c0740a501e7a6f90c7813cec.html#ga66698fa1c0740a501e7a6f90c7813cec">rat</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">raw</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">read</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9e1abef2b02773654dd566b466e9586a.html#ga9e1abef2b02773654dd566b466e9586a">rec</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03">reduce</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253">regular</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45">rempio2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__conditional_gab99c14f8c7e6cd5fc693a79c97bc89d8.html#gab99c14f8c7e6cd5fc693a79c97bc89d8">reverse_conditional</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">reverse_horner</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">rising_factorial</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf23afad64ceaef8914f279dc10f03faf.html#gaf23afad64ceaef8914f279dc10f03faf">round</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga677dabc1ce72bb1de0bf181b322aa8b6.html#ga677dabc1ce72bb1de0bf181b322aa8b6">roundscale</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">rshl</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga9622c49784c564f93798074ac6e6fe1f.html#ga9622c49784c564f93798074ac6e6fe1f">rshr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">rsqrt</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga3724675648acb38bcb3008a732d14c64.html#ga3724675648acb38bcb3008a732d14c64">saturate</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">saturated</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__simd__types.html#gac6d945f9d3ef36b189eb255dfe2ade19">scalar</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga999433dcb57f95f8d149d92e68c071f0.html#ga999433dcb57f95f8d149d92e68c071f0">scan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed">sec</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga4fe32d4bfda35b6d2196488cb036f185.html#ga4fe32d4bfda35b6d2196488cb036f185">sech</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da">secpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">shl</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">shr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga51432e6f8f1e6386e37b58e32183bcc4.html#ga51432e6f8f1e6386e37b58e32183bcc4">sign</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga61d15ea4565d12bf9dbbe92491ea064a.html#ga61d15ea4565d12bf9dbbe92491ea064a">signgam</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gae7cb49618932a9d2bcb50758aedc4ab3.html#gae7cb49618932a9d2bcb50758aedc4ab3">significants</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2e46880609b55c4620cce93efc936c7c.html#ga2e46880609b55c4620cce93efc936c7c">signmask</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">signnz</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">sin</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9f71b1e51347872f0a3b2ca92ac9cf9a.html#ga9f71b1e51347872f0a3b2ca92ac9cf9a">sinc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9f7c4b010d79f473531a7d83902b4d02.html#ga9f7c4b010d79f473531a7d83902b4d02">sincos</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga7c08108f1c56d9df1141637c01c0d194.html#ga7c08108f1c56d9df1141637c01c0d194">sind</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">sindcosd</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga33b301b28ef48f95b3a6b50b53291c1c.html#ga33b301b28ef48f95b3a6b50b53291c1c">sinh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaaa1e76a9092bfeb81d711073f975ba26.html#gaaa1e76a9092bfeb81d711073f975ba26">sinhc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga9f1d326d08e1125ddd0a032fa7a179af.html#ga9f1d326d08e1125ddd0a032fa7a179af">sinhcosh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga507c21955358dcd61c84f41e65d977c4.html#ga507c21955358dcd61c84f41e65d977c4">sinpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gac6415d1434e29c79594e7ef0ce5e2b65.html#gac6415d1434e29c79594e7ef0ce5e2b65">sinpic</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">sinpicospi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga34924224922708e1770206eb025185ec.html#ga34924224922708e1770206eb025185ec">smallestposval</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8">splat</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">sqr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga332395d365c5e31c1fbd8bf6cd62aaa3.html#ga332395d365c5e31c1fbd8bf6cd62aaa3">sqr_abs</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">sqrt</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf0a7a9b81d0b7a73bc26561479fe906e.html#gaf0a7a9b81d0b7a73bc26561479fe906e">sqrt_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga5dda1243e24732f78c849f2d5f0b814d.html#ga5dda1243e24732f78c849f2d5f0b814d">sqrt_2o_2</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad9bc63b6bdfc034541a2fa40539ec0ae.html#gad9bc63b6bdfc034541a2fa40539ec0ae">sqrteps</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga8822fec51c8b61d6d21db8b8a2f09228.html#ga8822fec51c8b61d6d21db8b8a2f09228">sqrtvalmax</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_ga97bb8b22f82c5b5e61e063d18fe7883f.html#ga97bb8b22f82c5b5e61e063d18fe7883f">stirling</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">store</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga72e1a8955910c7a2453b517afe7cde4e.html#ga72e1a8955910c7a2453b517afe7cde4e">store_equivalent</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">sub</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__polynomial_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">successor</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga2d5530893d21e4e04802f96fd85309df.html#ga2d5530893d21e4e04802f96fd85309df">swap_if</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">tan</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">tanh</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">tanpi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gab6f03be6923b910c56c4b49af92e5ad5.html#gab6f03be6923b910c56c4b49af92e5ad5">tgamma</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">to_nearest</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a">tolerant</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028">toward_zero</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac1255364700394f5b94065c935208f42.html#gac1255364700394f5b94065c935208f42">true_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga300f96ea06042ecfd42f3e3e17787882.html#ga300f96ea06042ecfd42f3e3e17787882">two_add</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga5ef9f1355859ff017142b92d4eb5516f.html#ga5ef9f1355859ff017142b92d4eb5516f">two_prod</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gaa982de3f437f63dd7e92019e186bcb9c.html#gaa982de3f437f63dd7e92019e186bcb9c">twoopi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__math_gab83b9743ff1508e1b62af18f170ed576.html#gab83b9743ff1508e1b62af18f170ed576">twopi</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gacefed0e3b9ee16507cf649601408be2a.html#gacefed0e3b9ee16507cf649601408be2a">twotonmb</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gac0d5d471080fe5537f1ed3d9296ddf77.html#gac0d5d471080fe5537f1ed3d9296ddf77">uint16</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga1dbf1967fa31abbc08b1ce14a8252acb.html#ga1dbf1967fa31abbc08b1ce14a8252acb">uint32</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga6004cbdbfdd5ec747cb4fa7ef28c84df.html#ga6004cbdbfdd5ec747cb4fa7ef28c84df">uint64</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gad236d2923e163d4f72970151d9ff0519.html#gad236d2923e163d4f72970151d9ff0519">uint8</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gafd86a79bb4835bef550be50d5b56b342.html#gafd86a79bb4835bef550be50d5b56b342">uint_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga40ae299a91e28c9285b6521ca12c3fbf.html#ga40ae299a91e28c9285b6521ca12c3fbf">ulpdist</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">unalign</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">under</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">upgrade_</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">upward</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">valmax</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaf8c83b159938a524efeaa2a64966d33b.html#gaf8c83b159938a524efeaa2a64966d33b">valmin</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">value_type_t</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__traits_ga51d0901c39a489a5d6e0449339291c57.html#ga51d0901c39a489a5d6e0449339291c57">wide_value_type_t</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d">write</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">zero</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__special_gaa1a8a239d3a2f132dbcedd15c848fafb.html#gaa1a8a239d3a2f132dbcedd15c848fafb">zeta</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="group__core_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">zip</a></td></tr>
+        </table>
+      </div>
+   </td>
+   <td valign="top" class="mempage">
+<a id="gae321c7322c1e89bb6e54b882569caf43" name="gae321c7322c1e89bb6e54b882569caf43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae321c7322c1e89bb6e54b882569caf43">&#9670;&nbsp;</a></span>fdim</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::fdim = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable object computing the positive difference. </p>
+<p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
+<h4><a class="anchor" id="autotoc_md513"></a>
+Members Functions</h4>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the fdim operation    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
+</table>
+<hr  />
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; real_value T, real_value U&gt; <span class="keyword">auto</span> operator()( T x, U y ) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
+<div class="line"><span class="keyword">requires</span> compatible&lt; T, U &gt;;</div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
+<p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">values</a></p>
+<p ><b>Return value</b></p>
+<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> positive difference between <code>x</code> and <code>y</code>:</p><ul>
+<li>if <code>x&gt;y</code>, x-y is returned</li>
+<li>if <code>x&lt;=y</code>, +0 is returned</li>
+<li>otherwise a <code>Nan</code> is returned</li>
+</ul>
+<hr  />
+<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__core_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43" title="Callable object computing the positive difference.">eve::fdim</a></p>
+<p ><b>Parameters</b></p>
+<p ><code>cond</code> : conditional expression</p>
+<p ><b>Return value</b></p>
+<p >A Callable object so that the expression <code>fdim[cond](x, ...)</code> is equivalent to <code>if_else(cond,fdim(x, ...),x)</code></p>
+<hr  />
+<h4><a class="anchor" id="autotoc_md517"></a>
+Supported decorators</h4>
+<ul>
+<li><p class="startli"><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a><br  />
+</p>
+<p class="startli">The expression <code>diff_1st(fim)(x,y)</code> and <code>diff_2nd(fim)(x,y)</code> computes the partial derivatives of \(f\), where \(f\) is the function \((x,y) \rightarrow \ \max(0,x-y)\).</p>
+</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md518"></a>
+Example</h4>
+<p > <a id="godbolt-link" href="#">See it live on Compiler Explorer</a> <div id="godbolt"> </p><div class="fragment"><div class="line"><span class="comment">//#include &lt;eve/function/fdim.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core/constant/valmax.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core/constant/valmin.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using</span> wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_it pf = {0, 1, -1, -<a class="code hl_variable" href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  wide_it qf = {1, -1, 0, <a class="code hl_variable" href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf           = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf           = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; fdim(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43">eve::fdim</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">float</span> xf = -<a class="code hl_variable" href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <span class="keywordtype">float</span> yf = <a class="code hl_variable" href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf           = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf           = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; fdim(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43">eve::fdim</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr callable_valmax_ valmax</div><div class="ttdoc">Callable object computing the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:53</div></div>
+<div class="ttc" id="agroup__core_gae321c7322c1e89bb6e54b882569caf43_html_gae321c7322c1e89bb6e54b882569caf43"><div class="ttname"><a href="group__core_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43">eve::fdim</a></div><div class="ttdeci">constexpr callable_fdim_ fdim</div><div class="ttdoc">Callable object computing the positive difference.</div><div class="ttdef"><b>Definition:</b> fdim.hpp:81</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+</div><!-- fragment --><p> <br  />
+  </div> </p>
+
+</div>
+</div>
+    </td>
+  </tr>
+</table>
+</div><!-- contents -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+<hr class="footer"/>
+</body>
+</html>

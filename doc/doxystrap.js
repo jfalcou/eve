@@ -12,7 +12,7 @@ $( document ).ready(function() {
   $('li > a[href="modules.html"] > span').before("<i class='fa fa-sitemap'></i> ");
   $('li > a[href="group__simd.html"] > span').before("<i class='fa fa-terminal'></i> ");
   $('li > a[href="group__functions.html"] > span').before("<i class='fa fa-superscript'></i> ");
-  $('li > a[href="group__constant.html"] > span').before("<i class='fa fa-bar-chart'></i> ");
+  $('li > a[href="group__algo.html"] > span').before("<i class='fa fa-bar-chart'></i> ");
   $('li > a[href="group__traits.html"] > span').before("<i class='fa fa-scissors'></i> ");
   $('li > a[href="concepts.html"] > span').before("<i class='fa fa-cubes'></i> ");
   $('li > a[href="namespaces.html"] > span').before("<i class='fa fa-braille'></i> ");

@@ -152,19 +152,19 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md1973">Explicit Selection</a></li>
-<li class="level2"><a href="#autotoc_md1974">Conditional Function Syntax</a></li>
-<li class="level2"><a href="#autotoc_md1975">Conditional Expressions</a><ul><li class="level3"><a href="#autotoc_md1976">Mask with alternative</a></li>
-<li class="level3"><a href="#autotoc_md1977">Context-sensitive mask</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md2042">Explicit Selection</a></li>
+<li class="level2"><a href="#autotoc_md2043">Conditional Function Syntax</a></li>
+<li class="level2"><a href="#autotoc_md2044">Conditional Expressions</a><ul><li class="level3"><a href="#autotoc_md2045">Mask with alternative</a></li>
+<li class="level3"><a href="#autotoc_md2046">Context-sensitive mask</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md1978">Conclusion</a></li>
+<li class="level2"><a href="#autotoc_md2047">Conclusion</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><p >When you call a function on one or more <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a>, you expect the computation to be performed on every elements of its parameters. Sometimes, you may want to make the application of a given function dependent on some condition.</p>
 <p >Let's explore the functionalities <b>EVE</b> provides for achieving those results.</p>
-<h2><a class="anchor" id="autotoc_md1973"></a>
+<h2><a class="anchor" id="autotoc_md2042"></a>
 Explicit Selection</h2>
 <p >Let's say the function we want to write computes the product of two values <code>a</code> and <code>b</code> if <code>a</code> is equal to <code>b</code> and their difference otherwise.</p>
 <p >The scalar code is looking like:</p>
@@ -172,7 +172,7 @@ Explicit Selection</h2>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> a == b ? a * b : a - b;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p >The SIMD version of this code can't use <code>if</code> nor the ternary operator directly. The correct approach is to use the <a class="el" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> function.</p>
+</div><!-- fragment --><p >The SIMD version of this code can't use <code>if</code> nor the ternary operator directly. The correct approach is to use the <a class="el" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> function.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/if_else.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -184,7 +184,7 @@ Explicit Selection</h2>
 <div class="line">  std::cout &lt;&lt; (a == b) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; a*b    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; a-b    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>( a == b, a * b, a - b );</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>( a == b, a * b, a - b );</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -194,9 +194,9 @@ Explicit Selection</h2>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; square_or_diff(v1,v2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__logical_ga74b9090a23d420d6382270233e66f7ac_html_ga74b9090a23d420d6382270233e66f7ac"><div class="ttname"><a href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a></div><div class="ttdeci">constexpr callable_if_else_ if_else</div><div class="ttdoc">Callable object computing the if_else operation.</div><div class="ttdef"><b>Definition:</b> if_else.hpp:99</div></div>
+<div class="ttc" id="agroup__core_ga74b9090a23d420d6382270233e66f7ac_html_ga74b9090a23d420d6382270233e66f7ac"><div class="ttname"><a href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a></div><div class="ttdeci">constexpr callable_if_else_ if_else</div><div class="ttdoc">Callable object computing the if_else operation.</div><div class="ttdef"><b>Definition:</b> if_else.hpp:99</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
-</div><!-- fragment --><p >The <a class="el" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> call explicitly requests we pass:</p><ul>
+</div><!-- fragment --><p >The <a class="el" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> call explicitly requests we pass:</p><ul>
 <li>the condition, i.e the comparison between <code>a</code> and <code>b</code></li>
 <li>the value to use whenever an element of said condition evaluates to <code>true</code>, here the product of <code>a</code> and <code>b</code></li>
 <li>the value to use whenever an element of said condition evaluates to <code>false</code>, here the difference of <code>a</code> and <code>b</code></li>
@@ -206,19 +206,18 @@ Explicit Selection</h2>
 <div class="line">(1, -4, 30, 16)</div>
 <div class="line">(0, 4, -7, 0)</div>
 <div class="line">(1, 4, -7, 16)</div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Contrary to a <code>if ... else</code> statement, <a class="el" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> will evaluates all its arguments before performing its selection even if potential short-cut can be applied later on.</dd></dl>
-<h2><a class="anchor" id="autotoc_md1974"></a>
+</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Contrary to a <code>if ... else</code> statement, <a class="el" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a> will evaluates all its arguments before performing its selection even if potential short-cut can be applied later on.</dd></dl>
+<h2><a class="anchor" id="autotoc_md2043"></a>
 Conditional Function Syntax</h2>
 <p >Let's define a <code>sqrt_positive</code> function that computes the square root of its argument if it's positive or returns it unchanged otherwise. One can write:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/if_else.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/function/sqrt.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using</span> w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sqrt_positive( w_t <span class="keyword">const</span>&amp; a )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>( a &gt;= 0, <a class="code hl_variable" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(a), a);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>( a &gt;= 0, <a class="code hl_variable" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(a), a);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -227,20 +226,20 @@ Conditional Function Syntax</h2>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; sqrt_positive(v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object computing the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:98</div></div>
+<div class="ttc" id="agroup__core_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object computing the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:99</div></div>
 </div><!-- fragment --><p >This code is perfectly valid and will produce the correct result. However, it has some issues:</p><ul>
 <li>the code looks like the important part is the test</li>
 <li>the code can't be optimized in case the current architecture support masked operations (i.e. AVX512)</li>
 </ul>
 <p >To go beyond those limitations, <b>EVE</b> functions supports &ndash; whenever it makes sense &ndash; a conditional call syntax:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/sqrt.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using</span> w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sqrt_positive( w_t <span class="keyword">const</span>&amp; a )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0](a);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0](a);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -251,38 +250,38 @@ Conditional Function Syntax</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p >The code of <code>sqrt_positive</code> now works differently:</p><ul>
 <li>the <code>a &gt;= 0</code> expression is evaluated</li>
-<li>the <a class="el" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Callable object computing the square root.">eve::sqrt</a>[a &gt;= 0] expression builds a new callable object that will perform the conditional call to <a class="el" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Callable object computing the square root.">eve::sqrt</a></li>
+<li>the <a class="el" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Callable object computing the square root.">eve::sqrt</a>[a &gt;= 0] expression builds a new callable object that will perform the conditional call to <a class="el" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Callable object computing the square root.">eve::sqrt</a></li>
 <li>this bound callable object is then called over <code>a</code></li>
-<li>Wherever the condition is true, the <a class="el" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Callable object computing the square root.">eve::sqrt</a> function will be applied.</li>
+<li>Wherever the condition is true, the <a class="el" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Callable object computing the square root.">eve::sqrt</a> function will be applied.</li>
 <li>Wherever the condition is false, the value of the first argument of the function will be returned.</li>
 </ul>
 <p >The fact the conditional syntax builds a new callable object is interesting because it ensures that any optimization over the conditional computation can be captured and that this new callable can be passed as-if to algorithms without having to worry about changing the number of arguments requested.</p>
 <p >If required, the callable object produced by the conditional syntax can be stored into a variable:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> sqrt_positive_temp( w_t <span class="keyword">const</span>&amp; a )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> f = <a class="code hl_variable" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0];</div>
+<div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> f = <a class="code hl_variable" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0];</div>
 <div class="line">  <span class="keywordflow">return</span> f(a);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1975"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2044"></a>
 Conditional Expressions</h2>
-<p >If passing a simple logical expression is the most common use-case of the conditional syntax, one may requires more flexibility. To do so, <b>EVE</b> provides various objects to express more interesting conditions.</p>
-<h3><a class="anchor" id="autotoc_md1976"></a>
+<p >If passing a simple logical expression is the most common use-case of the conditional syntax, one may requires more flexibility. To do so, <b>EVE</b> provides various objects to express more elaborated conditions.</p>
+<h3><a class="anchor" id="autotoc_md2045"></a>
 Mask with alternative</h3>
 <p >One may want to use the conditional syntax to call a function but instead of returning the first argument if the condition is false, one may want to return an arbitrary value. This use case is handled by the <a class="el" href="structeve_1_1if__.html" title="Extensible wrapper for SIMD conditional.">eve::if_</a> helper by wrapping logical expression so that an alternative value can be specified.</p>
 <p >Let's modify <code>sqrt_positive</code> so that, if the argument is not positive, 0 is returned instead.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/function/sqrt.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using</span> w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sqrt_positive( w_t <span class="keyword">const</span>&amp; a )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[ <a class="code hl_struct" href="structeve_1_1if__.html">eve::if_</a>(a &gt;= 0) ](a);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[ <a class="code hl_struct" href="structeve_1_1if__.html">eve::if_</a>(a &gt;= 0) ](a);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> sqrt_positive_else( w_t <span class="keyword">const</span>&amp; a )</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[ <a class="code hl_struct" href="structeve_1_1if__.html">eve::if_</a>(a &gt;= 0).<a class="code hl_function" href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">else_</a>(0) ](a);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[ <a class="code hl_struct" href="structeve_1_1if__.html">eve::if_</a>(a &gt;= 0).<a class="code hl_function" href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">else_</a>(0) ](a);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -292,12 +291,12 @@ Mask with alternative</h3>
 <div class="line">  std::cout &lt;&lt; sqrt_positive(v)       &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; sqrt_positive_else(v)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1if___a3c412a82b915cb199e4e120c916fb32c_html_a3c412a82b915cb199e4e120c916fb32c"><div class="ttname"><a href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">eve::if_::else_</a></div><div class="ttdeci">auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:136</div></div>
-<div class="ttc" id="astructeve_1_1if___html"><div class="ttname"><a href="structeve_1_1if__.html">eve::if_</a></div><div class="ttdoc">Extensible wrapper for SIMD conditional.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:124</div></div>
+<div class="ttc" id="astructeve_1_1if___a3c412a82b915cb199e4e120c916fb32c_html_a3c412a82b915cb199e4e120c916fb32c"><div class="ttname"><a href="structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c">eve::if_::else_</a></div><div class="ttdeci">auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:133</div></div>
+<div class="ttc" id="astructeve_1_1if___html"><div class="ttname"><a href="structeve_1_1if__.html">eve::if_</a></div><div class="ttdoc">Extensible wrapper for SIMD conditional.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:121</div></div>
 </div><!-- fragment --><p >The output is then:</p>
 <div class="fragment"><div class="line">(1, -2, 3.16228, -3.5)</div>
 <div class="line">(1, 0, 3.16228, 0)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1977"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2046"></a>
 Context-sensitive mask</h3>
 <p >Some algorithms require conditional function calls but use logical expression relative to the element index inside a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a> rather than its value. One may want for example to not compute an expression on the first and last element of such <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.</p>
 <p >A frequent example is trying to load data from memory while ignoring trailing garbage or out of bounds values:</p>
@@ -322,10 +321,10 @@ Context-sensitive mask</h3>
 <div class="line">  std::cout &lt;&lt; load_not_first(&amp;data[0] - 1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; load_not_last(&amp;data[1]) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea_html_a1a451ef557edf9be9754f6b7dde9e0ea"><div class="ttname"><a href="structeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea.html#a1a451ef557edf9be9754f6b7dde9e0ea">eve::ignore_first::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:500</div></div>
-<div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:488</div></div>
-<div class="ttc" id="astructeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320_html_a7c4efa5e5f45c87fbeb7d847aff52320"><div class="ttname"><a href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">eve::ignore_last::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:364</div></div>
-<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:351</div></div>
+<div class="ttc" id="astructeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea_html_a1a451ef557edf9be9754f6b7dde9e0ea"><div class="ttname"><a href="structeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea.html#a1a451ef557edf9be9754f6b7dde9e0ea">eve::ignore_first::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:499</div></div>
+<div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:487</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320_html_a7c4efa5e5f45c87fbeb7d847aff52320"><div class="ttname"><a href="structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320">eve::ignore_last::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:362</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:349</div></div>
 </div><!-- fragment --><p >The output is then:</p>
 <div class="fragment"><div class="line">(99, 1, 2, 3)</div>
 <div class="line">(6, 7, 8, 42)</div>
@@ -347,8 +346,8 @@ Context-sensitive mask</h3>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; load_between(&amp;data[0] - 1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb_html_aca92a195f802ba9cefc4ce60fd9d2ddb"><div class="ttname"><a href="structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb">eve::keep_between::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:560</div></div>
-<div class="ttc" id="astructeve_1_1keep__between_html"><div class="ttname"><a href="structeve_1_1keep__between.html">eve::keep_between</a></div><div class="ttdoc">Conditional expression keeping all lanes between two position.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:545</div></div>
+<div class="ttc" id="astructeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb_html_aca92a195f802ba9cefc4ce60fd9d2ddb"><div class="ttname"><a href="structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb">eve::keep_between::else_</a></div><div class="ttdeci">constexpr auto else_(V const &amp;v) const</div><div class="ttdoc">Extend a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:559</div></div>
+<div class="ttc" id="astructeve_1_1keep__between_html"><div class="ttname"><a href="structeve_1_1keep__between.html">eve::keep_between</a></div><div class="ttdoc">Conditional expression keeping all lanes between two position.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:544</div></div>
 </div><!-- fragment --><p >The output is then:</p>
 <div class="fragment"><div class="line">(-6.3, 1, 2, -6.3)</div>
 </div><!-- fragment --><p ><a class="el" href="structeve_1_1keep__between.html" title="Conditional expression keeping all lanes between two position.">eve::keep_between</a> uses ad-hoc indexes, which makes the code a bit too size dependent. One can also use the same conditional but use a similar interface to <a class="el" href="structeve_1_1ignore__first.html" title="Conditional expression ignoring the k first lanes from a eve::simd_value.">eve::ignore_first</a>.</p>
@@ -368,7 +367,7 @@ Context-sensitive mask</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p >The output is the same obviously:</p>
 <div class="fragment"><div class="line">(-6.3, 1, 2, -6.3)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1978"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2047"></a>
 Conclusion</h2>
 <p >Conditional operations on <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a> is a good way to keep a high level code over some complex computations. <b>EVE</b> provides different levels of abstraction for such operations as well as various helpers to specify how the conditions can be computed based either on values or indexes. </p>
 </div></div><!-- contents -->

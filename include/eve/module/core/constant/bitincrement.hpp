@@ -17,7 +17,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup constant
+  //! @addtogroup core
   //! @{
   //! @var bitincrement
   //!

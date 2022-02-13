@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup comparisons
+  //! @addtogroup core
   //! @{
   //! @var is_less_equal
   //!

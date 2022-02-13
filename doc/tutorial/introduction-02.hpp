@@ -29,7 +29,7 @@ Since C++20, you may be accustomed to the range-based version of this code:
 Very similar code, except for the fact the input data are passed directly without using iterators.
 
 ## Toward SIMD Algorithms
-We can turn this range-based code into a SIMD-aware calls to one of the algorithms defined in
+We can turn this range-based code into a SIMD-aware call to one of the algorithms defined in
 eve::algo. All algorithms in **EVE** are range-based thus simplifying the transition from code
 using standard algorithms.
 
@@ -37,7 +37,7 @@ using standard algorithms.
 
 Let's unpack all the new components:
 
-  - the SIMD algorithm used here is eve::algo::transform_to not just `eve::transform`. This is due
+  - the SIMD algorithm used here is eve::algo::transform_to not just `eve::algo::transform`. This is due
     to the fact that discriminating operation between two distinct ranges and in-place operations
     leads to better code generation and performances. If you need to perform in-place computation,
     you can replace eve::algo::transform_to by eve::algo::transform_inplace, its in-place variant.
@@ -54,10 +54,11 @@ In SIMD algorithms we by default assume that the provided operation is simple (a
 since this is the common case. This means we use aligned reads and do unrolling, which is an
 important optimisation. However, for a complex case, like here, it is beneficial to opt out.
 
-**EVE** provides various traits to customize algorithms behavior. The two main traits we're
+
+__EVE__ provides various traits to customize algorithms behavior. The two main traits we're
 interested in are:
 
-  - eve::algo::no_aligning that stops eve from using aligned loads/stores in case where it leads
+  - eve::algo::no_aligning that stops **EVE** from using aligned loads/stores in case where it leads
     to more code.
 
   - eve::algo::unroll that specify how many times the function will be unrolled inside the
@@ -69,7 +70,7 @@ For example, the following code disable aligning and force unroll to be 1.
 
 @snippet tutorial/intro-02.cpp simd-transform-traits
 
-Best strategy is always to benchmarks your code and tune algorithm accordingly.
+Best strategy is always to benchmark your code and tune algorithms accordingly.
 
 ## Conclusion
 In this tutorial, we managed to:
