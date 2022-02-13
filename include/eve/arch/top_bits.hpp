@@ -49,7 +49,7 @@ namespace eve
     //! For top_bits<logical<wide<T, N>>> this is T;
     using scalar_type = typename as_arithmetic_t<logical_type>::value_type;
 
-    //! Abi of the underlying simd value
+    //! ABI of the underlying simd value
     using abi_type = typename as_arithmetic_t<logical_type>::abi_type;
 
     //! logical_type::size();
@@ -59,7 +59,7 @@ namespace eve
     static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
                                           (has_emulated_abi_v<logical_type> && static_size > 64);
 
-    //! shortcut for !abi_type::is_wide_logical
+    //! Checks if current architecture use compact bool representation
     static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
 
     //! logical or half size

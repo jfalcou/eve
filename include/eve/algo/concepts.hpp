@@ -8,27 +8,29 @@
 #pragma once
 
 //==================================================================================================
-//! @defgroup algo Algorithms and Views
-//! @brief Provides SIMD implementation of standard algorithms
-//==================================================================================================
-
-//==================================================================================================
-//! @addtogroup algo
+//! @addtogroup simd
 //! @{
-//!
-//!   @defgroup views Views
-//!   @brief Provides views to work with SIMD algorihms
-//!
+//!   @defgroup algorithm Algorithms and Views
+//!   @brief Provides SIMD algorithms and SIMD views
 //! @}
 //==================================================================================================
 
 //==================================================================================================
-//! @addtogroup algo
+//! @addtogroup algorithm
 //! @{
+//!   @defgroup views Views
+//!   @brief Provides views to work with SIMD algorihms
 //!
+//!   @defgroup algo Algorithms
+//!   @brief Provides SIMD implementation of standard algorithms
+//! @}
+//==================================================================================================
+
+//==================================================================================================
+//! @addtogroup algorithm
+//! @{
 //!   @defgroup algo_concepts Concepts
 //!   @brief Provides Concepts for algorithms and related components
-//!
 //! @}
 //==================================================================================================
 #include <eve/algo/concepts/eve_iterator.hpp>

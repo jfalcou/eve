@@ -170,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 Operations Classification</h1>
 <h2><a class="anchor" id="glossary_access"></a>
 Generalized Element Access</h2>
-<p ><b>EVE</b> functions' semantics rely on a generic way to access an element of a <a class="el" href="concepteve_1_1value.html">value</a> in a generic way, be it <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> or <a class="el" href="concepteve_1_1simd__value.html">SIMD</a>.</p>
+<p ><b>EVE</b> functions' semantics rely on a generic way to access an element of a <a class="el" href="concepteve_1_1value.html">value</a>, be it <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> or <a class="el" href="concepteve_1_1simd__value.html">SIMD</a>.</p>
 <p >To do so, we define a synthetic function <code>at(v,i)</code> that retrieve the <code>i</code>th element of a value <code>v</code>.</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;eve::value V, std::<span class="keywordtype">int</span>egral I&gt; <span class="keyword">auto</span> at(V <span class="keyword">const</span>&amp; v,  I i)</div>
 <div class="line">{</div>
@@ -192,7 +192,7 @@ Elementwise Operations</h2>
 <h2><a class="anchor" id="glossary_reduction"></a>
 Reductions</h2>
 <p >Elementwise operations in <b>EVE</b> describe functions that operates over all elements of a given <a class="el" href="concepteve_1_1value.html">value</a> to produce a single <a class="el" href="concepteve_1_1scalar__value.html">scalar result</a>.</p>
-<p >For any <a class="el" href="concepteve_1_1value.html">value</a> <code>x</code> of type <code>T</code>, a Callable Object <code>f</code> returning a <a class="el" href="concepteve_1_1scalar__value.html">scalar value</a> of type <code>eve::elemet_type&lt;T&gt;</code> is said to be a <b>Reduction</b>.</p>
+<p >For any <a class="el" href="concepteve_1_1value.html">value</a> <code>x</code> of type <code>T</code>, a Callable Object <code>f</code> returning a <a class="el" href="concepteve_1_1scalar__value.html">scalar value</a> of type <code><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;T&gt;</code> is said to be a <b>Reduction</b>.</p>
 <h1><a class="anchor" id="glossary_function_semantic"></a>
 Function Semantic</h1>
 <h2><a class="anchor" id="glossary_arithmetic"></a>

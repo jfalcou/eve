@@ -12,9 +12,9 @@
     </tab>
     <tab type="modules" visible="yes" title="Modules">
       <tab type="modules" visible="yes" title="Modules"  intro=""/>
-      <tab type="user" visible="yes" title="Types &amp; Wrappers" url="group__simd.html"  intro=""/>
+      <tab type="user" visible="yes" title="Types &amp; Wrappers" url="group__simd__types.html"  intro=""/>
       <tab type="user" visible="yes" title="Functions" url="@ref functions"  intro=""/>
-      <tab type="user" visible="yes" title="Constants" url="@ref constant"  intro=""/>
+      <tab type="user" visible="yes" title="Algorithms" url="@ref algo"  intro=""/>
       <tab type="user" visible="yes" title="Traits" url="@ref traits"  intro=""/>
     </tab>
     <tab type="namespaces" visible="yes" title="References">

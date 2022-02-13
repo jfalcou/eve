@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup shuffle
+  //! @addtogroup core
   //! @{
   //!    @var deinterleave_groups
   //!

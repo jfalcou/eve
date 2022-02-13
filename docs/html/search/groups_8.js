@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logical_0',['Logical',['../group__logical.html',1,'']]]
+  ['type_20traits_0',['Type traits',['../group__traits.html',1,'']]]
 ];

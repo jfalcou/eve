@@ -10,8 +10,8 @@
 //==================================================================================================
 //! @addtogroup functions
 //! @{
-//! @defgroup core core function
-//! @brief core functions
+//! @defgroup core Core functions
+//! @brief Core functions
 //!
 //!  This module provides implementation for various fundamental functions
 //!

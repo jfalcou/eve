@@ -12,7 +12,7 @@
 namespace eve::views
 {
   //================================================================================================
-  //! @addtogroup eve.views
+  //! @addtogroup views
   //! @{
   //!
   //!    @var map_load_op

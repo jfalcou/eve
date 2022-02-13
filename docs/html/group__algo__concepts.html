@@ -122,9 +122,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="group__simd.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
       <li><a href="group__functions.html"><span>Functions</span></a></li>
-      <li><a href="group__constant.html"><span>Constants</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
       <li><a href="group__traits.html"><span>Traits</span></a></li>
     </ul>
   </div>
@@ -146,7 +146,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a>  </div>
-  <div class="headertitle"><div class="title">Concepts<div class="ingroups"><a class="el" href="group__algo.html">Algorithms and Views</a></div></div></div>
+  <div class="headertitle"><div class="title">Concepts<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__algorithm.html">Algorithms and Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -157,6 +157,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1nothing__t.html">eve::algo::nothing_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a type to indicate that there is nothing there  <a href="structeve_1_1algo_1_1nothing__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrelaxed__iterator.html">relaxed_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">anything that can be reasonably converted to an <code>iterator</code>: std::contigious_iterator, eve::algo::iterator, aligned_ptr. Defined as being totally_ordered, having +/- like an iterator And <code>preprocess_range(eve::algo::traits{}, I, I)</code> should work. <code>eve::unalign(I)</code> should be OK.  <a href="structrelaxed__iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,6 +168,12 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrelaxed__range.html">relaxed_range</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Any class that has <code>begin/end</code> and <code>end</code> is a <code><a class="el" href="structrelaxed__sentinel__for.html" title="Two relaxed iterators form a valid relaxed range pair. preprocess_range has to be defined for the pai...">relaxed_sentinel_for</a></code> begin. User can customize <code>preprocess_range</code> for a <code><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></code> in case there is more information to get from there then would be from just <code>begin</code>/<code>end</code>.  <a href="structrelaxed__range.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap__load__op.html">map_load_op</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">requirement for the operation applied on read/load in map. should work on both scalar and wide for the underlying iterator for any cardinal.  <a href="structmap__load__op.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap__store__op.html">map_store_op</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">requirement for the operation applied on store in map. should work on both scalar and wide for the underlying iterator for any cardinal.  <a href="structmap__store__op.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

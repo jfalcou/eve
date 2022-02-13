@@ -122,9 +122,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="group__simd.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
       <li><a href="group__functions.html"><span>Functions</span></a></li>
-      <li><a href="group__constant.html"><span>Constants</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
       <li><a href="group__traits.html"><span>Traits</span></a></li>
     </ul>
   </div>
@@ -146,7 +146,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <div class="header">
   <div class="summary">
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Polynomial related functions<div class="ingroups"><a class="el" href="group__functions.html">Functions</a></div></div></div>
+  <div class="headertitle"><div class="title">Polynomial related functions<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -168,6 +168,12 @@ Variables</h2></td></tr>
 <tr class="memitem:ga90f1fb37df377d7fd9f95282ec3c70cb"><td class="memItemLeft" align="right" valign="top">constexpr callable_horner_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a> = {}</td></tr>
 <tr class="memdesc:ga90f1fb37df377d7fd9f95282ec3c70cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the horner operation.  <a href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">More...</a><br /></td></tr>
 <tr class="separator:ga90f1fb37df377d7fd9f95282ec3c70cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5a6d5b7c8c61e7f5c9190e8b69bb4ab"><td class="memItemLeft" align="right" valign="top">constexpr p_kind_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__polynomial_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab">eve::p_kind</a> = {}</td></tr>
+<tr class="memdesc:gae5a6d5b7c8c61e7f5c9190e8b69bb4ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing p_kind behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__polynomial_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab">More...</a><br /></td></tr>
+<tr class="separator:gae5a6d5b7c8c61e7f5c9190e8b69bb4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4853888b0e6be1fdbc24c9f6b372599"><td class="memItemLeft" align="right" valign="top">constexpr q_kind_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599.html#gaa4853888b0e6be1fdbc24c9f6b372599">eve::q_kind</a> = {}</td></tr>
+<tr class="memdesc:gaa4853888b0e6be1fdbc24c9f6b372599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing q_kind behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599.html#gaa4853888b0e6be1fdbc24c9f6b372599">More...</a><br /></td></tr>
+<tr class="separator:gaa4853888b0e6be1fdbc24c9f6b372599"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga354e9d0edf47f3f2742a9d5c29c9706b"><td class="memItemLeft" align="right" valign="top">constexpr callable_laguerre_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a> = {}</td></tr>
 <tr class="memdesc:ga354e9d0edf47f3f2742a9d5c29c9706b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the laguerre operation: \(\displaystyle \mbox{L}_{n} = \frac{e^x}{n!}\frac{d^n}{dx^n}(x^ne^{-x})\) or the associated laguerre operation \(\displaystyle \mbox{L}_{n}^{m} = (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\).  <a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">More...</a><br /></td></tr>
 <tr class="separator:ga354e9d0edf47f3f2742a9d5c29c9706b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,6 +186,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ga2ab58fb81bbfe2bae7b7cc8007b988fe"><td class="memItemLeft" align="right" valign="top">constexpr callable_reverse_horner_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a> = {}</td></tr>
 <tr class="memdesc:ga2ab58fb81bbfe2bae7b7cc8007b988fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the reverse_horner operation.  <a href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">More...</a><br /></td></tr>
 <tr class="separator:ga2ab58fb81bbfe2bae7b7cc8007b988fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eb5977c62725094fe76ad7d62387dd0"><td class="memItemLeft" align="right" valign="top">constexpr successor_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__polynomial_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a> = {}</td></tr>
+<tr class="memdesc:ga4eb5977c62725094fe76ad7d62387dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing incrementation behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__polynomial_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">More...</a><br /></td></tr>
+<tr class="separator:ga4eb5977c62725094fe76ad7d62387dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.20-->

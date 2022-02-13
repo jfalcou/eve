@@ -135,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="group__algo.html">Algorithms and Views</a></li>  </ul>
+<li class="navelem"><a class="el" href="group__algo.html">Algorithms</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="contents">
@@ -169,7 +169,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::reverse = function_with_traits&lt;reverse_&gt;[algo::unroll&lt;1&gt;]</td>
+          <td class="memname">eve::algo::reverse = function_with_traits&lt;reverse_&gt;[algo::unroll&lt;1&gt;][no_aligning]</td>
         </tr>
       </table>
   </td>
@@ -184,7 +184,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <p>SIMD version of std::reverse. </p>
 <ul>
 <li>default unrolling is 1.</li>
-<li>will align by default.</li>
+<li>will won't align because it makes the logic more complex and does not win.</li>
 </ul>
 <p ><b>Required header:</b> <code>#include &lt;eve/algo/reverse.hpp&gt;</code> </p>
 

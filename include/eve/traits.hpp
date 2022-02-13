@@ -8,6 +8,8 @@
 #pragma once
 
 //==================================================================================================
+//! @addtogroup simd_types
+//! @{
 //! @defgroup traits Type traits
 //! @brief  Type traits for SIMD related types and functions
 //!
@@ -15,6 +17,7 @@
 //! types that are accessible through the following traits.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/traits.hpp> @endcode
+//! @}
 //==================================================================================================
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/as_arithmetic.hpp>

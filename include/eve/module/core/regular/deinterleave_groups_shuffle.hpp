@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup shuffle
+  //! @addtogroup core
   //! @{
   //! @var deinterleave_groups_shuffle
   //!
@@ -28,6 +28,7 @@ namespace eve
   //! 01234567,  group_size = 1  ==> 02461235
   //! 0123 4567, group_size = 2  ==> 01452367
   //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(deinterleave_groups_shuffle_, deinterleave_groups_shuffle);
 
   template <std::ptrdiff_t G, std::ptrdiff_t N>

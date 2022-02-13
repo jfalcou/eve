@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['zip_5fiterator_0',['zip_iterator',['../structeve_1_1algo_1_1views_1_1zip__iterator.html',1,'eve::algo::views::zip_iterator&lt; Is &gt;'],['../structzip__iterator.html',1,'zip_iterator']]],
-  ['zip_5frange_1',['zip_range',['../structeve_1_1algo_1_1views_1_1zip__range.html',1,'eve::algo::views::zip_range&lt; Rngs &gt;'],['../structzip__range.html',1,'zip_range']]]
+  ['scalar_5fcardinal_0',['scalar_cardinal',['../structeve_1_1scalar__cardinal.html',1,'eve']]],
+  ['soa_5fptr_1',['soa_ptr',['../structeve_1_1soa__ptr.html',1,'eve']]],
+  ['stack_5fbuffer_2',['stack_buffer',['../structeve_1_1stack__buffer.html',1,'eve']]],
+  ['struct_5fsupport_3',['struct_support',['../structeve_1_1struct__support.html',1,'eve']]],
+  ['supports_5flike_4',['supports_like',['../structeve_1_1supports__like.html',1,'eve']]],
+  ['supports_5fordering_5',['supports_ordering',['../structeve_1_1supports__ordering.html',1,'eve']]]
 ];

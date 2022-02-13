@@ -32,9 +32,9 @@ var menudata={children:[
 {text:"Contributing",url:"eve-dev.html"}]},
 {text:"Modules",url:"modules.html",children:[
 {text:"Modules",url:"modules.html"},
-{text:"Types & Wrappers",url:"group__simd.html"},
+{text:"Types & Wrappers",url:"group__simd__types.html"},
 {text:"Functions",url:"group__functions.html"},
-{text:"Constants",url:"group__constant.html"},
+{text:"Algorithms",url:"group__algo.html"},
 {text:"Traits",url:"group__traits.html"}]},
 {text:"References",url:"namespaces.html",children:[
 {text:"Namespace List",url:"namespaces.html"},
@@ -85,6 +85,7 @@ var menudata={children:[
 {text:"s",url:"namespacemembers_vars_s.html#index_s"},
 {text:"t",url:"namespacemembers_vars_t.html#index_t"},
 {text:"u",url:"namespacemembers_vars_u.html#index_u"},
+{text:"v",url:"namespacemembers_vars_v.html#index_v"},
 {text:"w",url:"namespacemembers_vars_w.html#index_w"},
 {text:"z",url:"namespacemembers_vars_z.html#index_z"}]},
 {text:"Typedefs",url:"namespacemembers_type.html"},

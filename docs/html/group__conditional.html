@@ -122,9 +122,9 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="group__simd.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
       <li><a href="group__functions.html"><span>Functions</span></a></li>
-      <li><a href="group__constant.html"><span>Constants</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
       <li><a href="group__traits.html"><span>Traits</span></a></li>
     </ul>
   </div>
@@ -145,11 +145,10 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 
 <div class="header">
   <div class="summary">
-<a href="#concepts">Concepts</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Conditional Expressions<div class="ingroups"><a class="el" href="group__simd.html">SIMD Types and Helpers</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
+  <div class="headertitle"><div class="title">Conditional Expressions<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -160,15 +159,6 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <p >Masking lanes from an <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a> is a frequent operations. To simplify and optimize such code, <b>EVE</b> provides objects and functions to define conditions with a high-level of flexibility including: alternative value, index-based relative conditions and more.</p>
 <p ><b>See also:</b> <a class="el" href="conditional.html">Conditional operations</a> </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
-Concepts</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type is a Conditional Expression. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type is a Conditional Expression using relative mask. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1or__.html">eve::or_&lt; C, V &gt;</a></td></tr>
@@ -204,6 +194,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga8265bd793db77b43d12988c1c297f00b"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </td></tr>
+<tr class="memitem:ga8265bd793db77b43d12988c1c297f00b"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b">eve::drop_alternative</a> (C c)</td></tr>
+<tr class="memdesc:ga8265bd793db77b43d12988c1c297f00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a conditional without an alternative.  <a href="group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b">More...</a><br /></td></tr>
+<tr class="separator:ga8265bd793db77b43d12988c1c297f00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </td></tr>
 <tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1">eve::map_alternative</a> (C c, auto op)</td></tr>
 <tr class="memdesc:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a transformed conditional.  <a href="group__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1">More...</a><br /></td></tr>
