@@ -36,8 +36,6 @@ EVE_TEST_TYPES( "Check behavior of minlogdenormal on wide"
 {
   using eve::as;
   TTS_ULP_EQUAL(eve::exp(eve::minlogdenormal(as<T>())), eve::zero(as<T>()), 0.0);
-  std::cout << eve::minlogdenormal(as<T>()) << std::endl;
-  std::cout << eve::minlog        (as<T>()) << std::endl;
-  if constexpr(platform::supports_denormals)
+  if constexpr(eve::latform::supports_denormals)
     TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp)(eve::next(eve::minlogdenormal(as<T>()))))));
 };
