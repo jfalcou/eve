@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sqrt_3
   //!
-  //! @brief Callable object computing the square root of 2 value.
+  //! @brief Callable object computing the square root of 3 value.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
@@ -46,25 +46,24 @@ namespace eve
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(sqrt_2_, sqrt_2);
+  EVE_MAKE_CALLABLE(sqrt_3_, sqrt_3);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto sqrt_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
+    EVE_FORCEINLINE auto sqrt_3_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
     {
-      return Ieee_constant<T, 0X3FB504F3U, 0X3FF6A09E667F3BCDULL>();  //1.41421356237309504880168872420969807856967187537694
-
+      return Ieee_constant<T, 0X3FDDB3D7U,0X3FFBB67AE8584CAAULL>();
    }
 
     template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto sqrt_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto sqrt_3_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       if constexpr(std::is_same_v<D, upward_type>)
-        return Ieee_constant<T, 0X3FB504F4U, 0X3FF6A09E667F3BCDULL>();
+        return Ieee_constant<T,  0X3FDDB3D8U,0X3FFBB67AE8584CABULL>();
       else
-        return Ieee_constant<T, 0X3FB504F3U, 0X3FF6A09E667F3BCCULL>();
+        return Ieee_constant<T,  0X3FDDB3D7U,0X3FFBB67AE8584CAAULL>();
     }
   }
 }

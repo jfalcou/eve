@@ -12,22 +12,22 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup constant
   //! @{
-  //! @var sqrt_3
+  //! @var phi
   //!
-  //! @brief Callable object computing the square root of 2 value.
+  //! @brief Callable object computing \f$\\\frac{1+\sqrt5}2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sqrt_3 constant                               |
+  //! | `operator()` | Computes the phi constant                               |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < flozting_value T > T operator()( as<T> const & t) const noexcept;
+  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -36,35 +36,35 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::sqrt_3(as<T>())` is semantically equivalent to  `eve::sqrt(T(2))`
+  //! the call `eve::phi(as<T>())` is semantically equivalent to  `eve::average(1, eve::sqrt(T(5)))`.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sqrt_3.cpp}
+  //! @godbolt{doc/core/phi.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(sqrt_2_, sqrt_2);
+  EVE_MAKE_CALLABLE(phi_, phi);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto sqrt_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
+    EVE_FORCEINLINE constexpr auto phi_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      return Ieee_constant<T, 0X3FB504F3U, 0X3FF6A09E667F3BCDULL>();  //1.41421356237309504880168872420969807856967187537694
-
-   }
+      return Ieee_constant<T, 0X3FCF1BBDU, 0X3FF9E3779B97F4A8ULL>();
+    }
 
     template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto sqrt_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto phi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       if constexpr(std::is_same_v<D, upward_type>)
-        return Ieee_constant<T, 0X3FB504F4U, 0X3FF6A09E667F3BCDULL>();
+        return Ieee_constant<T, 0X3FCF1BBDU, 0X3FF9E3779B97F4A8ULL>();
       else
-        return Ieee_constant<T, 0X3FB504F3U, 0X3FF6A09E667F3BCCULL>();
+        return Ieee_constant<T, 0X3FCF1BBCU, 0X3FF9E3779B97F4A7ULL>();
+
     }
   }
 }

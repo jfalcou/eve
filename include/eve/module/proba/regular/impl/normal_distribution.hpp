@@ -186,13 +186,13 @@ namespace eve
                                  , V const &x ) noexcept
     {
       if constexpr(floating_value<T> && floating_value<U>)
-        return  half(as(x))*erfc(sqrt_2o_2(as(x))*((d.m-x)/d.s));
+        return  half(as(x))*erfc(invsqrt_2(as(x))*((d.m-x)/d.s));
       else if constexpr(std::same_as<T, callable_zero_> && floating_value<U>)
-        return  half(as(x))*erfc(sqrt_2o_2(as(x))*(-x/d.s));
+        return  half(as(x))*erfc(invsqrt_2(as(x))*(-x/d.s));
       else if constexpr(std::same_as<U, callable_one_> && floating_value<T>)
-        return  half(as(x))*erfc(sqrt_2o_2(as(x))*((d.m-x)));
+        return  half(as(x))*erfc(invsqrt_2(as(x))*((d.m-x)));
       else
-        return  half(as(x))*erfc(sqrt_2o_2(as(x))*(-x));
+        return  half(as(x))*erfc(invsqrt_2(as(x))*(-x));
     }
 
    template<typename T, typename U, floating_value V
