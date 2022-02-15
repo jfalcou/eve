@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var oneotwoeps
+  //! @var log_10
   //!
-  //! @brief Callable object computing half the inverse of the machine epsilon.
+  //! @brief Callable object computing \f$\\log 2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the oneotwoeps constant                               |
+  //! | `operator()` | Computes the log_10 constant                                |
   //!
   //! ---
   //!
@@ -36,36 +36,34 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::oneotwoeps(``eve::as<T>())` is semantically equivalent to
-  //! `eve::rec(2*eve::eps(``eve::as<T>()))`
+  //! the call `eve::log_10(as<T>())` is semantically equivalent to  `eve::log(T(2.0)`.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneotwoeps.cpp}
+  //! @godbolt{doc/core/log_10.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(oneotwoeps_, oneotwoeps);
+  EVE_MAKE_CALLABLE(log_10_, log_10);
 
   namespace detail
   {
-    template<real_value T>
-    EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto log_10_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = element_type_t<T>;
-
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0X4A800000U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4320000000000000ULL>();
-      else return T(1);
+      return Ieee_constant<T, 0X40135D8EU, 0X40026BB1BBB55516ULL>();
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return oneotwoeps(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto log_10_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+    if constexpr(std::is_same_v<D, upward_type>)
+      return eve::log_10(as<T>());
+    else
+      return Ieee_constant<T, 0X40135D8DU, 0X40026BB1BBB55515ULL>();
+    }
   }
 }

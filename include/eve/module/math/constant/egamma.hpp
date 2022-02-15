@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var oneotwoeps
+  //! @var e
   //!
-  //! @brief Callable object computing half the inverse of the machine epsilon.
+  //! @brief Callable object computing the Euler-Mascheroni constant.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the oneotwoeps constant                               |
+  //! | `operator()` | Computes the egamma constant                                    |
   //!
   //! ---
   //!
@@ -36,36 +36,34 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::oneotwoeps(``eve::as<T>())` is semantically equivalent to
-  //! `eve::rec(2*eve::eps(``eve::as<T>()))`
+  //! the call `eve::egamma(as<T>())` is semantically equivalent to `-digamma(T(1))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneotwoeps.cpp}
+  //! @godbolt{doc/core/egamma.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(oneotwoeps_, oneotwoeps);
+  EVE_MAKE_CALLABLE(egamma_, egamma);
 
   namespace detail
   {
-    template<real_value T>
-    EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto egamma_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = element_type_t<T>;
-
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0X4A800000U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4320000000000000ULL>();
-      else return T(1);
+      return Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>(); //0.57721566490153286060651209008
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return oneotwoeps(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto egamma_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      if constexpr(std::is_same_v<D, upward_type>)
+        return Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>();
+      else
+        return Ieee_constant<T, 0x3f13c467U, 0x3fe2788cfc6fb618ULL>();
+    }
   }
 }

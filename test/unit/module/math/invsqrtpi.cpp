@@ -9,12 +9,11 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <cmath>
-#include <iomanip>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of invlog10"
+EVE_TEST_TYPES( "Check return types of invsqrtpi"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
@@ -22,14 +21,14 @@ EVE_TEST_TYPES( "Check return types of invlog10"
   using v_t = eve::element_type_t<T>;
   using eve::as;
 
-  TTS_EXPR_IS( eve::invlog_10(as<T>())  , T);
-  TTS_EXPR_IS( eve::invlog_10(as<v_t>()), v_t);
+  TTS_EXPR_IS( eve::invsqrtpi(as<T>())  , T);
+  TTS_EXPR_IS( eve::invsqrtpi(as<v_t>()), v_t);
 };
 
 //==================================================================================================
-// invlog_10  tests
+// e  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of invlog_10 on wide"
+EVE_TEST_TYPES( "Check behavior of e on wide"
         , eve::test::simd::ieee_reals
         )
 <typename T>(eve::as<T>)
@@ -37,12 +36,11 @@ EVE_TEST_TYPES( "Check behavior of invlog_10 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  using elt_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::invlog_10(as<T>()),  T(0.43429448190325182765112891891660508229439700580367l));
-  TTS_EXPECT(downward(eve::invlog_10)(as<elt_t>()) < 0.43429448190325182765112891891660508229439700580367l);
-  TTS_EXPECT(upward(eve::invlog_10)(as<elt_t>())   > 0.43429448190325182765112891891660508229439700580367l);
-  TTS_ULP_EQUAL(eve::invlog_10(as<T>()), T(0.43429448190325182765112891891660508229439700580367l), 0.0);
-  TTS_EXPECT(eve::all(downward(eve::invlog_10)(as<T>()) <= eve::invlog_10(as<T>())));
-  TTS_EXPECT(eve::all(eve::invlog_10(as<T>()) <= upward(eve::invlog_10)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::invlog_10)(as<T>()), upward(eve::invlog_10)(as<T>()), 0.5);
+  TTS_EXPECT(eve::invsqrtpi(as<float>()) > 0.564189583547756286948079451560772585844050629329l);
+  TTS_EXPECT(downward(eve::invsqrtpi)(as<float>()) < 0.564189583547756286948079451560772585844050629329l);
+  TTS_EXPECT(upward(eve::invsqrtpi)(as<float>())   >  0.564189583547756286948079451560772585844050629329l);
+  TTS_EQUAL(eve::invsqrtpi(as<T>()), T(0.564189583547756286948079451560772585844050629329l));
+  TTS_EXPECT(eve::all(downward(eve::invsqrtpi)(as<T>()) <= eve::invsqrtpi(as<T>())));
+  TTS_EXPECT(eve::all(eve::invsqrtpi(as<T>()) <= upward(eve::invsqrtpi)(as<T>())));
+  TTS_ULP_EQUAL(downward(eve::invsqrtpi)(as<T>()), upward(eve::invsqrtpi)(as<T>()), 0.5);
 };

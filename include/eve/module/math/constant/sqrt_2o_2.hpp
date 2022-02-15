@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup constant
   //! @{
   //! @var sqrt_2o_2
   //!
@@ -51,16 +51,26 @@ namespace eve
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
+    EVE_FORCEINLINE constexpr auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      return T(0.70710678118654752440084436210484903928483593768847);
+      using t_t           = element_type_t<T>;
+
+      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X3F3504F3U>();
+      else if constexpr(std::is_same_v<t_t, double>) return Constant<T,0X3FE6A09E667F3BCDULL >();
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return sqrt_2o_2(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      if constexpr(std::is_same_v<D, downward_type>)
+      {
+        return sqrt_2o_2(as<T>());
+      }
+      else
+      {
+        return  Ieee_constant<T, 0X3F3504F4U, 0X3FE6A09E667F3BCEULL >();
+      }
+    }
   }
 }

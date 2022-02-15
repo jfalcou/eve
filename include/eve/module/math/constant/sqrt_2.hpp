@@ -58,14 +58,17 @@ namespace eve
       if constexpr(std::is_same_v<t_t, float>) {
         return Constant<T, 0x3FB504F3>(); }
       else if constexpr(std::is_same_v<t_t, double>) {
-        return Constant<T, 0x3ff6A09E667F3BCCULL>(); }
+        return Constant<T, 0x3ff6A09E667F3BCDULL>(); }
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto sqrt_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return sqrt_2(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto sqrt_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      if constexpr(std::is_same_v<D, upward_type>)
+        return Ieee_constant<T, 0x3FB504F4,  0x3ff6A09E667F3BCDULL>();
+      else
+        return Ieee_constant<T, 0x3FB504F3,  0x3ff6A09E667F3BCCULL>();
+    }
   }
 }

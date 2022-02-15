@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup constant
   //! @{
   //! @var invlog_2
   //!
@@ -63,17 +63,10 @@ namespace eve
     EVE_FORCEINLINE constexpr auto invlog_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
-      using t_t           = element_type_t<T>;
-      if constexpr(std::is_same_v<D, upward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0X3FB8AA3CU>();
-        else                                      return invlog_2(as<T>());
-      }
+      if constexpr(std::is_same_v<D, downward_type>)
+        return Ieee_constant<T, 0X3FB8AA3BU, 0X3FF71547652B82FEULL>();
       else
-      {
-        if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X3FF71547652B82FDULL>();
-        else                                      return invlog_2(as<T>());
-      }
+        return Ieee_constant<T, 0X3FB8AA3CU, 0X3FF71547652B82FFULL>();
     }
   }
 }

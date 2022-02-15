@@ -92,7 +92,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto sqrtvalmax_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type>{}))
     {
-      return sqrtvalmax(as<T>());
+        return sqrtvalmax(as<T>());
     }
   }
 }

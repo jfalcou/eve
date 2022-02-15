@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup constant
   //! @{
-  //! @var oneotwoeps
+  //! @var invsqrtpi
   //!
-  //! @brief Callable object computing half the inverse of the machine epsilon.
+  //! @brief Callable object computing \f$\pi^{-1}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the oneotwoeps constant                               |
+  //! | `operator()` | Computes the invsqrtpi constant                               |
   //!
   //! ---
   //!
@@ -36,36 +36,38 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::oneotwoeps(``eve::as<T>())` is semantically equivalent to
-  //! `eve::rec(2*eve::eps(``eve::as<T>()))`
+  //! the call `eve::invsqrtpi(as<T>())` is semantically equivalent to  `eve::rec(eve::pi(eve::as<T>()))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneotwoeps.cpp}
+  //! @godbolt{doc/core/invsqrtpi.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(oneotwoeps_, oneotwoeps);
+  EVE_MAKE_CALLABLE(invsqrtpi_, invsqrtpi);
 
   namespace detail
   {
-    template<real_value T>
-    EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr auto invsqrtpi_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t           = element_type_t<T>;
-
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0X4A800000U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4320000000000000ULL>();
-      else return T(1);
+      return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6DULL>(); //0.564189583547756286948079451560772585844050629329
     }
- 
-  template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto oneotwoeps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return oneotwoeps(as<T>());
-  }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto invsqrtpi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+       if constexpr(std::is_same_v<D, downward_type>)
+      {
+        return Ieee_constant<T, 0X3F106EBAU, 0X3FE20DD750429B6DULL>();
+      }
+      else
+      {
+        return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6EULL>();
+      }
+    }
   }
 }

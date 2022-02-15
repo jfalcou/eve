@@ -82,9 +82,9 @@ namespace eve
       if constexpr(std::is_same_v<t_t, float>)
       {
         if constexpr(std::is_same_v<D, upward_type>)
-          return sqrteps(as<T>());
+           return Constant<T, 0x39B504F4U >();
         else
-          return Constant<T, 0x39B504F2U >();
+         return sqrteps(as<T>());
       }
       else return sqrteps(as<T>());
     }

@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of minlog10"
+EVE_TEST_TYPES( "Check return types of log_2"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
@@ -22,19 +22,25 @@ EVE_TEST_TYPES( "Check return types of minlog10"
   using v_t = eve::element_type_t<T>;
   using eve::as;
 
-  TTS_EXPR_IS( eve::minlog10(as<T>())  , T);
-  TTS_EXPR_IS( eve::minlog10(as<v_t>()), v_t);
+  TTS_EXPR_IS( eve::log_2(as<T>())  , T);
+  TTS_EXPR_IS( eve::log_2(as<v_t>()), v_t);
 };
 
 //==================================================================================================
-// minlog10  tests
+// log_2  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of minlog10 on wide"
+EVE_TEST_TYPES( "Check behavior of log_2 on wide"
         , eve::test::simd::ieee_reals
         )
 <typename T>(eve::as<T>)
 {
   using eve::as;
-  TTS_ULP_EQUAL(eve::exp10(eve::minlog10(as<T>())), eve::zero(as<T>()), 0.0);
-  TTS_EXPECT(eve::all(eve::is_finite(eve::exp10(eve::next(eve::minlog10(as<T>()))))));
+  using eve::downward;
+  using eve::upward;
+  TTS_EXPECT(downward(eve::log_2)(as<float>()) < std::log(2.0l));
+  TTS_EXPECT(upward(eve::log_2)(as<float>())   > std::log(2.0l));
+  TTS_ULP_EQUAL(eve::log_2(as<T>()), T(std::log(2.0l)), 0.0);
+  TTS_EXPECT(eve::all(downward(eve::log_2)(as<T>()) <= eve::log_2(as<T>())));
+  TTS_EXPECT(eve::all(eve::log_2(as<T>()) <= upward(eve::log_2)(as<T>())));
+  TTS_ULP_EQUAL(downward(eve::log_2)(as<T>()), upward(eve::log_2)(as<T>()), 0.5);
 };

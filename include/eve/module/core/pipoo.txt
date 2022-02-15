@@ -1,0 +1,92 @@
+
+./regular/is_nan.hpp:  //! @var is_nan
+./regular/is_nan.hpp:  //! @brief Callable object computing the is_nan logical value.
+./regular/is_nan.hpp:  //! | `operator()` | the computation of the is_nan logical value   |
+./regular/is_nan.hpp:  //!logical<T> r = is_nan(x);
+./regular/is_nan.hpp:  //!  Higher-order function generating a masked version of eve::is_nan
+./regular/is_nan.hpp:  //!  A Callable object so that the expression `is_nan[cond](x)` is equivalent to
+./regular/is_nan.hpp:  //! `if_else(cond,is_nan(x),false(as(is_nan(x))))`
+./regular/is_nan.hpp:  //! @godbolt{doc/core/is_nan.cpp}
+./regular/is_nan.hpp:  EVE_MAKE_CALLABLE(is_nan_, is_nan);
+./regular/is_nan.hpp:******************************************************************************** <eve/module/core/regular/impl/is_nan.hpp>
+./regular/core.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/is_not_finite.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/is_not_finite.hpp:  //!if   constexpr(floating_real_value<T>) r = is_nan(x-x);
+./regular/impl/is_nan.hpp:  EVE_FORCEINLINE constexpr as_logical_t<T> is_nan_(EVE_SUPPORTS(cpu_)
+./regular/impl/is_nan.hpp:    else                              return apply_over(is_nan, a);
+./regular/impl/is_nan.hpp:  EVE_FORCEINLINE auto is_nan_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+./regular/impl/is_nan.hpp:    return logical_mask_op(cond, is_nan, u);
+./regular/impl/negabsmax.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_nltz.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_nltz.hpp:        else if constexpr(floating_value<T>) return is_gez(a) || is_nan(a);
+./regular/impl/minabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/maxmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/sign.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/sign.hpp:            return is_nan(a) ? a : r;
+./regular/impl/sign.hpp:            return if_else(is_nan(a), eve::allbits, r);
+./regular/impl/is_ngtz.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_ngtz.hpp:        else if constexpr(floating_value<T>) return is_lez(a) || is_nan(a);
+./regular/impl/is_not_finite.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_not_finite.hpp:      else                             return is_nan(a-a);
+./regular/impl/negminabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_ngez.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_ngez.hpp:        else if constexpr(floating_value<T>) return is_ltz(a) || is_nan(a);
+./regular/impl/negabsmin.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/epsilon.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/epsilon.hpp:      return if_else(is_nan(a), allbits, dist(aa, next(aa)));
+./regular/impl/maxabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_nlez.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_nlez.hpp:        else if constexpr(floating_value<T>) return is_gtz(a) || is_nan(a);
+./regular/impl/is_not_infinite.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/is_not_infinite.hpp:    return eve::is_finite(a) || is_nan(a);
+./regular/impl/negmaxabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/impl/minmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/is_unordered.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./regular/is_unordered.hpp:  //!if   constexpr(floating_real_value<T>) r = is_nan(x) || is_nan(y);
+./pedantic/impl/prev.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/prev.hpp:          if (is_nan(a)) return a;
+./pedantic/impl/prev.hpp:          return if_else(is_nan(a), allbits, if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z));
+./pedantic/impl/prev.hpp:          if (is_nan(a)) return a;
+./pedantic/impl/prev.hpp:          return  if_else(is_nan(a), allbits, if_else(test, if_else(is_eqz(nz), mzero(eve::as<T>()), bitfloating(nz)), z));
+./pedantic/impl/max.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/maxmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/absmin.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/absmax.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/signnz.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/signnz.hpp:            return is_nan(a) ? a : r;
+./pedantic/impl/signnz.hpp:            return if_else(is_nan(a), eve::allbits, r);
+./pedantic/impl/simd/arm/neon/max.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/simd/arm/neon/max.hpp:    if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);
+./pedantic/impl/simd/arm/neon/min.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/simd/arm/neon/min.hpp:    if constexpr(eve::platform::supports_invalids) tmp = if_else(is_nan(a1), a0, tmp);
+./pedantic/impl/maxabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/min.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/next.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./pedantic/impl/next.hpp:          if (is_nan(a)) return a;
+./pedantic/impl/minmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/is_equal.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/is_equal.hpp:     if constexpr(floating_value<T>)  return tmp || (is_nan(a) && is_nan(b));
+./numeric/impl/minabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/max.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/max.hpp:          return is_nan(v0) ? v1 : is_nan(v1) ? v0 : max(v0, v1);
+./numeric/impl/max.hpp:          auto tmp = if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, max(v0, v1)));
+./numeric/impl/maxmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/maxmag.hpp:    auto aa = if_else(is_nan(a), b, a);
+./numeric/impl/maxmag.hpp:    auto bb = if_else(is_nan(b), a, b);
+./numeric/impl/absmin.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/absmax.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/maxabs.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/min.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/min.hpp:               if (is_nan(v0)) return v1;
+./numeric/impl/min.hpp:          else if (is_nan(v1)) return v0;
+./numeric/impl/min.hpp:          auto tmp = if_else(is_nan(v0), v1, if_else(is_nan(v1), v0, min(v0, v1)));
+./numeric/impl/minmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./numeric/impl/minmag.hpp:    auto aa = if_else(is_nan(a), b, a);
+./numeric/impl/minmag.hpp:    auto bb = if_else(is_nan(b), a, b);
+./saturated/impl/prev.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./saturated/impl/prev.hpp:        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
+./saturated/impl/prev.hpp:        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
+./saturated/impl/next.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
+./saturated/impl/next.hpp:        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
+./saturated/impl/next.hpp:        if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
+./saturated/impl/minmag.hpp:******************************************************************************** <eve/module/core/regular/is_nan.hpp>
