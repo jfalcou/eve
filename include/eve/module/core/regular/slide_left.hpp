@@ -45,6 +45,7 @@ namespace eve
   }
 }
 
+#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/slide_left.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

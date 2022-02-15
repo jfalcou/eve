@@ -7,12 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/max.hpp>
+#include <eve/detail/function/friends.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {

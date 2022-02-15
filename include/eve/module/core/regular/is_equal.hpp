@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/numeric.hpp>
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
@@ -107,7 +105,7 @@ namespace eve
       if constexpr( scalar_value<T> && scalar_value<U> )  return as_logical_t<T>(a == b);
       else                                                return a == b;
     }
-    
+
     // -----------------------------------------------------------------------------------------------
     // logical masked case
     template<conditional_expr C, real_value U, real_value V>
@@ -115,7 +113,7 @@ namespace eve
     {
       return logical_mask_op(cond, is_equal, u, v);
     }
-  } 
+  }
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)

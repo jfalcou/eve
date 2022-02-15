@@ -7,11 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
-#include <eve/module/core/regular/numeric.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve

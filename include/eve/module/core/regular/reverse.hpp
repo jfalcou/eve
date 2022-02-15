@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 #include <array>
 
 namespace eve

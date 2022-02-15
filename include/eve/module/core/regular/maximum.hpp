@@ -7,9 +7,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
@@ -74,7 +72,6 @@ namespace eve
   EVE_MAKE_CALLABLE(maximum_, maximum);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/maximum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)

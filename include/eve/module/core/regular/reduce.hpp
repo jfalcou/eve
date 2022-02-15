@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -82,5 +81,4 @@ namespace eve
   EVE_MAKE_CALLABLE(reduce_, reduce);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/reduce.hpp>

@@ -7,9 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/bit_or.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
@@ -83,7 +82,6 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_ornot_, bit_ornot);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/bit_ornot.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)

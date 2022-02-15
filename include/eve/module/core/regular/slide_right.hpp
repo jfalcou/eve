@@ -11,6 +11,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/pattern.hpp>
 #include <array>
+#include <eve/arch.hpp>
 
 namespace eve
 {

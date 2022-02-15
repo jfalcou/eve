@@ -7,9 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/clamp.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/convert.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
