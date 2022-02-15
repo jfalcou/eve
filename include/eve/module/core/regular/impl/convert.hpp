@@ -11,7 +11,6 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/raberu.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/constant/valmax.hpp>
@@ -162,47 +161,6 @@ namespace eve::detail
     }
     else
     {
-      // EVE treats out of range conversion to be errors and asserts over them
-      if constexpr( sizeof(in_t) > sizeof(out_t) )
-      {
-        EVE_ASSERT( eve::all( v0 <= valmax(as<out_t>()) )
-                  , "[EVE] - eve::convert(" << v0
-                                            << ", as<" << rbr::detail::type_name<out_t>::value()
-                                            << ">()) will overflow."
-                  );
-
-        if constexpr( std::is_signed_v<in_t> )
-        {
-          EVE_ASSERT( eve::all( v0 >= valmin(as<out_t>()) )
-                    , "[EVE] - eve::convert(" << v0
-                                              << ", as<" << rbr::detail::type_name<out_t>::value()
-                                              << ">()) will underflow."
-                    );
-        }
-      }
-      else
-      {
-              if constexpr(     std::is_unsigned_v<in_t> && std::is_signed_v<out_t>
-                            && !std::is_floating_point_v<out_t>
-                          )
-        {
-          EVE_ASSERT( eve::all( v0 <= valmax(as<out_t>()) )
-                    , "[EVE] - eve::convert(" << v0
-                                              << ", as<" << rbr::detail::type_name<out_t>::value()
-                                              << ">()) will overflow."
-                    );
-
-        }
-        else  if constexpr( std::is_signed_v<in_t> && std::is_unsigned_v<out_t> )
-        {
-          EVE_ASSERT( eve::all( v0 >= 0 )
-                    , "[EVE] - eve::convert(" << v0
-                                              << ", as<" << rbr::detail::type_name<out_t>::value()
-                                              << ">()) will underflow."
-                    );
-        }
-      }
-
       // Converting between integral of different signs is just a bit_cast away
           if constexpr ( std::signed_integral<in_t> && std::unsigned_integral<out_t> )
       {

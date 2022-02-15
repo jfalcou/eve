@@ -311,13 +311,8 @@ namespace eve::detail
       }
       else  if constexpr(match(c_o, category::int16x8, category::uint16x8))
       {
-              if constexpr( api_512 ) return _mm_cvtepi32_epi16(v);
-        else  if constexpr( std::is_unsigned_v<U> )
-        {
-          if constexpr( api_sse4 )    return _mm_packus_epi32(v,v);
-          else                        return map(convert, v, tgt);
-        }
-        else                          return _mm_packs_epi32(v,v);
+        if constexpr( api_512 ) return _mm_cvtepi32_epi16(v);
+        else                    return map(convert,v,tgt);
       }
       else if constexpr(match(c_o, category::int8x16, category::uint8x16))
       {
@@ -344,24 +339,8 @@ namespace eve::detail
     {
       if constexpr( match(c_o, category::int16x8, category::uint16x8) )
       {
-        if constexpr( api_512  )
-        {
-          return _mm256_cvtepi32_epi16(v);
-        }
-        else if constexpr(api_avx2)
-        {
-          wide<U> w = [](auto x)
-                      {
-                        if constexpr(c_o == category::int16x8 )       return _mm256_packs_epi32(x,x);
-                        else if constexpr(c_o == category::uint16x8)  return _mm256_packus_epi32(x,x);
-                      }(v);
-          w = _mm256_permute4x64_epi64(w,0xD8);
-          return w.slice(lower_);
-        }
-        else
-        {
-          return wide<U, N>(convert(v.slice(lower_),tgt),convert(v.slice(upper_),tgt));
-        }
+        if constexpr( api_512  ) return _mm256_cvtepi32_epi16(v);
+        else           return wide<U, N>(convert(v.slice(lower_),tgt),convert(v.slice(upper_),tgt));
       }
       else if constexpr( api_512 && match(c_o, category::int8x16, category::uint8x16) )
       {
@@ -414,11 +393,7 @@ namespace eve::detail
             if constexpr(match(c_o, category::int8x16, category::uint8x16))
       {
         if constexpr(api_512) return _mm_cvtepi16_epi8(v);
-        else
-        {
-                if constexpr(c_o == category::int8x16 ) return _mm_packs_epi16(v,v);
-          else  if constexpr(c_o == category::uint8x16) return _mm_packus_epi16(v,v);
-        }
+        else return map(convert,v,tgt);
       }
       else  if constexpr(match(c_o, category::int32x4, category::uint32x4))
       {
@@ -480,16 +455,6 @@ namespace eve::detail
         if constexpr(api_512)
         {
           return _mm256_cvtepi16_epi8(v);
-        }
-        else if constexpr(api_avx2)
-        {
-          wide<U> w = [](auto x)
-                      {
-                        if constexpr(c_o == category::int8x16 )       return _mm256_packs_epi16(x,x);
-                        else if constexpr(c_o == category::uint8x16)  return _mm256_packus_epi16(x,x);
-                      }(v);
-          w = _mm256_permute4x64_epi64(w,0xD8);
-          return w.slice(lower_);
         }
         else return wide<U, N>(eve::convert(v.slice(lower_),tgt),eve::convert(v.slice(upper_),tgt));
       }
