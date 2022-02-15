@@ -11,8 +11,11 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/raberu.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
@@ -27,7 +30,7 @@ namespace eve::detail
   //  scalar<->scalar convert
   template<scalar_value In, scalar_value Out>
   requires( !product_type<In> && !product_type<Out>)
-  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), In const &v0, as<Out> const&) noexcept
+  EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), In v0, as<Out> const&) noexcept
   {
     if constexpr(std::same_as<In, Out>) return v0;
     else                                return static_cast<Out>(v0);
@@ -137,10 +140,7 @@ namespace eve::detail
     if constexpr(has_aggregated_abi_v<In>)
     {
       // If input is aggregated, we can slice and combine without lose of performance
-      auto[l,h] = v0.slice();
-      auto ll = eve::convert(l,tgt);
-      auto hh = eve::convert(h,tgt);
-      return out_t{ll,hh};
+      return out_t{eve::convert(v0.slice(lower_),tgt),eve::convert(v0.slice(upper_),tgt)};
     }
     else
     {
@@ -160,21 +160,65 @@ namespace eve::detail
     {
       return v0;
     }
-    // Converting between integral of different signs is just a bit_cast away
-    else if constexpr ( std::signed_integral<in_t> && std::unsigned_integral<out_t> )
-    {
-      auto s_res = convert(v0, eve::as<std::make_signed_t<out_t>>{});
-      return bit_cast(s_res, eve::as<wide<Out, cardinal_t<In>>>{});
-    }
-    else if constexpr ( std::unsigned_integral<in_t> && std::signed_integral<out_t> )
-    {
-      auto u_res = convert(v0, eve::as<std::make_unsigned_t<out_t>>{});
-      return bit_cast(u_res, eve::as<wide<Out, cardinal_t<In>>>{});
-    }
     else
     {
-      // Fallbacks to architecture-specific cases
-      return convert_impl(EVE_RETARGET(EVE_CURRENT_API), v0, tgt);
+      // EVE treats out of range conversion to be errors and asserts over them
+      if constexpr( sizeof(in_t) > sizeof(out_t) )
+      {
+        EVE_ASSERT( eve::all( v0 <= valmax(as<out_t>()) )
+                  , "[EVE] - eve::convert(" << v0
+                                            << ", as<" << rbr::detail::type_name<out_t>::value()
+                                            << ">()) will overflow."
+                  );
+
+        if constexpr( std::is_signed_v<in_t> )
+        {
+          EVE_ASSERT( eve::all( v0 >= valmin(as<out_t>()) )
+                    , "[EVE] - eve::convert(" << v0
+                                              << ", as<" << rbr::detail::type_name<out_t>::value()
+                                              << ">()) will underflow."
+                    );
+        }
+      }
+      else
+      {
+              if constexpr(     std::is_unsigned_v<in_t> && std::is_signed_v<out_t>
+                            && !std::is_floating_point_v<out_t>
+                          )
+        {
+          EVE_ASSERT( eve::all( v0 <= valmax(as<out_t>()) )
+                    , "[EVE] - eve::convert(" << v0
+                                              << ", as<" << rbr::detail::type_name<out_t>::value()
+                                              << ">()) will overflow."
+                    );
+
+        }
+        else  if constexpr( std::is_signed_v<in_t> && std::is_unsigned_v<out_t> )
+        {
+          EVE_ASSERT( eve::all( v0 >= 0 )
+                    , "[EVE] - eve::convert(" << v0
+                                              << ", as<" << rbr::detail::type_name<out_t>::value()
+                                              << ">()) will underflow."
+                    );
+        }
+      }
+
+      // Converting between integral of different signs is just a bit_cast away
+          if constexpr ( std::signed_integral<in_t> && std::unsigned_integral<out_t> )
+      {
+        auto s_res = convert(v0, eve::as<std::make_signed_t<out_t>>{});
+        return bit_cast(s_res, eve::as<wide<Out, cardinal_t<In>>>{});
+      }
+      else if constexpr ( std::unsigned_integral<in_t> && std::signed_integral<out_t> )
+      {
+        auto u_res = convert(v0, eve::as<std::make_unsigned_t<out_t>>{});
+        return bit_cast(u_res, eve::as<wide<Out, cardinal_t<In>>>{});
+      }
+      else
+      {
+        // Fallbacks to architecture-specific cases
+        return convert_impl(EVE_RETARGET(EVE_CURRENT_API), v0, tgt);
+      }
     }
   }
 
@@ -218,7 +262,8 @@ namespace eve::detail
       return (idx < c) ? idx : i;
     } };
 
-    return bit_cast(shuffle(bit_cast(v,as<wide<U>>{}), shuffler), as<wide<U,N>>{});
+    using c_t = fixed<N::value*sizeof(T)/sizeof(U)>;
+    return bit_cast(shuffle(bit_cast(v,as<wide<U,c_t>>{}), shuffler), as<wide<U,N>>{});
   }
 
   // Convert integer from 2^n -> 2^n+1

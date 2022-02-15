@@ -11,7 +11,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <bit>
 
 namespace eve::detail
 {
