@@ -7,11 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/roundscale.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <type_traits>
 #include <eve/assert.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
@@ -102,7 +101,6 @@ namespace eve
   EVE_MAKE_CALLABLE(fracscale_, fracscale);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/fracscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

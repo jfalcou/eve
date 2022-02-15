@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
@@ -99,7 +100,6 @@ namespace eve
   EVE_MAKE_CALLABLE(if_else_, if_else);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/if_else.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

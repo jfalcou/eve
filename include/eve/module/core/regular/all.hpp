@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -74,7 +74,6 @@ namespace eve
   EVE_MAKE_CALLABLE(all_, all);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/all.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)

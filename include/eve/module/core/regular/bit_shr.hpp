@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/assert.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
@@ -99,7 +99,6 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_shr_, bit_shr);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/bit_shr.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)

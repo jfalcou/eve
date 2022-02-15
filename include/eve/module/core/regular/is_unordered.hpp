@@ -7,9 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -89,7 +87,6 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/is_unordered.hpp>
-#include <eve/arch.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_unordered.hpp>

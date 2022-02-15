@@ -7,9 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/regular/is_not_equal.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
@@ -75,7 +72,8 @@ namespace eve
   //! ---
   //!
   //! #### Supported decorators
-  //!
+  //!#include <eve/arch.hpp>
+
   //!  no decorators are supported
   //!
   //! #### Example

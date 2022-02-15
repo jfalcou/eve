@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/bit_or.hpp>
-#include <eve/module/core/regular/bit_andnot.hpp>
-#include <eve/module/core/regular/bit_and.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
@@ -84,7 +82,6 @@ namespace eve
   EVE_MAKE_CALLABLE(bit_select_, bit_select);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/bit_select.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)

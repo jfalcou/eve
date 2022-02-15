@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/is_ordered.hpp>
-#include <eve/module/core/regular/nb_values.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
