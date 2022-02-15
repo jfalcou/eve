@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/detail/function/bit_cast.hpp>
@@ -64,6 +65,13 @@ namespace eve
 
       if constexpr(std::is_integral_v<t_t>) return T(mask);
       else                                  return T(bit_cast(i_t(mask), as<t_t>() ));
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return allbits(as<T>());
     }
   }
 }

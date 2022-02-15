@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 #include <eve/detail/implementation.hpp>
@@ -57,6 +58,13 @@ namespace eve
     EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), as<T> const& tgt) noexcept
     {
       return allbits(tgt);
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return nan(as<T>());
     }
   }
 }

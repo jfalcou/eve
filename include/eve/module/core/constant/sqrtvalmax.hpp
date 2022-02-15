@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/floor.hpp>
@@ -46,8 +46,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::sqrtvalmax(as<T>())` is semantically equivalent to
-  //! `T(floor(sqrt(eve::valmax(as<T>())))`
+  //! the call `eve::sqrtvalmax(as<T>())` is the greatest number of the type,  the square of which
+  //! is less or equal to `eve::valmax(as<T>())`.
   //!
   //! ---
   //!
@@ -67,7 +67,7 @@ namespace eve
     {
       using t_t = element_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>)              {
-        return Constant<T, 0x5f7FFFFEU>(); }
+        return Constant<T, 0x5f7FFFFFU>(); }
       else if constexpr(std::is_same_v<t_t, double>)        {
         return Constant<T, 0X5FEFFFFFFFFFFFFFULL>(); }
       else if constexpr(std::is_same_v<t_t, std::uint8_t>)  {
@@ -86,6 +86,13 @@ namespace eve
         return T(46340); }
       else if constexpr(std::is_same_v<t_t, std::int64_t>)  {
         return T(3037000499LL); }
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto sqrtvalmax_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type>{}))
+    {
+      return sqrtvalmax(as<T>());
     }
   }
 }

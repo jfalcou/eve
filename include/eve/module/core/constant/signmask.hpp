@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/constant.hpp>
 #include <eve/detail/implementation.hpp>
@@ -101,6 +102,13 @@ namespace eve
       {
         return Constant<T, -9223372036854775807LL - 1>();
       }
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto signmask_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return signmask(as<T>());
     }
   }
 }

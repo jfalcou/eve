@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -58,6 +57,27 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X3F3504F3U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T,0X3FE6A09E667F3BCDULL >();
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto invsqrt_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      using t_t           = element_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        if constexpr(std::is_same_v<D, upward_type>)
+          return eve::invsqrt_2(as<T>());
+        else
+          return Constant<T,  0X3F3504F2U>();
+      }
+      else
+      {
+        if constexpr(std::is_same_v<D, downward_type>)
+          return eve::invsqrt_2(as<T>());
+        else
+          return Constant<T, 0X3FE6A09E667F3BCEULL>();
+      }
     }
   }
 }

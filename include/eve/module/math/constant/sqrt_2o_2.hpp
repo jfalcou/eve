@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -56,5 +55,12 @@ namespace eve
     {
       return T(0.70710678118654752440084436210484903928483593768847);
     }
+ 
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto sqrt_2o_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    return sqrt_2o_2(as<T>());
+  }
   }
 }

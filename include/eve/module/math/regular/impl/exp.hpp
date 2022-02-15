@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 #include <eve/module/math/constant/minlog.hpp>
 #include <eve/module/math/constant/minlogdenormal.hpp>
@@ -23,7 +22,7 @@ namespace eve::detail
     {
       if constexpr(has_emulated_abi_v<wide<T>>)
       {
-        return std::exp(x);
+        return (x <= eve::minlog(as(x)))? T(0) : ((x >= eve::maxlog(as(x)))? inf(as(x)): std::exp(x));
       }
       else
       {

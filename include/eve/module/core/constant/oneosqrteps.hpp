@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/constant/constant.hpp>
@@ -65,6 +66,21 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0X453504F3U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4190000000000000UL>();
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto oneosqrteps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      using t_t           = element_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)
+      {
+        if constexpr(std::is_same_v<D, downward_type>)
+          return oneosqrteps(as<T>());
+        else
+          return Constant<T, 0X453504F4U >();
+      }
+      else return oneosqrteps(as<T>());
     }
   }
 }

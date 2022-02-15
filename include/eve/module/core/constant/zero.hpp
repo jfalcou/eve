@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/roundings.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/as.hpp>
 
@@ -64,6 +65,13 @@ namespace eve
         return res;
       }
       else return T(0);
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto zero_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return zero(as<T>());
     }
   }
 }

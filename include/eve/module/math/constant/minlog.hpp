@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -42,6 +41,8 @@ namespace eve
   //!   - T(-87.3763f) if eve::element_type_t<T> is float
   //!   - T(-708.396) if eve::element_type_t<T> is double
   //!
+  //! This is the greatest real value for which `eve::exp` evaluates to zero
+  //!
   //! ---
   //!
   //! #### Example
@@ -61,6 +62,13 @@ namespace eve
 
       if constexpr(std::is_same_v<t_t, float>) return Constant<T,0xc2aec0a5>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc086232bdd7abcd3ULL>();
+    }
+
+    template<typename T, typename D>
+    EVE_FORCEINLINE constexpr auto minlog_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    {
+      return minlog(as<T>());
     }
   }
 }

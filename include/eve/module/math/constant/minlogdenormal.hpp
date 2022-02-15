@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -41,6 +40,8 @@ namespace eve
   //! the call `eve::minlog(as<T>())` is semantically equivalent to:
   //!   - T(-103.972f) if eve::element_type_t<T> is float
   //!   - T(-745.133) if eve::element_type_t<T> is double
+  //!
+  //! This is the greatest value for which `eve::pedantic(eve::exp)` is  zero
   //!
   //! ---
   //!
