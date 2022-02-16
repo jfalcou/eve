@@ -42,11 +42,8 @@ EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::all_t
   TTS_EQUAL(eve::convert((T(42.69))               , tgt), static_cast<t_t>(v_t(42.69)) );
   TTS_EQUAL(eve::convert(eve::sqr(T(2))           , tgt), eve::float64(eve::sqr)(T(2)));
 
-  if constexpr(sizeof(T)<sizeof(double))
-  {
-    TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), tgt), static_cast<t_t>(eve::valmin(eve::as<v_t>())) );
-    TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), tgt), static_cast<t_t>(eve::valmax(eve::as<v_t>())) );
-  }
+  TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), tgt), static_cast<t_t>(eve::valmin(eve::as<v_t>())) );
+  TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), tgt), static_cast<t_t>(eve::valmax(eve::as<v_t>())) );
 };
 
 EVE_TEST_TYPES( "Check saturated eve::convert arithmetic behavior", eve::test::simd::all_types)

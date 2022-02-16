@@ -228,6 +228,13 @@ namespace eve::detail
     return bit_cast(shuffle(bit_cast(v,as<wide<U,c_t>>{}), shuffler), as<wide<U,N>>{});
   }
 
+  // Convert helper : sign extension
+  template<typename T> EVE_FORCEINLINE auto sign_extend(T v) noexcept
+  {
+    if constexpr(std::is_signed_v<element_type_t<T>>) return (v<0).mask();
+    else                                              return zero(as(v));
+  }
+
   // Convert integer from 2^n -> 2^n+1
   template<typename T, typename N, typename U>
   auto convert_integers_interleave(wide<T,N> v, as<U> const&)
