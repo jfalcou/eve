@@ -37,9 +37,9 @@ EVE_TEST_TYPES( "Check behavior of log_10 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
+    using elt_t = eve::element_type_t<T>;
   if constexpr(sizeof(long double) > sizeof(elt_t))
   {
-    using elt_t = eve::element_type_t<T>;
     TTS_EXPECT(downward(eve::log_10)(as<elt_t>()) < std::log(10.0l));
     TTS_EXPECT(upward(eve::log_10)(as<elt_t>())   > std::log(10.0l));
   }

@@ -37,9 +37,9 @@ EVE_TEST_TYPES( "Check behavior of phi on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  if constexpr(sizeof(long double) > sizeof(elt_t))
+     using elt_t = eve::element_type_t<T>;
+ if constexpr(sizeof(long double) > sizeof(elt_t))
   {
-    using elt_t = eve::element_type_t<T>;
     TTS_EXPECT(downward(eve::phi)(as<elt_t>()) < 1.61803398874989484820458683436563811772030917980575l);
     TTS_EXPECT(upward(eve::phi)(as<elt_t>())   > 1.61803398874989484820458683436563811772030917980575l);
   }

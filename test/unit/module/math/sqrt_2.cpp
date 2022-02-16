@@ -37,9 +37,9 @@ EVE_TEST_TYPES( "Check behavior of sqrt_2 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
+  using elt_t = eve::element_type_t<T>;
   if constexpr(sizeof(long double) > sizeof(elt_t))
   {
-    using elt_t = eve::element_type_t<T>;
     TTS_EXPECT(downward(eve::sqrt_2)(as<elt_t>()) < std::sqrt(2.0l));
     TTS_EXPECT(upward(eve::sqrt_2)(as<elt_t>())   > std::sqrt(2.0l));
   }

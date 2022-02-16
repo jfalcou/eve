@@ -37,10 +37,10 @@ EVE_TEST_TYPES( "Check behavior of e on wide"
   using eve::downward;
   using eve::upward;
 
+  using elt_t = eve::element_type_t<T>;
   if constexpr(sizeof(long double) > sizeof(elt_t))
   {
-    using elt_t = eve::element_type_t<T>;
-    TTS_EXPECT(downward(eve::egamma)(as<elt_t>()) < 0.57721566490153286060651209008l);
+.    TTS_EXPECT(downward(eve::egamma)(as<elt_t>()) < 0.57721566490153286060651209008l);
     TTS_EXPECT(upward(eve::egamma)(as<elt_t>()) > 0.57721566490153286060651209008l);
   }
   TTS_EQUAL(eve::egamma(as<T>()), T(0.57721566490153286060651209008l));

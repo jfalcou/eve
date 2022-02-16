@@ -37,9 +37,9 @@ EVE_TEST_TYPES( "Check behavior of e on wide"
   using eve::downward;
   using eve::upward;
 
+  using elt_t = eve::element_type_t<T>;
   if constexpr(sizeof(long double) > sizeof(elt_t))
   {
-    using elt_t = eve::element_type_t<T>;
     TTS_EXPECT(downward(eve::euler)(as<elt_t>()) < std::exp(1.0l));
     TTS_EXPECT(upward(eve::euler)(as<elt_t>()) > std::exp(1.0l));
   }
