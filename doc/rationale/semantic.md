@@ -95,3 +95,40 @@ In a less formal way, **EVE** @ref glossary_logical can be applied to set of
 except for any potential logical scalar values.
 
 @note A large majority of @ref glossary_logical are _de facto_ @ref glossary_elementwise .
+
+---
+
+@subsection glossary_constant Constant Functions
+
+Some of the object functions defined by **EVE** have as only parameter a `target` value. All but two (see above) are reputed to be
+constants of the type referenced by the target.
+
+For instance `eve::one(eve::as<float>())` is merely 1.0f, `eve::one(eve::as<eve::wide<float>>())` is a `eve::wide<float>` value filled with
+elements equal to 1.0f.
+
+All these constants can be bracketed using decorators downward and upward.
+This means that for all constants, say of name xxx, one have
+
+            downward(xxx)(as<T>()) <= xxx(as<T>()) <= upward(xxx)(as<T>()).
+
+For most constants the 3 values are identical, but this is not the case when the constant semantic is a mathematical value which does not possess an exact
+representation in the target type. For instance think of pi or sqrt(2) for ieee floating type values.
+
+In these later cases the direct call to constant value always returns the nearest representable value to the mathematical constant,
+but it is constant dependant if this effective value is less or greater than the full precision  mathematical value.
+
+For pi:
+   - eve::pi(as<float>()) is greater than the mathematical pi
+   - eve::pi(as<double>()) is less than the mathematical pi
+
+The decorators give the guarantee that if math(xxx) is the (not representable) mathematical value, we get:
+
+            downward(xxx)(as<T>()) <= math(xxx) <= upward(xxx)(as<T>())
+
+for all supported target with ordered type. Of course one of these two values is the constant itself and the two values differs at most by 0.5ulp.
+
+@note Special case of eve::true_ and eve::false_
+
+        - they are the only constants whose name ends with an underscore (for obvious language limitations reason),
+        - eve::true_(as<T>()) and eve::false_(as<T>()) do not return a value of type T but as_logical<T>.
+        - they do not support any decorator.

@@ -42,7 +42,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/invsqrtpi.cpp}
+  //! @godbolt{doc/math/invsqrtpi.cpp}
   //!
   //! @}
   //================================================================================================

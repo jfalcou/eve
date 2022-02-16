@@ -47,7 +47,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/minlogdenormal.cpp}
+  //! @godbolt{doc/math/minlogdenormal.cpp}
   //!
   //! @}
   //================================================================================================

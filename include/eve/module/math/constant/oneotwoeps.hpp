@@ -43,7 +43,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/oneotwoeps.cpp}
+  //! @godbolt{doc/math/oneotwoeps.cpp}
   //!
   //! @}
   //================================================================================================
