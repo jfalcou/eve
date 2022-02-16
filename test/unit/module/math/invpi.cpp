@@ -37,9 +37,12 @@ EVE_TEST_TYPES( "Check behavior of invpi on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  using elt_t = eve::element_type_t<T>;
-  TTS_EXPECT(downward(eve::invpi)(as<elt_t>()) <= (1.0/(4*std::atan(1.0l))));
-  TTS_EXPECT(  upward(eve::invpi)(as<elt_t>()) >= (1.0/(4*std::atan(1.0l))));
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    using elt_t = eve::element_type_t<T>;
+    TTS_EXPECT(downward(eve::invpi)(as<elt_t>()) <= (1.0/(4*std::atan(1.0l))));
+    TTS_EXPECT(  upward(eve::invpi)(as<elt_t>()) >= (1.0/(4*std::atan(1.0l))));
+  }
   TTS_ULP_EQUAL(eve::invpi(as<T>()), T(1.0/(4*std::atan(1.0l))), 0.0);
   TTS_EXPECT(eve::all(downward(eve::invpi)(as<T>()) <= eve::invpi(as<T>())));
   TTS_EXPECT(eve::all(eve::invpi(as<T>()) <= upward(eve::invpi)(as<T>())));

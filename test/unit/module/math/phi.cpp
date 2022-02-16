@@ -37,9 +37,12 @@ EVE_TEST_TYPES( "Check behavior of phi on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  using elt_t = eve::element_type_t<T>;
-  TTS_EXPECT(downward(eve::phi)(as<elt_t>()) < 1.61803398874989484820458683436563811772030917980575l);
-  TTS_EXPECT(upward(eve::phi)(as<elt_t>())   > 1.61803398874989484820458683436563811772030917980575l);
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    using elt_t = eve::element_type_t<T>;
+    TTS_EXPECT(downward(eve::phi)(as<elt_t>()) < 1.61803398874989484820458683436563811772030917980575l);
+    TTS_EXPECT(upward(eve::phi)(as<elt_t>())   > 1.61803398874989484820458683436563811772030917980575l);
+  }
   TTS_ULP_EQUAL(eve::phi(as<T>()), T(1.61803398874989484820458683436563811772030917980575l), 0.0);
   TTS_EXPECT(eve::all(downward(eve::phi)(as<T>()) <= eve::phi(as<T>())));
   TTS_EXPECT(eve::all(eve::phi(as<T>()) <= upward(eve::phi)(as<T>())));

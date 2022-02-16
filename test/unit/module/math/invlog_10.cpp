@@ -37,10 +37,13 @@ EVE_TEST_TYPES( "Check behavior of invlog_10 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  using elt_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::invlog_10(as<T>()),  T(0.43429448190325182765112891891660508229439700580367l));
-  TTS_EXPECT(downward(eve::invlog_10)(as<elt_t>()) < 0.43429448190325182765112891891660508229439700580367l);
-  TTS_EXPECT(upward(eve::invlog_10)(as<elt_t>())   > 0.43429448190325182765112891891660508229439700580367l);
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    using elt_t = eve::element_type_t<T>;
+    TTS_EXPECT(downward(eve::invlog_10)(as<elt_t>()) < 0.43429448190325182765112891891660508229439700580367l);
+    TTS_EXPECT(upward(eve::invlog_10)(as<elt_t>())   > 0.43429448190325182765112891891660508229439700580367l);
+  }
   TTS_ULP_EQUAL(eve::invlog_10(as<T>()), T(0.43429448190325182765112891891660508229439700580367l), 0.0);
   TTS_EXPECT(eve::all(downward(eve::invlog_10)(as<T>()) <= eve::invlog_10(as<T>())));
   TTS_EXPECT(eve::all(eve::invlog_10(as<T>()) <= upward(eve::invlog_10)(as<T>())));

@@ -37,10 +37,13 @@ EVE_TEST_TYPES( "Check behavior of pio_2 on wide"
   using eve::downward;
   using eve::upward;
 
-  using elt_t = eve::element_type_t<T>;
-  TTS_EXPECT(downward(eve::pio_2)(as<elt_t>()) < 2*std::atan(1.0l));
-  TTS_EXPECT(upward(eve::pio_2)(as<elt_t>())   > 2*std::atan(1.0l));
-   TTS_EQUAL(eve::pio_2(as<T>()), T(2*std::atan(1.0l)));
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    using elt_t = eve::element_type_t<T>;
+    TTS_EXPECT(downward(eve::pio_2)(as<elt_t>()) < 2*std::atan(1.0l));
+    TTS_EXPECT(upward(eve::pio_2)(as<elt_t>())   > 2*std::atan(1.0l));
+  }
+  TTS_EQUAL(eve::pio_2(as<T>()), T(2*std::atan(1.0l)));
   TTS_EXPECT(eve::all(downward(eve::pio_2)(as<T>()) <= eve::pio_2(as<T>())));
   TTS_EXPECT(eve::all(eve::pio_2(as<T>()) <= upward(eve::pio_2)(as<T>())));
   TTS_ULP_EQUAL(downward(eve::pio_2)(as<T>()), upward(eve::pio_2)(as<T>()), 0.5);

@@ -37,9 +37,12 @@ EVE_TEST_TYPES( "Check behavior of log2_e on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  using elt_t = eve::element_type_t<T>;
-  TTS_EXPECT(downward(eve::log2_e)(as<elt_t>()) < std::log2(std::exp(1.0l)));
-  TTS_EXPECT(upward(eve::log2_e)(as<elt_t>())   > std::log2(std::exp(1.0l)));
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    using elt_t = eve::element_type_t<T>;
+    TTS_EXPECT(downward(eve::log2_e)(as<elt_t>()) < std::log2(std::exp(1.0l)));
+    TTS_EXPECT(upward(eve::log2_e)(as<elt_t>())   > std::log2(std::exp(1.0l)));
+  }
   TTS_ULP_EQUAL(eve::log2_e(as<T>()), T(std::log2(std::exp(1.0l))), 0.0);
   TTS_EXPECT(eve::all(downward(eve::log2_e)(as<T>()) <= eve::log2_e(as<T>())));
   TTS_EXPECT(eve::all(eve::log2_e(as<T>()) <= upward(eve::log2_e)(as<T>())));

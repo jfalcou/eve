@@ -37,9 +37,12 @@ EVE_TEST_TYPES( "Check behavior of sqrt_3 on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-  using elt_t = eve::element_type_t<T>;
-  TTS_EXPECT(downward(eve::sqrt_3)(as<elt_t>()) < std::sqrt(3.0l));
-  TTS_EXPECT(upward(eve::sqrt_3)(as<elt_t>())   > std::sqrt(3.0l));
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    using elt_t = eve::element_type_t<T>;
+    TTS_EXPECT(downward(eve::sqrt_3)(as<elt_t>()) < std::sqrt(3.0l));
+    TTS_EXPECT(upward(eve::sqrt_3)(as<elt_t>())   > std::sqrt(3.0l));
+  }
   TTS_ULP_EQUAL(eve::sqrt_3(as<T>()), T(std::sqrt(3.0l)), 0.0);
   TTS_EXPECT(eve::all(downward(eve::sqrt_3)(as<T>()) <= eve::sqrt_3(as<T>())));
   TTS_EXPECT(eve::all(eve::sqrt_3(as<T>()) <= upward(eve::sqrt_3)(as<T>())));
