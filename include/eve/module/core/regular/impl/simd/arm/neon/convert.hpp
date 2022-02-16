@@ -267,7 +267,7 @@ namespace eve::detail
       {
         // Force size to 4 so combine builds a properly sized wide
         wide<T,fixed<4>> base = v.storage();
-        return wide<downgrade_t<T>,N>(vmovn_u16(eve::combine(base,zero(as(base)))));
+        return wide<std::uint8_t,N>(vmovn_u16(eve::combine(base,zero(as(base)))));
       }
     }
     // Remaining cases
