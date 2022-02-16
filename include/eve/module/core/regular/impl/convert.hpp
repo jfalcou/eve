@@ -201,6 +201,10 @@ namespace eve::detail
       using next_t = make_integer_t<sizeof(in_t)*2,s_t>;
       return convert( convert(v0, as<next_t>{}), tgt);
     }
+    else
+    {
+      return bit_cast(v0, as<wide<Out,typename In::cardinal_type>>{});
+    }
   }
 
   // Convert helpers : large->small integers via a single shuffle
