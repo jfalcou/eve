@@ -58,9 +58,9 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_j1"
   TTS_ULP_EQUAL(eve__sph_bessel_j1( T(0))  , eve::zero(eve::as< T>()), 0.0);
 
 
-  TTS_ULP_EQUAL(eve__sph_bessel_j1(a0), map(std__sph_bessel_j1, a0), 10.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_j1(a1), map(std__sph_bessel_j1, a1), 10.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_j1(a2), map(std__sph_bessel_j1, a2), 10.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j1(a0), map(std__sph_bessel_j1, a0), 40.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j1(a1), map(std__sph_bessel_j1, a1), 40.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j1(a2), map(std__sph_bessel_j1, a2), 40.0);
 
 };
 

@@ -51,7 +51,7 @@ EVE_TEST( "Check behavior of sph_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(500)), std__sph_bessel_yn(2u, v_t(500)), 2.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(10)), std__sph_bessel_yn(2u, v_t(10))  , 5.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(5)),  std__sph_bessel_yn(3u, v_t(5))   , 30.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(5)),  std__sph_bessel_yn(3u, v_t(5))   , 40.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(0.1)), std__sph_bessel_yn(2u, v_t(0.1))  , 2.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(0.2)),  std__sph_bessel_yn(3u, v_t(0.2))   , 2.0);
@@ -69,7 +69,7 @@ EVE_TEST( "Check behavior of sph_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(500)),   T(std__sph_bessel_yn(2u, v_t(500))),   2.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(10)),    T(std__sph_bessel_yn(2u, v_t(10)))   , 5.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(5)),     T(std__sph_bessel_yn(3u, v_t(5)))    , 30.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(5)),     T(std__sph_bessel_yn(3u, v_t(5)))    , 40.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(0.1)),   T(std__sph_bessel_yn(2u, v_t(0.1)))  , 2.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(0.2)),   T(std__sph_bessel_yn(3u, v_t(0.2)))  , 2.0);
@@ -87,7 +87,7 @@ EVE_TEST( "Check behavior of sph_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(500)),   T(std__sph_bessel_yn(2u, v_t(500))),   2.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(10)),    T(std__sph_bessel_yn(2u, v_t(10)))   , 5.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(5)),     T(std__sph_bessel_yn(3u, v_t(5)))    , 30.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(5)),     T(std__sph_bessel_yn(3u, v_t(5)))    , 40.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(0.1)),   T(std__sph_bessel_yn(2u, v_t(0.1)))  , 2.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(0.2)),   T(std__sph_bessel_yn(3u, v_t(0.2)))  , 2.0);
@@ -108,7 +108,7 @@ EVE_TEST( "Check behavior of sph_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(500)),   T(std__sph_bessel_yn(2u, v_t(500))),   2.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(10)),    T(std__sph_bessel_yn(2u, v_t(10)))   , 5.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(5)),     T(std__sph_bessel_yn(3u, v_t(5)))    , 30.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(5)),     T(std__sph_bessel_yn(3u, v_t(5)))    , 40.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(0.1)),   T(std__sph_bessel_yn(2u, v_t(0.1)))  , 2.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(0.2)),   T(std__sph_bessel_yn(3u, v_t(0.2)))  , 2.0);

@@ -116,5 +116,5 @@ EVE_TEST( "Check behavior of sph_bessel_jn on wide with integral order"
   TTS_ULP_EQUAL(eve__sph_bessel_jn(I_t(10), T(8)),   T(std__sph_bessel_jn(10u, v_t(8)))   , 2.0);
   TTS_ULP_EQUAL(eve__sph_bessel_jn(I_t(10), T(8)),   T(std__sph_bessel_jn(10u, v_t(8)))   , 2.0);
 
-  TTS_RELATIVE_EQUAL(eve__sph_bessel_jn(n, a0),   map(std__sph_bessel_jn, n, a0)   , 0.0025);
+  TTS_RELATIVE_EQUAL(eve__sph_bessel_jn(n, a0),   map(std__sph_bessel_jn, n, a0)   , 0.0035);
 };
