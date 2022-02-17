@@ -118,9 +118,14 @@ namespace eve::detail
       else  if constexpr( c_o == category::float32x2 )  return vcvt_f32_s32(vmovn_s64(v));
       else  if constexpr( c_o == category::float64x2 )
       {
-        if constexpr(current_api >= asimd)  return vcvtq_f64_s64(v); else return map(convert,v,tgt);
+        if constexpr(current_api >= asimd)  return vcvtq_f64_s64(v);
+         else return map(convert,v,tgt);
       }
-      else                                  return convert_integers_chain(v,tgt);
+      else
+      {
+        if constexpr(c_o && category::integer_) return convert_integers_chain(v,tgt);
+        else                                    return map(convert,v,tgt);
+      }
     }
     else  if constexpr( c_i == category::uint64x2 )
     {
@@ -130,7 +135,11 @@ namespace eve::detail
       {
         if constexpr(current_api >= asimd)  return vcvtq_f64_u64(v); else return map(convert,v,tgt);
       }
-      else                                  return convert_integers_chain(v,tgt);
+      else
+      {
+        if constexpr(c_o && category::integer_) return convert_integers_chain(v,tgt);
+        else                                    return map(convert,v,tgt);
+      }
     }
     else  if constexpr( current_api >= asimd && c_o == category::float64x1)
     {
