@@ -9,6 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_yn.hpp>
 
 namespace eve::detail
 {

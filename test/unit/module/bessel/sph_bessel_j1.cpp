@@ -31,9 +31,9 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_j1"
   using v_t = eve::element_type_t<T>;
   auto eve__sph_bessel_j1 =  [](auto x) { return eve::sph_bessel_j1(x); };
 #if defined(__cpp_lib_math_special_functions)
-  auto std__sph_bessel_j1 =  [](auto x)->v_t { return std::sph_bessel_i(v_t(0), x); };
+  auto std__sph_bessel_j1 =  [](auto x)->v_t { return std::sph_bessel(v_t(1), x); };
 #else
-  auto std__sph_bessel_j1 =  [](auto x)->v_t { return boost::math::sph_bessel_i(double(0), double(x)); };
+  auto std__sph_bessel_j1 =  [](auto x)->v_t { return boost::math::sph_bessel(double(1), double(x)); };
 #endif
 
   if constexpr( eve::platform::supports_invalids )

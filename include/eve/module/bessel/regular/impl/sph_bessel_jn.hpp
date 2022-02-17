@@ -9,6 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/module/bessel/regular/cyl_bessel_jn.hpp>
 
 namespace eve::detail
 {
@@ -20,7 +21,7 @@ namespace eve::detail
     else
       return if_else( abs(x) < eps(as(x))
                     , if_else(is_eqz(nu), one(as(x)), zero)
-                    , cyl_bessel_jn(nu+half(as(x)), x)*rsqrt(2*x*invpi(as(x)))
+                    , cyl_bessel_jn(nu+half(as(nu)), x)*rsqrt(2*x*invpi(as(x)))
                     );
   }
 }
