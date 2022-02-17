@@ -34,9 +34,9 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
+  //!`n`:   [real_value](@ref eve::real_value) order of the function (integral and positive)
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value). if n is non an integral value, a negative entry will return a Nan.
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value) (positive).
   //!
   //! **Return value**
   //!
