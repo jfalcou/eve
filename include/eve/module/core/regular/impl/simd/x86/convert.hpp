@@ -349,7 +349,7 @@ namespace eve::detail
               if constexpr( c_o == category::float64x4 )
         {
                 if constexpr( c_i == category::int32x4)             return _mm256_cvtepi32_pd(v);
-          else  if constexpr( api_512 && c_i == category::uint32x4) return _mm256_cvtepu32_epi64(v);
+          else  if constexpr( api_512 && c_i == category::uint32x4) return _mm256_cvtepu32_pd(v);
           else  return wide<U,N>(convert(v.slice(lower_),tgt), convert(v.slice(upper_),tgt));
         }
         else  if constexpr(   current_api >= avx2

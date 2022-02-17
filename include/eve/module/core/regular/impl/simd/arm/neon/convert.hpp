@@ -256,7 +256,7 @@ namespace eve::detail
       {
         // Force size to 4 so combine builds a properly sized wide
         wide<T,fixed<4>> base = v.storage();
-        return wide<std::int8_t,N>{vmovn_s16(eve::combine(base,zero(as(base))))};
+        return wide<U,N>{vmovn_s16(eve::combine(base,zero(as(base))))};
       }
     }
     else  if constexpr( c_i == category::uint16x4 )
@@ -267,7 +267,7 @@ namespace eve::detail
       {
         // Force size to 4 so combine builds a properly sized wide
         wide<T,fixed<4>> base = v.storage();
-        return wide<std::uint8_t,N>(vmovn_u16(eve::combine(base,zero(as(base)))));
+        return wide<U,N>(vmovn_u16(eve::combine(base,zero(as(base)))));
       }
     }
     // Remaining cases
