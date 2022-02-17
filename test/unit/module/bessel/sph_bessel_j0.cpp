@@ -63,17 +63,3 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_j0"
   TTS_ULP_EQUAL(eve__sph_bessel_j0(a2), map(std__sph_bessel_j0, a2), 10.0);
 
 };
-
-
-// EVE_TEST( "Check behavior of sph_bessel_j0 on wide with negative non integral order"
-//         , eve::test::simd::ieee_reals
-//         , eve::test::generate(eve::test::randoms(0.0, 60.0))
-//         )
-//   <typename T>(T a0 )
-// {
-//   using v_t = eve::element_type_t<T>;
-//   auto eve__diff_bessel_j0 =  [](auto x) { return eve::diff(eve::sph_bessel_j0)(x); };
-//   auto std__diff_bessel_j0 =  [](auto x)->v_t { return boost::math::sph_bessel_i_prime(double(0), double(x)); };
-//   TTS_RELATIVE_EQUAL(eve__diff_bessel_j0(a0),   map(std__diff_bessel_j0, a0)   , 1.0e-3);
-
-// };
