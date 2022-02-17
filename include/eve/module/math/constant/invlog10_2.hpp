@@ -42,7 +42,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/invlog10_2.cpp}
+  //! @godbolt{doc/math/invlog10_2.cpp}
   //!
   //! @}
   //================================================================================================
@@ -62,17 +62,10 @@ namespace eve
     EVE_FORCEINLINE constexpr auto invlog10_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
-      using t_t           = element_type_t<T>;
-      if constexpr(std::is_same_v<D, upward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0x40549a79U>();
-        else                                      return invlog10_2(as<T>());
-      }
+       if constexpr(std::is_same_v<D, upward_type>)
+        return Ieee_constant<T, 0x40549a79U, 0x400a934f0979a372ULL>();
       else
-      {
-        if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x400a934f0979a370ULL >();
-        else                                      return invlog10_2(as<T>());
-      }
+        return Ieee_constant<T, 0x40549a78U, 0x400a934f0979a371ULL>();
     }
   }
 }

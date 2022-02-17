@@ -42,7 +42,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/invsqrt_2.cpp}
+  //! @godbolt{doc/math/invsqrt_2.cpp}
   //!
   //! @}
   //================================================================================================
@@ -63,21 +63,10 @@ namespace eve
     EVE_FORCEINLINE constexpr auto invsqrt_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
-      using t_t           = element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)
-      {
-        if constexpr(std::is_same_v<D, upward_type>)
-          return eve::invsqrt_2(as<T>());
-        else
-          return Constant<T,  0X3F3504F2U>();
-      }
+      if constexpr(std::is_same_v<D, upward_type>)
+        return Ieee_constant<T, 0X3F3504F4U, 0X3FE6A09E667F3BCDULL >();
       else
-      {
-        if constexpr(std::is_same_v<D, downward_type>)
-          return eve::invsqrt_2(as<T>());
-        else
-          return Constant<T, 0X3FE6A09E667F3BCEULL>();
-      }
+        return Ieee_constant<T, 0X3F3504F3U, 0X3FE6A09E667F3BCCULL >();
     }
   }
 }

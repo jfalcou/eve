@@ -36,8 +36,12 @@ EVE_TEST_TYPES( "Check behavior of pi on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
-
-  TTS_EQUAL(eve::pi(as<T>()), T(4*std::atan(1.0l)));
+  using elt_t = eve::element_type_t<T>;
+  if constexpr(sizeof(long double) > sizeof(elt_t))
+  {
+    TTS_EXPECT(downward(eve::pi)(as<elt_t>()) < 4*std::atan(1.0l));
+    TTS_EXPECT(upward(eve::pi)(as<elt_t>())   > 4*std::atan(1.0l));
+  }  TTS_EQUAL(eve::pi(as<T>()), T(4*std::atan(1.0l)));
   TTS_EXPECT(eve::all(downward(eve::pi)(as<T>()) <= eve::pi(as<T>())));
   TTS_EXPECT(eve::all(eve::pi(as<T>()) <= upward(eve::pi)(as<T>())));
   TTS_ULP_EQUAL(downward(eve::pi)(as<T>()), upward(eve::pi)(as<T>()), 0.5);

@@ -42,7 +42,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/halfeps.cpp}
+  //! @godbolt{doc/math/halfeps.cpp}
   //!
   //! @}
   //================================================================================================

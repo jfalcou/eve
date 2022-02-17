@@ -35,8 +35,11 @@ EVE_TEST_TYPES( "Check behavior of oneosqrteps on wide"
   using eve::as;
   using eve::downward;
   using eve::upward;
+  using elt_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::oneosqrteps(as<T>()), T(1.0l/std::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
+  TTS_EXPECT(eve::all(downward(eve::oneosqrteps)(as<elt_t>()) <= std::sqrt(1.0l/(long double)(eve::eps(as<elt_t>())))));
+  TTS_EXPECT(eve::all(  upward(eve::oneosqrteps)(as<elt_t>()) >= std::sqrt(1.0l/(long double)(eve::eps(as<elt_t>())))));
   TTS_EXPECT(eve::all(downward(eve::oneosqrteps)(as<T>()) <= eve::oneosqrteps(as<T>())));
   TTS_EXPECT(eve::all(eve::oneosqrteps(as<T>()) <= upward(eve::oneosqrteps)(as<T>())));
   TTS_ULP_EQUAL(downward(eve::oneosqrteps)(as<T>()), upward(eve::oneosqrteps)(as<T>()), 0.5);
