@@ -31,6 +31,10 @@ needs to change.
 
 [![SIMD in C++20: EVE of a new Era - CppCon 2021](http://img.youtube.com/vi/WZGNCPBMInI/0.jpg)](http://www.youtube.com/watch?v=WZGNCPBMInI "Video Title")
 
+### SIMD Algorithms Design
+
+[![Playlist by Denis Yaroshevskiy](http://img.youtube.com/vi/U1e_k8xmwR0/0.jpg)](https://www.youtube.com/playlist?list=PLYCMvilhmuPEM8DUvY6Wg_jaSFHpmlSBD)
+
 ## Current status - Operationnal
 
 EVE is considered **operationnal**: it's usable, has a large feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
