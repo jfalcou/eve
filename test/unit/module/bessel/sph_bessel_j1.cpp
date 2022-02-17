@@ -30,20 +30,15 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_j1"
 {
   using v_t = eve::element_type_t<T>;
   auto eve__sph_bessel_j1 =  [](auto x) { return eve::sph_bessel_j1(x); };
-#if defined(__cpp_lib_math_special_functions)
-  auto std__sph_bessel_j1 =  [](auto x)->v_t { return std::sph_bessel(v_t(1), x); };
-#else
   auto std__sph_bessel_j1 =  [](auto x)->v_t { return boost::math::sph_bessel(double(1), double(x)); };
-#endif
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve__sph_bessel_j1(eve::inf(eve::as<v_t>())), eve::inf(eve::as<v_t>()), 0);
+    TTS_ULP_EQUAL(eve__sph_bessel_j1(eve::inf(eve::as<v_t>())), eve::zero(eve::as<v_t>()), 0);
     TTS_ULP_EQUAL(eve__sph_bessel_j1(eve::nan(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
-    TTS_ULP_EQUAL(eve__sph_bessel_j1(eve::inf(eve::as< T>())),  eve::inf(eve::as< T>()), 0);
+    TTS_ULP_EQUAL(eve__sph_bessel_j1(eve::inf(eve::as< T>())),  eve::zero(eve::as< T>()), 0);
     TTS_ULP_EQUAL(eve__sph_bessel_j1(eve::nan(eve::as< T>())), eve::nan(eve::as< T>()), 0);
   }
-  TTS_IEEE_EQUAL(eve__sph_bessel_j1(v_t(-1)), eve::nan(eve::as<v_t>()));
   TTS_ULP_EQUAL(eve__sph_bessel_j1(v_t(500)), std__sph_bessel_j1(v_t(500)), 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(v_t(10)), std__sph_bessel_j1(v_t(10))  , 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(v_t(5)),  std__sph_bessel_j1(v_t(5))   , 6.0);
@@ -53,7 +48,6 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_j1"
   TTS_ULP_EQUAL(eve__sph_bessel_j1(v_t(1)),  std__sph_bessel_j1(v_t(1))   , 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(v_t(0)),  eve::zero(eve::as<v_t>()), 0.0);
 
-  TTS_IEEE_EQUAL(eve__sph_bessel_j1(T(-1)), eve::nan(eve::as<T>()));
   TTS_ULP_EQUAL(eve__sph_bessel_j1( T(500)),  T(std__sph_bessel_j1(v_t(500)) ), 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1( T(10)) ,  T(std__sph_bessel_j1( v_t(10)) ), 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1( T(5))  ,  T(std__sph_bessel_j1( v_t(5))  ), 6.0);
