@@ -22,3 +22,9 @@
 #include <eve/module/bessel/regular/cyl_bessel_y0.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_y1.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_yn.hpp>
+#include <eve/module/bessel/regular/sph_bessel_j0.hpp>
+#include <eve/module/bessel/regular/sph_bessel_j1.hpp>
+#include <eve/module/bessel/regular/sph_bessel_jn.hpp>
+#include <eve/module/bessel/regular/sph_bessel_y0.hpp>
+#include <eve/module/bessel/regular/sph_bessel_y1.hpp>
+#include <eve/module/bessel/regular/sph_bessel_yn.hpp>

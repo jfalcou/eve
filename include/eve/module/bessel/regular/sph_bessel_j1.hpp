@@ -14,9 +14,9 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_jn
+  //! @var sph_bessel_j1
   //!
-  //! @brief Callable object computing the cyl_bessel_jn function,  \f$ J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
+  //! @brief Callable object computing \f$ j_{0}(x)= \sqrt{\frac\pi{2x}}J_{1/2}(x) \f$.
   //!
   //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
@@ -24,25 +24,22 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_jn function                                 |
+  //! | `operator()` | the sph_bessel_j1 function   |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value N, floating_real_value T  > auto operator()( N n, T x ) const noexcept;
+  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
-  //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value). if n is non an integral value, a negative entry will return a Nan.
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //! \f$\displaystyle J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
-  //!
-  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f if \f$n \ne 0\f$ else \f$1\f$$.
+  //!Computes  [elementwise](@ref glossary_elementwise) the value of
+  //!the solution of \f$ x^{2}y''+xy'+(x^2-1/2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
   //! ---
   //!
@@ -51,16 +48,15 @@ namespace eve
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!
-  //!     The expression `eve::diff(eve::cyl_bessel_jn)(n, x)` computes the derivative of the function at `x`.
-  //!
+  //!     The expression `eve::diff(eve::sph_bessel_j1)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/bessel/cyl_bessel_jn.cpp}
+  //! @godbolt{doc/bessel/sph_bessel_j1.cpp}
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(cyl_bessel_jn_, cyl_bessel_jn);
+  EVE_MAKE_CALLABLE(sph_bessel_j1_, sph_bessel_j1);
 }
 
-#include <eve/module/bessel/regular/impl/cyl_bessel_jn.hpp>
+#include <eve/module/bessel/regular/impl/sph_bessel_j1.hpp>
