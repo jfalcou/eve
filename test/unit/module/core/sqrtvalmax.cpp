@@ -37,7 +37,7 @@ EVE_TEST_TYPES( "Check behavior of sqrtvalmax on wide"
   using eve::downward;
   using eve::upward;
 
-  using elt_t = element_type_t<T>;
+  using elt_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::sqrtvalmax(as<T>()), T(eve::sqrt(eve::valmax(as<elt_t>()))));
   if constexpr(eve::floating_value<T>)
     TTS_EQUAL(eve::sqr(eve::next(eve::sqrtvalmax(as<T>()))), eve::inf(as<T>()));
