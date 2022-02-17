@@ -184,8 +184,8 @@ namespace eve::detail
       else  if constexpr(c_o == category::float32x4 && api_512) return _mm_cvtepi64_ps(v);
       else  if constexpr(c_o == category::int16x8   && api_512) return _mm_cvtepi64_epi16(v);
       else  if constexpr(c_o == category::int16x8   && api_512) return _mm_cvtepi64_epi16(v);
-      else  if constexpr(c_o == category::int8x16   && api_512) return _mm_cvtepi64_epi8(v);
-      else  if constexpr(c_o == category::int8x16   && api_512) return _mm_cvtepi64_epi8(v);
+      else  if constexpr(c_o == category::uint8x16  && api_512) return _mm_cvtepi64_epi8(v);
+      else  if constexpr(c_o == category::uint8x16  && api_512) return _mm_cvtepi64_epi8(v);
       else  if constexpr( match(c_o, category::int32x4, category::uint32x4) )
       {
         if constexpr(api_512) return _mm_cvtepi64_epi32(v);
@@ -445,7 +445,8 @@ namespace eve::detail
       }
       else  if constexpr(api_512 && c_o == category::float64x8)
       {
-        return _mm512_cvtepi64_pd(_mm512_cvtepi16_epi64(v));
+        if constexpr( std::is_signed_v<T> ) return _mm512_cvtepi64_pd(_mm512_cvtepi16_epi64(v));
+        else                                return _mm512_cvtepi64_pd(_mm512_cvtepu16_epi64(v));
       }
       else  if constexpr(c_o == category::float32x4)
       {
@@ -466,7 +467,8 @@ namespace eve::detail
       }
       else  if constexpr( api_512 && match(c_o, category::int64x8, category::uint64x8))
       {
-        return _mm512_cvtepi16_epi64(v);
+        if constexpr( std::is_signed_v<T> ) return _mm512_cvtepi16_epi64(v);
+        else                                return _mm512_cvtepu16_epi64(v);
       }
       else  if constexpr(api_avx2 && match(c_o, category::int64x4, category::uint64x4))
       {
@@ -500,9 +502,10 @@ namespace eve::detail
       }
       else if constexpr(match(c_o, category::int32x16, category::uint32x16))
       {
-        return _mm512_cvtepi16_epi32(v);
+        if constexpr(c_i == category::int16x16) return _mm512_cvtepi16_epi32(v);
+        else                                    return _mm512_cvtepu16_epi32(v);
       }
-      else if constexpr(c_o == category::float32x16)
+      else if constexpr(c_o && category::float_)
       {
         return convert( convert(v,as<upgrade_t<T>>{}), tgt);
       }
@@ -556,7 +559,7 @@ namespace eve::detail
       }
       else  if constexpr(match(c_o, category::int16x16, category::uint16x16))
       {
-              if constexpr(api_avx2 && c_i == category::int8x16) return _mm256_cvtepi8_epi16(v);
+              if constexpr(api_avx2 && c_i == category::int8x16 ) return _mm256_cvtepi8_epi16(v);
         else  if constexpr(api_avx2 && c_i == category::uint8x16) return _mm256_cvtepu8_epi16(v);
         else return wide<U,N>(convert(v.slice(lower_), tgt), convert(v.slice(upper_), tgt));
       }
