@@ -151,8 +151,8 @@ namespace eve::detail
     }
     else  if constexpr( c_i == category::float32x16 )
     {
-            if constexpr( c_o == category::int32x16   ) return _mm512_cvtps_epi32(v);
-      else  if constexpr( c_o == category::uint32x16  ) return _mm512_cvtps_epu32(v);
+            if constexpr( c_o == category::int32x16   ) return _mm512_cvttps_epi32(v);
+      else  if constexpr( c_o == category::uint32x16  ) return _mm512_cvttps_epu32(v);
       else  if constexpr( match (c_o, category::int16x16 , category::int8x16
                                     , category::uint16x16, category::uint8x16
                         )       )
