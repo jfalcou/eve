@@ -91,7 +91,7 @@ namespace eve::detail
         using abi_t = typename In::abi_type;
         using out_t = as_wide_t<logical<Out>, cardinal_t<logical<In>>>;
 
-        // If input or output are aggregated, we can slice and combine without lose of performance
+        //  For non-wide logical, we only handle integers
         if constexpr( !abi_t::is_wide_logical)
         {
           // If input or output are aggregated, we can slice and combine without lose of performance
@@ -111,18 +111,39 @@ namespace eve::detail
         }
         else
         {
-          using s_in_t  = std::make_signed_t<typename logical<In>::bits_type::value_type>;
-          using v_int_t = typename logical<In>::bits_type::template rebind<s_in_t, cardinal_t<out_t>>;
-          using s_out_t = std::make_signed_t<typename logical<Out>::bits_type>;
-
-          // Just convert the bit and bitcast back to the proper output
-          return bit_cast ( convert ( bit_cast(v0.bits(),as<v_int_t>{})
-                                    , as<s_out_t>{}
-                                    )
-                          , as<out_t>{}
-                          );
+          return convert_impl(EVE_RETARGET(EVE_CURRENT_API),v0,tgt);
         }
       }
+    }
+  }
+
+  //================================================================================================
+  // logical<->logical default convert implementation
+  template<value In, scalar_value Out>
+  EVE_FORCEINLINE auto convert_impl ( EVE_SUPPORTS(cpu_)
+                                    , logical<In> const &v0
+                                    , [[maybe_unused]] as<logical<Out>> const & tgt
+                                    ) noexcept
+  {
+    using out_t   = as_wide_t<logical<Out>, cardinal_t<In>>;
+
+    if constexpr(has_aggregated_abi_v<In>)
+    {
+      // If input is aggregated, we can slice and combine without lose of performance
+      return out_t{eve::convert(v0.slice(lower_),tgt),eve::convert(v0.slice(upper_),tgt)};
+    }
+    else
+    {
+      using s_in_t  = std::make_signed_t<typename logical<In>::bits_type::value_type>;
+      using v_int_t = typename logical<In>::bits_type::template rebind<s_in_t, cardinal_t<out_t>>;
+      using s_out_t = std::make_signed_t<typename logical<Out>::bits_type>;
+
+      // Just convert the bit and bitcast back to the proper output
+      return bit_cast ( convert ( bit_cast(v0.bits(),as<v_int_t>{})
+                                , as<s_out_t>{}
+                                )
+                      , as<out_t>{}
+                      );
     }
   }
 

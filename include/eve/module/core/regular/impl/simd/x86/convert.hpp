@@ -15,6 +15,110 @@
 namespace eve::detail
 {
   //================================================================================================
+  // convert: logical -> logical
+  //================================================================================================
+  template<real_scalar_value T, typename N, real_scalar_value U>
+  EVE_FORCEINLINE logical<wide<U, N>> convert_impl( EVE_SUPPORTS(sse2_)
+                                                  , logical<wide<T,N>> v, as<logical<U>> const &tgt
+                                                  ) noexcept
+  {
+    constexpr auto c_in   = categorize<wide<T, N>>();
+    constexpr auto c_out  = categorize<wide<U, N>>();
+
+    //==============================================================================================
+    // Trivial cases : same size or unsigned input
+    //==============================================================================================
+        if constexpr( sizeof(U) == sizeof(T) )
+    {
+      return bit_cast(v, as<logical<wide<U,N>>>{} );
+    }
+    else if constexpr( std::is_unsigned_v<T> )
+    {
+      return convert( bit_cast(v, as< logical<wide<std::make_signed_t<T>,N>> >{}),tgt);
+    }
+    //==============================================================================================
+    // 8 bits cases - Always slice
+    //==============================================================================================
+    else  if constexpr( sizeof(T) == 1 && sizeof(U) > 2 && N::value > 1)
+    {
+      return convert( convert(v,as<logical<std::int16_t>>{}), tgt);
+    }
+    //==============================================================================================
+    // 16 bits cases
+    //==============================================================================================
+    else  if constexpr( c_in == category::int16x8 && sizeof(U) == 1 )
+    {
+      return  _mm_packs_epi16(v, v);
+    }
+    else  if constexpr( c_in == category::int16x16 && sizeof(U) == 1 )
+    {
+      return _mm_packs_epi16(v.slice(lower_), v.slice(upper_));
+    }
+    //==============================================================================================
+    // 32 bits cases
+    //==============================================================================================
+    else  if constexpr( c_in == category::int32x4 && sizeof(U) < 4 )
+    {
+      auto w = _mm_packs_epi32(v, v);
+      if constexpr(sizeof(U) == 1) return _mm_packs_epi16(w, w);
+      else return w;
+    }
+    else  if constexpr( c_in == category::float32x4  )
+    {
+            if constexpr( sizeof(U) < 4 )
+      {
+        return convert( convert(v,as<logical<as_integer_t<T,signed>>>{}), tgt);
+      }
+      else  if constexpr( match(c_out, category::int64x2, category::uint64x2) )
+      {
+        return convert( convert(v,as<logical<std::int32_t>>{}), tgt);
+      }
+      else  if constexpr( sizeof(U) == 8 && N::value == 4 )
+      {
+        return eve::combine(convert( v.slice(lower_), tgt), convert( v.slice(upper_), tgt));
+      }
+      else return convert_impl(EVE_RETARGET(cpu_),v,tgt);
+    }
+    else  if constexpr( N::value == 8 && sizeof(T) == 4  )
+    {
+      return eve::combine(convert( v.slice(lower_), tgt), convert( v.slice(upper_), tgt));
+    }
+    //==============================================================================================
+    // 64 cases
+    //==============================================================================================
+    else  if constexpr( sizeof(T) == 8 && sizeof(U) < 4 )
+    {
+      return convert( convert(v,as<logical<downgrade_t<as_integer_t<T,signed>>>>{}), tgt);
+    }
+    else  if constexpr(   c_in == category::float64x2
+                      && match(c_out, category::int64x2, category::uint64x2)
+                      )
+    {
+      return convert( convert(v,as<logical<float>>{}), tgt);
+    }
+    else  if constexpr( c_in == category::int64x2 )
+    {
+      using i_t = as<logical<std::int32_t>>;
+
+      if constexpr(match(c_out, category::float64x2, category::float32x4))
+        return convert( convert(v,i_t{}), tgt);
+      else
+        return convert_impl(EVE_RETARGET(cpu_),v,tgt);
+    }
+    else if constexpr( c_in == category::int64x4 && c_out == category::float32x4 )
+    {
+      return convert( convert(v,as<logical<std::int32_t>>{}), tgt);
+    }
+    //==============================================================================================
+    // Generic case
+    //==============================================================================================
+    else
+    {
+      return convert_impl(EVE_RETARGET(cpu_),v,tgt);
+    }
+  }
+
+  //================================================================================================
   // convert: float64 -> U
   //================================================================================================
   template<typename N, real_scalar_value U>
