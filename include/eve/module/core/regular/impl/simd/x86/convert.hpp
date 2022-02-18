@@ -180,11 +180,19 @@ namespace eve::detail
 
           if constexpr( match(c_i, category::int64x2, category::uint64x2))
     {
-            if constexpr(c_o == category::float64x2 && api_512) return _mm_cvtepi64_pd(v);
-      else  if constexpr(c_o == category::float32x4 && api_512) return _mm_cvtepi64_ps(v);
+            if constexpr(c_o == category::float64x2 && api_512)
+      {
+        if constexpr( std::is_signed_v<T> ) return _mm_cvtepi64_pd(v);
+        else                                return _mm_cvtepu64_pd(v);
+      }
+      else  if constexpr(c_o == category::float32x4 && api_512)
+      {
+        if constexpr( std::is_signed_v<T> ) return _mm_cvtepi64_ps(v);
+        else                                return _mm_cvtepu64_ps(v);
+      }
       else  if constexpr(c_o == category::int16x8   && api_512) return _mm_cvtepi64_epi16(v);
-      else  if constexpr(c_o == category::int16x8   && api_512) return _mm_cvtepi64_epi16(v);
-      else  if constexpr(c_o == category::uint8x16  && api_512) return _mm_cvtepi64_epi8(v);
+      else  if constexpr(c_o == category::uint16x8  && api_512) return _mm_cvtepi64_epi16(v);
+      else  if constexpr(c_o == category::int8x16   && api_512) return _mm_cvtepi64_epi8(v);
       else  if constexpr(c_o == category::uint8x16  && api_512) return _mm_cvtepi64_epi8(v);
       else  if constexpr( match(c_o, category::int32x4, category::uint32x4) )
       {
@@ -206,7 +214,11 @@ namespace eve::detail
         if constexpr(c_i == category::int64x4)  return _mm256_cvtepi64_pd(v);
         else                                    return _mm256_cvtepu64_pd(v);
       }
-      else  if constexpr(c_o == category::float32x4 && api_512) return _mm256_cvtepi64_ps(v);
+      else  if constexpr(c_o == category::float32x4 && api_512)
+      {
+        if constexpr(c_i == category::int64x4)  return _mm256_cvtepi64_ps(v);
+        else                                    return _mm256_cvtepu64_ps(v);
+      }
       else  if constexpr(c_o == category::int32x4   && api_512) return _mm256_cvtepi64_epi32(v);
       else  if constexpr(c_o == category::uint32x4  && api_512) return _mm256_cvtepi64_epi32(v);
       else  if constexpr(c_o == category::int16x8   && api_512) return _mm256_cvtepi64_epi16(v);
@@ -262,8 +274,16 @@ namespace eve::detail
     }
     else  if constexpr( match(c_i, category::int64x8, category::uint64x8))
     {
-            if constexpr(c_o == category::float64x8 ) return _mm512_cvtepi64_pd(v);
-      else  if constexpr(c_o == category::float32x8 ) return _mm512_cvtepi64_ps(v);
+            if constexpr(c_o == category::float64x8 )
+      {
+        if constexpr(c_i == category::int64x8)  return _mm512_cvtepi64_pd(v);
+        else                                    return _mm512_cvtepu64_pd(v);
+      }
+      else  if constexpr(c_o == category::float32x8)
+      {
+        if constexpr(c_i == category::int64x8)  return _mm512_cvtepi64_ps(v);
+        else                                    return _mm512_cvtepu64_ps(v);
+      }
       else  if constexpr(c_o == category::int32x8   ) return _mm512_cvtepi64_epi32(v);
       else  if constexpr(c_o == category::uint32x8  ) return _mm512_cvtepi64_epi32(v);
       else  if constexpr(c_o == category::int16x8   ) return _mm512_cvtepi64_epi16(v);
@@ -368,7 +388,12 @@ namespace eve::detail
     }
     else if constexpr( match(c_i, category::int32x8, category::uint32x8))
     {
-      if constexpr( match(c_o, category::int16x8, category::uint16x8) )
+      if constexpr(c_o == category::float32x8 )
+      {
+              if constexpr( c_i == category::int32x8)   return _mm256_cvtepi32_ps(v);
+        else  return wide<U, N>(convert(v.slice(lower_),tgt),convert(v.slice(upper_),tgt));
+      }
+      else if constexpr( match(c_o, category::int16x8, category::uint16x8) )
       {
         if constexpr( api_512  ) return _mm256_cvtepi32_epi16(v);
         else           return wide<U, N>(convert(v.slice(lower_),tgt),convert(v.slice(upper_),tgt));
@@ -384,7 +409,11 @@ namespace eve::detail
     }
     else if constexpr( match(c_i, category::int32x16, category::uint32x16))
     {
-            if constexpr(c_o == category::float32x16 )  return _mm512_cvtepi32_ps(v);
+      if constexpr(c_o == category::float32x16 )
+      {
+              if constexpr( c_i == category::int32x16)   return _mm512_cvtepi32_ps(v);
+        else  if constexpr( c_i == category::uint32x16)  return _mm512_cvtepu32_ps(v);
+      }
       else  if constexpr(match(c_o, category::int16x16, category::uint16x16))
       {
         return _mm512_cvtepi32_epi16(v);
