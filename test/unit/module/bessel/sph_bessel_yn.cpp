@@ -130,6 +130,6 @@ EVE_TEST( "Check behavior of diff(sph_bessel_j1) on wide"
   auto y3 = [](auto x){ return eve::sph_bessel_yn(3, x); };
   auto df = [y3](auto x){return eve::detail::centered_diffdiv(y3, x); };
 
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(3, a0),   df(a0), 1.0e-2);
+  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(3, a0),   df(a0), 3.0e-2);
   TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(1, a0),   eve::diff(eve::sph_bessel_y1)(a0), 1.0e-2);
 };
