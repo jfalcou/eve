@@ -196,6 +196,7 @@
 #include <eve/module/core/regular/shr.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/signnz.hpp>
+#include <eve/module/core/regular/sph.hpp>
 #include <eve/module/core/regular/sqr_abs.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
