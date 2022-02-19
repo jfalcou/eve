@@ -41,9 +41,9 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!With two parameters returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of order `l` at `x`.
+  //!With two parameters returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of degree `l` at `x`.
   //!
-  //!With three parameters returns [elementwise](@ref glossary_elementwise) the value of the associated Legendre "polynomial" of order (`l`, `m`) at `x`.
+  //!With three parameters returns [elementwise](@ref glossary_elementwise) the value of the associated Legendre "polynomial" of degree `l`, order `m` at `x`.
   //!
   //!The result type is of the [index compatible values](@ref index_compatible_values) type of the  parameters.
   //!
@@ -76,8 +76,15 @@ namespace eve
   //!
   //!  * eve::condon_shortley
   //!
-  //!     The expression `condon_shortley(legendre)(l, m, x)` multiplies the associated legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
+  //!     The expression `condon_shortley(legendre)(l, m, x)` multiplies the associated
+  //!     legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
   //!     to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math.
+  //!
+  //!  * eve::sph
+  //!
+  //!     The expression `sph(legendre)(l, m, theta)` returns the spherical associated Legendre function
+  //!     of degree l, order m, and polar angle theta in radian (that is the classical spherical harmonic with \f$\phi = 0\$),
+  //!     i.e. \f$\displaystyle\ (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
   //!
   //! #### Example
   //!
