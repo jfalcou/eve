@@ -250,5 +250,23 @@ namespace eve
       auto p0 = legendre(l, m, x);
       return if_else(is_odd(m), -p0, p0);
     }
+
+    template<real_value M, real_value L, floating_value T>
+    EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), sph_type const &
+                                  , L l,  M m, T theta) noexcept
+    {
+//      std::cout << "l " << l << " m " << m << " theta " << theta << std::endl;
+      EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "sph(legendre)(l, m, theta): l is negative or not integral");
+      EVE_ASSERT(eve::all(m >= 0 && is_flint(m)), "sph(legendre)(l, m, theta): m is negative or not integral");
+      EVE_ASSERT(eve::all(m <= l)               , "sph(legendre)(l, m, theta): some m are greater than l");
+      auto ll = convert(l, as<element_type_t<T>>());
+      auto mm = convert(m, as<element_type_t<T>>());
+      auto p0 = legendre(l, m, cos(theta));
+      p0 *= sqrt(((2*ll+1)/(4*pi(as(theta))))*exp(lgamma(ll-mm+1)-lgamma(ll+mm+1)));
+     return if_else(is_odd(m), -p0, p0);
+//        return p0;
+    }
+
+
   }
 }
