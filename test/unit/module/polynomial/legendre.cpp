@@ -192,7 +192,7 @@ EVE_TEST( "Check behavior of spherical legendre on wide"
       for(unsigned int p=0; p < n ; ++p)
       {
 #if defined(__cpp_lib_math_special_functions)
-        TTS_ULP_EQUAL(eve__slegendre(n, p, a0.get(k)), std_slegendre(n, p, a0.get(k)), 100);
+        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), std_slegendre(n, p, a0.get(k)), 0.001);
 #else
         TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), boost_slegendre(n, p, a0.get(k)), 0.001);
 #endif
