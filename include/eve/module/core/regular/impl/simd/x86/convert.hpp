@@ -26,20 +26,9 @@ namespace eve::detail
     constexpr auto c_out  = categorize<wide<U, N>>();
 
     //==============================================================================================
-    // Trivial cases : same size or unsigned input
-    //==============================================================================================
-        if constexpr( sizeof(U) == sizeof(T) )
-    {
-      return bit_cast(v, as<logical<wide<U,N>>>{} );
-    }
-    else if constexpr( std::is_unsigned_v<T> )
-    {
-      return convert( bit_cast(v, as< logical<wide<std::make_signed_t<T>,N>> >{}),tgt);
-    }
-    //==============================================================================================
     // 8 bits cases - Always slice
     //==============================================================================================
-    else  if constexpr( sizeof(T) == 1 && sizeof(U) > 2 && N::value > 1)
+    if constexpr( sizeof(T) == 1 && sizeof(U) > 2 && N::value > 1)
     {
       return convert( convert(v,as<logical<std::int16_t>>{}), tgt);
     }

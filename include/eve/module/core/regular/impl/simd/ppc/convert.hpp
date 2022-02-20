@@ -14,27 +14,6 @@
 
 namespace eve::detail
 {
-  //================================================================================================
-  // convert: logical -> logical
-  //================================================================================================
-  template<real_scalar_value T, typename N, real_scalar_value U>
-  EVE_FORCEINLINE logical<wide<U, N>> convert_impl( EVE_SUPPORTS(vmx_)
-                                                  , logical<wide<T,N>> v, as<logical<U>> const &tgt
-                                                  ) noexcept
-  requires ppc_abi<abi_t<T, N>>
-  {
-        if constexpr( sizeof(U) == sizeof(T) )
-    {
-      return bit_cast(v, as<logical<wide<U,N>>>{} );
-    }
-    else if constexpr( std::is_unsigned_v<T> )
-    {
-      return convert( bit_cast(v, as< logical<wide<std::make_signed_t<T>,N>> >{}),tgt);
-    }
-    else return convert_impl(EVE_RETARGET(cpu_),v,tgt);
-  }
-
-
   template<typename N, real_scalar_value U>
   EVE_FORCEINLINE wide<U, N> convert_impl ( EVE_SUPPORTS(vsx_)
                                           , wide<double,N> v, as<U> const &tgt

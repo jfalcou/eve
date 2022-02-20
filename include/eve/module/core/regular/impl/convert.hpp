@@ -72,48 +72,37 @@ namespace eve::detail
   // logical<->logical convert
   template<value In, scalar_value Out>
   EVE_FORCEINLINE auto convert_ ( EVE_SUPPORTS(cpu_)
-                                , logical<In> const &v0
+                                , logical<In> const &v
                                 , [[maybe_unused]] as<logical<Out>> const & tgt
                                 ) noexcept
   {
-    if constexpr(std::same_as<element_type_t<In>, Out>)
+    constexpr auto is_wide_logical = In::abi_type::is_wide_logical;
+    using out_t = as_wide_t<logical<Out>, cardinal_t<logical<In>>>;
+
+    if constexpr(std::same_as<element_type_t<In>, Out>) return v;
+    else  if constexpr( scalar_value<In> )              return static_cast<logical<Out>>(v.bits());
+    else  if constexpr( is_wide_logical )
     {
-      return v0;
+      using in_t = element_type_t<In>;
+
+            if constexpr( sizeof(Out) == sizeof(in_t) ) return bit_cast(v, as<out_t>{});
+      else  if constexpr( std::is_unsigned_v<in_t>    )
+      {
+        using i_t = as<logical<wide<std::make_signed_t<in_t>,cardinal_t<logical<In>>>>>;
+        return convert( bit_cast(v, i_t{}),tgt);
+      }
+      else  return convert_impl(EVE_RETARGET(EVE_CURRENT_API),v,tgt);
+    }
+    else  if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
+    {
+      // If input or output are aggregated, we slice and combine without lose of performance
+      return out_t{eve::convert(v.slice(lower_),tgt),eve::convert(v.slice(upper_),tgt)};
     }
     else
     {
-      if constexpr( scalar_value<In> )
-      {
-        return static_cast<logical<Out>>(v0.bits());
-      }
-      else
-      {
-        using abi_t = typename In::abi_type;
-        using out_t = as_wide_t<logical<Out>, cardinal_t<logical<In>>>;
-
-        //  For non-wide logical, we only handle integers
-        if constexpr( !abi_t::is_wide_logical)
-        {
-          // If input or output are aggregated, we can slice and combine without lose of performance
-          if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
-          {
-            auto[l,h] = v0.slice();
-            auto ll = eve::convert(l,tgt);
-            auto hh = eve::convert(h,tgt);
-            return out_t{ll,hh};
-          }
-          else
-          {
-            using s_t = typename out_t::storage_type;
-            using i_t = typename s_t::type;
-            return out_t( s_t{ static_cast<i_t>(v0.storage().value) } );
-          }
-        }
-        else
-        {
-          return convert_impl(EVE_RETARGET(EVE_CURRENT_API),v0,tgt);
-        }
-      }
+      //  For non-wide logical, we only have to convert kmask
+      using s_t = typename out_t::storage_type;
+      return out_t( s_t{ static_cast<typename s_t::type>(v.storage().value) } );
     }
   }
 
