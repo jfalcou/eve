@@ -62,8 +62,8 @@ namespace eve::detail
   {
     constexpr auto c_o = categorize<wide<U, N>>();
 
-          if constexpr( std::same_as<double,U> && current_api >= asimd) return vcvt_f64_f32(v);
-          if constexpr( std::same_as<double,U> )                        return map(convert,v,tgt);
+          if constexpr( c_o == category::float64x2 && current_api >= asimd) return vcvt_f64_f32(v);
+    else  if constexpr( std::same_as<double,U> )                            return map(convert,v,tgt);
     else  if constexpr( N::value <= 2 )
     {
       constexpr auto tgt_i32 = as<std::int32_t>{};
@@ -115,7 +115,7 @@ namespace eve::detail
             if constexpr( c_o == category::int32x2   )            return vmovn_s64(v);
       else  if constexpr( c_o == category::float32x2 )            return vcvt_f32_s32(vmovn_s64(v));
       else  if constexpr( c_o == category::float64x2 && api_a64)  return vcvtq_f64_s64(v);
-      else  if constexpr( c_o == category::float64x2 )            return map(convert,v,tgt);
+      else  if constexpr( std::same_as<U,double>    )             return map(convert,v,tgt);
       else  return convert_integers_chain(v,tgt);
     }
     else  if constexpr( c_i == category::uint64x2 )
@@ -123,7 +123,7 @@ namespace eve::detail
             if constexpr( c_o == category::uint32x2  )            return vmovn_u64(v);
       else  if constexpr( c_o == category::float32x2 )            return vcvt_f32_u32(vmovn_u64(v));
       else  if constexpr( c_o == category::float64x2 && api_a64)  return vcvtq_f64_u64(v);
-      else  if constexpr( c_o == category::float64x2 )            return map(convert,v,tgt);
+      else  if constexpr( std::same_as<U,double>    )             return map(convert,v,tgt);
       else  return convert_integers_chain(v,tgt);
     }
     else  if constexpr( api_a64 && c_o == category::float64x1)
@@ -145,7 +145,6 @@ namespace eve::detail
   {
     constexpr auto c_i = categorize<wide<T, N>>();
     constexpr auto c_o = categorize<wide<U, N>>();
-    using type64 = wide<upgrade_t<T>,typename N::split_type>;
 
           if constexpr( std::same_as<double,U> ) return convert(convert(v,as<upgrade_t<T>>{}),tgt);
     else  if constexpr( sizeof(U) == 1         ) return convert_integers_chain(v,tgt);
@@ -180,6 +179,7 @@ namespace eve::detail
       else  if constexpr( c_o == category::int16x4    ) return vmovn_s32(v);
       else  if constexpr( std::integral<U> && sizeof(U) == 8   )
       {
+        using type64 = wide<upgrade_t<T>,typename N::split_type>;
         auto [l,h] = v.slice(); // 2x i32x2
         return wide<U,N>(type64(vmovl_s32(l)),type64(vmovl_s32(h)));
       }
@@ -190,6 +190,7 @@ namespace eve::detail
       else  if constexpr( c_o == category::uint16x4  )  return vmovn_u32(v);
       else  if constexpr( std::integral<U> && sizeof(U) == 8   )
       {
+        using type64 = wide<upgrade_t<T>,typename N::split_type>;
         auto [l,h] = v.slice(); // 2x u32x2
         return wide<U,N>(type64(vmovl_u32(l)),type64(vmovl_u32(h)));
       }

@@ -86,10 +86,15 @@ namespace eve::detail
       using in_t = element_type_t<In>;
 
             if constexpr( sizeof(Out) == sizeof(in_t) ) return bit_cast(v, as<out_t>{});
-      else  if constexpr( std::is_unsigned_v<in_t>    )
+      else  if constexpr( std::is_unsigned_v<in_t> || std::is_floating_point_v<in_t> )
       {
-        using i_t = as<logical<wide<std::make_signed_t<in_t>,cardinal_t<logical<In>>>>>;
+        using i_t = as<logical<wide<as_integer_t<in_t,signed>,cardinal_t<logical<In>>>>>;
         return convert( bit_cast(v, i_t{}),tgt);
+      }
+      else  if constexpr( std::is_unsigned_v<Out> || std::is_floating_point_v<Out> )
+      {
+        using i_t = as<logical<as_integer_t<Out,signed>>>;
+        return bit_cast(convert(v,i_t{}),as<out_t>{});
       }
       else  return convert_impl(EVE_RETARGET(EVE_CURRENT_API),v,tgt);
     }
