@@ -10,8 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
-#include <eve/module/polynomial/regular/kind.hpp>
-#include <eve/module/polynomial/regular/successor.hpp>
 #include <eve/detail/hz_device.hpp>
 
 namespace eve

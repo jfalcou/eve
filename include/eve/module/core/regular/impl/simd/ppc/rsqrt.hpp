@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/fma.hpp>
-#include <eve/module/core/regular/raw.hpp>
+#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 

@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/saturated.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/saturated/sub.hpp>
 #include <eve/module/core/saturated/dec.hpp>

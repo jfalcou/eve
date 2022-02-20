@@ -14,8 +14,8 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/raw.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/raw.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/fma.hpp>

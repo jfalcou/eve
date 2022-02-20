@@ -9,12 +9,12 @@
 
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/fuzzy.hpp>
+#include <eve/module/core/decorator/fuzzy.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
-#include <eve/module/core/regular/saturated.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/saturated/next.hpp>
 #include <eve/module/core/saturated/add.hpp>
 #include <eve/concept/value.hpp>

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/regular/numeric.hpp>
+#include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>

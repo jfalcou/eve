@@ -18,6 +18,7 @@
 //! @}
 //==================================================================================================
 #include <eve/module/core/constant/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/core.hpp>
 #include <eve/module/core/diff/core.hpp>
 #include <eve/module/core/fuzzy/core.hpp>

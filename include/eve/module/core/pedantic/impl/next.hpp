@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/saturated/add.hpp>

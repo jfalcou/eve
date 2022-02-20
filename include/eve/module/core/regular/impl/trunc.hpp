@@ -13,7 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_not_less_equal.hpp>
-#include <eve/module/core/regular/raw.hpp>
+#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>

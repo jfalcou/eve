@@ -39,7 +39,6 @@
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/first_true.hpp>
-#include <eve/module/core/regular/fuzzy.hpp>
 #include <eve/module/core/regular/gather.hpp>
 #include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/if_else.hpp>
@@ -48,16 +47,10 @@
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/maximum.hpp>
 #include <eve/module/core/regular/minimum.hpp>
-#include <eve/module/core/regular/musl.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/none.hpp>
-#include <eve/module/core/regular/numeric.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
-#include <eve/module/core/regular/plain.hpp>
 #include <eve/module/core/regular/popcount.hpp>
-#include <eve/module/core/regular/raw.hpp>
 #include <eve/module/core/regular/reduce.hpp>
-#include <eve/module/core/regular/regular.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/reverse.hpp>
 #include <eve/module/core/regular/roundings.hpp>
@@ -196,7 +189,6 @@
 #include <eve/module/core/regular/shr.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/signnz.hpp>
-#include <eve/module/core/regular/sph.hpp>
 #include <eve/module/core/regular/sqr_abs.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/sqrt.hpp>

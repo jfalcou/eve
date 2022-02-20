@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 

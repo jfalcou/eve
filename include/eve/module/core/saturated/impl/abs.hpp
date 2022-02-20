@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/regular/saturated.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/has_abi.hpp>
