@@ -8,4 +8,4 @@
 #pragma once
 
 
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>

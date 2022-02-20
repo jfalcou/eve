@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/regular/successor.hpp>
+#include <eve/module/polynomial/decorator/successor.hpp>

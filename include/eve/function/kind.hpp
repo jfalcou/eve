@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/regular/kind.hpp>
+#include <eve/module/decorator/regular/kind.hpp>
