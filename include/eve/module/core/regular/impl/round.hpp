@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/trunc.hpp>
-#include <eve/module/core/regular/roundings.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/regular/derivative.hpp>
 
 namespace eve::detail

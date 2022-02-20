@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/sin.hpp>
-#include <eve/module/math/regular/trigo_tags.hpp>
+#include <eve/module/math/decorator/trigo_tags.hpp>
 
 namespace eve::detail
 {

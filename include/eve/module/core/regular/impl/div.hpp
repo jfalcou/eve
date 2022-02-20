@@ -18,7 +18,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/roundings.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/logical_andnot.hpp>

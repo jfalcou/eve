@@ -16,6 +16,7 @@
 #include <eve/module/core/decorator/plain.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/regular.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/decorator/sph.hpp>
 #include <eve/module/core/decorator/successor.hpp>

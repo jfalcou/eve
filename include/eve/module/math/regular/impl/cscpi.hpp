@@ -12,7 +12,7 @@
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/csc.hpp>
 #include <eve/module/math/regular/sin.hpp>
-#include <eve/module/math/regular/trigo_tags.hpp>
+#include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 
