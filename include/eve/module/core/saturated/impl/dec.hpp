@@ -10,7 +10,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/detail/function/conditional.hpp>
+#include <eve/detail/func/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/concept/value.hpp>

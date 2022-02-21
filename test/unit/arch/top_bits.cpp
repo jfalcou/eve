@@ -7,8 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/arch/top_bits.hpp>
-#include <eve/function/is_nez.hpp>
-#include <eve/function/all.hpp>
+#include <eve/module/core.hpp>
 #include <array>
 
 template <typename T, typename Test> void test_over_top_bits(Test test)

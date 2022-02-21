@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/reduce.hpp>
+#include <eve/detail/func/reduce.hpp>
 #include <eve/module/core/constant/signmask.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/replace.hpp>

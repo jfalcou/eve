@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/byte_16_runtime_shuffle.hpp>
+#include <eve/detail/func/byte_16_runtime_shuffle.hpp>
 
 
 EVE_TEST_TYPES("byte 16 runtime shuffle 4 elements",

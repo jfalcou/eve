@@ -9,7 +9,7 @@
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/transform.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/core:regular/sqrt.hpp>
 
 #include <eve/algo/reverse.hpp>
 #include <eve/algo/swap_ranges.hpp>

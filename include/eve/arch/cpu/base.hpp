@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/function/friends.hpp>
+#include <eve/detail/func/friends.hpp>
 #include <eve/detail/spy.hpp>
 
 #if defined(SPY_COMPILER_IS_GCC)

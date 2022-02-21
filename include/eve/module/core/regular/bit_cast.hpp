@@ -6,4 +6,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/func/bit_cast.hpp>

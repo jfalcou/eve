@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/bit_select.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/func/to_logical.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_mask.hpp>
 #include <type_traits>

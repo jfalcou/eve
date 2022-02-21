@@ -16,14 +16,14 @@
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/combine.hpp>
-#include <eve/detail/function/compounds.hpp>
-#include <eve/detail/function/fill.hpp>
-#include <eve/detail/function/friends.hpp>
-#include <eve/detail/function/load.hpp>
-#include <eve/detail/function/make.hpp>
-#include <eve/detail/function/slice.hpp>
-#include <eve/detail/function/subscript.hpp>
+#include <eve/detail/func/combine.hpp>
+#include <eve/detail/func/compounds.hpp>
+#include <eve/detail/func/fill.hpp>
+#include <eve/detail/func/friends.hpp>
+#include <eve/detail/func/load.hpp>
+#include <eve/detail/func/make.hpp>
+#include <eve/detail/func/slice.hpp>
+#include <eve/detail/func/subscript.hpp>
 #include <eve/product_type.hpp>
 
 #include <concepts>
