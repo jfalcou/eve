@@ -4,14 +4,16 @@
 
 int main()
 {
-  using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 32700}, qi = {4, 1, 1, 100};
+  using wf_t = eve::wide<float, eve::fixed<4>>;
+  wf_t pf = {3, 2, 3, 32700}, qf = {4, 1, 1, 100};
 
   std::cout << "---- simd" << '\n'
-            << " <- pi          = " << pi << '\n'
-            << " <- qi          = " << qi << '\n'
-            << " -> div(pi, qi) = " << eve::div(pi, qi) << '\n'
-            << " -> pi / qi     = " << pi / qi << '\n';
+            << " <- pf                    = " << pf << '\n'
+            << " <- qf                    = " << qf << '\n'
+            << " -> div(pf, qf)           = " << eve::div(pf, qf) << '\n'
+            << " -> pf / qf               = " << pf / qf << '\n'
+            << " -> diff_1st(div)(pf, qf) = " <<  eve::diff_1st(eve::div)(pf, qf) << '\n'
+            << " -> diff_2nd(div)(pf, qf) = " <<  eve::diff_2nd(eve::div)(pf, qf) << '\n';
 
   std::int16_t xi = -32768, yi = -1;
 
@@ -19,7 +21,10 @@ int main()
             << " xi                        = " << xi << '\n'
             << " yi                        = " << yi << '\n'
             << " -> div(xi, yi)            = " << eve::div(xi, yi) << '\n'
+            << " -> saturated(div(xi, yi)) = " << eve::saturated(eve::div)(xi, yi) << '\n'
             << " -> xi / yi                = " << xi / yi << '\n' // C++ promotion to int
             << " -> std::int16_t( xi / yi) = "<< std::int16_t( xi / yi) << '\n';
+  std::int16_t xi = -32768, yi = -1;
+
   return 0;
 }
