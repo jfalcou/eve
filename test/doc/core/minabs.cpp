@@ -15,8 +15,10 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> minabs(pf, qf)            = " << eve::minabs(pf, qf) << '\n'
-            << "-> pedantic(minabs)(pf, qf) = " << eve::pedantic(eve::minabs)(pf, qf) << '\n'
-            << "-> numeric(minabs)(pf, qf)  = " << eve::numeric(eve::minabs)(pf, qf) << '\n';
+            << "-> pedantic(minabs)(pf, qf)  = " << eve::pedantic(eve::minabs)(pf, qf) << '\n'
+            << "-> numeric(minabs)(pf, qf)   = " << eve::numeric(eve::minabs)(pf, qf) << '\n'
+            << "-> diff_1st(minabs)(pf, qf)  = " << eve::diff_1st(eve::minabs)(pf, qf) <<  '\n'
+            << "-> diff_2nd(minabs)(pf, qf)  = " << eve::diff_2nd(eve::minabs)(pf, qf) <<  '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -25,7 +27,7 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> minabs(xf, yf)            = " << eve::minabs(xf, yf) << '\n'
-            << "-> pedantic(minabs)(xf, yf) = " << eve::pedantic(eve::minabs)(xf, yf) << '\n'
-            << "-> numeric(minabs)(xf, yf)  = " << eve::numeric(eve::minabs)(xf, yf) << '\n';
+            << "-> pedantic(minabs)(xf, yf)  = " << eve::pedantic(eve::minabs)(xf, yf) << '\n'
+            << "-> numeric(minabs)(xf, yf)   = " << eve::numeric(eve::minabs)(xf, yf) << '\n';
    return 0;
 }

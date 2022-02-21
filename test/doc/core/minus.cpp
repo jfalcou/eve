@@ -11,10 +11,12 @@ int main()
   wide_it pi = {-1, 2, -3, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf        = " << pf << '\n'
-            << "-> minus(pf) = " << eve::minus(pf) << '\n'
-            << "<- pi        = " << pi << '\n'
-            << "-> minus(pi) = " << eve::minus(pi) << '\n';
+            << "<- pf                   = " << pf << '\n'
+            << "-> minus(pf)            = " << eve::minus(pf) << '\n'
+            << "-> diff(minus)(pf)      = " << eve::diff(eve::minus)(pf) << '\n'
+            << "<- pi                   = " << pi << '\n'
+            << "-> minus(pi)            = " << eve::minus(pi) << '\n'
+            << "-> saturated(minus)(pi) = " << eve::saturated(eve::minus)(pf) << '\n';
 
   float        xf = -32768.0f;
   std::int16_t xi = -32768;

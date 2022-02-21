@@ -25,9 +25,9 @@ int main()
             << "\n if the last fam result ends by '0, inf}', it is because\n"
             << " the system has no simd fam family intrinsics\n"
             << " or is not configured to use them.\n\n"
-            << "-> diff_1st(fam)(pf, qf, rf)          = " << eve::diff_1st(eve::fam)(pf, qf, rf) << '\n'
-            << "-> diff_2nd(fam)(pf, qf, rf)          = " << eve::diff_2nd(eve::fam)(pf, qf, rf) << '\n'
-            << "-> diff_3rd(fam)(pf, qf, rf)          = " << eve::diff_3rd(eve::fam)(pf, qf, rf) << '\n';
+            << "-> diff_1st(fam)(of, pf, qf)          = " << eve::diff_1st(eve::fam)(of, pf, qf) << '\n'
+            << "-> diff_2nd(fam)(of, pf, qf)          = " << eve::diff_2nd(eve::fam)(of, pf, qf) << '\n'
+            << "-> diff_3rd(fam)(of, pf, qf)          = " << eve::diff_3rd(eve::fam)(of, pf, qf) << '\n';
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'

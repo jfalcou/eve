@@ -24,7 +24,6 @@ int main()
             << " -> saturated(div(xi, yi)) = " << eve::saturated(eve::div)(xi, yi) << '\n'
             << " -> xi / yi                = " << xi / yi << '\n' // C++ promotion to int
             << " -> std::int16_t( xi / yi) = "<< std::int16_t( xi / yi) << '\n';
-  std::int16_t xi = -32768, yi = -1;
 
   return 0;
 }

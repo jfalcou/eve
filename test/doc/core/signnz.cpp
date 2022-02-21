@@ -12,10 +12,11 @@ int main()
   wide_it pi = { 0, 2, -3, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf         = " << pf << '\n'
-            << "-> signnz(pf) = " << eve::signnz(pf) << '\n'
-            << "<- pi         = " << pi << '\n'
-            << "-> signnz(pi) = " << eve::signnz(pi) << '\n';
+            << "<- pf               = " << pf << '\n'
+            << "-> signnz(pf)       = " << eve::signnz(pf) << '\n'
+            << "-> diff(signnz)(pf) = " << eve::diff(eve::signnz)(pf) << '\n'
+            << "<- pi               = " << pi << '\n'
+            << "-> signnz(pi)       = " << eve::signnz(pi) << '\n';
 
   float        xf = -327.68f;
   std::int16_t xi = -328;
