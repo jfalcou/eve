@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/compress_store.hpp>
+#include <eve/module/core/compress_store.hpp>
 
 #include <algorithm>
 #include <array>

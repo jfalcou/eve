@@ -8,7 +8,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/swap_if.hpp>
+#include <eve/module/core/regular/swap_if.hpp>
 
 EVE_TEST_TYPES( "Check behavior of swap_if - scalar values"
               , eve::test::scalar::all_types

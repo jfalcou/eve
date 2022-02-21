@@ -8,8 +8,8 @@
 #include "test.hpp"
 #include "unit/api/udt/udt.hpp"
 #include <eve/wide.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/replace.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/replace.hpp>
 #include <utility>
 
 //==================================================================================================

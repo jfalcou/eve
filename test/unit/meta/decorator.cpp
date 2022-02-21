@@ -6,14 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/musl.hpp>
-#include <eve/function/plain.hpp>
-#include <eve/function/numeric.hpp>
-#include <eve/function/pedantic.hpp>
-#include <eve/function/raw.hpp>
-#include <eve/function/regular.hpp>
-#include <eve/function/roundings.hpp>
-#include <eve/function/saturated.hpp>
+#include <eve/module/core.hpp>
 
 TTS_CASE("Checck that non-decorator types don't satisfy decorator" )
 {

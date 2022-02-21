@@ -7,8 +7,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/replace.hpp>
-#include <eve/function/store.hpp>
+#include <eve/module/core/regular/replace.hpp>
+#include <eve/module/core/regular/store.hpp>
 
 #include <array>
 #include <numeric>

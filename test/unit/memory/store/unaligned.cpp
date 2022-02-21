@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/store.hpp>
+#include <eve/module/core/regular/store.hpp>
 
 #include <array>
 #include <numeric>

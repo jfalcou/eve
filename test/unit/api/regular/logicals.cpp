@@ -6,9 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/logical_and.hpp>
-#include <eve/function/logical_not.hpp>
-#include <eve/function/logical_or.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // type tests

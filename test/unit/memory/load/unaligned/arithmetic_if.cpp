@@ -8,8 +8,8 @@
 #include "test.hpp"
 #include "unit/memory/page.hpp"
 
-#include <eve/function/load.hpp>
-#include <eve/function/any.hpp>
+#include <eve/module/core/regular/load.hpp>
+#include <eve/module/core/regular/any.hpp>
 #include <array>
 #include <list>
 

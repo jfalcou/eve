@@ -9,10 +9,7 @@
 
 #include <eve/memory/stack_buffer.hpp>
 
-#include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
-
-#include <eve/function/convert.hpp>
+#include <eve/coree.hpp>
 
 #include <utility>
 

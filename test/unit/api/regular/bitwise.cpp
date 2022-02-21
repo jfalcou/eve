@@ -6,10 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/bit_and.hpp>
-#include <eve/function/bit_not.hpp>
-#include <eve/function/bit_or.hpp>
-#include <eve/function/bit_xor.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/bit_not.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_xor.hpp>
 
 //==================================================================================================
 // type tests

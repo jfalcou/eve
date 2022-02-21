@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 #include <bit>
 
 template<int N> inline constexpr auto n_zeros = eve::fix_pattern<N>( [](int, int){ return -1; } );
