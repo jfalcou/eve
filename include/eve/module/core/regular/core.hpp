@@ -55,6 +55,7 @@
 #include <eve/module/core/regular/reverse.hpp>
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/scan.hpp>
+#include <eve/module/core/regular/sign_alternate.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 #include <eve/module/core/regular/store.hpp>
