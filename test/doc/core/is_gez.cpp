@@ -1,4 +1,3 @@
-//#include <eve/function/is_gez.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

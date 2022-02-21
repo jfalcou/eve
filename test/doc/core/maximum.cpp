@@ -1,4 +1,3 @@
-#include <eve/function/maximum.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

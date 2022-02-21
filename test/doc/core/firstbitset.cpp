@@ -1,4 +1,3 @@
-#include <eve/function/firstbitset.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

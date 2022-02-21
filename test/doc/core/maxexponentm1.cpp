@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/maxexponentm1.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

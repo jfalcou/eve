@@ -1,4 +1,3 @@
-#include <eve/function/bit_xor.hpp>
 
 #include <eve/wide.hpp>
 #include <iostream>

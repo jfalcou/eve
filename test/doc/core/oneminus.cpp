@@ -1,11 +1,5 @@
-//#include <eve/function/oneminus.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/saturated/oneminus.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
 #include <iostream>
 
 using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;

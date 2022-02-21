@@ -1,4 +1,3 @@
-#include <eve/function/bit_or.hpp>
 
 #include <eve/wide.hpp>
 #include <iostream>

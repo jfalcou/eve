@@ -6,11 +6,7 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-//#include <eve/function/rat.hpp>
 #include <eve/module/math/constant/pi.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

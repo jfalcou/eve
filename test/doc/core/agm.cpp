@@ -1,6 +1,4 @@
-//#include <eve/function/agm.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <vector>
 #include <iostream>

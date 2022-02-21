@@ -1,9 +1,4 @@
-#include <eve/function/fma.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/pedantic/fsm.hpp>
-#include <eve/function/numeric/fsm.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

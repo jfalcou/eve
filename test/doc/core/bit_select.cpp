@@ -1,6 +1,3 @@
-#include <eve/function/bit_select.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

@@ -1,4 +1,3 @@
-#include <eve/function/is_pow2.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

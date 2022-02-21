@@ -1,5 +1,3 @@
-#include <eve/function/bit_width.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

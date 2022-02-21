@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/minf.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

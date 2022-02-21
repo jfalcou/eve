@@ -1,4 +1,3 @@
-#include <eve/function/trunc.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

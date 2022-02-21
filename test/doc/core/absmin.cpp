@@ -1,11 +1,5 @@
-//#include <eve/function/absmin.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/pedantic/absmin.hpp>
-#include <eve/function/numeric/absmin.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/mzero.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

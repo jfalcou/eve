@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/half.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
