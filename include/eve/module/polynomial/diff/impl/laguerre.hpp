@@ -8,8 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
-#include <eve/module/math.hpp>
 #include <eve/module/polynomial/regular/laguerre.hpp>
 
 
@@ -34,6 +32,6 @@ namespace eve::detail
                                        , T const &x) noexcept
   requires index_compatible_values<N, T> && index_compatible_values<M, T>
   {
-    return if_else(is_eqz(n), zero, cospi(m)*laguerre(inc(m), saturated(dec)(n), x));
+    return if_else(is_eqz(n), zero, sign_alternate(m)*laguerre(inc(m), saturated(dec)(n), x));
   }
 }
