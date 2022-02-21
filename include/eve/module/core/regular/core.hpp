@@ -35,6 +35,8 @@
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/deinterleave_groups.hpp>
+#include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 #include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
@@ -43,6 +45,8 @@
 #include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
+#include <eve/module/core/regular/interleave.hpp>
+#include <eve/module/core/regular/interleave_shuffle.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/maximum.hpp>

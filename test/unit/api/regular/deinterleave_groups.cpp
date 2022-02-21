@@ -7,9 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/deinterleave_groups.hpp>
-
-#include <eve/module/core/regular/interleave.hpp>
+#include <eve/module/core.hpp>
 
 #include <array>
 #include <numeric>

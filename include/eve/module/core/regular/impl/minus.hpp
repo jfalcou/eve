@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/function/conditional.hpp>
+#include <eve/detail/func/conditional.hpp>
 #include <type_traits>
 
 namespace eve::detail

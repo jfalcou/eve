@@ -10,7 +10,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/func/to_logical.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
 

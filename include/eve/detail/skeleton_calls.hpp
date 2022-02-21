@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/func/bit_cast.hpp>
 #include <eve/traits/cardinal.hpp>
 
 

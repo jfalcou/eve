@@ -10,7 +10,7 @@
 #include <eve/traits/max_scalar_size.hpp>
 
 #include <eve/detail/compress/compress_mask_num.hpp>
-#include <eve/detail/function/byte_16_runtime_shuffle.hpp>
+#include <eve/detail/func/byte_16_runtime_shuffle.hpp>
 
 #include <eve/module/core/regular/count_true.hpp>
 #include <eve/module/core/regular/if_else.hpp>

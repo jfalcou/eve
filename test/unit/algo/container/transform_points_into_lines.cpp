@@ -13,7 +13,7 @@
 #include <eve/algo/transform.hpp>
 #include <eve/algo/views/zip.hpp>
 
-#include <eve/function/zip.hpp>
+#include <eve/module/core.hpp>
 #include <vector>
 
 TTS_CASE("transform points into vertical lines")

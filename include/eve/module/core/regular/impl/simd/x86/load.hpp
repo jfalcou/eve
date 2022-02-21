@@ -12,8 +12,8 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/function/bit_cast.hpp>
-#include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/func/bit_cast.hpp>
+#include <eve/detail/func/to_logical.hpp>
 
 namespace eve::detail
 {

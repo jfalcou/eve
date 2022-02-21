@@ -8,7 +8,7 @@
 
 #include <eve/detail/implementation.hpp>
 #include <eve/arch.hpp>
-#include <eve/detail/function/load.hpp>
+#include <eve/detail/func/load.hpp>
 #include <eve/module/core/regular/impl/load.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

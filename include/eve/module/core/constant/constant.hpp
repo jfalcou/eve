@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/detail/function/bit_cast.hpp>
+#include <eve/detail/func/bit_cast.hpp>
 #include <eve/as.hpp>
 #include <type_traits>
 

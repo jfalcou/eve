@@ -17,15 +17,15 @@
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
-#include <eve/detail/function/bit_cast.hpp>
-#include <eve/detail/function/bitmask.hpp>
-#include <eve/detail/function/combine.hpp>
-#include <eve/detail/function/fill.hpp>
-#include <eve/detail/function/friends.hpp>
-#include <eve/detail/function/load.hpp>
-#include <eve/detail/function/make.hpp>
-#include <eve/detail/function/slice.hpp>
-#include <eve/detail/function/subscript.hpp>
+#include <eve/detail/func/bit_cast.hpp>
+#include <eve/detail/func/bitmask.hpp>
+#include <eve/detail/func/combine.hpp>
+#include <eve/detail/func/fill.hpp>
+#include <eve/detail/func/friends.hpp>
+#include <eve/detail/func/load.hpp>
+#include <eve/detail/func/make.hpp>
+#include <eve/detail/func/slice.hpp>
+#include <eve/detail/func/subscript.hpp>
 #include <eve/traits/as_integer.hpp>
 
 #include <cstring>

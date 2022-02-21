@@ -6,11 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/converter.hpp>
-#include <eve/function/saturated/convert.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 //==================================================================================================
