@@ -1,4 +1,3 @@
-//#include <eve/include/function/ellint_rj.hpp>
 #include <eve/module/elliptic.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -7,10 +6,6 @@ using wide_ft = eve::wide<double, eve::fixed<4>>;
 
 int main()
 {
-//   wide_ft pf = {1.0f, 0.0f, 1.5f, 3.0f};
-//   wide_ft qf = {1.0f, 4.0f, 0.2f, 0.5f};
-//   wide_ft rf = {2.0f, 1.0f, 0.1f, 0.4f};
-//   wide_ft sf = {2.2f, 0.5f, 0.3f, 2.4f};
 
   wide_ft pf = {0.0f, 0.0f, 0.0f, 3.0f};
   wide_ft qf = {0.19f, 4.0f, 0.4375f, 0.5f};

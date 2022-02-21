@@ -1,4 +1,3 @@
-//#include <eve/function/sph_bessel_j0.hpp>
 #include <eve/module/bessel.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

@@ -1,4 +1,3 @@
-//#include <eve/function/newton.hpp>
 #include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

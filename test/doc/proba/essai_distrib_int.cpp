@@ -1,4 +1,3 @@
-//#include <test_distribution.hpp>
 #include <eve/module/proba.hpp>
 #include <generator.hpp>
 #include <eve/wide.hpp>

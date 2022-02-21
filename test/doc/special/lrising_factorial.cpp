@@ -1,4 +1,3 @@
-//#include <eve/function/pedantic/lrising_factorial.hpp>
 #include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

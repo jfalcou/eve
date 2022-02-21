@@ -1,4 +1,3 @@
-//#include <eve/function/cyl_bessel_j1.hpp>
 #include <eve/module/bessel.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/core/constant/inf.hpp>
