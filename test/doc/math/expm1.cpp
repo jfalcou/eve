@@ -1,4 +1,3 @@
-//#include <eve/function/expm1.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/core/constant/eps.hpp>

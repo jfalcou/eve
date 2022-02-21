@@ -1,4 +1,3 @@
-//#include <eve/function/atand.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

@@ -1,4 +1,3 @@
-//#include <eve/function/sincos.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/math/constant/pi.hpp>
