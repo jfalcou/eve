@@ -1,4 +1,3 @@
-//#include <eve/function/airy_bi.hpp>
 #include <eve/module/bessel.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

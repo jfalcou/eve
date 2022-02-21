@@ -1,7 +1,5 @@
-//#include <eve/function/reverse_horner.hpp>
 #include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/one.hpp>
 #include <iostream>
 #include <list>
 #include <vector>

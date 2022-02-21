@@ -1,4 +1,3 @@
-//#include <eve/function/pedantic/lpnorm.hpp>
 #include <eve/module/math.hpp>
 #include <iostream>
 #include <iomanip>

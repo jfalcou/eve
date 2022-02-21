@@ -1,4 +1,3 @@
-//#include <eve/function/gcd.hpp>
 #include <eve/module/combinatorial.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
