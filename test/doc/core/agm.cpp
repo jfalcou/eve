@@ -6,14 +6,14 @@
 
 int main()
 {
-  using w_t = eve::wide<float, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 3};
-  w_t qi = {4, 1, 1, eve::inf(eve::as<float>())};
+  using wf_t = eve::wide<float, eve::fixed<4>>;
+  wf_t pf = {3, 2, 3, 3};
+  wf_t qf = {4, 1, 1, eve::inf(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << " <- pi              = " << pi << '\n'
-            << " <- qi              = " << qi << '\n'
-            << " -> agm(pi, qi) = " << eve::agm(pi, qi) << '\n';
+            << " <- pf                = " << pf << '\n'
+            << " <- qf                = " << qf << '\n'
+            << " -> agm(pf, qf)       = " << eve::agm(pf, qf) << '\n';
 
   double xi = 3, yi = 4;
 

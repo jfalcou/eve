@@ -12,6 +12,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
+            << "-> diff(eve::abs)(pf)  = " << eve::diff(eve::abs)(pf) << '\n'
             << "-> abs(pf)             = " << eve::abs(pf) << '\n'
             << "<- pi                  = " << pi << '\n'
             << "-> saturated(abs)(pi)  = " << eve::saturated(eve::abs)(pi) << '\n'
