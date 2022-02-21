@@ -1,3 +1,4 @@
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <eve/product_type.hpp>
 #include <iostream>
