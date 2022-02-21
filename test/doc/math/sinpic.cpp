@@ -12,7 +12,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
-            << "-> sinpic(pf) = " << eve::sinpic(pf) << '\n';
+            << "-> sinpic(pf) = " << eve::sinpic(pf) << '\n'
+            << "-> diff(sinpic)(pf) = " << eve::diff(eve::sinpic)(pf) << '\n';
 
   float xf = 3.0f;
 

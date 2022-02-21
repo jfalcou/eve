@@ -12,7 +12,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf       = " << pf << '\n'
-            << "-> cscd(pf) = " << eve::cscd(pf) << '\n';
+            << "-> cscd(pf) = " << eve::cscd(pf) << '\n'
+            << "-> diff(cscd)(pf) = " << eve::diff(eve::cscd)(pf) << '\n';
 
   float xf = 3.0f;
 

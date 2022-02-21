@@ -11,8 +11,9 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf         = " << pf << '\n'
-    << "-> acscpi(pf) = " << eve::acscpi(pf) << '\n';
+    << "<- pf               = " << pf << '\n'
+    << "-> acscpi(pf)       = " << eve::acscpi(pf) << '\n'
+    << "-> diff(acscpi)(pf) = " << eve::diff(eve::acscpi)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::inf(eve::as<float>());

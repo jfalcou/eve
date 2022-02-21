@@ -15,9 +15,11 @@ int main()
                 -2.0f, -3.0f,  2.5f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf            = " << pf << '\n'
-            << "<- qf            = " << qf << '\n'
-            << "-> pow1p(pf, qf) = " << eve::pow1p(pf, qf) << '\n';
+            << "<- pf                      = " << pf << '\n'
+            << "<- qf                      = " << qf << '\n'
+            << "-> pow1p(pf, qf)           = " << eve::pow1p(pf, qf) << '\n'
+            << "-> diff_1st(pow1p)(pf, qf) = " << eve::diff_1st(eve::pow1p)(pf, qf) << '\n'
+            << "-> diff_2nd(pow1p)(pf, qf) = " << eve::diff_2nd(eve::pow1p)(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -1.0f;

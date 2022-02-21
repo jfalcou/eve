@@ -16,8 +16,8 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf =                  " << pf << '\n'
-    << "-> eve::radindeg(pf) =      " << eve::radindeg(pf) << '\n';
+    << "<- pf               = " << pf << '\n'
+    << "-> radindeg(pf)     = " << eve::radindeg(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::pi(eve::as<float>());

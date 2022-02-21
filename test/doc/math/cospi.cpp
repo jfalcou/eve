@@ -12,7 +12,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
-            << "-> cospi(pf) = " << eve::cospi(pf) << '\n';
+            << "-> cospi(pf) = " << eve::cospi(pf) << '\n'
+            << "-> diff(cospi)(pf) = " << eve::diff(eve::cospi)(pf) << '\n';
 
   float xf = 3.0f;
 

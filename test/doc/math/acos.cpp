@@ -6,12 +6,13 @@ using wide_ft = eve::wide <float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = { 0.0f, 1.0f, -1.0f, -0.5f};
+  wide_ft pf = { 0.0f, 0.99f, -1.0f, -0.5f};
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf            = " << pf << '\n'
-    << "-> eve::acos(pf) = " << eve::acos(pf) << '\n';
+    << "<- pf                 = " << pf << '\n'
+    << "-> acos(pf)           = " << eve::acos(pf) << '\n'
+    << "-> diff(acos)(pf)     = " << eve::diff(eve::acos)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());
