@@ -7,11 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/store_equivalent.hpp>
-
-#include <eve/function/compress_store.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/unalign.hpp>
+#include <eve/module/core.hpp>
 
 #include <eve/memory/stack_buffer.hpp>
 

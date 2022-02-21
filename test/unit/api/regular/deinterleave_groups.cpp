@@ -9,7 +9,7 @@
 
 #include <eve/function/deinterleave_groups.hpp>
 
-#include <eve/function/interleave.hpp>
+#include <eve/module/core/regular/interleave.hpp>
 
 #include <array>
 #include <numeric>

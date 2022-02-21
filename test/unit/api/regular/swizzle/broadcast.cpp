@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 #include <bit>
 
 template<int I, int N>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/deinterleave_groups_shuffle.hpp>
+#include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 
 EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuffle", eve::test::simd::all_types)
 <typename T>(eve::as<T>)

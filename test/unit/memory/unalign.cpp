@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/unalign.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 
 TTS_CASE("eve::unaligned_t")
 {

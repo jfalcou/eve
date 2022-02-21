@@ -9,7 +9,7 @@
 
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/slide_right.hpp>
+#include <eve/module/core/regular/slide_right.hpp>
 
 EVE_TEST_TYPES( "Check behavior of slide_right shuffle", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)

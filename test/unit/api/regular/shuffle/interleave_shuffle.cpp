@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/interleave_shuffle.hpp>
+#include <eve/module/core/regular/interleave_shuffle.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 

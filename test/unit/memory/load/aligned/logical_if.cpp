@@ -9,8 +9,8 @@
 #include "unit/memory/page.hpp"
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/load.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <array>
 #include <list>

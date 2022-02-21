@@ -13,7 +13,7 @@
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
-#include <eve/function/unalign.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 
 #include <array>
 #include <vector>

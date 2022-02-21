@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/interleave.hpp>
+#include <eve/module/core/regular/interleave.hpp>
 
 const auto loader = []<std::size_t... N>(auto const& d, auto card, std::index_sequence<N...>)
 {

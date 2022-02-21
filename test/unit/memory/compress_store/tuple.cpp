@@ -8,7 +8,7 @@
 
 #include "test.hpp"
 
-#include <eve/function/compress_store.hpp>
+#include <eve/module/core/regular/compress_store.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
 #include <random>
