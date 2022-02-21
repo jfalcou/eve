@@ -54,6 +54,7 @@
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/reverse.hpp>
@@ -67,6 +68,7 @@
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/write.hpp>
 
 
 #include <eve/module/core/regular/abs.hpp>
