@@ -1,4 +1,3 @@
-//#include <eve/function/acot.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/core/constant/inf.hpp>
