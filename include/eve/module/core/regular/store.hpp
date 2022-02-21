@@ -66,10 +66,6 @@ namespace eve
   //!
   //!  no decorators are supported
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/store.cpp}
-  //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(store_, store);
