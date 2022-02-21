@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/saturated.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/traits/as_floating_point.hpp>

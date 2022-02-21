@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core/regular/add.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
-#include <eve/module/core/regular/numeric.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
+#include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/regular/trigo_tags.hpp>
+#include <eve/module/math/decorator/trigo_tags.hpp>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/roundings.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>

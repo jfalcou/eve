@@ -9,7 +9,7 @@
 
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/saturated.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/inc.hpp>

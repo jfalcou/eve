@@ -11,7 +11,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/polynomial/regular/successor.hpp>
 
 namespace eve::detail
 {

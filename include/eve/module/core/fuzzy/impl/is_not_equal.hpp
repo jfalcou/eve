@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/fuzzy.hpp>
+#include <eve/module/core/decorator/fuzzy.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/module/core/constant/eps.hpp>

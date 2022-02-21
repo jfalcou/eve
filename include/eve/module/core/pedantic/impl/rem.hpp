@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>

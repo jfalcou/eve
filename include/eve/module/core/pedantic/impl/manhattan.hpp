@@ -10,7 +10,7 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/concept/value.hpp>

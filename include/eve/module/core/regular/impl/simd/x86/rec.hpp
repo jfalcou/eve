@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/regular/raw.hpp>
+#include <eve/module/core/decorator/raw.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 

@@ -8,4 +8,4 @@
 #pragma once
 
 
-#include <eve/module/core/regular/regular.hpp>
+#include <eve/module/core/decorator/regular.hpp>

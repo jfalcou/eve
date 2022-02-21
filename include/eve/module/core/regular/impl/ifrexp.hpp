@@ -23,7 +23,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/add.hpp>
-#include <eve/module/core/regular/raw.hpp>
+#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_greater.hpp>

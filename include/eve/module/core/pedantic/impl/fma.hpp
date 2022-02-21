@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>

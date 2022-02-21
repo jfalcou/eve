@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/regular/impl/simd/x86/rsqrt.hpp>
 
 

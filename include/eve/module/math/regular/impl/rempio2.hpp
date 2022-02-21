@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/module/math/regular/trigo_tags.hpp>
+#include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/rempio2_kernel.hpp>
 

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/frac.hpp>

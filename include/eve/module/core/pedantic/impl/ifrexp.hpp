@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/bit_notand.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
-#include <eve/module/core/regular/pedantic.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/exponentmask.hpp>
 #include <eve/module/core/constant/maxexponentp1.hpp>
