@@ -16,8 +16,10 @@ int main()
             << "<- qf                        = " << qf << '\n'
             << "-> minmag(pf, qf)            = " << eve::minmag(pf, qf) << '\n'
             << "-> saturated(minmag)(pf, qf) = " << eve::saturated(eve::minmag)(pf, qf) << '\n'
-//            << "-> numeric(minmag)(pf, qf)   = " << eve::numeric(eve::minmag)(pf, qf) << '\n'
-    ;
+            << "-> numeric(minmag)(pf, qf)   = " << eve::numeric(eve::minmag)(pf, qf) << '\n'
+            << "-> diff_1st(minmag)(pf, qf)  = " << eve::diff_1st(eve::minmag)(pf, qf) <<  '\n'
+            << "-> diff_2nd(minmag)(pf, qf)  = " << eve::diff_2nd(eve::minmag)(pf, qf) <<  '\n';
+
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -27,7 +29,7 @@ int main()
             << "<- yf                        = " << yf << '\n'
             << "-> minmag(xf, yf)            = " << eve::minmag(xf, yf) << '\n'
             << "-> saturated(minmag)(xf, yf) = " << eve::saturated(eve::minmag)(xf, yf) << '\n'
-//            << "-> numeric(minmag)(xf, yf)   = " << eve::numeric(eve::minmag)(xf, yf) << '\n'
+            << "-> numeric(minmag)(xf, yf)   = " << eve::numeric(eve::minmag)(xf, yf) << '\n'
     ;
    return 0;
 }

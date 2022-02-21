@@ -11,9 +11,11 @@ int main()
   wide_ft qf = {4.0f, 4.0f, -4.0f, -4.0, 0.0f, 0.0f, -0.0f,  -0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf               = " << pf << '\n'
-            << "<- qf               = " << qf << '\n'
-            << "-> negatenz(pf, qf) = " << eve::negatenz(pf, qf) << '\n';
+            << "<- pf                         = " << pf << '\n'
+            << "<- qf                         = " << qf << '\n'
+            << "-> negatenz(pf, qf)           = " << eve::negatenz(pf, qf) << '\n'
+            << "-> diff_1st(negatenz)(pf, qf) = " << eve::diff_1st(eve::negatenz)(pf, qf) << '\n'
+            << "-> diff_2nd(negatenz)(pf, qf) = " << eve::diff_2nd(eve::negatenz)(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -0.0f;

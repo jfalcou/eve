@@ -11,13 +11,14 @@ int main()
                  2.0f,  2.3f, eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> frac(pf) = " << eve::frac(pf) << '\n';
+            << "<- pf             = " << pf << '\n'
+            << "-> frac(pf)       = " << eve::frac(pf) << '\n'
+            << "-> diff(frac)(pf) = " << eve::diff(eve::frac)(pf) << '\n'   ;
 
   float xf = -327.68f;
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << "<- xf       = " << xf << '\n'
-            << "-> frac(xf) = " << eve::frac(xf) << '\n';
+            << "<- xf             = " << xf << '\n'
+            << "-> frac(xf)       = " << eve::frac(xf) << '\n';
   return 0;
 }

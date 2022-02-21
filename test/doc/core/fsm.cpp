@@ -11,20 +11,23 @@ int main()
   float esm1 = es-1.0f;
   float esp1 = es+1.0f;
   float vm  = eve::valmax(eve::as<float>());
-  wide_t qi = {2, -3, esp1,  vm};
-  wide_t pi = {3, -2, esm1,  2 };
-  wide_t oi = {-4, 1, -1.0f, vm};
+  wide_t qf = {2, -3, esp1,  vm};
+  wide_t pf = {3, -2, esm1,  2 };
+  wide_t of = {-4, 1, -1.0f, vm};
 
   std::cout << "---- simd" << '\n'
-            << " <- oi                                = " << oi << '\n'
-            << " <- pi                                = " << pi << '\n'
-            << " <- qi                                = " << qi << '\n'
-            << " -> pedantic(fsm)(oi, pi, qi)         = " << eve::pedantic(eve::fsm)(oi, pi, qi) << '\n'
-            << " -> numeric(fsm)(oi, pi, qi)          = " << eve::numeric(eve::fsm)(oi, pi, qi) << '\n'
-            << " -> fsm(oi, pi, qi)                   = " << eve::fsm(oi, pi, qi) << '\n'
+            << " <- of                                = " << of << '\n'
+            << " <- pf                                = " << pf << '\n'
+            << " <- qf                                = " << qf << '\n'
+            << " -> pedantic(fsm)(of, pf, qf)         = " << eve::pedantic(eve::fsm)(of, pf, qf) << '\n'
+            << " -> numeric(fsm)(of, pf, qf)          = " << eve::numeric(eve::fsm)(of, pf, qf) << '\n'
+            << " -> fsm(of, pf, qf)                   = " << eve::fsm(of, pf, qf) << '\n'
             << "\n if the last fsm result ends by '0, inf}', it is because\n"
             << " the system has no simd fsm fsmily intrinsics\n"
-            << " or is not configured to use them.\n\n";
+            << " or is not configured to use them.\n\n"
+            << "-> diff_1st(fam)(of, pf, qf)          = " << eve::diff_1st(eve::fam)(of, pf, qf) << '\n'
+            << "-> diff_2nd(fam)(of, pf, qf)          = " << eve::diff_2nd(eve::fam)(of, pf, qf) << '\n'
+            << "-> diff_3rd(fam)(of, pf, qf)          = " << eve::diff_3rd(eve::fam)(of, pf, qf) << '\n';
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'
