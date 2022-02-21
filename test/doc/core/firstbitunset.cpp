@@ -1,4 +1,3 @@
-#include <eve/function/firstbitunset.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/logeps.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

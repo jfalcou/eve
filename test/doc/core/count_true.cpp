@@ -1,4 +1,3 @@
-#include <eve/function/count_true.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

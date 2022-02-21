@@ -1,4 +1,3 @@
-#include <eve/function/bit_cast.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

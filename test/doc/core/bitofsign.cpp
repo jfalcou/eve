@@ -1,4 +1,3 @@
-#include <eve/function/bitofsign.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

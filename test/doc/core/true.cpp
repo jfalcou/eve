@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/true.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

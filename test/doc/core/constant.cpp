@@ -1,4 +1,3 @@
-#include <eve/module/core/constant/constant.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

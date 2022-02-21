@@ -1,8 +1,5 @@
-//#include <eve/function/fdim.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
 #include <iostream>
 
 using wide_it = eve::wide<float, eve::fixed<4>>;

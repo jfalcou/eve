@@ -1,4 +1,3 @@
-#include <eve/function/all.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

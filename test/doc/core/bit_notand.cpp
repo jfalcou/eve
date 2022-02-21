@@ -1,4 +1,3 @@
-#include <eve/function/bit_notand.hpp>
 
 #include <eve/wide.hpp>
 #include <iostream>
