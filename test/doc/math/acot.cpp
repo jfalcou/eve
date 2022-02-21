@@ -11,8 +11,9 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf            = " << pf << '\n'
-    << "-> eve::acot(pf) = " << eve::acot(pf) << '\n';
+    << "<- pf             = " << pf << '\n'
+    << "-> eve::acot(pf)  = " << eve::acot(pf) << '\n'
+    << "-> diff(acot)(pf) = " << eve::diff(eve::acot)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::inf(eve::as<float>());

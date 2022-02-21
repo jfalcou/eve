@@ -13,8 +13,9 @@ int main()
                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> cbrt(pf) = " << eve::cbrt(pf) << '\n';
+            << "<- pf             = " << pf << '\n'
+            << "-> cbrt(pf)       = " << eve::cbrt(pf) << '\n'
+            << "-> diff(cbrt)(pf) = " << eve::diff(eve::cbrt)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());

@@ -15,9 +15,11 @@ int main()
                 eve::nan(eve::as<float>()), -2.0f,  -eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                 = " << pf << '\n'
-            << "<- qf                 = " << qf << '\n'
-            << "-> pow_abs(pf, qf) = " << eve::pow_abs(pf, qf) << '\n';
+            << "<- pf                        = " << pf << '\n'
+            << "<- qf                        = " << qf << '\n'
+            << "-> pow_abs(pf, qf)           = " << eve::pow_abs(pf, qf) << '\n'
+            << "-> diff_1st(pow_abs)(pf, qf) = " << eve::diff_1st(eve::pow_abs)(pf, qf) << '\n'
+            << "-> diff_2nd(pow_abs)(pf, qf) = " << eve::diff_2nd(eve::pow_abs)(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -1.0f;

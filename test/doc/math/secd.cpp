@@ -11,8 +11,9 @@ int main()
   wide_ft pf = {1.0f, 0.0f, eve::inf(eve::as<float>()), 180.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> secd(pf) = " << eve::secd(pf) << '\n';
+            << "<- pf             = " << pf << '\n'
+            << "-> secd(pf)       = " << eve::secd(pf) << '\n'
+            << "-> diff(secd)(pf) = " << eve::diff(eve::secd)(pf) << '\n';
 
   float xf = 3.0f;
 

@@ -11,8 +11,9 @@ int main()
   wide_ft pf = {1.0f, 0.0f, eve::pio_2(eve::as<float>()), eve::pio_4(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf        = " << pf << '\n'
-            << "-> invgd(pf) = " << eve::invgd(pf) << '\n';
+            << "<- pf              = " << pf << '\n'
+            << "-> diff(invgd)(pf) = " << eve::diff(eve::invgd)(pf) << '\n'
+            << "-> invgd(pf)       = " << eve::invgd(pf) << '\n';
 
   float xf = 3.0f;
 

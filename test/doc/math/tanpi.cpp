@@ -12,7 +12,9 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
-            << "-> tanpi(pf) = " << eve::tanpi(pf) << '\n';
+            << "-> tanpi(pf) = " << eve::tanpi(pf) << '\n'
+            << "-> diff(tanpi)(pf) = " << eve::diff(eve::tanpi)(pf) << '\n';
+
 
   float xf = 3.0f;
 

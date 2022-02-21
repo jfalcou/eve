@@ -12,8 +12,9 @@ int main()
                eve::inf(eve::as<float>()), 4.0f, eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf      = " << pf << '\n'
-            << "-> log(pf) = " << eve::log(pf) << '\n';
+            << "<- pf            = " << pf << '\n'
+            << "-> diff(log)(pf) = " << eve::diff(eve::log)(pf) << '\n'
+            << "-> log(pf)       = " << eve::log(pf) << '\n';
 
   float xf = 1.0f;
 
