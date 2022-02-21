@@ -72,8 +72,7 @@ namespace eve
   //! ---
   //!
   //! #### Supported decorators
-  //!#include <eve/arch.hpp>
-
+  //!
   //!  no decorators are supported
   //!
   //! #### Example

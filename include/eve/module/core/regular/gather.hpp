@@ -85,10 +85,6 @@ namespace eve
   //!
   //!  no decorators are supported
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/gather.cpp}
-  //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(gather_, gather);
