@@ -9,7 +9,7 @@
 
 #include <eve/memory/stack_buffer.hpp>
 
-#include <eve/coree.hpp>
+#include <eve/module/core.hpp>
 
 #include <utility>
 
