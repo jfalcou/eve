@@ -10,10 +10,10 @@ int main()
   wide_ft x = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};
   wide_ft n = {0.5, 1.0, 1.5, 2.0, 2.5, 2.6, 3.2, 12};
   std::cout << "---- simd" << '\n'
-            << "<- n                 = " << n << '\n'
-            << "<- x                 = " << x << '\n'
-            << "-> cyl_bessel_jn(pd) = " << eve::cyl_bessel_jn(n, x) << '\n';
-
+            << "<- n                         = " << n << '\n'
+            << "<- x                         = " << x << '\n'
+            << "-> cyl_bessel_jn(pf)         = " << eve::cyl_bessel_jn(n, x) << '\n'
+            << "-> diff(cyl_bessel_jn)(n, x) = " << eve::diff(eve::cyl_bessel_jn)(n, x) << '\n';
 
   double xd = 1.0;
 

@@ -13,13 +13,14 @@ int main()
   wide_ft x(2.0);
 
   std::cout << "---- simd" << '\n'
-            << "<- xd               = " << xd << '\n'
-            << "<- n                = " << n  << '\n'
-            << "<- x                = " << x  << '\n'
-            << "-> hermite(n, xd)   = " << eve::hermite(n, xd) << '\n'
-            << "-> hermite(3, xd)   = " << eve::hermite(3, xd) << '\n'
-            << "-> hermite(n, 2.0)  = " << eve::hermite(n, 2.0) << '\n'
-            << "-> hermite(n, x)    = " << eve::hermite(n, x)   << '\n';
+            << "<- xd                  = " << xd << '\n'
+            << "<- n                   = " << n  << '\n'
+            << "<- x                   = " << x  << '\n'
+            << "-> hermite(n, xd)      = " << eve::hermite(n, xd) << '\n'
+            << "-> hermite(3, xd)      = " << eve::hermite(3, xd) << '\n'
+            << "-> hermite(n, 2.0)     = " << eve::hermite(n, 2.0) << '\n'
+            << "-> hermite(n, x)       = " << eve::hermite(n, x)   << '\n'
+            << "-> diff(hermite)(n, x) = " << eve::diff(eve::hermite)(n, x) << '\n';
 
   double xs = 3.0;
 
