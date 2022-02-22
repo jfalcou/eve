@@ -8,14 +8,16 @@
 #include <eve/module/core.hpp>
 #include "producers.hpp"
 #include "generator.hpp"
-#include <cmath>
+#include <bit>
 
-EVE_TEST_TYPES("Random check for eve::is_nez", eve::test::simd::all_types)
+EVE_TEST_TYPES("Random check for eve::popcount", eve::test::simd::unsigned_integers)
 <typename T>(eve::as<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto vmin = eve::valmin(eve::as<e_t>());
   auto vmax = eve::valmax(eve::as<e_t>());
-  auto std_is_nez = [](auto e) -> eve::logical<e_t>{ return e != 0; };
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_is_nez, eve::is_nez );
+  using u_t =  eve::as_integer_t<T, unsigned>;
+  using su_t =  eve::element_type_t<u_t>;
+  auto std_popcount = [](auto e) -> su_t { return std::popcount(e); };
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_popcount, eve::popcount );
  };
