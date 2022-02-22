@@ -9,7 +9,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/func/to_logical.hpp>
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/detail/overload.hpp>
 

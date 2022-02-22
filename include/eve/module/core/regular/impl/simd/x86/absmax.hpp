@@ -11,7 +11,7 @@
 #pragma once
 
 #include <eve/detail/category.hpp>
-#include <eve/detail/func/simd/x86/flags.hpp>
+#include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/value.hpp>
 

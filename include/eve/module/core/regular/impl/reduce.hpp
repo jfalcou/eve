@@ -9,8 +9,8 @@
 
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/func/reduce.hpp>
-#include <eve/detail/func/sum.hpp>
+#include <eve/detail/function/reduce.hpp>
+#include <eve/detail/function/sum.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/regular/logical_or.hpp>

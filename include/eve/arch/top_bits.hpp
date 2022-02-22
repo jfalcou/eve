@@ -13,9 +13,9 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/bits.hpp>
 #include <eve/traits/as_arithmetic.hpp>
-#include <eve/detail/func/slice.hpp>
+#include <eve/detail/function/slice.hpp>
 
-#include <eve/detail/func/movemask.hpp>
+#include <eve/detail/function/movemask.hpp>
 
 #include <array>
 #include <bit>

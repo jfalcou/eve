@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/average.hpp>

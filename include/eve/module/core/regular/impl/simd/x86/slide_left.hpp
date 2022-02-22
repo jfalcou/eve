@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/func/simd/x86/specifics.hpp>
+#include <eve/detail/function/simd/x86/specifics.hpp>
 #include <eve/conditional.hpp>
 
 namespace eve::detail

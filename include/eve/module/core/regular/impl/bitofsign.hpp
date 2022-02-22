@@ -11,7 +11,7 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/signmask.hpp>
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_and.hpp>

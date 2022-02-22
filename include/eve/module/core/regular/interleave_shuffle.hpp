@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/detail/func/interleave.hpp>
+#include <eve/detail/function/interleave.hpp>
 
 namespace eve
 {

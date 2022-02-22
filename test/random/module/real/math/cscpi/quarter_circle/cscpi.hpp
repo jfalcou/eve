@@ -5,7 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/detail/func/tmp/boost_math_sinpi.hpp>
+#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/function/cscpi.hpp>
 #include <eve/function/rec.hpp>
 #include "producers.hpp"

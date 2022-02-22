@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/func/operators.hpp>
+#include <eve/detail/function/operators.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/if_else.hpp>

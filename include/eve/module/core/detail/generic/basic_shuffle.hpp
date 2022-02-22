@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/pattern.hpp>
 #include <eve/forward.hpp>
-#include <eve/detail/func/slice.hpp>
+#include <eve/detail/function/slice.hpp>
 
 namespace eve::detail
 {

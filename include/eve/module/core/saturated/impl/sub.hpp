@@ -18,7 +18,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/is_gez.hpp>

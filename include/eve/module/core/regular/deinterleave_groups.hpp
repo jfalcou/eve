@@ -43,4 +43,4 @@ namespace eve
   EVE_MAKE_CALLABLE(deinterleave_groups_, deinterleave_groups);
 }
 
-#include <eve/detail/func/simd/common/deinterleave_groups.hpp>
+#include <eve/detail/function/simd/common/deinterleave_groups.hpp>
