@@ -12,6 +12,22 @@
 #include <eve/memory/align.hpp>
 #include <eve/function/store.hpp>
 
+
+#define EVE_RANGE_CHECK(Type, Producer, Ref, New)                                                   \
+  [&]()                                                                                             \
+  {                                                                                                 \
+    if constexpr(eve::floating_value<Type>)                                                         \
+      TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, 2.0);                                 \
+    else                                                                                            \
+      TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, 0.0);                                 \
+  }()                                                                                               \
+/**/
+
+#define EVE_RANGE_CHECK_WITH(Type, Producer, Ref, New, Ulps)                                        \
+TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, Ulps);                                      \
+/**/
+
+
 #define TTS_RANGE_CHECK(Producer, Ref, New)                                                         \
   [&]()                                                                                             \
   {                                                                                                 \
