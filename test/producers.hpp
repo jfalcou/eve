@@ -16,15 +16,15 @@
 #define EVE_ULP_RANGE_CHECK(Type, Producer, Ref, New)                                               \
   [&]()                                                                                             \
   {                                                                                                 \
-    if constexpr(eve::floating_value<Type>)                                                         \
-      TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, 2.0);                                 \
+    if constexpr(eve::floating_value<eve::element_type_t<T>>)                                       \
+      TTS_ULP_RANGE_CHECK(Producer, (eve::element_type_t<T>), (Type), Ref, New, 2.0);               \
     else                                                                                            \
-      TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, 0.0);                                 \
+      TTS_ULP_RANGE_CHECK(Producer, (eve::element_type_t<T>), (Type), Ref, New, 0.0);               \
   }()                                                                                               \
 /**/
 
 #define EVE_ULP_RANGE_CHECK_WITH(Type, Producer, Ref, New, Ulps)                                    \
-TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, Ulps);                                      \
+TTS_ULP_RANGE_CHECK(Producer, (eve::element_type_t<T>), (Type), Ref, New, Ulps);                    \
 /**/
 
 
