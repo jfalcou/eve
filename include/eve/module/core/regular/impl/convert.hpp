@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/func/bit_cast.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/module/core/regular/combine.hpp>

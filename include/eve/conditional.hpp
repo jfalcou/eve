@@ -11,7 +11,7 @@
 #include <eve/assert.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/func/iota.hpp>
+#include <eve/detail/function/iota.hpp>
 #include <eve/detail/bits.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits.hpp>

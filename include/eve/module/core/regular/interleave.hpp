@@ -7,4 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/func/interleave.hpp>
+#include <eve/detail/function/interleave.hpp>

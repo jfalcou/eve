@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>

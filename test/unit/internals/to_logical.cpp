@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/detail/func/to_logical.hpp>
+#include <eve/detail/function/to_logical.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 

@@ -13,7 +13,7 @@
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/add.hpp>
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/rec.hpp>

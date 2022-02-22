@@ -9,8 +9,8 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <cmath>
-#include <eve/detail/func/tmp/boost_math_cospi.hpp>
-#include <eve/detail/func/tmp/boost_math_sinpi.hpp>
+#include <eve/detail/function/tmp/boost_math_cospi.hpp>
+#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 
 //==================================================================================================
 // Types tests

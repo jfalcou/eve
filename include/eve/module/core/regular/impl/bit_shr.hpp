@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/func/conditional.hpp>
+#include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_integer.hpp>
