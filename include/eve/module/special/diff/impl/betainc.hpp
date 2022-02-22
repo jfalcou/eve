@@ -8,9 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/special/regular/betainc.hpp>
 #include <eve/module/special/regular/beta.hpp>
 #include <eve/module/special/diff/beta.hpp>
 

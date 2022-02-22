@@ -15,7 +15,8 @@ int main()
     << "<- pf                   = " << pf << '\n'
     << "<- qf                   = " << qf << '\n'
     << "<- rf                   = " << rf << '\n'
-    << "-> betainc(pf, qf, rf)  = " << eve::betainc(pf, qf, rf) << '\n';
+    << "-> betainc(pf, qf, rf)  = " << eve::betainc(pf, qf, rf) << '\n'
+    << "-> diff_1st(betainc)(pf, qf, rf) = " << eve::diff_1st(eve::betainc)(pf, qf, rf) << '\n';
 
   float xf = 0.2f;
   float yf = 0.5f;

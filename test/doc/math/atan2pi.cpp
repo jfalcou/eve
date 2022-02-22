@@ -1,9 +1,5 @@
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/sqrtvalmax.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;

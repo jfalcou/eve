@@ -10,8 +10,10 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf            = " << pf << '\n'
-    << "-> eve::erf_inv(pf) = " << eve::erf_inv(pf) << '\n';
+    << "<- pf                 = " << pf << '\n'
+    << "-> eve::erf_inv(pf)   = " << eve::erf_inv(pf) << '\n'
+    << "-> diff(erf_inv)(pf)  = " << eve::diff(eve::erf_inv)(pf) << '\n';
+
 
   float xf = 1.0f;
   float yf = 2.0f;

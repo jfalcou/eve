@@ -13,7 +13,8 @@ wide_ft pf = {0.5f, -1.5f, -1.0f, 1.0f, 2.0f,
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
-            << "-> tgamma(pf) = " << eve::tgamma(pf) << '\n';
+            << "-> tgamma(pf) = " << eve::tgamma(pf) << '\n'
+            << "-> diff(tgamma)(pf) = " << eve::diff(eve::tgamma)(pf) << '\n';
 
   float xf = 4.0f;
 

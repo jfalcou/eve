@@ -11,10 +11,12 @@ int main()
   wf_t x = {1.0f,  1.5f, 2.0f, 2.5f};
 
   std::cout << "---- simd" << std::setprecision(17) << '\n'
-            << " <- n                                  = " << n << '\n'
-            << " <- x                                  = " << x << '\n'
-            << " -> lrising_factorial(n, x)            = " << eve::lrising_factorial(n, x) << '\n'
-            << " -> pedantic(lrising_factorial(n, x))  = " << eve::pedantic(eve::lrising_factorial)(n, x) << '\n';
+            << " <- n                                   = " << n << '\n'
+            << " <- x                                   = " << x << '\n'
+            << " -> lrising_factorial(n, x)             = " << eve::lrising_factorial(n, x) << '\n'
+            << " -> pedantic(lrising_factorial(n, x))   = " << eve::pedantic(eve::lrising_factorial)(n, x) << '\n'
+            << " -> diff_1st(lrising_factorial)(pf, qf) = " << eve::diff_1st(eve::lrising_factorial)(pf, qf) << '\n'
+            << " -> diff_2nd(lrising_factorial)(pf, qf) = " << eve::diff_2nd(eve::lrising_factorial)(pf, qf) << '\n';
 
   double xi = 1.8;
   std::cout << "---- scalar" << '\n'

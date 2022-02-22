@@ -11,9 +11,11 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf             = " << pf << '\n'
-    << "<- qf             = " << qf << '\n'
-    << "-> lbeta(pf, qf)  = " << eve::lbeta(pf, qf) << '\n';
+    << "<- pf                      = " << pf << '\n'
+    << "<- qf                      = " << qf << '\n'
+    << "-> lbeta(pf, qf)           = " << eve::lbeta(pf, qf) << '\n'
+    << "-> diff_1st(lbeta)(pf, qf) = " << eve::diff_1st(eve::lbeta)(pf, qf) << '\n'
+    << "-> diff_2nd(lbeta)(pf, qf) = " << eve::diff_2nd(eve::lbeta)(pf, qf) << '\n';
 
   float xf = 2.0f;
   float yf = 10.0f;
