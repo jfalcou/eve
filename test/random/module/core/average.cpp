@@ -21,6 +21,6 @@ EVE_TEST_TYPES("Random check for eve::average", eve::test::scalar::all_types)
 
   eve::uniform_prng<T> p(eve::valmin(eve::as<T>()), eve::valmax(eve::as<T>()));
 
-  if constexpr(eve::floating_value<T>)  EVE_RANGE_CHECK(T, p, std_average, my_average );
-  else                                  EVE_RANGE_CHECK_WITH(T, p, std_average, my_average, 0.5);
+  if constexpr(eve::floating_value<T>)  EVE_ULP_RANGE_CHECK(T, p, std_average, my_average );
+  else                                  EVE_ULP_RANGE_CHECK_WITH(T, p, std_average, my_average, 0.5);
 };

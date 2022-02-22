@@ -18,7 +18,7 @@ EVE_TEST_TYPES("Random check for eve::abs", eve::test::scalar::all_types)
   if constexpr(eve::floating_value<T>)
   {
     auto std_abs = [](auto e) { return (e < 0) ? -e : e; };
-    EVE_RANGE_CHECK( T, eve::uniform_prng<T>(-1,1),  std_abs, eve::abs );
+    EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<T>(-1,1),  std_abs, eve::abs );
   }
   else if constexpr(eve::signed_value<T>)
   {
@@ -31,7 +31,7 @@ EVE_TEST_TYPES("Random check for eve::abs", eve::test::scalar::all_types)
       return z < 0 ? eve::valmax(eve::as(e)) : z;
     };
 
-    EVE_RANGE_CHECK ( T, eve::uniform_prng<T>( eve::inc(vmin), vmax ), std_abs, eve::abs );
+    EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<T>( eve::inc(vmin), vmax ), std_abs, eve::abs );
   }
   else
   {
@@ -39,6 +39,6 @@ EVE_TEST_TYPES("Random check for eve::abs", eve::test::scalar::all_types)
     auto vmax = eve::valmax(eve::as<T>());
 
     auto std_abs = [](auto e) { return e; };
-    EVE_RANGE_CHECK ( T, eve::uniform_prng<T>(vmin,vmax), std_abs, eve::abs );
+    EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<T>(vmin,vmax), std_abs, eve::abs );
   }
 };

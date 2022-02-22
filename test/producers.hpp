@@ -13,7 +13,7 @@
 #include <eve/function/store.hpp>
 
 
-#define EVE_RANGE_CHECK(Type, Producer, Ref, New)                                                   \
+#define EVE_ULP_RANGE_CHECK(Type, Producer, Ref, New)                                               \
   [&]()                                                                                             \
   {                                                                                                 \
     if constexpr(eve::floating_value<Type>)                                                         \
@@ -23,7 +23,7 @@
   }()                                                                                               \
 /**/
 
-#define EVE_RANGE_CHECK_WITH(Type, Producer, Ref, New, Ulps)                                        \
+#define EVE_ULP_RANGE_CHECK_WITH(Type, Producer, Ref, New, Ulps)                                    \
 TTS_ULP_RANGE_CHECK(Producer, (Type), (Type), Ref, New, Ulps);                                      \
 /**/
 
