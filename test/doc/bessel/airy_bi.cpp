@@ -7,10 +7,11 @@ using wide_ft = eve::wide<double, eve::fixed<8>>;
 int main()
 {
 
-  wide_ft pd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10.0};
+  wide_ft pf = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10.0};
   std::cout << "---- simd" << '\n'
-            << "<- pd          = " << pd << '\n'
-            << "-> airy_bi(pd) = " << eve::airy_bi(pd) << '\n';
+            << "<- pf          = " << pf << '\n'
+            << "-> airy_bi(pf) = " << eve::airy_bi(pf) << '\n'
+            << "-> diff(airy_bi)(pf)  = " << eve::diff(eve::airy_bi)(pf) << '\n';
 
 
   double xd = -1.0;
