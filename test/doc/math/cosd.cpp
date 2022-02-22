@@ -1,6 +1,5 @@
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <eve/module/math/constant/pi.hpp>
 #include <iostream>
 

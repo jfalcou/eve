@@ -1,7 +1,6 @@
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/math/constant/pi.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<4>>;

@@ -1,6 +1,5 @@
 #include <eve/function/hypot.hpp>
 #include <eve/function/pedantic/hypot.hpp>
-#include <eve/module/core/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iomanip>
 #include <iostream>

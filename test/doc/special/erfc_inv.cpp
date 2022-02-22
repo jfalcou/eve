@@ -11,7 +11,8 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf            = " << pf << '\n'
-    << "-> eve::erfc_inv(pf) = " << eve::erfc_inv(pf) << '\n';
+    << "-> eve::erfc_inv(pf) = " << eve::erfc_inv(pf) << '\n'
+    << "-> diff(erfc_inv)(pf)  = " << eve::diff(eve::erfc_inv)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = 2.0f;

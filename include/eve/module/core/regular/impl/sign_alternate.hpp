@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/is_flint.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/function/conditional.hpp>
+#include <eve/detail/func/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 
 namespace eve::detail

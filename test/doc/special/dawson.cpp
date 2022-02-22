@@ -11,8 +11,9 @@ int main()
                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf         = " << pf << '\n'
-            << "-> dawson(pf) = " << eve::dawson(pf) << '\n';
+            << "<- pf               = " << pf << '\n'
+            << "-> dawson(pf)       = " << eve::dawson(pf) << '\n'
+            << "-> diff(dawson)(pf) = " << eve::diff(eve::dawson)(pf) << '\n';
 
   float xf = 1.0f;
 
