@@ -32,4 +32,36 @@ EVE_TEST_TYPES("Random check for eve::prev", eve::test::simd::all_types)
     auto std_prev = [](auto e) -> e_t{ return e == eve::valmin(eve::as<e_t>()) ? eve::valmax(eve::as<e_t>()): e-1; };
     EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_prev, eve::prev );
   }
+
+
+  auto std_pedantic_prev = [](auto e)  -> e_t{
+    if constexpr(eve::floating_value<T>)
+    {
+      return  (e == 0) && eve::is_positive(e)
+                ? e_t(-0.)
+                : ((e ==  eve::minf(eve::as<e_t>()))
+                    ? eve::nan(eve::as<e_t>())
+                    : std::nextafter(e, eve::minf(eve::as<e_t>()))
+                  );
+    }
+    else
+    {
+      return e == eve::valmin(eve::as(e)) ? e : e-1;
+    }
+  };
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_pedantic_prev, eve::pedantic(eve::prev));
+
+  auto std_saturated_prev = [](auto e) -> e_t {
+    if constexpr(eve::floating_value<T>)
+    {
+      return (e == eve::minf(eve::as(e)))
+      ?  eve::nan(eve::as<e_t>())
+      : std::nextafter(e, eve::minf(eve::as<e_t>()));
+    }
+    else
+    {
+      return e == eve::valmin(eve::as(e)) ? e : e-1;
+    }
+  };
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax), std_saturated_prev, eve::saturated(eve::prev));
 };

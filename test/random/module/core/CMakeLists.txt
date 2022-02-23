@@ -19,7 +19,6 @@ make_unit("random.core" bit_not.cpp             )
 make_unit("random.core" bit_width.cpp           )
 make_unit("random.core" bitofsign.cpp           )
 make_unit("random.core" ceil.cpp                )
-##make_unit("random.core" conj.cpp                ) ->math
 make_unit("random.core" dec.cpp                 )
 make_unit("random.core" exponent.cpp            )
 make_unit("random.core" firstbitset.cpp         )

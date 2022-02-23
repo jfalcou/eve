@@ -11,6 +11,8 @@
 #include "generator.hpp"
 #include <cmath>
 
+//pedantic not tested only nan is affected, see unit test
+
 EVE_TEST_TYPES("Random check for eve::arg", eve::test::simd::ieee_reals)
 <typename T>(eve::as<T>)
 {

@@ -33,6 +33,7 @@ EVE_TEST_TYPES("Random check for eve::abs", eve::test::simd::all_types)
     };
 
     EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>( eve::inc(vmin), vmax ), std_abs, eve::abs );
+    EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>( vmin, vmax ), eve::saturated(eve::abs) );
   }
   else
   {
