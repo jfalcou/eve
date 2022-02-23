@@ -6,9 +6,9 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
+#include <eve/module/core.hpp>
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/regular/replace.hpp>
 
 EVE_TEST( "Check behavior of replace_ignored(ignore_all/ignore_none)"
         , eve::test::simd::all_types

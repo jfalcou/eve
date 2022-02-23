@@ -6,8 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 
-#include <eve/module/core/regular/zip.hpp>
 
 template<typename T>
 using tuple_t = kumi::tuple<std::int8_t,T,double>;

@@ -1,15 +1,12 @@
 #include <eve/module/proba.hpp>
 #include <generator.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
 #include <iostream>
 #include <vector>
 #include <random>
 
 int main()
+#include <eve/module/core.hpp>
 {
   using eve::as;
   std::random_device rd;  //Will be used to obtain a seed for the random number engine

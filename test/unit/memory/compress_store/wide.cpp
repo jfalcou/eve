@@ -6,8 +6,8 @@
 **/
 //==================================================================================================
 #include "compress_store_test.hpp"
+#include <eve/module/core.hpp>
 
-#include <eve/module/core/regular/compress_store.hpp>
 
 EVE_TEST( "Check compress store behavior"
         , eve::test::simd::all_types

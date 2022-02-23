@@ -6,13 +6,11 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
+#include <eve/module/core.hpp>
 //==================================================================================================
 #include "test.hpp"
 #include <cstddef>
 
-#include <eve/module/core/constant/false.hpp>
-#include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 #include <eve/wide.hpp>
 
 #if defined(SPY_SIMD_IS_X86_AVX512)

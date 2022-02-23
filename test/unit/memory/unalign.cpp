@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 
-#include <eve/module/core/regular/unalign.hpp>
 
 TTS_CASE("eve::unaligned_t")
 {

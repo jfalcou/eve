@@ -6,9 +6,9 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
+#include <eve/module/core.hpp>
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/regular/swap_if.hpp>
 
 EVE_TEST_TYPES( "Check behavior of swap_if - scalar values"
               , eve::test::scalar::all_types
