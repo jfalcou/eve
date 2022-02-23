@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/preprocess_range.hpp>
@@ -13,7 +14,6 @@
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
 
-#include <eve/module/core/regular/unalign.hpp>
 
 #include <array>
 #include <vector>

@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/core/detail/generic/horn1.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 template<typename T> constexpr auto coeff0()

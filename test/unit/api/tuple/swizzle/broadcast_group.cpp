@@ -6,9 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/regular/broadcast_group.hpp>
-#include <eve/module/core/regular/shuffle.hpp>
 #include <bit>
 
 //================================================================================================

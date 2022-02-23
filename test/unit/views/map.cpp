@@ -6,11 +6,11 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/views/map.hpp>
 
-#include <eve/module/core/regular/convert.hpp>
 
 struct load_op
 {
