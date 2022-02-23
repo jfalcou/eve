@@ -64,65 +64,38 @@ namespace eve::detail
                                           , wide<double,N> v, as<U> const &tgt
                                           ) noexcept
   {
+    using enum category;
     constexpr auto c_i = categorize<wide<double, N>>();
     constexpr auto c_o = categorize<wide<U, N>>();
+    constexpr auto api_512 = current_api >= avx512;
 
-          if constexpr( c_i == category::float64x2 )
-    {
-            if constexpr( c_o == category::float32x4 ) return _mm_cvtpd_ps(v);
-      else  if constexpr( c_o == category::uint64x2 )
+          if constexpr( c_i == float64x2 )
       {
-        if constexpr(current_api >= avx512) return _mm_cvttpd_epu64(v);
-        else                                return map(convert,v,tgt);
-      }
-      else  if constexpr( c_o == category::int64x2 )
-      {
-        if constexpr(current_api >= avx512) return _mm_cvttpd_epi64(v);
-        else                                return map(convert,v,tgt);
-      }
-      else  if constexpr( match(c_o,category::uint32x4,category::int32x4) )
-      {
-        return _mm_cvttpd_epi32(v);
-      }
-      else  if constexpr( match(c_o,category::uint16x8,category::int16x8) )
-      {
-        return _mm_shufflelo_epi16(_mm_cvttpd_epi32(v), 0b00001000);
-      }
-      else if constexpr( match(c_o,category::uint8x16,category::int8x16) )
-      {
-        return convert( convert(v, as<upgrade_t<U>>{}), tgt);
-      }
+            if constexpr( c_o == float32x4          ) return _mm_cvtpd_ps(v);
+      else  if constexpr( c_o == int32x4            ) return _mm_cvttpd_epi32(v);
+      else  if constexpr( c_o == uint32x4 && api_512) return _mm_cvttpd_epu32(v);
+      else  if constexpr( c_o ==  int64x2 && api_512) return _mm_cvttpd_epi64(v);
+      else  if constexpr( c_o == uint64x2 && api_512) return _mm_cvttpd_epu64(v);
+      else  if constexpr( sizeof(U) <= 2  )           return convert(convert(v,as<std::make_signed_t<upgrade_t<U>>>{}),tgt);
+      else                                            return map(convert,v,tgt);
     }
-    else  if constexpr( c_i == category::float64x4 )
+    else  if constexpr( c_i == float64x4 )
     {
-            if constexpr( c_o == category::float32x4 ) return _mm256_cvtpd_ps(v);
-      else  if constexpr( c_o == category::uint64x4 )
-      {
-        if constexpr(current_api >= avx512) return _mm256_cvttpd_epu64(v);
-        else                                return map(convert,v,tgt);
-      }
-      else  if constexpr( c_o == category::int64x4 )
-      {
-        if constexpr(current_api >= avx512) return _mm256_cvttpd_epi64(v);
-        else                                return map(convert,v,tgt);
-      }
-      else  if constexpr( match(c_o,category::uint32x4,category::int32x4) )
-      {
-        return _mm256_cvttpd_epi32(v);
-      }
-      else
-      {
-        return convert( convert(v, as<upgrade_t<U>>{}), tgt);
-      }
+            if constexpr( c_o == float32x4            ) return _mm256_cvtpd_ps(v);
+      else  if constexpr( c_o == uint64x4 && api_512  ) return _mm256_cvttpd_epu64(v);
+      else  if constexpr( c_o == int64x4  && api_512  ) return _mm256_cvttpd_epi64(v);
+      else  if constexpr( match(c_o,uint32x4,int32x4) ) return _mm256_cvttpd_epi32(v);
+      else  if constexpr( match(c_o,uint64x4,int64x4) ) return map(convert,v,tgt);
+      else  return convert(convert(v, as<upgrade_t<U>>{}), tgt);
     }
-    else  if constexpr( c_i == category::float64x8 )
+    else  if constexpr( c_i == float64x8 )
     {
-            if constexpr( c_o == category::float32x8) return _mm512_cvtpd_ps(v);
-      else  if constexpr( c_o == category::uint64x8 ) return _mm512_cvttpd_epu64(v);
-      else  if constexpr( c_o == category::int64x8  ) return _mm512_cvttpd_epi64(v);
-      else  if constexpr( c_o == category::int32x8  ) return _mm512_cvttpd_epi32(v);
-      else  if constexpr( c_o == category::uint32x8 ) return _mm512_cvttpd_epi32(v);
-      else                     return convert( convert(v, as<upgrade_t<U>>{}), tgt);
+            if constexpr( c_o == float32x8) return _mm512_cvtpd_ps(v);
+      else  if constexpr( c_o == uint64x8 ) return _mm512_cvttpd_epu64(v);
+      else  if constexpr( c_o == int64x8  ) return _mm512_cvttpd_epi64(v);
+      else  if constexpr( c_o == int32x8  ) return _mm512_cvttpd_epi32(v);
+      else  if constexpr( c_o == uint32x8 ) return _mm512_cvttpd_epu32(v);
+      else                                  return convert( convert(v, as<upgrade_t<U>>{}), tgt);
     }
     //==============================================================================================
     // Handle aggregations
@@ -130,7 +103,7 @@ namespace eve::detail
     else
     {
       // Save the large chunk of code required by combine on int8x16
-      if constexpr( match(c_o, category::int8x16, category::uint8x16) && N::value >= 4)
+      if constexpr( match(c_o, int8x16, uint8x16) && N::value >= 4)
       {
         return convert( convert(v, as<upgrade_t<U>>{}), tgt);
       }
@@ -399,7 +372,11 @@ namespace eve::detail
       else  if constexpr(match(c_o, category::int16x8, category::uint16x8))
       {
         if constexpr( api_512 ) return _mm_cvtepi32_epi16(v);
-        else                    return map(convert,v,tgt);
+        else
+        {
+          if constexpr(N::value <= 2) return _mm_shufflelo_epi16(v, 8);
+          else return wide<U,N>{ convert(v.slice(lower_), tgt), convert(v.slice(upper_), tgt)};
+        }
       }
       else  if constexpr(match(c_o, category::int8x16, category::uint8x16))
       {
