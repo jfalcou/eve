@@ -6,8 +6,9 @@
 */
 //==================================================================================================
 #pragma once
-#define TTS_MAIN
+#include "test.hpp"
 #include "test_distribution.hpp"
+#include "measures.hpp"
 #include <tts/ranges.hpp>
 #include <eve/memory/align.hpp>
 #include <eve/function/store.hpp>

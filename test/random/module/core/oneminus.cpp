@@ -8,7 +8,7 @@
 #include <eve/module/core.hpp>
 #include "producers.hpp"
 #include "generator.hpp"
-#include <cmath>
+
 
 EVE_TEST_TYPES("Random check for eve::oneminus", eve::test::simd::ieee_reals)
 <typename T>(eve::as<T>)
@@ -18,7 +18,7 @@ EVE_TEST_TYPES("Random check for eve::oneminus", eve::test::simd::ieee_reals)
   auto vmax = eve::valmax(eve::as<e_t>());
   auto std_oneminus = [](auto e) -> e_t { return 1-e; };
   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_oneminus, eve::oneminus);
-  auto std_saturated_oneminus = [](auto e) -> e_t {
+  auto std_saturated_oneminus = [ = ](auto e) -> e_t {
     if constexpr(eve::floating_value<e_t>) return 1-e;
     else if constexpr(eve::signed_value<e_t>) return e <= vmin+1 ? vmax : e_t(1)-e;
     else if constexpr(eve::unsigned_value<e_t>) return (e <= 1) ? e_t(1)-e : e_t(0);
