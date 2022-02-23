@@ -31,7 +31,7 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/module/core; hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
 
