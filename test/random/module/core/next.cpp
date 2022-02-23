@@ -33,7 +33,7 @@ EVE_TEST_TYPES("Random check for eve::next", eve::test::simd::all_types)
     EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_next, eve::next );
   }
 
-  auto std_pedantic_next = [](auto e) ->{
+  auto std_pedantic_next = [](auto e) -> e_t{
     if constexpr(eve::floating_value<T>)
     {
       return (e == 0) && eve::is_negative(e) ?
