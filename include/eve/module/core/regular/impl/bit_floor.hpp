@@ -9,15 +9,13 @@
 
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/regular/frexp.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/bit_shr.hpp>
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
-#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
 #include <type_traits>
@@ -28,7 +26,7 @@ namespace eve::detail
 {
   template<real_value T>
   EVE_FORCEINLINE T bit_floor_(EVE_SUPPORTS(cpu_)
-                                 , T const &v) noexcept
+                                 , T v) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
@@ -42,21 +40,14 @@ namespace eve::detail
         if constexpr(scalar_value<T>) return r;
         else                          return if_else(vlt1, eve::zero, r);
       }
+      else if constexpr(signed_integral_value<T>)
+      {
+        auto uz = bit_floor(uint_(v));
+        return if_else(is_ltz(v), zero, to_<T>(uz));
+      }
       else
       {
-        using u_t = as_integer_t<T, unsigned>;
-        return if_else(is_eqz(v), zero, T{1} << dec(bit_width(bit_cast(v, as<u_t>()))));
-//         using elt_t =  element_type_t<T>;
-//         auto a = v;
-//         a |= bit_shr(a, 1);
-//         a |= bit_shr(a, 2);
-//         a |= bit_shr(a, 4);
-//         if constexpr( sizeof(elt_t) >= 2 )  a |= bit_shr(a,  8);
-//         if constexpr( sizeof(elt_t) >= 4 )  a |= bit_shr(a, 16);
-//         if constexpr( sizeof(elt_t) >= 8 )  a |= bit_shr(a, 32);
-//         a -= (a >> 1);
-//         if constexpr(scalar_value<T>) return a;
-//         else                          return if_else(vlt1, eve::zero, a);
+        return if_else(is_eqz(v), zero, T{1} << dec(bit_width(v)));
       }
     }
     else return apply_over(bit_floor, v);
