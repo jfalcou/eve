@@ -60,35 +60,36 @@ namespace eve::detail
                                           ) noexcept
       requires arm_abi<abi_t<float, N>>
   {
-    constexpr auto c_o = categorize<wide<U, N>>();
+    using enum category;
+    constexpr auto c_o    = categorize<wide<U, N>>();
+    constexpr auto api64  = current_api >= asimd;
 
-          if constexpr( c_o == category::float64x2 && current_api >= asimd) return vcvt_f64_f32(v);
-    else  if constexpr( std::same_as<double,U> )                            return map(convert,v,tgt);
-    else  if constexpr( N::value <= 2 )
+    if constexpr( N::value <= 2 )
     {
-      constexpr auto tgt_i32 = as<std::int32_t>{};
-      constexpr auto tgt_u32 = as<std::uint32_t>{};
+      constexpr auto t_i32 = as<std::int32_t>{};
+      constexpr auto t_u32 = as<std::uint32_t>{};
 
-            if constexpr( c_o == category::int32x2   )  return vcvt_s32_f32(v);
-      else  if constexpr( c_o == category::int64x2   )  return vmovl_s32(vcvt_s32_f32(v));
-      else  if constexpr( c_o && category::signed_   )  return convert(convert(v,tgt_i32), tgt);
-      else  if constexpr( c_o == category::uint32x2  )  return vcvt_u32_f32(v);
-      else  if constexpr( c_o == category::uint64x2  )  return vmovl_u32(vcvt_u32_f32(v));
-      else  if constexpr( c_o && category::unsigned_ )  return convert(convert(v,tgt_u32), tgt);
+            if constexpr( c_o == float64x2 && api64 ) return vcvt_f64_f32(v);
+      else  if constexpr( c_o == int64x2   && api64 ) return vcvtq_s64_f64(vcvt_f64_f32(v));
+      else  if constexpr( c_o == uint64x2  && api64 ) return vcvtq_u64_f64(vcvt_f64_f32(v));
+      else  if constexpr( c_o == int32x2            ) return vcvt_s32_f32(v);
+      else  if constexpr( c_o == uint32x2           ) return vcvt_u32_f32(v);
+      else  if constexpr( sizeof(U) == 8            ) return map(convert,v,tgt);
+      else  if constexpr( c_o && signed_            ) return convert(convert(v,t_i32), tgt);
+      else  if constexpr( c_o && unsigned_          ) return convert(convert(v,t_u32), tgt);
     }
     else if constexpr( N::value == 4 )
     {
-      constexpr auto tgt_i16 = as<std::int16_t>{};
-      constexpr auto tgt_u16 = as<std::uint16_t>{};
+      constexpr auto t_i16 = as<std::int16_t>{};
+      constexpr auto t_u16 = as<std::uint16_t>{};
 
-            if constexpr( c_o == category::int32x4  )  return vcvtq_s32_f32(v);
-      else  if constexpr( c_o == category::int16x4  )  return vmovn_s32(vcvtq_s32_f32(v));
-      else  if constexpr( c_o == category::int8x8   )  return convert(convert(v,tgt_i16), tgt);
-      else  if constexpr( c_o == category::uint32x4 )  return vcvtq_u32_f32(v);
-      else  if constexpr( c_o == category::uint16x4 )  return vmovn_u32(vcvtq_u32_f32(v));
-      else  if constexpr( c_o == category::uint8x8  )  return convert(convert(v,tgt_u16), tgt);
-      // (u)int64x4 is sliced then recombined
-      else  if constexpr( sizeof(U) == 8 )
+            if constexpr( c_o == int32x4  )  return vcvtq_s32_f32(v);
+      else  if constexpr( c_o == uint32x4 )  return vcvtq_u32_f32(v);
+      else  if constexpr( c_o == int16x4  )  return vmovn_s32(vcvtq_s32_f32(v));
+      else  if constexpr( c_o == uint16x4 )  return vmovn_u32(vcvtq_u32_f32(v));
+      else  if constexpr( c_o == int8x8   )  return convert(convert(v,t_i16), tgt);
+      else  if constexpr( c_o == uint8x8  )  return convert(convert(v,t_u16), tgt);
+      else  if constexpr( sizeof(U) == 8  )
       {
         auto[l,h] = v.slice();
         return wide<U,N>(convert(l,tgt),convert(h,tgt));
