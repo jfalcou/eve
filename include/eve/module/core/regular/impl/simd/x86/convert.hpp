@@ -119,62 +119,44 @@ namespace eve::detail
                                           , wide<float,N> v, as<U> const &tgt
                                           ) noexcept
   {
+    using enum category;
     constexpr auto c_i = categorize<wide<float, N>>();
     constexpr auto c_o = categorize<wide<U, N>>();
     constexpr bool api_512 = current_api >= avx512;
+    using t_t = std::conditional_t<std::is_signed_v<U>,std::int32_t, std::uint32_t>;
 
-          if constexpr( c_i == category::float32x4 )
+          if constexpr( c_i == float32x4 )
     {
-            if constexpr( c_o == category::float64x2) return _mm_cvtps_pd(v);
-      else  if constexpr( c_o == category::float64x4) return _mm256_cvtps_pd(v);
-      else  if constexpr( c_o == category::int32x4  ) return _mm_cvttps_epi32(v);
-      else  if constexpr( api_512 && c_o == category::uint32x4 ) return _mm_cvttps_epu32(v);
-      else  if constexpr( c_o == category::uint32x4 ) return _mm_cvttps_epi32(v);
-      else  if constexpr( match (c_o, category::int16x8 , category::int8x16
-                                    , category::uint16x8, category::uint8x16
-                        )       )
-      {
-        using t_t = std::conditional_t< std::is_signed_v<U>,std::int32_t, std::uint32_t>;
-        return convert(convert(v, as<t_t>{}), tgt);
-      }
+            if constexpr( c_o == float64x2)           return _mm_cvtps_pd(v);
+      else  if constexpr( c_o == float64x4)           return _mm256_cvtps_pd(v);
+      else  if constexpr( c_o == int64x2  && api_512) return _mm_cvttps_epi64(v);
+      else  if constexpr( c_o == int64x4  && api_512) return _mm256_cvttps_epi64(v);
+      else  if constexpr( c_o == uint64x2 && api_512) return _mm_cvttps_epu64(v);
+      else  if constexpr( c_o == uint64x4 && api_512) return _mm256_cvttps_epu64(v);
+      else  if constexpr( c_o == uint32x4 && api_512) return _mm_cvttps_epu32(v);
+      else  if constexpr( c_o == int32x4  )           return _mm_cvttps_epi32(v);
+      else  if constexpr( sizeof(U) <= 2 )            return convert(convert(v, as<t_t>{}), tgt);
       else  if constexpr(std::same_as<U,double> && N::value == 4)
       {
-        auto[l,h] = v.slice();
-        return {convert(l,tgt), convert(h,tgt)};
+        return {convert(v.slice(lower_),tgt), convert(v.slice(upper_),tgt)};
       }
-      else  if constexpr(c_o == category::int64x2  && api_512) return _mm_cvttps_epi64(v);
-      else  if constexpr(c_o == category::uint64x2 && api_512) return _mm_cvttps_epu64(v);
-      else  if constexpr(c_o == category::int64x4  && api_512) return _mm256_cvttps_epi64(v);
-      else  if constexpr(c_o == category::uint64x4 && api_512) return _mm256_cvttps_epu64(v);
       else  return convert_impl(EVE_RETARGET(cpu_),v,tgt);
     }
-    else  if constexpr( c_i == category::float32x8 )
+    else  if constexpr( c_i == float32x8 )
     {
-            if constexpr( c_o == category::int32x8   ) return _mm256_cvttps_epi32(v);
-      else  if constexpr( c_o == category::uint32x8  ) return _mm256_cvttps_epi32(v);
-      else  if constexpr( match (c_o, category::int16x8 , category::int8x16
-                                    , category::uint16x8, category::uint8x16
-                        )       )
-      {
-        using t_t = std::conditional_t< std::is_signed_v<U>,std::int32_t, std::uint32_t>;
-        return convert(convert(v, as<t_t>{}), tgt);
-      }
-      else  if constexpr( c_o == category::int64x8   && api_512 ) return _mm512_cvttps_epi64(v);
-      else  if constexpr( c_o == category::uint64x8  && api_512 ) return _mm512_cvttps_epu64(v);
-      else  if constexpr( c_o == category::float64x8 && api_512 ) return _mm512_cvtps_pd(v);
+            if constexpr( c_o == float64x8 && api_512 ) return _mm512_cvtps_pd(v);
+      else  if constexpr( c_o == int64x8   && api_512 ) return _mm512_cvttps_epi64(v);
+      else  if constexpr( c_o == uint64x8  && api_512 ) return _mm512_cvttps_epu64(v);
+      else  if constexpr( c_o == uint32x8  && api_512 ) return _mm256_cvttps_epu32(v);
+      else  if constexpr( c_o == int32x8  )             return _mm256_cvttps_epi32(v);
+      else  if constexpr( sizeof(U) <= 2  )             return convert(convert(v, as<t_t>{}), tgt);
       else  return {convert(v.slice(lower_),tgt), convert(v.slice(upper_),tgt)};
     }
-    else  if constexpr( c_i == category::float32x16 )
+    else  if constexpr( c_i == float32x16 )
     {
-            if constexpr( c_o == category::int32x16   ) return _mm512_cvttps_epi32(v);
-      else  if constexpr( c_o == category::uint32x16  ) return _mm512_cvttps_epu32(v);
-      else  if constexpr( match (c_o, category::int16x16 , category::int8x16
-                                    , category::uint16x16, category::uint8x16
-                        )       )
-      {
-        using t_t = std::conditional_t< std::is_signed_v<U>,std::int32_t, std::uint32_t>;
-        return convert(convert(v, as<t_t>{}), tgt);
-      }
+            if constexpr( c_o == int32x16 ) return _mm512_cvttps_epi32(v);
+      else  if constexpr( c_o == uint32x16) return _mm512_cvttps_epu32(v);
+      else  if constexpr( sizeof(U) <= 2  ) return convert(convert(v, as<t_t>{}), tgt);
       else  return {convert(v.slice(lower_),tgt), convert(v.slice(upper_),tgt)};
     }
     else return convert_impl(EVE_RETARGET(cpu_),v,tgt);
