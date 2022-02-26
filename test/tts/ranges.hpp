@@ -320,15 +320,16 @@ namespace tts
 
     void init( options const& args )
     {
-      std::mt19937::result_type no_seed(-1);
+      //   std::mt19937::result_type no_seed(-1);
+      std::mt19937::result_type no_seed(18102008);
       seed_ = args.value( "--seed", no_seed );
 
-      if(seed_ == no_seed )
-      {
-        auto now  = std::chrono::high_resolution_clock::now();
-        seed_      = static_cast<unsigned int>(now.time_since_epoch().count());
-      }
-      generator_.seed(seed_);
+//       if(seed_ == no_seed )
+//       {
+//         auto now  = std::chrono::high_resolution_clock::now();
+//         seed_      = static_cast<unsigned int>(now.time_since_epoch().count());
+//       }
+//       generator_.seed(seed_);
 
       auto mn = args.value( "--valmin", distribution_.min() );
       auto mx = args.value( "--valmax", distribution_.max() );
