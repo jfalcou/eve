@@ -16,8 +16,8 @@ EVE_TEST_TYPES("Random check for eve::exp2", eve::test::simd::all_types)
   using e_t = eve::element_type_t<T>;
   if constexpr(eve::integral_value<e_t>)
   {
-    auto vmin = std::is_signed_v<e_t> ? -e_t(sizeof(e_t)*8-1) : e_t(0);
-    auto vmax = e_t(sizeof(e_t)*8-1);
+    auto vmin = std::is_signed_v<e_t> ? -e_t(sizeof(e_t)*8-2) : e_t(0);
+    auto vmax = e_t(sizeof(e_t)*8-2);
     auto std_exp2 = [](auto e) -> e_t { return std::exp2(e); };
     EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_exp2, eve::exp2 );
   }
