@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
 #include <eve/module/math/detail/generic/rem180.hpp>
 #include <eve/module/math/regular/tanpi.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
