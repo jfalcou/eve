@@ -56,8 +56,8 @@ EVE_TEST( "Check behavior of secd on wide"
   TTS_ULP_EQUAL(eve::half_circle(secd)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(secd)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(secd(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 50);
-  TTS_ULP_EQUAL(secd(a2)                       , map(ref, a2), 800);
+  TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 2);
+  TTS_ULP_EQUAL(secd(a2)                       , map(ref, a2), 2);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(secd)(a0), map([dinr](auto e) -> v_t { return  dinr*eve::secd(e)*eve::tand(e); }, a0), 2);

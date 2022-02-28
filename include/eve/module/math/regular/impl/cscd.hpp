@@ -8,10 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/sind.hpp>
-#include <eve/module/math/regular/cscpi.hpp>
 
 namespace eve::detail
 {
@@ -24,14 +22,16 @@ namespace eve::detail
       {
         return rec(D()(sind)(a0));
       }
-      auto  a0_180 = div_180(a0);
-      auto test = is_nez(a0_180) && is_flint(a0_180);
-      if constexpr( scalar_value<T> ) // early return for nans in scalar case
+      else
       {
-        if( test ) return nan(eve::as<T>());
+        auto  a0_180 = div_180(a0);
+        auto test = is_nez(a0_180) && is_flint(a0_180);
+        if constexpr( scalar_value<T> ) // early return for nans in scalar case
+        {
+          if( test ) return nan(eve::as<T>());
+        }
+        return if_else(test, eve::allbits, rec(D()(sind)(a0)));
       }
-      auto tmp = cscpi(a0_180);
-      return if_else(test, eve::allbits, tmp);
     }
     else
       return apply_over(D()(cscd), a0);
