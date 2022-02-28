@@ -41,10 +41,9 @@ EVE_TEST( "Check behavior of tand on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
                              , eve::test::randoms(mhalf_c, half_c)
-                             , eve::test::randoms(mmed, med)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+                             , eve::test::randoms(mmed, med))
                              )
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::detail::map;
   using eve::tand;
@@ -56,9 +55,9 @@ EVE_TEST( "Check behavior of tand on wide"
   TTS_ULP_EQUAL(eve::half_circle(tand)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tand)(a1)           , map(ref, a1), 50);
   TTS_ULP_EQUAL(tand(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(tand(a1)                       , map(ref, a1), 50);
-  TTS_ULP_EQUAL(tand(a2)                       , map(ref, a2), 1024);
-  TTS_ULP_EQUAL(tand(a3)                       , map(ref, a3), 2);
+  TTS_ULP_EQUAL(tand(a1)                       , map(ref, a1), 2);
+  TTS_ULP_EQUAL(tand(a2)                       , map(ref, a2), 2);
+
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(tand)(a0), map([dinr](auto e) -> v_t { return  dinr*eve::sqr(eve::secd(e)); }, a0), 2);
