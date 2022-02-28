@@ -39,10 +39,9 @@ EVE_TEST( "Check behavior of sindcosd on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
                              , eve::test::randoms(mhalf_c, half_c)
-                             , eve::test::randoms(mmed, med)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+                             , eve::test::randoms(mmed, med))
                              )
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::detail::map;
   using eve::sindcosd;
@@ -73,8 +72,5 @@ EVE_TEST( "Check behavior of sindcosd on wide"
     auto [s2, c2] = sindcosd(a2);
     TTS_ULP_EQUAL(s2      , map(refs, a2), 51);
     TTS_ULP_EQUAL(c2      , map(refc, a2), 51);
-    auto [s3, c3] = sindcosd(a3);
-    TTS_ULP_EQUAL(s3      , map(refs, a3), 2);
-    TTS_ULP_EQUAL(c3      , map(refc, a3), 2);
   }
 };
