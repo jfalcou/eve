@@ -250,9 +250,20 @@ namespace eve::detail
     else                                              return zero(as(v));
   }
 
+  template<typename T, typename N, typename U>
+  EVE_FORCEINLINE auto convert_slice(wide<T,N> v, as<U> const& tgt)
+  {
+    if constexpr(N::value > 1)
+    {
+      auto[l,h] = v.slice();
+      return wide<U,N>(convert(l,tgt),convert(h,tgt));
+    }
+    else return map(convert,v,tgt);
+  }
+
   // Convert integer from 2^n -> 2^n+1
   template<typename T, typename N, typename U>
-  auto convert_integers_interleave(wide<T,N> v, as<U> const&)
+  EVE_FORCEINLINE auto convert_integers_interleave(wide<T,N> v, as<U> const&)
   {
     static_assert ( (sizeof(U)/sizeof(T) == 2)
                   , "[eve::convert] - Interleave conversion requires ration of 2:1 between types"
