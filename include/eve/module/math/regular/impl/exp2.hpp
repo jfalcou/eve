@@ -106,7 +106,7 @@ namespace eve::detail
       }
       else
       {
-        size_t constexpr siz = sizeof(element_type_t<T>)*8-1;
+        element_type_t<T> constexpr siz = sizeof(element_type_t<T>)*8-1;
         auto test = is_ltz(xx) || (xx > siz);
         xx = if_else(test, zero, xx);
         auto tmp =  if_else(test, eve::zero, shl(one(eve::as(xx)), xx));

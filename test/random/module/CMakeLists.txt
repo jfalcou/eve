@@ -7,3 +7,4 @@ add_custom_target(random.real.exe)
 add_subdirectory(real)
 
 add_subdirectory(core)
+add_subdirectory(math)
