@@ -5,13 +5,10 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/gcd.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/combinatorial.hpp>
 #include <eve/module/core/constant/valmax.hpp>
-#include <eve/function/max.hpp>
-#include <eve/function/min.hpp>
-#include <eve/function/trunc.hpp>
-#include <eve/function/converter.hpp>
 #include <numeric>
 
 int main()

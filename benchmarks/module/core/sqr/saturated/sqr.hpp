@@ -5,7 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/module:core.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 int main()

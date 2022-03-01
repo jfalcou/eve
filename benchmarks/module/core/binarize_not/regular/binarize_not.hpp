@@ -5,7 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/binarize_not.hpp>
+#include <eve/module/core.hpp>
 
 int main()
 {

@@ -5,8 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/erfc.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/math/constant/minlog.hpp>
 #include <cmath>
 

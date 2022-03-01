@@ -5,7 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/cos.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 
 int main()

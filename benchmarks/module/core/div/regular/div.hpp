@@ -5,7 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/div.hpp>
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/math/constant/oneotwoeps.hpp>
 #include <eve/module/core/constant/valmin.hpp>

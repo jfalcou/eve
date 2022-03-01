@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+#include <eve/module/core.hpp>
 #include <eve/module/core/detail/generic/poleval.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
-#include <eve/function/horner.hpp>
 #include <eve/wide.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
