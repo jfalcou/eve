@@ -7,7 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <cmath>
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
@@ -52,12 +51,12 @@ EVE_TEST( "Check behavior of secd on wide"
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1.0l/boost::math::cos_pi(e/180.0l); };
 
-  TTS_ULP_EQUAL(eve::quarter_circle(secd)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(secd)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(secd)(a1)           , map(ref, a1), 50);
-  TTS_ULP_EQUAL(secd(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 50);
-  TTS_ULP_EQUAL(secd(a2)                       , map(ref, a2), 800);
+  TTS_ULP_EQUAL(eve::quarter_circle(secd)(a0)      , map(ref, a0), 4);
+  TTS_ULP_EQUAL(eve::half_circle(secd)(a0)           , map(ref, a0), 4);
+  TTS_ULP_EQUAL(eve::half_circle(secd)(a1)           , map(ref, a1), 4);
+  TTS_ULP_EQUAL(secd(a0)                       , map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 4);
+  TTS_ULP_EQUAL(secd(a2)                       , map(ref, a2), 512);
   auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
   TTS_ULP_EQUAL(diff(secd)(a0), map([dinr](auto e) -> v_t { return  dinr*eve::secd(e)*eve::tand(e); }, a0), 2);

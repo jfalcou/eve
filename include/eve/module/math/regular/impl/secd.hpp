@@ -8,9 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
+#include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/cosd.hpp>
-#include <eve/module/math/regular/secpi.hpp>
 
 namespace eve::detail
 {
@@ -23,15 +22,16 @@ namespace eve::detail
       {
         return rec(D()(cosd)(a0));
       }
-      auto a0_180 = div_180(a0);
-      auto test   = is_not_flint(a0_180) && is_flint(a0_180+mhalf(eve::as(a0_180)));
-      if constexpr( scalar_value<T> ) // early return for nans in scalar case
+      else
       {
-        if( test ) return nan(eve::as<T>());
+        auto a0_180 = div_180(a0);
+        auto test   = is_not_flint(a0_180) && is_flint(a0_180+mhalf(eve::as(a0_180)));
+        if constexpr( scalar_value<T> ) // early return for nans in scalar case
+        {
+          if( test ) return nan(eve::as<T>());
+        }
+        return if_else(test, eve::allbits, rec(D()(cosd)(a0)));
       }
-      auto tmp = D()(secpi)(a0_180);
-      if constexpr( scalar_value<T> ) return tmp;
-      return if_else(test, eve::allbits, tmp);
     }
     else
       return apply_over(D()(secd), a0);
