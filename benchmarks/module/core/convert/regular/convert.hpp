@@ -6,8 +6,6 @@
 */
 //==================================================================================================
 #include <eve/module/core.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
 #include <cmath>
 //THE BENCH IS VERY PARTIAL just type  to signed integer type of same size
 int main()
