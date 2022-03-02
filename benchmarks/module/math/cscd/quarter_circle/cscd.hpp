@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/cscd.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/function/radindeg.hpp>
 
 int main()
 {

@@ -5,7 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/two_split.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 int main()

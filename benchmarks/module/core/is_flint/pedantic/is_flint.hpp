@@ -5,11 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/pedantic/is_flint.hpp>
-#include <eve/function/abs.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 int main()

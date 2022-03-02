@@ -5,8 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/erfcx.hpp>
+#include <eve/module/core.hpp>
 
+#include <eve/module/special.hpp>
 int main()
 {
   auto lmin = EVE_VALUE(-1000);

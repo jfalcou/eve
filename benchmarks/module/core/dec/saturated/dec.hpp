@@ -5,9 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/saturated/dec.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 int main()

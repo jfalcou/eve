@@ -5,9 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/numeric/fnma.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core.hpp>
 #include <numeric>
 
 int main()
