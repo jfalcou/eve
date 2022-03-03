@@ -3,8 +3,7 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-add_custom_target(random.real.exe)
-add_subdirectory(real)
-
 add_subdirectory(core)
 add_subdirectory(math)
+add_custom_target(random.core)
+add_custom_target(random.math)

@@ -9,7 +9,7 @@
 
 #include <eve/wide.hpp>
 #include <eve/arch/top_bits.hpp>
-#include <eve/function/all.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
