@@ -7,7 +7,8 @@
 //==================================================================================================
 #pragma once
 #include <eve/module/core.hpp>
-#include <eve/module/math.hpp>
+#include <eve/module/math/regular/exp2.hpp>
+#include <eve/module/math/regular/log2.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>
