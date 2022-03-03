@@ -11,7 +11,7 @@
 #include "measures.hpp"
 #include <tts/ranges.hpp>
 #include <eve/memory/align.hpp>
-#include <eve/function/store.hpp>
+#include <eve/module/core.hpp>
 
 
 #define EVE_ULP_RANGE_CHECK(Type, Producer, Ref, New)                                               \
