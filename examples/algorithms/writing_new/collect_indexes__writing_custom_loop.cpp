@@ -14,7 +14,7 @@
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/preprocess_range.hpp>
 
-#include <eve/eve/module/core.hpp>
+#include <eve/module/core.hpp>
 
 #include <concepts>
 #include <type_traits>

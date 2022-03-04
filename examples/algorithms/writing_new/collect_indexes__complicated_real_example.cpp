@@ -31,7 +31,7 @@
 #include <eve/views/iota.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/eve/module/core.hpp>
+#include <eve/module/core.hpp>
 
 #include <concepts>
 #include <type_traits>

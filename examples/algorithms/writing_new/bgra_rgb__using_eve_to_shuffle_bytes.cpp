@@ -22,7 +22,7 @@
 
 #include <eve/conditional.hpp>
 #include <eve/eve.hpp>
-#include <eve/eve/module/core.hpp>
+#include <eve/module/core.hpp>
 
 #include <concepts>
 #include <span>

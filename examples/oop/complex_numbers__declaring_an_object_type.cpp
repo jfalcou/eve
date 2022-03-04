@@ -23,8 +23,8 @@
 //
 
 #include <eve/eve.hpp>
-#include <eve/eve/module/core.hpp>
-#include <eve/eve/module/math.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/product_type.hpp>
 
 #include <eve/algo/container/soa_vector.hpp>
