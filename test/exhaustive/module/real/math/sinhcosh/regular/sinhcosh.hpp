@@ -5,12 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/sinhcosh.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxlog.hpp>
-#include <eve/constant/log_2.hpp>
 #include <tts/tests/range.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>

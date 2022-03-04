@@ -5,12 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/is_even.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/function/div.hpp>
-#include <eve/function/trunc.hpp>
+#include <eve/module/core.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"

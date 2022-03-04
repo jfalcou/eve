@@ -6,14 +6,9 @@
 */
 //==================================================================================================
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
-#include <eve/function/tanpi.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/function/is_odd.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"

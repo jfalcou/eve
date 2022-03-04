@@ -6,9 +6,9 @@
 */
 //==================================================================================================
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/function/tanpi.hpp>
-#include <eve/function/rec.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"

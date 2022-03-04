@@ -5,10 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/exp.hpp>
-#include <eve/constant/minlog.hpp>
-#include <eve/constant/maxlog.hpp>
 #include <tts/tests/range.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>

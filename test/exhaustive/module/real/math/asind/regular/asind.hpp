@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/asind.hpp>
-#include <eve/function/radindeg.hpp>
 
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>

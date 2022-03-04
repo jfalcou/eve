@@ -5,11 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/radinpi.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
 
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>
