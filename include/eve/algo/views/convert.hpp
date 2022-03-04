@@ -7,17 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/range_ref.hpp>
 
-#include <eve/function/convert.hpp>
-#include <eve/function/read.hpp>
-#include <eve/function/write.hpp>
-#include <eve/function/store_equivalent.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/unalign.hpp>
 #include <eve/traits.hpp>
 
 namespace eve::algo::views

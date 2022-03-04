@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/function/zip.hpp>
 
 namespace eve::algo
 {

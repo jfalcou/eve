@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/for_each.hpp>
 #include <eve/algo/traits.hpp>

@@ -9,7 +9,7 @@
 #include "unit/memory/page.hpp"
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/read.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Read into scalar from pointer-like entity

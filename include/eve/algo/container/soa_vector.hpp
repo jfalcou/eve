@@ -7,14 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/equal.hpp>
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/views/zip.hpp>
 
 #include <eve/algo/container/detail/soa_storage.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/function/read.hpp>
-#include <eve/function/write.hpp>
 #include <eve/product_type.hpp>
 
 #include <memory>

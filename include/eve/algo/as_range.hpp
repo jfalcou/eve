@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 namespace eve::algo
 {
   template <typename I, typename S>

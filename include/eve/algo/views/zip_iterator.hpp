@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
 #include <eve/algo/iterator_helpers.hpp>
@@ -14,11 +15,6 @@
 
 #include <eve/algo/views/detail/preprocess_zip_range.hpp>
 
-#include <eve/function/compress_store.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/store_equivalent.hpp>
-#include <eve/function/unalign.hpp>
 
 #include <eve/detail/kumi.hpp>
 

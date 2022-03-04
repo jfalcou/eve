@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/nothing.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
@@ -14,7 +15,6 @@
 #include <eve/conditional.hpp>
 #include <eve/traits/as_wide.hpp>
 
-#include <eve/function/unalign.hpp>
 
 namespace eve::algo::views
 {

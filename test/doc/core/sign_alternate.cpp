@@ -1,4 +1,3 @@
-//#include <eve/function/sign_alternate.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

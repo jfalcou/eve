@@ -7,16 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/module/core/constant/as_value.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/reduce.hpp>
 #include <eve/traits.hpp>
 
 #include <utility>

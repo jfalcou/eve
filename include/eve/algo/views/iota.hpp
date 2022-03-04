@@ -7,14 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/views/convert.hpp>
 
-#include <eve/function/load.hpp>
-#include <eve/function/read.hpp>
-#include <eve/function/replace.hpp>
-#include <eve/function/unalign.hpp>
 
 namespace eve::algo::views
 {

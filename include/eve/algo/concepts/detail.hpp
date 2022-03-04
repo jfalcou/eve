@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <compare>
 #include <concepts>
 #include <type_traits>
 
-#include <eve/function/unalign.hpp>
 
 namespace eve::algo::detail
 {

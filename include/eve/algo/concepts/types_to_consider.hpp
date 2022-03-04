@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/traits.hpp>
 #include <eve/detail/kumi.hpp>
 

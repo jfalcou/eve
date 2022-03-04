@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/views/zip.hpp>
 

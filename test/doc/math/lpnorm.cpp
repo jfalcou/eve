@@ -1,5 +1,4 @@
 #include <eve/module/math.hpp>
-#include <eve/function/pedantic/lpnorm.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

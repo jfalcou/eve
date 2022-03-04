@@ -7,10 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/conditional.hpp>
 #include <eve/traits.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
 
 #include <utility>
 

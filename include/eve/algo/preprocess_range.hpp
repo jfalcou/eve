@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
 
 #include <eve/algo/ptr_iterator.hpp>
