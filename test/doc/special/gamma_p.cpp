@@ -1,4 +1,3 @@
-//#include <eve/function/gamma_p.hpp>
 #include <eve/module/special.hpp>
 #include <iomanip>
 #include <eve/wide.hpp>
@@ -12,9 +11,10 @@ int main()
   wide_ft p = {10.0f,  0.5f, 20.7f, 1.0f};
 
   std::cout << "---- simd" << '\n'
-             << "<- p                = " << p << '\n'
-             << "<- k                = " << k << '\n'
-             << "-> gamma_p(p, k)    = " << eve::gamma_p(p, k) << '\n';
+            << "<- p                = " << p << '\n'
+            << "<- k                = " << k << '\n'
+            << "-> gamma_p(p, k)    = " << eve::gamma_p(p, k) << '\n'
+            << "-> diff(eve::gamma_p)(p, k)  = " << eve::diff(eve::gamma_p)(p, k) << '\n';
 
   float kf = 2.1;
   float pf = 1.3;

@@ -1,9 +1,5 @@
-//#include <eve/function/gegenbauer.hpp>
 #include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
@@ -17,15 +13,16 @@ int main()
   wide_ft x(0.3);
   wide_ft l(-3.0/8.0);
   std::cout << "---- simd" << '\n'
-            << "<- xd                     = " << xd << '\n'
-            << "<- n                      = " << n  << '\n'
-            << "<- l                      = " << l  << '\n'
-            << "<- x                      = " << x  << '\n'
-            << "-> gegenbauer(n, l, xd)   = " << eve::gegenbauer(n, l, xd) << '\n'
-            << "-> gegenbauer(3, l, xd)   = " << eve::gegenbauer(3, l, xd) << '\n'
-            << "-> gegenbauer(n, l, 0.3)  = " << eve::gegenbauer(n, l, 0.3) << '\n'
-            << "-> gegenbauer(n, -3.0/8.0, 0.3)  = " << eve::gegenbauer(n, -3.0/8.0, 0.3) << '\n'
-            << "-> gegenbauer(n, l, x)    = " << eve::gegenbauer(n, l, x)   << '\n';
+            << "<- xd                           = " << xd << '\n'
+            << "<- n                            = " << n  << '\n'
+            << "<- l                            = " << l  << '\n'
+            << "<- x                            = " << x  << '\n'
+            << "-> gegenbauer(n, l, xd)         = " << eve::gegenbauer(n, l, xd) << '\n'
+            << "-> gegenbauer(3, l, xd)         = " << eve::gegenbauer(3, l, xd) << '\n'
+            << "-> gegenbauer(n, l, 0.3)        = " << eve::gegenbauer(n, l, 0.3) << '\n'
+            << "-> gegenbauer(n, -3.0/8.0, 0.3) = " << eve::gegenbauer(n, -3.0/8.0, 0.3) << '\n'
+            << "-> gegenbauer(n, l, x)          = " << eve::gegenbauer(n, l, x)   << '\n'
+            << "-> diff(gegenbauer)(n, l, x)    = " << eve::diff(eve::gegenbauer)(n, l, x)   << '\n';
 
   double xs = 3.0;
   double ll = 0.1;

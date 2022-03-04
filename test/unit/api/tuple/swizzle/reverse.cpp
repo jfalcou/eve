@@ -6,9 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 
-#include <eve/function/reverse.hpp>
-#include <eve/function/shuffle.hpp>
 #include <eve/wide.hpp>
 
 

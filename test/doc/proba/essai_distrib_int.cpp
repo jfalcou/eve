@@ -1,16 +1,12 @@
-//#include <test_distribution.hpp>
 #include <eve/module/proba.hpp>
 #include <generator.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
 #include <iostream>
 #include <vector>
 #include <random>
 
 int main()
+#include <eve/module/core.hpp>
 {
   using i_t = std::int64_t;
   using eve::as;

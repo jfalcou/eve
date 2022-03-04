@@ -1,9 +1,5 @@
-//#include <eve/function/powm1.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -16,9 +12,11 @@ int main()
                 eve::nan(eve::as<float>()), -2.0f,  eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf            = " << pf << '\n'
-            << "<- qf            = " << qf << '\n'
-            << "-> powm1(pf, qf) = " << eve::powm1(pf, qf) << '\n';
+            << "<- pf                      = " << pf << '\n'
+            << "<- qf                      = " << qf << '\n'
+            << "-> powm1(pf, qf)           = " << eve::powm1(pf, qf) << '\n'
+            << "-> diff_1st(powm1)(pf, qf) = " << eve::diff_1st(eve::powm1)(pf, qf) << '\n'
+            << "-> diff_2nd(powm1)(pf, qf) = " << eve::diff_2nd(eve::powm1)(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -1.0f;

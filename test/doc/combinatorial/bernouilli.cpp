@@ -1,4 +1,3 @@
-//#include <eve/function/bernouilli.hpp>
 #include <eve/module/combinatorial.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

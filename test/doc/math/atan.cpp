@@ -1,7 +1,5 @@
-//#include <eve/function/atan.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
@@ -12,8 +10,9 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf       = " << pf << '\n'
-    << "-> atan(pf) = " << eve::atan(pf) << '\n';
+    << "<- pf             = " << pf << '\n'
+    << "-> atan(pf)       = " << eve::atan(pf) << '\n'
+    << "-> diff(atan)(pf) = " << eve::diff(eve::atan)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::inf(eve::as<float>());

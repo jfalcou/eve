@@ -1,4 +1,4 @@
-#include <eve/module/core/constant/maxexponent.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

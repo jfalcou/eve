@@ -1,6 +1,4 @@
-//#include <eve/function/sub.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/saturated/sub.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -8,13 +6,18 @@ int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
   w_t pi = {3, 2, -32700, 32700}, qi = {4, 1, 100, -100};
+  using wf_t = eve::wide<float, eve::fixed<4>>;
+  wf_t pf = {3, 2.5, -32.7, 1327.43}, qf = {4.2, 1.5, -100.834, 10.02};
 
   std::cout << "---- simd" << '\n'
             << " <- pi          = " << pi << '\n'
             << " <- qi          = " << qi << '\n'
             << " -> sub(pi, qi) = " << eve::sub(pi, qi) << '\n'
             << " -> pi + qi     = " << pi + qi << '\n'
-            <<  " -> saturated(sub)(pi, qi) = " << eve::saturated(eve::sub)(pi, qi) << '\n';
+            <<  " -> saturated(sub)(pi, qi) = " << eve::saturated(eve::sub)(pi, qi) << '\n'
+            << " -> pf + qf                 = " << pf + qf << '\n'
+            <<  " -> diff(sub)(pf, qf)      = " << eve::diff(eve::sub)(pf, qf) << '\n'
+            <<  " -> diff_2nd(sub)(pf, qf)  = " << eve::diff_2nd(eve::sub)(pf, qf) << '\n';
 
   std::int16_t xi = 100, yi = 32700;
 

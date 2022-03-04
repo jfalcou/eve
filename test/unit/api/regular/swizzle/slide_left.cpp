@@ -6,10 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/slide_left.hpp>
-#include <eve/function/shuffle.hpp>
 #include <bit>
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>

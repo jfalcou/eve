@@ -1,9 +1,4 @@
-//#include <eve/function/fnms.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/pedantic/fnms.hpp>
-#include <eve/function/numeric/fnms.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>
@@ -16,20 +11,23 @@ int main()
   float esm1 = es-1.0f;
   float esp1 = es+1.0f;
   float vm  = eve::valmax(eve::as<float>());
-  wide_t oi = {2, -3, esp1,  vm};
-  wide_t pi = {3, -2, esm1,  2 };
-  wide_t qi = {4, -1, 1.0f, -vm};
+  wide_t of = {2, -3, esp1,  vm};
+  wide_t pf = {3, -2, esm1,  2 };
+  wide_t qf = {4, -1, 1.0f, -vm};
 
   std::cout << "---- simd" << '\n'
-            << " <- oi                                 = " << oi << '\n'
-            << " <- pi                                 = " << pi << '\n'
-            << " <- qi                                 = " << qi << '\n'
-            << " -> pedantic(fnms)(oi, pi, qi)        = " << eve::pedantic(eve::fnms)(oi, pi, qi) << '\n'
-            << " -> numeric(fnms)(oi, pi, qi)         = " << eve::numeric(eve::fnms)(oi, pi, qi) << '\n'
-            << " -> fnms(oi, pi, qi)                   = " << eve::fnms(oi, pi, qi) << '\n'
+            << " <- of                                 = " << of << '\n'
+            << " <- pf                                 = " << pf << '\n'
+            << " <- qf                                 = " << qf << '\n'
+            << " -> pedantic(fnms)(of, pf, qf)         = " << eve::pedantic(eve::fnms)(of, pf, qf) << '\n'
+            << " -> numeric(fnms)(of, pf, qf)          = " << eve::numeric(eve::fnms)(of, pf, qf) << '\n'
+            << " -> fnms(of, pf, qf)                   = " << eve::fnms(of, pf, qf) << '\n'
             << "\n if the last fnms result ends by '0, -inf}', it means that\n"
             << " the system has no simd fnms family intrinsics\n"
-            << " or is not configured to use them.\n\n";
+            << " or is not configured to use them.\n\n"
+            << "-> diff_1st(fnma)(of, pf, qf)          = " << eve::diff_1st(eve::fnma)(of, pf, qf) << '\n'
+            << "-> diff_2nd(fnma)(of, pf, qf)          = " << eve::diff_2nd(eve::fnma)(of, pf, qf) << '\n'
+            << "-> diff_3rd(fnma)(of, pf, qf)          = " << eve::diff_3rd(eve::fnma)(of, pf, qf) << '\n';
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'

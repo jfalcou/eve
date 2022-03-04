@@ -1,4 +1,3 @@
-//#include <eve/function/logical_and.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

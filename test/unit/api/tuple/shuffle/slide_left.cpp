@@ -6,10 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/slide_left.hpp>
 
 EVE_TEST_TYPES( "Check behavior of slide_left shuffle", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)

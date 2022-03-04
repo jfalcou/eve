@@ -1,4 +1,3 @@
-//#include <eve/function/log1p.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -11,8 +10,9 @@ int main()
   wide_ft pf = {-1.0f, 2.0f, -0.0f, 0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf        =  " << pf << '\n'
-            << "-> log1p(pf) =  " << eve::log1p(pf) << '\n';
+            << "<- pf              =  " << pf << '\n'
+            << "-> log1p(pf)       =  " << eve::log1p(pf) << '\n'
+            << "-> diff(log1p)(pf) = " << eve::diff(eve::log1p)(pf) << '\n';
 
   float        xf = 3.0f;
 

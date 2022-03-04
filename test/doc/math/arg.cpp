@@ -1,4 +1,3 @@
-//#include <eve/function/arg.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -12,7 +11,8 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf            = " << pf << '\n'
-    << "-> eve::arg(pf) = " << eve::arg(pf) << '\n';
+    << "-> diff(arg)(pf) = " << eve::diff(eve::arg)(pf) << '\n'
+    << "-> eve::arg(pf)  = " << eve::arg(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());
@@ -20,8 +20,8 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf            = " << xf << '\n'
-    << "-> eve::arg(xf) = " << eve::arg(xf) << '\n'
+    << "-> eve::arg(xf)  = " << eve::arg(xf) << '\n'
     << "<- yf            = " << yf << '\n'
-    << "-> eve::arg(yf) = " << eve::arg(yf) << '\n';
+    << "-> eve::arg(yf)  = " << eve::arg(yf) << '\n';
   return 0;
 }

@@ -1,10 +1,5 @@
-//#include <eve/function/asinpi.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<8>>;
@@ -17,7 +12,8 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf         = " << pf << '\n'
-    << "-> asinpi(pf) = " << eve::asinpi(pf) << '\n';
+    << "-> asinpi(pf) = " << eve::asinpi(pf) << '\n'
+    << "-> diff(asinpi)(pf) = " << eve::diff(eve::asinpi)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());

@@ -6,9 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/replace.hpp>
 #include <utility>
 
 template<typename T>

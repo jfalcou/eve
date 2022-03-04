@@ -1,4 +1,3 @@
-//#include <eve/function/beta.hpp>
 #include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -12,9 +11,11 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf            = " << pf << '\n'
-    << "<- qf            = " << qf << '\n'
-    << "-> beta(pf, qf)  = " << eve::beta(pf, qf) << '\n';
+    << "<- pf                     = " << pf << '\n'
+    << "<- qf                     = " << qf << '\n'
+    << "-> beta(pf, qf)           = " << eve::beta(pf, qf) << '\n'
+    << "-> diff_1st(beta)(pf, qf) = " << eve::diff_1st(eve::beta)(pf, qf) << '\n'
+    << "-> diff_2nd(beta)(pf, qf) = " << eve::diff_2nd(eve::beta)(pf, qf) << '\n';
 
   float xf = 2.0f;
   float yf = 10.0f;

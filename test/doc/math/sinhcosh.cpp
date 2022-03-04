@@ -1,10 +1,5 @@
-//#include <eve/function/sinhcosh.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
@@ -15,12 +10,17 @@ int main()
                eve::inf(eve::as<double>()), eve::minf(eve::as<double>()), eve::nan(eve::as<double>())};
 
   auto [s, c]    = eve::sinhcosh(pf);
+  auto [ds, dc]  = eve::diff(eve::sinhcosh)(pf);
   std::cout << "---- simd" << '\n'
-            << "<- pf                      = " << pf << '\n'
-            << "-> sinhcosh(pf)            = [" << '\n'
-            << "                              " << s << ", \n"
-            << "                              " << c << '\n'
-            << "                             ]\n";
+            << "<- pf                  = " << pf << '\n'
+            << "-> sinhcosh(pf)        = [" << '\n'
+            << "                        " << s << ", \n"
+            << "                        " << c << '\n'
+            << "                       ]\n"
+            << "-> diff(sinhcosh)(pf)  = [" << '\n'
+            << "                        " << ds << ", \n"
+            << "                        " << dc << '\n'
+            << "                       ]\n";
 
   float xf = 2.3;
   auto [ss, sc] =  eve::sinhcosh(xf);

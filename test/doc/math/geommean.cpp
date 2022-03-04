@@ -1,4 +1,3 @@
-//#include <eve/function/geommean.hpp>
 #include <eve/module/math.hpp>
 
 #include <eve/wide.hpp>

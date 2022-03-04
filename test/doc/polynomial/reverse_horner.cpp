@@ -1,7 +1,5 @@
-//#include <eve/function/reverse_horner.hpp>
 #include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/one.hpp>
 #include <iostream>
 #include <list>
 #include <vector>
@@ -35,8 +33,7 @@ int main()
             << "-> reverse_horner(xd, eve::one, &v[1], &v[4])       = " << eve::reverse_horner(xd, eve::one, &v[1], &v[4]) << '\n'
             << "-> reverse_horner(xd, std::begin(ca), std::end(ca)) = " << eve::reverse_horner(xd, std::begin(ca), std::end(ca) ) << '\n'
             << "-> reverse_horner(xd, wv)                           = " << eve::reverse_horner(xd, wv) << '\n'
-    ;
-
+            << "-> diff(reverse_horner)(x, 1, -2, 3, -4)            = " << eve::diff(eve::reverse_horner)(x, 1, -2, 3, -4)   << '\n';
 
   double xs = 0.1;
 

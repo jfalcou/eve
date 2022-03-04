@@ -1,8 +1,5 @@
-//#include <eve/function/csch.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
@@ -13,7 +10,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf       = " << pf << '\n'
-            << "-> csch(pf) = " << eve::csch(pf) << '\n';
+            << "-> csch(pf) = " << eve::csch(pf) << '\n'
+            << "-> diff(csch)(pf) = " << eve::diff(eve::csch)(pf) << '\n';
 
   float xf = 3.0f;
 

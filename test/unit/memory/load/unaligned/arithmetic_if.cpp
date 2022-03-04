@@ -6,10 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include "unit/memory/page.hpp"
 
-#include <eve/function/load.hpp>
-#include <eve/function/any.hpp>
 #include <array>
 #include <list>
 

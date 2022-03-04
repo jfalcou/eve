@@ -6,8 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/shuffle.hpp>
 #include <bit>
 
 template<int N>

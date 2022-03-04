@@ -1,4 +1,3 @@
-//#include <eve/function/acospi.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -11,8 +10,9 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf         = " << pf << '\n'
-    << "-> acospi(pf) = " << eve::acospi(pf) << '\n';
+    << "<- pf               = " << pf << '\n'
+    << "-> diff(acospi)(pf) = " << eve::diff(eve::acospi)(pf) << '\n'
+    << "-> acospi(pf)       = " << eve::acospi(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());

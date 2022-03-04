@@ -1,8 +1,5 @@
-//#include <eve/function/cot.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/math/constant/pi.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
@@ -13,7 +10,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf      = " << pf << '\n'
-            << "-> cot(pf) = " << eve::cot(pf) << '\n';
+            << "-> cot(pf) = " << eve::cot(pf) << '\n'
+            << "-> diff(cot)(pf) = " << eve::diff(eve::cot)(pf) << '\n';
 
   float xf = 3.0f;
 

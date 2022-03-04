@@ -1,4 +1,3 @@
-//#include <eve/function/lfactorial.hpp>
 #include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

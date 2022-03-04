@@ -1,7 +1,5 @@
-//#include <eve/function/rempio2.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/math/constant/pi.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

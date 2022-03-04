@@ -1,9 +1,4 @@
-//#include <eve/function/mantissa.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

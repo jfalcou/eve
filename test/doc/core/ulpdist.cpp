@@ -1,8 +1,4 @@
-//#include <eve/function/ulpdist.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/constant/eps.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

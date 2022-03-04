@@ -1,4 +1,3 @@
-//#include <eve/function/pedantic/rising_factorial.hpp>
 #include <eve/module/special.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -15,7 +14,9 @@ int main()
             << " <- n                                  = " << n << '\n'
             << " <- x                                  = " << x << '\n'
             << " -> rising_factorial(n, x)             = " << eve::rising_factorial(n, x) << '\n'
-            << " -> pedantic(rising_factorial)(n, x)   = " << eve::pedantic(eve::rising_factorial)(n, x) << '\n';
+            << " -> pedantic(rising_factorial)(n, x)   = " << eve::pedantic(eve::rising_factorial)(n, x) << '\n'
+            << " -> diff_1st(rising_factorial)(pf, qf) = " << eve::diff_1st(eve::rising_factorial)(pf, qf) << '\n'
+            << " -> diff_2nd(rising_factorial)(pf, qf) = " << eve::diff_2nd(eve::rising_factorial)(pf, qf) << '\n';
 
   double xi = 1.8;
   std::cout << "---- scalar" << '\n'

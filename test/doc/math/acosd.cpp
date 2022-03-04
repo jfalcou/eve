@@ -1,4 +1,3 @@
-//#include <eve/function/acosd.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -11,8 +10,9 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf             = " << pf << '\n'
-    << "-> eve::acosd(pf) = " << eve::acosd(pf) << '\n';
+    << "<- pf              = " << pf << '\n'
+    << "-> eve::acosd(pf)  = " << eve::acosd(pf) << '\n'
+    << "-> diff(acosd)(pf) = " << eve::diff(eve::acosd)(pf) << '\n';
 
   float xf = 1.0f;
 

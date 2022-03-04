@@ -1,4 +1,3 @@
-//#include <eve/function/logspace_sub.hpp>
 #include <eve/module/math.hpp>
 
 #include <eve/wide.hpp>
@@ -7,12 +6,14 @@
 int main()
 {
   using w_t = eve::wide<float, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 3}, qi = {4, 1, 1, ~0};
+  w_t pf = {3, 2, 3, 3}, qf = {4, 1, 1, ~0};
 
   std::cout << "---- simd" << '\n'
-            << " <- pi                   = " << pi << '\n'
-            << " <- qi                   = " << qi << '\n'
-            << " -> logspace_sub(pi, qi) = " << eve::logspace_sub(pi, qi) << '\n';
+            << " <- pf                             = " << pf << '\n'
+            << " <- qf                             = " << qf << '\n'
+            << " -> logspace_sub(pf, qf)           = " << eve::logspace_sub(pf, qf) << '\n'
+            << " -> diff_1st(logspace_sub)(pf, qf) = " << eve::diff_1st(eve::logspace_sub)(pf, qf) << '\n'
+            << " -> diff_2nd(logspace_sub)(pf, qf) = " << eve::diff_2nd(eve::logspace_sub)(pf, qf) << '\n';
 
   float xi = 3, yi = 4;
 

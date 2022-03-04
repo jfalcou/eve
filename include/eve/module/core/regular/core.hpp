@@ -35,6 +35,8 @@
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/count_true.hpp>
+#include <eve/module/core/regular/deinterleave_groups.hpp>
+#include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 #include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
@@ -43,6 +45,8 @@
 #include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifnot_else.hpp>
+#include <eve/module/core/regular/interleave.hpp>
+#include <eve/module/core/regular/interleave_shuffle.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/maximum.hpp>
@@ -50,6 +54,7 @@
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/reverse.hpp>
@@ -60,8 +65,10 @@
 #include <eve/module/core/regular/slide_right.hpp>
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/write.hpp>
 
 
 #include <eve/module/core/regular/abs.hpp>

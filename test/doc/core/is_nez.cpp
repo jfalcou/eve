@@ -1,4 +1,3 @@
-//#include <eve/function/is_nez.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

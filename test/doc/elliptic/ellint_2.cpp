@@ -1,6 +1,4 @@
-//#include <eve/include/function/ellint_2.hpp>
 #include <eve/module/elliptic.hpp>
-#include <eve/module/math/constant/pio_2.hpp>
 #include <eve/wide.hpp>
 #include <eve/as.hpp>
 #include <iostream>

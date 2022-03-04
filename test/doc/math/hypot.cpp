@@ -1,6 +1,5 @@
 #include <eve/function/hypot.hpp>
 #include <eve/function/pedantic/hypot.hpp>
-#include <eve/module/core/constant/valmax.hpp>
 #include <eve/wide.hpp>
 #include <iomanip>
 #include <iostream>
@@ -18,6 +17,7 @@ int main()
             << "<- qf                       = " << qf << '\n'
             << "-> hypot(pf, qf)            = " << eve::hypot(pf, qf) << '\n'
             << "-> pedantic(hypot)(pf, qf)  = " << eve::pedantic(eve::hypot)(pf, qf) << '\n';
+//            << "-> diff(hypot)(pf, qf)      = " << eve::diff(eve::hypot)(pf, qf) << '\n';
 
   double        xf = -327680000;
   double        yf = 10;

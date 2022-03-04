@@ -1,8 +1,5 @@
-//#include <eve/function/cospi.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/math/constant/pi.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
@@ -13,7 +10,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
-            << "-> cospi(pf) = " << eve::cospi(pf) << '\n';
+            << "-> cospi(pf) = " << eve::cospi(pf) << '\n'
+            << "-> diff(cospi)(pf) = " << eve::diff(eve::cospi)(pf) << '\n';
 
   float xf = 3.0f;
 

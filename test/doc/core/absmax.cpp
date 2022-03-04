@@ -1,11 +1,5 @@
-#include <eve/function/maxmag.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/pedantic/absmax.hpp>
-#include <eve/function/numeric/absmax.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -21,6 +15,7 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> absmax(pf, qf)            = " << eve::absmax(pf, qf) << '\n'
+            << "-> diff(eve::absmax)(pf, qf) = " << eve::diff(eve::absmax)(pf, qf) << '\n'
             << "-> pedantic(absmax)(pf, qf)  = " << eve::pedantic(eve::absmax)(pf, qf) << '\n'
             << "-> numeric(absmax)(pf, qf)   = " << eve::numeric(eve::absmax)(pf, qf) << '\n';
 

@@ -1,4 +1,3 @@
-//#include <eve/function/logical_not.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

@@ -6,11 +6,11 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/module/polynomial.hpp>
 #include <cmath>
 #include <array>
 #include <vector>
-#include <eve/module/core/detail/generic/poleval.hpp>
 
 //==================================================================================================
 //== Types tests

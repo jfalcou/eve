@@ -6,10 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include "unit/memory/page.hpp"
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/load.hpp>
 #include <array>
 #include <list>
 

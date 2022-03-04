@@ -1,9 +1,5 @@
-//#include <eve/function/erf.hpp>
 #include <eve/module/special.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -15,7 +11,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf      = " << pf << '\n'
-            << "-> erf(pf) = " << eve::erf(pf) << '\n';
+            << "-> erf(pf) = " << eve::erf(pf) << '\n'
+            << "-> diff(erf)(pf)  = " << eve::diff(eve::erf)(pf) << '\n';
 
   float xf = 1.0f;
 

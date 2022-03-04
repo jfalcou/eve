@@ -1,4 +1,3 @@
-//#include <eve/function/cyl_bessel_in.hpp>
 #include <eve/module/bessel.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -11,10 +10,10 @@ int main()
   wide_ft x = {0.5, 1.5, 0.1, 1.0, 19.0, 25.0, 21.5, 10000.0};
   wide_ft n = {0.5, -1.0, 1.5, -2.0, 2.5, -2.6, 3.2, -12};
   std::cout << "---- simd" << '\n'
-            << "<- n                 = " << n << '\n'
-            << "<- x                 = " << x << '\n'
-            << "-> cyl_bessel_in(pd) = " << eve::cyl_bessel_in(n, x) << '\n';
-
+            << "<- n                         = " << n << '\n'
+            << "<- x                         = " << x << '\n'
+            << "-> cyl_bessel_in(n, x)       = " << eve::cyl_bessel_in(n, x) << '\n'
+            << "-> diff(cyl_bessel_in)(n, x) = " << eve::diff(eve::cyl_bessel_in)(n, x) << '\n';
 
   double xd = 1.0;
 

@@ -1,8 +1,5 @@
-//#include <eve/function/tanpi.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/math/constant/pi.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
@@ -13,7 +10,9 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
-            << "-> tanpi(pf) = " << eve::tanpi(pf) << '\n';
+            << "-> tanpi(pf) = " << eve::tanpi(pf) << '\n'
+            << "-> diff(tanpi)(pf) = " << eve::diff(eve::tanpi)(pf) << '\n';
+
 
   float xf = 3.0f;
 

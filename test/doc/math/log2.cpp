@@ -1,8 +1,5 @@
-//#include <eve/function/log2.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -13,8 +10,9 @@ int main()
                eve::inf(eve::as<float>()), 4.0f, eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> log2(pf) = " << eve::log2(pf) << '\n';
+            << "<- pf             = " << pf << '\n'
+            << "-> log2(pf)       = " << eve::log2(pf) << '\n'
+            << "-> diff(log2)(pf) = " << eve::diff(eve::log2)(pf) << '\n';
 
   float xf = 1.0f;
 

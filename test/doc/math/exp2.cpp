@@ -1,9 +1,5 @@
-//#include <eve/function/exp2.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -20,6 +16,7 @@ int main()
             << "<- pf                  = " << pf << '\n'
             << "<- pi                  = " << pi << '\n'
             << "-> exp2(pf)            = " << eve::exp2(pf) << '\n'
+            << "-> diff(exp2)(pf)      = " << eve::diff(eve::exp2)(pf) << '\n'
             << "-> exp2(pi)            = " << eve::exp2(pi) << '\n'
             << "-> float32(exp2)(pi)   = " << eve::float32(eve::exp2)(pi) << '\n'
             << "-> float64(exp2)(pi)   = " << eve::float64(eve::exp2)(pi) << '\n'

@@ -1,5 +1,4 @@
-#include <eve/function/countr_zero.hpp>
-#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

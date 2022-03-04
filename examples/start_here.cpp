@@ -31,10 +31,9 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/function/atan2.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/zip.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+
 
 #include <eve/product_type.hpp>
 
@@ -106,7 +105,7 @@ void polar_to_cartesian_vectors(
 // remove numbers outside of treshold
 
 #include <eve/algo/remove.hpp>
-#include <eve/function/is_even.hpp>
+#include <eve/module/core.hpp>
 
 void erase_remove_numbers_outisde_of_treshold(
   std::vector<int>& v, int low, int up)
@@ -132,8 +131,8 @@ void reverse_parallel_arrays(std::vector<int>& a, std::vector<std::uint8_t>& b)
 
 #include "test.hpp"
 
-#include <eve/module/math/constant/pi.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 
 #include <vector>
 

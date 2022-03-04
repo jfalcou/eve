@@ -1,6 +1,4 @@
-//#include <eve/function/sqr.hpp>
 #include <eve/module/core.hpp>
-#include <eve/function/saturated/sqr.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -15,8 +13,9 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
             << "-> sqr(pf)             = " << eve::sqr(pf) << '\n'
+            << "-> diff(sqr)(pf)       = " << eve::diff(eve::sqr)(pf) << '\n'
             << "<- pi                  = " << pi << '\n'
-            << "-> saturated(sqr)(pi) = " << eve::saturated(eve::sqr)(pi) << '\n'
+            << "-> saturated(sqr)(pi)  = " << eve::saturated(eve::sqr)(pi) << '\n'
             << "-> sqr(pi)             = " << eve::sqr(pi) << '\n';
 
   float        xf = -32768.0f;
@@ -26,7 +25,7 @@ int main()
             << "<- xf                  = " << xf << '\n'
             << "-> sqr(xf)             = " << eve::sqr(xf) << '\n'
             << "<- xi                  = " << xi << '\n'
-            << "-> saturated(sqr)(xi) = " << eve::saturated(eve::sqr)(xi) << '\n'
+            << "-> saturated(sqr)(xi)  = " << eve::saturated(eve::sqr)(xi) << '\n'
             << "-> sqr(xi)             = " << eve::sqr(xi) << '\n';
   return 0;
 }

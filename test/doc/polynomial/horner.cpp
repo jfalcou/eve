@@ -1,7 +1,5 @@
-//#include <eve/function/horner.hpp>
 #include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/one.hpp>
 #include <iostream>
 #include <list>
 #include <vector>
@@ -35,8 +33,7 @@ int main()
             << "-> horner(xd, eve::one, &v[1], &v[4])       = " << eve::horner(xd, eve::one, &v[1], &v[4]) << '\n'
             << "-> horner(xd, std::begin(ca), std::end(ca)) = " << eve::horner(xd, std::begin(ca), std::end(ca) ) << '\n'
             << "-> horner(xd, wv)                           = " << eve::horner(xd, wv) << '\n'
-    ;
-
+            << "-> diff(horner)(x, 1, -2, 3, -4)            = " << eve::diff(eve::horner)(x, 1, -2, 3, -4)   << '\n';
 
   double xs = 0.1;
 

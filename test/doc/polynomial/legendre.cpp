@@ -1,9 +1,5 @@
-//#include <eve/function/legendre.hpp>
 #include <eve/module/polynomial.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
@@ -23,8 +19,8 @@ int main()
             << "-> legendre(n, xd)   = " << eve::legendre(n, xd) << '\n'
             << "-> legendre(3, xd)   = " << eve::legendre(3, xd) << '\n'
             << "-> legendre(n, 0.5)  = " << eve::legendre(n, 0.5) << '\n'
-            << "-> legendre(n, x)    = " << eve::legendre(n, x)   << '\n';
-
+            << "-> legendre(n, x)    = " << eve::legendre(n, x)   << '\n'
+            << "-> diff(legendre)(n, x) = " << eve::diff(eve::legendre)(n, x) << '\n';
 
   double xs = 0.1;
 

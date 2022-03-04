@@ -1,4 +1,3 @@
-//#include <eve/function/atanh.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
@@ -11,6 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
+            << "-> diff(atanh)(pf) = " << eve::diff(eve::atanh)(pf) << '\n'
             << "-> atanh(pf) = " << eve::atanh(pf) << '\n';
 
   float xf = 1.0f;

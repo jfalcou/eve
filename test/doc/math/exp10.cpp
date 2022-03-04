@@ -1,9 +1,5 @@
-//#include <eve/function/exp10.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -16,7 +12,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
-            << "-> exp10(pf) = " << eve::exp10(pf) << '\n';
+            << "-> exp10(pf) = " << eve::exp10(pf) << '\n'
+            << "-> diff(exp10)(pf) = " << eve::diff(eve::exp10)(pf) << '\n';
 
   float xf = 1.0f;
 

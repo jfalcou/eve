@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 
-#include <eve/function/deinterleave_groups_shuffle.hpp>
 
 TTS_CASE("Check behavior of deinterleave_groups_shuffle pattern")
 {

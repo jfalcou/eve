@@ -1,7 +1,5 @@
-//#include <eve/function/asecpi.hpp>
 #include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide <float, eve::fixed<4>>;
@@ -12,8 +10,9 @@ int main()
 
   std::cout
     << "---- simd" << '\n'
-    << "<- pf         = " << pf << '\n'
-    << "-> asecpi(pf) = " << eve::asecpi(pf) << '\n';
+    << "<- pf               = " << pf << '\n'
+    << "-> asecpi(pf)       = " << eve::asecpi(pf) << '\n'
+    << "-> diff(asecpi)(pf) = " << eve::diff(eve::asecpi)(pf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::inf(eve::as<float>());
