@@ -22,10 +22,7 @@
 
 #include <eve/conditional.hpp>
 #include <eve/eve.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/unalign.hpp>
-#include <eve/function/shuffle.hpp>
+#include <eve/eve/module/core.hpp>
 
 #include <concepts>
 #include <span>

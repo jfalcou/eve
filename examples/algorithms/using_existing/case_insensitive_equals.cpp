@@ -14,7 +14,7 @@
 //       we can get lexicograpgical case-insesetive compare.
 
 #include <eve/algo/equal.hpp>
-#include <eve/function/sub.hpp>
+#include <eve/module/core.hpp>
 
 #include <cstdint>
 #include <string_view>

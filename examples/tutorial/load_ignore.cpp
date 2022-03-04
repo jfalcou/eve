@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 //! [snippet]
-#include <eve/function/load.hpp>
+#include <eve/module/core.hpp>
 #include <array>
 
 auto load_not_first( float* ptr )

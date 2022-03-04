@@ -31,10 +31,7 @@
 #include <eve/views/iota.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/function/compress_store.hpp>
-#include <eve/function/replace.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/unalign.hpp>
+#include <eve/eve/module/core.hpp>
 
 #include <concepts>
 #include <type_traits>
