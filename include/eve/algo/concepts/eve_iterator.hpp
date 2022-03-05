@@ -7,14 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <concepts>
 #include <iterator>
 #include <type_traits>
-#include <eve/function/read.hpp>
-#include <eve/function/write.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/compress_store.hpp>
-#include <eve/function/unalign.hpp>
 
 #include <eve/algo/concepts/detail.hpp>
 

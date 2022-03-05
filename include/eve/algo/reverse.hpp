@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/copy.hpp>
 #include <eve/algo/preprocess_range.hpp>

@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/all_of.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/views/zip.hpp>
 
-#include <eve/function/is_equal.hpp>
 
 #include <utility>
 

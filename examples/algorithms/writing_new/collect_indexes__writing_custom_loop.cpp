@@ -14,10 +14,7 @@
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/preprocess_range.hpp>
 
-#include <eve/function/compress_store.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/unalign.hpp>
-#include <eve/traits.hpp>
+#include <eve/module/core.hpp>
 
 #include <concepts>
 #include <type_traits>

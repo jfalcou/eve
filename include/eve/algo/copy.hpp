@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/transform.hpp>

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
 
 #include <eve/detail/raberu.hpp>

@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 //! [snippet]
-#include <eve/function/load.hpp>
+#include <eve/module/core.hpp>
 
 auto load_between( float* ptr )
 {

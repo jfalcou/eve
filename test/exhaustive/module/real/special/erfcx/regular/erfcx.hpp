@@ -5,10 +5,10 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/constant/valmax.hpp>
-#include <eve/function/erfcx.hpp>
-#include <eve/function/prev.hpp>
 
+#include <eve/module/math.hpp>
+#include <eve/module/special.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 #include <cmath>

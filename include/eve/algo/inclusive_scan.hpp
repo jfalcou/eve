@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
@@ -15,10 +16,6 @@
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/module/core/constant/as_value.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/function/plus.hpp>
-#include <eve/function/scan.hpp>
 
 namespace eve::algo
 {

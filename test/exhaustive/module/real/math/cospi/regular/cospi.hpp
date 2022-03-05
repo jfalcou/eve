@@ -6,10 +6,8 @@
 */
 //==================================================================================================
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/constant/invpi.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include <tts/tests/range.hpp>
 #include "measures.hpp"
 #include "producers.hpp"

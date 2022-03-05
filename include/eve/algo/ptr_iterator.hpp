@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 
-#include <eve/function/load.hpp>
-#include <eve/function/store_equivalent.hpp>
-#include <eve/function/compress_store.hpp>
-#include <eve/function/store.hpp>
-#include <eve/function/unalign.hpp>
 
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/traits.hpp>

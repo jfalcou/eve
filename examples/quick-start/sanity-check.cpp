@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <eve/wide.hpp>
-#include <eve/function/sqrt.hpp>
+#include <eve/module/core.hpp>
 
 int main()
 {

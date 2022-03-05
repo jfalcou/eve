@@ -5,11 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/sinpicospi.hpp>
-#include <eve/function/cospi.hpp>
-#include <eve/function/sinpi.hpp>
-#include <eve/constant/pio_2.hpp>
 #include <tts/tests/range.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 

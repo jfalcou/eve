@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/detail.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 

@@ -1,5 +1,5 @@
-#include <eve/function/hypot.hpp>
-#include <eve/function/pedantic/hypot.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iomanip>
 #include <iostream>

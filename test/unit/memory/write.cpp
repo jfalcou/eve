@@ -9,7 +9,7 @@
 #include "unit/memory/page.hpp"
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/write.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Write scalar to pointer-like entity

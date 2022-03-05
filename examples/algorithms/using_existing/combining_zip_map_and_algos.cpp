@@ -15,7 +15,7 @@
 #include <eve/views/map.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/function/max.hpp>
+#include <eve/module/core.hpp>
 
 #include <vector>
 
