@@ -26,25 +26,18 @@ namespace eve::detail
   {
     using enum category;
 
-    if constexpr( current_api >= asimd )
-    {
-      constexpr auto c_i = categorize<wide<double, N>>();
-      constexpr auto c_o = categorize<wide<U, N>>();
+    constexpr auto c_i = categorize<wide<double, N>>();
+    constexpr auto c_o = categorize<wide<U, N>>();
 
-            if constexpr( c_i == float64x1 && c_o == int64x1  ) return vcvt_s64_f64(v);
-      else  if constexpr( c_i == float64x1 && c_o == uint64x1 ) return vcvt_u64_f64(v);
-      else  if constexpr( c_i == float64x1  )                   return map(convert,v,tgt);
-      else  if constexpr( c_i == float64x2 && c_o == float32x2) return vcvt_f32_f64(v);
-      else  if constexpr( c_i == float64x2 && c_o == int64x2  ) return vcvtq_s64_f64(v);
-      else  if constexpr( c_i == float64x2 && c_o == uint64x2 ) return vcvtq_u64_f64(v);
-      else  if constexpr( c_i == float64x2 && c_o == int32x2  ) return vmovn_s64(vcvtq_s64_f64(v));
-      else  if constexpr( c_i == float64x2 && c_o == uint32x2 ) return vmovn_u64(vcvtq_u64_f64(v));
-      else  if constexpr( c_i == float64x2  )  return convert(convert(v,as<std::int32_t>()), tgt);
-    }
-    else
-    {
-      return map(convert,v,tgt);
-    }
+          if constexpr( c_i == float64x1 && c_o == int64x1  ) return vcvt_s64_f64(v);
+    else  if constexpr( c_i == float64x1 && c_o == uint64x1 ) return vcvt_u64_f64(v);
+    else  if constexpr( c_i == float64x1  )                   return map(convert,v,tgt);
+    else  if constexpr( c_i == float64x2 && c_o == float32x2) return vcvt_f32_f64(v);
+    else  if constexpr( c_i == float64x2 && c_o == int64x2  ) return vcvtq_s64_f64(v);
+    else  if constexpr( c_i == float64x2 && c_o == uint64x2 ) return vcvtq_u64_f64(v);
+    else  if constexpr( c_i == float64x2 && c_o == int32x2  ) return vmovn_s64(vcvtq_s64_f64(v));
+    else  if constexpr( c_i == float64x2 && c_o == uint32x2 ) return vmovn_u64(vcvtq_u64_f64(v));
+    else  if constexpr( c_i == float64x2  )  return convert(convert(v,as<std::int32_t>()), tgt);
   }
 
   //================================================================================================
@@ -195,12 +188,12 @@ namespace eve::detail
     constexpr auto c_o = categorize<wide<U, N>>();
     constexpr auto c_i = categorize<wide<T, N>>();
 
-          if constexpr( std::same_as<double,U> || N::value == 1)  return map(convert,v,tgt);
-    else  if constexpr( c_i == int8x8   && c_o == int16x8 )       return vmovl_s8(v);
-    else  if constexpr( c_i == uint8x8  && c_o == uint16x8)       return vmovl_u8(v);
-    else  if constexpr( c_i == int8x8   && c_o == int16x4 )       return vget_low_s16(vmovl_s8(v));
-    else  if constexpr( c_i == uint8x8  && c_o == uint16x4)       return vget_low_u16(vmovl_u8(v));
+          if constexpr( c_i == int8x8   && c_o == int16x8 )             return vmovl_s8(v);
+    else  if constexpr( c_i == uint8x8  && c_o == uint16x8)             return vmovl_u8(v);
+    else  if constexpr( c_i == int8x8   && c_o == int16x4 )             return vget_low_s16(vmovl_s8(v));
+    else  if constexpr( c_i == uint8x8  && c_o == uint16x4)             return vget_low_u16(vmovl_u8(v));
+    else  if constexpr( std::same_as<double,U> && current_api < asimd)  return map(convert,v,tgt);
     else  if constexpr( sizeof(U) != 2) return convert(convert(v, as<upgrade_t<T>>{}),tgt);
-    else                                return convert_slice(v,tgt);
+    else                                                                return convert_slice(v,tgt);
   }
 }
