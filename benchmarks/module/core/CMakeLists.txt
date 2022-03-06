@@ -171,3 +171,7 @@ make_all_benchs(ROOT bench.core NAME sub                   TYPES ${all_types}   
 ##make_all_benchs(ROOT bench.core NAME tcheb                 TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME trunc                 TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME ulpdist               TYPES ${all_types}     )
+##make_all_benchs(ROOT bench.core NAME all    ARCH scalar simd TYPES ${all_types})
+##ake_all_benchs(ROOT bench.core NAME any    ARCH scalar simd TYPES ${all_types})
+##ake_all_benchs(ROOT bench.core NAME count_true ARCH scalar simd TYPES ${all_types})
+##make_all_benchs(ROOT bench.core NAME none   ARCH scalar simd TYPES ${all_types})

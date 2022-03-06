@@ -1,11 +1,8 @@
 #include <eve/module/core.hpp>
 #include <eve/algo.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 #include <vector>
-#include <numeric>
-#include <eve/views/iota.hpp>
-#include <algorithm>
+#include "detail/print.hpp"
 
 int main()
 {
@@ -26,8 +23,7 @@ int main()
   std::cout << " -> eve::algo::none_of(r2, eve::is_gtz)  = "<< std::boolalpha << eve::algo::none_of(r2, eve::is_gtz)<< '\n';
   std::cout << " -> eve::algo::none_of(vr2, eve::is_gtz) = "<< std::boolalpha << eve::algo::none_of(vr2, eve::is_gtz)<< '\n';
 
-  auto print =  [](auto v){ for(auto i : v) {std::cout << i << ' ';};  std::cout << '\n';};
-  std::cout << " -> r1                                  = "; print(r1);
-  std::cout << " -> r2                                  = "; print(r2);
+  std::cout << " -> r1                                  = "; eve::detail::print(r1);
+  std::cout << " -> r2                                  = "; eve::detail::print(r2);
   return 0;
 }

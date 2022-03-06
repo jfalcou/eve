@@ -47,3 +47,9 @@
 #include <eve/algo/swap_ranges.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/transform.hpp>
+#include <eve/views/backward.hpp>
+#include <eve/views/convert.hpp>
+#include <eve/views/iota.hpp>
+#include <eve/views/map.hpp>
+#include <eve/views/reverse.hpp>
+#include <eve/views/zip.hpp>

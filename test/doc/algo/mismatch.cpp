@@ -1,11 +1,8 @@
 #include <eve/module/core.hpp>
 #include <eve/algo.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 #include <vector>
-#include <numeric>
-#include <eve/views/iota.hpp>
-#include <algorithm>
+#include "detail/print.hpp"
 
 int main()
 {
