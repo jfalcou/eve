@@ -7,8 +7,8 @@
 
 int main()
 {
-  std::vector<float> r1(5), r2(10);
-  eve::algo::copy(eve::views::iota_scaled(0.0f, 2.0f, 5),  r1);
+  std::vector<float> r1(10), r2(10);
+  eve::algo::copy(eve::views::iota_scaled(0.0f, 2.0f, 10),  r1);
   eve::algo::copy(eve::views::iota_scaled(0.0f, 1.0f, 10), r2);
   std::cout << " <- std::vector<float> r1(5), r2(10);\n";
   std::cout << " <- eve::algo::copy(eve::views::iota_scaled(0.0f, 2.0f, 5),  r1);\n";
