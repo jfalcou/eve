@@ -17,7 +17,7 @@ int main()
   r2[4] = 12.0f;
   auto [m1, m2] = eve::algo::mismatch(r1, r2);
   std::cout << " <- auto [m1, m2] = eve::algo::mismatch(r1, r2);\n";
-  std::cout << " -> first mismatch is " << *m1 << " != " << *m2 << std::endl;
+  std::cout << " -> first mismatch is " << eve::read(m1) << " != " << eve::read(m2) << std::endl;
 
   auto [n1, n2] = eve::algo::mismatch(vr1, r2);
   std::cout << " -> first mismatch is             " << eve::read(n1) << " != " << eve::read(n2) << std::endl;
