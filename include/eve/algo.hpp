@@ -8,15 +8,16 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup functions
+//! @addtogroup algorithms
 //! @{
-//! @defgroup bessel Bessel function
-//! @brief Bessel functions
+//! @defgroup algorithm algorithms
+//! @brief ranges and view algorithms
 //!
-//! This module provides implementation for the
-//! [Bessel functions](https://en.wikipedia.org/wiki/Bessel_function) and related operations.
+//! This module provides implementation of simd versions of some std ranges algorithms.
+//! Take care that some prerequisite and syntaxes are not fully standard conformant
 //!
-//! **Required header:** @code{.cpp} #include <eve/module/bessel.hpp> @endcode
+//!
+//! **Required header:** @code{.cpp} #include <eve/algo.hpp> @endcode
 //!
 //! @}
 //==================================================================================================

@@ -24,7 +24,8 @@ struct store_op
 {
   auto operator()(auto x, eve::as<int>) const
   {
-    return eve::convert(x / 2.0, eve::as<int>{});
+    std::cout << "icitte" << std::endl;
+    return eve::convert(x/2.0, eve::as<double>{});
   }
 };
 
