@@ -14,7 +14,7 @@ int main()
   std::cout << " <- eve::algo::iota_scaled(r1, 0.5f);\n";
   std::cout << " <- std::iota(r2.begin(), r2.end(), 0.5f);\n";
   std::cout << " <- eve::algo::copy(vr, r1); // vr is not suited for direct output\n";
-  std::cout << " -> std::ranges::equal(r1, r2) = "<< std::boolalpha << std::ranges::equal(r1, r2) << '\n';
+  std::cout << " -> std::ranges::equal(r1, r2) = "<< std::boolalpha << eve::algo::equal(r1, r2) << '\n';
   std::cout << " -> eve::algo::equal(vr, r2)   = "<< std::boolalpha << eve::algo::equal(vr, r2) << '\n';
   std::cout << " -> vr                         = "; eve::detail::print(vr);
   std::cout << " -> r1                         = "; eve::detail::print(r1);
