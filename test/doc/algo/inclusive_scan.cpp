@@ -6,7 +6,7 @@
 
 int main()
 {
-  std::vector<float> r1(5) , r2(5); //, r3(5);
+  std::vector<float> r1(5) , r2(5);
   eve::algo::fill(r1, 2.0f);
   eve::algo::fill(r2, 2.0f);
 

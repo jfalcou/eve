@@ -3,7 +3,7 @@
 #include <vector>
 #include "detail/print.hpp"
 
-// iota_scaled is not a good name arithmetic_progression is too long but better
+// iota_scaled is not a good name arithmetic_progression is too long but better. arith_prog ?
 int main()
 {
   std::vector<float> r1(5);

@@ -7,7 +7,6 @@
 
 make_unit( "doc.algo" all_of.cpp             )
 make_unit( "doc.algo" any_of.cpp             )
-make_unit( "doc.algo" arith_prog.cpp         )
 make_unit( "doc.algo" convert.cpp            )
 make_unit( "doc.algo" copy.cpp               )
 make_unit( "doc.algo" equal.cpp              )
