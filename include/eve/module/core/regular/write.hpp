@@ -36,13 +36,13 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<typename Ptr, scalar_value V> auto operator()(Ptr p, V v) const noexcept
+  //!  template<typename Ptr, scalar_value V> auto operator()(V v,Ptr p) const noexcept
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //! `ptr`: Memory to write to.
   //! `v`  : [scalar value](@ref eve::scalar_value) to write.
+  //! `ptr`: Memory to write to.
   //!
   //!  @}
   //================================================================================================
@@ -51,16 +51,16 @@ namespace eve
   namespace detail
   {
     template<typename Ptr, scalar_value V>
-    EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), Ptr ptr, V v) noexcept
+    EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), V v, Ptr ptr) noexcept
     requires requires(Ptr p, V v) { *p = v; }
     {
       *ptr = v;
     }
 
     template <scalar_value V, typename ... Ptrs>
-    EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), soa_ptr<Ptrs...> ptr, V v) noexcept
+    EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), V v, soa_ptr<Ptrs...> ptr) noexcept
     {
-      kumi::for_each(write, ptr, v);
+      kumi::for_each(write, v, ptr);
     }
   }
 }

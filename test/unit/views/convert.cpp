@@ -25,7 +25,7 @@ TTS_CASE("eve::views::convert, read/write")
     TTS_TYPE_IS(decltype(eve::read(f)), double);
     TTS_EQUAL(eve::read(f), v[i]);
 
-    eve::write(f, 0.0);
+    eve::write(0.0, f);
 
     TTS_EQUAL(v[i], 0);
     ++i;

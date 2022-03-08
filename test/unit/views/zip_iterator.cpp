@@ -37,7 +37,7 @@ TTS_CASE("zip_iterator for not eve iterators")
 
   // std::fill won't work
   for (auto i = zf; i != zf; ++i) {
-    eve::write(i, twos);
+    eve::write(twos,i);
   }
 
   for (auto i = zf; i != zf; ++i) {

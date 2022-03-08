@@ -254,10 +254,10 @@ namespace eve::algo::views
       return self.load_op(eve::read(self.base));
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, map_iterator self, auto v)
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, auto v, map_iterator self)
       requires (!std::same_as<StoreOp, nothing_t>)
     {
-      eve::write(self.base, detail::bind_store_op<I>(self.store_op)(v));
+      eve::write(detail::bind_store_op<I>(self.store_op)(v),self.base);
     }
 
     template <relaxed_sentinel_for<I> I1>

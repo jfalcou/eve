@@ -123,9 +123,9 @@ namespace eve::algo::views
       return eve::read(unalign(self.base) - 1);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, backward_iterator self, value_type v)
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, value_type v, backward_iterator self)
     {
-      return eve::write(unalign(self.base) - 1, v);
+      return eve::write(v, unalign(self.base) - 1);
     }
 
     template <relaxed_sentinel_for<I> I1>
