@@ -50,8 +50,7 @@ namespace eve::algo::views
       i(0)
     {
       wide_cur = wv_type {[&](int j, int) { return j; }};
-      wide_cur *= scale;
-      wide_cur += base;
+      wide_cur = fam(base, wide_cur, scale);
       operator+=(i_);
     }
 
@@ -71,7 +70,7 @@ namespace eve::algo::views
     base_plus_offset_iterator& operator+=(std::ptrdiff_t n)
     {
       i += n;
-      wide_cur += scale * n;
+      wide_cur =  fam(wide_cur, scale, n);
       return *this;
     }
 
@@ -95,9 +94,9 @@ namespace eve::algo::views
       return i <=> x.i;
     }
 
-    EVE_FORCEINLINE friend T tagged_dispatch(eve::tag::read_, base_plus_offset_iterator self)
+    EVE_FORCEINLINE friend value_type tagged_dispatch(eve::tag::read_, base_plus_offset_iterator self)
     {
-      return self.base + eve::convert(self.i * self.scale, eve::as<T>{});
+      return fam( self.base, eve::convert(self.i, eve::as<value_type>{}), self.scale);
     }
 
     template <typename U>
