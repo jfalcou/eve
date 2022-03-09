@@ -7,7 +7,7 @@
 int main()
 {
   std::vector<float> r1(5), r2(5);
-  auto vr1 = eve::views::iota_scaled(0.5f, 2.0f, 5);
+  auto vr1 = eve::views::iota_with_step(0.5f, 2.0f, 5);
   eve::algo::copy(vr1, r1);
   eve::algo::copy(vr1, r2);
   r2[2] = 100.0f;

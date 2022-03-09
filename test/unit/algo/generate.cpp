@@ -52,11 +52,11 @@ template <typename R, eve::floating_scalar_value T> auto linspace_view(R & r, T 
 template <eve::floating_scalar_value T> auto linspace_scaled(T a, T b, ptrdiff_t n)
 {
   T nm1 = eve::rec(eve::dec(T(n)));
-  auto io = eve::views::iota_scaled(T{a}, T(b-a)*nm1, n);
+  auto io = eve::views::iota_with_step(T{a}, T(b-a)*nm1, n);
   return io;
 }
 
-EVE_TEST_TYPES("Check iota_scaled_iterator, conversions", eve::test::scalar::ieee_reals)
+EVE_TEST_TYPES("Check iota_with_step_iterator, conversions", eve::test::scalar::ieee_reals)
 <typename T>(eve::as<T> )
 {
 

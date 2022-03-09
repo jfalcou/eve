@@ -36,16 +36,4 @@ namespace eve::algo
   };
 
   inline constexpr auto iota = function_with_traits<iota_>[copy.get_traits()];
-
-  template <typename TraitsSupport>
-  struct iota_scaled_ : TraitsSupport
-  {
-    template <relaxed_range Rng, typename T>
-    EVE_FORCEINLINE void operator()(Rng&& rng, T value, T scale) const
-    {
-      algo::copy[TraitsSupport::get_traits()](views::iota_scaled(value, scale), rng);
-    }
-  };
-
-  inline constexpr auto iota_scaled = function_with_traits<iota_scaled_>[copy.get_traits()];
 }

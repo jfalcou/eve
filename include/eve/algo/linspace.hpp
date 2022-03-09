@@ -52,7 +52,7 @@ namespace eve::algo
       EVE_ASSERT(eve::is_finite(b), "b is not finite");
       if (n == 0u) return eve::views::iota(elt_t{0}, 0);
       else if (n == 1u) return eve::views::iota(elt_t{b}, 1);
-      else if (a == b)  return eve::views::iota_scaled(elt_t(a), elt_t(0), n);
+      else if (a == b)  return eve::views::iota_with_step(elt_t(a), elt_t(0), n);
       else
       {
         using elt_t = T; //decltype(eve::read(r.begin()));

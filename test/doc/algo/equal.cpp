@@ -7,12 +7,12 @@
 int main()
 {
   std::vector<float> r1(5), r2(5);
-  auto vr1 = eve::views::iota_scaled(0.5f, 2.0f, 5);
+  auto vr1 = eve::views::iota_with_step(0.5f, 2.0f, 5);
   eve::algo::copy(vr1, r1);
   eve::algo::copy(vr1, r2);
   r2[2] = 100.0f;
   std::cout << " <- std::vector<float> r1(5), r2(5);\n";
-  std::cout << " <- auto vr1 = eve::views::iota_scaled(0.5f, 2.0f, 5);\n";
+  std::cout << " <- auto vr1 = eve::views::iota_with_step(0.5f, 2.0f, 5);\n";
   std::cout << " <- eve::algo::copy(vr1, r1);\n";
   std::cout << " -> eve::algo::equal(r1, eve::is_gez)  = "<< std::boolalpha << eve::algo::equal(r1, vr1)<< '\n';
   std::cout << " -> eve::algo::equal(vr1, eve::is_gez) = "<< std::boolalpha << eve::algo::equal(r2, vr1)<< '\n';

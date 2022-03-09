@@ -3,11 +3,11 @@
 #include <vector>
 #include "detail/print.hpp"
 
-// iota_scaled is not a good name arithmetic_progression is too long but better. arith_prog ?
+// iota_with_step is not a good name arithmetic_progression is too long but better. arith_prog ?
 int main()
 {
   std::vector<float> r1(5);
-//  eve::algo::iota_scaled(r1, 0.5f, 2.0f); // why this does not exists ?
+//  eve::algo::iota_with_step(r1, 0.5f, 2.0f); // why this does not exists ?
   auto vr = eve::algo::linspace(0.0f, 2.0f, 5);
   eve::algo::copy(vr, r1);
 
