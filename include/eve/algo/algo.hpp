@@ -26,6 +26,7 @@
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
+#include <eve/algo/colon.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/copy.hpp>
 #include <eve/algo/equal.hpp>

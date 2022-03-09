@@ -16,7 +16,14 @@ namespace eve::detail
   template < eve::algo::relaxed_range R>
   void print(R const & v)
   {
-    for(auto i = v.begin();  i !=  v.end(); ++i) {std::cout << +eve::read(i) << ' ';};
-    std::cout << '\n';
+    std::cout << '{';
+    auto n = v.end() - v.begin();
+    auto cur = v.begin();
+    if(n)
+    {
+      for(auto i = 1;  i !=  n; ++i, ++cur) {std::cout << +eve::read(cur) << ", ";};
+      if (n) std::cout << +eve::read(cur) << "}\n";
+    }
+    else std::cout <<"}\n";
   }
 }

@@ -26,6 +26,7 @@
 #include <eve/algo/any_of.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/as_range.hpp>
+#include <eve/algo/colon.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/copy.hpp>
@@ -35,6 +36,7 @@
 #include <eve/algo/for_each.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/inclusive_scan.hpp>
+#include <eve/algo/views/interval.hpp>
 #include <eve/algo/iota.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/mismatch.hpp>

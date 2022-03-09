@@ -35,7 +35,7 @@ namespace eve::algo
     T invnm1;
 
     lerpoid(T a_, T b_, ptrdiff_t n) :
-      a(a_), b(b_), invnm1(eve::rec((T(eve::dec(n)))))
+      a(a_), b(b_), invnm1(n == 1 ? 1 : eve::rec((T(eve::dec(n)))))
     {};
     auto operator()(auto i){return eve::lerp(a, b, i*invnm1); };
   };
@@ -45,22 +45,22 @@ namespace eve::algo
   {
 
     template <eve::scalar_value T,  eve::scalar_value U>
-    EVE_FORCEINLINE auto operator()(T a, U b,  ptrdiff_t n) const
+    EVE_FORCEINLINE auto operator()(T , U ,  ptrdiff_t n) const
     {
       using elt_t = T;
       EVE_ASSERT(eve::is_finite(a), "a is not finite");
       EVE_ASSERT(eve::is_finite(b), "b is not finite");
-      if (n == 0u) return eve::views::iota(elt_t{0}, 0);
-      else if (n == 1u) return eve::views::iota(elt_t{b}, 1);
-      else if (a == b)  return eve::views::iota_with_step(elt_t(a), elt_t(0), n);
-      else
-      {
+//       if (n == 0u) return eve::views::iota(elt_t{0}, 0);
+//       else if (n == 1u) return eve::views::iota(elt_t{b}, 1);
+//       else if (a == b)  return eve::views::iota_with_step(elt_t(a), elt_t(0), n);
+//       else
+//       {
         using elt_t = T; //decltype(eve::read(r.begin()));
         auto io = eve::views::iota(elt_t{0}, n);
         //     auto l = lerpoid(elt_t(a), elt_t(b), n);
         auto r = eve::views::map(io, eve::sqrt); //l);
         return r;
-      }
+//      }
     }
   };
 
