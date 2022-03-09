@@ -46,5 +46,6 @@
 #include <eve/algo/remove.hpp>
 #include <eve/algo/reverse.hpp>
 #include <eve/algo/swap_ranges.hpp>
+#include <eve/algo/tchebytchev_points.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/transform.hpp>

@@ -24,5 +24,6 @@ int main()
   std::cout << " -> interval(-3.2, 4.5)                       = "; print(interval(-3.2, 4.5));
   std::cout << " -> interval(1.0f+2*eve::eps(as<float>(), 3.0f) = "; print(interval(1.0f+2*eve::eps(eve::as<float>()), 3.0f));
   std::cout << " -> raw(interval)(1.0f+2*eve::eps(as<float>(), 3.0f) = "; print(eve::raw(interval)(1.0f+2*eve::eps(eve::as<float>()), 3.0f));
+   print(eve::raw(interval[eve::algo::unroll<1>])(1.0f+2*eve::eps(eve::as<float>()), 3.0f));
   return 0;
 }
