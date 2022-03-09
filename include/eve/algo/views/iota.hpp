@@ -18,19 +18,19 @@ namespace eve::algo::views
   //================================================================================================
   //! @addtogroup views
   //! @{
-  //!    @struct base_plus_offset_iterator
+  //!    @struct iota_with_step_iterator
   //!    @brief An iterator for all values from base to offset.
   //!    Should be created with `iota_with_step` or `iota`.
   //!    Not OK to compare two iterators generated from a different base.
   //!
   //!    **Required header:** `#include <eve/algo/views/iota.hpp>`
   //!
-  //!    Has a shorthand `eve::views::base_plus_offset_iterator` in `<eve/views/iota.hpp>`.
+  //!    Has a shorthand `eve::views::iota_with_step_iterator` in `<eve/views/iota.hpp>`.
   //! @}
   //================================================================================================
 
   template <typename T, typename N>
-  struct base_plus_offset_iterator : operations_with_distance
+  struct iota_with_step_iterator : operations_with_distance
   {
     using value_type = T;
     using wv_type    = eve::wide<value_type, N>;
@@ -40,9 +40,9 @@ namespace eve::algo::views
     std::ptrdiff_t  i;
     wv_type         wide_cur;
 
-    base_plus_offset_iterator() = default;
+    iota_with_step_iterator() = default;
 
-    EVE_FORCEINLINE base_plus_offset_iterator(value_type base,
+    EVE_FORCEINLINE iota_with_step_iterator(value_type base,
                                               value_type step,
                                               std::ptrdiff_t i_) :
       base(base),
@@ -55,55 +55,55 @@ namespace eve::algo::views
       operator+=(i_);
     }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, base_plus_offset_iterator self )
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, iota_with_step_iterator self )
     {
       return self;
     }
 
-    base_plus_offset_iterator previous_partially_aligned() const { return *this; }
-    base_plus_offset_iterator next_partially_aligned()     const { return *this; }
+    iota_with_step_iterator previous_partially_aligned() const { return *this; }
+    iota_with_step_iterator next_partially_aligned()     const { return *this; }
 
     static N iterator_cardinal() { return {}; }
 
     template <typename _N>
-    auto cardinal_cast(_N) const { return base_plus_offset_iterator<T, _N>{base, step, i}; }
+    auto cardinal_cast(_N) const { return iota_with_step_iterator<T, _N>{base, step, i}; }
 
-    base_plus_offset_iterator& operator+=(std::ptrdiff_t n)
+    iota_with_step_iterator& operator+=(std::ptrdiff_t n)
     {
       i += n;
       wide_cur += step * n;
       return *this;
     }
 
-    friend std::ptrdiff_t operator-(base_plus_offset_iterator x, base_plus_offset_iterator y)
+    friend std::ptrdiff_t operator-(iota_with_step_iterator x, iota_with_step_iterator y)
     {
-      EVE_ASSERT(x.base == y.base,   "different base");
+      EVE_ASSERT(x.base == y.base, "different base");
       EVE_ASSERT(x.step == y.step, "different step");
       return x.i - y.i;
     }
 
-    bool operator== (base_plus_offset_iterator const& x) const
+    bool operator== (iota_with_step_iterator const& x) const
     {
-      EVE_ASSERT(base  == x.base,   "different base");
+      EVE_ASSERT(base == x.base, "different base");
       EVE_ASSERT(step == x.step, "different step");
       return i ==  x.i;
     }
-    auto operator<=>(base_plus_offset_iterator const& x) const
+    auto operator<=>(iota_with_step_iterator const& x) const
     {
-      EVE_ASSERT(base  == x.base,   "different base");
+      EVE_ASSERT(base == x.base, "different base");
       EVE_ASSERT(step == x.step, "different step");
       return i <=> x.i;
     }
 
-    EVE_FORCEINLINE friend T tagged_dispatch(eve::tag::read_, base_plus_offset_iterator self)
+    EVE_FORCEINLINE friend T tagged_dispatch(eve::tag::read_, iota_with_step_iterator self)
     {
       return self.base + eve::convert(self.i * self.step, eve::as<T>{});
     }
 
     template <typename U>
-    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, base_plus_offset_iterator self, eve::as<U> tgt)
+    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, iota_with_step_iterator self, eve::as<U> tgt)
     {
-      return base_plus_offset_iterator<U, N>{
+      return iota_with_step_iterator<U, N>{
         eve::convert(self.base, tgt),
         eve::convert(self.step, tgt),
         self.i
@@ -115,7 +115,7 @@ namespace eve::algo::views
                                                    C const & c,
                                                    S const &,
                                                    eve::as<wv_type> const &,
-                                                   base_plus_offset_iterator self)
+                                                   iota_with_step_iterator self)
     {
       if constexpr ( !C::has_alternative ) return self.wide_cur;
       else
@@ -147,7 +147,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE auto operator()(T base, T step) const
     {
       using N = eve::fixed<eve::expected_cardinal_v<T>>;
-      return base_plus_offset_iterator<T, N>{base, step, 0};
+      return iota_with_step_iterator<T, N>{base, step, 0};
     }
 
     template <typename T>

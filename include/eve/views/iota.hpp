@@ -21,12 +21,12 @@ namespace eve::views
   //!    @var iota_with_step
   //!    @brief a shorthand for `eve::algo::views::iota_with_step`.
   //!
-  //!    @struct base_plus_offset_iterator
-  //!    @brief a shorthand for `eve::algo::views::base_plus_offset_iterator`
+  //!    @struct iota_with_step_iterator
+  //!    @brief a shorthand for `eve::algo::views::iota_with_step_iterator`
   //!
   //! }@
   //================================================================================================
   using eve::algo::views::iota;
   using eve::algo::views::iota_with_step;
-  using eve::algo::views::base_plus_offset_iterator;
+  using eve::algo::views::iota_with_step_iterator;
 }
