@@ -237,7 +237,7 @@ namespace eve::algo
     //! @param v Value to write
     EVE_FORCEINLINE void set(std::size_t i, value_type const& v)
     {
-      return eve::write(begin() + i, v);
+      return eve::write(v, begin() + i);
     }
 
     //==============================================================================================

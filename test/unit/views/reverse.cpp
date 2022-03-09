@@ -25,10 +25,10 @@ TTS_CASE("eve::views::reverse, read/write")
 
   TTS_EQUAL((rev.end() - rev.begin()), 4);
 
-  eve::write(rev.begin() + 0, 1);
-  eve::write(rev.begin() + 1, 2);
-  eve::write(rev.begin() + 2, 3);
-  eve::write(rev.begin() + 3, 4);
+  eve::write(1, rev.begin() + 0);
+  eve::write(2, rev.begin() + 1);
+  eve::write(3, rev.begin() + 2);
+  eve::write(4, rev.begin() + 3);
 
   TTS_EQUAL(v, (std::vector<int>{4, 3, 2, 1}));
 };

@@ -156,9 +156,9 @@ namespace eve::algo::views
       return eve::convert(eve::read(self.base), eve::as<T>{});
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, converting_iterator self, T v)
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, T v, converting_iterator self)
     {
-      eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
+      eve::write(eve::convert(v, eve::as<value_type_t<I>>{}),self.base);
     }
 
     template <relaxed_sentinel_for<I> I1>

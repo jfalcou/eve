@@ -151,7 +151,7 @@ namespace algo_test
 
     // write
     {
-      eve::write(f, or_.get(0));
+      eve::write(or_.get(0),f);
       TTS_EQUAL(eve::read(f), or_.get(0));
       eve::store(v, f);
     }
