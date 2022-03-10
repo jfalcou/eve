@@ -35,7 +35,6 @@
 #include <eve/algo/for_each.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/inclusive_scan.hpp>
-#include <eve/algo/views/interval.hpp>
 #include <eve/algo/iota.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/mismatch.hpp>
@@ -52,8 +51,6 @@
 #include <eve/views/backward.hpp>
 #include <eve/views/convert.hpp>
 #include <eve/views/iota.hpp>
-#include <eve/algo/linspace.hpp>
 #include <eve/views/map.hpp>
 #include <eve/views/reverse.hpp>
-#include <eve/algo/views/tchebytchev_points.hpp>
 #include <eve/views/zip.hpp>
