@@ -14,9 +14,9 @@ namespace eve
   //================================================================================================
   //! @addtogroup polynomial
   //! @{
-  //! @var tchebytchev
+  //! @var tchebytchev_u
   //!
-  //! @brief Callable object computing the tchebytchev polynomial of degree n at x.
+  //! @brief Callable object computing the tchebytchev polynomial of second kind and degree n at x.
   //!
   //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the tchebytchev operation   |
+  //! | `operator()` | the tchebytchev_u operation   |
   //!
   //! ---
   //!
@@ -40,8 +40,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the  tchebytchev polynomial of
-  //!first kind and order `n` at `x` \f$T_n(x)\f$:
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the  tchebytchev_u polynomial of
+  //!first kind and order `n` at `x` \f$U_n(x)\f$:
   //!
   //!The result type is of the [common compatible type](@ref common_compatible) of the  parameters.
   //!
@@ -51,21 +51,15 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!     The expression `diff(tchebytchev)(n,x)` computes the derivative of the function relative to `x`.
-  //!
-  //! #### alias
-  //!
-  //!     To desambiguate from tchebytchev polynomial of the second kind (tchebytchev_u) you can use tchebytchev_t
-  //!     in place of tchebytchev
+  //!     The expression `diff(tchebytchev_u)(n,x)` computes the derivative of the function relative to `x`.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/polynomial/tchebytchev.cpp}
+  //! @godbolt{doc/polynomial/tchebytchev_u.cpp}
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(tchebytchev_, tchebytchev);
-  EVE_ALIAS_CALLABLE(chebytchev_t_, tchebytchev);
+  EVE_MAKE_CALLABLE(tchebytchev_u_, tchebytchev_u);
 }
 
-#include <eve/module/polynomial/regular/impl/tchebytchev.hpp>
+#include <eve/module/polynomial/regular/impl/tchebytchev_u.hpp>
