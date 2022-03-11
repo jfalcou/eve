@@ -3,7 +3,7 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include <eve/test/doc/algo/detail/print.hpp>
+#include "detail/print.hpp"
 
 
 int main()
