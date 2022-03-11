@@ -95,6 +95,14 @@ namespace eve
   //================================================================================================
   inline constexpr kind_1_type const kind_1 = {};
 
+  //================================================================================================
+  //================================================================================================
+  // Function decorators mark-up used in function overloads
+  struct kind_2_
+  {
+    template<typename D> static constexpr auto combine( D const& ) noexcept =delete;
+  };
+
   using kind_2_type = decorated<kind_2_()>;
   //================================================================================================
   //! @addtogroup polynomial

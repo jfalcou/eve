@@ -19,14 +19,14 @@ int main()
             << "-> tchebytchev(n, xd)      = " << eve::tchebytchev(n, xd) << '\n'
             << "-> tchebytchev(3, xd)      = " << eve::tchebytchev(3, xd) << '\n'
             << "-> tchebytchev(n, 2.0)     = " << eve::tchebytchev(n, 2.0) << '\n'
-            << "-> tchebytchev(n, x)       = " << eve::tchebytchev(n, x)   << '\n'
-            << "-> diff(tchebytchev)(n, x) = " << eve::diff(eve::tchebytchev)(n, x) << '\n';
+            << "-> tchebytchev(n, x)       = " << eve::tchebytchev(n, x)   << '\n';
+//            << "-> diff(tchebytchev)(n, x) = " << eve::diff(eve::tchebytchev)(n, x) << '\n';
 
-  double xs = 3.0;
+//   double xs = 3.0;
 
-  std::cout << "---- scalar" << '\n'
-            << "<- xs               = " << xs << '\n'
-            << "-> tchebytchev(4, xs)   = " << eve::tchebytchev(4, xs) << '\n';
+//   std::cout << "---- scalar" << '\n'
+//             << "<- xs               = " << xs << '\n'
+//             << "-> tchebytchev(4, xs)   = " << eve::tchebytchev(4.0, xs) << '\n';
 
   return 0;
 }
