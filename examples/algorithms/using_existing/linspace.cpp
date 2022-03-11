@@ -4,7 +4,20 @@
 #include <vector>
 #include <tuple>
 #include <eve/algo/concepts/relaxed.hpp>
-#include "detail/print.hpp"
+
+  template < eve::algo::relaxed_range R>
+  void print(R const & v)
+  {
+    std::cout << '{';
+    auto n = v.end() - v.begin();
+    auto cur = v.begin();
+    if(n)
+    {
+      for(auto i = 1;  i !=  n; ++i, ++cur) {std::cout << +eve::read(cur) << ", ";};
+      if (n) std::cout << +eve::read(cur) << "}\n";
+    }
+    else std::cout <<"}\n";
+  }
 
 // an accurate linspace with transform and lerp
 template < eve::algo::relaxed_range R, eve::scalar_value T,  eve::scalar_value U> R linspace(R& r, T a, U b )
@@ -32,6 +45,6 @@ int main()
 {
   std::vector<float> r1(10);
   linspace(r1, 2, 6.3);
-  eve::detail::print(r1);
+  print(r1);
   return 0;
 }

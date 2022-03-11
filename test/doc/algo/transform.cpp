@@ -3,7 +3,7 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "detail/print.hpp"
+#include <eve/test/doc/algo/detail/print.hpp>
 
 
 int main()
@@ -14,8 +14,8 @@ int main()
   float b = 5.0;
   eve::algo::transform_to(r1, r2, [a, b](auto e){return a*e+b; });
   std::cout << " -> r1                                  = "; eve::detail::print(r1);
-  std::cout << " -> r2  (a*r1+b)                        = ";eve::detail::print(r2);
+  std::cout << " -> r2  (a*r1+b)                        = "; eve::detail::print(r2);
   eve::algo::transform_inplace(r2, eve::log_abs);
-  std::cout << " -> r2  (log(|r2|)                      = ";eve::detail::print(r2);
+  std::cout << " -> r2  (log(|r2|)                      = "; eve::detail::print(r2);
   return 0;
 }
