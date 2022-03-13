@@ -75,7 +75,8 @@ namespace eve
   //!   * eve::saturated
   //!
   //!
-  //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to the type wrapped by `t`.
+  //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to
+  //!     the type wrapped by `t`.
   //!
   //! #### Example
   //!

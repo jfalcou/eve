@@ -18,7 +18,7 @@ EVE_TEST_TYPES( "Check eve::convert return type", eve::test::simd::all_types)
   using t_t = eve::wide<double, eve::cardinal_t<T>>;
 
   TTS_EXPR_IS(eve::convert(T()  , eve::as<double>())              , t_t);
-  TTS_EXPR_IS(eve::float64(T())                                   , t_t);
+   TTS_EXPR_IS(eve::float64(T())                                   , t_t);
   TTS_EXPR_IS(eve::saturated(eve::convert)(T(), eve::as<double>()), t_t);
 };
 
@@ -32,12 +32,13 @@ EVE_TEST_TYPES( "Check eve::convert arithmetic behavior", eve::test::simd::all_t
   using v_t = eve::element_type_t<T>;
   constexpr auto tgt = eve::as<double>();
 
-  TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), tgt), static_cast<t_t>(eve::valmin(eve::as<v_t>())) );
   TTS_EQUAL(eve::convert((T(0))                   , tgt), eve::float64(T(0)) );
   TTS_EQUAL(eve::convert((T(0))                   , tgt), static_cast<t_t>(0) );
   TTS_EQUAL(eve::convert((T(42.69))               , tgt), eve::float64(T(42.69)));
   TTS_EQUAL(eve::convert((T(42.69))               , tgt), static_cast<t_t>(v_t(42.69)) );
   TTS_EQUAL(eve::convert(eve::sqr(T(2))           , tgt), eve::float64(eve::sqr)(T(2)));
+
+  TTS_EQUAL(eve::convert(eve::valmin(eve::as<T>()), tgt), static_cast<t_t>(eve::valmin(eve::as<v_t>())) );
   TTS_EQUAL(eve::convert(eve::valmax(eve::as<T>()), tgt), static_cast<t_t>(eve::valmax(eve::as<v_t>())) );
 };
 

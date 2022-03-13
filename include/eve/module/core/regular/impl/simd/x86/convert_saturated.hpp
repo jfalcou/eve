@@ -7,9 +7,12 @@
 //==================================================================================================
 #pragma once
 
-
 namespace eve::detail
 {
+  // {
+  //         if constexpr(c_o == category::int8x16 ) return _mm_packs_epi16(v,v);
+  //   else  if constexpr(c_o == category::uint8x16) return _mm_packus_epi16(v,v);
+  // }
 
   /////////////////////////////////////////////////////////////////////////////////////
   // saturated conversions
