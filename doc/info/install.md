@@ -74,7 +74,7 @@ The resulting HTML files will be available in the `doc` folder.
 | Compiler       | Version        |
 | -------------- | -------------- |
 | g++            | 11  or above   |
-| clang++        | 12  or above   |
+| clang++        | 13  or above   |
 </center>
 <br/>
 

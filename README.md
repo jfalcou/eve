@@ -73,7 +73,7 @@ Here is the current minimal compiler version supported:
 | Compiler       | Version       |
 | -------------- | ------------- |
 | g++            | 11 or above   |
-| clang++        | 12 or above   |
+| clang++        | 13 or above   |
 | Visual Studio  | *TBD*         |
 
 Visual Studio support is currently being added. Help on the front of setting up appveyor properly is also welcome.

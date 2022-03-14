@@ -9,14 +9,14 @@ Change Log {#changelog}
 
 ### What's Changed
 
-**This releases is an API/ABI breaking changes release.**
+**This release is an API/ABI breaking changes release.**
 
-A lot of improvements in QoL, QoI and API has been made.
+A lot of improvements in QoL, QoI, and API have been made.
 Some more breaking ABI changes are planned, including a passive move toward
 an include file layout more amenable to future modularization.
 
 A bunch of platform supports changes are also in to prepare for new platform
-including WASM ans **gasp** fixed size SVE.
+including WASM and **gasp** fixed size SVE.
 
 * Improvements of documentation
  - Revamped docs to add basic 101 tutorials
