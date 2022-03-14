@@ -2253,3 +2253,24 @@ EXTERNAL_GROUPS        = YES
 # The default value is: YES.
 
 EXTERNAL_PAGES         = YES
+
+
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool
+#---------------------------------------------------------------------------
+DIA_PATH               =
+HIDE_UNDOC_RELATIONS   = YES
+HAVE_DOT               = NO
+CLASS_GRAPH            = NO
+COLLABORATION_GRAPH    = NO
+GROUP_GRAPHS           = NO
+UML_LOOK               = NO
+DOT_UML_DETAILS        = NO
+DOT_WRAP_THRESHOLD     = 17
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = NO
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = NO
+DIR_GRAPH_MAX_DEPTH    = 1
