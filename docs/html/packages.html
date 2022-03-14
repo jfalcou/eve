@@ -152,28 +152,28 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md2091">OS-dependent Package Manager</a><ul><li class="level2"><a href="#autotoc_md2092">AUR</a></li>
+<ul><li class="level1"><a href="#autotoc_md2094">OS-dependent Package Manager</a><ul><li class="level2"><a href="#autotoc_md2095">AUR</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md2093">OS-independent Package Manager</a><ul><li class="level2"><a href="#autotoc_md2094">Conan</a></li>
-<li class="level2"><a href="#autotoc_md2095">CPM</a></li>
-<li class="level2"><a href="#autotoc_md2096">SPACK</a></li>
-<li class="level2"><a href="#autotoc_md2097">VCPKG</a></li>
+<li class="level1"><a href="#autotoc_md2096">OS-independent Package Manager</a><ul><li class="level2"><a href="#autotoc_md2097">Conan</a></li>
+<li class="level2"><a href="#autotoc_md2098">CPM</a></li>
+<li class="level2"><a href="#autotoc_md2099">SPACK</a></li>
+<li class="level2"><a href="#autotoc_md2100">VCPKG</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_info_packages"></a></p>
 <p >If you want to automate your usage of <b>EVE</b>, here is a list of package managers that let you access the library.</p>
-<h1><a class="anchor" id="autotoc_md2091"></a>
+<h1><a class="anchor" id="autotoc_md2094"></a>
 OS-dependent Package Manager</h1>
-<h2><a class="anchor" id="autotoc_md2092"></a>
+<h2><a class="anchor" id="autotoc_md2095"></a>
 AUR</h2>
 <p ><b>EVE</b> is available on Arch-Linux via an <a href="https://aur.archlinux.org/packages/eve-git/"><b>AUR package</b></a>.</p>
 <div class="fragment"><div class="line">$ yay -S eve-git</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2093"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2096"></a>
 OS-independent Package Manager</h1>
-<h2><a class="anchor" id="autotoc_md2094"></a>
+<h2><a class="anchor" id="autotoc_md2097"></a>
 Conan</h2>
 <p ><a href="https://conan.io/center/"><b>Conan Center</b></a> hosts <b>EVE</b> as the <a href="https://conan.io/center/jfalcou-eve"><code>jfalcou-eve</code> package</a>.</p>
 <p >To use <b>EVE</b>, just add <code>jfalcou-eve/v2021.10.0</code> in the <code>[requires]</code> section of your <code>conanfile.txt</code></p>
@@ -182,7 +182,7 @@ Conan</h2>
 <div class="line"> </div>
 <div class="line">[generators]</div>
 <div class="line">cmake</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2095"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2098"></a>
 CPM</h2>
 <p >You can install <b>EVE</b> directly via <a href="https://github.com/cpm-cmake/CPM.cmake">CPM</a>. After <a href="https://github.com/cpm-cmake/CPM.cmake#adding-cpm">adding CPM to your CMake setup</a>, just add the following commands:</p>
 <div class="fragment"><div class="line">include(CPM)</div>
@@ -196,12 +196,12 @@ CPM</h2>
 <div class="line">                &quot;EVE_BUILD_BENCHMARKS OFF&quot;</div>
 <div class="line">                &quot;EVE_BUILD_DOCUMENTATION OFF&quot;</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2096"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2099"></a>
 SPACK</h2>
 <p ><b>EVE</b> is <a href="https://spack.readthedocs.io/en/latest/package_list.html#eve"><b>available</b></a> via <a href="https://spack.readthedocs.io/en/latest/getting_started.html"><b>SPACK</b></a>:</p>
 <div class="fragment"><div class="line">$ spack install eve</div>
 </div><!-- fragment --><p >Once installed, you can use <b>EVE</b> headers directly from your <a href="https://spack.readthedocs.io/en/latest/getting_started.html"><b>SPACK</b></a> installation.</p>
-<h2><a class="anchor" id="autotoc_md2097"></a>
+<h2><a class="anchor" id="autotoc_md2100"></a>
 VCPKG</h2>
 <p ><b>EVE</b> can be fetched from <a href="https://vcpkgx.com/details.html?package=eve">VCPKG</a>. Note that, as of now, we still don't support MSVC.</p>
 <div class="fragment"><div class="line">$ vcpkg install eve</div>
