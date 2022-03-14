@@ -59,7 +59,7 @@ MathJax.Hub.Config({
       <!--GITHUB RIBBON-->
       <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
       <!--GITHUB RIBBON-->
-        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
       </div>
     </div>
   </nav>
@@ -76,7 +76,7 @@ MathJax.Hub.Config({
                 </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">v2021.10.0</span>
+                    &#160;<span id="projectnumber">v2022.03.00</span>
                   </div>
                   <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
@@ -160,6 +160,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 <li class="level1"><a href="#glossary_function_semantic">Function Semantic</a><ul><li class="level2"><a href="#glossary_arithmetic">Arithmetic Functions</a></li>
 <li class="level2"><a href="#glossary_bitwise">Bitwise Functions</a></li>
 <li class="level2"><a href="#glossary_logical">Logical Functions</a></li>
+<li class="level2"><a href="#glossary_constant">Constant Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -219,7 +220,25 @@ Bitwise Functions</h2>
 Logical Functions</h2>
 <p ><b>EVE</b> <a class="el" href="glossary_semantic.html#glossary_logical">Logical Functions</a> are <a class="el" href="glossary_semantic.html#glossary_arithmetic">Arithmetic Functions</a> that can only be applied to [logical values][<a class="el" href="concepteve_1_1logical__value.html">eve::logical_value</a>) <code>L1</code>,... <code>Ln</code> that verify that either <code><a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a></code><code>&lt;L1&gt;::value ==</code><code><a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a></code><code>&lt;Ln&gt;::value</code> or that, for a given <code>n</code>, the expression <code>std::same_as&lt;</code><code><a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a></code><code>&lt;Ln&gt;,</code><code><a class="el" href="structeve_1_1scalar__cardinal.html" title="Cardinal type for scalar values.">eve::scalar_cardinal</a></code><code>&gt;</code> evaluates to <code>true</code>.</p>
 <p >In a less formal way, <b>EVE</b> <a class="el" href="glossary_semantic.html#glossary_logical">Logical Functions</a> can be applied to set of <a class="el" href="concepteve_1_1logical__value.html">logical values</a> as long as they all share the same <a class="el" href="structeve_1_1cardinal.html">number of lanes</a>, except for any potential logical scalar values.</p>
-<dl class="section note"><dt>Note</dt><dd>A large majority of <a class="el" href="glossary_semantic.html#glossary_logical">Logical Functions</a> are <em>de facto</em> <a class="el" href="glossary_semantic.html#glossary_elementwise">Elementwise Operations</a> . </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>A large majority of <a class="el" href="glossary_semantic.html#glossary_logical">Logical Functions</a> are <em>de facto</em> <a class="el" href="glossary_semantic.html#glossary_elementwise">Elementwise Operations</a> .</dd></dl>
+<hr  />
+<h2><a class="anchor" id="glossary_constant"></a>
+Constant Functions</h2>
+<p >Some of the object functions defined by <b>EVE</b> have as only parameter a <code>target</code> value. All but two (see above) are reputed to be constants of the type referenced by the target.</p>
+<p >For instance <code><a class="el" href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Callable object computing the 1 value.">eve::one</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;float&gt;())</code> is merely 1.0f, <code><a class="el" href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Callable object computing the 1 value.">eve::one</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;&gt;())</code> is a <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;</code> value filled with elements equal to 1.0f.</p>
+<p >All these constants can be bracketed using decorators downward and upward. This means that for all constants, say of name xxx, one have </p><pre class="fragment">        downward(xxx)(as&lt;T&gt;()) &lt;= xxx(as&lt;T&gt;()) &lt;= upward(xxx)(as&lt;T&gt;()).
+</pre><p> For most constants the 3 values are identical, but this is not the case when the constant semantic is a mathematical value which does not possess an exact representation in the target type. For instance think of pi or sqrt(2) for ieee floating type values.</p>
+<p >In these later cases the direct call to constant value always returns the nearest representable value to the mathematical constant, but it is constant dependant if this effective value is less or greater than the full precision mathematical value.</p>
+<p >For pi:</p><ul>
+<li>eve::pi(as&lt;float&gt;()) is greater than the mathematical pi</li>
+<li>eve::pi(as&lt;double&gt;()) is less than the mathematical pi</li>
+</ul>
+<p >The decorators give the guarantee that if math(xxx) is the (not representable) mathematical value, we get: </p><pre class="fragment">        downward(xxx)(as&lt;T&gt;()) &lt;= math(xxx) &lt;= upward(xxx)(as&lt;T&gt;())
+</pre><p> for all supported target with ordered type. Of course one of these two values is the constant itself and the two values differs at most by 0.5ulp.</p>
+<dl class="section note"><dt>Note</dt><dd>Special case of <a class="el" href="group__core_gac1255364700394f5b94065c935208f42.html#gac1255364700394f5b94065c935208f42" title="Callable object computing the logical true_ value.">eve::true_</a> and <a class="el" href="group__core_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6" title="Callable object computing the logical false_ value.">eve::false_</a> <pre class="fragment">    - they are the only constants whose name ends with an underscore (for obvious language limitations reason),
+    - eve::true_(as&lt;T&gt;()) and eve::false_(as&lt;T&gt;()) do not return a value of type T but as_logical&lt;T&gt;.
+    - they do not support any decorator.
+</pre> </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- HTML footer for doxygen 1.8.20-->
