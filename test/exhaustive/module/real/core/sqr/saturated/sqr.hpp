@@ -5,11 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/sqr.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/sqrtvalmax.hpp>
 #include <tts/tests/range.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 

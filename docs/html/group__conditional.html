@@ -1,0 +1,231 @@
+<!-- HTML header for doxygen 1.8.20-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="generator" content="Doxygen 1.9.4"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>E.V.E: Conditional Expressions</title>
+  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="doxystrap.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Custom input to switch branches -->
+  <script>
+    function switchBranchAction() {
+      var branch = document.getElementById("branch_input").value;
+      var form = this;
+      window.location.href = window.location.hostname + '/en/' + branch;
+    }
+  </script>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+</head>
+<body>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
+      </div>
+    </div>
+  </nav>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+    <div class="content" id="content">
+      <div class="container">
+        <div id="titlearea">
+          <table cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr style="height: 56px;">
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
+                <td id="projectalign" style="padding-left: 0.5em;">
+                  <div id="projectname">E.V.E
+                    &#160;<span id="projectnumber">v2022.03.00</span>
+                  </div>
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
+            <div style="margin-bottom: 15px;">
+              <!-- DOXYSTRAP BLOCK CHANGE END -->
+              <!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li><a href="pages.html"><span>Documentation</span></a></li>
+      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>References</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__functions.html"><span>Functions</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
+      <li><a href="group__traits.html"><span>Traits</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Conditional Expressions<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Types and operations to defines conditional mask expressions.  
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p >Types and operations to defines conditional mask expressions. </p>
+<p >Masking lanes from an <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a> is a frequent operations. To simplify and optimize such code, <b>EVE</b> provides objects and functions to define conditions with a high-level of flexibility including: alternative value, index-based relative conditions and more.</p>
+<p ><b>See also:</b> <a class="el" href="conditional.html">Conditional operations</a> </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1or__.html">eve::or_&lt; C, V &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional/Alternative wrapper.  <a href="structeve_1_1or__.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1if__.html">eve::if_&lt; C &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extensible wrapper for SIMD conditional.  <a href="structeve_1_1if__.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1ignore__all__.html">eve::ignore_all_</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression selecting no lane from a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1ignore__all__.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1ignore__none__.html">eve::ignore_none_</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression selecting all lanes from a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1ignore__none__.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1keep__first.html">eve::keep_first</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression selecting the <em>k</em> first lanes from a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1keep__first.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1ignore__last.html">eve::ignore_last</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression ignoring the <em>k</em> last lanes from a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1ignore__last.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1keep__last.html">eve::keep_last</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression keeping the <em>k</em> last lanes from a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1keep__last.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1ignore__first.html">eve::ignore_first</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression ignoring the <em>k</em> first lanes from a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1ignore__first.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1keep__between.html">eve::keep_between</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression keeping all lanes between two position.  <a href="structeve_1_1keep__between.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1ignore__extrema.html">eve::ignore_extrema</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression ignoring lanes at both extrema of a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.  <a href="structeve_1_1ignore__extrema.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga8265bd793db77b43d12988c1c297f00b"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </td></tr>
+<tr class="memitem:ga8265bd793db77b43d12988c1c297f00b"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b">eve::drop_alternative</a> (C c)</td></tr>
+<tr class="memdesc:ga8265bd793db77b43d12988c1c297f00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a conditional without an alternative.  <a href="group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b">More...</a><br /></td></tr>
+<tr class="separator:ga8265bd793db77b43d12988c1c297f00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </td></tr>
+<tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1">eve::map_alternative</a> (C c, auto op)</td></tr>
+<tr class="memdesc:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a transformed conditional.  <a href="group__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1">More...</a><br /></td></tr>
+<tr class="separator:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab99c14f8c7e6cd5fc693a79c97bc89d8"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C, typename T &gt; </td></tr>
+<tr class="memitem:gab99c14f8c7e6cd5fc693a79c97bc89d8"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__conditional_gab99c14f8c7e6cd5fc693a79c97bc89d8.html#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a> (C c, <a class="el" href="structeve_1_1as.html">eve::as</a>&lt; T &gt; tgt)</td></tr>
+<tr class="memdesc:gab99c14f8c7e6cd5fc693a79c97bc89d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the reverse of a given <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a>.  <a href="group__conditional_gab99c14f8c7e6cd5fc693a79c97bc89d8.html#gab99c14f8c7e6cd5fc693a79c97bc89d8">More...</a><br /></td></tr>
+<tr class="separator:gab99c14f8c7e6cd5fc693a79c97bc89d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga6ce7ac450593ee98fe8ca0d9cf65e4b4"><td class="memItemLeft" align="right" valign="top"><a id="ga6ce7ac450593ee98fe8ca0d9cf65e4b4" name="ga6ce7ac450593ee98fe8ca0d9cf65e4b4"></a>
+constexpr <a class="el" href="structeve_1_1ignore__all__.html">ignore_all_</a>&#160;</td><td class="memItemRight" valign="bottom"><b>eve::ignore_all</b> = {}</td></tr>
+<tr class="memdesc:ga6ce7ac450593ee98fe8ca0d9cf65e4b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object representing the <a class="el" href="structeve_1_1ignore__all__.html" title="Conditional expression selecting no lane from a eve::simd_value.">eve::ignore_all_</a> conditional expression. <br /></td></tr>
+<tr class="separator:ga6ce7ac450593ee98fe8ca0d9cf65e4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae234dce7533ecc38fe2c70fd69383633"><td class="memItemLeft" align="right" valign="top"><a id="gae234dce7533ecc38fe2c70fd69383633" name="gae234dce7533ecc38fe2c70fd69383633"></a>
+constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>&#160;</td><td class="memItemRight" valign="bottom"><b>eve::ignore_none</b> = {}</td></tr>
+<tr class="memdesc:gae234dce7533ecc38fe2c70fd69383633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object representing the <a class="el" href="structeve_1_1ignore__none__.html" title="Conditional expression selecting all lanes from a eve::simd_value.">eve::ignore_none_</a> conditional expression. <br /></td></tr>
+<tr class="separator:gae234dce7533ecc38fe2c70fd69383633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+<hr class="footer"/>
+</body>
+</html>

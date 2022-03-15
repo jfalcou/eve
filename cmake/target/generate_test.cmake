@@ -3,7 +3,6 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-include(target/generate_html)
 
 ##==================================================================================================
 ## Setup a test with many option
@@ -37,24 +36,14 @@ function(generate_test root rootpath dep file)
               COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
             )
   else()
-    if ( ${root} MATCHES "doc.*")
+    if ( (${root} MATCHES "doc.*") OR (${root} MATCHES "examples.*") )
       string(REPLACE "." "/" doc_path ${root})
       string(REPLACE ".cpp" ".out.html" doc_output ${file})
-
-      if( EVE_BUILD_SRC_HTML )
-        add_test( NAME ${test}
-                  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                  COMMAND sh -c "${PROJECT_SOURCE_DIR}/cmake/exe2html.sh $<TARGET_FILE:${test}> \"**Possible output:**\" > ${PROJECT_SOURCE_DIR}/docs/reference/out/${doc_output}"
-                )
-
-        generate_html( "test/${doc_path}/${file}" "docs/reference/src" "" "${file}")
-      else()
 
       add_test( NAME ${test}
                   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                   COMMAND "$<TARGET_FILE:${test}>"
                 )
-      endif()
 
       if( EVE_USE_PCH )
         target_precompile_headers(${test} REUSE_FROM doc_pch)

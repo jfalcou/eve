@@ -52,14 +52,14 @@ commands:
           name: Run tests for << parameters.targets >>
           command:                                                                                    |
             cd build                                                                                  &&
-            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest -R $i -j 8 ; done;
+            for i in `../cmake/toolchain/filter.sh << parameters.targets >> values`; do ctest --output-on-failure -R $i -j 8 ; done;
 
 ##==================================================================================================
 ## Jobs setup
 ##==================================================================================================
 random_jobs: &random_jobs
   docker:
-    - image: jfalcou/compilers:latest
+    - image: jfalcou/compilers:v4
   parameters:
     tool:
       type: string

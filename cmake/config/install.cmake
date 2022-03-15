@@ -7,7 +7,7 @@
 ## =================================================================================================
 ## Install target
 ## =================================================================================================
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include DESTINATION .)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/eve TYPE INCLUDE)
 
 ## =================================================================================================
 ## Exporting target for external use

@@ -7,15 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
-#include <eve/algo/unalign.hpp>
 
-#include <eve/function/compress_store.hpp>
 
 #include <array>
 
@@ -53,11 +52,11 @@ namespace eve::algo
     {
       if (rng.begin() == rng.end()) return unalign(rng.begin());
 
-      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
 
       auto iteration = algo::for_each_iteration(processed.traits(), processed.begin(), processed.end());
       auto out = iteration.base;
-      delegate<unaligned_t<decltype(out)>, P> d{out.unaligned(), p};
+      delegate<unaligned_t<decltype(out)>, P> d{unalign(out), p};
       iteration(d);
       return unalign(rng.begin()) + (d.out - processed.begin());
     }
@@ -71,7 +70,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename T>
     EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
     {
-      return remove_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), equal_to{v});
+      return remove_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to{v});
     }
   };
 

@@ -1,8 +1,5 @@
-#include <eve/function/dist.hpp>
-#include <eve/function/saturated/dist.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
 #include <iostream>
 
 using wide_it = eve::wide<int16_t, eve::fixed<4>>;

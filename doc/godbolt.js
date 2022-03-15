@@ -26,9 +26,9 @@ $( document ).ready(function() {
                                       {
                                         "compiler":
                                         {
-                                            "id": "clang1201",
+                                            "id": "clang1301",
                                             "libs": [ {"id": "eve", "version": "trunk"}],
-                                            "options": "-O3 -std=c++20 -mavx2"
+                                            "options": "-DEVE_NO_FORCEINLINE -std=c++20 -DNDEBUG"
                                         }
                                       }
                                     ]

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/convert.hpp>
-#include <eve/module/real/core/function/pedantic/generic/convert.hpp>
+#include <eve/module/core/function/pedantic/generic/convert.hpp>

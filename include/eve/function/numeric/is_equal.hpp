@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/is_equal.hpp>
-#include <eve/module/real/core/function/numeric/generic/is_equal.hpp>
+#include <eve/module/core/numeric/is_equal.hpp>

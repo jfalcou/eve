@@ -26,15 +26,16 @@ var menudata={children:[
 {text:"Index",url:"index.html"},
 {text:"Documentation",url:"pages.html",children:[
 {text:"Documentation",url:"pages.html"},
+{text:"Getting Started",url:"about.html"},
 {text:"Tutorials",url:"tutorials.html"},
-{text:"Glossary",url:"glossary.html"}]},
+{text:"Rationale",url:"rationale.html"},
+{text:"Contributing",url:"eve-dev.html"}]},
 {text:"Modules",url:"modules.html",children:[
 {text:"Modules",url:"modules.html"},
-{text:"Types & Wrappers",url:"group__simd.html"},
+{text:"Types & Wrappers",url:"group__simd__types.html"},
 {text:"Functions",url:"group__functions.html"},
-{text:"Constants",url:"group__constant.html"},
-{text:"Traits",url:"group__traits.html"},
-{text:"Internals",url:"group__details.html"}]},
+{text:"Algorithms",url:"group__algo.html"},
+{text:"Traits",url:"group__traits.html"}]},
 {text:"References",url:"namespaces.html",children:[
 {text:"Namespace List",url:"namespaces.html"},
 {text:"Concepts",url:"concepts.html"},
@@ -87,4 +88,5 @@ var menudata={children:[
 {text:"v",url:"namespacemembers_vars_v.html#index_v"},
 {text:"w",url:"namespacemembers_vars_w.html#index_w"},
 {text:"z",url:"namespacemembers_vars_z.html#index_z"}]},
+{text:"Typedefs",url:"namespacemembers_type.html"},
 {text:"Enumerations",url:"namespacemembers_enum.html"}]}]}]}

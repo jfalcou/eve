@@ -6,10 +6,10 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include "unit/memory/page.hpp"
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/load.hpp>
 #include <array>
 #include <list>
 
@@ -17,7 +17,7 @@
 // Load into wide from an aligned pointer
 //==================================================================================================
 EVE_TEST( "Check load to wides from aligned pointer"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate(eve::test::ramp(1))
         )
 <typename T>(T reference)
@@ -45,7 +45,7 @@ EVE_TEST( "Check load to wides from aligned pointer"
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::restricted::all_types)
+EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -72,6 +72,6 @@ EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
       (test(eve::lane<(1<<(N+2))>, f, expected),...);
-    }( std::make_integer_sequence<std::ptrdiff_t,5>{});
+    }( std::make_integer_sequence<std::ptrdiff_t,6>{});
   }
 };

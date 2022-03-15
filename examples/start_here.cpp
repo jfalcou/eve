@@ -31,10 +31,9 @@ int const* find_negative_number(int const* f, int const* l)
 #include <eve/algo/transform.hpp>
 #include <eve/views/zip.hpp>
 
-#include <eve/function/atan2.hpp>
-#include <eve/function/sincos.hpp>
-#include <eve/function/hypot.hpp>
-#include <eve/function/zip.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+
 
 #include <eve/product_type.hpp>
 
@@ -106,7 +105,7 @@ void polar_to_cartesian_vectors(
 // remove numbers outside of treshold
 
 #include <eve/algo/remove.hpp>
-#include <eve/function/is_even.hpp>
+#include <eve/module/core.hpp>
 
 void erase_remove_numbers_outisde_of_treshold(
   std::vector<int>& v, int low, int up)
@@ -117,12 +116,23 @@ void erase_remove_numbers_outisde_of_treshold(
   );
 }
 
+// -------------------------
+// reverse parallel arrays
+
+#include <eve/algo/reverse.hpp>
+#include <eve/views/zip.hpp>
+
+void reverse_parallel_arrays(std::vector<int>& a, std::vector<std::uint8_t>& b)
+{
+  eve::algo::reverse(eve::views::zip(a, b));
+}
+
 // --------------------------------------------
 
 #include "test.hpp"
 
-#include <eve/constant/pi.hpp>
-#include <eve/function/abs.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 
 #include <vector>
 
@@ -215,4 +225,18 @@ TTS_CASE("remove_numbers_outisde_of_treshold")
   erase_remove_numbers_outisde_of_treshold(in, 0, 9);
 
   TTS_EQUAL(expected, in);
+};
+
+TTS_CASE("reverse_parallel_arrays")
+{
+  std::vector<int>          a { -1, -2, -3, -4, -5 };
+  std::vector<std::uint8_t> b {  1,  2,  3,  4,  5 };
+
+  std::vector<int>          expected_a { -5, -4, -3, -2, -1 };
+  std::vector<std::uint8_t> expected_b {  5,  4,  3,  2,  1 };
+
+  reverse_parallel_arrays(a, b);
+
+  TTS_EQUAL(a, expected_a);
+  TTS_EQUAL(b, expected_b);
 };

@@ -14,6 +14,10 @@ inputs:
     description: 'Completion Status'
     required: false
     default: '1'
+  cpu:  # How much CPU do we use
+    description: 'CPU Count'
+    required: false
+    default: '8'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -21,3 +25,4 @@ runs:
     - ${{ inputs.options }}
     - ${{ inputs.cmake-options }}
     - ${{ inputs.status }}
+    - ${{ inputs.cpu }}

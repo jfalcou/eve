@@ -25,8 +25,10 @@ namespace eve::detail
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a << b); };
 
-    if constexpr(has_aggregated_abi_v<T> || has_aggregated_abi_v<U>)  v = aggregate(ss, v, s);
-    else                                                              v = map(ss, v, s);
+    if constexpr(   is_aggregated_v<abi_t<T, N>>
+                &&  is_aggregated_v<abi_t<U, N>>
+                )                                     v = aggregate(ss, v, s);
+    else                                              v = map(ss, v, s);
 
     return v;
   }
@@ -36,8 +38,8 @@ namespace eve::detail
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a << b); };
 
-    if constexpr(has_aggregated_abi_v<T>) v = aggregate(ss, v, s);
-    else                                  v = map(ss, v, s);
+    if constexpr(is_aggregated_v<abi_t<T, N>>) v = aggregate(ss, v, s);
+    else                                          v = map(ss, v, s);
 
     return v;
   }
@@ -50,8 +52,10 @@ namespace eve::detail
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
 
-    if constexpr(has_aggregated_abi_v<T> || has_aggregated_abi_v<U>)  v = aggregate(ss, v, s);
-    else                                                              v = map(ss, v, s);
+    if constexpr(   is_aggregated_v<abi_t<T, N>>
+                &&  is_aggregated_v<abi_t<U, N>>
+                )                                     v = aggregate(ss, v, s);
+    else                                              v = map(ss, v, s);
 
     return v;
   }
@@ -61,8 +65,8 @@ namespace eve::detail
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
 
-    if constexpr(has_aggregated_abi_v<T>) v = aggregate(ss, v, s);
-    else                                  v = map(ss, v, s);
+    if constexpr(is_aggregated_v<abi_t<T, N>>) v = aggregate(ss, v, s);
+    else                                          v = map(ss, v, s);
 
     return v;
   }

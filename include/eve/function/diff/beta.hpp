@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/beta.hpp>
-#include <eve/module/real/special/function/diff/generic/beta.hpp>
+#include <eve/module/special/diff/beta.hpp>

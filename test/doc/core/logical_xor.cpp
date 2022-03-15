@@ -1,6 +1,4 @@
-#include <eve/function/logical_xor.hpp>
-#include <eve/function/is_odd.hpp>
-#include <eve/function/is_even.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

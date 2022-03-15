@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <bit>
@@ -30,11 +31,11 @@ EVE_TEST( "Check behavior of identity swizzle"
   {
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
               {
-                constexpr std::size_t sz = 1ULL << N;
+                constexpr typename S::size_type sz = 1ULL << N;
                 if constexpr(sz <= S::size())
                 {
                   eve::as_wide_t<S,eve::fixed<sz>> ref = [&](auto i, auto) { return simd.get(i); };
-                  TTS_EQUAL(simd[identity<sz>], ref);
+                  TTS_EQUAL(eve::shuffle(simd,identity<sz>), ref);
                 }
               };
 

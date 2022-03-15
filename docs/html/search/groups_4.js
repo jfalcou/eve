@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['decorators_0',['Decorators',['../group__decorator.html',1,'']]]
+  ['functions_0',['Functions',['../group__functions.html',1,'']]]
 ];

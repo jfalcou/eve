@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/module/real/polynomial/function/pedantic/generic/newton.hpp>
+#include <eve/module/polynomial/pedantic/newton.hpp>

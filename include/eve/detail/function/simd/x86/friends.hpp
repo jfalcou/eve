@@ -122,17 +122,6 @@ namespace eve::detail
       else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
       else  if constexpr( c == category::float32x4  ) return _mm_cmpeq_ps(v,w);
       else  if constexpr( c == category::float64x2  ) return _mm_cmpeq_pd(v,w);
-      else  if constexpr(supports_xop)
-      {
-              if constexpr( c == category::uint64x2 ) return _mm_comeq_epu64(v,w);
-        else  if constexpr( c == category::uint32x4 ) return _mm_comeq_epu32(v,w);
-        else  if constexpr( c == category::uint16x8 ) return _mm_comeq_epu16(v,w);
-        else  if constexpr( c == category::uint8x16 ) return _mm_comeq_epu8 (v,w);
-        else  if constexpr( c == category::int64x2  ) return _mm_comeq_epi64(v,w);
-        else  if constexpr( c == category::int32x4  ) return _mm_comeq_epi32(v,w);
-        else  if constexpr( c == category::int16x8  ) return _mm_comeq_epi16(v,w);
-        else  if constexpr( c == category::int8x16  ) return _mm_comeq_epi8 (v,w);
-      }
       else
       {
         constexpr auto use_avx2 = current_api >= avx2;
@@ -234,17 +223,6 @@ namespace eve::detail
       else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
       else  if constexpr( c == category::float32x4  ) return _mm_cmpneq_ps(v,w);
       else  if constexpr( c == category::float64x2  ) return _mm_cmpneq_pd(v,w);
-      else  if constexpr(supports_xop)
-      {
-              if constexpr( c == category::uint64x2 ) return _mm_comneq_epu64(v,w);
-        else  if constexpr( c == category::uint32x4 ) return _mm_comneq_epu32(v,w);
-        else  if constexpr( c == category::uint16x8 ) return _mm_comneq_epu16(v,w);
-        else  if constexpr( c == category::uint8x16 ) return _mm_comneq_epu8 (v,w);
-        else  if constexpr( c == category::int64x2  ) return _mm_comneq_epi64(v,w);
-        else  if constexpr( c == category::int32x4  ) return _mm_comneq_epi32(v,w);
-        else  if constexpr( c == category::int16x8  ) return _mm_comneq_epi16(v,w);
-        else  if constexpr( c == category::int8x16  ) return _mm_comneq_epi8 (v,w);
-      }
       else                                            return !(v == w);
     }
   }
@@ -310,17 +288,6 @@ namespace eve::detail
       else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
       else  if constexpr( c == category::float32x4  ) return _mm_cmplt_ps(v,w);
       else  if constexpr( c == category::float64x2  ) return _mm_cmplt_pd(v,w);
-      else  if constexpr(supports_xop)
-      {
-              if constexpr( c == category::uint64x2 ) return _mm_comlt_epu64(v,w);
-        else  if constexpr( c == category::uint32x4 ) return _mm_comlt_epu32(v,w);
-        else  if constexpr( c == category::uint16x8 ) return _mm_comlt_epu16(v,w);
-        else  if constexpr( c == category::uint8x16 ) return _mm_comlt_epu8 (v,w);
-        else  if constexpr( c == category::int64x2  ) return _mm_comlt_epi64(v,w);
-        else  if constexpr( c == category::int32x4  ) return _mm_comlt_epi32(v,w);
-        else  if constexpr( c == category::int16x8  ) return _mm_comlt_epi16(v,w);
-        else  if constexpr( c == category::int8x16  ) return _mm_comlt_epi8 (v,w);
-      }
       else
       {
         constexpr auto use_avx2 = current_api >= avx2;
@@ -401,17 +368,6 @@ namespace eve::detail
       else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
       else  if constexpr( c == category::float32x4  ) return _mm_cmpgt_ps(v,w);
       else  if constexpr( c == category::float64x2  ) return _mm_cmpgt_pd(v,w);
-      else  if constexpr(supports_xop)
-      {
-              if constexpr( c == category::uint64x2 ) return _mm_comgt_epu64(v,w);
-        else  if constexpr( c == category::uint32x4 ) return _mm_comgt_epu32(v,w);
-        else  if constexpr( c == category::uint16x8 ) return _mm_comgt_epu16(v,w);
-        else  if constexpr( c == category::uint8x16 ) return _mm_comgt_epu8 (v,w);
-        else  if constexpr( c == category::int64x2  ) return _mm_comgt_epi64(v,w);
-        else  if constexpr( c == category::int32x4  ) return _mm_comgt_epi32(v,w);
-        else  if constexpr( c == category::int16x8  ) return _mm_comgt_epi16(v,w);
-        else  if constexpr( c == category::int8x16  ) return _mm_comgt_epi8 (v,w);
-      }
       else
       {
         constexpr auto use_avx2 = current_api >= avx2;
@@ -495,17 +451,6 @@ namespace eve::detail
       else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
       else  if constexpr( c == category::float32x4  ) return _mm_cmpge_ps(v,w);
       else  if constexpr( c == category::float64x2  ) return _mm_cmpge_pd(v,w);
-      else  if constexpr(supports_xop)
-      {
-              if constexpr( c == category::uint64x2 ) return _mm_comge_epu64(v,w);
-        else  if constexpr( c == category::uint32x4 ) return _mm_comge_epu32(v,w);
-        else  if constexpr( c == category::uint16x8 ) return _mm_comge_epu16(v,w);
-        else  if constexpr( c == category::uint8x16 ) return _mm_comge_epu8 (v,w);
-        else  if constexpr( c == category::int64x2  ) return _mm_comge_epi64(v,w);
-        else  if constexpr( c == category::int32x4  ) return _mm_comge_epi32(v,w);
-        else  if constexpr( c == category::int16x8  ) return _mm_comge_epi16(v,w);
-        else  if constexpr( c == category::int8x16  ) return _mm_comge_epi8 (v,w);
-      }
       else                                            return !(v < w);
     }
   }
@@ -557,17 +502,6 @@ namespace eve::detail
       else  if constexpr( c == category::float64x4  ) return _mm256_cmp_pd(v,w,f);
       else  if constexpr( c == category::float32x4  ) return _mm_cmple_ps(v,w);
       else  if constexpr( c == category::float64x2  ) return _mm_cmple_pd(v,w);
-      else  if constexpr(supports_xop)
-      {
-              if constexpr( c == category::uint64x2 ) return _mm_comle_epu64(v,w);
-        else  if constexpr( c == category::uint32x4 ) return _mm_comle_epu32(v,w);
-        else  if constexpr( c == category::uint16x8 ) return _mm_comle_epu16(v,w);
-        else  if constexpr( c == category::uint8x16 ) return _mm_comle_epu8 (v,w);
-        else  if constexpr( c == category::int64x2  ) return _mm_comle_epi64(v,w);
-        else  if constexpr( c == category::int32x4  ) return _mm_comle_epi32(v,w);
-        else  if constexpr( c == category::int16x8  ) return _mm_comle_epi16(v,w);
-        else  if constexpr( c == category::int8x16  ) return _mm_comle_epi8 (v,w);
-      }
       else                                            return !(v > w);
     }
   }

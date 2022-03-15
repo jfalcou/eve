@@ -7,16 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <concepts>
 #include <iterator>
 #include <type_traits>
-#include <eve/function/read.hpp>
-#include <eve/function/write.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/compress_store.hpp>
 
 #include <eve/algo/concepts/detail.hpp>
-#include <eve/algo/unalign.hpp>
 
 namespace eve::algo
 {
@@ -48,8 +44,9 @@ namespace eve::algo
     std::totally_ordered_with<std::remove_cvref_t<I>, unaligned_t<std::remove_cvref_t<I>>> &&
     detail::iterator_operations<I> &&
     requires(I i) {
-       { i.unaligned() } -> detail::unaligned_check;
+       { unalign(i) } -> detail::unaligned_check;
        { i.previous_partially_aligned() } -> detail::partially_aligned_check;
+       { i.next_partially_aligned() } -> detail::partially_aligned_check;
     };
 
   template <typename I>

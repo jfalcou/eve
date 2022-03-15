@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <bit>
 
@@ -35,7 +36,7 @@ EVE_TEST_TYPES( "Check behavior of zero swizzle", eve::test::scalar::all_types)
               using type = eve::as_wide_t<S,eve::fixed<sz>>;
               type ref(s_t{'\0',T{0},0.});
 
-              TTS_EQUAL(simd[n_zeros<sz>], ref);
+              TTS_EQUAL(eve::shuffle(simd,n_zeros<sz>), ref);
             };
 
     ( f(data    , std::integral_constant<std::size_t,I>{}), ...);

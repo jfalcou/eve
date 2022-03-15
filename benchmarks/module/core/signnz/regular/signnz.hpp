@@ -5,10 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/signnz.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/one.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
 
 int main()

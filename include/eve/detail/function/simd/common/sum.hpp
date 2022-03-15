@@ -10,11 +10,11 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/reduce.hpp>
-#include <eve/function/splat.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/add.hpp>
-#include <eve/constant/zero.hpp>
+#include <eve/module/core/regular/splat.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {

@@ -1,0 +1,364 @@
+<!-- HTML header for doxygen 1.8.20-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="generator" content="Doxygen 1.9.4"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>E.V.E: SIMD Data Structures</title>
+  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="doxystrap.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Custom input to switch branches -->
+  <script>
+    function switchBranchAction() {
+      var branch = document.getElementById("branch_input").value;
+      var form = this;
+      window.location.href = window.location.hostname + '/en/' + branch;
+    }
+  </script>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+</head>
+<body>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
+      </div>
+    </div>
+  </nav>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+    <div class="content" id="content">
+      <div class="container">
+        <div id="titlearea">
+          <table cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr style="height: 56px;">
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
+                <td id="projectalign" style="padding-left: 0.5em;">
+                  <div id="projectname">E.V.E
+                    &#160;<span id="projectnumber">v2022.03.00</span>
+                  </div>
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
+            <div style="margin-bottom: 15px;">
+              <!-- DOXYSTRAP BLOCK CHANGE END -->
+              <!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li class="current"><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>References</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li class="current"><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="about.html"><span>Getting&#160;Started</span></a></li>
+      <li><a href="tutorials.html"><span>Tutorials</span></a></li>
+      <li><a href="rationale.html"><span>Rationale</span></a></li>
+      <li><a href="eve-dev.html"><span>Contributing</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="tutorials.html">Tutorials</a></li><li class="navelem"><a class="el" href="simd-101.html">SIMD 101</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div><div class="header">
+  <div class="headertitle"><div class="title">SIMD Data Structures </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul><ul><li class="level2"><a href="#autotoc_md2124">Adapting UDT to SIMD processing</a></li>
+<li class="level2"><a href="#autotoc_md2125">Creating SIMD-aware UDT</a></li>
+<li class="level2"><a href="#autotoc_md2126">Storage and Processing</a></li>
+<li class="level2"><a href="#autotoc_md2127">Conclusion</a></li>
+</ul>
+</ul>
+</div>
+<div class="textblock"><p >In the previous tutorial, we laid out how <b>EVE</b> can use SIMD-aware tuples to handle more complex cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.</p>
+<div class="fragment"><div class="line"> </div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2124"></a>
+Adapting UDT to SIMD processing</h2>
+<p >Using tuples as a random bag of values returned from functions is somewhat lackluster. Indeed, one would prefer names over field numbers, thus rising the level of abstraction.</p>
+<p >Following this trend, we can rewrite our scalar <code>to_polar</code> function to return a proper structure.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span>adapt</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">struct </span>polar_coords</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordtype">float</span> rho, theta;</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  polar_coords to_polar(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">std::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">std::atan2</a>(y, x);</div>
+<div class="line">    <span class="keywordflow">return</span> { rho, theta };</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__math_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the hypot operation.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:92</div></div>
+<div class="ttc" id="agroup__math_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr callable_atan2_ atan2</div><div class="ttdoc">Callable object computing the atan2 operation.</div><div class="ttdef"><b>Definition:</b> atan2.hpp:94</div></div>
+</div><!-- fragment --><p >The next thing we want is to be able to write <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;polar_coords&gt;</code> and have everything we already put in place for handling tuple just works with user-defined type. <b>EVE</b> provides an opt-in system to do just that.</p>
+<p >To register <code>polar_coords</code> to be usable as a type inside <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>, two things are needed:</p><ul>
+<li>adapt the structure to be <a href="https://en.cppreference.com/w/cpp/language/structured_binding">compatible with C++ structured bindings</a>. This includes specializations for <code>std::tuple_size</code>, <code>std::tuple_element</code> and a <code>get</code> function.</li>
+<li>specialize eve::is_product_type to opt-in for product-type behavior</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">// Opt-in for eve::product_type</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/product_type.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><span class="keyword">struct </span>eve::is_product_type&lt;adapt::polar_coords&gt; : std::true_type</div>
+<div class="line">{};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Standard Structured Bindings adaptation</span></div>
+<div class="line"><span class="keyword">namespace </span>adapt</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span>&amp; get( polar_coords&amp; p) <span class="keyword">noexcept</span></div>
+<div class="line">  {</div>
+<div class="line">          <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==0) <span class="keywordflow">return</span> p.rho;</div>
+<div class="line">    <span class="keywordflow">else</span>  <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==1) <span class="keywordflow">return</span> p.theta;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt; <span class="keyword">constexpr</span> <span class="keywordtype">float</span> get( polar_coords <span class="keyword">const</span>&amp; p) <span class="keyword">noexcept</span></div>
+<div class="line">  {</div>
+<div class="line">          <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==0) <span class="keywordflow">return</span> p.rho;</div>
+<div class="line">    <span class="keywordflow">else</span>  <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(I==1) <span class="keywordflow">return</span> p.theta;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><span class="keyword">struct </span>std::tuple_size&lt;adapt::polar_coords&gt;  : std::integral_constant&lt;std::size_t, 2&gt;</div>
+<div class="line">{};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> I&gt;</div>
+<div class="line"><span class="keyword">struct </span>std::tuple_element&lt;I,adapt::polar_coords&gt;</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using</span> type = float;</div>
+<div class="line">};</div>
+</div><!-- fragment --><p >The most interesting effect of this adaptation protocol is that you can adapt pre-existing user defined types without modifying their code, thus allowing for 3rd party types adaptations.</p>
+<p >We can then just rewrite <code>to_polar</code> to use this new UDT.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span>adapt</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a> to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a>{ rho, theta };</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+</div><!-- fragment --><p >Note how the semantic improved by being able to explicitly states we return a SIMD register made of instance of <code>polar_coords</code>.</p>
+<h2><a class="anchor" id="autotoc_md2125"></a>
+Creating SIMD-aware UDT</h2>
+<p >All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build a new user-defined type directly usable as a SIMD type. <b>EVE</b> provides an intrusive protocol to do just that via the use of the <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> helper.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/product_type.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span>udt</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">struct </span>polar_coords : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;polar_coords,float,float&gt;</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">using</span> eve_disable_ordering = void;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) rho(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;polar_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">return</span> get&lt;0&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) theta(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;polar_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">return</span> get&lt;1&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:109</div></div>
+<div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:156</div></div>
+</div><!-- fragment --><p >Let's go over the new components introduced here:</p>
+<ul>
+<li><a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> is to be used as a base class for the new user-defined type. It acts as a <a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a> base class that gathers the ordered list of the desired members types. Here we want <code>udt::polar_coords</code> to be two <code>float</code>s. Said data members will then be automatically stored by <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> and accessible via a tuple-like interface via <code>get</code>.</li>
+<li>By default, inheriting from <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> provides overloads for equality and inequality operators.</li>
+<li><code>using eve_disable_ordering = void;</code> is an opt-out for the otherwise automatically generated comparison operators as we don't want to automatically be able to order instances of <code>polar_coords</code>.</li>
+<li>We then define friend functions to assign names to numbered fields. As the structure thus defined will be usable in both scalar and SIMD context, we use the <a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a> concept to overload them. <code><a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a>&lt;polar_coords&gt;</code> used as a parameters concept means that the function accepts any type that behaves like a <code>polar_coords</code>, i.e <code>polar_coords</code> and <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;polar_coords&gt;</code>. Such function can also be defined as regular function, but this form is easier and safer.</li>
+</ul>
+<p >This is the bare minimum we can do with <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>. Additional operators can be added along with stream insertion. Check <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> documentation for more informations.</p>
+<h2><a class="anchor" id="autotoc_md2126"></a>
+Storage and Processing</h2>
+<p >The last step in this situation is now to process multiples <code>udt::polar_coords</code> using algorithms. The most efficient way to do so is to use eve::soa_vector as a container for SIMD-aware types, either adapted or created using <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>.</p>
+<p >eve::soa_vector provides a <code>std::vector</code>-like interface but perform automatic Structure of Array storage optimisation, ensures the best alignment possible for each sub-members and is directly usable as <b>EVE</b> algorithm input or output.</p>
+<p >Let's see how eve::soa_vector can be used as a proper output parameter for out <code>to_polar</code> function.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo/container/soa_vector.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo/transform.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/views/zip.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span>udt</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;kumi::tuple&lt;float,float&gt;</a>&gt;{ rho, theta };</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> to_polar( std::vector&lt;float&gt; <span class="keyword">const</span>&amp; xs, std::vector&lt;float&gt; <span class="keyword">const</span>&amp; ys)</div>
+<div class="line">  {</div>
+<div class="line">    eve::algo::soa_vector&lt;polar_coords&gt; outs(xs.size());</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_variable" href="group__algo_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a> ( <a class="code hl_variable" href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::views::zip</a>(xs, ys), outs</div>
+<div class="line">                            , [](<span class="keyword">auto</span> in) { <span class="keywordflow">return</span> to_polar( get&lt;0&gt;(in), get&lt;1&gt;(in) ); }</div>
+<div class="line">                            );</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> outs;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__algo_ga023d457444697194cbb8dcf21bcb236e_html_ga023d457444697194cbb8dcf21bcb236e"><div class="ttname"><a href="group__algo_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a></div><div class="ttdeci">constexpr auto transform_to</div><div class="ttdoc">SIMD version of std::transform.</div><div class="ttdef"><b>Definition:</b> transform.hpp:112</div></div>
+<div class="ttc" id="agroup__views_ga351e71cb38111c22884bb11fc51211a4_html_ga351e71cb38111c22884bb11fc51211a4"><div class="ttname"><a href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::algo::views::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Given relaxed_iterors and relaxed ranges, zips them together (creates a single object)....</div><div class="ttdef"><b>Definition:</b> zip.hpp:144</div></div>
+</div><!-- fragment --><p >Now, as a final example, let's a do a <code>cartesian_coords</code> SIMD user-defined type and write <code>to_cartesian</code>.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo/container/soa_vector.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo/transform.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span>udt</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">struct </span>cartesian_coords : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;cartesian_coords,float,float&gt;</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">using</span> eve_disable_ordering = void;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) x(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;cartesian_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">return</span> get&lt;0&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">friend</span> <span class="keyword">decltype</span>(<span class="keyword">auto</span>) y(<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;cartesian_coords&gt;</a> <span class="keyword">auto</span>&amp;&amp; self)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">return</span> get&lt;1&gt;(std::forward&lt;<span class="keyword">decltype</span>(self)&gt;(self));</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> to_cartesian( eve::algo::soa_vector&lt;polar_coords&gt; <span class="keyword">const</span>&amp; ins)</div>
+<div class="line">  {</div>
+<div class="line">    eve::algo::soa_vector&lt;cartesian_coords&gt; outs(ins.size());</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_variable" href="group__algo_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a> ( ins, outs</div>
+<div class="line">                            , [](<span class="keyword">auto</span> in)</div>
+<div class="line">                              {</div>
+<div class="line">                                <span class="keyword">auto</span> r = rho(in);</div>
+<div class="line">                                <span class="keyword">auto</span> t = theta(in);</div>
+<div class="line">                                <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;cartesian_coords&gt;</a>{ r * <a class="code hl_variable" href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a>(t), r * <a class="code hl_variable" href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a>(t) };</div>
+<div class="line">                              }</div>
+<div class="line">                            );</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> outs;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__math_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr callable_cos_ cos</div><div class="ttdoc">Callable object computing cos.</div><div class="ttdef"><b>Definition:</b> cos.hpp:72</div></div>
+<div class="ttc" id="agroup__math_gaf171d35de1087cbe903e3c5748cf19f3_html_gaf171d35de1087cbe903e3c5748cf19f3"><div class="ttname"><a href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a></div><div class="ttdeci">constexpr callable_sin_ sin</div><div class="ttdoc">Callable object computing sin.</div><div class="ttdef"><b>Definition:</b> sin.hpp:72</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2127"></a>
+Conclusion</h2>
+<p >In this tutorial, we managed to:</p><ul>
+<li>adapt existing UDT to be compatible with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></li>
+<li>create new UDTs compatible with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> by constrcution</li>
+<li>use eve::soa_vector, the SIMD-aware storage in place of standard containers</li>
+<li>process SIMD-aware storage with <b>EVE</b> algorithms </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+<hr class="footer"/>
+</body>
+</html>

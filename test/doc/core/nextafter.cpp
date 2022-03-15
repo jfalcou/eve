@@ -1,6 +1,4 @@
-#include <eve/function/nextafter.hpp>
-#include <eve/constant/eps.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

@@ -3,8 +3,8 @@
 # EVE - the Expressive Vector Engine
 
 [![E.V.E CI](https://github.com/jfalcou/eve/actions/workflows/main.yml/badge.svg)](https://github.com/jfalcou/eve/actions/workflows/main.yml)
-[![Licence](https://img.shields.io/github/license/jfalcou/eve?style=plastic)](https://img.shields.io/github/license/jfalcou/eve?style=plastic) 
-[![Discord](https://img.shields.io/discord/692734675726237696?style=plastic)](https://discord.com/channels/692734675726237696/692735259204124692) 
+[![Licence](https://img.shields.io/github/license/jfalcou/eve?style=plastic)](https://img.shields.io/github/license/jfalcou/eve?style=plastic)
+[![Discord](https://img.shields.io/discord/692734675726237696?style=plastic)](https://discord.gg/8A4Q4HkhcW)
 
 ## Purpose
 
@@ -21,26 +21,36 @@ needs to change.
 ## Getting Started
 
  - [Installing and using the library](https://jfalcou.github.io/eve/html/install.html)
+ - [Fetching EVE using your favorite Package Manager](https://jfalcou.github.io/eve/html/packages.html)
+ - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/html/simd-101.html)
  - [References Documentation](https://jfalcou.github.io/eve/html/modules.html)
 
-## Current status - Advanced BETA
+## Video materials
 
-EVE is considered in **advanced beta**: it's usable, has an almost complete feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
+### SIMD in C++20: EVE of a new Era - CppCon 2021
 
-### Current roaster of supported Instructions Sets
+[![SIMD in C++20: EVE of a new Era - CppCon 2021](http://img.youtube.com/vi/WZGNCPBMInI/0.jpg)](http://www.youtube.com/watch?v=WZGNCPBMInI "Video Title")
+
+### SIMD Algorithms Design
+
+[![Playlist by Denis Yaroshevskiy](http://img.youtube.com/vi/U1e_k8xmwR0/0.jpg)](https://www.youtube.com/playlist?list=PLYCMvilhmuPEM8DUvY6Wg_jaSFHpmlSBD)
+
+## Current status - Operationnal
+
+EVE is considered **operationnal**: it's usable, has a large feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
+
+### Current roster of supported Instructions Sets
 
 Full support with tests:
  - **Intel**
    - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
-   - AVX, AVX2, FMA4
+   - AVX, AVX2, FMA3
    - AVX512 Skymake style (F,CD,DQ,BW,VL)
  - **ARM**
    - NEON (64 & 128 bits)
    - AARCH64
 
 Partial/In-progress support with minimal checks:
- - **AMD**
-   - XOP, FMA3
  - **PowerPC**
    - VMX
    - VSX
@@ -48,7 +58,7 @@ Partial/In-progress support with minimal checks:
  - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
  - We **do not support** GPGPU, this is the job for another tool.
 
-### Current roaster of supported compiler
+### Current roster of supported compiler
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
  - Concepts and requires
@@ -63,7 +73,7 @@ Here is the current minimal compiler version supported:
 | Compiler       | Version       |
 | -------------- | ------------- |
 | g++            | 11 or above   |
-| clang++        | 12 or above   |
+| clang++        | 13 or above   |
 | Visual Studio  | *TBD*         |
 
 Visual Studio support is currently being added. Help on the front of setting up appveyor properly is also welcome.
@@ -76,7 +86,7 @@ Visual Studio support is currently being added. Help on the front of setting up 
 
  - **Why this instead of std::simd or any other libraries?** EVE is a playground for testing proper
    design and implementation decisions for such libraries. Vc and its standard version are fine pieces
-   of work but we aim at pushing the envelop in term of API and implementation without any standard
+   of work but we aim at pushing the envelope in term of API and implementation without any standard
    restriction. We will try, however, to keep up with standard naming as much as possible.
 
  - **Is this Boost.SIMD v42.69?** Yes and no. This reimplementation is based on slightly different

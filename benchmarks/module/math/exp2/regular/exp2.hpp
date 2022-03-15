@@ -5,9 +5,10 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/exp2.hpp>
-#include <eve/constant/maxlog2.hpp>
-#include <eve/constant/minlog2.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/math/constant/maxlog2.hpp>
+#include <eve/module/math/constant/minlog2.hpp>
 #include <cmath>
 
 int main()

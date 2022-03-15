@@ -7,16 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/constant/as_value.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/function/add.hpp>
-#include <eve/function/reduce.hpp>
 #include <eve/traits.hpp>
 
 #include <utility>
@@ -66,7 +63,7 @@ namespace eve::algo
     template <typename Rng, typename Op, typename Zero, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
-      auto cvt_rng = views::convert(std::forward<Rng>(rng), as<U>{});
+      auto cvt_rng = views::convert(EVE_FWD(rng), as<U>{});
       auto processed = preprocess_range(TraitsSupport::get_traits(), cvt_rng);
 
       using I = decltype(processed.begin());
@@ -86,7 +83,7 @@ namespace eve::algo
     template <typename Rng, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, U init) const
     {
-      return operator()(std::forward<Rng>(rng), std::pair{eve::add, eve::zero}, init);
+      return operator()(EVE_FWD(rng), std::pair{eve::add, eve::zero}, init);
     }
   };
 

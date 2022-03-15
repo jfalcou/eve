@@ -1,10 +1,5 @@
-#include <eve/function/maxmag.hpp>
-#include <eve/function/pedantic/maxabs.hpp>
-#include <eve/function/numeric/maxabs.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -20,8 +15,10 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> maxabs(pf, qf)            = " << eve::maxabs(pf, qf) << '\n'
-            << "-> pedantic(maxabs)(pf, qf) = " << eve::pedantic(eve::maxabs)(pf, qf) << '\n'
-            << "-> numeric(maxabs)(pf, qf)  = " << eve::numeric(eve::maxabs)(pf, qf) << '\n';
+            << "-> pedantic(maxabs)(pf, qf)  = " << eve::pedantic(eve::maxabs)(pf, qf) << '\n'
+            << "-> numeric(maxabs)(pf, qf)   = " << eve::numeric(eve::maxabs)(pf, qf) << '\n'
+            << "-> diff_1st(maxabs)(pf, qf)  = " << eve::diff_1st(eve::maxabs)(pf, qf) << '\n'
+            << "-> diff_2nd(maxabs)(pf, qf)  = " << eve::diff_2nd(eve::maxabs)(pf, qf) << '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;

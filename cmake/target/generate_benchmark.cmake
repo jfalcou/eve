@@ -38,8 +38,8 @@ function(generate_bench root rootpath dep file)
   target_link_libraries(${bench} PUBLIC eve_bench)
 
   if( EVE_USE_PCH )
-    target_precompile_headers(${bench} REUSE_FROM doc_pch)
-    add_dependencies(${bench} doc_pch)
+    target_precompile_headers(${bench} REUSE_FROM bench_pch)
+    add_dependencies(${bench} bench_pch)
   endif()
 
   set_property( TARGET ${bench}

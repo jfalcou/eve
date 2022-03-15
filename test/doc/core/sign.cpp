@@ -1,4 +1,4 @@
-#include <eve/function/sign.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -12,10 +12,11 @@ int main()
   wide_it pi = { 0, 2, -3, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf       = " << pf << '\n'
-            << "-> sign(pf) = " << eve::sign(pf) << '\n'
-            << "<- pi       = " << pi << '\n'
-            << "-> sign(pi) = " << eve::sign(pi) << '\n';
+            << "<- pf             = " << pf << '\n'
+            << "-> sign(pf)       = " << eve::sign(pf) << '\n'
+            << "-> diff(sign)(pf) = " << eve::diff(eve::sign)(pf) << '\n'
+            << "<- pi             = " << pi << '\n'
+            << "-> sign(pi)       = " << eve::sign(pi) << '\n';
 
   float        xf = -327.68f;
   std::int16_t xi = -328;

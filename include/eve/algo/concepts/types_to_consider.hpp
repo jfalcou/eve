@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/concepts/value_type.hpp>
-
+#include <eve/module/core.hpp>
+#include <eve/traits.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve::algo

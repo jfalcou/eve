@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/abs.hpp>
-#include <eve/module/real/core/function/diff/generic/abs.hpp>
+#include <eve/module/core/diff/abs.hpp>

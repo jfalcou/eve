@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/manhattan.hpp>
-#include <eve/module/real/core/function/pedantic/generic/manhattan.hpp>
+#include <eve/module/core/pedantic/manhattan.hpp>

@@ -13,6 +13,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/memory/soa_ptr.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
@@ -20,12 +21,9 @@
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
-#include <eve/detail/function/patterns.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
-#include <eve/detail/function/swizzle.hpp>
 #include <eve/product_type.hpp>
 
 #include <concepts>
@@ -60,10 +58,8 @@ namespace eve
   //================================================================================================
   template<typename Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  wide
-        : detail::wide_cardinal<Cardinal>
-        , detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+        : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
-    using card_base     = detail::wide_cardinal<Cardinal>;
     using storage_base  = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
     public:
@@ -77,8 +73,11 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
-    //! Type for indexing element in a eve::wide
-    using size_type     = typename card_base::size_type;
+    //! Type describing the number of lanes of current wide
+    using cardinal_type = Cardinal;
+
+    //! Type representing the size of the current wide
+    using size_type     = std::ptrdiff_t;
 
     //! Opt-in for like concept
     using is_like = value_type;
@@ -90,8 +89,7 @@ namespace eve
     //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type,N>;
 
-    // TODO : REMOVE AFTER MERGE
-    static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
+     static EVE_FORCEINLINE constexpr auto alignment() noexcept { return sizeof(Type)*Cardinal{}; }
 
     //==============================================================================================
     //! @name Constructors
@@ -130,8 +128,8 @@ namespace eve
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
 #endif
-                            : wide( std::begin(std::forward<Range>(r))
-                                  , std::end  (std::forward<Range>(r))
+                            : wide( std::begin(EVE_FWD(r))
+                                  , std::end  (EVE_FWD(r))
                                   )
     {}
 
@@ -144,12 +142,13 @@ namespace eve
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<detail::data_source... Ptr>
     requires(kumi::product_type<Type>)
-    EVE_FORCEINLINE explicit  wide(kumi::tuple<Ptr...> ptr) noexcept
+    EVE_FORCEINLINE explicit  wide(eve::soa_ptr<Ptr...> ptr) noexcept
                             : storage_base(load(ptr, Cardinal{}))
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
     template<scalar_value S>
+    requires requires(S v) { static_cast<Type>(v); }
     EVE_FORCEINLINE explicit  wide(S const& v)  noexcept
                             : storage_base(detail::make(eve::as<wide>{}, static_cast<Type>(v)))
     {}
@@ -158,7 +157,7 @@ namespace eve
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide( S0 v0, S1 v1, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::size() == 2 + sizeof...(vs) )
+    requires( Cardinal::value == 2 + sizeof...(vs) )
 #endif
                   : storage_base(detail::make ( eve::as<wide>{}
                                               , static_cast<Type>(v0)
@@ -167,16 +166,17 @@ namespace eve
                                 )             )
     {}
 
-    //! Constructs a eve::wide from a sequence of SIMD product type values
-    template<simd_value S0, simd_value... Ss>
-    explicit EVE_FORCEINLINE wide( S0 v0, Ss... vs) noexcept
+    //! Constructs a eve::wide from a sequence of values
+    template<typename S0, typename... Ss>
+    explicit EVE_FORCEINLINE wide(S0 const& v0,Ss const&... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires    kumi::sized_product_type<Type,1+sizeof...(Ss)>
-            &&  (   std::same_as<cardinal_t<S0>,Cardinal> &&  ...
-                &&  std::same_as<cardinal_t<Ss>,Cardinal>
-                )
+    requires kumi::sized_product_type<Type,sizeof...(Ss) + 1>
 #endif
-            : storage_base(kumi::make_tuple(v0,vs...))
+            : storage_base( kumi::map ( []<typename W>(auto const& n, W const&) { return W{n}; }
+                                      , kumi::make_tuple(v0,vs...)
+                                      , *this
+                                      )
+                          )
     {}
 
     //==============================================================================================
@@ -213,7 +213,7 @@ namespace eve
     //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE wide(Generator &&g) noexcept
-                  : storage_base( detail::fill(eve::as<wide>{}, std::forward<Generator>(g)) )
+                  : storage_base( detail::fill(eve::as<wide>{}, EVE_FWD(g)) )
     {}
 
     //! @brief Constructs a eve::wide by combining two eve::wide of half the current cardinal.
@@ -221,7 +221,7 @@ namespace eve
     template<typename Half>
     EVE_FORCEINLINE wide( wide<Type, Half> const &l, wide<Type, Half> const &h) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::size() == 2 * Half::value )
+    requires( Cardinal::value == 2 * Half::value )
 #endif
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {}
@@ -234,8 +234,6 @@ namespace eve
     //! @name Assignment operators
     //! @{
     //==============================================================================================
-    //! Assignment operator
-    wide& operator=(wide const&) & = default;
 
     //! @brief Assignment of an architecture-specific SIMD register
     wide& operator=(storage_type const &r)
@@ -377,136 +375,14 @@ namespace eve
     //! @{
     //=============================================================================================
 
-    //==============================================================================================
-    //! @brief Dynamic lookup via lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero.
-    //!
-    //! Does not participate in overload resolution if `idx` is not an integral register.
-    //!
-    //! @param idx  eve::wide of integral indexes
-    //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
-    //!
-    //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/z7vndroaz)
-    //!
-    //! @code
-    //! #include <eve/wide.hpp>
-    //! #include <iostream>
-    //!
-    //! int main()
-    //! {
-    //!   // Generates the wide [1 2 4 ... 2^N-1]
-    //!   eve::wide<int> r = [](auto i, auto) { return 1 << i; };
-    //!   std::cout << r << "\n";
-    //!
-    //!   // A re-indexing wide
-    //!   eve::wide<int> l =  [](auto i, auto) { return i%2 ? i : i/2;};
-    //!   std::cout << l    << "\n";
-    //!   std::cout << r[l] << "\n";
-    //! }
-    //! @endcode
-    //==============================================================================================
-    template<integral_scalar_value Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
-    {
-      return lookup((*this),idx);
-    }
+    //! @brief Size of the wide in number of lanes
+    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Cardinal::value; }
 
-    //==============================================================================================
-    //! @brief Static lookup via lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! `p' is an instance of eve::pattern_t constructed via the eve::pattern template
-    //! variable. Values appearing in the pattern must be between 0 and `size()-1` or equal
-    //! to eve::na_ to indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a predefined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::pattern defining a shuffling pattern
-    //! @return   A wide constructed as `wide{ get(I), ... }`.
-    //!
-    //! @see eve::pattern_t
-    //! @see eve::pattern
-    //!
-    //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/7nohq9h1T)
-    //!
-    //! @code
-    //! #include <eve/wide.hpp>
-    //! #include <iostream>
-    //!
-    //! int main()
-    //! {
-    //!   eve::wide<int, eve::fixed<8>> r{1, 2, 4, 8, 16, 32, 64, 128};
-    //!   std::cout << r << "\n";
-    //!
-    //!   // Reindex r with a static pattern
-    //!   std::cout << r[ eve::pattern<0,0,1,1,2,2,3,3> ] << "\n";
-    //! }
-    //! @endcode
-    //==============================================================================================
-    template<std::ptrdiff_t... I>
-#if !defined (EVE_DOXYGEN_INVOKED)
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> ) const noexcept
-    requires(pattern_t<I...>{}.validate(Cardinal::value))
-#else
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
-#endif
-    {
-      constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();
-      return swizzler(*this);
-    }
+    //! @brief Maximal number of lanes for a given wide
+    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Cardinal::value; }
 
-    //==============================================================================================
-    //! @brief Static lookup via procedural lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! `p' is an instance of eve::as_pattern instantiated with a `constexpr` lambda that will be
-    //! used to generate the pattern algorithmically.
-    //! Values returned by the lambda must be between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a pre-defined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::as_pattern_t defined from a lambda function
-    //! @return   A wide constructed as `wide{ get(p(0,size())), ..., get(p(0,size()-1)) }`.
-    //!
-    //! @see eve::as_pattern
-    //!
-    //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/aacf487q1)
-    //!
-    //! @code
-    //! #include <eve/wide.hpp>
-    //! #include <iostream>
-    //!
-    //! int main()
-    //! {
-    //!   eve::wide<int, eve::fixed<8>> r{1, 2, 4, 8, 16, 32, 64, 128};
-    //!   std::cout << r << "\n";
-    //!
-    //!   // Reindex r with a constexpr lambda with two parameters
-    //!   // i : the current index being reordered
-    //!   // c : the cardinal of the value being reordered
-    //!   std::cout << r[ eve::as_pattern{ [](auto i, auto c) { return c-i-1; } } ] << "\n";
-    //! }
-    //! @endcode
-    //==============================================================================================
-    template<typename F>
-    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
-    {
-      return (*this)[ fix_pattern<Cardinal::value>(p) ];
-    }
+    //! @brief Check if a wide contains 0 lanes
+    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
     //==============================================================================================
     //! @}
@@ -747,7 +623,8 @@ namespace eve
 
     //! @brief Perform the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
-    friend  EVE_FORCEINLINE auto& operator*=(wide& w, value auto o) noexcept
+    template<value V>
+    friend  EVE_FORCEINLINE auto& operator*=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( !kumi::product_type<Type> )
 #endif
@@ -766,16 +643,17 @@ namespace eve
     //! @brief Perform the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
     template<real_scalar_value S>
-    friend EVE_FORCEINLINE auto operator*(S s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator*(S s, wide v) noexcept
     {
-      return v * wide(s);
+      return v *= s;
     }
 
     //! @brief Perform the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
-    friend EVE_FORCEINLINE auto operator*(wide const& v, real_scalar_value auto s) noexcept
+    template<real_scalar_value S>
+    friend EVE_FORCEINLINE auto operator*(wide v, S s) noexcept
     {
-      return v * wide(s);
+      return v *= s;
     }
 
     //! @brief Perform the compound division on all the wide lanes and assign
@@ -905,6 +783,7 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator==(wide v, S w) noexcept
     {
       return v == wide{w};
@@ -912,6 +791,7 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator==(S v, wide w) noexcept
     {
       return w == v;
@@ -925,6 +805,7 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator!=(wide v, S w) noexcept
     {
       return v != wide{w};
@@ -932,6 +813,7 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
     template<scalar_value S>
+    requires requires(S s) { wide{s}; }
     friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept
     {
       return w != v;
@@ -1098,16 +980,27 @@ namespace eve
   //==============================================================================================
   // Product type Support
   //==============================================================================================
-  template<std::size_t I, typename T, typename N> EVE_FORCEINLINE auto& get(wide<T,N>& w) noexcept
-  requires( kumi::product_type<T> )
+  template<std::size_t I, kumi::product_type T, typename N>
+  EVE_FORCEINLINE auto& get(wide<T,N>& w) noexcept
   {
     return kumi::get<I>(w.storage());
   }
 
-  template<std::size_t I, typename T, typename N> EVE_FORCEINLINE auto get(wide<T,N> const& w) noexcept
-  requires( kumi::product_type<T> )
+  template<std::size_t ... Idx, kumi::product_type T, typename N>
+#if !defined(EVE_DOXYGEN_INVOKED)
+  requires( (Idx < kumi::size<T>::value) && ... )
+#endif
+  EVE_FORCEINLINE auto get(eve::wide<T, N> const& w) noexcept
   {
-    return kumi::get<I>(w.storage());
+    if constexpr( sizeof...(Idx) == 1)
+    {
+      return kumi::get<Idx...>(w.storage());
+    }
+    else
+    {
+      using U = kumi::tuple<std::tuple_element_t<Idx, T> ...>;
+      return eve::wide<U, N>( get<Idx>(w) ... );
+    }
   }
 
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -1116,6 +1009,7 @@ namespace eve
 }
 #endif
 
+#if !defined(EVE_DOXYGEN_INVOKED)
 //================================================================================================
 // Product type Support
 //================================================================================================
@@ -1131,3 +1025,4 @@ struct  std::tuple_element<I, eve::wide<T, N>>
 template<kumi::product_type T, typename N>
 struct std::tuple_size<eve::wide<T, N>> : std::tuple_size<typename eve::wide<T, N>::storage_type>
 {};
+#endif

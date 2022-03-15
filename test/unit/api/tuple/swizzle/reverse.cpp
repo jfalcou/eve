@@ -6,8 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 
-#include <eve/function/reverse.hpp>
 #include <eve/wide.hpp>
 
 
@@ -24,4 +24,5 @@ EVE_TEST_TYPES( "Check behavior of identity swizzle", eve::test::scalar::all_typ
 
   eve::wide<s_t> expected([&](int i, int size) { return data.get(size - i - 1); });
   TTS_EQUAL(eve::reverse(data), expected);
+  TTS_EQUAL(eve::shuffle(data, eve::as_pattern([](auto i, auto c) { return c-i-1;})), expected);
 };

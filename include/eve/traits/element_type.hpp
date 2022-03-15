@@ -22,7 +22,7 @@ namespace eve
   //!
   //!   For a given type `T`, computes the type of its inner elements.
   //!
-  //!   @tparam T Type to process//!
+  //!   @tparam T Type to process
   //!
   //!   #### Member types
   //!

@@ -89,22 +89,6 @@ namespace eve::detail
     using type = T;
   };
 
-  // Extract value_type from type
-  template<typename T> struct value_type
-  {
-    using type = T;
-  };
-
-  template<typename T>
-  requires requires { typename T::value_type; }
-  struct value_type<T>
-  {
-    using type = typename T::value_type;
-  };
-
-  template<typename T>
-  using value_type_t    = typename value_type<T>::type;
-
   // Extract abi_type from type
   template<typename T, typename Enable = void>
   struct abi_type
@@ -323,15 +307,6 @@ namespace eve::detail
 
   ///////////////////////////////////////////////////////////////////
 
-  // Extract the sign of a type
-  template<typename T>
-  struct sign_of : std::conditional<std::is_signed_v<value_type_t<T>>, signed, unsigned>
-  {
-  };
-
-  template<typename T>
-  using sign_of_t = typename sign_of<T>::type;
-
   // Generate integral types from sign + size
   template<std::size_t Size>
   struct make_floating_point;
@@ -373,7 +348,7 @@ namespace eve::detail
   {
     const auto impl = [&]<std::size_t... I>(std::index_sequence<I...> const &)
     {
-      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+      return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
     };
 
     return impl(std::make_index_sequence<Count>{});
@@ -385,7 +360,7 @@ namespace eve::detail
   {
     const auto impl = [&](Generator<I...> const &)
     {
-      return std::forward<Func>(f)(std::integral_constant<std::size_t, I>{}...);
+      return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
     };
 
     return impl(g);

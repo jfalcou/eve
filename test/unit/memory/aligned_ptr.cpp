@@ -28,6 +28,48 @@ TTS_CASE("aligned_ptr constructor from nullptr")
   TTS_EQUAL(nullptr_constructed_ptr       , nullptr);
 };
 
+TTS_CASE("aligned_ptr constructor from more resticted")
+{
+  TTS_CONSTEXPR_EXPECT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int, eve::fixed<4>>,
+                        eve::aligned_ptr<int, eve::fixed<2>>
+                       >) );
+  TTS_CONSTEXPR_EXPECT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int const, eve::fixed<4>>,
+                        eve::aligned_ptr<int const, eve::fixed<2>>
+                       >) );
+  TTS_CONSTEXPR_EXPECT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int,       eve::fixed<4>>,
+                        eve::aligned_ptr<int const, eve::fixed<4>>
+                       >) );
+  TTS_CONSTEXPR_EXPECT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int,       eve::fixed<4>>,
+                        eve::aligned_ptr<int const, eve::fixed<2>>
+                       >) );
+
+  TTS_CONSTEXPR_EXPECT_NOT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int, eve::fixed<2>>,
+                        eve::aligned_ptr<int, eve::fixed<4>>
+                       >) );
+
+  TTS_CONSTEXPR_EXPECT_NOT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int const, eve::fixed<2>>,
+                        eve::aligned_ptr<int const, eve::fixed<4>>
+                       >) );
+
+  TTS_CONSTEXPR_EXPECT_NOT( (
+    std::convertible_to<
+                        eve::aligned_ptr<int const, eve::fixed<4>>,
+                        eve::aligned_ptr<int      , eve::fixed<4>>
+                       >) );
+};
+
 TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
   constexpr auto size = EVE_CURRENT_ABI::bytes;
@@ -53,8 +95,8 @@ TTS_CASE("aligned_ptr factory functions - Specific alignment")
 TTS_CASE("aligned_ptr ordering")
 {
   std::byte                      values[ 2 ];
-  eve::aligned_ptr<std::byte, eve::fixed<1>> ptr = &values[ 0 ];
-  eve::aligned_ptr<std::byte, eve::fixed<1>> ptr1= ptr;
+  eve::aligned_ptr<std::byte, eve::fixed<1>> ptr { &values[ 0 ] };
+  eve::aligned_ptr<std::byte, eve::fixed<1>> ptr1 = ptr;
 
   ptr1++;
   TTS_EXPECT(ptr < ptr1);
@@ -69,7 +111,7 @@ TTS_CASE("aligned_ptr ordering")
 TTS_CASE("aligned_ptr pre/post increment & decrement")
 {
   std::byte                            values[ 2 ];
-  eve::aligned_ptr<std::byte, eve::fixed<1>> ptr = &values[ 0 ];
+  eve::aligned_ptr<std::byte, eve::fixed<1>> ptr { &values[ 0 ] };
 
   ptr++;
   TTS_EQUAL(ptr.get(), &values[ 1 ]);
@@ -97,9 +139,9 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
     type values[2] = {{42},{17}};
     alignas(8) type extra_aligned_value{87};
 
-    eve::aligned_ptr<type, eve::fixed<1>> ptr           = &values[0];
-    eve::aligned_ptr<type, eve::fixed<1>> other_ptr     = &values[1];
-    eve::aligned_ptr<type, eve::fixed<8>> realigned_ptr = &extra_aligned_value;
+    eve::aligned_ptr<type, eve::fixed<1>> ptr           { &values[0] };
+    eve::aligned_ptr<type, eve::fixed<1>> other_ptr     { &values[1] };
+    eve::aligned_ptr<type, eve::fixed<8>> realigned_ptr { &extra_aligned_value };
 
     TTS_AND_THEN("we check the proper default alignment")
     {
@@ -117,7 +159,7 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
 
     TTS_AND_THEN("we check re-assignment from raw pointer")
     {
-      ptr = &values[1];
+      ptr = decltype(ptr)(&values[1]);
       TTS_EQUAL(ptr->method(), &values[1]);
       TTS_EQUAL(ptr->member, 17);
       ptr->member = 101;
@@ -187,7 +229,7 @@ TTS_CASE("aligned_ptr provides pointer-like interface")
   }
 };
 
-TTS_CASE("previous aligned address")
+TTS_CASE("previous/next aligned address")
 {
   using eve::aligned_ptr;
   using lanes = eve::fixed<16>;
@@ -195,13 +237,22 @@ TTS_CASE("previous aligned address")
 
   for( int i = 0; i != static_cast<int>(data.size()); ++i)
   {
-    short*            cur = data.begin() + i;
-    short const* expected = data.begin() + (i / 16) * 16;
+    short*                 cur = data.begin() + i;
+    short const* prev_expected = data.begin() + (i / 16) * 16;
+    short const* next_expected = (cur == prev_expected) ? cur : prev_expected + 16;
 
-    aligned_ptr<short, lanes> aligned = eve::previous_aligned_address(cur, lanes{});
-    TTS_EQUAL(aligned.get(), expected);
+    aligned_ptr<short, lanes> prev = eve::previous_aligned_address(cur, lanes{});
+    TTS_EQUAL(prev.get(), prev_expected);
 
-    aligned_ptr<short const, lanes> aligned_const = eve::previous_aligned_address((short const*)cur, lanes{});
-    TTS_EQUAL(aligned_const.get(), expected);
+    aligned_ptr<short const, lanes> prev_const = eve::previous_aligned_address((short const*)cur, lanes{});
+    TTS_EQUAL(prev_const.get(), prev_expected);
+
+    aligned_ptr<short, lanes> next = eve::next_aligned_address(cur, lanes{});
+    TTS_EQUAL(next.get(), next_expected);
+
+    aligned_ptr<short const, lanes> next_const = eve::next_aligned_address((short const*)cur, lanes{});
+    TTS_EQUAL(next_const.get(), next_expected);
+
+    TTS_LESS_EQUAL(eve::previous_aligned_address(cur), eve::next_aligned_address(cur));
   }
 };

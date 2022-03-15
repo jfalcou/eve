@@ -1,5 +1,4 @@
-#include <eve/function/abs.hpp>
-#include <eve/function/saturated/abs.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -13,6 +12,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
+            << "-> diff(abs)(pf)       = " << eve::diff(eve::abs)(pf) << '\n'
             << "-> abs(pf)             = " << eve::abs(pf) << '\n'
             << "<- pi                  = " << pi << '\n'
             << "-> saturated(abs)(pi)  = " << eve::saturated(eve::abs)(pi) << '\n'

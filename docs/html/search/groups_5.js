@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['elliptic_0',['Elliptic',['../group__elliptic.html',1,'']]],
-  ['exponential_1',['Exponential',['../group__exponential.html',1,'']]]
+  ['math_20function_0',['math function',['../group__math.html',1,'']]],
+  ['memory_20management_1',['Memory Management',['../group__memory.html',1,'']]]
 ];

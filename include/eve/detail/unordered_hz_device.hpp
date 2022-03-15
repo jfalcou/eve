@@ -11,11 +11,10 @@
 #include <eve/forward.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/as.hpp>
-#include <eve/function/any.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/function/any.hpp>
-#include <eve/function/if_else.hpp>
-#include <eve/function/logical_not.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
 
 // This is a help for programming efiicient horizontal branching
 // see dawson .hpp for an example

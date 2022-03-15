@@ -5,13 +5,14 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/module/real/core/detail/generic/horn1.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <type_traits>
 
 int main()
 {
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_VALUE = eve::element_type_t<EVE_TYPE>;
   if constexpr(std::is_same_v<EVE_VALUE, double>)
   {
     using i_t =  eve::as_integer_t<EVE_VALUE>;

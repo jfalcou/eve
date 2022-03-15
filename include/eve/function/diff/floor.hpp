@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/floor.hpp>
-#include <eve/module/real/core/function/diff/generic/floor.hpp>
+#include <eve/module/core/diff/floor.hpp>

@@ -50,7 +50,7 @@ test_targets()
   return 0;
 }
 
-echo "::group::Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
+echo "::group::Running: 'cmake .. -G Ninja -DEVE_OPTIONS="$1" $2'"
 mkdir build
 cd build
 cmake .. -G Ninja -DEVE_OPTIONS="$1" $2

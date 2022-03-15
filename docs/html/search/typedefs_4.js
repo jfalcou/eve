@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['mask_5ftype_0',['mask_type',['../structeve_1_1logical.html#a7f0eebc0478c6f0faf7c0ec92c634609',1,'eve::logical::mask_type()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a552251c1f51965f56d96414cc8f933c8',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::mask_type()']]]
+  ['is_5flike_0',['is_like',['../structeve_1_1wide.html#aff3a86e07d2a7b5aac81be591630dc0c',1,'eve::wide']]],
+  ['iterator_5fcardinal_5ft_1',['iterator_cardinal_t',['../group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980',1,'eve']]]
 ];

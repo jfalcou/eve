@@ -5,9 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/bit_notand.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <cmath>
 

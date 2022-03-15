@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
@@ -14,8 +15,6 @@
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
 
-#include <eve/function/all.hpp>
-#include <eve/function/logical_and.hpp>
 
 #include <array>
 #include <utility>
@@ -53,7 +52,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
     {
-      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
 
       if (processed.begin() == processed.end()) return true;
 

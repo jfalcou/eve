@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/find.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/views/zip.hpp>
 
-#include <eve/function/is_equal.hpp>
 
 #include <utility>
 
@@ -25,7 +25,7 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(R&& r, P p) const
     {
       return algo::find_if_not[TraitsSupport::get_traits()]
-        (std::forward<R>(r), apply_to_zip_pair{p});
+        (EVE_FWD(r), apply_to_zip_pair{p});
     }
 
     template <zipped_range_pair R>
@@ -40,14 +40,14 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, P p) const
     {
-      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), p);
+      return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), p);
     }
 
     template <typename R1, typename R2>
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2) const
     {
-      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)));
+      return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }
   };
 

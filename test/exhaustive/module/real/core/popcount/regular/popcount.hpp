@@ -5,12 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/popcount.hpp>
-#include <eve/function/bit_shr.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/function/bit_shr.hpp>
 #include <tts/tests/range.hpp>
+#include <eve/module/core.hpp>
 #include "measures.hpp"
 #include "producers.hpp"
 

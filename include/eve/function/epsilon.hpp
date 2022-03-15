@@ -7,11 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(epsilon_, epsilon);
-}
-
-#include <eve/module/real/core/function/regular/generic/epsilon.hpp>
+#include <eve/module/core/regular/epsilon.hpp>

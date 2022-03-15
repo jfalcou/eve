@@ -1,4 +1,4 @@
-#include <eve/function/negate.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -7,13 +7,14 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 int main()
 {
   wide_ft pf = {0.0f, -0.0f, 0.0f, -0.0f, 2.0f, -2.0f,  2.0f, 2.0f};
-
   wide_ft qf = {4.0f, 4.0f, -4.0f,  -4.0, 4.0f, 4.0f, -0.0f,  +0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf             = " << pf << '\n'
-            << "<- qf             = " << qf << '\n'
-            << "-> negate(pf, qf) = " << eve::negate(pf, qf) << '\n';
+            << "<- pf                       = " << pf << '\n'
+            << "<- qf                       = " << qf << '\n'
+            << "-> negate(pf, qf)           = " << eve::negate(pf, qf) << '\n'
+            << "-> diff_1st(negate)(pf, qf) = " << eve::diff_1st(eve::negate)(pf, qf) << '\n'
+            << "-> diff_2nd(negate)(pf, qf) = " << eve::diff_2nd(eve::negate)(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -1.0f;

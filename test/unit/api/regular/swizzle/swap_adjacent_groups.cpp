@@ -6,16 +6,16 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/swap_adjacent_groups.hpp>
 #include <bit>
 
 //==================================================================================================
 // SWAG test
 //==================================================================================================
 EVE_TEST( "Check behavior of SWAGs swizzle"
-        , eve::test::simd::restricted::all_types
+        , eve::test::simd::all_types
         , eve::test::generate ( eve::test::randoms(-50, 50)
                               , eve::test::logicals(1, 2)
                               )
@@ -31,12 +31,12 @@ EVE_TEST( "Check behavior of SWAGs swizzle"
               constexpr std::size_t sz = 1ULL << N;
               S ref = [=](auto i, auto c)
               {
-                constexpr auto p = eve::detail::swap_adjacent_groups_pattern<sz,S::size()>;
+                constexpr auto p = eve::swap_adjacent_groups_pattern<sz,S::size()>;
                 return simd.get(p(i,c));
               };
 
-              constexpr auto swags = eve::detail::swap_adjacent_groups_pattern<sz,S::size()>;
-              TTS_EQUAL( (simd[swags])                                  , ref);
+              constexpr auto swags = eve::swap_adjacent_groups_pattern<sz,S::size()>;
+              TTS_EQUAL( eve::shuffle(simd,swags)                       , ref);
               TTS_EQUAL( eve::swap_adjacent_groups(simd, eve::lane<sz>) , ref);
             };
 

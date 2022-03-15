@@ -1,5 +1,4 @@
-#include <eve/function/average.hpp>
-#include <eve/literals.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <vector>
 #include <iostream>
@@ -36,7 +35,13 @@ int main()
   std::cout << "---- multi" << '\n'
             << " <- pf                               = " << pf << '\n'
             << " <- qf                               = " << qf << '\n'
-            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n';
+            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n'
+            << " -> diff_1st(average)(pf, qf)        = " << eve::diff_1st(eve::average)(pf, qf) << std::endl
+            << " -> diff_2nd(average)(pf, qf)        = " << eve::diff_2nd(eve::average)(pf, qf) << std::endl;
 
+  std::cout << "---- multi parameters" << '\n'
+            << " -> diff(average)(pf,12.0f,pf,2*pf)         = " << eve::diff(eve::average)(pf,12.0f, pf, 2*pf)<< '\n'
+            << " -> diff_2nd(average)(pf,12.0f,pf,2*pf)     = " << eve::diff_2nd(eve::average)(pf,12.0f, pf, 2*pf)<< '\n'
+            << " -> diff_nth<5>(average)(pf,12.0f,pf,2*pf)  = " << eve::diff_nth<5>(eve::average)(pf,12.0f, pf, 2*pf)<< '\n';
   return 0;
 }

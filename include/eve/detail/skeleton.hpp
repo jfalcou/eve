@@ -25,13 +25,13 @@ namespace eve::detail
   template<typename T> EVE_FORCEINLINE
   constexpr decltype(auto) at(T &&t, std::size_t i) noexcept requires(has_indexed_get<T>)
   {
-    return std::forward<T>(t).get(i);
+    return EVE_FWD(t).get(i);
   }
 
   template<typename T> EVE_FORCEINLINE
   constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!has_indexed_get<T>)
   {
-    return std::forward<T>(t);
+    return EVE_FWD(t);
   }
 
   // Subparts extraction
@@ -39,8 +39,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
   {
     using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return std::forward<T>(t).slice(upper_);
-    else                          return std::forward<T>(t);
+    if constexpr(simd_value<u_t>) return EVE_FWD(t).slice(upper_);
+    else                          return EVE_FWD(t);
   }
 
   // Lower values extraction
@@ -48,8 +48,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
   {
     using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return std::forward<T>(t).slice(lower_);
-    else                          return std::forward<T>(t);
+    if constexpr(simd_value<u_t>) return EVE_FWD(t).slice(lower_);
+    else                          return EVE_FWD(t);
   }
 
   // Compute a transformed wide type
@@ -93,7 +93,7 @@ namespace eve::detail
     template<typename Func, typename Idx, typename... Ts>
     EVE_FORCEINLINE auto operator()(Func &&fn, Idx const &i, Ts &&... vs) const noexcept
     {
-      return std::forward<Func>(fn)(at(std::forward<Ts>(vs), i)...);
+      return EVE_FWD(fn)(at(EVE_FWD(vs), i)...);
     }
   };
 
@@ -107,7 +107,7 @@ namespace eve::detail
       return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
               ( [&](auto... I)
                 {
-                  return rebuild<w_t>(map_{}(std::forward<Fn>(f), I, std::forward<Ts>(ts)...)...);
+                  return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
                 }
               );
     }
@@ -115,9 +115,9 @@ namespace eve::detail
     {
       return apply<cardinal_v<w_t>> ( [&](auto... I)
                                       {
-                                        return w_t{ map_{}( std::forward<Fn>(f)
+                                        return w_t{ map_{}( EVE_FWD(f)
                                                           , I
-                                                          , std::forward<Ts>(ts)...
+                                                          , EVE_FWD(ts)...
                                                           )...
                                                   };
                                       }
@@ -146,13 +146,13 @@ namespace eve::detail
     template<typename Func, typename Out, typename... Ts>
     static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts &... ts) -> decltype(auto)
     {
-      dst.template get<I>() =  std::forward<Func>(f)( subpart(ts)... );
+      dst.template get<I>() =  EVE_FWD(f)( subpart(ts)... );
     }
 
     template<typename Func, typename Out, typename... Ts>
     static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts const&... ts) -> decltype(auto)
     {
-      dst.template get<I>() =  std::forward<Func>(f)( subpart(ts)... );
+      dst.template get<I>() =  EVE_FWD(f)( subpart(ts)... );
     }
   };
 
@@ -194,9 +194,9 @@ namespace eve::detail
       detail::apply<replication<wide_t>()>
       ( [&]<typename... I>(I const&...)
         {
-          ( ( aggregate_step<I::value>::perform ( std::forward<Func>(f)
+          ( ( aggregate_step<I::value>::perform ( EVE_FWD(f)
                                                 , that.storage()
-                                                , std::forward<Ts>(ts)...
+                                                , EVE_FWD(ts)...
                                                 )
             ),...
           );
@@ -211,8 +211,8 @@ namespace eve::detail
       // We end up there if we have a difference of # of replications inside
       // This happens in conversions context or when we call a function on a
       // AVX/AVX2 type with no implementation.
-      return wide_t{std::forward<Func>(f)(lower(std::forward<Ts>(ts))...),
-                    std::forward<Func>(f)(upper(std::forward<Ts>(ts))...)};
+      return wide_t{EVE_FWD(f)(lower(EVE_FWD(ts))...),
+                    EVE_FWD(f)(upper(EVE_FWD(ts))...)};
     }
   }
 }

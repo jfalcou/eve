@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/next.hpp>
-#include <eve/module/real/core/function/saturated/generic/next.hpp>
+#include <eve/module/core/saturated/impl/next.hpp>

@@ -5,9 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/numeric/is_not_equal.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core.hpp>
 #include <numeric>
 #include <cmath>
 

@@ -27,11 +27,9 @@ namespace algo_test
     , eve::wide<float>
     , eve::wide<double>
     , eve::wide<std::uint64_t>
-#if !defined(SPY_SIMD_IS_X86_AVX512)
     , eve::wide < std::uint32_t
                 , eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
                 >
-#endif
   > selected_types;
 
   inline constexpr eve::detail::types<
@@ -41,11 +39,9 @@ namespace algo_test
     , eve::wide<kumi::tuple<std::int32_t, std::uint16_t>>
     , eve::wide<kumi::tuple<float, double>, eve::fixed<2>>
     , eve::wide<kumi::tuple<float, double>>
-#if !defined(SPY_SIMD_IS_X86_AVX512)
     , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>,
                 eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
                 >
-#endif
     > selected_pairs_types;
 
 
@@ -92,6 +88,22 @@ namespace algo_test
   }
 
   template <typename T, typename Test>
+  void page_ends_test_special_cases(eve::as<T> tgt,
+                                    eve::element_type_t<T>* f,
+                                    eve::element_type_t<T>* l,
+                                    Test test)
+  {
+    if ((l - f) >= T::size())
+    {
+      ptr_range_test(tgt, f, f + T::size(), test);
+    }
+    if ((l - f) >= T::size() * 3)
+    {
+      ptr_range_test(tgt, f, f + 3 * T::size(), test);
+    }
+  }
+
+  template <typename T, typename Test>
   void page_ends_test(eve::as<T> tgt, Test test)
   {
     auto page = allocate_page<eve::element_type_t<T>>();
@@ -105,6 +117,8 @@ namespace algo_test
 
     auto run_f_l = [&] () mutable {
       test.init(page_begin, f, l, page_end);
+
+      page_ends_test_special_cases(tgt, f, l, test);
 
       while( f < l ) {
         ptr_range_test(tgt, f, l, test);
@@ -124,7 +138,7 @@ namespace algo_test
 
   template <typename N>
   auto select_offsets() {
-    if constexpr ( N{}() <= 8 )
+    if constexpr ( N{}() <= 7 )
     {
       std::array<int, N{}()> res;
       std::iota(res.begin(), res.end(), 0);
@@ -132,7 +146,7 @@ namespace algo_test
     }
     else
     {
-      std::array<int, 8> res;
+      std::array<int, 7> res;
       std::iota(res.begin(), res.end(), 0);
       res.back() = N{}();
       return res;

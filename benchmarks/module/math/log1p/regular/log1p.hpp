@@ -5,9 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/log1p.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/maxflint.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 int main()

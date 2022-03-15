@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <functional>
 
-EVE_TEST_TYPES("Check inlclusive_scan_inplace", algo_test::selected_types)
+EVE_TEST_TYPES("Check inclusive_scan_inplace", algo_test::selected_types)
 <typename T>(eve::as<T> tgt)
 {
   algo_test::transform_inplace_generic_test(

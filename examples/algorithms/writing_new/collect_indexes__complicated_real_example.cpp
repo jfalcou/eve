@@ -7,9 +7,11 @@
 //==================================================================================================
 
 //
+// NOTE: another way of writing the same example can be found in: algorithms/writing_new/collect_indexes__writing_custom_loop.cpp
+//
 // In this example we will have a look at a problem from this blog post:
 //   https://maxdemarzi.com/2021/08/30/lets-build-something-outrageous-part-13-finding-things-faster/
-// This is a slightly modified version of what they posted.
+// This is a modified version of what they posted.
 // According to the author, the number of requests per second went up 5.75 times, after using eve.
 // (My understanding is that `avx2` implementation kicked in).
 //
@@ -25,10 +27,11 @@
 //
 
 #include <eve/algo/concepts.hpp>
-#include <eve/algo/preprocess_range.hpp>
+#include <eve/algo/for_each.hpp>
+#include <eve/views/iota.hpp>
+#include <eve/views/zip.hpp>
 
-#include <eve/function/compress_store.hpp>
-#include <eve/function/load.hpp>
+#include <eve/module/core.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -48,72 +51,62 @@ template <
 >
 void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 {
-  EVE_ASSERT((r.end() - r.begin() <= std::numeric_limits<IdxType>::max()),
-              "The output type is not big enough to hold potential indexes");
+  EVE_ASSERT( (static_cast<std::size_t>(r.end() - r.begin()) <= std::numeric_limits<IdxType>::max())
+            , "The output type is not big enough to hold potential indexes"
+            );
+
 
   // Prepare the output in case it was not empty.
   res.clear();
 
-  // We have to do this everywhere in `algo`.
-  // There is a requirement for `eve::load` that the pointer/iterator is to
-  // somewheere in valid memory, even if we ignore everything.
-  if (r.begin() == r.end()) return;
-
-  // This converts the input to eve's understanding of a range:
-  // unwraps vector::iterator to pointers, things like that.
-  // This is also where all of our dealing with traits happen,
-  // passing `consider_types<IdxType>` will make sure that we choose the cardinal (width)
-  // appropriate for both range type and index type.
-  auto processed = eve::algo::preprocess_range(
-    eve::algo::traits{eve::algo::consider_types<IdxType>}, std::forward<R>(r)
-  );
-
-  // Here we would normally use `for_each_iteration` but it's good to understand what's
-  // happening inside.
-  auto  f  = processed.begin();
-  auto  l  = processed.end();
-  using I  = decltype(f);
-  using N  = eve::algo::iterator_cardinal_t<I>;
-  // ^ Because this is the first place where we get the cardinal,
-  //   we couldn't specify the requirement on the predicate
-
-  auto precise_l = f + ((l - f) / N{}()) * N{}();
-
-  // We are going to overallocate the output so that we can don't
-  // have to store partial registers.
-  res.resize(l - f + N{}());
+  // Over allocating to always use `unsafe(compress_store)`.
+  // eve won't go beyound eve::expected_cardinal_v<IdxType> per wide here.
+  res.resize((r.end() - r.begin()) + eve::expected_cardinal_v<IdxType>);
   IdxType* out = res.data();
 
-  // In a normal loop this would be i from for (i = 0; i != ...)
-  // The lambda constructor will fill in (0, 1, 2, ...);
-  eve::wide<IdxType, N> wide_i{[](int i, int) { return i; }};
+  // iota is going to be an iterator of 0, 1, 2, 3, ...
+  auto idxes = eve::views::iota(IdxType{0});
 
-  while (f != precise_l) {
-    auto test = p(eve::load(f));  // apply the predicate
+  // This is a zip view of element and it's index.
+  auto r_with_idx = eve::views::zip(std::forward<R>(r), idxes);
 
-    // Compress store is the working horse of `remove`. It get's values, mask and where to store.
-    // Writes all of the elements, for which mask is true.
-    // Returns a pointer to after the last stored.
-    // `unsafe` refers to the fact that it's allowed to store up to the whole register,
-    // as long as the first elements are fine.
-    out = eve::unsafe(eve::compress_store)(wide_i, test, out);
+  // Tweak for each for our purposes:
+  //   aligning/unrolling won't help us here due to the operation being complicated.
+  //   These tweaks won't affect correctness, you can align - it will work.
+  auto for_each = eve::algo::for_each[eve::algo::no_aligning][eve::algo::unroll<1>];
 
-    wide_i += N{}();  // ++i
-    f      += N{}();  // ++f
-  }
+  // Unlike `std::for_each` which calls the predicate with a reference,
+  // eve::algo::for_each calls the operations with the iterator and ignore.
+  // From iterator you can load/store values and ignore is needed to mask elements
+  // outside of the real range.
+  //
+  // The case where there is nothing to ignore is handled, there is a special `ignore_none`.
+  for_each(
+      r_with_idx,
+      [&](eve::algo::iterator auto r_idx_it, eve::relative_conditional_expr auto ignore) mutable
+      {
+        // load an element and an index for each element.
+        // The values in the `ignored` part are garbage.
+        auto [elems, idxs] = eve::load[ignore](r_idx_it);
 
-  // Deal with tail
-  if (f != l) {
-    auto ignore = eve::keep_first(l - f);  // elements after l should not be touched
-    auto test   = p(eve::load[ignore](f)); // This will safely load the partial register.
-                                           // The last elements that correspond to after l will be garbage.
+        // Apply the predicate
+        auto test = p(elems);
 
-    // We have overallocated the output, but we still need to mask out garbage elements
-    test = test && ignore.mask(eve::as(test));
-    out  = eve::unsafe(eve::compress_store)(wide_i, test, out);
-  }
+        // We don't know what was the result of applying a predicate to garbage, we need to mask it.
+        test = eve::replace_ignored(test, ignore, false);
 
-  // Clean up the vector
+        // unsafe(compress_store) - write elements marked as true to the output.
+        // the elements are packed together to the left.
+        // unsafe means we can write up to the register width of extra stuff.
+        // returns pointer behind last written element
+        //
+        //  idxs    : [ 1 2 3 4 ]
+        //  test    : [ f t f t ]
+        //  written : [ 2 4 x x ]
+        //  returns : out + 2
+        out  = eve::unsafe(eve::compress_store)(idxs, test, out);
+      });
+
   res.resize(out - res.data());
   res.shrink_to_fit();
 }
@@ -179,7 +172,7 @@ struct collect_indexes_generic_test
   void run(auto rng)
   {
     expected.clear();
-    for (auto* f = eve::algo::unalign(rng.begin()); f != rng.end(); ++f) {
+    for (auto* f = eve::unalign(rng.begin()); f != rng.end(); ++f) {
       if (*f == 1) expected.push_back(f - rng.begin());
     }
 

@@ -547,7 +547,7 @@ namespace tts::detail
   {
     static constexpr auto value() noexcept
     {
-  #if defined(_MSC_VER )
+  #if defined(_MSC_VER ) && !defined(__clang__)
       std::string_view data(__FUNCSIG__);
       auto i = data.find('<') + 1,
         j = data.find(">::value");
@@ -904,10 +904,24 @@ namespace tts
 #include <cstdint>
 #include <type_traits>
 #include <utility>
+#if !defined(__cpp_lib_bit_cast)
+# include <cstring>
+#endif
 namespace tts::detail
 {
-  inline auto as_int(float a)   noexcept  { return std::bit_cast<std::int32_t>(a); }
-  inline auto as_int(double a)  noexcept  { return std::bit_cast<std::int64_t>(a); }
+#if !defined(__cpp_lib_bit_cast)
+  template <class To, class From>
+  To bit_cast(const From& src) noexcept requires(sizeof(To) == sizeof(From))
+  {
+    To dst;
+    std::memcpy(&dst, &src, sizeof(To));
+    return dst;
+  }
+#else
+  using std::bit_cast;
+#endif
+  inline auto as_int(float a)   noexcept  { return bit_cast<std::int32_t>(a); }
+  inline auto as_int(double a)  noexcept  { return bit_cast<std::int64_t>(a); }
   template<typename T> inline auto bitinteger(T a) noexcept
   {
     auto ia = as_int(a);

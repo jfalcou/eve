@@ -9,8 +9,8 @@
 ##==================================================================================================
 add_library(eve_test INTERFACE)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  target_compile_options( eve_test INTERFACE /W3 /EHsc /std:c++latest)
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+  target_compile_options( eve_test INTERFACE /W3 /EHsc /std:c++20)
 else()
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra)
 endif()
@@ -30,7 +30,7 @@ target_include_directories( eve_test SYSTEM INTERFACE
 ##==================================================================================================
 add_library(eve_bench INTERFACE)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   target_compile_options( eve_bench INTERFACE /0x /W3 /EHsc /std:c++latest)
 else()
   target_compile_options( eve_bench INTERFACE -O3 -std=c++20 -Werror -Wall -Wpedantic -Wextra)

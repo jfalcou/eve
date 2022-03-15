@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/pedantic/rising_factorial.hpp>
-#include <eve/module/real/combinatorial/function/diff/generic/rising_factorial.hpp>
+#include <eve/module/special/diff/rising_factorial.hpp>

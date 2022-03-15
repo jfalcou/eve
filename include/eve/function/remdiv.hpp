@@ -7,11 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
-namespace eve
-{
-  EVE_MAKE_CALLABLE(remdiv_, remdiv);
-}
-
-#include <eve/module/real/core/function/regular/generic/remdiv.hpp>
+#include <eve/module/core/regular/remdiv.hpp>

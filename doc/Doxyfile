@@ -38,13 +38,13 @@ PROJECT_NAME           = E.V.E
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = 0.1-beta
+PROJECT_NUMBER         = v2022.03.00
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          =
+PROJECT_BRIEF          = The Expressive Vector Engine
 
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55
@@ -163,6 +163,8 @@ FULL_PATH_NAMES        = YES
 # This tag requires that the tag FULL_PATH_NAMES is set to YES.
 
 STRIP_FROM_PATH        = ../include
+STRIP_FROM_PATH       += /home/jt/falcoudev
+STRIP_FROM_PATH       += /home/falcou/dev
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of the
 # path mentioned in the documentation of a class, which tells the reader which
@@ -218,14 +220,6 @@ QT_AUTOBRIEF           = NO
 # The default value is: NO.
 
 MULTILINE_CPP_IS_BRIEF = NO
-
-# By default Python docstrings are displayed as preformatted text and doxygen's
-# special commands cannot be used. By setting PYTHON_DOCSTRING to NO the
-# doxygen's special commands can be used and the contents of the docstring
-# documentation blocks is shown as doxygen documentation.
-# The default value is: YES.
-
-PYTHON_DOCSTRING       = YES
 
 # If the INHERIT_DOCS tag is set to YES then an undocumented member inherits the
 # documentation from any documented member that it re-implements.
@@ -466,19 +460,6 @@ TYPEDEF_HIDES_STRUCT   = NO
 
 LOOKUP_CACHE_SIZE      = 0
 
-# The NUM_PROC_THREADS specifies the number threads doxygen is allowed to use
-# during processing. When set to 0 doxygen will based this on the number of
-# cores available in the system. You can set it explicitly to a value larger
-# than 0 to get more control over the balance between CPU load and processing
-# speed. At this moment only the input processing can be done using multiple
-# threads. Since this is still an experimental feature the default is set to 1,
-# which effectively disables parallel processing. Please report any issues you
-# encounter. Generating dot graphs in parallel is controlled by the
-# DOT_NUM_THREADS setting.
-# Minimum value: 0, maximum value: 32, default value: 1.
-
-NUM_PROC_THREADS       = 1
-
 #---------------------------------------------------------------------------
 # Build related configuration options
 #---------------------------------------------------------------------------
@@ -541,13 +522,6 @@ EXTRACT_LOCAL_METHODS  = NO
 # The default value is: NO.
 
 EXTRACT_ANON_NSPACES   = NO
-
-# If this flag is set to YES, the name of an unnamed parameter in a declaration
-# will be determined by the corresponding definition. By default unnamed
-# parameters remain unnamed in the output.
-# The default value is: YES.
-
-RESOLVE_UNNAMED_PARAMS = YES
 
 # If the HIDE_UNDOC_MEMBERS tag is set to YES, doxygen will hide all
 # undocumented members inside documented classes or files. If set to NO these
@@ -615,12 +589,6 @@ HIDE_SCOPE_NAMES       = NO
 # The default value is: NO.
 
 HIDE_COMPOUND_REFERENCE= NO
-
-# If the SHOW_HEADERFILE tag is set to YES then the documentation for a class
-# will show which file needs to be included to use the class.
-# The default value is: YES.
-
-SHOW_HEADERFILE        = YES
 
 # If the SHOW_INCLUDE_FILES tag is set to YES then doxygen will put a list of
 # the files that are included by a file in the documentation of that file.
@@ -833,13 +801,6 @@ WARN_IF_UNDOCUMENTED   = YES
 
 WARN_IF_DOC_ERROR      = YES
 
-# If WARN_IF_INCOMPLETE_DOC is set to YES, doxygen will warn about incomplete
-# function parameter documentation. If set to NO, doxygen will accept that some
-# parameters have no documentation without warning.
-# The default value is: YES.
-
-WARN_IF_INCOMPLETE_DOC = YES
-
 # This WARN_NO_PARAMDOC option can be enabled to get warnings for functions that
 # are documented, but have no documentation for their parameters or return
 # value. If set to NO, doxygen will only warn about wrong parameter
@@ -975,10 +936,9 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = ../include/eve/module/ \
-                         ../include/eve/detail/function/tmp \
-                         ../include/eve/detail/function/simd \
-                         ../include/eve/detail/raberu.hpp
+EXCLUDE                =  ../include/eve/detail/function/tmp  \
+                          ../include/eve/module/real/         \
+                          ../include/eve/detail/
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1005,16 +965,18 @@ EXCLUDE_PATTERNS       =
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories use the pattern */test/*
 
-EXCLUDE_SYMBOLS        = spy* \
+EXCLUDE_SYMBOLS        = spy*  \
                          kumi* \
-                         rbr*
+                         rbr*  \
+                         detail*
 
 # The EXAMPLE_PATH tag can be used to specify one or more files or directories
 # that contain example code fragments that are included (see the \include
 # command).
 
 EXAMPLE_PATH           = ../test/doc \
-                         ../examples
+                         ../examples \
+                         .
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
@@ -1285,7 +1247,8 @@ HTML_EXTRA_STYLESHEET  = doxystrap.css
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
 HTML_EXTRA_FILES       = doxystrap.js \
-                         godbolt.js
+                         godbolt.js   \
+                         blacktocat.png
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
@@ -1324,7 +1287,7 @@ HTML_COLORSTYLE_GAMMA  = 80
 # The default value is: NO.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_TIMESTAMP         = YES
+HTML_TIMESTAMP         = NO
 
 # If the HTML_DYNAMIC_MENUS tag is set to YES then the generated HTML
 # documentation will contain a main index with vertical navigation menus that
@@ -1580,18 +1543,6 @@ DISABLE_INDEX          = NO
 
 GENERATE_TREEVIEW      = NO
 
-# When both GENERATE_TREEVIEW and DISABLE_INDEX are set to YES, then the
-# FULL_SIDEBAR option determines if the side bar is limited to only the treeview
-# area (value NO) or if it should extend to the full height of the window (value
-# YES). Setting this to YES gives a layout similar to
-# https://docs.readthedocs.io with more room for contents, but less room for the
-# project logo, title, and description. If either GENERATOR_TREEVIEW or
-# DISABLE_INDEX is set to NO, this option has no effect.
-# The default value is: NO.
-# This tag requires that the tag GENERATE_HTML is set to YES.
-
-FULL_SIDEBAR           = NO
-
 # The ENUM_VALUES_PER_LINE tag can be used to set the number of enum values that
 # doxygen will group on one line in the generated HTML documentation.
 #
@@ -1615,17 +1566,6 @@ TREEVIEW_WIDTH         = 250
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
 EXT_LINKS_IN_WINDOW    = NO
-
-# If the HTML_FORMULA_FORMAT option is set to svg, doxygen will use the pdf2svg
-# tool (see https://github.com/dawbarton/pdf2svg) or inkscape (see
-# https://inkscape.org) to generate formulas as SVG images instead of PNGs for
-# the HTML output. These images will generally look nicer at scaled resolutions.
-# Possible values are: png (the default) and svg (looks nicer but requires the
-# pdf2svg or inkscape tool).
-# The default value is: png.
-# This tag requires that the tag GENERATE_HTML is set to YES.
-
-HTML_FORMULA_FORMAT    = png
 
 # Use this tag to change the font size of LaTeX formulas included as images in
 # the HTML documentation. When you change the font size after a successful
@@ -1663,17 +1603,6 @@ FORMULA_MACROFILE      =
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
 USE_MATHJAX            = YES
-
-# With MATHJAX_VERSION it is possible to specify the MathJax version to be used.
-# Note that the different versions of MathJax have different requirements with
-# regards to the different settings, so it is possible that also other MathJax
-# settings have to be changed when switching between the different MathJax
-# versions.
-# Possible values are: MathJax_2 and MathJax_3.
-# The default value is: MathJax_2.
-# This tag requires that the tag USE_MATHJAX is set to YES.
-
-MATHJAX_VERSION        = MathJax_2
 
 # When MathJax is enabled you can set the default output format to be used for
 # the MathJax output. For more details about the output format see MathJax
@@ -2325,336 +2254,23 @@ EXTERNAL_GROUPS        = YES
 
 EXTERNAL_PAGES         = YES
 
+
 #---------------------------------------------------------------------------
 # Configuration options related to the dot tool
 #---------------------------------------------------------------------------
-
-# If the CLASS_DIAGRAMS tag is set to YES, doxygen will generate a class diagram
-# (in HTML and LaTeX) for classes with base or super classes. Setting the tag to
-# NO turns the diagrams off. Note that this option also works with HAVE_DOT
-# disabled, but it is recommended to install and use dot, since it yields more
-# powerful graphs.
-# The default value is: YES.
-
-CLASS_DIAGRAMS         = NO
-
-# You can include diagrams made with dia in doxygen documentation. Doxygen will
-# then run dia to produce the diagram and insert it in the documentation. The
-# DIA_PATH tag allows you to specify the directory where the dia binary resides.
-# If left empty dia is assumed to be found in the default search path.
-
 DIA_PATH               =
-
-# If set to YES the inheritance and collaboration graphs will hide inheritance
-# and usage relations if the target is undocumented or is not a class.
-# The default value is: YES.
-
 HIDE_UNDOC_RELATIONS   = YES
-
-# If you set the HAVE_DOT tag to YES then doxygen will assume the dot tool is
-# available from the path. This tool is part of Graphviz (see:
-# http://www.graphviz.org/), a graph visualization toolkit from AT&T and Lucent
-# Bell Labs. The other options in this section have no effect if this option is
-# set to NO
-# The default value is: NO.
-
 HAVE_DOT               = NO
-
-# The DOT_NUM_THREADS specifies the number of dot invocations doxygen is allowed
-# to run in parallel. When set to 0 doxygen will base this on the number of
-# processors available in the system. You can set it explicitly to a value
-# larger than 0 to get control over the balance between CPU load and processing
-# speed.
-# Minimum value: 0, maximum value: 32, default value: 0.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_NUM_THREADS        = 0
-
-# When you want a differently looking font in the dot files that doxygen
-# generates you can specify the font name using DOT_FONTNAME. You need to make
-# sure dot is able to find the font, which can be done by putting it in a
-# standard location or by setting the DOTFONTPATH environment variable or by
-# setting DOT_FONTPATH to the directory containing the font.
-# The default value is: Helvetica.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_FONTNAME           = Helvetica
-
-# The DOT_FONTSIZE tag can be used to set the size (in points) of the font of
-# dot graphs.
-# Minimum value: 4, maximum value: 24, default value: 10.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_FONTSIZE           = 10
-
-# By default doxygen will tell dot to use the default font as specified with
-# DOT_FONTNAME. If you specify a different font using DOT_FONTNAME you can set
-# the path where dot can find it using this tag.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_FONTPATH           =
-
-# If the CLASS_GRAPH tag is set to YES then doxygen will generate a graph for
-# each documented class showing the direct and indirect inheritance relations.
-# Setting this tag to YES will force the CLASS_DIAGRAMS tag to NO.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-CLASS_GRAPH            = YES
-
-# If the COLLABORATION_GRAPH tag is set to YES then doxygen will generate a
-# graph for each documented class showing the direct and indirect implementation
-# dependencies (inheritance, containment, and class references variables) of the
-# class with other documented classes.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-COLLABORATION_GRAPH    = YES
-
-# If the GROUP_GRAPHS tag is set to YES then doxygen will generate a graph for
-# groups, showing the direct groups dependencies.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-GROUP_GRAPHS           = YES
-
-# If the UML_LOOK tag is set to YES, doxygen will generate inheritance and
-# collaboration diagrams in a style similar to the OMG's Unified Modeling
-# Language.
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
+CLASS_GRAPH            = NO
+COLLABORATION_GRAPH    = NO
+GROUP_GRAPHS           = NO
 UML_LOOK               = NO
-
-# If the UML_LOOK tag is enabled, the fields and methods are shown inside the
-# class node. If there are many fields or methods and many nodes the graph may
-# become too big to be useful. The UML_LIMIT_NUM_FIELDS threshold limits the
-# number of items for each type to make the size more manageable. Set this to 0
-# for no limit. Note that the threshold may be exceeded by 50% before the limit
-# is enforced. So when you set the threshold to 10, up to 15 fields may appear,
-# but if the number exceeds 15, the total amount of fields shown is limited to
-# 10.
-# Minimum value: 0, maximum value: 100, default value: 10.
-# This tag requires that the tag UML_LOOK is set to YES.
-
-UML_LIMIT_NUM_FIELDS   = 10
-
-# If the DOT_UML_DETAILS tag is set to NO, doxygen will show attributes and
-# methods without types and arguments in the UML graphs. If the DOT_UML_DETAILS
-# tag is set to YES, doxygen will add type and arguments for attributes and
-# methods in the UML graphs. If the DOT_UML_DETAILS tag is set to NONE, doxygen
-# will not generate fields with class member information in the UML graphs. The
-# class diagrams will look similar to the default class diagrams but using UML
-# notation for the relationships.
-# Possible values are: NO, YES and NONE.
-# The default value is: NO.
-# This tag requires that the tag UML_LOOK is set to YES.
-
 DOT_UML_DETAILS        = NO
-
-# The DOT_WRAP_THRESHOLD tag can be used to set the maximum number of characters
-# to display on a single line. If the actual line length exceeds this threshold
-# significantly it will wrapped across multiple lines. Some heuristics are apply
-# to avoid ugly line breaks.
-# Minimum value: 0, maximum value: 1000, default value: 17.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
 DOT_WRAP_THRESHOLD     = 17
-
-# If the TEMPLATE_RELATIONS tag is set to YES then the inheritance and
-# collaboration graphs will show the relations between templates and their
-# instances.
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
 TEMPLATE_RELATIONS     = NO
-
-# If the INCLUDE_GRAPH, ENABLE_PREPROCESSING and SEARCH_INCLUDES tags are set to
-# YES then doxygen will generate a graph for each documented file showing the
-# direct and indirect include dependencies of the file with other documented
-# files.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-INCLUDE_GRAPH          = YES
-
-# If the INCLUDED_BY_GRAPH, ENABLE_PREPROCESSING and SEARCH_INCLUDES tags are
-# set to YES then doxygen will generate a graph for each documented file showing
-# the direct and indirect include dependencies of the file with other documented
-# files.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-INCLUDED_BY_GRAPH      = YES
-
-# If the CALL_GRAPH tag is set to YES then doxygen will generate a call
-# dependency graph for every global function or class method.
-#
-# Note that enabling this option will significantly increase the time of a run.
-# So in most cases it will be better to enable call graphs for selected
-# functions only using the \callgraph command. Disabling a call graph can be
-# accomplished by means of the command \hidecallgraph.
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
+INCLUDE_GRAPH          = NO
 CALL_GRAPH             = NO
-
-# If the CALLER_GRAPH tag is set to YES then doxygen will generate a caller
-# dependency graph for every global function or class method.
-#
-# Note that enabling this option will significantly increase the time of a run.
-# So in most cases it will be better to enable caller graphs for selected
-# functions only using the \callergraph command. Disabling a caller graph can be
-# accomplished by means of the command \hidecallergraph.
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
 CALLER_GRAPH           = NO
-
-# If the GRAPHICAL_HIERARCHY tag is set to YES then doxygen will graphical
-# hierarchy of all classes instead of a textual one.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-GRAPHICAL_HIERARCHY    = NO
-
-# If the DIRECTORY_GRAPH tag is set to YES then doxygen will show the
-# dependencies a directory has on other directories in a graphical way. The
-# dependency relations are determined by the #include relations between the
-# files in the directories.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
+GRAPHICAL_HIERARCHY    = YES
 DIRECTORY_GRAPH        = NO
-
-# The DOT_IMAGE_FORMAT tag can be used to set the image format of the images
-# generated by dot. For an explanation of the image formats see the section
-# output formats in the documentation of the dot tool (Graphviz (see:
-# http://www.graphviz.org/)).
-# Note: If you choose svg you need to set HTML_FILE_EXTENSION to xhtml in order
-# to make the SVG files visible in IE 9+ (other browsers do not have this
-# requirement).
-# Possible values are: png, jpg, gif, svg, png:gd, png:gd:gd, png:cairo,
-# png:cairo:gd, png:cairo:cairo, png:cairo:gdiplus, png:gdiplus and
-# png:gdiplus:gdiplus.
-# The default value is: png.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_IMAGE_FORMAT       = png
-
-# If DOT_IMAGE_FORMAT is set to svg, then this option can be set to YES to
-# enable generation of interactive SVG images that allow zooming and panning.
-#
-# Note that this requires a modern browser other than Internet Explorer. Tested
-# and working are Firefox, Chrome, Safari, and Opera.
-# Note: For IE 9+ you need to set HTML_FILE_EXTENSION to xhtml in order to make
-# the SVG files visible. Older versions of IE do not have SVG support.
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-INTERACTIVE_SVG        = NO
-
-# The DOT_PATH tag can be used to specify the path where the dot tool can be
-# found. If left blank, it is assumed the dot tool can be found in the path.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_PATH               =
-
-# The DOTFILE_DIRS tag can be used to specify one or more directories that
-# contain dot files that are included in the documentation (see the \dotfile
-# command).
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOTFILE_DIRS           =
-
-# The MSCFILE_DIRS tag can be used to specify one or more directories that
-# contain msc files that are included in the documentation (see the \mscfile
-# command).
-
-MSCFILE_DIRS           =
-
-# The DIAFILE_DIRS tag can be used to specify one or more directories that
-# contain dia files that are included in the documentation (see the \diafile
-# command).
-
-DIAFILE_DIRS           =
-
-# When using plantuml, the PLANTUML_JAR_PATH tag should be used to specify the
-# path where java can find the plantuml.jar file. If left blank, it is assumed
-# PlantUML is not used or called during a preprocessing step. Doxygen will
-# generate a warning when it encounters a \startuml command in this case and
-# will not generate output for the diagram.
-
-PLANTUML_JAR_PATH      =
-
-# When using plantuml, the PLANTUML_CFG_FILE tag can be used to specify a
-# configuration file for plantuml.
-
-PLANTUML_CFG_FILE      =
-
-# When using plantuml, the specified paths are searched for files specified by
-# the !include statement in a plantuml block.
-
-PLANTUML_INCLUDE_PATH  =
-
-# The DOT_GRAPH_MAX_NODES tag can be used to set the maximum number of nodes
-# that will be shown in the graph. If the number of nodes in a graph becomes
-# larger than this value, doxygen will truncate the graph, which is visualized
-# by representing a node as a red box. Note that doxygen if the number of direct
-# children of the root node in a graph is already larger than
-# DOT_GRAPH_MAX_NODES then the graph will not be shown at all. Also note that
-# the size of a graph can be further restricted by MAX_DOT_GRAPH_DEPTH.
-# Minimum value: 0, maximum value: 10000, default value: 50.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_GRAPH_MAX_NODES    = 50
-
-# The MAX_DOT_GRAPH_DEPTH tag can be used to set the maximum depth of the graphs
-# generated by dot. A depth value of 3 means that only nodes reachable from the
-# root by following a path via at most 3 edges will be shown. Nodes that lay
-# further from the root node will be omitted. Note that setting this option to 1
-# or 2 may greatly reduce the computation time needed for large code bases. Also
-# note that the size of a graph can be further restricted by
-# DOT_GRAPH_MAX_NODES. Using a depth of 0 means no depth restriction.
-# Minimum value: 0, maximum value: 1000, default value: 0.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-MAX_DOT_GRAPH_DEPTH    = 0
-
-# Set the DOT_TRANSPARENT tag to YES to generate images with a transparent
-# background. This is disabled by default, because dot on Windows does not seem
-# to support this out of the box.
-#
-# Warning: Depending on the platform used, enabling this option may lead to
-# badly anti-aliased labels on the edges of a graph (i.e. they become hard to
-# read).
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_TRANSPARENT        = NO
-
-# Set the DOT_MULTI_TARGETS tag to YES to allow dot to generate multiple output
-# files in one run (i.e. multiple -o and -T options on the command line). This
-# makes dot run faster, but since only newer versions of dot (>1.8.10) support
-# this, this feature is disabled by default.
-# The default value is: NO.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-DOT_MULTI_TARGETS      = NO
-
-# If the GENERATE_LEGEND tag is set to YES doxygen will generate a legend page
-# explaining the meaning of the various boxes and arrows in the dot generated
-# graphs.
-# The default value is: YES.
-# This tag requires that the tag HAVE_DOT is set to YES.
-
-GENERATE_LEGEND        = YES
-
-# If the DOT_CLEANUP tag is set to YES, doxygen will remove the intermediate
-# files that are used to generate the various graphs.
-#
-# Note: This setting is not only used for dot files but also for msc temporary
-# files.
-# The default value is: YES.
-
-DOT_CLEANUP            = YES
+DIR_GRAPH_MAX_DEPTH    = 1

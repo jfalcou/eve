@@ -1,30 +1,28 @@
-#include <eve/function/eps.hpp>
-#include <eve/constant/bitincrement.hpp>
-#include <eve/constant/eps.hpp>
 #include <eve/wide.hpp>
-#include <iomanip>
+#include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
+using wide_ft = eve::wide<float>;
+using wide_dt = eve::wide<double>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 2.0f, eve::eps(eve::as<float>()), eve::Bitincrement(eve::as<float>())};
-  wide_it pi = {-1, 2, -3, -32};
+  wide_ft wxf;
+  wide_dt wxi;
 
   std::cout << "---- simd" << '\n'
-            << "<- pf =                " << std::setprecision(12) << pf << '\n'
-            << "-> eve::eps(pf) =     " << eve::eps(pf) << '\n'
-            << "<- pi =                " << pi << '\n'
-            << "-> eve::eps(pi) =     " << eve::eps(pi) << '\n';
+            << "-> eps(as<wide_ft>())  = " << eve::eps(eve::as<wide_ft>()) << '\n'
+            << "-> eps(as<wide_dt>())  = " << eve::eps(eve::as<wide_dt>()) << '\n'
+            << "-> eps(as(wxf))          = " << eve::eps(eve::as(wxf))     << '\n'
+            << "-> eps(as(wxi))          = " << eve::eps(eve::as(wxi))     << '\n';
 
-  float        xf = 0.0f;
-  std::int16_t xi = -3;
+  float        xf;
+  doube        xd;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf =                " << xf << '\n'
-            << "-> eve::eps(xf) =     " << eve::eps(xf) << '\n'
-            << "<- xi =                " << xi << '\n'
-            << "-> eve::eps(xi) =     " << eve::eps(xi) << '\n';
+            << "-> eps(as<float>())         = " << eve::eps(eve::as<float>()) << '\n'
+            << "-> eps(as<double>())  = " << eve::eps(eve::as<double>()) << '\n'
+            << "-> eps(as(xf))              = " << eve::eps(eve::as(xf)) << '\n'
+            << "-> eps(as(xd))              = " << eve::eps(eve::as(xd)) << '\n';
+
   return 0;
 }

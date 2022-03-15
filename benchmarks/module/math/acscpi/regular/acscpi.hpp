@@ -5,10 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/acscpi.hpp>
-#include <eve/function/radinpi.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/oneotwoeps.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/math/constant/oneotwoeps.hpp>
 #include <cmath>
 
 int main()

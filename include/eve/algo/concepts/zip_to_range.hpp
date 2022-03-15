@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/detail.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 
@@ -18,7 +19,7 @@ namespace eve::algo
 {
   template <typename ...Components>
   concept zip_to_range = requires (Components&& ... components) {
-    { views::zip(std::forward<Components>(components)...) } -> relaxed_range;
+    { views::zip(EVE_FWD(components)...) } -> relaxed_range;
   };
 
   template <typename T>

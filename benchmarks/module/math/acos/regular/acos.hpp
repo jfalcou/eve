@@ -5,7 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/acos.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <cmath>
 
 int main()

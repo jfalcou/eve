@@ -1,4 +1,4 @@
-#include <eve/function/is_ngtz.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

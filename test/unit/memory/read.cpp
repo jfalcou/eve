@@ -9,7 +9,7 @@
 #include "unit/memory/page.hpp"
 
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/read.hpp>
+#include <eve/module/core.hpp>
 
 //==================================================================================================
 // Read into scalar from pointer-like entity
@@ -47,4 +47,22 @@ EVE_TEST_TYPES( "Check read from Contiguous Iterators"
 
   TTS_EQUAL( eve::read(begin)      , *begin       );
   TTS_EQUAL( eve::read(const_begin), *const_begin );
+};
+
+//==================================================================================================
+// Read into scalar from soa_ptr
+//==================================================================================================
+EVE_TEST_TYPES( "Check read from soa_ptr"
+              , eve::test::scalar::all_types
+              )
+<typename T>(eve::as<T>)
+{
+  int    x = 0;
+  T      y = T(1);
+  double z = 2.0;
+
+  auto [rx, ry, rz] = eve::read(eve::soa_ptr(&x, &y, &z));
+  TTS_EQUAL(rx, x);
+  TTS_EQUAL(ry, y);
+  TTS_EQUAL(rz, z);
 };

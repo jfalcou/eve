@@ -12,8 +12,9 @@
 namespace eve::views
 {
   //================================================================================================
-  //! @addtogroup eve.views
+  //! @addtogroup views
   //! @{
+  //!
   //!    @var zip
   //!    @brief a shorthand for `eve::algo::views::zip`.
   //!
@@ -22,9 +23,9 @@ namespace eve::views
   //!
   //!    @struct zip_range
   //!    @brief a shorthand for `eve::algo::views::zip_range`
+  //!
   //! }@
   //================================================================================================
-
   using eve::algo::views::zip;
   using eve::algo::views::zip_iterator;
   using eve::algo::views::zip_range;

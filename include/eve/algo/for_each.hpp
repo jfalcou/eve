@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/for_each_iteration.hpp>
@@ -16,7 +17,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var for_each
   //!  @brief a basic for_each algorithm.
@@ -61,7 +62,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename Op>
     EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
     {
-      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
       if( processed.begin() == processed.end() ) return;
 
       delegate<Op> d{op};

@@ -27,8 +27,7 @@
 // Details in StackOverflow and a YouTube viedoe mentioned.
 
 #include <eve/conditional.hpp>
-#include <eve/function/first_true.hpp>
-#include <eve/function/load.hpp>
+#include <eve/module/core.hpp>
 
 std::size_t strlen_(const char* s_) {
   // char in C++ is not guarantied to be a int8_t or a uint8_t.

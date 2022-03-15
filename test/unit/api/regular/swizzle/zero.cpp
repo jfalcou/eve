@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 #include <bit>
@@ -33,7 +34,7 @@ EVE_TEST( "Check behavior of zeroes swizzle"
               using type = eve::as_wide_t<S,eve::fixed<sz>>;
               type ref(typename type::value_type(0));
 
-              TTS_EQUAL(simd[n_zeros<sz>], ref);
+              TTS_EQUAL(eve::shuffle(simd,n_zeros<sz>), ref);
             };
 
     ( f(data    , std::integral_constant<std::size_t,I>{}), ...);

@@ -25,7 +25,11 @@ namespace eve::detail
     }
     else
     {
-      return at_begin(p)[i];
+      // g++ need that
+      logical<T> data[N::value];
+      auto s = p.storage();
+      std::memcpy(&data[0],&s,sizeof(data));
+      return data[i];
     }
   }
 

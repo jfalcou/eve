@@ -25,14 +25,6 @@
 #    define __SSE4_2__
 #  endif
 
-#  if defined(EVE_ASSUME_XOP)
-#    define __XOP__
-#  endif
-
-#  if defined(EVE_ASSUME_FMA4)
-#    define __FMA4__
-#  endif
-
 #  if defined(EVE_ASSUME_FMA3)
 #    define __FMA3__
 #  endif
@@ -58,5 +50,11 @@
 #    define SPY_SIMD_DETECTED ::spy::detail::simd_version::avx2_
 #   endif
 #  endif
+
+# if defined(EVE_INCOMPLETE_AVX512_SUPPORT) || \
+     defined(SPY_SIMD_IS_X86_AVX512)        || \
+     (defined(SPY_SIMD_IS_X86_AVX2) && defined(EVE_USE_BMI_ON_AVX2))
+#define EVE_USE_BMI
+#endif
 
 #endif

@@ -1,0 +1,213 @@
+<!-- HTML header for doxygen 1.8.20-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="generator" content="Doxygen 1.9.4"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>E.V.E: Design Decisions</title>
+  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="doxystrap.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Custom input to switch branches -->
+  <script>
+    function switchBranchAction() {
+      var branch = document.getElementById("branch_input").value;
+      var form = this;
+      window.location.href = window.location.hostname + '/en/' + branch;
+    }
+  </script>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+</head>
+<body>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
+      </div>
+    </div>
+  </nav>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+    <div class="content" id="content">
+      <div class="container">
+        <div id="titlearea">
+          <table cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr style="height: 56px;">
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
+                <td id="projectalign" style="padding-left: 0.5em;">
+                  <div id="projectname">E.V.E
+                    &#160;<span id="projectnumber">v2022.03.00</span>
+                  </div>
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
+            <div style="margin-bottom: 15px;">
+              <!-- DOXYSTRAP BLOCK CHANGE END -->
+              <!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li class="current"><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>References</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li class="current"><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="about.html"><span>Getting&#160;Started</span></a></li>
+      <li><a href="tutorials.html"><span>Tutorials</span></a></li>
+      <li><a href="rationale.html"><span>Rationale</span></a></li>
+      <li><a href="eve-dev.html"><span>Contributing</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="rationale.html">Rationale</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div><div class="header">
+  <div class="headertitle"><div class="title">Design Decisions </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#rationale-simd">SIMD registers as Type x Cardinal</a></li>
+<li class="level1"><a href="#rationale-callable">Callable Function Objects as main API</a></li>
+<li class="level1"><a href="#rationale-decorator">Function customization via higher-order decorator</a></li>
+<li class="level1"><a href="#rationale-mask">Masked operations support</a></li>
+</ul>
+</div>
+<div class="textblock"><p ><a class="anchor" id="md_eve_doc_rationale_design"></a></p>
+<h1><a class="anchor" id="rationale-simd"></a>
+SIMD registers as Type x Cardinal</h1>
+<p >There is multiple way to abstract away SIMD registers. The choice made by <b>EVE</b> is to provide a type interface based on the underlying <b>type</b> and <b>cardinal</b> (or number of lanes).</p>
+<p >One can then define a SIMD type by specifying:</p>
+<ul>
+<li><p class="startli"><b>Only the base type: <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;</code></b></p>
+<p class="startli">In this case, the best cardinal for the current architecture will be selected and will ensure optimal performance for the user.</p>
+</li>
+<li><p class="startli"><b>The base type and cardinal: <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt; float, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt; 8 &gt; &gt;</code></b></p>
+<p class="startli">This interface is more geared toward power users that may requires a specific cardinal for their algorithm on any architecture. In this case, <b>EVE</b> will take care of ensuring the semantic of such code is correct over any architecture. This includes emulating smaller than usual cardinal using regular registers or aggregating multiple register to support greater than usual cardinal.</p>
+</li>
+</ul>
+<p >This enables for SIMD code to be written in a complete architecture-agnostic way from the get go.</p>
+<h1><a class="anchor" id="rationale-callable"></a>
+Callable Function Objects as main API</h1>
+<p >The majority of <b>EVE</b> features is accessible as <a href="https://en.cppreference.com/w/cpp/named_req/FunctionObject">Function Objects</a>. Internally, <b>EVE</b>'s implementation uses a <a href="http://eel.is/c++draft/customization.point.object#1">Customization Point Object</a> design to achieve such goals. A simplified version of this design is also available for the end-user that may wish to specialize a given function over a user-defined type via the <code>eve::tagged_dispatch</code> customizable function.</p>
+<p >This choice is driven by multiple reasons:</p>
+<ul>
+<li>It makes all <b>EVE</b> functions directly usable as an argument to another function. Contrary to template functions, function objects can be easily passed as parameters to algorithms or other higher-order functions.</li>
+<li>It enables the definition of function decorators that acts as lightweight wrapper for modifying the behavior of a function at compile-time.</li>
+</ul>
+<h1><a class="anchor" id="rationale-decorator"></a>
+Function customization via higher-order decorator</h1>
+<p >Decorators enable <b>EVE</b> functions to change behavior locally, enabling users to control their choice of trade-off between speed, precision or any other design decision. Such decisions could also have been implemented as functions in additional namespaces or functions with different names.</p>
+<p >We decided against those options because:</p>
+<ul>
+<li>extra namespaces may have required code duplication when combining multiple decorators or decorator and masking.</li>
+<li>extra function names would have cluttered the API.</li>
+</ul>
+<p >The use of callable object to modify another callable object also plays nicely with a purely functional view of the library in which everything is a value, including functions.</p>
+<h1><a class="anchor" id="rationale-mask"></a>
+Masked operations support</h1>
+<p >Some SIMD instruction sets provides intrinsics that can mask which lanes of the register are affected by the operations. Those so-called <b>Masked operations</b> are accessible in <b>EVE</b> via the following protocol:</p>
+<ul>
+<li>Let <code>func</code> be an <b>EVE</b> object function object that supports masks and let <code>cond</code> be a <a class="el" href="concepteve_1_1logical__value.html">logical value</a> or a <a class="el" href="concepteve_1_1conditional__expr.html">conditional expression</a>.</li>
+<li>Then, for any <a class="el" href="concepteve_1_1value.html">value</a> <code>x</code>, the expression <code>func[cond](x, ...)</code> is equivalent to <code>if_else(cond, func_(x,...), x)</code>.</li>
+</ul>
+<p >In these basic cases, if the mask is set to <code>false</code> for a given lane, the value returned by the function is the corresponding value of <code>x</code>, regardless of other parameters. Note that this semantic implies that <code>x</code> must be convertible to <code>decltype(func(x))</code>.</p>
+<p >Masks also provide proper alternatives (rather than untouched output) and indexed selection allowing to treat only a vector part designation by indexes rather than values (see <a class="el" href="conditional.html">the masking tutorial</a> for more details).</p>
+<p >The availability of such syntax is indicated explicitly in each function documentation page. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+<hr class="footer"/>
+</body>
+</html>

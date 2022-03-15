@@ -73,7 +73,7 @@ namespace eve
 
     //! Construct an aligned_ptr from a pointer.
     //! Behavior is undefined if `p` is not aligned on `Lanes`.
-    aligned_ptr(pointer p) noexcept : pointer_(p)
+    explicit aligned_ptr(pointer p) noexcept : pointer_(p)
     {
       EVE_ASSERT( is_aligned<alignment()>(p)
                 , (void *)(p) << " is not aligned on " << Lanes::value
@@ -82,10 +82,14 @@ namespace eve
     }
 
     //! Construct an aligned_ptr from another one with a compatible alignment constraint
-    template<typename L>
-    aligned_ptr(aligned_ptr<Type, L> p) noexcept
+    template<typename UType, typename L>
+    aligned_ptr(aligned_ptr<UType, L> p) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( L::value >= Lanes::value)
+    requires( L::value >= Lanes::value ) &&
+            (
+              std::same_as<std::remove_const_t<Type>, UType> ||
+              std::same_as<Type, UType>
+            )
 #endif
               : pointer_(p.get())
     {}
@@ -213,7 +217,7 @@ namespace eve
     explicit operator bool() const noexcept { return pointer_ != nullptr; }
 
     //! Returns the pointer to the held object
-    explicit operator pointer() const noexcept { return pointer_; }
+    operator pointer() const noexcept { return pointer_; }
 
     //! Returns the pointer to the held object
     pointer  get() const noexcept { return pointer_; }
@@ -230,11 +234,6 @@ namespace eve
     //! Dereferences pointer to the held object
     decltype(auto) operator-> ()        noexcept { return pointer_; }
 
-    //! Indexed array to the underlying array
-    Type const &operator[](std::size_t i) const noexcept { return pointer_[ i ]; }
-
-    //! Indexed array to the underlying array
-    Type &      operator[](std::size_t i)       noexcept { return pointer_[ i ]; }
     //==============================================================================================
     //! @}
     //==============================================================================================
@@ -385,7 +384,7 @@ namespace eve
   aligned_ptr<Type, Lanes> as_aligned(Type* ptr, Lanes lanes) noexcept
 #endif
   {
-    return {ptr};
+    return aligned_ptr<Type, Lanes>{ptr};
   }
 
   //================================================================================================
@@ -400,21 +399,21 @@ namespace eve
   template<typename Type>
   aligned_ptr<Type> as_aligned(Type* ptr) noexcept
   {
-    return {ptr};
+    return aligned_ptr<Type>{ptr};
   }
 
   //! @overload
   template<typename Lanes, typename Type>
   aligned_ptr<Type const, Lanes> as_aligned(Type const *ptr, Lanes) noexcept
   {
-    return {ptr};
+    return aligned_ptr<Type const, Lanes>{ptr};
   }
 
   //! @overload
   template<typename Type>
   aligned_ptr<Type const> as_aligned(Type const *ptr) noexcept
   {
-    return {ptr};
+    return aligned_ptr<Type const>{ptr};
   }
 
   //================================================================================================
@@ -452,6 +451,43 @@ namespace eve
   EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
   {
     return previous_aligned_address(p, eve::expected_cardinal<std::remove_cvref_t<T>>{});
+  }
+
+  //================================================================================================
+  //! @relates eve::aligned_ptr
+  //!
+  //! @brief Computes an address greater or equal to `p` which is satisfy the alignment constraint of
+  //! SIMD registers of size `Lanes`.
+  //!
+  //! @param p      Pointer to realign
+  //! @param width  SIMD cardinal to use as alignment constraint
+  //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
+  //! @see next_aligned_address(T*)
+  //================================================================================================
+  template <typename T, typename Lanes>
+  #if !defined(EVE_DOXYGEN_INVOKED)
+  EVE_FORCEINLINE auto next_aligned_address(T* p, Lanes) noexcept
+  #else
+  EVE_FORCEINLINE auto next_aligned_address(T* p, Lanes width) noexcept
+  #endif
+  {
+    return eve::aligned_ptr<T, Lanes>{ eve::align(p, eve::over{Lanes::value*sizeof(T)}) };
+  }
+
+  //================================================================================================
+  //! @relates eve::aligned_ptr
+  //!
+  //! @brief Computes an address greater or equal to `p` which is satisfy the alignment constraint of
+  //! current architecture's SIMD register.
+  //!
+  //! @param p      Pointer to realign
+  //! @return An aligned_ptr holding the realigned pointer with the proper alignment constraint.
+  //! @see next_aligned_address(T*, Cardinal)
+  //================================================================================================
+  template <typename T>
+  EVE_FORCEINLINE auto next_aligned_address(T* p) noexcept
+  {
+    return next_aligned_address(p, eve::expected_cardinal<std::remove_cvref_t<T>>{});
   }
 
   //================================================================================================

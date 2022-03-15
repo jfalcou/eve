@@ -7,17 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/traits.hpp>
-#include <eve/algo/unalign.hpp>
 
-#include <eve/function/any.hpp>
-#include <eve/function/first_true.hpp>
-#include <eve/function/logical_or.hpp>
 
 #include <array>
 
@@ -53,7 +50,7 @@ namespace eve::algo
         std::optional match = eve::first_true[ignore](test);
         if (!match) return false;
 
-        found = it.unaligned() + *match;
+        found = unalign(it) + *match;
         return true;
       }
 
@@ -68,7 +65,7 @@ namespace eve::algo
         // TODO: this might not be ideal, see: #764
         std::optional<std::ptrdiff_t> match;
         std::size_t pos = find_branchless(tests, detail::find_branchless_lambda{&match});
-        found = arr[0].unaligned() + (pos * iterator_cardinal_v<I>) + *match;
+        found = unalign(arr[0]) + (pos * iterator_cardinal_v<I>) + *match;
 
         return true;
       }
@@ -82,9 +79,9 @@ namespace eve::algo
     {
       if (rng.begin() == rng.end()) return unalign(rng.begin());
 
-      auto processed = preprocess_range(TraitsSupport::get_traits(), std::forward<Rng>(rng));
+      auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
 
-      auto l = processed.begin().unaligned() + (processed.end() - processed.begin());
+      auto l = unalign(processed.begin()) + (processed.end() - processed.begin());
 
       delegate<unaligned_t<decltype(processed.begin())>, P> d{l, p};
       algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
@@ -100,7 +97,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename T>
     EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
     {
-      return find_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), equal_to{v});
+      return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to{v});
     }
   };
 
@@ -112,7 +109,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename P>
     EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     {
-      return find_if[TraitsSupport::get_traits()](std::forward<Rng>(rng), not_p{p});
+      return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), not_p{p});
     }
   };
 

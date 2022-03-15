@@ -1,4 +1,4 @@
-#include <eve/constant/mindenormal.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

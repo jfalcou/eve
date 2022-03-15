@@ -1,5 +1,4 @@
-#include <eve/function/saturate.hpp>
-#include <eve/constant/valmax.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

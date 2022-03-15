@@ -1,5 +1,4 @@
-#include <eve/function/bit_notor.hpp>
-#include <eve/literals.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

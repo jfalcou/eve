@@ -6,10 +6,9 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "test.hpp"
 
-#include <eve/constant/as_value.hpp>
-#include <eve/constant/zero.hpp>
 
 #include "unit/api/udt/udt.hpp"
 

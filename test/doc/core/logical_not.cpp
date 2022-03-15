@@ -1,23 +1,21 @@
-#include <eve/function/logical.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
+using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {3.0f, 0.0f, -3.0f, -0.0};
+  wide_ft pf = {-1.0f, -1.3f, -0.0f, -1.7f, 0.0f, 2.3f, 2.5f, 2.7f};
 
   std::cout << "---- simd" << '\n'
-            << " <- pf                   = " << pf << '\n'
-            << " -> eve::logical_not(pf) = " << eve::logical_not(pf) << '\n';
+            << "<- pf              = " << pf << '\n'
+            << "-> logical_not(pf) = " << eve::logical_not(pf) << '\n';
 
-  std::int32_t xf = 3, yf = 0;
+  float xf = -32.768f;
 
   std::cout << "---- scalar" << '\n'
-            << " xf                      = " << xf << '\n'
-            << " yf                      = " << yf << '\n'
-            << " -> eve::logical_not(xf) = " << eve::logical_not(xf) << '\n'
-            << " -> eve::logical_not(yf) = " << eve::logical_not(yf) << '\n';
+            << "<- xf              = " << xf << '\n'
+            << "-> logical_not(xf) = " << eve::logical_not(xf) << '\n';
   return 0;
 }

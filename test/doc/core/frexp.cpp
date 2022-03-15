@@ -1,10 +1,5 @@
-#include <eve/function/frexp.hpp>
-#include <eve/function/pedantic/frexp.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;

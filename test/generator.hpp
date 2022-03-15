@@ -8,15 +8,17 @@
 #pragma once
 #include "test_distribution.hpp"
 #include "types.hpp"
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/mzero.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/mindenormal.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/module/core/constant/constant.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core/constant/mindenormal.hpp>
+#include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/mzero.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <tuple>
 
 namespace eve::test
@@ -34,23 +36,58 @@ namespace eve::test
   }
 
   //================================================================================================
+  // Poison wide data when using sub-sized types
+  //================================================================================================
+  template<simd_value W>
+  auto poison(W data)
+  {
+    using v_t = typename W::value_type;
+
+    // Add garbage at the end of sub-native registers
+    // For emulated type, there is no such gap so we don't do anything
+    if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !has_emulated_abi_v<W> )
+    {
+      using p_t   = eve::as_arithmetic_t<eve::as_integer_t<v_t, unsigned>>;
+      using ftype = as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+
+      ftype these(data.storage());
+
+      // Compute a recognizable filler
+      for(std::ptrdiff_t i=data.size();i<these.size();++i)
+      {
+        p_t filler = eve::Constant<p_t, static_cast<p_t>(0xDEADBEEFBABE0000)>() + p_t(i);
+        these.set(i, eve::bit_cast(filler,as<v_t>()) );
+      }
+
+      return W(these.storage());
+    }
+    else
+    {
+      return data;
+    }
+  }
+
+  //================================================================================================
   // Customization point for argument building
   //================================================================================================
   template<typename Sampler, typename Target>
-  auto get_arg(Sampler const& s, eve::as<Target>)
+  auto get_arg(Sampler const& s, eve::as<Target>, bool)
   {
     return s;
   }
 
   template<typename T, std::size_t N, simd_value Target>
-  auto get_arg(std::array<T,N> const& p, eve::as<Target>)
+  auto get_arg(std::array<T,N> const& p, eve::as<Target>, bool poisoned)
   {
     using type = as_wide_t< std::remove_cvref_t<decltype(*p.data())>, eve::cardinal_t<Target>>;
-    return type(p.data());
+    type  that(p.data());
+
+    if(poisoned)  return poison(that);
+    else          return that;
   }
 
   template<typename T, std::size_t N, scalar_value Target>
-  auto get_arg(std::array<T,N> const& p, eve::as<Target>)
+  auto get_arg(std::array<T,N> const& p, eve::as<Target>, bool)
   {
     std::array<Target,N> that;
     for(std::size_t i=0;i<N;++i) that[i] = static_cast<Target>(p[i]);
@@ -61,9 +98,9 @@ namespace eve::test
   // Turn a list of samples into the correct type
   //================================================================================================
   template<typename S, typename T, std::size_t... N>
-  auto make_args(S const& t, std::index_sequence<N...>, eve::as<T> tgt)
+  auto make_args(S const& t, std::index_sequence<N...>, eve::as<T> tgt, bool poisoned)
   {
-    return std::make_tuple( get_arg(std::get<N>(t), tgt)... );
+    return std::make_tuple( get_arg(std::get<N>(t), tgt, poisoned)... );
   }
 
   //================================================================================================
@@ -265,7 +302,7 @@ namespace eve::test
   };
 }
 
-#define EVE_TEST(DESCRIPTION,TYPES,SAMPLES)                                                         \
+#define EVE_TEST_IMPL(DESCRIPTION,TYPES,SAMPLES, POISON)                                            \
 inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{                       \
 [](auto tests)                                                                                      \
   {                                                                                                 \
@@ -285,7 +322,7 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
                                                                                                     \
               constexpr std::make_index_sequence<sizeof...(N)> size = {};                           \
               auto data = s(eve::as<T>{}, gen);                                                     \
-              auto args = eve::test::make_args(data, size, eve::as<T>{}) ;                          \
+              auto args = eve::test::make_args(data, size, eve::as<T>{},POISON);                    \
               if( ::tts::verbose_status )                                                           \
               {                                                                                     \
                 if(::tts::arguments[{"-d","--data"}])                                               \
@@ -316,6 +353,10 @@ inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{   
     return true;                                                                                    \
   }} + []                                                                                           \
 /**/
+
+#define EVE_TEST(D,T,S)       EVE_TEST_IMPL(D,T,S, true )
+#define EVE_SAFE_TEST(D,T,S)  EVE_TEST_IMPL(D,T,S, false)
+
 
 #define EVE_TEST_TYPES(DESCRIPTION,TYPES)                                                           \
 inline bool const TTS_CAT(register_,TTS_FUNCTION) =  ::eve::test::test_setup{                       \

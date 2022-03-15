@@ -1,0 +1,60 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#pragma once
+
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //! @var omega
+  //!
+  //! @brief Callable object computing the Wright \f$\omega\f$ function inverse of \f$ x-> \log x+x\f$
+  //!
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the omega operation                                        |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T > auto operator()( T x ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!
+  //! **Return value**
+  //!
+  //!Returns [elementwise](@ref glossary_elementwise) the value of the omega function.
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  * eve::diff, eve::diff_1st, eve::diff_nth
+  //!
+  //!
+  //!     The expression `diff(omega)(x)` computes the derivative  of the function at `x`.
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/special/omega.cpp}
+  //!
+  //!  @}
+  //================================================================================================
+  EVE_MAKE_CALLABLE(omega_, omega);
+}
+
+#include <eve/module/special/regular/impl/omega.hpp>

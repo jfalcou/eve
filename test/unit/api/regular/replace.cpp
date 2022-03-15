@@ -6,9 +6,9 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
+#include <eve/module/core.hpp>
 //==================================================================================================
 #include "test.hpp"
-#include <eve/function/replace.hpp>
 
 EVE_TEST( "Check behavior of replace_ignored(ignore_all/ignore_none)"
         , eve::test::simd::all_types
@@ -48,14 +48,11 @@ EVE_TEST( "Check behavior of replace_ignored(keep_last)"
 {
   using eve::keep_last;
 
-  for(std::ptrdiff_t i = 0;i < T::size();i++)
+  for(std::ptrdiff_t i = 0;i <= T::size();i++)
   {
-    auto const idx = T::size()-i-1;
-    replacement.set(idx, data.get(idx));
-    TTS_EQUAL( eve::replace_ignored(data,keep_last(i),replacement), replacement );
+    T reference = [&](auto e, auto){ return e >= (T::size()-i) ? data.get(e) : replacement.get(e);};
+    TTS_EQUAL( eve::replace_ignored(data,keep_last(i),replacement), reference );
   }
-
-  TTS_EQUAL( eve::replace_ignored(data,keep_last(T::size()),replacement), data );
 };
 
 EVE_TEST( "Check behavior of replace_ignored(ignore_first)"
@@ -88,8 +85,8 @@ EVE_TEST( "Check behavior of replace_ignored(keep_first)"
 
   for(std::ptrdiff_t i = 1;i <= T::size();i++)
   {
-    replacement.set(i-1, data.get(i-1));
-    TTS_EQUAL( eve::replace_ignored(data,keep_first(i),replacement), replacement );
+    T reference = [&](auto e, auto) { return e < i ? data.get(e) : replacement.get(e); };
+    TTS_EQUAL( eve::replace_ignored(data,keep_first(i),replacement), reference );
   }
 };
 

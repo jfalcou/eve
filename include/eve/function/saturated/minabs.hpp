@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/minabs.hpp>
-#include <eve/module/real/core/function/saturated/generic/minabs.hpp>
+#include <eve/module/core/saturated/impl/minabs.hpp>

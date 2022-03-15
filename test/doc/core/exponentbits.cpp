@@ -1,9 +1,4 @@
-#include <eve/function/exponentbits.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;

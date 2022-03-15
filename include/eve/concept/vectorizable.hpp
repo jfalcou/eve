@@ -152,7 +152,7 @@ namespace eve
   //! - `float`
   //! - `int`
   //================================================================================================
-  template<typename T> concept real_scalar_value              = scalar_value<T> && std::same_as< detail::value_type_t<T>, element_type_t<T>>;
+  template<typename T> concept real_scalar_value              = scalar_value<T> && std::is_arithmetic_v<T>;
 
   //================================================================================================
   //! @concept floating_real_scalar_value
@@ -164,7 +164,7 @@ namespace eve
   //! - `float`
   //! - `double`
   //================================================================================================
-  template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<detail::value_type_t<T>>;
+  template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<element_type_t<T>>;
 
   //================================================================================================
   //! @concept integral_real_scalar_value
@@ -176,5 +176,5 @@ namespace eve
   //! - `int`
   //! - `unsigned int`
   //================================================================================================
-  template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<detail::value_type_t<T>>;
+  template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<element_type_t<T>>;
 }

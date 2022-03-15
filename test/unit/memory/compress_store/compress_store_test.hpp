@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/function/compress_store.hpp>
+#include <eve/module/core/regular/compress_store.hpp>
 
 #include <algorithm>
 #include <array>
@@ -26,11 +26,11 @@ void ignore_test(T x, L m, C c)
   arr expected;
   expected.fill(e_t{0});
 
-  std::int8_t f_i = c.offset(eve::as(x));
-  std::int8_t l_i = f_i + c.count(eve::as(x));
-  std::int8_t o = f_i;
+  int f_i = c.offset(eve::as(x));
+  int l_i = f_i + c.count(eve::as(x));
+  int o = f_i;
 
-  for (std::int8_t i = f_i; i != l_i; ++i) {
+  for (int i = f_i; i != l_i; ++i) {
     if (!m.get(i)) continue;
     expected[o++] = x_arr[i];
   }
@@ -55,15 +55,15 @@ void all_ignore_tests(T x, L m)
 {
   if (x.size() < 16)
   {
-    for (std::int8_t i = 0; i != x.size() + 1; ++i) {
-      for (std::int8_t j = 0; j <= x.size() - i; ++j) {
+    for (int i = 0; i != x.size() + 1; ++i) {
+      for (int j = 0; j <= x.size() - i; ++j) {
         ignore_test(x, m, eve::ignore_extrema{i, j});
       }
     }
   }
   else
   {
-    for (std::int8_t i = 0; i != x.size() + 1; ++i) {
+    for (int i = 0; i != x.size() + 1; ++i) {
       ignore_test(x, m, eve::ignore_first(i));
       ignore_test(x, m, eve::ignore_last(i));
     }
@@ -86,7 +86,9 @@ void precise_tests(T x)
   e_t data[2] = { e_t{0}, e_t{5}} ;
   L mask{false};
   mask.set(T::size() - 1, true);
+
   eve::safe(eve::compress_store)(x, mask, &data[0]);
+
   TTS_EQUAL(data[0], x.back());
   TTS_EQUAL(data[1], e_t{5});
 
@@ -106,8 +108,8 @@ void one_test(T x, L m)
   arr expected;
   expected.fill(e_t{0});
 
-  std::int8_t o = 0;
-  for (std::int8_t i = 0; i != T::size(); ++i) {
+  int o = 0;
+  for (int i = 0; i != T::size(); ++i) {
     if (!m.get(i)) continue;
     expected[o++] = x.get(i);
   }
@@ -161,12 +163,6 @@ void go_through_everything(T x)
 template<typename L, typename T>
 void smaller_test_v(T x)
 {
-  if constexpr ( eve::current_api == eve::avx512 && (eve::has_aggregated_abi_v<T> || eve::has_aggregated_abi_v<L>))
-  {
-    TTS_PASS("aggregated on avx512");
-    return;
-  }
-  else
   {
     // even elements
     {

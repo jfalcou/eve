@@ -13,11 +13,18 @@
 
 namespace algo_test
 {
+  template <typename>
+  struct read_to_load_match
+  {
+    static constexpr std::ptrdiff_t value = 0;
+  };
+
+
   template <typename I, typename S, typename T, typename ReplaceIgnored>
   void iterator_sentinel_test_one_pair(I f, S l, T v, ReplaceIgnored replace)
   {
-    TTS_EQUAL     (f.unaligned(), f);
-    TTS_EQUAL     (l.unaligned(), l);
+    TTS_EQUAL     (eve::unalign(f), f);
+    TTS_EQUAL     (eve::unalign(l), l);
 
     TTS_EQUAL     (f, f);
     TTS_LESS_EQUAL   (f, f);
@@ -31,13 +38,13 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::fixed cardinal = eve::algo::iterator_cardinal_t<I>{};
-    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, decltype(cardinal));
+    eve::fixed cardinal = eve::iterator_cardinal_t<I>{};
+    TTS_TYPE_IS(eve::iterator_cardinal_t<I>, decltype(cardinal));
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test
     {
-      TTS_EQUAL(eve::read(f), eve::load(f).get(0));
+      TTS_EQUAL(eve::read(f), eve::load(f).get(read_to_load_match<I>::value));
     }
 
     {
@@ -87,6 +94,20 @@ namespace algo_test
   }
 
   template <typename I>
+  void previous_next_aligned(I f_)
+  {
+    auto f = eve::unalign(f_);
+    if (f == f.previous_partially_aligned()) f += 1;
+
+    if (eve::iterator_cardinal_v<I> != 1 && !eve::algo::always_aligned_iterator<I>) {
+      TTS_EQUAL((f.next_partially_aligned() - f.previous_partially_aligned()), eve::iterator_cardinal_v<I>);
+    }
+
+    f = f.previous_partially_aligned();
+    TTS_EQUAL(f.previous_partially_aligned(), f.next_partially_aligned());
+  }
+
+  template <typename I>
   void cardinal_cast_test(I f)
   {
     auto res = f.cardinal_cast(eve::lane<1>);
@@ -103,16 +124,20 @@ namespace algo_test
     eve::algo::preprocess_range(eve::algo::traits{}, f, f);
     is_relaxed_test(f, l);
     iterator_sentinel_test_one_pair(f, l, v, replace);
-    unaligned_iteration_test(f.unaligned(), l);
+    unaligned_iteration_test(eve::unalign(f), l);
 
     TTS_CONSTEXPR_EXPECT(
       eve::algo::partially_aligned_iterator<decltype(f.previous_partially_aligned())>);
     TTS_CONSTEXPR_EXPECT(
-      eve::algo::unaligned_iterator<decltype(f.unaligned())>);
+      eve::algo::partially_aligned_iterator<decltype(f.next_partially_aligned())>);
+    TTS_CONSTEXPR_EXPECT(
+      eve::algo::unaligned_iterator<decltype(eve::unalign(f))>);
 
-    iterator_sentinel_test_one_pair(f.unaligned(), l, v, replace);
-    iterator_sentinel_test_one_pair(f, l.unaligned(), v, replace);
-    iterator_sentinel_test_one_pair(f.unaligned(), l.unaligned(), v, replace);
+    previous_next_aligned(f);
+
+    iterator_sentinel_test_one_pair(eve::unalign(f), l, v, replace);
+    iterator_sentinel_test_one_pair(f, eve::unalign(l), v, replace);
+    iterator_sentinel_test_one_pair(eve::unalign(f), eve::unalign(l), v, replace);
   }
 
   template <typename I, typename T, typename ReplaceIgnored>
@@ -126,7 +151,7 @@ namespace algo_test
 
     // write
     {
-      eve::write(f, or_.get(0));
+      eve::write(or_.get(0),f);
       TTS_EQUAL(eve::read(f), or_.get(0));
       eve::store(v, f);
     }
@@ -152,9 +177,9 @@ namespace algo_test
     ignore_test(eve::keep_between(0, 1));
     ignore_test(eve::ignore_extrema(1, 0));
 
-    if constexpr (!std::same_as<eve::algo::unaligned_t<I>, I>)
+    if constexpr (!std::same_as<eve::unaligned_t<I>, I>)
     {
-      writeable_readable_iterator(f.unaligned(), v, replace);
+      writeable_readable_iterator(eve::unalign(f), v, replace);
     }
   }
 
@@ -167,11 +192,9 @@ namespace algo_test
     T expected = or_;
     expected.set(0, v.back());
 
-    using m_t = std::conditional_t<eve::current_api == eve::avx512, std::uint8_t, std::uint16_t>;
-
-    eve::logical<eve::wide<m_t, eve::fixed<T::size()>>> mask{false};
+    eve::logical<eve::wide<std::uint16_t, eve::fixed<T::size()>>> mask{false};
     mask.set(T::size() - 1, true);
-    eve::algo::unaligned_t<I> res = eve::safe(eve::compress_store)(v, mask, f);
+    eve::unaligned_t<I> res = eve::safe(eve::compress_store)(v, mask, f);
     TTS_EQUAL(eve::load(f), expected);
     TTS_EQUAL((res - f), 1);
 

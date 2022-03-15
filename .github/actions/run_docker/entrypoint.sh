@@ -14,7 +14,7 @@ compile_targets()
 {
   for i in `../cmake/toolchain/filter.sh $1 keys`;
   do
-  compile_target $i 3;
+  compile_target $i $2;
   if [ "$?" -ne "0" ]
   then
     echo "::error $i can not be compiled!" ;
@@ -39,7 +39,7 @@ test_targets()
 {
   for i in `../cmake/toolchain/filter.sh $1 values`;
   do
-    test_target $i 4;
+    test_target $i $2;
     if [ "$?" -ne "0" ]
     then
       echo "::error $i tests failed!" ;
@@ -56,25 +56,25 @@ cd build
 cmake .. -G Ninja -DEVE_OPTIONS="$1" $2
 echo "::endgroup::"
 
-compile_targets ../cmake/toolchain/arch.targets.json
+compile_targets ../cmake/toolchain/arch.targets.json $4
 if [ "$?" -eq "1" ]
 then
   exit 1;
 fi
 
-test_targets    ../cmake/toolchain/arch.targets.json
+test_targets    ../cmake/toolchain/arch.targets.json $4
 if [ "$?" -eq "1" ]
 then
   exit 1;
 fi
 
-compile_targets ../cmake/toolchain/api.targets.json
+compile_targets ../cmake/toolchain/api.targets.json $4
 if [ "$?" -eq "1" ]
 then
   exit 1;
 fi
 
-test_targets    ../cmake/toolchain/api.targets.json
+test_targets    ../cmake/toolchain/api.targets.json $4
 if [ "$?" -eq "1" ]
 then
   exit 1;
@@ -83,25 +83,25 @@ fi
 if [ "$3" -eq "1" ]
 then
 
-  compile_targets ../cmake/toolchain/doc.targets.json
+  compile_targets ../cmake/toolchain/doc.targets.json $4
   if [ "$?" -eq "1" ]
   then
     exit 1;
   fi
 
-  test_targets    ../cmake/toolchain/doc.targets.json
+  test_targets    ../cmake/toolchain/doc.targets.json $4
   if [ "$?" -eq "1" ]
   then
     exit 1;
   fi
 
-  compile_targets ../cmake/toolchain/real.targets.json
+  compile_targets ../cmake/toolchain/real.targets.json $4
   if [ "$?" -eq "1" ]
   then
     exit 1;
   fi
 
-  test_targets    ../cmake/toolchain/real.targets.json
+  test_targets    ../cmake/toolchain/real.targets.json $4
   if [ "$?" -eq "1" ]
   then
     exit 1;

@@ -21,8 +21,6 @@
 namespace eve
 {
   inline constexpr bool supports_fma3               = spy::supports::fma_;
-  inline constexpr bool supports_fma4               = spy::supports::fma4_;
-  inline constexpr bool supports_xop                = spy::supports::xop_;
   inline constexpr bool supports_avx512bw           = spy::supports::avx512::bw_;
   inline constexpr bool supports_avx512cd           = spy::supports::avx512::cd_;
   inline constexpr bool supports_avx512dq           = spy::supports::avx512::dq_;
@@ -38,4 +36,11 @@ namespace eve
   inline constexpr bool supports_avx512vbmi2_       = spy::supports::avx512::vbmi2_;
   inline constexpr bool supports_avx512vnni_        = spy::supports::avx512::vnni_;
   inline constexpr bool supports_avx512vpintersect_ = spy::supports::avx512::vpintersect_;
+
+#ifdef EVE_USE_BMI
+  inline constexpr bool supports_bmi_well           = true;
+#else
+  inline constexpr bool supports_bmi_well           = false;
+#endif
+
 }

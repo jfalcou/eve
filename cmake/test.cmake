@@ -4,7 +4,6 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 include(target/generate_test)
-include(target/failure)
 
 set(_TestCurrentDir "${CMAKE_CURRENT_LIST_DIR}")
 set(_TestSrcDir      "${PROJECT_BINARY_DIR}/tmp-src")

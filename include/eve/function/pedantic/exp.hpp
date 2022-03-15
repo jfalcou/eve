@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/exp.hpp>
-#include <eve/module/real/math/function/pedantic/generic/exp.hpp>
+#include <eve/module/math/pedantic/exp.hpp>

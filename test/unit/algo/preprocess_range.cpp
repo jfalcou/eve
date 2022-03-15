@@ -6,13 +6,14 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/preprocess_range.hpp>
 
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/ptr_iterator.hpp>
-#include <eve/algo/unalign.hpp>
+
 
 #include <array>
 #include <vector>
@@ -22,6 +23,9 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
+
+  using u_it  = eve::algo::ptr_iterator<e_t*, N>;
+  using uc_it = eve::algo::ptr_iterator<e_t const*, N>;
 
   alignas(sizeof(eve::wide<e_t, N>) * 2) std::array<e_t, N{}()> arr{};
 
@@ -33,7 +37,7 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     TTS_TYPE_IS(decltype(processed.begin()), decltype(expected_f_type));
     TTS_TYPE_IS(decltype(processed.end()), decltype(expected_l_type));
 
-    TTS_EQUAL((processed.end() - processed.begin()), (eve::algo::unalign(l) - eve::algo::unalign(f)));
+    TTS_EQUAL((processed.end() - processed.begin()), (eve::unalign(l) - eve::unalign(f)));
 
     auto processed_empty = eve::algo::preprocess_range(eve::algo::traits(eve::algo::unroll<2>), f, f);
     TTS_EQUAL(processed_empty.begin(), processed_empty.end());
@@ -44,41 +48,47 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   // pointers
   common_test(
     arr.begin(), arr.end(),
-    eve::algo::unaligned_ptr_iterator<e_t, N>{}, eve::algo::unaligned_ptr_iterator<e_t, N>{});
+    u_it{}, u_it{});
 
   // const pointers
   common_test(
     arr.cbegin(), arr.cend(),
-    eve::algo::unaligned_ptr_iterator<e_t const, N>{},
-    eve::algo::unaligned_ptr_iterator<e_t const, N>{}
+    uc_it{},
+    uc_it{}
   );
 
   // aligned_pointer
   {
+    using ap = eve::aligned_ptr<e_t, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t>{arr.begin()}, arr.end(),
-      eve::algo::aligned_ptr_iterator<e_t, N>{},
-      eve::algo::unaligned_ptr_iterator<e_t, N>{}
+      ap{arr.begin()}, arr.end(),
+      eve::algo::ptr_iterator<ap, N>{},
+      u_it{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
   }
 
   // const aligned_pointer
   {
+    using ap = eve::aligned_ptr<e_t const, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t const>{arr.cbegin()}, arr.cend(),
-      eve::algo::aligned_ptr_iterator<e_t const, N>{},
-      eve::algo::unaligned_ptr_iterator<e_t const, N>{}
+      ap{arr.cbegin()}, arr.cend(),
+      eve::algo::ptr_iterator<ap, N>{},
+      uc_it{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
   }
 
   // two aligned_pointers
   {
+    using ap = eve::aligned_ptr<e_t, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()},
-      eve::algo::aligned_ptr_iterator<e_t, N>{},
-      eve::algo::aligned_ptr_iterator<e_t, N>{}
+      ap{arr.begin()}, ap{arr.end()},
+      eve::algo::ptr_iterator<ap, N>{},
+      eve::algo::ptr_iterator<ap, N>{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
@@ -86,10 +96,12 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // two const aligned_pointers
   {
+    using ap = eve::aligned_ptr<e_t const, N>;
+
     auto processed = common_test(
-      eve::aligned_ptr<e_t const>{arr.cbegin()}, eve::aligned_ptr<e_t const>{arr.cend()},
-      eve::algo::aligned_ptr_iterator<e_t const, N>{},
-      eve::algo::aligned_ptr_iterator<e_t const, N>{}
+      ap{arr.cbegin()}, ap{arr.cend()},
+      eve::algo::ptr_iterator<ap, N>{},
+      eve::algo::ptr_iterator<ap, N>{}
     );
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
@@ -97,15 +109,18 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
 
   // unaligned/aligned
   {
+    using ap = eve::aligned_ptr<e_t, N>;
+    using acp = eve::aligned_ptr<e_t const, N>;
+
     common_test(
-      arr.begin(), eve::aligned_ptr<e_t>{arr.end()},
-      eve::algo::unaligned_ptr_iterator<e_t, N>{},
-      eve::algo::aligned_ptr_iterator<e_t, N>{}
+      arr.begin(), ap{arr.end()},
+      u_it{},
+      eve::algo::ptr_iterator<ap, N>{}
     );
     common_test(
-      arr.cbegin(), eve::aligned_ptr<e_t const>{arr.cend()},
-      eve::algo::unaligned_ptr_iterator<e_t const, N>{},
-      eve::algo::aligned_ptr_iterator<e_t const, N>{}
+      arr.cbegin(), acp{arr.cend()},
+      uc_it{},
+      eve::algo::ptr_iterator<acp, N>{}
     );
   }
 
@@ -113,13 +128,13 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   if constexpr (N{}() > 1) {
     common_test(
       arr.begin(), eve::aligned_ptr<e_t, eve::fixed<1>>{arr.end()},
-      eve::algo::unaligned_ptr_iterator<e_t, N>{},
-      eve::algo::unaligned_ptr_iterator<e_t, N>{}
+      u_it{},
+      u_it{}
     );
     common_test(
       eve::aligned_ptr<e_t, eve::fixed<1>>{arr.begin()}, eve::aligned_ptr<e_t, eve::fixed<1>>{arr.end()},
-      eve::algo::unaligned_ptr_iterator<e_t, N>{},
-      eve::algo::unaligned_ptr_iterator<e_t, N>{}
+      u_it{},
+      u_it{}
     );
   }
 
@@ -127,20 +142,20 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
   {
     common_test(
       eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()},
-      eve::algo::aligned_ptr_iterator<e_t, N>{},
-      eve::algo::aligned_ptr_iterator<e_t, N>{}
+      eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{},
+      eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{}
     );
   }
 
   // vector::iterator
   common_test(
     vec.begin(), vec.end(),
-    eve::algo::unaligned_ptr_iterator<e_t, N>{}, eve::algo::unaligned_ptr_iterator<e_t, N>{});
+    u_it{}, u_it{});
 
   // vector::const_iterator
   common_test(
     vec.cbegin(), vec.cend(),
-    eve::algo::unaligned_ptr_iterator<e_t const, N>{}, eve::algo::unaligned_ptr_iterator<e_t const, N>{});
+    uc_it{}, uc_it{});
 };
 
 EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::selected_types)
@@ -169,13 +184,12 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {
-    using aligned_it = eve::algo::aligned_ptr_iterator<U, N>;
-    using aligned_p = typename aligned_it::aligned_ptr_type;
+    using aligned_p = eve::aligned_ptr<U, N>;
 
-    eve::algo::unaligned_ptr_iterator<U, N> u_f(f);
-    eve::algo::unaligned_ptr_iterator<U, N> u_l(l);
-    eve::algo::aligned_ptr_iterator<U, N>   a_f(aligned_p{f});
-    eve::algo::aligned_ptr_iterator<U, N>   a_l(aligned_p{l});
+    eve::algo::ptr_iterator<U*, N>         u_f(f);
+    eve::algo::ptr_iterator<U*, N>         u_l(l);
+    eve::algo::ptr_iterator<aligned_p, N>  a_f(aligned_p{f});
+    eve::algo::ptr_iterator<aligned_p, N>  a_l(aligned_p{l});
 
     run_one_test(u_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
     run_one_test(u_f, a_l, eve::algo::traits(eve::algo::unroll<2>));
@@ -204,7 +218,7 @@ EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
   // empty vector
   {
     std::vector<e_t> v;
-    using u_it = eve::algo::unaligned_ptr_iterator<e_t, N>;
+    using u_it = eve::algo::ptr_iterator<e_t*, N>;
 
     auto processed = eve::algo::preprocess_range(eve::algo::traits(), v);
     TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits()));
@@ -216,8 +230,8 @@ EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
   auto non_empty_range_test = [](auto&& rng) {
     auto processed = eve::algo::preprocess_range(eve::algo::traits(), rng);
 
-    using u_it = eve::algo::unaligned_ptr_iterator<
-      std::remove_reference_t<decltype(*std::begin(rng))>, N>;
+    using u_it = eve::algo::ptr_iterator<
+      std::remove_reference_t<decltype(*std::begin(rng))>*, N>;
 
     TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits()));
     TTS_TYPE_IS(decltype(processed.begin()), u_it);
@@ -270,7 +284,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_cardinal<T::size()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, T);
+    TTS_TYPE_IS(eve::wide_value_type_t<I>, T);
   }
 
   {
@@ -279,7 +293,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_cardinal<cardinal_n{}()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::iterator_cardinal_t<I>, cardinal_n);
+    TTS_TYPE_IS(eve::iterator_cardinal_t<I>, cardinal_n);
   }
 
   {
@@ -289,7 +303,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>, eve::wide<double>);
+    TTS_TYPE_IS(eve::wide_value_type_t<I>, eve::wide<double>);
   }
 
   {
@@ -298,7 +312,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::views::convert(v, eve::as<double>{}));
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+    TTS_TYPE_IS(eve::wide_value_type_t<I>,
                 (eve::wide<double, eve::fixed<T::size()>>));
   }
 
@@ -307,7 +321,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::traits(eve::algo::consider_types<double>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+    TTS_TYPE_IS(eve::wide_value_type_t<I>,
                 (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 
@@ -316,7 +330,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
       eve::algo::traits{}, eve::algo::views::convert(v_d, eve::as<e_t>{}));
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::algo::wide_value_type_t<I>,
+    TTS_TYPE_IS(eve::wide_value_type_t<I>,
                 (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
   }
 };

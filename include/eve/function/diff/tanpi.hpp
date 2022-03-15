@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/tanpi.hpp>
-#include <eve/module/real/math/function/diff/generic/tanpi.hpp>
+#include <eve/module/math/diff/tanpi.hpp>

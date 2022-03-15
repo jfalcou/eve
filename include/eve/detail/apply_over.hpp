@@ -13,7 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
-#include <eve/function/combine.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/manhattan.hpp>
-#include <eve/module/real/core/function/diff/generic/manhattan.hpp>
+#include <eve/module/core/diff/manhattan.hpp>

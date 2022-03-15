@@ -6,8 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/function/store.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 #include <array>
 #include <numeric>
@@ -21,7 +22,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // store tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar::all_types)
+EVE_TEST_TYPES( "Check store behavior with soa_ptr", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)
 {
   using s_t = tuple_t<T>;
@@ -53,7 +54,7 @@ EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar:
                 std::array<T          , w_t::size()> target1, ctarget1;
   alignas(alg2) std::array<double     , w_t::size()> target2, ctarget2;
 
-  auto dst = kumi::make_tuple ( eve::as_aligned(&target0[0], eve::cardinal_t<w_t>{})
+  auto dst = eve::soa_ptr    ( eve::as_aligned(&target0[0], eve::cardinal_t<w_t>{})
                               , &target1[0]
                               , eve::as_aligned(&target2[0], eve::cardinal_t<w_t>{})
                               );
@@ -64,7 +65,7 @@ EVE_TEST_TYPES( "Check store behavior with aligned pointers", eve::test::scalar:
   TTS_ALL_EQUAL(target1, ref1);
   TTS_ALL_EQUAL(target2, ref2);
 
-  auto cdst = kumi::make_tuple( eve::as_aligned(&ctarget0[0], eve::cardinal_t<w_t>{})
+  auto cdst = eve::soa_ptr   ( eve::as_aligned(&ctarget0[0], eve::cardinal_t<w_t>{})
                               , &ctarget1[0]
                               , eve::as_aligned(&ctarget2[0], eve::cardinal_t<w_t>{})
                               );

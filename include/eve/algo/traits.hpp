@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/concepts/value_type.hpp>
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
 
 #include <eve/detail/raberu.hpp>
@@ -24,14 +24,14 @@ namespace eve::algo
   struct traits : Settings
   {
     template <rbr::concepts::option... Options>
-    constexpr explicit traits(Options && ... options) : Settings(std::forward<Options>(options) ...) {}
+    constexpr explicit traits(Options && ... options) : Settings(EVE_FWD(options) ...) {}
 
     template <typename... Options>
     constexpr traits(rbr::settings<Options...> const& options) : Settings(options) {}
   };
 
   template <rbr::concepts::option ... Options>
-  traits(Options&& ... options) -> traits<decltype(rbr::settings(std::forward<Options>(options) ...))>;
+  traits(Options&& ... options) -> traits<decltype(rbr::settings(EVE_FWD(options) ...))>;
 
   struct unroll_key_t : rbr::any_keyword<unroll_key_t>
   {

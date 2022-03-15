@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/trunc.hpp>
-#include <eve/module/real/core/function/diff/generic/trunc.hpp>
+#include <eve/module/core/diff/trunc.hpp>

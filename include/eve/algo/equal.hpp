@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/all_of.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/views/zip.hpp>
 
-#include <eve/function/is_equal.hpp>
 
 #include <utility>
 
@@ -25,7 +25,7 @@ namespace eve::algo
     template <zipped_range_pair R, typename P>
     EVE_FORCEINLINE bool operator()(R&& r, P p) const
     {
-      return algo::all_of[TraitsSupport::get_traits()](std::forward<R>(r),
+      return algo::all_of[TraitsSupport::get_traits()](EVE_FWD(r),
                                                        apply_to_zip_pair{p});
     }
 
@@ -39,14 +39,14 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE bool operator()(R1&& r1, R2&& r2, P p) const
     {
-      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), p);
+      return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), p);
     }
 
     template <typename R1, typename R2>
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2) const
     {
-      return operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)));
+      return operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }
   };
 

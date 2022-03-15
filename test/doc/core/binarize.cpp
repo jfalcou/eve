@@ -1,6 +1,4 @@
-#include <eve/function/binarize.hpp>
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

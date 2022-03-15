@@ -15,10 +15,7 @@
 #include <array>
 #include <numeric>
 
-  inline constexpr eve::detail::types<
-      eve::wide<std::int8_t, eve::fixed<1>>> some_types;
-
-EVE_TEST_TYPES("Check ptr_iterator", some_types)
+EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
 <typename T>(eve::as<T>)
 {
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
@@ -34,14 +31,15 @@ EVE_TEST_TYPES("Check ptr_iterator", some_types)
 
   auto run_test = [&] <typename U>(U* f, U* l) {
     using N = eve::fixed<T::size()>;
+    using aligned_p = eve::aligned_ptr<U, N>;
 
-    using aligned_it = eve::algo::aligned_ptr_iterator<U, N>;
-    using aligned_p = typename aligned_it::aligned_ptr_type;
+    using u_it = eve::algo::ptr_iterator<U*, N>;
+    using a_it = eve::algo::ptr_iterator<aligned_p, N>;
 
-    eve::algo::unaligned_ptr_iterator<U, N> u_f(f);
-    eve::algo::unaligned_ptr_iterator<U, N> u_l(l);
-    eve::algo::aligned_ptr_iterator<U, N>   a_f(aligned_p{f});
-    eve::algo::aligned_ptr_iterator<U, N>   a_l(aligned_p{l});
+    u_it u_f(f);
+    u_it u_l(l);
+    a_it a_f(aligned_p{f});
+    a_it a_l(aligned_p{l});
 
     run_test_one_pair(u_f, u_l);
     run_test_one_pair(u_f, a_l);
@@ -59,4 +57,20 @@ EVE_TEST_TYPES("Check ptr_iterator", some_types)
 
   run_test(data.begin(), data.end());
   run_test(data.cbegin(), data.cend());
+};
+
+
+TTS_CASE("eve.algo non const to const")
+{
+  using N = eve::fixed<4>;
+  using aligned_p  = eve::aligned_ptr<int, N>;
+  using aligned_cp = eve::aligned_ptr<int const, N>;
+
+  using u_it  = eve::algo::ptr_iterator <int*      , N>;
+  using uc_it = eve::algo::ptr_iterator<int const*, N>;
+  using a_it  = eve::algo::ptr_iterator<aligned_p, N>;
+  using ac_it = eve::algo::ptr_iterator<aligned_cp, N>;
+
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<u_it, uc_it>) );
+  TTS_CONSTEXPR_EXPECT( (std::convertible_to<a_it, ac_it>) );
 };

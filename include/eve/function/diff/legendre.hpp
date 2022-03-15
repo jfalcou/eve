@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/legendre.hpp>
-#include <eve/module/real/polynomial/function/diff/generic/legendre.hpp>
+#include <eve/module/polynomial/diff/legendre.hpp>

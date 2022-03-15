@@ -1,9 +1,5 @@
-#include <eve/function/dec.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
-#include <eve/constant/mindenormal.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
@@ -14,7 +10,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf           = " << pf << '\n'
-            << "-> eve::dec(pf) = " << eve::dec(pf) << '\n';
+            << "-> dec(pf)       = " << eve::dec(pf) << '\n'
+            << "-> diff(dec)(pf) = " << eve::diff(eve::dec)(pf) << '\n'; 
 
   float xf = 1.0f;
 

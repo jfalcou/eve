@@ -5,8 +5,8 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/constant/nan.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <tts/tts.hpp>
 #include <tts/tests/relation.hpp>
 #include <tts/tests/precision.hpp>

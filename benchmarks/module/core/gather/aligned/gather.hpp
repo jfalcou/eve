@@ -5,13 +5,13 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/gather.hpp>
+#include <eve/module/core.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 int main()
 {
   constexpr auto alg = eve::alignment_v<EVE_TYPE>;
-  using EVE_VALUE = eve::detail::value_type_t<EVE_TYPE>;
+  using EVE_VALUE = eve::element_type_t<EVE_TYPE>;
   using I_VALUE =  eve::as_integer_t<EVE_VALUE>;
   using I_TYPE =  eve::as_integer_t<EVE_TYPE>;
   auto smin = I_VALUE(0);

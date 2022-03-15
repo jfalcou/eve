@@ -21,8 +21,8 @@
 
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(compress_store_impl_);
-  EVE_DECLARE_CALLABLE(compress_store_impl_, compress_store_impl);
+  EVE_REGISTER_CALLABLE(compress_store_impl_)
+  EVE_DECLARE_CALLABLE(compress_store_impl_, compress_store_impl)
 
   namespace detail
   {
@@ -33,11 +33,3 @@ namespace eve
 }
 
 #include <eve/detail/function/simd/common/compress_store_impl.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/compress_store_impl.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#    include <eve/detail/function/simd/arm/neon/compress_store_impl.hpp>
-#endif

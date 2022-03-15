@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/array_utils.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/concepts.hpp>
@@ -36,13 +37,13 @@ namespace eve::algo
         using out_t = eve::element_type_t<decltype(processed)>;
         auto cvt_and_store_it = views::convert(store_it, as<out_t>{});
 
-        eve::store[ignore](op(xs), cvt_and_store_it);
+        eve::store[ignore](processed, cvt_and_store_it);
       }
     };
   }
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var transform_inplace
   //!
@@ -64,18 +65,18 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
     {
       detail::transform_delegate<inplace_load_store, Op> d{op};
-      for_each[TraitsSupport::get_traits()](std::forward<Rng>(rng), d);
+      for_each[TraitsSupport::get_traits()](EVE_FWD(rng), d);
     }
   };
 
   inline constexpr auto transform_inplace = function_with_traits<transform_inplace_>[default_simple_algo_traits];
 
   //================================================================================================
-  //! @addtogroup eve.algo
+  //! @addtogroup algo
   //! @{
   //!  @var transform_to
   //!
-  //!  @brief version of std::transform
+  //!  @brief SIMD version of std::transform
   //!    * Accepts two things zipping together to range of pair.
   //!    * Also can accept a `zipped_range_pair`.
   //!    * returns void.
@@ -104,7 +105,7 @@ namespace eve::algo
       requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2, Op op) const
     {
-      operator()(views::zip(std::forward<R1>(r1), std::forward<R2>(r2)), op);
+      operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), op);
     }
   };
 

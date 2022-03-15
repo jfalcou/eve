@@ -23,12 +23,9 @@
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/lookup.hpp>
 #include <eve/detail/function/make.hpp>
-#include <eve/detail/function/patterns.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
-#include <eve/detail/function/swizzle.hpp>
 #include <eve/traits/as_integer.hpp>
 
 #include <cstring>
@@ -56,10 +53,8 @@ namespace eve
   //================================================================================================
   template<typename Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_cardinal<Cardinal>
-        , detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
-    using card_base     = detail::wide_cardinal<Cardinal>;
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
     public:
@@ -72,8 +67,11 @@ namespace eve
     //! The type used for this register storage
     using storage_type  = typename storage_base::storage_type;
 
-    //! Type for indexing element in a eve::logical
-    using size_type     = typename card_base::size_type;
+    //! Type describing the number of lanes of current wide
+    using cardinal_type = Cardinal;
+
+    //! Type representing the size of the current wide
+    using size_type     = std::ptrdiff_t;
 
     //! Type representing the bits of the logical value
     using bits_type = wide<as_integer_t<Type, unsigned>, Cardinal>;
@@ -121,7 +119,7 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are @raiterator{s}.
     template<detail::range Range>
     EVE_FORCEINLINE explicit logical(Range &&r) noexcept requires(!std::same_as<storage_type, Range>)
-                  : logical(std::begin(std::forward<Range>(r)), std::end(std::forward<Range>(r)))
+                  : logical(std::begin(EVE_FWD(r)), std::end(EVE_FWD(r)))
     {}
 
     //! Constructs a eve::logical from a SIMD compatible pointer
@@ -141,7 +139,7 @@ namespace eve
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
           requires(     std::convertible_to<T0,logical<Type>> && std::convertible_to<T0,logical<Type>>
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
-                    &&  (card_base::size() == 2 + sizeof...(Ts))
+                    &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
         : storage_base(detail::make(eve::as<logical>{}, v0, v1, vs...))
     {}
@@ -181,7 +179,7 @@ namespace eve
     //==============================================================================================
     template<std::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
-                  : storage_base(detail::fill(as<logical>{}, std::forward<Generator>(g)))
+                  : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
     {}
 
     //! @brief Constructs a eve::logical by combining two eve::logical of half the current cardinal.
@@ -191,7 +189,7 @@ namespace eve
                             , logical<wide<Type, Half>> const &h
                             ) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( card_base::size() == 2 * Half::value )
+    requires( Cardinal::value == 2 * Half::value )
 #endif
                   : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
     {}
@@ -200,8 +198,6 @@ namespace eve
     //! @name Assignment operators
     //! @{
     //==============================================================================================
-    //! Assignment operator
-    logical& operator=(logical const&) & = default;
 
     //! @brief Assignment of a logical value by splatting it in all lanes
     EVE_FORCEINLINE logical& operator=(logical<Type> v) noexcept
@@ -231,78 +227,15 @@ namespace eve
     //! @{
     //==============================================================================================
 
-    //==============================================================================================
-    //! @brief Dynamic lookup via lane indexing
-    //!
-    //! Generate a new eve::wide which is an arbitrary shuffling of current eve::wide lanes.
-    //! The values of `idx` must be integer between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero.
-    //!
-    //! Does not participate in overload resolution if `idx` is not an integral register.
-    //!
-    //! @param idx  eve::wide of integral indexes
-    //! @return     A eve::wide constructed as `wide{ get(idx.get(0)), ..., get(idx.get(size()-1))}`.
-    //==============================================================================================
-    template<typename Index>
-    EVE_FORCEINLINE auto operator[](wide<Index,Cardinal> const& idx) const noexcept
-    {
-      return lookup((*this),idx);
-    }
+    //! @brief Size of the wide in number of lanes
+    static EVE_FORCEINLINE constexpr size_type size()     noexcept { return Cardinal::value; }
 
-    //==============================================================================================
-    //! @brief Static lookup via lane indexing
-    //!
-    //! Generate a new eve::logical which is an arbitrary shuffling of current eve::logical lanes.
-    //! `p' is an instance of eve::pattern_t constructed via the eve::pattern template
-    //! variable. Values appearing in the pattern must be between 0 and `size()-1` or equal
-    //! to eve::na_ to indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a predefined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::pattern defining a shuffling pattern
-    //! @return   A logical constructed as `logical{ get(I), ... }`.
-    //!
-    //! @see eve::pattern_t
-    //! @see eve::pattern
-    //==============================================================================================
-    template<std::ptrdiff_t... I>
-#if !defined (EVE_DOXYGEN_INVOKED)
-    EVE_FORCEINLINE auto operator[](pattern_t<I...>) const noexcept
-    requires(pattern_t<I...>{}.validate(Cardinal::value))
-#else
-    EVE_FORCEINLINE auto operator[](pattern_t<I...> p) const noexcept
-#endif
-    {
-      constexpr auto swizzler = detail::find_optimized_pattern<Cardinal::value,I...>();
-      return swizzler((*this));
-    }
+    //! @brief Maximal number of lanes for a given wide
+    static EVE_FORCEINLINE constexpr size_type max_size() noexcept { return Cardinal::value; }
 
+    //! @brief Check if a wide contains 0 lanes
+    static EVE_FORCEINLINE constexpr bool      empty()    noexcept { return false; }
 
-    //==============================================================================================
-    //! @brief Static lookup via procedural lane indexing
-    //!
-    //! Generate a new eve::logical which is an arbitrary shuffling of current eve::logical lanes.
-    //! `p' is an instance of eve::as_pattern instantiated with a `constexpr` lambda that will be
-    //! used to generate the pattern algorithmically.
-    //! Values returned by the lambda must be between 0 and `size()-1` or equal to eve::na_ to
-    //! indicate the value at this lane must be replaced by zero or this operator
-    //! will not participate in overload resolution.
-    //!
-    //! Note that if the statically generated pattern matches a pre-defined @ref shuffling function
-    //! the corresponding optimized shuffling functions will be called.
-    //!
-    //! @param p  A eve::as_pattern_t defined from a lambda function
-    //! @return   A logical constructed as `logical{ get(p(0,size())), ..., get(p(0,size()-1)) }`.
-    //!
-    //! @see eve::as_pattern
-    //==============================================================================================
-    template<typename F>
-    EVE_FORCEINLINE auto operator[](as_pattern<F> p) const noexcept
-    {
-      return (*this)[ fix_pattern<Cardinal::value>(p) ];
-    }
     //==============================================================================================
     //! @}
     //==============================================================================================
@@ -493,6 +426,7 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a eve::logical and a scalar value
     template<scalar_value S>
+    requires requires(S s) { logical{s}; }
     friend EVE_FORCEINLINE logical operator==(logical v, S w) noexcept
     {
       return v == logical{w};
@@ -500,6 +434,7 @@ namespace eve
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::logical
     template<scalar_value S>
+    requires requires(S s) { logical{s}; }
     friend EVE_FORCEINLINE logical operator==(S v, logical w) noexcept
     {
       return w == v;
@@ -513,6 +448,7 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a eve::logical and a scalar value
     template<scalar_value S>
+    requires requires(S s) { logical{s}; }
     friend EVE_FORCEINLINE logical operator!=(logical v, S w) noexcept
     {
       return v != logical{w};
@@ -520,6 +456,7 @@ namespace eve
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::logical
     template<scalar_value S>
+    requires requires(S s) { logical{s}; }
     friend EVE_FORCEINLINE logical operator!=(S v, logical w) noexcept
     {
       return w != v;

@@ -1,5 +1,4 @@
-#include <eve/function/rsqrt.hpp>
-#include <eve/constant/inf.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
@@ -12,8 +11,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
             << "-> rsqrt(pf)        = " << eve::rsqrt(pf) << '\n'
-            << "-> raw(rsqrt)(pf)  = " << eve::raw(eve::rsqrt)(pf) << '\n';
-
+            << "-> raw(rsqrt)(pf)   = " << eve::raw(eve::rsqrt)(pf) << '\n'
+            << "-> diff(rsqrt)(pf)  = " << eve::diff(eve::rsqrt)(pf) << '\n';
 
   float xf = 32.768f;
 

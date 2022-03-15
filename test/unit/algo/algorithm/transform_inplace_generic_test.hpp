@@ -25,10 +25,10 @@ namespace algo_test
 
     void run(auto rng) const
     {
-      auto f = eve::algo::unalign(rng.begin());
-      auto l = eve::algo::unalign(rng.end());
+      auto f = eve::unalign(rng.begin());
+      auto l = eve::unalign(rng.end());
 
-      using T = eve::algo::value_type_t<decltype(rng)>;
+      using T = eve::value_type_t<decltype(rng)>;
 
       std::vector<T> expected(l - f, 0);
 
@@ -41,7 +41,7 @@ namespace algo_test
       if constexpr( std::floating_point<T> )
       {
         for( int i = 0; i != (l - f); ++i ) {
-          TTS_RELATIVE_EQUAL(expected[i], actual[i], 0.0001);
+          TTS_RELATIVE_EQUAL(expected[i], actual[i], 0.0005);
         }
       }
       else

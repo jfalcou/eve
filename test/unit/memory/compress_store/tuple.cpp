@@ -6,9 +6,10 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "test.hpp"
 
-#include <eve/function/compress_store.hpp>
+#include <eve/memory/soa_ptr.hpp>
 
 #include <random>
 
@@ -18,8 +19,7 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
-  // No aggregated on avx512 support
-  using N = eve::fixed< eve::current_api == eve::avx512 ? 8 : T::size() >;
+  using N   = eve::fixed<T::size()>;
   using e_t = eve::element_type_t<T>;
   using s_t = tuple_t<e_t>;
   using w_t = eve::wide<s_t, N>;
@@ -36,7 +36,7 @@ EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::
   alignas(w_t::size() * sizeof(e_t        )) std::array<e_t        , w_t::size()> data1;
   alignas(w_t::size() * sizeof(double     )) std::array<double     , w_t::size()> data2;
 
-  using u_ptr = kumi::tuple<std::int8_t*, e_t*, double*>;
+  using u_ptr = eve::soa_ptr<std::int8_t*, e_t*, double*>;
 
   auto test = [&](auto ptr, auto mask, auto ignore) {
     data0.fill(0);
@@ -63,8 +63,8 @@ EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::
     TTS_EQUAL(o, (get<2>(res) - data2.data()));
   };
 
-  kumi::tuple ptr1{ data0.data(), data1.data(), data2.data() };
-  kumi::tuple ptr2{ data0.data(), eve::as_aligned(data1.data(), N{}), data2.data() };
+  eve::soa_ptr ptr1{ data0.data(), data1.data(), data2.data() };
+  eve::soa_ptr ptr2{ data0.data(), eve::as_aligned(data1.data(), N{}), data2.data() };
 
   constexpr auto seed = sizeof(e_t) + T::size();
   std::mt19937 g(seed);
@@ -100,9 +100,9 @@ TTS_CASE( "explicit test case")
 
   eve::logical<eve::wide<std::int16_t, eve::fixed<4>>> m { true, false, true, false};
 
-  auto r = eve::safe(eve::compress_store)(x, m, kumi::tuple{out_ints.data(), out_bytes.data()});
+  auto r = eve::safe(eve::compress_store)(x, m, eve::soa_ptr{out_ints.data(), out_bytes.data()});
   TTS_EQUAL(get<0>(r), out_ints.end());
-  TTS_EQUAL(get<1>(r), out_bytes.end());
+  TTS_EQUAL((std::ptrdiff_t)get<1>(r), (std::ptrdiff_t)out_bytes.end());
 
   TTS_EQUAL(out_ints[0], 1);
   TTS_EQUAL(out_ints[1], 5);

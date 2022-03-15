@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/div.hpp>
-#include <eve/module/real/core/function/saturated/generic/div.hpp>
+#include <eve/module/core/saturated/impl/div.hpp>

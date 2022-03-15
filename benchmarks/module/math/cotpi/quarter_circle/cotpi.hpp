@@ -5,8 +5,8 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/cotpi.hpp>
-#include <eve/function/radindeg.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 
 int main()
 {

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/as_range.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
@@ -25,7 +26,7 @@
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @struct zip_range
   //!    @brief  A `relaxed_range` on top of multiple `relaxed_range`.
@@ -52,7 +53,7 @@ namespace eve::algo::views
   }
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!    @var zip
   //!    @brief  Given relaxed_iterors and relaxed ranges, zips them together
@@ -103,7 +104,7 @@ namespace eve::algo::views
        return kumi::tuple{
          [&]<typename C>(C&& c)
          {
-           if constexpr (relaxed_range<C>) return range_ref(std::forward<C>(c));
+           if constexpr (relaxed_range<C>) return range_ref(EVE_FWD(c));
            else                            return as_range(c, unalign(c) + distance);
          }(components)...
        };
@@ -153,9 +154,9 @@ namespace eve::algo::views
 
     if constexpr (has_type_overrides_v<traits_type>)
     {
-      auto to = type_to_convert_to(std::forward<Components>(components)...);
+      auto to = type_to_convert_to(EVE_FWD(components)...);
       using T = typename decltype(to)::type;
-      return zip(views::convert(std::forward<Components>(components), eve::as<T>{})...);
+      return zip(views::convert(EVE_FWD(components), eve::as<T>{})...);
     }
     else if constexpr( (relaxed_iterator<Components> && ...) )
     {

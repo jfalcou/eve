@@ -5,8 +5,9 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include <eve/function/signgam.hpp>
+#include <eve/module/core.hpp>
 #include <cmath>
+#include <eve/module/special.hpp>
 
 int main()
 {

@@ -6,9 +6,9 @@
 **/
 //==================================================================================================
 
+#include <eve/module/core.hpp>
 #include "test.hpp"
 
-#include <eve/function/scan.hpp>
 
 EVE_TEST_TYPES( "Check behavior of scan", eve::test::scalar::all_types)
 <typename T>(eve::as<T>)

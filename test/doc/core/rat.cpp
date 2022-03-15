@@ -1,15 +1,13 @@
 //==================================================================================================
+#include <eve/module/core.hpp>
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/function/rat.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

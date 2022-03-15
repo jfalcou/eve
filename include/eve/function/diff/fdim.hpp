@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/fdim.hpp>
-#include <eve/module/real/core/function/diff/generic/fdim.hpp>
+#include <eve/module/core/diff/fdim.hpp>

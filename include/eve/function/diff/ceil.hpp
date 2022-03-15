@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/ceil.hpp>
-#include <eve/module/real/core/function/diff/generic/ceil.hpp>
+#include <eve/module/core/diff/ceil.hpp>

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/acos.hpp>
-#include <eve/module/real/math/function/diff/generic/acos.hpp>
+#include <eve/module/math/diff/acos.hpp>

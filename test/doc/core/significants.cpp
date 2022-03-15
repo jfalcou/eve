@@ -1,9 +1,5 @@
-#include <eve/function/significants.hpp>
+#include <eve/module/math.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/mindenormal.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 #include <iomanip>
 

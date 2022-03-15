@@ -6,9 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/constant/nan.hpp>
+#include <eve/module/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/logical.hpp>
 

@@ -1,0 +1,232 @@
+<!-- HTML header for doxygen 1.8.20-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="generator" content="Doxygen 1.9.4"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>E.V.E: eve::aligned_ptr::next_aligned_address</title>
+  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="doxystrap.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Custom input to switch branches -->
+  <script>
+    function switchBranchAction() {
+      var branch = document.getElementById("branch_input").value;
+      var form = this;
+      window.location.href = window.location.hostname + '/en/' + branch;
+    }
+  </script>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+</head>
+<body>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
+      </div>
+    </div>
+  </nav>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+    <div class="content" id="content">
+      <div class="container">
+        <div id="titlearea">
+          <table cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr style="height: 56px;">
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
+                <td id="projectalign" style="padding-left: 0.5em;">
+                  <div id="projectname">E.V.E
+                    &#160;<span id="projectnumber">v2022.03.00</span>
+                  </div>
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
+            <div style="margin-bottom: 15px;">
+              <!-- DOXYSTRAP BLOCK CHANGE END -->
+              <!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li><a href="pages.html"><span>Documentation</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>References</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="contents">
+<table cellspacing="0" cellpadding="0" border="0">
+  <tr>
+   <td valign="top">
+      <div class="navtab">
+        <table>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a243a4819a3e6659e3096adcfb4ed366a">aligned_ptr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a838df7b2c90202ade0f45d01f8134058">aligned_ptr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr_a5376a9155a39e6d311e361ef365c222f.html#a5376a9155a39e6d311e361ef365c222f">aligned_ptr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a70871f0fbce27686b5bc87745ada5698">aligned_ptr</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ac492dbb48b2314f4d9b874fe6cfbe79e">alignment</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr_a52d5ad94329c310ad8cb583b4e3f19f1.html#a52d5ad94329c310ad8cb583b4e3f19f1">as_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr_ac2f686e634604536ddbdcfce629887f3.html#ac2f686e634604536ddbdcfce629887f3">as_aligned</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#aa6c43a41bc91bdc491818820953f7b4d">get</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr_af5f46ed7531da24993e83cbd4ac128c0.html#af5f46ed7531da24993e83cbd4ac128c0">next_aligned_address</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="structeve_1_1aligned__ptr_ab3183f3cbe25f5af3b5d3842a76a7cfb.html#ab3183f3cbe25f5af3b5d3842a76a7cfb">next_aligned_address</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a45d36841620158a67436c4c285b16551">operator bool</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a3eae8f3254e53333dbad75b49401adea">operator pointer</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ab37c8571471bda0e72b365cc4d8f9e59">operator*</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a99c4ca7e6e42bbec8323085cd27f55e0">operator*</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ad762c64085048c2ba6ae0b8d128bc401">operator++</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a8f6465c2dbe7f3eafd1f3224fba2cc51">operator++</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a2fe3040a6a80afb80eec6e058f4ce9b8">operator+=</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ab5f56e187fd085ffc8df8352fbe6f2fd">operator--</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ab455c40952363fcdc630a5a192282558">operator--</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#af6dfde7e9c59f0f8d1cda928fc4e07b9">operator-=</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#aaa88aa0d88cf52b4669be820cca0866b">operator-&gt;</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a2c90d6ce8b8bf13b7e09cf4b06c7a271">operator-&gt;</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a75251b3b42de23e7b33fb87f53d20431">operator&lt;=&gt;</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ac34c57982bdea91092bd8d24ed25802d">operator=</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#a01fcaadfc18462725723c6ab049a7153">pointer</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr_a28fd884a05e3b74a5252025c69239e7f.html#a28fd884a05e3b74a5252025c69239e7f">previous_aligned_address</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr_a911aab2fb14b05dcc4625f412282dbe1.html#a911aab2fb14b05dcc4625f412282dbe1">previous_aligned_address</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ad093d3fbfa02d18d397c33ecbc5b81ad">rebind</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#ab30d7f5154fcc11c9538fb558cbbe7e6">swap</a></td></tr>
+          <tr><td class="navtab"><a class="navtab" href="structeve_1_1aligned__ptr.html#aed55f842914bf195c481887441623ca4">value_type</a></td></tr>
+        </table>
+      </div>
+   </td>
+   <td valign="top" class="mempage">
+<a id="ab3183f3cbe25f5af3b5d3842a76a7cfb" name="ab3183f3cbe25f5af3b5d3842a76a7cfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3183f3cbe25f5af3b5d3842a76a7cfb">&#9670;&nbsp;</a></span>next_aligned_address() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto next_aligned_address </td>
+          <td>(</td>
+          <td class="paramtype">T *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">related</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes an address greater or equal to <code>p</code> which is satisfy the alignment constraint of current architecture's SIMD register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>Pointer to realign </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> holding the realigned pointer with the proper alignment constraint. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>next_aligned_address(T*, Cardinal) </dd></dl>
+
+</div>
+</div>
+    </td>
+  </tr>
+</table>
+</div><!-- contents -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+<hr class="footer"/>
+</body>
+</html>

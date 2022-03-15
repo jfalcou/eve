@@ -6,13 +6,11 @@
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
   SPDX-License-Identifier: MIT
 **/
+#include <eve/module/core.hpp>
 //==================================================================================================
 #include "test.hpp"
 #include <cstddef>
 
-#include <eve/constant/false.hpp>
-#include <eve/constant/true.hpp>
-#include <eve/function/if_else.hpp>
 #include <eve/wide.hpp>
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
@@ -107,7 +105,9 @@ EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
                                             , eve::as<eve::logical<w_t>>()
                                             );
 
-    TTS_EQUAL(values, eve::true_(as(values)));
+    eve::logical<w_t> mask_ref = [=](auto i, auto) { return i<type::size(); };
+
+    TTS_EQUAL(values, mask_ref);
   }
 };
 
@@ -460,4 +460,29 @@ EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
       }
     }
   }
+};
+
+TTS_CASE("conditional/reverse")
+{
+  using T = eve::wide<int, eve::fixed<4>>;
+
+  auto rev = [](auto c) {
+    return eve::reverse_conditional(c, eve::as<T>{});
+  };
+
+  TTS_CONSTEXPR_EQUAL(rev(eve::keep_first(3)),       eve::keep_last(3));
+  TTS_CONSTEXPR_EQUAL(rev(eve::keep_last(3)),        eve::keep_first(3));
+  TTS_CONSTEXPR_EQUAL(rev(eve::keep_between(0, 1)),  eve::keep_between(3, 4));
+
+  TTS_CONSTEXPR_EQUAL(rev(eve::ignore_first(3)),      eve::ignore_last(3));
+  TTS_CONSTEXPR_EQUAL(rev(eve::ignore_last(3)),       eve::ignore_first(3));
+  TTS_CONSTEXPR_EQUAL(rev(eve::ignore_extrema(1, 2)), eve::ignore_extrema(2, 1));
+
+  TTS_CONSTEXPR_EQUAL(rev(eve::keep_first(1).else_(0)), eve::keep_last(1).else_(0));
+};
+
+TTS_CASE("conditional/drop_alternative")
+{
+  TTS_CONSTEXPR_EQUAL(eve::drop_alternative(eve::keep_first(3)), eve::keep_first(3));
+  TTS_CONSTEXPR_EQUAL(eve::drop_alternative(eve::keep_first(3).else_(1)), eve::keep_first(3));
 };

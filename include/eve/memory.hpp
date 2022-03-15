@@ -8,7 +8,7 @@
 #pragma once
 
 //================================================================================================
-//! @addtogroup simd
+//! @addtogroup arch
 //! @{
 //! @defgroup memory Memory Management
 //!

@@ -8,6 +8,8 @@
 #pragma once
 
 //==================================================================================================
+//! @addtogroup simd_types
+//! @{
 //! @defgroup traits Type traits
 //! @brief  Type traits for SIMD related types and functions
 //!
@@ -15,6 +17,7 @@
 //! types that are accessible through the following traits.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/traits.hpp> @endcode
+//! @}
 //==================================================================================================
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/as_arithmetic.hpp>
@@ -27,3 +30,7 @@
 #include <eve/traits/common_type.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
+#include <eve/traits/iterator_cardinal.hpp>
+#include <eve/traits/max_scalar_size.hpp>
+#include <eve/traits/value_type.hpp>
+#include <eve/traits/wide_value_type.hpp>

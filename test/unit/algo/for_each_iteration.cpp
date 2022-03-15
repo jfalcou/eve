@@ -27,15 +27,16 @@ namespace
 
     auto aligned_begin() const
     {
-      return eve::algo::aligned_ptr_iterator<const int, eve::fixed<4>> {
-        eve::aligned_ptr<const int, eve::fixed<4>>(data.begin())
+      using ap = eve::aligned_ptr<const int, eve::fixed<4>>;
+      return eve::algo::ptr_iterator<ap, eve::fixed<4>> {
+        ap(data.begin())
       };
     }
 
     auto aligned_end() const { return aligned_begin() + data.size(); }
 
-    auto unaligned_begin() const { return aligned_begin().unaligned(); }
-    auto unaligned_end()   const { return aligned_end().unaligned(); }
+    auto unaligned_begin() const { return eve::unalign(aligned_begin()); }
+    auto unaligned_end()   const { return eve::unalign(aligned_end()); }
 
     alignas(sizeof(int) * 4) std::array<int, 100> data;
   };

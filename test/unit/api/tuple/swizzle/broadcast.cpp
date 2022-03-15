@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <bit>
 #include <cstdint>
@@ -34,8 +35,8 @@ EVE_TEST_TYPES( "Check behavior of broadcast swizzle", eve::test::scalar::all_ty
                 ([&]()
                 {
                   typename S::template rescale<typename S::cardinal_type> ref(simd.get(V));
-                  TTS_EQUAL((simd[broadcast<V,S::size()>])        , ref);
-                  TTS_EQUAL((eve::broadcast(simd, eve::index<V>)) , ref);
+                  TTS_EQUAL(eve::shuffle(simd,broadcast<V,S::size()>) , ref);
+                  TTS_EQUAL((eve::broadcast(simd, eve::index<V>))     , ref);
                 }(), ...);
 
               }( std::make_index_sequence<S::size()>{} );

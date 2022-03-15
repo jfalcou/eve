@@ -19,10 +19,17 @@ Main eve supports it's callables for scalars. We don't do that for algorithms. T
 * inclusive_scan_inplace/inclusive_scan_to
 
 * copy
+* copy_backward
 
 * transform_inplace/transform_to
 
 * remove/remove_if
+
+* fill
+
+* iota
+
+* reverse/reverse_copy
 
 # Helpers
 
@@ -52,15 +59,15 @@ The minimum requirements are:
 * `I += n`  // `n` is `std::ptrdiff_t` is divisible by `iterator_cardinal_v<I>`
 * `I - I` - returns the distance between two iterators (in elements).
 * I is totally ordered
-* `I.unaligned()` - returns an `unaligned_iterator` pointing to the same place.
-* `I.unaligned()` and `I` are comparible
+* `eve::unaligned(I)` - returns an `unaligned_iterator` pointing to the same place.
+* `eve::unaligned(I)` and `I` are comparible
 * `I.previous_partially_aligned()` - returns our best attempt to align this iterator.
 
 ### aligned_iterator(concept)
 
 *TODO*
 
-The main model is `aligned_ptr_iterator`
+The main model is `ptr_iterator<aligned_ptr, N>`
 
 This is a `partially_aligned_iterator` but has an extra feature: we can do `unsafe` load.
 When we get to unbounded algorithms it will become important.
@@ -69,7 +76,7 @@ When we get to unbounded algorithms it will become important.
 
 I and partially_aligned_t<I> are the same.
 
-The main model is `aligned_ptr_iterator`, `zip_iterator<aligned_ptr_iterator, unaligned_ptr_iterator>`
+The main model is `ptr_iterator<aligned_ptr, N>`, `zip_iterator<ptr_iterator<aligned_ptr, N>, ptr_iterator<T*, N>>`
 
 Loading/Storing is more efficient than doing the same from `unaligned`. We can only step in `iterator_cardinal_v<I>` divisible steps.
 
@@ -77,7 +84,7 @@ Loading/Storing is more efficient than doing the same from `unaligned`. We can o
 
 I and unaligned_t<I> are the same.
 
-The main model is `unaligned_ptr_iterator`
+The main model is `ptr_iterator<T*, N>`
 
 iterator that can represent any position in the underlying range.
 
@@ -211,8 +218,7 @@ A tuple of iterators with the same cardinal.
 
 ### ptr_iterator
 
-* `aligned_ptr_iterator`
-* `unaligned_ptr_iterator`
+* `ptr_iterator`
 
 A pointer + cardinal with the `iterator` interface.
 
@@ -238,16 +244,6 @@ _TODO_ `step_unrolled(iterator)` if the `unroll` trait is bigger than 1.
 `iterator` type from steps is not guarantied to match `decltype(f)` (for when we know we can align the input for example).
 
 `step` returns `true` if it wants to break or `false` to continue.
-
-### unaligned
-
-`unalign`
-`uunaligned/unaligned_t`
-
-A small helper.
-For contigious iterators -> returns themselves
-For aligned_ptr -> returns a raw ptr
-For everything else -> returns .unaligned()
 
 ### zip
 

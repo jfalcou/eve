@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/prev.hpp>
-#include <eve/module/real/core/function/pedantic/generic/prev.hpp>
+#include <eve/module/core/pedantic/prev.hpp>

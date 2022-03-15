@@ -34,6 +34,7 @@
 
 #include <future>
 #include <thread>
+#include <vector>
 
 // -------------------------
 // typedefs

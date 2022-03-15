@@ -1,7 +1,4 @@
-#include <eve/function/next.hpp>
-#include <eve/function/pedantic/next.hpp>
-#include <eve/constant/bitincrement.hpp>
-#include <eve/constant/eps.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 #include <iomanip>

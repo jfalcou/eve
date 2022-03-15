@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/maxmag.hpp>
-#include <eve/module/real/core/function/diff/generic/maxmag.hpp>
+#include <eve/module/core/diff/maxmag.hpp>

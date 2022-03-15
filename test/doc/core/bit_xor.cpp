@@ -1,5 +1,4 @@
-#include <eve/function/bit_xor.hpp>
-#include <eve/literals.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

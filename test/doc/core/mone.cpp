@@ -1,4 +1,3 @@
-#include <eve/constant/mone.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

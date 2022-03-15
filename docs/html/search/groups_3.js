@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['combinatorial_0',['Combinatorial',['../group__combinatorial.html',1,'']]],
-  ['comparisons_1',['Comparisons',['../group__comparisons.html',1,'']]],
-  ['constants_2',['Constants',['../group__constant.html',1,'']]],
-  ['conversion_3',['Conversion',['../group__conversion.html',1,'']]],
-  ['conversion_20decorators_4',['Conversion decorators',['../group__converter.html',1,'']]]
+  ['elliptic_20function_0',['elliptic function',['../group__elliptic.html',1,'']]],
+  ['eve_1',['EVE',['../group__simd.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logical_0',['Logical',['../group__logical.html',1,'']]]
+  ['views_0',['Views',['../group__views.html',1,'']]]
 ];

@@ -5,16 +5,17 @@
     <tab type="mainpage" visible="yes" title="Index"/>
     <tab type="pages" visible="yes" title="Documentation">
       <tab type="pages" visible="yes" title="Documentation"/>
+      <tab type="user" visible="yes" title="Getting Started" url="about.html"/>
       <tab type="user" visible="yes" title="Tutorials" url="tutorials.html"/>
-      <tab type="user" visible="yes" title="Glossary" url="glossary.html"/>
+      <tab type="user" visible="yes" title="Rationale" url="rationale.html"/>
+      <tab type="user" visible="yes" title="Contributing" url="eve-dev.html"/>
     </tab>
     <tab type="modules" visible="yes" title="Modules">
       <tab type="modules" visible="yes" title="Modules"  intro=""/>
-      <tab type="user" visible="yes" title="Types &amp; Wrappers" url="group__simd.html"  intro=""/>
+      <tab type="user" visible="yes" title="Types &amp; Wrappers" url="group__simd__types.html"  intro=""/>
       <tab type="user" visible="yes" title="Functions" url="@ref functions"  intro=""/>
-      <tab type="user" visible="yes" title="Constants" url="@ref constant"  intro=""/>
+      <tab type="user" visible="yes" title="Algorithms" url="@ref algo"  intro=""/>
       <tab type="user" visible="yes" title="Traits" url="@ref traits"  intro=""/>
-      <tab type="user" visible="yes" title="Internals" url="@ref details"  intro=""/>
     </tab>
     <tab type="namespaces" visible="yes" title="References">
       <tab type="namespaces" visible="yes" title="" intro=""/>

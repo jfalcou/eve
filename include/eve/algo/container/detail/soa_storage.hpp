@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/views/zip.hpp>
 
@@ -47,8 +48,8 @@ namespace eve::algo::detail
       EVE_FORCEINLINE auto data_aligned()        { return data_aligned_impl(*this); }
       EVE_FORCEINLINE auto data_aligned()  const { return data_aligned_impl(*this); }
 
-      EVE_FORCEINLINE auto data()       { return eve::algo::unalign(data_aligned()); }
-      EVE_FORCEINLINE auto data() const { return eve::algo::unalign(data_aligned()); }
+      EVE_FORCEINLINE auto data()       { return eve::unalign(data_aligned()); }
+      EVE_FORCEINLINE auto data() const { return eve::unalign(data_aligned()); }
   };
 }
 

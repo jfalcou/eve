@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 #include <eve/wide.hpp>
-#include <eve/constant/pi.hpp>
-#include <eve/constant/signmask.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <iostream>
 
 int main()

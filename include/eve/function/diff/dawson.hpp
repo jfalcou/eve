@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/dawson.hpp>
-#include <eve/module/real/special/function/diff/generic/dawson.hpp>
+#include <eve/module/special/diff/dawson.hpp>

@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/coth.hpp>
-#include <eve/module/real/math/function/diff/generic/coth.hpp>
+#include <eve/module/math/diff/coth.hpp>

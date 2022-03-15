@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/laguerre.hpp>
-#include <eve/module/real/polynomial/function/diff/generic/laguerre.hpp>
+#include <eve/module/polynomial/diff/laguerre.hpp>

@@ -6,9 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/slide_right.hpp>
 #include <bit>
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
@@ -46,8 +46,8 @@ EVE_TEST( "Check behavior of slide_right swizzle"
     TTS_EQUAL(eve::slide_right(simd    ,eve::index<Shift::value>), ref);
     TTS_EQUAL(eve::slide_right(logicals,eve::index<Shift::value>), lref);
 
-    TTS_EQUAL( (simd[slide_right_pattern<Shift::value,T::size()>])     , ref   );
-    TTS_EQUAL( (logicals[slide_right_pattern<Shift::value,T::size()>]) , lref  );
+    TTS_EQUAL( eve::shuffle(simd, slide_right_pattern<Shift::value,T::size()>)    , ref   );
+    TTS_EQUAL( eve::shuffle(logicals,slide_right_pattern<Shift::value,T::size()>) , lref  );
   }
   );
 };

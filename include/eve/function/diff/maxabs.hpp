@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/maxabs.hpp>
-#include <eve/module/real/core/function/diff/generic/maxabs.hpp>
+#include <eve/module/core/diff/maxabs.hpp>

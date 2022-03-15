@@ -1,4 +1,3 @@
-#include <eve/constant/valmin.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

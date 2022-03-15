@@ -1,0 +1,518 @@
+<!-- HTML header for doxygen 1.8.20-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="generator" content="Doxygen 1.9.4"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>E.V.E: math function</title>
+  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="dynsections.js"></script>
+  <script type="text/javascript" src="godbolt.js"></script>
+  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <link href="doxygen.css" rel="stylesheet" type="text/css" />
+  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="doxystrap.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Custom input to switch branches -->
+  <script>
+    function switchBranchAction() {
+      var branch = document.getElementById("branch_input").value;
+      var form = this;
+      window.location.href = window.location.hostname + '/en/' + branch;
+    }
+  </script>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+</head>
+<body>
+  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+      <!--GITHUB RIBBON-->
+      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
+      <!--GITHUB RIBBON-->
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
+      </div>
+    </div>
+  </nav>
+  <!-- DOXYSTRAP BLOCK CHANGE END -->
+  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
+    <div class="content" id="content">
+      <div class="container">
+        <div id="titlearea">
+          <table cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr style="height: 56px;">
+                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
+                </td>
+                <td id="projectalign" style="padding-left: 0.5em;">
+                  <div id="projectname">E.V.E
+                    &#160;<span id="projectnumber">v2022.03.00</span>
+                  </div>
+                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
+            <div style="margin-bottom: 15px;">
+              <!-- DOXYSTRAP BLOCK CHANGE END -->
+              <!-- end header part -->
+<!-- Generated by Doxygen 1.9.4 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Index</span></a></li>
+      <li><a href="pages.html"><span>Documentation</span></a></li>
+      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>References</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li class="current"><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="group__simd__types.html"><span>Types&#160;&&#160;Wrappers</span></a></li>
+      <li><a href="group__functions.html"><span>Functions</span></a></li>
+      <li><a href="group__algo.html"><span>Algorithms</span></a></li>
+      <li><a href="group__traits.html"><span>Traits</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">math function<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>math function  
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p >math function </p>
+<p >This module provides implementation for scalar and SIMD versions of current mathematical functions.</p>
+<p ><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span> </div>
+</div><!-- fragment --> <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga0b261f4b5937510380744722e3407bbe"><td class="memItemLeft" align="right" valign="top">constexpr callable_egamma_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga0b261f4b5937510380744722e3407bbe.html#ga0b261f4b5937510380744722e3407bbe">eve::egamma</a> = {}</td></tr>
+<tr class="memdesc:ga0b261f4b5937510380744722e3407bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the Euler-Mascheroni constant.  <a href="group__math_ga0b261f4b5937510380744722e3407bbe.html#ga0b261f4b5937510380744722e3407bbe">More...</a><br /></td></tr>
+<tr class="separator:ga0b261f4b5937510380744722e3407bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c0026a6374d3c2bf0ce6271edeadaed"><td class="memItemLeft" align="right" valign="top">constexpr callable_euler_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga0c0026a6374d3c2bf0ce6271edeadaed.html#ga0c0026a6374d3c2bf0ce6271edeadaed">eve::euler</a> = {}</td></tr>
+<tr class="memdesc:ga0c0026a6374d3c2bf0ce6271edeadaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(\e\) value, i.e. \(e^1\).  <a href="group__math_ga0c0026a6374d3c2bf0ce6271edeadaed.html#ga0c0026a6374d3c2bf0ce6271edeadaed">More...</a><br /></td></tr>
+<tr class="separator:ga0c0026a6374d3c2bf0ce6271edeadaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga722c967a20debd9ffe04b325134395ba"><td class="memItemLeft" align="right" valign="top">constexpr callable_halfeps_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga722c967a20debd9ffe04b325134395ba.html#ga722c967a20debd9ffe04b325134395ba">eve::halfeps</a> = {}</td></tr>
+<tr class="memdesc:ga722c967a20debd9ffe04b325134395ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the the half of the machine epsilon.  <a href="group__math_ga722c967a20debd9ffe04b325134395ba.html#ga722c967a20debd9ffe04b325134395ba">More...</a><br /></td></tr>
+<tr class="separator:ga722c967a20debd9ffe04b325134395ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37d9537aa6f66240bd5b8b4e61269ee9"><td class="memItemLeft" align="right" valign="top">constexpr callable_invlog10_2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga37d9537aa6f66240bd5b8b4e61269ee9.html#ga37d9537aa6f66240bd5b8b4e61269ee9">eve::invlog10_2</a> = {}</td></tr>
+<tr class="memdesc:ga37d9537aa6f66240bd5b8b4e61269ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing 1/log10(2).  <a href="group__math_ga37d9537aa6f66240bd5b8b4e61269ee9.html#ga37d9537aa6f66240bd5b8b4e61269ee9">More...</a><br /></td></tr>
+<tr class="separator:ga37d9537aa6f66240bd5b8b4e61269ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae22a65c2fd3fabbb0223e51d9a38a47c"><td class="memItemLeft" align="right" valign="top">constexpr callable_invlog_10_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gae22a65c2fd3fabbb0223e51d9a38a47c.html#gae22a65c2fd3fabbb0223e51d9a38a47c">eve::invlog_10</a> = {}</td></tr>
+<tr class="memdesc:gae22a65c2fd3fabbb0223e51d9a38a47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing 1/log(10).  <a href="group__math_gae22a65c2fd3fabbb0223e51d9a38a47c.html#gae22a65c2fd3fabbb0223e51d9a38a47c">More...</a><br /></td></tr>
+<tr class="separator:gae22a65c2fd3fabbb0223e51d9a38a47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb667b96225f1f9d9e6a5b480d960344"><td class="memItemLeft" align="right" valign="top">constexpr callable_invlog_2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaeb667b96225f1f9d9e6a5b480d960344.html#gaeb667b96225f1f9d9e6a5b480d960344">eve::invlog_2</a> = {}</td></tr>
+<tr class="memdesc:gaeb667b96225f1f9d9e6a5b480d960344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing 1/log(2).  <a href="group__math_gaeb667b96225f1f9d9e6a5b480d960344.html#gaeb667b96225f1f9d9e6a5b480d960344">More...</a><br /></td></tr>
+<tr class="separator:gaeb667b96225f1f9d9e6a5b480d960344"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95e24f644925e19a6b356fa1c28f9799"><td class="memItemLeft" align="right" valign="top">constexpr callable_invpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga95e24f644925e19a6b356fa1c28f9799.html#ga95e24f644925e19a6b356fa1c28f9799">eve::invpi</a> = {}</td></tr>
+<tr class="memdesc:ga95e24f644925e19a6b356fa1c28f9799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\pi^{-1}\).  <a href="group__math_ga95e24f644925e19a6b356fa1c28f9799.html#ga95e24f644925e19a6b356fa1c28f9799">More...</a><br /></td></tr>
+<tr class="separator:ga95e24f644925e19a6b356fa1c28f9799"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49667d76f54c0c7753c703215266975f"><td class="memItemLeft" align="right" valign="top">constexpr callable_invsqrt_2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga49667d76f54c0c7753c703215266975f.html#ga49667d76f54c0c7753c703215266975f">eve::invsqrt_2</a> = {}</td></tr>
+<tr class="memdesc:ga49667d76f54c0c7753c703215266975f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(2^{-1/2}\).  <a href="group__math_ga49667d76f54c0c7753c703215266975f.html#ga49667d76f54c0c7753c703215266975f">More...</a><br /></td></tr>
+<tr class="separator:ga49667d76f54c0c7753c703215266975f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa658e21dd8b0fa179c14d63b141d216e"><td class="memItemLeft" align="right" valign="top">constexpr callable_invsqrtpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa658e21dd8b0fa179c14d63b141d216e.html#gaa658e21dd8b0fa179c14d63b141d216e">eve::invsqrtpi</a> = {}</td></tr>
+<tr class="memdesc:gaa658e21dd8b0fa179c14d63b141d216e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\pi^{-1}\).  <a href="group__math_gaa658e21dd8b0fa179c14d63b141d216e.html#gaa658e21dd8b0fa179c14d63b141d216e">More...</a><br /></td></tr>
+<tr class="separator:gaa658e21dd8b0fa179c14d63b141d216e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd1b1b9ad0af95820cfcff56f06e7f5b"><td class="memItemLeft" align="right" valign="top">constexpr callable_log10_e_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gafd1b1b9ad0af95820cfcff56f06e7f5b.html#gafd1b1b9ad0af95820cfcff56f06e7f5b">eve::log10_e</a> = {}</td></tr>
+<tr class="memdesc:gafd1b1b9ad0af95820cfcff56f06e7f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\\log 2\).  <a href="group__math_gafd1b1b9ad0af95820cfcff56f06e7f5b.html#gafd1b1b9ad0af95820cfcff56f06e7f5b">More...</a><br /></td></tr>
+<tr class="separator:gafd1b1b9ad0af95820cfcff56f06e7f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92249c9dfe28cb32f9643e3ea1988b36"><td class="memItemLeft" align="right" valign="top">constexpr callable_log2_e_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga92249c9dfe28cb32f9643e3ea1988b36.html#ga92249c9dfe28cb32f9643e3ea1988b36">eve::log2_e</a> = {}</td></tr>
+<tr class="memdesc:ga92249c9dfe28cb32f9643e3ea1988b36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\\log 2\).  <a href="group__math_ga92249c9dfe28cb32f9643e3ea1988b36.html#ga92249c9dfe28cb32f9643e3ea1988b36">More...</a><br /></td></tr>
+<tr class="separator:ga92249c9dfe28cb32f9643e3ea1988b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa784a9fb3ffd22d4e1e7353de9dab889"><td class="memItemLeft" align="right" valign="top">constexpr callable_log_10_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa784a9fb3ffd22d4e1e7353de9dab889.html#gaa784a9fb3ffd22d4e1e7353de9dab889">eve::log_10</a> = {}</td></tr>
+<tr class="memdesc:gaa784a9fb3ffd22d4e1e7353de9dab889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\\log 2\).  <a href="group__math_gaa784a9fb3ffd22d4e1e7353de9dab889.html#gaa784a9fb3ffd22d4e1e7353de9dab889">More...</a><br /></td></tr>
+<tr class="separator:gaa784a9fb3ffd22d4e1e7353de9dab889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga647cf7c845fb8a1139aebeb3d1342f8a"><td class="memItemLeft" align="right" valign="top">constexpr callable_log_2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga647cf7c845fb8a1139aebeb3d1342f8a.html#ga647cf7c845fb8a1139aebeb3d1342f8a">eve::log_2</a> = {}</td></tr>
+<tr class="memdesc:ga647cf7c845fb8a1139aebeb3d1342f8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\\log 2\).  <a href="group__math_ga647cf7c845fb8a1139aebeb3d1342f8a.html#ga647cf7c845fb8a1139aebeb3d1342f8a">More...</a><br /></td></tr>
+<tr class="separator:ga647cf7c845fb8a1139aebeb3d1342f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1261b05fe986985da2f916752eeadf57"><td class="memItemLeft" align="right" valign="top">constexpr callable_maxlog_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga1261b05fe986985da2f916752eeadf57.html#ga1261b05fe986985da2f916752eeadf57">eve::maxlog</a> = {}</td></tr>
+<tr class="memdesc:ga1261b05fe986985da2f916752eeadf57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the greatest positive value for which <a class="el" href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp</a> returns a finite result.  <a href="group__math_ga1261b05fe986985da2f916752eeadf57.html#ga1261b05fe986985da2f916752eeadf57">More...</a><br /></td></tr>
+<tr class="separator:ga1261b05fe986985da2f916752eeadf57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbdc6ed408ab2a2b8d6270f04f19798b"><td class="memItemLeft" align="right" valign="top">constexpr callable_maxlog10_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gadbdc6ed408ab2a2b8d6270f04f19798b.html#gadbdc6ed408ab2a2b8d6270f04f19798b">eve::maxlog10</a> = {}</td></tr>
+<tr class="memdesc:gadbdc6ed408ab2a2b8d6270f04f19798b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the greatest positive value for which <a class="el" href="group__math_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a" title="Callable object computing .">eve::exp10</a> returns a finite result.  <a href="group__math_gadbdc6ed408ab2a2b8d6270f04f19798b.html#gadbdc6ed408ab2a2b8d6270f04f19798b">More...</a><br /></td></tr>
+<tr class="separator:gadbdc6ed408ab2a2b8d6270f04f19798b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65e61db3f5dad150ee147383c4a8096e"><td class="memItemLeft" align="right" valign="top">constexpr callable_maxlog2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga65e61db3f5dad150ee147383c4a8096e.html#ga65e61db3f5dad150ee147383c4a8096e">eve::maxlog2</a> = {}</td></tr>
+<tr class="memdesc:ga65e61db3f5dad150ee147383c4a8096e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the greatest positive value for which <a class="el" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51" title="Callable object computing .">eve::exp2</a> returns a finite result.  <a href="group__math_ga65e61db3f5dad150ee147383c4a8096e.html#ga65e61db3f5dad150ee147383c4a8096e">More...</a><br /></td></tr>
+<tr class="separator:ga65e61db3f5dad150ee147383c4a8096e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03181e9677d0f1f28da82a94140f7496"><td class="memItemLeft" align="right" valign="top">constexpr callable_minlog_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga03181e9677d0f1f28da82a94140f7496.html#ga03181e9677d0f1f28da82a94140f7496">eve::minlog</a> = {}</td></tr>
+<tr class="memdesc:ga03181e9677d0f1f28da82a94140f7496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the least value for which <a class="el" href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp</a> returns a non denormal result.  <a href="group__math_ga03181e9677d0f1f28da82a94140f7496.html#ga03181e9677d0f1f28da82a94140f7496">More...</a><br /></td></tr>
+<tr class="separator:ga03181e9677d0f1f28da82a94140f7496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ab3341d4b8bf02105e3142b250ade19"><td class="memItemLeft" align="right" valign="top">constexpr callable_minlog10_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9ab3341d4b8bf02105e3142b250ade19.html#ga9ab3341d4b8bf02105e3142b250ade19">eve::minlog10</a> = {}</td></tr>
+<tr class="memdesc:ga9ab3341d4b8bf02105e3142b250ade19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the least value for which <a class="el" href="group__math_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a" title="Callable object computing .">eve::exp10</a> returns a non zero result.  <a href="group__math_ga9ab3341d4b8bf02105e3142b250ade19.html#ga9ab3341d4b8bf02105e3142b250ade19">More...</a><br /></td></tr>
+<tr class="separator:ga9ab3341d4b8bf02105e3142b250ade19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68563805ada81165afbd62684a872bc1"><td class="memItemLeft" align="right" valign="top">constexpr callable_minlog10denormal_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga68563805ada81165afbd62684a872bc1.html#ga68563805ada81165afbd62684a872bc1">eve::minlog10denormal</a> = {}</td></tr>
+<tr class="memdesc:ga68563805ada81165afbd62684a872bc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the least value for which <a class="el" href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp</a> returns a non denormal result.  <a href="group__math_ga68563805ada81165afbd62684a872bc1.html#ga68563805ada81165afbd62684a872bc1">More...</a><br /></td></tr>
+<tr class="separator:ga68563805ada81165afbd62684a872bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f0e34202816b0108d0d4a31ede311a7"><td class="memItemLeft" align="right" valign="top">constexpr callable_minlog2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga7f0e34202816b0108d0d4a31ede311a7.html#ga7f0e34202816b0108d0d4a31ede311a7">eve::minlog2</a> = {}</td></tr>
+<tr class="memdesc:ga7f0e34202816b0108d0d4a31ede311a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the least value for which <a class="el" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51" title="Callable object computing .">eve::exp2</a> returns a non denormal result.  <a href="group__math_ga7f0e34202816b0108d0d4a31ede311a7.html#ga7f0e34202816b0108d0d4a31ede311a7">More...</a><br /></td></tr>
+<tr class="separator:ga7f0e34202816b0108d0d4a31ede311a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf836e8bf4c83978fe3980f5a56a322a1"><td class="memItemLeft" align="right" valign="top">constexpr callable_minlog2denormal_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1">eve::minlog2denormal</a> = {}</td></tr>
+<tr class="memdesc:gaf836e8bf4c83978fe3980f5a56a322a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the least value for which <a class="el" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51" title="Callable object computing .">eve::exp2</a> returns a non zero result.  <a href="group__math_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1">More...</a><br /></td></tr>
+<tr class="separator:gaf836e8bf4c83978fe3980f5a56a322a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f2d0ce99a16b97d851663795179afcf"><td class="memItemLeft" align="right" valign="top">constexpr callable_minlogdenormal_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga1f2d0ce99a16b97d851663795179afcf.html#ga1f2d0ce99a16b97d851663795179afcf">eve::minlogdenormal</a> = {}</td></tr>
+<tr class="memdesc:ga1f2d0ce99a16b97d851663795179afcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the least value for which <a class="el" href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp</a> returns a non zero result.  <a href="group__math_ga1f2d0ce99a16b97d851663795179afcf.html#ga1f2d0ce99a16b97d851663795179afcf">More...</a><br /></td></tr>
+<tr class="separator:ga1f2d0ce99a16b97d851663795179afcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0cd00964886659218db19f7dea18b17"><td class="memItemLeft" align="right" valign="top">constexpr callable_oneotwoeps_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gac0cd00964886659218db19f7dea18b17.html#gac0cd00964886659218db19f7dea18b17">eve::oneotwoeps</a> = {}</td></tr>
+<tr class="memdesc:gac0cd00964886659218db19f7dea18b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing half the inverse of the machine epsilon.  <a href="group__math_gac0cd00964886659218db19f7dea18b17.html#gac0cd00964886659218db19f7dea18b17">More...</a><br /></td></tr>
+<tr class="separator:gac0cd00964886659218db19f7dea18b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25a5a4327793847943fd76abc0af6f17"><td class="memItemLeft" align="right" valign="top">constexpr callable_phi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">eve::phi</a> = {}</td></tr>
+<tr class="memdesc:ga25a5a4327793847943fd76abc0af6f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(\\\frac{1+\sqrt5}2\).  <a href="group__math_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">More...</a><br /></td></tr>
+<tr class="separator:ga25a5a4327793847943fd76abc0af6f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa262556a49cd7daf77138a7a636e737f"><td class="memItemLeft" align="right" valign="top">constexpr callable_pi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a> = {}</td></tr>
+<tr class="memdesc:gaa262556a49cd7daf77138a7a636e737f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(\pi\) value.  <a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">More...</a><br /></td></tr>
+<tr class="separator:gaa262556a49cd7daf77138a7a636e737f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabbdbd5a281cc068cba8e4551671a8561"><td class="memItemLeft" align="right" valign="top">constexpr callable_pio_2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gabbdbd5a281cc068cba8e4551671a8561.html#gabbdbd5a281cc068cba8e4551671a8561">eve::pio_2</a> = {}</td></tr>
+<tr class="memdesc:gabbdbd5a281cc068cba8e4551671a8561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(\pi/2\) value.  <a href="group__math_gabbdbd5a281cc068cba8e4551671a8561.html#gabbdbd5a281cc068cba8e4551671a8561">More...</a><br /></td></tr>
+<tr class="separator:gabbdbd5a281cc068cba8e4551671a8561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b056b1123bc80ac58687b3d6abfbec6"><td class="memItemLeft" align="right" valign="top">constexpr callable_pio_4_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga5b056b1123bc80ac58687b3d6abfbec6.html#ga5b056b1123bc80ac58687b3d6abfbec6">eve::pio_4</a> = {}</td></tr>
+<tr class="memdesc:ga5b056b1123bc80ac58687b3d6abfbec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(\pi/4\) value.  <a href="group__math_ga5b056b1123bc80ac58687b3d6abfbec6.html#ga5b056b1123bc80ac58687b3d6abfbec6">More...</a><br /></td></tr>
+<tr class="separator:ga5b056b1123bc80ac58687b3d6abfbec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga945e2331da894e3963992f134e8ed43c"><td class="memItemLeft" align="right" valign="top">constexpr callable_sqrt_3_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga945e2331da894e3963992f134e8ed43c.html#ga945e2331da894e3963992f134e8ed43c">eve::sqrt_3</a> = {}</td></tr>
+<tr class="memdesc:ga945e2331da894e3963992f134e8ed43c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the square root of 2 value.  <a href="group__math_ga945e2331da894e3963992f134e8ed43c.html#ga945e2331da894e3963992f134e8ed43c">More...</a><br /></td></tr>
+<tr class="separator:ga945e2331da894e3963992f134e8ed43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa982de3f437f63dd7e92019e186bcb9c"><td class="memItemLeft" align="right" valign="top">constexpr callable_twoopi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa982de3f437f63dd7e92019e186bcb9c.html#gaa982de3f437f63dd7e92019e186bcb9c">eve::twoopi</a> = {}</td></tr>
+<tr class="memdesc:gaa982de3f437f63dd7e92019e186bcb9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(2/\pi\) value.  <a href="group__math_gaa982de3f437f63dd7e92019e186bcb9c.html#gaa982de3f437f63dd7e92019e186bcb9c">More...</a><br /></td></tr>
+<tr class="separator:gaa982de3f437f63dd7e92019e186bcb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab83b9743ff1508e1b62af18f170ed576"><td class="memItemLeft" align="right" valign="top">constexpr callable_twopi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab83b9743ff1508e1b62af18f170ed576.html#gab83b9743ff1508e1b62af18f170ed576">eve::twopi</a> = {}</td></tr>
+<tr class="memdesc:gab83b9743ff1508e1b62af18f170ed576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(2\pi\) value.  <a href="group__math_gab83b9743ff1508e1b62af18f170ed576.html#gab83b9743ff1508e1b62af18f170ed576">More...</a><br /></td></tr>
+<tr class="separator:gab83b9743ff1508e1b62af18f170ed576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5125fa88aef3909aad8d39e760305c82"><td class="memItemLeft" align="right" valign="top">constexpr quarter_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">eve::quarter_circle</a> = {}</td></tr>
+<tr class="memdesc:ga5125fa88aef3909aad8d39e760305c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__math_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">More...</a><br /></td></tr>
+<tr class="separator:ga5125fa88aef3909aad8d39e760305c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="memItemLeft" align="right" valign="top">constexpr half_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">eve::half_circle</a> = {}</td></tr>
+<tr class="memdesc:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range standard semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__math_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">More...</a><br /></td></tr>
+<tr class="separator:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac046f0bc4a97b845c5dc86dacec11727"><td class="memItemLeft" align="right" valign="top">constexpr callable_acos_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gac046f0bc4a97b845c5dc86dacec11727.html#gac046f0bc4a97b845c5dc86dacec11727">eve::acos</a> = {}</td></tr>
+<tr class="memdesc:gac046f0bc4a97b845c5dc86dacec11727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acos.  <a href="group__math_gac046f0bc4a97b845c5dc86dacec11727.html#gac046f0bc4a97b845c5dc86dacec11727">More...</a><br /></td></tr>
+<tr class="separator:gac046f0bc4a97b845c5dc86dacec11727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46c6d32a2e7f8ae96c5af9053f093b59"><td class="memItemLeft" align="right" valign="top">constexpr callable_acosd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga46c6d32a2e7f8ae96c5af9053f093b59.html#ga46c6d32a2e7f8ae96c5af9053f093b59">eve::acosd</a> = {}</td></tr>
+<tr class="memdesc:ga46c6d32a2e7f8ae96c5af9053f093b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acosd.  <a href="group__math_ga46c6d32a2e7f8ae96c5af9053f093b59.html#ga46c6d32a2e7f8ae96c5af9053f093b59">More...</a><br /></td></tr>
+<tr class="separator:ga46c6d32a2e7f8ae96c5af9053f093b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacfc8bf8fd140b1283300e614c0382b4"><td class="memItemLeft" align="right" valign="top">constexpr callable_acosh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaacfc8bf8fd140b1283300e614c0382b4.html#gaacfc8bf8fd140b1283300e614c0382b4">eve::acosh</a> = {}</td></tr>
+<tr class="memdesc:gaacfc8bf8fd140b1283300e614c0382b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acosh; \(\log(x+\sqrt{x^2-1})\).  <a href="group__math_gaacfc8bf8fd140b1283300e614c0382b4.html#gaacfc8bf8fd140b1283300e614c0382b4">More...</a><br /></td></tr>
+<tr class="separator:gaacfc8bf8fd140b1283300e614c0382b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2552ad4688f72f40efa1374ec8ec86f"><td class="memItemLeft" align="right" valign="top">constexpr callable_acospi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab2552ad4688f72f40efa1374ec8ec86f.html#gab2552ad4688f72f40efa1374ec8ec86f">eve::acospi</a> = {}</td></tr>
+<tr class="memdesc:gab2552ad4688f72f40efa1374ec8ec86f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acospi.  <a href="group__math_gab2552ad4688f72f40efa1374ec8ec86f.html#gab2552ad4688f72f40efa1374ec8ec86f">More...</a><br /></td></tr>
+<tr class="separator:gab2552ad4688f72f40efa1374ec8ec86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf26eace785637f18f7c14bb14b5b4964"><td class="memItemLeft" align="right" valign="top">constexpr callable_acot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf26eace785637f18f7c14bb14b5b4964.html#gaf26eace785637f18f7c14bb14b5b4964">eve::acot</a> = {}</td></tr>
+<tr class="memdesc:gaf26eace785637f18f7c14bb14b5b4964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acot.  <a href="group__math_gaf26eace785637f18f7c14bb14b5b4964.html#gaf26eace785637f18f7c14bb14b5b4964">More...</a><br /></td></tr>
+<tr class="separator:gaf26eace785637f18f7c14bb14b5b4964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee28d4da1b9c05b252828db73ee5d803"><td class="memItemLeft" align="right" valign="top">constexpr callable_acotd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaee28d4da1b9c05b252828db73ee5d803.html#gaee28d4da1b9c05b252828db73ee5d803">eve::acotd</a> = {}</td></tr>
+<tr class="memdesc:gaee28d4da1b9c05b252828db73ee5d803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acotd.  <a href="group__math_gaee28d4da1b9c05b252828db73ee5d803.html#gaee28d4da1b9c05b252828db73ee5d803">More...</a><br /></td></tr>
+<tr class="separator:gaee28d4da1b9c05b252828db73ee5d803"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dae92bc35a35cf866c19228b6d5e694"><td class="memItemLeft" align="right" valign="top">constexpr callable_acoth_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga6dae92bc35a35cf866c19228b6d5e694.html#ga6dae92bc35a35cf866c19228b6d5e694">eve::acoth</a> = {}</td></tr>
+<tr class="memdesc:ga6dae92bc35a35cf866c19228b6d5e694"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acoth: \(\frac{1}{2}\log((x+1)/(x-1))\).  <a href="group__math_ga6dae92bc35a35cf866c19228b6d5e694.html#ga6dae92bc35a35cf866c19228b6d5e694">More...</a><br /></td></tr>
+<tr class="separator:ga6dae92bc35a35cf866c19228b6d5e694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga864565ce196adf9c2aba4d3d37dac033"><td class="memItemLeft" align="right" valign="top">constexpr callable_acotpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga864565ce196adf9c2aba4d3d37dac033.html#ga864565ce196adf9c2aba4d3d37dac033">eve::acotpi</a> = {}</td></tr>
+<tr class="memdesc:ga864565ce196adf9c2aba4d3d37dac033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acotpi.  <a href="group__math_ga864565ce196adf9c2aba4d3d37dac033.html#ga864565ce196adf9c2aba4d3d37dac033">More...</a><br /></td></tr>
+<tr class="separator:ga864565ce196adf9c2aba4d3d37dac033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec81cb638c6fb481fb61a896fbffd015"><td class="memItemLeft" align="right" valign="top">constexpr callable_acsc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaec81cb638c6fb481fb61a896fbffd015.html#gaec81cb638c6fb481fb61a896fbffd015">eve::acsc</a> = {}</td></tr>
+<tr class="memdesc:gaec81cb638c6fb481fb61a896fbffd015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acsc.  <a href="group__math_gaec81cb638c6fb481fb61a896fbffd015.html#gaec81cb638c6fb481fb61a896fbffd015">More...</a><br /></td></tr>
+<tr class="separator:gaec81cb638c6fb481fb61a896fbffd015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0747610ab5565034b4f67e90537541d"><td class="memItemLeft" align="right" valign="top">constexpr callable_acscd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf0747610ab5565034b4f67e90537541d.html#gaf0747610ab5565034b4f67e90537541d">eve::acscd</a> = {}</td></tr>
+<tr class="memdesc:gaf0747610ab5565034b4f67e90537541d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acscd.  <a href="group__math_gaf0747610ab5565034b4f67e90537541d.html#gaf0747610ab5565034b4f67e90537541d">More...</a><br /></td></tr>
+<tr class="separator:gaf0747610ab5565034b4f67e90537541d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga349e3de4ef3f6e76a1925faf2c24b3b0"><td class="memItemLeft" align="right" valign="top">constexpr callable_acsch_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">eve::acsch</a> = {}</td></tr>
+<tr class="memdesc:ga349e3de4ef3f6e76a1925faf2c24b3b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acsch: \(\log(1/x+\sqrt{1/x^2+1})\).  <a href="group__math_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">More...</a><br /></td></tr>
+<tr class="separator:ga349e3de4ef3f6e76a1925faf2c24b3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad2bdaa39988370b7910d041af662efa"><td class="memItemLeft" align="right" valign="top">constexpr callable_acscpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaad2bdaa39988370b7910d041af662efa.html#gaad2bdaa39988370b7910d041af662efa">eve::acscpi</a> = {}</td></tr>
+<tr class="memdesc:gaad2bdaa39988370b7910d041af662efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing acscpi.  <a href="group__math_gaad2bdaa39988370b7910d041af662efa.html#gaad2bdaa39988370b7910d041af662efa">More...</a><br /></td></tr>
+<tr class="separator:gaad2bdaa39988370b7910d041af662efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cac72b6f927ba13a67764846899b535"><td class="memItemLeft" align="right" valign="top">constexpr callable_arg_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">eve::arg</a> = {}</td></tr>
+<tr class="memdesc:ga0cac72b6f927ba13a67764846899b535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the phase angle (in radians).  <a href="group__math_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">More...</a><br /></td></tr>
+<tr class="separator:ga0cac72b6f927ba13a67764846899b535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b18ae3c66963dd65a5301dafa426cd6"><td class="memItemLeft" align="right" valign="top">constexpr callable_asec_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga8b18ae3c66963dd65a5301dafa426cd6.html#ga8b18ae3c66963dd65a5301dafa426cd6">eve::asec</a> = {}</td></tr>
+<tr class="memdesc:ga8b18ae3c66963dd65a5301dafa426cd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asec.  <a href="group__math_ga8b18ae3c66963dd65a5301dafa426cd6.html#ga8b18ae3c66963dd65a5301dafa426cd6">More...</a><br /></td></tr>
+<tr class="separator:ga8b18ae3c66963dd65a5301dafa426cd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae23e11941a656b1ee90ad98e0bf2c4af"><td class="memItemLeft" align="right" valign="top">constexpr callable_asecd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gae23e11941a656b1ee90ad98e0bf2c4af.html#gae23e11941a656b1ee90ad98e0bf2c4af">eve::asecd</a> = {}</td></tr>
+<tr class="memdesc:gae23e11941a656b1ee90ad98e0bf2c4af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asecd.  <a href="group__math_gae23e11941a656b1ee90ad98e0bf2c4af.html#gae23e11941a656b1ee90ad98e0bf2c4af">More...</a><br /></td></tr>
+<tr class="separator:gae23e11941a656b1ee90ad98e0bf2c4af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4b8c129553c90d5604003a1e6f711c5"><td class="memItemLeft" align="right" valign="top">constexpr callable_asech_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gad4b8c129553c90d5604003a1e6f711c5.html#gad4b8c129553c90d5604003a1e6f711c5">eve::asech</a> = {}</td></tr>
+<tr class="memdesc:gad4b8c129553c90d5604003a1e6f711c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asech: \(\log(1/x+\sqrt{1/x^2-1})\).  <a href="group__math_gad4b8c129553c90d5604003a1e6f711c5.html#gad4b8c129553c90d5604003a1e6f711c5">More...</a><br /></td></tr>
+<tr class="separator:gad4b8c129553c90d5604003a1e6f711c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbe6e2312c935fb0b9f54ec66e332b0d"><td class="memItemLeft" align="right" valign="top">constexpr callable_asecpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">eve::asecpi</a> = {}</td></tr>
+<tr class="memdesc:gadbe6e2312c935fb0b9f54ec66e332b0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asecpi.  <a href="group__math_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">More...</a><br /></td></tr>
+<tr class="separator:gadbe6e2312c935fb0b9f54ec66e332b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab45103e451eacb913e21269c31dd78ac"><td class="memItemLeft" align="right" valign="top">constexpr callable_asin_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">eve::asin</a> = {}</td></tr>
+<tr class="memdesc:gab45103e451eacb913e21269c31dd78ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asin.  <a href="group__math_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">More...</a><br /></td></tr>
+<tr class="separator:gab45103e451eacb913e21269c31dd78ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d341ed325943bd79fa090d9eba75d9c"><td class="memItemLeft" align="right" valign="top">constexpr callable_asind_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga2d341ed325943bd79fa090d9eba75d9c.html#ga2d341ed325943bd79fa090d9eba75d9c">eve::asind</a> = {}</td></tr>
+<tr class="memdesc:ga2d341ed325943bd79fa090d9eba75d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asind.  <a href="group__math_ga2d341ed325943bd79fa090d9eba75d9c.html#ga2d341ed325943bd79fa090d9eba75d9c">More...</a><br /></td></tr>
+<tr class="separator:ga2d341ed325943bd79fa090d9eba75d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdd0b4e5414191db4ce95026fdd4efad"><td class="memItemLeft" align="right" valign="top">constexpr callable_asinh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gafdd0b4e5414191db4ce95026fdd4efad.html#gafdd0b4e5414191db4ce95026fdd4efad">eve::asinh</a> = {}</td></tr>
+<tr class="memdesc:gafdd0b4e5414191db4ce95026fdd4efad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asinh: \(\log(x+\sqrt{x^2+1})\).  <a href="group__math_gafdd0b4e5414191db4ce95026fdd4efad.html#gafdd0b4e5414191db4ce95026fdd4efad">More...</a><br /></td></tr>
+<tr class="separator:gafdd0b4e5414191db4ce95026fdd4efad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0eea7b91e7d3786328d605b19a44d1d"><td class="memItemLeft" align="right" valign="top">constexpr callable_asinpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gac0eea7b91e7d3786328d605b19a44d1d.html#gac0eea7b91e7d3786328d605b19a44d1d">eve::asinpi</a> = {}</td></tr>
+<tr class="memdesc:gac0eea7b91e7d3786328d605b19a44d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing asinpi.  <a href="group__math_gac0eea7b91e7d3786328d605b19a44d1d.html#gac0eea7b91e7d3786328d605b19a44d1d">More...</a><br /></td></tr>
+<tr class="separator:gac0eea7b91e7d3786328d605b19a44d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4962fd095ca6aa9191e290f27d7f16d"><td class="memItemLeft" align="right" valign="top">constexpr callable_atan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa4962fd095ca6aa9191e290f27d7f16d.html#gaa4962fd095ca6aa9191e290f27d7f16d">eve::atan</a> = {}</td></tr>
+<tr class="memdesc:gaa4962fd095ca6aa9191e290f27d7f16d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing atan.  <a href="group__math_gaa4962fd095ca6aa9191e290f27d7f16d.html#gaa4962fd095ca6aa9191e290f27d7f16d">More...</a><br /></td></tr>
+<tr class="separator:gaa4962fd095ca6aa9191e290f27d7f16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4476e86ad2d63ed1ee057fb3bc30354"><td class="memItemLeft" align="right" valign="top">constexpr callable_atan2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a> = {}</td></tr>
+<tr class="memdesc:gaa4476e86ad2d63ed1ee057fb3bc30354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the atan2 operation.  <a href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">More...</a><br /></td></tr>
+<tr class="separator:gaa4476e86ad2d63ed1ee057fb3bc30354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea54ee9da2ff37652f5153774cda6dbc"><td class="memItemLeft" align="right" valign="top">constexpr callable_atan2d_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc">eve::atan2d</a> = {}</td></tr>
+<tr class="memdesc:gaea54ee9da2ff37652f5153774cda6dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the atan2d operation.  <a href="group__math_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc">More...</a><br /></td></tr>
+<tr class="separator:gaea54ee9da2ff37652f5153774cda6dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36ea32adf0e59948246e62907f591d1c"><td class="memItemLeft" align="right" valign="top">constexpr callable_atan2pi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c">eve::atan2pi</a> = {}</td></tr>
+<tr class="memdesc:ga36ea32adf0e59948246e62907f591d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the atan2pi operation.  <a href="group__math_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c">More...</a><br /></td></tr>
+<tr class="separator:ga36ea32adf0e59948246e62907f591d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae20e49e35daab1287b4f4efc9acac7a0"><td class="memItemLeft" align="right" valign="top">constexpr callable_atand_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0">eve::atand</a> = {}</td></tr>
+<tr class="memdesc:gae20e49e35daab1287b4f4efc9acac7a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing atand.  <a href="group__math_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0">More...</a><br /></td></tr>
+<tr class="separator:gae20e49e35daab1287b4f4efc9acac7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0dc9d45fbf29b358f7b5095dbed40256"><td class="memItemLeft" align="right" valign="top">constexpr callable_atanh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256">eve::atanh</a> = {}</td></tr>
+<tr class="memdesc:ga0dc9d45fbf29b358f7b5095dbed40256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing atanh: \(\frac{1}{2}\log((1+x)/(1-x))\).  <a href="group__math_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256">More...</a><br /></td></tr>
+<tr class="separator:ga0dc9d45fbf29b358f7b5095dbed40256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b95c0a926215da5fb3f0af9714103cb"><td class="memItemLeft" align="right" valign="top">constexpr callable_atanpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb">eve::atanpi</a> = {}</td></tr>
+<tr class="memdesc:ga5b95c0a926215da5fb3f0af9714103cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing atand.  <a href="group__math_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb">More...</a><br /></td></tr>
+<tr class="separator:ga5b95c0a926215da5fb3f0af9714103cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5520218c452db7b34e883bf0f7a14488"><td class="memItemLeft" align="right" valign="top">constexpr callable_cbrt_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga5520218c452db7b34e883bf0f7a14488.html#ga5520218c452db7b34e883bf0f7a14488">eve::cbrt</a> = {}</td></tr>
+<tr class="memdesc:ga5520218c452db7b34e883bf0f7a14488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cubic root.  <a href="group__math_ga5520218c452db7b34e883bf0f7a14488.html#ga5520218c452db7b34e883bf0f7a14488">More...</a><br /></td></tr>
+<tr class="separator:ga5520218c452db7b34e883bf0f7a14488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memItemLeft" align="right" valign="top">constexpr callable_conj_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">eve::conj</a> = {}</td></tr>
+<tr class="memdesc:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the conjugate value.  <a href="group__math_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">More...</a><br /></td></tr>
+<tr class="separator:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39e50b4c59911e463be1a11fc958fb86"><td class="memItemLeft" align="right" valign="top">constexpr callable_cos_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a> = {}</td></tr>
+<tr class="memdesc:ga39e50b4c59911e463be1a11fc958fb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cos.  <a href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">More...</a><br /></td></tr>
+<tr class="separator:ga39e50b4c59911e463be1a11fc958fb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga216a80d7f91be23dc0d74e26eb057000"><td class="memItemLeft" align="right" valign="top">constexpr callable_cosd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000">eve::cosd</a> = {}</td></tr>
+<tr class="memdesc:ga216a80d7f91be23dc0d74e26eb057000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cosd.  <a href="group__math_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000">More...</a><br /></td></tr>
+<tr class="separator:ga216a80d7f91be23dc0d74e26eb057000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab52648ab8990c126fd024ddf8badb536"><td class="memItemLeft" align="right" valign="top">constexpr callable_cosh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab52648ab8990c126fd024ddf8badb536.html#gab52648ab8990c126fd024ddf8badb536">eve::cosh</a> = {}</td></tr>
+<tr class="memdesc:gab52648ab8990c126fd024ddf8badb536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cosh: \(\frac{e^x+e^{-x}}2\).  <a href="group__math_gab52648ab8990c126fd024ddf8badb536.html#gab52648ab8990c126fd024ddf8badb536">More...</a><br /></td></tr>
+<tr class="separator:gab52648ab8990c126fd024ddf8badb536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03482f35c4921d89499b1034eee99be0"><td class="memItemLeft" align="right" valign="top">constexpr callable_cospi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga03482f35c4921d89499b1034eee99be0.html#ga03482f35c4921d89499b1034eee99be0">eve::cospi</a> = {}</td></tr>
+<tr class="memdesc:ga03482f35c4921d89499b1034eee99be0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cospi.  <a href="group__math_ga03482f35c4921d89499b1034eee99be0.html#ga03482f35c4921d89499b1034eee99be0">More...</a><br /></td></tr>
+<tr class="separator:ga03482f35c4921d89499b1034eee99be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0a09342c6bb010028e1686a0b1f599c"><td class="memItemLeft" align="right" valign="top">constexpr callable_cot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gad0a09342c6bb010028e1686a0b1f599c.html#gad0a09342c6bb010028e1686a0b1f599c">eve::cot</a> = {}</td></tr>
+<tr class="memdesc:gad0a09342c6bb010028e1686a0b1f599c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cot.  <a href="group__math_gad0a09342c6bb010028e1686a0b1f599c.html#gad0a09342c6bb010028e1686a0b1f599c">More...</a><br /></td></tr>
+<tr class="separator:gad0a09342c6bb010028e1686a0b1f599c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c0c27c3a93a40a2fa91c42b02040e62"><td class="memItemLeft" align="right" valign="top">constexpr callable_cotd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga1c0c27c3a93a40a2fa91c42b02040e62.html#ga1c0c27c3a93a40a2fa91c42b02040e62">eve::cotd</a> = {}</td></tr>
+<tr class="memdesc:ga1c0c27c3a93a40a2fa91c42b02040e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cotd.  <a href="group__math_ga1c0c27c3a93a40a2fa91c42b02040e62.html#ga1c0c27c3a93a40a2fa91c42b02040e62">More...</a><br /></td></tr>
+<tr class="separator:ga1c0c27c3a93a40a2fa91c42b02040e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab2e9ac37145ddd832e76a2ed724194c9"><td class="memItemLeft" align="right" valign="top">constexpr callable_coth_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab2e9ac37145ddd832e76a2ed724194c9.html#gab2e9ac37145ddd832e76a2ed724194c9">eve::coth</a> = {}</td></tr>
+<tr class="memdesc:gab2e9ac37145ddd832e76a2ed724194c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing coth: \(\frac{e^x+e^{-x}}{e^x-e^{-x}}\).  <a href="group__math_gab2e9ac37145ddd832e76a2ed724194c9.html#gab2e9ac37145ddd832e76a2ed724194c9">More...</a><br /></td></tr>
+<tr class="separator:gab2e9ac37145ddd832e76a2ed724194c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade4a273af7fb50439ae8974d4e5e8222"><td class="memItemLeft" align="right" valign="top">constexpr callable_cotpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222">eve::cotpi</a> = {}</td></tr>
+<tr class="memdesc:gade4a273af7fb50439ae8974d4e5e8222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cotpi.  <a href="group__math_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222">More...</a><br /></td></tr>
+<tr class="separator:gade4a273af7fb50439ae8974d4e5e8222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga664582204f1e5e323b88bf429706c77f"><td class="memItemLeft" align="right" valign="top">constexpr callable_csc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga664582204f1e5e323b88bf429706c77f.html#ga664582204f1e5e323b88bf429706c77f">eve::csc</a> = {}</td></tr>
+<tr class="memdesc:ga664582204f1e5e323b88bf429706c77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing csc.  <a href="group__math_ga664582204f1e5e323b88bf429706c77f.html#ga664582204f1e5e323b88bf429706c77f">More...</a><br /></td></tr>
+<tr class="separator:ga664582204f1e5e323b88bf429706c77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4658d7c9b116c396866ffa7ff7b47aa"><td class="memItemLeft" align="right" valign="top">constexpr callable_csch_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">eve::csch</a> = {}</td></tr>
+<tr class="memdesc:gae4658d7c9b116c396866ffa7ff7b47aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing csch: \(\frac2{e^x+e^{-x}}\).  <a href="group__math_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">More...</a><br /></td></tr>
+<tr class="separator:gae4658d7c9b116c396866ffa7ff7b47aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae413e8b133a104f344513b9500b7708b"><td class="memItemLeft" align="right" valign="top">constexpr callable_cscpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">eve::cscpi</a> = {}</td></tr>
+<tr class="memdesc:gae413e8b133a104f344513b9500b7708b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cscpi.  <a href="group__math_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">More...</a><br /></td></tr>
+<tr class="separator:gae413e8b133a104f344513b9500b7708b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56a5f857ff59ee64bb1ab21999eaae42"><td class="memItemLeft" align="right" valign="top">constexpr callable_exp_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">eve::exp</a> = {}</td></tr>
+<tr class="memdesc:ga56a5f857ff59ee64bb1ab21999eaae42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^x\).  <a href="group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">More...</a><br /></td></tr>
+<tr class="separator:ga56a5f857ff59ee64bb1ab21999eaae42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90cff7b583b7e96518af4946dcd7378a"><td class="memItemLeft" align="right" valign="top">constexpr callable_exp10_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a">eve::exp10</a> = {}</td></tr>
+<tr class="memdesc:ga90cff7b583b7e96518af4946dcd7378a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(10^x\).  <a href="group__math_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a">More...</a><br /></td></tr>
+<tr class="separator:ga90cff7b583b7e96518af4946dcd7378a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad00c9d24af2d29a5ab7656a3a975c51"><td class="memItemLeft" align="right" valign="top">constexpr callable_exp2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a> = {}</td></tr>
+<tr class="memdesc:gaad00c9d24af2d29a5ab7656a3a975c51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(2^x\).  <a href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">More...</a><br /></td></tr>
+<tr class="separator:gaad00c9d24af2d29a5ab7656a3a975c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52c9b96548ef6beeb8502c4d6af87745"><td class="memItemLeft" align="right" valign="top">constexpr callable_expm1_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745">eve::expm1</a> = {}</td></tr>
+<tr class="memdesc:ga52c9b96548ef6beeb8502c4d6af87745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^x-1\).  <a href="group__math_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745">More...</a><br /></td></tr>
+<tr class="separator:ga52c9b96548ef6beeb8502c4d6af87745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="memItemLeft" align="right" valign="top">constexpr callable_expx2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011">eve::expx2</a> = {}</td></tr>
+<tr class="memdesc:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^{\pm x^2}\).  <a href="group__math_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011">More...</a><br /></td></tr>
+<tr class="separator:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48ce470d1447e0b3f910a4341f63cc05"><td class="memItemLeft" align="right" valign="top">constexpr callable_gd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga48ce470d1447e0b3f910a4341f63cc05.html#ga48ce470d1447e0b3f910a4341f63cc05">eve::gd</a> = {}</td></tr>
+<tr class="memdesc:ga48ce470d1447e0b3f910a4341f63cc05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the gudermanian gd: \(\int_0^\infty \sech x dx\).  <a href="group__math_ga48ce470d1447e0b3f910a4341f63cc05.html#ga48ce470d1447e0b3f910a4341f63cc05">More...</a><br /></td></tr>
+<tr class="separator:ga48ce470d1447e0b3f910a4341f63cc05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafac2fbecb48c62079c84db6314ddc0e8"><td class="memItemLeft" align="right" valign="top">constexpr callable_geommean_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8">eve::geommean</a> = {}</td></tr>
+<tr class="memdesc:gafac2fbecb48c62079c84db6314ddc0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the mid-point operation.  <a href="group__math_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8">More...</a><br /></td></tr>
+<tr class="separator:gafac2fbecb48c62079c84db6314ddc0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memItemLeft" align="right" valign="top">constexpr callable_hypot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a> = {}</td></tr>
+<tr class="memdesc:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the hypot operation.  <a href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">More...</a><br /></td></tr>
+<tr class="separator:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga281f9b61b4a782a3ac625deb94faf5d6"><td class="memItemLeft" align="right" valign="top">constexpr callable_invgd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga281f9b61b4a782a3ac625deb94faf5d6.html#ga281f9b61b4a782a3ac625deb94faf5d6">eve::invgd</a> = {}</td></tr>
+<tr class="memdesc:ga281f9b61b4a782a3ac625deb94faf5d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the inverse gudermanian invgd: \(\int_0^\infty \sec x dx\).  <a href="group__math_ga281f9b61b4a782a3ac625deb94faf5d6.html#ga281f9b61b4a782a3ac625deb94faf5d6">More...</a><br /></td></tr>
+<tr class="separator:ga281f9b61b4a782a3ac625deb94faf5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1d7c29149e2041dbf869bc56fad863f"><td class="memItemLeft" align="right" valign="top">constexpr callable_log_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab1d7c29149e2041dbf869bc56fad863f.html#gab1d7c29149e2041dbf869bc56fad863f">eve::log</a> = {}</td></tr>
+<tr class="memdesc:gab1d7c29149e2041dbf869bc56fad863f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the natural logarithm: \(\log x\).  <a href="group__math_gab1d7c29149e2041dbf869bc56fad863f.html#gab1d7c29149e2041dbf869bc56fad863f">More...</a><br /></td></tr>
+<tr class="separator:gab1d7c29149e2041dbf869bc56fad863f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga913f29b7780e1e90dd19d13ec8c971f9"><td class="memItemLeft" align="right" valign="top">constexpr callable_log10_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga913f29b7780e1e90dd19d13ec8c971f9.html#ga913f29b7780e1e90dd19d13ec8c971f9">eve::log10</a> = {}</td></tr>
+<tr class="memdesc:ga913f29b7780e1e90dd19d13ec8c971f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the base 10 logarithm: \(\log_{10} x\).  <a href="group__math_ga913f29b7780e1e90dd19d13ec8c971f9.html#ga913f29b7780e1e90dd19d13ec8c971f9">More...</a><br /></td></tr>
+<tr class="separator:ga913f29b7780e1e90dd19d13ec8c971f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5105272ae2219a74e27f57f0b687893f"><td class="memItemLeft" align="right" valign="top">constexpr callable_log1p_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga5105272ae2219a74e27f57f0b687893f.html#ga5105272ae2219a74e27f57f0b687893f">eve::log1p</a> = {}</td></tr>
+<tr class="memdesc:ga5105272ae2219a74e27f57f0b687893f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the natural logarithm of \(1+x\): \(\log(1+x)\).  <a href="group__math_ga5105272ae2219a74e27f57f0b687893f.html#ga5105272ae2219a74e27f57f0b687893f">More...</a><br /></td></tr>
+<tr class="separator:ga5105272ae2219a74e27f57f0b687893f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf37f58fc6f7208ae058241b6b542ced"><td class="memItemLeft" align="right" valign="top">constexpr callable_log2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gacf37f58fc6f7208ae058241b6b542ced.html#gacf37f58fc6f7208ae058241b6b542ced">eve::log2</a> = {}</td></tr>
+<tr class="memdesc:gacf37f58fc6f7208ae058241b6b542ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the base 2 logarithm: \(\log_2 x\).  <a href="group__math_gacf37f58fc6f7208ae058241b6b542ced.html#gacf37f58fc6f7208ae058241b6b542ced">More...</a><br /></td></tr>
+<tr class="separator:gacf37f58fc6f7208ae058241b6b542ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab3a3243853d722c3340cdcb02083265e"><td class="memItemLeft" align="right" valign="top">constexpr callable_log_abs_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab3a3243853d722c3340cdcb02083265e.html#gab3a3243853d722c3340cdcb02083265e">eve::log_abs</a> = {}</td></tr>
+<tr class="memdesc:gab3a3243853d722c3340cdcb02083265e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the natural logarithm of the absolute value of the input.  <a href="group__math_gab3a3243853d722c3340cdcb02083265e.html#gab3a3243853d722c3340cdcb02083265e">More...</a><br /></td></tr>
+<tr class="separator:gab3a3243853d722c3340cdcb02083265e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9556715e0b694c52d69058582bc47aa3"><td class="memItemLeft" align="right" valign="top">constexpr callable_logspace_add_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9556715e0b694c52d69058582bc47aa3.html#ga9556715e0b694c52d69058582bc47aa3">eve::logspace_add</a> = {}</td></tr>
+<tr class="memdesc:ga9556715e0b694c52d69058582bc47aa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the logspace_add operation: \(\log\left(\sum_{i = 0}^n e^{x_i}\right)\).  <a href="group__math_ga9556715e0b694c52d69058582bc47aa3.html#ga9556715e0b694c52d69058582bc47aa3">More...</a><br /></td></tr>
+<tr class="separator:ga9556715e0b694c52d69058582bc47aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c85541a3e60b50506e87d18c2e88b34"><td class="memItemLeft" align="right" valign="top">constexpr callable_logspace_sub_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga6c85541a3e60b50506e87d18c2e88b34.html#ga6c85541a3e60b50506e87d18c2e88b34">eve::logspace_sub</a> = {}</td></tr>
+<tr class="memdesc:ga6c85541a3e60b50506e87d18c2e88b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the logspace_sub operation: \(\log\left(e^{x_0}-\sum_{i = 1}^n e^{x_i}\right)\).  <a href="group__math_ga6c85541a3e60b50506e87d18c2e88b34.html#ga6c85541a3e60b50506e87d18c2e88b34">More...</a><br /></td></tr>
+<tr class="separator:ga6c85541a3e60b50506e87d18c2e88b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf28f3373821c092b0910e29d8aa8138c"><td class="memItemLeft" align="right" valign="top">constexpr callable_lpnorm_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a> = {}</td></tr>
+<tr class="memdesc:gaf28f3373821c092b0910e29d8aa8138c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the lpnorm operation \( \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \).  <a href="group__math_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">More...</a><br /></td></tr>
+<tr class="separator:gaf28f3373821c092b0910e29d8aa8138c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0b5a64467474bf1d37bf7130958946a"><td class="memItemLeft" align="right" valign="top">constexpr callable_nthroot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a> = {}</td></tr>
+<tr class="memdesc:gaa0b5a64467474bf1d37bf7130958946a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the nth root: \(x^{1/n}\).  <a href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">More...</a><br /></td></tr>
+<tr class="separator:gaa0b5a64467474bf1d37bf7130958946a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e50f660c1ffa0aec9d549a822e5d2fb"><td class="memItemLeft" align="right" valign="top">constexpr callable_pow_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9e50f660c1ffa0aec9d549a822e5d2fb.html#ga9e50f660c1ffa0aec9d549a822e5d2fb">eve::pow</a> = {}</td></tr>
+<tr class="memdesc:ga9e50f660c1ffa0aec9d549a822e5d2fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the pow operation \(x^y\).  <a href="group__math_ga9e50f660c1ffa0aec9d549a822e5d2fb.html#ga9e50f660c1ffa0aec9d549a822e5d2fb">More...</a><br /></td></tr>
+<tr class="separator:ga9e50f660c1ffa0aec9d549a822e5d2fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5caf2f837c183fa5924d05b64b24def"><td class="memItemLeft" align="right" valign="top">constexpr callable_pow1p_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf5caf2f837c183fa5924d05b64b24def.html#gaf5caf2f837c183fa5924d05b64b24def">eve::pow1p</a> = {}</td></tr>
+<tr class="memdesc:gaf5caf2f837c183fa5924d05b64b24def"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing pow1p: \(x^y-1\).  <a href="group__math_gaf5caf2f837c183fa5924d05b64b24def.html#gaf5caf2f837c183fa5924d05b64b24def">More...</a><br /></td></tr>
+<tr class="separator:gaf5caf2f837c183fa5924d05b64b24def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7dc798b64cf565837240f4d135722cbe"><td class="memItemLeft" align="right" valign="top">constexpr callable_pow_abs_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga7dc798b64cf565837240f4d135722cbe.html#ga7dc798b64cf565837240f4d135722cbe">eve::pow_abs</a> = {}</td></tr>
+<tr class="memdesc:ga7dc798b64cf565837240f4d135722cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the pow_abs function \(|x|^y\).  <a href="group__math_ga7dc798b64cf565837240f4d135722cbe.html#ga7dc798b64cf565837240f4d135722cbe">More...</a><br /></td></tr>
+<tr class="separator:ga7dc798b64cf565837240f4d135722cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga277a659430f603cbb2d03d29e909b22d"><td class="memItemLeft" align="right" valign="top">constexpr callable_powm1_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">eve::powm1</a> = {}</td></tr>
+<tr class="memdesc:ga277a659430f603cbb2d03d29e909b22d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing powm1: \(x^y-1\).  <a href="group__math_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">More...</a><br /></td></tr>
+<tr class="separator:ga277a659430f603cbb2d03d29e909b22d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3716c407dc2f76f32b48455c1f6189f"><td class="memItemLeft" align="right" valign="top">constexpr callable_quadrant_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f">eve::quadrant</a> = {}</td></tr>
+<tr class="memdesc:gaf3716c407dc2f76f32b48455c1f6189f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the quadrant value.  <a href="group__math_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f">More...</a><br /></td></tr>
+<tr class="separator:gaf3716c407dc2f76f32b48455c1f6189f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8d411aa6820539627b8475e86395d45"><td class="memItemLeft" align="right" valign="top">constexpr callable_rempio2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45">eve::rempio2</a> = {}</td></tr>
+<tr class="memdesc:gab8d411aa6820539627b8475e86395d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the rempio2 value.  <a href="group__math_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45">More...</a><br /></td></tr>
+<tr class="separator:gab8d411aa6820539627b8475e86395d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9016964468b90f782aa01ba4be5e44ed"><td class="memItemLeft" align="right" valign="top">constexpr callable_sec_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed">eve::sec</a> = {}</td></tr>
+<tr class="memdesc:ga9016964468b90f782aa01ba4be5e44ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sec.  <a href="group__math_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed">More...</a><br /></td></tr>
+<tr class="separator:ga9016964468b90f782aa01ba4be5e44ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fe32d4bfda35b6d2196488cb036f185"><td class="memItemLeft" align="right" valign="top">constexpr callable_sech_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga4fe32d4bfda35b6d2196488cb036f185.html#ga4fe32d4bfda35b6d2196488cb036f185">eve::sech</a> = {}</td></tr>
+<tr class="memdesc:ga4fe32d4bfda35b6d2196488cb036f185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sech: \(\frac2{e^x-e^{-x}}\).  <a href="group__math_ga4fe32d4bfda35b6d2196488cb036f185.html#ga4fe32d4bfda35b6d2196488cb036f185">More...</a><br /></td></tr>
+<tr class="separator:ga4fe32d4bfda35b6d2196488cb036f185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84c8a10368a87019fd81eb234c3f09da"><td class="memItemLeft" align="right" valign="top">constexpr callable_secpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da">eve::secpi</a> = {}</td></tr>
+<tr class="memdesc:ga84c8a10368a87019fd81eb234c3f09da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing secpi.  <a href="group__math_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da">More...</a><br /></td></tr>
+<tr class="separator:ga84c8a10368a87019fd81eb234c3f09da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7cb49618932a9d2bcb50758aedc4ab3"><td class="memItemLeft" align="right" valign="top">constexpr callable_significants_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gae7cb49618932a9d2bcb50758aedc4ab3.html#gae7cb49618932a9d2bcb50758aedc4ab3">eve::significants</a> = {}</td></tr>
+<tr class="memdesc:gae7cb49618932a9d2bcb50758aedc4ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the significants operation.  <a href="group__math_gae7cb49618932a9d2bcb50758aedc4ab3.html#gae7cb49618932a9d2bcb50758aedc4ab3">More...</a><br /></td></tr>
+<tr class="separator:gae7cb49618932a9d2bcb50758aedc4ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf171d35de1087cbe903e3c5748cf19f3"><td class="memItemLeft" align="right" valign="top">constexpr callable_sin_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a> = {}</td></tr>
+<tr class="memdesc:gaf171d35de1087cbe903e3c5748cf19f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sin.  <a href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">More...</a><br /></td></tr>
+<tr class="separator:gaf171d35de1087cbe903e3c5748cf19f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f71b1e51347872f0a3b2ca92ac9cf9a"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9f71b1e51347872f0a3b2ca92ac9cf9a.html#ga9f71b1e51347872f0a3b2ca92ac9cf9a">eve::sinc</a> = {}</td></tr>
+<tr class="memdesc:ga9f71b1e51347872f0a3b2ca92ac9cf9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the sine cardinal.  <a href="group__math_ga9f71b1e51347872f0a3b2ca92ac9cf9a.html#ga9f71b1e51347872f0a3b2ca92ac9cf9a">More...</a><br /></td></tr>
+<tr class="separator:ga9f71b1e51347872f0a3b2ca92ac9cf9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f7c4b010d79f473531a7d83902b4d02"><td class="memItemLeft" align="right" valign="top">constexpr callable_sincos_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9f7c4b010d79f473531a7d83902b4d02.html#ga9f7c4b010d79f473531a7d83902b4d02">eve::sincos</a> = {}</td></tr>
+<tr class="memdesc:ga9f7c4b010d79f473531a7d83902b4d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the simultaneous computation of sin an cos.  <a href="group__math_ga9f7c4b010d79f473531a7d83902b4d02.html#ga9f7c4b010d79f473531a7d83902b4d02">More...</a><br /></td></tr>
+<tr class="separator:ga9f7c4b010d79f473531a7d83902b4d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c08108f1c56d9df1141637c01c0d194"><td class="memItemLeft" align="right" valign="top">constexpr callable_sind_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga7c08108f1c56d9df1141637c01c0d194.html#ga7c08108f1c56d9df1141637c01c0d194">eve::sind</a> = {}</td></tr>
+<tr class="memdesc:ga7c08108f1c56d9df1141637c01c0d194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sind.  <a href="group__math_ga7c08108f1c56d9df1141637c01c0d194.html#ga7c08108f1c56d9df1141637c01c0d194">More...</a><br /></td></tr>
+<tr class="separator:ga7c08108f1c56d9df1141637c01c0d194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84bdaf88941577d9b23999ae965b631b"><td class="memItemLeft" align="right" valign="top">constexpr callable_sindcosd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">eve::sindcosd</a> = {}</td></tr>
+<tr class="memdesc:ga84bdaf88941577d9b23999ae965b631b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the simultaneous computation of sin an cos of an argument in degrees.  <a href="group__math_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">More...</a><br /></td></tr>
+<tr class="separator:ga84bdaf88941577d9b23999ae965b631b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33b301b28ef48f95b3a6b50b53291c1c"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga33b301b28ef48f95b3a6b50b53291c1c.html#ga33b301b28ef48f95b3a6b50b53291c1c">eve::sinh</a> = {}</td></tr>
+<tr class="memdesc:ga33b301b28ef48f95b3a6b50b53291c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sinh: \(\frac{e^x-e^{-x}}2\).  <a href="group__math_ga33b301b28ef48f95b3a6b50b53291c1c.html#ga33b301b28ef48f95b3a6b50b53291c1c">More...</a><br /></td></tr>
+<tr class="separator:ga33b301b28ef48f95b3a6b50b53291c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa1e76a9092bfeb81d711073f975ba26"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinhc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaaa1e76a9092bfeb81d711073f975ba26.html#gaaa1e76a9092bfeb81d711073f975ba26">eve::sinhc</a> = {}</td></tr>
+<tr class="memdesc:gaaa1e76a9092bfeb81d711073f975ba26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sinhc: \(\frac{e^x-e^{-x}}{2x}\).  <a href="group__math_gaaa1e76a9092bfeb81d711073f975ba26.html#gaaa1e76a9092bfeb81d711073f975ba26">More...</a><br /></td></tr>
+<tr class="separator:gaaa1e76a9092bfeb81d711073f975ba26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f1d326d08e1125ddd0a032fa7a179af"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinhcosh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga9f1d326d08e1125ddd0a032fa7a179af.html#ga9f1d326d08e1125ddd0a032fa7a179af">eve::sinhcosh</a> = {}</td></tr>
+<tr class="memdesc:ga9f1d326d08e1125ddd0a032fa7a179af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object performing the simultaneous computations of sinh and cosh.  <a href="group__math_ga9f1d326d08e1125ddd0a032fa7a179af.html#ga9f1d326d08e1125ddd0a032fa7a179af">More...</a><br /></td></tr>
+<tr class="separator:ga9f1d326d08e1125ddd0a032fa7a179af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga507c21955358dcd61c84f41e65d977c4"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga507c21955358dcd61c84f41e65d977c4.html#ga507c21955358dcd61c84f41e65d977c4">eve::sinpi</a> = {}</td></tr>
+<tr class="memdesc:ga507c21955358dcd61c84f41e65d977c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sinpi.  <a href="group__math_ga507c21955358dcd61c84f41e65d977c4.html#ga507c21955358dcd61c84f41e65d977c4">More...</a><br /></td></tr>
+<tr class="separator:ga507c21955358dcd61c84f41e65d977c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6415d1434e29c79594e7ef0ce5e2b65"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinpic_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gac6415d1434e29c79594e7ef0ce5e2b65.html#gac6415d1434e29c79594e7ef0ce5e2b65">eve::sinpic</a> = {}</td></tr>
+<tr class="memdesc:gac6415d1434e29c79594e7ef0ce5e2b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing sinpic.  <a href="group__math_gac6415d1434e29c79594e7ef0ce5e2b65.html#gac6415d1434e29c79594e7ef0ce5e2b65">More...</a><br /></td></tr>
+<tr class="separator:gac6415d1434e29c79594e7ef0ce5e2b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91c450585092c45e088080706f4fe3df"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinpicospi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">eve::sinpicospi</a> = {}</td></tr>
+<tr class="memdesc:ga91c450585092c45e088080706f4fe3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the simultaneous computation of sin an cos of an argument in .  <a href="group__math_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">More...</a><br /></td></tr>
+<tr class="separator:ga91c450585092c45e088080706f4fe3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><td class="memItemLeft" align="right" valign="top">constexpr callable_tan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">eve::tan</a> = {}</td></tr>
+<tr class="memdesc:gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing tan.  <a href="group__math_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">More...</a><br /></td></tr>
+<tr class="separator:gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga32818e7959c1a884302b9f05ba8b8797"><td class="memItemLeft" align="right" valign="top">constexpr callable_tanh_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">eve::tanh</a> = {}</td></tr>
+<tr class="memdesc:ga32818e7959c1a884302b9f05ba8b8797"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing tanh: \(\frac{e^x-e^{-x}}{e^x+e^{-x}}\).  <a href="group__math_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">More...</a><br /></td></tr>
+<tr class="separator:ga32818e7959c1a884302b9f05ba8b8797"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="memItemLeft" align="right" valign="top">constexpr callable_tanpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">eve::tanpi</a> = {}</td></tr>
+<tr class="memdesc:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing tanpi.  <a href="group__math_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">More...</a><br /></td></tr>
+<tr class="separator:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+<hr class="footer"/>
+</body>
+</html>

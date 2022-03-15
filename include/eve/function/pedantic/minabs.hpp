@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/minabs.hpp>
-#include <eve/module/real/core/function/pedantic/generic/minabs.hpp>
+#include <eve/module/core/pedantic/minabs.hpp>

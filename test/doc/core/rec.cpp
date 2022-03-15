@@ -1,8 +1,5 @@
-#include <eve/function/diff/rec.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
@@ -13,13 +10,14 @@ int main()
                eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                                = " << pf << '\n'
-            << "-> eve::diff(eve::rec)(pf)     = " << eve::diff(eve::rec)(pf) << '\n';
+            << "<- pf            = " << pf << '\n'
+            << "-> rec)(pf)      = " << eve::rec(pf) << '\n'
+            << "-> diff(rec)(pf) = " << eve::diff(eve::rec)(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf                            = " << xf << '\n'
-            << "-> eve::diff(eve::rec)(xf) = " << eve::diff(eve::rec)(xf) << '\n';
+            << "<- xf      = " << xf << '\n'
+            << "-> rec(xf) = " << eve::rec(xf) << '\n';
   return 0;
 }

@@ -6,17 +6,9 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/constant/half.hpp>
-#include <eve/constant/zero.hpp>
-#include <eve/constant/valmin.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/function/saturated/abs.hpp>
-#include <eve/function/average.hpp>
-#include <eve/function/log2.hpp>
-#include <eve/function/exp2.hpp>
-#include <eve/function/dec.hpp>
-#include <eve/function/inc.hpp>
-#include <eve/function/round.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/exp2.hpp>
+#include <eve/module/math/regular/log2.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/platform.hpp>
 #include <type_traits>

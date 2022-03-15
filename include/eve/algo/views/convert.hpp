@@ -7,24 +7,18 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
-#include <eve/algo/concepts/value_type.hpp>
-#include <eve/algo/concepts/iterator_cardinal.hpp>
 #include <eve/algo/iterator_helpers.hpp>
 #include <eve/algo/range_ref.hpp>
 
-#include <eve/function/convert.hpp>
-#include <eve/function/read.hpp>
-#include <eve/function/write.hpp>
-#include <eve/function/compress_store.hpp>
-#include <eve/function/load.hpp>
-#include <eve/function/store.hpp>
+#include <eve/traits.hpp>
 
 namespace eve::algo::views
 {
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @struct converting_iterator
   //!   @brief An adapter over a `relaxed_iterator` that converts it's values to T.
@@ -32,16 +26,15 @@ namespace eve::algo::views
   //!
   //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
   //!
-  //!    Has a shorthand `eve::views::convert` in `<eve/views/convert.hpp>`.
+  //!    Has a shorthand `eve::views::converting_iterator` in `<eve/views/convert.hpp>`.
   //! @}
   //================================================================================================
-
 
   template <relaxed_iterator I, typename T>
   struct converting_iterator;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @struct converting_range
   //!   @brief An adapter over a `relaxed_range` that converts it's values to T.
@@ -57,7 +50,7 @@ namespace eve::algo::views
   struct converting_range;
 
   //================================================================================================
-  //! @addtogroup eve.algo.views
+  //! @addtogroup views
   //! @{
   //!   @var convert
   //!   @brief Takes an iterator or a range and returns an adapter that has a provided value type.
@@ -73,7 +66,7 @@ namespace eve::algo::views
   //!
   //!    **Required header:** `#include <eve/algo/views/convert.hpp>`
   //!
-  //!    Has a shorthand `eve::views::converting_range` in `<eve/views/convert.hpp>`.
+  //!    Has a shorthand `eve::views::convert` in `<eve/views/convert.hpp>`.
   //! @}
   //================================================================================================
 
@@ -84,30 +77,30 @@ namespace eve::algo::views
     {
       if constexpr( relaxed_range<Wrapped> )
       {
-        auto rng  = range_ref(std::forward<Wrapped>(wrapped));
+        auto rng  = range_ref(EVE_FWD(wrapped));
         using Rng = decltype(rng);
 
-             if constexpr( std::same_as<value_type_t<Rng>, T>         ) return rng;
-        else if constexpr( detail::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
-        else                                                            return converting_range<Rng, T> {rng};
+             if constexpr( std::same_as<value_type_t<Rng>, T>               ) return rng;
+        else if constexpr( algo::detail::instance_of<Rng, converting_range> ) return (*this)(rng.base, tgt);
+        else                                                                  return converting_range<Rng, T> {rng};
       }
       else
       {
         using I = std::remove_cvref_t<Wrapped>;
-             if constexpr( std::same_as<value_type_t<I>, T>            ) return wrapped;
-        else if constexpr( detail::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
-        else                                                             return converting_iterator<I, T> {wrapped};
+             if constexpr( std::same_as<value_type_t<I>, T>                  ) return wrapped;
+        else if constexpr( algo::detail::instance_of<I, converting_iterator> ) return (*this)(wrapped.base, tgt);
+        else                                                                   return converting_iterator<I, T> {wrapped};
       }
     }
 
     template <typename Wrapped, typename T>
     auto operator()(Wrapped&& wrapped, eve::as<T> tgt) const
     {
-      if constexpr (eve::detail::tag_dispatchable<convert_, decltype(std::forward<Wrapped>(wrapped)), as<T>>)
+      if constexpr (eve::detail::tag_dispatchable<convert_, decltype(EVE_FWD(wrapped)), as<T>>)
       {
-        return tagged_dispatch(*this, std::forward<Wrapped>(wrapped), tgt);
+        return tagged_dispatch(*this, EVE_FWD(wrapped), tgt);
       }
-      else return no_tagged_dispatch( std::forward<Wrapped>(wrapped), tgt);
+      else return no_tagged_dispatch( EVE_FWD(wrapped), tgt);
     }
   } inline constexpr convert;
 
@@ -150,18 +143,22 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE explicit converting_iterator(I base) : base(base) {}
 
-    EVE_FORCEINLINE auto unaligned() const { return convert(unalign(base), as<T>{}); }
+    template <std::convertible_to<I> I1>
+    converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}
 
-    operator unaligned_me() const { return unaligned(); }
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, converting_iterator self )
+    {
+      return convert(unalign(self.base), as<T>{});
+    }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator self)
     {
       return eve::convert(eve::read(self.base), eve::as<T>{});
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, converting_iterator self, T v)
+    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, T v, converting_iterator self)
     {
-      eve::write(self.base, eve::convert(v, eve::as<value_type_t<I>>{}));
+      eve::write(eve::convert(v, eve::as<value_type_t<I>>{}),self.base);
     }
 
     template <relaxed_sentinel_for<I> I1>
@@ -220,6 +217,12 @@ namespace eve::algo::views
       return convert(base.previous_partially_aligned(), eve::as<T>{});
     }
 
+    EVE_FORCEINLINE auto next_partially_aligned() const
+      requires iterator<I>
+    {
+      return convert(base.next_partially_aligned(), eve::as<T>{});
+    }
+
     static auto iterator_cardinal() requires iterator<I>
     { return I::iterator_cardinal(); }
 
@@ -248,42 +251,19 @@ namespace eve::algo::views
                           );
     }
 
-    template<relative_conditional_expr C>
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                C                                      c,
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,
+                                                relative_conditional_expr auto c,
                                                 wide_value_type_t<converting_iterator> v,
                                                 converting_iterator self)
-      requires iterator<I>
     {
       auto c1 = map_alternative(
         c,
         [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
       );
 
-      eve::store[c1](eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
-    }
+      auto v1 = eve::convert(v, eve::as<value_type_t<I>>{});
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,
-                                                wide_value_type_t<converting_iterator> v,
-                                                converting_iterator self)
-      requires iterator<I>
-    {
-      eve::store(eve::convert(v, eve::as<value_type_t<I>>{}), self.base);
-    }
-
-    template<relative_conditional_expr C, decorator Decorator, typename U>
-    EVE_FORCEINLINE friend auto
-    tagged_dispatch(eve::tag::compress_store_,
-                    C                                                  c,
-                    Decorator                                          d,
-                    wide_value_type_t<converting_iterator>             v,
-                    eve::logical<eve::wide<U, iterator_cardinal_t<I>>> m,
-                    converting_iterator                                self)
-      requires iterator<I>
-    {
-      // No alternative support in compress_store
-      auto raw_res = d(eve::compress_store[c])(eve::convert(v, eve::as<value_type_t<I>>{}), m, self.base);
-      return unaligned_t<converting_iterator>{raw_res};
+      return kumi::make_tuple(c1, v1, self.base);
     }
   };
 }

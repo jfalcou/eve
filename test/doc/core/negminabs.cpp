@@ -1,10 +1,5 @@
-#include <eve/function/negminabs.hpp>
-#include <eve/function/pedantic/negminabs.hpp>
-#include <eve/function/numeric/negminabs.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

@@ -1,11 +1,5 @@
-#include <eve/function/is_flint.hpp>
-#include <eve/function/pedantic/is_flint.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/constant/inf.hpp>
-#include <eve/constant/maxflint.hpp>
-#include <eve/constant/valmax.hpp>
-#include <eve/constant/minf.hpp>
-#include <eve/constant/nan.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;

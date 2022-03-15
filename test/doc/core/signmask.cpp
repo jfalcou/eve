@@ -1,4 +1,3 @@
-#include <eve/constant/signmask.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

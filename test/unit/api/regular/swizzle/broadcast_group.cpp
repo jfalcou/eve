@@ -6,9 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
-#include <eve/function/broadcast_group.hpp>
 #include <bit>
 
 //================================================================================================
@@ -32,22 +32,24 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
   eve::detail::for_<0,1,ssz>
   ( [&]<typename Group>(Group g)
   {
-    constexpr auto grp = (T::size()/(1<<g));
     eve::detail::for_<0,1,(1<<Group::value)>
     ( [&]<typename Index>(Index)
     {
       T ref = [=](auto i, auto c)
               {
+                constexpr auto grp = (T::size()/(1<<g));
                 constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                 return simd.get(p(i,c));
               };
 
       L lref  = [=](auto i, auto c)
                 {
+                  constexpr auto grp = (T::size()/(1<<g));
                   constexpr auto p = broadcast_group_n<grp,Index::value,T::size()>;
                   return logicals.get(p(i,c));
                 };
 
+      constexpr auto grp = (T::size()/(1<<g));
       TTS_EQUAL ( eve::broadcast_group( simd, eve::lane<grp>
                                       , eve::index<Index::value>, eve::lane<T::size()>
                                       )
@@ -58,8 +60,8 @@ EVE_TEST( "Check behavior of broadcast_groups swizzle"
                                       )
                 , lref
                 );
-      TTS_EQUAL ( (simd[broadcast_group_n<grp,Index::value,T::size()>]), ref );
-      TTS_EQUAL ( (logicals[broadcast_group_n<grp,Index::value,T::size()>]), lref );
+      TTS_EQUAL ( eve::shuffle(simd,broadcast_group_n<grp,Index::value,T::size()>), ref );
+      TTS_EQUAL ( eve::shuffle(logicals,broadcast_group_n<grp,Index::value,T::size()>), lref );
     }
     );
   }

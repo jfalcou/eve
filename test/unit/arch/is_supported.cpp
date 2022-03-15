@@ -26,8 +26,6 @@ TTS_CASE("Static detections of API")
   std::cout << "SSE4.2      : " << std::boolalpha << (eve::current_api >= eve::sse4_2) << "\n";
   std::cout << "AVX         : " << std::boolalpha << (eve::current_api >= eve::avx   ) << "\n";
   std::cout << "FMA3        : " << std::boolalpha << eve::supports_fma3                << "\n";
-  std::cout << "XOP         : " << std::boolalpha << eve::supports_fma4                << "\n";
-  std::cout << "FMA4        : " << std::boolalpha << eve::supports_xop                 << "\n";
   std::cout << "AVX2        : " << std::boolalpha << (eve::current_api >= eve::avx2  ) << "\n";
   std::cout << "AVX512      : " << std::boolalpha << (eve::current_api >= eve::avx512) << "\n";
   std::cout << "AVX512bw    : " << std::boolalpha << eve::supports_avx512bw            << "\n";
@@ -73,8 +71,6 @@ TTS_CASE("Dynamic detections of API")
   std::cout << "SSE4.2 : " << std::boolalpha << eve::is_supported(eve::sse4_2) << "\n";
   std::cout << "AVX    : " << std::boolalpha << eve::is_supported(eve::avx) << "\n";
   std::cout << "FMA3   : " << std::boolalpha << eve::is_supported(eve::fma3) << "\n";
-  std::cout << "XOP    : " << std::boolalpha << eve::is_supported(eve::xop) << "\n";
-  std::cout << "FMA4   : " << std::boolalpha << eve::is_supported(eve::fma4) << "\n";
   std::cout << "AVX2   : " << std::boolalpha << eve::is_supported(eve::avx2) << "\n";
   std::cout << "AVX512 : " << std::boolalpha << eve::is_supported(eve::avx512) << "\n";
   std::cout << "\n";

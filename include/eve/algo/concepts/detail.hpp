@@ -7,11 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <compare>
 #include <concepts>
 #include <type_traits>
 
-#include <eve/algo/unalign.hpp>
 
 namespace eve::algo::detail
 {
@@ -46,7 +46,7 @@ namespace eve::algo::detail
 
   template <typename I>
   concept iterator_operations =
-    std::regular<std::remove_cvref_t<I>> &&
+    std::copyable<std::remove_cvref_t<I>> &&
     std::totally_ordered<std::remove_cvref_t<I>> &&
     requires(std::remove_cvref_t<I> f, std::remove_cvref_t<I> l, std::ptrdiff_t n) {
       { l - f }  -> std::convertible_to<std::ptrdiff_t>;

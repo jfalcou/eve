@@ -7,8 +7,7 @@
 ##==================================================================================================
 ## Setup aggregation of tests
 ##==================================================================================================
-add_custom_target(unit.algo.exe       )
-add_custom_target(unit.algo.simd.exe  )
+add_custom_target(unit.algo.exe )
 
 ##==================================================================================================
 ## ALGO tests
@@ -16,18 +15,11 @@ add_custom_target(unit.algo.simd.exe  )
 # Components
 make_unit("unit.algo" array_utils.cpp)
 make_unit("unit.algo" concepts.cpp)
-make_unit("unit.algo" convert.cpp)
-make_unit("unit.algo" convert_zip.cpp)
-make_unit("unit.algo" converting_eve_iterator.cpp)
 make_unit("unit.algo" for_each_iteration.cpp)
 make_unit("unit.algo" preprocess_range.cpp)
-make_unit("unit.algo" preprocess_zip_range.cpp)
 make_unit("unit.algo" ptr_iterator.cpp)
 make_unit("unit.algo" range_ref.cpp)
 make_unit("unit.algo" traits.cpp)
-make_unit("unit.algo" unalign.cpp)
-make_unit("unit.algo" zip_iterator.cpp)
-make_unit("unit.algo" zip.cpp)
 
 # Containers
 make_unit( "unit.algo" container/erase_remove.cpp )
@@ -56,12 +48,19 @@ make_unit("unit.algo" algorithm/sums_special_cases.cpp)
 
 # shuffles
 make_unit("unit.algo" algorithm/remove.cpp)
+make_unit("unit.algo" algorithm/reverse_generic.cpp)
 
 # transform
 make_unit("unit.algo" algorithm/transform_inplace_generic.cpp)
 make_unit("unit.algo" algorithm/transform_to_generic.cpp)
 make_unit("unit.algo" algorithm/transform_special_cases.cpp)
+make_unit("unit.algo" algorithm/iota_generic.cpp)
+make_unit("unit.algo" algorithm/fill_generic.cpp)
 
 # copy
-make_unit("unit.algo" algorithm/copy_generic.cpp)
+make_unit("unit.algo" algorithm/copy_back.cpp)
+make_unit("unit.algo" algorithm/copy_backward_generic.cpp)
 make_unit("unit.algo" algorithm/copy_fwd.cpp)
+make_unit("unit.algo" algorithm/copy_generic.cpp)
+make_unit("unit.algo" algorithm/reverse_copy_generic.cpp)
+make_unit("unit.algo" algorithm/swap_ranges_generic.cpp)

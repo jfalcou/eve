@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/function/pow1p.hpp>
-#include <eve/module/real/math/function/diff/generic/pow1p.hpp>
+#include <eve/module/math/diff/pow1p.hpp>

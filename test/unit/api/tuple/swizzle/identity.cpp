@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <bit>
 
@@ -36,7 +37,7 @@ EVE_TEST_TYPES( "Check behavior of identity swizzle", eve::test::scalar::all_typ
                 if constexpr(sz <= S::size())
                 {
                   eve::as_wide_t<S,eve::fixed<sz>> ref = [&](auto i, auto) { return simd.get(i); };
-                  TTS_EQUAL(simd[identity<sz>], ref);
+                  TTS_EQUAL(eve::shuffle(simd,identity<sz>), ref);
                 }
               };
 

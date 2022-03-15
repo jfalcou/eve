@@ -1,4 +1,4 @@
-#include <eve/function/diff/fnma.hpp>
+#include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
