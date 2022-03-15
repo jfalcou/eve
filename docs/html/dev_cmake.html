@@ -59,7 +59,7 @@ MathJax.Hub.Config({
       <!--GITHUB RIBBON-->
       <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
       <!--GITHUB RIBBON-->
-        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
       </div>
     </div>
   </nav>
@@ -76,7 +76,7 @@ MathJax.Hub.Config({
                 </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">v2021.10.0</span>
+                    &#160;<span id="projectnumber">v2022.03.00</span>
                   </div>
                   <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
@@ -189,7 +189,9 @@ CMake setup</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Aarch64(arm-v8)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Arm (arm-v7)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake   </td></tr>
+<td class="markdownTableBodyNone">Arm (arm-v7)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">wasm   </td><td class="markdownTableBodyNone">emcmake cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE='../cmake/toolchain/emcc.cmake'   </td></tr>
 </table>
 <p >Once run, your build folder should contain all the necessary artifact to compile and run <b>EVE</b> test suite.</p>
 <h1><a class="anchor" id="dev_build_test"></a>

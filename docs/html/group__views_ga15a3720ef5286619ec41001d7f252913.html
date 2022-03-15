@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="generator" content="Doxygen 1.9.4"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>E.V.E: eve::algo::views::iota_scaled</title>
+  <title>E.V.E: eve::algo::views::iota_with_step</title>
   <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -59,7 +59,7 @@ MathJax.Hub.Config({
       <!--GITHUB RIBBON-->
       <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
       <!--GITHUB RIBBON-->
-        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
       </div>
     </div>
   </nav>
@@ -76,7 +76,7 @@ MathJax.Hub.Config({
                 </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">v2021.10.0</span>
+                    &#160;<span id="projectnumber">v2022.03.00</span>
                   </div>
                   <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
@@ -147,7 +147,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
           <tr><td class="navtab"><a class="navtab" href="group__views_ga2bdd27bab60783ec3a7c8ee97ebb2d32.html#ga2bdd27bab60783ec3a7c8ee97ebb2d32">backward</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__views_ga4cc00e59b322f70ba2c789afde3593aa.html#ga4cc00e59b322f70ba2c789afde3593aa">convert</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5">iota</a></td></tr>
-          <tr><td class="navtabHL"><a class="navtab" href="group__views_ga257d82230fde79fc057177a7eb1ab543.html#ga257d82230fde79fc057177a7eb1ab543">iota_scaled</a></td></tr>
+          <tr><td class="navtabHL"><a class="navtab" href="group__views_ga15a3720ef5286619ec41001d7f252913.html#ga15a3720ef5286619ec41001d7f252913">iota_with_step</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a">map</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__views_ga439554904906de9ac78acd434166848a.html#ga439554904906de9ac78acd434166848a">map_convert</a></td></tr>
           <tr><td class="navtab"><a class="navtab" href="group__views_gaac86f874e3f90c117f6495f0ea1b782a.html#gaac86f874e3f90c117f6495f0ea1b782a">reverse</a></td></tr>
@@ -156,24 +156,24 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
       </div>
    </td>
    <td valign="top" class="mempage">
-<a id="ga257d82230fde79fc057177a7eb1ab543" name="ga257d82230fde79fc057177a7eb1ab543"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga257d82230fde79fc057177a7eb1ab543">&#9670;&nbsp;</a></span>iota_scaled</h2>
+<a id="ga15a3720ef5286619ec41001d7f252913" name="ga15a3720ef5286619ec41001d7f252913"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga15a3720ef5286619ec41001d7f252913">&#9670;&nbsp;</a></span>iota_with_step</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::views::iota_scaled</td>
+          <td class="memname">eve::algo::views::iota_with_step</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p><code>#include &lt;eve/algo/views/iota.hpp&gt;</code></p>
 
-<p>A fuction to generate an <code>iota</code> scaled by some multiplier. To generate an iterator pass T base, T scale. For a range pass a range size as ptrdiff_t as a 3rd parameter. </p>
-<p >Example: iota_scaled(0.1, 0.2, 3) is a range [0.1, 0.3, 0.5]</p>
+<p>A fuction to generate an <code>iota</code> with a step i.e. a general arithmetic sequence. To generate an iterator pass T base, T step. For a range pass a range size as ptrdiff_t as a 3rd parameter. </p>
+<p >Example: iota_with_step(0.1, 0.2, 4) is a range [0.1, 0.3, 0.5, 0.7]</p>
 <p ><b>Required header:</b> <code>#include &lt;eve/algo/views/iota.hpp&gt;</code></p>
-<p >Has a shorthand <code>eve::views::iota_scaled</code> in <code>&lt;eve/views/iota.hpp&gt;</code>. </p>
+<p >Has a shorthand <code>eve::views::iota_with_step</code> in <code>&lt;eve/views/iota.hpp&gt;</code>. </p>
 
 </div>
 </div>

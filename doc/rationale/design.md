@@ -39,7 +39,7 @@ This choice is driven by multiple reasons:
    template functions, function objects can be easily passed as parameters to algorithms or other
    higher-order functions.
 
- - It enables the definition of [function decorators](@ref decorator) that acts as lightweight
+ - It enables the definition of function decorators that acts as lightweight
    wrapper for modifying the behavior of a function at compile-time.
 
 @section rationale-decorator Function customization via higher-order decorator

@@ -14,7 +14,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup math
   //! @{
-  //! @var e
+  //! @var egamma
   //!
   //! @brief Callable object computing the Euler-Mascheroni constant.
   //!

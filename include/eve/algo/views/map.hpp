@@ -53,7 +53,7 @@ namespace eve::algo::views
   //!         should work on both scalar and wide for the underlying iterator
   //!         for any cardinal.
   //!
-  //!   **Required header:** #include <eve/algo/views/map.hpp>
+  //!   **Required header:** `#include <eve/algo/views/map.hpp>`
   //!
   //!   Has a shorthand `eve::views::map_load_op` in `<eve/views/map.hpp>`
   //!

@@ -59,7 +59,7 @@ MathJax.Hub.Config({
       <!--GITHUB RIBBON-->
       <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
       <!--GITHUB RIBBON-->
-        <a href="index.html" class="navbar-brand">E.V.E v2021.10.0</a>
+        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
       </div>
     </div>
   </nav>
@@ -76,7 +76,7 @@ MathJax.Hub.Config({
                 </td>
                 <td id="projectalign" style="padding-left: 0.5em;">
                   <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">v2021.10.0</span>
+                    &#160;<span id="projectnumber">v2022.03.00</span>
                   </div>
                   <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
                 </td>
@@ -170,8 +170,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1converting__range.html">eve::algo::views::converting_range&lt; R, T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An adapter over a <code><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></code> that converts it's values to T. Should be created via <code>convert</code>.  <a href="structeve_1_1algo_1_1views_1_1converting__range.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1base__plus__offset__iterator.html">eve::algo::views::base_plus_offset_iterator&lt; T, N &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator for all values from base to offset. Should be created with <code>iota_scaled</code> or <code>iota</code>. Not OK to compare two iterators generated from a different base.  <a href="structeve_1_1algo_1_1views_1_1base__plus__offset__iterator.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1iota__with__step__iterator.html">eve::algo::views::iota_with_step_iterator&lt; T, N &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator for all values from base to offset. Should be created with <code>iota_with_step</code> or <code>iota</code>. Not OK to compare two iterators generated from a different base.  <a href="structeve_1_1algo_1_1views_1_1iota__with__step__iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1views_1_1map__iterator.html">eve::algo::views::map_iterator&lt; I, LoadOp, StoreOp &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator for <code>map</code>, <code>map_convert</code>. Should be created with one of those functions. If one of the operations is not avaliable, it's <code><a class="el" href="structeve_1_1algo_1_1nothing__t.html" title="a type to indicate that there is nothing there">eve::algo::nothing_t</a></code>.  <a href="structeve_1_1algo_1_1views_1_1map__iterator.html#details">More...</a><br /></td></tr>
@@ -203,8 +203,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structconverting__range.html">converting_range</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1converting__range.html" title="An adapter over a relaxed_range that converts it&#39;s values to T. Should be created via convert.">eve::algo::views::converting_range</a></code>  <a href="structconverting__range.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbase__plus__offset__iterator.html">base_plus_offset_iterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1base__plus__offset__iterator.html" title="An iterator for all values from base to offset. Should be created with iota_scaled or iota....">eve::algo::views::base_plus_offset_iterator</a></code>  <a href="structbase__plus__offset__iterator.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structiota__with__step__iterator.html">iota_with_step_iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1iota__with__step__iterator.html" title="An iterator for all values from base to offset. Should be created with iota_with_step or iota....">eve::algo::views::iota_with_step_iterator</a></code>  <a href="structiota__with__step__iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap__iterator.html">map_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a shorthand for <code><a class="el" href="structeve_1_1algo_1_1views_1_1map__iterator.html" title="An iterator for map, map_convert. Should be created with one of those functions. If one of the operat...">eve::algo::views::map_iterator</a></code>  <a href="structmap__iterator.html#details">More...</a><br /></td></tr>
@@ -233,13 +233,13 @@ Variables</h2></td></tr>
 <tr class="memitem:ga4cc00e59b322f70ba2c789afde3593aa"><td class="memItemLeft" align="right" valign="top">struct eve::algo::views::convert_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_ga4cc00e59b322f70ba2c789afde3593aa.html#ga4cc00e59b322f70ba2c789afde3593aa">eve::algo::views::convert</a></td></tr>
 <tr class="memdesc:ga4cc00e59b322f70ba2c789afde3593aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes an iterator or a range and returns an adapter that has a provided value type.  <a href="group__views_ga4cc00e59b322f70ba2c789afde3593aa.html#ga4cc00e59b322f70ba2c789afde3593aa">More...</a><br /></td></tr>
 <tr class="separator:ga4cc00e59b322f70ba2c789afde3593aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga257d82230fde79fc057177a7eb1ab543"><td class="memItemLeft" >struct {</td></tr>
-<tr class="memitem:ga257d82230fde79fc057177a7eb1ab543"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_ga257d82230fde79fc057177a7eb1ab543.html#ga257d82230fde79fc057177a7eb1ab543">eve::algo::views::iota_scaled</a></td></tr>
-<tr class="memdesc:ga257d82230fde79fc057177a7eb1ab543"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fuction to generate an <code>iota</code> scaled by some multiplier. To generate an iterator pass T base, T scale. For a range pass a range size as ptrdiff_t as a 3rd parameter.  <a href="group__views_ga257d82230fde79fc057177a7eb1ab543.html#ga257d82230fde79fc057177a7eb1ab543">More...</a><br /></td></tr>
-<tr class="separator:ga257d82230fde79fc057177a7eb1ab543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15a3720ef5286619ec41001d7f252913"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:ga15a3720ef5286619ec41001d7f252913"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_ga15a3720ef5286619ec41001d7f252913.html#ga15a3720ef5286619ec41001d7f252913">eve::algo::views::iota_with_step</a></td></tr>
+<tr class="memdesc:ga15a3720ef5286619ec41001d7f252913"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fuction to generate an <code>iota</code> with a step i.e. a general arithmetic sequence. To generate an iterator pass T base, T step. For a range pass a range size as ptrdiff_t as a 3rd parameter.  <a href="group__views_ga15a3720ef5286619ec41001d7f252913.html#ga15a3720ef5286619ec41001d7f252913">More...</a><br /></td></tr>
+<tr class="separator:ga15a3720ef5286619ec41001d7f252913"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5">eve::algo::views::iota</a></td></tr>
-<tr class="memdesc:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fuction to generate an <code>iota</code> iterator/view like [0, 1, 2, 3, ...]. To generate an iterator pass T base. For a range pass a range size as ptrdiff_t as a 2rd parameter.  <a href="group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5">More...</a><br /></td></tr>
+<tr class="memdesc:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fuction to generate an <code>iota</code> iterator/view like [0.5, 2.5, 4.5, ...]. \((0.5 + 2(n-1))_{n \in \N}\) To generate an iterator base + (n-1) step pass T base and T step. For a range pass a range size as ptrdiff_t as a 2rd parameter.  <a href="group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5">More...</a><br /></td></tr>
 <tr class="separator:gac775cd27d2cf90ff76710e45c8e5e1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga439554904906de9ac78acd434166848a"><td class="memItemLeft" >struct {</td></tr>
 <tr class="memitem:ga439554904906de9ac78acd434166848a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__views_ga439554904906de9ac78acd434166848a.html#ga439554904906de9ac78acd434166848a">eve::algo::views::map_convert</a></td></tr>
