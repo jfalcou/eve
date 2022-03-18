@@ -36,6 +36,7 @@
 .idea/
 *.sublime-*
 .vscode/*
+compile_commands.json
 
 # Potential local build repository
 *build*/
