@@ -8,6 +8,7 @@
 #pragma once
 
 // #include <eve/algo/equal.hpp>
+#include <eve/algo/copy.hpp>
 #include <eve/algo/views/convert.hpp>
 
 #include <eve/arch/expected_cardinal.hpp>
@@ -79,7 +80,7 @@ namespace eve::algo
     soa_vector() : storage(0) {}
 
     //! Constructs the container with `n` default-inserted instances of `Type`. No copies are made.
-    soa_vector ( std::size_t n) : storage(n) {}
+    explicit soa_vector ( std::size_t n) : storage(n) {}
 
     //! Constructs the container with `n` copies of elements with `value` value.
     soa_vector(std::size_t n, value_type value)  : storage(n, value) {}
@@ -129,7 +130,8 @@ namespace eve::algo
       {
         auto const sz = size();
         soa_vector that(n);
-        storage_type::piecewise_copy(that.storage, storage, sz);
+        eve::algo::copy(*this, that);
+        //storage_type::piecewise_copy(that.storage, storage, sz);
         swap(that);
         storage.size_ = sz;
      }
@@ -147,7 +149,7 @@ namespace eve::algo
     //! @brief Clear the contents of the container.
     void clear()
     {
-      storage.capacity_ = storage_type::capacity_impl(storage.size_);
+      storage.capacity_ = storage_type::available_elements(storage.size_);
       storage.size_     = 0;
     }
 
@@ -215,7 +217,7 @@ namespace eve::algo
       else
       {
         soa_vector that(n, value);
-        storage_type::piecewise_copy(that.storage, storage, size());
+        eve::algo::copy(*this, that);
         swap(that);
      }
     }

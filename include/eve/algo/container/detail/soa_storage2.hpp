@@ -23,9 +23,9 @@ namespace eve::algo::detail
   {
     using is_product_type = void;
 
-    soa_storage()                : storage_( sizing(0) ), size_(0) { build(0); }
-    soa_storage( std::size_t n)  : storage_( sizing(n) ), size_(n) { build(n); }
-    soa_storage( std::size_t n, Type const& v)  : storage_( sizing(n) ), size_(n) { build(n,v); }
+    soa_storage()                : storage_( byte_size(0) ), size_(0) { build(0); }
+    explicit soa_storage( std::size_t n)  : soa_storage( n, Type{} ) {}
+    soa_storage( std::size_t n, Type const& v)  : storage_( byte_size(n) ), size_(n) { build(n,v); }
 
     soa_storage(soa_storage const& src) : storage_(src.storage), size_(src.size())
     {
@@ -76,6 +76,11 @@ namespace eve::algo::detail
       std::swap(size_,other.size_);
     }
 
+    friend void swap(soa_storage& a, soa_storage& b ) noexcept
+    {
+      a.swap(b);
+    }
+
     void build(std::size_t n, Type v = {})
     {
       using alloc_t = std::allocator_traits<Allocator>;
@@ -90,7 +95,7 @@ namespace eve::algo::detail
                     , indexes_, v
                     );
 
-      capacity_ = capacity_impl(n);
+      capacity_ = available_elements(n);
     }
 
     void reindex(std::size_t n)
@@ -104,20 +109,12 @@ namespace eve::algo::detail
                       }
                     , indexes_
                     );
-      capacity_ = capacity_impl(n);
+      capacity_ = available_elements(n);
     }
 
     //==============================================================================================
     // Static helpers
     //==============================================================================================
-    template<typename Content>
-    static void piecewise_copy(Content& dst, Content const& src, std::size_t n)
-    {
-      kumi::for_each( [&]<typename T>(T* d, T const* s) { std::memcpy(d,s,sizeof(T)*n); }
-                    , dst, src
-                    );
-    }
-
     template<typename T> static EVE_FORCEINLINE auto as_aligned_pointer(T* ptr)
     {
       return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
@@ -126,14 +123,14 @@ namespace eve::algo::detail
     template<typename T>
     static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
 
-    static auto capacity_impl(std::size_t n) noexcept
+    static auto available_elements(std::size_t n) noexcept
     {
       // Capacity is the smallest gap possible, ie the one in the largest type
       constexpr std::size_t largest = max_scalar_size_v<Type>;
       return eve::align(largest*n, eve::over{64})/largest;
     }
 
-    static auto sizing(std::size_t n) noexcept
+    static auto byte_size(std::size_t n) noexcept
     {
       return  n ? 64 + kumi::fold_left( [n]<typename S>(auto a, S) { return a + realign<S>(n); }
                                   , flat_t{}
@@ -152,14 +149,15 @@ namespace eve::algo::detail
     friend decltype(auto) get(soa_storage const& s) noexcept { return get<I>(s.indexes_); }
 
     //==============================================================================================
-    using byte_t      = unsigned char;
+    using byte_t      = std::byte;
     using flat_t      = kumi::result::flatten_all_t<Type>;
     using sub_span_t  = kumi::as_tuple_t<flat_t, std::add_pointer>;
     using alloc_t     = typename std::allocator_traits<Allocator>::template rebind_alloc<byte_t>;
 
     std::vector<byte_t,alloc_t> storage_;
     sub_span_t                  indexes_;
-    std::size_t                 size_, capacity_;
+    std::size_t                 size_;
+    std::size_t                 capacity_;
   };
 }
 
