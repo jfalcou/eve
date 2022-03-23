@@ -130,13 +130,13 @@ namespace eve::algo
       {
         auto const sz = size();
         soa_vector that(n);
-        eve::algo::copy(*this, that);
-        //storage_type::piecewise_copy(that.storage, storage, sz);
+        eve::algo::copy ( *this
+                        , algo::as_range(that.begin(), that.begin() + sz)
+                        );
         swap(that);
         storage.size_ = sz;
      }
     }
-
 
     //==============================================================================================
     //! @}
@@ -217,7 +217,9 @@ namespace eve::algo
       else
       {
         soa_vector that(n, value);
-        eve::algo::copy(*this, that);
+        eve::algo::copy ( *this
+                        , algo::as_range(that.begin(), that.begin() + size())
+                        );
         swap(that);
      }
     }
