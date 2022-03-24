@@ -18,7 +18,6 @@
 #include <eve/traits.hpp>
 
 #include <memory>
-#include <vector>
 
 namespace eve::algo
 {
@@ -37,7 +36,7 @@ namespace eve::algo
   //! @}
   //================================================================================================
   template< eve::product_type Type
-          , typename Allocator = eve::aligned_allocator<unsigned char, eve::fixed<64>>
+          , eve::simd_allocator Allocator = eve::aligned_allocator<unsigned char, eve::fixed<64>>
           >
   struct soa_vector
   {
