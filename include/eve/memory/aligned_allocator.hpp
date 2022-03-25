@@ -82,13 +82,15 @@ namespace eve
     }
 
     //! @brief Deallocates aligned storage
-    void deallocate(value_type *p, std::size_t n) noexcept
+    void deallocate(value_type *p, std::size_t) noexcept
     {
-      aligned_dealloc((void *)p, n);
+      aligned_dealloc((void *)p);
     }
 
-    void aligned_dealloc(void* ptr, std::size_t)
+    void aligned_dealloc(void* ptr)
     {
+      if(!ptr) return;
+
       #if defined(SPY_COMPILER_IS_MSVC)
       _aligned_free(ptr);
       #else
