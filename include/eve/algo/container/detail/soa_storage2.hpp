@@ -10,7 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/algo/views/zip.hpp>
 #include <eve/detail/kumi.hpp>
-#include <eve/detail/raberu.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/concept/simd_allocator.hpp>
 #include <eve/product_type.hpp>
@@ -24,54 +23,54 @@ namespace eve::algo::detail
   {
     using is_product_type = void;
 
-              soa_storage() : storage_( nullptr ), size_(0) { build(0); }
+    soa_storage() noexcept
+                : indexes_{}, storage_( nullptr, aligned_deleter{this} ), size_{}, capacity_{}
+    {}
+
     explicit  soa_storage( std::size_t n) : soa_storage( n, Type{} ) {}
 
     soa_storage( std::size_t n, Type const& v)  : soa_storage()
     {
-      storage_ = (byte_t*)Allocator::aligned_alloc(byte_size(n), 64);
-      size_ = n;
+      storage_t  local{ reinterpret_cast<byte_t*>(Allocator::aligned_alloc(byte_size(n), 64))
+                      , aligned_deleter{this}
+                      };
+      storage_.swap(local);
+      size_     = n;
       build(n,v);
     }
 
     soa_storage(soa_storage const& src) : soa_storage()
     {
-      storage_ = (byte_t*)Allocator::aligned_alloc(size_, 64);
-      size_ = src.size_;
-      std::copy(storage_, storage_+size_, src.storage_);
-      reindex(src.size_);
+      auto sz = byte_size(src.size_);
+      storage_t  local{ reinterpret_cast<byte_t*>(Allocator::aligned_alloc(sz,64))
+                      , aligned_deleter{this}
+                      };
+      std::copy(src.storage_.get(), src.storage_.get()+sz, local.get());
+
+      storage_.swap(local);
+      indexes_  = src.indexes_;
+      size_     = src.size_;
+      capacity_ = src.capacity_;
     }
 
     soa_storage& operator=(soa_storage const& src)
     {
-      soa_storage that(src);
-      swap(that);
+      *this = soa_storage(src);
       return *this;
     }
 
     soa_storage(soa_storage&&)            =default;
     soa_storage& operator=(soa_storage&&) =default;
 
-    ~soa_storage()
-    {
-      kumi::for_each( [&]<typename T>(T*& s)
-                      {
-                        for(std::size_t i=0;i<size_;++i) static_cast<T*>(s+i)->~T();
-                      }
-                    , indexes_
-                    );
-      Allocator::aligned_dealloc(storage_, size_);
-    }
-
     EVE_FORCEINLINE auto data_aligned()
     {
-      auto ptrs = kumi::map([](auto* m) { return as_aligned_pointer(m); }, indexes_);
+      auto ptrs = kumi::map([]( auto p) { return as_aligned_pointer( p ); }, *this);
       return kumi::apply(eve::algo::views::zip, ptrs);
     }
 
     EVE_FORCEINLINE auto data_aligned() const
     {
-      auto ptrs = kumi::map([](auto const* m) { return as_aligned_pointer(m); }, indexes_);
+      auto ptrs = kumi::map([]( auto p) { return as_aligned_pointer( p ); }, *this);
       return kumi::apply(eve::algo::views::zip, ptrs);
     }
 
@@ -80,9 +79,10 @@ namespace eve::algo::detail
 
     void swap(soa_storage& other) noexcept
     {
-      std::swap(storage_,other.storage_);
       std::swap(indexes_,other.indexes_);
+      storage_.swap(other.storage_);
       std::swap(size_,other.size_);
+      std::swap(capacity_,other.capacity_);
     }
 
     friend void swap(soa_storage& a, soa_storage& b ) noexcept
@@ -92,32 +92,24 @@ namespace eve::algo::detail
 
     void build(std::size_t n, Type v = {})
     {
-      auto sub_span = storage_;
+      auto sub_span = storage_.get();
+      auto offset = 0;
 
-      kumi::for_each( [&]<typename T>(T*& s, auto m)
-                      {
-                        s = reinterpret_cast<T*>(sub_span);
-                        for(std::size_t i=0;i<n;++i) new (s+i) T(m);
-                        sub_span += realign<T>(n);
-                      }
-                    , indexes_, v
-                    );
+      kumi::for_each_index( [&]<typename Idx>(Idx, auto& s, auto m)
+                            {
+                              // Constructs the current sub-span
+                              using type = kumi::element_t<Idx::value,Type>;
+                              auto p = reinterpret_cast<type*>(sub_span+offset);
+                              for(std::size_t i=0;i<n;++i) new (p+i) type(m);
 
-      capacity_ = available_elements(n);
-    }
+                              // update the index
+                              s       = offset;
+                              offset += realign<type>(n);
+                            }
+                          , indexes_, v
+                          );
 
-    void reindex(std::size_t n)
-    {
-      auto sub_span = storage_;
-
-      kumi::for_each( [&]<typename T>(T*& s)
-                      {
-                        s = reinterpret_cast<T*>(sub_span);
-                        sub_span += realign<T>(n);
-                      }
-                    , indexes_
-                    );
-      capacity_ = available_elements(n);
+      capacity_ = aligned_capacity(n);
     }
 
     //==============================================================================================
@@ -131,7 +123,7 @@ namespace eve::algo::detail
     template<typename T>
     static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
 
-    static auto available_elements(std::size_t n) noexcept
+    static auto aligned_capacity(std::size_t n) noexcept
     {
       // Capacity is the smallest gap possible, ie the one in the largest type
       constexpr std::size_t largest = max_scalar_size_v<Type>;
@@ -150,28 +142,47 @@ namespace eve::algo::detail
     // Tuple interface
     //==============================================================================================
     template<std::size_t I>
-    friend decltype(auto) get(soa_storage& s) noexcept { return get<I>(s.indexes_); }
+    friend decltype(auto) get(soa_storage& s) noexcept
+    {
+      return reinterpret_cast<kumi::element_t<I,Type>*>(s.storage_.get() + get<I>(s.indexes_));
+    }
 
     template<std::size_t I>
-    friend decltype(auto) get(soa_storage const& s) noexcept { return get<I>(s.indexes_); }
+    friend decltype(auto) get(soa_storage const& s) noexcept
+    {
+      return reinterpret_cast<kumi::element_t<I,Type> const*>(s.storage_.get() + get<I>(s.indexes_));
+    }
 
     //==============================================================================================
-    using byte_t      = std::byte;
-    using flat_t      = kumi::result::flatten_all_t<Type>;
-    using sub_span_t  = kumi::as_tuple_t<flat_t, std::add_pointer>;
-    using alloc_t     = typename std::allocator_traits<Allocator>::template rebind_alloc<byte_t>;
+    template<typename U> struct as_index { using type = std::size_t; };
 
-    byte_t*     storage_;
-    sub_span_t  indexes_;
+    struct aligned_deleter
+    {
+      aligned_deleter(Allocator* a) : alloc(a) {}
+      void operator()(void* p) { if(p) alloc->aligned_dealloc(p); }
+      Allocator* alloc;
+    };
+
+    //==============================================================================================
+    using byte_t    = std::byte;
+    using storage_t = std::unique_ptr<byte_t, aligned_deleter>;
+    using flat_t    = kumi::result::flatten_all_t<Type>;
+    using indexes_t = kumi::as_tuple_t<flat_t, as_index>;
+    using alloc_t   = typename std::allocator_traits<Allocator>::template rebind_alloc<byte_t>;
+
+    indexes_t   indexes_;
+    storage_t   storage_;
     std::size_t size_;
     std::size_t capacity_;
   };
 }
 
 template <eve::product_type Type, typename Allocator>
-struct std::tuple_size<eve::algo::detail::soa_storage<Type,Allocator>> :
-  std::tuple_size<typename eve::algo::detail::soa_storage<Type,Allocator>::sub_span_t> {};
+struct  std::tuple_size<eve::algo::detail::soa_storage<Type,Allocator>>
+      : kumi::size<Type>
+{};
 
 template <std::size_t I, eve::product_type Type, typename Allocator>
-struct std::tuple_element<I, eve::algo::detail::soa_storage<Type,Allocator>> :
-  std::tuple_element<I, typename eve::algo::detail::soa_storage<Type,Allocator>::sub_span_t> {};
+struct  std::tuple_element<I, eve::algo::detail::soa_storage<Type,Allocator>>
+      : std::add_pointer<kumi::element<I, Type>>
+{};

@@ -12,6 +12,27 @@
 
 using t_t = kumi::tuple<int,float,char>;
 
+TTS_CASE("Check types")
+{
+  using T        = udt::grid2d;
+  using ap       = eve::aligned_ptr<int,       eve::fixed<64 / sizeof(int)>>;
+  using const_ap = eve::aligned_ptr<int const, eve::fixed<64 / sizeof(int)>>;
+
+  using v = eve::algo::soa_vector<udt::grid2d>;
+  TTS_TYPE_IS(v::pointer,               (eve::algo::views::zip_iterator<int*,       int*>));
+  TTS_TYPE_IS(v::const_pointer,         (eve::algo::views::zip_iterator<int const*, int const*>));
+  TTS_TYPE_IS(v::pointer_aligned,       (eve::algo::views::zip_iterator<ap,   ap>));
+  TTS_TYPE_IS(v::const_pointer_aligned, (eve::algo::views::zip_iterator<const_ap,   const_ap>));
+
+  TTS_TYPE_IS(v::iterator,               (eve::algo::views::converting_iterator<v::pointer,               T>));
+  TTS_TYPE_IS(v::const_iterator,         (eve::algo::views::converting_iterator<v::const_pointer,         T>));
+  TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::views::converting_iterator<v::pointer_aligned,       T>));
+  TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::views::converting_iterator<v::const_pointer_aligned, T>));
+
+  TTS_CONSTEXPR_EXPECT((std::convertible_to<v::iterator, v::const_iterator>));
+  TTS_CONSTEXPR_EXPECT((std::convertible_to<v::pointer,  v::const_pointer>));
+};
+
 TTS_CASE("Check soa_vector default ctor")
 {
   eve::algo::soa_vector<t_t>          empty_tuple;
@@ -36,26 +57,38 @@ TTS_CASE("Check soa_vector sized ctor")
   TTS_EXPECT_NOT( udt_vector.empty()  );
 
   // grid2d has some specific default
-  TTS_EQUAL( get<0>(udt_vector.get(0)), +1  );
-  TTS_EQUAL( get<1>(udt_vector.get(0)), -1  );
   TTS_EQUAL( udt_vector.get(0), udt::grid2d{});
 };
 
 TTS_CASE("Check soa_vector sized ctor with default value")
 {
-  eve::algo::soa_vector<t_t>          tuple_vector( 71, t_t{13,3.7f,'Z'} );
-  eve::algo::soa_vector<udt::grid2d>  udt_vector  ( 71, udt::grid2d{4,19} );
+  eve::algo::soa_vector<t_t>          tuple_vector( 71, t_t{13,3.7f,'Z'}              );
+  eve::algo::soa_vector<udt::grid2d>  udt_vector  ( 71, udt::grid2d{4,19}             );
 
   TTS_EQUAL     ( tuple_vector.size() , 71ULL   );
   TTS_EXPECT_NOT( tuple_vector.empty()          );
-  TTS_EQUAL( get<0>(tuple_vector.get(35)), 13    );
-  TTS_EQUAL( get<1>(tuple_vector.get(35)), 3.7f  );
-  TTS_EQUAL( get<2>(tuple_vector.get(35)), 'Z'   );
+  TTS_EQUAL     ( tuple_vector.get(35), (t_t{13,3.7f,'Z'})  );
 
-  TTS_EQUAL ( udt_vector.size(), 71ULL);
+  TTS_EQUAL     ( udt_vector.size(), 71ULL);
   TTS_EXPECT_NOT( udt_vector.empty()  );
-  TTS_EQUAL( get<0>(udt_vector.get(35)), 4 );
-  TTS_EQUAL( get<1>(udt_vector.get(35)), 19);
+  TTS_EQUAL     ( udt_vector.get(35), (udt::grid2d{4,19}) );
+};
+
+TTS_CASE("Check soa_vector copy ctor")
+{
+  eve::algo::soa_vector<t_t>          tuple_original( 71, t_t{13,3.7f,'Z'} )
+                                    , tuple_copy(tuple_original);
+
+  eve::algo::soa_vector<udt::grid2d>  udt_original  ( 71, udt::grid2d{4,19} )
+                                    , udt_copy(udt_original);
+
+  TTS_EQUAL     ( tuple_copy.size() , 71ULL   );
+  TTS_EXPECT_NOT( tuple_copy.empty()          );
+  TTS_EQUAL     ( tuple_copy.get(35), (t_t{13,3.7f,'Z'})  );
+
+  TTS_EQUAL     ( udt_copy.size(), 71ULL);
+  TTS_EXPECT_NOT( udt_copy.empty()  );
+  TTS_EQUAL     ( udt_copy.get(35), (udt::grid2d{4,19}) );
 };
 
 TTS_CASE("Check soa_vector initializer list ctor")
@@ -78,6 +111,52 @@ TTS_CASE("Check soa_vector initializer list ctor")
   TTS_EQUAL(udt_vector.get(0), (udt::grid2d{1,2}));
   TTS_EQUAL(udt_vector.get(1), (udt::grid2d{3,4}));
   TTS_EQUAL(udt_vector.get(2), (udt::grid2d{5,8}));
+};
+
+TTS_CASE("Check soa_vector::data behavior")
+{
+  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
+                                      , t_t{5,6.7f  ,'8'}
+                                      , t_t{9,10.11f,'X'}
+                                      };
+
+  eve::algo::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
+                                     , udt::grid2d{3,4}
+                                     , udt::grid2d{5,8}
+                                     };
+
+  auto tv_data = tv.data();
+  for(std::size_t i = 0;i< tv.size();++i)
+    TTS_EQUAL( eve::read(tv_data++), tv.get(i));
+
+  auto uv_data = uv.data();
+  for(std::size_t i = 0;i< uv.size();++i)
+    TTS_EQUAL( eve::read(uv_data++), uv.get(i));
+};
+
+TTS_CASE("Check soa_vector::begin/end behavior")
+{
+  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
+                                            , t_t{5,6.7f  ,'8'}
+                                            , t_t{9,10.11f,'X'}
+                                            };
+
+  eve::algo::soa_vector<udt::grid2d>  uv  = { udt::grid2d{1,2}
+                                            , udt::grid2d{3,4}
+                                            , udt::grid2d{5,8}
+                                            };
+
+  auto tv_begin = tv.begin();
+  auto tv_end = tv.end();
+  int i = 0;
+  while(tv_begin != tv_end)
+    TTS_EQUAL( eve::read(tv_begin++), tv.get(i++));
+
+  auto uv_begin = uv.begin();
+  auto uv_end   = uv.end();
+  i = 0;
+  while(uv_begin != uv_end)
+    TTS_EQUAL( eve::read(uv_begin++), uv.get(i++));
 };
 
 TTS_CASE("Check soa_vector resize")
@@ -281,76 +360,7 @@ TTS_CASE("Check soa_vector::pop behavior")
 
   TTS_EQUAL(uv, uvref);
 };
-#endif
 
-TTS_CASE("Check soa_vector::data behavior")
-{
-  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
-                                      , t_t{5,6.7f  ,'8'}
-                                      , t_t{9,10.11f,'X'}
-                                      };
-
-  eve::algo::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
-                                     , udt::grid2d{3,4}
-                                     , udt::grid2d{5,8}
-                                     };
-
-  auto tv_data = tv.data();
-  for(std::size_t i = 0;i< tv.size();++i)
-    TTS_EQUAL( eve::read(tv_data++), tv.get(i));
-
-  auto uv_data = uv.data();
-  for(std::size_t i = 0;i< uv.size();++i)
-    TTS_EQUAL( eve::read(uv_data++), uv.get(i));
-};
-
-TTS_CASE("Check soa_vector::begin/end behavior")
-{
-  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
-                                            , t_t{5,6.7f  ,'8'}
-                                            , t_t{9,10.11f,'X'}
-                                            };
-
-  eve::algo::soa_vector<udt::grid2d>  uv  = { udt::grid2d{1,2}
-                                            , udt::grid2d{3,4}
-                                            , udt::grid2d{5,8}
-                                            };
-
-  auto tv_begin = tv.begin();
-  auto tv_end = tv.end();
-  int i = 0;
-  while(tv_begin != tv_end)
-    TTS_EQUAL( eve::read(tv_begin++), tv.get(i++));
-
-  auto uv_begin = uv.begin();
-  auto uv_end   = uv.end();
-  i = 0;
-  while(uv_begin != uv_end)
-    TTS_EQUAL( eve::read(uv_begin++), uv.get(i++));
-};
-
-TTS_CASE("Check types")
-{
-  using T        = udt::grid2d;
-  using ap       = eve::aligned_ptr<int,       eve::fixed<64 / sizeof(int)>>;
-  using const_ap = eve::aligned_ptr<int const, eve::fixed<64 / sizeof(int)>>;
-
-  using v = eve::algo::soa_vector<udt::grid2d>;
-  TTS_TYPE_IS(v::pointer,               (eve::algo::views::zip_iterator<int*,       int*>));
-  TTS_TYPE_IS(v::const_pointer,         (eve::algo::views::zip_iterator<int const*, int const*>));
-  TTS_TYPE_IS(v::pointer_aligned,       (eve::algo::views::zip_iterator<ap,   ap>));
-  TTS_TYPE_IS(v::const_pointer_aligned, (eve::algo::views::zip_iterator<const_ap,   const_ap>));
-
-  TTS_TYPE_IS(v::iterator,               (eve::algo::views::converting_iterator<v::pointer,               T>));
-  TTS_TYPE_IS(v::const_iterator,         (eve::algo::views::converting_iterator<v::const_pointer,         T>));
-  TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::views::converting_iterator<v::pointer_aligned,       T>));
-  TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::views::converting_iterator<v::const_pointer_aligned, T>));
-
-  TTS_CONSTEXPR_EXPECT((std::convertible_to<v::iterator, v::const_iterator>));
-  TTS_CONSTEXPR_EXPECT((std::convertible_to<v::pointer,  v::const_pointer>));
-};
-
-#if 0
 TTS_CASE("erase(pos)")
 {
   using grids = eve::algo::soa_vector<udt::grid2d>;

@@ -76,7 +76,7 @@ namespace eve::algo
     //==============================================================================================
 
     //! Constructs an empty container.
-    soa_vector() : storage(0) {}
+    soa_vector() : storage() {}
 
     //! Constructs the container with `n` default-inserted instances of `Type`. No copies are made.
     explicit soa_vector ( std::size_t n) : storage(n) {}
@@ -90,13 +90,14 @@ namespace eve::algo
       auto ptr = l.begin();
       for(std::size_t i = 0;i < size(); ++i)
       {
-        kumi::for_each( [&](auto m, auto& v) { v[i] = m; }, kumi::flatten_all(*ptr++), storage );
+        eve::write(*ptr++, begin()+i);
       }
     }
 
     //==============================================================================================
     //! @}
     //==============================================================================================
+
 
     //==============================================================================================
     //! @name Capacity
@@ -132,7 +133,7 @@ namespace eve::algo
         eve::algo::copy ( *this
                         , algo::as_range(that.begin(), that.begin() + sz)
                         );
-        swap(that);
+        this->operator=(std::move(that));
         storage.size_ = sz;
      }
     }
@@ -148,7 +149,7 @@ namespace eve::algo
     //! @brief Clear the contents of the container.
     void clear()
     {
-      storage.capacity_ = storage_type::available_elements(storage.size_);
+      storage.capacity_ = storage_type::aligned_capacity(storage.size_);
       storage.size_     = 0;
     }
 
@@ -204,10 +205,9 @@ namespace eve::algo
     {
       if(n <= capacity())
       {
-        using alloc_t = std::allocator_traits<Allocator>;
         kumi::for_each( [&]<typename T>(T* s, auto m)
                         {
-                          for(std::size_t i=size();i<n;++i) alloc_t::construct(storage, s+i,m);
+                          for(std::size_t i=size();i<n;++i) new(s+i) T(m);
                         }
                       , storage, value
                       );
@@ -219,8 +219,8 @@ namespace eve::algo
         eve::algo::copy ( *this
                         , algo::as_range(that.begin(), that.begin() + size())
                         );
-        swap(that);
-     }
+        this->operator=(std::move(that));
+      }
     }
 
     //! @brief Exchanges the contents of the container with those of `other`.
