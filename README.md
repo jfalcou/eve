@@ -20,10 +20,10 @@ needs to change.
 
 ## Getting Started
 
- - [Installing and using the library](https://jfalcou.github.io/eve/html/install.html)
- - [Fetching EVE using your favorite Package Manager](https://jfalcou.github.io/eve/html/packages.html)
- - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/html/simd-101.html)
- - [References Documentation](https://jfalcou.github.io/eve/html/modules.html)
+ - [Installing and using the library](https://jfalcou.github.io/eve/install.html)
+ - [Fetching EVE using your favorite Package Manager](https://jfalcou.github.io/eve/packages.html)
+ - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/simd-101.html)
+ - [References Documentation](https://jfalcou.github.io/eve/modules.html)
 
 ## Video materials
 
