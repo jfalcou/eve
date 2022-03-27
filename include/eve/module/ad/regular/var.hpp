@@ -10,8 +10,8 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/ad.hpp>
-#include <eve/module/ad/valder.hpp>
+ #include <eve/module/ad.hpp>
+// #include <eve/module/ad/valder.hpp>
 #include <eve/module/ad/regular/traits.hpp>
 
 namespace eve
@@ -51,17 +51,18 @@ namespace eve
   //!  @}
   //================================================================================================
 
-//   namespace tag { struct var_; }
-//   template<> struct supports_conditional<tag::var_> : std::false_type {};
+  namespace tag { struct var_; }
+  template<> struct supports_conditional<tag::var_> : std::false_type {};
 
   EVE_MAKE_CALLABLE(var_, var);
 
   namespace detail
   {
-    template < floating_value T > EVE_FORCEINLINE auto var_( EVE_SUPPORTS(cpu_), const T & x)
+    template < floating_value T >
+    EVE_FORCEINLINE auto var_( EVE_SUPPORTS(cpu_), const T & x)
     {
-       using vd_t = eve::as_valder_t<T>;
-       return vd_t{x, T(1)};
+      using vd_t = eve::as_valder_t<T>;
+      return vd_t{x, T(1)};
     };
   }
 }
