@@ -14,7 +14,7 @@ namespace eve
   template<typename T>
   concept simd_allocator = requires(T& t)
   {
-    { t.aligned_alloc(0,1)        } -> std::same_as<void*>;
-    { t.aligned_dealloc(nullptr)  };
+    { t.allocate_aligned(0,1)        } -> std::same_as<void*>;
+    { t.deallocate_aligned(nullptr)  };
   };
 }
