@@ -6,4 +6,5 @@
 
 make_unit( "doc.ad" abs.cpp                    )
 make_unit( "doc.ad" is_equal.cpp               )
+make_unit( "doc.ad" fma.cpp                    )
 make_unit( "doc.ad" hypot.cpp                  )

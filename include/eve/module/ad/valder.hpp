@@ -34,7 +34,7 @@ namespace eve
   template<floating_scalar_value Type>
   struct valder : struct_support<valder<Type>, Type, Type>
   {
-    using eve_disable_ordering = void;
+    //   using eve_disable_ordering = void;
     using parent = struct_support<valder<Type>, Type, Type>;
 
     /// Underlying type
@@ -118,7 +118,7 @@ namespace eve
       auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
       auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
       auto v3 = v_t(val(z3)); auto d3 = v_t(der(z3));
-      r_t d = sum_of_prod(diff_1st(f)(v1, v2, v3), d1, diff_2nd(f)(v1, v2, v3), d2);
+      v_t d = sum_of_prod(diff_1st(f)(v1, v2, v3), d1, diff_2nd(f)(v1, v2, v3), d2);
       return r_t{f(v1, v2, v3), fam(d, diff_3rd(f)(v1, v2, v3), d3)};
     }
 
