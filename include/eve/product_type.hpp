@@ -109,6 +109,9 @@ namespace eve
   concept like = std::same_as<std::remove_cvref_t<Wrapper>, Self> ||
                  supports_like<std::remove_cvref_t<Wrapper>, Self>::value;
 
+  template<typename Wrapper, typename Self>
+  concept maybe = like<Wrapper, Self> || value<Self>;
+
   //================================================================================================
   //! @brief CRTP base-class to declare operators for user-defined product type
   //!
