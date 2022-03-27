@@ -10,9 +10,8 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/ad/regular/ad.hpp>
-#include <eve/module/ad/regular/traits.hpp>
 #include <eve/product_type.hpp>
+#include <eve/module/ad/regular/traits.hpp>
 #include <eve/detail/abi.hpp>
 #include <iostream>
 #include <iomanip>
@@ -443,9 +442,8 @@ namespace eve
     //==============================================================================================
     //  Binary functions
     //==============================================================================================
-
-    template<typename Func, typename Z1, typename Z2>  static EVE_FORCEINLINE auto binary(Func const & f, Z1 const & z1, Z2 const & z2 )
-      requires ((is_valder_v<Z1>)  || (is_valder_v<Z2>))
+    template<typename Func, typename Z1, typename Z2>
+    static EVE_FORCEINLINE auto binary(Func const & f, Z1 const & z1, Z2 const & z2 )
     {
       using v_t = decltype(f(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
@@ -459,8 +457,7 @@ namespace eve
     //==============================================================================================
 
     template<typename Func, typename Z1, typename Z2, typename Z3>  static
-    EVE_FORCEINLINE auto binary(Func const & f, Z1 const & z1, Z2 const & z2, Z3 const & z3 )
-      requires ((is_valder_v<Z1>)  || (is_valder_v<Z2>) || (is_valder_v<Z3>))
+    EVE_FORCEINLINE auto ternary(Func const & f, Z1 const & z1, Z2 const & z2, Z3 const & z3 )
     {
       using v_t = decltype(f(val(z1), val(z2), val(z3)));
       using r_t = eve::as_valder_t<v_t>;
@@ -550,7 +547,11 @@ namespace eve
 
 
     //binary functions
-     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::atan2_,   auto const& z1, auto const& z2) noexcept  {return binary(atan2 , z1, z2);}
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(eve::tag::atan2_, maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept
+    {
+      return binary(atan2 , z1, z2);
+    }
 //     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::average_, auto const& z1, auto const& z2) noexcept  {return binary(average, z1, z2);}
 //     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::copysign_, auto const& z1,  auto const& z2) noexcept {return binary(copysign, z1, z2);}
 //     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::dist_,   auto const& z1, auto const& z2) noexcept  {return binary(dist, z1, z2);}

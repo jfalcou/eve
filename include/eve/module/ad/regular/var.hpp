@@ -8,10 +8,6 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core.hpp>
-#include <eve/module/math.hpp>
- #include <eve/module/ad.hpp>
-// #include <eve/module/ad/valder.hpp>
 #include <eve/module/ad/regular/traits.hpp>
 
 namespace eve

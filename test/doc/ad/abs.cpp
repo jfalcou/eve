@@ -1,9 +1,8 @@
-#include <eve/module/math.hpp>
-#include <eve/module/ad/regular/ad.hpp>
+#include <eve/module/ad.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
+using wide_ft  = eve::wide<float, eve::fixed<4>>;
 using wide_vdt = eve::wide<eve::valder<float>, eve::fixed<4>>;
 using vd_t     = eve::valder<double>;
 
