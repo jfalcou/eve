@@ -19,32 +19,38 @@
 namespace eve::algo::detail
 {
   template<eve::product_type Type, eve::simd_allocator Allocator>
-  struct soa_storage : Allocator
+  struct soa_storage
   {
     using is_product_type = void;
 
-    soa_storage() noexcept
-                : indexes_{}, storage_( nullptr, aligned_deleter{this} ), size_{}, capacity_{}
+    soa_storage(Allocator const& a = {}) noexcept
+                : indexes_{}, storage_( nullptr, aligned_deleter{a} ), size_{}, capacity_{}
     {}
 
-    explicit  soa_storage( std::size_t n) : soa_storage( n, Type{} ) {}
-
-    soa_storage( std::size_t n, Type const& v)  : soa_storage()
+    soa_storage(Allocator const& a, std::size_t n)  : soa_storage(a)
     {
-      storage_t  local{ reinterpret_cast<byte_t*>(Allocator::aligned_alloc(byte_size(n), 64))
-                      , aligned_deleter{this}
-                      };
+      auto local = allocate(a, byte_size(n));
       storage_.swap(local);
       size_     = n;
-      build(n,v);
+      capacity_ = aligned_capacity(n);
+
+      auto offset = 0;
+
+      kumi::for_each_index( [&]<typename Idx>(Idx, auto& s)
+                            {
+                              s       = offset;
+                              offset += realign<kumi::element_t<Idx::value,Type>>(n);
+                            }
+                          , indexes_
+                          );
+
     }
 
     soa_storage(soa_storage const& src) : soa_storage()
     {
-      auto sz = byte_size(src.size_);
-      storage_t  local{ reinterpret_cast<byte_t*>(Allocator::aligned_alloc(sz,64))
-                      , aligned_deleter{this}
-                      };
+      auto sz     = byte_size(src.size_);
+      auto local  = allocate(src.storage_.get_deleter(), sz);
+
       std::copy(src.storage_.get(), src.storage_.get()+sz, local.get());
 
       storage_.swap(local);
@@ -90,28 +96,6 @@ namespace eve::algo::detail
       a.swap(b);
     }
 
-    void build(std::size_t n, Type v = {})
-    {
-      auto sub_span = storage_.get();
-      auto offset = 0;
-
-      kumi::for_each_index( [&]<typename Idx>(Idx, auto& s, auto m)
-                            {
-                              // Constructs the current sub-span
-                              using type = kumi::element_t<Idx::value,Type>;
-                              auto p = reinterpret_cast<type*>(sub_span+offset);
-                              for(std::size_t i=0;i<n;++i) new (p+i) type(m);
-
-                              // update the index
-                              s       = offset;
-                              offset += realign<type>(n);
-                            }
-                          , indexes_, v
-                          );
-
-      capacity_ = aligned_capacity(n);
-    }
-
     //==============================================================================================
     // Static helpers
     //==============================================================================================
@@ -122,6 +106,12 @@ namespace eve::algo::detail
 
     template<typename T>
     static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
+
+    static auto allocate(Allocator const& a,std::size_t n)
+    {
+      aligned_deleter d{a};
+      return storage_t{ reinterpret_cast<byte_t*>(d.allocate_aligned(n,64)), d};
+    }
 
     static auto aligned_capacity(std::size_t n) noexcept
     {
@@ -156,11 +146,10 @@ namespace eve::algo::detail
     //==============================================================================================
     template<typename U> struct as_index { using type = std::size_t; };
 
-    struct aligned_deleter
+    struct aligned_deleter : Allocator
     {
-      aligned_deleter(Allocator* a) : alloc(a) {}
-      void operator()(void* p) { if(p) alloc->aligned_dealloc(p); }
-      Allocator* alloc;
+      aligned_deleter(Allocator const& a) : Allocator(a) {}
+      void operator()(void* p) { if(p) Allocator::deallocate_aligned(p); }
     };
 
     //==============================================================================================

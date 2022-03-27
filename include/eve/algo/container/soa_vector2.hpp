@@ -9,6 +9,7 @@
 
 // #include <eve/algo/equal.hpp>
 #include <eve/algo/copy.hpp>
+#include <eve/algo/fill.hpp>
 #include <eve/algo/views/convert.hpp>
 
 #include <eve/arch/expected_cardinal.hpp>
@@ -76,16 +77,22 @@ namespace eve::algo
     //==============================================================================================
 
     //! Constructs an empty container.
-    soa_vector() : storage() {}
+    soa_vector(Allocator const& a = Allocator{}) : storage(a) {}
 
-    //! Constructs the container with `n` default-inserted instances of `Type`. No copies are made.
-    explicit soa_vector ( std::size_t n) : storage(n) {}
+    //! Constructs the container with `n` default-inserted instances of `Type`.
+    explicit  soa_vector(std::size_t n, Allocator const& a = Allocator{})
+            : soa_vector(n, value_type{}, a)
+    {}
 
     //! Constructs the container with `n` copies of elements with `value` value.
-    soa_vector(std::size_t n, value_type value)  : storage(n, value) {}
+    soa_vector(std::size_t n, value_type v, Allocator const& a = Allocator{})  : storage(a,n)
+    {
+      eve::algo::fill(*this, v);
+    }
 
     //! Constructs the container with the contents of the initializer list `l`.
-    soa_vector( std::initializer_list<Type> l ) : storage(l.size())
+    soa_vector( std::initializer_list<Type> l, Allocator const& a = Allocator{})
+              : storage(a, l.size())
     {
       auto ptr = l.begin();
       for(std::size_t i = 0;i < size(); ++i)
@@ -97,7 +104,6 @@ namespace eve::algo
     //==============================================================================================
     //! @}
     //==============================================================================================
-
 
     //==============================================================================================
     //! @name Capacity
@@ -205,20 +211,18 @@ namespace eve::algo
     {
       if(n <= capacity())
       {
-        kumi::for_each( [&]<typename T>(T* s, auto m)
-                        {
-                          for(std::size_t i=size();i<n;++i) new(s+i) T(m);
-                        }
-                      , storage, value
-                      );
-        storage.size_ = n;
+        if(n > size())
+          eve::algo::fill(algo::as_range(begin() + size(), begin()+n), value );
+
+        storage.size_     = n;
+        storage.capacity_ = n > size()  ? storage.capacity_ - (size()-n)
+                                        : storage.capacity_ - (n-size()) ;
       }
       else
       {
+        // Grow twice per resize
         soa_vector that(n, value);
-        eve::algo::copy ( *this
-                        , algo::as_range(that.begin(), that.begin() + size())
-                        );
+        eve::algo::copy(*this, algo::as_range(that.begin(), that.begin() + size()));
         this->operator=(std::move(that));
       }
     }
