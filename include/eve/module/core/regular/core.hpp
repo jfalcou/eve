@@ -203,6 +203,7 @@
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/three_fma.hpp>
+#include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
