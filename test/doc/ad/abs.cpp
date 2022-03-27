@@ -11,6 +11,7 @@ int main()
 {
   wide_ft x   = {-1.0f, 2.0f, -3.0f,  0.0f};
   wide_vdt vx(eve::var(x));
+//  wide_vdt vx(wide_vdt{x, wide_vdt(1)});
 
   std::cout << "---- simd" << '\n'
             << "<- x            = " << x << '\n'
