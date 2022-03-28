@@ -1,5 +1,5 @@
 #include <eve/module/math.hpp>
-#include <eve/module/ad/regular/ad.hpp>
+#include <eve/module/ad.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 
