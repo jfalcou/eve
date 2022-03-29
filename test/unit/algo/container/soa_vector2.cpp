@@ -365,7 +365,6 @@ TTS_CASE("Check soa_vector::pop behavior")
   TTS_EQUAL(uv, uvref);
 };
 
-#if 0
 TTS_CASE("erase(pos)")
 {
   using grids = eve::algo::soa_vector<udt::grid2d>;
@@ -454,4 +453,3 @@ TTS_CASE("erase(f, l)")
     TTS_EQUAL(pos, v.begin());
   }
 };
-#endif

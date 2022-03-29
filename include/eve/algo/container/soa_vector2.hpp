@@ -159,23 +159,30 @@ namespace eve::algo
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
     //! end() iterator is not a valid pos.
-    // iterator erase(const_iterator pos)
-    // {
-    //   std::ptrdiff_t distance = pos - cbegin();
-    //   kumi::for_each([&](auto& m) { return m.erase(m.begin() + distance); }, storage);
-    //   return begin() + distance;
-    // }
+    iterator erase(const_iterator pos)
+    {
+      std::ptrdiff_t distance = pos - cbegin();
+      eve::algo::copy_backward( eve::algo::as_range(pos+1, cend())
+                              , eve::algo::as_range(begin()+distance, begin() + size() - 1)
+                              );
+      storage.size_--;
+      return begin() + distance;
+    }
 
     //! @brief Removes the elements in the range [first, last)
     //! Empty range is OK, does nothing
-    // iterator erase(const_iterator f, const_iterator l)
-    // {
-    //   std::ptrdiff_t distance_f = f - cbegin();
-    //   std::ptrdiff_t distance_l = l - cbegin();
-    //   kumi::for_each([&](auto& m) {
-    //     return m.erase(m.begin() + distance_f, m.begin() + distance_l); }, storage);
-    //   return begin() + distance_f;
-    // }
+    iterator erase(const_iterator f, const_iterator l)
+    {
+      std::ptrdiff_t distance_f = f - cbegin();
+      std::ptrdiff_t sz = l - f;
+
+      eve::algo::copy_backward( eve::algo::as_range(l, cend())
+                              , eve::algo::as_range(l -sz, cend() - sz)
+                              );
+
+      storage.size_ -= sz;
+      return begin() + distance_f;
+    }
 
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
