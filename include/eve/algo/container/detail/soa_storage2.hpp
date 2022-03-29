@@ -34,10 +34,16 @@ namespace eve::algo::detail
       size_     = n;
       capacity_ = aligned_capacity(n);
 
+      auto sub    = storage_.get();
       auto offset = 0;
 
       kumi::for_each_index( [&]<typename Idx>(Idx, auto& s)
                             {
+                              // Start current sub-span data lifetime
+                              using type = kumi::element_t<Idx::value,Type>;
+                              std::memmove(reinterpret_cast<type*>(sub+offset), sub+offset, n);
+
+                              // update the index
                               s       = offset;
                               offset += realign<kumi::element_t<Idx::value,Type>>(n);
                             }
