@@ -138,7 +138,7 @@ namespace eve
     template<typename Func, typename V0, typename V1, typename... Vs>
     static EVE_FORCEINLINE auto n_ary(Func const & f, V0 const& z0, V1 const& z1, Vs const&... zs )
     {
-      using v_t = decltype(f(val(zs)...));
+      using v_t = decltype(f(val(z0),val(z1),val(zs)...));
       using r_t = eve::as_valder_t<v_t>;
 
       auto vs = kumi::make_tuple(v_t(val(z0)),v_t(val(z1)),v_t(val(zs))...);
@@ -480,7 +480,7 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::clamp_,    maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(clamp, z1, z2, z3);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fam_,      maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fam,   z1, z2, z3);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fanm_,     maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fanm,  z1, z2, z3);}
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fma_,      maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fma,   z1, z2, z3);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fma_,      maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return n_ary(fma,   z1, z2, z3);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fms_,      maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fms,   z1, z2, z3);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fnma_,     maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fnma,  z1, z2, z3);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fnms_,     maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fnms,  z1, z2, z3);}
