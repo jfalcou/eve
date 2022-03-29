@@ -174,10 +174,11 @@ namespace eve::algo
     iterator erase(const_iterator f, const_iterator l)
     {
       std::ptrdiff_t distance_f = f - cbegin();
-      std::ptrdiff_t sz = l - f;
+      std::ptrdiff_t distance_l = l - cbegin();
+      std::ptrdiff_t sz = distance_l - distance_f;
 
       eve::algo::copy_backward( eve::algo::as_range(l, cend())
-                              , eve::algo::as_range(l -sz, cend() - sz)
+                              , eve::algo::as_range(begin() + distance_l - sz, end() - sz)
                               );
 
       storage.size_ -= sz;
