@@ -379,11 +379,12 @@ namespace eve
     template<typename Tag, like<valder> T>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag, as<T> const&) noexcept
     {
-      return T{ detail::callable_object<Tag>{}(as<value_type>{}), 0};
+      return T{ detail::callable_object<Tag>{}(as<value_type>{}), -10.555};
     }
 
     template<typename Tag>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag, like<valder> auto const& v) noexcept
+    requires( has_derivation_v<Tag> )
     {
       if constexpr(is_derivable_v<Tag>) return unary  ( detail::callable_object<Tag>{}, v);
       else                              return compute( detail::callable_object<Tag>{}, v);
@@ -391,6 +392,7 @@ namespace eve
 
     template<typename Tag>
     EVE_FORCEINLINE friend auto tagged_dispatch (Tag, maybe<valder> auto const&... v) noexcept
+    requires( has_derivation_v<Tag> )
     {
       if constexpr(is_derivable_v<Tag>) return n_ary  ( detail::callable_object<Tag>{}, v...);
       else                              return compute( detail::callable_object<Tag>{}, v...);
