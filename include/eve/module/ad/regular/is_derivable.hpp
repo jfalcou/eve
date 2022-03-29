@@ -1,0 +1,103 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#pragma once
+#include <type_traits>
+
+namespace eve
+{
+  template<typename Tag> struct is_derivable    : std::true_type {};
+
+  template<typename Tag>
+  inline constexpr auto is_derivable_v =  is_derivable<Tag>::value;
+
+  // List of non-derivable functions
+  namespace tag
+  {
+    struct val_;
+    struct der_;
+    struct var_;
+    struct if_else_;
+    struct is_equal_;
+    struct is_not_equal_;
+    struct is_less_;
+    struct is_less_equal_;
+    struct is_lessgreater_;
+    struct is_greater_;
+    struct is_greater_equal_;
+    struct is_ordered_;
+    struct is_unordered_;
+    struct is_not_less_;
+    struct is_not_less_equal_;
+    struct is_not_greater_;
+    struct is_not_greater_equal_;
+    struct is_eqz_;
+    struct is_denormal_;
+    struct is_even_;
+    struct is_infinite_;
+    struct is_finite_;
+    struct is_flint_;
+    struct is_lez_;
+    struct is_ltz_;
+    struct is_gez_;
+    struct is_gtz_;
+    struct is_nez_;
+    struct is_negative_;
+    struct is_nlez_;
+    struct is_nltz_;
+    struct is_ngez_;
+    struct is_ngtz_;
+    struct is_normal_;
+    struct is_not_denormal_;
+    struct is_not_finite_;
+    struct is_not_flint_;
+    struct is_nan_;
+    struct is_odd_;
+    struct is_positive_;
+  }
+
+  template<> struct is_derivable<tag::val_>                   : std::false_type {};
+  template<> struct is_derivable<tag::der_>                   : std::false_type {};
+  template<> struct is_derivable<tag::var_>                   : std::false_type {};
+  template<> struct is_derivable<tag::if_else_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_equal_>              : std::false_type {};
+  template<> struct is_derivable<tag::is_not_equal_>          : std::false_type {};
+  template<> struct is_derivable<tag::is_less_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_less_equal_>         : std::false_type {};
+  template<> struct is_derivable<tag::is_lessgreater_>        : std::false_type {};
+  template<> struct is_derivable<tag::is_greater_>            : std::false_type {};
+  template<> struct is_derivable<tag::is_greater_equal_>      : std::false_type {};
+  template<> struct is_derivable<tag::is_ordered_>            : std::false_type {};
+  template<> struct is_derivable<tag::is_unordered_>          : std::false_type {};
+  template<> struct is_derivable<tag::is_not_less_>           : std::false_type {};
+  template<> struct is_derivable<tag::is_not_less_equal_>     : std::false_type {};
+  template<> struct is_derivable<tag::is_not_greater_>        : std::false_type {};
+  template<> struct is_derivable<tag::is_not_greater_equal_>  : std::false_type {};
+  template<> struct is_derivable<tag::is_eqz_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
+  template<> struct is_derivable<tag::is_even_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_infinite_>           : std::false_type {};
+  template<> struct is_derivable<tag::is_finite_>             : std::false_type {};
+  template<> struct is_derivable<tag::is_flint_>              : std::false_type {};
+  template<> struct is_derivable<tag::is_lez_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_ltz_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_gez_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_gtz_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_nez_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_negative_>           : std::false_type {};
+  template<> struct is_derivable<tag::is_nlez_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_nltz_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_ngez_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_ngtz_>               : std::false_type {};
+  template<> struct is_derivable<tag::is_normal_>             : std::false_type {};
+  template<> struct is_derivable<tag::is_not_denormal_>       : std::false_type {};
+  template<> struct is_derivable<tag::is_not_finite_>         : std::false_type {};
+  template<> struct is_derivable<tag::is_not_flint_>          : std::false_type {};
+  template<> struct is_derivable<tag::is_nan_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_odd_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_positive_>           : std::false_type {};
+}
