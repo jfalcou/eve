@@ -79,10 +79,13 @@ namespace eve::detail
     using elt_t = element_type_t<r_t>;
     elt_t invn = rec(elt_t(sizeof...(args)+1u));
     r_t that(a0*invn);
-    auto next = [invn](auto avg,  auto x){
-      return fma(x, invn, avg);
-    };
-    ((that = next(that,args)),...);
+
+    if constexpr(sizeof...(Ts) > 0)
+    {
+      auto next = [invn](auto avg,  auto x) { return fma(x, invn, avg); };
+      ((that = next(that,args)),...);
+    }
+
     return that;
   }
 
