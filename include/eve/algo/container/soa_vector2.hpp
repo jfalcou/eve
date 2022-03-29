@@ -153,11 +153,7 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! @brief Clear the contents of the container.
-    void clear()
-    {
-      storage.capacity_ = storage_type::aligned_capacity(storage.size_);
-      storage.size_     = 0;
-    }
+    void clear() { storage.size_ = 0; }
 
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
@@ -214,15 +210,13 @@ namespace eve::algo
         if(n > size())
           eve::algo::fill(algo::as_range(begin() + size(), begin()+n), value );
 
-        storage.size_     = n;
-        storage.capacity_ = n > size()  ? storage.capacity_ - (size()-n)
-                                        : storage.capacity_ - (n-size()) ;
+        storage.size_ = n;
       }
       else
       {
         // Grow twice per resize
         soa_vector that(n, value);
-        eve::algo::copy(*this, algo::as_range(that.begin(), that.begin() + size()));
+        eve::algo::copy(*this, that.begin_aligned());
         this->operator=(std::move(that));
       }
     }
