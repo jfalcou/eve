@@ -11,9 +11,13 @@
 namespace eve
 {
   template<typename Tag> struct is_derivable    : std::true_type {};
+  template<typename Tag> struct has_derivation  : std::true_type {};
 
   template<typename Tag>
   inline constexpr auto is_derivable_v =  is_derivable<Tag>::value;
+
+  template<typename Tag>
+  inline constexpr auto has_derivation_v =  has_derivation<Tag>::value;
 
   // List of non-derivable functions
   namespace tag
@@ -64,6 +68,11 @@ namespace eve
   template<> struct is_derivable<tag::der_>                   : std::false_type {};
   template<> struct is_derivable<tag::var_>                   : std::false_type {};
   template<> struct is_derivable<tag::if_else_>               : std::false_type {};
+  template<> struct has_derivation<tag::val_>                 : std::false_type {};
+  template<> struct has_derivation<tag::der_>                 : std::false_type {};
+  template<> struct has_derivation<tag::var_>                 : std::false_type {};
+  template<> struct has_derivation<tag::if_else_>             : std::false_type {};
+
   template<> struct is_derivable<tag::is_equal_>              : std::false_type {};
   template<> struct is_derivable<tag::is_not_equal_>          : std::false_type {};
   template<> struct is_derivable<tag::is_less_>               : std::false_type {};
