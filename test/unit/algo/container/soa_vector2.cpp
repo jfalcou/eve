@@ -225,29 +225,22 @@ TTS_CASE("Check soa_vector resize")
 
   // Resize over capacity
   c = tuple_vector.capacity();
-  tuple_vector.resize(c+1);
-  TTS_EQUAL(tuple_vector.size(), c+1);
-  TTS_EQUAL(tuple_vector.capacity(), 2*c);
+  tuple_vector.resize(c+7);
+  TTS_EQUAL(tuple_vector.size(), c+7);
   TTS_EQUAL(tuple_vector.get(0), (t_t{1,2.3f  ,'4'}));
-  TTS_EQUAL(tuple_vector.get(1), (t_t{}));
-  TTS_EQUAL(tuple_vector.get(2), (t_t{}));
 
-  for(std::size_t i=3;i<tuple_vector.size();++i)
+  for(std::size_t i=1;i<tuple_vector.size();++i)
     TTS_EQUAL(tuple_vector.get(i), (t_t{}));
 
-/*
   c = udt_vector.capacity();
-  udt_vector.resize(2*c);
-  TTS_EQUAL(udt_vector.size(), 2*c );
+  udt_vector.resize(c+7);
+  TTS_EQUAL(udt_vector.size(), c+7 );
   TTS_EQUAL(udt_vector.get(0), (udt::grid2d{1,2}));
   TTS_EQUAL(udt_vector.get(1), (udt::grid2d{3,4}));
-  TTS_EQUAL(udt_vector.get(2), (udt::grid2d{}));
 
-  for(std::size_t i=3;i<udt_vector.size();++i)
+  for(std::size_t i=2;i<udt_vector.size();++i)
     TTS_EQUAL(udt_vector.get(i), (udt::grid2d{}));
-*/
 };
-
 
 TTS_CASE("Check soa_vector::clear behavior")
 {
@@ -310,20 +303,19 @@ TTS_CASE("Check soa_vector::swap behavior")
   TTS_EQUAL(uv2.get(2), (udt::grid2d{5,8}));
 };
 
-#if 0
 TTS_CASE("Check soa_vector::push_back behavior")
 {
-  eve::algo::soa_vector<t_t>          tvref  =  { t_t{1,2.3f  ,'4'}
-                                          , t_t{5,6.7f  ,'8'}
-                                          , t_t{9,10.11f,'X'}
-                                          }
+  eve::algo::soa_vector<t_t>  tvref = { t_t{1,2.3f  ,'4'}
+                                      , t_t{5,6.7f  ,'8'}
+                                      , t_t{9,10.11f,'X'}
+                                      }
                               , tv;
 
   eve::algo::soa_vector<udt::grid2d>  uvref = { udt::grid2d{1,2}
-                                        , udt::grid2d{3,4}
-                                        , udt::grid2d{5,8}
-                                        }
-                              , uv;
+                                              , udt::grid2d{3,4}
+                                              , udt::grid2d{5,8}
+                                              }
+                                    , uv;
 
   TTS_EQUAL(tv.size(), 0ULL );
 
@@ -344,17 +336,17 @@ TTS_CASE("Check soa_vector::push_back behavior")
 
 TTS_CASE("Check soa_vector::pop behavior")
 {
-  eve::algo::soa_vector<t_t>          tv  = { t_t{1,2.3f  ,'4'}
+  eve::algo::soa_vector<t_t>    tv  = { t_t{1,2.3f  ,'4'}
                                       , t_t{5,6.7f  ,'8'}
                                       , t_t{9,10.11f,'X'}
                                       }
                               , tvref;
 
-  eve::algo::soa_vector<udt::grid2d>  uv = { udt::grid2d{1,2}
-                                     , udt::grid2d{3,4}
-                                     , udt::grid2d{5,8}
-                                     }
-                              , uvref;
+  eve::algo::soa_vector<udt::grid2d>  uv  = { udt::grid2d{1,2}
+                                            , udt::grid2d{3,4}
+                                            , udt::grid2d{5,8}
+                                            }
+                                      , uvref;
 
   TTS_EQUAL(tv.size(), 3ULL );
 
@@ -373,6 +365,7 @@ TTS_CASE("Check soa_vector::pop behavior")
   TTS_EQUAL(uv, uvref);
 };
 
+#if 0
 TTS_CASE("erase(pos)")
 {
   using grids = eve::algo::soa_vector<udt::grid2d>;

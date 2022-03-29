@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-// #include <eve/algo/equal.hpp>
 #include <eve/algo/copy.hpp>
+#include <eve/algo/equal.hpp>
 #include <eve/algo/fill.hpp>
 #include <eve/algo/views/convert.hpp>
 
@@ -17,6 +17,7 @@
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/product_type.hpp>
 #include <eve/traits.hpp>
+#include <eve/assert.hpp>
 
 #include <memory>
 
@@ -43,24 +44,24 @@ namespace eve::algo
   {
     public:
 
+    using storage_t = detail::soa_storage<Type,Allocator>;
+
+    //!=============================================================================================
+    //! @name Member types
+    //! @{
+    //==============================================================================================
     //! Type of data stored in the container
     using value_type = Type;
 
-    using storage_type = detail::soa_storage<Type,Allocator>;
-
-    //!=============================================================================================
-    //! @name Pointers and Iterators
-    //! @{
-    //==============================================================================================
     //!   @brief pointer and iterator types.
     //!   pointer*  - are eve::algo::views::zip_iterator over fields (no conversion to type, just flat fields)
     //!   iterator* - are a pointer, converter to the Type.
     //!   They all satisfy eve::algo::relaxed_iterator but not std::iterator
 
-    using pointer               = decltype(storage_type{}.data());
-    using const_pointer         = decltype(std::declval<storage_type const>().data());
-    using pointer_aligned       = decltype(storage_type{}.data_aligned());
-    using const_pointer_aligned = decltype(std::declval<storage_type const>().data_aligned());
+    using pointer               = decltype(storage_t{}.data());
+    using const_pointer         = decltype(std::declval<storage_t const>().data());
+    using pointer_aligned       = decltype(storage_t{}.data_aligned());
+    using const_pointer_aligned = decltype(std::declval<storage_t const>().data_aligned());
 
     using iterator               = decltype(views::convert(pointer{}              , as<value_type>{}));
     using const_iterator         = decltype(views::convert(const_pointer{}        , as<value_type>{}));
@@ -181,20 +182,32 @@ namespace eve::algo
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
     //! invalidated.
     //! @param value [Value](@eve::vectorizable) to append
-    // EVE_FORCEINLINE void push_back(value_type const& value) noexcept
-    // {
-    //   kumi::for_each( [&](auto& m, auto const& v) { m.push_back(v); }
-    //                 , storage, kumi::flatten_all(value)
-    //                 );
-    // }
+    EVE_FORCEINLINE void push_back(value_type const& value) noexcept
+    {
+      auto sz = size();
+      if(sz != capacity())
+      {
+        storage.size_++;
+      }
+      else
+      {
+        // Grow twice per push_back
+        soa_vector that( storage_t(storage.get_allocator(),sz+1,2*sz+1) );
+        eve::algo::copy(*this, that.begin_aligned());
+        this->operator=(std::move(that));
+      }
+
+      eve::write(value, begin()+sz);
+    }
 
     //! @brief Removes the last element of the container.
     //! Calling pop_back on an empty container results in undefined behavior.
     //! Iterators and references to the last element, as well as the end() iterator, are invalidated.
-    // EVE_FORCEINLINE void pop_back() noexcept
-    // {
-    //   kumi::for_each([&](auto& m) { m.pop_back(); }, storage);
-    // }
+    EVE_FORCEINLINE void pop_back() noexcept
+    {
+      EVE_ASSERT(!empty(), "soa_vector::pop_back() was called on empty container");
+      storage.size_--;
+    }
 
     //! @brief Resizes the container to contain count elements.
     //!
@@ -205,20 +218,22 @@ namespace eve::algo
     //! @param value  the value to initialize the new elements with
     void resize(std::size_t n, value_type value = {})
     {
+      auto sz = size();
       if(n <= capacity())
       {
-        if(n > size())
-          eve::algo::fill(algo::as_range(begin() + size(), begin()+n), value );
-
         storage.size_ = n;
       }
       else
       {
         // Grow twice per resize
-        soa_vector that(n, value);
+        soa_vector that( storage_t(storage.get_allocator(),n,2*n) );
         eve::algo::copy(*this, that.begin_aligned());
         this->operator=(std::move(that));
       }
+
+      // If needed, fill with new data
+      if(n > sz)
+        eve::algo::fill(algo::as_range(begin() + sz, begin()+n), value );
     }
 
     //! @brief Exchanges the contents of the container with those of `other`.
@@ -311,16 +326,16 @@ namespace eve::algo
     //! @name Comparisons and ordering
     //! @{
     //==============================================================================================
-    // friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
-    // {
-    //   if( lhs.size() != rhs.size() ) return false;
-    //   return eve::algo::equal( lhs, rhs.begin_aligned());
-    // }
+    friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
+    {
+      if( lhs.size() != rhs.size() ) return false;
+      return eve::algo::equal( lhs, rhs.begin_aligned());
+    }
 
-    // friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
-    // {
-    //   return !(lhs == rhs);
-    // }
+    friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
+    {
+      return !(lhs == rhs);
+    }
 
     //==============================================================================================
     //! @}
@@ -342,6 +357,8 @@ namespace eve::algo
     }
 
     private:
-    storage_type storage;
+    soa_vector(storage_t&& s) : storage(std::move(s)) {}
+
+    storage_t storage;
   };
 }

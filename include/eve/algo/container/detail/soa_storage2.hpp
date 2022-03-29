@@ -27,39 +27,46 @@ namespace eve::algo::detail
                 : indexes_{}, storage_( nullptr, aligned_deleter{a} ), size_{}, capacity_{}
     {}
 
-    soa_storage(Allocator const& a, std::size_t n)  : soa_storage(a)
+    soa_storage(Allocator const& a, std::size_t n)  : soa_storage(a,n,n) {}
+
+    soa_storage(Allocator const& a, std::size_t n, std::size_t c)  : soa_storage(a)
     {
-      auto local = allocate(a, byte_size(n));
+      // Strong guarantee on allocation
+      auto local = allocate(a, byte_size(c));
       storage_.swap(local);
+
       size_     = n;
-      capacity_ = aligned_capacity(n);
+      capacity_ = aligned_capacity(c);
 
       auto sub    = storage_.get();
       auto offset = 0;
 
       kumi::for_each_index( [&]<typename Idx>(Idx, auto& s)
                             {
+                              // How many things
+                              auto sz = realign<kumi::element_t<Idx::value,Type>>(c);
+
                               // Start current sub-span data lifetime
                               using type = kumi::element_t<Idx::value,Type>;
-                              std::memmove(reinterpret_cast<type*>(sub+offset), sub+offset, n);
+                              std::memmove(reinterpret_cast<type*>(sub+offset), sub+offset, sz);
 
                               // update the index
                               s       = offset;
-                              offset += realign<kumi::element_t<Idx::value,Type>>(n);
+                              offset += sz;
                             }
                           , indexes_
                           );
-
     }
 
     soa_storage(soa_storage const& src) : soa_storage()
     {
       auto sz     = byte_size(src.size_);
+
+      // Strong guarantee on allocation
       auto local  = allocate(src.storage_.get_deleter(), sz);
-
       std::copy(src.storage_.get(), src.storage_.get()+sz, local.get());
-
       storage_.swap(local);
+
       indexes_  = src.indexes_;
       size_     = src.size_;
       capacity_ = src.capacity_;
@@ -91,16 +98,13 @@ namespace eve::algo::detail
 
     void swap(soa_storage& other) noexcept
     {
-      std::swap(indexes_,other.indexes_);
       storage_.swap(other.storage_);
-      std::swap(size_,other.size_);
-      std::swap(capacity_,other.capacity_);
+      std::swap(indexes_  , other.indexes_  );
+      std::swap(capacity_ , other.capacity_ );
+      std::swap(size_     , other.size_     );
     }
 
-    friend void swap(soa_storage& a, soa_storage& b ) noexcept
-    {
-      a.swap(b);
-    }
+    friend void swap(soa_storage& a, soa_storage& b ) noexcept { a.swap(b); }
 
     //==============================================================================================
     // Static helpers
@@ -157,6 +161,8 @@ namespace eve::algo::detail
       aligned_deleter(Allocator const& a) : Allocator(a) {}
       void operator()(void* p) { if(p) Allocator::deallocate_aligned(p); }
     };
+
+    Allocator& get_allocator() { return storage_.get_deleter(); }
 
     //==============================================================================================
     using byte_t    = std::byte;
