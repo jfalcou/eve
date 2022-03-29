@@ -24,10 +24,20 @@ namespace eve
   //================================================================================================
   //! @brief SIMD-compatible representation of valder numbers
   //!
-  //! **Required header:** `#include <eve/module/complex.hpp>`
+  //! **Required header:** `#include <eve/module/ad.hpp>`
   //!
   //! eve::valder is structure representing pair of function value,  function derivative
   //! and mean to be used in conjunction with eve::wide.
+  //!
+  //! All eve functions can be called with a valder parameter in place of floating or complex parameters
+  //! with a few restrictions and exceptions
+  //!
+  //!    - the derivative of piecewise derivable functions (as abs, trunc or frac) are undefined at non derivable points
+  //!    - complex non meromorphic functions cannot be derived relative the complex arguments.  // TO BE DONE complex still not accepted
+  //!    - functions with no sensible derivation properties as predicates or bit-related
+  //!      are accepted but always act as if  the derivative was not present and return a function value. // TO BE COMPLETED
+  //!      They can be used in tests.
+  //!    - eve constants of valder<T> are constant of T // TO BE DONE eve constants still not accepted
   //!
   //! @tparam Type  Underlying floating point type
   //================================================================================================
@@ -436,6 +446,7 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::sqr_abs_ ,like<valder> auto const& z) noexcept {return unary(sqr_abs, z); }
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::trunc_,   like<valder> auto const& z) noexcept {return unary(trunc,   z); }
 
+
     //binary functions
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::absmax_,       maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(absmax,       z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::absmin_,       maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(absmin,       z1, z2);}
@@ -445,6 +456,7 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::div_,          maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(div,          z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::hypot_,        maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(hypot,        z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::geommean_,     maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(geommean,     z1, z2);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::ldexp_,        maybe<valder> auto const& z1, value auto const& z2        ) noexcept {return binary(ldexp,        z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::logspace_add_, maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(logspace_add, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::logspace_sub_, maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(logspace_sub, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::lpnorm_,       maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return binary(lpnorm,       z1, z2);}
@@ -475,7 +487,6 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fsm_,      maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fsm,   z1, z2, z3);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::fsnm_,     maybe<valder> auto const& z1, maybe<valder> auto const& z2, maybe<valder> auto const& z3) noexcept {return ternary(fsnm,  z1, z2, z3);}
 
-
     //n-ary functions
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::add_,             maybe<valder> auto const&... z) noexcept {return n_ary(add,             z...);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::average_,         maybe<valder> auto const&... z) noexcept {return n_ary(average,         z...);}
@@ -496,6 +507,7 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_not_equal_,         maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_not_equal, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_less_,              maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_less, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_less_equal_,        maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_less_equal, z1, z2);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_lessgreater_,       maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_lessgreater, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_greater_,           maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_greater, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_greater_equal_,     maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_greater_equal, z1, z2);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_ordered_,           maybe<valder> auto const& z1, maybe<valder> auto const& z2) noexcept {return predicates(is_ordered, z1, z2);}
@@ -507,23 +519,46 @@ namespace eve
 
 
     //unary predicates
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_denormal_,    like<valder> auto const& z) noexcept {return predicates(is_denormal, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_eqz_,         like<valder> auto const& z) noexcept {return predicates(is_eqz, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_even_,        like<valder> auto const& z) noexcept {return predicates(is_even, z);}
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_nez_,         like<valder> auto const& z) noexcept {return predicates(is_nez, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_infinite_,    like<valder> auto const& z) noexcept {return predicates(is_infinite, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_finite_,      like<valder> auto const& z) noexcept {return predicates(is_finite, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_flint_,       like<valder> auto const& z) noexcept {return predicates(is_flint,  z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_lez_,         like<valder> auto const& z) noexcept {return predicates(is_lez, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_ltz_,         like<valder> auto const& z) noexcept {return predicates(is_ltz, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_gez_,         like<valder> auto const& z) noexcept {return predicates(is_gez, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_gtz_,         like<valder> auto const& z) noexcept {return predicates(is_gtz, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_nez_,         like<valder> auto const& z) noexcept {return predicates(is_nez, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_negative_,    like<valder> auto const& z) noexcept {return predicates(is_negative, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_nlez_,        like<valder> auto const& z) noexcept {return predicates(is_nlez, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_nltz_,        like<valder> auto const& z) noexcept {return predicates(is_nltz, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_ngez_,        like<valder> auto const& z) noexcept {return predicates(is_ngez, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_ngtz_,        like<valder> auto const& z) noexcept {return predicates(is_ngtz, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_normal_,      like<valder> auto const& z) noexcept {return predicates(is_normal, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_not_denormal_,like<valder> auto const& z) noexcept {return predicates(is_not_denormal, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_not_finite_,  like<valder> auto const& z) noexcept {return predicates(is_not_finite, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_not_flint_,   like<valder> auto const& z) noexcept {return predicates(is_not_flint, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_nan_,         like<valder> auto const& z) noexcept {return predicates(is_nan, z);}
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_odd_,         like<valder> auto const& z) noexcept {return predicates(is_odd, z);}
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::is_positive_,    like<valder> auto const& z) noexcept {return predicates(is_positive, z);}
 
+    // specials cases
+    template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::exponent_, Z const& z) noexcept
+    {
+      return exponent(val(z));
+    }
+
+    template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::mantissa_, Z const& z) noexcept
+    {
+      return Z{mantissa(val(z)), der(z)};
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //==  optimizations
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     template<like<valder> Z>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::cbrt_, Z const& z) noexcept
     {
@@ -797,6 +832,25 @@ namespace eve
     }
 
     template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::sincos_
+                                               , Z const& z ) noexcept
+    {
+      auto [v, d] = z;
+      auto [s, c]= sincos(v);
+      return kumi::tuple{Z{s, -d*c}, Z{c, -d*s}};
+    }
+
+    template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::sinpicospi_
+                                               , Z const& z ) noexcept
+    {
+      auto [v, d] = z;
+      auto [s, c]= sinpicospi(v);
+      auto fac = pi(as(v));
+      return kumi::tuple{Z{s, -d*c*fac}, Z{c, -d*s*fac}};
+    }
+
+    template<like<valder> Z>
     EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::sinpi_
                                                , Z const& z ) noexcept
     {
@@ -806,12 +860,31 @@ namespace eve
     }
 
     template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::sindcosd_
+                                               , Z const& z ) noexcept
+    {
+      auto [v, d] = z;
+      auto [s, c]= sindcosd(v);
+      auto fac = deginrad(as(v));
+      return kumi::tuple{Z{s, -d*c*fac}, Z{c, -d*s*fac}};
+    }
+
+    template<like<valder> Z>
     EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::sind_
                                                , Z const& z ) noexcept
     {
       auto [v, d] = z;
       auto [s, c]= sindcosd(v);
       return Z{s, -d*c*deginrad(as(v))};
+    }
+
+    template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::sinhcosh_
+                                               , Z const& z ) noexcept
+    {
+      auto [v, d] = z;
+      auto [s, c]= sinhcosh(v);
+      return kumi::tuple{Z{s, d*c}, Z{c, d*s}};
     }
 
     template<like<valder> Z>
@@ -858,6 +931,16 @@ namespace eve
       auto t = tanh(v);
       return Z{t, dec(sqr(t))*d};
     }
+
+    template<like<valder> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::modf_
+                                               , Z const& z ) noexcept
+    {
+      auto [v, d] = z;
+      auto [f, t] = modf(v);
+      return kumi::tuple{Z{f, d}, Z{t}};
+    }
+
  };
 
   //================================================================================================
