@@ -28,12 +28,27 @@ namespace eve::algo::detail
                       , eve::as_aligned(reinterpret_cast<std::uint8_t*>(dst), lane<64>)
                       );
     }
+
+    template<typename Storage>
+    static void grow(Storage& s, std::size_t new_capacity, std::size_t old_size)
+    {
+      // Build new storage
+      Storage that{s.get_allocator(), new_capacity};
+
+      // Copy old data
+      using type  = typename Storage::value_type;
+      auto  b     = views::convert(s.data(), eve::as<type>{});
+      eve::algo::copy( as_range(b, b + old_size), that.data());
+
+      s = std::move(that);
+    }
   };
 
   template<eve::product_type Type, eve::simd_allocator Allocator>
   struct soa_storage
   {
     using is_product_type = void;
+    using value_type = Type;
 
     explicit  soa_storage(Allocator a = {}) noexcept
             : indexes_{}, storage_( nullptr, aligned_deleter{a} ), capacity_{}
@@ -52,14 +67,12 @@ namespace eve::algo::detail
 
       kumi::for_each_index( [&]<typename Idx>(Idx, auto& s)
                             {
-                              // Compute the per element capacity
-                              auto sz = realign<kumi::element_t<Idx::value,Type>>(c);
-
                               // Start current sub-span data lifetime
-                              using type = kumi::element_t<Idx::value,Type>;
+                              using type  = kumi::element_t<Idx::value,Type>;
+                              auto sz     = realign<type>(c);
                               std::memmove(reinterpret_cast<type*>(sub+offset), sub+offset, sz);
 
-                              // update the index
+                              // Update the index
                               s       = offset;
                               offset += sz;
                             }

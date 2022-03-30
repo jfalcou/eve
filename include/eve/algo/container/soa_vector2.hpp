@@ -136,12 +136,9 @@ namespace eve::algo
     {
       if(n > capacity())
       {
+        // Grow capacity to n
         auto const sz = size_;
-        soa_vector that(n);
-        eve::algo::copy ( *this
-                        , algo::as_range(that.begin(), that.begin() + sz)
-                        );
-        this->operator=(std::move(that));
+        detail::memory_helper::grow(storage, n, size());
         size_ = sz;
      }
     }
@@ -163,6 +160,7 @@ namespace eve::algo
     iterator erase(const_iterator pos)
     {
       std::ptrdiff_t distance = pos - cbegin();
+
       eve::algo::copy_backward( eve::algo::as_range(pos+1, cend())
                               , eve::algo::as_range(begin()+distance, begin() + size() - 1)
                               );
@@ -193,20 +191,14 @@ namespace eve::algo
     //! @param value [Value](@eve::vectorizable) to append
     EVE_FORCEINLINE void push_back(value_type const& value) noexcept
     {
-      auto sz = size_;
-      if(sz != capacity())
-      {
-        size_++;
-      }
-      else
+      if(size_ == capacity())
       {
         // Grow twice per push_back
-        soa_vector that( storage_t(storage.get_allocator(),2*sz+1), sz+1 );
-        eve::algo::copy(*this, that.begin_aligned());
-        this->operator=(std::move(that));
+        detail::memory_helper::grow(storage, 2*size_+1, size());
       }
 
-      eve::write(value, begin()+sz);
+      eve::write(value, begin()+size_);
+      size_++;
     }
 
     //! @brief Removes the last element of the container.
@@ -228,21 +220,16 @@ namespace eve::algo
     void resize(std::size_t n, value_type value = {})
     {
       auto sz = size_;
-      if(n <= capacity())
-      {
-        size_ = n;
-      }
-      else
+      if(n > capacity())
       {
         // Grow twice per resize
-        soa_vector that( storage_t(storage.get_allocator(),2*n), n );
-        eve::algo::copy(*this, that.begin_aligned());
-        this->operator=(std::move(that));
+        detail::memory_helper::grow(storage, 2*n, size());
       }
 
       // If needed, fill with new data
       if(n > sz)
         eve::algo::fill(algo::as_range(begin() + sz, begin()+n), value );
+      size_ = n;
     }
 
     //! @brief Exchanges the contents of the container with those of `other`.
@@ -259,6 +246,8 @@ namespace eve::algo
     {
       lhs.swap(rhs);
     }
+
+    Allocator get_allocator() { return storage.get_allocator(); }
 
     //==============================================================================================
     //! @}
@@ -367,8 +356,6 @@ namespace eve::algo
     }
 
     private:
-    soa_vector(storage_t&& s, std::size_t n) : storage(std::move(s)), size_{n} {}
-
     storage_t   storage;
     std::size_t size_;
   };
