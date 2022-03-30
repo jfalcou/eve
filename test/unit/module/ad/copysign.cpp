@@ -19,7 +19,7 @@ EVE_TEST( "Check behavior of eve::copysign(eve::wide)"
                               , eve::test::logicals(0,3)
                               )
         )
-<typename T, typename M>(T const& a0, T const& a1, M const& )
+<typename T, typename M>(T const& a0, T const& a1, M const&)
 {
   using eve::detail::map;
   using eve::var;
@@ -30,8 +30,10 @@ EVE_TEST( "Check behavior of eve::copysign(eve::wide)"
   auto vda0 = var(a0);
   auto z = eve::copysign(vda0, a1);
   std::cout << z << std::endl;
-//  TTS_EQUAL(val(eve::copysign(vda0, a1))      , eve::copysign(a0, a1));
-//   TTS_EQUAL(val(eve::copysign[mask](vda0, a1)), eve::copysign[mask](a0, a1));
-//   TTS_EQUAL(der(eve::copysign(vda0, a1))      , diff(eve::copysign)(a0, a1));
-//   TTS_EQUAL(der(eve::copysign[mask](vda0, a1)), diff(eve::copysign[mask])(a0, a1));
+  TTS_EQUAL(val(eve::copysign(vda0, a1))      , eve::copysign(a0, a1));
+
+  // Those don't exist
+  //TTS_EQUAL(val(eve::copysign[mask](vda0, a1)), eve::copysign[mask](a0, a1));
+  //TTS_EQUAL(der(eve::copysign(vda0, a1))      , diff(eve::copysign)(a0, a1));
+  //TTS_EQUAL(der(eve::copysign[mask](vda0, a1)), diff(eve::copysign[mask])(a0, a1));
 };

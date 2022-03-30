@@ -30,8 +30,10 @@ EVE_TEST( "Check behavior of eve::atan2(eve::wide)"
   auto vda0 = var(a0);
   auto z = eve::atan2(vda0, a1);
   std::cout << z << std::endl;
-//  TTS_EQUAL(val(eve::atan2(vda0, a1))      , eve::atan2(a0, a1));
+
+  // atan2 doesn't support masks
+  TTS_EQUAL(val(eve::atan2(vda0, a1))      , eve::atan2(a0, a1));
 //   TTS_EQUAL(val(eve::atan2[mask](vda0, a1)), eve::atan2[mask](a0, a1));
-//   TTS_EQUAL(der(eve::atan2(vda0, a1))      , diff(eve::atan2)(a0, a1));
+  TTS_EQUAL(der(eve::atan2(vda0, a1))      , diff(eve::atan2)(a0, a1));
 //   TTS_EQUAL(der(eve::atan2[mask](vda0, a1)), diff(eve::atan2[mask])(a0, a1));
 };
