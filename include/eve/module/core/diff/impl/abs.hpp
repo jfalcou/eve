@@ -39,4 +39,12 @@ namespace eve::detail
 
     return sign(x);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_real_value U>
+  EVE_FORCEINLINE auto abs_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &, U const &t) noexcept
+  {
+    return mask_op( cond, eve::diff(eve::abs), t);
+  }
 }

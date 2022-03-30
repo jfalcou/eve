@@ -47,12 +47,18 @@ namespace eve::detail
     return mask_op(  cond, D()(eve::absmin), t, f);
   }
 
+  template<int N, conditional_expr C, real_value T, real_value... Ts>
+  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond
+                               , T const &t, Ts ... ts ) noexcept
+  {
+    return mask_op(  cond, eve::absmin, t, ts...);
+  }
   template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
     return mask_op(  cond, eve::absmin, t, f);
-  }
+ }
 
   //================================================================================================
   // N parameters

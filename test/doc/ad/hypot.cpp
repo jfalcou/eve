@@ -17,8 +17,8 @@ int main()
             << "<- vx                = " << vx << '\n'
             << "-> hypot(vx, 1.0f)   = " << eve::hypot(vx, 1.0f) << '\n'
             << "-> hypot(x, y, y)   = " << eve::hypot(x, y, y) << '\n'
-            << "-> diff_nth<3>(hypot)(x, y, y)   = " << eve::diff_nth<3>(eve::hypot)(x, y, y) << '\n'
             << "-> hypot(vx, y, y)   = " << eve::hypot(vx, y, y) << '\n'
+//            << "-> pedantic(hypot)(vx, y, y)   = " << eve::pedantic(eve::hypot)(vx, y, y) << '\n'
     ;
 
   vd_t sx(eve::var(-2.4));
