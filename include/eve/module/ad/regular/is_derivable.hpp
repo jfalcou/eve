@@ -108,6 +108,7 @@ namespace eve
   template<> struct is_derivable<tag::count_true_>            : std::false_type {};
   template<> struct is_derivable<tag::copysign_>              : std::false_type {};
   template<> struct is_derivable<tag::none_>                  : std::false_type {};
+  template<> struct is_derivable<tag::epsilon_>               : std::false_type {};
   template<> struct is_derivable<tag::exponent_>              : std::false_type {};
   template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
   template<> struct is_derivable<tag::is_equal_>              : std::false_type {};

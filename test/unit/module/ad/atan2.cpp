@@ -16,24 +16,21 @@ EVE_TEST( "Check behavior of eve::atan2(eve::wide)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(-10, +10)
                               , eve::test::randoms(-10, +10)
-                              , eve::test::logicals(0,3)
                               )
         )
-<typename T, typename M>(T const& a0, T const& a1, M const& )
+<typename T>(T const& a0, T const& a1)
 {
   using eve::detail::map;
   using eve::var;
   using eve::val;
   using eve::der;
-  using eve::diff;
+  using eve::diff_1st;
+  using eve::diff_2nd;
 
   auto vda0 = var(a0);
-  auto z = eve::atan2(vda0, a1);
-  std::cout << z << std::endl;
-
-  // atan2 doesn't support masks
+  auto vda1 = var(a1);
   TTS_EQUAL(val(eve::atan2(vda0, a1))      , eve::atan2(a0, a1));
-//   TTS_EQUAL(val(eve::atan2[mask](vda0, a1)), eve::atan2[mask](a0, a1));
-  TTS_EQUAL(der(eve::atan2(vda0, a1))      , diff(eve::atan2)(a0, a1));
-//   TTS_EQUAL(der(eve::atan2[mask](vda0, a1)), diff(eve::atan2[mask])(a0, a1));
+  TTS_EQUAL(der(eve::atan2(vda0, a1))      , diff_1st(eve::atan2)(a0, a1));
+  TTS_EQUAL(val(eve::atan2(a0, vda1))      , eve::atan2(a0, a1));
+  TTS_EQUAL(der(eve::atan2(a0, vda1))      , diff_2nd(eve::atan2)(a0, a1));
 };

@@ -141,23 +141,23 @@ namespace eve
     //==============================================================================================
     //  n_ary functions
     //==============================================================================================
- //    template<typename Func, decorator D, typename V0, typename V1, typename... Vs>
-//     static EVE_FORCEINLINE auto derivative(Func f, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
-//     {
-//       return derivative(D()(f), z0, z1, zs...);
-//     }
+    template<typename Func, decorator D, typename V0, typename V1, typename... Vs>
+    static EVE_FORCEINLINE auto derivative(Func f, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
+    {
+      return derivative(D()(f), z0, z1, zs...);
+    }
 
-//     template<typename Func, conditional_expr C, typename V0, typename V1, typename... Vs>
-//     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, V0 const& z0, V1 const& z1, Vs const&... zs )
-//     {
-//       return derivative(f[cond], z0, z1, zs...);
-//     }
+    template<typename Func, conditional_expr C, typename V0, typename V1, typename... Vs>
+    static EVE_FORCEINLINE auto derivative(Func f, C const & cond, V0 const& z0, V1 const& z1, Vs const&... zs )
+    {
+      return derivative(f[cond], z0, z1, zs...);
+    }
 
-//     template<typename Func, conditional_expr C, decorator D, typename V0, typename V1, typename... Vs>
-//     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
-//     {
-//       return derivative(D()(f[cond]), z0, z1, zs...);
-//     }
+    template<typename Func, conditional_expr C, decorator D, typename V0, typename V1, typename... Vs>
+    static EVE_FORCEINLINE auto derivative(Func f, C const & cond, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
+    {
+      return derivative(D()(f[cond]), z0, z1, zs...);
+    }
 
     template<typename Func, typename V0, typename V1, typename... Vs>
     static EVE_FORCEINLINE auto derivative(Func f, V0 const& z0, V1 const& z1, Vs const&... zs )
@@ -421,12 +421,15 @@ namespace eve
     //==============================================================================================
     // functions & constants
     //==============================================================================================
+    // constants
     template<typename Tag, like<valder> T>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag, as<T> const&) noexcept
     {
       return T{ detail::callable_object<Tag>{}(as<value_type>{})};
     }
 
+    //==============================================================================================
+    // unary functions
     template<typename Tag>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag, like<valder> auto const& v) noexcept
     requires( has_derivation_v<Tag> )
@@ -435,6 +438,8 @@ namespace eve
       else                              return compute( detail::callable_object<Tag>{}, v);
     }
 
+    //==============================================================================================
+    // n-ary functions
     template<typename Tag>
     EVE_FORCEINLINE friend auto tagged_dispatch (Tag, maybe<valder> auto const&... v) noexcept
     requires( has_derivation_v<Tag> )
@@ -444,8 +449,6 @@ namespace eve
     }
 
     // lpnorm
-    // max familly
-    // min familly
 
     // specials cases
     template<like<valder> Z>
@@ -585,7 +588,21 @@ namespace eve
       return r_t{atan2pi(v1, v2), radinpi(invden*sum_of_prod(v1, d2, v2, d1))};
     }
 
-      template < typename T >
+    template < typename T >
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::dist_
+                                                , maybe<valder> auto const& z1
+                                                , maybe<valder> auto const& z2
+                                                ) noexcept
+    {
+      using v_t = decltype(dist(val(z1), val(z2)));
+      using r_t = eve::as_valder_t<v_t>;
+      auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
+      auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
+      auto  s = sign(v1-v2);
+      return r_t{dist(v1, v2), s*(d1-d2)};
+    }
+
+    template < typename T >
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::ulpdist_
                                                 , maybe<valder> auto const& z1
                                                 , maybe<valder> auto const& z2

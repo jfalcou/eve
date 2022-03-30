@@ -14,6 +14,7 @@
 #include <eve/module/core/diff/average.hpp>
 #include <eve/module/core/diff/ceil.hpp>
 #include <eve/module/core/diff/clamp.hpp>
+#include <eve/module/core/diff/copysign.hpp>
 #include <eve/module/core/diff/dec.hpp>
 #include <eve/module/core/diff/dist.hpp>
 #include <eve/module/core/diff/div.hpp>
