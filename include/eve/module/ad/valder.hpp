@@ -549,7 +549,7 @@ namespace eve
                                                 , Z2 const & z2
                                                 ) noexcept
     {
-      using v_t = decltype(f(val(z1), val(z2)));
+      using v_t = decltype(atan2(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
       auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
       auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
@@ -563,7 +563,7 @@ namespace eve
                                                 , Z2 const & z2
                                                 ) noexcept
     {
-      using v_t = decltype(f(val(z1), val(z2)));
+      using v_t = decltype(atan2d(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
       auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
       auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
@@ -577,7 +577,7 @@ namespace eve
                                                 , Z2 const & z2
                                                 ) noexcept
     {
-      using v_t = decltype(f(val(z1), val(z2)));
+      using v_t = decltype(atan2pi(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
       auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
       auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
@@ -601,7 +601,7 @@ namespace eve
                                                  , Z2 const & z2
                                                  ) noexcept
     {
-      using v_t = decltype(f(val(z1), val(z2)));
+      using v_t = decltype(pow(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
       auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
       auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
@@ -615,7 +615,7 @@ namespace eve
                                                 , T const & z2
                                                 ) noexcept
     {
-      using v_t = decltype(f(val(z1), val(z2)));
+      using v_t = decltype(pow(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
       auto v1 = v_t(val(z1)); auto d1 = v_t(der(z1));
       auto  p = pow(v1, z2);
@@ -629,7 +629,7 @@ namespace eve
                                                 , Z const & z2
                                                 ) noexcept
     {
-      using v_t = decltype(f(val(z1), val(z2)));
+      using v_t = decltype(pow(val(z1), val(z2)));
       using r_t = eve::as_valder_t<v_t>;
       auto v2 = v_t(val(z2)); auto d2 = v_t(der(z2));
       auto p = pow(z1, v2);
