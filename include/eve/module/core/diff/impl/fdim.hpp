@@ -36,4 +36,14 @@ namespace eve::detail
     using r_t = common_compatible_t<T,U>;
     return if_else(is_not_less(x, y), mone(as<r_t>()), zero);
   }
+
+  template<auto N, conditional_expr C, floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto fdim_(EVE_SUPPORTS(cpu_)
+                            , C const &cond
+                            , diff_type<N> const &
+                            , T const &a
+                            , U const &b) noexcept
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::fdim), a, b);
+  }
 }
