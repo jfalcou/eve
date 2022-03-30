@@ -93,6 +93,21 @@ namespace eve
 
     // helpers
     //==============================================================================================
+    // mask helper
+    //==============================================================================================
+    template<conditional_expr Cond>
+    static EVE_FORCEINLINE auto if_else_1(Cond const & cond)
+    {
+      if constexpr(Cond::has_alternative) return cond.rebase(1);
+      else return cond.else_(1);
+    }
+    template<conditional_expr Cond>
+    static EVE_FORCEINLINE auto if_else_0(Cond const & cond)
+    {
+      if constexpr(Cond::has_alternative) return cond.rebase(0);
+      else return cond.else_(0);
+    }
+    //==============================================================================================
     // Compute non-derivable function
     //==============================================================================================
     template<typename Func, typename Z1, typename... Zs>
@@ -128,14 +143,14 @@ namespace eve
     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, Z const & z)
     {
       auto [v, d] = z;
-      return Z{f[cond](v), if_else(cond, diff(f)(v), one)*d};
-//      return Z{f[cond](v), mask_op(cond, diff(f), v, one(as(v)))*d};
+      return Z{f[cond](v), diff(f[if_else_1(cond)])(v)*d};
     }
 
     template<typename Func, conditional_expr C, decorator D, like<valder> Z>
     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, D const &, Z const & z)
     {
-      return derivative(D()(f[cond]), z);
+      auto [v, d] = z;
+      return Z{D()(f[cond])(v), diff(D()(f[if_else_1(cond)]))(v)*d};
     }
 
     //==============================================================================================
@@ -150,7 +165,23 @@ namespace eve
     template<typename Func, conditional_expr C, typename V0, typename V1, typename... Vs>
     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, V0 const& z0, V1 const& z1, Vs const&... zs )
     {
-      return derivative(f[cond], z0, z1, zs...);
+      using v_t = decltype(f(val(z0),val(z1),val(zs)...));
+      using r_t = eve::as_valder_t<v_t>;
+
+      auto vs = kumi::make_tuple(v_t(val(z0)),v_t(val(z1)),v_t(val(zs))...);
+      auto ds = kumi::make_tuple(v_t(der(zs))...);
+
+      v_t d = sum_of_prod ( kumi::apply(diff_1st(f[if_else_1(cond)]),vs), v_t(der(z0))
+                          , kumi::apply(diff_2nd(f[if_else_0(cond)]),vs), v_t(der(z1))
+                          );
+
+      [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        ((d = fam(d, kumi::apply(diff_nth<I+3>(f[if_else_0(cond)]),vs), get<I>(ds))),...);
+      }(std::index_sequence_for<Vs...>{});
+
+      return r_t{ kumi::apply(f[cond],vs), d};
+      //return derivative(f[cond], z0, z1, zs...);
     }
 
     template<typename Func, conditional_expr C, decorator D, typename V0, typename V1, typename... Vs>
