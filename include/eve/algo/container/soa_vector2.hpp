@@ -78,22 +78,22 @@ namespace eve::algo
     //==============================================================================================
 
     //! Constructs an empty container.
-    soa_vector(Allocator const& a = Allocator{}) : storage(a), size_{} {}
+    explicit soa_vector(Allocator a = Allocator{}) : storage(a), size_{} {}
 
     //! Constructs the container with `n` default-inserted instances of `Type`.
-    explicit  soa_vector(std::size_t n, Allocator const& a = Allocator{})
+    explicit  soa_vector(std::size_t n, Allocator a = Allocator{})
             : soa_vector(n, value_type{}, a)
     {}
 
     //! Constructs the container with `n` copies of elements with `value` value.
-    soa_vector(std::size_t n, value_type v, Allocator const& a = Allocator{})
+    soa_vector(std::size_t n, value_type v, Allocator a = Allocator{})
               : storage(a,n), size_{n}
     {
       eve::algo::fill(*this, v);
     }
 
     //! Constructs the container with the contents of the initializer list `l`.
-    soa_vector( std::initializer_list<Type> l, Allocator const& a = Allocator{})
+    soa_vector( std::initializer_list<Type> l, Allocator a = Allocator{})
               : storage(a, l.size()), size_{l.size()}
     {
       auto ptr = l.begin();
@@ -283,7 +283,7 @@ namespace eve::algo
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
-    EVE_FORCEINLINE auto get(std::size_t i) const { return eve::read(begin() + i); }
+    EVE_FORCEINLINE value_type get(std::size_t i) const { return eve::read(begin() + i); }
 
     //! @brief Modify the value of the `i`th element of the container
     //! @param i Index of the value to write
