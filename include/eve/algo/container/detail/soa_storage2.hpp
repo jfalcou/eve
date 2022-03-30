@@ -35,8 +35,8 @@ namespace eve::algo::detail
 
       capacity_ = aligned_capacity(c);
 
-      auto sub    = storage_.get();
-      auto offset = 0;
+      auto        sub     = storage_.get();
+      std::size_t offset  = 0ULL;
 
       kumi::for_each_index( [&]<typename Idx>(Idx, auto& s)
                             {
