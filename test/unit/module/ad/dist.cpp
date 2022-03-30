@@ -10,9 +10,9 @@
 #include <eve/module/ad.hpp>
 
 //==================================================================================================
-// Tests for eve::add
+// Tests for eve::dist
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::copysign(eve::wide)"
+EVE_TEST( "Check behavior of eve::dist(eve::wide)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(-10, +10)
                               , eve::test::randoms(-10, +10)
@@ -28,9 +28,8 @@ EVE_TEST( "Check behavior of eve::copysign(eve::wide)"
 
   auto vda0 = var(a0);
   auto vda1 = var(a1);
-  TTS_EQUAL(val(eve::copysign(vda0, a1))      , eve::copysign(a0, a1));
-  TTS_EQUAL(der(eve::copysign(vda0, a1))      , diff(eve::copysign)(a0, a1));
-  TTS_EQUAL(val(eve::copysign(a0, vda1))      , eve::copysign(a0, vda1));
-  TTS_EQUAL(der(eve::copysign(a0, vda1))      , diff(eve::copysign)(a0, vda1));
-
- };
+  TTS_EQUAL(val(eve::dist(vda0, a1))    , eve::dist(a0, a1));
+  TTS_EQUAL(der(eve::dist(vda0, a1))    , diff(eve::dist)(a0, a1));
+  TTS_EQUAL(val(eve::dist(a0, vda1))    , eve::dist(a0, a1));
+  TTS_EQUAL(der(eve::dist(a0, vda1))    , diff(eve::dist)(a0, a1));
+};
