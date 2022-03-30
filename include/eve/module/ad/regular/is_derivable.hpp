@@ -91,6 +91,7 @@ namespace eve
     struct nextafter_;
     struct prev_;
     struct popcount_;
+    struct copysign_;
   }
 
   template<> struct is_derivable<tag::val_>                   : std::false_type {};
@@ -105,6 +106,7 @@ namespace eve
   template<> struct is_derivable<tag::all_>                   : std::false_type {};
   template<> struct is_derivable<tag::any_>                   : std::false_type {};
   template<> struct is_derivable<tag::count_true_>            : std::false_type {};
+  template<> struct is_derivable<tag::copysign_>              : std::false_type {};
   template<> struct is_derivable<tag::none_>                  : std::false_type {};
   template<> struct is_derivable<tag::exponent_>              : std::false_type {};
   template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
