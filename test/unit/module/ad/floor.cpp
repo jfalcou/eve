@@ -10,9 +10,9 @@
 #include <eve/module/ad.hpp>
 
 //==================================================================================================
-// Tests for eve::ceil
+// Tests for eve::floor
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::ceil(eve::wide)"
+EVE_TEST( "Check behavior of eve::floor(eve::wide)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(-10, +10)
                               , eve::test::logicals(0,3)
@@ -27,8 +27,8 @@ EVE_TEST( "Check behavior of eve::ceil(eve::wide)"
   using eve::diff;
 
   auto vda0 = var(a0);
-  TTS_EQUAL(val(eve::ceil(vda0))      , eve::ceil(a0));
-  TTS_EQUAL(val(eve::ceil[mask](vda0)), eve::ceil[mask](a0));
-  TTS_EQUAL(der(eve::ceil(vda0))      , diff(eve::ceil)(a0));
-  TTS_EQUAL(der(eve::ceil[mask](vda0)), eve::if_else(mask, diff(eve::ceil)(a0), eve::one));
+  TTS_EQUAL(val(eve::floor(vda0))      , eve::floor(a0));
+  TTS_EQUAL(val(eve::floor[mask](vda0)), eve::floor[mask](a0));
+  TTS_EQUAL(der(eve::floor(vda0))      , diff(eve::floor)(a0));
+  TTS_EQUAL(der(eve::floor[mask](vda0)), eve::if_else(mask, diff(eve::floor)(a0), eve::one));
 };
