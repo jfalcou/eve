@@ -30,7 +30,7 @@ namespace eve::algo::detail
     soa_storage(Allocator a, std::size_t c) : soa_storage(a)
     {
       // Strong guarantee on allocation
-      auto local = allocate(a, byte_size(c));
+      auto local = allocate(get_allocator(), byte_size(c));
       storage_.swap(local);
 
       capacity_ = aligned_capacity(c);
@@ -55,12 +55,12 @@ namespace eve::algo::detail
                           );
     }
 
-    soa_storage(soa_storage const& src) : soa_storage()
+    soa_storage(soa_storage const& src) : soa_storage(src.storage_.get_deleter())
     {
-      auto sz     = byte_size(src.capacity_);
+      auto sz = byte_size(src.capacity_);
 
       // Strong guarantee on allocation
-      auto local  = allocate(src.storage_.get_deleter(), sz);
+      auto local  = allocate(get_allocator(),sz);
       std::copy(src.storage_.get(), src.storage_.get()+sz, local.get());
       storage_.swap(local);
 
@@ -112,10 +112,9 @@ namespace eve::algo::detail
     template<typename T>
     static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
 
-    static auto allocate(Allocator a,std::size_t n)
+    static auto allocate(Allocator a, std::size_t n)
     {
-      aligned_deleter d{a};
-      return storage_t{ reinterpret_cast<byte_t*>(d.allocate_aligned(n,64)), d};
+      return storage_t{ reinterpret_cast<byte_t*>(a.allocate_aligned(n,64)), a};
     }
 
     static auto aligned_capacity(std::size_t n) noexcept
