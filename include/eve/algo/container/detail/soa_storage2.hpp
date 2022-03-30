@@ -7,17 +7,29 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/algo/copy.hpp>
 #include <eve/algo/views/zip.hpp>
+#include <eve/concept/simd_allocator.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
-#include <eve/concept/simd_allocator.hpp>
+#include <eve/module/core.hpp>
 #include <eve/product_type.hpp>
 #include <type_traits>
 #include <memory>
 
 namespace eve::algo::detail
 {
+  struct memory_helper
+  {
+    static void copy_all_aligned(std::byte const* src, std::byte* dst, std::size_t size)
+    {
+      auto aligned_src = eve::as_aligned(reinterpret_cast<std::uint8_t const*>(src), lane<64>);
+      eve::algo::copy ( as_range(aligned_src, aligned_src+size)
+                      , eve::as_aligned(reinterpret_cast<std::uint8_t*>(dst), lane<64>)
+                      );
+    }
+  };
+
   template<eve::product_type Type, eve::simd_allocator Allocator>
   struct soa_storage
   {
@@ -61,7 +73,7 @@ namespace eve::algo::detail
 
       // Strong guarantee on allocation
       auto local  = allocate(get_allocator(),sz);
-      std::copy(src.storage_.get(), src.storage_.get()+sz, local.get());
+      memory_helper::copy_all_aligned(src.storage_.get(), local.get(), sz );
       storage_.swap(local);
 
       indexes_  = src.indexes_;
