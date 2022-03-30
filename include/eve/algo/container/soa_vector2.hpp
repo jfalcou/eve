@@ -113,10 +113,7 @@ namespace eve::algo
     EVE_FORCEINLINE std::size_t capacity()  const noexcept { return storage.capacity_; }
 
     //! Requests the removal of unused capacity.
-    // EVE_FORCEINLINE void shrink_to_fit() noexcept
-    // {
-    //   kumi::for_each([](auto& m) { m.shrink_to_fit(); }, storage);
-    // }
+    EVE_FORCEINLINE void shrink_to_fit() { detail::memory_helper::grow(storage, size(), size()); }
 
     //! Checks if the container has no elements
     EVE_FORCEINLINE bool empty() const noexcept { return !size(); }

@@ -242,6 +242,42 @@ TTS_CASE("Check soa_vector resize")
     TTS_EQUAL(udt_vector.get(i), (udt::grid2d{}));
 };
 
+
+TTS_CASE("Check soa_vector shrink_to_fit")
+{
+  eve::algo::soa_vector<t_t>          tuple_vector  = { t_t{1,2.3f  ,'4'}
+                                                      , t_t{5,6.7f  ,'8'}
+                                                      , t_t{9,10.11f,'X'}
+                                                      };
+
+  eve::algo::soa_vector<udt::grid2d>  udt_vector    = { udt::grid2d{1,2}
+                                                      , udt::grid2d{3,4}
+                                                      , udt::grid2d{5,8}
+                                                      };
+
+  auto c = tuple_vector.capacity();
+  tuple_vector.resize(7*c);
+  tuple_vector.resize(3);
+  tuple_vector.shrink_to_fit();
+
+  TTS_EQUAL(tuple_vector.size()     , 3ULL );
+  TTS_EQUAL(tuple_vector.capacity() , 16ULL);
+  TTS_EQUAL(tuple_vector.get(0), (t_t{1,2.3f  ,'4'}));
+  TTS_EQUAL(tuple_vector.get(1), (t_t{5,6.7f  ,'8'}));
+  TTS_EQUAL(tuple_vector.get(2), (t_t{9,10.11f,'X'}));
+
+  c = udt_vector.capacity();
+  udt_vector.resize(7*c);
+  udt_vector.resize(3);
+  udt_vector.shrink_to_fit();
+
+  TTS_EQUAL(udt_vector.size()     , 3ULL );
+  TTS_EQUAL(udt_vector.capacity() , 16ULL);
+  TTS_EQUAL( udt_vector.get(0), (udt::grid2d{1,2}) );
+  TTS_EQUAL( udt_vector.get(1), (udt::grid2d{3,4}) );
+  TTS_EQUAL( udt_vector.get(2), (udt::grid2d{5,8}) );
+};
+
 TTS_CASE("Check soa_vector::clear behavior")
 {
   eve::algo::soa_vector<t_t>          tuple_vector(71);
