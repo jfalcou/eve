@@ -7,11 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/copy.hpp>
-#include <eve/algo/equal.hpp>
-#include <eve/algo/fill.hpp>
-#include <eve/algo/views/convert.hpp>
-
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/algo/container/detail/soa_storage2.hpp>
 #include <eve/memory/aligned_allocator.hpp>
@@ -89,7 +84,7 @@ namespace eve::algo
     soa_vector(std::size_t n, value_type v, Allocator a = Allocator{})
               : storage(a,n), size_{n}
     {
-      eve::algo::fill(*this, v);
+      detail::memory_helper::fill(begin(), 0, n, v );
     }
 
     //! Constructs the container with the contents of the initializer list `l`.
@@ -157,16 +152,7 @@ namespace eve::algo
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
     //! end() iterator is not a valid pos.
-    iterator erase(const_iterator pos)
-    {
-      std::ptrdiff_t distance = pos - cbegin();
-
-      eve::algo::copy_backward( eve::algo::as_range(pos+1, cend())
-                              , eve::algo::as_range(begin()+distance, begin() + size() - 1)
-                              );
-      size_--;
-      return begin() + distance;
-    }
+    iterator erase(const_iterator pos) { return erase(pos, pos+1); }
 
     //! @brief Removes the elements in the range [first, last)
     //! Empty range is OK, does nothing
@@ -176,10 +162,9 @@ namespace eve::algo
       std::ptrdiff_t distance_l = l - cbegin();
       std::ptrdiff_t sz = distance_l - distance_f;
 
-      eve::algo::copy_backward( eve::algo::as_range(l, cend())
-                              , eve::algo::as_range(begin() + distance_l - sz, end() - sz)
-                              );
-
+      detail::memory_helper::erase( algo::as_range(l, cend())
+                                  , algo::as_range(begin() + distance_l - sz, end() - sz)
+                                  );
       size_ -= sz;
       return begin() + distance_f;
     }
@@ -227,8 +212,7 @@ namespace eve::algo
       }
 
       // If needed, fill with new data
-      if(n > sz)
-        eve::algo::fill(algo::as_range(begin() + sz, begin()+n), value );
+      if(n > sz) detail::memory_helper::fill(begin(), sz, n, value );
       size_ = n;
     }
 

@@ -8,12 +8,16 @@
 #pragma once
 
 #include <eve/algo/copy.hpp>
+#include <eve/algo/equal.hpp>
+#include <eve/algo/fill.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/views/zip.hpp>
 #include <eve/concept/simd_allocator.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/module/core.hpp>
 #include <eve/product_type.hpp>
+#include <cstddef>
 #include <type_traits>
 #include <memory>
 
@@ -41,6 +45,17 @@ namespace eve::algo::detail
       eve::algo::copy( as_range(b, b + old_size), that.data());
 
       s = std::move(that);
+    }
+
+    template<typename Iterator, typename Value>
+    static void fill(Iterator begin, std::size_t first, std::size_t last, Value v)
+    {
+      eve::algo::fill(algo::as_range(begin + first, begin + last), v );
+    }
+
+    template<typename Src, typename Dst> static void erase( Src src, Dst dst)
+    {
+      eve::algo::copy_backward( src, dst);
     }
   };
 
