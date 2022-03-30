@@ -57,6 +57,11 @@ namespace eve::algo::detail
     {
       eve::algo::copy_backward( src, dst);
     }
+
+    template<typename Container> static bool compare(Container const& lhs, Container const& rhs)
+    {
+      return eve::algo::equal(lhs, rhs.begin_aligned());
+    }
   };
 
   template<eve::product_type Type, eve::simd_allocator Allocator>

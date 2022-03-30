@@ -158,6 +158,8 @@ namespace eve::algo
     //! Empty range is OK, does nothing
     iterator erase(const_iterator f, const_iterator l)
     {
+      EVE_ASSERT(!empty(), "soa_vector::erase() was called on empty container");
+
       std::ptrdiff_t distance_f = f - cbegin();
       std::ptrdiff_t distance_l = l - cbegin();
       std::ptrdiff_t sz = distance_l - distance_f;
@@ -226,10 +228,7 @@ namespace eve::algo
     }
 
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
-    friend EVE_FORCEINLINE void swap(soa_vector &lhs, soa_vector &rhs) noexcept
-    {
-      lhs.swap(rhs);
-    }
+    friend EVE_FORCEINLINE void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
 
     Allocator get_allocator() { return storage.get_allocator(); }
 
@@ -312,7 +311,7 @@ namespace eve::algo
     friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
     {
       if( lhs.size() != rhs.size() ) return false;
-      return eve::algo::equal( lhs, rhs.begin_aligned());
+      return detail::memory_helper::compare(lhs,rhs);
     }
 
     friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
