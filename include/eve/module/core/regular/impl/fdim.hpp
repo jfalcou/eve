@@ -35,4 +35,13 @@ namespace eve::detail
     auto r = if_else(a >= b, sub(a, b), eve::zero);
     return r;
   }
+
+  template<conditional_expr C, floating_value T, floating_value U>
+  EVE_FORCEINLINE  auto fdim_(EVE_SUPPORTS(cpu_)
+                            , C const &cond
+                            , T const &a
+                            , U const &b) noexcept
+  {
+    return mask_op(  cond, eve::fdim, a, b);
+  }
 }

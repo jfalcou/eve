@@ -35,4 +35,17 @@ namespace eve::detail
     else if constexpr(N == 2) return a;
     else if constexpr(N == 3) return one(as(c));
   }
+
+  template<auto N, conditional_expr C, floating_value T, floating_value U, floating_value V>
+  EVE_FORCEINLINE  auto fma_(EVE_SUPPORTS(cpu_)
+                            , C const &cond
+                            , diff_type<N> const &
+                            , T const &a
+                            , U const &b
+                            , V const &c) noexcept
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::fma), a, b, c);
+  }
+
+
 }
