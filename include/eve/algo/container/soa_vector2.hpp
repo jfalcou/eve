@@ -78,7 +78,7 @@ namespace eve::algo
     //==============================================================================================
 
     //! Constructs an empty container.
-    soa_vector(Allocator const& a = Allocator{}) : storage(a) {}
+    soa_vector(Allocator const& a = Allocator{}) : storage(a), size_{} {}
 
     //! Constructs the container with `n` default-inserted instances of `Type`.
     explicit  soa_vector(std::size_t n, Allocator const& a = Allocator{})
@@ -86,14 +86,15 @@ namespace eve::algo
     {}
 
     //! Constructs the container with `n` copies of elements with `value` value.
-    soa_vector(std::size_t n, value_type v, Allocator const& a = Allocator{})  : storage(a,n)
+    soa_vector(std::size_t n, value_type v, Allocator const& a = Allocator{})
+              : storage(a,n), size_{n}
     {
       eve::algo::fill(*this, v);
     }
 
     //! Constructs the container with the contents of the initializer list `l`.
     soa_vector( std::initializer_list<Type> l, Allocator const& a = Allocator{})
-              : storage(a, l.size())
+              : storage(a, l.size()), size_{l.size()}
     {
       auto ptr = l.begin();
       for(std::size_t i = 0;i < size(); ++i)
@@ -111,7 +112,7 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns the number of elements in the container
-    EVE_FORCEINLINE std::size_t size()  const noexcept { return storage.size_; }
+    EVE_FORCEINLINE std::size_t size()  const noexcept { return size_; }
 
     //! Returns the number of elements that the container has currently allocated space for
     EVE_FORCEINLINE std::size_t capacity()  const noexcept { return storage.capacity_; }
@@ -123,7 +124,7 @@ namespace eve::algo
     // }
 
     //! Checks if the container has no elements
-    EVE_FORCEINLINE bool empty() const noexcept { return size() == 0ULL; }
+    EVE_FORCEINLINE bool empty() const noexcept { return !size(); }
 
     //! @brief Increase the capacity of the vector to a value that's greater or equal to `n`.
     //! If `n` is greater than the current capacity(), new storage is allocated and all iterators,
@@ -135,13 +136,13 @@ namespace eve::algo
     {
       if(n > capacity())
       {
-        auto const sz = size();
+        auto const sz = size_;
         soa_vector that(n);
         eve::algo::copy ( *this
                         , algo::as_range(that.begin(), that.begin() + sz)
                         );
         this->operator=(std::move(that));
-        storage.size_ = sz;
+        size_ = sz;
      }
     }
 
@@ -154,7 +155,7 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! @brief Clear the contents of the container.
-    void clear() { storage.size_ = 0; }
+    void clear() { size_ = 0; }
 
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
@@ -165,7 +166,7 @@ namespace eve::algo
       eve::algo::copy_backward( eve::algo::as_range(pos+1, cend())
                               , eve::algo::as_range(begin()+distance, begin() + size() - 1)
                               );
-      storage.size_--;
+      size_--;
       return begin() + distance;
     }
 
@@ -181,7 +182,7 @@ namespace eve::algo
                               , eve::algo::as_range(begin() + distance_l - sz, end() - sz)
                               );
 
-      storage.size_ -= sz;
+      size_ -= sz;
       return begin() + distance_f;
     }
 
@@ -192,15 +193,15 @@ namespace eve::algo
     //! @param value [Value](@eve::vectorizable) to append
     EVE_FORCEINLINE void push_back(value_type const& value) noexcept
     {
-      auto sz = size();
+      auto sz = size_;
       if(sz != capacity())
       {
-        storage.size_++;
+        size_++;
       }
       else
       {
         // Grow twice per push_back
-        soa_vector that( storage_t(storage.get_allocator(),sz+1,2*sz+1) );
+        soa_vector that( storage_t(storage.get_allocator(),2*sz+1), sz+1 );
         eve::algo::copy(*this, that.begin_aligned());
         this->operator=(std::move(that));
       }
@@ -214,7 +215,7 @@ namespace eve::algo
     EVE_FORCEINLINE void pop_back() noexcept
     {
       EVE_ASSERT(!empty(), "soa_vector::pop_back() was called on empty container");
-      storage.size_--;
+      size_--;
     }
 
     //! @brief Resizes the container to contain count elements.
@@ -226,15 +227,15 @@ namespace eve::algo
     //! @param value  the value to initialize the new elements with
     void resize(std::size_t n, value_type value = {})
     {
-      auto sz = size();
+      auto sz = size_;
       if(n <= capacity())
       {
-        storage.size_ = n;
+        size_ = n;
       }
       else
       {
         // Grow twice per resize
-        soa_vector that( storage_t(storage.get_allocator(),n,2*n) );
+        soa_vector that( storage_t(storage.get_allocator(),2*n), n );
         eve::algo::copy(*this, that.begin_aligned());
         this->operator=(std::move(that));
       }
@@ -250,6 +251,7 @@ namespace eve::algo
     void swap(soa_vector& other) noexcept
     {
       storage.swap(other.storage);
+      std::swap(size_, other.size_);
     }
 
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
@@ -365,8 +367,9 @@ namespace eve::algo
     }
 
     private:
-    soa_vector(storage_t&& s) : storage(std::move(s)) {}
+    soa_vector(storage_t&& s, std::size_t n) : storage(std::move(s)), size_{n} {}
 
-    storage_t storage;
+    storage_t   storage;
+    std::size_t size_;
   };
 }

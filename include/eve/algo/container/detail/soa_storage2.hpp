@@ -23,19 +23,16 @@ namespace eve::algo::detail
   {
     using is_product_type = void;
 
-    soa_storage(Allocator const& a = {}) noexcept
-                : indexes_{}, storage_( nullptr, aligned_deleter{a} ), size_{}, capacity_{}
+    explicit  soa_storage(Allocator const& a = {}) noexcept
+            : indexes_{}, storage_( nullptr, aligned_deleter{a} ), capacity_{}
     {}
 
-    soa_storage(Allocator const& a, std::size_t n)  : soa_storage(a,n,n) {}
-
-    soa_storage(Allocator const& a, std::size_t n, std::size_t c)  : soa_storage(a)
+    soa_storage(Allocator const& a, std::size_t c) : soa_storage(a)
     {
       // Strong guarantee on allocation
       auto local = allocate(a, byte_size(c));
       storage_.swap(local);
 
-      size_     = n;
       capacity_ = aligned_capacity(c);
 
       auto sub    = storage_.get();
@@ -60,7 +57,7 @@ namespace eve::algo::detail
 
     soa_storage(soa_storage const& src) : soa_storage()
     {
-      auto sz     = byte_size(src.size_);
+      auto sz     = byte_size(src.capacity_);
 
       // Strong guarantee on allocation
       auto local  = allocate(src.storage_.get_deleter(), sz);
@@ -68,7 +65,6 @@ namespace eve::algo::detail
       storage_.swap(local);
 
       indexes_  = src.indexes_;
-      size_     = src.size_;
       capacity_ = src.capacity_;
     }
 
@@ -101,7 +97,6 @@ namespace eve::algo::detail
       storage_.swap(other.storage_);
       std::swap(indexes_  , other.indexes_  );
       std::swap(capacity_ , other.capacity_ );
-      std::swap(size_     , other.size_     );
     }
 
     friend void swap(soa_storage& a, soa_storage& b ) noexcept { a.swap(b); }
@@ -173,7 +168,6 @@ namespace eve::algo::detail
 
     indexes_t   indexes_;
     storage_t   storage_;
-    std::size_t size_;
     std::size_t capacity_;
   };
 }
