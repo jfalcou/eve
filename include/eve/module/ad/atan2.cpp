@@ -141,23 +141,23 @@ namespace eve
     //==============================================================================================
     //  n_ary functions
     //==============================================================================================
- //    template<typename Func, decorator D, typename V0, typename V1, typename... Vs>
-//     static EVE_FORCEINLINE auto derivative(Func f, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
-//     {
-//       return derivative(D()(f), z0, z1, zs...);
-//     }
+    template<typename Func, decorator D, typename V0, typename V1, typename... Vs>
+    static EVE_FORCEINLINE auto derivative(Func f, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
+    {
+      return derivative(D()(f), z0, z1, zs...);
+    }
 
-//     template<typename Func, conditional_expr C, typename V0, typename V1, typename... Vs>
-//     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, V0 const& z0, V1 const& z1, Vs const&... zs )
-//     {
-//       return derivative(f[cond], z0, z1, zs...);
-//     }
+    template<typename Func, conditional_expr C, typename V0, typename V1, typename... Vs>
+    static EVE_FORCEINLINE auto derivative(Func f, C const & cond, V0 const& z0, V1 const& z1, Vs const&... zs )
+    {
+      return derivative(f[cond], z0, z1, zs...);
+    }
 
-//     template<typename Func, conditional_expr C, decorator D, typename V0, typename V1, typename... Vs>
-//     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
-//     {
-//       return derivative(D()(f[cond]), z0, z1, zs...);
-//     }
+    template<typename Func, conditional_expr C, decorator D, typename V0, typename V1, typename... Vs>
+    static EVE_FORCEINLINE auto derivative(Func f, C const & cond, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
+    {
+      return derivative(D()(f[cond]), z0, z1, zs...);
+    }
 
     template<typename Func, typename V0, typename V1, typename... Vs>
     static EVE_FORCEINLINE auto derivative(Func f, V0 const& z0, V1 const& z1, Vs const&... zs )

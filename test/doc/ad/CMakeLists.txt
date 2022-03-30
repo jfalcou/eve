@@ -5,6 +5,7 @@
 ##==================================================================================================
 
 make_unit( "doc.ad" abs.cpp                    )
+#make_unit( "doc.ad" agm.cpp                    )
 make_unit( "doc.ad" average.cpp                )
 make_unit( "doc.ad" geommean.cpp               )
 make_unit( "doc.ad" is_equal.cpp               )

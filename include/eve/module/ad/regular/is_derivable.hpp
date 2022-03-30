@@ -25,7 +25,32 @@ namespace eve
     struct val_;
     struct der_;
     struct var_;
+
+    struct all_;
+    struct any_;
+    struct count_true__;
+    struct none_;
+    struct bit_and_;
+    struct bit_andnot_;
+    struct bit_cast_;
+    struct bit_ceil_;
+    struct bit_floor_;
+    struct bit_mask_;
+    struct bit_notand_;
+    struct bit_not_;
+    struct bit_notor_;
+    struct bitofsign_;
+    struct bit_or_;
+    struct bit_ornot_;
+    struct bit_select_;
+    struct bit_shl_;
+    struct bit_shr_;
+    struct bit_width_;
+    struct bit_xor_;
+    struct exponent_;
+
     struct if_else_;
+    struct is_denormal_;
     struct is_equal_;
     struct is_not_equal_;
     struct is_less_;
@@ -40,7 +65,6 @@ namespace eve
     struct is_not_greater_;
     struct is_not_greater_equal_;
     struct is_eqz_;
-    struct is_denormal_;
     struct is_even_;
     struct is_infinite_;
     struct is_finite_;
@@ -62,6 +86,11 @@ namespace eve
     struct is_nan_;
     struct is_odd_;
     struct is_positive_;
+
+    struct next_;
+    struct nextafter_;
+    struct prev_;
+    struct popcount_;
   }
 
   template<> struct is_derivable<tag::val_>                   : std::false_type {};
@@ -73,6 +102,12 @@ namespace eve
   template<> struct has_derivation<tag::var_>                 : std::false_type {};
   template<> struct has_derivation<tag::if_else_>             : std::false_type {};
 
+  template<> struct is_derivable<tag::all_>                   : std::false_type {};
+  template<> struct is_derivable<tag::any_>                   : std::false_type {};
+  template<> struct is_derivable<tag::count_true_>            : std::false_type {};
+  template<> struct is_derivable<tag::none_>                  : std::false_type {};
+  template<> struct is_derivable<tag::exponent_>              : std::false_type {};
+  template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
   template<> struct is_derivable<tag::is_equal_>              : std::false_type {};
   template<> struct is_derivable<tag::is_not_equal_>          : std::false_type {};
   template<> struct is_derivable<tag::is_less_>               : std::false_type {};
@@ -87,7 +122,6 @@ namespace eve
   template<> struct is_derivable<tag::is_not_greater_>        : std::false_type {};
   template<> struct is_derivable<tag::is_not_greater_equal_>  : std::false_type {};
   template<> struct is_derivable<tag::is_eqz_>                : std::false_type {};
-  template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
   template<> struct is_derivable<tag::is_even_>               : std::false_type {};
   template<> struct is_derivable<tag::is_infinite_>           : std::false_type {};
   template<> struct is_derivable<tag::is_finite_>             : std::false_type {};
@@ -109,4 +143,28 @@ namespace eve
   template<> struct is_derivable<tag::is_nan_>                : std::false_type {};
   template<> struct is_derivable<tag::is_odd_>                : std::false_type {};
   template<> struct is_derivable<tag::is_positive_>           : std::false_type {};
+
+  template<> struct is_derivable<tag::bit_and_>               : std::false_type {};
+  template<> struct is_derivable<tag::bit_andnot_>            : std::false_type {};
+  template<> struct is_derivable<tag::bit_cast_>              : std::false_type {};
+  template<> struct is_derivable<tag::bit_ceil_>              : std::false_type {};
+  template<> struct is_derivable<tag::bit_floor_>             : std::false_type {};
+  template<> struct is_derivable<tag::bit_mask_>              : std::false_type {};
+  template<> struct is_derivable<tag::bit_notand_>            : std::false_type {};
+  template<> struct is_derivable<tag::bit_not_>               : std::false_type {};
+  template<> struct is_derivable<tag::bit_notor_>             : std::false_type {};
+  template<> struct is_derivable<tag::bitofsign_>             : std::false_type {};
+  template<> struct is_derivable<tag::bit_or_>                : std::false_type {};
+  template<> struct is_derivable<tag::bit_ornot_>             : std::false_type {};
+  template<> struct is_derivable<tag::bit_select_>            : std::false_type {};
+  template<> struct is_derivable<tag::bit_shl_>               : std::false_type {};
+  template<> struct is_derivable<tag::bit_shr_>               : std::false_type {};
+  template<> struct is_derivable<tag::bit_width_>             : std::false_type {};
+  template<> struct is_derivable<tag::bit_xor_>               : std::false_type {};
+  template<> struct is_derivable<tag::next_>                  : std::false_type {};
+  template<> struct is_derivable<tag::nextafter_>             : std::false_type {};
+  template<> struct is_derivable<tag::popcount_>              : std::false_type {};
+  template<> struct is_derivable<tag::prev_>                  : std::false_type {};
+
+
 }
