@@ -33,18 +33,17 @@ EVE_TEST( "Check behavior of eve::fma(eve::wide)"
   auto vda0 = var(a0);
   auto vda1 = var(a1);
   auto vda2 = var(a2);
-  TTS_EQUAL(val(eve::fma(vda0, a1, a2))      , eve::fma(a0, a1, a2));
-  TTS_EQUAL(der(eve::fma(vda0, a1, a2))      , diff_1st(eve::fma)(a0, a1, a2));
-  TTS_EQUAL(val(eve::fma(a0, vda1, a2))      , eve::fma(a0, a1, a2));
-  TTS_EQUAL(der(eve::fma(a0, vda1, a2))      , diff_2nd(eve::fma)(a0, a1, a2));
-  TTS_EQUAL(val(eve::fma(a0, a1, vda2))      , eve::fma(a0, a1, a2));
-  TTS_EQUAL(der(eve::fma(a0, a1, vda2))      , diff_3rd(eve::fma)(a0, a1, a2));
+  TTS_EQUAL(val(eve::fma(vda0, a1, a2))  , eve::fma(a0, a1, a2));
+  TTS_EQUAL(val(eve::fma(a0, vda1, a2))  , eve::fma(a0, a1, a2));
+  TTS_EQUAL(val(eve::fma(a0, a1, vda2))  , eve::fma(a0, a1, a2));
+  TTS_EQUAL(der(eve::fma(vda0, a1, a2))  , diff_1st(eve::fma)(a0, a1, a2));
+  TTS_EQUAL(der(eve::fma(a0, vda1, a2))  , diff_2nd(eve::fma)(a0, a1, a2));
+  TTS_EQUAL(der(eve::fma(a0, a1, vda2))  , diff_3rd(eve::fma)(a0, a1, a2));
 
-
-  TTS_EQUAL(val(eve::fma[mask](vda0, a1, a2)), eve::fma[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fma[mask](vda0, a1, a2)), diff_1st(eve::fma[mask])(a0, a1, a2));
-  TTS_EQUAL(val(eve::fma[mask](a0, vda1, a2)), eve::fma[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fma[mask](a0, vda1, a2)), diff_2nd(eve::fma[mask])(a0, a1, a2));
-  TTS_EQUAL(val(eve::fma[mask](a0, a1, vda2)), eve::fma[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fma[mask](a0, a1, vda2)), diff_3rd(eve::fma[mask])(a0, a1, a2));
+  TTS_EQUAL(val(eve::fma[mask](vda0, a1, a2))  , eve::fma[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::fma[mask](a0, vda1, a2))  , eve::fma[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::fma[mask](a0, a1, vda2))  , eve::fma[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::fma[mask](vda0, a1, a2))  , eve::if_else(mask, diff_1st(eve::fma)(a0, a1, a2), eve::one));
+  TTS_EQUAL(der(eve::fma[mask](a0, vda1, a2))  , eve::if_else(mask, diff_2nd(eve::fma)(a0, a1, a2), eve::zero));
+  TTS_EQUAL(der(eve::fma[mask](a0, a1, vda2))  , eve::if_else(mask, diff_3rd(eve::fma)(a0, a1, a2), eve::zero));
 };

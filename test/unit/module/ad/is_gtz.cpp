@@ -8,27 +8,22 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 #include <eve/module/ad.hpp>
+#include <cmath>
 
 //==================================================================================================
-// Tests for eve::abs
+// Tests for eve::is_denormal
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::abs(eve::wide)"
+
+EVE_TEST( "Check behavior of eve::is_gtz(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-10, +10)
-                              , eve::test::logicals(0,3)
-                              )
+        , eve::test::generate ( eve::test::randoms(-10, 10)
+                              , eve::test::logicals(0, 3))
         )
-<typename T, typename M>(T const& a0, M const& mask)
+<typename T, typename M>(T const& a0, M const & t)
 {
   using eve::detail::map;
-  using eve::var;
-  using eve::val;
-  using eve::der;
-  using eve::diff;
+  auto vda0 = eve::var(a0);
 
-  auto vda0 = var(a0);
-  TTS_EQUAL(val(eve::abs(vda0))      , eve::abs(a0));
-  TTS_EQUAL(val(eve::abs[mask](vda0)), eve::abs[mask](a0));
-  TTS_EQUAL(der(eve::abs(vda0))      , diff(eve::abs)(a0));
-  TTS_EQUAL(der(eve::abs[mask](vda0)), eve::if_else(mask, diff(eve::abs)(a0), eve::one));
+  TTS_EQUAL(eve::is_gtz(vda0), eve::is_gtz(a0));
+  TTS_EQUAL(eve::is_gtz[t](vda0), eve::if_else(t, eve::is_gtz(a0), eve::false_(eve::as(a0))));
 };

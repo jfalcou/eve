@@ -33,4 +33,15 @@ namespace eve::detail
     else
       return apply_over(diff_2nd(dist), x, y);
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<int N, conditional_expr C, floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto dist_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<N> const &
+                               , T const &t, U const & u ) noexcept
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::dist), t, u);
+  }
+
 }

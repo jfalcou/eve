@@ -33,18 +33,17 @@ EVE_TEST( "Check behavior of eve::fam(eve::wide)"
   auto vda0 = var(a0);
   auto vda1 = var(a1);
   auto vda2 = var(a2);
-  TTS_EQUAL(val(eve::fam(vda0, a1, a2))      , eve::fam(a0, a1, a2));
-  TTS_EQUAL(der(eve::fam(vda0, a1, a2))      , diff_1st(eve::fam)(a0, a1, a2));
-  TTS_EQUAL(val(eve::fam(a0, vda1, a2))      , eve::fam(a0, a1, a2));
-  TTS_EQUAL(der(eve::fam(a0, vda1, a2))      , diff_2nd(eve::fam)(a0, a1, a2));
-  TTS_EQUAL(val(eve::fam(a0, a1, vda2))      , eve::fam(a0, a1, a2));
-  TTS_EQUAL(der(eve::fam(a0, a1, vda2))      , diff_3rd(eve::fam)(a0, a1, a2));
+  TTS_EQUAL(val(eve::fam(vda0, a1, a2))  , eve::fam(a0, a1, a2));
+  TTS_EQUAL(val(eve::fam(a0, vda1, a2))  , eve::fam(a0, a1, a2));
+  TTS_EQUAL(val(eve::fam(a0, a1, vda2))  , eve::fam(a0, a1, a2));
+  TTS_EQUAL(der(eve::fam(vda0, a1, a2))  , diff_1st(eve::fam)(a0, a1, a2));
+  TTS_EQUAL(der(eve::fam(a0, vda1, a2))  , diff_2nd(eve::fam)(a0, a1, a2));
+  TTS_EQUAL(der(eve::fam(a0, a1, vda2))  , diff_3rd(eve::fam)(a0, a1, a2));
 
-
-  TTS_EQUAL(val(eve::fam[mask](vda0, a1, a2)), eve::fam[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fam[mask](vda0, a1, a2)), diff_1st(eve::fam[mask])(a0, a1, a2));
-  TTS_EQUAL(val(eve::fam[mask](a0, vda1, a2)), eve::fam[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fam[mask](a0, vda1, a2)), diff_2nd(eve::fam[mask])(a0, a1, a2));
-  TTS_EQUAL(val(eve::fam[mask](a0, a1, vda2)), eve::fam[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fam[mask](a0, a1, vda2)), diff_3rd(eve::fam[mask])(a0, a1, a2));
+  TTS_EQUAL(val(eve::fam[mask](vda0, a1, a2))  , eve::fam[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::fam[mask](a0, vda1, a2))  , eve::fam[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::fam[mask](a0, a1, vda2))  , eve::fam[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::fam[mask](vda0, a1, a2))  , eve::if_else(mask, diff_1st(eve::fam)(a0, a1, a2), eve::one));
+  TTS_EQUAL(der(eve::fam[mask](a0, vda1, a2))  , eve::if_else(mask, diff_2nd(eve::fam)(a0, a1, a2), eve::zero));
+  TTS_EQUAL(der(eve::fam[mask](a0, a1, vda2))  , eve::if_else(mask, diff_3rd(eve::fam)(a0, a1, a2), eve::zero));
 };

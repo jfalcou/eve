@@ -45,7 +45,7 @@ namespace eve::detail
   // Masked case
   // -----------------------------------------------------------------------------------------------
   template<conditional_expr C,  floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond
+  EVE_FORCEINLINE auto copysign_(EVE_SUPPORTS(cpu_), C const &cond
                                , T const & t, U const & u ) noexcept
   {
     return mask_op(  cond, eve::copysign, t, u);
