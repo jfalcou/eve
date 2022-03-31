@@ -10,7 +10,7 @@
 #include <eve/module/ad.hpp>
 
 //==================================================================================================
-// Tests for eve::fsm
+// Tests for eve::fdim
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::fdim(eve::wide)"
         , eve::test::simd::ieee_reals
@@ -19,7 +19,7 @@ EVE_TEST( "Check behavior of eve::fdim(eve::wide)"
                               , eve::test::logicals(0,3)
                               )
         )
-<typename T, typename M>(T const& a0, T const& a1, M const& mask)
+<typename T, typename M>(T const& a0, T const& a1, M const& mask )
 {
   using eve::detail::map;
   using eve::var;
@@ -28,17 +28,16 @@ EVE_TEST( "Check behavior of eve::fdim(eve::wide)"
   using eve::diff_1st;
   using eve::diff_2nd;
 
-
   auto vda0 = var(a0);
   auto vda1 = var(a1);
+  TTS_EQUAL(val(eve::fdim(vda0, a1))  , eve::fdim(a0, a1));
+  TTS_EQUAL(val(eve::fdim(a0, vda1))  , eve::fdim(a0, a1));
+  TTS_EQUAL(der(eve::fdim(vda0, a1))  , diff_1st(eve::fdim)(a0, a1));
+  TTS_EQUAL(der(eve::fdim(a0, vda1))  , diff_2nd(eve::fdim)(a0, a1));
 
-  TTS_EQUAL(val(eve::fdim(vda0, a1))      , eve::fdim(a0, a1));
-  TTS_EQUAL(der(eve::fdim(vda0, a1))      , diff_1st(eve::fdim)(a0, a1));
-  TTS_EQUAL(val(eve::fdim(a0, vda1))      , eve::fdim(a0, a1));
-  TTS_EQUAL(der(eve::fdim(a0, vda1))      , diff_2nd(eve::fdim)(a0, a1));
 
-  TTS_EQUAL(val(eve::fdim[mask](vda0, a1)), eve::fdim[mask](a0, a1));
-  TTS_EQUAL(der(eve::fdim[mask](vda0, a1)), diff_1st(eve::fdim[mask])(a0, a1));
-  TTS_EQUAL(val(eve::fdim[mask](a0, vda1)), eve::fdim[mask](a0, a1));
-  TTS_EQUAL(der(eve::fdim[mask](a0, vda1)), diff_2nd(eve::fdim[mask])(a0, a1));
+  TTS_EQUAL(val(eve::fdim[mask](vda0, a1))  , eve::fdim[mask](a0, a1));
+  TTS_EQUAL(val(eve::fdim[mask](a0, vda1))  , eve::fdim[mask](a0, a1));
+  TTS_EQUAL(der(eve::fdim[mask](vda0, a1))  , eve::if_else(mask, diff_1st(eve::fdim)(a0, a1), eve::one));
+  TTS_EQUAL(der(eve::fdim[mask](a0, vda1))  , eve::if_else(mask, diff_2nd(eve::fdim)(a0, a1), eve::zero));
 };

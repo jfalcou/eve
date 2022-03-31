@@ -37,30 +37,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // Masked case
-  //================================================================================================
-  template<decorator D, conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond, D const &
-                              , U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, D()(eve::absmin), t, f);
-  }
-
-  template<int N, conditional_expr C, real_value T, real_value... Ts>
-  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond
-                               , T const &t, Ts ... ts ) noexcept
-  {
-    return mask_op(  cond, eve::absmin, t, ts...);
-  }
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, eve::absmin, t, f);
- }
-
-  //================================================================================================
   // N parameters
   //================================================================================================
   template<real_value T0, real_value T1, real_value ...Ts>
@@ -68,4 +44,21 @@ namespace eve::detail
   {
     return eve::abs(eve::min(a0, a1, args...));
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<decorator D, conditional_expr C, real_value U, real_value ...Ts>
+  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond, D const &
+                              , U const &t, Ts const &... args) noexcept
+  {
+    return mask_op(  cond, D()(eve::absmin), t, args...);
+  }
+
+  template<conditional_expr C, real_value U, real_value ...Ts>
+  EVE_FORCEINLINE auto absmin_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, Ts const &...args) noexcept
+  {
+    return mask_op(  cond, eve::absmin, t, args...);
+  }
+
 }
