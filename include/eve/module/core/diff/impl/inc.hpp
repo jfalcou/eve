@@ -33,7 +33,16 @@ namespace eve::detail
                                     , diff_type<1> const &
                                     , T x) noexcept
   {
-
     return one(as(x));
+  }
+
+    // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto inc_(EVE_SUPPORTS(cpu_), C const &cond
+                            , diff_type<1> const &
+                            , U const &t) noexcept
+  {
+    return one(as(t));
   }
 }

@@ -30,6 +30,6 @@ namespace eve::detail
                             , diff_type<1> const &
                             , U const &t) noexcept
   {
-    return mask_op(  cond, diff(eve::ceil), t);
+    return mask_op(  cond, diff(eve::ceil), one(as(t)));
   }
 }
