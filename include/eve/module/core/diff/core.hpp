@@ -30,6 +30,7 @@
 #include <eve/module/core/diff/fsm.hpp>
 #include <eve/module/core/diff/fsnm.hpp>
 #include <eve/module/core/diff/inc.hpp>
+#include <eve/module/core/diff/lerp.hpp>
 #include <eve/module/core/diff/manhattan.hpp>
 #include <eve/module/core/diff/maxabs.hpp>
 #include <eve/module/core/diff/max.hpp>

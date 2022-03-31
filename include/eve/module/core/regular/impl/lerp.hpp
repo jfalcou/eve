@@ -52,4 +52,15 @@ namespace eve::detail
     return fma(t, b, fnma(t, a, a));
     ;
   }
+
+  template<conditional_expr C, floating_value T, floating_value U, floating_value V>
+  EVE_FORCEINLINE  auto lerp_(EVE_SUPPORTS(cpu_)
+                            , C const &cond
+                            , T const &a
+                            , U const &b
+                            , V const &c) noexcept
+  {
+    return mask_op(  cond, eve::lerp, a, b, c);
+  }
+
 }
