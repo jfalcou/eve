@@ -46,7 +46,9 @@ namespace eve::detail
                             , T const &a
                             , U const &b
                             , V const &c) noexcept
+  requires properly_convertible<U, V, T>
   {
-    return mask_op(  cond, eve::diff_nth<N>(eve::fsm), a, b, c);
+    using r_t =  common_compatible_t<T, U, V>;
+    return mask_op(  cond, diff_nth<N>(eve::fsm), r_t(a), r_t(b), r_t(c));
   }
 }

@@ -36,6 +36,9 @@ namespace eve::detail
     else if constexpr(N == 3) return one(as(c));
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  // -----------------------------------------------------------------------------------------------
   template<auto N, conditional_expr C, floating_value T, floating_value U, floating_value V>
   EVE_FORCEINLINE  auto fma_(EVE_SUPPORTS(cpu_)
                             , C const &cond
@@ -43,8 +46,10 @@ namespace eve::detail
                             , T const &a
                             , U const &b
                             , V const &c) noexcept
+  requires properly_convertible<U, V, T>
   {
-    return mask_op(  cond, eve::diff_nth<N>(eve::fma), a, b, c);
+    using r_t =  common_compatible_t<T, U, V>;
+    return mask_op(  cond, diff_nth<N>(eve::fnma), r_t(a), r_t(b), r_t(c));
   }
 
 
