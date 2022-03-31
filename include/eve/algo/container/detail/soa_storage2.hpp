@@ -70,7 +70,11 @@ namespace eve::algo::detail
     using is_product_type = void;
     using value_type = Type;
 
-    explicit  soa_storage(Allocator a = {}) noexcept
+    soa_storage() noexcept
+            : indexes_{}, storage_( nullptr, aligned_deleter{Allocator{}} ), capacity_{}
+    {}
+
+    explicit  soa_storage(Allocator a) noexcept
             : indexes_{}, storage_( nullptr, aligned_deleter{a} ), capacity_{}
     {}
 
@@ -119,8 +123,8 @@ namespace eve::algo::detail
       return *this;
     }
 
-    soa_storage(soa_storage&&)            =default;
-    soa_storage& operator=(soa_storage&&) =default;
+    soa_storage(soa_storage&&)            = default;
+    soa_storage& operator=(soa_storage&&) = default;
 
     EVE_FORCEINLINE auto data_aligned()
     {
@@ -208,7 +212,6 @@ namespace eve::algo::detail
     using storage_t = std::unique_ptr<byte_t, aligned_deleter>;
     using flat_t    = kumi::result::flatten_all_t<Type>;
     using indexes_t = kumi::as_tuple_t<flat_t, as_index>;
-    using alloc_t   = typename std::allocator_traits<Allocator>::template rebind_alloc<byte_t>;
 
     indexes_t   indexes_;
     storage_t   storage_;
