@@ -77,4 +77,12 @@ namespace eve::detail
     ((that = maxmag(that,r_t(args))),...);
     return that;
   }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  common_compatible_t<T0,T1,Ts...> maxmag_(EVE_SUPPORTS(cpu_), C const & cond,
+                                           T0 a0, T1 a1, Ts... args)
+  {
+   return mask_op(  cond, eve::maxmag, a0, args...);
+  }
+
 }
