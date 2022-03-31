@@ -43,4 +43,10 @@ namespace eve::detail
     }
   }
 
+  template<auto N, conditional_expr C, real_value T0, real_value ...Ts>
+  auto manhattan_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<N> const &, T0 a0, Ts... args)
+  requires floating_value<common_compatible_t<T0, Ts...>>
+  {
+    return mask_op(  cond, diff_nth<N>(eve::manhattan), a0, args...);
+  }
 }
