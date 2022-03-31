@@ -37,4 +37,21 @@ namespace eve::detail
     else if constexpr(N == 2) return a;
     else if constexpr(N == 3) return mone(as(c));
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  // -----------------------------------------------------------------------------------------------
+  template<auto N, conditional_expr C, floating_value T, floating_value U, floating_value V>
+  EVE_FORCEINLINE  auto fms_(EVE_SUPPORTS(cpu_)
+                            , C const &cond
+                            , diff_type<N> const &
+                            , T const &a
+                            , U const &b
+                            , V const &c) noexcept
+  requires properly_convertible<U, V, T>
+  {
+    using r_t =  common_compatible_t<T, U, V>;
+    return mask_op(  cond, diff_nth<N>(eve::fms), r_t(a), r_t(b), r_t(c));
+  }
+
 }
