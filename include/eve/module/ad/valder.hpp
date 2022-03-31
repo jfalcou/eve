@@ -91,6 +91,7 @@ namespace eve
       return get<1>(z);
     }
 
+    //==============================================================================================
     // helpers
     //==============================================================================================
     // mask helper
@@ -144,6 +145,7 @@ namespace eve
     {
       auto [v, d] = z;
       return Z{f[cond](v), diff(f[if_else_1(cond)])(v)*d};
+      //   return Z{f[cond](v), diff(f[          cond ])(v)*d};
     }
 
     template<typename Func, conditional_expr C, decorator D, like<valder> Z>
@@ -181,13 +183,27 @@ namespace eve
       }(std::index_sequence_for<Vs...>{});
 
       return r_t{ kumi::apply(f[cond],vs), d};
-      //return derivative(f[cond], z0, z1, zs...);
     }
 
     template<typename Func, conditional_expr C, decorator D, typename V0, typename V1, typename... Vs>
     static EVE_FORCEINLINE auto derivative(Func f, C const & cond, D const &, V0 const& z0, V1 const& z1, Vs const&... zs )
     {
-      return derivative(D()(f[cond]), z0, z1, zs...);
+      using v_t = decltype(D()(f[cond])(val(z0),val(z1),val(zs)...));
+      using r_t = eve::as_valder_t<v_t>;
+
+      auto vs = kumi::make_tuple(v_t(val(z0)),v_t(val(z1)),v_t(val(zs))...);
+      auto ds = kumi::make_tuple(v_t(der(zs))...);
+
+      v_t d = sum_of_prod ( kumi::apply(diff_1st(D()(f)[if_else_1(cond)]),vs), v_t(der(z0))
+                          , kumi::apply(diff_2nd(D()(f)[if_else_0(cond)]),vs), v_t(der(z1))
+                          );
+
+      [&]<std::size_t... I>(std::index_sequence<I...>)
+      {
+        ((d = fam(d, kumi::apply(diff_nth<I+3>(D()(f)[if_else_0(cond)]),vs), get<I>(ds))),...);
+      }(std::index_sequence_for<Vs...>{});
+
+      return r_t{ kumi::apply(D(f)[cond],vs), d};
     }
 
     template<typename Func, typename V0, typename V1, typename... Vs>
