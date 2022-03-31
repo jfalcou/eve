@@ -36,4 +36,16 @@ namespace eve::detail
   {
     return eve::max(a, b) - eve::min(a, b);
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto dist_(EVE_SUPPORTS(cpu_), C const &cond
+                               , T const &t, U const & u ) noexcept
+  {
+    return mask_op(  cond, eve::dist, t, u);
+  }
+
+
 }

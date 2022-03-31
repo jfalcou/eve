@@ -10,7 +10,7 @@
 #include <eve/module/ad.hpp>
 
 //==================================================================================================
-// Tests for eve::fsm
+// Tests for eve::fsnm
 //==================================================================================================
 EVE_TEST( "Check behavior of eve::fsnm(eve::wide)"
         , eve::test::simd::ieee_reals
@@ -33,18 +33,17 @@ EVE_TEST( "Check behavior of eve::fsnm(eve::wide)"
   auto vda0 = var(a0);
   auto vda1 = var(a1);
   auto vda2 = var(a2);
-  TTS_EQUAL(val(eve::fsnm(vda0, a1, a2))      , eve::fsnm(a0, a1, a2));
-  TTS_EQUAL(der(eve::fsnm(vda0, a1, a2))      , diff_1st(eve::fsnm)(a0, a1, a2));
-  TTS_EQUAL(val(eve::fsnm(a0, vda1, a2))      , eve::fsnm(a0, a1, a2));
-  TTS_EQUAL(der(eve::fsnm(a0, vda1, a2))      , diff_2nd(eve::fsnm)(a0, a1, a2));
-  TTS_EQUAL(val(eve::fsnm(a0, a1, vda2))      , eve::fsnm(a0, a1, a2));
-  TTS_EQUAL(der(eve::fsnm(a0, a1, vda2))      , diff_3rd(eve::fsnm)(a0, a1, a2));
+  TTS_EQUAL(val(eve::fsnm(vda0, a1, a2))  , eve::fsnm(a0, a1, a2));
+  TTS_EQUAL(val(eve::fsnm(a0, vda1, a2))  , eve::fsnm(a0, a1, a2));
+  TTS_EQUAL(val(eve::fsnm(a0, a1, vda2))  , eve::fsnm(a0, a1, a2));
+  TTS_EQUAL(der(eve::fsnm(vda0, a1, a2))  , diff_1st(eve::fsnm)(a0, a1, a2));
+  TTS_EQUAL(der(eve::fsnm(a0, vda1, a2))  , diff_2nd(eve::fsnm)(a0, a1, a2));
+  TTS_EQUAL(der(eve::fsnm(a0, a1, vda2))  , diff_3rd(eve::fsnm)(a0, a1, a2));
 
-
-  TTS_EQUAL(val(eve::fsnm[mask](vda0, a1, a2)), eve::fsnm[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fsnm[mask](vda0, a1, a2)), diff_1st(eve::fsnm[mask])(a0, a1, a2));
-  TTS_EQUAL(val(eve::fsnm[mask](a0, vda1, a2)), eve::fsnm[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fsnm[mask](a0, vda1, a2)), diff_2nd(eve::fsnm[mask])(a0, a1, a2));
-  TTS_EQUAL(val(eve::fsnm[mask](a0, a1, vda2)), eve::fsnm[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::fsnm[mask](a0, a1, vda2)), diff_3rd(eve::fsnm[mask])(a0, a1, a2));
+  TTS_EQUAL(val(eve::fsnm[mask](vda0, a1, a2))  , eve::fsnm[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::fsnm[mask](a0, vda1, a2))  , eve::fsnm[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::fsnm[mask](a0, a1, vda2))  , eve::fsnm[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::fsnm[mask](vda0, a1, a2))  , eve::if_else(mask, diff_1st(eve::fsnm)(a0, a1, a2), eve::one));
+  TTS_EQUAL(der(eve::fsnm[mask](a0, vda1, a2))  , eve::if_else(mask, diff_2nd(eve::fsnm)(a0, a1, a2), eve::zero));
+  TTS_EQUAL(der(eve::fsnm[mask](a0, a1, vda2))  , eve::if_else(mask, diff_3rd(eve::fsnm)(a0, a1, a2), eve::zero));
 };

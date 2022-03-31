@@ -7,21 +7,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
+#include <eve/module/ad.hpp>
 #include <cmath>
-
-//==================================================================================================
-// Types tests
-//==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_denormal(simd)"
-              , eve::test::simd::ieee_reals
-              )
-<typename T>(eve::as<T>)
-{
-  using eve::logical;
-  using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS( eve::is_denormal(T())                    , logical<T>   );
-  TTS_EXPR_IS( eve::is_denormal(v_t())                  , logical<v_t> );
-};
 
 //==================================================================================================
 // Tests for eve::is_denormal
@@ -47,17 +34,20 @@ EVE_TEST( "Check behavior of eve::is_denormal(simd)"
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
+  auto vda0 = eve::var(a0);
+  auto vda1 = eve::var(a1);
+  auto vda2 = eve::var(a2);
 
-  TTS_EQUAL(eve::is_denormal(a0), eve::false_(eve::as(a0)));
-  TTS_EQUAL(eve::is_denormal[t](a0), eve::if_else(t, eve::is_denormal(a0), eve::false_(eve::as(a0))));
-  TTS_EQUAL(eve::is_denormal(a1), eve::logical<T>{eve::platform::supports_denormals});
+  TTS_EQUAL(eve::is_denormal(vda0), eve::false_(eve::as(a0)));
+  TTS_EQUAL(eve::is_denormal[t](vda0), eve::if_else(t, eve::is_denormal(a0), eve::false_(eve::as(a0))));
+  TTS_EQUAL(eve::is_denormal(vda1), eve::logical<T>{eve::platform::supports_denormals});
 
   if constexpr(eve::platform::supports_denormals)
   {
-    TTS_EQUAL(eve::is_denormal(a2), map([](auto e) -> eve::logical<v_t> { return  std::fpclassify(e) == FP_SUBNORMAL; }, a2));
+    TTS_EQUAL(eve::is_denormal(vda2), map([](auto e) -> eve::logical<v_t> { return  std::fpclassify(e) == FP_SUBNORMAL; }, a2));
   }
   else
   {
-    TTS_EQUAL(eve::is_denormal(a2), eve::false_(eve::as(a2)));
+    TTS_EQUAL(eve::is_denormal(vda2), eve::false_(eve::as(a2)));
   }
 };

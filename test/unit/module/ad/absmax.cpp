@@ -34,13 +34,16 @@ EVE_TEST( "Check behavior of eve::absmax(eve::wide)"
   auto vda1 = var(a1);
   auto vda2 = var(a2);
   TTS_EQUAL(val(eve::absmax(vda0, a1, a2))  , eve::absmax(a0, a1, a2));
-  TTS_EQUAL(val(eve::absmax[mask](vda0, a1)), eve::absmax[mask](a0, a1));
-  TTS_EQUAL(der(eve::absmax(vda0, a1, a2))  , diff_1st(eve::absmax)(a0, a1, a2));
-  TTS_EQUAL(der(eve::absmax[mask](vda0, a1)), diff_1st(eve::absmax[mask])(a0, a1));
-
   TTS_EQUAL(val(eve::absmax(a0, vda1, a2))  , eve::absmax(a0, a1, a2));
-  TTS_EQUAL(der(eve::absmax(a0, vda1, a2))  , diff_2nd(eve::absmax)(a0, a1, a2));
   TTS_EQUAL(val(eve::absmax(a0, a1, vda2))  , eve::absmax(a0, a1, a2));
+  TTS_EQUAL(der(eve::absmax(vda0, a1, a2))  , diff_1st(eve::absmax)(a0, a1, a2));
+  TTS_EQUAL(der(eve::absmax(a0, vda1, a2))  , diff_2nd(eve::absmax)(a0, a1, a2));
   TTS_EQUAL(der(eve::absmax(a0, a1, vda2))  , diff_3rd(eve::absmax)(a0, a1, a2));
 
+  TTS_EQUAL(val(eve::absmax[mask](vda0, a1, a2))  , eve::absmax[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::absmax[mask](a0, vda1, a2))  , eve::absmax[mask](a0, a1, a2));
+  TTS_EQUAL(val(eve::absmax[mask](a0, a1, vda2))  , eve::absmax[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::absmax[mask](vda0, a1, a2))  , eve::if_else(mask, diff_1st(eve::absmax)(a0, a1, a2), eve::one));
+  TTS_EQUAL(der(eve::absmax[mask](a0, vda1, a2))  , eve::if_else(mask, diff_2nd(eve::absmax)(a0, a1, a2), eve::zero));
+  TTS_EQUAL(der(eve::absmax[mask](a0, a1, vda2))  , eve::if_else(mask, diff_3rd(eve::absmax)(a0, a1, a2), eve::zero));
 };

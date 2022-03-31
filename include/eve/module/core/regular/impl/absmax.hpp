@@ -38,25 +38,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // Masked case
-  //================================================================================================
-  template<decorator D, conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto absmax_(EVE_SUPPORTS(cpu_), C const &cond, D const &
-                              , U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, D()(eve::absmax), t, f);
-  }
-
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto absmax_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, eve::absmax, t, f);
-  }
-
-
-  //================================================================================================
   // N parameters
   //================================================================================================
   template<real_value T0, real_value T1, real_value ...Ts>
@@ -64,4 +45,21 @@ namespace eve::detail
   {
     return eve::abs(eve::max(a0, a1, args...));
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<decorator D, conditional_expr C, real_value U, real_value ...Ts>
+  EVE_FORCEINLINE auto absmax_(EVE_SUPPORTS(cpu_), C const &cond, D const &
+                              , U const &t, Ts const &... args) noexcept
+  {
+    return mask_op(  cond, D()(eve::absmax), t, args...);
+  }
+
+  template<conditional_expr C, real_value U, real_value ...Ts>
+  EVE_FORCEINLINE auto absmax_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, Ts const &...args) noexcept
+  {
+    return mask_op(  cond, eve::absmax, t, args...);
+  }
+
 }

@@ -49,7 +49,7 @@ namespace eve::detail
   requires properly_convertible<U, V, T>
   {
     using r_t =  common_compatible_t<T, U, V>;
-    return mask_op(  cond, diff_nth<N>(eve::fnma), r_t(a), r_t(b), r_t(c));
+    return mask_op(  cond, diff_nth<N>(eve::fma), r_t(a), r_t(b), r_t(c));
   }
 
 
