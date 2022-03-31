@@ -29,6 +29,6 @@ namespace eve::detail
                             , diff_type<1> const &
                             , U const &t) noexcept
   {
-    return mask_op(  cond, diff(eve::floor), t);
+    return mask_op(  cond, diff(eve::floor), one(as(t)));
   }
 }
