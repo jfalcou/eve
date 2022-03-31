@@ -48,7 +48,9 @@ namespace eve
     struct bit_width_;
     struct bit_xor_;
     struct exponent_;
-
+    struct gather_;
+    struct has_sinle_bit_;
+    struct hi_;
     struct if_else_;
     struct is_denormal_;
     struct is_equal_;
@@ -83,10 +85,15 @@ namespace eve
     struct is_not_denormal_;
     struct is_not_finite_;
     struct is_not_flint_;
+    struct is_not_infinite_;
     struct is_nan_;
+    struct is_not_nan_;
     struct is_odd_;
     struct is_positive_;
-
+    struct is_pow2_;
+    struct lo_;
+    struct lohi_;
+    struct lookup_;
     struct next_;
     struct nextafter_;
     struct prev_;
@@ -108,6 +115,9 @@ namespace eve
   template<> struct is_derivable<tag::none_>                  : std::false_type {};
   template<> struct is_derivable<tag::epsilon_>               : std::false_type {};
   template<> struct is_derivable<tag::exponent_>              : std::false_type {};
+  template<> struct is_derivable<tag::gather_>                : std::false_type {};
+  template<> struct is_derivable<tag::has_sinle_bit_>         : std::false_type {};
+  template<> struct is_derivable<tag::hi_>                    : std::false_type {};
   template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
   template<> struct is_derivable<tag::is_equal_>              : std::false_type {};
   template<> struct is_derivable<tag::is_not_equal_>          : std::false_type {};
@@ -141,10 +151,15 @@ namespace eve
   template<> struct is_derivable<tag::is_not_denormal_>       : std::false_type {};
   template<> struct is_derivable<tag::is_not_finite_>         : std::false_type {};
   template<> struct is_derivable<tag::is_not_flint_>          : std::false_type {};
+  template<> struct is_derivable<tag::is_not_infinite_>       : std::false_type {};
   template<> struct is_derivable<tag::is_nan_>                : std::false_type {};
+  template<> struct is_derivable<tag::is_not_nan_>            : std::false_type {};
   template<> struct is_derivable<tag::is_odd_>                : std::false_type {};
   template<> struct is_derivable<tag::is_positive_>           : std::false_type {};
-
+  template<> struct is_derivable<tag::is_pow2_>               : std::false_type {};
+  template<> struct is_derivable<tag::lo_>                    : std::false_type {};
+  template<> struct is_derivable<tag::lohi_>                  : std::false_type {};
+  template<> struct is_derivable<tag::lookup_>                : std::false_type {};
   template<> struct is_derivable<tag::bit_and_>               : std::false_type {};
   template<> struct is_derivable<tag::bit_andnot_>            : std::false_type {};
   template<> struct is_derivable<tag::bit_cast_>              : std::false_type {};
