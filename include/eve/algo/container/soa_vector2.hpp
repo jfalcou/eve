@@ -97,7 +97,7 @@ namespace eve::algo
     soa_vector(std::size_t n, value_type v, Allocator a = Allocator{})
               : soa_vector(no_init,n,a)
     {
-      fill(0, n, v );
+      fill(v);
     }
 
     //! Constructs the container with the contents of the initializer list `l`.
@@ -362,6 +362,8 @@ namespace eve::algo
     {
       eve::algo::fill(algo::as_range(begin() + first, begin() + last), v );
     }
+
+    void fill(value_type v) { eve::algo::fill(*this, v ); }
 
     storage_t   storage;
     std::size_t size_;
