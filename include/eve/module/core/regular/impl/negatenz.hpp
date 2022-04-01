@@ -43,4 +43,13 @@ namespace eve::detail
     return arithmetic_call(negatenz, a, b);
   }
 
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  // -----------------------------------------------------------------------------------------------
+  template<conditional_expr C,  floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto negatenz_(EVE_SUPPORTS(cpu_), C const &cond
+                               , T const & t, U const & u ) noexcept
+  {
+    return mask_op(  cond, eve::negatenz, t, u);
+  }
 }

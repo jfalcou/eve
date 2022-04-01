@@ -33,7 +33,7 @@ namespace eve::detail
                             , T const &a
                             , T const &b) noexcept
   {
-    return if_else(b < a, b, a);
+    return if_else(a < b, b, a);
   }
 
   template<real_simd_value T>
@@ -42,16 +42,6 @@ namespace eve::detail
                             , T const &b) noexcept
   {
     return apply_over(min, a, b);
-  }
-
-  //================================================================================================
-  // Masked case
-  //================================================================================================
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto min_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
-  {
-    return mask_op(  cond, eve::min, t, f);
   }
 
   //================================================================================================
@@ -64,5 +54,14 @@ namespace eve::detail
     r_t that(min(r_t(a0),r_t(a1)));
     ((that = min(that,r_t(args))),...);
     return that;
+  }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto min_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
+  {
+     return mask_op(  cond, eve::min, a0, a1, args...);
   }
 }

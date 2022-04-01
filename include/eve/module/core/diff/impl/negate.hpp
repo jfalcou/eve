@@ -19,7 +19,6 @@ namespace eve::detail
                                     , diff_type<1> const &
                                     , T, T y) noexcept
   {
-
     return sign(y);
   }
 
@@ -28,7 +27,16 @@ namespace eve::detail
                                     , diff_type<2> const &
                                     , T x, T ) noexcept
   {
-
     return zero(as(x));
+  }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<int N, conditional_expr C, floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto negate_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<N> const &
+                               , T const &t, U const & u ) noexcept
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::negate), t, u);
   }
 }
