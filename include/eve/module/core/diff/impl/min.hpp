@@ -21,4 +21,11 @@ namespace eve::detail
     auto o = [](auto m){return eve::one(as(m)); };
     return minmax_kernel<N>(eve::min, o, arg0, arg1, args...);
   }
+
+  template<int N, conditional_expr C, typename T0, typename T1, typename... Ts>
+  auto min_(EVE_SUPPORTS(cpu_), C const & cond, diff_type<N>
+           , T0 arg0, T1 arg1, Ts... args) noexcept
+  {
+    return mask_op(  cond, diff_nth<N>(eve::min), arg0, arg1, args...);
+  }
 }

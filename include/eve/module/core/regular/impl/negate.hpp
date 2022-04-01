@@ -37,4 +37,15 @@ namespace eve::detail
     if constexpr(signed_value<T>) {  return a*sign(b); }
     else { return if_else(is_nez(b), a, eve::zero);}
   }
+  
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  // -----------------------------------------------------------------------------------------------
+  template<conditional_expr C,  floating_real_value T, floating_real_value U>
+  EVE_FORCEINLINE auto negate_(EVE_SUPPORTS(cpu_), C const &cond
+                               , T const & t, U const & u ) noexcept
+  {
+    return mask_op(  cond, eve::negate, t, u);
+  }
+  
 }

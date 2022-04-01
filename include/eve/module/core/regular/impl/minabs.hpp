@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
@@ -16,7 +17,9 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
-#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/minabs.hpp>
+#include <eve/module/core/pedantic/minabs.hpp>
+#include <eve/module/core/numeric/minabs.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
@@ -55,6 +58,19 @@ namespace eve::detail
     return mask_op(  cond, eve::minabs, t, f);
   }
 
+  //================================================================================================
+  //N parameters
+  //================================================================================================
+  template<decorator D, real_value T0, real_value T1, real_value ...Ts>
+  auto minabs_(EVE_SUPPORTS(cpu_), D const &, T0 a0, T1 a1, Ts... args)
+  {
+    auto dma = D()(minabs);
+    using r_t = common_compatible_t<T0,T1,Ts...>;
+    r_t that(dma(r_t(a0),r_t(a1)));
+    ((that = dma(that,r_t(args))),...);
+    return that;
+  }
+
   template<real_value T0, real_value T1, real_value ...Ts>
   common_compatible_t<T0,T1,Ts...> minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
@@ -63,4 +79,12 @@ namespace eve::detail
     ((that = minabs(that,r_t(args))),...);
     return that;
   }
+
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  common_compatible_t<T0,T1,Ts...> minabs_(EVE_SUPPORTS(cpu_), C const & cond,
+                                           T0 a0, T1 a1, Ts... args)
+  {
+   return mask_op(  cond, eve::minabs, a0, args...);
+  }
+
 }
