@@ -37,4 +37,12 @@ namespace eve::detail
 
     return one(as(x));
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_real_value U>
+  EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &, U const &t) noexcept
+  {
+    return mask_op( cond, eve::diff(eve::plus), t);
+  }
 }

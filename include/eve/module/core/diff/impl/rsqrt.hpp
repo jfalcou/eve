@@ -23,9 +23,17 @@ namespace eve::detail
                                     , T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return 3*mhalf(as(x))*rec(sqrt(x)*x);
+      return mhalf(as(x))*rec(sqrt(x)*x);
     else
       return apply_over(diff_1st(rsqrt), x);
 
+  }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_real_value U>
+  EVE_FORCEINLINE auto rsqrt_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &, U const &t) noexcept
+  {
+    return mask_op( cond, eve::diff(eve::rsqrt), t);
   }
 }

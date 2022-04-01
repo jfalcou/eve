@@ -44,4 +44,13 @@ namespace eve::detail
       return if_else(a < b, next(a), if_else(b < a, prev(a), a));
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::nextafter, t);
+  }
+
 }
