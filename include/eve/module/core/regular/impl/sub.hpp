@@ -47,4 +47,11 @@ namespace eve::detail
     ((that = sub(that,args)),...);
     return that;
   }
+
+  template<conditional_expr C, real_value T0, real_value ...Ts>
+  auto sub_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, Ts... args)
+  requires floating_value<common_compatible_t<T0, Ts...>>
+  {
+   return mask_op(  cond, eve::sub, a0, args...);
+  }  
 }

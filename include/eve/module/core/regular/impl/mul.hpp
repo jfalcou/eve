@@ -38,4 +38,11 @@ namespace eve::detail
     ((that = mul(that,r_t(args))),...);
     return that;
   }
+
+  template<conditional_expr C, real_value T0, real_value ...Ts>
+  auto mul_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, Ts... args)
+  requires floating_value<common_compatible_t<T0, Ts...>>
+  {
+   return mask_op(  cond, eve::mul, a0, args...);
+  }
 }

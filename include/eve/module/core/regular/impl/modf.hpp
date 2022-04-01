@@ -36,4 +36,13 @@ namespace eve::detail
       return apply_over2(modf, a);
     }
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_real_value U>
+  EVE_FORCEINLINE kumi::tuple<U, U> modf_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return {mask_op( cond, eve::frac, t), mask_op( cond, eve::trunc, t)};
+  }
 }

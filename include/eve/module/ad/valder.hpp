@@ -913,9 +913,7 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::modf_
                                                , Z const& z ) noexcept
     {
-      auto [v, d] = z;
-      auto [f, t] = modf(v);
-      return kumi::tuple{Z{f, d}, Z{t}};
+      return kumi::tuple{frac(z), trunc(z)};
     }
 
  };
