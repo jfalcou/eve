@@ -10,9 +10,9 @@
 #include <eve/module/ad.hpp>
 
 //==================================================================================================
-// Tests for eve::add
+// Tests for eve::sub
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::add(eve::wide)"
+EVE_TEST( "Check behavior of eve::sub(eve::wide)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(-10, +10)
                               , eve::test::randoms(-10, +10)
@@ -33,19 +33,19 @@ EVE_TEST( "Check behavior of eve::add(eve::wide)"
   auto vda0 = var(a0);
   auto vda1 = var(a1);
   auto vda2 = var(a2);
-  TTS_EQUAL(val(eve::add(vda0, a1, a2))      , eve::add(a0, a1, a2));
-  TTS_EQUAL(der(eve::add(vda0, a1, a2))      , diff_1st(eve::add)(a0, a1, a2));
-  TTS_EQUAL(val(eve::add(a0, vda1, a2))      , eve::add(a0, a1, a2));
-  TTS_EQUAL(der(eve::add(a0, vda1, a2))      , diff_2nd(eve::add)(a0, a1, a2));
-  TTS_EQUAL(val(eve::add(a0, a1, vda2))      , eve::add(a0, a1, a2));
-  TTS_EQUAL(der(eve::add(a0, a1, vda2))      , diff_3rd(eve::add)(a0, a1, a2));
+  TTS_EQUAL(val(eve::sub(vda0, a1, a2))      , eve::sub(a0, a1, a2));
+  TTS_EQUAL(der(eve::sub(vda0, a1, a2))      , diff_1st(eve::sub)(a0, a1, a2));
+  TTS_EQUAL(val(eve::sub(a0, vda1, a2))      , eve::sub(a0, a1, a2));
+  TTS_EQUAL(der(eve::sub(a0, vda1, a2))      , diff_2nd(eve::sub)(a0, a1, a2));
+  TTS_EQUAL(val(eve::sub(a0, a1, vda2))      , eve::sub(a0, a1, a2));
+  TTS_EQUAL(der(eve::sub(a0, a1, vda2))      , diff_3rd(eve::sub)(a0, a1, a2));
 
-  TTS_EQUAL(val(eve::add[mask](vda0, a1, a2)), eve::add[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::add[mask](vda0, a1, a2)), eve::if_else(mask, diff_1st(eve::add)(a0, a1, a2), eve::one));
-  TTS_EQUAL(val(eve::add[mask](a0, vda1, a2)), eve::add[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::add[mask](a0, vda1, a2)), eve::if_else(mask, diff_2nd(eve::add)(a0, a1, a2), eve::zero));
-  TTS_EQUAL(val(eve::add[mask](a0, a1, vda2)), eve::add[mask](a0, a1, a2));
-  TTS_EQUAL(der(eve::add[mask](a0, a1, vda2)), eve::if_else(mask, diff_3rd(eve::add)(a0, a1, a2), eve::zero));
+  TTS_EQUAL(val(eve::sub[mask](vda0, a1, a2)), eve::sub[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::sub[mask](vda0, a1, a2)), eve::if_else(mask, diff_1st(eve::sub)(a0, a1, a2), eve::one));
+  TTS_EQUAL(val(eve::sub[mask](a0, vda1, a2)), eve::sub[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::sub[mask](a0, vda1, a2)), eve::if_else(mask, diff_2nd(eve::sub)(a0, a1, a2), eve::zero));
+  TTS_EQUAL(val(eve::sub[mask](a0, a1, vda2)), eve::sub[mask](a0, a1, a2));
+  TTS_EQUAL(der(eve::sub[mask](a0, a1, vda2)), eve::if_else(mask, diff_3rd(eve::sub)(a0, a1, a2), eve::zero));
 
 
 };

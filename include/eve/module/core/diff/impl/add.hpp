@@ -24,4 +24,14 @@ namespace eve::detail
     if constexpr(N > sizeof...(Ts)+1) return zero(as < r_t>());
     else return one(as<r_t>());
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<int N, conditional_expr C, floating_real_value T, floating_real_value... Ts>
+  EVE_FORCEINLINE auto add_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<N> const &
+                               , T const &t, Ts ... ts ) noexcept
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::add), t, ts...);
+  }
 }
