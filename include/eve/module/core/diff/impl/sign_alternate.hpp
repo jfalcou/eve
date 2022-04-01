@@ -8,27 +8,24 @@
 #pragma once
 
 #include <eve/module/core/regular/derivative.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/derivative.hpp>
+#include <eve/module/core/regular/sign_alternate.hpp>
 
 namespace eve::detail
 {
-
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T trunc_(EVE_SUPPORTS(cpu_)
-                                   , diff_type<1> const &
-                                   , T x) noexcept
+  EVE_FORCEINLINE constexpr T sign_alternate_(EVE_SUPPORTS(cpu_)
+                                    , diff_type<1> const &
+                                    , T ) noexcept
   {
-    return zero(as(x));
+    return T(0);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, floating_real_value U>
-  EVE_FORCEINLINE auto trunc_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &
-                             , U const &t) noexcept
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto sign_alternate_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &
+                            , U const &t) noexcept
   {
-    return mask_op( cond, eve::diff(eve::trunc), t);
+    return mask_op( cond, diff(eve::sign_alternate), t);
   }
-
 }

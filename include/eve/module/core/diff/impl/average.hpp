@@ -34,6 +34,4 @@ namespace eve::detail
     return mask_op(  cond, eve::diff_nth<N>(eve::average), t, ts...);
   }
 
-
-
 }

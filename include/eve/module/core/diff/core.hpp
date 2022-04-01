@@ -29,6 +29,8 @@
 #include <eve/module/core/diff/frac.hpp>
 #include <eve/module/core/diff/fsm.hpp>
 #include <eve/module/core/diff/fsnm.hpp>
+#include <eve/module/core/diff/if_else.hpp>
+#include <eve/module/core/diff/ifnot_else.hpp>
 #include <eve/module/core/diff/inc.hpp>
 #include <eve/module/core/diff/lerp.hpp>
 #include <eve/module/core/diff/manhattan.hpp>
@@ -52,6 +54,7 @@
 #include <eve/module/core/diff/rec.hpp>
 //#include <eve/module/core/diff/round.hpp>
 #include <eve/module/core/diff/rsqrt.hpp>
+#include <eve/module/core/diff/sign_alternate.hpp>
 #include <eve/module/core/diff/sign.hpp>
 #include <eve/module/core/diff/signnz.hpp>
 #include <eve/module/core/diff/sqr_abs.hpp>

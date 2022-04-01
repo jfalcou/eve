@@ -73,4 +73,14 @@ namespace eve::detail
       return that;
     }
   }
+
+  //================================================================================================
+  // Masked case
+  //================================================================================================
+  template<int N, conditional_expr C, floating_real_value T, floating_real_value... Ts>
+  EVE_FORCEINLINE auto mul_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<N> const &
+                               , T const &t, Ts ... ts ) noexcept
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::mul), t, ts...);
+  }
 }

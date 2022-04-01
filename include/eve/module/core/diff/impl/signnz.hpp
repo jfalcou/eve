@@ -19,4 +19,14 @@ namespace eve::detail
   {
     return T(0);
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto signnz_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &
+                            , U const &t) noexcept
+  {
+    return mask_op( cond, diff(eve::signnz), t);
+  }
 }
