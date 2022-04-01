@@ -7,7 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/expected_cardinal.hpp>
+#include <eve/algo/copy.hpp>
+#include <eve/algo/equal.hpp>
+#include <eve/algo/fill.hpp>
+#include <eve/algo/views/convert.hpp>
 #include <eve/algo/container/detail/soa_storage2.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/product_type.hpp>
@@ -18,6 +21,11 @@
 
 namespace eve::algo
 {
+  struct no_init_t {};
+
+  //! Markup to trigger construction of container without initialisation of content
+  inline constexpr no_init_t no_init = {};
+
   //================================================================================================
   //! @addtogroup memory
   //! @{
@@ -80,11 +88,16 @@ namespace eve::algo
             : soa_vector(n, value_type{}, a)
     {}
 
+    //! Constructs the container with `n` default-inserted instances of `Type`.
+    soa_vector(no_init_t, std::size_t n, Allocator a = Allocator{})
+            : storage(a,n), size_{n}
+    {}
+
     //! Constructs the container with `n` copies of elements with `value` value.
     soa_vector(std::size_t n, value_type v, Allocator a = Allocator{})
-              : storage(a,n), size_{n}
+              : soa_vector(no_init,n,a)
     {
-      detail::memory_helper::fill(begin(), 0, n, v );
+      fill(0, n, v );
     }
 
     //! Constructs the container with the contents of the initializer list `l`.
@@ -113,7 +126,7 @@ namespace eve::algo
     EVE_FORCEINLINE std::size_t capacity()  const noexcept { return storage.capacity_; }
 
     //! Requests the removal of unused capacity.
-    EVE_FORCEINLINE void shrink_to_fit() { detail::memory_helper::grow(storage, size(), size()); }
+    EVE_FORCEINLINE void shrink_to_fit() { grow(size(), size()); }
 
     //! Checks if the container has no elements
     EVE_FORCEINLINE bool empty() const noexcept { return !size(); }
@@ -130,7 +143,7 @@ namespace eve::algo
       {
         // Grow capacity to n
         auto const sz = size_;
-        detail::memory_helper::grow(storage, n, size());
+        grow(n, size());
         size_ = sz;
      }
     }
@@ -159,11 +172,11 @@ namespace eve::algo
 
       std::ptrdiff_t distance_f = f - cbegin();
       std::ptrdiff_t distance_l = l - cbegin();
-      std::ptrdiff_t sz = distance_l - distance_f;
+      std::ptrdiff_t sz         = distance_l - distance_f;
 
-      detail::memory_helper::erase( algo::as_range(l, cend())
-                                  , algo::as_range(begin() + distance_l - sz, end() - sz)
-                                  );
+      eve::algo::copy_backward( algo::as_range(l, cend())
+                              , algo::as_range(begin() + distance_l - sz, end() - sz)
+                              );
       size_ -= sz;
       return begin() + distance_f;
     }
@@ -178,7 +191,7 @@ namespace eve::algo
       if(size_ == capacity())
       {
         // Grow twice per push_back
-        detail::memory_helper::grow(storage, 2*size_+1, size());
+        grow(2*size_+1, size());
       }
 
       eve::write(value, begin()+size_);
@@ -207,11 +220,11 @@ namespace eve::algo
       if(n > capacity())
       {
         // Grow twice per resize
-        detail::memory_helper::grow(storage, 2*n, size());
+        grow(2*n, size());
       }
 
       // If needed, fill with new data
-      if(n > sz) detail::memory_helper::fill(begin(), sz, n, value );
+      if(n > sz) fill(sz, n, value );
       size_ = n;
     }
 
@@ -308,7 +321,7 @@ namespace eve::algo
     friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
     {
       if( lhs.size() != rhs.size() ) return false;
-      return detail::memory_helper::compare(lhs,rhs);
+      return eve::algo::equal(lhs, rhs.begin_aligned());
     }
 
     friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
@@ -336,6 +349,20 @@ namespace eve::algo
     }
 
     private:
+
+    void grow(std::size_t new_capacity, std::size_t old_size)
+    {
+      soa_vector that(no_init, new_capacity, get_allocator());
+      eve::algo::copy(*this, that.begin_aligned());
+      this->operator=(std::move(that));
+      size_ = old_size;
+    }
+
+    void fill(std::size_t first, std::size_t last, value_type v)
+    {
+      eve::algo::fill(algo::as_range(begin() + first, begin() + last), v );
+    }
+
     storage_t   storage;
     std::size_t size_;
   };

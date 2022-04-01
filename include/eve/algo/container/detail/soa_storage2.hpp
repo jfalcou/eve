@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/copy.hpp>
-#include <eve/algo/equal.hpp>
-#include <eve/algo/fill.hpp>
-#include <eve/algo/views/convert.hpp>
 #include <eve/algo/views/zip.hpp>
+#include <eve/arch/expected_cardinal.hpp>
 #include <eve/concept/simd_allocator.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
@@ -28,40 +25,25 @@ namespace eve::algo::detail
     static void copy_all_aligned(std::byte const* src, std::byte* dst, std::size_t size)
     {
       auto aligned_src = eve::as_aligned(reinterpret_cast<std::uint8_t const*>(src), lane<64>);
-      eve::algo::copy ( as_range(aligned_src, aligned_src+size)
-                      , eve::as_aligned(reinterpret_cast<std::uint8_t*>(dst), lane<64>)
-                      );
+      auto aligned_dst = eve::as_aligned(reinterpret_cast<std::uint8_t*>(dst), lane<64>);
+      eve::algo::copy(as_range(aligned_src, aligned_src+size), aligned_dst);
     }
+
+    template<typename T> static EVE_FORCEINLINE auto as_aligned_pointer(T* ptr)
+    {
+      return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
+    }
+
+    template<typename T>
+    static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
 
     template<typename Storage>
-    static void grow(Storage& s, std::size_t new_capacity, std::size_t old_size)
+    static auto allocate(Storage const& s, std::size_t n)
     {
-      // Build new storage
-      Storage that{s.get_allocator(), new_capacity};
-
-      // Copy old data
-      using type  = typename Storage::value_type;
-      auto  b     = views::convert(s.data(), eve::as<type>{});
-      eve::algo::copy( as_range(b, b + old_size), that.data());
-
-      s = std::move(that);
-    }
-
-    template<typename Iterator, typename Value>
-    static void fill(Iterator begin, std::size_t first, std::size_t last, Value v)
-    {
-      eve::algo::fill(algo::as_range(begin + first, begin + last), v );
-    }
-
-    template<typename Src, typename Dst> static void erase( Src src, Dst dst)
-    {
-      eve::algo::copy_backward( src, dst);
-    }
-
-    template<typename Container> static bool compare(Container const& lhs, Container const& rhs)
-    {
-      return eve::algo::equal(lhs, rhs.begin_aligned());
-    }
+      using storage_t = typename Storage::storage_t;
+      auto a = s.get_allocator();
+      return storage_t{ (typename Storage::byte_t*)(a.allocate_aligned(n,64)), a};
+     }
   };
 
   template<eve::product_type Type, eve::simd_allocator Allocator>
@@ -81,7 +63,7 @@ namespace eve::algo::detail
     soa_storage(Allocator a, std::size_t c) : soa_storage(a)
     {
       // Strong guarantee on allocation
-      auto local = allocate(get_allocator(), byte_size(c));
+      auto local = memory_helper::allocate(*this, byte_size(c));
       storage_.swap(local);
 
       capacity_ = aligned_capacity(c);
@@ -93,7 +75,7 @@ namespace eve::algo::detail
                             {
                               // Start current sub-span data lifetime
                               using type  = kumi::element_t<Idx::value,Type>;
-                              auto sz     = realign<type>(c);
+                              auto sz     = memory_helper::realign<type>(c);
                               std::memmove(reinterpret_cast<type*>(sub+offset), sub+offset, sz);
 
                               // Update the index
@@ -109,7 +91,7 @@ namespace eve::algo::detail
       auto sz = byte_size(src.capacity_);
 
       // Strong guarantee on allocation
-      auto local  = allocate(get_allocator(),sz);
+      auto local  = memory_helper::allocate(*this,sz);
       memory_helper::copy_all_aligned(src.storage_.get(), local.get(), sz );
       storage_.swap(local);
 
@@ -128,13 +110,13 @@ namespace eve::algo::detail
 
     EVE_FORCEINLINE auto data_aligned()
     {
-      auto ptrs = kumi::map([]( auto p) { return as_aligned_pointer( p ); }, *this);
+      auto ptrs = kumi::map([]( auto p) { return memory_helper::as_aligned_pointer( p ); }, *this);
       return kumi::apply(eve::algo::views::zip, ptrs);
     }
 
     EVE_FORCEINLINE auto data_aligned() const
     {
-      auto ptrs = kumi::map([]( auto p) { return as_aligned_pointer( p ); }, *this);
+      auto ptrs = kumi::map([]( auto p) { return memory_helper::as_aligned_pointer( p ); }, *this);
       return kumi::apply(eve::algo::views::zip, ptrs);
     }
 
@@ -153,19 +135,6 @@ namespace eve::algo::detail
     //==============================================================================================
     // Static helpers
     //==============================================================================================
-    template<typename T> static EVE_FORCEINLINE auto as_aligned_pointer(T* ptr)
-    {
-      return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
-    }
-
-    template<typename T>
-    static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
-
-    static auto allocate(Allocator a, std::size_t n)
-    {
-      return storage_t{ reinterpret_cast<byte_t*>(a.allocate_aligned(n,64)), a};
-    }
-
     static auto aligned_capacity(std::size_t n) noexcept
     {
       // Capacity is the smallest gap possible, ie the one in the largest type
@@ -175,7 +144,7 @@ namespace eve::algo::detail
 
     static auto byte_size(std::size_t n) noexcept
     {
-      return  kumi::fold_left ( [n]<typename S>(auto a, S) { return a + realign<S>(n); }
+      return  kumi::fold_left ( [n]<typename S>(auto a,S) { return a + memory_helper::realign<S>(n); }
                               , flat_t{}
                               , 0ULL
                               );
@@ -205,7 +174,7 @@ namespace eve::algo::detail
       void operator()(void* p) { Allocator::deallocate_aligned(p); }
     };
 
-    Allocator get_allocator() { return storage_.get_deleter(); }
+    Allocator get_allocator() const { return storage_.get_deleter(); }
 
     //==============================================================================================
     using byte_t    = std::byte;
