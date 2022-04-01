@@ -31,10 +31,17 @@ namespace eve::detail
   //================================================================================================
   // Masked case
   //================================================================================================
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return t;
+  }
+
   template<conditional_expr C, real_value U, real_value V>
   EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
       requires compatible_values<U, V>
   {
-    return mask_op(  cond, eve::add, t, f);
+    auto addit = [](auto x, auto y){return x+y;};
+    return mask_op(  cond, addit, t, f);
   }
 }

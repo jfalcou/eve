@@ -554,7 +554,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto sqrtv = sqrt(v);
-      return Z{sqrtv, -d/(2*sqrtv)};
+      return Z{sqrtv, d/(2*sqrtv)};
     }
 
     template<like<valder> Z>
