@@ -49,7 +49,7 @@ namespace eve
     struct bit_xor_;
     struct exponent_;
     struct gather_;
-    struct has_sinle_bit_;
+    struct has_single_bit_;
     struct hi_;
     struct if_else_;
     struct is_denormal_;
@@ -98,6 +98,12 @@ namespace eve
     struct nextafter_;
     struct prev_;
     struct popcount_;
+    struct rotl_;
+    struct rotr_;
+    struct rshl__;
+    struct rshr_;
+    struct shl__;
+    struct shr_;
   }
 
   template<> struct is_derivable<tag::val_>                   : std::false_type {};
@@ -116,7 +122,7 @@ namespace eve
   template<> struct is_derivable<tag::epsilon_>               : std::false_type {};
   template<> struct is_derivable<tag::exponent_>              : std::false_type {};
   template<> struct is_derivable<tag::gather_>                : std::false_type {};
-  template<> struct is_derivable<tag::has_sinle_bit_>         : std::false_type {};
+  template<> struct is_derivable<tag::has_single_bit_>        : std::false_type {};
   template<> struct is_derivable<tag::hi_>                    : std::false_type {};
   template<> struct is_derivable<tag::is_denormal_>           : std::false_type {};
   template<> struct is_derivable<tag::is_equal_>              : std::false_type {};
@@ -181,6 +187,13 @@ namespace eve
   template<> struct is_derivable<tag::nextafter_>             : std::false_type {};
   template<> struct is_derivable<tag::popcount_>              : std::false_type {};
   template<> struct is_derivable<tag::prev_>                  : std::false_type {};
+  template<> struct is_derivable<tag::rotl_>                  : std::false_type {};
+  template<> struct is_derivable<tag::rotr_>                  : std::false_type {};
+  template<> struct is_derivable<tag::rshl_>                  : std::false_type {};
+  template<> struct is_derivable<tag::rshr_>                  : std::false_type {};
+  template<> struct is_derivable<tag::shl_>                   : std::false_type {};
+  template<> struct is_derivable<tag::shr_>                   : std::false_type {};
+
 
 
 }

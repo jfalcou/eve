@@ -24,6 +24,13 @@ namespace eve::detail
     else                                  return T{0} - v;
   }
 
+  template<real_value T, real_value U>
+  EVE_FORCEINLINE auto minus_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
+      requires compatible_values<T, U>
+  {
+    return a-b;
+  }
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>
@@ -39,4 +46,5 @@ namespace eve::detail
     auto substract =  [](auto x, auto y){return x-y;};
     return mask_op(  cond, substract, t, f);
   }
+
 }
