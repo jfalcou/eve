@@ -17,6 +17,7 @@
 #include <eve/traits.hpp>
 #include <eve/assert.hpp>
 
+#include "eve/algo/mismatch.hpp"
 #include <memory>
 
 namespace eve::algo
@@ -168,17 +169,14 @@ namespace eve::algo
     //! Empty range is OK, does nothing
     iterator erase(const_iterator f, const_iterator l)
     {
-      EVE_ASSERT(!empty(), "soa_vector::erase() was called on empty container");
-
-      std::ptrdiff_t distance_f = f - cbegin();
-      std::ptrdiff_t distance_l = l - cbegin();
-      std::ptrdiff_t sz         = distance_l - distance_f;
+      std::ptrdiff_t distance = f - cbegin();
+      std::ptrdiff_t sz       = l - f;
 
       eve::algo::copy_backward( algo::as_range(l, cend())
-                              , algo::as_range(begin() + distance_l - sz, end() - sz)
+                              , algo::as_range(begin() + distance, end() - sz)
                               );
       size_ -= sz;
-      return begin() + distance_f;
+      return begin() + distance;
     }
 
     //! @brief Appends the given element value to the end of the container.
@@ -219,12 +217,12 @@ namespace eve::algo
       auto sz = size_;
       if(n > capacity())
       {
-        // Grow twice per resize
-        grow(2*n, size());
+        // Grow twice or up to n per resize
+        grow(std::max(2*size(), n), size());
       }
 
       // If needed, fill with new data
-      if(n > sz) fill(sz, n, value );
+      if(n > sz) fill(sz, capacity(), value );
       size_ = n;
     }
 
@@ -274,6 +272,9 @@ namespace eve::algo
     {
       return eve::write(v, begin() + i);
     }
+
+    //! @brief Fill the soa_vector with a given value
+    void fill(value_type v) { eve::algo::fill(*this, v); }
 
     //==============================================================================================
     //! @}
@@ -362,8 +363,6 @@ namespace eve::algo
     {
       eve::algo::fill(algo::as_range(begin() + first, begin() + last), v );
     }
-
-    void fill(value_type v) { eve::algo::fill(*this, v ); }
 
     storage_t   storage;
     std::size_t size_;
