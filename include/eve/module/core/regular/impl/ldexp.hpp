@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/converter.hpp>   
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/trunc.hpp>
@@ -89,9 +89,8 @@ namespace eve::detail
     }
   }
 
-  template<conditional_expr C, floating_real_value T0, real_value T1>
+  template<conditional_expr C, floating_real_value T0, value T1>
   auto ldexp_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1)
-  requires floating_value<common_compatible_t<T0, T1>>
   {
    return mask_op(  cond, ldexp, a0, a1);
   }
