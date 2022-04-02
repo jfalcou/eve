@@ -514,9 +514,10 @@ namespace eve
     //==  peculiar cases
     //==============================================================================================/////////////////////////
     template<like<valder> Z, value N>
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::ldexp_, Z const& z,  N const& n) noexcept
+    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::ldexp_
+                                                , Z const& z,  N const& n) noexcept
     {
-      return Z{ldexp(val(z), n), ldexp(one(as(val(z))), n)};
+      return Z{ldexp(val(z), val(n)), ldexp(one(as(val(z))), val(n))};
     }
 
     //==============================================================================================/////////////////////////
@@ -916,8 +917,19 @@ namespace eve
       return kumi::tuple{frac(z), trunc(z)};
     }
 
- };
+    template< typename U, maybe<valder> Z1, maybe<valder> Z2>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::if_else_
+                                              , U const & c , Z1 const& a, Z2 const& b ) noexcept
+    {
+      auto va = val(a); auto da = der(a);
+      auto vb = val(b); auto db = der(b);
+      auto vc = val(c);
+      using v_t = decltype(if_else(vc, va, vb));
+      using r_t = as_valder_t<v_t>;
+      return r_t{if_else(vc, va, vb), if_else(vc, da, db)};
+    }
 
+  };
   //================================================================================================
   //! @}
   //================================================================================================

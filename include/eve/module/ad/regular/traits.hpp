@@ -52,4 +52,13 @@ namespace eve
   template<typename T>
   struct as_logical<valder<T>> : as_logical_t<T>
   {};
+  template<typename T, typename Sign>
+  struct as_integer<valder<T>, Sign> : as_integer_t<T,  Sign>
+  {};
+  template<typename T>
+  struct as_integer<valder<T>> : as_integer_t<T>
+  {};
+  template<typename T>
+  struct as_uinteger<valder<T>> : as_uinteger_t<T>
+  {};
 }

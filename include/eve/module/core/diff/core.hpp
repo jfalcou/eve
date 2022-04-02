@@ -32,6 +32,7 @@
 #include <eve/module/core/diff/if_else.hpp>
 #include <eve/module/core/diff/ifnot_else.hpp>
 #include <eve/module/core/diff/inc.hpp>
+#include <eve/module/core/diff/ldexp.hpp>
 #include <eve/module/core/diff/lerp.hpp>
 #include <eve/module/core/diff/manhattan.hpp>
 #include <eve/module/core/diff/maxabs.hpp>

@@ -47,10 +47,10 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  template<conditional_expr C, real_value T, real_value U>
+  EVE_FORCEINLINE auto nextafter_(EVE_SUPPORTS(cpu_), C const &cond, T const &t, U const &u) noexcept
   {
-    return mask_op( cond, eve::nextafter, t);
+    return mask_op( cond, eve::nextafter, t, u);
   }
 
 }
