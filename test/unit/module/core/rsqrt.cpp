@@ -43,7 +43,7 @@ EVE_TEST( "Check behavior of rsqrt on wide"
 {
   using v_t = eve::element_type_t<T>;
   auto st = [](auto e)-> v_t {return eve::rec(std::sqrt(e)); };
-  auto dst= [](auto e)-> v_t {return v_t(-1.5)/(std::sqrt(e)*e); };
+  auto dst= [](auto e)-> v_t {return v_t(-0.5)/(std::sqrt(e)*e); };
 
   TTS_ULP_EQUAL( eve::rsqrt(a0), map(st, a0), 2);
   TTS_ULP_EQUAL( eve::pedantic(eve::rsqrt)(a0), map(st, a0), 2);

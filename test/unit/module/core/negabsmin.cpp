@@ -40,7 +40,7 @@ EVE_TEST_TYPES( "Check return types of negabsmin"
 //==================================================================================================
 
 EVE_TEST( "Check behavior of negabsmin on all types full range"
-        , eve::test::simd::all_types
+        , eve::test::simd::signed_types
         , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
                               ,  eve::test::randoms(eve::valmin, eve::valmax)
@@ -62,9 +62,11 @@ EVE_TEST( "Check behavior of negabsmin on all types full range"
   TTS_ULP_EQUAL(eve::pedantic(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(negabsmin)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(negabsmin)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(negabsmin)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  if constexpr(eve::floating_value<T>){
+    TTS_ULP_EQUAL(eve::diff_1st(negabsmin)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
+    TTS_ULP_EQUAL(eve::diff_2nd(negabsmin)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
+    TTS_ULP_EQUAL(eve::diff_3rd(negabsmin)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  }
   TTS_IEEE_EQUAL(negabsmin[t](a0, a1), eve::if_else(t, negabsmin(a0, a1), a0));
  };
 
