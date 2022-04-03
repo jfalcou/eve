@@ -48,7 +48,8 @@ namespace eve::algo
   struct soa_vector
   {
     private:
-    using storage_type = detail::soa_storage<Type,Allocator>;
+    using storage_type        = detail::soa_storage<Type,Allocator>;
+    using const_storage_type  = detail::soa_storage<Type,Allocator> const;
 
     public:
     //!=============================================================================================
@@ -63,15 +64,15 @@ namespace eve::algo
     //!   iterator* - are a pointer, converter to the Type.
     //!   They all satisfy eve::algo::relaxed_iterator but not std::iterator
 
-    using pointer               = decltype(storage_type{}.data());
-    using const_pointer         = decltype(std::declval<storage_type const>().data());
-    using pointer_aligned       = decltype(storage_type{}.data_aligned());
-    using const_pointer_aligned = decltype(std::declval<storage_type const>().data_aligned());
+    using iterator               = decltype(views::convert(storage_type{}.data() , as<value_type>{}));
+    using const_iterator         = decltype(views::convert(std::declval<storage_type const>().data(), as<value_type>{}));
+    using iterator_aligned       = decltype(views::convert(storage_type{}.data_aligned(), as<value_type>{}));
+    using const_iterator_aligned = decltype(views::convert(std::declval<storage_type const>().data_aligned(), as<value_type>{}));
 
-    using iterator               = decltype(views::convert(pointer{}              , as<value_type>{}));
-    using const_iterator         = decltype(views::convert(const_pointer{}        , as<value_type>{}));
-    using iterator_aligned       = decltype(views::convert(pointer_aligned{}      , as<value_type>{}));
-    using const_iterator_aligned = decltype(views::convert(const_pointer_aligned{}, as<value_type>{}));
+    using pointer               = iterator;
+    using const_pointer         = const_iterator;
+    using pointer_aligned       = iterator_aligned;
+    using const_pointer_aligned = const_iterator_aligned;
 
     using size_type = std::size_t;
 
@@ -254,16 +255,16 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns a zipped aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned() { return storage.data_aligned(); }
+    EVE_FORCEINLINE auto data_aligned() { return begin_aligned(); }
 
     //! Returns a zipped aligned pointer to the beginning
-    EVE_FORCEINLINE auto data_aligned()  const  { return storage.data_aligned(); }
+    EVE_FORCEINLINE auto data_aligned()  const  { return begin_aligned(); }
 
     //! Returns a zipped pointer to the beginning
-    EVE_FORCEINLINE auto data() { return storage.data(); }
+    EVE_FORCEINLINE auto data() { return begin(); }
 
     //! Returns a constant zipped pointer to the beginning
-    EVE_FORCEINLINE auto data() const { return storage.data(); }
+    EVE_FORCEINLINE auto data() const { return begin(); }
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
@@ -289,19 +290,31 @@ namespace eve::algo
     //! @{
     //==============================================================================================
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned { return views::convert(data_aligned(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned
+    {
+      return views::convert(storage.data_aligned(), eve::as<Type>{});
+    }
 
     //! Returns an aligned iterator to the beginning
-    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned { return views::convert(data_aligned(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned
+    {
+      return views::convert(storage.data_aligned(), eve::as<Type>{});
+    }
 
     //! Returns a constant aligned iterator to the beginning
     EVE_FORCEINLINE auto cbegin_aligned() const -> const_iterator_aligned { return begin_aligned(); }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin() -> iterator { return views::convert(data(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin() -> iterator
+    {
+      return views::convert(storage.data(), eve::as<Type>{});
+    }
 
     //! Returns an iterator to the beginning
-    EVE_FORCEINLINE auto begin()  const -> const_iterator { return views::convert(data(), eve::as<Type>{}); }
+    EVE_FORCEINLINE auto begin()  const -> const_iterator
+    {
+      return views::convert(storage.data(), eve::as<Type>{});
+    }
 
     //! Returns a constant iterator to the beginning
     EVE_FORCEINLINE auto cbegin() const -> const_iterator { return begin(); }
