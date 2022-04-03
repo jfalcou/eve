@@ -50,7 +50,7 @@ namespace eve::algo::detail
     using value_type      = Type;
     using byte_t          = std::byte;
 
-    explicit  soa_storage(Allocator a) noexcept
+    explicit soa_storage(Allocator a) noexcept
             : indexes_{}, data_( nullptr, aligned_deleter{a} ), capacity_{}
     {}
 
@@ -58,13 +58,10 @@ namespace eve::algo::detail
 
     soa_storage(Allocator a, std::size_t c) : soa_storage(a)
     {
-      // Strong guarantee on allocation
-      auto local = allocate(byte_size(c));
-      data_ = std::move(local);
-
+      data_     = allocate(byte_size(c));
       capacity_ = aligned_capacity(c);
 
-      auto        sub     = data_.get();
+      std::byte*  sub     = data_.get();
       std::size_t offset  = 0ULL;
 
       kumi::for_each_index( [&]<typename Idx>(Idx, auto& s)
@@ -173,12 +170,12 @@ namespace eve::algo::detail
     Allocator get_allocator() const { return data_.get_deleter(); }
 
     //==============================================================================================
-    using data_t    = std::unique_ptr<byte_t, aligned_deleter>;
-    using flat_t    = kumi::result::flatten_all_t<Type>;
-    using indexes_t = kumi::as_tuple_t<flat_t, as_index>;
+    using data_ptr_t  = std::unique_ptr<byte_t, aligned_deleter>;
+    using flat_t      = kumi::result::flatten_all_t<Type>;
+    using indexes_t   = kumi::as_tuple_t<flat_t, as_index>;
 
     indexes_t   indexes_;
-    data_t      data_;
+    data_ptr_t  data_;
     std::size_t capacity_;
 
     private:
@@ -188,12 +185,12 @@ namespace eve::algo::detail
     }
 
     template<typename T>
-    static  auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
+    static auto realign(std::size_t n) { return eve::align(sizeof(T)*n, eve::over{64}); }
 
     auto allocate(std::size_t n)
     {
       auto a = get_allocator();
-      return data_t{ (byte_t*)(a.allocate_aligned(n,64)), a};
+      return data_ptr_t{ (byte_t*)(a.allocate_aligned(n,64)), a};
      }
   };
 }

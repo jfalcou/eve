@@ -81,28 +81,32 @@ namespace eve::algo
     //! @{
     //==============================================================================================
 
+    //! Constructs an empty container with a custom `Allocator`.
+    explicit soa_vector(Allocator a) : storage(a), size_{} {}
+
     //! Constructs an empty container.
-    explicit soa_vector(Allocator a = Allocator{}) : storage(a), size_{} {}
+    explicit soa_vector() : soa_vector(Allocator{}) {}
+
+    //! Constructs the container with `n` default-inserted instances of `Type` and a custom `Allocator`.
+    explicit soa_vector(std::size_t n, Allocator a) : soa_vector(n, value_type{}, a) {}
 
     //! Constructs the container with `n` default-inserted instances of `Type`.
-    explicit  soa_vector(std::size_t n, Allocator a = Allocator{})
-            : soa_vector(n, value_type{}, a)
-    {}
+    explicit soa_vector(std::size_t n) : soa_vector(n, value_type{}, Allocator{}) {}
+
+    //! Constructs the container with `n` default-inserted instances of `Type` and a custom `Allocator`.
+    soa_vector(no_init_t, std::size_t n, Allocator a) : storage(a,n), size_{n} {}
 
     //! Constructs the container with `n` default-inserted instances of `Type`.
-    soa_vector(no_init_t, std::size_t n, Allocator a = Allocator{})
-            : storage(a,n), size_{n}
-    {}
+    soa_vector(no_init_t, std::size_t n) : soa_vector(no_init,n,Allocator{}) {}
+
+    //! Constructs the container with `n` copies of elements with `value` value and a custom `Allocator`.
+    soa_vector(std::size_t n, value_type v, Allocator a) : soa_vector(no_init,n,a) { fill(v);  }
 
     //! Constructs the container with `n` copies of elements with `value` value.
-    soa_vector(std::size_t n, value_type v, Allocator a = Allocator{})
-              : soa_vector(no_init,n,a)
-    {
-      fill(v);
-    }
+    soa_vector(std::size_t n, value_type v) : soa_vector(n,v,Allocator{}) { fill(v); }
 
     //! Constructs the container with the contents of the initializer list `l`.
-    soa_vector( std::initializer_list<Type> l, Allocator a = Allocator{})
+    soa_vector( std::initializer_list<Type> l, Allocator a)
               : storage(a, l.size()), size_{l.size()}
     {
       auto ptr = l.begin();
@@ -111,6 +115,9 @@ namespace eve::algo
         eve::write(*ptr++, begin()+i);
       }
     }
+
+    //! Constructs the container with the contents of the initializer list `l`.
+    soa_vector( std::initializer_list<Type> l ) : soa_vector(l,Allocator{}) {}
 
     //==============================================================================================
     //! @}
@@ -186,15 +193,27 @@ namespace eve::algo
     //! @param value [Value](@eve::vectorizable) to append
     EVE_FORCEINLINE void push_back(value_type const& value) noexcept
     {
-      if(size_ == capacity())
+      if(size_ != capacity())
       {
-        // Grow twice per push_back
+        eve::write(value, begin()+size_);
+      }
+      else
+      {
         grow(2*size_+1, size());
+        eve::write(value, begin()+size_);
       }
 
-      eve::write(value, begin()+size_);
       size_++;
     }
+
+/*
+if (this->__end_ != this->__end_cap())
+    {
+        __construct_one_at_end(__x);
+    }
+    else
+        __push_back_slow_path(__x);
+*/
 
     //! @brief Removes the last element of the container.
     //! Calling pop_back on an empty container results in undefined behavior.
@@ -212,7 +231,7 @@ namespace eve::algo
     //! either default-inserted or copied if `value` is provided.
     //! @param n      new size of the container
     //! @param value  the value to initialize the new elements with
-    void resize(std::size_t n, value_type value = {})
+    void resize(std::size_t n, value_type value)
     {
       auto sz = size_;
       if(n > capacity())
@@ -225,6 +244,8 @@ namespace eve::algo
       if(n > sz) fill(sz, capacity(), value );
       size_ = n;
     }
+
+    void resize(std::size_t n) { resize(n, value_type{}); }
 
     //! @brief Exchanges the contents of the container with those of `other`.
     //! Does not invoke any move, copy, or swap operations on individual elements.
@@ -349,13 +370,13 @@ namespace eve::algo
       return algo::preprocess_range(tr, algo::as_range(self.begin_aligned(), self.end()));
     }
 
-    private:
+  private:
 
     void grow(std::size_t new_capacity, std::size_t old_size)
     {
       soa_vector that(no_init, new_capacity, get_allocator());
       eve::algo::copy(*this, that.begin_aligned());
-      this->operator=(std::move(that));
+      *this = std::move(that);
       size_ = old_size;
     }
 
