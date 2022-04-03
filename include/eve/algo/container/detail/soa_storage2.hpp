@@ -196,11 +196,11 @@ namespace eve::algo::detail
 }
 
 template <eve::product_type Type, typename Allocator>
-struct  std::tuple_size<eve::algo::detail::soa_storage<Type,Allocator>>
+struct std::tuple_size<eve::algo::detail::soa_storage<Type,Allocator>>
       : kumi::size<Type>
 {};
 
 template <std::size_t I, eve::product_type Type, typename Allocator>
-struct  std::tuple_element<I, eve::algo::detail::soa_storage<Type,Allocator>>
+struct std::tuple_element<I, eve::algo::detail::soa_storage<Type,Allocator>>
       : std::add_pointer<kumi::element<I, Type>>
 {};
