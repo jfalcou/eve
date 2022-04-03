@@ -31,36 +31,31 @@ function(generate_test root rootpath dep file)
               )
 
   if (CMAKE_CROSSCOMPILING_CMD)
-    add_test( NAME ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
-            )
+    set(FIXED_COMMAND ${CMAKE_CROSSCOMPILING_CMD})
   else()
-    if ( (${root} MATCHES "doc.*") OR (${root} MATCHES "examples.*") )
-      string(REPLACE "." "/" doc_path ${root})
-      string(REPLACE ".cpp" ".out.html" doc_output ${file})
+    set(FIXED_COMMAND "")
+  endif()
 
-      add_test( NAME ${test}
-                  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                  COMMAND "$<TARGET_FILE:${test}>"
-                )
-
-      if( EVE_USE_PCH )
-        target_precompile_headers(${test} REUSE_FROM doc_pch)
-        add_dependencies(${test} doc_pch)
-      endif()
-
-    else()
-
-      add_test( NAME ${test}
+  if ( (${root} MATCHES "doc.*") OR (${root} MATCHES "examples.*") )
+    add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND $<TARGET_FILE:${test}>
+                COMMAND "${FIXED_COMMAND}" $<TARGET_FILE:${test}>
               )
 
-      if( EVE_USE_PCH )
-        target_precompile_headers(${test} REUSE_FROM test_pch)
-        add_dependencies(${test} test_pch)
-      endif()
+    if( EVE_USE_PCH )
+      target_precompile_headers(${test} REUSE_FROM doc_pch)
+      add_dependencies(${test} doc_pch)
+    endif()
+
+  else()
+    add_test( NAME ${test}
+              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+              COMMAND "${FIXED_COMMAND}" $<TARGET_FILE:${test}>
+            )
+
+    if( EVE_USE_PCH )
+      target_precompile_headers(${test} REUSE_FROM test_pch)
+      add_dependencies(${test} test_pch)
     endif()
   endif()
 
