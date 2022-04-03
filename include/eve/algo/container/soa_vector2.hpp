@@ -173,11 +173,18 @@ namespace eve::algo
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
     //! end() iterator is not a valid pos.
-    iterator erase(const_iterator pos) { return erase(pos,pos - cbegin(),1); }
+    iterator erase(const_iterator pos)
+    {
+      auto idx = pos - cbegin();
+      return erase(idx,idx+1);
+    }
 
     //! @brief Removes the elements in the range [first, last)
     //! Empty range is OK, does nothing
-    iterator erase(const_iterator f, const_iterator l) { return erase(f, f - cbegin(), l - f); }
+    iterator erase(const_iterator f, const_iterator l)
+    {
+      return erase(f - cbegin(),l - cbegin());
+    }
 
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
@@ -361,13 +368,14 @@ namespace eve::algo
       eve::algo::fill(algo::as_range(begin() + first, begin() + last), v );
     }
 
-    iterator erase(const_iterator f, std::ptrdiff_t distance, std::ptrdiff_t sz)
+    iterator erase(std::ptrdiff_t f_idx, std::ptrdiff_t l_idx)
     {
-      eve::algo::copy_backward( algo::as_range(f+sz, cend())
-                              , algo::as_range(begin() + distance, end() - sz)
+      std::ptrdiff_t sz = l_idx - f_idx;
+      eve::algo::copy_backward( algo::as_range(begin() + l_idx, end())
+                              , algo::as_range(begin() + f_idx, end() - sz)
                               );
       size_ -= sz;
-      return begin() + distance;
+      return begin() + f_idx;
     }
 
     void push_slow_path(value_type const& value)
