@@ -35,6 +35,7 @@
 #include <eve/module/core/diff/ldexp.hpp>
 #include <eve/module/core/diff/lerp.hpp>
 #include <eve/module/core/diff/manhattan.hpp>
+#include <eve/module/core/diff/mantissa.hpp>
 #include <eve/module/core/diff/maxabs.hpp>
 #include <eve/module/core/diff/max.hpp>
 #include <eve/module/core/diff/maxmag.hpp>
