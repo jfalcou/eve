@@ -52,7 +52,7 @@ namespace eve::detail
   //================================================================================================
   template<decorator D, conditional_expr C, real_value U, real_value ...Ts>
   EVE_FORCEINLINE auto negabsmin_(EVE_SUPPORTS(cpu_), C const &cond, D const &
-                              , U const &t, Ts const &... args) noexcept
+                                 , U const &t, Ts const &... args) noexcept
   {
     return mask_op(  cond, D()(eve::negabsmin), t, args...);
   }
