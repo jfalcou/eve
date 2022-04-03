@@ -32,7 +32,7 @@ namespace eve::detail
   // Masked case
   //================================================================================================
   template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), C const &, U const &t) noexcept
   {
     return t;
   }

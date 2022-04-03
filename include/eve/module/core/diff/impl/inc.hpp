@@ -43,6 +43,6 @@ namespace eve::detail
                             , diff_type<1> const &
                             , U const &t) noexcept
   {
-    return one(as(t));
+    return mask_op(  cond, diff(eve::inc), t);
   }
 }

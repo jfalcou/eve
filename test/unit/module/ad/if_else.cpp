@@ -22,10 +22,11 @@ EVE_TEST( "Check behavior of eve::if_else(simd)"
         )
 <typename T, typename M>(T const& a0, T const& a1, M const & t)
 {
-  using eve::detail::map;
   auto vda0 = eve::var(a0);
   auto vda1 = eve::var(a1);
 
-  TTS_EQUAL(val(eve::if_else(t, vda0, a1)), eve::if_else(t, T(1), T(0)));
-  TTS_EQUAL(val(eve::if_else(t, a0, vda1)), eve::if_else(t, T(0), T(1)));
+  TTS_EQUAL(eve::val(eve::if_else(t, vda0, a1)), eve::if_else(t, a0, a1));
+  TTS_EQUAL(eve::val(eve::if_else(t, a0, vda1)), eve::if_else(t, a0, a1));
+  TTS_EQUAL(eve::der(eve::if_else(t, vda0, a1)), eve::if_else(t, T(1), T(0)));
+  TTS_EQUAL(eve::der(eve::if_else(t, a0, vda1)), eve::if_else(t, T(0), T(1)));
 };
