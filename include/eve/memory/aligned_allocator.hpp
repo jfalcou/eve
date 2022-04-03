@@ -67,27 +67,37 @@ namespace eve
     //! @brief Allocates aligned, uninitialized storage for `n` elements of type `T`.
     value_type *allocate(std::size_t n)
     {
-      auto nbelem = align(n * sizeof(value_type), over{alignment()});
+      return static_cast<value_type*>( allocate_aligned(n * sizeof(value_type),alignment()));
+    }
+
+    void * allocate_aligned(std::size_t n, std::size_t a)
+    {
+      auto sz = align(n, over{a});
 
       #if defined(SPY_COMPILER_IS_MSVC)
-      void *result = _aligned_malloc(nbelem,alignment());
+      return  _aligned_malloc(sz,a);
       #else
-      void *result = std::aligned_alloc(alignment(), nbelem);
+      return std::aligned_alloc(a, sz);
       #endif
-
-      return static_cast<value_type*>(result);
     }
 
     //! @brief Deallocates aligned storage
     void deallocate(value_type *p, std::size_t) noexcept
     {
-      #if defined(SPY_COMPILER_IS_MSVC)
-      _aligned_free((void *)p)
-      #else
-      std::free((void *)p);
-      #endif
-
+      deallocate_aligned((void *)p);
     }
+
+    void deallocate_aligned(void* ptr)
+    {
+      if(!ptr) return;
+
+      #if defined(SPY_COMPILER_IS_MSVC)
+      _aligned_free(ptr);
+      #else
+      std::free(ptr);
+      #endif
+    }
+
   };
   //================================================================================================
   //! @}
