@@ -18,6 +18,7 @@
 #include <eve/assert.hpp>
 
 #include "eve/algo/mismatch.hpp"
+#include <cstddef>
 #include <memory>
 
 namespace eve::algo
@@ -71,6 +72,8 @@ namespace eve::algo
     using const_iterator         = decltype(views::convert(const_pointer{}        , as<value_type>{}));
     using iterator_aligned       = decltype(views::convert(pointer_aligned{}      , as<value_type>{}));
     using const_iterator_aligned = decltype(views::convert(const_pointer_aligned{}, as<value_type>{}));
+
+    using size_type = std::size_t;
 
     //==============================================================================================
     //! @}
@@ -170,21 +173,11 @@ namespace eve::algo
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
     //! end() iterator is not a valid pos.
-    iterator erase(const_iterator pos) { return erase(pos, pos+1); }
+    iterator erase(const_iterator pos) { return eraser(pos,pos - cbegin(),1); }
 
     //! @brief Removes the elements in the range [first, last)
     //! Empty range is OK, does nothing
-    iterator erase(const_iterator f, const_iterator l)
-    {
-      std::ptrdiff_t distance = f - cbegin();
-      std::ptrdiff_t sz       = l - f;
-
-      eve::algo::copy_backward( algo::as_range(l, cend())
-                              , algo::as_range(begin() + distance, end() - sz)
-                              );
-      size_ -= sz;
-      return begin() + distance;
-    }
+    iterator erase(const_iterator f, const_iterator l) { return eraser(f, f - cbegin(), l - f); }
 
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
@@ -205,15 +198,6 @@ namespace eve::algo
 
       size_++;
     }
-
-/*
-if (this->__end_ != this->__end_cap())
-    {
-        __construct_one_at_end(__x);
-    }
-    else
-        __push_back_slow_path(__x);
-*/
 
     //! @brief Removes the last element of the container.
     //! Calling pop_back on an empty container results in undefined behavior.
@@ -284,12 +268,12 @@ if (this->__end_ != this->__end_cap())
 
     //! @brief Returns the value of the `i`th element of the container
     //! @param i Index of the value to retrieve
-    EVE_FORCEINLINE value_type get(std::size_t i) const { return eve::read(begin() + i); }
+    EVE_FORCEINLINE value_type get(size_type i) const { return eve::read(begin() + i); }
 
     //! @brief Modify the value of the `i`th element of the container
     //! @param i Index of the value to write
     //! @param v Value to write
-    EVE_FORCEINLINE void set(std::size_t i, value_type const& v)
+    EVE_FORCEINLINE void set(size_type i, value_type const& v)
     {
       return eve::write(v, begin() + i);
     }
@@ -383,6 +367,15 @@ if (this->__end_ != this->__end_cap())
     void fill(std::size_t first, std::size_t last, value_type v)
     {
       eve::algo::fill(algo::as_range(begin() + first, begin() + last), v );
+    }
+
+    iterator eraser(const_iterator f, std::ptrdiff_t distance, std::ptrdiff_t sz)
+    {
+      eve::algo::copy_backward( algo::as_range(f+sz, cend())
+                              , algo::as_range(begin() + distance, end() - sz)
+                              );
+      size_ -= sz;
+      return begin() + distance;
     }
 
     storage_t   storage;
