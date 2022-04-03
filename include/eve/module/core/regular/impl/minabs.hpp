@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
@@ -17,9 +16,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
-#include <eve/module/core/regular/minabs.hpp>
-#include <eve/module/core/pedantic/minabs.hpp>
-#include <eve/module/core/numeric/minabs.hpp>
+#include <eve/module/core/regular/min.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
@@ -86,5 +83,4 @@ namespace eve::detail
   {
    return mask_op(  cond, eve::minabs, a0, args...);
   }
-
 }

@@ -14,9 +14,10 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
-#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/minus.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
@@ -34,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto negabsmin_(EVE_SUPPORTS(cpu_), T const &a, T const &b) noexcept
   requires has_native_abi_v<T>
   {
-    return  eve::abs(eve::max(a, b));
+    return  minus(eve::abs(eve::min(a, b)));
   }
 
   //================================================================================================
@@ -43,7 +44,7 @@ namespace eve::detail
   template<real_value T0, real_value T1, real_value ...Ts>
   common_compatible_t<T0,T1,Ts...> negabsmin_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   {
-    return eve::abs(eve::max(a0, a1, args...));
+    return minus(eve::abs(eve::min(a0, a1, args...)));
   }
 
   //================================================================================================
