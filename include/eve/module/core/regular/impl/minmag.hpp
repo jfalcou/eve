@@ -60,7 +60,7 @@ namespace eve::detail
   common_compatible_t<T0,T1,Ts...> minmag_(EVE_SUPPORTS(cpu_), C const & cond,
                                            T0 a0, T1 a1, Ts... args)
   {
-   return mask_op(  cond, eve::minmag, a0, args...);
+   return mask_op(  cond, eve::minmag, a0, a1, args...);
   }
 
   //================================================================================================

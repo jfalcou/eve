@@ -26,6 +26,6 @@ namespace eve::detail
   template<conditional_expr C, floating_real_value U>
   EVE_FORCEINLINE auto frac_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<1> const &, U const &t) noexcept
   {
-    return one(as(t));
+    return mask_op(  cond, diff(eve::frac), t);
   }
 }

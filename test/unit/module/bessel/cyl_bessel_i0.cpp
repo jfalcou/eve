@@ -44,23 +44,23 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i0"
     TTS_ULP_EQUAL(eve__cyl_bessel_i0(eve::nan(eve::as< T>())), eve::nan(eve::as< T>()), 0);
   }
   TTS_IEEE_EQUAL(eve__cyl_bessel_i0(v_t(-1)), eve::nan(eve::as<v_t>()));
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(500)), std__cyl_bessel_i0(v_t(500)), 7.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(10)), std__cyl_bessel_i0(v_t(10))  , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(5)),  std__cyl_bessel_i0(v_t(5))   , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(2)),  std__cyl_bessel_i0(v_t(2))   , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(1.5)),std__cyl_bessel_i0(v_t(1.5)) , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(0.5)),std__cyl_bessel_i0(v_t(0.5)) , 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(1)),  std__cyl_bessel_i0(v_t(1))   , 6.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(500)), std__cyl_bessel_i0(v_t(500)), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(10)), std__cyl_bessel_i0(v_t(10))  , 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(5)),  std__cyl_bessel_i0(v_t(5))   , 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(2)),  std__cyl_bessel_i0(v_t(2))   , 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(1.5)),std__cyl_bessel_i0(v_t(1.5)) , 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(0.5)),std__cyl_bessel_i0(v_t(0.5)) , 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(1)),  std__cyl_bessel_i0(v_t(1))   , 8.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(0)),  eve::zero(eve::as<v_t>()), 0.0);
 
   TTS_IEEE_EQUAL(eve__cyl_bessel_i0(T(-1)), eve::nan(eve::as<T>()));
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(500)),  T(std__cyl_bessel_i0(v_t(500)) ), 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(10)) ,  T(std__cyl_bessel_i0( v_t(10)) ), 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(5))  ,  T(std__cyl_bessel_i0( v_t(5))  ), 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(2))  ,  T(std__cyl_bessel_i0( v_t(2))  ), 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(1.5)),  T(std__cyl_bessel_i0( v_t(1.5))), 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(0.5)),  T(std__cyl_bessel_i0( v_t(0.5))), 6.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(1))  ,  T(std__cyl_bessel_i0( v_t(1))  ), 6.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(500)),  T(std__cyl_bessel_i0(v_t(500)) ), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(10)) ,  T(std__cyl_bessel_i0( v_t(10)) ), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(5))  ,  T(std__cyl_bessel_i0( v_t(5))  ), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(2))  ,  T(std__cyl_bessel_i0( v_t(2))  ), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(1.5)),  T(std__cyl_bessel_i0( v_t(1.5))), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(0.5)),  T(std__cyl_bessel_i0( v_t(0.5))), 8.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(1))  ,  T(std__cyl_bessel_i0( v_t(1))  ), 8.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(0))  , eve::zero(eve::as< T>()), 0.0);
 
 
