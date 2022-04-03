@@ -28,8 +28,8 @@ namespace eve::detail
   EVE_FORCEINLINE  auto if_else_(EVE_SUPPORTS(cpu_)
                             , diff_type<N> const &
                             , T const &a
-                            , T const &b
-                            , T const &c) noexcept
+                            , T const &
+                            , T const &) noexcept
   {
     if constexpr(N == 2) return if_else(a, T(1), zero);
     else if constexpr(N == 3) return if_else(a, zero, T(1));

@@ -37,14 +37,14 @@ namespace eve::detail
 
     return one(as(x));
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(cpu_), C const &cond
+  EVE_FORCEINLINE auto dec_(EVE_SUPPORTS(cpu_), C const & cond
                             , diff_type<1> const &
                             , U const &t) noexcept
   {
-    return one(as(t));
+    return mask_op(  cond, diff(eve::dec), t);
   }
 }
