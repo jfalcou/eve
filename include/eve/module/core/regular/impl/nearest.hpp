@@ -69,7 +69,6 @@ namespace eve::detail
     }
   }
 
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>
@@ -77,4 +76,5 @@ namespace eve::detail
   {
     return mask_op( cond, eve::nearest, t);
   }
+
 }
