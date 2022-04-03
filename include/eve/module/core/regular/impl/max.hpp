@@ -48,11 +48,10 @@ namespace eve::detail
   //================================================================================================
   // Masked case
   //================================================================================================
-  template<conditional_expr C, real_value U, real_value V>
-  EVE_FORCEINLINE auto max_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto max_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
   {
-    return mask_op(  cond, eve::max, t, f);
+     return mask_op(  cond, eve::max, a0, a1, args...);
   }
 
   //================================================================================================
