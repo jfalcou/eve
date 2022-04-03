@@ -1,0 +1,21 @@
+List of operations SIMD types need to support for the Octo-Tiger gravity kernels:
+
+- Arithmethic:
++ - * / += -=
+
+- Data:
+copy_from
+copy_to
+[supporting element_aligned_tag{}]
+construct from scalar (for example simd_t(1.0);)
+size
+
+- Masking:
+< (mask = simd1 < simd2);)
+any_of
+choose ("where" also works)
+&& (mask = mask1 && mask2)
+
+- Functions:
+sqrt
+max

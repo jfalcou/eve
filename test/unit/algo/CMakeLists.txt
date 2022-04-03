@@ -24,6 +24,7 @@ make_unit("unit.algo" traits.cpp)
 # Containers
 make_unit( "unit.algo" container/erase_remove.cpp )
 make_unit( "unit.algo" container/soa_vector.cpp )
+make_unit( "unit.algo" container/soa_vector2.cpp )
 make_unit( "unit.algo" container/transform_points_into_lines.cpp )
 
 # Algorithms
