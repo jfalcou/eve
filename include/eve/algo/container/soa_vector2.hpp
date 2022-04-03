@@ -47,10 +47,10 @@ namespace eve::algo
           >
   struct soa_vector
   {
+    private:
+    using storage_type = detail::soa_storage<Type,Allocator>;
+
     public:
-
-    using storage_t = detail::soa_storage<Type,Allocator>;
-
     //!=============================================================================================
     //! @name Member types
     //! @{
@@ -63,10 +63,10 @@ namespace eve::algo
     //!   iterator* - are a pointer, converter to the Type.
     //!   They all satisfy eve::algo::relaxed_iterator but not std::iterator
 
-    using pointer               = decltype(storage_t{}.data());
-    using const_pointer         = decltype(std::declval<storage_t const>().data());
-    using pointer_aligned       = decltype(storage_t{}.data_aligned());
-    using const_pointer_aligned = decltype(std::declval<storage_t const>().data_aligned());
+    using pointer               = decltype(storage_type{}.data());
+    using const_pointer         = decltype(std::declval<storage_type const>().data());
+    using pointer_aligned       = decltype(storage_type{}.data_aligned());
+    using const_pointer_aligned = decltype(std::declval<storage_type const>().data_aligned());
 
     using iterator               = decltype(views::convert(pointer{}              , as<value_type>{}));
     using const_iterator         = decltype(views::convert(const_pointer{}        , as<value_type>{}));
@@ -106,7 +106,7 @@ namespace eve::algo
     soa_vector(std::size_t n, value_type v, Allocator a) : soa_vector(no_init,n,a) { fill(v);  }
 
     //! Constructs the container with `n` copies of elements with `value` value.
-    soa_vector(std::size_t n, value_type v) : soa_vector(n,v,Allocator{}) { fill(v); }
+    soa_vector(std::size_t n, value_type v) : soa_vector(n,v,Allocator{}) {}
 
     //! Constructs the container with the contents of the initializer list `l`.
     soa_vector( std::initializer_list<Type> l, Allocator a)
@@ -134,7 +134,7 @@ namespace eve::algo
     EVE_FORCEINLINE std::size_t size()  const noexcept { return size_; }
 
     //! Returns the number of elements that the container has currently allocated space for
-    EVE_FORCEINLINE std::size_t capacity()  const noexcept { return storage.capacity_; }
+    EVE_FORCEINLINE std::size_t capacity()  const noexcept { return storage.capacity(); }
 
     //! Requests the removal of unused capacity.
     EVE_FORCEINLINE void shrink_to_fit() { grow(size(), size()); }
@@ -173,11 +173,11 @@ namespace eve::algo
     //! @brief Removes an element from the container.
     //! Has the same invalidation semantics as std::vector.
     //! end() iterator is not a valid pos.
-    iterator erase(const_iterator pos) { return eraser(pos,pos - cbegin(),1); }
+    iterator erase(const_iterator pos) { return erase(pos,pos - cbegin(),1); }
 
     //! @brief Removes the elements in the range [first, last)
     //! Empty range is OK, does nothing
-    iterator erase(const_iterator f, const_iterator l) { return eraser(f, f - cbegin(), l - f); }
+    iterator erase(const_iterator f, const_iterator l) { return erase(f, f - cbegin(), l - f); }
 
     //! @brief Appends the given element value to the end of the container.
     //! If the new size() is greater than capacity() then all iterators and references (including
@@ -186,16 +186,8 @@ namespace eve::algo
     //! @param value [Value](@eve::vectorizable) to append
     EVE_FORCEINLINE void push_back(value_type const& value) noexcept
     {
-      if(size_ != capacity())
-      {
-        eve::write(value, begin()+size_);
-      }
-      else
-      {
-        grow(2*size_+1, size());
-        eve::write(value, begin()+size_);
-      }
-
+      if(size_ != capacity()) eve::write(value, begin()+size_);
+      else                    push_slow_path(value);
       size_++;
     }
 
@@ -364,12 +356,12 @@ namespace eve::algo
       size_ = old_size;
     }
 
-    void fill(std::size_t first, std::size_t last, value_type v)
+    void fill(std::size_t first, std::size_t last, value_type const& v)
     {
       eve::algo::fill(algo::as_range(begin() + first, begin() + last), v );
     }
 
-    iterator eraser(const_iterator f, std::ptrdiff_t distance, std::ptrdiff_t sz)
+    iterator erase(const_iterator f, std::ptrdiff_t distance, std::ptrdiff_t sz)
     {
       eve::algo::copy_backward( algo::as_range(f+sz, cend())
                               , algo::as_range(begin() + distance, end() - sz)
@@ -378,7 +370,13 @@ namespace eve::algo
       return begin() + distance;
     }
 
-    storage_t   storage;
-    std::size_t size_;
+    void push_slow_path(value_type const& value)
+    {
+      grow(2*size_+1, size());
+      eve::write(value, begin()+size_);
+    }
+
+    storage_type  storage;
+    std::size_t   size_;
   };
 }

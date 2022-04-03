@@ -48,7 +48,7 @@ namespace eve::algo::detail
   {
     using is_product_type = void;
     using value_type      = Type;
-    using byte_t          = std::byte;
+    using byte_type       = std::byte;
 
     explicit soa_storage(Allocator a) noexcept
             : indexes_{}, data_( nullptr, aligned_deleter{a} ), capacity_{}
@@ -125,6 +125,8 @@ namespace eve::algo::detail
 
     friend void swap(soa_storage& a, soa_storage& b ) noexcept { a.swap(b); }
 
+    std::size_t capacity() const noexcept { return capacity_; }
+
     //==============================================================================================
     // Static helpers
     //==============================================================================================
@@ -138,7 +140,7 @@ namespace eve::algo::detail
     static auto byte_size(std::size_t n) noexcept
     {
       return  kumi::fold_left ( [n]<typename S>(auto a,S) { return a + realign<S>(n); }
-                              , flat_t{}
+                              , flat_type{}
                               , 0ULL
                               );
     }
@@ -164,21 +166,21 @@ namespace eve::algo::detail
     struct aligned_deleter : Allocator
     {
       aligned_deleter(Allocator a) : Allocator(a) {}
-      void operator()(byte_t* p) { Allocator::deallocate_aligned(p); }
+      void operator()(byte_type* p) { Allocator::deallocate_aligned(p); }
     };
 
     Allocator get_allocator() const { return data_.get_deleter(); }
 
     //==============================================================================================
-    using data_ptr_t  = std::unique_ptr<byte_t, aligned_deleter>;
-    using flat_t      = kumi::result::flatten_all_t<Type>;
-    using indexes_t   = kumi::as_tuple_t<flat_t, as_index>;
-
-    indexes_t   indexes_;
-    data_ptr_t  data_;
-    std::size_t capacity_;
-
     private:
+    using data_ptr_type  = std::unique_ptr<byte_type, aligned_deleter>;
+    using flat_type      = kumi::result::flatten_all_t<Type>;
+    using indexes_type   = kumi::as_tuple_t<flat_type, as_index>;
+
+    indexes_type  indexes_;
+    data_ptr_type data_;
+    std::size_t   capacity_;
+
     template<typename T> static EVE_FORCEINLINE auto as_aligned_pointer(T* ptr)
     {
       return eve::as_aligned(ptr, eve::detail::cache_line_cardinal<T>{});
@@ -190,7 +192,7 @@ namespace eve::algo::detail
     auto allocate(std::size_t n)
     {
       auto a = get_allocator();
-      return data_ptr_t{ (byte_t*)(a.allocate_aligned(n,64)), a};
+      return data_ptr_type{ (byte_type*)(a.allocate_aligned(n,64)), a};
      }
   };
 }
