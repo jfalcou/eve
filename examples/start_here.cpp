@@ -33,9 +33,9 @@ int const* find_negative_number(int const* f, int const* l)
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-
-
 #include <eve/product_type.hpp>
+
+#include <vector>
 
 // See oop on how to have them more meaningful names
 using cartesian = kumi::tuple<double, double>;

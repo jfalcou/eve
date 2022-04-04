@@ -13,7 +13,6 @@
 using t_t = kumi::tuple<int,float,char>;
 using n_t = kumi::tuple<int,kumi::tuple<float,char>,double>;
 
-/*
 TTS_CASE("Check types")
 {
   using T        = udt::grid2d;
@@ -21,20 +20,26 @@ TTS_CASE("Check types")
   using const_ap = eve::aligned_ptr<int const, eve::fixed<64 / sizeof(int)>>;
 
   using v = eve::algo::soa_vector<udt::grid2d>;
-  TTS_TYPE_IS(v::pointer,               (eve::algo::views::zip_iterator<int*,       int*>));
-  TTS_TYPE_IS(v::const_pointer,         (eve::algo::views::zip_iterator<int const*, int const*>));
-  TTS_TYPE_IS(v::pointer_aligned,       (eve::algo::views::zip_iterator<ap,   ap>));
-  TTS_TYPE_IS(v::const_pointer_aligned, (eve::algo::views::zip_iterator<const_ap,   const_ap>));
 
-  TTS_TYPE_IS(v::iterator,               (eve::algo::views::converting_iterator<v::pointer,               T>));
-  TTS_TYPE_IS(v::const_iterator,         (eve::algo::views::converting_iterator<v::const_pointer,         T>));
-  TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::views::converting_iterator<v::pointer_aligned,       T>));
-  TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::views::converting_iterator<v::const_pointer_aligned, T>));
+  using base_pointer                = eve::algo::views::zip_iterator<int*,       int*>;
+  using base_const_pointer          = eve::algo::views::zip_iterator<int const*, int const*>;
+  using base_pointer_aligned        = eve::algo::views::zip_iterator<ap,   ap>;
+  using base_const_pointer_aligned  = eve::algo::views::zip_iterator<const_ap,   const_ap>;
+
+  TTS_TYPE_IS(v::iterator,               (eve::algo::views::converting_iterator<base_pointer,               T>));
+  TTS_TYPE_IS(v::const_iterator,         (eve::algo::views::converting_iterator<base_const_pointer,         T>));
+  TTS_TYPE_IS(v::iterator_aligned,       (eve::algo::views::converting_iterator<base_pointer_aligned,       T>));
+  TTS_TYPE_IS(v::const_iterator_aligned, (eve::algo::views::converting_iterator<base_const_pointer_aligned, T>));
+
+  TTS_TYPE_IS(v::pointer,               v::iterator,             );
+  TTS_TYPE_IS(v::const_pointer,         v::const_iterator,       );
+  TTS_TYPE_IS(v::pointer_aligned,       v::iterator_aligned,     );
+  TTS_TYPE_IS(v::const_pointer_aligned, v::const_iterator_aligned);
 
   TTS_CONSTEXPR_EXPECT((std::convertible_to<v::iterator, v::const_iterator>));
   TTS_CONSTEXPR_EXPECT((std::convertible_to<v::pointer,  v::const_pointer>));
 };
-*/
+
 TTS_CASE("Check soa_vector default ctor")
 {
   eve::algo::soa_vector<t_t>          empty_tuple;
