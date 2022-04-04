@@ -30,37 +30,40 @@ function(generate_test root rootpath dep file)
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
               )
 
-  if (CMAKE_CROSSCOMPILING_CMD)
-    add_test( NAME ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
-            )
-  else()
-    if ( (${root} MATCHES "doc.*") OR (${root} MATCHES "examples.*") )
-      string(REPLACE "." "/" doc_path ${root})
-      string(REPLACE ".cpp" ".out.html" doc_output ${file})
-
+  if ( (${root} MATCHES "doc.*") OR (${root} MATCHES "examples.*") )
+    if (CMAKE_CROSSCOMPILING_CMD)
       add_test( NAME ${test}
-                  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                  COMMAND "$<TARGET_FILE:${test}>"
-                )
-
-      if( EVE_USE_PCH )
-        target_precompile_headers(${test} REUSE_FROM doc_pch)
-        add_dependencies(${test} doc_pch)
-      endif()
-
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
+              )
     else()
-
       add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
                 COMMAND $<TARGET_FILE:${test}>
               )
+    endif()
 
-      if( EVE_USE_PCH )
-        target_precompile_headers(${test} REUSE_FROM test_pch)
-        add_dependencies(${test} test_pch)
-      endif()
+    if( EVE_USE_PCH )
+      target_precompile_headers(${test} REUSE_FROM doc_pch)
+      add_dependencies(${test} doc_pch)
+    endif()
+
+  else()
+    if (CMAKE_CROSSCOMPILING_CMD)
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
+              )
+    else()
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND $<TARGET_FILE:${test}>
+              )
+    endif()
+
+    if( EVE_USE_PCH )
+      target_precompile_headers(${test} REUSE_FROM test_pch)
+      add_dependencies(${test} test_pch)
     endif()
   endif()
 
