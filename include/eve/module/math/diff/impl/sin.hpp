@@ -19,6 +19,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return cos(x);
+    return -cos(x);
   }
 }

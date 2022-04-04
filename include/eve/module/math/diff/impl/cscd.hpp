@@ -21,6 +21,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return -deginrad(cscd(x)*cotd(x));
+    return -radindeg(cscd(x)*cotd(x));
   }
 }
