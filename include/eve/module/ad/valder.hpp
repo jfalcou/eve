@@ -567,14 +567,6 @@ namespace eve
     }
 
     template<like<valder> Z>
-    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::expm1_, Z const& z ) noexcept
-    {
-       auto [v, d] = z;
-       auto e = expm1(v);
-       return Z{e, inc(e)*d};
-    }
-
-    template<like<valder> Z>
     EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::exp2_, Z const& z ) noexcept
     {
       auto [v, d] = z;
@@ -706,7 +698,7 @@ namespace eve
                                                , Z const& z ) noexcept
     {
       auto [v, d] = z;
-      auto [s, c]= sincos(v);
+      auto [s, c]= sindcosd(v);
       return Z{c, -d*deginrad(s)};
     }
 
@@ -715,7 +707,7 @@ namespace eve
                                                , Z const& z ) noexcept
     {
       auto [v, d] = z;
-      auto [s, c]= sincos(v);
+      auto [s, c]= sinpicospi(v);
       return Z{c, -d*s*pi(as(v))};
     }
 
@@ -734,7 +726,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto cs = cscd(v);
-      return Z{cs, -d*deginrad(cs)*cot(v)};
+      return Z{cs, -d*radindeg(cs)*cotd(v)};
     }
 
     template<like<valder> Z>
@@ -743,7 +735,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto cs = csch(v);
-      return Z{cs, -d*deginrad(cs)*coth(v)};
+      return Z{cs, -d*cs*coth(v)};
     }
 
     template<like<valder> Z>
@@ -752,7 +744,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto cs = cscpi(v);
-      return Z{cs, -d*cs*coth(v)*pi(as(v))};
+      return Z{cs, -d*cs*cotpi(v)*pi(as(v))};
     }
 
     template<like<valder> Z>
@@ -779,7 +771,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto se = secd(v);
-      return Z{se, d*deginrad(se)*tan(v)};
+      return Z{se, d*radindeg(se)*tand(v)};
     }
 
     template<like<valder> Z>
@@ -788,7 +780,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto se = sech(v);
-      return Z{se, -d*deginrad(se)*tanh(v)};
+      return Z{se, -d*se*tanh(v)};
     }
 
     template<like<valder> Z>
@@ -797,7 +789,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto se = secpi(v);
-      return Z{se, d*se*tanh(v)*pi(as(v))};
+      return Z{se, d*se*tanpi(v)*pi(as(v))};
     }
 
     template<like<valder> Z>
@@ -844,7 +836,7 @@ namespace eve
       auto [v, d] = z;
       auto [s, c]= sindcosd(v);
       auto fac = deginrad(d);
-      return kumi::tuple{Z{s, -c*fac}, Z{c, -s*fac}};
+      return kumi::tuple{Z{s, -c*fac}, Z{s, -c*fac}};
     }
 
     template<like<valder> Z>
@@ -871,7 +863,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto [s, c]= sinhcosh(v);
-      return Z{s, -d*c};
+      return Z{s, d*c};
     }
 
    template<like<valder> Z>
@@ -880,7 +872,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto t = tan(v);
-      return Z{t, -d*inc(sqr(t))};
+      return Z{t, d*inc(sqr(t))};
     }
 
     template<like<valder> Z>
@@ -889,7 +881,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto t = tanpi(v);
-      return Z{t, -d*inc(sqr(t))*pi(as(v))};
+      return Z{t, d*inc(sqr(t))*pi(as(v))};
     }
 
     template<like<valder> Z>
@@ -898,7 +890,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto t = tand(v);
-      return Z{t, -deginrad(d)*inc(sqr(t))};
+      return Z{t, deginrad(d)*inc(sqr(t))};
     }
 
     template<like<valder> Z>
@@ -907,7 +899,7 @@ namespace eve
     {
       auto [v, d] = z;
       auto t = tanh(v);
-      return Z{t, dec(sqr(t))*d};
+      return Z{t, oneminus(sqr(t))*d};
     }
 
     template<like<valder> Z>

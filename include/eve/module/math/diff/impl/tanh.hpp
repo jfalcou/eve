@@ -20,6 +20,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return sqr(sech(x));
+    return oneminus(sqr(tanh(x)));
   }
 }

@@ -21,6 +21,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , T const &x) noexcept
   {
-    return deginrad(secd(x)*tand(x));
+    return radindeg(secd(x)*tand(x));
   }
 }
