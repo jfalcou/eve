@@ -106,6 +106,7 @@ namespace eve
     struct rshr_;
     struct shl__;
     struct shr_;
+    struct significants_;
   }
 
   template<> struct is_derivable<tag::val_>                   : std::false_type {};
@@ -197,5 +198,6 @@ namespace eve
   template<> struct is_derivable<tag::rshr_>                  : std::false_type {};
   template<> struct is_derivable<tag::shl_>                   : std::false_type {};
   template<> struct is_derivable<tag::shr_>                   : std::false_type {};
+  template<> struct is_derivable<tag::significants_>          : std::false_type {};
 
 }
