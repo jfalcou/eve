@@ -23,6 +23,7 @@
 #include <eve/module/core/diff/fdim.hpp>
 #include <eve/module/core/diff/floor.hpp>
 #include <eve/module/core/diff/fma.hpp>
+#include <eve/module/core/diff/fmod.hpp>
 #include <eve/module/core/diff/fms.hpp>
 #include <eve/module/core/diff/fnma.hpp>
 #include <eve/module/core/diff/fnms.hpp>
