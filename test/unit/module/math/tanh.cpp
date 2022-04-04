@@ -42,7 +42,7 @@ auto mini = []<typename T>(eve::as<T> const & tgt)
 EVE_TEST( "Check behavior of tanh on wide"
         , eve::test::simd::ieee_reals
         , eve::test::generate( eve::test::randoms(mini, maxi)
-                             , eve::test::randoms(-1.0, 1.0))
+                             , eve::test::randoms(-10.0, 10.0))
         )
 <typename T>(T const& a0, T const& a1)
 {
@@ -52,6 +52,6 @@ EVE_TEST( "Check behavior of tanh on wide"
   using eve::diff;
   TTS_ULP_EQUAL(tanh(a0)      , map([](auto e) -> v_t { return std::tanh(double(e)); }, a0), 2);
   TTS_ULP_EQUAL(tanh(a1)      , map([](auto e) -> v_t { return std::tanh(double(e)); }, a1), 2);
-  TTS_ULP_EQUAL(diff(tanh)(a0), map([](auto e) -> v_t { return eve::sqr(eve::sech(e)); }, a0), 2);
-  TTS_ULP_EQUAL(diff(tanh)(a1), map([](auto e) -> v_t { return eve::sqr(eve::sech(e)); }, a1), 2);
+  TTS_ULP_EQUAL(diff(tanh)(a0), map([](auto e) -> v_t { return eve::oneminus(eve::sqr(std::tanh(e))); }, a0), 2);
+  TTS_ULP_EQUAL(diff(tanh)(a1), map([](auto e) -> v_t { return eve::oneminus(eve::sqr(std::tanh(e))); }, a1), 2);
 };
