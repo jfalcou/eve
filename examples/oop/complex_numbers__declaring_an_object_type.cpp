@@ -35,6 +35,7 @@
 #include <eve/views/zip.hpp>
 
 #include <optional>
+#include <vector>
 
 
 // Ideally we would want to just be able to reflect on any struct, split it into members
