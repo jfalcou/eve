@@ -22,4 +22,15 @@ namespace eve::detail
     auto tn = convert(n, as<elt_t>());
     return nthroot(x, n)*rec(x*tn);
   }
+
+  template<floating_real_value T, value N>
+  EVE_FORCEINLINE constexpr T nthroot_(EVE_SUPPORTS(cpu_)
+                                   , diff_type<2> const &
+                                   , T x, N n) noexcept
+  {
+    using elt_t = element_type_t<T>;
+    auto tn = -rec(sqr(convert(n, as<elt_t>())));
+    return nthroot(x, n)*log(x)*tn;
+  }
+
 }

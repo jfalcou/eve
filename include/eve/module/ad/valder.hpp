@@ -520,6 +520,7 @@ namespace eve
       return Z{ldexp(val(z), val(n)), ldexp(one(as(val(z))), val(n))};
     }
 
+
     //==============================================================================================/////////////////////////
     //==  optimizations
     //==============================================================================================/////////////////////////
@@ -836,7 +837,7 @@ namespace eve
       auto [v, d] = z;
       auto [s, c]= sindcosd(v);
       auto fac = deginrad(d);
-      return kumi::tuple{Z{s, -c*fac}, Z{s, -c*fac}};
+      return kumi::tuple{Z{s, -c*fac}, Z{c, -s*fac}};
     }
 
     template<like<valder> Z>
@@ -920,6 +921,20 @@ namespace eve
       using r_t = as_valder_t<v_t>;
       return r_t{if_else(vc, va, vb), if_else(vc, da, db)};
     }
+
+//     template<maybe<valder> Z, maybe<valder> N>
+//     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::nthroot_
+//                                                 , Z const& z,  N const& n) noexcept
+//     {
+//       EVE_ASSERT(eve::all(is_flint(n)),  "n is not flint");
+//       auto v1 = val(z); auto d1 = der(z);
+//       auto v2 = val(n); auto d2 = der(n);
+//       auto rn = nthroot(v1, v2);
+//       using r_t =  decltype(rn);
+//       using elt_t = element_type_t<r_t>;
+//       auto fn = rec(convert(n, as<elt_t>()));
+//       return Z{rn, rn*fn*sum_of_prod(d1, rec(v1), minus(d2), log(v1)*fn)};
+//     }
 
   };
   //================================================================================================
