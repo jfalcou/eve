@@ -30,17 +30,18 @@ function(generate_test root rootpath dep file)
                 PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
               )
 
-  if (CMAKE_CROSSCOMPILING_CMD)
-    set(FIXED_COMMAND ${CMAKE_CROSSCOMPILING_CMD})
-  else()
-    set(FIXED_COMMAND "")
-  endif()
-
   if ( (${root} MATCHES "doc.*") OR (${root} MATCHES "examples.*") )
-    add_test( NAME ${test}
+    if (CMAKE_CROSSCOMPILING_CMD)
+      add_test( NAME ${test}
                 WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-                COMMAND "${FIXED_COMMAND}" $<TARGET_FILE:${test}>
+                COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
               )
+    else()
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND $<TARGET_FILE:${test}>
+              )
+    endif()
 
     if( EVE_USE_PCH )
       target_precompile_headers(${test} REUSE_FROM doc_pch)
@@ -48,10 +49,17 @@ function(generate_test root rootpath dep file)
     endif()
 
   else()
-    add_test( NAME ${test}
-              WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
-              COMMAND "${FIXED_COMMAND}" $<TARGET_FILE:${test}>
-            )
+    if (CMAKE_CROSSCOMPILING_CMD)
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND "${CMAKE_CROSSCOMPILING_CMD}" $<TARGET_FILE:${test}>
+              )
+    else()
+      add_test( NAME ${test}
+                WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                COMMAND $<TARGET_FILE:${test}>
+              )
+    endif()
 
     if( EVE_USE_PCH )
       target_precompile_headers(${test} REUSE_FROM test_pch)
