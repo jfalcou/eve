@@ -13,5 +13,5 @@ build_script:
 - cmake --build . --target unit.meta.exe --verbose --config Release
 
 test_script:
-- ctest -C Release -VV -R ^unit.arch.*.exe
+# - ctest -C Release -VV -R ^unit.arch.*.exe
 - ctest -C Release -VV -R ^unit.meta.*.exe
