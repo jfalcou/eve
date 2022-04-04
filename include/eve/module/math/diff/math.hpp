@@ -48,6 +48,7 @@
 #include <eve/module/math/diff/cscd.hpp>
 #include <eve/module/math/diff/csch.hpp>
 #include <eve/module/math/diff/cscpi.hpp>
+#include <eve/module/math/diff/deginrad.hpp>
 #include <eve/module/math/diff/exp10.hpp>
 #include <eve/module/math/diff/exp2.hpp>
 #include <eve/module/math/diff/exp.hpp>
@@ -70,6 +71,8 @@
 #include <eve/module/math/diff/pow_abs.hpp>
 #include <eve/module/math/diff/pow.hpp>
 #include <eve/module/math/diff/powm1.hpp>
+#include <eve/module/math/diff/radindeg.hpp>
+#include <eve/module/math/diff/radinpi.hpp>
 #include <eve/module/math/diff/secd.hpp>
 #include <eve/module/math/diff/sech.hpp>
 #include <eve/module/math/diff/sec.hpp>
