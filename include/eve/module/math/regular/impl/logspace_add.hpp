@@ -78,4 +78,12 @@ namespace eve::detail
     return mask_op(  cond, eve::logspace_add, t, f);
   }
 
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto logspace_add_(EVE_SUPPORTS(cpu_), C const &cond
+                    , T0 a0, T1 a1, Ts... args)
+  requires floating_value<common_compatible_t<T0, T1, Ts...>>
+  {
+    return mask_op(  cond, eve::logspace_add, a0, a1, args...);
+  }
+
 }

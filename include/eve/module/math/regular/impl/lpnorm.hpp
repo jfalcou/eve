@@ -58,4 +58,13 @@ namespace eve::detail
       }
     }
   }
+
+  template<conditional_expr C, real_value P, real_value T0, real_value T1, real_value ...Ts>
+  auto lpnorm_(EVE_SUPPORTS(cpu_), C const &cond
+          , P  p, T0 a0, T1 a1, Ts... args)
+  requires floating_value<common_compatible_t<P, T0, T1, Ts...>>
+  {
+    return mask_op(  cond, eve::lpnorm, p, a0, a1, args...);
+  }
+
 }

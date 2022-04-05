@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value P, floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
+  //!  template< floating_value P, floating_value T, floating_value ...Ts> auto operator()(P p, T x,Ts... args ) const noexcept
   //!                                                    requires (compatiblevalues< P, T, Ts > && ...);
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
@@ -56,7 +56,7 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `lpnorm[cond](x, ...)` is equivalent to `if_else(cond,lpnorm(x, ...),x)`
+  //!  A Callable object so that the expression `lpnorm[cond](x, ...)` is equivalent to `if_else(cond,lpnorm(p, ...),p)`
   //!
   //! ---
   //!
