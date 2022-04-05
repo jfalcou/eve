@@ -28,6 +28,7 @@ namespace eve
 
     struct all_;
     struct any_;
+    struct reduce_;
     struct count_true__;
     struct bit_and_;
     struct bit_andnot_;
@@ -104,6 +105,7 @@ namespace eve
     struct rotr_;
     struct rshl__;
     struct rshr_;
+    struct scan_;
     struct shl__;
     struct shr_;
     struct significants_;
@@ -192,10 +194,12 @@ namespace eve
   template<> struct is_derivable<tag::none_>                  : std::false_type {};
   template<> struct is_derivable<tag::popcount_>              : std::false_type {};
   template<> struct is_derivable<tag::prev_>                  : std::false_type {};
+  template<> struct is_derivable<tag::reduce_>                : std::false_type {};
   template<> struct is_derivable<tag::rotl_>                  : std::false_type {};
   template<> struct is_derivable<tag::rotr_>                  : std::false_type {};
   template<> struct is_derivable<tag::rshl_>                  : std::false_type {};
   template<> struct is_derivable<tag::rshr_>                  : std::false_type {};
+  template<> struct is_derivable<tag::scan_>                  : std::false_type {};
   template<> struct is_derivable<tag::shl_>                   : std::false_type {};
   template<> struct is_derivable<tag::shr_>                   : std::false_type {};
   template<> struct is_derivable<tag::significants_>          : std::false_type {};
