@@ -73,11 +73,12 @@ namespace eve::detail
   //================================================================================================
   // Masked case
   //================================================================================================
-  template<conditional_expr C, floating_real_value U, floating_real_value V>
-  EVE_FORCEINLINE auto logspace_sub_(EVE_SUPPORTS(cpu_), C const &cond, U const &t, V const &f) noexcept
-      requires compatible_values<U, V>
+  template<conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto logspace_sub_(EVE_SUPPORTS(cpu_), C const &cond
+                    , T0 a0, T1 a1, Ts... args)
+  requires floating_value<common_compatible_t<T0, T1, Ts...>>
   {
-    return mask_op(  cond, eve::logspace_sub, t, f);
+    return mask_op(  cond, eve::logspace_sub, a0, a1, args...);
   }
 
 }
