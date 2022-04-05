@@ -63,5 +63,5 @@ EVE_TEST( "Check behavior of sin on wide"
   TTS_ULP_EQUAL(sin(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(sin(a3)                       , map(ref, a3), 2);
   TTS_ULP_EQUAL(sin(a4)                       , map(ref, a4), 2);
-  TTS_ULP_EQUAL(diff(sin)(a0), map([](auto e) -> v_t { return  -std::cos(e); }, a0), 2);
+  TTS_ULP_EQUAL(diff(sin)(a0), map([](auto e) -> v_t { return  std::cos(e); }, a0), 2);
 };

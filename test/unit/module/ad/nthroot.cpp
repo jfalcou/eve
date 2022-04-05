@@ -16,10 +16,9 @@ EVE_TEST( "Check behavior of eve::nthroot(eve::wide)"
         , eve::test::simd::ieee_reals
         , eve::test::generate ( eve::test::randoms(0, +10)
                               , eve::test::ramp(1, 1)
-                              , eve::test::logicals(0,3)
                               )
         )
-<typename T, typename M>(T const& a0, T const& a1, M const&  )
+<typename T>(T const& a0, T const& a1)
 {
   using eve::detail::map;
   using eve::var;

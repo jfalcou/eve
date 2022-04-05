@@ -61,8 +61,8 @@ EVE_TEST( "Check behavior of sinpi on wide"
   TTS_ULP_EQUAL(sinpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(sinpi(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(sinpi(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(diff(sinpi)(a0), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::cos_pi(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(sinpi)(a1), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::cos_pi(e); }, a1), 2);
-  TTS_ULP_EQUAL(diff(sinpi)(a2), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::cos_pi(e); }, a2), 2);
-  TTS_ULP_EQUAL(diff(sinpi)(a3), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::cos_pi(e); }, a3), 2);
+  TTS_ULP_EQUAL(diff(sinpi)(a0), map([ldpi](auto e) -> v_t { return  ldpi*boost::math::cos_pi(e); }, a0), 2);
+  TTS_ULP_EQUAL(diff(sinpi)(a1), map([ldpi](auto e) -> v_t { return  ldpi*boost::math::cos_pi(e); }, a1), 2);
+  TTS_ULP_EQUAL(diff(sinpi)(a2), map([ldpi](auto e) -> v_t { return  ldpi*boost::math::cos_pi(e); }, a2), 2);
+  TTS_ULP_EQUAL(diff(sinpi)(a3), map([ldpi](auto e) -> v_t { return  ldpi*boost::math::cos_pi(e); }, a3), 2);
 };
