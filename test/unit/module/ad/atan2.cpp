@@ -29,8 +29,9 @@ EVE_TEST( "Check behavior of eve::atan2(eve::wide)"
 
   auto vda0 = var(a0);
   auto vda1 = var(a1);
-  TTS_EQUAL(val(eve::atan2(vda0, a1))      , eve::atan2(a0, a1));
-  TTS_EQUAL(der(eve::atan2(vda0, a1))      , diff_1st(eve::atan2)(a0, a1));
-  TTS_EQUAL(val(eve::atan2(a0, vda1))      , eve::atan2(a0, a1));
-  TTS_EQUAL(der(eve::atan2(a0, vda1))      , diff_2nd(eve::atan2)(a0, a1));
+  TTS_ULP_EQUAL(val(eve::atan2(vda0, a1))      , eve::atan2(a0, a1), 2.0);
+  TTS_ULP_EQUAL(der(eve::atan2(vda0, a1))      , diff_1st(eve::atan2)(a0, a1), 2.0);
+  TTS_ULP_EQUAL(val(eve::atan2(a0, vda1))      , eve::atan2(a0, a1), 2.0);
+  TTS_ULP_EQUAL(der(eve::atan2(a0, vda1))      , diff_2nd(eve::atan2)(a0, a1), 2.0);
+  TTS_ULP_EQUAL(der(eve::atan2(vda0, vda1))    , eve::sum_of_prod(diff_2nd(eve::atan2)(a0, a1), T(1), diff_1st(eve::atan2)(a0, a1), T(1)), 400.0);
 };

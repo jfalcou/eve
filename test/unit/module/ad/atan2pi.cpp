@@ -29,8 +29,9 @@ EVE_TEST( "Check behavior of eve::atan2pi(eve::wide)"
 
   auto vda0 = var(a0);
   auto vda1 = var(a1);
-  TTS_EQUAL(val(eve::atan2pi(vda0, a1))      , eve::atan2pi(a0, a1));
-  TTS_EQUAL(der(eve::atan2pi(vda0, a1))      , diff_1st(eve::atan2pi)(a0, a1));
-  TTS_EQUAL(val(eve::atan2pi(a0, vda1))      , eve::atan2pi(a0, a1));
-  TTS_EQUAL(der(eve::atan2pi(a0, vda1))      , diff_2nd(eve::atan2pi)(a0, a1));
+  TTS_ULP_EQUAL(val(eve::atan2pi(vda0, a1))      , eve::atan2pi(a0, a1), 2.0);
+  TTS_ULP_EQUAL(der(eve::atan2pi(vda0, a1))      , diff_1st(eve::atan2pi)(a0, a1), 2.0);
+  TTS_ULP_EQUAL(val(eve::atan2pi(a0, vda1))      , eve::atan2pi(a0, a1), 2.0);
+  TTS_ULP_EQUAL(der(eve::atan2pi(a0, vda1))      , diff_2nd(eve::atan2pi)(a0, a1), 2.0);
+
 };
