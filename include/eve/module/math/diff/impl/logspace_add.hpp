@@ -66,4 +66,13 @@ namespace eve::detail
       return eve::rec(z+(...+exp(args-that)));
     }
   }
+
+  template<int N, conditional_expr C, real_value T0, real_value T1, real_value ...Ts>
+  auto logspace_add_(EVE_SUPPORTS(cpu_), C const &cond, diff_type<N> const &
+          , T0 a0, T1 a1, Ts... args)
+  requires floating_value<common_compatible_t<T0, T1, Ts...>>
+  {
+    return mask_op(  cond, eve::diff_nth<N>(eve::logspace_add), a0, a1, args...);
+  }
+
 }
