@@ -15,15 +15,15 @@ namespace eve::detail
 {
 
   template<real_value T0, real_value U0, real_value T1, real_value U1, real_value ...Ts>
-  auto sum_of_prod_(EVE_SUPPORTS(cpu_), T0 a0, U0 b0, T1 a1, U1 b1, Ts... args)
+  auto sum_of_prod_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, U0 b0, T1 a1, U1 b1, Ts... args)
     requires (compatible_values<T0, Ts> && ...)
   {
     EVE_ASSERT(is_even(sizeof(Ts)...),"total number of parameter must be even");
     using r_t = common_compatible_t<T0,U0, T1, U1, Ts...>;
     auto sop = [](auto a, auto b, auto c,  auto d){
       auto mcd = -c * d;
-      auto err = fma(c, d, mcd);
-      auto dop = fms(a, b, mcd);
+      auto err = pedantic(fma)(c, d, mcd);
+      auto dop = pedantic(fms)(a, b, mcd);
       return dop + err;
     };
 
@@ -35,7 +35,7 @@ namespace eve::detail
       auto  b(false);
       r_t tmp;
       auto step = [&b, &tmp](auto it, auto arg){
-        it = fam[b](it, tmp, r_t(arg));
+        it = pedantic(fam[b])(it, tmp, r_t(arg));
         tmp =  r_t(arg);
         b = !b;
         return it;
