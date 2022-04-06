@@ -64,4 +64,5 @@
 #include <eve/module/core/diff/sqr.hpp>
 #include <eve/module/core/diff/sqrt.hpp>
 #include <eve/module/core/diff/sub.hpp>
+#include <eve/module/core/diff/sum_of_prod.hpp>
 #include <eve/module/core/diff/trunc.hpp>
