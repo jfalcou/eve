@@ -18,7 +18,7 @@ namespace eve::detail
   auto sum_of_prod_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 a0, U0 b0, T1 a1, U1 b1, Ts... args)
     requires (compatible_values<T0, Ts> && ...)
   {
-    EVE_ASSERT(!(sizeof...(Ts))&1),"total number of parameter must be even");
+    EVE_ASSERT(!((sizeof...(Ts))&1),"total number of parameter must be even");
     using r_t = common_compatible_t<T0,U0, T1, U1, Ts...>;
     auto sop = [](auto a, auto b, auto c,  auto d){
       auto mcd = -c * d;
