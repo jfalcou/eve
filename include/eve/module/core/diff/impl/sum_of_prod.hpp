@@ -19,7 +19,7 @@ namespace eve::detail
   auto sum_of_prod_(EVE_SUPPORTS(cpu_), diff_type<N>
              , T0 arg0, T1 arg1, T2 arg2, T3 arg3, Ts... args) noexcept
   {
-    EVE_ASSERT(!(sizeof...(Ts))&1,"total number of parameters must be even");
+    EVE_ASSERT(!(sizeof...(Ts)&1),"total number of parameters must be even");
     using r_t = common_compatible_t<T0,T1,T2,T3,Ts...>;
     if constexpr(N > sizeof...(Ts)+4)
     {
