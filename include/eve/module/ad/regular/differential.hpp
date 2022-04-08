@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/ad/regular/var.hpp>
+#include <eve/module/ad/valder.hpp>
 
 namespace eve
 {
@@ -24,7 +26,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of imaginary part                         |
+  //! | `operator()` | the  computation of the differential                         |
   //!
   //! ---
   //!
@@ -47,27 +49,18 @@ namespace eve
   //!  @}
   //================================================================================================
 
-  namespace tag { struct differential_; }
-  template<> struct supports_conditional<tag::differential_> : std::false_type {};
+//   namespace tag { struct differential_; }
+//   template<> struct supports_conditional<tag::differential_> : std::false_type {};
 
   EVE_MAKE_CALLABLE(differential_, differential);
 
   namespace detail
   {
-    template<typename Func, floating_real_value X>
-    EVE_FORCEINLINE V differential_( EVE_SUPPORTS(cpu_), Func f, X const & x, X const & dx) noexcept
-    {
-      return der(f(as_valder_t<X>(x, dx)));
-    }
 
-    EVE_FORCEINLINE V differential_( EVE_SUPPORTS(cpu_), Func f, like<valder> auto const & x) noexcept
+    template < typename Func>
+    EVE_FORCEINLINE auto differential_( EVE_SUPPORTS(cpu_), Func f, auto const & ...x) noexcept
     {
-      return der(f(x));
-    }
-
-    EVE_FORCEINLINE V differential_( EVE_SUPPORTS(cpu_), Func f, maybe<valder> auto const & x...) noexcept
-    {
-      return der(f(x...));
+      return [f, x...](auto ...dx){return der(f(var(x, dx)...)); };
     }
   }
 }

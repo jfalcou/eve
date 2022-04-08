@@ -15,6 +15,7 @@
 #include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/plain.hpp>
+#include <eve/module/core/decorator/pol.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/regular.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
