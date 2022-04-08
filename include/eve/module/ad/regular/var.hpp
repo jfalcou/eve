@@ -60,5 +60,12 @@ namespace eve
       using vd_t = eve::as_valder_t<T>;
       return vd_t{x, T(1)};
     };
+
+        template < floating_value T >
+    EVE_FORCEINLINE auto var_( EVE_SUPPORTS(cpu_), const T & x, const T & dx)
+    {
+      using vd_t = eve::as_valder_t<T>;
+      return vd_t{x, dx};
+    };
   }
 }
