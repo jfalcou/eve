@@ -22,9 +22,5 @@ int main()
             << "-> der(eve::geommean(x, var(y)))        = " << eve::der(eve::geommean(x, eve::var(y))) << '\n'
             << "-> der(eve::geommean(var(x), y))        = " << eve::der(eve::geommean(eve::var(x), y)) << '\n'
             << "<- eve::geommean(x, y, z)               = " << eve::geommean(x, y, z) << '\n';
-//             << "-> val(eve::geommean(var(x), y, z))     = " << eve::val(eve::geommean(eve::var(x), y, z)) << '\n'
-//             << "-> der(eve::geommean(x, var(y), z))     = " << eve::der(eve::geommean(x, eve::var(y), z)) << '\n'
-//             << "-> der(eve::geommean(x, y, var(z)))     = " << eve::der(eve::geommean(x, y, eve::var(z))) << '\n'
-    ;
   return 0;
 }

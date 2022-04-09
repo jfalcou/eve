@@ -25,6 +25,11 @@ namespace eve
     struct val_;
     struct der_;
     struct var_;
+    struct gradient_;
+    struct differential_;
+    struct horner_;
+    struct newton_;
+    struct agm_;
 
     struct all_;
     struct any_;
@@ -115,10 +120,15 @@ namespace eve
   template<> struct is_derivable<tag::der_>                   : std::false_type {};
   template<> struct is_derivable<tag::var_>                   : std::false_type {};
   template<> struct is_derivable<tag::if_else_>               : std::false_type {};
+  template<> struct is_derivable<tag::gradient_>              : std::false_type {};
+  template<> struct is_derivable<tag::differential_>          : std::false_type {};
   template<> struct has_derivation<tag::val_>                 : std::false_type {};
   template<> struct has_derivation<tag::der_>                 : std::false_type {};
   template<> struct has_derivation<tag::var_>                 : std::false_type {};
   template<> struct has_derivation<tag::if_else_>             : std::false_type {};
+  template<> struct has_derivation<tag::horner_>              : std::false_type {};
+  template<> struct has_derivation<tag::newton_>              : std::false_type {};
+  template<> struct has_derivation<tag::agm_>                 : std::false_type {};
 
   template<> struct is_derivable<tag::all_>                   : std::false_type {};
   template<> struct is_derivable<tag::any_>                   : std::false_type {};
