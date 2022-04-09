@@ -53,8 +53,8 @@ namespace eve
 
   namespace detail
   {
-    template<value V>
-    EVE_FORCEINLINE V der_( EVE_SUPPORTS(cpu_), V const &) noexcept
+    template<typename V>
+    EVE_FORCEINLINE auto der_( EVE_SUPPORTS(cpu_), V const &) noexcept
     {
       return V(0);
     }

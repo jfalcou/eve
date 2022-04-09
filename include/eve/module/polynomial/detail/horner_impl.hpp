@@ -39,7 +39,7 @@ namespace eve::detail
   template<decorator D, value T0, value T1, value T2>
   EVE_FORCEINLINE constexpr auto horner_impl(D const &
                                             , T0 const &x, T1 const &a, T2 const &b) noexcept
-  requires compatible_values<T0, T1> &&compatible_values<T1, T2>
+   requires compatible_values<T0, T1> &&compatible_values<T1, T2>
   {
     using r_t = common_compatible_t<T0, T1, T2>;
     return D()(fma)(r_t(x), a, b);

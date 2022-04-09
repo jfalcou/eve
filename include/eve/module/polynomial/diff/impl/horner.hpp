@@ -50,7 +50,10 @@ namespace eve::detail
     r_t that(fma(n*x, a, (n-1)*b));
     --n;
     auto next = [x, &n](auto that, auto arg){
-      return fma(x, that, --n*arg);
+      if (n > 1) [[likely]]
+        return fma( x, that, --n*arg);
+      else
+        return that;
     };
     ((that = next(that, args)),...);
     return that;
