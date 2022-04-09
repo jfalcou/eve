@@ -19,6 +19,7 @@ namespace eve::detail
   //================================================================================================
   //== Horner variadic
   //================================================================================================
+
   template<decorator D, value T0, value ...Cs>
   EVE_FORCEINLINE constexpr
   auto horner_impl(D const & d, T0 const & xx, Cs... cs) noexcept

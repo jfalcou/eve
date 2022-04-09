@@ -31,38 +31,41 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, floating_real_value U>
-  EVE_FORCEINLINE  auto agm_(EVE_SUPPORTS(cpu_)
-                            , T const &a
-                            , U const &b) noexcept
-  requires compatible_values<T, U>
-  {
-    return arithmetic_call(agm, a, b);
-  }
+//   template<value T, value U>
+//   EVE_FORCEINLINE  auto agm_(EVE_SUPPORTS(cpu_)
+//                             , T const &a
+//                             , U const &b) noexcept
+//   requires compatible_values<T, U>
+//   {
+//     return arithmetic_call(agm, a, b);
+//   }
 
-  template<floating_real_value T>
-  EVE_FORCEINLINE T agm_(EVE_SUPPORTS(cpu_)
-                             , T a,  T b) noexcept
+  template<value T, value U>
+  EVE_FORCEINLINE auto agm_(EVE_SUPPORTS(cpu_)
+                             , T aa,  U bb) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    using r_t = decltype(eve::add(aa, bb));
+    r_t a(aa);
+    r_t b(bb);
+    if constexpr(has_native_abi_v<r_t>)
     {
       auto ex = exponent(average(a, b));
       auto r = nan(as(a));
       auto null = is_eqz(a)||is_eqz(b);
       r = if_else(null, zero, r);
       auto infi = is_infinite(a) || is_infinite(b);
-      r = if_else(infi, a+b, r);
+      r = if_else(infi, add(a, b), r);
       auto unord = is_unordered(a, b);
       auto done = is_lez(sign(a)*sign(b)) || unord || infi;
       a = if_else(done,  zero, a);
       b = if_else(done,  zero, b);
       a =  ldexp(a, -ex);
       b =  ldexp(b, -ex);
-      auto c = 200*eps(as(a));
-      while (eve::any(eve::abs(c) > 2*eps(as(a))))
+      auto c = one(as(a)); //mul(200, eps(as(a)));
+      while (eve::any(eve::abs(c) > eps(as(a))))
       {
         auto an=average(a, b);
-        auto bn=sqrt(a*b);
+        auto bn=sqrt(mul(a, b));
         c=average(a, -b);
         a=an;
         b=bn;

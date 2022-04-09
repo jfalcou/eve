@@ -13,6 +13,7 @@
 #include <eve/product_type.hpp>
 #include <eve/module/ad/regular/traits.hpp>
 #include <eve/module/ad/regular/is_derivable.hpp>
+#include <eve/concept/generator.hpp>
 #include <eve/detail/abi.hpp>
 #include <iostream>
 #include <iomanip>
@@ -537,7 +538,7 @@ namespace eve
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::ldexp_
                                                 , Z const& z,  N const& n) noexcept
     {
-      return Z{ldexp(val(z), val(n)), ldexp(one(as(val(z))), val(n))};
+      return Z{ldexp(val(z), val(n)), ldexp(one(as(val(z))), val(n))*der(z)};
     }
 
 
@@ -932,6 +933,36 @@ namespace eve
       using r_t = as_valder_t<v_t>;
       return r_t{if_else(vc, va, vb), if_else(vc, da, db)};
     }
+
+    template < like < valder> Z2, generator < typename Z2::value_type> Constant>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::if_else_
+                                               , auto const & c
+                                               , Constant const& a
+                                               , Z2 const& b ) noexcept
+    {
+      auto vb = val(b); auto db = der(b);
+      auto vc = val(c);
+      using v_t = decltype(if_else(vc, a, vb));
+      using r_t = as_valder_t<v_t>;
+      return r_t{if_else(vc, a, vb), if_else(vc, zero, db)};
+    }
+
+    template < like < valder> Z1, generator < typename Z1::value_type> Constant>
+    EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::if_else_
+                                               , auto const & c
+                                               , Z1 const& b
+                                              , Constant const& a
+
+                                               ) noexcept
+    {
+      auto vb = val(b); auto db = der(b);
+      auto vc = val(c);
+      using v_t = decltype(if_else(vc, a, vb));
+      using r_t = as_valder_t<v_t>;
+      return r_t{if_else(vc, a, vb), if_else(vc, zero, db)};
+    }
+
+
 
 //     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::nthroot_
 //                                                 , maybe<valder> auto  const& z
