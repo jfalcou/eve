@@ -34,17 +34,25 @@ template < eve::algo::relaxed_range R, eve::scalar_value T,  eve::scalar_value U
   {
     elt_t invnm1 = eve::rec((elt_t(eve::dec(siz))));
     auto io = eve::views::iota(elt_t{0}, siz);
-    auto f = [a, b, invnm1](auto i){return eve::lerp(elt_t(a), elt_t(b), i*invnm1); };
-    eve::algo::transform_to(eve::views::zip(io, r), f);
+    auto op = [a, b, invnm1](auto i){return eve::lerp(elt_t(a), elt_t(b), i*invnm1); };
+    eve::algo::transform_to(eve::views::zip(io, r), op);
     return r;
   }
 }
 
+// -----------------------
 
-int main()
+#include "test.hpp"
+
+TTS_CASE("example for vector of floats")
+
 {
-  std::vector<float> r1(10);
-  linspace(r1, 2, 6.3);
-  print(r1);
-  return 0;
-}
+  std::vector<float> r1(5);
+  std::vector<float> r2{1.0f, 1.5f, 2.0f, 2.5f, 3.0f};
+  linspace(r1, 1.0f, 3.0f);
+
+  for(size_t i=0; i < r1.size() ; ++i)
+  {
+    TTS_ULP_EQUAL(r1[i], r2[i], 0.5);
+  }
+};
