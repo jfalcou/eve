@@ -117,13 +117,13 @@ namespace eve::algo::views
 
       if constexpr( traits_type::contains(force_type_key) )
       {
-        return rbr::get_type_t<traits_type, force_type_key> {};
+        return rbr::result::fetch_t<force_type_key, traits_type> {};
       }
       else
       {
         using common_zip = eve::common_type<value_type_t<std::remove_cvref_t<Components>>...>;
 
-        using Param = rbr::get_type_t<traits_type, common_with_types_key>;
+        using Param = rbr::result::fetch_t<common_with_types_key,traits_type>;
 
         return []<typename... ParamTypes, typename... ZipTypes>(eve::common_type<ParamTypes...>,
                                                                 eve::common_type<ZipTypes...>)
