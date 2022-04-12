@@ -65,7 +65,7 @@ namespace eve
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(tchebytchev_, tchebytchev);
-  EVE_ALIAS_CALLABLE(chebytchev_t_, tchebytchev);
+//  EVE_ALIAS_CALLABLE(chebytchev_t_, tchebytchev);
 }
 
 #include <eve/module/polynomial/regular/impl/tchebytchev.hpp>
