@@ -1,11 +1,13 @@
 //==================================================================================================
 /*
   KUMI - Compact Tuple Tools
-  Copyright : OFW Contributors & Maintainers
+  Copyright : KUMI Contributors & Maintainers
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#pragma once
+#ifndef KUMI_TUPLE_HPP_INCLUDED
+#define KUMI_TUPLE_HPP_INCLUDED
+
 #include <concepts>
 #include <iosfwd>
 #include <type_traits>
@@ -171,6 +173,9 @@ namespace kumi
 
   template<typename T, std::size_t N>
   concept sized_product_type = product_type<T> && (size<T>::value == N);
+
+  template<typename T, std::size_t N>
+  concept sized_product_type_or_more = product_type<T> && (size<T>::value >= N);
 
   //================================================================================================
   // Forward declaration
@@ -665,6 +670,14 @@ namespace kumi
     return apply([](auto &&...elems) { return tuple{elems...}; }, KUMI_FWD(that));
   }
 
+  template<product_type Type>
+  [[nodiscard]] constexpr auto to_ref(Type&& that)
+  {
+    return apply([](auto&&... elems) {
+      return kumi::forward_as_tuple(KUMI_FWD(elems)...);
+    }, KUMI_FWD(that));
+  }
+
   //================================================================================================
   // Access
   //================================================================================================
@@ -835,27 +848,35 @@ namespace kumi
   //================================================================================================
   // Concatenates tuples
   //================================================================================================
-  template<product_type T, product_type U> [[nodiscard]] constexpr auto cat(T &&t, U &&u)
+  template<product_type... Tuples> [[nodiscard]] constexpr auto cat(Tuples&&... us)
   {
-          if constexpr(sized_product_type<T,0> && sized_product_type<U,0>) return t;
-    else  if constexpr(sized_product_type<T,0>) return u;
-    else  if constexpr(sized_product_type<U,0>) return t;
+    if constexpr(sizeof...(Tuples) == 0) return tuple{};
     else
     {
-      return [&]<std::size_t... TI, std::size_t... UI>(std::index_sequence<TI...>,
-                                                       std::index_sequence<UI...>)
+      // count is at least 1 so MSVC don't cry when we use a 0-sized array
+      constexpr auto count = (1ULL + ... + kumi::size<Tuples>::value);
+      constexpr auto location = [&]()
       {
-        return kumi::make_tuple(get<TI>(KUMI_FWD(t))..., get<UI>(KUMI_FWD(u))...);
-      }
-      (std::make_index_sequence<size<T>::value>(), std::make_index_sequence<size<U>::value>());
-    }
-  }
+        struct { std::size_t t[count],e[count]; } that{};
+        std::size_t k = 0, offset = 0;
 
-  template<product_type T, product_type... Tuples>
-  [[nodiscard]] constexpr auto cat(T&& t, Tuples&&... us)
-  {
-    auto const cc = [](auto&& a, auto&& b) { return cat(KUMI_FWD(a), KUMI_FWD(b)); };
-    return (detail::foldable {cc, KUMI_FWD(t)} << ... << detail::foldable {cc, KUMI_FWD(us)}).value;
+        auto locate = [&]<std::size_t... I>(std::index_sequence<I...>)
+        {
+          (((that.t[I+offset] = k),(that.e[I+offset] = I)),...);
+          offset += sizeof...(I);
+          k++;
+        };
+
+        (locate(std::make_index_sequence<kumi::size<Tuples>::value>{}),...);
+
+        return that;
+      }();
+
+      return [&]<std::size_t... N>(auto&& tuples, std::index_sequence<N...>)
+      {
+        return kumi::tuple{get<location.e[N]>(get<location.t[N]>(tuples))...};
+      }(kumi::forward_as_tuple(KUMI_FWD(us)...), std::make_index_sequence<count-1>{});
+    }
   }
 
   namespace result
@@ -1239,3 +1260,4 @@ namespace kumi
 }
 
 #undef KUMI_FWD
+#endif
