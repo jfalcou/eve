@@ -11,31 +11,6 @@
 
 namespace eve::detail
 {
-  //================================================================================================
-  //== Horner with iterators
-  //================================================================================================
-
-  template<value T0, std::input_iterator IT>
-  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , T0 xx, IT const & first, IT const & last) noexcept
-  requires ((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
-  {
-    return detail::horner_impl(regular_type(), xx, first, last);
-  }
-
-  //================================================================================================
-  //== Horner with iterators and leading unitary coefficient
-  //================================================================================================
-
-  template<value T0, std::input_iterator IT>
-  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , T0 xx
-                                        , callable_one_ const &
-                                        , IT const & first, IT const & last) noexcept
-  requires ((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
-  {
-    return detail::horner_impl(regular_type(), xx, one, first, last);
-  }
 
   //================================================================================================
   //== Horner with ranges
@@ -49,20 +24,7 @@ namespace eve::detail
   }
 
   //================================================================================================
-  //== Horner with ranges and leading unitary coefficient
-  //================================================================================================
-  template<value T0, range R>
-  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , T0 xx
-                                        , callable_one_ const &
-                                        , R const & r) noexcept
-  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
-  {
-    return detail::horner_impl(regular_type(), xx, one, r);
-  }
-
-  //================================================================================================
-  //== N parameters (((..(a*x+b)*x+c)*x + ..)..)
+  //== variadic
   //================================================================================================
 
   template<value T0, value ...Ts>
@@ -70,16 +32,4 @@ namespace eve::detail
   {
     return horner_impl(regular_type(), x, args...);
   }
-
-  //================================================================================================
-  //== N parameters with unitary first coefficient (((..(a*x+b)*x+c)*x + ..)..)
-  //================================================================================================
-
-  template<value T0, value ...Ts>
-  EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , T0 x, callable_one_ const &, Ts... args) noexcept
-  {
-    return horner_impl(regular_type(), x, one, args...);
-  }
-
 }
