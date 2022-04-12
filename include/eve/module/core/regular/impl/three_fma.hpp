@@ -13,37 +13,27 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
-#include <eve/module/core/regular/two_split.hpp>
+#include <eve/module/core/regular/two_prod.hpp>
+#include <eve/module/core/regular/two_add.hpp>
 #include <eve/platform.hpp>
-#include <eve/detection.hpp>
 
 namespace eve::detail
 {
   template<floating_real_value T>
-  EVE_FORCEINLINE kumi::tuple<T, T>
-  two_prod_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE kumi::tuple<T, T, T>
+  three_fma_(EVE_SUPPORTS(cpu_)
            , const T& a
-           , const T& b) noexcept
+           , const T& b
+           , const T& c) noexcept
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(eve::supports_fma3)
-      {
-        auto r0 = a*b;
-        auto r1 = fms(a, b, r0);
-        return {r0, r1};
-      }
-      else
-      {
-        auto [a1, a2] = two_split(a);
-        auto [b1, b2] = two_split(b);
-        T r0 = a*b;
-        T r1 = a2*b2 -(((r0-a1*b1)-a2*b1)-a1*b2);
-        if constexpr(eve::platform::supports_invalids)
-          r1 = if_else(is_not_finite(r0), eve::zero, r1);
-        return {r0, r1};
-      }
+      auto x =  numeric(fma)(a, b, c);
+      auto [u1, u2] = two_prod(a, b);
+      auto [a1, z2] = two_add(b, u2);
+      auto [b1, b2] = two_add(u1, a1);
+      return {x, (b1-x)+b2};
     }
-    else return apply_over2(two_prod, a, b);
+    else return apply_over3(three_fma, a, b, c);
   }
 }
