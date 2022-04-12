@@ -25,13 +25,11 @@ namespace eve
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
   //! | `operator()` | the newton operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator()(value auto x, range auto c, range auto n) const noexcept;
-  //!  auto operator()(value x, std::inputiterator auto firstcoef, std::inputiterator auto sentinel, std::inputiterator auto firstnode) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
@@ -40,9 +38,7 @@ namespace eve
   //!
   //!`x`:   [value x](@ref eve::value).
   //!
-  //!`c`, `n``:   [values ](@ref eve::value) Range containing the coefficients
-  //!
-  //!`firstcoef`, `sentinel`,`firstnode`:   std::input_iterator conforming pair of iterators through the coefficients and start of the nodes
+  //!`c`, `n``:   [values ](@ref eve::value) Range containing respectively the coefficients and the nodes
   //!
   //! **Return value**
   //!
@@ -55,22 +51,6 @@ namespace eve
   //!   If the coefficients are simd values of cardinal N, this means you compute the values of N polynomials.
   //!   * If x is scalar, the polynomials are all computed at the same point
   //!   * If x is simd, the nth polynomial is computed on the nth value of x
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::newton
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `newton[cond](x, ...)` is equivalent to `if_else(cond,newton(x, ...),x)`
   //!
   //! ---
   //!
