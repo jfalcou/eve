@@ -67,4 +67,32 @@ namespace eve::detail
       return that;
     }
   }
+
+  template<value T0, std::ranges::input_range R>
+  EVE_FORCEINLINE constexpr auto horner_impl(comp_type const &, T0 xx, R const & r) noexcept
+  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+  {
+    using r_t = common_compatible_t<T0, typename R::value_type>;
+    auto x =  r_t(xx);
+    auto cur =  std::begin(r);
+    auto last  =  std::end(r);
+    if (last == cur) return r_t(0);
+    else  if (std::distance(cur, last) == 1) return r_t(*cur);
+    else
+    {
+      using std::advance;
+      auto that{r_t(*cur)};
+      auto err{zero(as < r_t>())};
+      auto step = [&x, &that, &err](auto arg){
+        auto [pi, epi] = two_prod(x, that);
+        auto [th, si] = two_add(pi, arg);
+        that = th;
+        err = fma(err, x, epi+si);
+      };
+      for (advance(cur, 1); cur != last; advance(cur, 1))
+        step(r_t(*cur));
+      return that+err;
+    }
+  }
+
 }
