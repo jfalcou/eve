@@ -23,6 +23,14 @@ namespace eve::detail
     return detail::tchebeval_impl(regular_type(), xx, r);
   }
 
+  template<value T0, value T1, value T2, std::ranges::bidirectional_range R>
+  EVE_FORCEINLINE constexpr auto tchebeval_(EVE_SUPPORTS(cpu_)
+                                        , T0 xx, T1 a, T2 b, R const & r) noexcept
+  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+  {
+    return detail::tchebeval_impl(regular_type(), xx, a, b, r);
+  }
+
   //================================================================================================
   //== N parameters (((..(a*x+b)*x+c)*x + ..)..)
   //================================================================================================
