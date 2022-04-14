@@ -58,7 +58,7 @@ EVE_TEST( "Check behavior of tchebeval on wide"
   std::vector<v_t> c3{1, 2, 3};
   auto bcl1 = [c1](auto x)->v_t{return boost::math::chebyshev_clenshaw_recurrence(c1.data(), c1.size(), x);};
   auto bcl2 = [c2](auto x)->v_t{return boost::math::chebyshev_clenshaw_recurrence(c2.data(), c2.size(), x);};
-  auto bcl3 = [c3](auto x)->v_t{return boost::math::chebyshev_clenshaw_recurrence(c3.data(), c3.size(), x);};
+  auto bcl3 = [c3](auto x)->v_t{return boost::math::detail::unchecked_chebyshev_clenshaw_recurrence(c3.data(), c3.size(), v_t(-1), v_t(1), v_t(x));};
 
   TTS_EQUAL(tchebeval(a0), T(0));
   TTS_EQUAL(tchebeval(a0, 1.0), T(0.5));
@@ -72,5 +72,10 @@ EVE_TEST( "Check behavior of tchebeval on wide"
   TTS_EQUAL((tchebeval)(a0, c2),  map(bcl2, a0));
   TTS_EQUAL((tchebeval)(a0, c3),  map(bcl3, a0));
   TTS_ULP_EQUAL((tchebeval)(v_t(0.24), c3),  bcl3(v_t(0.24)), 0.5);
+  TTS_ULP_EQUAL((tchebeval)(v_t(0.24), v_t(-1), v_t(1), c3),  bcl3(v_t(0.24)), 0.5);
+  TTS_ULP_EQUAL((tchebeval)(v_t(-0.24), v_t(-1), v_t(1), c3),  bcl3(v_t(-0.24)), 0.5);
+  TTS_ULP_EQUAL((tchebeval)(v_t(0.70), v_t(-1), v_t(1), c3),  bcl3(v_t(0.70)), 0.5);
+  TTS_ULP_EQUAL((tchebeval)(v_t(-0.70), v_t(-1), v_t(1), c3),  bcl3(v_t(-0.70)), 2);
+
 
 };

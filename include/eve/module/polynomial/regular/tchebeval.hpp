@@ -24,21 +24,25 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | evaluate a polynomial using the tchebeval algorithm           |
+  //! | `operator()` | evaluate a polynomial using the tchebeval algorithm        |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator()(value auto x, value auto... cs) const noexcept;
   //!  auto operator()(value auto x, std::ranges::bidirectional_range auto r) const noexcept;
+  //!  auto operator()(value auto x, auto a,  auto b, std::ranges::bidirectional_range auto r) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value x](@ref eve::value).
+  //!`x`:   [value](@ref eve::value).
   //!
+  //!`a`, `b`:   [values](@ref eve::value). If present,  they are the bounds of the interval for which the tchebytchev polynomial
+  //!       must be evaluated ( -1 and 1 by default). A change of variable \f$ x -> \frac{2x-a-b}{b-a} is internally performed.
+  //!`
   //!`cs`:   [values ](@ref eve::value) expansion pack associated to the coefficients \f$(c_i)_{i_0\le i \lt n}\f$.
   //!
   //!`r`:   [values ](@ref eve::value) Range containing the coefficients in the same conditions

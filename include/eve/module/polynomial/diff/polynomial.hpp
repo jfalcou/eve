@@ -14,3 +14,4 @@
 #include <eve/module/polynomial/diff/laguerre.hpp>
 #include <eve/module/polynomial/diff/legendre.hpp>
 #include <eve/module/polynomial/diff/reverse_horner.hpp>
+#include <eve/module/polynomial/diff/tchebytchev.hpp>
