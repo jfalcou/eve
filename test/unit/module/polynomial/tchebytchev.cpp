@@ -80,6 +80,24 @@ EVE_TEST( "Check behavior of kind_2(tchebytchev) on wide"
   TTS_ULP_EQUAL(kind_2(eve::tchebytchev)(i0    , a1), map(boost_tchebytchev_u, i0, a1), 64);
 };
 
+EVE_TEST( "Check behavior of successor(tchebytchev)"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::between(1.0, 10.0))
+        )
+  <typename T>(T const& a0, T const&)
+{
+  auto t3 = eve::tchebytchev(3, a0);
+  auto t4 = eve::tchebytchev(4, a0);
+  auto t5 = eve::tchebytchev(5, a0);
+  TTS_ULP_EQUAL(eve::successor(eve::tchebytchev)(a0, t4, t3), t5, 64);
+  using eve::kind_2;
+  auto u3 = kind_2(eve::tchebytchev)(3, a0);
+  auto u4 = kind_2(eve::tchebytchev)(4, a0);
+  auto u5 = kind_2(eve::tchebytchev)(5, a0);
+ TTS_ULP_EQUAL(eve::successor(eve::tchebytchev)(a0, u4, u3), u5, 100);
+};
+
+
 // //==================================================================================================
 // //== tchebytchev diff tests
 // //==================================================================================================

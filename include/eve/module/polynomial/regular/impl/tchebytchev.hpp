@@ -17,8 +17,8 @@ namespace eve::detail
 {
   // Recurrence relation for Tchebytchev polynomials:
   template <floating_value T>
-  EVE_FORCEINLINE T tchebytchev_(EVE_SUPPORTS(cpu_), successor_type const &
-                                     , T x, T tn, T tnm1) noexcept
+  EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), successor_type const &
+                                     ,T x, T tn, T tnm1) noexcept
   {
     return fms(x+x, tn, tnm1);
   }
