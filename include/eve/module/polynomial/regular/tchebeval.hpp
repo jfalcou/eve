@@ -29,8 +29,8 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x, value auto... args) const noexcept;
-  //!  auto operator()(value auto x, std::ranges::bidectional_range auto r) const noexcept;
+  //!  auto operator()(value auto x, value auto... cs) const noexcept;
+  //!  auto operator()(value auto x, std::ranges::bidirectional_range auto r) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---
@@ -39,19 +39,17 @@ namespace eve
   //!
   //!`x`:   [value x](@ref eve::value).
   //!
-  //!`args`:   [values ](@ref eve::value) expansion pack associated to \f$(a_i)_{i_0\le i \le n}\f$. \f$i_0\f$ is 1 if o is present else 0
+  //!`cs`:   [values ](@ref eve::value) expansion pack associated to the coefficients \f$(c_i)_{i_0\le i \lt n}\f$.
   //!
   //!`r`:   [values ](@ref eve::value) Range containing the coefficients in the same conditions
-  //!
-  //!`first`, `sentinel`:   std::input_iterator conforming pair of iterators through the coefficients in the same conditions
   //!
   //! **Return value**
   //!
   //!Returns [elementwise](@ref glossary_elementwise) the value of tchebytchev polynomial function
   //!represented by the coefficients in increasing index order at `x`.
   //!
-  //!I.e if \f$c_0, ...c_{n-1}\f$ are the \fn\f$ given coefficients, the object function computes:
-  //! \f$\displaymath c_0/2+\sum_1^n c_i T_i(x)\f$,  where the T_i are the n first tchebytchev polynomials
+  //!I.e if \f$c_0, ...c_{n-1}\f$ are the \f$n\f$ given coefficients, the object function computes:
+  //! \f$\displaymath c_0/2+\sum_1^n c_i T_i(x)\f$,  where the T_i are the n first tchebytchev polynomials of first kind
   //!
   //!
   //!The result type is of the compatibility type of the  coefficients and the evaluation value `x`.

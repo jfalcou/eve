@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var tchebytchev
   //!
-  //! @brief Callable object computing the tchebytchev polynomial of degree n at x.
+  //! @brief Callable object evaluating the tchebytchev polynomial of degree n at x.
   //!
   //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
@@ -53,10 +53,15 @@ namespace eve
   //!
   //!     The expression `diff(tchebytchev)(n,x)` computes the derivative of the function relative to `x`.
   //!
-  //! #### alias
+  //!  * eve::kind_1, kind_2
   //!
-  //!     To desambiguate from tchebytchev polynomial of the second kind (tchebytchev_u) you can use tchebytchev_t
-  //!     in place of tchebytchev
+  //!     The expression `kind_1(tchebytchev)(n,x)` is identical to `tchebytchev(n,x)`.
+  //!     The expression `kind_2(tchebytchev)(n,x)` evaluates the nth polynominial of tchebytchev of second kind \f$U_n\f$ at `x`.
+  //!
+  //!  * eve::successor
+  //!
+  //!     The expression `successor(tchebytchev)( x, yn, ynm1)` computes the value of \f$T_{n+1}(x)\f$ (resp. \f$U_{n+1}(x)\f$)
+  //!     knowing the values yn = f$T_n(x)\f$ and   ynm1 = f$T_{n-1}(x)\f$, (resp.  yn = f$U_n(x)\f$ and   ynm1 = f$U_{n-1}(x)\f$).
   //!
   //! #### Example
   //!
@@ -65,7 +70,6 @@ namespace eve
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(tchebytchev_, tchebytchev);
-//  EVE_ALIAS_CALLABLE(chebytchev_t_, tchebytchev);
 }
 
 #include <eve/module/polynomial/regular/impl/tchebytchev.hpp>
