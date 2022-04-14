@@ -26,6 +26,17 @@ EVE_TEST_TYPES( "Check return types of tchebytchev on wide"
   TTS_EXPR_IS( eve::tchebytchev(i_t(), v_t())  , v_t);
   TTS_EXPR_IS( eve::tchebytchev(wi_t(), v_t())  , T);
 
+  using eve::kind_1;
+  TTS_EXPR_IS( kind_1(eve::tchebytchev)(i_t(), T())  , T);
+  TTS_EXPR_IS( kind_1(eve::tchebytchev)(wi_t(), T())  , T);
+  TTS_EXPR_IS( kind_1(eve::tchebytchev)(i_t(), v_t())  , v_t);
+  TTS_EXPR_IS( kind_1(eve::tchebytchev)(wi_t(), v_t())  , T);
+
+  using eve::kind_2;
+  TTS_EXPR_IS( kind_2(eve::tchebytchev)(i_t(), T())  , T);
+  TTS_EXPR_IS( kind_2(eve::tchebytchev)(wi_t(), T())  , T);
+  TTS_EXPR_IS( kind_2(eve::tchebytchev)(i_t(), v_t())  , v_t);
+  TTS_EXPR_IS( kind_2(eve::tchebytchev)(wi_t(), v_t())  , T);
 };
 
 //==================================================================================================
@@ -50,6 +61,24 @@ EVE_TEST( "Check behavior of tchebytchev on wide"
   TTS_ULP_EQUAL(eve::tchebytchev(i0    , a1), map(boost_tchebytchev, i0, a1), 64);
 };
 
+EVE_TEST( "Check behavior of kind_2(tchebytchev) on wide"
+        , eve::test::simd::ieee_reals
+        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::between(1.0, 10.0), eve::test::as_integer(eve::test::ramp(0)))
+        )
+  <typename T, typename I>(T const& a0, T const& a1, I const & i0)
+{
+  using eve::kind_2;
+  auto eve__tchebytchev  =  [](uint32_t n, auto x) { return eve::kind_2(eve::tchebytchev)(n, x); };
+  for(unsigned int n=0; n < 6; ++n)
+  {
+    auto boost_tchebytchev_u =  [&](auto i, auto e) { return boost::math::chebyshev_u((unsigned int)i, e); };
+    TTS_ULP_EQUAL(eve__tchebytchev(n, a0), map(boost_tchebytchev_u, n, a0), 1000);
+    TTS_ULP_EQUAL(eve__tchebytchev(n, a1), map(boost_tchebytchev_u, n, a1), 1000);
+  }
+  auto boost_tchebytchev_u =  [&](auto i, auto e) { return boost::math::chebyshev_u(i, e); };
+  TTS_ULP_EQUAL(kind_2(eve::tchebytchev)(i0    , a0), map(boost_tchebytchev_u, i0, a0), 64);
+  TTS_ULP_EQUAL(kind_2(eve::tchebytchev)(i0    , a1), map(boost_tchebytchev_u, i0, a1), 64);
+};
 
 // //==================================================================================================
 // //== tchebytchev diff tests

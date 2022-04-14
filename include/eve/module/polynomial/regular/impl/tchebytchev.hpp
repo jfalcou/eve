@@ -17,7 +17,7 @@ namespace eve::detail
 {
   // Recurrence relation for Tchebytchev polynomials:
   template <floating_value T>
-  EVE_FORCEINLINE T laguerre_(EVE_SUPPORTS(cpu_), successor_type const &
+  EVE_FORCEINLINE T tchebytchev_(EVE_SUPPORTS(cpu_), successor_type const &
                                      , T x, T tn, T tnm1) noexcept
   {
     return fms(x+x, tn, tnm1);
@@ -81,6 +81,7 @@ namespace eve::detail
     }
     else return apply_over(tchebytchev, n, x);
   }
+
   template<simd_value I, floating_real_value T>
   EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   //  requires(index_compatible < I, T>
@@ -103,40 +104,41 @@ namespace eve::detail
     else return apply_over(tchebytchev, n, x);
   }
 
-//   template<integral_value I, floating_real_value T>
-//   EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), kind_1_type const &, I n, T x) noexcept
-//   {
-//     return tchebytchev(n, x);
-//   }
+  template<integral_value I, floating_real_value T>
+  EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), kind_1_type const &, I n, T x) noexcept
+  {
+    return tchebytchev(n, x);
+  }
 
-//   template<integral_simd_value I, floating_real_value T>
-//   EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), kind_2_type const &, I n, T x) noexcept
-//   {
-//     EVE_ASSERT(eve::all(is_gez(n)), "some elements of n are not positive");
-//     auto nn = inc(convert(n, as<element_type_t<T>>()));
-//     auto z =  eve::abs(x);
-//     auto acx = acos(x);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  //==  second kind
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  template<integral_value I, floating_real_value T>
+  EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), kind_2_type const &, I n, T x) noexcept
+  {
+    EVE_ASSERT(eve::all(is_gez(n)), "some elements of n are not positive");
+    auto nn = inc(convert(n, as<element_type_t<T>>()));
+    auto z =  eve::abs(x);
+    auto acx = acos(x);
 
-//     auto r0 = sin(nn*acx)/sin(acx);
-//     auto r = if_else((1-z < eps(as(x))
-//                      , if_else(is_gez(x), nn, nn*alternate_sign(n))
-//                      , r0)
-//                     );
-//     auto test = z <= one(as(z));
-//     if (all(test))
-//     {
-//       return r;
-//     }
-//     else
-//     {
-//       auto achx = acosh(x);
-//       auto t0 = sinh(n*achx)/sinh(achx);
-//       auto t = if_else((z-1 < eps(as(x))
-//                        , if_else(is_gez(x), nn, nn*alternate_sign(n))
-//                        , t0)
-//                       );
-//       return if_else(test,  r, if_else(is_gez(x), t, t*sign_alternate(nn)));
-//     }
-//   }
+    auto r0 = sin(nn*acx)/sin(acx);
+    auto r = if_else(1-z < eps(as(x))
+                     , if_else(is_gez(x), nn, -nn*sign_alternate(nn))
+                    , r0);
+    auto test = z <= one(as(z));
+    if (all(test))
+    {
+      return r;
+    }
+    else
+    {
+      auto achx = acosh(x);
+      auto t0 = sinh(nn*achx)/sinh(achx);
+      auto t = if_else(z-1 < eps(as(x))
+                      , if_else(is_gez(x), nn, -nn*sign_alternate(nn))
+                      , t0);
+      return if_else(test,  r, if_else(is_gez(x), t, -t*sign_alternate(nn)));
+    }
+  }
 
 }
