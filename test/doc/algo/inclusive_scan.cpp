@@ -2,21 +2,23 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "detail/print.hpp"
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> r1(5) , r2(5);
-  eve::algo::fill(r1, 2.0f);
-  eve::algo::fill(r2, 2.0f);
+  std::vector<int> v{2,4,6,8,10,12,14,16,18,20,22,24,26};
+  std::vector<int> w{1,2,3,4,5,6,7,8};
 
-  std::cout << " -> r1                         = "; eve::detail::print(r1);
-  std::cout << " -> r2                         = "; eve::detail::print(r2);
-  eve::algo::inclusive_scan_inplace(r1, 0.0f);
-  eve::algo::inclusive_scan_inplace(r2, std::pair{eve::mul, 1.0f}, 1.0f);
-  std::cout << " <- eve::algo::inclusive_scan_inplace(r1, 0.0f);\n";
-  std::cout << " <- eve::algo::inclusive_scan_inplace(r2, std::pair{eve::mul, 1.0f}, 1.0f);\n";
-  std::cout << " -> r1                         = "; eve::detail::print(r1);
-  std::cout << " -> r2                         = "; eve::detail::print(r2);
+  std::cout << " -> v                                                      = ";
+  doc_utils::print(v);
+
+  std::cout << " <- eve::algo::inclusive_scan_inplace(v, 0)                = ";
+  eve::algo::inclusive_scan_inplace(v, 0);
+  doc_utils::print(v);
+
+  std::cout << " <- eve::algo::inclusive_scan_inplace(w, {eve::mul, 1}, 1) = ";
+  eve::algo::inclusive_scan_inplace(w, std::pair{eve::mul, 1}, 1);
+  doc_utils::print(w);
+
   return 0;
 }

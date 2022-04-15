@@ -2,14 +2,17 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "detail/print.hpp"
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> r1(5);
-  eve::algo::fill(r1, 8.0);
-  std::cout << " <- std::vector<float> r1(5);\n";
-  std::cout << " <- eve::algo::fill(r1, 8.0);\n";
-  std::cout << " -> r1                         = "; eve::detail::print(r1);
+  std::vector<float> v(12);
+  eve::algo::fill(v, 8.0);
+
+  std::cout << " <- eve::algo::fill(v, 8.0);\n";
+
+  std::cout << " -> v                      = ";
+  doc_utils::print(v);
+
   return 0;
 }

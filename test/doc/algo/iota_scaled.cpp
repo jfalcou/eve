@@ -1,19 +1,13 @@
 #include <eve/algo.hpp>
 #include <iostream>
-#include <vector>
-#include "detail/print.hpp"
+#include "print.hpp"
 
-// iota_with_step is not a good name arithmetic_progression is too long but better. arith_prog ?
 int main()
 {
-  std::vector<float> r1(5);
-//  eve::algo::iota_with_step(r1, 0.5f, 2.0f); // why this does not exists ?
   auto vr = eve::views::iota_with_step(0.5f, 2.0f, 5);
-  eve::algo::copy(vr, r1);
 
-  std::cout << " <- std::vector<float> r1(5);\n";
-  std::cout << " <- vr = eve::views::iota_with_step(0.5f, 2.0, 5);\n";
-  std::cout << " -> vr = "; eve::detail::print(vr);
-  std::cout << " -> r1 = "; eve::detail::print(r1);
+  std::cout << " <- eve::views::iota_with_step(0.5f, 2.0, 5) = ";
+  doc_utils::print(vr);
+
   return 0;
 }

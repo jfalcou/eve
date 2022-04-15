@@ -2,26 +2,23 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> r1{12, 0, 21, 2, 0, -4};
+  std::vector<int> v{12,0,5,-9,3,-8,2,-5,7,21,2,0,-4};
 
-  auto pos   = eve::algo::find_if(r1, eve::is_eqz);
-  auto posn  = eve::algo::find_if_not(r1, [](auto x){return x <  20.0; });
-  auto pos21 = eve::algo::find(r1, 21.0f);
+  std::cout << " -> v                      = ";
+  doc_utils::print(v);
 
-  std::cout << " <- std::vector<float> r1{12, 0, 21, 2, 0, -4};\n";
-  std::cout << " <- *eve::algo::find_if(r1, eve::is_eqz)   = " << *pos     << "\n";
-  std::cout << " <- next element                           = " << *(pos+1) << "\n";
-  std::cout << " <- previous  element                      = " << *(pos-1) << "\n";
+  auto pos   = eve::algo::find_if(v, eve::is_eqz);
+  std::cout << " <- eve::algo::find_if(v, eve::is_eqz)  = " << *pos   << "\n";
 
-  std::cout << " <- *eve::algo::find_ifnot(r1, [](auto x){return x <  20.0; })   = " << *posn    << "\n";
-  std::cout << " <- next element                           = " << *(posn+1) << "\n";
-  std::cout << " <- previous  element                      = " << *(posn-1) << "\n";
+  auto posn  = eve::algo::find_if_not(v, [](auto x){return x < 0; });
+  std::cout << " <- eve::algo::find_if_not(v, x <0 )    = " << *posn  << "\n";
 
-  std::cout << " <- *eve::algo::find(r1, 21.0f })          = " << *pos21    << "\n";
-  std::cout << " <- next element                           = " << *(pos21+1) << "\n";
-  std::cout << " <- previous  element                      = " << *(pos21-1) << "\n";
+  auto pos21 = eve::algo::find(v, 21);
+  std::cout << " <- eve::algo::find(v, 21 })            = " << *pos21 << "\n";
+
   return 0;
 }

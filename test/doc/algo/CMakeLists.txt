@@ -4,7 +4,6 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-
 make_unit( "doc.algo" all_of.cpp             )
 make_unit( "doc.algo" any_of.cpp             )
 make_unit( "doc.algo" convert.cpp            )

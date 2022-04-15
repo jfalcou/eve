@@ -1,21 +1,26 @@
-#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "detail/print.hpp"
-
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> r1{1.0f, -2.3f, 5.0f, 0.0f, -1.0f};
-  std::vector<float> r2(r1.size());
-  float a = 10.0;
-  float b = 5.0;
-  eve::algo::transform_to(r1, r2, [a, b](auto e){return a*e+b; });
-  std::cout << " -> r1                                  = "; eve::detail::print(r1);
-  std::cout << " -> r2  (a*r1+b)                        = "; eve::detail::print(r2);
-  eve::algo::transform_inplace(r2, eve::log_abs);
-  std::cout << " -> r2  (log(|r2|)                      = "; eve::detail::print(r2);
+  std::vector<double> v = {2.5,6.8,-10.62,3.2,-8.8,2.7,-6.66,8.5,-2.01,4.8};
+  std::vector<double> w(v.size());
+
+  std::cout << " -> v                                                           =\n";
+  doc_utils::print(v);
+
+  std::cout << " <- eve::algo::transform_to(v,w,[](auto e){return e*2.5+1.3; })\n";
+  eve::algo::transform_to(v, w, [](auto e){return e*2.5+1.3; });
+  std::cout << " -> w                                                           =\n";
+  doc_utils::print(w);
+
+  std::cout << " <- eve::algo::transform_inplace(v, eve::log_abs)\n";
+  eve::algo::transform_inplace(v, eve::log_abs);
+  std::cout << " -> v                                                           =\n";
+  doc_utils::print(v);
+
   return 0;
 }

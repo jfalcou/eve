@@ -2,22 +2,20 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "detail/print.hpp"
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> r1(5), r2(5);
-  auto vr1 = eve::views::iota_with_step(0.5f, 2.0f, 5);
-  eve::algo::copy(vr1, r1);
-  auto vr2 = eve::views::iota(-3.0, 5);
-  eve::algo::copy(vr2, r2);
+  std::vector<int>  v = {2,5,-9,3,-8,2,-5,7,-2,3};
 
-  std::cout << " -> eve::algo::all_of(r1, my_gez)       = "<< std::boolalpha << eve::algo::all_of(r1, [](auto i){return (i >= 0); })<< '\n';
-  std::cout << " -> eve::algo::all_of(vr1,my_gez)       = "<< std::boolalpha << eve::algo::all_of(vr1, [](auto i){return (i >= 0); })<< '\n';
-  std::cout << " -> eve::algo::all_of(r2, eve::is_ltz)  = "<< std::boolalpha << eve::algo::all_of(r2, eve::is_ltz)<< '\n';
-  std::cout << " -> eve::algo::all_of(vr2, eve::is_ltz) = "<< std::boolalpha << eve::algo::all_of(vr2, eve::is_ltz)<< '\n';
+  std::cout << " -> v                                  = ";
+  doc_utils::print(v);
 
-  std::cout << " -> r1                                  = "; eve::detail::print(r1);
-  std::cout << " -> r2                                  = "; eve::detail::print(r2);
+  std::cout << " -> eve::algo::all_of(v, i*i >= 4)     = "
+            << std::boolalpha << eve::algo::all_of(v, [](auto i){ return i*i >= 4; })<< "\n";
+
+  std::cout << " -> eve::algo::all_of(v, eve::is_ltz)  = "
+            << std::boolalpha << eve::algo::all_of(v, eve::is_ltz)<< "\n";
+
   return 0;
 }

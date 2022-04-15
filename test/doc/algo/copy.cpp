@@ -2,18 +2,19 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "detail/print.hpp"
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> r1(5);
-  auto vr1 = eve::views::iota_with_step(0.5f, 2.0f, 5);
-  eve::algo::copy(vr1, r1);
-  std::cout << " <- std::vector<float> r1(5);\n";
-  std::cout << " <- auto vr1 = eve::views::iota_with_step(0.5f, 2.0f, 5);\n";
-  std::cout << " <- eve::algo::copy(vr1, r1);\n";
-  std::cout << " -> eve::algo::equal(r1, vr1)  = "<< std::boolalpha << eve::algo::equal(r1, vr1)<< '\n';
+  std::vector<double>  v = {2.5,6.8,-10.62,3.2,-8.8,2.7,-6.66,8.5,-2.01,4.8};
+  std::vector<double>  w(v.size());
 
-  std::cout << " -> r1                         = "; eve::detail::print(r1);
+  std::cout << " -> v                       = ";
+  doc_utils::print(v);
+
+  eve::algo::copy(v, w);
+  std::cout << " -> eve::algo::copy(v, w);  = ";
+  doc_utils::print(w);
+
   return 0;
 }

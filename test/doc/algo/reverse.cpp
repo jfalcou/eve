@@ -2,25 +2,17 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include <eve/views/iota.hpp>
-#include <eve/views/reverse.hpp>
-#include "detail/print.hpp"
+#include "print.hpp"
 
 int main()
 {
-  std::vector<float> v(10), r1(10);
-  auto vv = eve::views::iota(1.0f, 10);
-  eve::algo::copy(vv, v);
-  eve::algo::reverse_copy(v, r1);
-  auto r2 = eve::views::reverse(vv);
+  std::vector<int> v= {1,2,3,4,5,6,7,8,9,10,11,12,13};
 
-  std::cout << " <- std::vector<float> r1(10);\n";
-  std::cout << " <- auto vv = eve::views::iota(1.0f, 10);;\n";
-  std::cout << " -> eve::algo::reverse_copy(v, r1);\n";
-  std::cout << " -> auto r2 = eve::views::reverse(vv);\n";
+  std::cout << " -> v                       = ";
+  doc_utils::print(v);
 
-  std::cout << " -> v                                   = "; eve::detail::print(v);
-  std::cout << " -> r1                                  = "; eve::detail::print(r1);
-  std::cout << " -> r2                                  = "; eve::detail::print(r2);
+  std::cout << " -> eve::views::reverse(v)  = ";
+  doc_utils::print(eve::views::reverse(v));
+
   return 0;
 }
