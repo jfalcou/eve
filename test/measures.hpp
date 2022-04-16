@@ -10,6 +10,7 @@
 #include <eve/wide.hpp>
 #include <eve/arch/top_bits.hpp>
 #include <eve/module/core.hpp>
+#include <sstream>
 
 namespace eve
 {
