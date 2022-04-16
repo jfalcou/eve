@@ -40,17 +40,21 @@ set_target_properties ( doc_pch PROPERTIES
                       )
 
 target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/test/test.hpp")
-target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/core.hpp")
-target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/math.hpp")
 
 target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/wide.hpp")
 target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/logical.hpp")
-target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/core.hpp")
-target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/math.hpp")
 
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/benchmarks/generators.hpp")
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/benchmarks/experiment.hpp")
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/wide.hpp")
 target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/logical.hpp")
-target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/core.hpp")
-target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/math.hpp")
+
+if (NOT CMAKE_CXX_COMPILER_ID  MATCHES "MSVC" )
+  target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/core.hpp")
+  target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/core.hpp")
+  target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/core.hpp")
+
+  target_precompile_headers(bench_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/math.hpp")
+  target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/math.hpp")
+  target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/module/math.hpp")
+endif()
