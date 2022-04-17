@@ -53,7 +53,10 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
+<<<<<<< Updated upstream
   //!
+=======
+>>>>>>> Stashed changes
   //!     The expression `diff(jacobi)(...,x)` computes the derivative of the function relative to `x`.
   //!
   //!     The expression `diff(jacobi)(...,x,k)` computes the derivative of order k of the function relative to `x`.
