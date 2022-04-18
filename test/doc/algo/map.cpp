@@ -4,11 +4,6 @@
 #include <vector>
 #include "print.hpp"
 
-struct load_op
-{
-  auto operator()(auto x) const { return eve::sqrt(eve::convert(x, eve::as<double>{})); }
-};
-
 int main()
 {
   std::vector<double>  v = {2.5,6.8,10.62,3.2,8.8,2.7,6.66,8.5,2.01,4.8};

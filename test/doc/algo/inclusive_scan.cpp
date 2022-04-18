@@ -6,19 +6,19 @@
 
 int main()
 {
-  std::vector<int> v{2,4,6,8,10,12,14,16,18,20,22,24,26};
-  std::vector<int> w{1,2,3,4,5,6,7,8};
+  std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
+  std::vector<int> w(v.size());
 
   std::cout << " -> v                                                      = ";
   doc_utils::print(v);
 
+  std::cout << " <- eve::algo::inclusive_scan_to(v, w, {eve::mul, 1}, 1)   = ";
+  eve::algo::inclusive_scan_to(v, w, std::pair{eve::mul, 1}, 1);
+  doc_utils::print(w);
+
   std::cout << " <- eve::algo::inclusive_scan_inplace(v, 0)                = ";
   eve::algo::inclusive_scan_inplace(v, 0);
   doc_utils::print(v);
-
-  std::cout << " <- eve::algo::inclusive_scan_inplace(w, {eve::mul, 1}, 1) = ";
-  eve::algo::inclusive_scan_inplace(w, std::pair{eve::mul, 1}, 1);
-  doc_utils::print(w);
 
   return 0;
 }

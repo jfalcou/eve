@@ -23,6 +23,5 @@ namespace doc_utils
       for(auto i = 1;  i !=  n; ++i, ++cur) {std::cout << +eve::read(cur) << " ";};
       if (n) std::cout << +eve::read(cur) << "\n";
     }
-    else std::cout <<"}\n";
   }
 }
