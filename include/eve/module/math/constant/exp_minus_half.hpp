@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the exp_minus_half constant value.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/exp_minus_half.cpp}
+  //! @godbolt{doc/math/exp_minus_half.cpp}
   //!
   //! @}
   //================================================================================================

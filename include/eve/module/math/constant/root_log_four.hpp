@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the root_log_four constant value.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/root_log_four.cpp}
+  //! @godbolt{doc/math/root_log_four.cpp}
   //!
   //! @}
   //================================================================================================

@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the log_log_two constant value.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/log_log_two.cpp}
+  //! @godbolt{doc/math/log_log_two.cpp}
   //!
   //! @}
   //================================================================================================

@@ -227,6 +227,7 @@ std::vector<type_t> cts
     type_t{"two_thirds_pi"         , 2.094395102393195492308428922186335256e+00Q},
     type_t{"zeta_three"            , 1.202056903159594285399738161511449990e+00Q},
     type_t{"zeta_two"              , 1.644934066848226436472415166646025189e+00Q},
+    type_t{"pi2_o_16"              , 0.61685027506808491367715568749225944595710621295255e+00Q}
   };
 
 // std::vector<__float128> cts{
@@ -377,7 +378,8 @@ std::vector<type_t> cts
     "twothirds",
     "two_thirds_pi",
     "zeta_three",
-    "zeta_two"
+    "zeta_two",
+    "pi2_o_16"
     };
 
 using ld_t = __float128;

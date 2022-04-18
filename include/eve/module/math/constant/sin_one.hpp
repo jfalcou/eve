@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the sin_one constant value.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/sin_one.cpp}
+  //! @godbolt{doc/math/sin_one.cpp}
   //!
   //! @}
   //================================================================================================

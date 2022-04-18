@@ -32,6 +32,7 @@
 #include <eve/module/math/constant/oneotwoeps.hpp>
 #include <eve/module/math/constant/phi.hpp>
 #include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/constant/pi2_o_16.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/constant/sqrt_2.hpp>
 #include <eve/module/math/constant/sqrt_3.hpp>

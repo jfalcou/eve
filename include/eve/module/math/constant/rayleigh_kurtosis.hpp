@@ -24,7 +24,7 @@ namespace eve
   //!
   //! @brief Callable object computing the rayleigh_kurtosis constant value.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
@@ -48,7 +48,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/rayleigh_kurtosis.cpp}
+  //! @godbolt{doc/math/rayleigh_kurtosis.cpp}
   //!
   //! @}
   //================================================================================================
