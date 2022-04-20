@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/asum.hpp>
 
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/any.hpp>
