@@ -14,9 +14,9 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var asum
+  //! @var asum2
   //!
-  //! @brief Callable object computing the asum operation.
+  //! @brief Callable object computing the asum2 operation.
   //!
   //! **Required header:** `#include <eve/module/core.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the asum operation                                         |
+  //! | `operator()` | the asum2 operation                                         |
   //!
   //! ---
   //!
@@ -51,16 +51,16 @@ namespace eve
   //!  * eve::comp
   //!
   //!
-  //!     The call `comp(asum)(x,args...`  computes the sum of the absolute values of its parameters
+  //!     The call `comp(asum2)(x,args...`  computes the sum of the absolute values of its parameters
   //!      using kahan compensation algoritm.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/core/asum.cpp}
+  //! @godbolt{doc/core/asum2.cpp}
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(asum_, asum);
+  EVE_MAKE_CALLABLE(asum2_, asum2);
 }
 
-#include <eve/module/core/regular/impl/asum.hpp>
+#include <eve/module/core/regular/impl/asum2.hpp>

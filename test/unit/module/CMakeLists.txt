@@ -6,6 +6,7 @@
 add_subdirectory(core)
 
 ## Modules
+add_subdirectory(compensated)
 add_subdirectory(polynomial)
 add_subdirectory(proba)
 

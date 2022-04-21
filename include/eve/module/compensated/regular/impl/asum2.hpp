@@ -23,7 +23,7 @@ namespace eve::detail
   //N parameters
   //================================================================================================
   template<real_value T0, real_value ...Ts>
-  auto asum_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, Ts... args)
+  auto asum2_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, Ts... args)
   {
     using r_t = common_compatible_t<T0,Ts...>;
     r_t that(eve::abs(a0));
@@ -39,7 +39,7 @@ namespace eve::detail
   }
 
   template<real_value T0, real_value ...Ts>
-  common_compatible_t<T0,Ts...> asum_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
+  common_compatible_t<T0,Ts...> asum2_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   {
     using r_t = common_compatible_t<T0,Ts...>;
     r_t that(eve::abs(a0));
@@ -52,7 +52,7 @@ namespace eve::detail
   }
 
 //   template<real_value T0, real_value ...Ts>
-//   auto asum_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 a0, Ts... args)
+//   auto asum2_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 a0, Ts... args)
 //   {
 //     using r_t = common_compatible_t<T0,Ts...>;
 //     r_t that(eve::abs(a0));
@@ -76,7 +76,7 @@ namespace eve::detail
 
 
   template<real_value T0, real_value ...Ts>
-  auto asum_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 a0, Ts... args)
+  auto asum2_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 a0, Ts... args)
   {
     using r_t = common_compatible_t<T0,Ts...>;
     r_t that(eve::abs(a0));
@@ -99,7 +99,7 @@ namespace eve::detail
 
 
   template<range R>
-  auto asum_(EVE_SUPPORTS(cpu_), numeric_type const &, R const & xs)
+  auto asum2_(EVE_SUPPORTS(cpu_), numeric_type const &, R const & xs)
     requires (!simd_value<R>)
   {
     using r_t = typename R::value_type;
@@ -130,7 +130,7 @@ namespace eve::detail
     }
   }
   template<range R>
-  auto asum_(EVE_SUPPORTS(cpu_), R const & xs)
+  auto asum2_(EVE_SUPPORTS(cpu_), R const & xs)
     requires (!simd_value<R>)
   {
     using r_t = typename R::value_type;
