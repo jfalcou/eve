@@ -173,15 +173,13 @@ Getting Started</h1>
 Retrieving the source</h2>
 <p ><b>EVE</b> is available on GitHub and can be retrieved via the following command: <br  />
 </p>
-<pre class="fragment">$ git clone -b main https://github.com/jfalcou/eve.git
-</pre><p >This retrieves the <code>main</code> branch which contains the latest stable version.</p>
-<p >You can also use the <code>develop</code> branch if you prefer using bleeding edge unstable version or any tagged versions.</p>
+<pre class="fragment">$ git clone  https://github.com/jfalcou/eve.git
+</pre><p >This retrieves the <code>main</code> branch which contains the latest stable version. Development happens live on <code>main</code> so if you need stability, use a tagged versions.</p>
 <p >Once retrieved, you should have a <code>eve</code> folder which contains the whole source code, this documentation, assorted examples and the unit test suite.</p>
 <pre class="fragment">$ cd eve
 $ ls
-  benchmarks  cmake  CODE_OF_CONDUCT.md  CONTRIBUTORS  LICENSE.md
-  README.md   tools  CMakeLists.txt      doc           examples
-  include     test
+  CMakeLists.txt  CONTRIBUTORS  README.md  benchmarks  cmake  doc  examples
+  tools  CODE_OF_CONDUCT.md  LICENSE.md appveyor.yml  docs  include  test
 </pre><h2><a class="anchor" id="autotoc_md2086"></a>
 Installing</h2>
 <p >Create a <code>build</code> directory here and enter it. Once in the <code>build</code> directory, you can use <b>CMake</b> to generate the build system for <b>EVE</b>.</p>
