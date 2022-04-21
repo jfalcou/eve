@@ -1248,6 +1248,7 @@ HTML_EXTRA_STYLESHEET  = doxystrap.css
 
 HTML_EXTRA_FILES       = doxystrap.js \
                          godbolt.js   \
+                         eve.bibtex   \
                          blacktocat.png
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
