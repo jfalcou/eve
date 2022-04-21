@@ -7,7 +7,7 @@
 //==================================================================================================
 #include <eve/module/core.hpp>
 #include <eve/algo.hpp>
-#include "eve/algo/transform.hpp"
+#include <eve/algo/transform.hpp>
 #include <vector>
 
 //
@@ -16,7 +16,7 @@
 //
 //  - the first element of r is equal to a;
 //  - the last element of r is equal to b;
-//  - each other elements are separated by (b-a)/(s.size()-1)
+//  - all other elements are separated by (b-a)/(s.size()-1)
 //
 //  Precision is usually the cornerstone of proper linspace implementation. We use eve::lerp
 //  to ensure proper accuracy.
