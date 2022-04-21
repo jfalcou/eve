@@ -26,15 +26,15 @@ namespace eve::detail
   auto asum2_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 a0, Ts... args)
   {
     using r_t = common_compatible_t<T0,Ts...>;
-    r_t that(eve::abs(a0));
+    r_t that(sqr_abs(a0));
     auto inf_found = is_infinite(that);
-    auto addabs = [&inf_found](auto that, auto next)->r_t{
-      auto z = eve::abs(next);
+    auto addsqrabs = [&inf_found](auto that, auto next)->r_t{
+      auto z = eve::sqr_abs(next);
       inf_found = inf_found || is_infinite(z);
       that+= z;
       return that;
     };
-    ((that = addabs(that,args)),...);
+    ((that = addsqrabs(that,args)),...);
     return if_else(inf_found, inf(as<r_t>()), that);
   }
 
@@ -42,12 +42,12 @@ namespace eve::detail
   common_compatible_t<T0,Ts...> asum2_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   {
     using r_t = common_compatible_t<T0,Ts...>;
-    r_t that(eve::abs(a0));
-    auto addabs = [](auto that, auto next)->r_t{
-      that+= eve::abs(next);
+    r_t that(sqr_abs(a0));
+    auto addsqrabs = [](auto that, auto next)->r_t{
+      that+= sqr_abs(next);
       return that;
     };
-    ((that = addabs(that,args)),...);
+    ((that = addsqrabs(that,args)),...);
     return that;
   }
 
@@ -76,19 +76,20 @@ namespace eve::detail
 
 
   template<real_value T0, real_value ...Ts>
-  auto asum2_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 a0, Ts... args)
+  auto asum2_(EVE_SUPPORTS(cpu_), compensated_type const &, T0 a0, Ts... args)
   {
     using r_t = common_compatible_t<T0,Ts...>;
-    r_t that(eve::abs(a0));
+    r_t that(sqr_abs(a0));
     auto inf_found = is_infinite(that);
     r_t c(0);
-    auto kaddabs = [&c, &inf_found](auto that, auto next)->r_t{
-      auto a = eve::abs(next);
-      auto [s, err] = two_add(that, a);
-      c+= err;
-      inf_found = inf_found || is_infinite(a);
-      return s;
+    auto sosq = [](auto a, auto b, auto c,  auto d){
+      auto mc2 = -sqr_abs(c);
+      auto err = pedantic(fma)(c, c, mc2);
+      auto dop = pedantic(fms)(a, a, mc2);
+      return dop;
+      c+= err; 
     };
+
     ((that = kaddabs(that,args)),...);
 //     std::cout << std::endl << "c      " << c << std::endl;
 //     std::cout << "that   " << that << std::endl;
