@@ -1,7 +1,7 @@
 name: E.V.E CI
 on:
   push:
-    branches:
+    branches-ignore:
       - main
   pull_request:
     branches:
