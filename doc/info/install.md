@@ -11,21 +11,19 @@ Installation & Quick Start {#install}
 <br/>
 
 @verbatim
-$ git clone -b main https://github.com/jfalcou/eve.git
+$ git clone  https://github.com/jfalcou/eve.git
 @endverbatim
 
-This retrieves the `main` branch which contains the latest stable version.
-
-You can also use the `develop` branch if you prefer using bleeding edge unstable version or any tagged versions.
+This retrieves the `main` branch which contains the latest stable version. Development happens
+live on `main` so if you need stability, use a tagged versions.
 
 Once retrieved, you should have a `eve` folder which contains the whole source code, this documentation, assorted examples and the unit test suite.
 
 @verbatim
 $ cd eve
 $ ls
-  benchmarks  cmake  CODE_OF_CONDUCT.md  CONTRIBUTORS  LICENSE.md
-  README.md   tools  CMakeLists.txt      doc           examples
-  include     test
+  CMakeLists.txt  CONTRIBUTORS  README.md  benchmarks  cmake  doc  examples
+  tools  CODE_OF_CONDUCT.md  LICENSE.md appveyor.yml  docs  include  test
 @endverbatim
 
 ## Installing

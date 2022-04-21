@@ -212,6 +212,7 @@ Conditional Function Syntax</h2>
 <p >Let's define a <code>sqrt_positive</code> function that computes the square root of its argument if it's positive or returns it unchanged otherwise. One can write:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using</span> w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
@@ -234,6 +235,7 @@ Conditional Function Syntax</h2>
 <p >To go beyond those limitations, <b>EVE</b> functions supports &ndash; whenever it makes sense &ndash; a conditional call syntax:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using</span> w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
@@ -271,6 +273,7 @@ Mask with alternative</h3>
 <p >Let's modify <code>sqrt_positive</code> so that, if the argument is not positive, 0 is returned instead.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using</span> w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
@@ -302,6 +305,7 @@ Context-sensitive mask</h3>
 <p >A frequent example is trying to load data from memory while ignoring trailing garbage or out of bounds values:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_not_first( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
@@ -333,6 +337,7 @@ Context-sensitive mask</h3>
 <p >EVE** provides some more conditional expression to express this need.</p>
 <p >The first is to use the <a class="el" href="structeve_1_1keep__between.html" title="Conditional expression keeping all lanes between two position.">eve::keep_between</a> helper:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_between( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
@@ -352,6 +357,7 @@ Context-sensitive mask</h3>
 <div class="fragment"><div class="line">(-6.3, 1, 2, -6.3)</div>
 </div><!-- fragment --><p ><a class="el" href="structeve_1_1keep__between.html" title="Conditional expression keeping all lanes between two position.">eve::keep_between</a> uses ad-hoc indexes, which makes the code a bit too size dependent. One can also use the same conditional but use a similar interface to <a class="el" href="structeve_1_1ignore__first.html" title="Conditional expression ignoring the k first lanes from a eve::simd_value.">eve::ignore_first</a>.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> load_between( <span class="keywordtype">float</span>* ptr )</div>
 <div class="line">{</div>
