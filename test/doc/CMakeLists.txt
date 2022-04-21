@@ -4,6 +4,7 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
+add_subdirectory(algo)
 add_subdirectory(bessel)
 add_subdirectory(combinatorial)
 add_subdirectory(elliptic)
