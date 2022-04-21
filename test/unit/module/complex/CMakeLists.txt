@@ -4,16 +4,9 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-## Modules
-add_subdirectory(core)
-add_subdirectory(complex)
-add_subdirectory(polynomial)
-add_subdirectory(proba)
+add_custom_target(unit.complex.exe          )
+add_dependencies(unit.exe unit.complex.exe  )
 
-#if(EVE_USE_BOOST)
-add_subdirectory(bessel)
-add_subdirectory(elliptic)
-add_subdirectory(combinatorial)
-add_subdirectory(math)
-add_subdirectory(special)
-#endif()
+make_unit("unit.complex"  constructor.cpp   )
+make_unit("unit.complex"  imag.cpp          )
+make_unit("unit.complex"  real.cpp          )
