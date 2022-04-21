@@ -30,3 +30,5 @@ A new, more up-to-date **EVE** specific journal paper is in the work atm.
  - [**Modern Generative Programming for Optimizing Small Matrix-Vector Multiplication**, Jules Penuchot, Joel Falcou, Amal Khabou in *HPCS 2018*](https://hal.archives-ouvertes.fr/hal-01409286/document)
  - [**Boost. simd: generic programming for portable simdization**, Pierre Estérie, Joel Falcou, Mathias Gaunard, Jean-Thierry Lapresté, *PACT 2012*](https://core.ac.uk/download/pdf/51214382.pdf#page=110)
  - [**EVE, an object oriented SIMD library**, Joel Falcou, Jocelyn Serot in *Scalable Computing: Practice and Experience 6 (4)*](https://www.scpe.org/index.php/scpe/article/download/345/32)
+
+A [**ready to use Bibtex file can be downloaded here**](eve.bibtex).
