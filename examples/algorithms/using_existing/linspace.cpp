@@ -45,13 +45,13 @@ requires( eve::floating_scalar_value<decltype(eve::read(r.begin()))>)
     elt_t step  = eve::rec((elt_t(size - 1)));
 
     // Make a view over [0 .... size-1]
-    auto io     = eve::views::iota(elt_t{0}, size);
+    auto io     = eve::views::iota_with_step(elt_t{0}, step, size);
 
     // Compute lerp(a,b, iota[i] * step) for the whole range
     eve::algo::transform_to ( eve::views::zip(io, r)
-                            , [a, b, step](auto i)
+                            , [a, b](auto i)
                               {
-                                return eve::lerp(elt_t(a), elt_t(b), i*step);
+                                return eve::lerp(elt_t(a), elt_t(b), i);
                               }
                             );
 
