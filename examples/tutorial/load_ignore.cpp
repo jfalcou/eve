@@ -8,6 +8,7 @@
 //! [snippet]
 #include <eve/module/core.hpp>
 #include <array>
+#include <iostream>
 
 auto load_not_first( float* ptr )
 {

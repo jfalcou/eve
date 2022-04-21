@@ -8,6 +8,7 @@
 //! [snippet]
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
+#include <iostream>
 
 using w_t = eve::wide<float, eve::fixed<4>>;
 

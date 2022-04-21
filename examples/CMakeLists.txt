@@ -9,7 +9,7 @@ make_unit( "examples" algorithms/using_existing/memcmp__two_range_algorithms_int
 make_unit( "examples" algorithms/using_existing/inclusive_scan_zip__using_zip_with_algorithms.cpp )
 make_unit( "examples" algorithms/using_existing/case_insensitive_equals.cpp )
 make_unit( "examples" algorithms/using_existing/combining_zip_map_and_algos.cpp )
- 
+make_unit( "examples" algorithms/using_existing/linspace.cpp )
 find_package(Threads REQUIRED)
 make_unit( "examples" algorithms/using_existing/inclusive_scan_par_unseq.cpp )
 target_link_libraries(examples.algorithms.using_existing.inclusive_scan_par_unseq.exe PRIVATE Threads::Threads)
