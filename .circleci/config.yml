@@ -108,18 +108,18 @@ workflows:
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
-              ignore: develop
+              ignore: main
       - random_avx2:
           tool:     "../cmake/toolchain/gcc.x86.ci.cmake"
           options:  "-mavx2"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
-              ignore: develop
+              ignore: main
       - random_arm:
           tool:     "../cmake/toolchain/gcc.aarch64.cmake"
           options:  "-Wno-psabi"
           setup:    "-DEVE_BUILD_RANDOM=ON"
           filters:
             branches:
-              ignore: develop
+              ignore: main

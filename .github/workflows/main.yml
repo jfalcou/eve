@@ -5,7 +5,7 @@ on:
       - main
   pull_request:
     branches:
-      - develop
+      - main
 
 concurrency:
   group: ${{ github.head_ref }}
