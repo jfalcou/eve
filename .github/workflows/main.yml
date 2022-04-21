@@ -8,7 +8,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: environment-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
