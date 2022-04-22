@@ -31,13 +31,13 @@ int main()
 
   for(size_t i=0; i < vf.size() ; ++i) vf[i] = 1/float(i+1);
   std::cout << std::setprecision(8) << eve::asum(vf) << std::endl;
-  std::cout << eve::numeric(eve::asum)(vf)<< std::endl;
+//   std::cout << eve::numeric(eve::asum)(vf)<< std::endl;
 
-  std::vector<double> vd(100);
+//   std::vector<double> vd(100);
 
-  for(size_t i=0; i < vd.size() ; ++i) vd[i] = 1/float(i+1);
-  std::cout << eve::asum(vd) << std::endl;
-  std::cout << eve::numeric(eve::asum)(vd)<< std::endl;
+//   for(size_t i=0; i < vd.size() ; ++i) vd[i] = 1/float(i+1);
+//   std::cout << eve::asum(vd) << std::endl;
+//   std::cout << eve::numeric(eve::asum)(vd)<< std::endl;
 
   __float128 s(0);
   for(size_t i=0; i < 100 ; ++i){

@@ -9,14 +9,15 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/algo.hpp>
+#include <eve/algo/reduce.hpp>
+#include <eve/algo/transform.hpp>
+
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
 #include <iostream>
 #include <numeric>
+#include <eve/algo/views/map.hpp>
+
 namespace eve::detail
 {
   //================================================================================================
@@ -75,6 +76,7 @@ namespace eve::detail
   ////////////////////////////////////////////////////////////////////////////////
   //range algorithms
   ////////////////////////////////////////////////////////////////////////////////
+
   // regular just naive sum but simd reduce used
   template<range R>
   auto asum_(EVE_SUPPORTS(cpu_), R const & xs)
@@ -88,59 +90,117 @@ namespace eve::detail
     if (std::distance(first, last) == 1) return that;
     else
     {
-      auto absadd = [](auto x){ return eve::abs(x);};
+      auto absadd = [](auto that, auto x){ return that + eve::abs(x);};
       return eve::algo::reduce(xs, std::pair{absadd, r_t(0)}, r_t(0));
     }
   }
-  template<range R>
-  auto asum_(EVE_SUPPORTS(cpu_), pedantic_type const &, R const & xs)
-    requires (!simd_value<R>)
-  {
-    using r_t = typename R::value_type;
-    auto first = begin(xs);
-    auto last  = end(xs);
-    if (first == last) return r_t(0);
-    auto that = abs(r_t(*first));
-    if (std::distance(first, last) == 1) return that;
-    else
-    {
-      ++first;
-      auto inf_found = is_infinite(that);
-      r_t c(0);
-      for(; first != last; ++first)
-      {
-        auto a = eve::abs(*first);
-        auto [s, err] = two_add(that, a);
-        that = s;
-        c+= err;
-        inf_found = inf_found || is_infinite(a);
-      };
-      return if_else(inf_found, inf(as<r_t>()), that+c);
-    }
-  }
 
-//   template<range R>
-//   auto asum_(EVE_SUPPORTS(cpu_), R const & xs)
+  //==   regular with std::transform_reduce
+  //   template<range R>
+  //   auto asum_(EVE_SUPPORTS(cpu_), R const & xs)
+  //     requires (!simd_value<R>)
+  //   {
+  //     using r_t = typename R::value_type;
+  //     return std::transform_reduce(begin(xs), end(xs), r_t(0), eve::add, eve::abs);
+  //   }
+
+  //==   compensated with naive loop
+  //  template<range R>
+  //   auto asum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)
+  //     requires (!simd_value<R>)
+  //   {
+  //     using r_t = typename R::value_type;
+  //     auto first = begin(xs);
+  //     auto last  = end(xs);
+  //     if (first == last) return r_t(0);
+  //     auto that = abs(r_t(*first));
+  //     if (std::distance(first, last) == 1) return that;
+  //     else
+  //     {
+  //       ++first;
+  //       auto inf_found = is_infinite(that);
+  //       r_t c(0);
+  //       for(; first != last; ++first)
+  //       {
+  //         auto a = eve::abs(*first);
+  //         auto [s, err] = two_add(that, a);
+  //         that = s;
+  //         c+= err;
+  //         inf_found = inf_found || is_infinite(a);
+  //       };
+  //       return if_else(inf_found, inf(as<r_t>()), that+c);
+  //     }
+  //  }
+
+  //= compensated with naive loop
+ //  template<range R>
+//   auto asum_(EVE_SUPPORTS(cpu_), pedantic_type const &, R const & xs)
 //     requires (!simd_value<R>)
 //   {
 //     using r_t = typename R::value_type;
-//     return std::transform_reduce(begin(xs), end(xs), r_t(0), eve::add, eve::abs);
+//     auto first = begin(xs);
+//     auto last  = end(xs);
+//     if (first == last) return r_t(0);
+//     auto that = abs(r_t(*first));
+//     if (std::distance(first, last) == 1) return that;
+//     else
+//     {
+//       ++first;
+//       auto inf_found = is_infinite(that);
+//       r_t c(0);
+//       for(; first != last; ++first)
+//       {
+//         auto a = eve::abs(*first);
+//         auto [s, err] = two_add(that, a);
+//         that = s;
+//         c+= err;
+//         inf_found = inf_found || is_infinite(a);
+//       };
+//       return if_else(inf_found, inf(as<r_t>()), that+c);
+//     }
 //   }
 
+
+  //=   compensated with eve::reduce and eve::view::map
   template<range R>
   auto asum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)
     requires (!simd_value<R>)
   {
     using v_t = typename R::value_type;
-    using r_t =  kumi::tuple<v_t, v_t>;
-    auto red = [](auto that, auto x){
-      auto & [s, err] = two_add(get<0>(that), x);
-      err+= get<1>(that);
-      return r_t{s, err};
+    using r_t = kumi::tuple<v_t, v_t, logical<v_t>>;
+
+    r_t init{v_t(0), v_t(0), false_(as<v_t>())};
+
+    auto absadd = [](auto that, auto x)
+    {
+      auto [next, err] = two_add(get<0>(that), get<0>(x));
+      return eve::zip(next, get<1>(that)+err, get<2>(that) || is_infinite(get<0>(x)));
     };
-    auto that= std::transform_reduce(begin(xs), end(xs), r_t{0, 0}, red, eve::abs);
-    return get<0>(that)+get<1>(that);
+    auto zipit = []<typename T>(T e){
+      return eve::zip(eve::abs(e),T(0),eve::false_(eve::as<T>{}));
+    };
+    auto [s, c, i] = eve::algo::reduce( eve::algo::views::map(xs, zipit)
+                                      , std::pair{absadd, init}
+                                      , init
+                                      );
+    return if_else(i, inf(as<v_t>()), s+c);
   }
+
+
+//   template<range R>
+//   auto asum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)
+//     requires (!simd_value<R>)
+//   {
+//     using v_t = typename R::value_type;
+//     using r_t =  kumi::tuple<v_t, v_t>;
+//     auto red = [](auto that, auto x){
+//       auto & [s, err] = two_add(get<0>(that), x);
+//       err+= get<1>(that);
+//       return r_t{s, err};
+//     };
+//     auto that= std::transform_reduce(begin(xs), end(xs), r_t{0, 0}, red, eve::abs);
+//     return get<0>(that)+get<1>(that);
+//   }
 
 
 //   template<range R>
