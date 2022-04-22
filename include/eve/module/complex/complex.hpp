@@ -12,6 +12,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/complex/regular/complex.hpp>
+#include <eve/module/complex/regular/detail/arithmetic.hpp>
 #include <eve/module/complex/regular/detail/predicates.hpp>
 #include <eve/product_type.hpp>
 

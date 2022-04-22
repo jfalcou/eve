@@ -7,6 +7,7 @@
 add_custom_target(unit.complex.exe          )
 add_dependencies(unit.exe unit.complex.exe  )
 
+make_unit("unit.complex"  abs.cpp           )
 make_unit("unit.complex"  constructor.cpp   )
 make_unit("unit.complex"  i.cpp             )
 make_unit("unit.complex"  imag.cpp          )
