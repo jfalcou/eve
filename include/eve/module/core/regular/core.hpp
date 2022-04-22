@@ -38,6 +38,7 @@
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 #include <eve/module/core/regular/derivative.hpp>
+#include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/first_true.hpp>
@@ -64,6 +65,7 @@
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 #include <eve/module/core/regular/store.hpp>
+#include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/unalign.hpp>
