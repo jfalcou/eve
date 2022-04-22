@@ -9,4 +9,5 @@
 
 #include <eve/module/complex/regular/traits.hpp>
 #include <eve/module/complex/regular/real.hpp>
+#include <eve/module/complex/regular/i.hpp>
 #include <eve/module/complex/regular/imag.hpp>

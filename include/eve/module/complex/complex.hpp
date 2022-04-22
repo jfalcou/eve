@@ -9,9 +9,10 @@
 
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/complex/regular/complex.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/module/complex/regular/complex.hpp>
+#include <eve/module/complex/regular/detail/predicates.hpp>
 #include <eve/product_type.hpp>
 
 #include <ostream>
@@ -61,6 +62,23 @@ namespace eve
     EVE_FORCEINLINE friend decltype(auto) tagged_dispatch(eve::tag::imag_, like<complex> auto&& z)
     {
       return get<1>(EVE_FWD(z));
+    }
+
+    //==============================================================================================
+    // Unary functions support
+    //==============================================================================================
+    template<typename Tag, like<complex> Z>
+    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const& tag, Z const& z) noexcept
+                            ->    decltype(detail::complex_dispatch(tag, z))
+    {
+      return detail::complex_dispatch(tag, z);
+    }
+
+    template<typename Tag, decorator D, like<complex> Z>
+    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
+                            ->    decltype(detail::complex_dispatch(tag, d, z))
+    {
+      return detail::complex_dispatch(tag, d, z);
     }
   };
 }
