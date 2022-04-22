@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/math.hpp>
+#include <eve/module/complex/regular/traits.hpp>
 
 namespace eve
 {
@@ -60,8 +60,8 @@ namespace eve
     template<floating_value V>
     EVE_FORCEINLINE auto proj_(EVE_SUPPORTS(cpu_), V const & v) noexcept
     {
-      using c_t = eve::as_complex_t < V>;
-      return if_else(is_infinite(v), c_t{inf(as(v)), zero(as(v))}, c_t(v));
+      using c_t = eve::as_complex_t<V>;
+      return if_else(is_infinite(v), c_t{inf(as(v)), zero(as(v))}, c_t(v,0));
     }
   }
 }

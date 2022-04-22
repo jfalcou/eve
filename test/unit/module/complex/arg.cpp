@@ -11,30 +11,23 @@
 
 EVE_TEST( "Check behavior of arg on scalar"
         , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate(eve::test::randoms(-1000.0, 1000.0)
+                             , eve::test::randoms(-1000.0, 1000.0))
         )
-  <typename T>(T const& a0, T const& a1 )
+<typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
   for(auto e : a0)
-  {
     for(auto f : a1)
-    {
-      TTS_EQUAL( eve::arg(eve::complex<e_t>(e, f)), eve::atan2(f, e) );
-    }
-  }
+      TTS_EQUAL( eve::arg(eve::complex(e, f)), eve::atan2(f, e) );
 };
 
 EVE_TEST( "Check behavior of arg on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+        , eve::test::generate(eve::test::randoms(-1000.0, 1000.0)
+                             , eve::test::randoms(-1000.0, 1000.0))
         )
-  <typename T>(T const& a0, T const& a1 )
+<typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
-  using z_t = eve::wide<eve::complex<e_t>, typename T::cardinal_type>;
-
+  using z_t = eve::as_complex_t<T>;
   TTS_EQUAL( eve::arg(z_t{a0,a1}), eve::atan2(a1,a0) );
 };

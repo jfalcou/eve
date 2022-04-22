@@ -38,6 +38,13 @@ namespace eve::detail
     return eve::hypot(real(z), imag(z));
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_dispatch(eve::tag::sqr_, Z const& z) noexcept
+  {
+    auto [zr, zi] = z;
+    return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
+  }
+
 /*
   EVE_FORCEINLINE auto complex_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
   {
@@ -55,10 +62,6 @@ namespace eve::detail
     return Z{eve::sqr(zr)-eve::sqr(zi), 2*zr*zi};
   }
 
-  EVE_FORCEINLINE auto complex_dispatch(eve::tag::sqr_, auto const& z) noexcept
-  {
-    auto [zr, zi] = z;
-    return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
-  }
+
 */
 }
