@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE T sum_( EVE_SUPPORTS(sse2_), wide<T,N> v) noexcept
+  EVE_FORCEINLINE T detail_sum_( EVE_SUPPORTS(sse2_), wide<T,N> v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -102,12 +102,12 @@ namespace eve::detail
     {
       // Always better or similar than other approach
       auto[l,h] = v.slice();
-      return sum(l+h);
+      return detail_sum(l+h);
     }
     // else other types use common cases
     else
     {
-      return sum_(EVE_RETARGET(cpu_), v);
+      return detail_sum_(EVE_RETARGET(cpu_), v);
     }
   }
 }

@@ -8,3 +8,4 @@
 #pragma once
 
 #include <eve/module/compensated/regular/asum.hpp>
+#include <eve/module/compensated/regular/sum.hpp>

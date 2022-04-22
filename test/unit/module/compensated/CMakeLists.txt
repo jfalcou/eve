@@ -8,4 +8,4 @@ add_custom_target(unit.compensated.exe           )
 add_dependencies(unit.exe unit.compensated.exe   )
 
 make_unit("unit.compensated"  asum.cpp           )
-#make_unit("unit.compensated"  dot.cpp            )
+make_unit("unit.compensated"  sum.cpp           )

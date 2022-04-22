@@ -45,13 +45,13 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N> sum_( EVE_SUPPORTS(neon128_), splat_type const&, wide<T,N> v) noexcept
+  EVE_FORCEINLINE wide<T,N> detail_sum_( EVE_SUPPORTS(neon128_), splat_type const&, wide<T,N> v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
           if constexpr(N::value == 1)  return v;
     else  if constexpr(current_api >= asimd)
     {
-      return wide<T,N>(sum(v));
+      return wide<T,N>(detail_sum(v));
     }
     else
     {
@@ -69,7 +69,7 @@ namespace eve::detail
         else
         {
           auto [l, h] = v.slice();
-          l = splat(sum)(l+h);
+          l = splat(detail_sum)(l+h);
           return wide<T,N>{l, l};
         }
       }
@@ -77,7 +77,7 @@ namespace eve::detail
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE T sum_( EVE_SUPPORTS(neon128_), wide<T,N> v) noexcept
+  EVE_FORCEINLINE T detail_sum_( EVE_SUPPORTS(neon128_), wide<T,N> v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     if constexpr(N::value == 1)  return v.get(0);
@@ -108,12 +108,12 @@ namespace eve::detail
       }
       else
       {
-              if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return splat(sum)(v).get(0);
+              if constexpr( std::same_as<abi_t<T,N>, arm_64_> ) return splat(detail_sum)(v).get(0);
         else  if constexpr(sizeof(T) == 8)                      return v.get(0)+v.get(1);
         else
         {
           auto [l,h] = v.slice();
-          return splat(eve::detail::sum)(l+h).get(0);
+          return splat(eve::detail::detail_sum)(l+h).get(0);
         }
       }
     }

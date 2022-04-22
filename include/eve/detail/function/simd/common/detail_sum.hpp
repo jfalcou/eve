@@ -19,29 +19,29 @@
 namespace eve::detail
 {
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto sum_ ( EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE auto detail_sum_ ( EVE_SUPPORTS(cpu_)
                             , splat_type const&, wide<T,N> const &v
                             ) noexcept
   {
           if constexpr( N::value == 1 )               return v;
-    else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::detail::sum(v) );
+    else  if constexpr( is_emulated_v<abi_t<T, N>>  ) return wide<T,N>( eve::detail::detail_sum(v) );
     else  if constexpr( is_aggregated_v<abi_t<T, N>>)
     {
       auto[l,h] = v.slice();
-      auto r = splat(sum)( l + h );
+      auto r = splat(detail_sum)( l + h );
       return eve::combine(r,r);
     }
     else return butterfly_reduction(v, eve::add);
   }
 
   template<real_scalar_value T>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE auto detail_sum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     return v;
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), wide<T,N> const &v) noexcept
+  EVE_FORCEINLINE auto detail_sum_(EVE_SUPPORTS(cpu_), wide<T,N> const &v) noexcept
   {
           if constexpr( N::value == 1 )         return v.get(0);
     else  if constexpr( is_emulated_v<abi_t<T, N>> )
@@ -56,7 +56,7 @@ namespace eve::detail
     else  if constexpr( is_aggregated_v<abi_t<T, N>> )
     {
       auto[l,h] = v.slice();
-      return  sum( l+h );
+      return  detail_sum( l+h );
     }
     else return butterfly_reduction(v, eve::add).get(0);
   }
@@ -64,15 +64,15 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  EVE_FORCEINLINE auto detail_sum_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
-    return sum(if_else(cond, t, eve::zero));
+    return detail_sum(if_else(cond, t, eve::zero));
   }
 
   template<conditional_expr C, real_value U>
-  EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), C const &cond
+  EVE_FORCEINLINE auto detail_sum_(EVE_SUPPORTS(cpu_), C const &cond
                                , splat_type const&, U const &t) noexcept
   {
-    return splat(sum)(if_else(cond, t, eve::zero));
+    return splat(detail_sum)(if_else(cond, t, eve::zero));
   }
 }

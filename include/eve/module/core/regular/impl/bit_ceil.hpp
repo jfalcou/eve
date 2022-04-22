@@ -35,18 +35,21 @@ namespace eve::detail
       if constexpr(scalar_value<T>) if (vle1) return one(eve::as(v));
       if constexpr(floating_real_value<T>)
       {
-        auto [m, e] = ifrexp(v);
-        e = dec(e);
-        auto tmp = ldexp(one(eve::as(v)), e);
-        auto tmpltv = tmp < v;
-        if constexpr(scalar_value<T>)
-        {
-          return tmpltv ? tmp+tmp : tmp;
-        }
-        else
-        {
-          return if_else(vle1, one(eve::as(v)), if_else(tmpltv,  tmp+tmp, tmp));
-        }
+        auto q = one_o_eps(as(v))*v;
+        auto l = (q+v)-q;
+        return if_else(is_eqz(l), abs(p), l);
+//         auto [m, e] = ifrexp(v);
+//         e = dec(e);
+//         auto tmp = ldexp(one(eve::as(v)), e);
+//         auto tmpltv = tmp < v;
+//         if constexpr(scalar_value<T>)
+//         {
+//           return tmpltv ? tmp+tmp : tmp;
+//         }
+//         else
+//         {
+//           return if_else(vle1, one(eve::as(v)), if_else(tmpltv,  tmp+tmp, tmp));
+//         }
       }
       else
       {

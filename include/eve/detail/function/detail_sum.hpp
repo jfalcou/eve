@@ -12,23 +12,23 @@
 
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(sum_)
-  EVE_DECLARE_CALLABLE(sum_, sum)
+  EVE_REGISTER_CALLABLE(detail_sum_)
+  EVE_DECLARE_CALLABLE(detail_sum_, detail_sum)
 
   namespace detail
   {
-    EVE_ALIAS_CALLABLE(sum_, sum);
+    EVE_ALIAS_CALLABLE(detail_sum_, detail_sum);
   }
 
-  EVE_CALLABLE_API(sum_, sum)
+  EVE_CALLABLE_API(detail_sum_, detail_sum)
 }
 
-#include <eve/detail/function/simd/common/sum.hpp>
+#include <eve/detail/function/simd/common/detail_sum.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/sum.hpp>
+#  include <eve/detail/function/simd/x86/detail_sum.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/detail/function/simd/arm/neon/sum.hpp>
+#  include <eve/detail/function/simd/arm/neon/detail_sum.hpp>
 #endif
