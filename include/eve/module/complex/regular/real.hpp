@@ -54,9 +54,9 @@ namespace eve
   namespace detail
   {
     template<floating_real_value V>
-    EVE_FORCEINLINE V real_( EVE_SUPPORTS(cpu_), V const &) noexcept
+    EVE_FORCEINLINE V real_( EVE_SUPPORTS(cpu_), V const& v) noexcept
     {
-      return V(0);
+      return v;
     }
   }
 }

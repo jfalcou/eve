@@ -31,7 +31,7 @@ namespace tag { struct TAG {}; }                                                
     template<typename... Args>                                                                     \
     concept supports_ ## TAG = requires(Args&&... args)                                            \
     {                                                                                              \
-      { TAG( delay_t{}, EVE_CURRENT_API{}, EVE_FWD(args)...) };                         \
+      { TAG( delay_t{}, EVE_CURRENT_API{}, EVE_FWD(args)...) };                                    \
     };                                                                                             \
                                                                                                    \
     template<typename Dummy>                                                                       \
@@ -43,31 +43,31 @@ namespace tag { struct TAG {}; }                                                
       requires  (   tag_dispatchable<tag_type,Arg,Args...>                                         \
                 ||  supports_ ## TAG<Arg,Args...>                                                  \
                 )                                                                                  \
-      static EVE_FORCEINLINE constexpr auto call(Arg&& d, Args &&... args)  noexcept               \
+      static EVE_FORCEINLINE constexpr decltype(auto) call(Arg&& d, Args &&... args)  noexcept     \
       {                                                                                            \
         if constexpr( decorator<std::decay_t<Arg>> )                                               \
         {                                                                                          \
           check ( delay_t{}, ::eve::detail::types<std::decay_t<Arg>,tag_type>{},                   \
-                  EVE_FWD(args)...                                                      \
+                  EVE_FWD(args)...                                                                 \
                 );                                                                                 \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
-          check ( delay_t{}, ::eve::detail::types<tag_type>{}, EVE_FWD(d),               \
-                  EVE_FWD(args)...                                                      \
+          check ( delay_t{}, ::eve::detail::types<tag_type>{}, EVE_FWD(d),                         \
+                  EVE_FWD(args)...                                                                 \
                 );                                                                                 \
         }                                                                                          \
                                                                                                    \
         if constexpr( tag_dispatchable<tag_type,Arg,Args...> )                                     \
         {                                                                                          \
           return tagged_dispatch ( tag_type{}                                                      \
-                            , EVE_FWD(d), EVE_FWD(args)...                    \
+                            , EVE_FWD(d), EVE_FWD(args)...                                         \
                             );                                                                     \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
           return TAG( delay_t{}, EVE_CURRENT_API{}                                                 \
-                    , EVE_FWD(d), EVE_FWD(args)...                            \
+                    , EVE_FWD(d), EVE_FWD(args)...                                                 \
                     );                                                                             \
         }                                                                                          \
       }                                                                                            \
@@ -76,7 +76,7 @@ namespace tag { struct TAG {}; }                                                
       requires  (   tag_dispatchable<tag_type,Args...>                                             \
                 ||  supports_ ## TAG<Args...>                                                      \
                 )                                                                                  \
-      EVE_FORCEINLINE constexpr auto operator()(Args &&... args) const noexcept                    \
+      EVE_FORCEINLINE constexpr decltype(auto) operator()(Args &&... args) const noexcept          \
       {                                                                                            \
         return call(args...);                                                                      \
       }                                                                                            \
