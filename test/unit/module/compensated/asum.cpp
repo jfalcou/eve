@@ -65,4 +65,5 @@ EVE_TEST( "Check behavior of asum on all types full range"
 //  std::cout << double(s) << std::endl;
   TTS_ULP_EQUAL(v_t(s), eve::asum(vd), 0.5);
   TTS_ULP_EQUAL(v_t(s), eve::comp(eve::asum)(vd), 0.5);
+
 };

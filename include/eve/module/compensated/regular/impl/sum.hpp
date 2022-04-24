@@ -143,6 +143,44 @@ namespace eve::detail
     return s+c;
   }
 
+  //=   compensated with eve::reduce and eve::view::map
+  template<range R>
+  auto sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p)
+    requires (!simd_value<R>)
+  {
+    using r_t = common_compatible_t<typename R::value_type>;
+    auto mu = eve::algo::reduce(p, std::pair{ maxabs, r_t(0)}, r_t(0));
+    size_t n = end(p)-begin(p);
+    if(is_eqz(mu) || is_eqz(n)) return mu;
+    auto Ms = bit_ceil(n+2);
+    auto sigma = Ms*bit_ceil(mu);
+    auto phi = Ms*halfeps(as(mu));
+    auto factor = phi*Ms;
+    r_t t(0);
+    std::vector<r_t> q(n);
+    while (true)
+    {
+      auto extract_vector = [&sigma]( auto p){ return (sigma+p)-sigma; };
+      eve::algo::transform_to(p, q, extract_vector);
+      auto tau = sum(q);
+      auto zipped = eve::algo::views::zip(p, q);
+      eve::algo::transform_to(zipped, p, [](auto z){return get<0>(z)-get<1>(z); });
+      auto tau1 = t+tau;
+      if (( abs(tau1)>=factor*sigma ) || ( sigma<=smallestposval(as(tau))))
+      {
+        auto tau2 = tau - ( tau1 - t );
+        auto res = tau1 + ( tau2 + sum(p) );
+        return res;
+      }
+      t = tau1;
+//       if(is_eqz(t)){
+//         r_t res = faithfull(sum)(p);
+//         return res;
+//       }
+      sigma = phi*sigma;
+    }
+  }
+
 
 //   template<range R>
 //   auto sum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)

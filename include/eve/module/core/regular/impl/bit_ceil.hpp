@@ -11,6 +11,7 @@
 #include <eve/module/core/regular/frexp.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/constant/inveps.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_floor.hpp>
 #include <eve/module/core/regular/dec.hpp>
@@ -35,21 +36,16 @@ namespace eve::detail
       if constexpr(scalar_value<T>) if (vle1) return one(eve::as(v));
       if constexpr(floating_real_value<T>)
       {
-        auto q = one_o_eps(as(v))*v;
-        auto l = (q+v)-q;
-        return if_else(is_eqz(l), abs(p), l);
-//         auto [m, e] = ifrexp(v);
-//         e = dec(e);
-//         auto tmp = ldexp(one(eve::as(v)), e);
-//         auto tmpltv = tmp < v;
-//         if constexpr(scalar_value<T>)
-//         {
-//           return tmpltv ? tmp+tmp : tmp;
-//         }
-//         else
-//         {
-//           return if_else(vle1, one(eve::as(v)), if_else(tmpltv,  tmp+tmp, tmp));
-//         }
+        auto ep = eps(as(v))/2;
+        auto p = v;
+        auto q = p/ep;
+        auto test = is_not_finite(q);
+        q = if_else(test, p, q);
+        p = if_else(test, p*ep, p);
+        auto l = abs((q+p)-q);
+        l = if_else(is_eqz(l), zero, l);
+        l = if_else(test, l/ep, l);
+        return l;
       }
       else
       {

@@ -15,25 +15,25 @@ namespace eve
   //================================================================================================
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct faitfull_
+  struct faithfull_
   {
     template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
     {
-      return decorated<diff_<N>(faitfull_)>{};
+      return decorated<diff_<N>(faithfull_)>{};
     }
   };
 
-  using faitfull_type = decorated<faitfull_()>;
+  using faithfull_type = decorated<faithfull_()>;
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var faitfull
+  //! @var faithfull
   //!
   //! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
-  //!  if faitfull(eve::fname) is to be called then
+  //!  if faithfull(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/module/corenu.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,5 +53,5 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  [[maybe_unused]] inline constexpr faitfull_type const faitfull = {};
+  [[maybe_unused]] inline constexpr faithfull_type const faithfull = {};
 }

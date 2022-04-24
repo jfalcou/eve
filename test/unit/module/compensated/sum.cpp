@@ -61,6 +61,9 @@ EVE_TEST( "Check behavior of sum on all types full range"
     std::cout << "cas  " << std::setprecision(sizeof(v_t)*2) << cas<< " -> " << eve::ulpdist( v_t(s), cas) << std::endl;
     TTS_ULP_EQUAL(v_t(s), as,  50);
     TTS_ULP_EQUAL(v_t(s), cas, 25);
+
+   std::cout << eve::faithfull(sum)(vd) << std::endl;
+
   }
 
 
