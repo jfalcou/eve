@@ -118,26 +118,32 @@ namespace eve::detail
       r_t sigma0 = 2*T*inc((3*n+2)*epsi);
       if (cnt == 150) break;
       auto sigma =  sigma0;
-      //      auto extract_vector = [&sigma]( auto p){ return (sigma+p)-sigma; };
-      for (size_t i = 0; i < n;  i+= 2)
+//       auto zipit = []<typename T>(T e){ return eve::zip(e, T(0)); };
+//       auto psig = eve::algo::views::map(p, zipit);
+
+//       auto extract_vector = []( auto psig){
+//         auto &sigma = get<1>(psig);
+//         auto &p     = get<0>(psig);
+//         auto sigmap = sigma + p;
+//         auto q = sigmap-sigma;
+//         p -= q;
+//         sigma = sigmap;
+//       };
+//       using t_t =  kumi::tuple<r_t, r_t>;
+//       t_t init{r_t(0), r_t(sigma0)};
+//       auto [pipo, s] = eve::algo::reduce(psig, extract_vector
+//                       , std::pair{extract_vector, init}
+//                       , init);
+//       sigma = s;
+
+      for (auto cur = std::begin(p); cur != std::end(p); ++cur)
       {
-        auto sigmap = sigma + p[i];
+        auto sigmap = sigma + *cur;
         auto q = sigmap-sigma;
-          p[i] = p[i] - q;
-        sigma = sigmap  + p[i+1];
-        q = sigma-sigmap;
-        p[i+1] = p[i+1] - q;
+        *cur -= q;
+        sigma = sigmap;
       }
 
-//      for (size_t i = 0; i < n;  ++i)
-//       {
-//         auto sigmap = sigma + p[i];
-//         auto q = sigmap-sigma;
-//         p[i] = p[i] - q;
-//         sigma = sigmap;
-//       }
-
-      //      eve::algo::transform_to(p, q, extract_vector);
       tau = sigma-sigma0;
       t = tprim;
       tprim = t+tau;
@@ -147,8 +153,6 @@ namespace eve::detail
       }
       auto m1 = (r_t(1.5)+4*epsi)*(n*epsi)*sigma0;
       auto m2 = (2*n*epsi)*ufp(sigma0);
-      //     auto q = sigma0/eps(as(T));
-      //      auto /*u = abs(q/(oneminus(halfeps(as(T)))-q)); */ u = ufp(sigma0);
       phi = (2*n*(n+2)*epsi*ufp(sigma))/inc(6*epsi);
       T = min(m1, m2);
 //       std::cout << "cnt =  " << cnt << std::endl;
