@@ -203,4 +203,6 @@
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
 #include <eve/module/core/regular/two_split.hpp>
+#include <eve/module/core/regular/ufp.hpp>
+#include <eve/module/core/regular/ulp.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>

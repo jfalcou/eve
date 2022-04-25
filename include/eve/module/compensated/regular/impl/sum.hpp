@@ -54,6 +54,17 @@ namespace eve::detail
     return that+c;
   }
 
+
+  // faithfull performs faithfull rounding algorithm
+  template<floating_scalar_value ...Ts>
+  auto sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, Ts... args)
+  {
+    using r_t = common_compatible_t<Ts...>;
+    std::vector<r_t> v{r_t(args)...};
+    return faithfull(sum)(v);
+  }
+
+
   ////////////////////////////////////////////////////////////////////////////////
   //range algorithms
   ////////////////////////////////////////////////////////////////////////////////
@@ -67,59 +78,6 @@ namespace eve::detail
     return eve::algo::reduce(xs, r_t(0));
   }
 
-  //==   compensated with naive loop
-  //  template<range R>
-  //   auto sum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)
-  //     requires (!simd_value<R>)
-  //   {
-  //     using r_t = typename R::value_type;
-  //     auto first = begin(xs);
-  //     auto last  = end(xs);
-  //     if (first == last) return r_t(0);
-  //     auto that = abs(r_t(*first));
-  //     if (std::distance(first, last) == 1) return that;
-  //     else
-  //     {
-  //       ++first;
-  //       r_t c(0), err;
-  //       for(; first != last; ++first)
-  //       {
-  //         std::tie(that, err] = two_add(that, *first);
-  //         c+= err;
-  //       };
-  //       return that+c;
-  //     }
-  //  }
-
-  //= compensated with naive loop
- //  template<range R>
-//   auto sum_(EVE_SUPPORTS(cpu_), pedantic_type const &, R const & xs)
-//     requires (!simd_value<R>)
-//   {
-//     using r_t = typename R::value_type;
-//     auto first = begin(xs);
-//     auto last  = end(xs);
-//     if (first == last) return r_t(0);
-//     auto that = abs(r_t(*first));
-//     if (std::distance(first, last) == 1) return that;
-//     else
-//     {
-//       ++first;
-//       auto inf_found = is_infinite(that);
-//       r_t c(0);
-//       for(; first != last; ++first)
-//       {
-//         auto a = eve::abs(*first);
-//         auto [s, err] = two_add(that, a);
-//         that = s;
-//         c+= err;
-//         inf_found = inf_found || is_infinite(a);
-//       };
-//       return if_else(inf_found, inf(as<r_t>()), that+c);
-//     }
-//   }
-
-
   //=   compensated with eve::reduce and eve::view::map
   template<range R>
   auto sum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)
@@ -127,9 +85,7 @@ namespace eve::detail
   {
     using v_t = typename R::value_type;
     using r_t = kumi::tuple<v_t, v_t>;
-
     r_t init{v_t(0), v_t(0)};
-
     auto absadd = [](auto that, auto x)
     {
       auto [next, err] = two_add(get<0>(that), get<0>(x));
@@ -143,12 +99,12 @@ namespace eve::detail
     return s+c;
   }
 
-  //=   compensated with eve::reduce and eve::view::map
+  //=   faithfull computes the sum with faithfull rounding
   template<range R>
-  auto sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p)
+  typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p)
     requires (!simd_value<R>)
   {
-    using r_t = common_compatible_t<typename R::value_type>;
+    using r_t = typename R::value_type;
     auto mu = eve::algo::reduce(p, std::pair{ maxabs, r_t(0)}, r_t(0));
     size_t n = end(p)-begin(p);
     if(is_eqz(mu) || is_eqz(n)) return mu;
@@ -173,10 +129,10 @@ namespace eve::detail
         return res;
       }
       t = tau1;
-//       if(is_eqz(t)){
-//         r_t res = faithfull(sum)(p);
-//         return res;
-//       }
+      if(is_eqz(t)){
+        r_t res = faithfull(sum)(p);
+        return res;
+      }
       sigma = phi*sigma;
     }
   }
@@ -225,4 +181,6 @@ namespace eve::detail
 //     return that;
 //   }
 // }
+
+
 }
