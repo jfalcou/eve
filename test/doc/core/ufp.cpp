@@ -2,11 +2,11 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<8>>;
+using wide_ft = eve::wide<double, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft p = {14, 1, 3, 8, 20, 23000, 0, 25};
+  wide_ft p = {14, 1, 3, 8, 20, 23000, 0, 48};
 
   std::cout << "---- simd" << '\n'
             << "<- p      = " << p << '\n'

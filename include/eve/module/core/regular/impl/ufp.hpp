@@ -8,6 +8,9 @@
 #pragma once
 
 #include <eve/module/core/regular/bit_floor.hpp>
+#include <eve/module/math/constant/halfeps.hpp>
+#include <iostream>
+#include <iomanip>
 
 namespace eve::detail
 {
@@ -15,6 +18,9 @@ namespace eve::detail
   EVE_FORCEINLINE T ufp_(EVE_SUPPORTS(cpu_)
                                  , T v) noexcept
   {
-    return bit_floor(abs(v));
+    //if no overflow !
+    auto q = inc(rec(eps(as(v))))*v;
+    auto z = oneminus(halfeps(as(v)))*q;
+    return abs(q-z);
   }
 }

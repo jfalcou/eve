@@ -43,7 +43,7 @@ EVE_TEST( "Check behavior of sum on all types full range"
 {
   using eve::sum;
   using v_t = eve::element_type_t<T>;
-  constexpr size_t N = 1000000;
+  constexpr size_t N = 100000;
   {
     std::vector<v_t> vd(N);
     v_t sign(1);
@@ -57,16 +57,19 @@ EVE_TEST( "Check behavior of sum on all types full range"
     auto as = eve::sum(vd);
     auto cas= eve::comp(eve::sum)(vd);
     auto fas= eve::faithfull(eve::sum)(vd);
+    auto gas= eve::faithfull(eve::sum)(vd, 1);
     std::cout << "s    " << std::setprecision(16) << double(s)  << std::endl;
     std::cout << "as   " << std::setprecision(sizeof(v_t)*2) << as << " -> " << eve::ulpdist( v_t(s),  as) << std::endl;
     std::cout << "cas  " << std::setprecision(sizeof(v_t)*2) << cas<< " -> " << eve::ulpdist( v_t(s), cas) << std::endl;
     std::cout << "fas  " << std::setprecision(sizeof(v_t)*2) << fas<< " -> " << eve::ulpdist( v_t(s), fas) << std::endl;
+    std::cout << "gas  " << std::setprecision(sizeof(v_t)*2) << gas<< " -> " << eve::ulpdist( v_t(s), gas) << std::endl;
     TTS_ULP_EQUAL(v_t(s), as,  50);
     TTS_ULP_EQUAL(v_t(s), cas, 25);
     TTS_ULP_EQUAL(v_t(s), fas, 1);
+    TTS_ULP_EQUAL(v_t(s), gas, 1);
   }
 
-  std::cout << eve::faithfull(eve::sum)(1.0, 10.0, 2.45) << std::endl;
+  std::cout << std::setprecision(8) << eve::faithfull(eve::sum)(1.0, 10.0, 2.45) << std::endl;
 
 //  {
 //     std::vector<v_t> vd(N);

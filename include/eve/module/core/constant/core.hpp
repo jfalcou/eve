@@ -7,9 +7,10 @@
 //==================================================================================================
 #pragma once
 
- #include <eve/module/core/decorator/roundings.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 #include <eve/module/core/constant/as_value.hpp>
+#include <eve/module/core/constant/eta.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/constant/ieee_constant.hpp>

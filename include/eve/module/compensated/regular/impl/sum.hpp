@@ -99,6 +99,74 @@ namespace eve::detail
     return s+c;
   }
 
+  //=   fast faithfull computes the sum with faithfull rounding
+  template<range R>
+  typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p, int )
+    requires (!simd_value<R>)
+  {
+    using r_t = typename R::value_type;
+    const r_t epsi = eps(as<r_t>())/2;
+    const r_t two_realmin = 2*smallestposval(as<r_t>());
+    size_t n = end(p)-begin(p);
+    auto T  = eve::algo::reduce(eve::algo::views::map(p, abs), r_t(0))*inc(inc(n)*epsi);
+    if (T <= two_realmin) return eve::algo::reduce(p, r_t(0));
+    r_t tprim(0), tau, t, phi;
+    int cnt = 0;
+    while (true)
+    {
+      ++cnt;
+      r_t sigma0 = 2*T*inc((3*n+2)*epsi);
+      if (cnt == 150) break;
+      auto sigma =  sigma0;
+      //      auto extract_vector = [&sigma]( auto p){ return (sigma+p)-sigma; };
+      for (size_t i = 0; i < n;  i+= 2)
+      {
+        auto sigmap = sigma + p[i];
+        auto q = sigmap-sigma;
+          p[i] = p[i] - q;
+        sigma = sigmap  + p[i+1];
+        q = sigma-sigmap;
+        p[i+1] = p[i+1] - q;
+      }
+
+//      for (size_t i = 0; i < n;  ++i)
+//       {
+//         auto sigmap = sigma + p[i];
+//         auto q = sigmap-sigma;
+//         p[i] = p[i] - q;
+//         sigma = sigmap;
+//       }
+
+      //      eve::algo::transform_to(p, q, extract_vector);
+      tau = sigma-sigma0;
+      t = tprim;
+      tprim = t+tau;
+      if (is_eqz(tprim)) {
+        r_t res = faithfull(sum)(p);
+        return res;
+      }
+      auto m1 = (r_t(1.5)+4*epsi)*(n*epsi)*sigma0;
+      auto m2 = (2*n*epsi)*ufp(sigma0);
+      //     auto q = sigma0/eps(as(T));
+      //      auto /*u = abs(q/(oneminus(halfeps(as(T)))-q)); */ u = ufp(sigma0);
+      phi = (2*n*(n+2)*epsi*ufp(sigma))/inc(6*epsi);
+      T = min(m1, m2);
+//       std::cout << "cnt =  " << cnt << std::endl;
+//       std::cout << "tprim " << tprim << std::endl;
+//       std::cout << "phi " << phi << std::endl;
+//       std::cout << " T " <<  T << std::endl;
+//       std::cout << "  two_realmin " <<  two_realmin << std::endl;
+      if ((tprim >= phi) || (4*T <= two_realmin)) break;
+    }
+//     std::cout << "fin"<< std::endl;
+     std::cout << "cnt" << cnt << std::endl;
+//     std::cout << "tprim " << tprim << std::endl;
+//     std::cout << "phi " << phi << std::endl;
+//     std::cout << " T " <<  T << std::endl;
+    auto tau2 = (t-tprim)+tau;
+    return tprim+(tau2+eve::algo::reduce(p, r_t(0)));
+  }
+
   //=   faithfull computes the sum with faithfull rounding
   template<range R>
   typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p)
