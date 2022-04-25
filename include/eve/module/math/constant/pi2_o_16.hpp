@@ -72,7 +72,7 @@ namespace eve
       if constexpr(std::is_same_v<D, upward_type>)
       {
         if constexpr(std::is_same_v<t_t, float>)  return T(0x1.3bd3cep-1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.3bd3cc9be45dfp-1;
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.3bd3cc9be45dfp-1);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
