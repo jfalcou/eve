@@ -130,10 +130,21 @@ namespace eve::detail
       }
     }
     r_t e(0);
-
-    for(size_t i=0; i <n ; ++i)
+//    for(size_t i=0; i <n ; ++i)
+//    {
+//     auto extract = [&sigma, k](auto pi) {
+//       for(size_t m=1; m < k-1; ++m)
+//       {
+//         auto sigmaprim = sigma[m] + pi;
+//         auto q = sigmaprim - sigma[m];
+//         pi -= q;
+//         sigma[m] = sigmaprim;
+//       }
+//     };
+//     e = eve::reduce(p, std::pair{extract, r_t(0)}, r_t{0});
+    for(auto cur = std::begin(p); cur != std::end(p); ++cur)  //vectorize this loop
     {
-      auto tmp = p[i];
+      auto tmp = *cur;
       for(size_t m=1; m < k-1; ++m)
       {
         auto sigmaprim = sigma[m] + tmp;
@@ -145,34 +156,32 @@ namespace eve::detail
     }
     if (exact) return e;
     r_t tc(0);
-    std::vector<r_t> t(K, 0), tau(K, 0);
-
     for(size_t m=1; m < k ; ++m)
     {
-      tau[m] = sigma[m]-sigma0[m];
-      t[m] = tc + tau[m];
-      if(t[m] >= phi[m])  // surely faithfull result
+      auto tau = sigma[m]-sigma0[m];
+      auto tm = tc + tau;
+      if(tm >= phi[m])  // surely faithfull result (is this really necessary and go up to k-1 possible in every case ?
       {
-        auto tau2 = (tc-t[m])+ tau[m];
+        auto tau2 = (tc-tm)+ tau;
         if(m == k-1)
         {
-          return t[m] + (tau2 + e);
+          return tm + (tau2 + e);
         }
         else
         {
-          tau[m+1] = sigma[m+1]-sigma0[m+1];
-          auto tau3 = tau2+ tau[m+1];
-          auto tau4 = (tau2-tau3)+ tau[m+1];
+          tau = sigma[m+1]-sigma0[m+1];
+          auto tau3 = tau2+ tau;
+          auto tau4 = (tau2-tau3)+ tau;
           if(m == k-2)
-            return t[m] + (tau3 + (tau4 + e));
+            return tm + (tau3 + (tau4 + e));
           else
           {
-            tau[m+2] = sigma[m+2]-sigma0[m+2];
-            return t[m] + (tau3 + (tau4 + tau[m+2]));
+            tau = sigma[m+2]-sigma0[m+2];
+            return tm + (tau3 + (tau4 + tau));
           }
         }
       }
-      tc = t[m];
+      tc = tm;
     }
     return tc+e;
   }
@@ -234,7 +243,7 @@ namespace eve::detail
 //   }
 
 
-  //=   fast faithfull computes the sum with faithfull rounding
+  //=   fast faithfull computes the sum with faithfull rounding (Rump)
   template<range R>
   typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p, int )
     requires (!simd_value<R>)
