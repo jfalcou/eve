@@ -64,12 +64,11 @@ namespace eve::detail
     return faithfull(sum)(v);
   }
 
-
   ////////////////////////////////////////////////////////////////////////////////
   //range algorithms
   ////////////////////////////////////////////////////////////////////////////////
 
-  // regular eve::reduce used
+  //== regular eve::reduce used
   template<range R>
   auto sum_(EVE_SUPPORTS(cpu_), R const & xs)
     requires (!simd_value<R>)
@@ -78,7 +77,7 @@ namespace eve::detail
     return eve::algo::reduce(xs, r_t(0));
   }
 
-  //=   compensated with eve::reduce and eve::view::map
+  //==  compensated with eve::reduce and eve::view::map
   template<range R>
   auto sum_(EVE_SUPPORTS(cpu_), comp_type const &, R const & xs)
     requires (!simd_value<R>)
@@ -99,79 +98,87 @@ namespace eve::detail
     return s+c;
   }
 
-  //=   fast faithfull computes the sum with faithfull rounding
-  template<range R>
-  typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p, int )
+
+  //=  computes "as if" k-fold precision
+  template<auto K, range R>
+  typename R::value_type sum_(EVE_SUPPORTS(cpu_), kfold_type<K> const &, R p)
     requires (!simd_value<R>)
   {
+    EVE_ASSERT(K >= 0, "K must be positive");
+    if constexpr(K == 0) return faithfull(sum)(p, 1);
     using r_t = typename R::value_type;
     const r_t epsi = eps(as<r_t>())/2;
     const r_t two_realmin = 2*smallestposval(as<r_t>());
     size_t n = end(p)-begin(p);
-    auto T  = eve::algo::reduce(eve::algo::views::map(p, abs), r_t(0))*inc(inc(n)*epsi);
-    if (T <= two_realmin) return eve::algo::reduce(p, r_t(0));
-    r_t tprim(0), tau, t, phi;
-//    int cnt = 0;
-    while (true)
+    std::vector<r_t> T(K), sigma(K, 0), sigma0(K, 0), phi(K, 0);
+    size_t k = K;
+    T[0] = eve::algo::reduce(eve::algo::views::map(p, abs), r_t(0))*inc(inc(n)*epsi);
+    bool exact = false;
+    for(int m=1; m < K; ++m)
     {
-//      ++cnt;
-      r_t sigma0 = 2*T*inc((3*n+2)*epsi);
-//      if (cnt == 150) break;
-      auto sigma =  sigma0;
-//       auto zipit = []<typename T>(T e){ return eve::zip(e, T(0)); };
-//       auto psig = eve::algo::views::map(p, zipit);
-
-//       auto extract_vector = []( auto psig){
-//         auto &sigma = get<1>(psig);
-//         auto &p     = get<0>(psig);
-//         auto sigmap = sigma + p;
-//         auto q = sigmap-sigma;
-//         p -= q;
-//         sigma = sigmap;
-//       };
-//       using t_t =  kumi::tuple<r_t, r_t>;
-//       t_t init{r_t(0), r_t(sigma0)};
-//       auto [pipo, s] = eve::algo::reduce(psig, extract_vector
-//                       , std::pair{extract_vector, init}
-//                       , init);
-//       sigma = s;
-
-      for (auto cur = std::begin(p); cur != std::end(p); ++cur)
+      sigma0[m] = 2*T[m-1]*inc((3*n+2)*epsi);
+      sigma[m] = sigma0[m];
+      auto u = ufp(sigma0[m]);
+      auto m1 = (r_t(1.5)+4*epsi)*(n*epsi)*sigma0[m];
+      auto m2 = (2*n*epsi)*ufp(sigma0[m]);
+      phi[m] = (2*n*(n+2)*epsi*u)/inc(6*epsi);
+      T[m] = min(m1, m2);
+      if(4*T[m] <= two_realmin)
       {
-        auto sigmap = sigma + *cur;
-        auto q = sigmap-sigma;
-        *cur -= q;
-        sigma = sigmap;
+        k = m+1;
+        exact = true;
       }
-
-      tau = sigma-sigma0;
-      t = tprim;
-      tprim = t+tau;
-      if (is_eqz(tprim)) {
-        r_t res = faithfull(sum)(p);
-        return res;
-      }
-      auto m1 = (r_t(1.5)+4*epsi)*(n*epsi)*sigma0;
-      auto m2 = (2*n*epsi)*ufp(sigma0);
-      phi = (2*n*(n+2)*epsi*ufp(sigma))/inc(6*epsi);
-      T = min(m1, m2);
-//       std::cout << "cnt =  " << cnt << std::endl;
-//       std::cout << "tprim " << tprim << std::endl;
-//       std::cout << "phi " << phi << std::endl;
-//       std::cout << " T " <<  T << std::endl;
-//       std::cout << "  two_realmin " <<  two_realmin << std::endl;
-      if ((tprim >= phi) || (4*T <= two_realmin)) break;
     }
-//     std::cout << "fin"<< std::endl;
-//     std::cout << "cnt" << cnt << std::endl;
-//     std::cout << "tprim " << tprim << std::endl;
-//     std::cout << "phi " << phi << std::endl;
-//     std::cout << " T " <<  T << std::endl;
-    auto tau2 = (t-tprim)+tau;
-    return tprim+(tau2+eve::algo::reduce(p, r_t(0)));
+    r_t e(0);
+
+    for(size_t i=0; i <n ; ++i)
+    {
+      auto tmp = p[i];
+      for(size_t m=1; m < k-1; ++m)
+      {
+        auto sigmaprim = sigma[m] + tmp;
+        auto q = sigmaprim - sigma[m];
+        tmp -= q;
+        sigma[m] = sigmaprim;
+      }
+      e += tmp;
+    }
+    if (exact) return e;
+    r_t tc(0);
+    std::vector<r_t> t(K, 0), tau(K, 0);
+
+    for(size_t m=1; m < k ; ++m)
+    {
+      tau[m] = sigma[m]-sigma0[m];
+      t[m] = tc + tau[m];
+      if(t[m] >= phi[m])  // surely faithfull result
+      {
+        auto tau2 = (tc-t[m])+ tau[m];
+        if(m == k-1)
+        {
+          return t[m] + (tau2 + e);
+        }
+        else
+        {
+          tau[m+1] = sigma[m+1]-sigma0[m+1];
+          auto tau3 = tau2+ tau[m+1];
+          auto tau4 = (tau2-tau3)+ tau[m+1];
+          if(m == k-2)
+            return t[m] + (tau3 + (tau4 + e));
+          else
+          {
+            tau[m+2] = sigma[m+2]-sigma0[m+2];
+            return t[m] + (tau3 + (tau4 + tau[m+2]));
+          }
+        }
+      }
+      tc = t[m];
+    }
+    return tc+e;
   }
 
-  //=   faithfull computes the sum with faithfull rounding
+
+  //=   faithfull computes the sum with faithfull rounding oishi
   template<range R>
   typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p)
     requires (!simd_value<R>)
@@ -215,44 +222,57 @@ namespace eve::detail
 //     requires (!simd_value<R>)
 //   {
 //     using v_t = typename R::value_type;
-//     using r_t =  kumi::tuple<v_t, v_t>;
-//     auto red = [](auto that, auto x){
-//       auto & [s, err] = two_add(get<0>(that), x);
-//       err+= get<1>(that);
-//       return r_t{s, err};
+//     using r_t =  v_t;
+//     r_t err(0);
+//     auto red = [&err](auto that, auto x){
+//       auto [s, e] = two_add(that, x);
+//       err+= e;
+//       return s;
 //     };
-//     auto that= std::transform_reduce(begin(xs), end(xs), r_t{0, 0}, red, eve::abs);
-//     return get<0>(that)+get<1>(that);
+//     auto that= std::reduce(begin(xs), end(xs), r_t{0}, red);
+//     return that+err;
 //   }
 
 
-//   template<range R>
-//   auto sum_(EVE_SUPPORTS(cpu_), R const & xs)
-//     requires (!simd_value<R>)
-//   {
-//     using r_t = typename R::value_type;
-//     auto first = begin(xs);
-//     auto last  = end(xs);
-//     if (first == last) return r_t(0);
-//     auto that = abs(r_t(*first));
-//     if (std::distance(first, last) == 1) return that;
-//     else
-//     {
-//       ++first;
-//         auto inf_found = is_infinite(that);
-//       r_t c(0);
-//       for(; first != last; ++first)
-//       {
-//         that += abs(*first);
-//       };
+  //=   fast faithfull computes the sum with faithfull rounding
+  template<range R>
+  typename R::value_type sum_(EVE_SUPPORTS(cpu_), faithfull_type const &, R p, int )
+    requires (!simd_value<R>)
+  {
+    using r_t = typename R::value_type;
+    const r_t epsi = eps(as<r_t>())/2;
+    const r_t two_realmin = 2*smallestposval(as<r_t>());
+    size_t n = end(p)-begin(p);
+    auto T  = eve::algo::reduce(eve::algo::views::map(p, abs), r_t(0))*inc(inc(n)*epsi);
+    if (T <= two_realmin) return eve::algo::reduce(p, r_t(0));
+    r_t tprim(0), tau, t, phi;
+    while (true)
+    {
+      r_t sigma0 = 2*T*inc((3*n+2)*epsi);
+      auto sigma =  sigma0;
 
-//     std::cout << std::endl << "c      " << c << std::endl;
-//     std::cout << "that   " << that << std::endl;
-//     std::cout << "that+c "<< that+c<< std::endl;
-//     std::cout << "that-c "<< that-c<< std::endl;
-//     return that;
-//   }
-// }
+      for (auto cur = std::begin(p); cur != std::end(p); ++cur) // vectorize that loop
+      {
+        auto sigmap = sigma + *cur;
+        auto q = sigmap-sigma;
+        *cur -= q;
+        sigma = sigmap;
+      }
 
-
+      tau = sigma-sigma0;
+      t = tprim;
+      tprim = t+tau;
+      if (is_eqz(tprim)) {
+        r_t res = faithfull(sum)(p);
+        return res;
+      }
+      auto m1 = (r_t(1.5)+4*epsi)*(n*epsi)*sigma0;
+      auto m2 = (2*n*epsi)*ufp(sigma0);
+      phi = (2*n*(n+2)*epsi*ufp(sigma))/inc(6*epsi);
+      T = min(m1, m2);
+      if ((tprim >= phi) || (4*T <= two_realmin)) break;
+    }
+    auto tau2 = (t-tprim)+tau;
+    return tprim+(tau2+eve::algo::reduce(p, r_t(0)));
+  }
 }

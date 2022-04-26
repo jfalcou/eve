@@ -9,3 +9,4 @@
 
 #include <eve/module/compensated/decorator/comp.hpp>
 #include <eve/module/compensated/decorator/faithfull.hpp>
+#include <eve/module/compensated/decorator/kfold.hpp>

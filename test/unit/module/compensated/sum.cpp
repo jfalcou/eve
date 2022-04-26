@@ -44,80 +44,65 @@ EVE_TEST( "Check behavior of sum on all types full range"
 {
   using eve::sum;
   using v_t = eve::element_type_t<T>;
-  constexpr size_t N = 100000;
+  if constexpr(eve::cardinal_v<T> == 1)
   {
-    namespace chr = std::chrono;
-    using hrc     = chr::high_resolution_clock;
-    std::vector<v_t> vd(N);
-    v_t sign(1);
-    for(size_t i=0; i < vd.size() ; ++i, sign = -sign) vd[i] = sign/v_t(N-i+1);
+    constexpr size_t N = 10000;
+    {
+      namespace chr = std::chrono;
+      using hrc     = chr::high_resolution_clock;
+      std::vector<v_t> vd(N);
+      v_t sign(1);
+      for(size_t i=0; i < vd.size() ; ++i, sign = -sign) vd[i] = sign/v_t(N-i+1);
 
-    auto t0 = hrc::now();
-    __float128 s(0);
-    __float128 signl(1);
-    for(size_t i=0; i < vd.size() ; ++i, signl = -signl){
-      s+= __float128(signl/v_t(N-i+1));
+      auto t0 = hrc::now();
+      __float128 s(0);
+      __float128 signl(1);
+      for(size_t i=0; i < vd.size() ; ++i, signl = -signl){
+        s+= __float128(signl/v_t(N-i+1));
+      }
+      auto t1 = hrc::now();
+      std::cout << " float_128 rounded    s " << chr::duration_cast<chr::nanoseconds>(t1 - t0).count() << std::endl;
+
+      t0 = hrc::now();
+      auto as = eve::sum(vd);
+      t1 = hrc::now();
+      std::cout << " naive vectorized    as " << chr::duration_cast<chr::nanoseconds>(t1 - t0).count() << std::endl;
+
+      t0 = hrc::now();
+      auto cas= eve::comp(eve::sum)(vd);
+      t1 = hrc::now();
+      std::cout << " kahan compensated  cas " << chr::duration_cast<chr::nanoseconds>(t1 - t0).count() << std::endl;
+
+      t0 = hrc::now();
+      auto fas=  eve::faithfull(eve::sum)(vd);
+      t1 = hrc::now();
+      std::cout << " oishi faithfull    fas " << chr::duration_cast<chr::nanoseconds>(t1 - t0).count() << std::endl;
+
+      t0 = hrc::now();
+      auto gas=  eve::kfold<4>(eve::sum)(vd);
+      t1 = hrc::now();
+      std::cout << " rump kfold (k=4)   gas " << chr::duration_cast<chr::nanoseconds>(t1 - t0).count() << std::endl;
+
+      t0 = hrc::now();
+      auto fgas = eve::kfold<0>(eve::sum)(vd);
+      t1 = hrc::now();
+      std::cout << " rump faithfull    fgas " << chr::duration_cast<chr::nanoseconds>(t1 - t0).count() << std::endl;
+
+      std::cout << "s    " << std::setprecision(16) << double(s)  << std::endl;
+      std::cout << "as   " << std::setprecision(sizeof(v_t)*2) << as << " -> " << eve::ulpdist( v_t(s),  as) << std::endl;
+      std::cout << "cas  " << std::setprecision(sizeof(v_t)*2) << cas<< " -> " << eve::ulpdist( v_t(s), cas) << std::endl;
+      std::cout << "fas  " << std::setprecision(sizeof(v_t)*2) << fas<< " -> " << eve::ulpdist( v_t(s), fas) << std::endl;
+      std::cout << "gas  " << std::setprecision(sizeof(v_t)*2) << gas<< " -> " << eve::ulpdist( v_t(s), gas) << std::endl;
+      std::cout << "fgas  " << std::setprecision(sizeof(v_t)*2) << fgas<< " -> " << eve::ulpdist( v_t(s), fgas) << std::endl;
+      TTS_ULP_EQUAL(v_t(s), as,  50);
+      TTS_ULP_EQUAL(v_t(s), cas, 25);
+      TTS_ULP_EQUAL(v_t(s), fas, 1);
+      TTS_ULP_EQUAL(v_t(s), gas, 1);
+      TTS_ULP_EQUAL(v_t(s), fgas, 1);
     }
-    auto t1 = hrc::now();
-    std::cout << " s " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
 
-    t0 = hrc::now();
-    auto as = eve::sum(vd);
-    t1 = hrc::now();
-    std::cout << " as " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
-
-    t0 = hrc::now();
-    auto cas= eve::comp(eve::sum)(vd);
-    t1 = hrc::now();
-    std::cout << " cas " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
-
-    t0 = hrc::now();
-    auto fas= eve::faithfull(eve::sum)(vd);
-    t1 = hrc::now();
-    std::cout << " fas " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
-
-    t0 = hrc::now();
-    auto gas= eve::faithfull(eve::sum)(vd, 1);
-    t1 = hrc::now();
-    std::cout << " gas " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
-
-    std::cout << "s    " << std::setprecision(16) << double(s)  << std::endl;
-    std::cout << "as   " << std::setprecision(sizeof(v_t)*2) << as << " -> " << eve::ulpdist( v_t(s),  as) << std::endl;
-    std::cout << "cas  " << std::setprecision(sizeof(v_t)*2) << cas<< " -> " << eve::ulpdist( v_t(s), cas) << std::endl;
-    std::cout << "fas  " << std::setprecision(sizeof(v_t)*2) << fas<< " -> " << eve::ulpdist( v_t(s), fas) << std::endl;
-    std::cout << "gas  " << std::setprecision(sizeof(v_t)*2) << gas<< " -> " << eve::ulpdist( v_t(s), gas) << std::endl;
-    TTS_ULP_EQUAL(v_t(s), as,  50);
-    TTS_ULP_EQUAL(v_t(s), cas, 25);
-    TTS_ULP_EQUAL(v_t(s), fas, 1);
-    TTS_ULP_EQUAL(v_t(s), gas, 1);
+    std::cout << std::setprecision(8) << eve::faithfull(eve::sum)(1.0, 10.0, 2.45) << std::endl;
   }
-
-  std::cout << std::setprecision(8) << eve::faithfull(eve::sum)(1.0, 10.0, 2.45) << std::endl;
-
-//  {
-//     std::vector<v_t> vd(N);
-//     v_t s(1);
-//     v_t f(1/v_t(3));
-
-//     for(size_t i=0; i < vd.size() ; ++i, s*= -f) vd[i] = s;
-
-//     __float128 s(0);
-//     __float128 signl(1);
-//     for(size_t i=0; i < vd.size() ; ++i, signl = -signl){
-//       s+= __float128(signl/v_t(i+1));
-//     }
-//     auto as = eve::sum(vd);
-//     auto cas= eve::comp(eve::sum)(vd);
-//     std::cout << "log_2" << std::setprecision(16) << eve::log_2(eve::as(as)) << std::endl;
-//     std::cout << "s    " << std::setprecision(16) << double(s)  << std::endl;
-//     std::cout << "as   " << std::setprecision(sizeof(v_t)*2) << as << " -> " << eve::ulpdist( v_t(s),  as) << std::endl;
-//     std::cout << "cas  " << std::setprecision(sizeof(v_t)*2) << cas<< " -> " << eve::ulpdist( v_t(s), cas) << std::endl;
-//     TTS_ULP_EQUAL(v_t(s), as,  50);
-//     TTS_ULP_EQUAL(v_t(s), cas, 25);
-//     TTS_ULP_EQUAL(eve::log_2(eve::as(as)), as,  50);
-//     TTS_ULP_EQUAL(eve::log_2(eve::as(as)), cas, 25);
-//   }
-
-
-
+  else
+    TTS_PASS("no test");
 };
