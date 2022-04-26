@@ -111,12 +111,12 @@ namespace eve::detail
     auto T  = eve::algo::reduce(eve::algo::views::map(p, abs), r_t(0))*inc(inc(n)*epsi);
     if (T <= two_realmin) return eve::algo::reduce(p, r_t(0));
     r_t tprim(0), tau, t, phi;
-    int cnt = 0;
+//    int cnt = 0;
     while (true)
     {
-      ++cnt;
+//      ++cnt;
       r_t sigma0 = 2*T*inc((3*n+2)*epsi);
-      if (cnt == 150) break;
+//      if (cnt == 150) break;
       auto sigma =  sigma0;
 //       auto zipit = []<typename T>(T e){ return eve::zip(e, T(0)); };
 //       auto psig = eve::algo::views::map(p, zipit);
@@ -163,7 +163,7 @@ namespace eve::detail
       if ((tprim >= phi) || (4*T <= two_realmin)) break;
     }
 //     std::cout << "fin"<< std::endl;
-     std::cout << "cnt" << cnt << std::endl;
+//     std::cout << "cnt" << cnt << std::endl;
 //     std::cout << "tprim " << tprim << std::endl;
 //     std::cout << "phi " << phi << std::endl;
 //     std::cout << " T " <<  T << std::endl;

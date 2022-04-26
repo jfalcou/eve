@@ -9,6 +9,7 @@
 #include <eve/module/compensated.hpp>
 #include <vector>
 #include <iomanip>
+#include <chrono>
 
 //==================================================================================================
 // Types tests
@@ -45,19 +46,41 @@ EVE_TEST( "Check behavior of sum on all types full range"
   using v_t = eve::element_type_t<T>;
   constexpr size_t N = 100000;
   {
+    namespace chr = std::chrono;
+    using hrc     = chr::high_resolution_clock;
     std::vector<v_t> vd(N);
     v_t sign(1);
     for(size_t i=0; i < vd.size() ; ++i, sign = -sign) vd[i] = sign/v_t(N-i+1);
 
+    auto t0 = hrc::now();
     __float128 s(0);
     __float128 signl(1);
     for(size_t i=0; i < vd.size() ; ++i, signl = -signl){
       s+= __float128(signl/v_t(N-i+1));
     }
+    auto t1 = hrc::now();
+    std::cout << " s " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
+
+    t0 = hrc::now();
     auto as = eve::sum(vd);
+    t1 = hrc::now();
+    std::cout << " as " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
+
+    t0 = hrc::now();
     auto cas= eve::comp(eve::sum)(vd);
+    t1 = hrc::now();
+    std::cout << " cas " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
+
+    t0 = hrc::now();
     auto fas= eve::faithfull(eve::sum)(vd);
+    t1 = hrc::now();
+    std::cout << " fas " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
+
+    t0 = hrc::now();
     auto gas= eve::faithfull(eve::sum)(vd, 1);
+    t1 = hrc::now();
+    std::cout << " gas " << chr::duration_cast<chr::microseconds>(t1 - t0).count() << std::endl;
+
     std::cout << "s    " << std::setprecision(16) << double(s)  << std::endl;
     std::cout << "as   " << std::setprecision(sizeof(v_t)*2) << as << " -> " << eve::ulpdist( v_t(s),  as) << std::endl;
     std::cout << "cas  " << std::setprecision(sizeof(v_t)*2) << cas<< " -> " << eve::ulpdist( v_t(s), cas) << std::endl;
