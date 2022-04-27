@@ -53,8 +53,8 @@ namespace eve
     EVE_FORCEINLINE auto pi_sqr_o_six_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return 0x1.a51a66p+0;
-      else if constexpr(std::is_same_v<t_t, double>) return 0x1.a51a6625307d3p+0;
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.a51a66p+0);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.a51a6625307d3p+0);
     }
 
     template<floating_real_value T, typename D>
@@ -64,13 +64,13 @@ namespace eve
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return 0x1.a51a68p+0;
-        else if constexpr(std::is_same_v<t_t, double>) return 0x1.a51a6625307d4p+0;
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.a51a68p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.a51a6625307d4p+0);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return 0x1.a51a66p+0;
-        else if constexpr(std::is_same_v<t_t, double>) return 0x1.a51a6625307d3p+0;
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.a51a66p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.a51a6625307d3p+0);
       }
     }
   }
