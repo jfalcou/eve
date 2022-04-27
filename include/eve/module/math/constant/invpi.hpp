@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing \f$\pi^{-1}\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

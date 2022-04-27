@@ -19,7 +19,6 @@ namespace eve
   //! @brief Callable object computing the least value for which eve::exp
   //! returns a non denormal result.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

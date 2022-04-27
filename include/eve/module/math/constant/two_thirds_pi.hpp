@@ -7,13 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/decorator/roundings.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/as.hpp>
-#include <type_traits>
+#include <eve/module/math.hpp>
 
 namespace eve
 {
@@ -24,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the two_thirds_pi constant value.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

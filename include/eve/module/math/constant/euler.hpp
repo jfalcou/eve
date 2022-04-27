@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the \f$\e\f$ value,  i.e. \f$e^1\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

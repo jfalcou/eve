@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/math.hpp>
 #include <eve/module/math/constant/euler.hpp>
 #include <eve/module/math/constant/egamma.hpp>
 #include <eve/module/math/constant/halfeps.hpp>

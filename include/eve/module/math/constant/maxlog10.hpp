@@ -19,7 +19,6 @@ namespace eve
   //! @brief Callable object computing the greatest positive value for which eve::exp10
   //! returns a finite result.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the Euler-Mascheroni constant.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

@@ -18,7 +18,6 @@ namespace eve
   //!
   //! @brief Callable object computing the \f$2\pi\f$ value.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
