@@ -43,12 +43,12 @@
 #include <eve/module/math/constant/catalan.hpp>
 #include <eve/module/math/constant/cbrt_pi.hpp>
 #include <eve/module/math/constant/cosh_1.hpp>
-#include <eve/module/math/constant/cos_one.hpp>
+#include <eve/module/math/constant/cos_1.hpp>
 #include <eve/module/math/constant/egamma.hpp>
 #include <eve/module/math/constant/egamma_sqr.hpp>
 #include <eve/module/math/constant/exp_pi.hpp>
 #include <eve/module/math/constant/rsqrt_e.hpp>
-#include <eve/module/math/constant/invexp.hpp>
+#include <eve/module/math/constant/inv_e.hpp>
 #include <eve/module/math/constant/extreme_value_skewness.hpp>
 #include <eve/module/math/constant/four_minus_pi.hpp>
 #include <eve/module/math/constant/four_thirds_pi.hpp>
