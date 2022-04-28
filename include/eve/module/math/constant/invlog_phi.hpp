@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var invlog_phi
   //!
-  //! @brief Callable object computing the invlog_phi constant value.
+  //! @brief Callable object computing the invlog_phi constant value : : \f$\frac{1}{\log((1+\sqrt5)/2)}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

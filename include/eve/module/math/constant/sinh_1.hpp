@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sinh_1
   //!
-  //! @brief Callable object computing the sinh_1 constant value.
+  //! @brief Callable object computing the sinh_1 constant value;: \f$\sinh1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

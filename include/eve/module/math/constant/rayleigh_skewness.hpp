@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rayleigh_skewness
   //!
-  //! @brief Callable object computing the rayleigh_skewness constant value.
+  //! @brief Callable object computing the rayleigh_skewness constant value : /f$2\sqrt\pi(\pi-3)/(4-\pi^{3/2})/f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var root_log_four
+  //! @var sqrtlog_4
   //!
-  //! @brief Callable object computing the root_log_four constant value.
+  //! @brief Callable object computing the sqrtlog_4 constant value : \f$\sqrt{\log4}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the root_log_four constant                              |
+  //! | `operator()` | Computes the sqrtlog_4 constant                              |
   //!
   //! ---
   //!
@@ -36,22 +36,22 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the root_log_four constant in the chosen type.
+  //! the sqrtlog_4 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/root_log_four.cpp}
+  //! @godbolt{doc/math/sqrtlog_4.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(root_log_four_, root_log_four);
+  EVE_MAKE_CALLABLE(sqrtlog_4_, sqrtlog_4);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto root_log_four_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto sqrtlog_4_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>)       return T(0x1.2d6abep+0);
@@ -59,7 +59,7 @@ namespace eve
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto root_log_four_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto sqrtlog_4_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;

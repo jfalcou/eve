@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var three_quarters_pi
+  //! @var two_pio_3
   //!
-  //! @brief Callable object computing the three_quarters_pi constant value.
+  //! @brief Callable object computing the two_pio_3 constant value.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the three_quarters_pi constant                              |
+  //! | `operator()` | Computes the two_pio_3 constant                              |
   //!
   //! ---
   //!
@@ -36,42 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the three_quarters_pi constant in the chosen type.
+  //! the two_pio_3 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/three_quarters_pi.cpp}
+  //! @godbolt{doc/math/two_pio_3.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(three_quarters_pi_, three_quarters_pi);
+  EVE_MAKE_CALLABLE(two_pio_3_, two_pio_3);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto three_quarters_pi_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto two_pio_3_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.2d97c8p+1);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.2d97c7f3321d2p+1);
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.0c1524p+1);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.0c152382d7366p+1);
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto three_quarters_pi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto two_pio_3_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.2d97c8p+1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.2d97c7f3321d3p+1);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.0c1524p+1);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.0c152382d7366p+1);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.2d97c6p+1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.2d97c7f3321d2p+1);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.0c1522p+1);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.0c152382d7365p+1);
       }
     }
   }

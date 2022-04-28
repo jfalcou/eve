@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sixth
   //!
-  //! @brief Callable object computing the sixth constant value.
+  //! @brief Callable object computing the sixth constant value : \f$1/6\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

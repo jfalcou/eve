@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var inv_pi
   //!
-  //! @brief Callable object computing the inv_pi constant value.
+  //! @brief Callable object computing the inv_pi constant value : \f$\frac{1}{\pi}\f$..
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

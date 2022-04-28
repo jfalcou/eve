@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rayleigh_kurtosis
   //!
-  //! @brief Callable object computing the rayleigh_kurtosis constant value.
+  //! @brief Callable object computing the rayleigh_kurtosis constant value : /f$3+(6\pi^2-24\pi+16)/(4-\pi^2)/f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rsqrt_pi
   //!
-  //! @brief Callable object computing \f$\pi^{-1}\f$.
+  //! @brief Callable object computing \f$\pi^{-1/2}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
