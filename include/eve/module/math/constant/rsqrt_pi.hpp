@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup math
   //! @{
-  //! @var twoopi
+  //! @var rsqrt_pi
   //!
-  //! @brief Callable object computing the \f$2/\pi\f$ value.
+  //! @brief Callable object computing \f$\pi^{-1}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the twoopi constant                               |
+  //! | `operator()` | Computes the rsqrt_pi constant                               |
   //!
   //! ---
   //!
@@ -36,53 +36,37 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::twoopi(as<T>())` is semantically equivalent to  `eve::rec(2*eve::atan``(T(1)))`
+  //! the call `eve::rsqrt_pi(as<T>())` is semantically equivalent to  `eve::rec(eve::pi(eve::as<T>()))`
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/twoopi.cpp}
+  //! @godbolt{doc/math/rsqrt_pi.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(twoopi_, twoopi);
+  EVE_MAKE_CALLABLE(rsqrt_pi_, rsqrt_pi);
 
   namespace detail
   {
     template<floating_value T>
-    EVE_FORCEINLINE auto twoopi_(EVE_SUPPORTS(cpu_), eve::as<T> const & = {}) noexcept
+    EVE_FORCEINLINE constexpr auto rsqrt_pi_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
     {
-      using t_t = element_type_t<T>;
-
-      if constexpr(std::is_same_v<t_t, float>)
-      {
-        return Constant<T, 0X3F22F983U>();
-      }
-      else if constexpr(std::is_same_v<t_t, double>)
-      {
-        return Constant<T, 0X3FE45F306DC9C883ULL>();
-      }
+      return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6DULL>(); //0.564189583547756286948079451560772585844050629329
     }
 
     template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto twoopi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto rsqrt_pi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
-      using t_t           = element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)
+       if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<D, upward_type>)
-          return eve::twoopi(as<T>());
-        else
-          return Constant<T, 0X3F22F982U>();
+        return Ieee_constant<T, 0X3F106EBAU, 0X3FE20DD750429B6DULL>();
       }
       else
       {
-        if constexpr(std::is_same_v<D, downward_type>)
-          return eve::twoopi(as<T>());
-        else
-          return Constant<T, 0X3FE45F306DC9C884ULL>();
+        return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6EULL>();
       }
     }
   }

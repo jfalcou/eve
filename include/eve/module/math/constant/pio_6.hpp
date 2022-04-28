@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var sixth_pi
+  //! @var pio_6
   //!
-  //! @brief Callable object computing the sixth_pi constant value.
+  //! @brief Callable object computing the pio_6 constant value.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sixth_pi constant                              |
+  //! | `operator()` | Computes the pio_6 constant                              |
   //!
   //! ---
   //!
@@ -36,22 +36,22 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the sixth_pi constant in the chosen type.
+  //! the pio_6 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/sixth_pi.cpp}
+  //! @godbolt{doc/math/pio_6.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(sixth_pi_, sixth_pi);
+  EVE_MAKE_CALLABLE(pio_6_, pio_6);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto sixth_pi_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto pio_6_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>)       return T(0x1.0c1524p-1);
@@ -59,7 +59,7 @@ namespace eve
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto sixth_pi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto pio_6_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;

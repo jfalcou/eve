@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var inv_two_pi
+  //! @var sin_1
   //!
-  //! @brief Callable object computing the inv_two_pi constant value.
+  //! @brief Callable object computing the sin_1 constant value.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the inv_two_pi constant                              |
+  //! | `operator()` | Computes the sin_1 constant                              |
   //!
   //! ---
   //!
@@ -36,42 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the inv_two_pi constant in the chosen type.
+  //! the sin_1 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/inv_two_pi.cpp}
+  //! @godbolt{doc/math/sin_1.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(inv_two_pi_, inv_two_pi);
+  EVE_MAKE_CALLABLE(sin_1_, sin_1);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto inv_two_pi_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto sin_1_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.45f306p-3);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.45f306dc9c883p-3);
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.aed548p-1);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.aed548f090ceep-1);
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto inv_two_pi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto sin_1_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.45f308p-3);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.45f306dc9c883p-3);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.aed54ap-1);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.aed548f090cefp-1);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.45f306p-3);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.45f306dc9c882p-3);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.aed548p-1);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.aed548f090ceep-1);
       }
     }
   }

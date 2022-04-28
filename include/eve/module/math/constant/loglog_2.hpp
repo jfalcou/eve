@@ -12,22 +12,22 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup core
   //! @{
-  //! @var invsqrtpi
+  //! @var loglog_2
   //!
-  //! @brief Callable object computing \f$\pi^{-1}\f$.
+  //! @brief Callable object computing the loglog_2 constant value.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the invsqrtpi constant                               |
+  //! | `operator()` | Computes the loglog_2 constant                              |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
+  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -36,37 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the call `eve::invsqrtpi(as<T>())` is semantically equivalent to  `eve::rec(eve::pi(eve::as<T>()))`
+  //! the loglog_2 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/invsqrtpi.cpp}
+  //! @godbolt{doc/math/loglog_2.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(invsqrtpi_, invsqrtpi);
+  EVE_MAKE_CALLABLE(loglog_2_, loglog_2);
 
   namespace detail
   {
-    template<floating_value T>
-    EVE_FORCEINLINE constexpr auto invsqrtpi_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    template<floating_real_value T>
+    EVE_FORCEINLINE auto loglog_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
-      return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6DULL>(); //0.564189583547756286948079451560772585844050629329
+      using t_t =  element_type_t<T>;
+      if constexpr(std::is_same_v<t_t, float>)       return -0x1.774f2ap-2;
+      else if constexpr(std::is_same_v<t_t, double>) return -0x1.774f29bdd6b9fp-2;
     }
 
-    template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto invsqrtpi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    template<floating_real_value T, typename D>
+    EVE_FORCEINLINE constexpr auto loglog_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
-       if constexpr(std::is_same_v<D, downward_type>)
+      using t_t =  element_type_t<T>;
+      if constexpr(std::is_same_v<D, upward_type>)
       {
-        return Ieee_constant<T, 0X3F106EBAU, 0X3FE20DD750429B6DULL>();
+        if constexpr(std::is_same_v<t_t, float>)  return -0x1.774f28p-2;
+        else if constexpr(std::is_same_v<t_t, double>) return -0x1.774f29bdd6b9ep-2;
       }
-      else
+      else if constexpr(std::is_same_v<D, downward_type>)
       {
-        return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6EULL>();
+        if constexpr(std::is_same_v<t_t, float>)  return -0x1.774f2ap-2;
+        else if constexpr(std::is_same_v<t_t, double>) return -0x1.774f29bdd6b9fp-2;
       }
     }
   }

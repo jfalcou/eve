@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var extreme_value_skewness
   //!
-  //! @brief Callable object computing the extreme_value_skewness constant value.
+  //! @brief Callable object computing the extreme_value_skewness : \f$12\sqrt6\zeta(3)/\pi^3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

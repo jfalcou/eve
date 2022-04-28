@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var pi_pow_euler
+  //! @var zeta_3
   //!
-  //! @brief Callable object computing the pi_pow_euler constant value.
+  //! @brief Callable object computing the zeta_3 constant value.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the pi_pow_euler constant                              |
+  //! | `operator()` | Computes the zeta_3 constant                              |
   //!
   //! ---
   //!
@@ -36,42 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the pi_pow_euler constant in the chosen type.
+  //! the zeta_3 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/pi_pow_euler.cpp}
+  //! @godbolt{doc/math/zeta_3.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(pi_pow_euler_, pi_pow_euler);
+  EVE_MAKE_CALLABLE(zeta_3_, zeta_3);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto pi_pow_euler_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto zeta_3_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.6758b6p+4);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.6758b5c381111p+4);
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.33bap+0);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.33ba004f00621p+0);
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto pi_pow_euler_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto zeta_3_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.6758b6p+4);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.6758b5c381112p+4);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.33ba02p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.33ba004f00622p+0);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.6758b4p+4);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.6758b5c381111p+4);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.33bap+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.33ba004f00621p+0);
       }
     }
   }

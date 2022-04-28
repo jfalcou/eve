@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var log_log_2
+  //! @var invegamma
   //!
-  //! @brief Callable object computing the log_log_2 constant value.
+  //! @brief Callable object computing the inverse of the Euler-Mascheroni constant.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the log_log_2 constant                              |
+  //! | `operator()` | Computes the invegamma constant                              |
   //!
   //! ---
   //!
@@ -36,42 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the log_log_2 constant in the chosen type.
+  //! the invegamma constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/log_log_2.cpp}
+  //! @godbolt{doc/math/invegamma.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(log_log_2_, log_log_2);
+  EVE_MAKE_CALLABLE(invegamma_, invegamma);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto log_log_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto invegamma_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return -0x1.774f2ap-2;
-      else if constexpr(std::is_same_v<t_t, double>) return -0x1.774f29bdd6b9fp-2;
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.bb8226p+0);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.bb8226f502bf8p+0);
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto log_log_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto invegamma_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return -0x1.774f28p-2;
-        else if constexpr(std::is_same_v<t_t, double>) return -0x1.774f29bdd6b9ep-2;
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.bb8228p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.bb8226f502bf8p+0);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return -0x1.774f2ap-2;
-        else if constexpr(std::is_same_v<t_t, double>) return -0x1.774f29bdd6b9fp-2;
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.bb8226p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.bb8226f502bf7p+0);
       }
     }
   }
