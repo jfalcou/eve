@@ -25,18 +25,7 @@ namespace eve::detail
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
-      if constexpr( current_api == spy::vmx_ )
-      {
-        if constexpr( sizeof(T) <= 8 )
-        {
-          return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
-        }
-        else
-        {
-          return load(tgt, cpu_ {}, ptr);
-        }
-      }
-      else if constexpr( current_api == spy::vsx_ )
+      if constexpr( current_api >= spy::vsx_ )
       {
         if constexpr( std::is_integral_v<T> )
         {
@@ -46,6 +35,17 @@ namespace eve::detail
         else
         {
           return vec_vsx_ld(0, ptr);
+        }
+      }
+      else if constexpr( current_api >= spy::vmx_ )
+      {
+        if constexpr( sizeof(T) <= 8 )
+        {
+          return vec_perm(vec_ld(0, ptr), vec_ld(16, ptr), vec_lvsl(0, ptr));
+        }
+        else
+        {
+          return load(tgt, cpu_ {}, ptr);
         }
       }
     }
@@ -67,15 +67,7 @@ namespace eve::detail
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
-      if constexpr( current_api == spy::vmx_ )
-      {
-        if constexpr( sizeof(T) <= 8 )
-        {
-          if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 )  return vec_ld(0, ptr.get());
-          else                                                      return load(tgt, ptr.get());
-        }
-      }
-      else if constexpr( current_api == spy::vsx_ )
+      if constexpr( current_api >= spy::vsx_ )
       {
         if constexpr( std::is_integral_v<T> )
         {
@@ -85,6 +77,14 @@ namespace eve::detail
         else
         {
           return vec_vsx_ld(0, ptr.get());
+        }
+      }
+      else if constexpr( current_api >= spy::vmx_ )
+      {
+        if constexpr( sizeof(T) <= 8 )
+        {
+          if constexpr( aligned_ptr<T, Lanes>::alignment() >= 16 )  return vec_ld(0, ptr.get());
+          else                                                      return load(tgt, ptr.get());
         }
       }
     }
