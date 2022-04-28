@@ -15,6 +15,8 @@
 #include <type_traits>
 #include <limits>
 #include <utility>
+#include <algorithm>
+
 
 namespace eve
 {
