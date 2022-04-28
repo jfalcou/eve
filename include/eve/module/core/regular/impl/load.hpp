@@ -10,7 +10,9 @@
 #include <eve/concept/memory.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
@@ -29,22 +31,6 @@ namespace eve
 
 namespace eve::detail
 {
-
-#if defined(__has_feature)
-#  if __has_feature(address_sanitizer) or __has_feature(thread_sanitizer)
-#       define EVE_SANITIZERS_ARE_ON
-#  endif  // __has_feature
-#endif
-
-#if defined(EVE_SANITIZERS_ARE_ON)
-  constexpr bool sanitizers_are_on = true;
-
-#undef EVE_SANITIZERS_ARE_ON
-
-#else
-  constexpr bool sanitizers_are_on = false;
-#endif
-
   //================================================================================================
   // Load from pointer - Conditional load
   //================================================================================================
@@ -63,7 +49,7 @@ namespace eve::detail
     {
       static constexpr bool is_aligned_enough = c_t() * sizeof(e_t) >= Ptr::alignment();
 
-      if constexpr (!sanitizers_are_on && is_aligned_enough)
+      if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
       {
         auto that = eve::unsafe(eve::load)(ptr, tgt);
         if constexpr( C::has_alternative )  return replace_ignored(that, cond, cond.alternative);
@@ -108,31 +94,23 @@ namespace eve::detail
     }
   }
 
-#if defined(SPY_COMPILER_IS_MSVC)
-#define DISABLE_SANITIZERS __declspec(no_sanitize_address)
-#elif defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
-#define DISABLE_SANITIZERS __attribute__((no_sanitize_address)) __attribute__((no_sanitize_thread))
-#else
-#define DISABLE_SANITIZERS
-#endif
-
   // making unsafe(load) call intrinsics requires a lot of work and is not very portable
   // due to what called functions it will affect.
   // Since the unsafe is mostly used in corner cases, will do it scalar in asan mode.
   template<relative_conditional_expr C, scalar_pointer Ptr, typename Pack>
-  DISABLE_SANITIZERS Pack load_ ( EVE_SUPPORTS(cpu_)
-                                , C const& cond, unsafe_type const&
-                                , eve::as<Pack> const& tgt, Ptr ptr
-                                ) noexcept
+  SPY_DISABLE_SANITIZERS Pack load_ ( EVE_SUPPORTS(cpu_)
+                                    , C const& cond, unsafe_type const&
+                                    , eve::as<Pack> const& tgt, Ptr ptr
+                                    ) noexcept
   {
-    if constexpr(sanitizers_are_on)
+    if constexpr(spy::supports::sanitizers_status)
     {
       Pack that;
 
       auto offset = cond.offset( as<Pack>{} );
       auto count  = cond.count( as<Pack>{} );
 
-      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]);
+      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, read(unalign(ptr)+i) );
 
       return that;
     }
