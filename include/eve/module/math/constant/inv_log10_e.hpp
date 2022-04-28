@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the inv_log10_e constant value.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

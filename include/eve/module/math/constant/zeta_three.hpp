@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the zeta_three constant value.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

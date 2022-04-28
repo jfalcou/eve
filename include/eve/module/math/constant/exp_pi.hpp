@@ -14,14 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var exp_minus_half
+  //! @var exp_pi
   //!
-  //! @brief Callable object computing the exp_minus_half constant value.
+  //! @brief Callable object computing the exp_pi constant value : \f$e^\pi\$.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the exp_minus_half constant                              |
+  //! | `operator()` | Computes the exp_pi constant                              |
   //!
   //! ---
   //!
@@ -35,42 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the exp_minus_half constant in the chosen type.
+  //! the exp_pi constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/exp_minus_half.cpp}
+  //! @godbolt{doc/math/exp_pi.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(exp_minus_half_, exp_minus_half);
+  EVE_MAKE_CALLABLE(exp_pi_, exp_pi);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto exp_minus_half_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto exp_pi_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.368b3p-1);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.368b2fc6f960ap-1);
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.724046p+4);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.724046eb0933ap+4);
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto exp_minus_half_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto exp_pi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.368b3p-1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.368b2fc6f960ap-1);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.724048p+4);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.724046eb0933ap+4);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.368b2ep-1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.368b2fc6f9609p-1);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.724046p+4);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.724046eb09339p+4);
       }
     }
   }

@@ -16,8 +16,9 @@ namespace eve
   //! @{
   //! @var four_thirds_pi
   //!
-  //! @brief Callable object computing the four_thirds_pi constant value.
+  //! @brief Callable object computing the four_thirds_pi constant value : \f$4\pi/3\f$.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

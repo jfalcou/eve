@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the root_euler constant value.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

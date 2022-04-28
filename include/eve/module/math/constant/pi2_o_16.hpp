@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the \f$\pi^2/16\f$  constant value.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

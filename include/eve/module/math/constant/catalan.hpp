@@ -16,8 +16,9 @@ namespace eve
   //! @{
   //! @var catalan
   //!
-  //! @brief Callable object computing the catalan constant value.
+  //! @brief Callable object computing the catalan constant \f$\beta(2) = \sum_0^\infty \frac{(-1)^n}{(2n+1)^2}.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing 1/log(2).
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

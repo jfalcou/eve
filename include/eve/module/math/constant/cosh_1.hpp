@@ -14,14 +14,15 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var cos_one
+  //! @var cosh_1
   //!
-  //! @brief Callable object computing the cos_one constant value.
+  //! @brief Callable object computing the cosh_1 constant value : \f$\cosh1\f$.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the cos_one constant                              |
+  //! | `operator()` | Computes the cosh_1 constant                              |
   //!
   //! ---
   //!
@@ -35,42 +36,42 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the cos_one constant in the chosen type.
+  //! the cosh_1 constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/cos_one.cpp}
+  //! @godbolt{doc/math/cosh_1.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(cos_one_, cos_one);
+  EVE_MAKE_CALLABLE(cosh_1_, cosh_1);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto cos_one_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto cosh_1_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.14a28p-1);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.14a280fb5068cp-1);
+      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.8b0756p+0);
+      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.8b07551d9f55p+0);
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto cos_one_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto cosh_1_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<D, upward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.14a282p-1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.14a280fb5068cp-1);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.8b0756p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.8b07551d9f551p+0);
       }
       else if constexpr(std::is_same_v<D, downward_type>)
       {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.14a28p-1);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.14a280fb5068bp-1);
+        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.8b0754p+0);
+        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.8b07551d9f55p+0);
       }
     }
   }

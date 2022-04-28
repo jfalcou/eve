@@ -42,19 +42,17 @@
 //boost math constants
 #include <eve/module/math/constant/catalan.hpp>
 #include <eve/module/math/constant/cbrt_pi.hpp>
-#include <eve/module/math/constant/cosh_one.hpp>
+#include <eve/module/math/constant/cosh_1.hpp>
 #include <eve/module/math/constant/cos_one.hpp>
 #include <eve/module/math/constant/egamma.hpp>
 #include <eve/module/math/constant/egamma_sqr.hpp>
-#include <eve/module/math/constant/euler_pow_pi.hpp>
-#include <eve/module/math/constant/exp_minus_half.hpp>
-#include <eve/module/math/constant/exp_minus_one.hpp>
+#include <eve/module/math/constant/exp_pi.hpp>
+#include <eve/module/math/constant/rsqrt_e.hpp>
+#include <eve/module/math/constant/invexp.hpp>
 #include <eve/module/math/constant/extreme_value_skewness.hpp>
 #include <eve/module/math/constant/four_minus_pi.hpp>
 #include <eve/module/math/constant/four_thirds_pi.hpp>
 #include <eve/module/math/constant/glaisher.hpp>
-#include <eve/module/math/constant/half_pi.hpp>
-#include <eve/module/math/constant/half_root_two.hpp>
 #include <eve/module/math/constant/inv_cbrt_pi.hpp>
 #include <eve/module/math/constant/inv_egamma.hpp>
 #include <eve/module/math/constant/inv_log_phi.hpp>

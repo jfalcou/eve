@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the log_log_2 constant value.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

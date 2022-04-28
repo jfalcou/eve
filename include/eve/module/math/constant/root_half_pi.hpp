@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the root_half_pi constant value.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

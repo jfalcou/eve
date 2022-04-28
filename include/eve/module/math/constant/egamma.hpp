@@ -16,8 +16,9 @@ namespace eve
   //! @{
   //! @var egamma
   //!
-  //! @brief Callable object computing the Euler-Mascheroni constant.
+  //! @brief Callable object computing the Euler-Mascheroni constant : \f$\gamma = \lim_{n\leadsto\infty}\left( \sum_{k = 0}^n \frac1k\log n\right )\f$.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

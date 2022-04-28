@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing half the inverse of the machine epsilon.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

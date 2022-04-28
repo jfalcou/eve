@@ -16,12 +16,13 @@ namespace eve
   //! @{
   //! @var egamma_sqr
   //!
-  //! @brief Callable object computing the egamma_sqr constant value.
+  //! @brief Callable object computing the egamma_sqr constant value : square of the Euler-Mascheroni constant.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the egamma_sqr constant                              |
+  //! | `operator()` | Computes the egamma_sqr constant                           |
   //!
   //! ---
   //!

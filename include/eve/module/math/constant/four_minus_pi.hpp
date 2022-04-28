@@ -16,8 +16,9 @@ namespace eve
   //! @{
   //! @var four_minus_pi
   //!
-  //! @brief Callable object computing the four_minus_pi constant value.
+  //! @brief Callable object computing the four_minus_pi constant value : \f$4-\pi\f$.
   //!
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
