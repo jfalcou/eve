@@ -25,11 +25,11 @@ namespace eve::detail
     }
     else if constexpr( N::value * sizeof(T) == ppc_::bytes )
     {
-      if constexpr( current_api == eve::vmx )
+      if constexpr( current_api >= eve::vmx )
       {
         *((typename wide<T, N>::storage_type *)(ptr)) = value;
       }
-      else if constexpr( current_api == eve::vsx )
+      else if constexpr( current_api >= eve::vsx )
       {
         // 64bits integrals are not supported by vec_vsx_st on some compilers
         if constexpr( sizeof(T) == 8 && std::is_integral_v<T> )

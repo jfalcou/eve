@@ -32,15 +32,15 @@ namespace eve
           else if constexpr( width == 64) return x86_512_{};
           else                            return aggregated_{};
         }
-        else if constexpr( spy::simd_instruction_set == spy::vmx_ )
-        {
-          if constexpr(!f64 && width <= 16) return ppc_{};
-          else                              return emulated_{};
-        }
-        else if constexpr( spy::simd_instruction_set == spy::vsx_ )
+        else if constexpr( spy::simd_instruction_set >= spy::vsx_ )
         {
           if constexpr(width <= 16) return ppc_{};
           else                      return emulated_{};
+        }
+        else if constexpr( spy::simd_instruction_set >= spy::vmx_ )
+        {
+          if constexpr(!f64 && width <= 16) return ppc_{};
+          else                              return emulated_{};
         }
         else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {
