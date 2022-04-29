@@ -30,6 +30,9 @@ namespace eve
     using type = eve::wide<eve::complex<element_type_t<T>>, cardinal_t<T>>;
   };
 
+  template<floating_scalar_value T, typename N>
+  struct as_complex<wide<complex<T>,N>>  { using type = wide<complex<T>,N>; };
+
   template<typename T>
   using as_complex_t = typename as_complex<T>::type;
 

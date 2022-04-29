@@ -15,53 +15,33 @@
 
 namespace eve::detail
 {
-  EVE_FORCEINLINE auto complex_dispatch(eve::tag::arg_, auto const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::arg_, auto const& z) noexcept
   {
     return eve::atan2(imag(z), real(z) );
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto complex_dispatch( eve::tag::conj_, Z const& z ) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::conj_, Z const& z ) noexcept
   {
     return Z{real(z), -imag(z)};
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto complex_dispatch(eve::tag::proj_, Z const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::proj_, Z const& z) noexcept
   {
     using real_t = as< as_real_t<Z> >;
     return if_else(is_infinite(z), Z(inf(real_t{}), copysign(zero(real_t{}), imag(z))), z);
   }
 
-  EVE_FORCEINLINE auto complex_dispatch(eve::tag::abs_, auto const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
   {
     return eve::hypot(real(z), imag(z));
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto complex_dispatch(eve::tag::sqr_, Z const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
   {
     auto [zr, zi] = z;
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
   }
-
-/*
-  EVE_FORCEINLINE auto complex_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
-  {
-    auto [zr, zi] = z;
-    return sum_of_prod(zr, zr, zi, zi);
-  }
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_dispatch ( eve::tag::sqr_
-                                        , eve::raw_type const &
-                                        , Z const& z
-                                        ) noexcept
-  {
-    auto [zr, zi] = z;
-    return Z{eve::sqr(zr)-eve::sqr(zi), 2*zr*zi};
-  }
-
-
-*/
 }
