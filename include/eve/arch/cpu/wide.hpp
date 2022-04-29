@@ -555,7 +555,7 @@ namespace eve
 
     //! @brief Perform the compound addition on all the wide lanes and assign the result
     //! to the current one. See also: eve::add
-    template<value V>
+    template<real_value V>
     friend  EVE_FORCEINLINE auto& operator+=(wide& w, V v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( !kumi::product_type<Type> )
@@ -574,14 +574,16 @@ namespace eve
 
     //! @brief Perform the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator+(real_scalar_value auto s, wide const& v) noexcept
+    requires( !kumi::product_type<Type> )
     {
       return v + wide(s);
     }
 
     //! @brief Perform the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(wide const& v,scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator+(wide const& v,real_scalar_value auto s) noexcept
+    requires( !kumi::product_type<Type> )
     {
       return v + wide(s);
     }
