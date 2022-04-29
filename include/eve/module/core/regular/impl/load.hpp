@@ -10,9 +10,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/spy.hpp>
-#include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
-#include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
@@ -107,10 +105,10 @@ namespace eve::detail
     {
       Pack that;
 
-      auto offset = cond.offset( as<Pack>{} );
-      auto count  = cond.count( as<Pack>{} );
+      auto offset = cond.offset( tgt );
+      auto count  = cond.count( tgt );
 
-      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, read(unalign(ptr)+i) );
+      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]) );
 
       return that;
     }
