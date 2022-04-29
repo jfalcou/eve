@@ -26,7 +26,7 @@ namespace eve::detail
       EVE_ASSERT(all(is_gez(n) && is_flint(n)), "diff(sph_bessel_jn) : some orders are non integral positive");
       EVE_ASSERT(all(is_nltz(x)),               "diff(sph_bessel_jn) : some x are negative");
       auto nph = convert(n, as<element_type_t<T>>())+half(as(x));
-      auto d = rsqrt(2*x*invpi(as(x)));
+      auto d = rsqrt(2*x*inv_pi(as(x)));
       return if_else( abs(x) < eps(as(x))
                     ,  if_else(is_eqz(n),  zero, inf(as(x)))
                     , (cyl_bessel_jn(nph, x)*mhalf(as(x))/x+diff(cyl_bessel_jn)(nph, x))*d

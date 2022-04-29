@@ -44,7 +44,7 @@ namespace eve::detail
         if(eve::any(x >= maxlog(as(x))))
         {
           auto ex = eve::exp(x/2);
-          return ex*(ex*rsqrt(x*twopi(as(x))));
+          return ex*(ex*rsqrt(x*two_pi(as(x))));
         }
         else return rsqrt(x*pio_2(as(x)))*sinh(x);
       };

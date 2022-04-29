@@ -20,6 +20,6 @@ namespace eve::detail
     EVE_ASSERT(all(is_nltz(x)),               "sph_bessel_yn : some x are negative");
     using elt_t = element_type_t<T>;
     if constexpr(integral_value<I>) return sph_bessel_yn(convert(n, as<elt_t>()), x);
-    else                            return cyl_bessel_yn(n+half(as(x)), x)*rsqrt(2*x*invpi(as(x)));
+    else                            return cyl_bessel_yn(n+half(as(x)), x)*rsqrt(2*x*inv_pi(as(x)));
   }
 }

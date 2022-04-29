@@ -14,7 +14,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of invpi"
+EVE_TEST_TYPES( "Check return types of inv_pi"
             , eve::test::simd::ieee_reals
             )
 <typename T>(eve::as<T>)
@@ -22,14 +22,14 @@ EVE_TEST_TYPES( "Check return types of invpi"
   using v_t = eve::element_type_t<T>;
   using eve::as;
 
-  TTS_EXPR_IS( eve::invpi(as<T>())  , T);
-  TTS_EXPR_IS( eve::invpi(as<v_t>()), v_t);
+  TTS_EXPR_IS( eve::inv_pi(as<T>())  , T);
+  TTS_EXPR_IS( eve::inv_pi(as<v_t>()), v_t);
 };
 
 //==================================================================================================
-// invpi  tests
+// inv_pi  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of invpi on wide"
+EVE_TEST_TYPES( "Check behavior of inv_pi on wide"
         , eve::test::simd::ieee_reals
         )
 <typename T>(eve::as<T>)
@@ -40,11 +40,11 @@ EVE_TEST_TYPES( "Check behavior of invpi on wide"
   using elt_t = eve::element_type_t<T>;
   if constexpr(sizeof(long double) > sizeof(elt_t))
   {
-    TTS_EXPECT(downward(eve::invpi)(as<elt_t>()) <= (1.0/(4*std::atan(1.0l))));
-    TTS_EXPECT(  upward(eve::invpi)(as<elt_t>()) >= (1.0/(4*std::atan(1.0l))));
+    TTS_EXPECT(downward(eve::inv_pi)(as<elt_t>()) <= (1.0/(4*std::atan(1.0l))));
+    TTS_EXPECT(  upward(eve::inv_pi)(as<elt_t>()) >= (1.0/(4*std::atan(1.0l))));
   }
-  TTS_ULP_EQUAL(eve::invpi(as<T>()), T(1.0/(4*std::atan(1.0l))), 0.0);
-  TTS_EXPECT(eve::all(downward(eve::invpi)(as<T>()) <= eve::invpi(as<T>())));
-  TTS_EXPECT(eve::all(eve::invpi(as<T>()) <= upward(eve::invpi)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::invpi)(as<T>()), upward(eve::invpi)(as<T>()), 0.5);
+  TTS_ULP_EQUAL(eve::inv_pi(as<T>()), T(1.0/(4*std::atan(1.0l))), 0.0);
+  TTS_EXPECT(eve::all(downward(eve::inv_pi)(as<T>()) <= eve::inv_pi(as<T>())));
+  TTS_EXPECT(eve::all(eve::inv_pi(as<T>()) <= upward(eve::inv_pi)(as<T>())));
+  TTS_ULP_EQUAL(downward(eve::inv_pi)(as<T>()), upward(eve::inv_pi)(as<T>()), 0.5);
 };

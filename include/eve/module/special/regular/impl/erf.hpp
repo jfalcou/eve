@@ -25,7 +25,7 @@ namespace eve::detail
       T y =  eve::abs(a0);
       if (y <= 0.46875) // 15/32
       {
-        T ysq = if_else(y > halfeps(as<T>()), sqr(y), eve::zero);
+        T ysq = if_else(y > epso_2(as<T>()), sqr(y), eve::zero);
         return kernel1_erf1(a0, ysq);
       }
       else
@@ -82,7 +82,7 @@ namespace eve::detail
       auto nb = eve::count_true(test1);
         if(nb > 0)  //here y < 0.46875
         {
-          T ysq = if_else(y > halfeps(as<T>()), sqry, eve::zero);
+          T ysq = if_else(y > epso_2(as<T>()), sqry, eve::zero);
           r1 = kernel1_erf1(a0, ysq);
           if (nb == T::size()) return r1;
         }

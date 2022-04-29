@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var zeta_3
   //!
-  //! @brief Callable object computing the zeta_3 constant value.
+  //! @brief Callable object computing the zeta_3 constant value : \f$\zeta(3)\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

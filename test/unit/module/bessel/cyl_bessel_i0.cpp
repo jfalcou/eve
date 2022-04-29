@@ -44,7 +44,7 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_i0"
     TTS_ULP_EQUAL(eve__cyl_bessel_i0(eve::nan(eve::as< T>())), eve::nan(eve::as< T>()), 0);
   }
   TTS_IEEE_EQUAL(eve__cyl_bessel_i0(v_t(-1)), eve::nan(eve::as<v_t>()));
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(500)), std__cyl_bessel_i0(v_t(500)), 6.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(500)), std__cyl_bessel_i0(v_t(500)), 7.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(10)), std__cyl_bessel_i0(v_t(10))  , 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(5)),  std__cyl_bessel_i0(v_t(5))   , 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i0(v_t(2)),  std__cyl_bessel_i0(v_t(2))   , 6.0);
