@@ -100,6 +100,7 @@ namespace eve::detail
                                     , C const& cond, unsafe_type const&
                                     , eve::as<Pack> const& tgt, Ptr ptr
                                     ) noexcept
+  requires(!has_bundle_abi_v<Pack>)
   {
     if constexpr(spy::supports::sanitizers_status)
     {
@@ -108,7 +109,7 @@ namespace eve::detail
       auto offset = cond.offset( tgt );
       auto count  = cond.count( tgt );
 
-      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]) );
+      for (std::ptrdiff_t i = offset; i != count + offset; ++i) that.set(i, ptr[i]);
 
       return that;
     }
