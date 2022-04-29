@@ -229,14 +229,14 @@ namespace eve::detail
     {
       kumi::for_each( [=]<typename M>(M& m, auto part_alt, auto p) {
             auto new_c = c.map_alternative([&](auto) { return part_alt; });
-            m = load(new_c,safe,as<M>{},p);
+            m = load(new_c,mode,as<M>{},p);
           }
           , that.storage(), c.alternative, ptr
           );
     }
     else
     {
-      kumi::for_each( [=]<typename M>(M& m, auto p) { m = load(c,safe,as<M>{},p); }
+      kumi::for_each( [=]<typename M>(M& m, auto p) { m = load(c,mode,as<M>{},p); }
                      , that.storage(), ptr
                      );
     }
