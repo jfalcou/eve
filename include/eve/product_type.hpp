@@ -157,18 +157,19 @@ namespace eve
   {
     using tuple_type = kumi::tuple<Fields...>;
 
-    EVE_FORCEINLINE friend auto operator+(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x += y; }
-    {
-      x += y;
-      return x;
-    }
-
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend  auto operator+(Z1 x, Z2 y)
-    requires( (scalar_value<Z1> && simd_value<Z2>) && requires { x += x; })
+    EVE_FORCEINLINE friend auto operator+(Z1 x, Z2 y) requires requires { x += x; }
     {
-      as_wide_t<Z1> that{x};
-      return that += y;
+      if constexpr(scalar_value<Z1> && simd_value<Z2>)
+      {
+        as_wide_t<Z1> that{x};
+        return that += y;
+      }
+      else
+      {
+        x += y;
+        return x;
+      }
     }
 
     EVE_FORCEINLINE friend auto operator-(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x -= y; }

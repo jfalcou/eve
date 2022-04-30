@@ -16,12 +16,29 @@
 #include <eve/module/complex/regular/detail/math.hpp>
 #include <eve/module/complex/regular/detail/predicates.hpp>
 #include <eve/product_type.hpp>
-
 #include <ostream>
-#include <iomanip>
 
 namespace eve
 {
+  template<typename T, typename U>
+  struct make_as_wide : std::conditional<!simd_value<T> && simd_value<U>,as_wide_t<T>,T>
+  {};
+
+  template<typename T, typename U>
+  struct make_as_wide<T,eve::detail::callable_object<U>>
+  {
+    using type = T;
+  };
+
+  template<typename T, typename U>
+  struct make_as_wide<eve::detail::callable_object<T>, U>
+  {
+    using type = U;
+  };
+
+  template<typename T, typename U>
+  using make_as_wide_t = typename make_as_wide<T,U>::type;
+
   //================================================================================================
   //! @addtogroup simd_types
   //! @{
@@ -101,7 +118,6 @@ namespace eve
 
     template<like<complex> Z1, like<complex> Z2>
     EVE_FORCEINLINE friend auto& operator+= (Z1& self, Z2 const& o) noexcept
-    requires( simd_value<Z1> || (scalar_value<Z1> && scalar_value<Z2>))
     {
       real(self) += real(o);
       imag(self) += imag(o);
@@ -114,24 +130,25 @@ namespace eve
       return self;
     }
 
-    EVE_FORCEINLINE friend auto& operator+=(like<complex> auto& self, real_value auto o) noexcept
+    template<typename Z>
+    EVE_FORCEINLINE friend auto& operator+=(like<complex> auto& self, Z o) noexcept
+    requires(like<Z,Type> || std::convertible_to<Z,Type>)
     {
       real(self) += o;
       return self;
     }
 
-    template<like<complex> Z1, typename Z2>
+    template<like<complex> Z1, real_value Z2>
     EVE_FORCEINLINE friend  auto operator+(Z1 const& lhs, Z2 const& rhs) noexcept
-    requires(!like<Z2,complex>)
+    requires(requires(make_as_wide_t<Z1,Z2> t) { t += rhs; })
     {
-      using w_t = std::conditional_t<!simd_value<Z1> && simd_value<Z2>,as_wide_t<Z1>,Z1>;
-      w_t that{lhs};
+      make_as_wide_t<Z1,Z2> that{lhs};
       return that += rhs;
     }
 
-    template<typename Z1, like<complex> Z2>
+    template<real_value Z1, like<complex> Z2>
     EVE_FORCEINLINE friend  auto operator+(Z1 const& lhs, Z2 const& rhs) noexcept
-    requires(!like<Z1,complex>)
+    requires(requires(make_as_wide_t<Z2,Z1> t) { t += lhs; })
     {
       return rhs + lhs;
     }
