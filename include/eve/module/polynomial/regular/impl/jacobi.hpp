@@ -62,7 +62,7 @@ namespace eve::detail
                               , T n, T alpha, T beta, T x) noexcept
   {
     EVE_ASSERT(eve::all(is_flint(n)), "some elements of n are not flint");
-   if (has_native_abi_v<T>)
+   if constexpr(has_native_abi_v<T>)
     {
       T y0(1);
       auto ap1 = inc(alpha);
