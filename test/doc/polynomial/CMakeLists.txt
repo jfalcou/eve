@@ -7,6 +7,7 @@
 make_unit( "doc.polynomial" gegenbauer.cpp     )
 make_unit( "doc.polynomial" hermite.cpp        )
 make_unit( "doc.polynomial" horner.cpp         )
+make_unit( "doc.polynomial" jacobi.cpp         )
 make_unit( "doc.polynomial" laguerre.cpp       )
 make_unit( "doc.polynomial" legendre.cpp       )
 make_unit( "doc.polynomial" newton.cpp         )
