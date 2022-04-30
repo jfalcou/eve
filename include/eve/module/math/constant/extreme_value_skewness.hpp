@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var extreme_value_skewness
   //!

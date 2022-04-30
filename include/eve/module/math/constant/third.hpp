@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var third
   //!
-  //! @brief Callable object computing \f$\1/3\f$.
+  //! @brief Callable object computing constant \f$1/3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

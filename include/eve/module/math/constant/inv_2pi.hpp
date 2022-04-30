@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var inv_2pi
   //!
-  //! @brief Callable object computing \f$\frac{1}{2\pi}\f$.
+  //! @brief Callable object computing constant \f$\frac{1}{2\pi}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

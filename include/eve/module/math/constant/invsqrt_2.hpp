@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var invsqrt_2
   //!
-  //! @brief Callable object computing \f$2^{-1/2}\f$.
+  //! @brief Callable object computing constant \f$2^{-1/2}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

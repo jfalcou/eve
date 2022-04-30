@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var invlog_phi
   //!
-  //! @brief Callable object computing the inverse of tje logarithm of the golden ratio : \f$\frac{1}{\log((1+\sqrt5)/2)}\f$.
+  //! @brief Callable object computing the inverse of tje logarithm of the golden ratio : \f$1/\log((1+\sqrt5)/2)\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

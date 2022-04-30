@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var log_10
   //!
-  //! @brief Callable object computing \f$\log 10\f$.
+  //! @brief Callable object computing constant \f$\log 10\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

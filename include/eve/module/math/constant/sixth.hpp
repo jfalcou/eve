@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var sixth
   //!
-  //! @brief Callable object computing \f$1/6\f$.
+  //! @brief Callable object computing constant \f$1/6\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

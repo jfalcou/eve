@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var pi_pow_e
   //!
-  //! @brief Callable object computing the pi_pow_e value : \f$\pi^e\f$.
+  //! @brief Callable object computing constant \f$\pi^e\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

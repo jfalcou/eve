@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var rayleigh_skewness
   //!
-  //! @brief Callable object computing the Rayleigh skewness value : /f$2\sqrt\pi(\pi-3)/(4-\pi^{3/2})/f$.
+  //! @brief Callable object computing the Rayleigh skewness value : \f$2\sqrt\pi(\pi-3)/(4-\pi^{3/2})\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

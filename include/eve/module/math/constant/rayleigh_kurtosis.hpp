@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var rayleigh_kurtosis
   //!
-  //! @brief Callable object computing the Rayleigh kurtosis value : /f$3+(6\pi^2-24\pi+16)/(4-\pi^2)/f$.
+  //! @brief Callable object computing the Rayleigh kurtosis value : \f$3+(6\pi^2-24\pi+16)/(4-\pi^2)\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pio_4
   //!
-  //! @brief Callable object computing \f$\pi/4\f$.
+  //! @brief Callable object computing constant \f$\pi/4\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

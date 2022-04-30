@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var invlog10_2
   //!
-  //! @brief Callable object computing : \f$\frac{1}{\log_10 2}\f$.
+  //! @brief Callable object computing the constant \f$1/\log_{10}2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

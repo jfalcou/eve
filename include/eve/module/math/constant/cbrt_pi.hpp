@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var cbrt_pi
   //!
-  //! @brief Callable object computing \f$\sqrt[3]\pi\f$.
+  //! @brief Callable object computing constant \f$\sqrt[3]\pi\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -18,6 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing the least value for which eve::exp
   //! returns a non denormal result.
+  //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //!
@@ -61,7 +62,7 @@ namespace eve
       if constexpr(std::is_same_v<t_t, float>)  return Constant<T,  0xc2349e36U>();
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc07439b7422d1bfbULL>();
     }
- 
+
   template<typename T, typename D>
   EVE_FORCEINLINE constexpr auto minlog10denormal_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
   requires(is_one_of<D>(types<upward_type, downward_type> {}))

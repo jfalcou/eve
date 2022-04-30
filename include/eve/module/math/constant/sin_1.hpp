@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var sin_1
   //!
-  //! @brief Callable object computing \f$\sin1\f$.
+  //! @brief Callable object computing constant \f$\sin1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var invlog10_e
   //!
-  //! @brief Callable object computing the \f$\frac{1}{\log_10 e}\f$ invlog10_e.
+  //! @brief Callable object computing the \f$1/\log_{10}e\f$ invlog10_e.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

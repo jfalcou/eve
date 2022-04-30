@@ -12,11 +12,11 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup math
   //! @{
   //! @var cosh_1
   //!
-  //! @brief Callable object computing\f$\cosh1\f$.
+  //! @brief Callable object computing constant \f$\cosh1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

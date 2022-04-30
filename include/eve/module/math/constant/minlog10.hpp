@@ -18,9 +18,8 @@ namespace eve
   //!
   //! @brief Callable object computing the least value for which eve::exp10
   //! returns a non zero result.
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
-  //! **Required header:** `#include <eve/math.hpp>`
+  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var euler
   //!
-  //! @brief Callable object computing the \f$\e\f$ value,  i.e. \f$e^1\f$.
+  //! @brief Callable object computing constant \f$\exp1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
