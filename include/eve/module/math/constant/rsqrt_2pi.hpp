@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var rsqrt_2pi
   //!
-  //! @brief Callable object computing the rsqrt_2pi constant value : \f$\frac1{\sqrt{2\pi}}\f$.
+  //! @brief Callable object computing \f$\frac1{\sqrt{2\pi}}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -51,7 +51,7 @@
 #include <eve/module/math/constant/minlog.hpp>
 #include <eve/module/math/constant/phi.hpp>
 #include <eve/module/math/constant/pi2.hpp>
-#include <eve/module/math/constant/pi2_o_16.hpp>
+#include <eve/module/math/constant/pi2o_16.hpp>
 #include <eve/module/math/constant/pi2o_6.hpp>
 #include <eve/module/math/constant/pi3.hpp>
 #include <eve/module/math/constant/pi.hpp>

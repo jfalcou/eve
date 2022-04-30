@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var invegamma
   //!
-  //! @brief Callable object computing the inverse of the Euler-Mascheroni constant.
+  //! @brief Callable object computing the inverse of the [Euler-Mascheroni constant](@ref eve::egamma).
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

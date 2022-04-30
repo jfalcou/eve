@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pi_pow_e
   //!
-  //! @brief Callable object computing the pi_pow_e constant value : \f$\pi^e\f$.
+  //! @brief Callable object computing the pi_pow_e value : \f$\pi^e\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

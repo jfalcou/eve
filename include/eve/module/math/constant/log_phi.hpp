@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var log_phi
   //!
-  //! @brief Callable object computing the log_phi constant value : \f$ \log((1+\sqrt5)/2)\f$.
+  //! @brief Callable object computing the logaritm of the golden ratio : \f$\log((1+\sqrt5)/2)\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

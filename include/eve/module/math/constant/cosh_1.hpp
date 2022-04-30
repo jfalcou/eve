@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cosh_1
   //!
-  //! @brief Callable object computing the cosh_1 constant value : \f$\cosh1\f$.
+  //! @brief Callable object computing\f$\cosh1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

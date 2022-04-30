@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var two_o_pi
   //!
-  //! @brief Callable object computing the two_o_pi constant value : \f$2/\pi\f$.
+  //! @brief Callable object computing \f$2/\pi\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

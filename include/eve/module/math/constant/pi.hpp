@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pi
   //!
-  //! @brief Callable object computing the \f$\pi\f$ value.
+  //! @brief Callable object computing \f$\pi\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var loglog_2
   //!
-  //! @brief Callable object computing the loglog_2 constant value : \f$\log(\log2)\f$.
+  //! @brief Callable object computing \f$\log(\log2)\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

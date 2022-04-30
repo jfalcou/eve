@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var cos_1
   //!
-  //! @brief Callable object computing the cos_1 constant value :\f$\cos1\f$.
+  //! @brief Callable object computing\f$\cos1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

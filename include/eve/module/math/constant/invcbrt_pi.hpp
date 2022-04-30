@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var invcbrt_pi
   //!
-  //! @brief Callable object computing the invcbrt_pi constant value \f$\pi^{-1/3}\f$.
+  //! @brief Callable object computing \f$\pi^{-1/3}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

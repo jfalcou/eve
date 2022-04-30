@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var two_pio_3
   //!
-  //! @brief Callable object computing the two_pio_3 constant value.
+  //! @brief Callable object computing \f$2\pi/3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sqrt_3
   //!
-  //! @brief Callable object computing the square root of 2 value.
+  //! @brief Callable object computing the square root of 2.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var glaisher
   //!
-  //! @brief Callable object computing the Glaisher-Kinkelin constant value.
+  //! @brief Callable object computing the Glaisher-Kinkelin constant.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

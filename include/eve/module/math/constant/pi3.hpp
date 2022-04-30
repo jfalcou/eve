@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pi3
   //!
-  //! @brief Callable object computing the pi3 constant value : \f$\pi^3\f$.
+  //! @brief Callable object computing the pi cubed value : \f$\pi^3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

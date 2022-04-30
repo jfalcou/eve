@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sqrtlog_4
   //!
-  //! @brief Callable object computing the sqrtlog_4 constant value : \f$\sqrt{\log4}\f$.
+  //! @brief Callable object computing \f$\sqrt{\log4}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

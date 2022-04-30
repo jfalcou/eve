@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pio_6
   //!
-  //! @brief Callable object computing the pio_6 constant value : \f$\pi/6\f$.
+  //! @brief Callable object computing \f$\pi/6\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

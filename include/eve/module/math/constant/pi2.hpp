@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var pi2
   //!
-  //! @brief Callable object computing the pi2 constant value : \f$\pi^2\f$.
+  //! @brief Callable object computing the square of \f$\pi^2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

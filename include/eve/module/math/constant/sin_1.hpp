@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var sin_1
   //!
-  //! @brief Callable object computing the sin_1 constant value  \f$\sin1\f$.
+  //! @brief Callable object computing \f$\sin1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

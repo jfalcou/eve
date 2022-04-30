@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var khinchin
   //!
-  //! @brief Callable object computing the Khinchin constant value.
+  //! @brief Callable object computing the Khinchin constant.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
