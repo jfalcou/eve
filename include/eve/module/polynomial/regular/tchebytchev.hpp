@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the tchebytchev operation   |
+  //! | `operator()` | the tchebytchev operation                                  |
   //!
   //! ---
   //!
