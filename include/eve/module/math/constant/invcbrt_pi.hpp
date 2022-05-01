@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var invcbrt_pi
   //!
-  //! @brief Callable object computing constant \f$\pi^{-1/3}\f$.
+  //! @brief Callable object computing the constant \f$\pi^{-1/3}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the invcbrt_pi constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

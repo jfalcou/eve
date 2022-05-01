@@ -22,7 +22,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the rayleigh_kurtosis constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

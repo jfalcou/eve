@@ -23,7 +23,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the minlog10 constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

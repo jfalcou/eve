@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var rsqrt_e
   //!
-  //! @brief Callable object computing constant \f$1/\sqrt{e}\f$.
+  //! @brief Callable object computing the constant \f$1/\sqrt{e}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the rsqrt_e constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the maxlog constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

@@ -22,7 +22,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the egamma constant                                    |
+  //! | `operator()` | Computes the aforementioned constant                                    |
   //!
   //! ---
   //!

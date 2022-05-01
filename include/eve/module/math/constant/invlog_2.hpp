@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var invlog_2
   //!
-  //! @brief Callable object computing constant \f$1/\log2\f$.
+  //! @brief Callable object computing the constant \f$1/\log2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the invlog_2 constant                             |
+  //! | `operator()` | Computes the aforementioned constant                             |
   //!
   //! ---
   //!

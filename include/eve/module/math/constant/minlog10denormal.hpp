@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the minlog10denormal constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

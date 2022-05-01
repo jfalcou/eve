@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var cos_1
   //!
-  //! @brief Callable object computing constant \f$\cos1\f$.
+  //! @brief Callable object computing the constant \f$\cos1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the cos_1 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

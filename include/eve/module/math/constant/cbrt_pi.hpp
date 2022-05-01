@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var cbrt_pi
   //!
-  //! @brief Callable object computing constant \f$\sqrt[3]\pi\f$.
+  //! @brief Callable object computing the constant \f$\sqrt[3]\pi\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the cbrt_pi constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

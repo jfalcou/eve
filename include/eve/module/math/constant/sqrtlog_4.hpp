@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var sqrtlog_4
   //!
-  //! @brief Callable object computing constant \f$\sqrt{\log4}\f$.
+  //! @brief Callable object computing the constant \f$\sqrt{\log4}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sqrtlog_4 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var log10_e
   //!
-  //! @brief Callable object computing constant \f$\log_{10}e\f$.
+  //! @brief Callable object computing the constant \f$\log_{10}e\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the log10_e constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

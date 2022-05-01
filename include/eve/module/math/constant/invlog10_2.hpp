@@ -22,7 +22,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the invlog10_2 constant                           |
+  //! | `operator()` | Computes the aforementioned constant                           |
   //!
   //! ---
   //!

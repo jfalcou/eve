@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var sinh_1
   //!
-  //! @brief Callable object computing constant \f$\sinh1\f$.
+  //! @brief Callable object computing the constant \f$\sinh1\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sinh_1 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

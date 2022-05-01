@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var pi_minus_3
   //!
-  //! @brief Callable object computing constant \f$\pi-3\f$.
+  //! @brief Callable object computing the constant \f$\pi-3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the pi_minus_3 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var third
   //!
-  //! @brief Callable object computing constant \f$1/3\f$.
+  //! @brief Callable object computing the constant \f$1/3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the third constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

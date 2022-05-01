@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var two_o_pi
   //!
-  //! @brief Callable object computing constant \f$2/\pi\f$.
+  //! @brief Callable object computing the constant \f$2/\pi\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the two_o_pi constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var two_o_3
   //!
-  //! @brief Callable object computing constant \f$2/3\f$.
+  //! @brief Callable object computing the constant \f$2/3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the two_o_3 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

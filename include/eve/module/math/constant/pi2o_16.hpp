@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var pi2o_16
   //!
-  //! @brief Callable object computing constant \f$\pi^2/16\f$.
+  //! @brief Callable object computing the constant \f$\pi^2/16\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the pi2o_16 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var four_pio_3
   //!
-  //! @brief Callable object computing the four_pio_3 value : \f$4\pi/3\f$.
+  //! @brief Callable object computing the constant \f$4\pi/3\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the four_pio_3 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!

@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var rsqrt_pi
   //!
-  //! @brief Callable object computing constant \f$\pi^{-1/2}\f$.
+  //! @brief Callable object computing the constant \f$\pi^{-1/2}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the rsqrt_pi constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var epso_2
   //!
-  //! @brief Callable object computing the the half of the machine epsilon.
+  //! @brief Callable object computing the half of the machine epsilon.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the epso_2 constant                              |
+  //! | `operator()` | Computes the aforementioned constant                              |
   //!
   //! ---
   //!
