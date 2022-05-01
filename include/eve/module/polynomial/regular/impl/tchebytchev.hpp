@@ -84,7 +84,6 @@ namespace eve::detail
 
   template<simd_value I, floating_real_value T>
   EVE_FORCEINLINE auto tchebytchev_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
-  //  requires(index_compatible < I, T>
   {
     if constexpr(has_native_abi_v<T> && has_native_abi_v<I>)
     {

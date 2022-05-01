@@ -23,4 +23,3 @@
 #include <eve/module/core/detail/multi_div.hpp>
 #include <eve/module/core/detail/multi_mul.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
-#include <eve/module/core/detail/tchebeval.hpp>
