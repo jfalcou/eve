@@ -14,7 +14,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup math
   //! @{
-  //! @var invegamma
+  //! @var inv_egamma
   //!
   //! @brief Callable object computing the inverse of the [Euler-Mascheroni constant](@ref eve::egamma).
   //!
@@ -36,22 +36,22 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //! the invegamma constant in the chosen type.
+  //! the inv_egamma constant in the chosen type.
   //!
   //! ---
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/math/invegamma.cpp}
+  //! @godbolt{doc/math/inv_egamma.cpp}
   //!
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(invegamma_, invegamma);
+  EVE_MAKE_CALLABLE(inv_egamma_, inv_egamma);
 
   namespace detail
   {
     template<floating_real_value T>
-    EVE_FORCEINLINE auto invegamma_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
+    EVE_FORCEINLINE auto inv_egamma_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
     {
       using t_t =  element_type_t<T>;
       if constexpr(std::is_same_v<t_t, float>)       return T(0x1.bb8226p+0);
@@ -59,7 +59,7 @@ namespace eve
     }
 
     template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto invegamma_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
+    EVE_FORCEINLINE constexpr auto inv_egamma_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))
     {
       using t_t =  element_type_t<T>;
