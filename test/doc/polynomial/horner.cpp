@@ -16,7 +16,6 @@ int main()
   wide_ft x(0.5);
   std::vector<float> v {1, -2, 3, -4};
   std::list<float>   l {1, -2, 3, -4};
-  float ca[4] = {1, -2, 3, -4};
   std::vector<wide_ft> wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };
 
   std::cout << "---- simd" << '\n'
@@ -24,14 +23,11 @@ int main()
             << "<- x                                        = " << x  << '\n'
             << "<- l and v contain  {1, -2, 3, -4} "<< '\n'
             << "<- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }"<< '\n'
-            << "-> horner(xd, 1, -2, 3, -4)                 = " << eve::horner(xd, 1, -2, 3, -4) << '\n'
-            << "-> horner(xd, eve::one, -2, 3, -4))         = " << eve::horner(xd, eve::one, -2, 3, -4) << '\n'
+            << "-> horner(xd, 1, -2, 3, -4)                 = " << eve::horner(xd, 1.0f, -2.0f, 3.0f, -4.0f) << '\n'
             << "-> horner(0.5 1, b, 3, -4)                  = " << eve::horner(0.5, 1, b, 3, -4) << '\n'
             << "-> horner(x, 1, -2, 3, -4)                  = " << eve::horner(xd, 1, -2, 3, -4)  << '\n'
             << "-> horner(xd, l)                            = " << eve::horner(xd, l)  << '\n'
             << "-> horner(xd, v)                            = " << eve::horner(xd, v)  << '\n'
-            << "-> horner(xd, eve::one, &v[1], &v[4])       = " << eve::horner(xd, eve::one, &v[1], &v[4]) << '\n'
-            << "-> horner(xd, std::begin(ca), std::end(ca)) = " << eve::horner(xd, std::begin(ca), std::end(ca) ) << '\n'
             << "-> horner(xd, wv)                           = " << eve::horner(xd, wv) << '\n'
             << "-> diff(horner)(x, 1, -2, 3, -4)            = " << eve::diff(eve::horner)(x, 1, -2, 3, -4)   << '\n';
 

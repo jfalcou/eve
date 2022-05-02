@@ -18,7 +18,6 @@ namespace eve::detail
                                   , diff_type<1> const &
                                   , N const &n
                                   , T const &x) noexcept
-  //  requires index_compatible_values<N, T>
   {
 
     auto nn = convert(n, as<element_type_t<T>>());
