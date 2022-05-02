@@ -23,7 +23,7 @@ namespace eve::detail
     else
       return if_else( abs(x) < eps(as(x))
                     , if_else(is_eqz(n), one(as(x)), zero)
-                    , cyl_bessel_jn(n+half(as(n)), x)*rsqrt(2*x*invpi(as(x)))
+                    , cyl_bessel_jn(n+half(as(n)), x)*rsqrt(2*x*inv_pi(as(x)))
                     );
   }
 }

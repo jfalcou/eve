@@ -15,7 +15,7 @@
 TTS_CASE_TPL("wide random check on asecpi", EVE_TYPE)
 {
   using v_t = eve::element_type_t<T>;
-  auto std_asecpi = tts::vectorize<T>( [](auto e) { return eve::invpi(eve::as<v_t>())*std::acos(eve::rec(e)); } );
+  auto std_asecpi = tts::vectorize<T>( [](auto e) { return eve::inv_pi(eve::as<v_t>())*std::acos(eve::rec(e)); } );
 
   eve::exhaustive_producer<T> p1(eve::valmin(eve::as<v_t>()), v_t(-1));
   TTS_RANGE_CHECK(p1, std_asecpi, eve::asecpi);

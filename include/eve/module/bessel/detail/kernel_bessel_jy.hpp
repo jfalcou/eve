@@ -50,7 +50,7 @@ namespace eve::detail
     const T mu2 = sqr(mu);
     const T xi = rec(x);
     const T xi2 = xi + xi;
-    T w = xi2 *invpi(as(x));
+    T w = xi2 *inv_pi(as(x));
     int isign = 1;
     T h = nu * xi;
     if (h < fp_min)  h = fp_min;
@@ -230,7 +230,7 @@ namespace eve::detail
     const T mu2 = sqr(mu);
     const T xi = if_else(iseqzx, x, rec(x));
     const T xi2 = xi + xi;
-    T w = xi2 *invpi(as(x));
+    T w = xi2 *inv_pi(as(x));
     T isign = one(as(x));
     T h = nu * xi;
     h = eve::max(h, fp_min);

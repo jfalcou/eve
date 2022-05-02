@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
-#include <eve/module/math/constant/twoopi.hpp>
+#include <eve/module/math/constant/two_o_pi.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/workaround.hpp>
@@ -28,7 +28,7 @@ namespace eve::detail
       static const double mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642      */
       static const double mp2 = 0x1.DDE973C000000p-27;  /*  1.3909067564377153e-08  */
       static const double mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto                xn  = nearest(xx * twoopi(eve::as<double>()));
+      auto                xn  = nearest(xx * two_o_pi(eve::as<double>()));
       auto                y   = fma(xn, mp2, fma(xn, mp1, xx));
       auto                n   = quadrant(xn);
       auto                da  = xn * mp3;
@@ -40,7 +40,7 @@ namespace eve::detail
     else if constexpr(std::is_same_v<elt_t,  float>)
     {
       auto x =  float64(xx);
-      auto n =  nearest(x*twoopi(eve::as<double>()));
+      auto n =  nearest(x*two_o_pi(eve::as<double>()));
       auto dxr = fma(n, -pio_2(eve::as<double>()), x);
       return {quadrant(float32(n)), float32(dxr), T(0.0f)};
     }
@@ -58,7 +58,7 @@ namespace eve::detail
     static const double pp4 = 0x1.d747f23e32ed7p-83;  /*  1.9034889620193266e-25  */
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      auto xn  = nearest(xx * twoopi(eve::as<double>()));
+      auto xn  = nearest(xx * two_o_pi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx))));
@@ -75,7 +75,7 @@ namespace eve::detail
     else if constexpr( std::is_same_v<elt_t, float> )
     {
       auto x   = float64(xx);
-      auto xn  = nearest(x * twoopi(eve::as<double>()));
+      auto xn  = nearest(x * two_o_pi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
@@ -111,7 +111,7 @@ namespace eve::detail
       mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642     */
       mp2 =  0x1.DDE973C000000p-27; /*  1.3909067564377153e-08  */
       mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto xn  = nearest(x * twoopi(eve::as<elt_t>()));
+      auto xn  = nearest(x * two_o_pi(eve::as<elt_t>()));
       auto y    = fma (xn, mp2, fma (xn, mp1, x));
       auto n    = quadrant(xn);
       auto da   = xn * mp3;
@@ -124,7 +124,7 @@ namespace eve::detail
       mp1 = -0x1.921fb0p+00f;        /* -1.57079601e+00 // pio2_high */
       mp2 = -0x1.5110b4p-22f;        /* -3.13916473e-07 // pio2_mid  */
       mp3 = -0x1.846988p-48f;        /* -5.39030253e-15 // pio2_low */
-      auto xn  = nearest(x * twoopi(eve::as<elt_t>()));
+      auto xn  = nearest(x * two_o_pi(eve::as<elt_t>()));
       auto y    = fma (xn, mp3, fma (xn, mp2, fma (xn, mp1, x)));
       return {quadrant(xn), y, zero(as(y))};
     }

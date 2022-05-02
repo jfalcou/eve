@@ -103,8 +103,8 @@ namespace eve::detail
       k_t = if_else(kltn, k_t*(y/(k * (n-k))), k_t);
       sum1   += if_else(kltn, k_t, zero);
     }
-    T t1 = -eve::exp(log_p1) * sum1 *invpi(as(x));
-    T p2 = -exp(n*log_xo_2) *invpi(as(x));
+    T t1 = -eve::exp(log_p1) * sum1 *inv_pi(as(x));
+    T p2 = -exp(n*log_xo_2) *inv_pi(as(x));
     T t2(0);
     auto nezp2 = is_nez(p2);
     if(eve::any(nezp2))

@@ -106,7 +106,7 @@ namespace eve::detail
              ans = add[is_nez(pk)](ans, yk/pk);
              t = if_else(is_nez(ans), abs(yk/ans), one);
            }
-           while( eve::any(t > halfeps(as(x))));
+           while( eve::any(t > epso_2(as(x))));
            auto in = int_(n);
            return add[eqzx]((eve::pow(z, dec(in)) * psi / tgamma(n)) - ans, inf(as(x)));
          };
@@ -142,7 +142,7 @@ namespace eve::detail
                qkm2 = qkm1;
                qkm1 = qk;
                test = abs(pk) > exp_intbig;
-               auto fac = if_else(test, halfeps(as(x)), one);
+               auto fac = if_else(test, epso_2(as(x)), one);
                pkm2 *= fac;
                pkm1 *= fac;
                qkm2 *= fac;

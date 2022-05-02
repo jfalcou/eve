@@ -182,7 +182,7 @@ namespace eve::detail
             z = q * sinpi(z);
             if( is_eqz(z) )
               return inf(as<T>());
-            return -log(invpi(as<T>()) * abs(z)) - w;
+            return -log(inv_pi(as<T>()) * abs(z)) - w;
           }
           else
           {
@@ -292,7 +292,7 @@ namespace eve::detail
               z          = dec[test2](z);
               z          = q * sinpi(z);
               z          = abs(z);
-              return -log(invpi(as<T>()) * abs(z)) - w;
+              return -log(inv_pi(as<T>()) * abs(z)) - w;
             };
             // treat negative
             r = if_else(inf_result, inf(as<T>()), negative(q, r1));

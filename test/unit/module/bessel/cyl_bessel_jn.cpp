@@ -163,7 +163,7 @@ EVE_TEST( "Check behavior of cyl_bessel_jn on wide with non integral order"
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), v_t(5)),  std__cyl_bessel_jn(v_t(3.5), v_t(5))   , 2.0);
   //scalar serie
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(2.5), v_t(0.1)), std__cyl_bessel_jn(v_t(2.5), v_t(0.1))  , 2.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), v_t(0.2)),  std__cyl_bessel_jn(v_t(3.5), v_t(0.2))   , 2.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(3.5), v_t(0.2)),  std__cyl_bessel_jn(v_t(3.5), v_t(0.2))   , 3.0);
   //scalar besseljy
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(10.5), v_t(8)), std__cyl_bessel_jn(v_t(10.5), v_t(8))  , 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_jn(v_t(10.5), v_t(8)),  std__cyl_bessel_jn(v_t(10.5), v_t(8))   , 2.0);

@@ -21,9 +21,10 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
+  //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the minlog constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

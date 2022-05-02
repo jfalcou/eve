@@ -10,8 +10,7 @@
 //TO PUT IN DETAIL
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/constant/invpi.hpp>
-#include <eve/module/math/constant/twoopi.hpp>
+#include <eve/module/math/constant/two_o_pi.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/module/math/detail/scalar/ieee_754_rem_pio2.hpp>
 
@@ -64,7 +63,7 @@ namespace eve::detail
     if( abs(a0) < 4.2166e+08 )                               /* |x| ~< 2^28*(pi/2), medium size */
     {
       /* 25+53 bit pi is good enough for medium size */
-      double fn = nearest(double(a0) * twoopi(eve::as<double>()));
+      double fn = nearest(double(a0) * two_o_pi(eve::as<double>()));
       return kumi::make_tuple(static_cast<float>(quadrant(fn)),
                              static_cast<float>((a0 - fn * pio2_1) - fn * pio2_1t),
                              0.0f);

@@ -238,7 +238,7 @@ namespace eve::detail
     if(eve::any(reflect))
     {
       auto s = sinpi(nu);
-      Inu += if_else(reflect, invpi(as(x))*2*s*Knu,zero);
+      Inu += if_else(reflect, inv_pi(as(x))*2*s*Knu,zero);
     }
     return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
   }
@@ -410,7 +410,7 @@ namespace eve::detail
     if(reflect)
     {
       auto s = sinpi(nu);
-      Inu += invpi(as(x))*2*s*Knu;
+      Inu += inv_pi(as(x))*2*s*Knu;
     }
     return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
   }

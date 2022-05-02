@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var invsqrt_2
   //!
-  //! @brief Callable object computing \f$2^{-1/2}\f$.
+  //! @brief Callable object computing the constant \f$2^{-1/2}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the invsqrt_2 constant                            |
+  //! | `operator()` | Computes the aforementioned constant                            |
   //!
   //! ---
   //!

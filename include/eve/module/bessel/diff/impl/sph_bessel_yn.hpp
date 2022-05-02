@@ -23,7 +23,7 @@ namespace eve::detail
     if constexpr(has_native_abi_v<T>)
     {
       auto nph = convert(n, as<element_type_t<T>>())+half(as(x));
-      auto d = rsqrt(2*x*invpi(as(x)));
+      auto d = rsqrt(2*x*inv_pi(as(x)));
       return if_else( abs(x) < eps(as(x))
                     , inf(as(x))
                     , (cyl_bessel_yn(nph, x)*mhalf(as(x))/x+diff(cyl_bessel_yn)(nph, x))*d

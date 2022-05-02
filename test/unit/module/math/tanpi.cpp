@@ -34,8 +34,8 @@ auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-0.25); };
 auto quarter_c   = []<typename T>(eve::as<T> const & ){  return T( 0.25); };
 auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-0.5 ); };
 auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 0.5 ); };
-auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt)*eve::invpi(tgt); };
-auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt)*eve::invpi(tgt); };
+auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt)*eve::inv_pi(tgt); };
+auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt)*eve::inv_pi(tgt); };
 
 EVE_TEST( "Check behavior of tanpi on wide"
         , eve::test::simd::ieee_reals

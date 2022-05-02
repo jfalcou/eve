@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var gd
   //!
-  //! @brief Callable object computing the gudermanian gd: \f$\int_0^\infty \sech x dx\f$.
+  //! @brief Callable object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
