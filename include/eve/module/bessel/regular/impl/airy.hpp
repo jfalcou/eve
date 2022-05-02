@@ -37,7 +37,7 @@ namespace eve::detail
       T j1 = cyl_bessel_in(v, p);
       T j2 = cyl_bessel_in(-v, p);
       auto bi = racthird * (j1 + j2);
-      auto ai = cyl_bessel_kn(v, p) * rac* T(0.183776298473931);// third *invpi(as(p));
+      auto ai = cyl_bessel_kn(v, p) * rac* T(0.183776298473931);// third *inv_pi(as(p));
       return kumi::tuple<T, T>{ai, bi};
     };
     elt_t constexpr thresh = (sizeof(elt_t) == 8) ? (4.440892098500626e-16) : (2.3841858e-07);

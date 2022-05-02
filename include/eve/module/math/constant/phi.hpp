@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var phi
   //!
-  //! @brief Callable object computing \f$\\\frac{1+\sqrt5}2\f$.
+  //! @brief Callable object computing the golden ratio : \f$\frac{1+\sqrt5}2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the phi constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

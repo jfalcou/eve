@@ -21,9 +21,10 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
+  //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the maxlog10 constant                             |
+  //! | `operator()` | Computes the aforementioned constant                             |
   //!
   //! ---
   //!

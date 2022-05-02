@@ -114,7 +114,7 @@ namespace eve::detail
     };
 
     /*
-     * invpio2:  53 bits of 2/pi
+     * inv_pio2:  53 bits of 2/pi
      * pio2_1:   first  33 bit of pi/2
      * pio2_1t:  pi/2 - pio2_1
      * pio2_2:   second 33 bit of pi/2
@@ -127,7 +127,7 @@ namespace eve::detail
       zero =  0.00000000000000000000e+00, /* 0x00000000, 0x00000000 */
       half =  5.00000000000000000000e-01, /* 0x3FE00000, 0x00000000 */
       two24 =  1.67772160000000000000e+07, /* 0x41700000, 0x00000000 */
-      invpio2 =  6.36619772367581382433e-01, /* 0x3FE45F30, 0x6DC9C883 */
+      inv_pio2 =  6.36619772367581382433e-01, /* 0x3FE45F30, 0x6DC9C883 */
       pio2_1  =  1.57079632673412561417e+00, /* 0x3FF921FB, 0x54400000 */
       pio2_1t =  6.07710050650619224932e-11, /* 0x3DD0B461, 0x1A626331 */
       pio2_2  =  6.07710050630396597660e-11, /* 0x3DD0B461, 0x1A600000 */
@@ -174,7 +174,7 @@ namespace eve::detail
     }
     if(ix<=0x413921fb) { /* |x| ~<= 2^19*(pi/2), medium size */
       t  = fabs(x);
-      n  = (std::int32_t) (t*invpio2+half);
+      n  = (std::int32_t) (t*inv_pio2+half);
       fn = (double)n;
       r  = t-fn*pio2_1;
       w  = fn*pio2_1t;    /* 1st round good to 85 bit */

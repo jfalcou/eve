@@ -16,13 +16,13 @@ namespace eve
   //! @{
   //! @var sqrt_3
   //!
-  //! @brief Callable object computing the square root of 2 value.
+  //! @brief Callable object computing the constant \f$\sqrt2\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sqrt_3 constant                               |
+  //! | `operator()` | Computes the aforementioned constant                               |
   //!
   //! ---
   //!

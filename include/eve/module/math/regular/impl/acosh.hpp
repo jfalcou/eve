@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/constant/oneotwoeps.hpp>
+#include <eve/module/math/constant/inv_2eps.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/log1p.hpp>
 
@@ -22,7 +22,7 @@ namespace eve::detail
     if constexpr( has_native_abi_v<T> )
     {
       const T    t    = dec(x);
-      auto const test = is_greater(t, oneotwoeps(eve::as<T>()));
+      auto const test = is_greater(t, inv_2eps(eve::as<T>()));
 
       if constexpr( simd_value<T> )
       {

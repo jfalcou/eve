@@ -41,7 +41,7 @@ EVE_TEST( "Check behavior of erfcx on wide"
   TTS_ULP_EQUAL( eve::diff(erfcx)(a0),  map(derfcx, a0), 13);
   TTS_ULP_EQUAL(erfcx(T(-0.0)), T(1), 0);
   TTS_ULP_EQUAL(erfcx(T(0)), T(1), 0);
-  TTS_ULP_EQUAL(erfcx(T(eve::halfeps(as<T>()))),T(0.999999999999999874724746818321), 0.5);
+  TTS_ULP_EQUAL(erfcx(T(eve::epso_2(as<T>()))),T(0.999999999999999874724746818321), 0.5);
   TTS_ULP_EQUAL(erfcx(T(0.25)), T(0.7703465477309967439167391723367911261876423850266), 0.5);
   TTS_ULP_EQUAL(erfcx(T(0.5)), T(0.61569034419292587487079342268374193678230639126563), 0.5);
 
@@ -59,7 +59,7 @@ EVE_TEST( "Check behavior of erfcx on wide"
   TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 2))     ,asympt(eve::prev(eve::valmax(as<T>()), 2)), 0.5);
   TTS_ULP_EQUAL(erfcx(eve::prev(eve::valmax(as<T>()), 1))     ,asympt(eve::prev(eve::valmax(as<T>()), 1)), 0.5);
   TTS_ULP_EQUAL(erfcx(T(1.0E30)), eve::rsqrt(eve::pi(as<T>()))/T(1.0E30), 0.5);
-  TTS_ULP_EQUAL(erfcx(-eve::halfeps(as<T>())), T(1.00000000000000012527525318168), 0.5);
+  TTS_ULP_EQUAL(erfcx(-eve::epso_2(as<T>())), T(1.00000000000000012527525318168), 0.5);
   TTS_ULP_EQUAL(erfcx(-T(0.25))          , T(1.3586423701047221152100420169489882200138085022721), 0.5);
   TTS_ULP_EQUAL(erfcx(-T(0.5))           , T(1.95236048918255709327604771344), 0.5);
   TTS_ULP_EQUAL(erfcx(-T(1))             , T(5.00898008076228346630982459821), 0.5);

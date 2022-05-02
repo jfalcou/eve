@@ -16,6 +16,6 @@ EVE_TEST_TYPES("Random check for eve::radinpi", eve::test::simd::ieee_reals)
   using e_t = eve::element_type_t<T>;
   auto vmin = eve::valmin(eve::as<e_t>());
   auto vmax = eve::valmax(eve::as<e_t>());
-  auto std_radinpi = [](auto e) { return eve::invpi(eve::as(e))*e; };
+  auto std_radinpi = [](auto e) { return eve::inv_pi(eve::as(e))*e; };
   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_radinpi, eve::radinpi );
 };

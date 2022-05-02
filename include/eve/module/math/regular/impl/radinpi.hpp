@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/constant/invpi.hpp>
+#include <eve/module/math/constant/inv_pi.hpp>
 
 namespace eve::detail
 {
@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto radinpi_(EVE_SUPPORTS(cpu_), T const &a) noexcept
   {
     if constexpr( has_native_abi_v<T> )
-      return invpi(eve::as(a)) * a;
+      return inv_pi(eve::as(a)) * a;
     else
       return apply_over(radinpi, a);
   }
