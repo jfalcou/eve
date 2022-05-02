@@ -23,7 +23,7 @@
 #include <eve/module/math/constant/glaisher.hpp>
 #include <eve/module/math/constant/inv_2eps.hpp>
 #include <eve/module/math/constant/invcbrt_pi.hpp>
-#include <eve/module/math/constant/invegamma.hpp>
+#include <eve/module/math/constant/inv_egamma.hpp>
 #include <eve/module/math/constant/inv_e.hpp>
 #include <eve/module/math/constant/invlog10_2.hpp>
 #include <eve/module/math/constant/invlog10_e.hpp>
