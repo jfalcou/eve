@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var egamma_sqr
   //!
-  //! @brief Callable object computing the egamma_sqr value : square of the [Euler-Mascheroni constant](@ref eve::egamma).
+  //! @brief Callable object computing the square of the [Euler-Mascheroni constant](@ref eve::egamma).
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

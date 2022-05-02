@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var inv_e
   //!
-  //! @brief Callable object computing the \f$e^{-1}\f$ value : \f$e^{-1}\f$.
+  //! @brief Callable object computing the constant \f$e^{-1}\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!
