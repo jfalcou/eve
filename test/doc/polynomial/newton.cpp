@@ -5,7 +5,7 @@
 #include <vector>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<int   , eve::fixed<8>>;
+using wide_it = eve::wide<int  , eve::fixed<8>>;
 
 int main()
 {
@@ -25,7 +25,6 @@ int main()
             << "<- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }"<< '\n'
             << "-> newton(xd, l, n)                            = " << eve::newton(xd, l, n)  << '\n'
             << "-> newton(xd, v, n)                            = " << eve::newton(xd, v, n)  << '\n'
-            << "-> newton(xd, &l[0], &v[4], &n[0])             = " << eve::newton(xd, &v[0], &v[4], &n[0]) << '\n'
             << "-> newton(xd, wv, n)                           = " << eve::newton(xd, wv, n) << '\n';
 
   return 0;
