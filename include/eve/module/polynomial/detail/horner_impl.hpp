@@ -12,7 +12,7 @@
 #include <concepts>
 #include <iterator>
 #include <initializer_list>
-#include <ranges>
+//#include <ranges>
 #include <concepts>
 
 namespace eve::detail
