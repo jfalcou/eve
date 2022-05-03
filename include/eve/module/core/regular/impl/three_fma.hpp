@@ -32,7 +32,7 @@ namespace eve::detail
       auto [u1, u2] = two_prod(a, b);
       auto [a1, z2] = two_add(b, u2);
       auto [b1, b2] = two_add(u1, a1);
-      return {x, (b1-x)+b2}, z2;
+      return {x, (b1-x)+b2, z2};
     }
     else return apply_over3(three_fma, a, b, c);
   }
