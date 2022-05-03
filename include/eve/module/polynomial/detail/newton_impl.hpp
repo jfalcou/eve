@@ -71,7 +71,7 @@ namespace eve::detail
     else
     {
       auto siz = std::distance(firstc, lastc);
-      EVE_ASSERT(siz < inc(std::distance(begin(rn), end(rn))), "nodes are not in sufficient number to match coefficients");
+      EVE_ASSERT(siz > std::distance(begin(rn), end(rn)), "nodes are not in sufficient number to match coefficients");
       if (siz == 1) return r_t(*firstc);
       else
       {
