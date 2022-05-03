@@ -71,11 +71,11 @@ EVE_TEST( "Check behavior of tchebeval on wide"
   TTS_EQUAL((tchebeval)(a0, c1), T(0.5));
   TTS_EQUAL((tchebeval)(a0, c2),  map(bcl2, a0));
   TTS_EQUAL((tchebeval)(a0, c3),  map(bcl3, a0));
-  TTS_ULP_EQUAL((tchebeval)(v_t(0.24), c3),  bcl3(v_t(0.24)), 0.5);
+  TTS_ULP_EQUAL((tchebeval)(v_t(0.24), c3),  bcl3(v_t(0.24)), 2.0);
   TTS_ULP_EQUAL((tchebeval)(v_t(0.24), v_t(-1), v_t(1), c3),  bcl3(v_t(0.24)), 0.5);
   TTS_ULP_EQUAL((tchebeval)(v_t(-0.24), v_t(-1), v_t(1), c3),  bcl3(v_t(-0.24)), 0.5);
   TTS_ULP_EQUAL((tchebeval)(v_t(0.70), v_t(-1), v_t(1), c3),  bcl3(v_t(0.70)), 0.5);
-  TTS_ULP_EQUAL((tchebeval)(v_t(-0.70), v_t(-1), v_t(1), c3),  bcl3(v_t(-0.70)), 2);
+  TTS_ULP_EQUAL((tchebeval)(v_t(-0.70), v_t(-1), v_t(1), c3),  bcl3(v_t(-0.70)), 2.0);
 
 
 };
