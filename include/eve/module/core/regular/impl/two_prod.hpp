@@ -15,7 +15,6 @@
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/two_split.hpp>
 #include <eve/platform.hpp>
-#include <eve/detection.hpp>
 
 namespace eve::detail
 {
@@ -27,22 +26,13 @@ namespace eve::detail
   {
     if constexpr(has_native_abi_v<T>)
     {
-      if constexpr(eve::supports_fma3)
-      {
-        auto r0 = a*b;
-        auto r1 = fms(a, b, r0);
-        return {r0, r1};
-      }
-      else
-      {
-        auto [a1, a2] = two_split(a);
-        auto [b1, b2] = two_split(b);
-        T r0 = a*b;
-        T r1 = a2*b2 -(((r0-a1*b1)-a2*b1)-a1*b2);
-        if constexpr(eve::platform::supports_invalids)
-          r1 = if_else(is_not_finite(r0), eve::zero, r1);
-        return {r0, r1};
-      }
+      auto [a1, a2] = two_split(a);
+      auto [b1, b2] = two_split(b);
+      T r0 = a*b;
+      T r1 = a2*b2 -(((r0-a1*b1)-a2*b1)-a1*b2);
+      if constexpr(eve::platform::supports_invalids)
+        r1 = if_else(is_not_finite(r0), eve::zero, r1);
+      return {r0, r1};
     }
     else return apply_over2(two_prod, a, b);
   }
