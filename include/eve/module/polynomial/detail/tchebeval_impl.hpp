@@ -18,7 +18,7 @@ namespace eve::detail
   //================================================================================================
   //== Tchebeval with range
   //================================================================================================
-  template<decorator D, value T0, std::ranges::bidirectional_range R>
+  template<decorator D, value T0, range R>
   EVE_FORCEINLINE constexpr common_compatible_t<T0, typename R::value_type>
   tchebeval_impl(D const & d, T0 xx, R const & r) noexcept
   {
@@ -44,7 +44,7 @@ namespace eve::detail
     }
   }
 
-  template<decorator D, value T0, value T1, value T2, std::ranges::bidirectional_range R>
+  template<decorator D, value T0, value T1, value T2, range R>
   EVE_FORCEINLINE constexpr common_compatible_t<T0, typename R::value_type>
   tchebeval_impl(D const & d, T0 xx, T1 a, T2 b, R const & r) noexcept
   {

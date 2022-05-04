@@ -30,8 +30,8 @@ namespace eve
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator()(value auto x, value auto... cs) const noexcept;
-  //!  auto operator()(value auto x, std::ranges::bidirectional_range auto r) const noexcept;
-  //!  auto operator()(value auto x, auto a,  auto b, std::ranges::bidirectional_range auto r) const noexcept;
+  //!  auto operator()(value auto x, range auto r) const noexcept;
+  //!  auto operator()(value auto x, auto a,  auto b, auto r) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---

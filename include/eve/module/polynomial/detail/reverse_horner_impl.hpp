@@ -86,7 +86,7 @@ namespace eve::detail
   //================================================================================================
   //== Reverse_Horner with ranges
   //================================================================================================
-  template<decorator D, value T0, std::ranges::bidirectional_range R>
+  template<decorator D, value T0, range R>
   EVE_FORCEINLINE constexpr auto reverse_horner_impl(D const & d, T0 xx, R const & r) noexcept
   requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {

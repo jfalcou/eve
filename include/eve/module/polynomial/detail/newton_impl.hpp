@@ -56,7 +56,7 @@ namespace eve::detail
   //================================================================================================
   //== Newton with ranges
   //================================================================================================
-  template<decorator D, value T0, /*std::ranges::input_*/range R1, /*std::ranges::*/range R2>
+  template<decorator D, value T0, range R1, range R2>
   EVE_FORCEINLINE constexpr auto newton_impl(D const & d, T0 xx, R1 const & rc, R2 rn) noexcept
   requires (compatible_values<T0, typename R1::value_type>
             && compatible_values<T0, typename R2::value_type>

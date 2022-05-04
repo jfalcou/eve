@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/range.hpp>
 #include <eve/module/polynomial/detail/horner_impl.hpp>
 
 namespace eve::detail

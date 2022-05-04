@@ -12,7 +12,6 @@
 #include <concepts>
 #include <iterator>
 #include <initializer_list>
-//#include <ranges>
 #include <concepts>
 
 namespace eve::detail
@@ -46,7 +45,7 @@ namespace eve::detail
   //================================================================================================
   //== Horner with ranges
   //================================================================================================
-  template<decorator D, value T0, /*std::ranges::input_*/range R>
+  template<decorator D, value T0, range R>
   EVE_FORCEINLINE constexpr auto horner_impl(D const & d, T0 xx, R const & r) noexcept
   requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {
@@ -70,7 +69,7 @@ namespace eve::detail
     }
   }
 
-  template<value T0, /*std::ranges::input_*/range R>
+  template<value T0, range R>
   EVE_FORCEINLINE constexpr auto horner_impl(comp_type const &, T0 xx, R const & r) noexcept
   requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {
