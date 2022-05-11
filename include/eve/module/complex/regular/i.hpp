@@ -74,4 +74,7 @@ namespace eve
       return rhs + ii;
     }
   }
+
+  template<typename T>  struct as_wide_as<T, callable_i_> { using type = T; };
+  template<typename U>  struct as_wide_as<callable_i_, U> { using type = U; };
 }

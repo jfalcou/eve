@@ -20,25 +20,6 @@
 
 namespace eve
 {
-  template<typename T, typename U>
-  struct make_as_wide : std::conditional<!simd_value<T> && simd_value<U>,as_wide_t<T>,T>
-  {};
-
-  template<typename T, typename U>
-  struct make_as_wide<T,eve::detail::callable_object<U>>
-  {
-    using type = T;
-  };
-
-  template<typename T, typename U>
-  struct make_as_wide<eve::detail::callable_object<T>, U>
-  {
-    using type = U;
-  };
-
-  template<typename T, typename U>
-  using make_as_wide_t = typename make_as_wide<T,U>::type;
-
   //================================================================================================
   //! @addtogroup simd_types
   //! @{
@@ -140,15 +121,15 @@ namespace eve
 
     template<like<complex> Z1, real_value Z2>
     EVE_FORCEINLINE friend  auto operator+(Z1 const& lhs, Z2 const& rhs) noexcept
-    requires(requires(make_as_wide_t<Z1,Z2> t) { t += rhs; })
+    requires(requires(as_wide_as_t<Z1,Z2> t) { t += rhs; })
     {
-      make_as_wide_t<Z1,Z2> that{lhs};
+      as_wide_as_t<Z1,Z2> that{lhs};
       return that += rhs;
     }
 
     template<real_value Z1, like<complex> Z2>
     EVE_FORCEINLINE friend  auto operator+(Z1 const& lhs, Z2 const& rhs) noexcept
-    requires(requires(make_as_wide_t<Z2,Z1> t) { t += lhs; })
+    requires(requires(as_wide_as_t<Z2,Z1> t) { t += lhs; })
     {
       return rhs + lhs;
     }
