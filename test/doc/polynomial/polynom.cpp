@@ -16,17 +16,17 @@ int main()
 // float x = 2.0;
 
   auto [rem, quo] = remquo(pv, pw);
- std::cout  << "-> pv            = " << pv << '\n'
-            << "-> pw            = " << pw << '\n'
-            <<  "-> rem            = " << rem << '\n'
-            << "-> quo            = " << quo << '\n' << '\n';
+  std::cout  << "-> pv            = " << pv << '\n'
+             << "-> pw            = " << pw << '\n'
+             <<  "-> rem            = " << rem << '\n'
+             << "-> quo            = " << quo << '\n' << '\n';
 
-   std::cout << "---- simd" << '\n'
+  std::cout << "---- simd" << '\n'
 //             << "<- l and v contain  {1, 2, -3, 0, 4} "<< '\n'
-//             << "-> pu            = " << pu << '\n'
+            << "-> pu            = " << pu << '\n'
 //             << "-> pv            = " << pv << '\n'
 //             << "-> pw            = " << pw << '\n'
-//             << "-> pu.derivative() = " << pu.derivative()  << '\n'
+//            << "-> derivative(pu) = " << derivative(pu)  << '\n'
 //             << "-> pu.derivative(2)= " << pu.derivative(2) << '\n'
 //             << "-> pu.derivative(3)= " << pu.derivative(3) << '\n'
 //             << "-> pu.derivative(4)= " << pu.derivative(4) << '\n'
@@ -45,10 +45,10 @@ int main()
 //             << "-> pv+pu            = " << pv+pu  << '\n'
 //             << "-> pu-pv            = " << pu-pv  << '\n'
 //             << "-> pv-pu            = " << pv-pu  << '\n'
-             << "-> pv*pu            = " << pv*pu  << '\n'
-             << "-> pv*pw            = " << pv*pw  << '\n'
-             << "-> from_roots(v) = " << eve::from_roots(v)<< '\n'
-     ;
+            << "-> pv*pu            = " << pv*pu  << '\n'
+            << "-> pv*pw            = " << pv*pw  << '\n'
+            << "-> from_roots(v) = " << eve::from_roots(v)<< '\n'
+    ;
 
 
   return 0;
