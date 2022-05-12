@@ -422,7 +422,7 @@ namespace eve::detail
           T    q          = abs(x);
           if (eve::platform::supports_infinites) inf_result = inf_result || (q ==  inf(as<T>()));
           auto   test = (a0 < T(-34.0));
-          size_t nb   = eve::count_true(test);
+          auto nb   = eve::count_true(test);
           T      r    = nan(as<T>());
           if( nb > 0 )
           {
