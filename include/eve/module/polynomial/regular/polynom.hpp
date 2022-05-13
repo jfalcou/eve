@@ -8,7 +8,9 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/special.hpp>
 #include <eve/module/polynomial/regular/horner.hpp>
+#include <eve/module/polynomial/regular/derivative.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/algo/copy.hpp>
@@ -253,14 +255,16 @@ namespace eve
     //== derivatives and primitives
     //==============================================================================================
 
-    friend polynom_t derivative( inplace_type const &, polynom_t & p) noexcept
+    friend polynom_t & tagged_dispatch( eve::tag::derivative_, inplace_type const &, polynom_t & p) noexcept
     {
       value_type n = degree(p);
-      if(n == -1) return p;
-      else if(n == 0){ p.data.resize(0); return p;}
+      if(n < 0) return p;
+//       else if(n == 0){ p.data.resize(0); return p; }
+//      else if(n == 1){ p.data.resize(1); return p;}
+      else if(n <= 1){ p.data.resize(n); return p;}
       else
       {
-        auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), degree(p)+1);
+        auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), n+1);
         auto mult = [](auto pair)
           {
             get<0>(pair) *= get<1>(pair);
@@ -272,27 +276,84 @@ namespace eve
       }
     }
 
-    [[nodiscard]] friend polynom_t derivative(polynom_t const & p) noexcept
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::derivative_, polynom_t const & p) noexcept
     {
       value_type n = degree(p);
-      if(n == -1) return polynom_t();
-      else if(n == 0) return polynom_t(p[0]);
+      if(n <= 0) return polynom_t();
+      else if(n == 1) return polynom_t(p[1]);
       else
       {
         auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), degree(p)+1);
         data_t datad(degree(p)+1);
         eve::algo::copy(factors, datad);
-        auto mult = [](auto pair)
-          {
+        auto mult = [](auto pair){
             auto [x, y] = pair;
             return x *= y;
-
-          };
+        };
         eve::algo::transform_to(eve::algo::views::zip(datad, p.data), datad, mult);
         datad.resize(n);
         polynom_t der(datad);
         return der;
       }
+    }
+
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::derivative_, polynom_t const & p, size_t m) noexcept
+    {
+      value_type n = degree(p);
+      if (m > n)  return polynom_t(data_t(0));
+      else if (m == n) return polynom_t(value_type(factorial(m)));
+      else if (m == 0) return p;
+      else if (m == 1) return derivative(p);
+      else
+      {
+        auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), n-m+1);
+        data_t f(n-m+1);
+        data_t datad(n-m+1);
+        eve::algo::copy(factors, datad);
+        eve::algo::copy(factors, f);
+        auto mult = [](auto pair){
+            auto [x, y] = pair;
+            return x *= y;
+        };
+        auto z = eve::algo::as_range(p.data.begin(), p.data.begin()+n-m+1);
+        eve::algo::transform_to(eve::algo::views::zip(datad, z), datad, mult);
+        for(size_t i=2; i <= m; ++i)
+        {
+          eve::algo::transform_inplace(f, dec);
+          eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, mult);
+        }
+        polynom_t der(datad);
+        return der;
+      }
+    }
+
+    [[nodiscard]] friend auto tagged_dispatch( eve::tag::derivative_, polynom_t const & p, size_t m, eve::callable_all_) noexcept
+    {
+      value_type n = degree(p);
+      std::vector<polynom_t> ders(m+1);
+      ders[0] = p;
+      if (m == 0) return ders;
+      ders[1] = derivative(p);
+      if (m == 1) return ders;
+      auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), n+1);
+      data_t f(n+1);
+      data_t datad(n+1);
+      eve::algo::copy(factors, datad);
+      eve::algo::copy(factors, f);
+      auto mult = [](auto pair) {
+        auto [x, y] = pair;
+        return x *= y;
+      };
+      eve::algo::transform_inplace(eve::algo::views::zip(datad, p.data), mult);
+
+      for(size_t i=2; i <= min(n, m); ++i)
+      {
+        eve::algo::transform_inplace(f, dec);
+        eve::algo::transform_inplace(eve::algo::views::zip(datad, f), mult);
+        datad.resize(n-i+1);
+        ders[i] = polynom_t(datad);
+      }
+      return ders;
     }
 
 //     polynom_t primitive() const noexcept
@@ -312,66 +373,6 @@ namespace eve
 //       return integ;
 //     }
 
-//     polynom_t derivative(int m) const noexcept
-//     {
-//       value_type n = degree(*this);
-//       if (m < 0)       return primitive(-m);
-//       else if (m > n)       return polynom_t(data_t(0));
-//       else if (m == 0) return *this;
-//       else if (m == 1) return derivative();
-//       else
-//       {
-//         auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), degree(*this)+1);
-//         data_t f(degree(*this)+1);
-//         data_t datad(degree(*this)+1);
-//         eve::algo::copy(factors, datad);
-//         eve::algo::copy(factors, f);
-//         auto mult = [](auto pair)
-//           {
-//             get<0>(pair) *= get<1>(pair);
-//             return pair;
-//           };
-//         eve::algo::transform_inplace(eve::algo::views::zip(datad, data), mult);
-
-//         for(int i=2; i <= m; ++i)
-//         {
-//           eve::algo::transform_inplace(f, dec);
-//           eve::algo::transform_inplace(eve::algo::views::zip(datad, f), mult);
-//         }
-//         datad.resize(n-m+1);
-//         polynom_t der(datad);
-//         return der;
-//       }
-//     }
-
-//     std::vector<polynom_t> derivatives(size_t m) const noexcept
-//     {
-//       value_type n = degree(*this);
-//       std::vector<polynom_t> ders(m+1, polynom_t());
-//       ders[0] = *this;
-//       if (m >= 1u) ders[1] = this->derivative();
-//       if(m <= 1u) return ders;
-//       auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), degree(*this)+1);
-//       data_t f(degree(*this)+1);
-//       data_t datad(degree(*this)+1);
-//       eve::algo::copy(factors, datad);
-//       eve::algo::copy(factors, f);
-//       auto mult = [](auto pair)
-//         {
-//           get<0>(pair) *= get<1>(pair);
-//           return pair;
-//         };
-//       eve::algo::transform_inplace(eve::algo::views::zip(datad, data), mult);
-
-//       for(int i=2; i <= min(n, m); ++i)
-//       {
-//         eve::algo::transform_inplace(f, dec);
-//         eve::algo::transform_inplace(eve::algo::views::zip(datad, f), mult);
-//         datad.resize(n-i+1);
-//         ders[i] = polynom_t(datad);
-//       }
-//       return ders;
-//     }
 
 //     polynom_t primitive(int m) const noexcept
 //     {

@@ -66,4 +66,4 @@ namespace eve
   EVE_MAKE_CALLABLE(derivative_, derivative);
 }
 
-#include <eve/module/polynomial/regular/impl/derivative.hpp>
+//#include <eve/module/polynomial/regular/impl/derivative.hpp>
