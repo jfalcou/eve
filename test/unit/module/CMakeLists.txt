@@ -3,9 +3,10 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-add_subdirectory(core)
 
 ## Modules
+add_subdirectory(core)
+add_subdirectory(complex)
 add_subdirectory(polynomial)
 add_subdirectory(proba)
 

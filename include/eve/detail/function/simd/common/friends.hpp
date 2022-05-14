@@ -178,7 +178,7 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_simd_value Wide>
+  template<simd_value Wide>
   EVE_FORCEINLINE auto self_lognot(Wide const& v) noexcept
   {
     if constexpr(has_native_abi_v<Wide>)

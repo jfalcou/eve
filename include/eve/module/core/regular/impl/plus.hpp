@@ -21,9 +21,9 @@ namespace eve::detail
     return a;
   }
 
-  template<real_value T, real_value U>
+  template<value T, value U>
   EVE_FORCEINLINE auto plus_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
-      requires compatible_values<T, U>
+  requires compatible_values<T, U>
   {
     return a+b;
   }

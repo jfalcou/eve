@@ -7,4 +7,5 @@
 ,  "unit.proba.exe": "^unit.proba.*.exe"
 ,  "unit.special.exe": "^unit.special.*.exe"
 ,  "unit.core.exe": "^unit.core.*.exe"
+,  "unit.complex.exe": "^unit.complex.*.exe"
 }
