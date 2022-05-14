@@ -14,9 +14,9 @@ namespace eve
   //================================================================================================
   //! @addtogroup polynomial
   //! @{
-  //! @var derivative
+  //! @var primitive
   //!
-  //! @brief Callable object computing the derivative operation.
+  //! @brief Callable object computing the primitive operation.
   //!
   //! **Required header:** `#include <eve/module/polynomial.hpp>`
   //!
@@ -24,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | compute the (nth) derivative of a polynomial               |
+  //! | `operator()` | compute the (nth) primitive of a polynomial               |
   //!
   //! ---
   //!
@@ -40,28 +40,28 @@ namespace eve
   //!
   //!`p`:   polynomial.
   //!
-  //!`n`:   order of derivation
+  //!`n`:   order of integration
   //!
-  //!`all`:  if all is present a vector of polynomial containing all derivatives from 0 to n is returned
+  //!`all`:  if all is present a vector of polynomial containing all primitives from 0 to n is returned
   //!
   //! **Return value**
-  //!    - the first call returns the polynomial derivative pf p
-  //!    - the second call returns the  polynomial nth derivative pf p
-  //!    - the third call returns a vector of polynoms containing all derivatives from 0 to n.
+  //!    - the first call returns the polynomial primitive pf p null at 0
+  //!    - the second call returns the  polynomial nth primitive pf p of valuation n (or -1 if p is null)
+  //!    - the third call returns a vector of polynoms containing all these primitives from 0 to n.
   //!
   //! #### Supported decorators
   //!
   //!  * eve::inplace
   //!
-  //!     The expression `inplace(derivative)(p)` or  `inplace(derivative)(p, n)` replaceq p
+  //!     The expression `inplace(primitive)(p)` or  `inplace(primitive)(p, n)` replaceq p
   //!     by the computed object value
   //!
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/polynomial/polynomial_derivatives.cpp}
+  //! @godbolt{doc/polynomial/polynomial_primitives.cpp}
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(derivative_, derivative);
+  EVE_MAKE_CALLABLE(primitive_, primitive);
 }
