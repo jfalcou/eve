@@ -1,8 +1,6 @@
 Design Decisions {#design_rationale}
 ================
 
-@tableofcontents
-
 @section rationale-simd SIMD registers as Type x Cardinal
 
 There is multiple way to abstract away SIMD registers. The choice made by **EVE** is to provide

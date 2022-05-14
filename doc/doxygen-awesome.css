@@ -29,14 +29,14 @@ SOFTWARE.
 
 html {
     /* primary theme color. This will affect the entire websites color scheme: links, arrows, labels, ... */
-    --primary-color: hsl(90, 69%, 40%);
-    --primary-dark-color: hsl(90, 74%, 80%);
-    --primary-light-color: hsl(90, 78%, 20%);
+    --primary-dark-color: hsl(90, 69%, 20%);
+    --primary-color: hsl(90, 69%, 30%);
+    --primary-light-color: hsl(90, 69%, 40%);
 
     /* page base colors */
     --page-background-color: white;
-    --page-foreground-color: hsl(90, 78%, 20%);
-    --page-secondary-foreground-color: hsl(90, 50%, 40%);
+    --page-foreground-color: hsl(90, 69%, 20%);
+    --page-secondary-foreground-color: hsl(90, 69%, 40%);
 
     /* color for all separators on the website: hr, borders, ... */
     --separator-color: #dedede;
@@ -72,7 +72,7 @@ html {
     /* content text properties. These only affect the page content, not the navigation or any other ui elements */
     --content-line-height: 27px;
     /* The content is centered and constraint in it's width. To make the content fill the whole page, set the variable to auto.*/
-    --content-maxwidth: 1000px;
+    --content-maxwidth: 75%;
 
     /* colors for various content boxes: @warning, @note, @deprecated @bug */
     --warning-color: #f8d1cc;
@@ -149,7 +149,7 @@ html {
     /* sidebar navigation (treeview) colors */
     --side-nav-background: #fbfbfb;
     --side-nav-foreground: var(--page-foreground-color);
-    --side-nav-arrow-opacity: 0;
+    --side-nav-arrow-opacity: 0.9;
     --side-nav-arrow-hover-opacity: 0.9;
 
     --toc-background: var(--side-nav-background);

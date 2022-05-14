@@ -1,11 +1,9 @@
 Change Log {#changelog}
 ==========
 
-@tableofcontents
-
 ## Version 2022.03.0
 
-* Codename: [Miranda Numinous](https://en.wikipedia.org/wiki/Miranda_(The_Tempest))
+Codename: [Miranda Numinous](https://en.wikipedia.org/wiki/Miranda_(The_Tempest))
 
 ### What's Changed
 
@@ -31,7 +29,7 @@ including WASM and **gasp** fixed size SVE.
   - provide ana alternative implementation based on switch ()
 
 * Improvements on algorithms
-@DenisYaroshevskiy did a wonderful job on this front.
+`@DenisYaroshevskiy` did a wonderful job on this front.
   - New algorithm: `reverse` (#1066, #1068)
   - New algorithm: `reverse_copy` (#1060)
   - New algorithm: `iota` (#1016)
@@ -42,9 +40,9 @@ including WASM and **gasp** fixed size SVE.
 * Improvements on wide handling
   - Fix the "no garbage after cardinal" for small wide (#815)
   - Fix aliasing issue in `wide::get` and `wide::set` (#1047)
-  - `wide<product_type>` has correct sizeof
-  - Adapt wide to handle more complex construction from  product_type
-  - Added an emulation layer for std::experimental::simd types
+  - `wide<product_type>` has correct `sizeof`
+  - Adapt wide to handle more complex construction from `product_type`
+  - Added an emulation layer for `std::experimental::simd` types
 
 * Convert
   - Fixed missing code for `eve::convert`. All convert calls now produce optimal code.
@@ -62,20 +60,20 @@ including WASM and **gasp** fixed size SVE.
   - Implement AVX512 logical pair interleave using BMI parallel bit deposit
 
 * Build systems
-  - Install directory fix (Thanks @JPenuchot)
+  - Install directory fix (Thanks `@JPenuchot`)
   - Prevent CMake error if EVE_BUILD_TEST is set to OFF (#1032)
   - Fix bench compilation issues (#1136)
   - Add CI tests for clang++ with -std=libc++ (#614)
   - Remove dependency to `std::bit_cast` in tests
 
 * Compiler/Platform supports
-  - clang++ 13 is now th eminimum clang version
+  - clang++ 13 is now the minimum clang version
   - Added minimum toolchain for WASM
   - Enable partial build on appveyor for MSVC for small test samples
   - Fixed usage of ARM v8 intrinsic in ARM v7 code
   - Fixed a bunch of ULPs boundaries in unit and random tests
   - rat tests use more convenient divisor (#1038)
-  - Reactivate wide * scalar optimisation for ARM (#993)
+  - Reactivate wide * scalar optimization for ARM (#993)
   - Removed support for XOP/FMA4
   - Enable compatibility with CPM
   -
@@ -92,20 +90,23 @@ including WASM and **gasp** fixed size SVE.
   - Fixed codegen for aggregated operator<< and >>
   - Fixed issue with non-terminating gcd/lcm
   - Make write API consistent with store API
-  - Replace std::forward by EVE_FWD
+  - Replace `std::forward` by EVE_FWD
 
 ### New Contributors
 Thanks to all our new contributor for this release!
 
-  * @aguinet made their first contribution in https://github.com/jfalcou/eve/pull/1049
-  * @JPenuchot made their first contribution in https://github.com/jfalcou/eve/pull/1028
-  * @pauljurczak made their first contribution in https://github.com/jfalcou/eve/pull/1123
-  * @the-moisrex made their first contribution in https://github.com/jfalcou/eve/pull/1025
-  * @toughengineer made their first contribution in https://github.com/jfalcou/eve/pull/1182
+  * `@aguinet` made their first contribution in https://github.com/jfalcou/eve/pull/1049
+  * `@JPenuchot` made their first contribution in https://github.com/jfalcou/eve/pull/1028
+  * `@pauljurczak` made their first contribution in https://github.com/jfalcou/eve/pull/1123
+  * `@the-moisrex` made their first contribution in https://github.com/jfalcou/eve/pull/1025
+  * `@toughengineer` made their first contribution in https://github.com/jfalcou/eve/pull/1182
 
 ## Version 2021.10.0
 
-* Codename: [Titania Unleashed](https://en.wikipedia.org/wiki/Titania_(A_Midsummer_Night%27s_Dream))
+Codename: [Titania Unleashed](https://en.wikipedia.org/wiki/Titania_(A_Midsummer_Night%27s_Dream))
+
+### What's Changed
+
 * First tagged release for **EVE** which includes:
    - Fully functional x86 and AARCH64 supports
    - Standard-like SIMD algorithms
@@ -115,4 +116,4 @@ Thanks to all our new contributor for this release!
 
 ## Version beta.2020.09
 
-* Initial beta release
+Initial beta release

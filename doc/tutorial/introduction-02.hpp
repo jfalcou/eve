@@ -1,9 +1,7 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page intro-02 SIMD Algorithms
-
-@tableofcontents
+@page intro-02 Algorithms
 
 [In the previous tutorial](@ref intro-01), we managed to convert a sequential function into a function
 using SIMD types and functions. In general, such function is meant to be applied to a large
@@ -13,9 +11,7 @@ As for usual sequential computation, we want to lift ourselves from raw loops an
 algorithms. **EVE** provides such ready-to-use SIMD aware algorithms and this tutorial will take
 a look at how to handle them.
 
-@snippet tutorial/intro-02.cpp empty
-
-## Initial problem
+# Initial problem
 Let's try to apply our sequential conversion function over data stored in `std::vector` using
 standard algorithms.
 
@@ -28,7 +24,7 @@ Since C++20, you may be accustomed to the range-based version of this code:
 
 Very similar code, except for the fact the input data are passed directly without using iterators.
 
-## Toward SIMD Algorithms
+# Toward SIMD Algorithms
 We can turn this range-based code into a SIMD-aware call to one of the algorithms defined in
 eve::algo. All algorithms in **EVE** are range-based thus simplifying the transition from code
 using standard algorithms.
@@ -49,11 +45,10 @@ Let's unpack all the new components:
     We will dive into details of this tuple later but for now just remember you can retrieve the
     data member exactly like with a regular tuple (using `get` or structured bindings).
 
-## Tuning algorithms
+# Tuning algorithms
 In SIMD algorithms we by default assume that the provided operation is simple (a few instructions),
 since this is the common case. This means we use aligned reads and do unrolling, which is an
 important optimisation. However, for a complex case, like here, it is beneficial to opt out.
-
 
 __EVE__ provides various traits to customize algorithms behavior. The two main traits we're
 interested in are:
@@ -72,7 +67,7 @@ For example, the following code disable aligning and force unroll to be 1.
 
 Best strategy is always to benchmark your code and tune algorithms accordingly.
 
-## Conclusion
+# Conclusion
 In this tutorial, we managed to:
   - use a simple algorithms from **EVE** algorithms set
   - use a range view to handle multiple inputs into our algorithm
