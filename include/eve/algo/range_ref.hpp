@@ -13,7 +13,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup algo
+  //! @addtogroup algos
   //! @{
   //!   @struct range_ref_wrapper
   //!   @brief a non_owning_range wrapper around owning range.
@@ -68,7 +68,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algo
+  //! @addtogroup algos
   //! @{
   //!    @var range_ref
   //!    @brief for a `non_owning_range` returns it, otherwise returns a `range_ref_wrapper`.

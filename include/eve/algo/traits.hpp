@@ -74,8 +74,19 @@ namespace eve::algo
   inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
 
   struct no_aligning_tag {};
-  inline constexpr auto no_aligning = ::rbr::flag( no_aligning_tag{} );
 
+  //================================================================================================
+  //! @addtogroup algos
+  //! @{
+  //!   @var no_aligning
+  //!
+  //!   @brief Decorator for disabling alignment handling in algorithm
+  //!
+  //!   Modify an algorithm semantic to not perform any additional operations to force the
+  //!   exploitation of the alignment of processed data.
+  //! @}
+  //================================================================================================
+  inline constexpr auto no_aligning = ::rbr::flag( no_aligning_tag{} );
 
   // getters -------------------
 

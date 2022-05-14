@@ -17,7 +17,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup algo
+  //! @addtogroup algos
   //! @{
   //!  @var for_each
   //!  @brief a basic for_each algorithm.
