@@ -28,8 +28,8 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/module/complex.hpp>`
   //!
-  //! eve::complex is structure representing complex number and mean to be used in conjunction with
-  //! eve::wide.
+  //! eve::complex is structure representing complex number and is meant to be used in
+  //! conjunction with eve::wide.
   //!
   //! @tparam Type  Underlying floating point type
   //================================================================================================
@@ -49,7 +49,10 @@ namespace eve
     /// Stream insertion operator
     friend std::ostream& operator<<(std::ostream& os, like<complex> auto const& z)
     {
-      return os << real(z) << std::showpos << imag(z) << "i" << std::noshowpos;
+      os << real(z);
+      auto i = imag(z);
+      if(i >= 0) os << '+' << i; else os << '-' << -i;
+      return os << 'i';
     }
 
     //==============================================================================================
@@ -120,18 +123,18 @@ namespace eve
     }
 
     template<like<complex> Z1, real_value Z2>
-    EVE_FORCEINLINE friend  auto operator+(Z1 const& lhs, Z2 const& rhs) noexcept
-    requires(requires(as_wide_as_t<Z1,Z2> t) { t += rhs; })
+    EVE_FORCEINLINE friend  auto operator+(Z1 const& x, Z2 const& y) noexcept
+    requires(requires(as_wide_as_t<Z1,Z2> t) { t += y; })
     {
-      as_wide_as_t<Z1,Z2> that{lhs};
-      return that += rhs;
+      as_wide_as_t<Z1,Z2> that{x};
+      return that += y;
     }
 
     template<real_value Z1, like<complex> Z2>
-    EVE_FORCEINLINE friend  auto operator+(Z1 const& lhs, Z2 const& rhs) noexcept
-    requires(requires(as_wide_as_t<Z2,Z1> t) { t += lhs; })
+    EVE_FORCEINLINE friend  auto operator+(Z1 const& x, Z2 const& y) noexcept
+    requires(requires(as_wide_as_t<Z2,Z1> t) { t += x; })
     {
-      return rhs + lhs;
+      return y + x;
     }
 
     //==============================================================================================
