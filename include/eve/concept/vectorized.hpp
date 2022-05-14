@@ -50,7 +50,7 @@ namespace eve
   template<typename T> concept signed_integral_simd_value = simd_value<T> && std::signed_integral<element_type_t<T>>;
   template<typename T> concept floating_simd_value        = simd_value<T> && std::floating_point<element_type_t<T>>;
   template<typename T> concept logical_simd_value         = simd_value<T> && is_logical_v<T>;
-  template<typename T> concept real_simd_value            = simd_value<T> && std::same_as< element_type_t<T>, element_type_t<T>>;
+  template<typename T> concept real_simd_value            = simd_value<T> && std::is_arithmetic_v<element_type_t<T>>;
   template<typename T> concept floating_real_simd_value   = real_simd_value<T> && std::floating_point<element_type_t<T>>;
   template<typename T> concept integral_real_simd_value   = real_simd_value<T> && std::integral<element_type_t<T>>;
 

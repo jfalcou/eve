@@ -11,6 +11,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/traits/element_type.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <type_traits>
 
 //==================================================================================================
@@ -156,10 +157,11 @@ namespace eve
   {
     using tuple_type = kumi::tuple<Fields...>;
 
-    EVE_FORCEINLINE friend auto operator+(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x += y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator+(Z1 x, Z2 y) requires requires { x += x; }
     {
-      x += y;
-      return x;
+      if constexpr(scalar_value<Z1> && simd_value<Z2>)  return y += x;
+      else                                              return x += y;
     }
 
     EVE_FORCEINLINE friend auto operator-(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x -= y; }
