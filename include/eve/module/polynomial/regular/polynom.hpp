@@ -11,6 +11,7 @@
 #include <eve/module/special.hpp>
 #include <eve/module/polynomial/regular/horner.hpp>
 #include <eve/module/polynomial/regular/derivative.hpp>
+#include <eve/module/polynomial/regular/primitive.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/algo/copy.hpp>
@@ -89,14 +90,8 @@ namespace eve
   //!     - is_null returns true if and only if the polynomial is of degree -1
   //!     - is_constant returns true if and only if the polynomial is of degree less than 1
   //!     - is_monomial returns true if and only if the polynomial has only one non null coef
-  //!
-  //! - methods
-  //!    - p.derivative(n) computes the nth derivative of p
-  //!    - p.primive(n)    computes a primitive of order n of p (the one with valuation greater or equal to n)
-  //!
-  //!      - with n = 0 these methods return the polynomial itself
-  //!      - if n is negative p.derivative(n) is equivalent to p.integral(-n)
-  //!      - if n is negative p.integral(n) is equivalent to p.derivative(-n)
+  //!     - p.derivative(n) computes the nth derivative of p
+  //!     - p.primive(n)    computes a primitive of order n of p (the one with valuation greater or equal to n)
   //!
   //================================================================================================
 
@@ -252,24 +247,21 @@ namespace eve
     }
 
     //==============================================================================================
-    //== derivatives and primitives
+    //== derivatives
     //==============================================================================================
 
     friend polynom_t & tagged_dispatch( eve::tag::derivative_, inplace_type const &, polynom_t & p) noexcept
     {
       value_type n = degree(p);
       if(n < 0) return p;
-//       else if(n == 0){ p.data.resize(0); return p; }
-//      else if(n == 1){ p.data.resize(1); return p;}
       else if(n <= 1){ p.data.resize(n); return p;}
       else
       {
         auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), n+1);
-        auto mult = [](auto pair)
-          {
-            get<0>(pair) *= get<1>(pair);
-            return get<0>(pair);
-          };
+        auto mult = [](auto pair) {
+          get<0>(pair) *= get<1>(pair);
+          return get<0>(pair);
+        };
         eve::algo::transform_to(eve::algo::views::zip(p.data, factors), p.data, mult);
         p.data.resize(n);
         return p;
@@ -357,23 +349,50 @@ namespace eve
       return ders;
     }
 
-//     polynom_t primitive() const noexcept
-//     {
-//       value_type n = degree(*this);
-//       auto factors = eve::algo::views::iota_with_step(n+1, mone(as(n)), degree(*this)+1);
-//       data_t datad(degree(*this)+1);
-//       eve::algo::copy(factors, datad);
-//       auto divi = [](auto pair)
-//         {
-//           get<0>(pair) = get<1>(pair)/get<0>(pair);
-//           return pair;
-//         };
-//       eve::algo::transform_inplace(eve::algo::views::zip(datad, data), divi);
-//       datad.push_back(value_type(0));
-//       polynom_t integ(datad);
-//       return integ;
-//     }
+    //==============================================================================================
+    //== primitives
+    //==============================================================================================
+    friend polynom_t & tagged_dispatch( eve::tag::primitive_, inplace_type const &, polynom_t & p) noexcept
+    {
+      return p;
+//       int n = degree(p);
+//       if(n < 0) return p;
+//       else if(n <= 1){ p.data.resize(n); return p;}
+//       else
+//       {
+//         value_type nvt = n;
+//         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), nvt+1);
+//         auto mult = [](auto pair)
+//           {
+//             get<0>(pair) = get<1>(pair)/get<0>(pair);
+//             return pair;
+//           };
+//         eve::algo::transform_to(eve::algo::views::zip(p.data, factors), p.data, mult);
+//         p.data.resize(n+1);
+//         return p;
+//       }
+    }
 
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::primitive_, polynom_t const & p) noexcept
+    {
+      int n = degree(p);
+      if(n < 0) return polynom_t();
+      else
+      {
+        value_type nvt = n;
+        auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
+        data_t datad(degree(p)+1);
+        eve::algo::copy(p.data, datad);
+        auto mult = [](auto pair){
+            auto [x, y] = pair;
+            return x /= y;
+        };
+        eve::algo::transform_to(eve::algo::views::zip(datad, factors), datad, mult);
+        datad.resize(n+2);
+        polynom_t prim(datad);
+        return prim;
+      }
+    }
 
 //     polynom_t primitive(int m) const noexcept
 //     {
@@ -730,6 +749,7 @@ namespace eve
       }
       return os;
     }
+
 //  private :
 
     static void internal_print(const std::string & name, data_t const & d)
