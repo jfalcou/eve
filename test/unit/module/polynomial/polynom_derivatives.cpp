@@ -51,7 +51,6 @@ EVE_TEST_TYPES( "Check behavior of derivative(p, m)"
     for(size_t i=0; i < 8u; ++i)
     {
       der = eve::derivative(der);
-      std::cout << i << " -> der " << der << std::endl;
       auto derb =  eve::derivative(p0, i+1);
       TTS_EXPECT(der == derb);
     }
@@ -71,11 +70,10 @@ EVE_TEST_TYPES( "Check behavior of derivative(p, m, all_)"
     polynom_t p0(c0);
     polynom_t der = p0;
     auto ders = eve::derivative(p0, 7, eve::all);
-    for(size_t i=0; i < 8u; ++i)
+      for(size_t i=0; i < ders.size()-1; ++i)
     {
       der = eve::derivative(der);
-      std::cout << i << " -> der " << der << std::endl;
-      TTS_EXPECT(der == der[i+1]);
+      TTS_EXPECT(der == ders[i+1]);
     }
   } else TTS_PASS("");
 };
