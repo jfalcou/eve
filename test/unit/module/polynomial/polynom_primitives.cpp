@@ -95,7 +95,6 @@ EVE_TEST_TYPES( "Check behavior of primitive(p, m, all_)"
     auto prims = eve::primitive(p0, 7, eve::all);
     for(size_t i=0; i < prims.size()-1; ++i)
     {
-      std::cout << i+1 << std::endl;
       prim = eve::primitive(p0,i+1);
       TTS_EXPECT(prim == prims[i+1]);
     }
