@@ -352,77 +352,137 @@ namespace eve
     //==============================================================================================
     //== primitives
     //==============================================================================================
-    friend polynom_t & tagged_dispatch( eve::tag::primitive_, inplace_type const &, polynom_t & p) noexcept
+    friend polynom_t & tagged_dispatch( eve::tag::primitive_
+                                      , inplace_type const &, polynom_t & p) noexcept
     {
-      return p;
-//       int n = degree(p);
-//       if(n < 0) return p;
-//       else if(n <= 1){ p.data.resize(n); return p;}
-//       else
-//       {
-//         value_type nvt = n;
-//         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), nvt+1);
-//         auto mult = [](auto pair)
-//           {
-//             get<0>(pair) = get<1>(pair)/get<0>(pair);
-//             return pair;
-//           };
-//         eve::algo::transform_to(eve::algo::views::zip(p.data, factors), p.data, mult);
-//         p.data.resize(n+1);
-//         return p;
-//       }
+      int n = degree(p);
+      if(n < 0) return p;
+      else if(n <= 1){ p.data.resize(n); return p;}
+      else
+      {
+        value_type nvt = n+1;
+        auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
+        auto divi = [](auto pair){
+          auto [x, y] = pair;
+          return x /= y;
+        };
+        eve::algo::transform_to(eve::algo::views::zip(p.data, factors), p.data, divi);
+        p.data.resize(n+2);
+        return p;
+      }
     }
 
-    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::primitive_, polynom_t const & p) noexcept
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::primitive_
+                                                  , polynom_t const & p) noexcept
     {
       int n = degree(p);
       if(n < 0) return polynom_t();
       else
       {
-        value_type nvt = n;
+        value_type nvt = n+1;
         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
-        data_t datad(degree(p)+1);
+        data_t datad(n+1);
         eve::algo::copy(p.data, datad);
-        auto mult = [](auto pair){
+        auto divi = [](auto pair){
             auto [x, y] = pair;
             return x /= y;
         };
-        eve::algo::transform_to(eve::algo::views::zip(datad, factors), datad, mult);
+        eve::algo::transform_to(eve::algo::views::zip(datad, factors), datad, divi);
         datad.resize(n+2);
         polynom_t prim(datad);
         return prim;
       }
     }
 
-//     polynom_t primitive(int m) const noexcept
-//     {
-//       value_type n = degree(*this);
-//       if (m < 0)       return derivative(-m);
-//       else if (m == 0) return *this;
-//       else if (m == 1) return primitive();
-//       else
-//       {
-//         auto factors = eve::algo::views::iota_with_step(n+1, mone(as(n)), degree(*this)+1);
-//         data_t f(degree(*this)+1);
-//         data_t datad(degree(*this)+1);
-//         eve::algo::copy(data, datad);
-//         eve::algo::copy(factors, f);
-//         auto mult = [](auto pair)
-//           {
-//             get<0>(pair) /= get<1>(pair);
-//             return pair;
-//           };
-//         eve::algo::transform_inplace(eve::algo::views::zip(datad, f), mult);
-//         for(int i=2; i <= m; ++i)
-//         {
-//           eve::algo::transform_inplace(f, inc);
-//           eve::algo::transform_inplace(eve::algo::views::zip(datad, f), mult);
-//         }
-//         datad.resize(n+m+1);
-//         polynom_t integ(datad);
-//         return integ;
-//       }
-//     }
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::primitive_, polynom_t & p
+                                    , size_t m) noexcept
+    {
+      size_t n = degree(p);
+      if (m == 0 || n < 0) return p;
+      else if (m == 1) return primitive(p);
+      else
+      {
+        value_type nvt = n+1;
+        auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)),n+1);
+        data_t f(n+1);
+        data_t datad(n+1);
+        eve::algo::copy(p.data, datad);
+        eve::algo::copy(factors, f);
+        auto divi = [](auto pair)
+          {
+            auto [x, y] = pair;
+            return x /= y;
+          };
+        eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
+        for(size_t i=2; i <= m; ++i)
+        {
+          eve::algo::transform_inplace(f, inc);
+          eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
+        }
+        datad.resize(n+m+1);
+        polynom_t integ(datad);
+        return integ;
+      }
+    }
+
+    friend polynom_t tagged_dispatch( eve::tag::primitive_, inplace_type const &
+                                    , polynom_t & p, size_t m) noexcept
+    {
+      size_t n = degree(p);
+      if (m == 0 || n < 0) return p;
+      else if (m == 1) return inplace(primitive)(p);
+      else
+      {
+        value_type nvt = n+1;
+        auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)),n+1);
+        data_t f(n+1);
+        eve::algo::copy(factors, f);
+        auto divi = [](auto pair) {
+          auto [x, y] = pair;
+          return x /= y;
+        };
+        eve::algo::transform_to(eve::algo::views::zip(p.data, f), p.data, divi);
+        for(size_t i=2; i <= m; ++i)
+        {
+          eve::algo::transform_inplace(f, inc);
+          eve::algo::transform_to(eve::algo::views::zip(p.data, f), p.data, divi);
+        }
+        p.data.resize(n+m+1);
+        return p;
+      }
+    }
+
+    [[nodiscard]] friend auto tagged_dispatch( eve::tag::primitive_
+                                             , polynom_t const & p, size_t m
+                                             , eve::callable_all_) noexcept
+    {
+      int n = degree(p);
+      std::vector<polynom_t> prims(m+1);
+      prims[0] = p;
+      if (m == 0 || n <= 0) return prims;
+      prims[1] = primitive(p);
+      if (m == 1) return prims;
+      value_type nvt = n+1;
+      auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
+      data_t f(n+1);
+      data_t datad(n+1);
+      eve::algo::copy(p.data, datad);
+      eve::algo::copy(factors, f);
+      auto divi = [](auto pair) {
+        auto [x, y] = pair;
+        return x /= y;
+      };
+      eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
+
+      for(size_t i=2; i <= m; ++i)
+      {
+        eve::algo::transform_inplace(f, inc);
+        eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
+        prims[i] = polynom_t(datad);
+        prims[i].data.resize(n+i+1);
+      }
+      return prims;
+    }
 
     //==============================================================================================
     //=== operators
@@ -760,7 +820,7 @@ namespace eve
       {
         std::cout << d[i] << ",  ";
       }
-      std::cout << std::endl;
+
     }
 
     void normalize()
