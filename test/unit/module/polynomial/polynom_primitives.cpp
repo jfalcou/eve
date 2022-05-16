@@ -24,7 +24,7 @@ EVE_TEST_TYPES( "Check behavior of primitive"
   {
     using elt_t = eve::element_type_t<T>;
     using polynom_t = eve::polynom<elt_t>;
-    std::vector<elt_t> const c0{1, 2, 3, 4, 5};
+    std::vector<elt_t> const c0(5, 1.0f);
     polynom_t p0(c0);
     polynom_t prim = p0;
     for(size_t i=0; i < 8u; ++i)
@@ -36,44 +36,68 @@ EVE_TEST_TYPES( "Check behavior of primitive"
   } else TTS_PASS("");
 };
 
-// EVE_TEST_TYPES( "Check behavior of primitive(p, m)"
-//               , eve::test::simd::ieee_reals
-//               )
-//   <typename T>(eve::as<T>)
-// {
-//   if constexpr(eve::cardinal_v<T> == 1)
-//   {
-//     using elt_t = eve::element_type_t<T>;
-//     using polynom_t = eve::polynom<elt_t>;
-//     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
-//     polynom_t p0(c0);
-//     polynom_t prim = p0;
-//     for(size_t i=0; i < 8u; ++i)
-//     {
-//       prim = eve::primitive(prim);
-//       auto primb =  eve::primitive(p0, i+1);
-//       TTS_EXPECT(prim == primb);
-//     }
-//   } else TTS_PASS("");
-// };
+EVE_TEST_TYPES( "Check behavior of primitive(p, m)"
+              , eve::test::simd::ieee_reals
+              )
+  <typename T>(eve::as<T>)
+{
+  if constexpr(eve::cardinal_v<T> == 1)
+  {
+    using elt_t = eve::element_type_t<T>;
+    using polynom_t = eve::polynom<elt_t>;
+    std::vector<elt_t> const c0{1, 2, 3, 4, 5};
+    polynom_t p0(c0);
+    polynom_t prim = p0;
+    for(size_t i=0; i < 8u; ++i)
+    {
+      prim = eve::primitive(prim);
+      auto primb =  eve::primitive(p0, i+1);
+      TTS_EXPECT(prim == primb);
+    }
+  } else TTS_PASS("");
+};
 
-// EVE_TEST_TYPES( "Check behavior of primitive(p, m, all_)"
-//               , eve::test::simd::ieee_reals
-//               )
-//   <typename T>(eve::as<T>)
-// {
-//   if constexpr(eve::cardinal_v<T> == 1)
-//   {
-//     using elt_t = eve::element_type_t<T>;
-//     using polynom_t = eve::polynom<elt_t>;
-//     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
-//     polynom_t p0(c0);
-//     polynom_t prim = p0;
-//     auto prims = eve::primitive(p0, 7, eve::all);
-//       for(size_t i=0; i < prims.size()-1; ++i)
-//     {
-//       prim = eve::primitive(prim);
-//       TTS_EXPECT(prim == prims[i+1]);
-//     }
-//   } else TTS_PASS("");
-// };
+EVE_TEST_TYPES( "Check behavior of inplace(primitive)(p, m)"
+              , eve::test::simd::ieee_reals
+              )
+  <typename T>(eve::as<T>)
+{
+  if constexpr(eve::cardinal_v<T> == 1)
+  {
+    using elt_t = eve::element_type_t<T>;
+    using polynom_t = eve::polynom<elt_t>;
+    std::vector<elt_t> const c0{1, 2, 3, 4, 5};
+    polynom_t p0(c0);
+    for(size_t i=0; i < 8u; ++i)
+    {
+      polynom_t prim = p0;
+      eve::inplace(eve::primitive)(prim, i+1);
+      auto primb =  eve::primitive(p0, i+1);
+      TTS_EXPECT(prim == primb);
+    }
+  } else TTS_PASS("");
+};
+
+
+
+EVE_TEST_TYPES( "Check behavior of primitive(p, m, all_)"
+              , eve::test::simd::ieee_reals
+              )
+  <typename T>(eve::as<T>)
+{
+  if constexpr(eve::cardinal_v<T> == 1)
+  {
+    using elt_t = eve::element_type_t<T>;
+    using polynom_t = eve::polynom<elt_t>;
+    std::vector<elt_t> const c0(5, 1.0);
+    polynom_t p0(c0);
+    polynom_t prim = p0;
+    auto prims = eve::primitive(p0, 7, eve::all);
+    for(size_t i=0; i < prims.size()-1; ++i)
+    {
+      std::cout << i+1 << std::endl;
+      prim = eve::primitive(p0,i+1);
+      TTS_EXPECT(prim == prims[i+1]);
+    }
+  } else TTS_PASS("");
+};
