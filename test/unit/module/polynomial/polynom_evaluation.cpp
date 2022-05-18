@@ -26,21 +26,6 @@ EVE_TEST( "Check behavior of horner on wide"
   std::vector<elt_t> const c0(10, 2.0);
   std::vector<elt_t> c1(c0);
   polynom_t p0(c0);
-  std::cout << "p0  "<< p0 << std::endl;
-  for(size_t i=0; i <c0.size() ; ++i) std::cout << c0[i] << " ";
-  std::cout << std::endl;
-  auto z = p0(c0);
-  for(size_t i=0; i <c0.size() ; ++i) std::cout << c0[i] << " ";
-  std::cout << std::endl;
-  for(size_t i=0; i <z.size()  ; ++i) std::cout <<  z[i] << " ";
-  std::cout << std::endl;
-  for(size_t i=0; i <c1.size()  ; ++i) std::cout <<  c1[i] << " ";
-  std::cout << std::endl;
-  p0(c1);
-  for(size_t i=0; i <c1.size()  ; ++i) std::cout <<  c1[i] << " ";
-  std::cout << std::endl;
-
-  std::cout << p0(x) << std::endl;
-  std::cout << p0(elt_t(2.0))<< std::endl;
-
+  TTS_EQUAL(p0(x), eve::horner(x, c0));
+  TTS_EQUAL(p0(elt_t(2.0)), 2046.0f);
 };

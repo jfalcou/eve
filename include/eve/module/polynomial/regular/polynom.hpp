@@ -1,4 +1,4 @@
-//==================================================================================================
+//=================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -90,8 +90,8 @@ namespace eve
   //!     - is_null returns true if and only if the polynomial is of degree -1
   //!     - is_constant returns true if and only if the polynomial is of degree less than 1
   //!     - is_monomial returns true if and only if the polynomial has only one non null coef
-  //!     - p.derivative(n) computes the nth derivative of p
-  //!     - p.primive(n)    computes a primitive of order n of p (the one with valuation greater or equal to n)
+  //!     - derivative(p, n) computes the nth derivative of p
+  //!     - primive(p, n)    computes a primitive of order n of p (the one with valuation greater or equal to n)
   //!
   //================================================================================================
 
@@ -107,14 +107,71 @@ namespace eve
     using monom_t  = monom<value_type>;
 
     friend struct polynom<value_type>;
+    using polynom_t = polynom<value_type>;
 
     monom():deg(-1), data(0){};
-    monom(value_type val, int degree) :deg(degree), data(val){};
+    monom(value_type val, int degree) :deg(degree), data(val){if (data == 0) deg = -1; };
 
     monom_t friend operator*(monom_t const & m1,  monom_t const & m2)
     {
       if (m1.deg < 0 || m2.deg < 0) return monom_t();
       return monom_t(m1.data*m2.data, m1.deg+m2.deg);
+    }
+
+    monom_t friend operator*(monom_t const & m1,  value_type const & m2)
+    {
+      if (m1.deg < 0 || is_eqz(m2)) return monom_t();
+      return monom_t(m1.data*m2, m1.deg);
+    }
+
+    monom_t friend operator*(value_type const & m1, monom_t const & m2 )
+    {
+      return m2*m1;
+    }
+
+    monom_t & operator*= (monom_t const & m)
+    {
+      return *this = (*this)*m;
+    }
+
+    polynom_t friend operator+(monom_t const & m0,  monom_t const & m1)
+    {
+      auto maxd = max(m0.deg, m1.deg);
+      polynom_t r;
+      r.data.resize(maxd+1);
+      auto d = m0.deg-m1.deg;
+      if (d == 0)
+      {
+        r.data[0] = m1.data+m0.data;
+      }
+      else if (m0.deg > m1.deg)
+      {
+        r.data[0] = m0.data;
+        r.data[d] = m1.data;
+      }
+      else
+      {
+        r.data[0] = m1.data;
+        r.data[-d] = m0.data;
+      }
+      return r;
+    }
+
+    polynom_t friend operator+(monom_t const & m0,  value_type const & m1)
+    {
+      if(is_null(m0)) return polynom_t(m1);
+      else
+      {
+        polynom_t p(m0);
+        p.data[degree(p)] += m1;
+        p.normalize();
+        return p;
+      }
+    }
+
+    polynom_t friend operator-(monom_t const & m1,  monom_t const & m0)
+    {
+      return m1+(-m0);
     }
 
     int friend degree(monom_t const & m)
@@ -127,9 +184,9 @@ namespace eve
       return m.deg;
     }
 
-    bool friend is_null(monom_t const & )
+    bool friend is_null(monom_t const & m)
     {
-      return false;
+      return is_eqz(m.data);
     }
 
     bool friend is_constant(monom_t const & m)
@@ -146,11 +203,40 @@ namespace eve
     {
       return monom_t(-m.data, m.deg);
     }
+
+    kumi::tuple<monom_t, monom_t> friend remquo(monom_t const & m0, monom_t const & m1)
+    {
+      if (m1.data == 0) return monom_t(-1, nan(as<value_type>()));
+      if (m0.deg >= m1.deg)
+        return {monom_t(m0.data/m1.data, m0.deg-m1.deg), monom_t()};
+      else
+        return {monom_t(m0.data, m0.deg), monom_t()};
+    }
+
     auto operator()(floating_value auto const & x)
     {
       return pow(x, deg)*data;
     }
 
+    friend bool operator==(monom_t const & p0, monom_t const & p1)
+    {
+      return (degree(p0) == degree(p1) && (p0.data == p1.data));
+    }
+
+    friend bool operator!=(monom_t const & p0, monom_t const & p1)
+    {
+      return (degree(p0) != degree(p1) || (p0.data == p1.data));
+      if(degree(p0) != degree(p1)) return true;
+      return degree(p0-p1) != -1;
+    }
+
+    template <class charT, class traits> friend
+    inline std::basic_ostream<charT, traits>&
+    operator << (std::basic_ostream<charT, traits>& os, const monom_t& m)
+    {
+      os << polynom_t(m);
+      return os;
+    }
     int deg;
     value_type data;
   };
@@ -214,15 +300,11 @@ namespace eve
     template<integral_value I>
     auto operator[](I const & i) const noexcept
     {
-      auto d = degree(*this);
+      I d = degree(*this);
       if constexpr(scalar_value<I>)
-      {
-        return (i >= 0 && i <= degree(*this) ? data[d-i] : zero(as<value_type>()));
-      }
+        return (i >= 0 && i <= d) ? data[d-i] : zero(as<value_type>());
       else
-      {
-        return if_else(i >= 0 && i <= degree(*this), gather(&data[0], d-i), zero);
-      }
+        return if_else(i >= 0 && i <= d, gather(&data[0], d-i), zero);
     }
 
     //==============================================================================================
@@ -259,8 +341,8 @@ namespace eve
       {
         auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), n+1);
         auto mult = [](auto pair) {
-          get<0>(pair) *= get<1>(pair);
-          return get<0>(pair);
+          auto [x, y] = pair;
+          return x *= y;
         };
         eve::algo::transform_to(eve::algo::views::zip(p.data, factors), p.data, mult);
         p.data.resize(n);
@@ -268,58 +350,51 @@ namespace eve
       }
     }
 
-    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::derivative_, polynom_t const & p) noexcept
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::derivative_, polynom_t const & p0) noexcept
     {
-      value_type n = degree(p);
-      if(n <= 0) return polynom_t();
-      else if(n == 1) return polynom_t(p[1]);
-      else
-      {
-        auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), degree(p)+1);
-        data_t datad(degree(p)+1);
-        eve::algo::copy(factors, datad);
-        auto mult = [](auto pair){
-            auto [x, y] = pair;
-            return x *= y;
-        };
-        eve::algo::transform_to(eve::algo::views::zip(datad, p.data), datad, mult);
-        datad.resize(n);
-        polynom_t der(datad);
-        return der;
-      }
+      auto p = p0;
+      return inplace(derivative)(p);
     }
 
-    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::derivative_, polynom_t const & p, size_t m) noexcept
+    [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::derivative_
+                                                  , polynom_t const & p0, size_t m) noexcept
     {
-      value_type n = degree(p);
-      if (m > n)  return polynom_t(data_t(0));
-      else if (m == n) return polynom_t(value_type(factorial(m)));
+      auto p = p0;
+      return inplace(derivative)(p, m);
+    }
+
+    friend polynom_t tagged_dispatch( eve::tag::derivative_
+                                    , inplace_type const &, polynom_t & p, size_t m) noexcept
+    {
+      int n = degree(p);
+      if (int(m) > n)  { p.data.resize(0); return p; }
+      else if (int(m) == n) { p.data.resize(1); return p.data[0] = value_type(factorial(m));}
       else if (m == 0) return p;
-      else if (m == 1) return derivative(p);
+      else if (m == 1) return inplace(derivative)(p);
       else
       {
         auto factors = eve::algo::views::iota_with_step(n, mone(as(n)), n-m+1);
         data_t f(n-m+1);
-        data_t datad(n-m+1);
-        eve::algo::copy(factors, datad);
+        p.data.resize(n-m+1);
         eve::algo::copy(factors, f);
         auto mult = [](auto pair){
-            auto [x, y] = pair;
-            return x *= y;
+          auto [x, y] = pair;
+          return x *= y;
         };
-        auto z = eve::algo::as_range(p.data.begin(), p.data.begin()+n-m+1);
-        eve::algo::transform_to(eve::algo::views::zip(datad, z), datad, mult);
+        eve::algo::transform_to(eve::algo::views::zip(p.data, f), p.data, mult);
         for(size_t i=2; i <= m; ++i)
         {
           eve::algo::transform_inplace(f, dec);
-          eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, mult);
+          eve::algo::transform_to(eve::algo::views::zip(p.data, f), p.data, mult);
         }
-        polynom_t der(datad);
-        return der;
+        return p;
       }
     }
 
-    [[nodiscard]] friend auto tagged_dispatch( eve::tag::derivative_, polynom_t const & p, size_t m, eve::callable_all_) noexcept
+
+
+    [[nodiscard]] friend auto tagged_dispatch( eve::tag::derivative_, polynom_t const & p
+                                             , size_t m, eve::callable_all_) noexcept
     {
       int n = degree(p);
       std::vector<polynom_t> ders(m+1);
@@ -536,8 +611,8 @@ namespace eve
       else
       {
         auto r(p0);
-        if (dm > degegree(p0)) r.data.resize(dm+1);
-        r.data[degree(r)] += m.data;
+        if (dm > degree(p0)) r.data.resize(dm+1);
+        r.data[degree(r)-m.deg] += m.data;
         return r;
       }
     }
@@ -550,7 +625,7 @@ namespace eve
     template < typename Other>
     polynom_t & operator+= (Other const & other)
     {
-      return *this+other;
+      return *this = *this+other;
     }
 
     //==============================================================================================
@@ -578,26 +653,27 @@ namespace eve
     //=== operator* family
     friend polynom_t operator*(polynom_t const & p0, polynom_t const &  p1)
     {
-      const size_t size = p0.data.size() + p1.data.size() - 1;
-      data_t r(size);
-      for (size_t i = 0; i < p0.data.size(); ++i) {
+      const size_t p1s = p1.data.size();
+      const size_t size = p0.data.size() + p1s - 1;
+      data_t r(size, value_type(0));
+      auto b = r.begin();
+      for (size_t i = 0; i < p0.data.size(); ++i, ++b) {
         auto p0i = p0.data[i];
         auto addit = [p0i](auto p){
           auto [ripj, p1j] = p;
           return fam(ripj, p0i, p1j);
         };
-        auto z = eve::algo::as_range(r.begin()+i, r.end());
+        auto z = eve::algo::as_range(b, b+p1s);
         eve::algo::transform_to(eve::algo::views::zip(z, p1.data), z , addit);
       }
-
       return polynom_t(r);
     }
 
     friend polynom_t operator*(polynom_t const & p0, value_type const & f)
     {
-
       auto r(p0);
       eve::algo::transform_inplace(r.data, [f](auto e){return e*f; });
+      r.normalize();
       return r;
     }
 
@@ -626,10 +702,25 @@ namespace eve
       return p0*m;
     }
 
-    template < typename Other>
+    template <typename Other>
     polynom_t & operator*= (Other const & other)
+      requires(is_one_of<Other>(detail::types<polynom_t, monom_t, value_type> {}))
     {
-      return (*this)*other;
+      if constexpr(std::same_as<value_type, Other>)
+      {
+        eve::algo::transform_inplace(data, [other](auto e){return e*other; });
+        normalize();
+      }
+      else if  constexpr(std::same_as<monom_t, Other>)
+      {
+        eve::algo::transform_inplace(data, [other](auto e){return e*other.data; });
+        if (other.deg > 0) data.resize(data.size()+other.deg);
+      }
+      else
+      {
+        return *this = (*this)*other;
+      }
+      return *this;
     }
 
     //==============================================================================================
@@ -688,6 +779,37 @@ namespace eve
       }
     }
 
+    template < typename O>
+    friend polynom_t operator/(polynom_t const & p0, O const & p1)
+      requires(is_one_of<O>(detail::types<polynom_t, monom_t, value_type> {}))
+    {
+      if constexpr(std::same_as<O, value_type>)
+      {
+        auto fac =  rec(p1);
+        return (is_invalid(fac) || is_eqz(fac)) ? polynom_t() : p0*fac;
+      }
+      else
+      {
+        auto [q, _] = remquo(p0, p1);
+        return q;
+      }
+    }
+
+    template < typename O>
+    friend polynom_t operator%(polynom_t const & p0, O const & p1)
+      requires(is_one_of<O>(detail::types<polynom_t, monom_t, value_type> {}))
+    {
+      if constexpr(std::same_as<O, value_type>)
+      {
+        return polynom_t();
+      }
+      else
+      {
+        auto [_, r] = remquo(p0, p1);
+        return r;
+      }
+    }
+
     //==============================================================================================
     //=== young and young_remainder
     //==============================================================================================
@@ -738,10 +860,32 @@ namespace eve
       return degree(p0-p1) == -1;
     }
 
+    friend bool operator==(polynom_t const & p0, monom_t const & p1)
+    {
+      if(degree(p0) != degree(p1)) return false;
+      if(!is_monomial(p0)) return false;
+      return (p0[0] == p1.data);
+    }
+
+    friend bool operator==( monom_t const & p0, polynom_t const & p1)
+    {
+      return p1 == p0;
+    }
+
     friend bool operator!=(polynom_t const & p0, polynom_t const & p1)
     {
       if(degree(p0) != degree(p1)) return true;
       return degree(p0-p1) != -1;
+    }
+
+    friend bool operator!=(polynom_t const & p0, monom_t const & p1)
+    {
+      return (degree(p0) != degree(p1) || !is_monomial(p0)) ? true : (p0[0] != p1.data);
+    }
+
+    friend bool operator!=( monom_t const & p0, polynom_t const & p1)
+    {
+      return p1 != p0;
     }
 
     //==============================================================================================
@@ -793,18 +937,13 @@ namespace eve
           {
             auto z = eve::abs(c);
             auto neg = is_ltz(c);
-            if(z == one(as(z)))
-              os << (neg ? "-" : "+");
-            else
-              os << std::showpos << c;
-            if (s-i-1 == 1)
-              os << "x";
-            else
-              os << "x^"<< (s-i-1);
+            if(z == one(as(z))) os << (neg ? "-" : "+");
+            else                os << std::showpos << c;
+            if (s-i-1 == 1)     os << "x";
+            else                os << "x^"<< (s-i-1);
           }
         }
-        if(is_nez(poly.data[s-1]))
-          os << std::showpos << poly.data[s-1];
+        if(is_nez(poly.data[s-1])) os << std::showpos << poly.data[s-1];
          os << std::noshowpos;
       }
       return os;
@@ -816,9 +955,9 @@ namespace eve
     {
       std::cout << std::endl << name << std::endl;
 
-      for(size_t i=0; i < d.size(); ++i)
+      for(auto cur = d.begin(); cur != d.end(); ++cur)
       {
-        std::cout << d[i] << ",  ";
+        std::cout << *cur << ",  ";
       }
 
     }
