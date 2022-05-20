@@ -10,6 +10,7 @@
 #include <eve/module/polynomial/regular/polynom.hpp>
 #include <eve/module/polynomial/regular/derivative.hpp>
 #include <eve/module/polynomial/regular/primitive.hpp>
+#include <eve/module/polynomial/regular/polyval.hpp>
 #include <eve/module/polynomial/regular/from_roots.hpp>
 #include <eve/module/polynomial/regular/gegenbauer.hpp>
 #include <eve/module/polynomial/regular/hermite.hpp>
