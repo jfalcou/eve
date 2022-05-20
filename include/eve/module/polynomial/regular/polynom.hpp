@@ -1,4 +1,4 @@
-//=================================================================================================
+//================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -12,6 +12,7 @@
 #include <eve/module/polynomial/regular/horner.hpp>
 #include <eve/module/polynomial/regular/derivative.hpp>
 #include <eve/module/polynomial/regular/primitive.hpp>
+#include <eve/module/polynomial/regular/polyval.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/algo/copy.hpp>
@@ -351,22 +352,26 @@ namespace eve
       return horner(x, data);
     }
 
-//     template <detail::range R> void operator()(R & x) const noexcept
-//     {
-//       auto horn = [this](auto e){return horner(e, this->data); };
-//       eve::algo::transform_inplace(x, horn);
-//       return x;
-//     }
-
-    template <detail::range R> [[nodiscard]] auto operator()(R const & x) noexcept
+    template <detail::range R>
+    friend void tagged_dispatch( eve::tag::polyval_, inplace_type const&
+                               , polynom_t const & p, R & x)  noexcept
     {
-      auto d = x;
-      auto horn = [d](auto e){return horner(e, d); };
+      auto horn = [ p ](auto e){return horner(e, p.data); };
       eve::algo::transform_inplace(x, horn);
-      return x;
-//       R r(x);
-//       this->operator()(r);
-//       return r;
+    }
+
+    template <detail::range R>
+    friend  R tagged_dispatch( eve::tag::polyval_, polynom_t const & p, const R & x)  noexcept
+    {
+      return p(x);
+    }
+
+    template <detail::range R> [[nodiscard]] R operator()(R const & x) const noexcept
+    {
+      auto px(x);
+      auto horn = [ = ](auto e){return horner(e, data); };
+      eve::algo::transform_inplace(px, horn);
+      return px;
     }
 
     //==============================================================================================
