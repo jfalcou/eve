@@ -231,6 +231,18 @@ namespace eve
         return {monom_t(m0.data, m0.deg), monom_t()};
     }
 
+    monom_t friend operator/(monom_t const & m0, monom_t const & m1)
+    {
+      auto [_, q] = remquo(m0, m1);
+      return q;
+    }
+
+    monom_t friend operator%(monom_t const & m0, monom_t const & m1)
+    {
+      auto [r, _] = remquo(m0, m1);
+      return r;
+    }
+
     auto operator()(floating_value auto const & x)
     {
       return pow(x, deg)*data;
@@ -817,7 +829,7 @@ namespace eve
       }
       else
       {
-        auto [q, _] = remquo(p0, p1);
+        auto [_, q] = remquo(p0, p1);
         return q;
       }
     }
@@ -832,7 +844,7 @@ namespace eve
       }
       else
       {
-        auto [_, r] = remquo(p0, p1);
+        auto [r, _] = remquo(p0, p1);
         return r;
       }
     }
