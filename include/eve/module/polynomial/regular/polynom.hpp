@@ -346,22 +346,27 @@ namespace eve
     //==============================================================================================
     //== evaluation
     //==============================================================================================
-    [[nodiscard]] auto operator()(floating_value auto const & x) noexcept
+    auto operator()(floating_value auto const & x) noexcept
     {
       return horner(x, data);
     }
 
-    template <detail::range R> void operator()(R & x) const noexcept
-    {
-      auto horn = [this](auto e){return horner(e, this->data); };
-      eve::algo::transform_inplace(x, horn);
-    }
+//     template <detail::range R> void operator()(R & x) const noexcept
+//     {
+//       auto horn = [this](auto e){return horner(e, this->data); };
+//       eve::algo::transform_inplace(x, horn);
+//       return x;
+//     }
 
-    template <detail::range R> [[nodiscard]] auto operator()(R const & x) const noexcept
+    template <detail::range R> [[nodiscard]] auto operator()(R const & x) noexcept
     {
-      R r(x);
-      this->operator()(r);
-      return r;
+      auto d = x;
+      auto horn = [d](auto e){return horner(e, d); };
+      eve::algo::transform_inplace(x, horn);
+      return x;
+//       R r(x);
+//       this->operator()(r);
+//       return r;
     }
 
     //==============================================================================================
