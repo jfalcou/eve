@@ -112,6 +112,11 @@ namespace eve
     monom():deg(-1), data(0){};
     monom(value_type val, int degree) :deg(degree), data(val){if (data == 0) deg = -1; };
 
+    explicit operator polynom_t()
+    {
+      return *this;
+    };
+
     monom_t friend operator*(monom_t const & m1,  monom_t const & m2)
     {
       if (m1.deg < 0 || m2.deg < 0) return monom_t();
@@ -154,6 +159,7 @@ namespace eve
         r.data[0] = m1.data;
         r.data[-d] = m0.data;
       }
+      r.normalize();
       return r;
     }
 
@@ -169,9 +175,21 @@ namespace eve
       }
     }
 
-    polynom_t friend operator-(monom_t const & m1,  monom_t const & m0)
+    polynom_t friend operator-(monom_t const & m0,  monom_t const & m1)
     {
-      return m1+(-m0);
+      return m0+(-m1);
+    }
+
+    polynom_t friend operator-(monom_t const & m1,  value_type const & m0)
+    {
+      if(is_eqz(m0)) return polynom_t(m1);
+      else
+      {
+        polynom_t p(m1);
+        p.data[degree(p)] -= m0;
+        p.normalize();
+        return p;
+      }
     }
 
     int friend degree(monom_t const & m)
@@ -206,9 +224,9 @@ namespace eve
 
     kumi::tuple<monom_t, monom_t> friend remquo(monom_t const & m0, monom_t const & m1)
     {
-      if (m1.data == 0) return monom_t(-1, nan(as<value_type>()));
+      if (m1.data == 0) return {monom_t(-1, nan(as<value_type>())), monom_t(-1, nan(as<value_type>()))};
       if (m0.deg >= m1.deg)
-        return {monom_t(m0.data/m1.data, m0.deg-m1.deg), monom_t()};
+        return {monom_t(), monom_t(m0.data/m1.data, m0.deg-m1.deg)};
       else
         return {monom_t(m0.data, m0.deg), monom_t()};
     }
@@ -237,6 +255,12 @@ namespace eve
       os << polynom_t(m);
       return os;
     }
+
+    void normalize()
+    {
+      if (data == 0) deg = -1;
+    }
+
     int deg;
     value_type data;
   };
@@ -595,6 +619,7 @@ namespace eve
       {
         auto r(p0);
         r.data[degree(r)] += v;
+        r.normalize();
         return r;
       }
     }
@@ -613,6 +638,7 @@ namespace eve
         auto r(p0);
         if (dm > degree(p0)) r.data.resize(dm+1);
         r.data[degree(r)-m.deg] += m.data;
+        r.normalize();
         return r;
       }
     }
@@ -647,7 +673,7 @@ namespace eve
     template < typename Other>
     polynom_t & operator-= (Other const & other)
     {
-      return *this-other;
+      return *this = *this-other;
     }
 
     //=== operator* family
@@ -735,14 +761,13 @@ namespace eve
         if (is_eqz(d.data[0])) return  {d, polynom_t()};
         else return {polynom_t(), p0*rec(d.data[0])};
       }
-      if (n0 < n1) return {polynom_t(), d};
+      if (n0 < n1) return {p0, polynom_t()};
       else
       {
         polynom_t r(p0);
         int i = -1;
         int deg = n0-n1;
         polynom_t q;
-        std::cout << "deg" << deg << std::endl;
         q.data.resize(deg+1);
         while (degree(r) >= 0 && degree(r) >= degree(d))
         {
@@ -765,16 +790,18 @@ namespace eve
     {
       auto degd = degree(d);
       auto degp0= degree(p0);
-      if (degd < 0)           return {polynom_t(), p0};
+      if (degd < 0)           return {polynom_t(), polynom_t()};
       else if (degd == 0)     return {polynom_t(), p0*rec(d.data)};
-      else if (degd > degree(p0))  return {d, polynom_t()};
+      else if (degd > degree(p0))  return {polynom_t(d), polynom_t()};
       else
       {
         auto q(p0);
-        q.data.resize(degp0-degd);
+        q.data.resize(degp0-degd+1);
+        eve::algo::transform_inplace(q.data, [d](auto e){return e/d.data;});
         auto r(p0);
-        eve::algo::copy(r.data, eve::algo::as_range(p0.data+degp0-degd, p0.qata.end));
-        q.data.resize(degd);
+        r.data.resize(degd);
+        eve::algo::copy(eve::algo::as_range(p0.data.begin()+degp0-degd+1, p0.data.end()), r.data);
+        r.normalize();
         return {r, q};
       }
     }
@@ -786,7 +813,7 @@ namespace eve
       if constexpr(std::same_as<O, value_type>)
       {
         auto fac =  rec(p1);
-        return (is_invalid(fac) || is_eqz(fac)) ? polynom_t() : p0*fac;
+        return (is_not_finite(fac) || is_eqz(fac)) ? polynom_t() : p0*fac;
       }
       else
       {
@@ -959,7 +986,6 @@ namespace eve
       {
         std::cout << *cur << ",  ";
       }
-
     }
 
     void normalize()

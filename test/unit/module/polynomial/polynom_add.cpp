@@ -104,28 +104,29 @@ EVE_TEST_TYPES( "Check behavior of += "
 };
 
 
-// EVE_TEST_TYPES( "Check behavior of + in special cases"
-//         , eve::test::simd::ieee_reals
-//         )
-//   <typename T>(eve::as<T>)
-// {
-//   if constexpr(eve::cardinal_v<T> == 1)
-//   {
-//     using elt_t = eve::element_type_t<T>;
-//     using polynom_t = eve::polynom<elt_t>;
-//     using monom_t   = eve::monom<elt_t>;
-//     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
-//     std::vector<elt_t> const c1{1, 0, 2};
-//     elt_t z(0);
-//     monom_t mz(0.0, 2);
-//     monom_t m4(2.0, 4);
-//     monom_t m6(2.0, 6);
-//     polynom_t p0(c0);
-//     polynom_t pz =  p0+z;
-//     polynom_t p2 =  p0+mz;
-//     polynom_t p3 =  p0+pz;
-//     TTS_EXPECT(is_null(pz));
-//     TTS_EXPECT(is_null(p2));
-//     TTS_EXPECT(is_null(p3));
-//   } else TTS_PASS("");
-// };
+EVE_TEST_TYPES( "Check behavior of + in special cases"
+        , eve::test::simd::ieee_reals
+        )
+  <typename T>(eve::as<T>)
+{
+  if constexpr(eve::cardinal_v<T> == 1)
+  {
+    using elt_t = eve::element_type_t<T>;
+    using polynom_t = eve::polynom<elt_t>;
+    using monom_t   = eve::monom<elt_t>;
+    std::vector<elt_t> const c0{1, 2, 3, 4, 5};
+    std::vector<elt_t> const c1{1, 0, 2};
+    monom_t mz(1.0, 2);
+    monom_t mz1(-1.0, 2);
+    monom_t mx(2.0, 0);
+    elt_t two(-2);
+    polynom_t p0(c0);
+    polynom_t p1 = -p0;
+    polynom_t pz =  p0+p1;
+    auto p2 =  mz1+mz;
+    auto p3 =  mx+two;
+    TTS_EXPECT(is_null(pz));
+    TTS_EXPECT(is_null(p2));
+    TTS_EXPECT(is_null(p3));
+  } else TTS_PASS("");
+};
