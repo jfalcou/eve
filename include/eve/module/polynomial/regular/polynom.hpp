@@ -64,6 +64,7 @@ namespace eve
   //!
   //!       binary operators accept mix of polynom, momom, value_type in any order.
   //!       monomial multiplication can be replaced by shift operators
+  //!       division and remainder with null second parameter are UB.
   //!
   //!    - operator(): p(x) evaluates the polynomial p at x. x can be a scalar, an simd value or a range of scalar
   //!                  of the underlying type
@@ -112,6 +113,7 @@ namespace eve
 
     monom():deg(-1), data(0){};
     monom(value_type val, int degree) :deg(degree), data(val){if (data == 0) deg = -1; };
+    monom(int degree) :deg(degree), data(value_type(1)){};
 
     explicit operator polynom_t()
     {
@@ -238,15 +240,48 @@ namespace eve
       return q;
     }
 
+    auto operator/=(monom_t const & m1)
+    {
+      auto [_, q] = remquo(*this, m1);
+      return *this = q;
+    }
+
     monom_t friend operator%(monom_t const & m0, monom_t const & m1)
     {
       auto [r, _] = remquo(m0, m1);
       return r;
     }
 
+    auto operator%=(monom_t const & m1)
+    {
+      auto [r, _] = remquo(*this, m1);
+      return *this = r;
+    }
     auto operator()(floating_value auto const & x)
     {
       return pow(x, deg)*data;
+    }
+
+    template <detail::range R>
+    friend void tagged_dispatch( eve::tag::polyval_, inplace_type const&
+                               , monom_t const & p, R & x)  noexcept
+    {
+      auto eval = [ p ](auto e){return pow(e, p.deg)*p.data; };
+      eve::algo::transform_inplace(x, eval);
+    }
+
+    template <detail::range R>
+    friend  R tagged_dispatch( eve::tag::polyval_, monom_t const & p, const R & x)  noexcept
+    {
+      return p(x);
+    }
+
+    template <detail::range R> [[nodiscard]] R operator()(R const & x) const noexcept
+    {
+      auto px(x);
+      auto eval = [ =  ](auto e){return pow(e, deg)*data; };
+      eve::algo::transform_inplace(px, eval);
+      return px;
     }
 
     friend bool operator==(monom_t const & p0, monom_t const & p1)
@@ -845,6 +880,13 @@ namespace eve
     }
 
     template < typename O>
+    auto operator/= (O const & p1)
+      requires(is_one_of<O>(detail::types<polynom_t, monom_t, value_type> {}))
+    {
+      return *this = *this/p1;
+    }
+
+    template < typename O>
     friend polynom_t operator%(polynom_t const & p0, O const & p1)
       requires(is_one_of<O>(detail::types<polynom_t, monom_t, value_type> {}))
     {
@@ -857,6 +899,13 @@ namespace eve
         auto [r, _] = remquo(p0, p1);
         return r;
       }
+    }
+
+    template < typename O>
+    auto operator%= (O const & p1)
+      requires(is_one_of<O>(detail::types<polynom_t, monom_t, value_type> {}))
+    {
+      return *this = *this%p1;
     }
 
     //==============================================================================================
