@@ -10,6 +10,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fms.hpp>
+#include <eve/module/core/regular/fam.hpp>
 
 namespace eve::detail
 {
