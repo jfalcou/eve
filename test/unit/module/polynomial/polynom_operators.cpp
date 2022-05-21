@@ -35,6 +35,7 @@ EVE_TEST_TYPES( "Check behavior of opertor() : evaluation"
     TTS_EQUAL(p1(elt_t(1)), elt_t(3));
     TTS_EQUAL(p0(elt_t(1)), elt_t(15));
     TTS_EQUAL(p1(elt_t(2)), elt_t(6));
+    TTS_EQUAL(p1(elt_t(3)), elt_t(11));
     TTS_EQUAL(m2(elt_t(1)), elt_t(3.0));
     TTS_EQUAL(m2(elt_t(2)), elt_t(48));
     std::vector<elt_t> z{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -67,8 +68,9 @@ EVE_TEST_TYPES( "Check behavior of opertor[] : coefficients"
   {
     using elt_t = eve::element_type_t<T>;
     using polynom_t = eve::polynom<elt_t>;
-    polynom_t p0{1, 2, 3, 4, 5};
-    for(int i=0; i < degree(p0) ; ++i) TTS_EQUAL(p0[i], p0.data[degree(p0)-i]);
+    std::vector<elt_t> v{1, 2, 3, 4, 5};
+    polynom_t p0(v);
+    for(int i=0; i < degree(p0) ; ++i) TTS_EQUAL(p0[i], v[degree(p0)-i]);
   }
   else TTS_PASS("");
 };

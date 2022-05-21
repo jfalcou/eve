@@ -15,7 +15,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST( "Check behavior of horner on wide"
+EVE_TEST( "Check behavior of polynom evaluation"
         , eve::test::simd::ieee_reals
         , eve::test::generate(eve::test::randoms(0.0, 10.0))
         )
