@@ -40,13 +40,19 @@ EVE_TEST_TYPES( "Check behavior of opertor() : evaluation"
     std::vector<elt_t> z{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     auto z1 = z;
     std::vector<elt_t> pz{5,  15,  57,  179,  453,  975,  1865,  3267,  5349,  8303};
+    std::vector<elt_t> mz{0, 3, 48, 243, 768, 1875, 3888, 7203, 12288, 19683};
+    auto z2 = z;
     auto p0z =  p0(z);
     auto zz = eve::polyval(p0, z);
     eve::inplace(eve::polyval)(p0, z1);
+    auto m2z = eve::polyval(m2, z);
+    eve::inplace(eve::polyval)(m2, z2);
     for(int i=0; i < 10 ; ++i){
       TTS_EQUAL(p0z[i], pz[i]);
       TTS_EQUAL(zz[i],  pz[i]);
       TTS_EQUAL(z1[i],  pz[i]);
+      TTS_EQUAL(m2z[i], mz[i]);
+      TTS_EQUAL(z2[i],  mz[i]);
     }
   }
   else TTS_PASS("");

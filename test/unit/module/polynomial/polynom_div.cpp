@@ -80,3 +80,56 @@ EVE_TEST_TYPES( "Check behavior of remquo"
   }
   else TTS_PASS("");
 };
+
+EVE_TEST_TYPES( "Check behavior of /= % = "
+        , eve::test::simd::ieee_reals
+        )
+  <typename T>(eve::as<T>)
+{
+  if constexpr(eve::cardinal_v<T> == 1)
+  {
+    using elt_t = eve::element_type_t<T>;
+    using polynom_t = eve::polynom<elt_t>;
+    using monom_t   = eve::monom<elt_t>;
+    elt_t two(2);
+    polynom_t p1{1, 0, 2};
+    {
+      polynom_t p0{1, 2, 3, 4, 5};
+      polynom_t p2(p0);
+      auto [r, q] = remquo(p0, p1);
+      p0 /= p1;
+      p2 %= p1;
+      TTS_EXPECT(q == p0);
+      TTS_EXPECT(r == p2);
+    }
+    {
+      polynom_t p0{1, 2, 3, 4, 5};
+      polynom_t p2(p0);
+      auto [r, q] = remquo(p0, two);
+      p0 /= two;
+      p2 %= two;
+      TTS_EXPECT(q == p0);
+      TTS_EXPECT(r == p2);
+    }
+    {
+      monom_t x0(3.0, 2);
+      monom_t m1(2.0, 4);
+      monom_t x1(x0);
+      auto [r1, q1] = remquo(x0, m1);
+      x0 /= m1;
+      x1 %= m1;
+      TTS_EXPECT(q1 == x0);
+      TTS_EXPECT(r1 == x1);
+    }
+    {
+      monom_t x0(3.0, 2);
+      monom_t x1(x0);
+      auto [r1, q1] = remquo(x0, two);
+      x0 /= two;
+      x1 %= two;
+      TTS_EXPECT(q1 == x0);
+      TTS_EXPECT(r1 == x1);
+    }
+  }
+  else TTS_PASS("");
+};
