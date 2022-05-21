@@ -17,6 +17,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/algo/copy.hpp>
 #include <eve/algo/transform.hpp>
+#include <eve/algo/reduce2.hpp>
 #include <eve/algo/views/reverse.hpp>
 #include <eve/algo/views/zip.hpp>
 #include <eve/algo/reverse.hpp>
@@ -107,9 +108,9 @@ namespace eve
     /// Underlying type
     using value_type = Type;
     using monom_t  = monom<value_type>;
-
-    friend struct polynom<value_type>;
     using polynom_t = polynom<value_type>;
+    friend polynom_t;
+    using data_t = typename polynom_t::data_t;
 
     monom():deg(-1), data(0){};
     monom(value_type val, int degree) :deg(degree), data(val){if (data == 0) deg = -1; };
@@ -145,25 +146,24 @@ namespace eve
     polynom_t friend operator+(monom_t const & m0,  monom_t const & m1)
     {
       auto maxd = max(m0.deg, m1.deg);
-      polynom_t r;
-      r.data.resize(maxd+1);
+      data_t r;
+      r.resize(maxd+1);
       auto d = m0.deg-m1.deg;
       if (d == 0)
       {
-        r.data[0] = m1.data+m0.data;
+        r[0] = m1.data+m0.data;
       }
       else if (m0.deg > m1.deg)
       {
-        r.data[0] = m0.data;
-        r.data[d] = m1.data;
+        r[0] = m0.data;
+        r[d] = m1.data;
       }
       else
       {
-        r.data[0] = m1.data;
-        r.data[-d] = m0.data;
+        r[0] = m1.data;
+        r[-d] = m0.data;
       }
-      r.normalize();
-      return r;
+      return polynom_t(r);
     }
 
     polynom_t friend operator+(monom_t const & m0,  value_type const & m1)
@@ -172,8 +172,7 @@ namespace eve
       else
       {
         polynom_t p(m0);
-        p.data[degree(p)] += m1;
-        p.normalize();
+        p += m1;
         return p;
       }
     }
@@ -189,8 +188,7 @@ namespace eve
       else
       {
         polynom_t p(m1);
-        p.data[degree(p)] -= m0;
-        p.normalize();
+        p -= m0;
         return p;
       }
     }
@@ -309,6 +307,17 @@ namespace eve
       if (data == 0) deg = -1;
     }
 
+    friend monom_t young(int n, monom_t const & m0)
+    {
+      return (n >= degree(m0)) ? m0 : monom_t();
+    }
+
+    friend monom_t young_remainder(int n, monom_t const & m0)
+    {
+      return (n >= degree(m0)) ? monom_t() : m0;
+    }
+
+  private :
     int deg;
     value_type data;
   };
@@ -352,12 +361,12 @@ namespace eve
     //==============================================================================================
     //== degree and valuation
     //==============================================================================================
-    friend inline int degree(polynom<value_type> const & p) noexcept
+    friend inline int degree(polynom_t const & p) noexcept
     {
       return p.data.size()-1;
     }
 
-    friend inline int valuation(polynom<value_type> const & p) noexcept
+    friend inline int valuation(polynom_t const & p) noexcept
     {
       if (degree(p) == -1) return -1;
       auto r = algo::views::reverse(p.data);
@@ -382,9 +391,29 @@ namespace eve
     //==============================================================================================
     //== evaluation
     //==============================================================================================
-    auto operator()(floating_value auto const & x) noexcept
+    template <floating_value T>
+    auto operator()(T const & x) noexcept
     {
-      return horner(x, data);
+      if constexpr(simd_value<T>)
+      {
+       return horner(x, data);
+      }
+      else
+      {
+        using w_t =   eve::wide<T>;
+        auto zz =  value_type(1);
+        w_t xx([&zz, x](auto ,  auto){ auto z = zz; zz *= x; return z;});
+        auto xc = zz;
+        bool domul = false;
+        auto sum = [&domul, &xx, xc](auto &s, auto v) {
+          s = eve::fam(s, v, xx);
+          if (domul) xx*= xc; else domul = true;
+          return s;
+        };
+        return eve::algo::reduce2[eve::algo::no_aligning][eve::algo::unroll<1>]
+          (data, std::make_pair(sum, eve::zero(eve::as<T>()))
+          , eve::add, eve::zero(eve::as<T>()));
+      }
     }
 
     template <detail::range R>
@@ -1038,7 +1067,7 @@ namespace eve
             if(z == one(as(z))) os << (neg ? "-" : "+");
             else                os << std::showpos << c;
             if (s-i-1 == 1)     os << "x";
-            else                os << "x^"<< (s-i-1);
+            else                os << "x" << "^"<< (s-i-1);
           }
         }
         if(is_nez(poly.data[s-1])) os << std::showpos << poly.data[s-1];
@@ -1047,7 +1076,13 @@ namespace eve
       return os;
     }
 
-//  private :
+    void normalize()
+    {
+      auto z = eve::algo::find_if(data, is_nez);
+      data.erase(data.begin(), z);
+    }
+
+  private :
 
     static void internal_print(const std::string & name, data_t const & d)
     {
@@ -1057,12 +1092,6 @@ namespace eve
       {
         std::cout << *cur << ",  ";
       }
-    }
-
-    void normalize()
-    {
-      auto z = eve::algo::find_if(data, is_nez);
-      data.erase(data.begin(), z);
     }
 
     data_t data;
