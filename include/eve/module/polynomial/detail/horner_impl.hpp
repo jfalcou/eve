@@ -70,7 +70,7 @@ namespace eve::detail
   }
 
   template<value T0, range R>
-  EVE_FORCEINLINE constexpr auto horner_impl(comp_type const &, T0 xx, R const & r) noexcept
+  EVE_FORCEINLINE constexpr auto horner_impl(compensated_type const &, T0 xx, R const & r) noexcept
   requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {
     using r_t = common_compatible_t<T0, typename R::value_type>;

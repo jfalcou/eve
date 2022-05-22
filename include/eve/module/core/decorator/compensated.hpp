@@ -15,25 +15,25 @@ namespace eve
   //================================================================================================
   //================================================================================================
   // Function decorators mark-up used in function overloads
-  struct comp_
+  struct compensated_
   {
     template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
     {
-      return decorated<diff_<N>(comp_)>{};
+      return decorated<diff_<N>(compensated_)>{};
     }
   };
 
-  using comp_type = decorated<comp_()>;
+  using compensated_type = decorated<compensated_()>;
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var comp
+  //! @var compensated
   //!
   //! @brief  Higher-order @callable imbuing more more accuracy onto other @callable{s}.
   //!
   //! #### Synopsis
   //!
-  //!  if comp(eve::fname) is to be called then
+  //!  if compensated(eve::fname) is to be called then
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/module/core.hpp>
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,5 +52,5 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  [[maybe_unused]] inline constexpr comp_type const comp = {};
+  [[maybe_unused]] inline constexpr compensated_type const compensated = {};
 }

@@ -26,11 +26,11 @@ namespace eve::detail
 
   template<value T0, range R>
   EVE_FORCEINLINE constexpr auto horner_(EVE_SUPPORTS(cpu_)
-                                        , comp_type const &
+                                        , compensated_type const &
                                         , T0 xx, R const & r) noexcept
   requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {
-    return detail::horner_impl(comp_type(), xx, r);
+    return detail::horner_impl(compensated_type(), xx, r);
   }
   //================================================================================================
   //== variadic

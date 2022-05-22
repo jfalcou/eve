@@ -71,7 +71,7 @@ namespace eve::detail
     else
     {
       auto siz = std::distance(firstc, lastc);
-      EVE_ASSERT(siz == inc(std::distance(begin(rn), end(rn))), "number of nodes must be number of coefficients minus 1");
+      EVE_ASSERT(siz == inc(std::distance(begin(rn), end(rn))), "number of nodes must equal to the number of coefficients minus 1");
       if (siz == 1) return r_t(*firstc);
       else
       {
