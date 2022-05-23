@@ -109,7 +109,6 @@ namespace eve
     using value_type = Type;
     using monom_t  = monom<value_type>;
     using polynom_t = polynom<value_type>;
-    friend polynom_t;
     using data_t = typename polynom_t::data_t;
 
     monom():deg(-1), data(0){};
@@ -339,7 +338,6 @@ namespace eve
     using polynom_t  = polynom<value_type>;
     using data_t     = std::vector<value_type>;
     using monom_t    = monom<value_type>;
-    friend monom_t;
 
     // constructors
     polynom() :data(0) {}
@@ -365,7 +363,7 @@ namespace eve
 
     polynom(monom_t const & m) : data(degree(m)+1)
     {
-      if (degree(m) >= 0) data[0] = m.data;
+      if (degree(m) >= 0) data[0] = m[0];
     };
 
     //==============================================================================================
@@ -596,9 +594,9 @@ namespace eve
     [[nodiscard]] friend polynom_t tagged_dispatch( eve::tag::primitive_, polynom_t & p
                                     , size_t m) noexcept
     {
-      size_t n = degree(p);
+      int n = degree(p);
       if (m == 0 || n < 0) return p;
-      else if (m == 1) return primitive(p);
+      else if (m == 1u) return primitive(p);
       else
       {
         value_type nvt = n+1;
@@ -627,9 +625,9 @@ namespace eve
     friend polynom_t tagged_dispatch( eve::tag::primitive_, inplace_type const &
                                     , polynom_t & p, size_t m) noexcept
     {
-      size_t n = degree(p);
+      int n = degree(p);
       if (m == 0 || n < 0) return p;
-      else if (m == 1) return inplace(primitive)(p);
+      else if (m == 1u) return inplace(primitive)(p);
       else
       {
         value_type nvt = n+1;
@@ -737,7 +735,7 @@ namespace eve
       {
         auto r(p0);
         if (dm > degree(p0)) r.data.resize(dm+1);
-        r.data[degree(r)-m.deg] += m.data;
+        r.data[degree(r)-degree(m)] += m[0];
         r.normalize();
         return r;
       }
@@ -840,8 +838,9 @@ namespace eve
       }
       else if  constexpr(std::same_as<monom_t, Other>)
       {
-        eve::algo::transform_inplace(data, [other](auto e){return e*other.data; });
-        if (other.deg > 0) data.resize(data.size()+other.deg);
+        auto deg = degree(other);
+        eve::algo::transform_inplace(data, [other](auto e){return e*other[0]; });
+        if (deg > 0) data.resize(data.size()+deg);
       }
       else
       {
@@ -892,13 +891,13 @@ namespace eve
       auto degd = degree(d);
       auto degp0= degree(p0);
       if (degd < 0)           return {polynom_t(), polynom_t()};
-      else if (degd == 0)     return {polynom_t(), p0*rec(d.data)};
+      else if (degd == 0)     return {polynom_t(), p0*rec(d[0])};
       else if (degd > degree(p0))  return {polynom_t(d), polynom_t()};
       else
       {
         auto q(p0);
         q.data.resize(degp0-degd+1);
-        eve::algo::transform_inplace(q.data, [d](auto e){return e/d.data;});
+        eve::algo::transform_inplace(q.data, [d](auto e){return e/d[0];});
         auto r(p0);
         r.data.resize(degd);
         eve::algo::copy(eve::algo::as_range(p0.data.begin()+degp0-degd+1, p0.data.end()), r.data);
@@ -1006,7 +1005,7 @@ namespace eve
     {
       if(degree(p0) != degree(p1)) return false;
       if(!is_monomial(p0)) return false;
-      return (p0[0] == p1.data);
+      return (p0[0] == p1[0]);
     }
 
     friend bool operator==( monom_t const & p0, polynom_t const & p1)
@@ -1022,7 +1021,7 @@ namespace eve
 
     friend bool operator!=(polynom_t const & p0, monom_t const & p1)
     {
-      return (degree(p0) != degree(p1) || !is_monomial(p0)) ? true : (p0[0] != p1.data);
+      return (degree(p0) != degree(p1) || !is_monomial(p0)) ? true : (p0[0] != p1[0]);
     }
 
     friend bool operator!=( monom_t const & p0, polynom_t const & p1)
