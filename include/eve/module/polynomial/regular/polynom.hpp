@@ -18,9 +18,9 @@
 #include <eve/algo/copy.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/algo/reduce2.hpp>
-#include <eve/algo/views/reverse.hpp>
-#include <eve/algo/views/zip.hpp>
 #include <eve/algo/reverse.hpp>
+#include <eve/algo/views/reverse.hpp>
+#include <eve/views/reverse.hpp>
 #include <eve/algo/iota.hpp>
 #include <eve/algo/fill.hpp>
 #include <eve/algo/find.hpp>
@@ -410,8 +410,11 @@ namespace eve
           if (domul) xx*= xc; else domul = true;
           return s;
         };
+//        auto r = data;
+        auto r = algo::views::reverse(data);
+        eve::algo::reverse_copy(data, r);
         return eve::algo::reduce2[eve::algo::no_aligning][eve::algo::unroll<1>]
-          (data, std::make_pair(sum, eve::zero(eve::as<T>()))
+          (r, std::make_pair(sum, eve::zero(eve::as<T>()))
           , eve::add, eve::zero(eve::as<T>()));
       }
     }
