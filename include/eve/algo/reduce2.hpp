@@ -12,9 +12,6 @@
 #include <eve/algo/preprocess_range.hpp>
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/traits.hpp>
-
-//#include <eve/constant/as_value.hpp>
-//#include <eve/constant/zero.hpp>
 #include <eve/function/add.hpp>
 #include <eve/function/reduce.hpp>
 #include <eve/traits.hpp>
@@ -60,7 +57,8 @@ namespace eve::algo
 
       EVE_FORCEINLINE auto finish() {
         auto sum = array_reduce(sums, op);
-        return eve::reduce(sum, op1);
+        auto res = eve::reduce(sum, op1);
+        return res;
       }
     };
 

@@ -35,7 +35,7 @@ EVE_TEST_TYPES( "Check behavior of opertor() : evaluation"
     TTS_EQUAL(p1(elt_t(1)), elt_t(3));
     TTS_EQUAL(p0(elt_t(1)), elt_t(15));
     TTS_EQUAL(p1(elt_t(2)), elt_t(6));
-    TTS_EQUAL(p1(elt_t(3)), elt_t(11));
+   TTS_EQUAL(p1(elt_t(3)), elt_t(11));
     TTS_EQUAL(m2(elt_t(1)), elt_t(3.0));
     TTS_EQUAL(m2(elt_t(2)), elt_t(48));
     std::vector<elt_t> z{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -54,7 +54,7 @@ EVE_TEST_TYPES( "Check behavior of opertor() : evaluation"
       TTS_EQUAL(z1[i],  pz[i]);
       TTS_EQUAL(m2z[i], mz[i]);
       TTS_EQUAL(z2[i],  mz[i]);
-    }
+   }
   }
   else TTS_PASS("");
 };
