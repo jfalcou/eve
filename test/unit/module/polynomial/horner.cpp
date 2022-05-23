@@ -45,7 +45,7 @@ EVE_TEST( "Check behavior of horner on wide"
   using eve::fma;
   using eve::pedantic;
   using eve::numeric;
-  using eve::comp;
+  using eve::compensated;
   using eve::one;
   using v_t = eve::element_type_t<T>;
   //============================================================================
