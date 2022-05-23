@@ -277,7 +277,7 @@ namespace eve
     template <detail::range R> [[nodiscard]] R operator()(R const & x) const noexcept
     {
       auto px(x);
-      auto eval = [ =  ](auto e){return pow(e, deg)*data; };
+      auto eval = [ deg, data ](auto e){return pow(e, deg)*data; };
       eve::algo::transform_inplace(px, eval);
       return px;
     }
@@ -436,7 +436,7 @@ namespace eve
     template <detail::range R> [[nodiscard]] R operator()(R const & x) const noexcept
     {
       auto px(x);
-      auto horn = [ = ](auto e){return horner(e, data); };
+      auto horn = [ data ](auto e){return horner(e, data); };
       eve::algo::transform_inplace(px, horn);
       return px;
     }
