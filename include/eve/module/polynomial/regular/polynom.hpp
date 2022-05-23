@@ -121,6 +121,15 @@ namespace eve
       return *this;
     };
 
+    template<integral_value I>
+    auto operator[](I const & i) const noexcept
+    {
+      if constexpr(scalar_value<I>)
+        return (i == 0) ? data :value_type(0);
+      else
+        return if_else(is_eqz(i), data, zero);
+    }
+
     monom_t friend operator*(monom_t const & m1,  monom_t const & m2)
     {
       if (m1.deg < 0 || m2.deg < 0) return monom_t();
@@ -330,6 +339,7 @@ namespace eve
     using polynom_t  = polynom<value_type>;
     using data_t     = std::vector<value_type>;
     using monom_t    = monom<value_type>;
+    friend monom_t;
 
     // constructors
     polynom() :data(0) {}
@@ -802,13 +812,14 @@ namespace eve
 
     friend polynom_t operator*(polynom_t const & p0, monom_t const & m)
     {
-      if (m.deg < 0) return polynom_t();
+      auto d = degree(m);
+      if (d < 0) return polynom_t();
       else
       {
         polynom_t r(p0);
-        r = r*m.data;
-        if (m.deg ==  0) return r;
-        r.data.resize(p0.data.size()+m.deg);
+        r = r*m[0];
+        if (d ==  0) return r;
+        r.data.resize(p0.data.size()+d);
         return r;
       }
     }
