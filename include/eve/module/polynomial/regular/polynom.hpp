@@ -532,6 +532,7 @@ namespace eve
         eve::algo::transform_inplace(f, dec);
         eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, mult);
         datad.resize(n-i+1);
+        f.resize(n-i+1);
         ders[i] = polynom_t(datad);
       }
       return ders;
