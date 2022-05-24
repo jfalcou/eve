@@ -23,7 +23,7 @@ namespace eve::detail
     {
       return  [&g]<std::ptrdiff_t... N>(std::integer_sequence<std::ptrdiff_t,N...>)
               {
-                return Pack( g(N,cardinal_v<Pack>)... );
+                return Pack{ g(N,cardinal_v<Pack>)... };
               }( std::make_integer_sequence<std::ptrdiff_t,cardinal_v<Pack>>{});
     }
     else

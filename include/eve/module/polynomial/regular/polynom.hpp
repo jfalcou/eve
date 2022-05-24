@@ -402,34 +402,26 @@ namespace eve
     template <floating_value T>
     auto operator()(T const & x) noexcept
     {
-      if constexpr( spy::compiler == spy::gcc_ )
+      if constexpr(simd_value<T>)
       {
         return horner(x, data);
       }
       else
       {
-        if constexpr(simd_value<T>)
-        {
-          return horner(x, data);
-        }
-        else
-        {
-          using w_t =   eve::wide<T>;
-          auto zz =  value_type(1);
-          w_t xx([&zz, x](auto ,  auto){ auto z = zz; zz *= x; return z;});
-          auto xc = zz;
-          bool domul = false;
-          auto sum = [&domul, &xx, xc](auto &s, auto v) {
-            s = eve::fam(s, v, xx);
-            if (domul) xx*= xc; else domul = true;
-            return s;
-          };
-          auto r = algo::views::reverse(data);
-          eve::algo::reverse_copy(data, r);
-          return eve::algo::reduce2[eve::algo::no_aligning][eve::algo::unroll<1>]
-            (r, std::make_pair(sum, eve::zero(eve::as<T>()))
-            , eve::add, eve::zero(eve::as<T>()));
-        }
+        using w_t =   eve::wide<T>;
+        auto zz =  value_type(1);
+        w_t xx([&zz, x](auto ,  auto){ auto z = zz; zz *= x; return z;});
+        auto xc = zz;
+        bool domul = false;
+        auto sum = [&domul, &xx, xc](auto &s, auto v) {
+          s = eve::fam(s, v, xx);
+          if (domul) xx*= xc; else domul = true;
+          return s;
+        };
+        auto r = algo::views::reverse(data);
+        return eve::algo::reduce2[eve::algo::no_aligning][eve::algo::unroll<1>]
+          (r, std::make_pair(sum, eve::zero(eve::as<T>()))
+          , eve::add, eve::zero(eve::as<T>()));
       }
     }
 
