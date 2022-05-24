@@ -7,5 +7,4 @@
 //==================================================================================================
 #pragma once
 
-
-#include <eve/module/core/detail/tchebeval.hpp>
+#include <eve/module/polynomial/regular/tchebytchev.hpp>

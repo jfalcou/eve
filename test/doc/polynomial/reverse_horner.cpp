@@ -16,7 +16,6 @@ int main()
   wide_ft x(0.5);
   std::vector<float> v {-4, 3, -2, 1};
   std::list<float>   l {-4, 3, -2, 1};
-  float ca[4] = {-4, 3, -2, 1};
   std::vector<wide_ft> wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };
 
   std::cout << "---- simd" << '\n'
@@ -25,13 +24,10 @@ int main()
             << "<- l and v contain  {-4, 3, -2, 1} "<< '\n'
             << "<- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }"<< '\n'
             << "-> reverse_horner(xd, 1, -2, 3, -4)                 = " << eve::reverse_horner(xd, 1, -2, 3, -4) << '\n'
-            << "-> reverse_horner(xd, eve::one, -2, 3, -4))         = " << eve::reverse_horner(xd, eve::one, -2, 3, -4) << '\n'
             << "-> reverse_horner(0.5 1, b, 3, -4)                  = " << eve::reverse_horner(0.5, 1, b, 3, -4) << '\n'
             << "-> reverse_horner(x, 1, -2, 3, -4)                  = " << eve::reverse_horner(xd, 1, -2, 3, -4)  << '\n'
             << "-> reverse_horner(xd, l)                            = " << eve::reverse_horner(xd, l)  << '\n'
             << "-> reverse_horner(xd, v)                            = " << eve::reverse_horner(xd, v)  << '\n'
-            << "-> reverse_horner(xd, eve::one, &v[1], &v[4])       = " << eve::reverse_horner(xd, eve::one, &v[1], &v[4]) << '\n'
-            << "-> reverse_horner(xd, std::begin(ca), std::end(ca)) = " << eve::reverse_horner(xd, std::begin(ca), std::end(ca) ) << '\n'
             << "-> reverse_horner(xd, wv)                           = " << eve::reverse_horner(xd, wv) << '\n'
             << "-> diff(reverse_horner)(x, 1, -2, 3, -4)            = " << eve::diff(eve::reverse_horner)(x, 1, -2, 3, -4)   << '\n';
 

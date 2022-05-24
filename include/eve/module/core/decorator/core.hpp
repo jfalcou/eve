@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/compensated.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/fuzzy.hpp>
 #include <eve/module/core/decorator/kind.hpp>

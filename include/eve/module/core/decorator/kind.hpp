@@ -66,4 +66,67 @@ namespace eve
   //!  @}
   //================================================================================================
   inline constexpr q_kind_type const q_kind = {};
+
+  //================================================================================================
+  //================================================================================================
+  // Function decorators mark-up used in function overloads
+  struct kind_1_
+  {
+    template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
+    {
+      return decorated<diff_<N>(kind_1_)>{};
+    }
+  };
+
+  using kind_1_type = decorated<kind_1_()>;
+  //================================================================================================
+  //! @addtogroup polynomial
+  //! @{
+  //! @var kind_1
+  //!
+  //! @brief  Higher-order @callable imbuing kind_1 behaviour onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the kind_1 algorithm choice
+  //!
+  //!  @}
+  //================================================================================================
+  inline constexpr kind_1_type const kind_1 = {};
+
+  //================================================================================================
+  //================================================================================================
+  // Function decorators mark-up used in function overloads
+  struct kind_2_
+  {
+    template<auto N> static constexpr auto combine( decorated<diff_<N>()> const& ) noexcept
+    {
+      return decorated<diff_<N>(kind_2_)>{};
+    }
+   };
+
+  using kind_2_type = decorated<kind_2_()>;
+  //================================================================================================
+  //! @addtogroup polynomial
+  //! @{
+  //! @var kind_2
+  //!
+  //! @brief  Higher-order @callable imbuing kind_2 behaviour onto other @callable{s}.
+  //!
+  //! #### Synopsis
+  //!
+  //! @param f
+  //! An instance of eve::callable
+  //!
+  //! @return
+  //! A @callable performing the kind_2 algorithm choice
+  //!
+  //!  @}
+  //================================================================================================
+  inline constexpr kind_2_type const kind_2 = {};
+
 }

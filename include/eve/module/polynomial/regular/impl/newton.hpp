@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-
 #include <eve/module/polynomial/detail/newton_impl.hpp>
 
 namespace eve::detail
