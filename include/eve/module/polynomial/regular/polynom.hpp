@@ -402,6 +402,9 @@ namespace eve
     template <floating_value T>
     auto operator()(T const & x) noexcept
     {
+#ifdef SPY_COMPLER_IS_GCC
+       return horner(x, data);
+#else       
       if constexpr(simd_value<T>)
       {
        return horner(x, data);
@@ -418,13 +421,13 @@ namespace eve
           if (domul) xx*= xc; else domul = true;
           return s;
         };
-//        auto r = data;
         auto r = algo::views::reverse(data);
         eve::algo::reverse_copy(data, r);
         return eve::algo::reduce2[eve::algo::no_aligning][eve::algo::unroll<1>]
           (r, std::make_pair(sum, eve::zero(eve::as<T>()))
           , eve::add, eve::zero(eve::as<T>()));
       }
+#endif
     }
 
     template <detail::range R>
@@ -1097,17 +1100,6 @@ namespace eve
     }
 
   private :
-
-    static void internal_print(const std::string & name, data_t const & d)
-    {
-      std::cout << std::endl << name << std::endl;
-
-      for(auto cur = d.begin(); cur != d.end(); ++cur)
-      {
-        std::cout << *cur << ",  ";
-      }
-    }
-
     data_t data;
   };
 }
