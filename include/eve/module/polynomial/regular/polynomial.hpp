@@ -15,3 +15,5 @@
 #include <eve/module/polynomial/regular/legendre.hpp>
 #include <eve/module/polynomial/regular/newton.hpp>
 #include <eve/module/polynomial/regular/reverse_horner.hpp>
+#include <eve/module/polynomial/regular/tchebytchev.hpp>
+#include <eve/module/polynomial/regular/tchebeval.hpp>

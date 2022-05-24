@@ -12,122 +12,54 @@
 #include <concepts>
 #include <iterator>
 #include <initializer_list>
+#include <concepts>
 
 namespace eve::detail
 {
   //================================================================================================
-  //== N+ 1  parameters (((..(a*x+b)*x+c)*x + ..)..)
+  //== Horner variadic
   //================================================================================================
-  //==  N = 0
-  template<decorator D,  value T0>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const &, T0 const &) noexcept
-  {
-    return T0(0);
-  }
-
-  //==  N = 1
-  template<decorator D, value T0, value T1>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const &
-                                            , T0 const &, T1 const &a) noexcept
-  requires compatible_values<T0, T1>
-  {
-    using r_t = common_compatible_t<T0, T1>;
-    return r_t(a);
-  }
-
-  //==  N = 2
-  template<decorator D, value T0, value T1, value T2>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const &
-                                            , T0 const &x, T1 const &a, T2 const &b) noexcept
-  requires compatible_values<T0, T1> &&compatible_values<T1, T2>
-  {
-    using r_t = common_compatible_t<T0, T1, T2>;
-    return D()(fma)(r_t(x), a, b);
-  }
-
-  //==  N >= 3
-  template<decorator D,
-           value T0,
-           value T1,
-           value T2,
-           value ...Ts>
+  template<decorator D, value T0, value ...Cs>
   EVE_FORCEINLINE constexpr
-  auto horner_impl(D const & d
-                  , T0 xx, T1 a, T2 b, Ts... args) noexcept
+  auto horner_impl(D const & d, T0 const & xx, Cs... cs) noexcept
   {
-    using r_t = common_compatible_t<T0, T1, T2, Ts...>;
-    auto x =  r_t(xx);
-    auto dfma = d(fma);
-    r_t that(dfma(x, a, b));
-    [[maybe_unused]] auto next = [&](auto that, auto arg){
-      return dfma(x, that, arg);
-    };
-    ((that = next(that, args)),...);
-    return that;
+    using r_t = common_compatible_t<T0, Cs...>;
+    constexpr size_t N =  sizeof...(Cs);
+    if constexpr(N == 0) return r_t(0);
+    else if constexpr(N == 1) return (r_t(cs), ...);
+    else if constexpr(N == 2) return d(fma)(r_t(xx), r_t(cs)...);
+    else
+    {
+      auto x =  r_t(xx);
+      auto dfma = d(fma);
+      r_t that(zero(as<r_t>()));
+      auto next = [&](auto that, auto arg){
+        return dfma(x, that, arg);
+      };
+      ((that = next(that, cs)),...);
+      return that;
+    }
   }
 
-  //================================================================================================
-  //== N+ 1  parameters (((..(x+b)*x+c)*x + ..)..) with unitary leader coefficients
-  //================================================================================================
-  //==  N = 0,nope one is there
-  //==  N = 1
-  template<decorator D, value T0>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const &
-                                            , T0 const & x, callable_one_ const &) noexcept
-  {
-    return one(as(x));
-  }
-  //==  N = 2
-  template<decorator D, value T0, value T2>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const &
-                                            , T0 const &x, callable_one_ const &, T2 const &b) noexcept
-  requires compatible_values<T0, T2>
-  {
-    return add(x, b);
-  }
-
-  //==  N >= 3
-  template<decorator D,
-           value T0,
-           value T2,
-           value ...Ts>
-  EVE_FORCEINLINE constexpr
-  auto horner_impl(D const & d
-                  , T0 xx, callable_one_ const&, T2 b, Ts... args) noexcept
-  {
-    using r_t = common_compatible_t<T0, T2, Ts...>;
-    auto x =  r_t(xx);
-    auto dfma = d(fma);
-    r_t that(add(x, b));
-    auto next = [&](auto that, auto arg){
-      return dfma(x, that, arg);
-    };
-    ((that = next(that, args)),...);
-    return that;
-  }
 
   //================================================================================================
-  //== Horner with iterators
+  //== Horner with ranges
   //================================================================================================
-  template<decorator D, value T0, std::input_iterator IT>
-  EVE_FORCEINLINE constexpr auto horner_impl( D const & d
-                                            , T0 xx
-                                            , IT const & first
-                                            , IT const & last
-                                            ) noexcept
-  requires (compatible_values<T0, typename std::iterator_traits<IT>::value_type>)
+  template<decorator D, value T0, range R>
+  EVE_FORCEINLINE constexpr auto horner_impl(D const & d, T0 xx, R const & r) noexcept
+  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {
-    using r_t = common_compatible_t<T0, typename std::iterator_traits<IT>::value_type>;
+    using r_t = common_compatible_t<T0, typename R::value_type>;
     auto x =  r_t(xx);
-    if (first == last) return r_t(0);
-    if (std::distance(first, last) == 1) return r_t(*first);
+    auto cur =  std::begin(r);
+    auto last  =  std::end(r);
+    if (last == cur) return r_t(0);
+    else  if (std::distance(cur, last) == 1) return r_t(*cur);
     else
     {
       using std::advance;
-      auto cur = first;
-      advance(cur, 1);
       auto dfma = d(fma);
-      r_t that(dfma(x, *first, *cur));
+      auto that = r_t(*cur);
       auto step = [&](auto that, auto arg){
         return dfma(x, that, arg);
       };
@@ -137,54 +69,31 @@ namespace eve::detail
     }
   }
 
-  //================================================================================================
-  //== Horner with iterators and unitary leader coefficient
-  //================================================================================================
-  template<decorator D, value T0, std::input_iterator IT>
-  EVE_FORCEINLINE constexpr auto horner_impl( D const & d
-                                            , T0 xx
-                                           ,  callable_one_ const &
-                                            , IT const & first
-                                            , IT const & last
-                                            ) noexcept
-  requires (compatible_values<T0, typename std::iterator_traits<IT>::value_type>)
+  template<value T0, range R>
+  EVE_FORCEINLINE constexpr auto horner_impl(compensated_type const &, T0 xx, R const & r) noexcept
+  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
   {
-    using r_t = common_compatible_t<T0, typename std::iterator_traits<IT>::value_type>;
+    using r_t = common_compatible_t<T0, typename R::value_type>;
     auto x =  r_t(xx);
-    if(first == last) return one(as(x));
-    auto cur = first;
-    auto dfma = d(fma);
-    r_t that(add(x, *cur));
-    auto step = [&](auto that, auto arg){
-      return dfma(x, that, arg);
-    };
-    using std::advance;
-    for (advance(cur, 1); cur != last; advance(cur, 1))
-      that = step(that, *cur);
-    return that;
+    auto cur =  std::begin(r);
+    auto last  =  std::end(r);
+    if (last == cur) return r_t(0);
+    else  if (std::distance(cur, last) == 1) return r_t(*cur);
+    else
+    {
+      using std::advance;
+      auto that{r_t(*cur)};
+      auto err{zero(as < r_t>())};
+      auto step = [&x, &that, &err](auto arg){
+        auto [pi, epi] = two_prod(x, that);
+        auto [th, si] = two_add(pi, arg);
+        that = th;
+        err = fma(err, x, epi+si);
+      };
+      for (advance(cur, 1); cur != last; advance(cur, 1))
+        step(r_t(*cur));
+      return that+err;
+    }
   }
 
-  //================================================================================================
-  //== Horner with ranges
-  //================================================================================================
-  template<decorator D, value T0, range R>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const & d
-                                        , T0 xx, R const & r) noexcept
-  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
-  {
-    return horner_impl(d, xx, std::begin(r), std::end(r));
-  }
-
-  //================================================================================================
-  //== Horner with ranges and leading unitary coefficient
-  //================================================================================================
-  template<decorator D, value T0, range R>
-  EVE_FORCEINLINE constexpr auto horner_impl(D const & d
-                                            , T0 xx
-                                            , callable_one_ const &
-                                            , R const & r) noexcept
-  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
-  {
-    return horner_impl(d, xx, one, std::begin(r), std::end(r));
-  }
 }
