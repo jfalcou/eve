@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  template<int Param> struct diff_;
+  template<auto Param> struct diff_;
   //================================================================================================
   // Function decorators mark-up used in function overloads
   //================================================================================================
