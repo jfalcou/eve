@@ -15,7 +15,7 @@ namespace eve
 
   //================================================================================================
   // Function decorator - differential mode
-  template<int Param> struct diff_
+  template<auto Param> struct diff_
   {
     static constexpr auto combine( decorated<pedantic_()> const& ) noexcept
     {
