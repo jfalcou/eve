@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/polynomial/regular/polynom.hpp>
+#include <eve/module/polynomial/regular/sparse_polynom.hpp>
 #include <eve/module/polynomial/regular/derivative.hpp>
 #include <eve/module/polynomial/regular/primitive.hpp>
 #include <eve/module/polynomial/regular/polyval.hpp>
