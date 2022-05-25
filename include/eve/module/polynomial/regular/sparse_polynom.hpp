@@ -118,81 +118,57 @@ namespace eve
     }
 
     //==============================================================================================
-    //== coefficients, index can be scalar or simd, but only for reading.
+    //== coefficients but only for reading.
     //== Out of range returns 0
     //==============================================================================================
-//    template<integral_value I>
     auto operator[](int const & i) const noexcept
     {
       auto search = data.find(i);
       return (search != data.end()) ? search->second : zero(as<value_type>());
     }
 
-//     if constexpr(scalar_value<I>)
-//         if (data.contains(i))
-//         {
-//           value_type z = data[i];
-//           return z;
-//         }
-//         else return zero(as<value_type>());
-//       else
-//       {
-//         using w_t = eve::wide<value_type, cardinal_t<I>>;
-//         w_t r([this](auto j, auto){return this->data.contains(j)? this->data[j] : zero(as<value_type>()); });
-//         return r;
-//       }
-//    }
+    //==============================================================================================
+    //== evaluation
+    //==============================================================================================
+    template <floating_value T>
+    auto operator()(T const & x) noexcept
+    {
+      auto s = T(0);
+      for (const auto& [i, value] : data) { s+= pow(x, i)*value; }
+      return s;
+    }
 
-//     //==============================================================================================
-//     //== evaluation
-//     //==============================================================================================
-//     template <floating_value T>
-//     auto operator()(T const & x) noexcept
-//     {
-//       if constexpr(simd_value<T>)
-//       {
-//         return horner(x, data);
-//       }
-//       else
-//       {
-//         using w_t =   eve::wide<T>;
-//         auto zz =  value_type(1);
-//         w_t xx([&zz, x](auto ,  auto){ auto z = zz; zz *= x; return z;});
-//         auto xc = zz;
-//         bool domul = false;
-//         auto sum = [&domul, &xx, xc](auto &s, auto v) {
-//           s = eve::fam(s, v, xx);
-//           if (domul) xx*= xc; else domul = true;
-//           return s;
-//         };
-//         auto r = algo::views::reverse(data);
-//         return eve::algo::reduce2[eve::algo::no_aligning][eve::algo::unroll<1>]
-//           (r, std::make_pair(sum, eve::zero(eve::as<T>()))
-//           , eve::add, eve::zero(eve::as<T>()));
-//       }
-//     }
+    template <detail::range R>
+    friend void tagged_dispatch( eve::tag::polyval_, inplace_type const&
+                               , sparse_polynom_t const & p, R & x)  noexcept
+    {
+      auto eval = [ p ](auto e){
+        auto s = zero(as(e));
+        for (const auto& [i, value] : p.data) { s+= eve::pow(e, i)*value; }
+        return s;
+//       return p(e);
+      };
+      eve::algo::transform_inplace(x, eval);
+    }
 
-//     template <detail::range R>
-//     friend void tagged_dispatch( eve::tag::polyval_, inplace_type const&
-//                                , sparse_polynom_t const & p, R & x)  noexcept
-//     {
-//       auto horn = [ p ](auto e){return horner(e, p.data); };
-//       eve::algo::transform_inplace(x, horn);
-//     }
+    template <detail::range R>
+    friend  R tagged_dispatch( eve::tag::polyval_, sparse_polynom_t const & p, const R & x)  noexcept
+    {
+      return p(x);
+    }
 
-//     template <detail::range R>
-//     friend  R tagged_dispatch( eve::tag::polyval_, sparse_polynom_t const & p, const R & x)  noexcept
-//     {
-//       return p(x);
-//     }
-
-//     template <detail::range R> [[nodiscard]] R operator()(R const & x) const noexcept
-//     {
-//       auto px(x);
-//       auto horn = [ this ](auto e){return horner(e, this->data); };
-//       eve::algo::transform_inplace(px, horn);
-//       return px;
-//     }
+    template <detail::range R> [[nodiscard]] R operator()(R const & x) const noexcept
+    {
+      auto px(x);
+      auto eval = [ this ](auto e){
+        auto s = zero(as(e));
+        for (const auto& [i, value] : data) { s+= pow(e, i)*value; }
+        return s;
+        //    return this->operator()(e);
+      };
+      eve::algo::transform_inplace(px, eval);
+      return px;
+    }
 
 //     //==============================================================================================
 //     //== derivatives
