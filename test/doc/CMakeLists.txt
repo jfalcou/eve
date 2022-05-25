@@ -5,7 +5,7 @@
 ##==================================================================================================
 
 add_subdirectory(algo)
-add_subdirectory(ad)
+##add_subdirectory(ad)
 add_subdirectory(bessel)
 add_subdirectory(combinatorial)
 add_subdirectory(elliptic)
