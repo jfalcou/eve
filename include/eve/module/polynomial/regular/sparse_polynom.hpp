@@ -96,7 +96,7 @@ namespace eve
     sparse_polynom(std::initializer_list<pair_t> const & c) : data(c) { normalize();}
 
     template <detail::range R>
-    sparse_polynom(R const & r) : data(r.begin(), r.end()) {normalize();}
+    sparse_polynom(R const & r) : data(r.begin(), r.end()) { normalize();}
 
     sparse_polynom(monom_t const & m) : data{{degree(m), m[0]}} {};
     sparse_polynom(polynom_t const & p) {
@@ -146,7 +146,6 @@ namespace eve
         auto s = zero(as(e));
         for (const auto& [i, value] : p.data) { s+= eve::pow(e, i)*value; }
         return s;
-//       return p(e);
       };
       eve::algo::transform_inplace(x, eval);
     }
@@ -164,7 +163,6 @@ namespace eve
         auto s = zero(as(e));
         for (const auto& [i, value] : data) { s+= pow(e, i)*value; }
         return s;
-        //    return this->operator()(e);
       };
       eve::algo::transform_inplace(px, eval);
       return px;
@@ -406,72 +404,50 @@ namespace eve
 //     //=== operators
 //     //==============================================================================================
 
-//     //==============================================================================================
-//     //=== operator+ family
-//     //==============================================================================================
-//     friend sparse_polynom_t operator+(sparse_polynom_t const & p0, sparse_polynom_t const & p1)
-//     {
-//       int const n0 = p0.data.size();
-//       int const n1 = p1.data.size();
-//       int offset = abs(n0-n1);
-//       sparse_polynom_t r;
-//       r.data.resize(max(n0, n1));
-//       auto doit =  [&r, offset](auto const & p0,  auto const & p1) {
-//         std::copy(p1.data.begin(), p1.data.end(), r.data.begin()+offset);
-//         eve::algo::copy(p1.data, eve::algo::as_range(r.data.begin()+offset, r.data.end()));
-//         auto addi = [](auto pair){
-//           auto [x, y] = pair;
-//           return x+y;
-//         };
-//         eve::algo::transform_to(eve::algo::views::zip(r.data, p0.data), r.data, addi);
-//         r.normalize();
-//         return r;
-//       };
-//       return (n0 > n1) ? doit(p0, p1) : doit(p1, p0);
-//     }
+    //==============================================================================================
+    //=== operator+ family
+    //==============================================================================================
+    template < typename Other>
+    friend sparse_polynom_t operator+(sparse_polynom_t const & p0, Other const & v)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
+    {
+      sparse_polynom_t r(p0);
+      return r += v;
+    }
 
-//     friend sparse_polynom_t operator+(sparse_polynom_t const & p0, value_type const & v)
-//     {
-//       if (is_eqz(v)) return p0;
-//       else if (degree(p0) < 0) return sparse_polynom_t(v);
-//       else
-//       {
-//         auto r(p0);
-//         r.data[degree(r)] += v;
-//         r.normalize();
-//         return r;
-//       }
-//     }
+    template < typename Other>
+    friend sparse_polynom_t operator+(Other const & v, sparse_polynom_t const & p0)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t> {}))
+    {
+      return p0+v;
+    }
 
-//     friend sparse_polynom_t operator+(value_type const & v, sparse_polynom_t const & p0)
-//     {
-//       return p0+v;
-//     }
-
-//     friend sparse_polynom_t operator+(sparse_polynom_t const & p0, monom_t const & m)
-//     {
-//       auto dm = degree(m);
-//       if (dm < 0) return p0;
-//       else
-//       {
-//         auto r(p0);
-//         if (dm > degree(p0)) r.data.resize(dm+1);
-//         r.data[degree(r)-degree(m)] += m[0];
-//         r.normalize();
-//         return r;
-//       }
-//     }
-
-//     friend sparse_polynom_t operator+(monom_t const & m, sparse_polynom_t const & p0)
-//     {
-//       return p0+m;
-//     }
-
-//     template < typename Other>
-//     sparse_polynom_t & operator+= (Other const & other)
-//     {
-//       return *this = *this+other;
-//     }
+    template < typename Other>
+    sparse_polynom_t & operator+= (Other const & other)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
+    {
+      if constexpr(std::same_as<Other, value_type>)
+      {
+        data[0]+= other;
+      }
+      else if constexpr(std::same_as<Other, monom_t>)
+      {
+        data[degree(other)]+= coef(other);
+      }
+      else if  constexpr(std::same_as<Other, sparse_polynom_t>)
+      {
+        for (const auto& [i, value] : other.data)
+        {
+          data[i] += value;
+        }
+      }
+      else if  constexpr(std::same_as<Other, polynom_t>)
+      {
+        auto d = degree(other);
+        for (int i = 0; i <= d;  ++i) data[i] += other[i];
+      }
+      return normalize();
+    }
 
 //     //==============================================================================================
 //     //=== operator- family
@@ -801,9 +777,10 @@ namespace eve
       return os << std::noshowpos;
     }
 
-    void normalize()
+    sparse_polynom_t & normalize()
     {
       std::erase_if (data, [](const auto& item){ auto const & [i, v] = item; return is_eqz(v); });
+      return *this;
     }
 
   private :

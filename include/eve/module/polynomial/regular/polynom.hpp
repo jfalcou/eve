@@ -325,6 +325,11 @@ namespace eve
       return (n >= degree(m0)) ? monom_t() : m0;
     }
 
+    friend value_type coef(monom_t const & m)
+    {
+      return m.data;
+    }
+
   private :
     int deg;
     value_type data;
