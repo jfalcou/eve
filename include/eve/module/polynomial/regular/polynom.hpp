@@ -712,47 +712,54 @@ namespace eve
       return (n0 > n1) ? doit(p0, p1) : doit(p1, p0);
     }
 
-    friend polynom_t operator+(polynom_t const & p0, value_type const & v)
+   template < typename Other>
+   friend polynom_t operator+(polynom_t const & p0, value_type const & v)
+     requires(is_one_of<Other>(detail::types<monom_t, value_type> {}))
     {
-      if (is_eqz(v)) return p0;
-      else if (degree(p0) < 0) return polynom_t(v);
-      else
-      {
-        auto r(p0);
-        r.data[degree(r)] += v;
-        r.normalize();
-        return r;
-      }
+      return p0 += v;
     }
 
-    friend polynom_t operator+(value_type const & v, polynom_t const & p0)
+    template < typename Other>
+    friend polynom_t operator+(Other const & v, polynom_t const & p0)
     {
       return p0+v;
     }
 
-    friend polynom_t operator+(polynom_t const & p0, monom_t const & m)
-    {
-      auto dm = degree(m);
-      if (dm < 0) return p0;
-      else
-      {
-        auto r(p0);
-        if (dm > degree(p0)) r.data.resize(dm+1);
-        r.data[degree(r)-degree(m)] += m[0];
-        r.normalize();
-        return r;
-      }
-    }
-
-    friend polynom_t operator+(monom_t const & m, polynom_t const & p0)
-    {
-      return p0+m;
-    }
-
     template < typename Other>
-    polynom_t & operator+= (Other const & other)
+    polynom_t & operator+= (Other const & v)
+      requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t> {}))
     {
-      return *this = *this+other;
+      if constexpr(std::same_as<Other, value_type>)
+      {
+        if (is_eqz(v)) return *this;
+        else if (degree(*this) < 0) return *this = polynom_t(v);
+        else
+        {
+          data[degree(*this)] += v;
+        }
+      }
+      else if constexpr(std::same_as<Other, monom_t>)
+      {
+        auto dm = degree(v);
+        if (dm < 0) return *this;
+        else
+        {
+          if (dm > degree(*this)) data.resize(dm+1);
+          data[degree(*this)-degree(v)] += coef(v);
+        }
+      }
+ //      else if  constexpr(std::same_as<Other, sparse_polynom_t>)
+//       {
+//         for (const auto& [i, value] : other.data)
+//         {
+//           data[i] += value;
+//         }
+//       }
+      else if  constexpr(std::same_as<Other, polynom_t>)
+      {
+        return *this = *this+v;
+      }
+      return normalize();
     }
 
     //==============================================================================================
@@ -1093,10 +1100,11 @@ namespace eve
       return os;
     }
 
-    void normalize()
+    polynom_t& normalize()
     {
       auto z = eve::algo::find_if(data, is_nez);
       data.erase(data.begin(), z);
+      return *this;
     }
 
   private :

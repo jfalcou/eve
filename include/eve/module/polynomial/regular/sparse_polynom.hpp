@@ -400,13 +400,18 @@ namespace eve
 //       return prims;
 //     }
 
-//     //==============================================================================================
-//     //=== operators
-//     //==============================================================================================
+    //==============================================================================================
+    //=== operators
+    //==============================================================================================
 
     //==============================================================================================
     //=== operator+ family
     //==============================================================================================
+    friend sparse_polynom_t operator+(sparse_polynom_t const & p0)
+    {
+      return p0;
+    }
+
     template < typename Other>
     friend sparse_polynom_t operator+(sparse_polynom_t const & p0, Other const & v)
     requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
@@ -449,102 +454,113 @@ namespace eve
       return normalize();
     }
 
-//     //==============================================================================================
-//     //=== operator- family
-//     //==============================================================================================
-//     friend sparse_polynom_t operator-(sparse_polynom_t const & p0)
-//     {
-//       data_t mp0 = p0.data;
-//       eve::algo::transform_inplace(mp0, minus);
-//       return sparse_polynom_t(mp0);
-//     }
+    //==============================================================================================
+    //=== operator- family
+    //==============================================================================================
+    friend sparse_polynom_t operator-(sparse_polynom_t const & p0)
+    {
+      sparse_polynom_t r(p0);
+      for (const auto& [i, value] : r.data) r.data[i] -= value;
+      return r;
+    }
 
-//     template < typename Other>
-//     friend sparse_polynom_t operator-(sparse_polynom_t const & p0, Other const & o)
-//     {
-//       return p0+(-o);
-//     }
+    template < typename Other>
+    sparse_polynom_t & operator-= (Other const & other)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
+    {
+      if constexpr(std::same_as<Other, value_type>)
+      {
+        data[0]-= other;
+      }
+      else if constexpr(std::same_as<Other, monom_t>)
+      {
+        data[degree(other)]-= coef(other);
+      }
+      else if  constexpr(std::same_as<Other, sparse_polynom_t>)
+      {
+        for (const auto& [i, value] : other.data)
+        {
+          data[i] -= value;
+        }
+      }
+      else if  constexpr(std::same_as<Other, polynom_t>)
+      {
+        auto d = degree(other);
+        for (int i = 0; i <= d;  ++i) data[i] -= other[i];
+      }
+      return normalize();
+    }
 
-//     template < typename Other>
-//     sparse_polynom_t & operator-= (Other const & other)
-//     {
-//       return *this = *this-other;
-//     }
+    template < typename Other>
+    friend sparse_polynom_t operator-(sparse_polynom_t const & p0, Other const & v)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
+    {
+      sparse_polynom_t r(p0);
+      return r -= v;
+    }
 
-//     //=== operator* family
-//     friend sparse_polynom_t operator*(sparse_polynom_t const & p0, sparse_polynom_t const &  p1)
-//     {
-//       const size_t p1s = p1.data.size();
-//       const size_t size = p0.data.size() + p1s - 1;
-//       data_t r(size, value_type(0));
-//       auto b = r.begin();
-//       for (size_t i = 0; i < p0.data.size(); ++i, ++b) {
-//         auto p0i = p0.data[i];
-//         auto addit = [p0i](auto p){
-//           auto [ripj, p1j] = p;
-//           return fam(ripj, p0i, p1j);
-//         };
-//         auto z = eve::algo::as_range(b, b+p1s);
-//         eve::algo::transform_to(eve::algo::views::zip(z, p1.data), z , addit);
-//       }
-//       return sparse_polynom_t(r);
-//     }
+    template < typename Other>
+    friend sparse_polynom_t operator-(Other const & v, sparse_polynom_t const & p0)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t> {}))
+    {
+      return -(p0+v);
+    }
 
-//     friend sparse_polynom_t operator*(sparse_polynom_t const & p0, value_type const & f)
-//     {
-//       auto r(p0);
-//       eve::algo::transform_inplace(r.data, [f](auto e){return e*f; });
-//       r.normalize();
-//       return r;
-//     }
+    //=== operator* family
+    template < typename Other>
+    friend sparse_polynom_t operator*(sparse_polynom_t const & p0, Other const &  p1)
+      requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
+    {
+      sparse_polynom_t r(p0);
+      return r*= p1;
+    }
 
-//     friend sparse_polynom_t operator*(value_type const & f, sparse_polynom_t const & p0)
-//     {
-//       auto r(p0);
-//       eve::algo::transform_inplace(r.data, [f](auto e){return e*f; });
-//       return r;
-//     }
+    template < typename Other>
+    friend sparse_polynom_t operator*(Other const &  p0, sparse_polynom_t const & p1)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t> {}))
+    {
+      sparse_polynom_t r(p1);
+      return r*= p0;
+    }
 
-//     friend sparse_polynom_t operator*(sparse_polynom_t const & p0, monom_t const & m)
-//     {
-//       auto d = degree(m);
-//       if (d < 0) return sparse_polynom_t();
-//       else
-//       {
-//         sparse_polynom_t r(p0);
-//         r = r*m[0];
-//         if (d ==  0) return r;
-//         r.data.resize(p0.data.size()+d);
-//         return r;
-//       }
-//     }
-
-//     friend sparse_polynom_t operator*(monom_t const & m, sparse_polynom_t const & p0)
-//     {
-//       return p0*m;
-//     }
-
-//     template <typename Other>
-//     sparse_polynom_t & operator*= (Other const & other)
-//       requires(is_one_of<Other>(detail::types<sparse_polynom_t, monom_t, value_type> {}))
-//     {
-//       if constexpr(std::same_as<value_type, Other>)
-//       {
-//         eve::algo::transform_inplace(data, [other](auto e){return e*other; });
-//         normalize();
-//       }
-//       else if  constexpr(std::same_as<monom_t, Other>)
-//       {
-//         auto deg = degree(other);
-//         eve::algo::transform_inplace(data, [other](auto e){return e*other[0]; });
-//         if (deg > 0) data.resize(data.size()+deg);
-//       }
-//       else
-//       {
-//         return *this = (*this)*other;
-//       }
-//       return *this;
-//     }
+    template < typename Other>
+    sparse_polynom_t & operator*= (Other const & other)
+    requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t, sparse_polynom_t> {}))
+    {
+      if constexpr(std::same_as<Other, value_type>)
+      {
+        for (auto cur = data.begin(); cur != data.end();  ++cur) cur->second *= other;
+      }
+      else if constexpr(std::same_as<Other, monom_t>)
+      {
+        sparse_polynom_t r;
+        int d = degree(other);
+        value_type c = coef(other);
+        for (const auto& [i, v] : data) r.data[i+d] = v*c;
+        *this = r;
+      }
+      else if  constexpr(std::same_as<Other, sparse_polynom_t>)
+      {
+        sparse_polynom_t r;
+        for (const auto& [i, v] : other.data )
+        {
+          auto z = monom_t(v, i);
+          r += (*this)*z;
+        }
+        *this = r;
+      }
+      else if  constexpr(std::same_as<Other, polynom_t>)
+      {
+        sparse_polynom_t r;
+        for (const auto& [j, v] : data )
+        {
+          auto z = monom_t(v, j);
+          r+= other*z;
+        }
+        *this = r;
+      }
+      return normalize();
+    }
 
 //     //==============================================================================================
 //     //=== operator/ family and remquo
