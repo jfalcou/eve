@@ -17,7 +17,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!  @var reverse
   //!
@@ -75,7 +75,7 @@ namespace eve::algo
   inline constexpr auto reverse = function_with_traits<reverse_>[algo::unroll<1>][no_aligning];
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!  @var reverse_copy
   //!

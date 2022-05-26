@@ -33,7 +33,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!   @var copy
   //!   @brief SIMD optimized copy algorithm
@@ -71,10 +71,6 @@ namespace eve::algo
   //!     * `r2` : A range or an iterator to the beginning of the destination elements
   //!     * `r`  : An eve::algo::zipped_range_pair of ranges and/or iterators.
   //!
-  //!   @groupheader{Supported Decorator}
-  //!
-  //!     * @ref eve::algo::no_aligning
-  //!
   //!   @groupheader{Example}
   //!
   //!   @godbolt{doc/algo/copy.cpp}
@@ -105,7 +101,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!   @var copy_backward
   //!   @brief Configurable @callable performing backward copy between two ranges' or

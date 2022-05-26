@@ -43,7 +43,7 @@ namespace eve::algo
   }
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!  @var transform_inplace
   //!
@@ -72,7 +72,7 @@ namespace eve::algo
   inline constexpr auto transform_inplace = function_with_traits<transform_inplace_>[default_simple_algo_traits];
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!  @var transform_to
   //!

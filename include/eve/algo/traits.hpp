@@ -76,11 +76,11 @@ namespace eve::algo
   struct no_aligning_tag {};
 
   //================================================================================================
-  //! @addtogroup algos
+  //! @addtogroup algorithms
   //! @{
   //!   @var no_aligning
   //!
-  //!   @brief Decorator for disabling alignment handling in algorithm
+  //!   @brief Traits for disabling alignment handling in algorithm
   //!
   //!   Modify an algorithm semantic to not perform any additional operations to force the
   //!   exploitation of the alignment of processed data.

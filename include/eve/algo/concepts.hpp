@@ -10,7 +10,7 @@
 //==================================================================================================
 //! @addtogroup algorithms
 //! @{
-//!   @defgroup algos Algorithms
+//!   @defgroup algorithms Algorithms
 //!   @brief Provides SIMD implementation of standard algorithms
 //!
 //!   @defgroup views Views
