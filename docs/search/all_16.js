@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['zero_0',['zero',['../group__core_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85',1,'eve']]],
-  ['zeta_1',['zeta',['../group__special_gaa1a8a239d3a2f132dbcedd15c848fafb.html#gaa1a8a239d3a2f132dbcedd15c848fafb',1,'eve']]],
-  ['zip_2',['zip',['../group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4',1,'eve::algo::views::zip()'],['../group__core_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94',1,'eve::zip()']]],
-  ['zip_5fiterator_3',['zip_iterator',['../structeve_1_1algo_1_1views_1_1zip__iterator.html',1,'eve::algo::views::zip_iterator&lt; Is &gt;'],['../structzip__iterator.html',1,'zip_iterator']]],
-  ['zip_5frange_4',['zip_range',['../structeve_1_1algo_1_1views_1_1zip__range.html',1,'eve::algo::views::zip_range&lt; Rngs &gt;'],['../structzip__range.html',1,'zip_range']]]
+  ['why_20and_20how_0',['Why and How',['../eve-dev.html',1,'']]],
+  ['wide_1',['wide',['../structeve_1_1wide.html',1,'eve::wide&lt; Type, Cardinal &gt;'],['../structeve_1_1wide.html#afd2944c4f0f54a386e887762385c91ba',1,'eve::wide::wide(eve::soa_ptr&lt; Ptr... &gt; ptr) noexcept'],['../structeve_1_1wide.html#aafaacedf98d44860a942473b93621668',1,'eve::wide::wide(wide&lt; Type, Half &gt; const &amp;l, wide&lt; Type, Half &gt; const &amp;h) noexcept'],['../structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html#a007581d779fcbfc70bfcee970ee95451',1,'eve::wide::wide(Generator &amp;&amp;g) noexcept'],['../structeve_1_1wide.html#a25e4002f3f0e1123d70644b153d2bf5a',1,'eve::wide::wide(S0 const &amp;v0, Ss const &amp;... vs) noexcept'],['../structeve_1_1wide.html#adc793fe6af06f8b2a094ad0a34d0fb84',1,'eve::wide::wide(S0 v0, S1 v1, Ss... vs) noexcept'],['../structeve_1_1wide.html#a5ca6afd4d88b463815c5b6d00f59a78e',1,'eve::wide::wide(S const &amp;v) noexcept'],['../structeve_1_1wide.html#a9e8f8635331b18d7ce9e1c28019722be',1,'eve::wide::wide(Ptr ptr) noexcept'],['../structeve_1_1wide.html#abdfcee2feb9fc089466b5b8e69d076d8',1,'eve::wide::wide(Range &amp;&amp;r) noexcept'],['../structeve_1_1wide.html#a75fcee86f103e039da6bb498b7c59cf2',1,'eve::wide::wide(It b, It e) noexcept'],['../structeve_1_1wide.html#a4ad46a6f998bb898592da9625181634d',1,'eve::wide::wide(storage_type const &amp;r) noexcept'],['../structeve_1_1wide.html#a1c748a83009d02b0388bbb3de19534bd',1,'eve::wide::wide()']]],
+  ['wide_3c_20value_5ftype_2c_20n_20_3e_2',['wide&lt; value_type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_3c_20value_5ftype_5ft_3c_20i_20_3e_2c_20n_20_3e_3',['wide&lt; value_type_t&lt; I &gt;, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
+  ['wide_5fvalue_5ftype_5ft_4',['wide_value_type_t',['../group__traits_ga51d0901c39a489a5d6e0449339291c57.html#ga51d0901c39a489a5d6e0449339291c57',1,'eve']]],
+  ['write_5',['write',['../group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d',1,'eve']]]
 ];

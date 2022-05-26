@@ -1,6 +1,6 @@
 //==================================================================================================
-//  KUMI - Compact Tuple Tools
-//  Copyright : KUMI Contributors & Maintainers
+//  EVE - Expressive Vector Engine
+//  Copyright : EVE Contributors & Maintainers
 //  SPDX-License-Identifier: MIT
 //==================================================================================================
 class SendToGodbolt extends HTMLElement {
