@@ -5,10 +5,6 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-//! [empty]
-
-//! [empty]
-
 //! [scalar-tuple]
 #include <cmath>
 #include <tuple>

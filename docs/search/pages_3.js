@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['design_20decisions_0',['Design Decisions',['../design_rationale.html',1,'rationale']]],
-  ['development_20environment_1',['Development Environment',['../dev_environment.html',1,'eve-dev']]]
+  ['data_20structures_0',['Data Structures',['../intro-04.html',1,'tutorials']]],
+  ['design_20decisions_1',['Design Decisions',['../design_rationale.html',1,'eve-dev']]],
+  ['development_20environment_2',['Development Environment',['../dev_environment.html',1,'eve-dev']]]
 ];

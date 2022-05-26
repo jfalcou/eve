@@ -1,9 +1,14 @@
 var searchData=
 [
-  ['validate_0',['validate',['../structeve_1_1pattern__t.html#a828fefe9303d5cfdd45a1bdd67bf0b80',1,'eve::pattern_t']]],
-  ['valmax_1',['valmax',['../group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2',1,'eve']]],
-  ['valmin_2',['valmin',['../group__core_gaf8c83b159938a524efeaa2a64966d33b.html#gaf8c83b159938a524efeaa2a64966d33b',1,'eve']]],
-  ['value_5ftype_3',['value_type',['../structeve_1_1logical.html#a4ca253e53d508bd86a04e37251298986',1,'eve::logical::value_type()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a949b3a102b27d4c7a290ea89caf45e12',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::value_type()'],['../structeve_1_1wide.html#ad6e0f9fd221ca191f42484f47660662c',1,'eve::wide::value_type()'],['../structeve_1_1aligned__allocator.html#a1172a3003ffee8879d69bc92082ba045',1,'eve::aligned_allocator::value_type()'],['../structeve_1_1aligned__ptr.html#aed55f842914bf195c481887441623ca4',1,'eve::aligned_ptr::value_type()']]],
-  ['value_5ftype_5ft_4',['value_type_t',['../group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2',1,'eve']]],
-  ['views_5',['Views',['../group__views.html',1,'']]]
+  ['uint16_0',['uint16',['../group__core_gac0d5d471080fe5537f1ed3d9296ddf77.html#gac0d5d471080fe5537f1ed3d9296ddf77',1,'eve']]],
+  ['uint32_1',['uint32',['../group__core_ga1dbf1967fa31abbc08b1ce14a8252acb.html#ga1dbf1967fa31abbc08b1ce14a8252acb',1,'eve']]],
+  ['uint64_2',['uint64',['../group__core_ga6004cbdbfdd5ec747cb4fa7ef28c84df.html#ga6004cbdbfdd5ec747cb4fa7ef28c84df',1,'eve']]],
+  ['uint8_3',['uint8',['../group__core_gad236d2923e163d4f72970151d9ff0519.html#gad236d2923e163d4f72970151d9ff0519',1,'eve']]],
+  ['uint_5f_4',['uint_',['../group__core_gafd86a79bb4835bef550be50d5b56b342.html#gafd86a79bb4835bef550be50d5b56b342',1,'eve']]],
+  ['ulpdist_5',['ulpdist',['../group__core_ga40ae299a91e28c9285b6521ca12c3fbf.html#ga40ae299a91e28c9285b6521ca12c3fbf',1,'eve']]],
+  ['unalign_6',['unalign',['../group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a',1,'eve']]],
+  ['unaligned_5ft_7',['unaligned_t',['../group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c',1,'eve']]],
+  ['under_8',['under',['../structeve_1_1pattern__t.html#aef70581b6e3b30db25467efcc08eff1c',1,'eve::pattern_t::under()'],['../group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047',1,'eve::under()']]],
+  ['upgrade_5f_9',['upgrade_',['../group__core_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252',1,'eve']]],
+  ['upward_10',['upward',['../group__core_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80',1,'eve']]]
 ];

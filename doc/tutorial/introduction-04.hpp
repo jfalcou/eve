@@ -1,16 +1,12 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page intro-04 SIMD Data Structures
-
-@tableofcontents
+@page intro-04 Data Structures
 
 In the previous tutorial, we laid out how **EVE** can use SIMD-aware tuples to handle more complex
 cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.
 
-@snippet tutorial/intro-04.cpp  empty
-
-## Adapting UDT to SIMD processing
+# Adapting UDT to SIMD processing
 Using tuples as a random bag of values returned from functions is somewhat lackluster. Indeed, one
 would prefer names over field numbers, thus rising the level of abstraction.
 
@@ -39,7 +35,7 @@ We can then just rewrite `to_polar` to use this new UDT.
 Note how the semantic improved by being able to explicitly states we return a SIMD register made
 of instance of `polar_coords`.
 
-## Creating SIMD-aware UDT
+# Creating SIMD-aware UDT
 All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build
 a new user-defined type directly usable as a SIMD type. **EVE** provides an intrusive protocol
 to do just that via the use of the eve::struct_support helper.
@@ -70,7 +66,7 @@ Let's go over the new components introduced here:
 This is the bare minimum we can do with eve::struct_support. Additional operators can be added along
 with stream insertion. Check eve::struct_support documentation for more informations.
 
-## Storage and Processing
+# Storage and Processing
 The last step in this situation is now to process multiples `udt::polar_coords` using algorithms.
 The most efficient way to do so is to use eve::soa_vector as a container for SIMD-aware types, either
 adapted or created using eve::struct_support.
@@ -88,7 +84,7 @@ Now, as a final example, let's a do a `cartesian_coords` SIMD user-defined type 
 
 @snippet tutorial/intro-04.cpp simd-soa_vector_in
 
-## Conclusion
+# Conclusion
 In this tutorial, we managed to:
   - adapt existing UDT to be compatible with eve::wide
   - create new UDTs compatible with eve::wide by constrcution

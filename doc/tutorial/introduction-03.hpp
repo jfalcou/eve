@@ -1,9 +1,7 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page intro-03 SIMD Tuples
-
-@tableofcontents
+@page intro-03 Tuples
 
 In the previous tutorials, we built a SIMD function to compute those cartesian-polar conversions
 and we used them in the context of a SIMD algorithm to apply them over an arbitrary set of data.
@@ -14,9 +12,7 @@ This interaction between SIMD register and tuple-like types is very interesting 
 different ways to take advantage of these interactions. In this tutorial, we'll go over how **EVE**
 can help you design SIMD-aware tuple to write higher level SIMD code.
 
-@snippet tutorial/intro-03.cpp  empty
-
-## Tuple of SIMD registers
+# Tuple of SIMD registers
 If we go back to the initial scalar conversion functions, we can actually merge both `rho` and
 `theta` functions in a single `to_polar` function that will return a tuple of float containing
 both results of the conversion.
@@ -33,7 +29,7 @@ is to just return a `std::tuple<eve::wide<float>, eve::wide<float>>`.
 This version of the code just works out of the box. eve::wide is just a C++ type and thus
 interacts normally with other standard components.
 
-## SIMD register of tuples
+# SIMD register of tuples
 If the previous code is fine, it has the disadvantage of not being compatible to the general SIMD
 principle of **EVE**. Indeed, `std::tuple` is not a eve::simd_value even when it contains eve::wide.
 
@@ -59,7 +55,7 @@ SIMD algorithm call to use eve::views::zip for both the input and output ranges.
 
 @snippet tutorial/intro-03.cpp  simd-transform_zip
 
-## Conclusion
+# Conclusion
 In this tutorial, we managed to:
   - handle tuple in SIMD context using eve::wide and [**kumi::tuple**](https://jfalcou.github.io/kumi/)
   - process SIMD-aware tuple with **EVE** algorithms

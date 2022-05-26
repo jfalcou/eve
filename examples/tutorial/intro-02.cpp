@@ -5,10 +5,6 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-//! [empty]
-
-//! [empty]
-
 #include <cmath>
 #include <eve/wide.hpp>
 #include <eve/module/math.hpp>
