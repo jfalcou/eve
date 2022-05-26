@@ -3,15 +3,13 @@
 
 @page conditional Conditional operations
 
-@tableofcontents
-
 When you call a function on one or more [SIMD values](../reference/concepts/simd_value.html#simd_value),
 you expect the computation to be performed on every elements of its parameters. Sometimes, you may
 want to make the application of a given function dependent on some condition.
 
 Let's explore the functionalities **EVE** provides for achieving those results.
 
-## Explicit Selection
+# Explicit Selection
 Let's say the function we want to write computes the product of two values `a` and `b` if `a`
 is equal to `b` and their difference otherwise.
 
@@ -46,7 +44,7 @@ The expected result of this program is:
 @warning  Contrary to a `if ... else` statement, eve::if_else will evaluates all its arguments
           before performing its selection even if potential short-cut can be applied later on.
 
-## Conditional Function Syntax
+# Conditional Function Syntax
 Let's define a `sqrt_positive` function that computes the square root of its argument if it's positive
 or returns it unchanged otherwise. One can write:
 
@@ -78,12 +76,12 @@ If required, the callable object produced by the conditional syntax can be store
 
 @snippet tutorial/sqrt_positive_op.cpp snippet-alt
 
-## Conditional Expressions
+# Conditional Expressions
 If passing a simple logical expression is the most common use-case of the conditional syntax, one
 may requires more flexibility. To do so, **EVE** provides various objects to express more
 elaborated conditions.
 
-### Mask with alternative
+## Mask with alternative
 One may want to use the conditional syntax to call a function but instead of returning the first
 argument if the condition is false, one may want to return an arbitrary value. This use case is
 handled by the eve::if_ helper by wrapping logical expression so that an alternative value can be specified.
@@ -99,7 +97,7 @@ The output is then:
 (1, 0, 3.16228, 0)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-### Context-sensitive mask
+## Context-sensitive mask
 Some algorithms require conditional function calls but use logical expression relative to the
 element index inside a eve::simd_value rather than its value. One may want for example to not
 compute an expression on the first and last element of such eve::simd_value.
@@ -147,7 +145,7 @@ The output is the same obviously:
 (-6.3, 1, 2, -6.3)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-## Conclusion
+# Conclusion
 
 Conditional operations on [SIMD values](../reference/concepts/simd_value.html#simd_value) is a good way to
 keep a high level code over some complex computations. **EVE** provides different levels of abstraction

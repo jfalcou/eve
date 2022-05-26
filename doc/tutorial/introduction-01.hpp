@@ -1,11 +1,9 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page intro-01 SIMD Basic Operations
+@page intro-01 Basic Operations
 
-@tableofcontents
-
-## Initial problem
+# Initial problem
 
 Let's say we want to convert  2D cartesian coordinates to 2D polar coordinates.
 This is a rather common exercise and will only require basic arithmetic and trigonometric functions.
@@ -18,14 +16,12 @@ A bit of geometry in the unit circle leads to a relationship between the cartesi
 coordinates :
 
 <center>
-<a  title="WillowW, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons"
+<a  title="WillowW, CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0, via Wikimedia Commons"
     href="https://commons.wikimedia.org/wiki/File:Polar_coordinate_components.svg">
-<img width="23%" alt="Polar coordinate components"  class="center"
+<img width="30%" alt="Polar coordinate components"  class="center"
      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Polar_coordinate_components.svg/512px-Polar_coordinate_components.svg.png">
 </a>
 </center>
-
-@snippet tutorial/intro-01.cpp empty
 
 Therefore, we can derive the following C++ functions that perform this conversion:
 
@@ -36,7 +32,7 @@ Fellow mathematicians in the audience may have some remarks on this code. For no
 deal with the fact that it requires \f$\theta\f$ to be in radians and that the accuracy of
 computing \f$\rho\f$ this way is maybe sub-optimal. We will address those concerns later.
 
-## From scalar to SIMD using eve::wide
+# From scalar to SIMD using eve::wide
 
 The next step is to work a SIMD version of those functions. When dealing with SIMD data types,
 one has to remember that a single operation has to be performed on multiple values. There, we will
@@ -60,7 +56,7 @@ The SIMD version of our conversion functions are then given by:
 eve::wide behaves like a regular type and can just be dropped as a replacement for any C++
 arithmetic types.
 
-## Handling eve::wide
+# Handling eve::wide
 
 The remaining question is how to put data inside an instance of eve::wide so we can write tests
 for our SIMD cartesian to polar conversion function.
@@ -112,7 +108,7 @@ As AVX2 registers are twice as big, the output should now contains 8 values:
 
 As expected, **EVE** code scales naturally with the selected architecture at compile time.
 
-## Mathematical Epilogue
+# Mathematical Epilogue
 As stated earlier, we are currently using a slightly brutal computation for \f$\rho\f$. Indeed, if
 the magnitudes of `x` and `y` vary greatly, we may end up with overflow or cancellation, both
 classic IEEE 754 floating-point issues.
@@ -125,7 +121,7 @@ A better implementation is then given as:
 
 @snippet tutorial/intro-01.cpp hypot-variant
 
-## Conclusion
+# Conclusion
 In this first tutorial, we managed to:
   - get familiar with eve::wide, the main SIMD enabling type from **EVE**
   - take a simple scalar operation and turn it into a SIMD function using eve::wide

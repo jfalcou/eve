@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var exp_pi
   //!
-  //! @brief Callable object computing the constant \f$e^\pi\$.
+  //! @brief Callable object computing the constant \f$e^\pi\f$.
   //!
   //! **Required header:** `#include <eve/module/math.hpp>`
   //!

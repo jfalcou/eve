@@ -8,17 +8,15 @@
 #pragma once
 
 //==================================================================================================
-//! @addtogroup algorithms
+//! @addtogroup simd
 //! @{
-//! @defgroup algorithm algorithms
-//! @brief ranges and view algorithms
+//!   @defgroup algorithms Algorithms and Views
+//!   @brief Algorithms and Views
 //!
-//! This module provides implementation of simd versions of some std ranges algorithms.
-//! Take care that some prerequisite and syntaxes are not fully standard conformant
+//!   This module provides implementation of SIMD versions of some std ranges algorithms.
+//!   Take care that some prerequisite and syntaxes are not fully standard conformant
 //!
-//!
-//! **Required header:** @code{.cpp} #include <eve/algo.hpp> @endcode
-//!
+//!   **Required header:** @code{.cpp} #include <eve/algo.hpp> @endcode
 //! @}
 //==================================================================================================
 

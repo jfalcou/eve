@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 #include <eve/algo/common_forceinline_lambdas.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/transform.hpp>
@@ -16,25 +15,6 @@
 
 namespace eve::algo
 {
-  //================================================================================================
-  //! @addtogroup algo
-  //! @{
-  //!  @var copy
-  //!
-  //!  @brief version of std::copy
-  //!    * Accepts two things zipping together to range of pair.
-  //!    * Also can accept a `zipped_range_pair`.
-  //!    * returns void.
-  //!    * default unrolling is 4.
-  //!    * will align by default.
-  //!    * for copying to the same scalar type consider using `std::memmove` instead.
-  //!    * will do conversions if necessary.
-  //!
-  //!   **Required header:** `#include <eve/algo/copy.hpp>`
-  //!
-  //! @}
-  //================================================================================================
-
   template <typename TraitsSupport>
   struct copy_ : TraitsSupport
   {
@@ -45,35 +25,58 @@ namespace eve::algo
     }
 
     template <typename R1, typename R2>
-      requires zip_to_range<R1, R2>
+    requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
     {
       operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }
   };
 
-  inline constexpr auto copy = function_with_traits<copy_>[default_simple_algo_traits];
-
   //================================================================================================
-  //! @addtogroup algo
+  //! @addtogroup algorithms
   //! @{
-  //!  @var copy_backward
+  //!   @var copy
+  //!   @brief SIMD optimized copy algorithm
   //!
-  //!  @brief version of std::copy_backward
-  //!    * Accepts two things zipping together to range of pair but the optput cannot be an iterator.
-  //!      The restriction on the output is that we'd have to accept first, while the standard accepts last.
-  //!    * Also can accept a `zipped_range_pair`.
-  //!    * returns void.
-  //!    * default unrolling is 4.
-  //!    * will align by default.
-  //!    * for copying to the same scalar type consider using `std::memmove` instead.
-  //!    * will do conversions if necessary.
+  //!   Configurable @callable performing a SIMD optimized version of the copy.
+  //!   By default, the operation will be unrolled by a factor of 4, align memory accesses and
+  //!   perform conversions if needed.
   //!
-  //!   **Required header:** `#include <eve/algo/copy.hpp>`
+  //!   @note If you want to copy elements of same scalar type, use `std::memmove`.
   //!
+  //!   **Alternative Header**
+  //!
+  //!   @code
+  //!   #include <eve/algo.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve::algo
+  //!   {
+  //!     template<typename R1, typename R2>
+  //!     void copy(R1&& r1, R2&& r2) requires zip_to_range<R1, R2>;    //  1
+  //!
+  //!     void copy(zipped_range_pair auto&& r);                        //  2
+  //!   }
+  //!   @endcode
+  //!
+  //!   1. Copy the elements of from `r1` to  `r2`.
+  //!   2. Copy the elements of from `get<0>(r)` to `get<1>(r)`.
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `r1` : The range of elements or an iterator to the beginning of the elements to copy from
+  //!     * `r2` : A range or an iterator to the beginning of the destination elements
+  //!     * `r`  : An eve::algo::zipped_range_pair of ranges and/or iterators.
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/algo/copy.cpp}
   //! @}
   //================================================================================================
-
+  inline constexpr auto copy = function_with_traits<copy_>[default_simple_algo_traits];
 
   template <typename TraitsSupport>
   struct copy_backward_ : TraitsSupport
@@ -86,7 +89,7 @@ namespace eve::algo
     }
 
     template <typename R1, typename R2>
-      requires zip_to_range<R1, R2>
+    requires zip_to_range<R1, R2>
     EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
     {
       static_assert(!relaxed_iterator<R2>, "Behavior of std::copy_backward and eve::algo::copy_backward"
@@ -97,5 +100,53 @@ namespace eve::algo
     }
   };
 
+  //================================================================================================
+  //! @addtogroup algorithms
+  //! @{
+  //!   @var copy_backward
+  //!   @brief Configurable @callable performing backward copy between two ranges' or
+  //!          between a range and an iterator.
+  //!
+  //!   By default, eve::algo::copy_backward will be unrolled by a factor of 4, align memory
+  //!   accesses and perform conversions if needed.
+  //!
+  //!   @note If you want to copy between ranges of the same scalar type, use `std::memmove`.
+  //!
+  //!   **Alternative Header**
+  //!
+  //!   @code
+  //!   #include <eve/algo.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve::algo
+  //!   {
+  //!     template<typename R1, typename R2>
+  //!     void copy_backward(R1&& r1, R2&& r2) requires zip_to_range<R1, R2>;    //  1
+  //!
+  //!     void copy_backward(zipped_range_pair auto&& r);                        //  2
+  //!   }
+  //!   @endcode
+  //!
+  //!   1. Copy the elements of from `r1` to  `r2`.
+  //!   2. Copy the elements of from `get<0>(r)` to `get<1>(r)`.
+  //!
+  //!   The elements are copied in reverse order (the last element is copied first), but their
+  //!   relative order is preserved. Due to the specificities of the SIMD algorithm, the second
+  //!   can not be an iterator. Use the zip based overload to do so.
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `r1` : The range of elements or an iterator to the beginning of the elements to copy from
+  //!     * `r2` : A range of the destination elements
+  //!     * `r` : A eve::algo::zipped_range_pair of ranges and/or iterators.
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/algo/copy_backward.cpp}
+  //! @}
+  //================================================================================================
   inline constexpr auto copy_backward = function_with_traits<copy_backward_>[default_simple_algo_traits];
 }

@@ -1,17 +1,28 @@
-<!-- HTML header for doxygen 1.8.20-->
+<!-- HTML header for doxygen 1.9.5-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="generator" content="Doxygen 1.9.4"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>E.V.E: eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::slice</title>
-  <!--<link href="tabs.css" rel="stylesheet" type="text/css"/> REMOVED BY DOXYSTRAP -->
-  <script type="text/javascript" src="jquery.js"></script>
-  <script type="text/javascript" src="dynsections.js"></script>
-  <script type="text/javascript" src="godbolt.js"></script>
-  <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::slice</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
@@ -19,90 +30,36 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-  <script type="text/x-mathjax-config">
+<script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   extensions: ["tex2jax.js"],
   jax: ["input/TeX","output/HTML-CSS"],
 });
 </script>
 <script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
-  <link href="doxygen.css" rel="stylesheet" type="text/css" />
-  <link href="doxystrap.css" rel="stylesheet" type="text/css"/>
-  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
-  <script type="text/javascript" src="doxystrap.js"></script>
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <!-- Custom input to switch branches -->
-  <script>
-    function switchBranchAction() {
-      var branch = document.getElementById("branch_input").value;
-      var form = this;
-      window.location.href = window.location.hostname + '/en/' + branch;
-    }
-  </script>
-  <!-- DOXYSTRAP BLOCK CHANGE END -->
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-  <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-      <!--GITHUB RIBBON-->
-      <a id="forkme_banner" href="https://github.com/jfalcou/eve">View on GitHub</a>
-      <!--GITHUB RIBBON-->
-        <a href="index.html" class="navbar-brand">E.V.E v2022.03.00</a>
-      </div>
-    </div>
-  </nav>
-  <!-- DOXYSTRAP BLOCK CHANGE END -->
-  <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
-    <!-- DOXYSTRAP BLOCK CHANGE BEGIN -->
-    <div class="content" id="content">
-      <div class="container">
-        <div id="titlearea">
-          <table cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr style="height: 56px;">
-                <td id="projectlogo"><a href="index.html"><img alt="Logo" src="logo.png" /></a>
-                </td>
-                <td id="projectalign" style="padding-left: 0.5em;">
-                  <div id="projectname">E.V.E
-                    &#160;<span id="projectnumber">v2022.03.00</span>
-                  </div>
-                  <!-- BEGIN PROJECT_BRIEF--><div id="projectbrief">The Expressive Vector Engine</div><!--END PROJECT_BRIEF -->
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="row">
-          <div class="col-sm-12 panel " style="padding-bottom: 15px;">
-            <div style="margin-bottom: 15px;">
-              <!-- DOXYSTRAP BLOCK CHANGE END -->
-              <!-- end header part -->
-<!-- Generated by Doxygen 1.9.4 -->
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search",'Search','.html');
-/* @license-end */
-</script>
-  <div id="navrow1" class="tabs">
-    <ul class="tablist">
-      <li><a href="index.html"><span>Index</span></a></li>
-      <li><a href="pages.html"><span>Documentation</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>References</span></a></li>
-      <li>
-        <div id="MSearchBox" class="MSearchBoxInactive">
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2022.03.00</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
           <img id="MSearchSelect" src="search/mag_sel.svg"
                onmouseover="return searchBox.OnSearchSelectShow()"
@@ -116,9 +73,35 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
             <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
           </span>
         </div>
-      </li>
-    </ul>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
   </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a71e274784f66b6d8f845129e580ae02a.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -133,71 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html">logical&lt; wide&lt; Type, Cardinal &gt; &gt;</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="contents">
-<table cellspacing="0" cellpadding="0" border="0">
-  <tr>
-   <td valign="top">
-      <div class="navtab">
-        <table>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#aac957e33daa41b5a3f551ed78c05c100">abi_type</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a618532fc6332155edaf4aca72b5b93aa">alignment</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a43db7ec7fb3a32fe5b649f4e8a85ab95">back</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a53088b65fa4bba929183f9c4d5792dea">bitmap</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7c2d0acc8ffcbfcc373fa2f6b849a06f">bits</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#adb0e98ce3f9d38e138e3055cada7d4e3">bits_type</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a1c043e9a2264e6257e715022ffbbe9a9">cardinal_type</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#abbbe1a87460349d94895917816d5577a">empty</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20">front</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7e669e8b662996c0cb3553c33a09dedc">get</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ab42e96c04ba7d545273a8411e2172411">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a19f9305f2be6c493a6e86c236fcf4f9e">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a8c8cffa8e0ad9c246d8bde7d4a7d697a">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad74fd08f470ac565e1bed7096d119098">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ab463edf2bbe092c328f8dc599e49ce8f">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a0cfcd335f2f3a8d4ffa60ea0f137de44">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#aa2326a61c106e43359af2b8661d506ef">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a84ea3b085a785e085cbb9a9ffba1c4a4.html#a84ea3b085a785e085cbb9a9ffba1c4a4">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ab58e9c1c605e5f3283a596987dc749cf">logical</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ada0487b178d683fd8483150ff569f37d">mask</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a552251c1f51965f56d96414cc8f933c8">mask_type</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a626f66c1c0e65886dda45ba50cac4439">max_size</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a1bdaef9f0529757040060f464139e90f">operator!</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a5ffb9eef782dce13e60236a7caeac1d0">operator!=</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a6472dde6325ad44e896cc76798855f20">operator!=</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a3e508ccb49c3afb74d9f7c0e1ad72468">operator!=</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6947551513c7b279d003fc01870daf2">operator&amp;&amp;</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6d1d0320e4a51dfdf5ead96cf47fb6b">operator&amp;&amp;</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad3339bae6830cf8e46c00a1ea5665958">operator&amp;&amp;</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a517ff9e640d1ead16cc41eecdce7fd5c">operator&lt;&lt;</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a21ab888a7a1c9d785657e01d74e12540">operator=</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a83aa966901ef9fa80aaf45518c57b1f7">operator=</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a64946da0cd3477cab6fb2c5132b7fc22">operator=</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7045100ab4bb27a393a7f62d827aaf88">operator==</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a8dea17246f2631c0b6e1107d35860b64">operator==</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad89cc4a35e1888c99b7a20ba9e09322a">operator==</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a01982a3c658025a2e2f9dd6b019f21b8">operator||</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae2ffc3a3b598538dfef3cbcc3f130eaa">operator||</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a6ce43ecc63fed35b4d4a76e33f8bbaee">operator||</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a814d09107a0280ceb564cf053d075dee">rebind</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad4bd66d02fdce24a908de7f36619a20f">rescale</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7ba62de53449b225d4ff0686630d2fce">set</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad4d0897d94f1786e153dcd05ab059be5">size</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_aa9cd862159f14c1959ab479dc243a310.html#aa9cd862159f14c1959ab479dc243a310">slice</a></td></tr>
-          <tr><td class="navtabHL"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a71e274784f66b6d8f845129e580ae02a.html#a71e274784f66b6d8f845129e580ae02a">slice</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ac94c47f8d965d821d503a0a41818fde8">storage_type</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae56f9b89b700d9668b761c6d5a3167b4">swap</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7cec0220f0393e97f10e78ea89c112a0">swap</a></td></tr>
-          <tr><td class="navtab"><a class="navtab" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a949b3a102b27d4c7a290ea89caf45e12">value_type</a></td></tr>
-        </table>
-      </div>
-   </td>
-   <td valign="top" class="mempage">
 <a id="a71e274784f66b6d8f845129e580ae02a" name="a71e274784f66b6d8f845129e580ae02a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a71e274784f66b6d8f845129e580ae02a">&#9670;&nbsp;</a></span>slice() <span class="overload">[2/2]</span></h2>
 
@@ -258,17 +177,19 @@ eve::lower_</dd></dl>
 </div><!-- fragment --> 
 </div>
 </div>
-    </td>
-  </tr>
-</table>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html">logical&lt; wide&lt; Type, Cardinal &gt; &gt;</a></li>
+  </ul>
+</div>
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
 </div> <!-- DOXYSTRAP RELATED -->
-<hr class="footer"/>
 </body>
 </html>

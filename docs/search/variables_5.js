@@ -6,7 +6,7 @@ var searchData=
   ['fanm_3',['fanm',['../group__core_ga4f4ca543d5f16fa535a0307128ec27aa.html#ga4f4ca543d5f16fa535a0307128ec27aa',1,'eve']]],
   ['fdim_4',['fdim',['../group__core_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43',1,'eve']]],
   ['fibonacci_5',['fibonacci',['../group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6',1,'eve']]],
-  ['fill_6',['fill',['../group__algo.html#ga432fd8a2cb308dad3994a596ab6b11b7',1,'eve::algo']]],
+  ['fill_6',['fill',['../group__algorithms.html#ga432fd8a2cb308dad3994a596ab6b11b7',1,'eve::algo']]],
   ['firstbitset_7',['firstbitset',['../group__core_gad440bea367cdc362a6e90919cc601e35.html#gad440bea367cdc362a6e90919cc601e35',1,'eve']]],
   ['firstbitunset_8',['firstbitunset',['../group__core_ga8bc33d70eb0f0eb36126b95e06588748.html#ga8bc33d70eb0f0eb36126b95e06588748',1,'eve']]],
   ['float32_9',['float32',['../group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a',1,'eve']]],
@@ -17,10 +17,12 @@ var searchData=
   ['fms_14',['fms',['../group__core_gaae2ebed60c826b5686a2599a37bc1a88.html#gaae2ebed60c826b5686a2599a37bc1a88',1,'eve']]],
   ['fnma_15',['fnma',['../group__core_ga074ab3f337c7af4c8d8cb430ac4e1cc5.html#ga074ab3f337c7af4c8d8cb430ac4e1cc5',1,'eve']]],
   ['fnms_16',['fnms',['../group__core_ga7d02a108e868c1deaa0143f6377c7c3f.html#ga7d02a108e868c1deaa0143f6377c7c3f',1,'eve']]],
-  ['for_5feach_17',['for_each',['../group__algo_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0',1,'eve::algo']]],
-  ['frac_18',['frac',['../group__core_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732',1,'eve']]],
-  ['fracscale_19',['fracscale',['../group__core_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf',1,'eve']]],
-  ['frexp_20',['frexp',['../group__core_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
-  ['fsm_21',['fsm',['../group__core_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
-  ['fsnm_22',['fsnm',['../group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]]
+  ['for_5feach_17',['for_each',['../group__algorithms_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0',1,'eve::algo']]],
+  ['four_5fminus_5fpi_18',['four_minus_pi',['../group__math_ga32fb8dd8121052157d14ae18a413026f.html#ga32fb8dd8121052157d14ae18a413026f',1,'eve']]],
+  ['four_5fpio_5f3_19',['four_pio_3',['../group__math_ga348ec58b614ef783f4183689f21850b1.html#ga348ec58b614ef783f4183689f21850b1',1,'eve']]],
+  ['frac_20',['frac',['../group__core_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732',1,'eve']]],
+  ['fracscale_21',['fracscale',['../group__core_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf',1,'eve']]],
+  ['frexp_22',['frexp',['../group__core_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
+  ['fsm_23',['fsm',['../group__core_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
+  ['fsnm_24',['fsnm',['../group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]]
 ];

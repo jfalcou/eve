@@ -7,33 +7,20 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
 //==================================================================================================
-//! @addtogroup simd
+//! @addtogroup algorithms
 //! @{
-//!   @defgroup algorithm Algorithms and Views
-//!   @brief Provides SIMD algorithms and SIMD views
-//! @}
-//==================================================================================================
-
-//==================================================================================================
-//! @addtogroup algorithm
-//! @{
+//!   @defgroup algorithms Algorithms
+//!   @brief Provides SIMD implementation of standard algorithms
+//!
 //!   @defgroup views Views
 //!   @brief Provides views to work with SIMD algorihms
 //!
-//!   @defgroup algo Algorithms
-//!   @brief Provides SIMD implementation of standard algorithms
-//! @}
-//==================================================================================================
-
-//==================================================================================================
-//! @addtogroup algorithm
-//! @{
 //!   @defgroup algo_concepts Concepts
 //!   @brief Provides Concepts for algorithms and related components
 //! @}
 //==================================================================================================
+#include <eve/module/core.hpp>
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/nothing.hpp>
 #include <eve/algo/concepts/relaxed.hpp>

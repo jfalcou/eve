@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['eve_20development_0',['EVE Development',['../eve-dev.html',1,'']]]
+  ['installation_20_26_20quick_20start_0',['Installation &amp; Quick Start',['../install.html',1,'']]]
 ];

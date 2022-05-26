@@ -42,7 +42,7 @@ namespace eve
   //!
   //! \f$\displaystyle J_{n}(x)=\sum_{p=0}^{\infty}{\frac{(-1)^p}{p!\,\Gamma (p+n +1)}}{\left({x \over 2}\right)}^{2p+n }\f$.
   //!
-  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f if \f$n \ne 0\f$ else \f$1\f$$.
+  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f$ if \f$n \ne 0\f$ else \f$1\f$.
   //!
   //! ---
   //!

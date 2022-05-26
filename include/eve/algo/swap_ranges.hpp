@@ -15,7 +15,7 @@
 namespace eve::algo
 {
   //================================================================================================
-  //! @addtogroup algo
+  //! @addtogroup algorithms
   //! @{
   //!  @var swap_ranges
   //!
