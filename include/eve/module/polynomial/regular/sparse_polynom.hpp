@@ -16,7 +16,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup simd_types
   //! @{
-  //================================================================================================
+  //===============================================================================================
   //! @brief representation of sparse polynoms
   //!
   //! **Required header:** `#include <eve/module/polynomial.hpp>`
@@ -455,12 +455,26 @@ namespace eve
     }
 
     //==============================================================================================
+    //=== leading term
+    //==============================================================================================
+    friend monom_t lead(sparse_polynom_t const & p0)
+    {
+      if (is_null(p0)) return monom_t();
+      else
+      {
+        monom_t m(p0.data.begin()->second, p0.data.begin()->first);
+        return m;
+      }
+    }
+
+
+    //==============================================================================================
     //=== operator- family
     //==============================================================================================
     friend sparse_polynom_t operator-(sparse_polynom_t const & p0)
     {
       sparse_polynom_t r(p0);
-      for (const auto& [i, value] : r.data) r.data[i] -= value;
+      for (const auto& [i, value] : r.data) r.data[i] = -value;
       return r;
     }
 
@@ -478,9 +492,9 @@ namespace eve
       }
       else if  constexpr(std::same_as<Other, sparse_polynom_t>)
       {
-        for (const auto& [i, value] : other.data)
+        for (const auto& [i, v] : other.data)
         {
-          data[i] -= value;
+         data[i] -= v;
         }
       }
       else if  constexpr(std::same_as<Other, polynom_t>)
@@ -503,7 +517,7 @@ namespace eve
     friend sparse_polynom_t operator-(Other const & v, sparse_polynom_t const & p0)
     requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t> {}))
     {
-      return -(p0+v);
+      return -(p0-v);
     }
 
     //=== operator* family
@@ -562,62 +576,95 @@ namespace eve
       return normalize();
     }
 
-//     //==============================================================================================
-//     //=== operator/ family and remquo
-//     //==============================================================================================
-//     friend kumi::tuple<sparse_polynom_t, sparse_polynom_t> remquo(sparse_polynom_t const & p0, sparse_polynom_t const & d)
-//     {
-//       int const n0 = p0.data.size();
-//       int const n1 = d.data.size();
-//       if (n1 == -1) return {d, sparse_polynom_t()};
-//       if (n1 == 0) {
-//         if (is_eqz(d.data[0])) return  {d, sparse_polynom_t()};
-//         else return {sparse_polynom_t(), p0*rec(d.data[0])};
-//       }
-//       if (n0 < n1) return {p0, sparse_polynom_t()};
-//       else
-//       {
-//         sparse_polynom_t r(p0);
-//         int i = -1;
-//         int deg = n0-n1;
-//         sparse_polynom_t q;
-//         q.data.resize(deg+1);
-//         while (degree(r) >= 0 && degree(r) >= degree(d))
-//         {
-//           auto t = r.data[0]/d.data[0];
-//           q.data[++i] = t;
-//           r = r-monom(t, deg)*d;
-//           --deg;
-//         }
+    //==============================================================================================
+    //=== operator/ family and remquo
+    //==============================================================================================
+    friend kumi::tuple<sparse_polynom_t, sparse_polynom_t> remquo(sparse_polynom_t const & num, sparse_polynom_t const & den)
+    {
+      int const dnum = degree(num);
+      int const dden = degree(den);
+      if (dden == -1) return {den, sparse_polynom_t()};
+      if (dnum == 0) {
+        if (is_null(den)) return  {den, sparse_polynom_t()};
+        else return {sparse_polynom_t(), num*rec(den.data.begin()->second)};
+      }
+      if (dnum < dden) return {num, sparse_polynom_t()};
+      else
+      {
+        sparse_polynom_t r(num);
+        sparse_polynom_t q;
+        monom_t md = lead(den);
+        while (degree(r) >= 0 && degree(r) >= dden)
+        {
+          auto t = lead(r)/md;
+          q += t;
+          r -= t*den;
+        }
+        return {r, q};
+      }
+    }
 
-//         return {r, q};
-//       }
-//     }
-
-//     friend kumi::tuple<sparse_polynom_t, sparse_polynom_t> remquo(sparse_polynom_t const & p0, value_type const & d)
-//     {
-//       return {sparse_polynom_t(), p0*rec(d)};
-//     }
-
-//     friend kumi::tuple<sparse_polynom_t, sparse_polynom_t> remquo(sparse_polynom_t const & p0, monom_t const & d)
-//     {
-//       auto degd = degree(d);
-//       auto degp0= degree(p0);
-//       if (degd < 0)           return {sparse_polynom_t(), sparse_polynom_t()};
-//       else if (degd == 0)     return {sparse_polynom_t(), p0*rec(d[0])};
-//       else if (degd > degree(p0))  return {sparse_polynom_t(d), sparse_polynom_t()};
-//       else
-//       {
-//         auto q(p0);
-//         q.data.resize(degp0-degd+1);
-//         eve::algo::transform_inplace(q.data, [d](auto e){return e/d[0];});
-//         auto r(p0);
-//         r.data.resize(degd);
-//         eve::algo::copy(eve::algo::as_range(p0.data.begin()+degp0-degd+1, p0.data.end()), r.data);
-//         r.normalize();
-//         return {r, q};
-//       }
-//     }
+    template < typename Other>
+    friend kumi::tuple<sparse_polynom_t, sparse_polynom_t> remquo(sparse_polynom_t const & p0, Other const & other)
+      requires(is_one_of<Other>(detail::types<monom_t, value_type, polynom_t> {}))
+    {
+      if constexpr(std::same_as<Other, value_type>)
+      {
+        return {sparse_polynom_t(), p0*rec(other)};
+      }
+      else if constexpr(std::same_as<Other, monom_t>)
+      {
+        int const dnum = degree(p0);
+        int const dden = degree(other);
+        if (dden == -1) return {sparse_polynom_t(), sparse_polynom_t()};
+        if (dnum == 0) {
+          return {sparse_polynom_t(), p0*rec(other.coef())};
+        }
+        if (dnum < dden)
+          return {p0, sparse_polynom_t()};
+        else
+        {
+          sparse_polynom_t r(p0);
+          sparse_polynom_t q;
+          while (degree(r) >= 0 && degree(r) >= dden)
+          {
+            auto t = lead(r)/other;
+            q += t;
+            r -= t*other;
+          }
+          return {r, q};
+        }
+      }
+      else if  constexpr(std::same_as<Other, sparse_polynom_t>)
+      {
+        int const dden = degree(p0);
+       if (dden == -1) return {other, sparse_polynom_t()};
+        int const dnum = degree(other);
+        if (dnum == 0) {
+          if (is_null(other)) return  {other, sparse_polynom_t()};
+          else return {sparse_polynom_t(), p0*rec(coef(lead(other)))};
+        }
+        if (dnum < dden) return {p0, sparse_polynom_t()};
+        else
+        {
+          sparse_polynom_t r(p0);
+          sparse_polynom_t q;
+          monom_t md = lead(other);
+          while (degree(r) >= 0 && degree(r) >= dden)
+          {
+            auto t = lead(r)/md;
+            q += t;
+            r -= t*other;
+          }
+          return {r, q};
+        }
+      }
+      else if  constexpr(std::same_as<Other, polynom_t>)
+      {
+        sparse_polynom_t sp1(other);
+        return remquo(p0, sp1);  // TODO
+      }
+   }
 
 //     template < typename O>
 //     friend sparse_polynom_t operator/(sparse_polynom_t const & p0, O const & p1)
@@ -767,6 +814,7 @@ namespace eve
     inline std::basic_ostream<charT, traits>&
     operator << (std::basic_ostream<charT, traits>& os, const sparse_polynom<value_type>& poly)
     {
+      os << std::noshowpos;
       if (poly.data.empty())
         return os << value_type(0);
       else
@@ -775,9 +823,9 @@ namespace eve
           auto show = false;
           auto neg = is_ltz(value);
           auto z = eve::abs(value);
-          if(eve::abs(z) == one(as(z)))
+          if(eve::abs(z) == one(as(z)) && (i!= 0))
           {
-            os << (neg ? "-" : "+");
+            os << (neg ? "-" : (show ? "+" : ""));
             show = true;
           }
           else

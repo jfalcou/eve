@@ -113,6 +113,7 @@ namespace eve
 
     monom():deg(-1), data(0){};
     monom(value_type val, int degree) :deg(degree), data(val){if (data == 0) deg = -1; };
+    monom(kumi::tuple<int, value_type> pair) : monom(pair.second, pair.first){};
     monom(int degree) :deg(degree), data(value_type(1)){};
 
     explicit operator polynom_t()
