@@ -37,11 +37,7 @@ STRIP_FROM_INC_PATH    = ../include
 SEPARATE_MEMBER_PAGES  = YES
 TAB_SIZE               = 2
 
-ALIASES  = "ce=@htmlonly <a id=\"godbolt-link\" href=\"#\">See it live on Compiler Explorer</a> <div id=\"godbolt\">@endhtmlonly"
-ALIASES += "ce{1}=@htmlonly <a id=\"godbolt-link\" href=\"#\"> \1 </a> <div id=\"godbolt\">@endhtmlonly"
-ALIASES += "endce=@htmlonly</div>@endhtmlonly"
-ALIASES += "godbolt{1}=@ce @include \1 ^^ @endce"
-ALIASES += "godbolt{2}=@ce{\1} @include \2 ^^ @endce"
+ALIASES += "godbolt{1}=@include \1"
 ALIASES += "groupheader{1}=<h2 class=\"groupheader\"> \1 </h2>"
 ALIASES += "nullable=[NullablePointer](https://en.cppreference.com/w/cpp/named_req/NullablePointer)"
 ALIASES += "callable=[Callable Object](https://en.cppreference.com/w/cpp/named_req/Callable)"
@@ -353,7 +349,7 @@ FILE_VERSION_FILTER    =
 # DoxygenLayout.xml, doxygen will parse it automatically even if the LAYOUT_FILE
 # tag is left empty.
 
-LAYOUT_FILE            =
+LAYOUT_FILE            = layout.xml
 
 # The CITE_BIB_FILES tag can be used to specify one or more bib files containing
 # the reference definitions. This must be a list of .bib files. The .bib
