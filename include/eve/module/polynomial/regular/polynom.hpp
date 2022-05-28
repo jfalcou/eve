@@ -13,6 +13,8 @@
 #include <eve/module/polynomial/regular/derivative.hpp>
 #include <eve/module/polynomial/regular/primitive.hpp>
 #include <eve/module/polynomial/regular/polyval.hpp>
+#include <eve/module/polynomial/regular/coefs.hpp>
+#include <eve/module/polynomial/regular/exponents.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/algo/copy.hpp>
@@ -21,10 +23,7 @@
 #include <eve/algo/reverse.hpp>
 #include <eve/algo/views/reverse.hpp>
 #include <eve/views/reverse.hpp>
-#include <eve/algo/iota.hpp>
-#include <eve/algo/fill.hpp>
-#include <eve/algo/find.hpp>
-#include <eve/algo/as_range.hpp>
+#include <eve/algo.hpp>
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -364,6 +363,21 @@ namespace eve
         eve::algo::reverse_copy(r, data);
       else
         eve::algo::copy(r, data);
+      normalize();
+    }
+
+    template <detail::range I, detail::range C>
+    polynom(I const & exponents, C const & coefs)
+      : data(exponents.begin() == exponents.end() ? 0 : *exponents.begin()+1)
+    {
+      [[maybe_unused]] auto s = exponents.begin() == exponents.end();
+      EVE_ASSERT(s >= exponents.end()-exponents.begin(), "number of coefs must must match the number of coefficients");
+      auto curc = coefs.begin();
+      auto d = size(data)-1;
+      for(auto cure = exponents.begin(); cure!= exponents.end(); ++cure, ++curc)
+      {
+        data[d-*cure] = *curc;
+      }
       normalize();
     }
 
@@ -1099,6 +1113,33 @@ namespace eve
          os << std::noshowpos;
       }
       return os;
+    }
+
+    //==============================================================================================
+    //== utilities
+    //==============================================================================================
+
+    friend auto tagged_dispatch( eve::tag::coefs_
+                                , polynom_t const & p0)
+    {
+      std::vector<value_type> c(p0.data);
+      eve::algo::remove_if(c, is_eqz);
+      c.resize(degree(p0)-valuation(p0));
+      return c;
+    }
+
+    friend auto tagged_dispatch( eve::tag::exponents_
+                                , polynom_t const & p0)
+    {
+      auto n = degree(p0);
+      auto ve = eve::algo::views::iota_with_step(n, -1, n+1);
+      std::vector<int> e(n+1);
+      eve::algo::copy(ve, e);
+      auto d = p0.data;
+      auto purge = [](auto pair){return is_eqz(get<1>(pair)); };
+      eve::algo::remove_if(eve::algo::views::zip(e, d), purge);
+      e.resize(degree(p0)-valuation(p0));
+      return e;
     }
 
     polynom_t& normalize()

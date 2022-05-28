@@ -178,10 +178,10 @@ namespace eve
                                                          , sparse_polynom_t const & p) noexcept
     {
       value_type n = degree(p);
-      sparse_polynom_t der;
       if(n < 1) return sparse_polynom_t();
       else
       {
+        sparse_polynom_t der;
         for (const auto& [i, e] : p.data) { der.data[i-1] = i*e; }
         return der.normalize();
       }
@@ -250,140 +250,78 @@ namespace eve
       return ders;
     }
 
-//     //==============================================================================================
-//     //== primitives
-//     //==============================================================================================
-//     friend sparse_polynom_t & tagged_dispatch( eve::tag::primitive_
-//                                       , inplace_type const &, sparse_polynom_t & p) noexcept
-//     {
-//       int n = degree(p);
-//       if(n < 0) return p;
-//       else if(n <= 1){ p.data.resize(n); return p;}
-//       else
-//       {
-//         value_type nvt = n+1;
-//         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
-//         auto divi = [](auto pair){
-//           auto [x, y] = pair;
-//           return x /= y;
-//         };
-//         eve::algo::transform_to(eve::algo::views::zip(p.data, factors), p.data, divi);
-//         p.data.resize(n+2);
-//         return p;
-//       }
-//     }
+    //==============================================================================================
+    //== primitives
+    //==============================================================================================
+    [[nodiscard]] friend sparse_polynom_t tagged_dispatch( eve::tag::primitive_
+                                                         , sparse_polynom_t const & p) noexcept
+    {
+      value_type n = degree(p);
+      if(n < 0) return sparse_polynom_t();
+      else
+      {
+        sparse_polynom_t prim;
+        for (const auto& [i, e] : p.data) { prim.data[i+1] = e/(i+1); }
+        return prim.normalize();
+      }
+    }
 
-//     [[nodiscard]] friend sparse_polynom_t tagged_dispatch( eve::tag::primitive_
-//                                                   , sparse_polynom_t const & p) noexcept
-//     {
-//       int n = degree(p);
-//       if(n < 0) return sparse_polynom_t();
-//       else
-//       {
-//         value_type nvt = n+1;
-//         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
-//         data_t datad(n+1);
-//         eve::algo::copy(p.data, datad);
-//         auto divi = [](auto pair){
-//             auto [x, y] = pair;
-//             return x /= y;
-//         };
-//         eve::algo::transform_to(eve::algo::views::zip(datad, factors), datad, divi);
-//         datad.resize(n+2);
-//         sparse_polynom_t prim(datad);
-//         return prim;
-//       }
-//     }
+   friend sparse_polynom_t tagged_dispatch( eve::tag::primitive_
+                                         , sparse_polynom_t & p, size_t m) noexcept
+    {
+      if (m == 0)      return p;
+      else if (m == 1) return primitive(p);
+      else
+      {
+        std::vector<value_type> f(p.data.size());
+        std::transform(p.data.begin(), p.data.end(), f.begin(), [](auto pair){return value_type(inc(pair.first)); });
+        auto factors(f);
+        auto mult = [](auto pair){
+          auto [x, y] = pair;
+          return x *= y;
+        };
+        for(size_t i=2; i <= m; ++i)
+        {
+          eve::algo::transform_inplace(f, inc);
+          eve::algo::transform_to(eve::algo::views::zip(factors, f), factors, mult);
+        }
+        sparse_polynom_t prim;
+        auto fit = factors.begin();
+        for (const auto& [i, v] : p.data) { prim.data[i+m] = v/(*fit++); }
+        return prim.normalize();
+      }
+    }
 
-//     [[nodiscard]] friend sparse_polynom_t tagged_dispatch( eve::tag::primitive_, sparse_polynom_t & p
-//                                     , size_t m) noexcept
-//     {
-//       int n = degree(p);
-//       if (m == 0 || n < 0) return p;
-//       else if (m == 1u) return primitive(p);
-//       else
-//       {
-//         value_type nvt = n+1;
-//         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)),n+1);
-//         data_t f(n+1);
-//         data_t datad(n+1);
-//         eve::algo::copy(p.data, datad);
-//         eve::algo::copy(factors, f);
-//         auto divi = [](auto pair)
-//           {
-//             auto [x, y] = pair;
-//             return x /= y;
-//           };
-//         eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
-//         for(size_t i=2; i <= m; ++i)
-//         {
-//           eve::algo::transform_inplace(f, inc);
-//           eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
-//         }
-//         datad.resize(n+m+1);
-//         sparse_polynom_t integ(datad);
-//         return integ;
-//       }
-//     }
+   [[nodiscard]] friend auto tagged_dispatch( eve::tag::primitive_, sparse_polynom_t const & p
+                                             , size_t m, eve::callable_all_) noexcept
+    {
+      int n = degree(p);
+      std::vector<sparse_polynom_t> prims(m+1);
+      if  (n < 0) return prims;
+      prims[0] = p;
+      if (m == 0) return prims;
+      prims[1] = primitive(p);
+      if (m == 1) return prims;
 
-//     friend sparse_polynom_t tagged_dispatch( eve::tag::primitive_, inplace_type const &
-//                                     , sparse_polynom_t & p, size_t m) noexcept
-//     {
-//       int n = degree(p);
-//       if (m == 0 || n < 0) return p;
-//       else if (m == 1u) return inplace(primitive)(p);
-//       else
-//       {
-//         value_type nvt = n+1;
-//         auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)),n+1);
-//         data_t f(n+1);
-//         eve::algo::copy(factors, f);
-//         auto divi = [](auto pair) {
-//           auto [x, y] = pair;
-//           return x /= y;
-//         };
-//         eve::algo::transform_to(eve::algo::views::zip(p.data, f), p.data, divi);
-//         for(size_t i=2; i <= m; ++i)
-//         {
-//           eve::algo::transform_inplace(f, inc);
-//           eve::algo::transform_to(eve::algo::views::zip(p.data, f), p.data, divi);
-//         }
-//         p.data.resize(n+m+1);
-//         return p;
-//       }
-//     }
-
-//     [[nodiscard]] friend auto tagged_dispatch( eve::tag::primitive_
-//                                              , sparse_polynom_t const & p, size_t m
-//                                              , eve::callable_all_) noexcept
-//     {
-//       int n = degree(p);
-//       std::vector<sparse_polynom_t> prims(m+1);
-//       prims[0] = p;
-//       if (m == 0 || n <= 0) return prims;
-//       prims[1] = primitive(p);
-//       if (m == 1) return prims;
-//       value_type nvt = n+1;
-//       auto factors = eve::algo::views::iota_with_step(nvt, mone(as(nvt)), n+1);
-//       data_t f(n+1);
-//       data_t datad(n+1);
-//       eve::algo::copy(p.data, datad);
-//       eve::algo::copy(factors, f);
-//       auto divi = [](auto pair) {
-//         auto [x, y] = pair;
-//         return x /= y;
-//       };
-//       eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
-
-//       for(size_t i=2; i <= m; ++i)
-//       {
-//         eve::algo::transform_inplace(f, inc);
-//         eve::algo::transform_to(eve::algo::views::zip(datad, f), datad, divi);
-//         prims[i] = sparse_polynom_t(datad);
-//         prims[i].data.resize(n+i+1);
-//       }
-//       return prims;
-//     }
+      std::vector<value_type> f(p.data.size());
+      std::transform(p.data.begin(), p.data.end(), f.begin(), [](auto pair){return value_type(inc(pair.first)); });
+      auto factors(f);
+      auto mult = [](auto pair){
+        auto [x, y] = pair;
+        return x *= y;
+      };
+      for(size_t i=2; i <= m; ++i)
+      {
+        eve::algo::transform_inplace(f, inc);
+        eve::algo::transform_to(eve::algo::views::zip(factors, f), factors, mult);
+        auto fit = factors.begin();
+        for (const auto& [j, v] : p.data) {  prims[i].data[i+j] = v/(*fit++);
+          std::cout << prims[i].data[i+j] << std::endl;
+        }
+        prims[i].normalize();
+      }
+      return prims;
+    }
 
     //==============================================================================================
     //=== operators
@@ -823,6 +761,34 @@ namespace eve
         }
       }
       return os << std::noshowpos;
+    }
+
+    friend value_type  tagged_dispatch( eve::tag::dist_
+                                , sparse_polynom_t const & p0, sparse_polynom_t const & p1)
+    {
+      value_type s = 0;
+      for (auto pair : (p0-p1).data){ s = maxabs(pair.second, s); }
+      return s;
+    }
+
+    //==============================================================================================
+    //== utilities
+    //==============================================================================================
+
+    friend auto tagged_dispatch( eve::tag::coefs_
+                                , sparse_polynom_t const & p0)
+    {
+      std::vector<value_type> c(p0.data.size());
+      std::transform(p0.data.begin(), p0.data.end(), c.begin(), [](auto pair){return pair.second; });
+      return c;
+    }
+
+    friend auto tagged_dispatch( eve::tag::exponents_
+                                , sparse_polynom_t const & p0)
+    {
+      std::vector<int> e(p0.data.size());
+      std::transform(p0.data.begin(), p0.data.end(), e.begin(), [](auto pair){return pair.first; });
+      return e;
     }
 
     sparse_polynom_t & normalize()

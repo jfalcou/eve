@@ -15,37 +15,32 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST( "Check behavior of horner on wide"
+EVE_TEST_TYPES( "Check behavior of polynom constructors"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(0))
         )
-<typename T>(T const& a0)
+<typename T>(eve::as<T>)
 {
+//   auto print = [](std::string const & title, auto v1){
+
+//     auto s = v1.size()-1;
+//     std::cout << title << " = {";
+//     if (s > 1) for(size_t i=0; i < s; ++i) std::cout << v1[i] << ", ";
+//     if (s >= 1) std::cout << v1[s];
+//     std::cout << "}" << std::endl; ;
+//   };
   using elt_t = eve::element_type_t<T>;
   using polynom_t = eve::polynom<elt_t>;
   using monom_t   = eve::monom<elt_t>;
-  std::vector<elt_t> c0{1, 2, 3, 4};
+  std::vector<elt_t> c0{1, 2, 0, 4};
+  std::vector<elt_t> c1{4, 0, 2, 1};
+  std::vector<elt_t> coef0{1, 2, 4};
+  std::vector<int>   expo0{3, 2, 0};
   polynom_t p0(c0);
-  polynom_t p1{1, 2, 3, 4};
-  polynom_t p2(c0, eve::upward);
-  polynom_t p3{4, 3, 2, 1};
+  polynom_t p1(c1, eve::upward);
+  TTS_EXPECT(p0 == p1);
+  polynom_t p2(expo0, coef0);
+  TTS_EXPECT(p0 == p2);
   polynom_t p4(monom_t(5.0f, 3));
   polynom_t p5{5.0f, 0, 0, 0};
-  TTS_EQUAL(p1(a0), p0(a0));
-  TTS_EQUAL(p3(a0), p2(a0));
-
-  auto d = degree(p0);
-  TTS_EQUAL(d, degree(p2));
-  for(int i=0; i <= degree(p0) ; ++i)
-  {
-    TTS_EQUAL(p0[i], elt_t(d-i+1));
-  }
-  for(int i=0; i <= degree(p2) ; ++i)
-  {
-    TTS_EQUAL(p2[i], c0[i]);
-  }
-  for(int i=0; i <= degree(p5) ; ++i)
-  {
-    TTS_EQUAL(p4[i], p5[i]);
-  }
+  TTS_EXPECT(p5 == p4);
 };

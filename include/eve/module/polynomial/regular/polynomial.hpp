@@ -9,6 +9,8 @@
 
 #include <eve/module/polynomial/regular/polynom.hpp>
 #include <eve/module/polynomial/regular/sparse_polynom.hpp>
+#include <eve/module/polynomial/regular/coefs.hpp>
+#include <eve/module/polynomial/regular/exponents.hpp>
 #include <eve/module/polynomial/regular/derivative.hpp>
 #include <eve/module/polynomial/regular/primitive.hpp>
 #include <eve/module/polynomial/regular/polyval.hpp>
