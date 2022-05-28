@@ -35,9 +35,9 @@ EVE_TEST( "Check behavior of horner on wide"
   TTS_EQUAL(degree(yr), degree(p0));
   TTS_GREATER_EQUAL(valuation(yr), degree(y)+1);
   TTS_EXPECT(p0 == (yr+y));
-  polynom_t g = concat(y, yr/monom_t(elt_t(1), degree(y)+1));
-  TTS_EXPECT(p0 == g);
-  monom_t x5(elt_t(3), 5);
+//   polynom_t g = concat(y, yr/monom_t(degree(y)+1, elt_t(1));
+//   TTS_EXPECT(p0 == g);
+  monom_t x5(5, elt_t(3));
   TTS_EXPECT(young(3, x5) == monom_t());
   TTS_EXPECT(young(6, x5) == x5);
   TTS_EXPECT(young_remainder(6, x5) == monom_t());

@@ -29,7 +29,7 @@ EVE_TEST_TYPES( "Check behavior of *"
     polynom_t const c0{1, 2, 3}; //, 4, 5};
     polynom_t const c1{1, 0, 2};
     elt_t two(2);
-    monom_t m2(3.0, 2);
+    monom_t m2(2, 3.0);
     sparse_polynom_t p0(c0);
     sparse_polynom_t p1(c1);
     std::cout << "c0 " << c0 << std::endl;
@@ -67,7 +67,7 @@ EVE_TEST_TYPES( "Check behavior of *= "
     polynom_t const c0{1, 2, 3, 4, 5};
     polynom_t const c1{1, 0, 2};
    elt_t two(2);
-   monom_t m2(1.0, 2);
+   monom_t m2(2, 1.0);
     sparse_polynom_t p0(c0);
    sparse_polynom_t p1(c1);
     p0*= p1;

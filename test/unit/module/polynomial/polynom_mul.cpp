@@ -28,9 +28,9 @@ EVE_TEST_TYPES( "Check behavior of *"
     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
     std::vector<elt_t> const c1{1, 0, 2};
     elt_t two(2);
-    monom_t m2(1.0, 2);
-    monom_t m4(2.0, 4);
-    monom_t m6(2.0, 6);
+    monom_t m2(2, 1.0);
+    monom_t m4(4, 2.0);
+    monom_t m6(6, 2.0);
     polynom_t p0(c0);
     polynom_t p1(c1);
     polynom_t p2 =  p0*two;
@@ -62,9 +62,9 @@ EVE_TEST_TYPES( "Check behavior of *= "
     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
     std::vector<elt_t> const c1{1, 0, 2};
     elt_t two(2);
-    monom_t m2(1.0, 2);
-    monom_t m4(2.0, 4);
-    monom_t m6(2.0, 6);
+    monom_t m2(2, 1.0);
+    monom_t m4(4, 2.0);
+    monom_t m6(6, 2.0);
     polynom_t p0(c0);
     polynom_t p1(c1);
     polynom_t p2 =  p0*two;
@@ -100,9 +100,9 @@ EVE_TEST_TYPES( "Check behavior of * in special cases"
     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
     std::vector<elt_t> const c1{1, 0, 2};
     elt_t z(0);
-    monom_t mz(0.0, 2);
-    monom_t m4(2.0, 4);
-    monom_t m6(2.0, 6);
+    monom_t mz(2, 0.0);
+    monom_t m4(4, 2.0);
+    monom_t m6(6, 2.0);
     polynom_t p0(c0);
     polynom_t pz =  p0*z;
     polynom_t p2 =  p0*mz;

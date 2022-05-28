@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check behavior of -"
     polynom_t p1(c1);
     polynom_t p2(c2);
     TTS_EXPECT((p0-p1) == p2);
-    monom_t threex2(3.0, 2);
+    monom_t threex2(2, 3.0);
     polynom_t p3{1, 2, 0, 4, 5};
     TTS_EXPECT((p0-threex2) == p3);
     TTS_EXPECT((threex2-p0)== -p3);
@@ -62,7 +62,7 @@ EVE_TEST_TYPES( "Check behavior of -= "
     auto z = p0;
     z-= p1;
     TTS_EXPECT(z == p2);
-    monom_t threex2(3.0, 2);
+    monom_t threex2(2, 3.0);
     polynom_t p3{1, 2, 0, 4, 5};
     z = p0;
     z-= threex2;
@@ -87,7 +87,7 @@ EVE_TEST_TYPES( "Check behavior of - in special cases"
     using monom_t   = eve::monom<elt_t>;
     polynom_t const p0{1, 2, 3, 4, 5};
     polynom_t const p1{2, 0, 0};
-    monom_t m0(2.0, 2);
+    monom_t m0(2, 2.0);
     auto pz1 = p0-p0;
     auto pz2 = p1-m0;
     auto pz3 = p1-p1;

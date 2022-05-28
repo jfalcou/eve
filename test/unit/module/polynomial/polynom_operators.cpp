@@ -30,7 +30,7 @@ EVE_TEST_TYPES( "Check behavior of opertor() : evaluation"
     using monom_t   = eve::monom<elt_t>;
     polynom_t p0{1, 2, 3, 4, 5};
     polynom_t p1{1, 0, 2};
-    monom_t   m2(3.0, 4);
+    monom_t   m2(4, 3.0);
     TTS_EQUAL(p0(elt_t(1)), elt_t(15));
     TTS_EQUAL(p1(elt_t(1)), elt_t(3));
     TTS_EQUAL(p0(elt_t(1)), elt_t(15));

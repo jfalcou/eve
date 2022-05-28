@@ -29,7 +29,7 @@ EVE_TEST_TYPES( "Check behavior of +"
     std::vector<elt_t> const c0{1, 2, 3, 0, 5};
     std::vector<elt_t> const c1{1, -3, 2, 4};
     elt_t two(2);
-    monom_t m2(1.0, 2);
+    monom_t m2(2, 1.0);
     polynom_t p0(c0);
     sparse_polynom_t sp0(p0);
     polynom_t p1(c1);
@@ -58,7 +58,7 @@ EVE_TEST_TYPES( "Check behavior of += "
     std::vector<elt_t> const c0{1, 2, 3, 0, 5};
     std::vector<elt_t> const c1{1, -3, 2, 4};
     elt_t two(2);
-    monom_t m2(1.0, 2);
+    monom_t m2(2, 1.0);
     polynom_t p0(c0);
     sparse_polynom_t sp0(p0);
     polynom_t p1(c1);

@@ -29,8 +29,8 @@ EVE_TEST_TYPES( "Check behavior of +"
     std::vector<elt_t> const c1{1, 0, 2};
     std::vector<elt_t> const c2{1, 2, 4, 4, 7};
     elt_t two(2);
-    monom_t m2(1.0, 2);
-    monom_t m4(2.0, 4);
+    monom_t m2(2, 1.0);
+    monom_t m4(4, 2.0);
     polynom_t m6{2.0, 0.f, 1.0f, 0.f, 0.f};
     polynom_t p0(c0);
     polynom_t p1(c1);
@@ -67,9 +67,9 @@ EVE_TEST_TYPES( "Check behavior of += "
     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
     std::vector<elt_t> const c1{1, 0, 2};
     elt_t two(2);
-    monom_t m2(1.0, 2);
-    monom_t m4(2.0, 4);
-    monom_t m6(2.0, 6);
+    monom_t m2(2, 1.0);
+    monom_t m4(4, 2.0);
+    monom_t m6(6, 2.0);
     polynom_t p0(c0);
     polynom_t p1(c1);
     polynom_t p2 =  p0+two;
@@ -116,9 +116,9 @@ EVE_TEST_TYPES( "Check behavior of + in special cases"
     using monom_t   = eve::monom<elt_t>;
     std::vector<elt_t> const c0{1, 2, 3, 4, 5};
     std::vector<elt_t> const c1{1, 0, 2};
-    monom_t mz(1.0, 2);
-    monom_t mz1(-1.0, 2);
-    monom_t mx(2.0, 0);
+    monom_t mz(2, 1.0);
+    monom_t mz1(2, -1.0);
+    monom_t mx(0, 2.0);
     elt_t two(-2);
     polynom_t p0(c0);
     polynom_t p1 = -p0;

@@ -29,7 +29,7 @@ EVE_TEST_TYPES( "Check behavior of -"
     polynom_t p0{1, 2, 3, 0, 5};
     polynom_t p1{1, -3, 2, 4};
     elt_t two(2);
-    monom_t m2(1.0, 2);
+    monom_t m2(2, 1.0);
     sparse_polynom_t sp0(p0);
     sparse_polynom_t sp1(p1);
 //     std::cout << "p0  " << p0 << std::endl;
@@ -65,7 +65,7 @@ EVE_TEST_TYPES( "Check behavior of -= "
     polynom_t p0{1, 2, 3, 0, 5};
     polynom_t p1{1, -3, 2, 4};
     elt_t two(2);
-    monom_t m2(1.0, 2);
+    monom_t m2(2, 1.0);
     sparse_polynom_t sp0(p0);
     sparse_polynom_t sp1(p1);
     auto sum(sp0);

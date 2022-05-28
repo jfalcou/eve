@@ -34,7 +34,7 @@ EVE_TEST_TYPES( "Check behavior of remquo"
       TTS_EXPECT(q ==  p2);
       TTS_EXPECT(r ==  p3);
       TTS_EXPECT(p0 == (p1*q+r));
-      monom_t x2(3.0, 2);
+      monom_t x2(2, 3.0);
       auto [r1, q1] = remquo(p0, x2);
       polynom_t p4{1, 2, 3};
       polynom_t p5{4, 5};
@@ -46,9 +46,9 @@ EVE_TEST_TYPES( "Check behavior of remquo"
       polynom_t p7;
       TTS_EXPECT(r2 ==  p7);
       TTS_EXPECT(q2 ==  p6);
-      monom_t x4(2.0, 4);
+      monom_t x4(4, 2.0);
       auto [r3, q3] = remquo(x4, x2);
-      monom_t m2(2.0/3.0, 2);
+      monom_t m2(2, 2.0/3.0);
       polynom_t p8;
       TTS_EXPECT(r3 ==  p8);
       TTS_EXPECT(q3 ==  m2);
@@ -59,7 +59,7 @@ EVE_TEST_TYPES( "Check behavior of remquo"
       TTS_EXPECT(q ==  polynom_t());
       TTS_EXPECT(r ==  p1);
       TTS_EXPECT(p1 == (p0*q+r));
-      monom_t x2(3.0, 2);
+      monom_t x2(2, 3.0);
       auto [r1, q1] = remquo(x2, p0);
       TTS_EXPECT(q1 ==  polynom_t());
       TTS_EXPECT(r1 ==  polynom_t(x2));
@@ -89,7 +89,7 @@ EVE_TEST_TYPES( "Check behavior of remquo in corner cases"
     TTS_EXPECT(q ==  p2);
     TTS_EXPECT(r ==  p3);
     TTS_EXPECT(p0 == (p1*q+r));
-    monom_t x2(3.0, 2);
+    monom_t x2(2, 3.0);
     auto [r1, q1] = remquo(p0, x2);
     polynom_t p4{1, 2, 3};
     polynom_t p5{4, 5};

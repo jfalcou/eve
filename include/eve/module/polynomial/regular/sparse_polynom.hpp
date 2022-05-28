@@ -385,7 +385,7 @@ namespace eve
       if (is_null(p0)) return monom_t();
       else
       {
-        monom_t m(p0.data.begin()->second, p0.data.begin()->first);
+        monom_t m(p0.data.begin()->first, p0.data.begin()->second);
         return m;
       }
     }
@@ -481,7 +481,7 @@ namespace eve
         sparse_polynom_t r;
         for (const auto& [i, v] : other.data )
         {
-          auto z = monom_t(v, i);
+          auto z = monom_t(i, v);
           r += (*this)*z;
         }
         *this = r;
@@ -491,7 +491,7 @@ namespace eve
         sparse_polynom_t r;
         for (const auto& [j, v] : data )
         {
-          auto z = monom_t(v, j);
+          auto z = monom_t(j, v);
           r+= other*z;
         }
         *this = r;

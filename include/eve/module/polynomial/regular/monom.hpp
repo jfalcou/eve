@@ -99,7 +99,7 @@ namespace eve
 
   template<floating_scalar_value Type>
   struct sparse_polynom;
-  
+
   template<floating_scalar_value Type>
   struct polynom;
 
@@ -113,9 +113,8 @@ namespace eve
     using data_t = typename polynom_t::data_t;
 
     monom():deg(-1), data(0){};
-    monom(value_type val, int degree) :deg(degree), data(val){if (data == 0) deg = -1; };
-    monom(kumi::tuple<int, value_type> pair) : monom(pair.second, pair.first){};
-    monom(int degree) :deg(degree), data(value_type(1)){};
+    monom(int degree, value_type val) :deg(degree), data(val){if (data == 0) deg = -1; };
+    monom(kumi::tuple<int, value_type> pair) : deg(get<0>(pair)), data(get<1>(pair)){if (data == 0) deg = -1;};
 
     explicit operator polynom_t()
     {
@@ -134,13 +133,13 @@ namespace eve
     monom_t friend operator*(monom_t const & m1,  monom_t const & m2)
     {
       if (m1.deg < 0 || m2.deg < 0) return monom_t();
-      return monom_t(m1.data*m2.data, m1.deg+m2.deg);
+      return monom_t(m1.deg+m2.deg, m1.data*m2.data);
     }
 
     monom_t friend operator*(monom_t const & m1,  value_type const & m2)
     {
       if (m1.deg < 0 || is_eqz(m2)) return monom_t();
-      return monom_t(m1.data*m2, m1.deg);
+      return monom_t(m1.deg, m1.data*m2);
     }
 
     monom_t friend operator*(value_type const & m1, monom_t const & m2 )
@@ -230,16 +229,16 @@ namespace eve
 
     monom_t friend operator-(monom_t const & m)
     {
-      return monom_t(-m.data, m.deg);
+      return monom_t(m.deg, -m.data);
     }
 
     kumi::tuple<monom_t, monom_t> friend remquo(monom_t const & m0, monom_t const & m1)
     {
       if (m1.data == 0) return {monom_t(-1, nan(as<value_type>())), monom_t(-1, nan(as<value_type>()))};
       if (m0.deg >= m1.deg)
-        return {monom_t(), monom_t(m0.data/m1.data, m0.deg-m1.deg)};
+        return {monom_t(), monom_t(m0.deg-m1.deg, m0.data/m1.data)};
       else
-        return {monom_t(m0.data, m0.deg), monom_t()};
+        return {monom_t(m0.deg, m0.data), monom_t()};
     }
 
     monom_t friend operator/(monom_t const & m0, monom_t const & m1)

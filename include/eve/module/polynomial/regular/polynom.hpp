@@ -554,7 +554,7 @@ namespace eve
 
     template < typename Other>
     friend polynom_t operator-(polynom_t const & p0, Other const & o)
-    {
+    {     
       return p0+(-o);
     }
 
@@ -663,7 +663,7 @@ namespace eve
         {
           auto t = r.data[0]/d.data[0];
           q.data[++i] = t;
-          r = r-monom(t, deg)*d;
+          r = r-monom(deg, t)*d;
           --deg;
         }
 
@@ -778,7 +778,7 @@ namespace eve
     {
       auto d = degree(p0);
       if (d == -1) return p1;
-      else return p0+monom_t(value_type(1), d+1)*p1;
+      else return p0+monom_t(d+1, value_type(1))*p1;
     }
 
 

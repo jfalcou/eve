@@ -36,7 +36,7 @@ EVE_TEST( "Check behavior of horner on wide"
 
 //   sparse_polynom_t p2(c0, eve::upward);
 //   sparse_polynom_t p3{4, 3, 2, 1};
-  sparse_polynom_t p4(monom_t(5.0f, 3));
+  sparse_polynom_t p4(monom_t(3, 5.0));
   sparse_polynom_t p4b{{3, 5.0f}};
   TTS_EXPECT((p4 == p4b));
   std::cout << p4 << std::endl;
