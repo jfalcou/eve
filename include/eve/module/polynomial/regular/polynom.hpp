@@ -554,7 +554,7 @@ namespace eve
 
     template < typename Other>
     friend polynom_t operator-(polynom_t const & p0, Other const & o)
-    {     
+    {
       return p0+(-o);
     }
 
@@ -878,6 +878,25 @@ namespace eve
          os << std::noshowpos;
       }
       return os;
+    }
+
+    template<typename Other>
+    friend value_type  tagged_dispatch( eve::tag::dist_
+                                , polynom_t const & p0, Other const & p1)
+      requires(is_one_of<Other>(detail::types<polynom_t, monom_t, value_type> {}))
+    {
+      return eve::algo::reduce((p0-p1).data, maxabs);
+//       value_type s = 0;
+//       for (auto c : (p0-p1).data){ s = maxabs(c, s); }
+//       return s;
+    }
+
+    template<typename Other>
+    friend value_type  tagged_dispatch( eve::tag::dist_
+                                , Other const & p0, polynom_t const & p1)
+      requires(is_one_of<Other>(detail::types<monom_t, value_type> {}))
+    {
+      return dist(p1-p0);
     }
 
     //==============================================================================================

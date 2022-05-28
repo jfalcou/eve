@@ -763,12 +763,22 @@ namespace eve
       return os << std::noshowpos;
     }
 
+    template<typename Other>
     friend value_type  tagged_dispatch( eve::tag::dist_
-                                , sparse_polynom_t const & p0, sparse_polynom_t const & p1)
+                                , sparse_polynom_t const & p0, Other const & p1)
+      requires(is_one_of<Other>(detail::types<sparse_polynom_t, polynom_t, monom_t, value_type> {}))
     {
       value_type s = 0;
       for (auto pair : (p0-p1).data){ s = maxabs(pair.second, s); }
       return s;
+    }
+
+    template<typename Other>
+    friend value_type  tagged_dispatch( eve::tag::dist_
+                                , Other const & p0, sparse_polynom_t const & p1)
+      requires(is_one_of<Other>(detail::types<polynom_t, monom_t, value_type> {}))
+    {
+      return dist(p1-p0);
     }
 
     //==============================================================================================

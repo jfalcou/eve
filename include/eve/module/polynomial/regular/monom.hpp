@@ -110,16 +110,17 @@ namespace eve
     using value_type = Type;
     using monom_t  = monom<value_type>;
     using polynom_t = polynom<value_type>;
+    using sparse_polynom_t = sparse_polynom<value_type>;
     using data_t = typename polynom_t::data_t;
 
     monom():deg(-1), data(0){};
     monom(int degree, value_type val) :deg(degree), data(val){if (data == 0) deg = -1; };
     monom(kumi::tuple<int, value_type> pair) : deg(get<0>(pair)), data(get<1>(pair)){if (data == 0) deg = -1;};
 
-    explicit operator polynom_t()
-    {
-      return *this;
-    };
+//     explicit operator polynom_t()
+//     {
+//       return *this;
+//     };
 
     template<integral_value I>
     auto operator[](I const & i) const noexcept
@@ -152,28 +153,38 @@ namespace eve
       return *this = (*this)*m;
     }
 
-    polynom_t friend operator+(monom_t const & m0,  monom_t const & m1)
+    sparse_polynom_t friend operator+(monom_t const & m0,  monom_t const & m1)
     {
-      auto maxd = max(m0.deg, m1.deg);
-      data_t r;
-      r.resize(maxd+1);
-      auto d = m0.deg-m1.deg;
-      if (d == 0)
+       if (degree(m0) == degree(m1))
       {
-        r[0] = m1.data+m0.data;
-      }
-      else if (m0.deg > m1.deg)
-      {
-        r[0] = m0.data;
-        r[d] = m1.data;
+        if(m0.data+m1.data == zero(as<value_type>())) return sparse_polynom_t();
+        else return sparse_polynom_t(m0.deg, m0.data+m1.data);
       }
       else
       {
-        r[0] = m1.data;
-        r[-d] = m0.data;
+        return sparse_polynom_t{{m0.deg, m0.data}, {m1.deg, m1.data}};
       }
-      return polynom_t(r);
     }
+ //      auto maxd = max(m0.deg, m1.deg);
+//       data_t r;
+//       r.resize(maxd+1);
+//       auto d = m0.deg-m1.deg;
+//       if (d == 0)
+//       {
+//         r[0] = m1.data+m0.data;
+//       }
+//       else if (m0.deg > m1.deg)
+//       {
+//         r[0] = m0.data;
+//         r[d] = m1.data;
+//       }
+//       else
+//       {
+//         r[0] = m1.data;
+//         r[-d] = m0.data;
+//       }
+//      return polynom_t(r);
+//    }
 
     polynom_t friend operator+(monom_t const & m0,  value_type const & m1)
     {
@@ -186,17 +197,17 @@ namespace eve
       }
     }
 
-    polynom_t friend operator-(monom_t const & m0,  monom_t const & m1)
+    sparse_polynom_t friend operator-(monom_t const & m0,  monom_t const & m1)
     {
       return m0+(-m1);
     }
 
-    polynom_t friend operator-(monom_t const & m1,  value_type const & m0)
+    sparse_polynom_t friend operator-(monom_t const & m1,  value_type const & m0)
     {
       if(is_eqz(m0)) return polynom_t(m1);
       else
       {
-        polynom_t p(m1);
+        sparse_polynom_t p(m1);
         p -= m0;
         return p;
       }
@@ -241,7 +252,7 @@ namespace eve
         return {monom_t(m0.deg, m0.data), monom_t()};
     }
 
-    monom_t friend operator/(monom_t const & m0, monom_t const & m1)
+    auto friend operator/(monom_t const & m0, monom_t const & m1)
     {
       auto [_, q] = remquo(m0, m1);
       return q;
@@ -253,7 +264,7 @@ namespace eve
       return *this = q;
     }
 
-    monom_t friend operator%(monom_t const & m0, monom_t const & m1)
+    auto friend operator%(monom_t const & m0, monom_t const & m1)
     {
       auto [r, _] = remquo(m0, m1);
       return r;
@@ -329,6 +340,27 @@ namespace eve
     friend value_type coef(monom_t const & m)
     {
       return m.data;
+    }
+
+  friend auto tagged_dispatch( eve::tag::coefs_
+                                , monom_t const & p0)
+    {
+      std::vector<value_type> c(1, p0.data);
+      return c;
+    }
+
+    friend auto tagged_dispatch( eve::tag::exponents_
+                                , monom_t const & p0)
+    {
+      std::vector<int> e(1, p0.data);
+      return e;
+    }
+
+    friend value_type  tagged_dispatch( eve::tag::dist_
+                                , monom_t const & m0, monom_t const & m1)
+    {
+      if (m0.deg !=  m1.deg) return maxabs(m0.data, m1.data);
+      else return abs(m0.data-m1.data);
     }
 
   private :
