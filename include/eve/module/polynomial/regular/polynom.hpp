@@ -135,7 +135,7 @@ namespace eve
     polynom(I const & exponents, C const & coefs)
       : data(exponents.begin() == exponents.end() ? 0 : *exponents.begin()+1)
     {
-      [[maybe_unused]] auto s = exponents.begin() == exponents.end();
+      [[maybe_unused]] auto s = coefs.end() - coefs.begin();
       EVE_ASSERT(s >= exponents.end()-exponents.begin(), "number of coefs must must match the number of coefficients");
       auto curc = coefs.begin();
       auto d = size(data)-1;
