@@ -27,5 +27,5 @@ EVE_TEST( "Check behavior of sparse_polynom evaluation"
   std::vector<elt_t> const c0{0, 1, 0, 3, 0, 5, 0, 7, 0, 9};
   polynom_t p0(c0);
   sparse_polynom_t sp0(p0);
-  TTS_ULP_EQUAL(p0(x), sp0(x), 1.0);
+  TTS_ULP_EQUAL(p0(x), sp0(x), 2);
 };
