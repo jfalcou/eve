@@ -35,13 +35,10 @@ EVE_TEST_TYPES( "Check behavior of primitive"
     for(size_t i=0; i < 8u; ++i)
     {
       TTS_EXPECT((eve::dist(prims[i], prim) < eve::eps(eve::as<elt_t>())));
-      std::cout << "i " << i << std::endl;
       prim = eve::primitive(prim);
       sprim = eve::primitive(sprim);
-      auto z = eve::dist(eve::primitive(sp0, i+1), sparse_polynom_t(eve::primitive(p0, i+1)));
-      std::cout << (z < eve::eps(eve::as<elt_t>())) << std::endl;
       TTS_EXPECT((eve::dist(eve::primitive(sp0, i+1), sparse_polynom_t(eve::primitive(p0, i+1))) < eve::eps(eve::as<elt_t>())));
-      TTS_EXPECT(sprim == sparse_polynom_t(prim));
+      TTS_EXPECT((eve::dist(sprim, sparse_polynom_t(prim))< eve::eps(eve::as<elt_t>())));;
     }
   } else TTS_PASS("");
 };
