@@ -557,9 +557,7 @@ namespace eve
     //! to the current one. See also: eve::add
     template<real_value V>
     friend  EVE_FORCEINLINE auto& operator+=(wide& w, V v) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
     requires( !kumi::product_type<Type> )
-#endif
     {
       return detail::self_add(w, v);
     }
@@ -592,9 +590,7 @@ namespace eve
     //! the result to the current one. See also: eve::sub
     template<value V>
     friend  EVE_FORCEINLINE auto& operator-=(wide& w, V v) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
     requires( !kumi::product_type<Type> )
-#endif
     {
       return detail::self_sub(w, v);
     }
@@ -609,14 +605,16 @@ namespace eve
 
     //! @brief Perform the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator-(real_scalar_value auto s, wide const& v) noexcept
+    requires( !kumi::product_type<Type> )
     {
       return wide(s) - v;
     }
 
     //! @brief Perform the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(wide const& v, scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator-(wide const& v, real_scalar_value auto s) noexcept
+    requires( !kumi::product_type<Type> )
     {
       return v - wide(s);
     }

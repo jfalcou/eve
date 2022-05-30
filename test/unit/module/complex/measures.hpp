@@ -18,7 +18,7 @@ namespace tts
     auto [rr, ir] = r;
     auto d = eve::if_else ( eve::almost(eve::is_real)(diff)
                           , eve::ulpdist(rl, rr)
-                          , eve::if_else(eve::almost(eve::is_imag)(diff)
+                          , eve::if_else( eve::almost(eve::is_imag)(diff)
                                         , eve::ulpdist(il, ir)
                                         , eve::ulpdist(l, r)
                                         )

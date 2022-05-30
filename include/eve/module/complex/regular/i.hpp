@@ -9,7 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-#include "eve/traits/as_floating_point.hpp"
+#include <eve/traits/as_floating_point.hpp>
 
 namespace eve
 {
@@ -72,6 +72,21 @@ namespace eve
     template<value Z> EVE_FORCEINLINE auto operator+(callable_i_ const& ii, Z rhs ) noexcept
     {
       return rhs + ii;
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator-(Z lhs, callable_i_ const& ii) noexcept
+    {
+      if constexpr( is_complex_v<Z> ) return lhs -= ii;
+      else
+      {
+        as_complex_t<as_floating_point_t<Z>> that{lhs,0};
+        return that -= ii;
+      }
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator-(callable_i_ const&, Z rhs ) noexcept
+    {
+      return i(as<as_real_t<Z>>()) - rhs;
     }
   }
 
