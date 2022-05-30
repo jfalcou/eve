@@ -588,7 +588,7 @@ namespace eve
 
     //! @brief Perform the compound difference on all the wide lanes and assign
     //! the result to the current one. See also: eve::sub
-    template<value V>
+    template<real_value V>
     friend  EVE_FORCEINLINE auto& operator-=(wide& w, V v) noexcept
     requires( !kumi::product_type<Type> )
     {
@@ -621,7 +621,7 @@ namespace eve
 
     //! @brief Perform the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
-    template<value V>
+    template<real_value V>
     friend  EVE_FORCEINLINE auto& operator*=(wide& w, V o) noexcept
     requires( !kumi::product_type<Type> )
     {
@@ -655,7 +655,8 @@ namespace eve
 
     //! @brief Perform the compound division on all the wide lanes and assign
     //! the result to the current one. See also: eve::div
-    friend  EVE_FORCEINLINE auto& operator/=(wide& w, value auto o) noexcept
+    template<real_value V>
+    friend  EVE_FORCEINLINE auto& operator/=(wide& w, V o) noexcept
     requires( !kumi::product_type<Type> )
     {
       return detail::self_div(w, o);

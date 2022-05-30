@@ -157,7 +157,7 @@ namespace eve
     EVE_FORCEINLINE friend auto& operator-=(like<complex> auto& self, callable_i_ const&) noexcept
     {
       imag(self)--;
-        return self;
+      return self;
     }
 
     template<typename Z>
@@ -180,8 +180,8 @@ namespace eve
     EVE_FORCEINLINE friend  auto operator-(Z1 const& x, Z2 const& y) noexcept
     requires(requires(as_wide_as_t<Z2,Z1> t) { t -= y; })
     {
-      as_wide_as_t<Z2,Z1> that(x,0);
-      return that -= y;
+      as_wide_as_t<Z2,Z1> that{-y};
+      return x + that;
     }
 
     //==============================================================================================
@@ -226,8 +226,7 @@ namespace eve
     EVE_FORCEINLINE friend  auto operator*(Z1 const& x, Z2 const& y) noexcept
     requires(requires(as_wide_as_t<Z2,Z1> t) { t *= y; })
     {
-      as_wide_as_t<Z2,Z1> that(x,0);
-      return that *= y;
+      return y * x;
     }
 
     //==============================================================================================
