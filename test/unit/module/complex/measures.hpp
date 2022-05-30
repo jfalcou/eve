@@ -41,10 +41,22 @@ namespace tts
     return ulp_distance_impl(l,r);
   }
 
-  // template<typename T> auto relative_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
-  // {
-  //   return eve::maximum(eve::reldist(l, r));
-  // }
+  template<typename T> auto relative_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
+  {
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+
+    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
+  }
+
+  template<typename T, typename N>
+  auto relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_complex_v<T>)
+  {
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+
+    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
+  }
 
   template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
   {
