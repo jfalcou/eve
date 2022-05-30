@@ -16,6 +16,7 @@
 #include <eve/module/complex/regular/detail/math.hpp>
 #include <eve/module/complex/regular/detail/predicates.hpp>
 #include <eve/product_type.hpp>
+#include "eve/module/core/constant/one.hpp"
 #include <ostream>
 
 namespace eve
@@ -182,5 +183,51 @@ namespace eve
       as_wide_as_t<Z2,Z1> that(x,0);
       return that -= y;
     }
-    };
+
+    //==============================================================================================
+    // Operator *
+    //==============================================================================================
+    template<like<complex> Z1, like<complex> Z2>
+    EVE_FORCEINLINE friend auto& operator*= (Z1& self, Z2 const& o) noexcept
+    {
+      auto [a, b] = self;
+      auto [c, d] = o;
+      real(self) = diff_of_prod(a, c, b, d);
+      imag(self) = sum_of_prod(a, d, b, c);
+      return self;
+    }
+
+    EVE_FORCEINLINE friend auto& operator*=(like<complex> auto& self, callable_i_ const&) noexcept
+    {
+      auto[r,i] = self;
+      real(self) = -i;
+      imag(self) =  r;
+      return self;
+    }
+
+    template<typename Z>
+    EVE_FORCEINLINE friend auto& operator*=(like<complex> auto& self, Z o) noexcept
+    requires(like<Z,Type> || std::convertible_to<Z,Type>)
+    {
+      real(self) *= o;
+      imag(self) *= o;
+      return self;
+    }
+
+    template<like<complex> Z1, real_value Z2>
+    EVE_FORCEINLINE friend  auto operator*(Z1 const& x, Z2 const& y) noexcept
+    requires(requires(as_wide_as_t<Z1,Z2> t) { t *= y; })
+    {
+      as_wide_as_t<Z1,Z2> that(x);
+      return that *= y;
+    }
+
+    template<real_value Z1, like<complex> Z2>
+    EVE_FORCEINLINE friend  auto operator*(Z1 const& x, Z2 const& y) noexcept
+    requires(requires(as_wide_as_t<Z2,Z1> t) { t *= y; })
+    {
+      as_wide_as_t<Z2,Z1> that(x,0);
+      return that *= y;
+    }
+  };
 }
