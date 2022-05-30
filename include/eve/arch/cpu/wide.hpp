@@ -641,7 +641,7 @@ namespace eve
     friend EVE_FORCEINLINE auto operator*(real_scalar_value auto s, wide const& v) noexcept
     requires( !kumi::product_type<Type> )
     {
-      return v *= s;
+      return v * s;
     }
 
     //! @brief Perform the product between all lanes of a eve::wide and a scalar
@@ -649,15 +649,14 @@ namespace eve
     friend EVE_FORCEINLINE auto operator*(wide const& v, real_scalar_value auto s) noexcept
     requires( !kumi::product_type<Type> )
     {
-      return v *= s;
+      auto that = v;
+      return that *= s;
     }
 
     //! @brief Perform the compound division on all the wide lanes and assign
     //! the result to the current one. See also: eve::div
     friend  EVE_FORCEINLINE auto& operator/=(wide& w, value auto o) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
     requires( !kumi::product_type<Type> )
-#endif
     {
       return detail::self_div(w, o);
     }
@@ -672,14 +671,16 @@ namespace eve
 
     //! @brief Perform the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator/(real_scalar_value auto s, wide const& v) noexcept
+    requires( !kumi::product_type<Type> )
     {
       return wide(s) / v;
     }
 
     //! @brief Perform the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(wide const& v,scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator/(wide const& v, real_scalar_value auto s) noexcept
+    requires( !kumi::product_type<Type> )
     {
       return v / wide(s);
     }

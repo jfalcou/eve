@@ -229,5 +229,56 @@ namespace eve
       as_wide_as_t<Z2,Z1> that(x,0);
       return that *= y;
     }
+
+    //==============================================================================================
+    // Operator /
+    //==============================================================================================
+    template<like<complex> Z1, like<complex> Z2>
+    EVE_FORCEINLINE friend auto& operator/= (Z1& self, Z2 const& o) noexcept
+    {
+      auto rr =  eve::abs(real(self));
+      auto ii =  eve::abs(imag(self));
+      auto e  = -if_else((rr < ii), exponent(ii), exponent(rr));
+      auto oo(eve::ldexp(o, e));
+      auto denom =  sqr_abs(oo);
+      self *= conj(oo);
+      self /= denom;
+      self = ldexp(self, e);
+      return self;
+    }
+
+    EVE_FORCEINLINE friend auto& operator/=(like<complex> auto& self, callable_i_ const&) noexcept
+    {
+      auto[r,i] = self;
+      real(self) = i;
+      imag(self) = -r;
+      return self;
+    }
+
+    template<typename Z>
+    EVE_FORCEINLINE friend auto& operator/=(like<complex> auto& self, Z o) noexcept
+    requires(like<Z,Type> || std::convertible_to<Z,Type>)
+    {
+      real(self) /= o;
+      imag(self) /= o;
+      return self;
+    }
+
+    template<like<complex> Z1, real_value Z2>
+    EVE_FORCEINLINE friend  auto operator/(Z1 const& x, Z2 const& y) noexcept
+    requires(requires(as_wide_as_t<Z1,Z2> t) { t /= y; })
+    {
+      as_wide_as_t<Z1,Z2> that(x);
+      return that /= y;
+    }
+
+    template<real_value Z1, like<complex> Z2>
+    EVE_FORCEINLINE friend  auto operator/(Z1 const& x, Z2 const& y) noexcept
+    requires(requires(as_wide_as_t<Z2,Z1> t) { t /= y; })
+    {
+      auto[r,i] = y;
+      auto m = x/(r*r+i*i);
+      return as_wide_as_t<Z2,Z1>(m*r,-m*i);
+    }
   };
 }
