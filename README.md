@@ -55,7 +55,7 @@ Partial/In-progress support with minimal checks:
    - VMX
    - VSX
 
- - We **do not support** ARM SVE as the execution model makes no sense and the current compiler support is not adequate for us.
+ - We **do not support** ARM SVE with dynamic as the execution model makes no sense and the current compiler support is not adequate for us. **WOrk is in progress for fixed size SVE support**.
  - We **do not support** GPGPU, this is the job for another tool.
 
 ### Current roster of supported compiler
