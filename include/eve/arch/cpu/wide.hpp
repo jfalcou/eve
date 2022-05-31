@@ -157,7 +157,10 @@ namespace eve
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide( S0 v0, S1 v1, Ss... vs) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-    requires( Cardinal::value == 2 + sizeof...(vs) )
+    requires(   ( Cardinal::value == 2 + sizeof...(vs))
+            &&    std::is_convertible_v<S0,Type>
+            &&  ( std::is_convertible_v<S1,Type> && ... &&  std::is_convertible_v<Ss,Type>)
+            )
 #endif
                   : storage_base(detail::make ( eve::as<wide>{}
                                               , static_cast<Type>(v0)

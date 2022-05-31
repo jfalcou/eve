@@ -180,8 +180,8 @@ namespace eve
     EVE_FORCEINLINE friend  auto operator-(Z1 const& x, Z2 const& y) noexcept
     requires(requires(as_wide_as_t<Z2,Z1> t) { t -= y; })
     {
-      as_wide_as_t<Z2,Z1> that{-y};
-      return x + that;
+      as_wide_as_t<Z2,Z1> that(x,Type{0});
+      return that - y;
     }
 
     //==============================================================================================
