@@ -45,9 +45,10 @@ namespace eve
   template<typename T>
   using as_real_t = typename as_real<T>::type;
 
-  template<typename T> struct is_complex                    : std::false_type {};
-  template<typename T> struct is_complex<complex<T>>        : std::true_type {};
-  template<typename T> struct is_complex<wide<complex<T>>>  : std::true_type {};
+  template<typename T> struct is_complex              : std::false_type {};
+  template<typename T> struct is_complex<complex<T>>  : std::true_type {};
+  template<typename T, typename N>
+  struct is_complex<wide<complex<T>,N>>               : std::true_type {};
 
   template<typename T>
   inline constexpr bool is_complex_v = is_complex<T>::value;
