@@ -10,7 +10,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
-#include "eve/detail/overload.hpp"
 
 namespace eve::detail
 {
