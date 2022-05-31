@@ -264,23 +264,23 @@ EVE_TEST_TYPES( "Check complex::operator/", eve::test::scalar::ieee_reals)
   TTS_EQUAL((rv     / z_s1  ) , (wc_t{[&](auto i, auto){ return rv.get(i) / z_s1;}}));
 
   // complex / wide complex / wide complex / complex
-  TTS_EQUAL((z_s1 / z_v1) , (wc_t{[&](auto i, auto){ return z_s1 / z_v1.get(i);}}));
-  TTS_EQUAL((z_v1 / z_s1) , (wc_t{[&](auto i, auto){ return z_v1.get(i) / z_s1;}}));
+  TTS_RELATIVE_EQUAL((z_s1 / z_v1) , (wc_t{[&](auto i, auto){ return z_s1 / z_v1.get(i);}}), 1e-4);
+  TTS_RELATIVE_EQUAL((z_v1 / z_s1) , (wc_t{[&](auto i, auto){ return z_v1.get(i) / z_s1;}}), 1e-4);
 
   // wide complex / wide complex
-  TTS_EQUAL((z_v1   / z_v2  ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / z_v2.get(i));}}));
+  TTS_RELATIVE_EQUAL((z_v1   / z_v2  ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / z_v2.get(i));}}), 1e-4);
 
   // wide complex / real / real / wide complex
-  TTS_EQUAL((z_v1   / 1     ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / 1          );}}));
-  TTS_EQUAL((z_v1   / 2.    ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / 2.         );}}));
-  TTS_EQUAL((z_v1   / 3.f   ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / 3.f        );}}));
-  TTS_EQUAL((z_v1   / eve::i) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / eve::i     );}}));
-  TTS_RELATIVE_EQUAL((1      / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(1      / z_v1.get(i));}}), 1e-4);
-  TTS_RELATIVE_EQUAL((2.     / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(2.     / z_v1.get(i));}}), 1e-4);
-  TTS_RELATIVE_EQUAL((3.f    / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(3.f    / z_v1.get(i));}}), 1e-4);
-  TTS_RELATIVE_EQUAL((eve::i / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(eve::i / z_v1.get(i));}}), 1e-4);
+  TTS_RELATIVE_EQUAL((z_v1   / 1     ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / 1     );}}), 1e-4);
+  TTS_RELATIVE_EQUAL((z_v1   / 2.    ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / 2.    );}}), 1e-4);
+  TTS_RELATIVE_EQUAL((z_v1   / 3.f   ) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / 3.f   );}}), 1e-4);
+  TTS_RELATIVE_EQUAL((z_v1   / eve::i) , (wc_t{[&](auto i, auto){ return c_t( z_v1.get(i) / eve::i);}}), 1e-4);
+  TTS_RELATIVE_EQUAL((1      / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(1       / z_v1.get(i));}}), 1e-4);
+  TTS_RELATIVE_EQUAL((2.     / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(2.      / z_v1.get(i));}}), 1e-4);
+  TTS_RELATIVE_EQUAL((3.f    / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(3.f     / z_v1.get(i));}}), 1e-4);
+  TTS_RELATIVE_EQUAL((eve::i / z_v1  ) , (wc_t{[&](auto i, auto){ return c_t(eve::i  / z_v1.get(i));}}), 1e-4);
 
   // wide complex / wide real / wide real / wide complex
-  TTS_EQUAL((z_v1   / rv    ) , (wc_t{[&](auto i, auto){ return z_v1.get(i) / rv.get(i);}}));
-  TTS_EQUAL((rv     / z_v1  ) , (wc_t{[&](auto i, auto){ return rv.get(i)   / z_v1.get(i);}}));
+  TTS_RELATIVE_EQUAL((z_v1   / rv    ) , (wc_t{[&](auto i, auto){ return z_v1.get(i) / rv.get(i);}}), 1e-4);
+  TTS_RELATIVE_EQUAL((rv     / z_v1  ) , (wc_t{[&](auto i, auto){ return rv.get(i)   / z_v1.get(i);}}), 1e-4);
 };
