@@ -10,6 +10,8 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/complex/regular/traits.hpp>
+#include <eve/module/complex/regular/conj.hpp>
+#include <eve/module/complex/regular/i.hpp>
 
 namespace eve::detail
 {
@@ -20,6 +22,7 @@ namespace eve::detail
     return eve::max ( eve::ulpdist(real(z1), real(z2))
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
+
   }
 
   template<typename Z, integral_value N>
