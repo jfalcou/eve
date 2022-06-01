@@ -38,6 +38,7 @@ jobs:
         - { comp: clang_libcpp, arch: x86     , opts: -msse2    , status: 1 }
         - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
         - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
+        - { comp: gcc         , arch: sve     , opts: -Wno-psabi, status: 0 }
         - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
 
     steps:
