@@ -33,11 +33,11 @@ namespace eve
     static constexpr std::size_t fundamental_cardinal = 8 / sizeof(Type);
   };
 
-  struct arm_64_      : arm_abi_< 64,true> {};
-  struct arm_128_     : arm_abi_<128,true> {};
-  struct arm_sve_128_ : arm_abi_<128,true> {};
-  struct arm_sve_256_ : arm_abi_<256,true> {};
-  struct arm_sve_512_ : arm_abi_<512,true> {};
+  struct arm_64_      : arm_abi_< 64,true>  {};
+  struct arm_128_     : arm_abi_<128,true>  {};
+  struct arm_sve_128_ : arm_abi_<128,false> {};
+  struct arm_sve_256_ : arm_abi_<256,false> {};
+  struct arm_sve_512_ : arm_abi_<512,false> {};
 
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation

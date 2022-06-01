@@ -9,6 +9,7 @@
 
 #include <eve/detail/spy.hpp>
 #include <eve/arch/tags.hpp>
+#include <eve/arch/spec.hpp>
 
 namespace eve
 {
