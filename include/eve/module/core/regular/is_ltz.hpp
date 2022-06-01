@@ -77,3 +77,4 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/is_ltz.hpp>
+#include <eve/module/core/regular/impl/simd/x86/is_ltz.hpp>
