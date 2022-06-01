@@ -44,4 +44,10 @@ namespace eve::detail
     auto [zr, zi] = z;
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
   }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::dist_, Z const& x, Z const& y) noexcept
+  {
+    return eve::abs(x-y);
+  }
 }

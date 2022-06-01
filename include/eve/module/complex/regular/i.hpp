@@ -9,7 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-#include "eve/traits/as_floating_point.hpp"
+#include <eve/traits/as_floating_point.hpp>
 
 namespace eve
 {
@@ -64,7 +64,7 @@ namespace eve
       if constexpr( is_complex_v<Z> ) return lhs += ii;
       else
       {
-        as_complex_t<as_floating_point_t<Z>> that{lhs,0};
+        as_complex_t<as_floating_point_t<Z>> that(lhs,0);
         return that += ii;
       }
     }
@@ -72,6 +72,61 @@ namespace eve
     template<value Z> EVE_FORCEINLINE auto operator+(callable_i_ const& ii, Z rhs ) noexcept
     {
       return rhs + ii;
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator-(Z lhs, callable_i_ const& ii) noexcept
+    {
+      if constexpr( is_complex_v<Z> ) return lhs -= ii;
+      else
+      {
+        as_complex_t<as_floating_point_t<Z>> that(lhs,0);
+        return that -= ii;
+      }
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator-(callable_i_ const&, Z rhs ) noexcept
+    {
+      if constexpr( is_complex_v<Z> )
+      {
+        auto [r,i] = rhs;
+        return Z{-r, 1 - i};
+      }
+      else
+      {
+        return as_complex_t<as_floating_point_t<Z>>(-rhs,1);
+      }
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator*(Z lhs, callable_i_ const& ii) noexcept
+    {
+      if constexpr( is_complex_v<Z> ) return lhs *= ii;
+      else                            return as_complex_t<as_floating_point_t<Z>>(0, lhs);
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator*(callable_i_ const& ii, Z rhs ) noexcept
+    {
+      return rhs * ii;
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator/(Z lhs, callable_i_ const& ii) noexcept
+    {
+      if constexpr( is_complex_v<Z> ) return lhs /= ii;
+      else                            return as_complex_t<as_floating_point_t<Z>>(0, -lhs);
+    }
+
+    template<value Z> EVE_FORCEINLINE auto operator/(callable_i_ const&, Z rhs ) noexcept
+    {
+      if constexpr( is_complex_v<Z> )
+      {
+        auto [r,i] = rhs;
+        auto m = r*r+i*i;
+        return Z(i/m, r/m);
+      }
+      else
+      {
+        using f_t = as_floating_point_t<Z>;
+        return as_complex_t<f_t>(0,f_t{1}/rhs);
+      }
     }
   }
 
