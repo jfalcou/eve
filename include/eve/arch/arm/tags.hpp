@@ -33,23 +33,37 @@ namespace eve
     static constexpr std::size_t fundamental_cardinal = 8 / sizeof(Type);
   };
 
-  struct arm_64_  : arm_abi_<64,true> {};
-  struct arm_128_ : arm_abi_<128,true> {};
+  struct arm_64_      : arm_abi_< 64,true> {};
+  struct arm_128_     : arm_abi_<128,true> {};
+  struct arm_sve_128_ : arm_abi_<128,true> {};
+  struct arm_sve_256_ : arm_abi_<256,true> {};
+  struct arm_sve_512_ : arm_abi_<512,true> {};
 
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
   //================================================================================================
-  struct neon128_ : simd_api<simd_   , spy::neon_>  {};
-  struct asimd_   : simd_api<neon128_, spy::asimd_> {};
+  struct neon128_ : simd_api<simd_   , spy::neon_>      {};
+  struct asimd_   : simd_api<neon128_, spy::asimd_>     {};
+  struct sve128_  : simd_api<simd_   , spy::fixed_sve_> {};
+  struct sve256_  : simd_api<simd_   , spy::fixed_sve_> {};
+  struct sve512_  : simd_api<simd_   , spy::fixed_sve_> {};
 
   //================================================================================================
   // NEON extension tag objects
   //================================================================================================
-  inline constexpr neon128_ neon  = {};
-  inline constexpr asimd_   asimd = {};
+  inline constexpr neon128_ neon    = {};
+  inline constexpr asimd_   asimd   = {};
+  inline constexpr sve128_  sve128  = {};
+  inline constexpr sve256_  sve256  = {};
+  inline constexpr sve512_  sve512  = {};
 
   //================================================================================================
   // ARM ABI concept
   //================================================================================================
-  template<typename T> concept arm_abi = detail::is_one_of<T>(detail::types<arm_64_,arm_128_> {});
+  template<typename T> concept arm_abi = detail::is_one_of<T> ( detail::types<arm_64_,arm_128_> {});
+  template<typename T> concept sve_abi = detail::is_one_of<T> ( detail::types < arm_sve_128_
+                                                                              , arm_sve_256_
+                                                                              , arm_sve_512_
+                                                                              > {}
+                                                              );
 }
