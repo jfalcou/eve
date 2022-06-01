@@ -15,6 +15,15 @@
 
 namespace eve::detail
 {
+
+  //==============================================================================================
+  //  Unary functions
+  //==============================================================================================
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
+  {
+    return eve::hypot(real(z), imag(z));
+  }
+
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::arg_, auto const& z) noexcept
   {
     return eve::atan2(imag(z), real(z) );
@@ -33,16 +42,37 @@ namespace eve::detail
     return if_else(is_infinite(z), Z(inf(real_t{}), copysign(zero(real_t{}), imag(z))), z);
   }
 
-  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
-  {
-    return eve::hypot(real(z), imag(z));
-  }
-
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
   {
     auto [zr, zi] = z;
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
+  }
+  
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
+  {
+    auto [zr, zi] = z;
+    return sum_of_prod(zr, zr, zi, zi);
+  }
+
+
+  //==============================================================================================
+  //  Binary functions
+  //==============================================================================================
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::add_, Z const& x, Z const& y) noexcept
+  {
+    return x+y; 
+  }
+  
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::average_
+                                              , auto const& z1, auto const& z2
+                                              ) noexcept
+  {
+    return eve::max ( eve::average(real(z1), real(z2))
+                    , eve::average(imag(z1), imag(z2))
+                    );
   }
 
   template<typename Z>
@@ -50,4 +80,17 @@ namespace eve::detail
   {
     return eve::abs(x-y);
   }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::div_, Z const& x, Z const& y) noexcept
+  {
+    return x/y;
+  }
+  
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::mul_, Z const& x, Z const& y) noexcept
+  {
+    return x-y;
+  }
+  
 }
