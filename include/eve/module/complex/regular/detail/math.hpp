@@ -21,4 +21,19 @@ namespace eve::detail
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
   }
+
+  template<typename Z, integral_value N>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::ldexp_
+                                              , Z const& z1
+                                              , N n
+                                              ) noexcept
+  {
+    return as_wide_as_t<Z,N>(ldexp(real(z1), n), ldexp(imag(z1), n));
+  }
+
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
+  {
+    auto [zr, zi] = z;
+    return sum_of_prod(zr, zr, zi, zi);
+  }
 }

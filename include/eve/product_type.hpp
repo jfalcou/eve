@@ -164,22 +164,33 @@ namespace eve
       else                                              return x += y;
     }
 
-    EVE_FORCEINLINE friend auto operator-(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x -= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator-(Z1 x, Z2 y) requires requires { x -= x; }
     {
-      x -= y;
-      return x;
+      if constexpr(scalar_value<Z1> && simd_value<Z2>)
+      {
+        as_wide_t<Z1> that{x};
+        return that -= y;
+      }
+      else                                              return x -= y;
     }
 
-    EVE_FORCEINLINE friend auto operator*(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x *= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator*(Z1 x, Z2 y) requires requires { x *= x; }
     {
-      x *= y;
-      return x;
+      if constexpr(scalar_value<Z1> && simd_value<Z2>)  return y *= x;
+      else                                              return x *= y;
     }
 
-    EVE_FORCEINLINE friend auto operator/(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x /= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator/(Z1 x, Z2 y) requires requires { x /= x; }
     {
-      x /= y;
-      return x;
+      if constexpr(scalar_value<Z1> && simd_value<Z2>)
+      {
+        as_wide_t<Z1> that{x};
+        return that /= y;
+      }
+      else                                              return x /= y;
     }
 
     EVE_FORCEINLINE friend auto operator%(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x %= y; }
