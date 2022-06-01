@@ -22,7 +22,6 @@ namespace eve::detail
     return eve::max ( eve::ulpdist(real(z1), real(z2))
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
-
   }
 
   template<typename Z, integral_value N>

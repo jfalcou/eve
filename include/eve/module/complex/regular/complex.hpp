@@ -11,3 +11,5 @@
 #include <eve/module/complex/regular/real.hpp>
 #include <eve/module/complex/regular/i.hpp>
 #include <eve/module/complex/regular/imag.hpp>
+#include <eve/module/complex/regular/detail/acos.hpp>
+#include <eve/module/complex/regular/detail/asin.hpp>
