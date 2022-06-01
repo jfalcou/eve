@@ -21,8 +21,7 @@ needs to change.
 ## Getting Started
 
  - [Installing and using the library](https://jfalcou.github.io/eve/install.html)
- - [Fetching EVE using your favorite Package Manager](https://jfalcou.github.io/eve/packages.html)
- - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/simd-101.html)
+ - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/tutorials.html)
  - [References Documentation](https://jfalcou.github.io/eve/modules.html)
 
 ## Video materials
