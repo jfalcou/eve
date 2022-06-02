@@ -8,8 +8,6 @@
 #include "test.hpp"
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
-#include <eve/module/math.hpp>
-#include <eve/module/core.hpp>
 #include <complex>
 
 template < typename T >
@@ -45,7 +43,7 @@ EVE_TEST( "Check behavior of acos on wide"
 {
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
-  using z_t = eve::wide<eve::complex<e_t>, typename T::cardinal_type>;
+  using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
   auto std_acos = [](auto x, auto y){return std::acos(c_t(x, y)); };
   auto init_with_std = [std_acos](auto a0,  auto a1){

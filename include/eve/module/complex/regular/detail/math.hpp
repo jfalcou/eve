@@ -104,11 +104,15 @@ namespace eve::detail
   }
 
   template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cos_
+                                             , pedantic_type const &, Z const& z) noexcept
+  {
+    return pedantic(cosh)(eve::i*z);
+  }
+
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cos_, Z const& z) noexcept
   {
-//    auto iz = eve::i*z;
-//    return cosh(iz);
-//   Z iz{-imag(z), real(z)};
     return cosh(eve::i*z);
   }
 
