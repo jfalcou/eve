@@ -15,9 +15,9 @@
 
 TTS_CASE("eve.algo.array_utils array_map")
 {
-  constexpr std::array<char, 4>   input = { 1, 2, 3, 4  };
+  constexpr std::array<std::int8_t, 4>   input = { 1, 2, 3, 4  };
   constexpr std::array<int, 4> expected = { 2, 4, 6, 8 };
-  constexpr auto actual = eve::algo::array_map(input, [](char x) -> int { return x * 2; });
+  constexpr auto actual = eve::algo::array_map(input, [](std::int8_t x) -> int { return x * 2; });
   TTS_CONSTEXPR_EXPECT(expected == actual);
 };
 

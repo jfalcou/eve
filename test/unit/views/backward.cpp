@@ -34,7 +34,7 @@ TTS_CASE("eve::views::backward, backward of backward")
 {
   // pointer
   {
-    using ap = eve::aligned_ptr<char>;
+    using ap = eve::aligned_ptr<std::int8_t>;
     ap                                   in{};
     eve::views::backward_iterator<ap>    rev  = eve::views::backward(in);
     ap                                   back = eve::views::backward(rev);
@@ -43,7 +43,7 @@ TTS_CASE("eve::views::backward, backward of backward")
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<char, eve::fixed<4>>, eve::fixed<4>>;
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, eve::fixed<4>>, eve::fixed<4>>;
     ap_it                                in;
     eve::views::backward_iterator<ap_it> rev = eve::views::backward(in);
     ap_it                                back = eve::views::backward(rev);
@@ -52,9 +52,9 @@ TTS_CASE("eve::views::backward, backward of backward")
   }
   // std::vector
   {
-    using ref_vc = eve::algo::range_ref_wrapper<std::vector<char>>;
+    using ref_vc = eve::algo::range_ref_wrapper<std::vector<std::int8_t>>;
 
-    std::vector<char>                  in;
+    std::vector<std::int8_t>                  in;
     eve::views::backward_range<ref_vc> rev = eve::views::backward(in);
     ref_vc                             back = eve::views::backward(rev);
 

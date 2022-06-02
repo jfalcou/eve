@@ -60,22 +60,22 @@ TTS_CASE("eve.algo defaulting")
 
 TTS_CASE("eve.algo.traits consider types")
 {
-  eve::algo::traits expected{ eve::algo::consider_types<double, int, char> };
+  eve::algo::traits expected{ eve::algo::consider_types<double, int, std::int8_t> };
   {
     eve::algo::traits tr;
-    eve::algo::traits def{eve::algo::consider_types<double, int, char>};
+    eve::algo::traits def{eve::algo::consider_types<double, int, std::int8_t>};
     auto actual = eve::algo::default_to(tr, def);
     TTS_TYPE_IS(decltype(expected), decltype(actual));
   }
   {
-    eve::algo::traits tr{eve::algo::consider_types<double, int, char>};
+    eve::algo::traits tr{eve::algo::consider_types<double, int, std::int8_t>};
     eve::algo::traits def;
     auto actual = eve::algo::default_to(tr, def);
     TTS_TYPE_IS(decltype(expected), decltype(actual));
   }
   {
     eve::algo::traits tr{eve::algo::consider_types<double>};
-    eve::algo::traits def{eve::algo::consider_types<int, char>};
+    eve::algo::traits def{eve::algo::consider_types<int, std::int8_t>};
     auto actual = eve::algo::default_to(tr, def);
     TTS_TYPE_IS(decltype(expected), decltype(actual));
   }
@@ -107,7 +107,7 @@ TTS_CASE("eve.algo.traits, type and cardinal")
     eve::algo::traits tr;
     eve::algo::traits big_step{eve::algo::force_cardinal<64>};
     eve::algo::traits tr2 = eve::algo::default_to(tr, big_step);
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr2), char*>), eve::fixed<64>);
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr2), std::int8_t*>), eve::fixed<64>);
   }
 };
 

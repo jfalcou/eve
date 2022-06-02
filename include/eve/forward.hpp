@@ -10,6 +10,7 @@
 #include <eve/arch/abi.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/scalar.hpp>
 
 namespace eve
 {
@@ -19,7 +20,7 @@ namespace eve
   inline namespace EVE_ABI_NAMESPACE
   {
     // Wrapper for SIMD registers holding arithmetic types with compile-time size
-    template<typename Type,
+    template<scalar Type,
              typename Size = expected_cardinal_t<Type>>
     struct wide;
   }

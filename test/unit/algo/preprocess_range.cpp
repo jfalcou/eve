@@ -299,7 +299,7 @@ EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
   {
     auto processed = eve::algo::preprocess_range(
       eve::algo::traits(),
-      eve::algo::views::convert(v, eve::as<eve::common_type_t<double, char>>{}));
+      eve::algo::views::convert(v, eve::as<eve::common_type_t<double, std::int8_t>>{}));
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);

@@ -12,6 +12,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 #include <bitset>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -40,6 +41,6 @@ namespace eve::detail
 
   template<scalar_value T> EVE_FORCEINLINE auto to_logical( T v ) noexcept
   {
-    return logical<T>(v);
+    return logical<std::conditional_t<std::is_same_v<T,bool>, std::uint8_t, T>>(v);
   }
 }

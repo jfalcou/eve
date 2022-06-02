@@ -105,32 +105,32 @@ TTS_CASE("views.convert to/from")
 {
   // pointer
   {
-    using ap = eve::aligned_ptr<char>;
+    using ap = eve::aligned_ptr<std::int8_t>;
     ap                                        chars{};
     eve::views::converting_iterator<ap, int>   ints   = eve::views::convert(chars,   eve::as<int>{});
     eve::views::converting_iterator<ap, short> shorts = eve::views::convert(ints,    eve::as<short>{});
-    ap                                         chars2 = eve::views::convert(shorts,  eve::as<char>{});
+    ap                                         chars2 = eve::views::convert(shorts,  eve::as<std::int8_t>{});
     (void) chars2;
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<char, eve::fixed<4>>, eve::fixed<4>>;
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, eve::fixed<4>>, eve::fixed<4>>;
     ap_it                                         chars{};
     eve::views::converting_iterator<ap_it, int>   ints   = eve::views::convert(chars,  eve::as<int>{});
     eve::views::converting_iterator<ap_it, short> shorts = eve::views::convert(ints,   eve::as<short>{});
-    ap_it                                         chars2 = eve::views::convert(shorts, eve::as<char>{});
+    ap_it                                         chars2 = eve::views::convert(shorts, eve::as<std::int8_t>{});
     (void)chars2;
   }
   // std::vector
   {
-    std::vector<char> chars_v;
+    std::vector<std::int8_t> chars_v;
 
-    using ref_vc = eve::algo::range_ref_wrapper<std::vector<char>>;
+    using ref_vc = eve::algo::range_ref_wrapper<std::vector<std::int8_t>>;
 
-    ref_vc                                      chars  = eve::views::convert(chars_v, eve::as<char>{});
+    ref_vc                                      chars  = eve::views::convert(chars_v, eve::as<std::int8_t>{});
     eve::views::converting_range<ref_vc, int>   ints   = eve::views::convert(chars,   eve::as<int>{});
     eve::views::converting_range<ref_vc, short> shorts = eve::views::convert(ints,    eve::as<short>{});
-    ref_vc                                      chars2 = eve::views::convert(shorts,  eve::as<char>{});
+    ref_vc                                      chars2 = eve::views::convert(shorts,  eve::as<std::int8_t>{});
     (void) chars2;
   }
 
@@ -139,8 +139,8 @@ TTS_CASE("views.convert to/from")
 
 TTS_CASE("eve.algo.views.convert_iterator const/non-const")
 {
-  using ap             = eve::aligned_ptr<char>;
-  using acp            = eve::aligned_ptr<char const>;
+  using ap             = eve::aligned_ptr<std::int8_t>;
+  using acp            = eve::aligned_ptr<std::int8_t const>;
   using converting_it  = eve::views::converting_iterator<ap,  int>;
   using converting_cit = eve::views::converting_iterator<acp, int>;
 

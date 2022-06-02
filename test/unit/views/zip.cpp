@@ -103,21 +103,21 @@ TTS_CASE("zip force_type")
   std::vector<int> const   v{1, 2, 3, 4};
   std::vector<std::int8_t> c{'a', 'b', 'c', 'd'};
 
-  auto expected = eve::views::zip(eve::views::convert(v, eve::as<char>{}),
-                                  eve::views::convert(c, eve::as<char>{}));
+  auto expected = eve::views::zip(eve::views::convert(v, eve::as<std::int8_t>{}),
+                                  eve::views::convert(c, eve::as<std::int8_t>{}));
 
   auto expected_f = expected.begin();
 
   {
-    auto zipped = eve::views::zip[eve::algo::force_type<char>](v, c);
+    auto zipped = eve::views::zip[eve::algo::force_type<std::int8_t>](v, c);
     TTS_TYPE_IS(decltype(zipped), decltype(expected));
 
-    auto zipped_f = eve::views::zip[eve::algo::force_type<char>](v.begin(), c.begin());
+    auto zipped_f = eve::views::zip[eve::algo::force_type<std::int8_t>](v.begin(), c.begin());
     TTS_EQUAL(zipped_f, expected_f);
   }
 
   {
-    auto zipped = eve::views::zip(v, c)[eve::algo::force_type<char>];
+    auto zipped = eve::views::zip(v, c)[eve::algo::force_type<std::int8_t>];
     TTS_TYPE_IS(decltype(zipped), decltype(expected));
   }
 };

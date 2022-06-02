@@ -13,6 +13,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/concept/scalar.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/detail/abi.hpp>
@@ -56,7 +57,7 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<typename Type, typename Cardinal>
+  template<scalar Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  wide
         : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {

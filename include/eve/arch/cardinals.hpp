@@ -61,11 +61,6 @@ namespace eve
     using combined_type = fixed<2>;
   };
 
-  //================================================================================================
-  //! @brief Cardinal object representing the cardinal of [scalar values](@ref eve::scalar_value)
-  //================================================================================================
-  inline constexpr scalar_cardinal const scalar = {};
-
   template<std::ptrdiff_t Cardinal>
   inline constexpr fixed<Cardinal> const lane = {};
 

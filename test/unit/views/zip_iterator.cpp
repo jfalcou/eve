@@ -232,8 +232,8 @@ EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
 
 TTS_CASE("zip iterators const/non-const")
 {
-  using cvt       = eve::views::converting_iterator<char*      , int>;
-  using cvt_const = eve::views::converting_iterator<char const*, int>;
+  using cvt       = eve::views::converting_iterator<std::int8_t*      , int>;
+  using cvt_const = eve::views::converting_iterator<std::int8_t const*, int>;
 
   using from      = eve::views::zip_iterator<int*      , cvt>;
   using to        = eve::views::zip_iterator<int const*, cvt_const>;

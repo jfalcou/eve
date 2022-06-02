@@ -13,13 +13,13 @@ EVE_TEST_TYPES("Check converting_iterator", algo_test::selected_types)
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
   std::iota(data.begin(), data.end(), 0);
 
-  eve::wide<char,          eve::fixed<T::size()>> char_values ([](int i, int) { return i; });
+  eve::wide<std::int8_t  , eve::fixed<T::size()>> char_values ([](int i, int) { return i; });
   eve::wide<std::uint64_t, eve::fixed<T::size()>> int64_values([](int i, int) { return i; });
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, decltype(v){0}); };
 
   auto run_test_one_pair = [&](auto f, auto l) {
-    algo_test::iterator_sentinel_test(eve::views::convert(f, eve::as<char>{}),
-                                      eve::views::convert(l, eve::as<char>{}),
+    algo_test::iterator_sentinel_test(eve::views::convert(f, eve::as<std::int8_t>{}),
+                                      eve::views::convert(l, eve::as<std::int8_t>{}),
                                       char_values, replace);
     algo_test::iterator_sentinel_test(eve::views::convert(f, eve::as<std::uint64_t>{}),
                                       eve::views::convert(l, eve::as<std::uint64_t>{}),
@@ -28,9 +28,9 @@ EVE_TEST_TYPES("Check converting_iterator", algo_test::selected_types)
 
   auto run_test_writeable = [&](auto f) {
     algo_test::writeable_readable_iterator(
-      eve::views::convert(f, eve::as<char>{}), char_values, replace);
+      eve::views::convert(f, eve::as<std::int8_t>{}), char_values, replace);
     algo_test::iterator_supports_compress(
-      eve::views::convert(f, eve::as<char>{}), char_values, replace);
+      eve::views::convert(f, eve::as<std::int8_t>{}), char_values, replace);
   };
 
   auto run_test = [&] <typename U>(U* f, U* l) {

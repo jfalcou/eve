@@ -24,25 +24,25 @@ TTS_CASE("Check convert return type for UDT/tuple")
               , (kumi::tuple<int,int>)
               );
 
-  TTS_EXPR_IS ( ( eve::convert( kumi::tuple<int,char,float>{}
+  TTS_EXPR_IS ( ( eve::convert( kumi::tuple<int,std::int8_t,float>{}
                               , eve::as<kumi::tuple<short,double,std::uint32_t>>()
                               )
                 )
               , (kumi::tuple<short,double,std::uint32_t>)
               );
 
-  TTS_EXPR_IS ( ( eve::convert( kumi::tuple<int,char,float>{}
+  TTS_EXPR_IS ( ( eve::convert( kumi::tuple<int,std::int8_t,float>{}
                               , eve::as<kumi::tuple<short,double,std::uint32_t>>()
                               )
                 )
               , (kumi::tuple<short,double,std::uint32_t>)
               );
 
-  TTS_EXPR_IS ( ( eve::convert( kumi::tuple<int,kumi::tuple<int,char,float>,float>{}
-                              , eve::as<kumi::tuple<int, short,double,std::uint32_t, char>>()
+  TTS_EXPR_IS ( ( eve::convert( kumi::tuple<int,kumi::tuple<int,std::int8_t,float>,float>{}
+                              , eve::as<kumi::tuple<int, short,double,std::uint32_t, std::int8_t>>()
                               )
                 )
-              , (kumi::tuple<int, short,double,std::uint32_t, char>)
+              , (kumi::tuple<int, short,double,std::uint32_t, std::int8_t>)
               );
 };
 
@@ -59,7 +59,7 @@ TTS_CASE("Conversion from/to UDTs &nd tuples")
             , (udt::grid2d{-9, 70})
             );
 
-  TTS_EQUAL ( (eve::convert ( udt::grid2d{66, -9}, eve::as<kumi::tuple<char,float>>()))
+  TTS_EQUAL ( (eve::convert ( udt::grid2d{66, -9}, eve::as<kumi::tuple<std::int8_t,float>>()))
             , (kumi::tuple{'B',-9.f})
             );
 
