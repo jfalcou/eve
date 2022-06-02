@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/concept/basic.hpp>
+#include <string>
 
 TTS_CASE("Check for builtin_vectorizable on regular types" )
 {
@@ -45,7 +46,7 @@ TTS_CASE("Check for builtin_vectorizable on cstdint/def types" )
 
 TTS_CASE("Check for builtin_vectorizable on unsupported types" )
 {
-  TTS_EXPECT_NOT( eve::builtin_vectorizable<long double>                  );
+  TTS_EXPECT_NOT( eve::builtin_vectorizable<std::string>                  );
   TTS_EXPECT_NOT( eve::builtin_vectorizable<bool>                         );
   TTS_EXPECT_NOT( eve::builtin_vectorizable<void*>                        );
   TTS_EXPECT_NOT((eve::builtin_vectorizable<kumi::tuple<int,float,char>> ));
@@ -89,7 +90,7 @@ TTS_CASE("Check for vectorizable on product_type" )
 
 TTS_CASE("Check for vectorizable on unsupported types" )
 {
-  TTS_EXPECT_NOT(  eve::vectorizable<long double>             );
+  TTS_EXPECT_NOT(  eve::vectorizable<std::string>             );
   TTS_EXPECT_NOT(  eve::vectorizable<bool>                    );
   TTS_EXPECT_NOT(  eve::vectorizable<void*>                   );
   TTS_EXPECT_NOT( (eve::vectorizable<kumi::tuple<>>)          );
