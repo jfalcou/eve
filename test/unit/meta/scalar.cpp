@@ -13,12 +13,10 @@ TTS_CASE("Check for plain_scalar on regular types" )
   TTS_EXPECT( eve::plain_scalar<signed char>);
   TTS_EXPECT( eve::plain_scalar<short>      );
   TTS_EXPECT( eve::plain_scalar<int>        );
-  TTS_EXPECT( eve::plain_scalar<long>       );
 
   TTS_EXPECT( eve::plain_scalar<unsigned char>      );
   TTS_EXPECT( eve::plain_scalar<unsigned short>     );
   TTS_EXPECT( eve::plain_scalar<unsigned int>       );
-  TTS_EXPECT( eve::plain_scalar<unsigned long>      );
 
   TTS_EXPECT( eve::plain_scalar<float>  );
   TTS_EXPECT( eve::plain_scalar<double> );
@@ -70,11 +68,9 @@ TTS_CASE("Check for scalar on plain_scalar" )
   TTS_EXPECT( eve::scalar<signed char>        );
   TTS_EXPECT( eve::scalar<short>              );
   TTS_EXPECT( eve::scalar<int>                );
-  TTS_EXPECT( eve::scalar<long>               );
   TTS_EXPECT( eve::scalar<unsigned char>      );
   TTS_EXPECT( eve::scalar<unsigned short>     );
   TTS_EXPECT( eve::scalar<unsigned int>       );
-  TTS_EXPECT( eve::scalar<unsigned long>      );
   TTS_EXPECT( eve::scalar<float>              );
   TTS_EXPECT( eve::scalar<double>             );
 
