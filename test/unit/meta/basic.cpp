@@ -84,6 +84,7 @@ TTS_CASE("Check for vectorizable on product_type" )
   TTS_EXPECT((eve::vectorizable<kumi::tuple<int>>));
   TTS_EXPECT((eve::vectorizable<kumi::tuple<int,float>>));
   TTS_EXPECT((eve::vectorizable<kumi::tuple<int,signed char,double>>));
+  TTS_EXPECT((eve::vectorizable<kumi::tuple<int,kumi::tuple<signed char,double>,float>>));
 };
 
 TTS_CASE("Check for vectorizable on unsupported types" )

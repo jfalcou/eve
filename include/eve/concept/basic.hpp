@@ -25,14 +25,13 @@ namespace eve
     {
       if constexpr(kumi::product_type<T>)
       {
-        constexpr auto sz = kumi::size<T>::value;
-
-        if constexpr(sz != 0)
+        if constexpr(kumi::size<T>::value != 0)
         {
+          using flatten_t = kumi::result::flatten_all_t<T>;
           return []<std::size_t... I>( std::index_sequence<I...> )
           {
-            return (builtin_vectorizable<kumi::element_t<I,T>> && ... && true);
-          }(std::make_index_sequence<sz>{});
+            return (builtin_vectorizable<kumi::element_t<I,flatten_t>> && ... && true);
+          }(std::make_index_sequence<kumi::size<flatten_t>::value>{});
         }
         else
         {
