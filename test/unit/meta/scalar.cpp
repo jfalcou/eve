@@ -48,6 +48,23 @@ TTS_CASE("Check for plain_scalar on unsupported types" )
   TTS_EXPECT_NOT((eve::plain_scalar<kumi::tuple<int,float,std::int8_t>> ));
 };
 
+TTS_CASE("Check for scalar_product_type on product_type" )
+{
+  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int>>));
+  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int,float>>));
+  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int,std::int8_t,double>>));
+  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
+};
+
+TTS_CASE("Check for scalar_product_type on unsupported types" )
+{
+  TTS_EXPECT_NOT( eve::scalar_product_type<long double>                           );
+  TTS_EXPECT_NOT( eve::scalar_product_type<std::int8_t>                           );
+  TTS_EXPECT_NOT( eve::scalar_product_type<void*>                                 );
+  TTS_EXPECT_NOT((eve::scalar_product_type<float> )                               );
+  TTS_EXPECT_NOT((eve::scalar_product_type<kumi::tuple<void*, int, long double>>) );
+};
+
 TTS_CASE("Check for scalar on plain_scalar" )
 {
   TTS_EXPECT( eve::scalar<signed char>        );
@@ -90,11 +107,13 @@ TTS_CASE("Check for scalar on unsupported types" )
   TTS_EXPECT_NOT( (eve::scalar<kumi::tuple<int,bool>>)  );
 };
 
-template<eve::plain_scalar T> auto check_overload(T)  { return +1;  }
-template<eve::scalar T>       auto check_overload(T)  { return +2;  }
-template<eve::scalar T>       auto check_overload2(T) { return +3;  }
-template<typename T>          auto check_overload(T)  { return -1;  }
-template<typename T>          auto check_overload2(T) { return -10; }
+template<eve::plain_scalar T>         auto check_overload(T)  { return +1;  }
+template<eve::scalar T>               auto check_overload(T)  { return +2;  }
+template<eve::scalar T>               auto check_overload2(T) { return +3;  }
+template<eve::scalar_product_type T>  auto check_overload3(T)  { return +10;  }
+template<typename T>                  auto check_overload(T)  { return -1;  }
+template<typename T>                  auto check_overload2(T) { return -3; }
+template<typename T>                  auto check_overload3(T)  { return -10;  }
 
 TTS_CASE("Check for scalar/plain_scalar overload relationship" )
 {
@@ -103,16 +122,26 @@ TTS_CASE("Check for scalar/plain_scalar overload relationship" )
   TTS_EQUAL(check_overload(kumi::tuple{4})       , +2);
   TTS_EQUAL(check_overload(kumi::tuple{3,5.f})   , +2);
 
+  TTS_EQUAL(check_overload(nullptr)              , -1);
+  TTS_EQUAL(check_overload(kumi::tuple<>{})      , -1);
+  TTS_EQUAL(check_overload(kumi::tuple{nullptr}) , -1);
+
   TTS_EQUAL(check_overload2(4)                    , +3);
   TTS_EQUAL(check_overload2(4.f)                  , +3);
   TTS_EQUAL(check_overload2(kumi::tuple{4})       , +3);
   TTS_EQUAL(check_overload2(kumi::tuple{3,5.f})   , +3);
 
-  TTS_EQUAL(check_overload(nullptr)              , -1);
-  TTS_EQUAL(check_overload(kumi::tuple<>{})      , -1);
-  TTS_EQUAL(check_overload(kumi::tuple{nullptr}) , -1);
+  TTS_EQUAL(check_overload2(nullptr)              , -3);
+  TTS_EQUAL(check_overload2(kumi::tuple<>{})      , -3);
+  TTS_EQUAL(check_overload2(kumi::tuple{nullptr}) , -3);
 
-  TTS_EQUAL(check_overload2(nullptr)              , -10);
-  TTS_EQUAL(check_overload2(kumi::tuple<>{})      , -10);
-  TTS_EQUAL(check_overload2(kumi::tuple{nullptr}) , -10);
+  TTS_EQUAL(check_overload3(kumi::tuple{4})                     , +10);
+  TTS_EQUAL(check_overload3(kumi::tuple{3,5.f})                 , +10);
+  TTS_EQUAL(check_overload3(kumi::tuple{3,kumi::tuple{4.},5.f}) , +10);
+
+  TTS_EQUAL(check_overload3(4)                    , -10);
+  TTS_EQUAL(check_overload3(4.f)                  , -10);
+  TTS_EQUAL(check_overload3(nullptr)              , -10);
+  TTS_EQUAL(check_overload3(kumi::tuple<>{})      , -10);
+  TTS_EQUAL(check_overload3(kumi::tuple{nullptr}) , -10);
 };
