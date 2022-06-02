@@ -48,7 +48,7 @@ namespace eve::detail
   //================================================================================================
   // Load from pointer - Conditional load
   //================================================================================================
-  template<relative_conditional_expr C, data_source Ptr, typename Pack>
+  template<relative_conditional_expr C, scalar_pointer Ptr, typename Pack>
   EVE_FORCEINLINE auto load_(EVE_SUPPORTS(cpu_)
                             , C const &cond, safe_type const&
                             , eve::as<Pack> tgt, Ptr ptr
@@ -119,7 +119,7 @@ namespace eve::detail
   // making unsafe(load) call intrinsics requires a lot of work and is not very portable
   // due to what called functions it will affect.
   // Since the unsafe is mostly used in corner cases, will do it scalar in asan mode.
-  template<relative_conditional_expr C, data_source Ptr, typename Pack>
+  template<relative_conditional_expr C, scalar_pointer Ptr, typename Pack>
   DISABLE_SANITIZERS Pack load_ ( EVE_SUPPORTS(cpu_)
                                 , C const& cond, unsafe_type const&
                                 , eve::as<Pack> const& tgt, Ptr ptr
