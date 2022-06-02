@@ -8,8 +8,6 @@
 #include "test.hpp"
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
-#include <eve/module/math.hpp>
-#include <eve/module/core.hpp>
 #include <complex>
 
 template < typename T >
@@ -31,9 +29,6 @@ EVE_TEST( "Check behavior of cosh on scalar"
   {
     for(auto f : a1)
     {
-//       std::cout << "e = " << e << " f =  " <<  f << std::endl;
-//       std::cout << "-- " << cv(std::cosh(c_t(e, f))) << std::endl;
-//       std::cout << "== " << eve::cosh(eve::complex<e_t>(e, f)) << std::endl;
       TTS_ULP_EQUAL(eve::cosh(eve::complex<e_t>(e, f)),  cv(std::cosh(c_t(e, f))), 2);
       TTS_ULP_EQUAL(eve::pedantic(eve::cosh)(eve::complex<e_t>(e, f)),  cv(std::cosh(c_t(e, f))), 2);
       TTS_ULP_EQUAL(eve::cosh(eve::complex<e_t>(e, f)),  cv(std::cosh(c_t(e, f))), 2.0);
@@ -50,7 +45,7 @@ EVE_TEST( "Check behavior of cosh on wide"
 {
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
-  using z_t = eve::wide<eve::complex<e_t>, typename T::cardinal_type>;
+  using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
   auto std_ch = [](auto x, auto y){return std::cosh(c_t(x, y)); };
   auto init_with_std = [std_ch](auto a0,  auto a1){
