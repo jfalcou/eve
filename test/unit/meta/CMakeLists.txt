@@ -13,7 +13,7 @@ make_unit( "unit.meta" as_wide.cpp )
 
 ##==================================================================================================
 ## Concepts tests
-make_unit( "unit.meta.concept" basic.cpp )
+make_unit( "unit.meta.concept" scalar.cpp )
 make_unit( "unit.meta.concept" decorator.cpp )
 make_unit( "unit.meta.concept" value.cpp )
 make_unit( "unit.meta.concept" native_simd_for_abi.cpp )
