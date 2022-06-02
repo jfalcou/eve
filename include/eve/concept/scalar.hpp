@@ -52,8 +52,8 @@ namespace eve
   }
 
   template<typename T>
-  concept scalar_product_type  = detail::scalar_tuple<T>();
+  concept product_scalar  = detail::scalar_tuple<T>();
 
   template<typename T>
-  concept scalar  = plain_scalar<T> || scalar_product_type<T>;
+  concept scalar  = plain_scalar<T> || product_scalar<T>;
 }

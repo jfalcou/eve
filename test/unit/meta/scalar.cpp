@@ -46,21 +46,21 @@ TTS_CASE("Check for plain_scalar on unsupported types" )
   TTS_EXPECT_NOT((eve::plain_scalar<kumi::tuple<int,float,std::int8_t>> ));
 };
 
-TTS_CASE("Check for scalar_product_type on product_type" )
+TTS_CASE("Check for product_scalar on product_type" )
 {
-  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int>>));
-  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int,float>>));
-  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int,std::int8_t,double>>));
-  TTS_EXPECT((eve::scalar_product_type<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
+  TTS_EXPECT((eve::product_scalar<kumi::tuple<int>>));
+  TTS_EXPECT((eve::product_scalar<kumi::tuple<int,float>>));
+  TTS_EXPECT((eve::product_scalar<kumi::tuple<int,std::int8_t,double>>));
+  TTS_EXPECT((eve::product_scalar<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
 };
 
-TTS_CASE("Check for scalar_product_type on unsupported types" )
+TTS_CASE("Check for product_scalar on unsupported types" )
 {
-  TTS_EXPECT_NOT( eve::scalar_product_type<long double>                           );
-  TTS_EXPECT_NOT( eve::scalar_product_type<std::int8_t>                           );
-  TTS_EXPECT_NOT( eve::scalar_product_type<void*>                                 );
-  TTS_EXPECT_NOT((eve::scalar_product_type<float> )                               );
-  TTS_EXPECT_NOT((eve::scalar_product_type<kumi::tuple<void*, int, long double>>) );
+  TTS_EXPECT_NOT( eve::product_scalar<long double>                           );
+  TTS_EXPECT_NOT( eve::product_scalar<std::int8_t>                           );
+  TTS_EXPECT_NOT( eve::product_scalar<void*>                                 );
+  TTS_EXPECT_NOT((eve::product_scalar<float> )                               );
+  TTS_EXPECT_NOT((eve::product_scalar<kumi::tuple<void*, int, long double>>) );
 };
 
 TTS_CASE("Check for scalar on plain_scalar" )
@@ -106,7 +106,7 @@ TTS_CASE("Check for scalar on unsupported types" )
 template<eve::plain_scalar T>         auto check_overload(T)  { return +1;  }
 template<eve::scalar T>               auto check_overload(T)  { return +2;  }
 template<eve::scalar T>               auto check_overload2(T) { return +3;  }
-template<eve::scalar_product_type T>  auto check_overload3(T)  { return +10;  }
+template<eve::product_scalar T>  auto check_overload3(T)  { return +10;  }
 template<typename T>                  auto check_overload(T)  { return -1;  }
 template<typename T>                  auto check_overload2(T) { return -3; }
 template<typename T>                  auto check_overload3(T)  { return -10;  }
