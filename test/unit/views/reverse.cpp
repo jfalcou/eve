@@ -37,7 +37,7 @@ TTS_CASE("eve::views::reverse, reverse of reverse")
 {
   // pointer
   {
-    using ap = eve::aligned_ptr<char>;
+    using ap = eve::aligned_ptr<std::int8_t>;
     ap                                  in{};
     eve::views::reverse_iterator<ap>    rev  = eve::views::reverse(in);
     ap                                  back = eve::views::reverse(rev);
@@ -46,7 +46,7 @@ TTS_CASE("eve::views::reverse, reverse of reverse")
   }
   // eve::iterator
   {
-    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<char, eve::fixed<4>>, eve::fixed<4>>;
+    using ap_it = eve::algo::ptr_iterator<eve::aligned_ptr<std::int8_t, eve::fixed<4>>, eve::fixed<4>>;
     ap_it                               in;
     eve::views::reverse_iterator<ap_it> rev = eve::views::reverse(in);
     ap_it                               back = eve::views::reverse(rev);
@@ -55,9 +55,9 @@ TTS_CASE("eve::views::reverse, reverse of reverse")
   }
   // std::vector
   {
-    using ref_vc = eve::algo::range_ref_wrapper<std::vector<char>>;
+    using ref_vc = eve::algo::range_ref_wrapper<std::vector<std::int8_t>>;
 
-    std::vector<char>                 in;
+    std::vector<std::int8_t>                 in;
     eve::views::reverse_range<ref_vc> rev = eve::views::reverse(in);
     ref_vc                            back = eve::views::reverse(rev);
 

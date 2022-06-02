@@ -10,8 +10,8 @@
 #include "unit/api/udt/udt.hpp"
 #include <memory>
 
-using t_t = kumi::tuple<int,float,char>;
-using n_t = kumi::tuple<int,kumi::tuple<float,char>,double>;
+using t_t = kumi::tuple<int,float,std::int8_t>;
+using n_t = kumi::tuple<int,kumi::tuple<float,std::int8_t>,double>;
 
 TTS_CASE("Check types")
 {
