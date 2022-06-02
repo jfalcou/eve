@@ -62,9 +62,13 @@ namespace eve::detail
   }
 
   //==============================================================================================
-  // Trigo : cosh cos acosh asinh
+  // Trigo/hyper : cosh cos acosh asinh atan
+  // acos asin atanh are in specific files
   //==============================================================================================
 
+  //===-------------------------------------------------------------------------------------------
+  //=== cosh
+  //===-------------------------------------------------------------------------------------------
   template<decorator D, typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cosh_
                                              , D const &
@@ -95,6 +99,9 @@ namespace eve::detail
     return cosh(regular_type(), z);
   }
 
+  //===-------------------------------------------------------------------------------------------
+  //=== cos
+  //===-------------------------------------------------------------------------------------------
   template<decorator D, typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cos_
                                              , D const & d, Z const& z) noexcept
@@ -116,6 +123,9 @@ namespace eve::detail
     return cosh(eve::i*z);
   }
 
+  //===-------------------------------------------------------------------------------------------
+  //=== acosh
+  //===-------------------------------------------------------------------------------------------
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::acosh_
                                              , Z const& z) noexcept
@@ -129,11 +139,25 @@ namespace eve::detail
     return if_else(lez, res, -res);
   }
 
+  //===-------------------------------------------------------------------------------------------
+  //=== asinh
+  //===-------------------------------------------------------------------------------------------
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::asinh_
                                              , Z const& z) noexcept
   {
     return -(eve::i*asin(eve::i*z));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== atan
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::atan_
+                                             , Z const& z) noexcept
+  {
+      // C99 definition here; atan(z) = -i atanh(iz):
+    return -(eve::i*(eve::atanh(eve::i*z)));
   }
 
   //==============================================================================================

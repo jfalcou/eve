@@ -13,3 +13,4 @@
 #include <eve/module/complex/regular/imag.hpp>
 #include <eve/module/complex/regular/detail/acos.hpp>
 #include <eve/module/complex/regular/detail/asin.hpp>
+#include <eve/module/complex/regular/detail/atanh.hpp>
