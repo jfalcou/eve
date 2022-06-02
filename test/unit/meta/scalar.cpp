@@ -45,7 +45,7 @@ TTS_CASE("Check for plain_scalar on unsupported types" )
   TTS_EXPECT_NOT( eve::plain_scalar<long double>                  );
   TTS_EXPECT_NOT( eve::plain_scalar<bool>                         );
   TTS_EXPECT_NOT( eve::plain_scalar<void*>                        );
-  TTS_EXPECT_NOT((eve::plain_scalar<kumi::tuple<int,float,char>> ));
+  TTS_EXPECT_NOT((eve::plain_scalar<kumi::tuple<int,float,std::int8_t>> ));
 };
 
 TTS_CASE("Check for scalar on plain_scalar" )
@@ -77,8 +77,8 @@ TTS_CASE("Check for scalar on product_type" )
 {
   TTS_EXPECT((eve::scalar<kumi::tuple<int>>));
   TTS_EXPECT((eve::scalar<kumi::tuple<int,float>>));
-  TTS_EXPECT((eve::scalar<kumi::tuple<int,signed char,double>>));
-  TTS_EXPECT((eve::scalar<kumi::tuple<int,kumi::tuple<signed char,double>,float>>));
+  TTS_EXPECT((eve::scalar<kumi::tuple<int,std::int8_t,double>>));
+  TTS_EXPECT((eve::scalar<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
 };
 
 TTS_CASE("Check for scalar on unsupported types" )

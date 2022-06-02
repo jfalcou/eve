@@ -12,7 +12,7 @@
 
 TTS_CASE( "Check for element_type")
 {
-  using tuple_t = kumi::tuple<int,float,char>;
+  using tuple_t = kumi::tuple<int,float, std::uint8_t>;
 
   TTS_TYPE_IS( eve::element_type_t<bool>                              , bool);
   TTS_TYPE_IS( eve::element_type_t<int>                               , int);

@@ -50,7 +50,7 @@ TTS_CASE_TPL( "Check for SIMD tuple-like type cardinals"
             )
 <typename T>(::tts::type<T>)
 {
-  using tuple_t = kumi::tuple<float,double,char>;
+  using tuple_t = kumi::tuple<float,double,std::int8_t>;
 
   TTS_TYPE_IS( (eve::cardinal_t<eve::wide<tuple_t, T>>), T        );
   TTS_EQUAL  ( (eve::cardinal_v<eve::wide<tuple_t, T>>), T::value );
