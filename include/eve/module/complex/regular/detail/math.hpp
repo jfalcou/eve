@@ -12,12 +12,20 @@
 #include <eve/module/complex/regular/traits.hpp>
 #include <eve/module/complex/regular/conj.hpp>
 #include <eve/module/complex/regular/i.hpp>
+#include <eve/module/complex/regular/exp_i.hpp>
+#include <eve/module/complex/regular/exp_ipi.hpp>
 
 namespace eve::detail
 {
+
   //==============================================================================================
+  // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec
+  // acos asin atanh are in specific files
+  //==============================================================================================
+
+  //===-------------------------------------------------------------------------------------------
   //  Unary functions : sqrt
-  //==============================================================================================
+  //===-------------------------------------------------------------------------------------------
   template<decorator D, typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sqrt_
                                               , D const &
@@ -60,11 +68,6 @@ namespace eve::detail
   {
     return regular(sqrt)(z);
   }
-
-  //==============================================================================================
-  // Trigo/hyper : cosh cos acosh asinh atan
-  // acos asin atanh are in specific files
-  //==============================================================================================
 
   //===-------------------------------------------------------------------------------------------
   //=== cosh
@@ -156,8 +159,81 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::atan_
                                              , Z const& z) noexcept
   {
-      // C99 definition here; atan(z) = -i atanh(iz):
+    // C99 definition here; atan(z) = -i atanh(iz):
     return -(eve::i*(eve::atanh(eve::i*z)));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp_
+                                             , Z const& z) noexcept
+  {
+    auto [rz, iz] = z;
+    auto [s, c]   = sincos(iz);
+    auto rho = exp(rz);
+    return if_else(is_real(z) || rz == minf(as(rz)),
+                   Z{rho, zero(as(rho))},
+                   Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp_i
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp_i_, Z const& z ) noexcept
+  {
+    return exp(eve::i*z);
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp_ipi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::exp_ipi_, Z const& z ) noexcept
+  {
+    auto [rz, iz] = eve::i*z;
+    auto [s, c]   = sinpicospi(iz);
+    auto rho = exp(rz*pi(as(rz)));
+    return if_else(is_real(z) || rz == minf(as(rz)),
+                   Z{rho, zero(as(rho))},
+                   Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_
+                                             , Z const& z) noexcept
+  {
+      auto argz = eve::arg(z);
+      auto absz = if_else(is_nan(real(z)) && (inf(as(argz)) == imag(z)), inf(as(argz)), abs(z));
+      return Z{log(absz), argz};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log_abs
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_
+                                             , Z const& z) noexcept
+  {
+    return log(abs(z));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== rec
+  //===-------------------------------------------------------------------------------------------
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::rec_
+                                            , Z const& z ) noexcept
+  {
+    auto [a, b] = z;
+    auto n2 = sqr_abs(z);
+    return Z{a/n2, -b/n2};
   }
 
   //==============================================================================================

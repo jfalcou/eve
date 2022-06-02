@@ -11,7 +11,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/complex.hpp>
-//#include <eve/module/complex/regular/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
 
 namespace eve
