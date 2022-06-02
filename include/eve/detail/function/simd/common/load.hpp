@@ -215,13 +215,16 @@ namespace eve::detail
   //================================================================================================
   // Bundle
   //================================================================================================
-  template<typename T, typename N, relative_conditional_expr C, typename ... Ptrs>
-  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(cpu_), C const& c, safe_type const&
-                                  , eve::as<wide<T, N>> const &, soa_ptr<Ptrs...> ptr
-                                  ) noexcept
-  requires(std::same_as<abi_t<T, N>, bundle_>)
+  template<typename N, relative_conditional_expr C, typename ... Ptrs>
+  EVE_FORCEINLINE wide<value_type_t<soa_ptr<Ptrs...>>, N>
+  load_( EVE_SUPPORTS(cpu_)
+         , C const& c
+         , decorator auto const& d
+         , eve::as<wide<value_type_t<soa_ptr<Ptrs...>>, N>> const &
+         , soa_ptr<Ptrs...> ptr
+        ) noexcept
   {
-    wide<T, N> that;
+    wide<value_type_t<soa_ptr<Ptrs...>>, N> that;
     if constexpr ( C::has_alternative )
     {
       kumi::for_each( [=]<typename M>(M& m, auto part_alt, auto p) {
