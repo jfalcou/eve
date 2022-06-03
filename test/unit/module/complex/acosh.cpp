@@ -59,47 +59,64 @@ EVE_TEST( "Check behavior of acosh on wide"
 };
 
 
-// EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
-//   <typename T>(eve::as<T>)
-// {
-//   using e_t = eve::element_type_t<T>;
-//   using c_t = eve::complex<e_t>;
-//   using eve::as;
-//   const int N = 24;
-//   e_t pid = eve::downward(eve::pi)(as<e_t>()); // nearest pi representation less than mathematical pi
-//   e_t piu = eve::upward(eve::pi)(as<e_t>());   // nearest pi representation greater than mathematical pi
-//   std::array<c_t, N> inputs =
-//     { c_t(eve::zero(as<e_t>()),eve::zero(as<e_t>())),//0
-//       c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())), //1
-//       c_t(eve::minf(as<e_t>()),eve::zero(as<e_t>())),//2
-//       c_t(eve::nan(as<e_t>()),eve::zero(as<e_t>())), //3
-//       c_t(eve::zero(as<e_t>()),eve::inf(as<e_t>())), //4
-//       c_t(eve::inf(as<e_t>()),eve::inf(as<e_t>())),  //5
-//       c_t(eve::minf(as<e_t>()),eve::inf(as<e_t>())), //6
-//       c_t(eve::nan(as<e_t>()),eve::inf(as<e_t>())),  //7
-//       c_t(eve::zero(as<e_t>()),eve::minf(as<e_t>())),//8
-//       c_t(eve::inf(as<e_t>()),eve::minf(as<e_t>())), //9
-//       c_t(eve::minf(as<e_t>()),eve::minf(as<e_t>())),//10
-//       c_t(eve::nan(as<e_t>()),eve::minf(as<e_t>())), //11
-//       c_t(eve::zero(as<e_t>()),eve::nan(as<e_t>())), //12
-//       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),  //13
-//       c_t(eve::minf(as<e_t>()),eve::nan(as<e_t>())), //14
-//       c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),  //15
-//       c_t(eve::zero(as<e_t>()),pid),                 //16
-//       c_t(eve::inf(as<e_t>()),pid),                  //17
-//       c_t(eve::minf(as<e_t>()),pid),                 //18
-//       c_t(eve::nan(as<e_t>()),pid),                  //19
-//       c_t(eve::zero(as<e_t>()),piu),                 //20
-//       c_t(eve::inf(as<e_t>()),piu),                  //21
-//       c_t(eve::minf(as<e_t>()),piu),                 //22
-//       c_t(eve::nan(as<e_t>()),piu),                  //23
-//     };
+EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
+  <typename T>(eve::as<T>)
+{
+  using e_t = eve::element_type_t<T>;
+  using c_t = eve::complex<e_t>;
+  using eve::as;
+  const int N = 22;
+  std::array<c_t, N> inputs =
+    { c_t(eve::zero(as<e_t>()),eve::zero(as<e_t>())),//0*
+     c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())), //1*
+      c_t(eve::minf(as<e_t>()),eve::zero(as<e_t>())),//2*
+      c_t(eve::nan(as<e_t>()),eve::zero(as<e_t>())), //3*
+      c_t(eve::zero(as<e_t>()),eve::inf(as<e_t>())), //4*
+      c_t(eve::inf(as<e_t>()),eve::inf(as<e_t>())),  //5*
+      c_t(eve::minf(as<e_t>()),eve::inf(as<e_t>())), //6*
+      c_t(eve::nan(as<e_t>()),eve::inf(as<e_t>())),  //7*
+      c_t(eve::zero(as<e_t>()),eve::minf(as<e_t>())),//8*
+      c_t(eve::inf(as<e_t>()),eve::minf(as<e_t>())), //9*
+      c_t(eve::minf(as<e_t>()),eve::minf(as<e_t>())),//10*
+      c_t(eve::nan(as<e_t>()),eve::minf(as<e_t>())), //11*
+      c_t(eve::zero(as<e_t>()),eve::nan(as<e_t>())), //12*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),  //13*
+      c_t(eve::minf(as<e_t>()),eve::nan(as<e_t>())), //14*
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),  //15*
+      c_t(eve::mzero(as<e_t>()),eve::zero(as<e_t>())),//16*
+      c_t(eve::one(as<e_t>()),eve::inf(as<e_t>())),   //17*
+      c_t(eve::one(as<e_t>()),eve::nan(as<e_t>())),   //18*
+      c_t(eve::minf(as<e_t>()),eve::one(as<e_t>())),  //19*
+      c_t(eve::inf(as<e_t>()),eve::one(as<e_t>())),   //20*
+      c_t(eve::nan(as<e_t>()),eve::one(as<e_t>())),   //21*
+    };
+  std::array<c_t, N> expected =
+    { c_t(eve::zero(as<e_t>()),eve::pio_2(as<e_t>())), //0*
+      c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())),   //1*
+      c_t(eve::inf(as<e_t>()),-eve::pi(as<e_t>())),    //2*
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //3*
+      c_t(eve::inf(as<e_t>()),eve::pio_2(as<e_t>())),  //4*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //5*
+      c_t(eve::inf(as<e_t>()),3*eve::pio_4(as<e_t>())),//6*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //7*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //8*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //9*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //10*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //11*
+      c_t(eve::nan(as<e_t>()),-eve::pio_2(as<e_t>())),  //12
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //13*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //14*
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //15*
+      c_t(eve::zero(as<e_t>()),eve::pio_2(as<e_t>())), //16*
+      c_t(eve::inf(as<e_t>()),eve::pio_2(as<e_t>())),  //17*
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //18*
+      c_t(eve::inf(as<e_t>()),eve::pi(as<e_t>())),     //19*
+      c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())),   //20*
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //21
+    };
 
-//   auto acoshine = eve::pedantic(eve::acosh);
-//   auto tacoshine= [](auto z){return eve::pedantic(eve::acosh)(eve::i*z);};
-//   for(int i=0; i < N; ++i)
-//   {
-//     TTS_IEEE_EQUAL(acoshine(-inputs[i]), acoshine(inputs[i]));
-//     TTS_IEEE_EQUAL(acoshine(inputs[i]), tacoshine(inputs[i]));
-//   }
-// };
+  for(int i=0; i < N; ++i)
+  {
+    TTS_ULP_EQUAL(eve::acosh(inputs[i]), expected[i], 0.5);
+  }
+};

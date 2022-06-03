@@ -54,11 +54,11 @@ namespace eve::detail
     if constexpr(std::same_as<D, pedantic_type>)
     {
       auto infty = inf(as(iaz));
-      res = if_else(iaz == infty,  Z{infty, infty}, z);
+      res = if_else(iaz == infty,  Z{infty, infty}, res);
       res = if_else(logical_andnot(rz == -infty, is_nan(iz)), Z{if_else(iaz == infty, iaz, zero), infty}, res);
       res = if_else(is_eqz(iz) && is_nan(rz), z, res);
       res = if_else(is_nan(z), Z(nan(as(iz)), nan(as(iz))), res);
-      res = if_else(is_eqz(iz) && is_gez(rz), Z(rz), res);
+      res = if_else(is_eqz(iz) && is_gez(rz), Z(sqrt(rz), zero(as(rz))), res);
     }
     return if_else(negimag, conj(res), res);
  }
@@ -66,7 +66,7 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sqrt_, Z const& z) noexcept
   {
-    return regular(sqrt)(z);
+    return sqrt(regular_type(), z);
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -209,8 +209,20 @@ namespace eve::detail
                                              , Z const& z) noexcept
   {
       auto argz = eve::arg(z);
-      auto absz = if_else(is_nan(real(z)) && (inf(as(argz)) == imag(z)), inf(as(argz)), abs(z));
+      auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
       return Z{log(absz), argz};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log10
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_
+                                             , Z const& z) noexcept
+  {
+    auto argz = eve::arg(z)/log_10(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    return Z{log10(absz), argz};
   }
 
   //===-------------------------------------------------------------------------------------------

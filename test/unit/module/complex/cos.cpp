@@ -11,7 +11,6 @@
 #include <eve/module/complex.hpp>
 #include <complex>
 
-
 template < typename T >
 auto cv(std::complex < T > sc)
 {
