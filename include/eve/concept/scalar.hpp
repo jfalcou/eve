@@ -31,10 +31,10 @@ namespace eve
     {
       if constexpr(kumi::product_type<T>)
       {
-        return kumi::size<T>::value ? kumi::all_of( kumi::flatten_all(T{})
-                                                  , []<typename M>(M ) { return plain_scalar<M>; }
-                                                  )
-                                    : false ;
+        return kumi::size_v<T>  ? kumi::all_of( kumi::flatten_all(kumi::as_tuple_t<T>{})
+                                              , []<typename M>(M ) { return plain_scalar<M>; }
+                                              )
+                                : false;
       }
       else
       {
