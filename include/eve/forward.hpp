@@ -14,14 +14,12 @@
 
 namespace eve
 {
-  template<typename Type>
-  struct logical;
+  template<typename Type> struct logical;
 
   inline namespace EVE_ABI_NAMESPACE
   {
     // Wrapper for SIMD registers holding arithmetic types with compile-time size
-    template<scalar Type,
-             typename Size = expected_cardinal_t<Type>>
+    template<scalar Type, typename Size = expected_cardinal_t<Type>>
     struct wide;
   }
 }
