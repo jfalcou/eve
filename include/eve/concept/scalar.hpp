@@ -31,18 +31,10 @@ namespace eve
     {
       if constexpr(kumi::product_type<T>)
       {
-        if constexpr(kumi::size<T>::value != 0)
-        {
-          using flatten_t = kumi::result::flatten_all_t<T>;
-          return []<std::size_t... I>( std::index_sequence<I...> )
-          {
-            return (plain_scalar<kumi::element_t<I,flatten_t>> && ... && true);
-          }(std::make_index_sequence<kumi::size<flatten_t>::value>{});
-        }
-        else
-        {
-          return false;
-        }
+        return kumi::size<T>::value ? kumi::all_of( kumi::flatten_all(T{})
+                                                  , []<typename M>(M ) { return plain_scalar<M>; }
+                                                  )
+                                    : false ;
       }
       else
       {
@@ -52,7 +44,7 @@ namespace eve
   }
 
   template<typename T>
-  concept product_scalar  = detail::scalar_tuple<T>();
+  concept product_scalar = detail::scalar_tuple<T>();
 
   template<typename T>
   concept scalar  = plain_scalar<T> || product_scalar<T>;
