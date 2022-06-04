@@ -32,7 +32,7 @@ namespace eve
   //!
   //! @tparam T  Type of value to store a mask from
   //================================================================================================
-  template<plain_scalar T> struct logical<T>
+  template<plain_scalar_value T> struct logical<T>
   {
     //! The type associated to the boolean mask.
     using value_type  = T;

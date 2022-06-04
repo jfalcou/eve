@@ -57,7 +57,7 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<scalar Type, typename Cardinal>
+  template<arithmetic_scalar_value Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  wide
         : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {

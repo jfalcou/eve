@@ -414,4 +414,8 @@ namespace eve::detail
 
   template <typename T, template <typename ...> class Templ>
   concept instance_of = instance_of_impl<T, Templ>::value;
+
+  // one_of concept
+  template<typename T, typename... Ts>
+  concept one_of = (std::same_as<T,Ts> || ... || false);
 }
