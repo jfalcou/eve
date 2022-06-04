@@ -323,12 +323,6 @@ namespace eve::detail
     using type = double;
   };
 
-  template<>
-  struct make_floating_point<16>
-  {
-    using type = double;
-  };
-
   template<std::size_t Size>
   using make_floating_point_t = typename make_floating_point<Size>::type;
 
