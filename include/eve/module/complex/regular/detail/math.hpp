@@ -160,7 +160,7 @@ namespace eve::detail
                                              , Z const& z) noexcept
   {
     // C99 definition here; atan(z) = -i atanh(iz):
-    return -(eve::i*(eve::atanh(eve::i*z)));
+    return  -(eve::i*(eve::atanh(eve::i*z)));
   }
 
   //===-------------------------------------------------------------------------------------------

@@ -15,6 +15,11 @@ auto cv(std::complex < T > sc)
 {
   return eve::complex<T>(sc.real(), sc.imag());
 }
+template < typename T >
+auto sc(eve::complex < T > cv)
+{
+  return std::complex<T>(eve::real(cv), eve::imag(cv));
+}
 
 EVE_TEST( "Check behavior of atanh on scalar"
         , eve::test::scalar::ieee_reals
@@ -56,4 +61,44 @@ EVE_TEST( "Check behavior of atanh on wide"
     return b;
   };
   TTS_ULP_EQUAL(eve::atanh(z_t{a0,a1}), init_with_std(a0, a1), 2);
+};
+
+
+EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
+  <typename T>(eve::as<T>)
+{
+  using e_t = eve::element_type_t<T>;
+  using c_t = eve::complex<e_t>;
+  using eve::as;
+  const int N = 16;
+  std::array<c_t, N> inputs =
+    { c_t(eve::zero(as<e_t>()),eve::zero(as<e_t>())),//0
+      c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())), //1
+      c_t(eve::minf(as<e_t>()),eve::zero(as<e_t>())),//2
+      c_t(eve::nan(as<e_t>()),eve::zero(as<e_t>())), //3
+      c_t(eve::zero(as<e_t>()),eve::inf(as<e_t>())), //4
+      c_t(eve::inf(as<e_t>()),eve::inf(as<e_t>())),  //5
+      c_t(eve::minf(as<e_t>()),eve::inf(as<e_t>())), //6
+      c_t(eve::nan(as<e_t>()),eve::inf(as<e_t>())),  //7
+      c_t(eve::zero(as<e_t>()),eve::minf(as<e_t>())),//8--
+      c_t(eve::inf(as<e_t>()),eve::minf(as<e_t>())), //9
+      c_t(eve::minf(as<e_t>()),eve::minf(as<e_t>())),//10
+      c_t(eve::nan(as<e_t>()),eve::minf(as<e_t>())), //11
+      c_t(eve::zero(as<e_t>()),eve::nan(as<e_t>())), //12
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),  //13
+      c_t(eve::minf(as<e_t>()),eve::nan(as<e_t>())), //14
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),  //15
+    };
+
+  for(int i=0; i < N; ++i)
+  {
+    if((i != 2 && i != 1)){
+      // this curious test corresponds to the fact that neither boost::math::atanh nor std::atanh are correct for inputs inf*i or -inf*i
+      // peculiarly they contredict the C99 specification that atanh is odd
+      // atanh must Behave "the same as C99 function catanh, defined in subclause 7.3.6.3 and G.5.2.3."
+      // It has to be removed when libc++ will be corrected
+      TTS_ULP_EQUAL(eve::atanh(inputs[i]), cv(std::atanh(sc(inputs[i]))), 0.5);
+      TTS_ULP_EQUAL(eve::atanh(-inputs[i]), cv(std::atanh(sc(-inputs[i]))), 0.5);
+    }
+  }
 };

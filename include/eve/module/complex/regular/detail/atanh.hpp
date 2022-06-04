@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-
+#include <boost/math/complex/atanh.hpp>
 namespace eve
 {
 
@@ -35,6 +35,7 @@ namespace eve
       // at : http://jove.prohosting.com/~skripty/toc.htm
       //
       auto [a0r, a0i] = a0;
+      auto realinf = is_eqz(a0i) && is_infinite(a0r);
       using rtype = decltype(a0r);
       const rtype alpha_crossover(0.3);
       auto  ltzra0 = is_ltz(a0r);
@@ -158,9 +159,15 @@ namespace eve
                      )*half(as(a0r));
 
       r = eve::if_else( ltzra0,-r, r);
-      i = eve::if_else(is_infinite(y), pio_2(as(a0r)), i);
+      i = eve::if_else(is_infinite(y), pio_2(as(a0r))*sign(y), i);
       i = eve::if_else( ltzia0,-i, i);
-      return Z{r, i};
+      std::cout << "realinf " << realinf << " a0r " << a0r << std::endl;
+      std::cout << "sign(a0r) " << sign(a0r) <<  std::endl;
+      std::cout << Z{zero(as(a0r)), sign(a0r)*pio_2(as(a0r))} << std::endl;
+      r = if_else(realinf, zero(as(a0r)), r);
+      i = if_else(realinf, -sign(a0r)*pio_2(as(a0r)), i);
+      return  Z{r, i};
+//      return if_else(realinf, Z{zero(as(a0r)), -sign(a0r)*pio_2(as(a0r))}, Z{r, i});
     }
   }
 }
