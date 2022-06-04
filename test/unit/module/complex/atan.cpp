@@ -89,7 +89,6 @@ EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
   auto tatanine= [](auto z){return -(eve::i*eve::atanh(eve::i*z));};
   for(int i=0; i < N; ++i)
   {
-    std::cout << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(atanine(inputs[i]), -atanine(-inputs[i]));
     TTS_IEEE_EQUAL(atanine(inputs[i]), tatanine(inputs[i]));
   }

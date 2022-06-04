@@ -23,13 +23,14 @@ EVE_TEST( "Check behavior of acosh on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
+  auto ulp = (spy::stdlib_type() == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::acosh(eve::complex<e_t>(e, f)),  cv(std::acosh(c_t(e, f))), 2.0);
+      TTS_ULP_EQUAL(eve::acosh(eve::complex<e_t>(e, f)),  cv(std::acosh(c_t(e, f))), ulp);
     }
   }
 };
@@ -41,6 +42,7 @@ EVE_TEST( "Check behavior of acosh on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
+  auto ulp = (spy::stdlib_type() == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
@@ -55,7 +57,7 @@ EVE_TEST( "Check behavior of acosh on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::acosh(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::acosh(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
 

@@ -43,7 +43,6 @@ namespace eve
       auto s_min = eve::sqrtsmallestposval(as(a0r))*2;
       auto s_max = eve::sqrtvalmax(as(a0r))/2;
       rtype const two = rtype(2);
-//      rtype one =  One(as(a0r));
       rtype inf =  eve::inf(as(a0r));
       rtype x = eve::abs(a0r);
       rtype y = eve::abs(a0i);
@@ -161,13 +160,9 @@ namespace eve
       r = eve::if_else( ltzra0,-r, r);
       i = eve::if_else(is_infinite(y), pio_2(as(a0r))*sign(y), i);
       i = eve::if_else( ltzia0,-i, i);
-      std::cout << "realinf " << realinf << " a0r " << a0r << std::endl;
-      std::cout << "sign(a0r) " << sign(a0r) <<  std::endl;
-      std::cout << Z{zero(as(a0r)), sign(a0r)*pio_2(as(a0r))} << std::endl;
       r = if_else(realinf, zero(as(a0r)), r);
       i = if_else(realinf, -sign(a0r)*pio_2(as(a0r)), i);
       return  Z{r, i};
-//      return if_else(realinf, Z{zero(as(a0r)), -sign(a0r)*pio_2(as(a0r))}, Z{r, i});
     }
   }
 }

@@ -9,6 +9,7 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 #include <complex>
+#include <boost/math/complex/asin.hpp>
 
 template < typename T >
 auto cv(std::complex < T > sc)
@@ -23,13 +24,15 @@ EVE_TEST( "Check behavior of asin on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
+  std::cout << "------------- " << (spy::stdlib == spy::libcpp_)<< std::endl;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 3.5;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(std::asin(c_t(e, f))), 3.5);
+      TTS_ULP_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(boost::math::asin(c_t(e, f))), ulp);
     }
   }
 };
@@ -41,11 +44,12 @@ EVE_TEST( "Check behavior of asin on wide"
         )
   <typename T>(T const& a0, T const&  a1)
 {
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_asin = [](auto x, auto y){return std::asin(c_t(x, y)); };
+  auto std_asin = [](auto x, auto y){return boost::math::asin(c_t(x, y)); };
   auto init_with_std = [std_asin](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
@@ -55,7 +59,7 @@ EVE_TEST( "Check behavior of asin on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::asin(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::asin(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
 EVE_TEST_TYPES( "Check return types of eve::asin", eve::test::scalar::ieee_reals)
@@ -65,7 +69,7 @@ EVE_TEST_TYPES( "Check return types of eve::asin", eve::test::scalar::ieee_reals
   using c_t = eve::complex<e_t>;
   using s_t = std::complex<e_t>;
   using eve::as;
-  auto s_asin = [](auto x){return cv(std::asin(x)); };
+  auto s_asin = [](auto x){return cv(boost::math::asin(x)); };
   // specific values tests
 #ifndef boost_simd_no_invalids
   TTS_ULP_EQUAL(eve::asin(c_t(eve::nan (as<T>()),  eve::zero(as<T>()))), s_asin(s_t(eve::nan (as<T>()),  eve::zero(as<T>())) ),  2.0);

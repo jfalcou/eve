@@ -9,6 +9,7 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 #include <complex>
+#include <boost/math/complex/atanh.hpp>
 
 template < typename T >
 auto cv(std::complex < T > sc)
@@ -28,13 +29,14 @@ EVE_TEST( "Check behavior of atanh on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(std::atanh(c_t(e, f))), 2.0);
+      TTS_ULP_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(boost::math::atanh(c_t(e, f))), ulp);
     }
   }
 };
@@ -46,11 +48,12 @@ EVE_TEST( "Check behavior of atanh on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
- using z_t = eve::as_complex_t<T>;
+  using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_ch = [](auto x, auto y){return cv(std::atanh(c_t(x, y))); };
+  auto std_ch = [](auto x, auto y){return cv(boost::math::atanh(c_t(x, y))); };
   auto init_with_std = [std_ch](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
@@ -60,13 +63,14 @@ EVE_TEST( "Check behavior of atanh on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::atanh(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::atanh(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
 
 EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
   <typename T>(eve::as<T>)
 {
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 0.5;
   using e_t = eve::element_type_t<T>;
   using c_t = eve::complex<e_t>;
   using eve::as;
@@ -93,12 +97,12 @@ EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
   for(int i=0; i < N; ++i)
   {
     if((i != 2 && i != 1)){
-      // this curious test corresponds to the fact that neither boost::math::atanh nor std::atanh are correct for inputs inf*i or -inf*i
+      // this curious test corresponds to the fact that neither boost::math::atanh nor boost::math::atanh are correct for inputs inf*i or -inf*i
       // peculiarly they contredict the C99 specification that atanh is odd
       // atanh must Behave "the same as C99 function catanh, defined in subclause 7.3.6.3 and G.5.2.3."
       // It has to be removed when libc++ will be corrected
-      TTS_ULP_EQUAL(eve::atanh(inputs[i]), cv(std::atanh(sc(inputs[i]))), 0.5);
-      TTS_ULP_EQUAL(eve::atanh(-inputs[i]), cv(std::atanh(sc(-inputs[i]))), 0.5);
+      TTS_ULP_EQUAL(eve::atanh(inputs[i]), cv(boost::math::atanh(sc(inputs[i]))), ulp);
+      TTS_ULP_EQUAL(eve::atanh(-inputs[i]), cv(boost::math::atanh(sc(-inputs[i]))), ulp);
     }
   }
 };
