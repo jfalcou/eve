@@ -45,9 +45,6 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct exp_ipi_; }
-  template<> struct supports_conditional<tag::exp_ipi_> : std::false_type {};
-
   EVE_MAKE_CALLABLE(exp_ipi_, exp_ipi);
 
   namespace detail

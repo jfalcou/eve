@@ -48,7 +48,7 @@ namespace eve::detail
     auto [zr, zi] = z;
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
   }
-  
+
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
   {
     auto [zr, zi] = z;
@@ -60,37 +60,11 @@ namespace eve::detail
   //  Binary functions
   //==============================================================================================
 
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::add_, Z const& x, Z const& y) noexcept
-  {
-    return x+y; 
-  }
-  
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::average_
                                               , auto const& z1, auto const& z2
                                               ) noexcept
   {
-    return eve::max ( eve::average(real(z1), real(z2))
-                    , eve::average(imag(z1), imag(z2))
-                    );
+    using z_t = decltype(z1+z2);
+    return z_t{eve::average(real(z1), real(z2)), eve::average(imag(z1), imag(z2))};
   }
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::dist_, Z const& x, Z const& y) noexcept
-  {
-    return eve::abs(x-y);
-  }
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::div_, Z const& x, Z const& y) noexcept
-  {
-    return x/y;
-  }
-  
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::mul_, Z const& x, Z const& y) noexcept
-  {
-    return x-y;
-  }
-  
 }

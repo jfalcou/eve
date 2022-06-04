@@ -19,8 +19,8 @@ namespace eve::detail
 {
 
   //==============================================================================================
-  // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec
-  // acos asin atanh are in specific files
+  // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec are here.
+  // acos asin atanh are in specific files included at the end
   //==============================================================================================
 
   //===-------------------------------------------------------------------------------------------
@@ -270,3 +270,7 @@ namespace eve::detail
   }
 
 }
+
+#include <eve/module/complex/regular/detail/acos.hpp>
+#include <eve/module/complex/regular/detail/asin.hpp>
+#include <eve/module/complex/regular/detail/atanh.hpp>
