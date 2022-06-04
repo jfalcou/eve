@@ -404,4 +404,14 @@ namespace eve::detail
   {
     return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin),(End - Begin) / Step>{}, f);
   }
+
+  // instance concept
+  template <typename T, template <typename ...> class Templ>
+  struct instance_of_impl : std::false_type {};
+
+  template <typename ...Args, template <typename ...> class Templ>
+  struct instance_of_impl<Templ<Args...>, Templ> : std::true_type {};
+
+  template <typename T, template <typename ...> class Templ>
+  concept instance_of = instance_of_impl<T, Templ>::value;
 }

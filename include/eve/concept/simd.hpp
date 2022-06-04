@@ -9,6 +9,7 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/concept/scalar.hpp>
+#include <eve/detail/meta.hpp>
 #include <eve/traits/element_type.hpp>
 
 namespace eve
@@ -18,16 +19,8 @@ namespace eve
     template<scalar Type, typename Size> struct wide;
   }
 
-  namespace detail
-  {
-    template<typename T> struct is_wide { static constexpr bool value = false; };
-
-    template<scalar T, typename N>
-    struct is_wide<wide<T,N>> { static constexpr bool value = true; };
-  }
-
   template<typename T>
-  concept simd = detail::is_wide<T>::value;
+  concept simd = detail::instance_of<T,wide>;
 
   template<typename T>
   concept plain_simd = simd<T> && plain_scalar<element_type_t<T>>;
