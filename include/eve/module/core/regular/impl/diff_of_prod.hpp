@@ -33,9 +33,6 @@ namespace eve::detail
                                    ) noexcept
   requires(has_native_abi_v<T>)
   {
-      T cd = c * d;
-      T err = fnma(c, d, cd);
-      T dop = fms(a, b, cd);
-      return dop + err;
+    return a*b-c*d;
   }
 }
