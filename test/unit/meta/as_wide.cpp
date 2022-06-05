@@ -9,7 +9,7 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-TTS_CASE_TPL("Check as_wide on scalar", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES  )
+TTS_CASE_TPL("Check as_wide on scalar", tts::arithmetic_types)
 <typename T>(::tts::type<T>)
 {
   using eve::as_wide_t;
@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check as_wide on scalar", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_N
               );
 };
 
-TTS_CASE_TPL("Check as_wide on wide", TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES)
+TTS_CASE_TPL("Check as_wide on wide", tts::arithmetic_types)
 <typename T>(::tts::type<T>)
 {
   using eve::as_wide_t;

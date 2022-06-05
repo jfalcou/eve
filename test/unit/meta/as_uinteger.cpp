@@ -11,9 +11,7 @@
 #include <eve/wide.hpp>
 #include <type_traits>
 
-TTS_CASE_TPL( "Check as_uinteger on integral scalar",
-              TTS_SIGNED_INTEGRAL_TYPES, TTS_UNSIGNED_INTEGRAL_TYPES
-            )
+TTS_CASE_TPL( "Check as_uinteger on integral scalar", tts::integral_types)
 <typename T>(::tts::type<T>)
 {
   using eve::as_uinteger_t;
@@ -29,9 +27,7 @@ TTS_CASE("Check as_uinteger on floating-point scalar")
   TTS_TYPE_IS((as_uinteger_t<double>) , std::uint64_t );
 };
 
-TTS_CASE_TPL( "Check as_uinteger on logical scalar",
-              TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
-            )
+TTS_CASE_TPL( "Check as_uinteger on logical scalar", tts::arithmetic_types)
 <typename T>(::tts::type<T>)
 {
   using eve::as_uinteger_t;
@@ -40,9 +36,7 @@ TTS_CASE_TPL( "Check as_uinteger on logical scalar",
   TTS_TYPE_IS((as_uinteger_t<logical<T>>), (logical<as_uinteger_t<T>>));
 };
 
-TTS_CASE_TPL( "Check as_uinteger on integral wide",
-              TTS_SIGNED_INTEGRAL_TYPES, TTS_UNSIGNED_INTEGRAL_TYPES
-            )
+TTS_CASE_TPL( "Check as_uinteger on integral wide", tts::integral_types)
 <typename T>(::tts::type<T>)
 {
   using eve::as_uinteger_t;
@@ -65,9 +59,7 @@ TTS_CASE("Check as_uinteger on floating-point wide")
   TTS_TYPE_IS((as_uinteger_t<wide<double>>) , wide<std::uint64_t> );
 };
 
-TTS_CASE_TPL( "Check as_uinteger on logical wide",
-              TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
-            )
+TTS_CASE_TPL( "Check as_uinteger on logical wide", tts::arithmetic_types)
 <typename T>(::tts::type<T>)
 {
   using eve::as_uinteger_t;

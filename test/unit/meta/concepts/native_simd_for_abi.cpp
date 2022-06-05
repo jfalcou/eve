@@ -16,7 +16,7 @@ template<typename T> using tiny_wide  = eve::wide<T,eve::fixed<1>>;
 #if !defined(EVE_NO_SIMD)
 #if defined(SPY_SIMD_IS_X86)
 TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any X86 ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
@@ -28,7 +28,7 @@ TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any X86 A
 };
 
 TTS_CASE_TPL( "Check that wide<T,N> does not satisfy native_simd_for_abi with other ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
@@ -42,7 +42,7 @@ TTS_CASE_TPL( "Check that wide<T,N> does not satisfy native_simd_for_abi with ot
 };
 #elif defined(SPY_SIMD_IS_PPC)
 TTS_CASE_TPL( "Check that wide<T,N,ppc*> satisfies native_simd_for_abi with any PPC ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
@@ -54,7 +54,7 @@ TTS_CASE_TPL( "Check that wide<T,N,ppc*> satisfies native_simd_for_abi with any 
 };
 
 TTS_CASE_TPL( "Check that wide<T,N,ppc*> does not satisfy native_simd_for_abi with other ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
@@ -68,7 +68,7 @@ TTS_CASE_TPL( "Check that wide<T,N,ppc*> does not satisfy native_simd_for_abi wi
 };
 #elif defined(SPY_SIMD_IS_ARM)
 TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
@@ -96,7 +96,7 @@ TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM A
 };
 
 TTS_CASE_TPL( "Check that wide<T,N> does not satisfy native_simd_for_abi with other ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
@@ -112,7 +112,7 @@ TTS_CASE_TPL( "Check that wide<T,N> does not satisfy native_simd_for_abi with ot
 #endif
 
 TTS_CASE_TPL( "Check that wide<T,k*N> does not satisfy any native_simd_for_abi"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {

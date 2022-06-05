@@ -8,9 +8,7 @@
 #include "test.hpp"
 #include <eve/std.hpp>
 
-TTS_CASE_TPL( "Check for experimental::simd compliance"
-            , TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
-            )
+TTS_CASE_TPL( "Check for experimental::simd compliance", ::tts::arithmetic_types)
 <typename T>(::tts::type<T>)
 {
   using eve_type      = eve::experimental::simd<T>;
@@ -20,9 +18,7 @@ TTS_CASE_TPL( "Check for experimental::simd compliance"
   TTS_EQUAL(sizeof(eve_mask_type) , sizeof(eve::logical<eve::wide<T,eve::fixed<16/sizeof(T)>>>));
 };
 
-TTS_CASE_TPL( "Check for experimental::native_simd compliance"
-            , TTS_SIGNED_NUMERIC_TYPES, TTS_UNSIGNED_NUMERIC_TYPES
-            )
+TTS_CASE_TPL( "Check for experimental::native_simd compliance", ::tts::arithmetic_types)
 <typename T>(::tts::type<T>)
 {
   using eve_type      = eve::experimental::native_simd<T>;
