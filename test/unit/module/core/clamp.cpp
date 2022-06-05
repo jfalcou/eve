@@ -44,20 +44,20 @@ EVE_TEST( "Check behavior of clamp(wide) and diff  on all types"
         )<typename T>( T const& a0, T const& a1, T const& a2 )
 {
   using eve::clamp;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL( clamp(a0, a1, a2), map([&](auto e, auto f, auto g) -> v_t{ return std::clamp(e, f, g); }, a0, a1, a2));
 
   if constexpr(eve::floating_real_value<T>)
   {
-    using eve::diff_1st;
-    using eve::diff_2nd;
-    using eve::diff_3rd;
+    
+    
+    
     using eve::min;
     using eve::max;
-    TTS_EQUAL( diff_1st(clamp)(a0, a1, a2), map([&](auto a, auto b, auto c) -> v_t{ return diff_1st(min)(max(a, b), c)*diff_1st(max)(a, b); }, a0, a1, a2));
-    TTS_EQUAL( diff_2nd(clamp)(a0, a1, a2), map([&](auto a, auto b, auto c) -> v_t{ return diff_1st(min)(max(a, b), c)*diff_2nd(max)(a, b); }, a0, a1, a2));
-    TTS_EQUAL( diff_3rd(clamp)(a0, a1, a2), map([&](auto a, auto b, auto c) -> v_t{ return diff_2nd(min)(max(a, b), c); }, a0, a1, a2));
+    
+    
+    
   }
 };

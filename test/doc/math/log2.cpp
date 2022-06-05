@@ -12,7 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
             << "-> log2(pf)       = " << eve::log2(pf) << '\n'
-            << "-> diff(log2)(pf) = " << eve::diff(eve::log2)(pf) << '\n';
+            ;
 
   float xf = 1.0f;
 

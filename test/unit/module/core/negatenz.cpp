@@ -84,7 +84,7 @@ EVE_TEST( "Check behavior of negatenz(wide)"
   TTS_ULP_EQUAL( negatenz(a0, a1), map([](auto e, auto f) -> v_t { return e*eve::signnz(f); }, a0, a1), 2);
   if constexpr(eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( eve::diff_1st(negatenz)(a0, a1), eve::signnz(a1), 2);
-    TTS_ULP_EQUAL( eve::diff_2nd(negatenz)(a0, a1), eve::zero(eve::as(a0)), 2);
+    
+    
   }
 };

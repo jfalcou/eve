@@ -20,7 +20,7 @@ int main()
             << "-> hermite(3, xd)      = " << eve::hermite(3, xd) << '\n'
             << "-> hermite(n, 2.0)     = " << eve::hermite(n, 2.0) << '\n'
             << "-> hermite(n, x)       = " << eve::hermite(n, x)   << '\n'
-            << "-> diff(hermite)(n, x) = " << eve::diff(eve::hermite)(n, x) << '\n';
+            ;
 
   double xs = 3.0;
 

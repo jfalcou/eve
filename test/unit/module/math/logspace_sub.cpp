@@ -59,10 +59,10 @@ EVE_TEST( "Check behavior of logspace_sub on wide"
   auto la3 = eve::log(a3);
   TTS_ULP_EQUAL(eve::logspace_sub(la0, la1)      , eve::log(a0-a1), 2);
   TTS_ULP_EQUAL(eve::logspace_sub(la2, la3)      , eve::log(a2-a3), 10);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_sub)(a0, a1), eve::rec(eve::oneminus(eve::exp(a1-a0))), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_sub)(a2, a3), eve::rec(eve::oneminus(eve::exp(a3-a2))), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_sub)(a0, a1), eve::rec(eve::oneminus(eve::exp(a0-a1))), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_sub)(a2, a3), eve::rec(eve::oneminus(eve::exp(a2-a3))), 2);
+  
+  
+  
+  
   auto la4 = eve::log(a4);
   auto la5 = eve::log(a5);
   TTS_ULP_EQUAL(eve::logspace_sub(la0, la1, la4)      , eve::log(a0-a1-a4), 2);

@@ -15,7 +15,7 @@ int main()
             << "<- n                     = " << n  << '\n'
             << "-> exp_int(n, pf)        = " << eve::exp_int(n, pf)  << '\n'
             << "-> exp_int(pf)           = " << eve::exp_int(pf) << '\n'
-            << "-> diff(exp_int)(n, pf)  = " << eve::diff(eve::exp_int)(n, pf) << '\n';
+            ;
 
   float xd = 0.5f;
 

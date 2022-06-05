@@ -40,11 +40,6 @@ EVE_TEST( "Check behavior of erfc on wide"
   using eve::erfc;
   using eve::as;
   TTS_ULP_EQUAL( erfc(a0),  map([&](auto e) -> v_t{ return std::erfc(e); }, a0), 2);
-  auto derfc = [](auto e){return -2*std::exp(-e*e)*v_t(.564189583547756286948);};
-  TTS_ULP_EQUAL( eve::diff(erfc)(a0),  map(derfc, a0), 2);
-
-
-
   TTS_ULP_EQUAL(erfc(T(0.5)), T(std::erfc(v_t(0.5))), 2.0 );
   TTS_ULP_EQUAL(erfc(T(-35)), T(std::erfc(v_t(-35))), 0.5);
   TTS_ULP_EQUAL(erfc(T(eve::smallestposval(as<T>()))), T(std::erfc(eve::smallestposval(as<v_t>()))), 2.0);

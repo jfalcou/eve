@@ -20,7 +20,7 @@ int main()
             << "-> legendre(3, xd)   = " << eve::legendre(3, xd) << '\n'
             << "-> legendre(n, 0.5)  = " << eve::legendre(n, 0.5) << '\n'
             << "-> legendre(n, x)    = " << eve::legendre(n, x)   << '\n'
-            << "-> diff(legendre)(n, x) = " << eve::diff(eve::legendre)(n, x) << '\n';
+            ;
 
   double xs = 0.1;
 

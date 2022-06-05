@@ -8,8 +8,7 @@
 #include "test.hpp"
 #include <eve/module/bessel.hpp>
 #include <boost/math/special_functions/bessel.hpp>
-#include <boost/math/special_functions/bessel_prime.hpp>
-#include <eve/detail/diff_div.hpp>
+
 
 EVE_TEST_TYPES( "Check return types of sph_bessel_y1"
             , eve::test::simd::ieee_reals
@@ -63,16 +62,4 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_y1"
   TTS_ULP_EQUAL(eve__sph_bessel_y1(a1), map(std__sph_bessel_y1, a1), 20.0);
   TTS_ULP_EQUAL(eve__sph_bessel_y1(a2), map(std__sph_bessel_y1, a2), 20.0);
 
-};
-
-EVE_TEST( "Check behavior of diff(sph_bessel_y1) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(1.0, 10.0))
-        )
-  <typename T>(T a0 )
-{
-  auto eve__diff_bessel_y1 =  [](auto x) { return eve::diff(eve::sph_bessel_y1)(x); };
-  auto df = [](auto x){return eve::detail::centered_diffdiv(eve::sph_bessel_y1, x); };
-
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_y1(a0),   df(a0), 2.0e-2);
 };

@@ -30,10 +30,10 @@ EVE_TEST( "Check behavior of lpnorm on wide"
 
   TTS_ULP_EQUAL(eve::lpnorm(2, a0, a1)      , eve::hypot(a0, a1), 2);
   TTS_ULP_EQUAL(eve::lpnorm(2, a2, a3)      , eve::hypot(a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::lpnorm)(2, a0, a1), eve::diff_1st(eve::hypot)(a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::lpnorm)(2, a2, a3), eve::diff_1st(eve::hypot)(a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::lpnorm)(2, a0, a1), eve::diff_2nd(eve::hypot)(a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::lpnorm)(2, a2, a3), eve::diff_2nd(eve::hypot)(a2, a3), 2);
+  
+  
+  
+  
   TTS_ULP_EQUAL(eve::lpnorm(2, a0, a1, a4)      , eve::hypot(a0, a1, a4), 2);
   TTS_ULP_EQUAL(eve::lpnorm(2, a2, a3, a5)      , eve::hypot(a2, a3, a5), 2);
 };

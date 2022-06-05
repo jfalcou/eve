@@ -40,6 +40,6 @@ EVE_TEST( "Check behavior of atand on wide"
 
   TTS_ULP_EQUAL(eve::atand(a0)      , map([](auto e) -> v_t { return eve::radindeg(std::atan(e)); }, a0), 2);
   TTS_ULP_EQUAL(eve::atand(a1)      , map([](auto e) -> v_t { return eve::radindeg(std::atan(e)); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atand)(a0), map([](auto e) -> v_t { return  eve::radindeg(v_t(1)/(e*e+1)); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atand)(a1), map([](auto e) -> v_t { return  eve::radindeg(v_t(1)/(e*e+1)); }, a1), 2);
+  
+  
 };

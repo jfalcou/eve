@@ -28,8 +28,8 @@ EVE_TEST_TYPES( "Check return types of sqrt"
   TTS_EXPR_IS( eve::sqrt[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS( eve::sqrt[bool()](T())  , T);
   TTS_EXPR_IS( eve::sqrt[bool()](v_t()), v_t);
-  TTS_EXPR_IS( eve::diff(eve::sqrt)(T())  , T);
-  TTS_EXPR_IS( eve::diff(eve::sqrt)(v_t()), v_t);
+  
+  
 };
 
 //==================================================================================================
@@ -42,11 +42,11 @@ EVE_TEST( "Check behavior of sqrt(wide) and diff on  floating types"
 <typename T>(T const& a0 )
 {
   using eve::detail::map;
-  using eve::diff;
+  
   using eve::sqr;
   using eve::rec;
   TTS_ULP_EQUAL( eve::sqrt(a0), map([&](auto e) { return std::sqrt(e); }, a0), 2);
-  TTS_ULP_EQUAL( diff(eve::sqrt)(a0), map([&](auto e) { return rec(std::sqrt(e)*2); }, a0), 2.5);
+  
 };
 
 //==================================================================================================

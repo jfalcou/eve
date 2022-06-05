@@ -9,7 +9,6 @@
 #include <eve/module/core.hpp>
 #include "test.hpp"
 
-
 EVE_TEST_TYPES("Check eve::first_true return type", eve::test::simd::all_types)
 <typename T>(eve::as<T>)
 {
@@ -21,13 +20,6 @@ TTS_CASE("Check eve::first_true bool")
   TTS_EXPR_IS( (eve::first_true(bool{})) , std::optional<std::ptrdiff_t>);
   TTS_EQUAL  ( (eve::first_true(true)), 0 );
   TTS_EQUAL  ( (eve::first_true(false)), std::nullopt );
-};
-
-EVE_TEST_TYPES("Check eve::first_true behavior on logical", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
-{
-  TTS_EQUAL(eve::first_true(eve::true_(eve::as<T>())), 0);
-  TTS_EQUAL(eve::first_true(eve::false_(eve::as<T>())), std::nullopt);
 };
 
 EVE_TEST_TYPES("Check eve::first_true", eve::test::simd::all_types)

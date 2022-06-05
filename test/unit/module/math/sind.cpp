@@ -47,7 +47,7 @@ EVE_TEST( "Check behavior of sind on wide"
 {
   using eve::detail::map;
   using eve::sind;
-  using eve::diff;
+  
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return boost::math::sin_pi(e/180.0l); };
@@ -58,9 +58,6 @@ EVE_TEST( "Check behavior of sind on wide"
   TTS_ULP_EQUAL(sind(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(sind(a1)                       , map(ref, a1), 30);
   TTS_ULP_EQUAL(sind(a2)                       , map(ref, a2), 1024);
-  auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
-
-  TTS_ULP_EQUAL(diff(sind)(a0), map([dinr](auto e) -> v_t { return  dinr*boost::math::cos_pi(e/180.0l); }, a0), 2);
 };
 
 EVE_TEST_TYPES( "Check return types of sind"

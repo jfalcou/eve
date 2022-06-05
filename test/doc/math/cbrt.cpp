@@ -12,7 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
             << "-> cbrt(pf)       = " << eve::cbrt(pf) << '\n'
-            << "-> diff(cbrt)(pf) = " << eve::diff(eve::cbrt)(pf) << '\n';
+            ;
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());

@@ -10,7 +10,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/detail/diff_div.hpp>
+
 
 //==================================================================================================
 // Types tests
@@ -54,20 +54,12 @@ EVE_TEST_TYPES( "Check behavior of dawson on wide"
 
    eve::wide < float, eve::fixed < 8 > > w{0.0f, 1.0f, 2.0f, 4.0f, 8.0f, 2.0, eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
    eve::wide < float, eve::fixed < 8 > > r{eve::dawson(( 0.0f )),
-                                           eve::dawson(( 1.0f )),
-                                           eve::dawson(( 2.0f )),
-                                           eve::dawson(( 4.0f )),
-                                           eve::dawson(( 8.0f )),
-                                           eve::dawson(( 2.0f )),
+       eve::dawson(( 1.0f )),
+       eve::dawson(( 2.0f )),
+       eve::dawson(( 4.0f )),
+       eve::dawson(( 8.0f )),
+       eve::dawson(( 2.0f )),
        eve::dawson(eve::inf(eve::as<float>())),
        eve::dawson( eve::nan(eve::as<float>()))};
    TTS_ULP_EQUAL(eve::dawson(w), r, 2);
-
-
-    using elt_t = eve::element_type_t<T>;
-    auto df = [](auto f, auto x){return eve::detail::centered_diffdiv(f, x); };
-    auto ulp =  (sizeof(elt_t) == 4) ? 1.0e4 : 1.0e8;
-    TTS_ULP_EQUAL(eve::diff(eve::dawson)(T{2.0}), df(eve::dawson, T(2.0))  , ulp);
-    TTS_ULP_EQUAL(eve::diff(eve::dawson)(T{1}), df(eve::dawson, T(1.0))  , ulp);
-
 };

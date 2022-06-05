@@ -8,7 +8,7 @@
 #include "test.hpp"
 #include <eve/module/special.hpp>
 #include <cmath>
-#include <eve/detail/diff_div.hpp>
+
 
 //==================================================================================================
 // Types tests

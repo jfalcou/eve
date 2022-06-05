@@ -22,7 +22,7 @@ int main()
             << "-> gegenbauer(n, l, 0.3)        = " << eve::gegenbauer(n, l, 0.3) << '\n'
             << "-> gegenbauer(n, -3.0/8.0, 0.3) = " << eve::gegenbauer(n, -3.0/8.0, 0.3) << '\n'
             << "-> gegenbauer(n, l, x)          = " << eve::gegenbauer(n, l, x)   << '\n'
-            << "-> diff(gegenbauer)(n, l, x)    = " << eve::diff(eve::gegenbauer)(n, l, x)   << '\n';
+            ;
 
   double xs = 3.0;
   double ll = 0.1;

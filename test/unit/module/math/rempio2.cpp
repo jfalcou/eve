@@ -46,7 +46,7 @@ EVE_TEST( "Check behavior of cos on wide"
 {
   using eve::detail::map;
   using eve::rempio2;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   auto [sn0, sx0, sdx0] = eve::rem_pio2(a0);
   auto [sn1, sx1, sdx1] = eve::rem_pio2(a1);

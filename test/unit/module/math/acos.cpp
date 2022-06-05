@@ -38,5 +38,5 @@ EVE_TEST( "Check behavior of acos on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::acos(a0)      , map([](auto e) -> v_t { return std::acos(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acos)(a0), map([](auto e) -> v_t { return  -v_t(1)/std::sqrt(1-e*e); }, a0), 2);
+  
 };

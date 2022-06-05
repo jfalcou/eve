@@ -29,8 +29,8 @@ EVE_TEST_TYPES( "Check return types of eve::signnz", eve::test::simd::all_types)
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::signnz)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::signnz)(v_t()) , v_t );
+    
+    
   }
 };
 
@@ -52,7 +52,7 @@ EVE_TEST( "Check behavior of eve::signnz(eve::wide)"
   TTS_EQUAL(eve::signnz[mask](a0), eve::if_else(mask,eve::signnz(a0),a0)                    );
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EQUAL(eve::diff(eve::signnz)(a0)      , T(0) );
+    
     TTS_IEEE_EQUAL(eve::pedantic(eve::signnz)(eve::nan(eve::as<T>())),  eve::nan(eve::as<T>()));
   }
 };

@@ -12,7 +12,7 @@ int main()
             << "<- pf               = " << pf << '\n'
             << "-> rsqrt(pf)        = " << eve::rsqrt(pf) << '\n'
             << "-> raw(rsqrt)(pf)   = " << eve::raw(eve::rsqrt)(pf) << '\n'
-            << "-> diff(rsqrt)(pf)  = " << eve::diff(eve::rsqrt)(pf) << '\n';
+            ;
 
   float xf = 32.768f;
 

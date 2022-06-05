@@ -15,8 +15,8 @@ int main()
             << " <- x                                   = " << x << '\n'
             << " -> lrising_factorial(n, x)             = " << eve::lrising_factorial(n, x) << '\n'
             << " -> pedantic(lrising_factorial(n, x))   = " << eve::pedantic(eve::lrising_factorial)(n, x) << '\n'
-            << " -> diff_1st(lrising_factorial)(pf, qf) = " << eve::diff_1st(eve::lrising_factorial)(pf, qf) << '\n'
-            << " -> diff_2nd(lrising_factorial)(pf, qf) = " << eve::diff_2nd(eve::lrising_factorial)(pf, qf) << '\n';
+            
+            ;
 
   double xi = 1.8;
   std::cout << "---- scalar" << '\n'

@@ -25,9 +25,9 @@ int main()
             << "\n if the last fms result ends by '0, inf}', it is because\n"
             << " the system has no simd fms family intrinsics\n"
             << " or is not configured to use them.\n\n"
-            << " -> diff_1st(fms)(of, pf, qf)         = " << eve::diff_1st(eve::fms)(of, pf, qf) << '\n'
-            << " -> diff_2nd(fms)(of, pf, qf)         = " << eve::diff_2nd(eve::fms)(of, pf, qf) << '\n'
-            << " -> diff_3rd(fms)(of, pf, qf)         = " << eve::diff_3rd(eve::fms)(of, pf, qf) << '\n';
+            
+            
+            ;
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'

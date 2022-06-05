@@ -24,4 +24,3 @@
 #include <eve/module/polynomial/regular/polynomial.hpp>
 #include <eve/module/polynomial/pedantic/polynomial.hpp>
 #include <eve/module/polynomial/numeric/polynomial.hpp>
-#include <eve/module/polynomial/diff/polynomial.hpp>

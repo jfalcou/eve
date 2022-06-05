@@ -20,7 +20,7 @@ int main()
             << "-> tchebytchev(3, xd)      = " << eve::tchebytchev(3, xd) << '\n'
             << "-> tchebytchev(n, 2.0)     = " << eve::tchebytchev(n, 2.0) << '\n'
             << "-> tchebytchev(n, x)       = " << eve::tchebytchev(n, x)   << '\n'
-            << "-> diff(tchebytchev)(n, x) = " << eve::diff(eve::tchebytchev)(3, x) << '\n'
+            
     ;
 
   double xs = 3.0;

@@ -16,8 +16,8 @@ int main()
             << " -> pi + qi     = " << pi + qi << '\n'
             <<  " -> saturated(sub)(pi, qi) = " << eve::saturated(eve::sub)(pi, qi) << '\n'
             << " -> pf + qf                 = " << pf + qf << '\n'
-            <<  " -> diff(sub)(pf, qf)      = " << eve::diff(eve::sub)(pf, qf) << '\n'
-            <<  " -> diff_2nd(sub)(pf, qf)  = " << eve::diff_2nd(eve::sub)(pf, qf) << '\n';
+            
+            ;
 
   std::int16_t xi = 100, yi = 32700;
 

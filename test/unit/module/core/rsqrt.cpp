@@ -23,8 +23,8 @@ EVE_TEST_TYPES( "Check return types of rsqrt"
   TTS_EXPR_IS( eve::rsqrt(v_t()), v_t);
   TTS_EXPR_IS( eve::pedantic(eve::rsqrt)(T())  , T);
   TTS_EXPR_IS( eve::pedantic(eve::rsqrt)(v_t()), v_t);
-  TTS_EXPR_IS( eve::diff(eve::rsqrt)(T())  , T);
-  TTS_EXPR_IS( eve::diff(eve::rsqrt)(v_t()), v_t);
+
+
 };
 
 //==================================================================================================
@@ -43,11 +43,9 @@ EVE_TEST( "Check behavior of rsqrt on wide"
 {
   using v_t = eve::element_type_t<T>;
   auto st = [](auto e)-> v_t {return eve::rec(std::sqrt(e)); };
-  auto dst= [](auto e)-> v_t {return v_t(-1.5)/(std::sqrt(e)*e); };
-
   TTS_ULP_EQUAL( eve::rsqrt(a0), map(st, a0), 2);
   TTS_ULP_EQUAL( eve::pedantic(eve::rsqrt)(a0), map(st, a0), 2);
-  TTS_ULP_EQUAL( eve::diff(eve::rsqrt)(a0), map(dst, a0), 2);
+
 };
 
 EVE_TEST_TYPES( "Check behavior of pedantic(rsqrt)"

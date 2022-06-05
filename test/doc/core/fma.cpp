@@ -25,9 +25,9 @@ int main()
             << "\n if the last fma result ends by '0, inf}', it is because\n"
             << " the system has no simd fma family intrinsics\n"
             << " or is not configured to use them.\n\n"
-            << " -> diff_1st(fma)(of, pf, qf)         = " << eve::diff_1st(eve::fma)(of, pf, qf) << '\n'
-            << " -> diff_2nd(fma)(of, pf, qf)         = " << eve::diff_2nd(eve::fma)(of, pf, qf) << '\n'
-            << " -> diff_3rd(fma)(of, pf, qf)         = " << eve::diff_3rd(eve::fma)(of, pf, qf) << '\n';
+            
+            
+            ;
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'

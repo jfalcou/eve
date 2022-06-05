@@ -44,10 +44,10 @@ EVE_TEST( "Check behavior of pow on wide"
 
   TTS_ULP_EQUAL(eve::pow(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 64);
   TTS_ULP_EQUAL(eve::pow(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3), 64);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::pow)(a0, a1), eve::pow(a0, eve::dec(a1))*a1, 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::pow)(a2, a3), eve::pow(a2, eve::dec(a3))*a3, 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::pow)(a0, a1), eve::pow(a0, a1)*eve::log(a0), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::pow)(a2, a3), eve::pow(a2, a3)*eve::log(a2), 2);
+  
+  
+  
+  
 };
 
 

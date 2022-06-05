@@ -29,8 +29,8 @@ EVE_TEST_TYPES( "Check return types of eve::rec", eve::test::simd::all_types)
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::rec)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::rec)(v_t()) , v_t );
+
+
   }
 };
 
@@ -67,6 +67,4 @@ EVE_TEST( "Check behavior of eve::rec(eve::wide)"
                 );
 
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask,eve::rec(a0),a0));
-  if constexpr(eve::floating_real_value<T>)
-    TTS_EQUAL ( eve::diff(eve::rec)(a0), -eve::rec(a0*a0));
-};
+ };

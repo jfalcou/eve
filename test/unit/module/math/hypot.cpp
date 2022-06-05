@@ -22,7 +22,7 @@ EVE_TEST_TYPES( "Check return types of hypot"
   using v_t = eve::element_type_t<T>;
   using eve::hypot;
   using eve::pedantic;
-  using eve::diff;
+
   //regular
   TTS_EXPR_IS( hypot(T(), T()  ) , T);
   TTS_EXPR_IS( hypot(T(), v_t()) , T);
@@ -73,31 +73,6 @@ EVE_TEST_TYPES( "Check return types of hypot"
   TTS_EXPR_IS( pedantic(hypot)(v_t(), T(), int()) , T);
   TTS_EXPR_IS( pedantic(hypot)(v_t(), v_t(), v_t()) , v_t);
 
-  //regular
-  TTS_EXPR_IS( diff(hypot)(T(), T()  ) , T);
-  TTS_EXPR_IS( diff(hypot)(T(), v_t()) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), T()) , T);
-  TTS_EXPR_IS( diff(hypot)(T(),int()) , T);
-  TTS_EXPR_IS( diff(hypot)(int(), T()) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), v_t()) , v_t);
-
-  //multi
-  TTS_EXPR_IS( diff(hypot)(T(), T(), T()  )  , T);
-  TTS_EXPR_IS( diff(hypot)(T(), v_t(), T())  , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), T(), T())  , T);
-  TTS_EXPR_IS( diff(hypot)(T(), T(), v_t() ) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), v_t(), T()) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), T(), v_t()) , T);
-
-  TTS_EXPR_IS( diff(hypot)(T(), int(), T())  , T);
-  TTS_EXPR_IS( diff(hypot)(int(), T(), T())  , T);
-  TTS_EXPR_IS( diff(hypot)(T(), T(), int() ) , T);
-  TTS_EXPR_IS( diff(hypot)(int(), v_t(), T()) , T);
-  TTS_EXPR_IS( diff(hypot)(int(), T(), v_t()) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), int(), T()) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), T(), int()) , T);
-  TTS_EXPR_IS( diff(hypot)(v_t(), v_t(), v_t()) , v_t);
-
 };
 
 //==================================================================================================
@@ -124,27 +99,6 @@ EVE_TEST( "Check behavior of hypot(wide)"
   }
 };
 
-//==================================================================================================
-//== diff(hypot) tests
-//==================================================================================================
-EVE_TEST( "Check behavior of diff(hypot)(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-100, 100)
-                              , eve::test::randoms(-100, 100)
-                              , eve::test::randoms(-100, 100)
-                              )
-            )
-<typename T>( T const& a0, T const& a1, T const& a2 )
-{
-  using eve::hypot;
-  using eve::as;
-  using v_t =  eve::element_type_t<T>;
-  TTS_ULP_EQUAL( eve::diff_1st(hypot)(a0, a1), map([](auto e , auto f) -> v_t { return e/std::hypot(e, f); }, a0, a1), 2);
-  TTS_ULP_EQUAL( eve::diff_2nd(hypot)(a0, a1), map([](auto e , auto f) -> v_t { return f/std::hypot(e, f); }, a0, a1), 2);
-  TTS_ULP_EQUAL( eve::diff_1st(hypot)(a0, a1, a2), map([](auto e, auto f, auto g) -> v_t { return e/std::hypot(e, f, g); }, a0, a1, a2), 2);
-  TTS_ULP_EQUAL( eve::diff_2nd(hypot)(a0, a1, a2), map([](auto e, auto f, auto g) -> v_t { return f/std::hypot(e, f, g); }, a0, a1, a2), 2);
-  TTS_ULP_EQUAL( eve::diff_3rd(hypot)(a0, a1, a2), map([](auto e, auto f, auto g) -> v_t { return g/std::hypot(e, f, g); }, a0, a1, a2), 2);
-};
 
 //==================================================================================================
 //== Test for corner-cases values

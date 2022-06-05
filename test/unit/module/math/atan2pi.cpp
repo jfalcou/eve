@@ -47,8 +47,8 @@ EVE_TEST( "Check behavior of atan2pi on wide"
 
   TTS_ULP_EQUAL(eve::atan2pi(a0, a1)      , map([](auto e, auto f) -> v_t { return eve::radinpi(std::atan2(e, f)); }, a0, a1), 2);
   TTS_ULP_EQUAL(eve::atan2pi(a2, a3)      , map([](auto e, auto f) -> v_t { return eve::radinpi(std::atan2(e, f)); }, a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::atan2pi)(a0, a1), map([](auto e, auto f) -> v_t { return  eve::radinpi(f/(e*e+f*f)); }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::atan2pi)(a2, a3), map([](auto e, auto f) -> v_t { return  eve::radinpi(f/(e*e+f*f)); }, a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2pi)(a0, a1), map([](auto e, auto f) -> v_t { return  eve::radinpi(e/(e*e+f*f)); }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2pi)(a2, a3), map([](auto e, auto f) -> v_t { return  eve::radinpi(e/(e*e+f*f)); }, a2, a3), 2);
+  
+  
+  
+  
 };

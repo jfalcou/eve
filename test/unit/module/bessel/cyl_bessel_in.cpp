@@ -240,17 +240,3 @@ EVE_TEST( "Check behavior of cyl_bessel_in on wide with negative non integral or
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_in(-n, a0),   map(std__cyl_bessel_in, -n, a0)   , 1.0e-3);
 };
-
-EVE_TEST( "Check behavior of diff of cyl_bessel_in on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 10.0)
-                             , eve::test::randoms(0.0, 10.0))
-        )
-  <typename T>(T n, T a0 )
-{
-  using v_t = eve::element_type_t<T>;
-  auto eve__diff_bessel_in =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_in)(n, x); };
-  auto std__diff_bessel_in =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_i_prime(double(n), double(x)); };
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_in(n, a0),   map(std__diff_bessel_in, n, a0)   , 1.0e-3);
-
-};

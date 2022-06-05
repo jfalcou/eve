@@ -40,14 +40,11 @@ EVE_TEST( "Check behavior of exp_int on wide"
         )
 <typename T>(T const& a0 )
 {
-  using v_t = eve::element_type_t<T>;
   using eve::exp_int;
   using eve::as;
   for(int i=1; i < 4 ; ++i)
   {
     TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 5);
-    auto dexp_int = [i](auto e){return v_t( -boost::math::expint(i-1, e));};
-    TTS_ULP_EQUAL( eve::diff(exp_int)(i, a0),  map(dexp_int, a0), 5);
   }
 
   if constexpr( eve::platform::supports_invalids )

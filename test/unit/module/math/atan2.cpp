@@ -47,10 +47,10 @@ EVE_TEST( "Check behavior of atan2 on wide"
 
   TTS_ULP_EQUAL(eve::atan2(a0, a1)      , map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a0, a1), 2);
   TTS_ULP_EQUAL(eve::atan2(a2, a3)      , map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::atan2)(a0, a1), map([](auto e, auto f) -> v_t { return  f/(e*e+f*f); }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::atan2)(a2, a3), map([](auto e, auto f) -> v_t { return  f/(e*e+f*f); }, a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2)(a0, a1), map([](auto e, auto f) -> v_t { return  e/(e*e+f*f); }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2)(a2, a3), map([](auto e, auto f) -> v_t { return  e/(e*e+f*f); }, a2, a3), 2);
+  
+  
+  
+  
 };
 
 EVE_TEST_TYPES( "Check behavior of pedantic(atan2)"

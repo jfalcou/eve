@@ -13,7 +13,7 @@ int main()
             << "<- n                         = " << n << '\n'
             << "<- x                         = " << x << '\n'
             << "-> cyl_bessel_in(n, x)       = " << eve::cyl_bessel_in(n, x) << '\n'
-            << "-> diff(cyl_bessel_in)(n, x) = " << eve::diff(eve::cyl_bessel_in)(n, x) << '\n';
+            ;
 
   double xd = 1.0;
 

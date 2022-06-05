@@ -19,8 +19,8 @@ int main()
             << "-> max(pf, qf)            = " << eve::max(pf, qf) << '\n'
             << "-> pedantic(max)(pf, qf)  = " << eve::pedantic(eve::max)(pf, qf) << '\n'
             << "-> numeric(max)(pf, qf)   = " << eve::numeric(eve::max)(pf, qf) << '\n'
-            << "-> diff_1st(max)(pf, qf)  = " << eve::diff_1st(eve::max)(pf, qf) << std::endl
-            << "-> diff_2nd(max)(pf, qf)  = " << eve::diff_2nd(eve::max)(pf, qf) << std::endl;
+            
+            ;
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());
