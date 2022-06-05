@@ -106,7 +106,7 @@ struct mandelbrot
   //! [mandelbrot-complex-simd]
 };
 
-int main(int argc, char** argv)
+int main()
 {
   namespace chr = std::chrono;
   using hrc     = chr::high_resolution_clock;
