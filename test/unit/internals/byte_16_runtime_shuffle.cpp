@@ -9,10 +9,8 @@
 
 #include <eve/detail/function/byte_16_runtime_shuffle.hpp>
 
-
-EVE_TEST_TYPES("byte 16 runtime shuffle 4 elements",
-               eve::test::simd::uints_8)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("byte 16 runtime shuffle 4 elements", eve::test::wides_t<tts::types<std::uint8_t>>)
+<typename T>(tts::type<T>)
 {
   if constexpr (T::size() > 16)
   {

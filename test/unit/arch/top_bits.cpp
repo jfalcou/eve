@@ -36,8 +36,8 @@ template <typename T, std::size_t N> bool expect_array(const std::array<T, N>&) 
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t         = eve::element_type_t<T>;
   using logical     = eve::logical<T>;
@@ -67,8 +67,8 @@ EVE_TEST_TYPES( "Check top bits raw type", eve::test::simd::all_types)
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top bits from logical", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
   for (std::ptrdiff_t i = 0; i != T::size(); ++i)
@@ -79,8 +79,8 @@ EVE_TEST_TYPES("Check top bits from logical", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top bits from logical+ignore", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
   logical expected(true);
@@ -89,8 +89,8 @@ EVE_TEST_TYPES("Check top bits from logical+ignore", eve::test::simd::all_types)
   TTS_EQUAL(expected, eve::detail::to_logical(actual));
 };
 
-EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top bits to_logical", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   test_over_top_bits<T>([&](auto x)
   {
@@ -102,8 +102,8 @@ EVE_TEST_TYPES("Check top bits to_logical", eve::test::simd::all_types)
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check top_bits::set", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
 
@@ -128,8 +128,8 @@ EVE_TEST_TYPES( "Check top_bits::set", eve::test::simd::all_types)
 //==================================================================================================
 // Check the raw type of top_bits' storage
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top_bits endianess", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
 
@@ -150,8 +150,8 @@ EVE_TEST_TYPES("Check top_bits endianess", eve::test::simd::all_types)
 //==================================================================================================
 // Check the behavior of top_bits over ignore masks
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top_bits from ignore_*", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
 
@@ -213,8 +213,8 @@ EVE_TEST_TYPES("Check top_bits from ignore_*", eve::test::simd::all_types)
 //==================================================================================================
 // Check the behavior of top_bits bitwise operators
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top_bits bitwise operators", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
 
@@ -246,8 +246,8 @@ EVE_TEST_TYPES("Check top_bits bitwise operators", eve::test::simd::all_types)
 //==================================================================================================
 // Check the behavior of top_bits slicing
 //==================================================================================================
-EVE_TEST_TYPES("Check top_bits slicing", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check top_bits slicing", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
 
