@@ -11,6 +11,7 @@
 #include <eve/algo/concepts/eve_iterator.hpp>
 #include <eve/algo/concepts/detail.hpp>
 #include <eve/algo/traits.hpp>
+#include <eve/detail/meta.hpp>
 
 #include <iterator>
 #include <type_traits>
@@ -22,8 +23,8 @@ namespace eve::algo
   {
     template <typename I, typename S>
     concept pointer_iterator_sentinel =
-      (std::is_pointer_v<I> || detail::instance_of<I, aligned_ptr>) &&
-      (std::is_pointer_v<S> || detail::instance_of<S, aligned_ptr>) &&
+      (std::is_pointer_v<I> || eve::detail::instance_of<I, aligned_ptr>) &&
+      (std::is_pointer_v<S> || eve::detail::instance_of<S, aligned_ptr>) &&
       std::same_as<typename eve::pointer_traits<I>::value_type,
                    typename eve::pointer_traits<S>::value_type>;
   }

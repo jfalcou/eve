@@ -44,7 +44,7 @@ struct ball : eve::struct_support < ball
     return get<2>(std::forward<decltype(self)>(self));
   }
 
-  EVE_FORCEINLINE friend decltype(auto) count(eve::like<ball> auto &&self)
+  EVE_FORCEINLINE friend decltype(auto) nb_bounces(eve::like<ball> auto &&self)
   {
     return get<3>(std::forward<decltype(self)>(self));
   }
@@ -67,7 +67,7 @@ struct update
 
     // Compute the bounced ball case
     speed(bounced)    *= -elasticity(bounced);
-    ++count(bounced);
+    ++nb_bounces(bounced);
 
     // Select the proper one based on position
     return eve::if_else( position(falling) <= 1e-4, bounced, falling);
@@ -90,7 +90,7 @@ void run_simulation( float gravity , int time, int max_bounce
   balls.erase ( eve::algo::remove_if(balls
                                     , [max_bounce](auto const& b)
                                       {
-                                        return count(b) >= max_bounce;
+                                        return nb_bounces(b) >= max_bounce;
                                       }
                                     )
               , balls.end()
@@ -132,7 +132,7 @@ TTS_CASE("Run a ball simulation")
     for(std::size_t i=0;i<200;i++)
     {
       if(i < balls.size())
-        screen.put( 'A' + count(balls.get(i))%27
+        screen.put( 'A' + nb_bounces(balls.get(i))%27
                   , 1+i
                   , std::max(1, render_size - static_cast<int>(resolution*position(balls.get(i))))
                   );

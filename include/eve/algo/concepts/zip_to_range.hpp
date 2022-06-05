@@ -23,7 +23,7 @@ namespace eve::algo
   };
 
   template <typename T>
-  concept zipped_range = detail::instance_of<std::remove_cvref_t<T>, views::zip_range>;
+  concept zipped_range = eve::detail::instance_of<std::remove_cvref_t<T>, views::zip_range>;
 
   template <typename T>
   concept zipped_range_pair = zipped_range<T> && (std::tuple_size_v<std::remove_cvref_t<T>> == 2);
