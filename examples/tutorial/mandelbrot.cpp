@@ -17,7 +17,7 @@ struct mandelbrot
   static constexpr auto algt = eve::alignment_v<T>;
   int size, max_iter;
   T x_min, x_max, y_min, y_max, x_range, y_range;
-  /*eve::detail::alignas(algt)*/ std::vector<int> iterations;
+  std::vector<int> iterations;
 
   mandelbrot(int size_, int max_iter_)
     : size(size_)
@@ -111,7 +111,7 @@ int main(int argc, char** argv)
   namespace chr = std::chrono;
   using hrc     = chr::high_resolution_clock;
 
-  int size          = 1024;
+  int size          = 256;
   int max_iteration = 100;
   mandelbrot image(size, max_iteration);
 
