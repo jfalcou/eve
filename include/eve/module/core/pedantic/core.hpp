@@ -9,6 +9,7 @@
 
 #include <eve/module/core/pedantic/absmax.hpp>
 #include <eve/module/core/pedantic/absmin.hpp>
+#include <eve/module/core/pedantic/diff_of_prod.hpp>
 #include <eve/module/core/pedantic/fam.hpp>
 #include <eve/module/core/pedantic/fanm.hpp>
 #include <eve/module/core/pedantic/fma.hpp>
@@ -42,3 +43,4 @@
 #include <eve/module/core/pedantic/rem.hpp>
 #include <eve/module/core/pedantic/rsqrt.hpp>
 #include <eve/module/core/pedantic/signnz.hpp>
+#include <eve/module/core/pedantic/sum_of_prod.hpp>

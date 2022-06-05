@@ -11,3 +11,6 @@
 #include <eve/module/complex/regular/real.hpp>
 #include <eve/module/complex/regular/i.hpp>
 #include <eve/module/complex/regular/imag.hpp>
+#include <eve/module/complex/regular/exp_i.hpp>
+#include <eve/module/complex/regular/exp_ipi.hpp>
+#include <eve/module/complex/regular/polar.hpp>

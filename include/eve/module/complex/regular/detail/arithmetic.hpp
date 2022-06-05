@@ -15,6 +15,15 @@
 
 namespace eve::detail
 {
+
+  //==============================================================================================
+  //  Unary functions
+  //==============================================================================================
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
+  {
+    return eve::hypot(real(z), imag(z));
+  }
+
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::arg_, auto const& z) noexcept
   {
     return eve::atan2(imag(z), real(z) );
@@ -33,11 +42,6 @@ namespace eve::detail
     return if_else(is_infinite(z), Z(inf(real_t{}), copysign(zero(real_t{}), imag(z))), z);
   }
 
-  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
-  {
-    return eve::hypot(real(z), imag(z));
-  }
-
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
   {
@@ -45,9 +49,22 @@ namespace eve::detail
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
   }
 
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::dist_, Z const& x, Z const& y) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
   {
-    return eve::abs(x-y);
+    auto [zr, zi] = z;
+    return sum_of_prod(zr, zr, zi, zi);
+  }
+
+
+  //==============================================================================================
+  //  Binary functions
+  //==============================================================================================
+
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::average_
+                                              , auto const& z1, auto const& z2
+                                              ) noexcept
+  {
+    using z_t = decltype(z1+z2);
+    return z_t{eve::average(real(z1), real(z2)), eve::average(imag(z1), imag(z2))};
   }
 }
