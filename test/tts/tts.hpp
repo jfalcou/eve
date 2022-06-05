@@ -374,6 +374,7 @@ namespace tts
   using int_types         = types < std::int64_t , std::int32_t , std::int16_t , std::int8_t>;
   using signed_types      = concatenate_t<real_types,int_types>;
   using uint_types        = types < std::uint64_t , std::uint32_t , std::uint16_t , std::uint8_t>;
+  using integral_types    = concatenate_t<int_types,uint_types>;
   using arithmetic_types  = concatenate_t<real_types,int_types,uint_types>;
 }
 namespace tts::detail
@@ -1074,9 +1075,9 @@ namespace tts
 #define TTS_TYPE_IS_(TYPE, REF)         TTS_TYPE_IS_IMPL(TYPE, REF,TTS_FAIL)
 #define TTS_TYPE_IS_REQUIRED(TYPE, REF) TTS_TYPE_IS_IMPL(TYPE, REF,TTS_FATAL)
 #define TTS_TYPE_IS_IMPL(TYPE, REF, FAILURE)                                                        \
-[&]<typename T, typename R>(::tts::type<T>, ::tts::type<R>)                                         \
+[&]<typename TTS_T, typename TTS_R>(::tts::type<TTS_T>, ::tts::type<TTS_R>)                         \
 {                                                                                                   \
-  if constexpr( std::is_same_v<T,R> )                                                               \
+  if constexpr( std::is_same_v<TTS_T,TTS_R> )                                                       \
   {                                                                                                 \
     ::tts::global_runtime.pass(); return ::tts::logger{false};                                      \
   }                                                                                                 \
@@ -1084,7 +1085,7 @@ namespace tts
   {                                                                                                 \
     FAILURE ( "Type: "  << TTS_STRING(TTS_REMOVE_PARENS(TYPE)) << " is not the same as "            \
                         << TTS_STRING(TTS_REMOVE_PARENS(REF))  << " because "                       \
-                        << ::tts::typename_<T> << " is not " << ::tts::typename_<R>                 \
+                        << ::tts::typename_<TTS_T> << " is not " << ::tts::typename_<TTS_R>         \
             );                                                                                      \
     return ::tts::logger{};                                                                         \
   }                                                                                                 \
@@ -1094,9 +1095,9 @@ namespace tts
 #define TTS_EXPR_IS_(EXPR, TYPE)         TTS_EXPR_IS_IMPL(EXPR, TYPE,TTS_FAIL)
 #define TTS_EXPR_IS_REQUIRED(EXPR, TYPE) TTS_EXPR_IS_IMPL(EXPR, TYPE,TTS_FATAL)
 #define TTS_EXPR_IS_IMPL(EXPR, TYPE, FAILURE)                                                       \
-[&]<typename T, typename R>(::tts::type<T>, ::tts::type<R>)                                         \
+[&]<typename TTS_T, typename TTS_R>(::tts::type<T>, ::tts::type<R>)                                 \
 {                                                                                                   \
-  if constexpr( std::is_same_v<T,R> )                                                               \
+  if constexpr( std::is_same_v<TTS_T,TTS_R> )                                                       \
   {                                                                                                 \
     ::tts::global_runtime.pass(); return ::tts::logger{false};                                      \
   }                                                                                                 \
@@ -1104,13 +1105,13 @@ namespace tts
   {                                                                                                 \
     FAILURE (   "Type: "  << TTS_STRING(TTS_REMOVE_PARENS(EXPR))  << " is not the same as "         \
                           << TTS_STRING(TTS_REMOVE_PARENS(TYPE)) << " because "                     \
-                          << ::tts::typename_<T> << " is not " << ::tts::typename_<R>               \
+                          << ::tts::typename_<TTS_T> << " is not " << ::tts::typename_<TTS_R>       \
             );                                                                                      \
     return ::tts::logger{};                                                                         \
   }                                                                                                 \
 }(::tts::type<decltype(TTS_REMOVE_PARENS(EXPR))>{}, ::tts::type<TTS_REMOVE_PARENS(TYPE)>{})         \
 
-#define TTS_EXPECT_COMPILES_IMPL(EXPR, ...)                                                             \
+#define TTS_EXPECT_COMPILES_IMPL(EXPR, ...)                                                           \
 [&]( TTS_ARG(__VA_ARGS__) )                                                                           \
 {                                                                                                     \
   if constexpr( requires TTS_REMOVE_PARENS(EXPR) )                                                    \

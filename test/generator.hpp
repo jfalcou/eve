@@ -6,7 +6,6 @@
 */
 //==================================================================================================
 #pragma once
-#include "test_distribution.hpp"
 #include "types.hpp"
 #include <eve/arch/fundamental_cardinal.hpp>
 #include <eve/module/core/constant/constant.hpp>
@@ -210,7 +209,7 @@ namespace eve::test
     return [=]<typename T>(eve::as<T>, auto& gen)
            {
              using e_t = eve::element_type_t<T>;
-             eve::prng<e_t> dist(as_value(mn,as<e_t>{}),as_value(mx,as<e_t>{}));
+             tts::realistic_distribution<e_t> dist(as_value(mn,as<e_t>{}),as_value(mx,as<e_t>{}));
              std::array<e_t,amount<T>()> d;
              std::for_each(d.begin(),d.end(), [&](auto& e) { e = dist(gen); });
              return d;
