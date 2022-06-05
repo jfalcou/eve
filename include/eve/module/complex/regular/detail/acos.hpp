@@ -119,7 +119,7 @@ namespace eve
           i = if_else(not_treated, half(as(x))*eve::log1p(2*y*(y+aa)), i);
         }
       }
-      if (eve::any(eve::is_not_finite(a0))) // this is perhaps for pedantic specialization ?
+      if (eve::any(eve::is_not_finite(a0)))
       {
         auto nanx = eve::is_nan(x);
         auto nany = eve::is_nan(y);
