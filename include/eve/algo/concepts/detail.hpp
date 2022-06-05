@@ -8,22 +8,13 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/detail/meta.hpp>
 #include <compare>
 #include <concepts>
 #include <type_traits>
 
-
 namespace eve::algo::detail
 {
-  template <typename T, template <typename ...> class Templ>
-  struct instance_of_impl : std::false_type {};
-
-  template <typename ...Args, template <typename ...> class Templ>
-  struct instance_of_impl<Templ<Args...>, Templ> : std::true_type {};
-
-  template <typename T, template <typename ...> class Templ>
-  concept instance_of = detail::instance_of_impl<T, Templ>::value;
-
   template <typename R>
   concept has_begin_end = requires (R&& r) {
       { r.begin() };

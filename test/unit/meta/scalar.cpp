@@ -8,110 +8,110 @@
 #include "test.hpp"
 #include <eve/concept/scalar.hpp>
 
-TTS_CASE("Check for plain_scalar on regular types" )
+TTS_CASE("Check for plain_scalar_value on regular types" )
 {
-  TTS_EXPECT( eve::plain_scalar<signed char>);
-  TTS_EXPECT( eve::plain_scalar<short>      );
-  TTS_EXPECT( eve::plain_scalar<int>        );
+  TTS_EXPECT( eve::plain_scalar_value<signed char>);
+  TTS_EXPECT( eve::plain_scalar_value<short>      );
+  TTS_EXPECT( eve::plain_scalar_value<int>        );
 
-  TTS_EXPECT( eve::plain_scalar<unsigned char>      );
-  TTS_EXPECT( eve::plain_scalar<unsigned short>     );
-  TTS_EXPECT( eve::plain_scalar<unsigned int>       );
+  TTS_EXPECT( eve::plain_scalar_value<unsigned char>      );
+  TTS_EXPECT( eve::plain_scalar_value<unsigned short>     );
+  TTS_EXPECT( eve::plain_scalar_value<unsigned int>       );
 
-  TTS_EXPECT( eve::plain_scalar<float>  );
-  TTS_EXPECT( eve::plain_scalar<double> );
+  TTS_EXPECT( eve::plain_scalar_value<float>  );
+  TTS_EXPECT( eve::plain_scalar_value<double> );
 };
 
-TTS_CASE("Check for plain_scalar on cstdint/def types" )
+TTS_CASE("Check for plain_scalar_value on cstdint/def types" )
 {
-  TTS_EXPECT( eve::plain_scalar<std::int8_t>  );
-  TTS_EXPECT( eve::plain_scalar<std::int16_t> );
-  TTS_EXPECT( eve::plain_scalar<std::int32_t> );
-  TTS_EXPECT( eve::plain_scalar<std::int64_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::int8_t>  );
+  TTS_EXPECT( eve::plain_scalar_value<std::int16_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::int32_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::int64_t> );
 
-  TTS_EXPECT( eve::plain_scalar<std::uint8_t>  );
-  TTS_EXPECT( eve::plain_scalar<std::uint16_t> );
-  TTS_EXPECT( eve::plain_scalar<std::uint32_t> );
-  TTS_EXPECT( eve::plain_scalar<std::uint64_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::uint8_t>  );
+  TTS_EXPECT( eve::plain_scalar_value<std::uint16_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::uint32_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::uint64_t> );
 
-  TTS_EXPECT( eve::plain_scalar<std::size_t>    );
-  TTS_EXPECT( eve::plain_scalar<std::ptrdiff_t> );
+  TTS_EXPECT( eve::plain_scalar_value<std::size_t>    );
+  TTS_EXPECT( eve::plain_scalar_value<std::ptrdiff_t> );
 };
 
-TTS_CASE("Check for plain_scalar on unsupported types" )
+TTS_CASE("Check for plain_scalar_value on unsupported types" )
 {
-  TTS_EXPECT_NOT( eve::plain_scalar<long double>                  );
-  TTS_EXPECT_NOT( eve::plain_scalar<bool>                         );
-  TTS_EXPECT_NOT( eve::plain_scalar<void*>                        );
-  TTS_EXPECT_NOT((eve::plain_scalar<kumi::tuple<int,float,std::int8_t>> ));
+  TTS_EXPECT_NOT( eve::plain_scalar_value<long double>                  );
+  TTS_EXPECT_NOT( eve::plain_scalar_value<bool>                         );
+  TTS_EXPECT_NOT( eve::plain_scalar_value<void*>                        );
+  TTS_EXPECT_NOT((eve::plain_scalar_value<kumi::tuple<int,float,std::int8_t>> ));
 };
 
-TTS_CASE("Check for product_scalar on product_type" )
+TTS_CASE("Check for product_scalar_value on product_type" )
 {
-  TTS_EXPECT((eve::product_scalar<kumi::tuple<int>>));
-  TTS_EXPECT((eve::product_scalar<kumi::tuple<int,float>>));
-  TTS_EXPECT((eve::product_scalar<kumi::tuple<int,std::int8_t,double>>));
-  TTS_EXPECT((eve::product_scalar<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
+  TTS_EXPECT((eve::product_scalar_value<kumi::tuple<int>>));
+  TTS_EXPECT((eve::product_scalar_value<kumi::tuple<int,float>>));
+  TTS_EXPECT((eve::product_scalar_value<kumi::tuple<int,std::int8_t,double>>));
+  TTS_EXPECT((eve::product_scalar_value<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
 };
 
-TTS_CASE("Check for product_scalar on unsupported types" )
+TTS_CASE("Check for product_scalar_value on unsupported types" )
 {
-  TTS_EXPECT_NOT( eve::product_scalar<long double>                           );
-  TTS_EXPECT_NOT( eve::product_scalar<std::int8_t>                           );
-  TTS_EXPECT_NOT( eve::product_scalar<void*>                                 );
-  TTS_EXPECT_NOT((eve::product_scalar<float> )                               );
-  TTS_EXPECT_NOT((eve::product_scalar<kumi::tuple<void*, int, long double>>) );
+  TTS_EXPECT_NOT( eve::product_scalar_value<long double>                           );
+  TTS_EXPECT_NOT( eve::product_scalar_value<std::int8_t>                           );
+  TTS_EXPECT_NOT( eve::product_scalar_value<void*>                                 );
+  TTS_EXPECT_NOT((eve::product_scalar_value<float> )                               );
+  TTS_EXPECT_NOT((eve::product_scalar_value<kumi::tuple<void*, int, long double>>) );
 };
 
-TTS_CASE("Check for scalar on plain_scalar" )
+TTS_CASE("Check for arithmetic_scalar_value on plain_scalar_value" )
 {
-  TTS_EXPECT( eve::scalar<signed char>        );
-  TTS_EXPECT( eve::scalar<short>              );
-  TTS_EXPECT( eve::scalar<int>                );
-  TTS_EXPECT( eve::scalar<unsigned char>      );
-  TTS_EXPECT( eve::scalar<unsigned short>     );
-  TTS_EXPECT( eve::scalar<unsigned int>       );
-  TTS_EXPECT( eve::scalar<float>              );
-  TTS_EXPECT( eve::scalar<double>             );
+  TTS_EXPECT( eve::arithmetic_scalar_value<signed char>        );
+  TTS_EXPECT( eve::arithmetic_scalar_value<short>              );
+  TTS_EXPECT( eve::arithmetic_scalar_value<int>                );
+  TTS_EXPECT( eve::arithmetic_scalar_value<unsigned char>      );
+  TTS_EXPECT( eve::arithmetic_scalar_value<unsigned short>     );
+  TTS_EXPECT( eve::arithmetic_scalar_value<unsigned int>       );
+  TTS_EXPECT( eve::arithmetic_scalar_value<float>              );
+  TTS_EXPECT( eve::arithmetic_scalar_value<double>             );
 
-  TTS_EXPECT( eve::scalar<std::int8_t>    );
-  TTS_EXPECT( eve::scalar<std::int16_t>   );
-  TTS_EXPECT( eve::scalar<std::int32_t>   );
-  TTS_EXPECT( eve::scalar<std::int64_t>   );
-  TTS_EXPECT( eve::scalar<std::uint8_t>   );
-  TTS_EXPECT( eve::scalar<std::uint16_t>  );
-  TTS_EXPECT( eve::scalar<std::uint32_t>  );
-  TTS_EXPECT( eve::scalar<std::uint64_t>  );
-  TTS_EXPECT( eve::scalar<std::size_t>    );
-  TTS_EXPECT( eve::scalar<std::ptrdiff_t> );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::int8_t>    );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::int16_t>   );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::int32_t>   );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::int64_t>   );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::uint8_t>   );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::uint16_t>  );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::uint32_t>  );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::uint64_t>  );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::size_t>    );
+  TTS_EXPECT( eve::arithmetic_scalar_value<std::ptrdiff_t> );
 };
 
-TTS_CASE("Check for scalar on product_type" )
+TTS_CASE("Check for arithmetic_scalar_value on product_type" )
 {
-  TTS_EXPECT((eve::scalar<kumi::tuple<int>>));
-  TTS_EXPECT((eve::scalar<kumi::tuple<int,float>>));
-  TTS_EXPECT((eve::scalar<kumi::tuple<int,std::int8_t,double>>));
-  TTS_EXPECT((eve::scalar<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
+  TTS_EXPECT((eve::arithmetic_scalar_value<kumi::tuple<int>>));
+  TTS_EXPECT((eve::arithmetic_scalar_value<kumi::tuple<int,float>>));
+  TTS_EXPECT((eve::arithmetic_scalar_value<kumi::tuple<int,std::int8_t,double>>));
+  TTS_EXPECT((eve::arithmetic_scalar_value<kumi::tuple<int,kumi::tuple<std::int8_t,double>,float>>));
 };
 
-TTS_CASE("Check for scalar on unsupported types" )
+TTS_CASE("Check for arithmetic_scalar_value on unsupported types" )
 {
-  TTS_EXPECT_NOT(  eve::scalar<long double>             );
-  TTS_EXPECT_NOT(  eve::scalar<bool>                    );
-  TTS_EXPECT_NOT(  eve::scalar<void*>                   );
-  TTS_EXPECT_NOT( (eve::scalar<kumi::tuple<>>)          );
-  TTS_EXPECT_NOT( (eve::scalar<kumi::tuple<int,bool>>)  );
+  TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<long double>             );
+  TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<bool>                    );
+  TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<void*>                   );
+  TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<>>)          );
+  TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<int,bool>>)  );
 };
 
-template<eve::plain_scalar T>         auto check_overload(T)  { return +1;  }
-template<eve::scalar T>               auto check_overload(T)  { return +2;  }
-template<eve::scalar T>               auto check_overload2(T) { return +3;  }
-template<eve::product_scalar T>  auto check_overload3(T)  { return +10;  }
-template<typename T>                  auto check_overload(T)  { return -1;  }
-template<typename T>                  auto check_overload2(T) { return -3; }
-template<typename T>                  auto check_overload3(T)  { return -10;  }
+template<eve::plain_scalar_value T>       auto check_overload(T)  { return +1;  }
+template<eve::arithmetic_scalar_value T>  auto check_overload(T)  { return +2;  }
+template<eve::arithmetic_scalar_value T>  auto check_overload2(T) { return +3;  }
+template<eve::product_scalar_value T>     auto check_overload3(T)  { return +10;  }
+template<typename T>                      auto check_overload(T)  { return -1;  }
+template<typename T>                      auto check_overload2(T) { return -3; }
+template<typename T>                      auto check_overload3(T)  { return -10;  }
 
-TTS_CASE("Check for scalar/plain_scalar overload relationship" )
+TTS_CASE("Check for arithmetic_scalar_value/plain_scalar_value overload relationship" )
 {
   TTS_EQUAL(check_overload(4)                    , +1);
   TTS_EQUAL(check_overload(4.f)                  , +1);
