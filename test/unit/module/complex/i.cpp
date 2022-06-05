@@ -22,4 +22,6 @@ EVE_TEST_TYPES( "Check eve::i constant", eve::test::simd::ieee_reals)
 
   TTS_EQUAL( eve::i(eve::as<T>{})   , (z_t{0,1}) );
   TTS_EQUAL( eve::i(eve::as<z_t>{}) , (z_t{0,1}) );
+  TTS_EQUAL( -eve::i(eve::as<z_t>{}) , (z_t{0,-1}) );
+  TTS_EQUAL( (-eve::i(eve::as<z_t>{})*T(2)),  (z_t{0,-2}) );
 };
