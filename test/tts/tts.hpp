@@ -499,6 +499,11 @@ namespace tts
     int         line_{};
   };
 }
+#define TTS_PASS(Message)                                                                           \
+  [&]()                                                                                             \
+  {                                                                                                 \
+    ::tts::global_runtime.pass();                                                                   \
+  }()
 #define TTS_FAIL(Message)                                                                           \
   [&]()                                                                                             \
   {                                                                                                 \
@@ -1095,7 +1100,7 @@ namespace tts
 #define TTS_EXPR_IS_(EXPR, TYPE)         TTS_EXPR_IS_IMPL(EXPR, TYPE,TTS_FAIL)
 #define TTS_EXPR_IS_REQUIRED(EXPR, TYPE) TTS_EXPR_IS_IMPL(EXPR, TYPE,TTS_FATAL)
 #define TTS_EXPR_IS_IMPL(EXPR, TYPE, FAILURE)                                                       \
-[&]<typename TTS_T, typename TTS_R>(::tts::type<T>, ::tts::type<R>)                                 \
+[&]<typename TTS_T, typename TTS_R>(::tts::type<TTS_T>, ::tts::type<TTS_R>)                         \
 {                                                                                                   \
   if constexpr( std::is_same_v<TTS_T,TTS_R> )                                                       \
   {                                                                                                 \

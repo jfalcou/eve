@@ -8,7 +8,7 @@
 #pragma once
 #include <array>
 
-namespace eve::detail
+namespace eve::test
 {
   template<typename T, typename Indexes> struct to_wide;
 
@@ -49,10 +49,9 @@ namespace eve::detail
   // Prevent calling remove_cvref_t
   template<typename L> struct wides<L const>  : wides<L>  {};
   template<typename L> struct wides<L&>       : wides<L>  {};
-}
 
-namespace eve::test
-{
+  template<typename L> using wides_t = typename wides<L>::type;
+
   using sizes = tts::types< std::integral_constant<int,    8>
                           , std::integral_constant<int,   16>
                           , std::integral_constant<int,   32>
@@ -88,9 +87,9 @@ namespace eve::test::scalar
 
 namespace eve::test::simd
 {
-  using ieee_reals        = eve::detail::wides< ::tts::real_types>::type;
-  using signed_integers   = eve::detail::wides< ::tts::signed_types>::type;
-  using unsigned_integers = eve::detail::wides< ::tts::uint_types>::type;
-  using integers          = eve::detail::wides< ::tts::integral_types>::type;
-  using all_types         = eve::detail::wides< ::tts::arithmetic_types>::type;
+  using ieee_reals        = eve::test::wides<::tts::real_types>::type;
+  using signed_integers   = eve::test::wides<::tts::signed_types>::type;
+  using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
+  using integers          = eve::test::wides<::tts::integral_types>::type;
+  using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
 }
