@@ -61,9 +61,28 @@ namespace tts
     using e_t = eve::element_type_t<T>;
     auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
 
-    T that(&data[0]);
+    using v_t = typename decltype(data)::value_type;
+    eve::as_wide_t<v_t, eve::cardinal_t<T>> that(&data[0]);
+
     return poison(that);
   }
+
+  //================================================================================================
+  // logical ramp - generate (v+1) % k == 0, (v+2) % k ==  0, ... (v+N) % k == 0
+  //================================================================================================
+  template<typename T, typename U = T> struct logicals
+  {
+    logicals(T v, U k) : start(v), range(k)  {}
+
+    template<typename D> auto operator()(tts::type<D>, auto&, auto idx, auto...) const
+    {
+      using type = eve::as_logical_t<D>;
+      return as_value<type>(((start+idx)%range) == 0);
+    }
+
+    T start;
+    U range;
+  };
 
   //================================================================================================
   // IEEE Special Constant value

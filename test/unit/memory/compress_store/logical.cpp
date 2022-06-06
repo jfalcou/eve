@@ -9,9 +9,9 @@
 #include <eve/module/core.hpp>
 
 
-EVE_TEST( "Check compress store behavior"
+TTS_CASE_WITH( "Check compress store behavior"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::logicals(1,2))
+        , tts::generate(tts::logicals(1,2))
         )
 <typename L> (L logical_data)
 {

@@ -377,6 +377,7 @@ namespace tts
   using integral_types    = concatenate_t<int_types,int_types>;
   using arithmetic_types  = concatenate_t<real_types,int_types,uint_types>;
 }
+#include <tuple>
 namespace tts::detail
 {
   struct test_capture
@@ -511,7 +512,7 @@ namespace tts
     if(!::tts::global_runtime.fail_status)                                                          \
     {                                                                                               \
       ::tts::global_runtime.fail_status = true;                                                     \
-      std::cout << "[X] - " << ::tts::detail::current_test<< "\n";                                  \
+      std::cout << "[X] - " << ::tts::detail::current_test << "\n";                                 \
     }                                                                                               \
     if( !::tts::detail::current_type.empty())                                                       \
     {                                                                                               \
@@ -875,14 +876,32 @@ namespace tts
       return std::make_tuple(produce(t,g,rng,others...)...);
     };
   }
+
+  template<tts::sequence Seq, typename U> struct rebuild;
+
+  template<template<class,class...> class Seq, typename T, typename... S, typename U>
+  struct rebuild<Seq<T,S...>,U>
+  {
+    using type = Seq<U,S...>;
+  };
+
+  template<template<class,std::size_t> class Seq, typename T, std::size_t N, typename U>
+  struct rebuild<Seq<T,N>,U>
+  {
+    using type = Seq<U,N>;
+  };
+
   template<tts::sequence T>
   auto produce(type<T> const& t, auto g, auto& rng, auto... args)
   {
-    using value_type = std::remove_cvref_t<decltype(*std::begin(std::declval<T>()))>;
-    T that;
+    using elmt_type   = std::remove_cvref_t<decltype(*std::begin(std::declval<T>()))>;
+    using value_type  = decltype(g(tts::type<elmt_type>{},rng,0,0ULL,args...));
+
+    typename rebuild<T,value_type>::type that;
     auto b = std::begin(that);
     auto e = std::end(that);
     auto sz = e - b;
+
     for(std::ptrdiff_t i=0;i<sz;++i)
     {
       *b++ = as_value<value_type>(g(tts::type<value_type>{},rng,i,sz,args...));
@@ -1454,3 +1473,44 @@ namespace tts::detail
 #define TTS_ALL_ULP_EQUAL(L,R,N,...)      TTS_ALL(L,R, ::tts::ulp_distance     ,N,"ULP" , __VA_ARGS__ )
 #define TTS_ALL_IEEE_EQUAL(S1,S2,...)     TTS_ALL_ULP_EQUAL(S1,S2,0, __VA_ARGS__)
 #define TTS_ALL_EQUAL(L,R,...)            TTS_ALL_ABSOLUTE_EQUAL(L,R, 0 __VA_ARGS__ )
+#include <iostream>
+namespace tts::detail
+{
+  struct section_guard
+  {
+    int &       id;
+    int const & section;
+    section_guard(int &id_, int const &section_, int &count) : id(id_) , section(section_)
+    {
+      if(section == 0) id = count++ - 1;
+    }
+    template<typename Desc> bool check(Desc const& desc)
+    {
+      if(id == section) std::cout << "  And then: " << desc << std::endl;
+      return id == section;
+    }
+  };
+  struct only_once
+  {
+    bool once = true;
+    explicit operator bool() { bool result = once; once = false; return result; }
+  };
+}
+#define TTS_WHEN(STORY)                                                                             \
+  std::cout << "[?] - For: " << ::tts::detail::current_test << "\n";                                \
+  std::cout << "When      : " << STORY << std::endl;                                                \
+  for(int tts_section = 0, tts_count = 1; tts_section < tts_count; tts_count -= 0==tts_section++)   \
+    for( tts::detail::only_once tts_only_once_setup{}; tts_only_once_setup; )                       \
+
+#define TTS_AND_THEN_IMPL(TTS_LOCAL_ID, ...)                                                        \
+  static int TTS_LOCAL_ID = 0;                                                                      \
+  std::ostringstream TTS_CAT(desc_,TTS_LOCAL_ID);                                                   \
+  if(::tts::detail::section_guard(TTS_LOCAL_ID, tts_section, tts_count )                            \
+                  .check( ((TTS_CAT(desc_,TTS_LOCAL_ID)  << __VA_ARGS__)                            \
+                          , TTS_CAT(desc_,TTS_LOCAL_ID).str())                                      \
+                        )                                                                           \
+    )                                                                                               \
+  for(int tts_section = 0, tts_count = 1; tts_section < tts_count; tts_count -= 0==tts_section++ )  \
+    for(tts::detail::only_once tts__only_once_section{}; tts__only_once_section; )                  \
+
+#define TTS_AND_THEN(...) TTS_AND_THEN_IMPL(TTS_UNIQUE(id), __VA_ARGS__)
