@@ -42,7 +42,8 @@ namespace algo_test
     , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>,
                 eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
                 >
-    >;
+    > ;
+
 
   template <typename T, typename Test>
   void ptr_range_test(eve::as<T>,

@@ -16,13 +16,13 @@
 #include <functional>
 #include <vector>
 
-EVE_TEST_TYPES("Check inclusive_scan_to", algo_test::selected_pairs_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check inclusive_scan_to", algo_test::selected_pairs_types)
+<typename T>(tts::type<T>)
 {
   using init_t = std::tuple_element_t<1, eve::element_type_t<T>>;
 
   algo_test::transform_to_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::inclusive_scan_to,
     [](auto f, auto l, auto o, auto init) {
       std::inclusive_scan(f, l, o, std::plus<>{}, init);
