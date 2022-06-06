@@ -18,7 +18,7 @@
 
 namespace algo_test
 {
-  inline constexpr eve::detail::types<
+  using selected_types = tts::types<
       eve::wide<std::int8_t, eve::fixed<1>>
     , eve::wide<std::uint8_t>
     , eve::wide<std::int16_t>
@@ -30,9 +30,9 @@ namespace algo_test
     , eve::wide < std::uint32_t
                 , eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
                 >
-  > selected_types;
+  >;
 
-  inline constexpr eve::detail::types<
+  using selected_pairs_types = tts::types<
       eve::wide<kumi::tuple<std::int8_t, std::int16_t>, eve::fixed<1>>
     , eve::wide<kumi::tuple<std::uint8_t, std::uint8_t>>
     , eve::wide<kumi::tuple<std::int32_t, std::int32_t>>
@@ -42,8 +42,7 @@ namespace algo_test
     , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>,
                 eve::fixed<eve::expected_cardinal_v<std::uint32_t> * 2>
                 >
-    > selected_pairs_types;
-
+    >;
 
   template <typename T, typename Test>
   void ptr_range_test(eve::as<T>,

@@ -26,8 +26,8 @@ struct read_to_load_match<eve::views::backward_iterator<I>>
 
 }
 
-EVE_TEST_TYPES("Check backward_iterator", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check backward_iterator", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
   std::iota(data.begin(), data.end(), 0);

@@ -184,8 +184,8 @@ TTS_CASE("zip_iterator, main iterator")
   TTS_CONSTEXPR_EQUAL(zip_i_i::main_iterator_idx, 0u);
 };
 
-EVE_TEST_TYPES("Check zip_iterator", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check zip_iterator", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using t1 = std::int8_t;
   using t2 = eve::element_type_t<T>;

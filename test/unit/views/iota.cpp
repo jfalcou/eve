@@ -15,8 +15,8 @@
 
 #include <numeric>
 
-EVE_TEST_TYPES("Check iota_with_step_iterator", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check iota_with_step_iterator", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
 
@@ -32,8 +32,8 @@ EVE_TEST_TYPES("Check iota_with_step_iterator", algo_test::selected_types)
   TTS_CONSTEXPR_EXPECT(eve::algo::always_aligned_iterator<decltype(f)>);
 };
 
-EVE_TEST_TYPES("Check iota_with_step_iterator, conversions", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check iota_with_step_iterator, conversions", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   auto f = eve::views::iota_with_step(T(0), T(1));
 
@@ -45,8 +45,8 @@ EVE_TEST_TYPES("Check iota_with_step_iterator, conversions", eve::test::scalar::
   TTS_EQUAL(f, actual_back);
 };
 
-EVE_TEST_TYPES("Check iota", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check iota", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   std::array<T, 13> expected;
   std::iota(expected.begin(), expected.end(), T{0});
