@@ -12,8 +12,8 @@
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
 
 
-// EVE_TEST_TYPES("Random check for eve::secd", eve::test::simd::ieee_reals)
-// <typename T>(eve::as<T>)
+// TTS_CASE_TPL("Random check for eve::secd", eve::test::simd::ieee_reals)
+// <typename T>(tts::type<T>)
 // {
 //   using e_t = eve::element_type_t<T>;
 //   auto vmin = e_t(-45.);
@@ -22,8 +22,8 @@
 //   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_secd, eve::secd );
 // };
 
-EVE_TEST_TYPES("Random check for eve::secd", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::secd", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto std_secd = [](auto e) -> e_t{ return 1.0l/(boost::math::cos_pi(((long double)e)/180.0l)); };

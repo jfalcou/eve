@@ -13,8 +13,8 @@
 
 //pedantic not tested only nan is affected, see unit test
 
-EVE_TEST_TYPES("Random check for eve::arg", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::arg", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto vmin = eve::valmin(eve::as<e_t>());

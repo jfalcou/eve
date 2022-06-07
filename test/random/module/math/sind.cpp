@@ -11,8 +11,8 @@
 #include <cmath>
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 
-EVE_TEST_TYPES("Random check for eve::sind", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::sind", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto std_sind = [](auto e) -> e_t{ return boost::math::sin_pi(((long double)e)/180.0l); };

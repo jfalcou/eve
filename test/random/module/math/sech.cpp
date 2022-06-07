@@ -10,8 +10,8 @@
 #include "generator.hpp"
 #include <cmath>
 
-EVE_TEST_TYPES("Random check for eve::sech", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::sech", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto vmax =  (eve::maxlog(eve::as<e_t>())-e_t(1))/2;

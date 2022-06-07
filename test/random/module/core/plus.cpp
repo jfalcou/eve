@@ -10,8 +10,8 @@
 #include "generator.hpp"
 #include <bit>
 
-EVE_TEST_TYPES("Random check for eve::plus", eve::test::simd::signed_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::plus", eve::test::simd::signed_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto vmin = eve::valmin(eve::as<e_t>());

@@ -10,8 +10,8 @@
 #include "generator.hpp"
 #include <cmath>
 
-EVE_TEST_TYPES("Random check for eve::cotd", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::cotd", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto std_cotd = [](auto e) -> e_t { return eve::rec(std::tan(1.7453292519943295769236907684886127134428718885417e-2l*(long double)e)); };

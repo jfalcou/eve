@@ -79,7 +79,9 @@ namespace eve::test
 namespace eve::test::scalar
 {
   using ieee_reals        = ::tts::real_types;
-  using signed_integers   = ::tts::signed_types;
+  using signed_integers   = ::tts::int_types;
+  using signed_types      = ::tts::signed_types;
+  using signed_integers   = ::tts::int_types;
   using unsigned_integers = ::tts::uint_types;
   using integers          = ::tts::integral_types;
   using all_types         = ::tts::arithmetic_types;
@@ -88,7 +90,9 @@ namespace eve::test::scalar
 namespace eve::test::simd
 {
   using ieee_reals        = eve::test::wides<::tts::real_types>::type;
-  using signed_integers   = eve::test::wides<::tts::signed_types>::type;
+  using signed_integers   = eve::test::wides<::tts::int_types>::type;
+  using signed_types      = eve::test::wides<::tts::signed_types>::type;
+  using signed_integers   = eve::test::wides<::tts::int_types>::type;
   using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
   using integers          = eve::test::wides<::tts::integral_types>::type;
   using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
