@@ -9,8 +9,8 @@
 #include <eve/module/core.hpp>
 
 
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuffle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T field_markers { [](int i, int) { return ((i & 1) ? 0xB : 0xA) << 4; } };
 
@@ -47,8 +47,8 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle group size 1, shuf
 };
 
 // This is identity
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shuffle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shuffle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
 
@@ -64,8 +64,8 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , s
   TTS_EQUAL(expected, actual);
 };
 
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
 

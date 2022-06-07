@@ -420,14 +420,15 @@ namespace tts::detail
   template<typename Generator, typename... Types> struct test_generators
   {
     test_generators(const char* id, Generator g, Types...) : name(id), generator(g) {}
-    auto operator+(auto body)
+
+    friend auto operator<<(test_generators tg, auto body)
     {
       std::mt19937 gen(::tts::random_seed());
-      return test::acknowledge( { name
-                                , [*this,body,gen]() mutable
+      return test::acknowledge( { tg.name
+                                , [tg,body,gen]() mutable
                                   {
                                     ( ( (current_type = " with [T = " + typename_<Types> + "]")
-                                      , std::apply(body, generator(type<Types>{}, gen))
+                                      , std::apply(body, tg.generator(type<Types>{}, gen))
                                       ), ...
                                     );
                                     current_type.clear();
@@ -457,7 +458,7 @@ namespace tts::detail
                     : parent(id,g,typename TypeGenerator::types_list{}) {}
   };
 }
-#define TTS_PROTOTYPE(...) []__VA_ARGS__
+#define TTS_PROTOTYPE(...) [] __VA_ARGS__
 #define TTS_CASE(ID)                                                                                \
 static bool const TTS_CAT(case_,TTS_FUNCTION) = ::tts::detail::test_capture{ID} + TTS_PROTOTYPE(()) \
 
@@ -467,7 +468,7 @@ static bool const TTS_CAT(case_,TTS_FUNCTION) = ::tts::detail::test_captures<__V
 
 #define TTS_CASE_WITH(ID, TYPES, GENERATOR)                                                         \
 static bool const TTS_CAT(case_,TTS_FUNCTION)                                                       \
-                  = ::tts::detail::test_generators{ID,GENERATOR,TYPES{}} + TTS_PROTOTYPE()          \
+                  = ::tts::detail::test_generators{ID,GENERATOR,TYPES{}} << TTS_PROTOTYPE()         \
 
 #include <string_view>
 #include <ostream>
@@ -865,6 +866,7 @@ namespace tts
 namespace tts
 {
   template<typename T, typename V> auto as_value(V const& v) { return static_cast<T>(v); }
+
   template<typename T> auto produce(type<T> const& t, auto g, auto& rng, auto... others)
   {
     return g(t,rng, others...);
@@ -876,32 +878,20 @@ namespace tts
       return std::make_tuple(produce(t,g,rng,others...)...);
     };
   }
-
   template<tts::sequence Seq, typename U> struct rebuild;
-
   template<template<class,class...> class Seq, typename T, typename... S, typename U>
-  struct rebuild<Seq<T,S...>,U>
-  {
-    using type = Seq<U,S...>;
-  };
-
+  struct rebuild<Seq<T,S...>,U> { using type = Seq<U,S...>; };
   template<template<class,std::size_t> class Seq, typename T, std::size_t N, typename U>
-  struct rebuild<Seq<T,N>,U>
-  {
-    using type = Seq<U,N>;
-  };
-
+  struct rebuild<Seq<T,N>,U>    { using type = Seq<U,N>; };
   template<tts::sequence T>
   auto produce(type<T> const& t, auto g, auto& rng, auto... args)
   {
     using elmt_type   = std::remove_cvref_t<decltype(*std::begin(std::declval<T>()))>;
     using value_type  = decltype(g(tts::type<elmt_type>{},rng,0,0ULL,args...));
-
     typename rebuild<T,value_type>::type that;
     auto b = std::begin(that);
     auto e = std::end(that);
     auto sz = e - b;
-
     for(std::ptrdiff_t i=0;i<sz;++i)
     {
       *b++ = as_value<value_type>(g(tts::type<value_type>{},rng,i,sz,args...));
@@ -927,7 +917,7 @@ namespace tts
     template<typename D>
     auto operator()(tts::type<D>, auto&, auto idx, auto...) const
     {
-      return as_value<D>(start)+idx*as_value<D>(step);
+      return as_value<D>(start+idx*step);
     }
     T start;
     U step;
@@ -941,7 +931,7 @@ namespace tts
     template<typename D>
     auto operator()(tts::type<D>, auto&, auto idx, auto sz, auto...) const
     {
-      return as_value<D>(start)+(sz-1-idx)*as_value<D>(step);
+      return as_value<D>(start+(sz-1-idx)*step);
     }
     T start;
     U step;
@@ -967,7 +957,7 @@ namespace tts
     sample(Distribution d)  : dist(std::move(d))  {}
     template<typename D> auto operator()(tts::type<D>, auto& rng, auto...)
     {
-      return as_value<D>(dist(rng));
+      return dist(rng);
     }
     Distribution dist;
   };

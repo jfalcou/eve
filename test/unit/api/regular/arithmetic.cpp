@@ -10,8 +10,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of arithmetic operators on wide", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of arithmetic operators on wide", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,11 +39,11 @@ EVE_TEST_TYPES( "Check return types of arithmetic operators on wide", eve::test:
 //==================================================================================================
 // wide (*) wide tests
 //==================================================================================================
-EVE_TEST( "Check behavior of arithmetic operators on wide"
+TTS_CASE_WITH( "Check behavior of arithmetic operators on wide"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms( 5, 50  )
-                              , eve::test::randoms( 1, 100 )
-                              , eve::test::randoms( 5, 50  )
+        , tts::generate ( tts::randoms( 5, 50  )
+                              , tts::randoms( 1, 100 )
+                              , tts::randoms( 5, 50  )
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& a2)
@@ -62,11 +62,11 @@ EVE_TEST( "Check behavior of arithmetic operators on wide"
 //==================================================================================================
 // wide ++/-- tests
 //==================================================================================================
-EVE_TEST( "Check behavior of pre/post increment/decrement operators on wide"
+TTS_CASE_WITH( "Check behavior of pre/post increment/decrement operators on wide"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms( 5, 50  )
-                              , eve::test::randoms( 1, 100 )
-                              , eve::test::randoms( 5, 50  )
+        , tts::generate ( tts::randoms( 5, 50  )
+                              , tts::randoms( 1, 100 )
+                              , tts::randoms( 5, 50  )
                               )
         )
 <typename T>(T, T a1, T)
@@ -103,11 +103,11 @@ EVE_TEST( "Check behavior of pre/post increment/decrement operators on wide"
 //==================================================================================================
 // scalar (*) wide tests
 //==================================================================================================
-EVE_TEST( "Check behavior of arithmetic operators on wide and scalar"
+TTS_CASE_WITH( "Check behavior of arithmetic operators on wide and scalar"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms( 5, 50  )
-                              , eve::test::randoms( 1, 100 )
-                              , eve::test::randoms( 5, 50  )
+        , tts::generate ( tts::randoms( 5, 50  )
+                              , tts::randoms( 1, 100 )
+                              , tts::randoms( 5, 50  )
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& v)

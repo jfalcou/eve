@@ -14,8 +14,8 @@
 //==================================================================================================
 // interleave_shuffle test
 //==================================================================================================
-EVE_TEST_TYPES("Check behavior of interleave_shuffle shuffle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of interleave_shuffle shuffle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T x{[](int i, int) { return 2*i; }};
   T y{[](int i, int) { return 2*i+1; }};

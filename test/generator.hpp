@@ -19,6 +19,15 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
+namespace eve::detail
+{
+  template<typename T, typename V>
+  auto as_value(callable_object<V> const& v)
+  {
+    return v(eve::as<T>{});
+  }
+}
+
 namespace tts
 {
   //================================================================================================
@@ -82,6 +91,19 @@ namespace tts
 
     T start;
     U range;
+  };
+
+  //================================================================================================
+  // generate random bits
+  //================================================================================================
+  struct random_bits
+  {
+    template<typename D> auto operator()(tts::type<D>, auto& rng, auto...)
+    {
+      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
+      static tts::realistic_distribution<i_t> dist(0,8*sizeof(i_t)-1);
+      return dist(rng);
+    }
   };
 
   //================================================================================================

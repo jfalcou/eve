@@ -11,15 +11,13 @@
 #include <array>
 #include <numeric>
 
-namespace
-{
 //==================================================================================================
 // Unaligned store tests
 //==================================================================================================
-TTS_CASE_WITH( "Check store behavior with unaligned pointers"
-        , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
-        )
+TTS_CASE_WITH ( "Check store behavior with unaligned pointers"
+              , eve::test::simd::all_types
+              , tts::generate(tts::ramp(1),tts::logicals(1,2))
+              )
 <typename T, typename L> (T data, L logical_data)
 {
   std::array<eve::element_type_t<T>, 3 * T::size()> ref;
@@ -50,4 +48,3 @@ TTS_CASE_WITH( "Check store behavior with unaligned pointers"
   TTS_ALL_EQUAL(target        , ref         );
   TTS_ALL_EQUAL(logical_target, logical_ref );
 };
-}

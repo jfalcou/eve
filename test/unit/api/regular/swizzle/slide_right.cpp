@@ -21,10 +21,10 @@ auto slide_right_pattern  = eve::fix_pattern<N>([](auto i, auto )
 //==================================================================================================
 // slide_right test
 //==================================================================================================
-EVE_TEST( "Check behavior of slide_right swizzle"
+TTS_CASE_WITH( "Check behavior of slide_right swizzle"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50)
-                              , eve::test::logicals(0, 1)
+        , tts::generate ( tts::randoms(-50, 50)
+                              , tts::logicals(0, 1)
                               )
         )
 <typename T, typename L>(T simd, L logicals)
