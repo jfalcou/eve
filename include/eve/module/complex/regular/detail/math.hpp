@@ -179,6 +179,57 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== exp2
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp2_
+                                             , Z const& z) noexcept
+  {
+    auto [rz, iz] = z;
+    auto rho = exp2(rz);
+    auto [s, c]  = sincos(iz*log_2(as(rho)));
+    return if_else(is_real(z) || rz == minf(as(rz)),
+                   Z{rho, zero(as(rho))},
+                   Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp10
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp10_
+                                             , Z const& z) noexcept
+  {
+    auto [rz, iz] = z;
+    auto rho = exp10(rz);
+    auto [s, c]  = sincos(iz*log_10(as(rho)));
+    return if_else(is_real(z) || rz == minf(as(rz)),
+                   Z{rho, zero(as(rho))},
+                   Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== expm1
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::expm1_
+                                             , Z const& z) noexcept
+  {
+    auto u =  exp(z);
+    std::cout << "u " << u << std::endl;
+    auto w =  u-one(as(imag(z))); //decu);
+    std::cout << "w " << w << std::endl;
+    auto ru =  real(u);
+    auto exceptionnal = (is_eqz(ru) ||(is_not_finite(u) || is_eqz(z)
+                                       || is_nan(z)
+                                       || is_not_less(abs(imag(z)), pio_2(as(imag(z))))));
+    std::cout << "exceptional " << exceptionnal<< std::endl;
+    auto correct = z/log1p(w);
+    auto real_case = Z{expm1(real(z)), zero(as(real(z)))};
+    return  if_else(is_real(z), real_case, if_else(exceptionnal, w, w*correct));
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== exp_i
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -223,6 +274,34 @@ namespace eve::detail
     auto argz = eve::arg(z)/log_10(as(real(z)));
     auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
     return Z{log10(absz), argz};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log2
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_
+                                             , Z const& z) noexcept
+  {
+    auto argz = eve::arg(z)/log_2(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    return Z{log2(absz), argz};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log1p
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log1p_
+                                             , Z const& z) noexcept
+  {
+    auto m = z+one(as(imag(z)));
+    auto theta = if_else((is_real(m) && is_nltz(real(m))), zero, arg(m)) ;
+    auto rz =  real(z);
+    auto iz2 =  sqr(imag(z));
+    using r_t = decltype(rz);
+
+    return Z{half(as<r_t>())*log1p(rz*(rz+r_t(2))+iz2), theta};
   }
 
   //===-------------------------------------------------------------------------------------------
