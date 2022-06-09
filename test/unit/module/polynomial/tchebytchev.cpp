@@ -9,14 +9,13 @@
 #include <eve/module/polynomial.hpp>
 #include <boost/math/special_functions/chebyshev.hpp>
 
-// //==================================================================================================
-// //== Types tests
-// //==================================================================================================
-EVE_TEST_TYPES( "Check return types of tchebytchev on wide"
-        , eve::test::simd::ieee_reals
-
-        )
-<typename T>(eve::as<T>)
+//==================================================================================================
+//== Types tests
+//==================================================================================================
+TTS_CASE_TPL( "Check return types of tchebytchev on wide"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using wi_t = eve::as_integer_t<T>;
@@ -42,13 +41,15 @@ EVE_TEST_TYPES( "Check return types of tchebytchev on wide"
 //==================================================================================================
 //== tchebytchev tests
 //==================================================================================================
-EVE_TEST( "Check behavior of tchebytchev on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::between(1.0, 10.0), eve::test::as_integer(eve::test::ramp(0)))
-        )
-  <typename T, typename I>(T const& a0, T const& a1, I const & )
+TTS_CASE_WITH ( "Check behavior of tchebytchev on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::between(-1.0, 1.0)
+                              , tts::between(1.0, 10.0)
+                              , tts::as_integer(eve::test::ramp(0))
+                              )
+              )
+<typename T, typename I>(T const& a0, T const& a1, I const & )
 {
-
   auto eve__tchebytchev  =  [](uint32_t n, auto x) { return eve::tchebytchev(n, x); };
   for(unsigned int n=0; n < 6; ++n)
   {
@@ -56,36 +57,13 @@ EVE_TEST( "Check behavior of tchebytchev on wide"
     TTS_ULP_EQUAL(eve__tchebytchev(n, a0), map(boost_tchebytchev, n, a0), 320);
     TTS_ULP_EQUAL(eve__tchebytchev(n, a1), map(boost_tchebytchev, n, a1), 320);
   }
-
-//   auto boost_tchebytchev =  [&](auto i, auto e) { return boost::math::chebyshev_t(i, e); };
-//   TTS_ULP_EQUAL(eve::tchebytchev(i0    , a0), map(boost_tchebytchev, i0, a0), 64);
-//   TTS_ULP_EQUAL(eve::tchebytchev(i0    , a1), map(boost_tchebytchev, i0, a1), 64);
 };
 
-// EVE_TEST( "Check behavior of kind_2(tchebytchev) on wide"
-//         , eve::test::simd::ieee_reals
-//         , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::between(1.0, 10.0), eve::test::as_integer(eve::test::ramp(0)))
-//         )
-//   <typename T, typename I>(T const& a0, T const& a1, I const & i0)
-// {
-//   using eve::kind_2;
-//   auto eve__tchebytchev  =  [](uint32_t n, auto x) { return eve::kind_2(eve::tchebytchev)(n, x); };
-//   for(unsigned int n=0; n < 6; ++n)
-//   {
-//     auto boost_tchebytchev_u =  [&](auto i, auto e) { return boost::math::chebyshev_u((unsigned int)i, e); };
-//     TTS_ULP_EQUAL(eve__tchebytchev(n, a0), map(boost_tchebytchev_u, n, a0), 1000);
-//     TTS_ULP_EQUAL(eve__tchebytchev(n, a1), map(boost_tchebytchev_u, n, a1), 1000);
-//   }
-//   auto boost_tchebytchev_u =  [&](auto i, auto e) { return boost::math::chebyshev_u(i, e); };
-//   TTS_ULP_EQUAL(kind_2(eve::tchebytchev)(i0    , a0), map(boost_tchebytchev_u, i0, a0), 64);
-//   TTS_ULP_EQUAL(kind_2(eve::tchebytchev)(i0    , a1), map(boost_tchebytchev_u, i0, a1), 64);
-// };
-
-EVE_TEST( "Check behavior of successor(tchebytchev)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::between(1.0, 10.0))
-        )
-  <typename T>(T const& a0, T const&)
+TTS_CASE_WITH ( "Check behavior of successor(tchebytchev)"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::between(-1.0, 1.0)=)
+              )
+  <typename T>(T const& a0)
 {
   auto t3 = eve::tchebytchev(3, a0);
   auto t4 = eve::tchebytchev(4, a0);

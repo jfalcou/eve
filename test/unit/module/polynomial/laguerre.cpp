@@ -12,11 +12,11 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of laguerre on wide"
+TTS_CASE_TPL( "Check return types of laguerre on wide"
         , eve::test::simd::ieee_reals
 
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using wi_t = eve::as_integer_t<T>;
@@ -31,10 +31,10 @@ EVE_TEST_TYPES( "Check return types of laguerre on wide"
 //==================================================================================================
 //== laguerre tests
 //==================================================================================================
-EVE_TEST( "Check behavior of laguerre on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
-        )
+TTS_CASE_WITH ( "Check behavior of laguerre on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::between(-1, 1), tts::as_integer(tts::ramp(0)))
+              )
   <typename T, typename I>(T const& a0,I const & i0)
 {
   using v_t = eve::element_type_t<T>;

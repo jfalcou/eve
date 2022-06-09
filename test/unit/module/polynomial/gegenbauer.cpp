@@ -12,11 +12,11 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of gegenbauer on wide"
+TTS_CASE_TPL( "Check return types of gegenbauer on wide"
         , eve::test::simd::ieee_reals
 
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using wi_t = eve::as_integer_t<T>;
@@ -30,9 +30,9 @@ EVE_TEST_TYPES( "Check return types of gegenbauer on wide"
 //==================================================================================================
 //== gegenbauer tests
 //==================================================================================================
-EVE_TEST( "Check behavior of gegenbauer on wide"
+TTS_CASE_WITH( "Check behavior of gegenbauer on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(0.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
+        , tts::generate(tts::between(0.0, 1.0), tts::as_integer(tts::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {

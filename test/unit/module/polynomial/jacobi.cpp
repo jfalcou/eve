@@ -12,30 +12,27 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of jacobi on wide"
-        , eve::test::simd::ieee_reals
-
-        )
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of jacobi on wide", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
-  using v_t = eve::element_type_t<T>;
+  using v_t  = eve::element_type_t<T>;
   using wi_t = eve::as_integer_t<T>;
   using i_t  = eve::as_integer_t<v_t>;
+
   TTS_EXPR_IS( eve::jacobi(i_t(), T())  , T);
   TTS_EXPR_IS( eve::jacobi(wi_t(), T())  , T);
   TTS_EXPR_IS( eve::jacobi(i_t(), v_t())  , v_t);
   TTS_EXPR_IS( eve::jacobi(wi_t(), v_t())  , T);
-
 };
 
 //==================================================================================================
 //== jacobi tests
 //==================================================================================================
-EVE_TEST( "Check behavior of jacobi on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
-        )
-  <typename T, typename I>(T const& a0,I const & i0)
+TTS_CASE_WITH ( "Check behavior of jacobi on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::between(-1, 1), tts::as_integer(tts::ramp(0)))
+              )
+<typename T, typename I>(T const& a0,I const & i0)
 {
   using v_t = eve::element_type_t<T>;
   auto eve__jacobiv  =  [](auto n, auto x) { return eve::jacobi(n, x); };
