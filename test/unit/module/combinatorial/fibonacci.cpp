@@ -11,9 +11,9 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::fibonacci"
+TTS_CASE_TPL( "Check return types of eve::fibonacci"
               , eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T, unsigned>;
   using elt_t = eve::element_type_t<T>;
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of eve::fibonacci"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check corner-cases behavior of eve::fibonacci on wide"
+TTS_CASE_TPL( "Check corner-cases behavior of eve::fibonacci on wide"
         , eve::test::simd::ieee_reals
          )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
   using i_t = eve::as_integer_t<T, unsigned>;

@@ -11,9 +11,9 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::prime_floor"
+TTS_CASE_TPL( "Check return types of eve::prime_floor"
               , eve::test::simd::unsigned_integers)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using f_t = eve::wide<float, eve::cardinal_t<T>>;
@@ -29,9 +29,9 @@ EVE_TEST_TYPES( "Check return types of eve::prime_floor"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::prime_floor on wide"
+TTS_CASE_WITH( "Check corner-cases behavior of eve::prime_floor on wide"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(0, 100))
+        , tts::generate(tts::randoms(0, 100))
 
          )
 <typename T>(T)
