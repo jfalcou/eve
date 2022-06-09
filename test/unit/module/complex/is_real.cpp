@@ -8,10 +8,10 @@
 #include "test.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of is_real on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+TTS_CASE_WITH( "Check behavior of is_real on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax)
+                             , tts::randoms(eve::valmin, eve::valmax))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -25,10 +25,10 @@ EVE_TEST( "Check behavior of is_real on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of is_real on wide"
+TTS_CASE_WITH( "Check behavior of is_real on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax)
+                             , tts::randoms(eve::valmin, eve::valmax))
         )
   <typename T>(T const& a0, T const& a1 )
 {

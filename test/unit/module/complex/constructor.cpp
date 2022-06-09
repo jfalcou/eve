@@ -8,8 +8,8 @@
 #include "test.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST_TYPES( "Check complex constructor from constants", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check complex constructor from constants", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using w_t = eve::wide<T>;
   auto spi  = eve::pi(eve::as<T>{});
@@ -47,8 +47,8 @@ EVE_TEST_TYPES( "Check complex constructor from constants", eve::test::scalar::i
   TTS_EQUAL( eve::imag(z_vv), wpi);
 };
 
-EVE_TEST_TYPES("Check complex constructor from lambda", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check complex constructor from lambda", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using w_t = eve::wide<T>;
 
@@ -71,8 +71,8 @@ EVE_TEST_TYPES("Check complex constructor from lambda", eve::test::scalar::ieee_
   TTS_EQUAL( eve::imag(z_cl) , w_t(fill_i));
 };
 
-EVE_TEST_TYPES("Check complex copy/assignment", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check complex copy/assignment", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using w_t = eve::wide<T>;
   auto spi  = eve::pi(eve::as<T>{});

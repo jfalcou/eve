@@ -29,6 +29,17 @@ namespace eve::detail
 
 namespace tts
 {
+  template<typename T> struct bunch
+  {
+    template<typename L> struct make;
+    template<typename... Ls> struct make<tts::types<Ls...>>
+    {
+      using type = tts::types<std::array<Ls,10>...>;
+    };
+
+    using types_list = typename make<T>::type;
+  };
+
   //================================================================================================
   // Constant wrapper
   //================================================================================================
