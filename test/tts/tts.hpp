@@ -423,10 +423,10 @@ namespace tts::detail
 
     friend auto operator<<(test_generators tg, auto body)
     {
-      std::mt19937 gen(::tts::random_seed());
       return test::acknowledge( { tg.name
-                                , [tg,body,gen]() mutable
+                                , [tg,body]() mutable
                                   {
+                                    std::mt19937 gen(::tts::random_seed());
                                     ( ( (current_type = " with [T = " + typename_<Types> + "]")
                                       , std::apply(body, tg.generator(type<Types>{}, gen))
                                       ), ...
@@ -660,7 +660,7 @@ namespace tts
         T a, b;
         param_type(T aa, T bb) : a(aa),  b(bb) {};
       };
-      fp_realistic_distribution() : fp_realistic_distribution(0.0, 0.1, 300) { }
+      fp_realistic_distribution() : fp_realistic_distribution(0.0, 0.1) { }
       fp_realistic_distribution(T aa, T bb)
         : a(std::min(aa, bb)),
           b(std::max(aa, bb)),
@@ -884,7 +884,7 @@ namespace tts
   template<template<class,std::size_t> class Seq, typename T, std::size_t N, typename U>
   struct rebuild<Seq<T,N>,U>    { using type = Seq<U,N>; };
   template<tts::sequence T>
-  auto produce(type<T> const& t, auto g, auto& rng, auto... args)
+  auto produce(type<T> const&, auto g, auto& rng, auto... args)
   {
     using elmt_type   = std::remove_cvref_t<decltype(*std::begin(std::declval<T>()))>;
     using value_type  = decltype(g(tts::type<elmt_type>{},rng,0,0ULL,args...));
@@ -966,9 +966,10 @@ namespace tts
     randoms(Mn mn, Mx mx)  : mini(mn), maxi(mx)  {}
     template<typename D> auto operator()(tts::type<D>, auto& rng, auto...)
     {
-      static tts::realistic_distribution<D> dist(as_value<D>(mini), as_value<D>(maxi));
-      return dist(rng);
+      tts::realistic_distribution<D> dist(as_value<D>(mini), as_value<D>(maxi));
+      return  dist(rng);
     }
+
     Mn mini;
     Mx maxi;
   };

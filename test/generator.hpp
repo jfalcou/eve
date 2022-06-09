@@ -95,7 +95,7 @@ namespace tts
     auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
 
     using v_t = typename decltype(data)::value_type;
-    eve::as_wide_t<v_t, eve::cardinal_t<T>> that(&data[0]);
+    eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
 
     return poison(that);
   }
