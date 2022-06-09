@@ -23,7 +23,6 @@ EVE_TEST_TYPES( "Check behavior of log2"
 {
   using eve::as;
   using e_t = eve::element_type_t<T>;
-  using eve::as;
   using z_t = eve::as_complex_t<T>;
   auto inf = eve::inf(as<T>());
   auto minf = eve::minf(as<T>());

@@ -58,3 +58,25 @@ EVE_TEST( "Check behavior of exp on wide"
   };
   TTS_ULP_EQUAL(eve::exp(z_t{a0,a1}), init_with_std(a0, a1), 2);
 };
+
+EVE_TEST_TYPES( "Check behavior of log2"
+        , eve::test::simd::ieee_reals
+            )
+  <typename T>(eve::as<T>)
+{
+  using eve::as;
+  using z_t = eve::as_complex_t<T>;
+  auto inf = eve::inf(as<T>());
+  auto minf = eve::minf(as<T>());
+  auto zer = eve::zero(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one= eve::one(as<T>());
+  auto e =  eve::euler(as<T>());
+  TTS_ULP_EQUAL(eve::exp(z_t{inf, zer}),   (z_t{inf, zer}), 0.5);
+  TTS_ULP_EQUAL(eve::exp(z_t{minf, zer}),  (z_t{zer, zer}), 0.5);
+
+  TTS_ULP_EQUAL(eve::exp(z_t{nan, zer}),   (z_t{nan, zer}), 0.5);
+  TTS_ULP_EQUAL(eve::exp(z_t{nan, nan}),   (z_t{nan, nan}), 0.5);
+  TTS_ULP_EQUAL(eve::exp(z_t{one, zer}),   (z_t{e, zer}), 0.5);
+  TTS_ULP_EQUAL(eve::exp(z_t{zer, zer}),   (z_t{one, zer}), 0.5);
+};

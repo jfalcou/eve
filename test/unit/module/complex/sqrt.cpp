@@ -133,7 +133,7 @@ EVE_TEST_TYPES( "Check return types of eve::sqrt", eve::test::scalar::ieee_reals
 
 
 
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::one(as<T>()), -eve::inf(as<T>()))), c_t(eve::inf(as<T>()),-eve::inf(as<T>())),ulp);
+  TTS_ULP_EQUAL(psqrt(c_t(eve::one(as<T>()), -eve::inf(as<T>()))), c_t(eve::inf(as<T>()),-eve::inf(as<T>())),ulp);
 
   TTS_ULP_EQUAL(eve::sqrt(c_t(1)), c_t(1), 0);
   TTS_ULP_EQUAL(eve::sqrt(c_t(eve::mone(as<T>()))), c_t(0, eve::one(as<T>())),ulp);

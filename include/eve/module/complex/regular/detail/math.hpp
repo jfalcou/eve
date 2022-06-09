@@ -172,7 +172,9 @@ namespace eve::detail
   {
     auto [rz, iz] = z;
     auto [s, c]   = sincos(iz);
-    auto rho = exp(rz);
+    auto rho = eve::exp(rz);
+    std::cout << "rz " << rz << std::endl;
+    std::cout << "rho " << rho << std::endl;
     return if_else(is_real(z) || rz == minf(as(rz)),
                    Z{rho, zero(as(rho))},
                    Z{rho*c, rho*s});
@@ -256,37 +258,73 @@ namespace eve::detail
   //=== log
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_, pedantic_type const &
+                                             , Z const& z) noexcept
+  {
+    auto argz = pedantic(eve::arg)(z);
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log(absz);
+    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))}, r);
+  }
+
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_
                                              , Z const& z) noexcept
   {
-      auto argz = eve::arg(z);
-      auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-      return Z{log(absz), argz};
+    auto argz = eve::arg(z);
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log(absz);
+    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
   }
 
   //===-------------------------------------------------------------------------------------------
   //=== log10
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_, pedantic_type const &
+                                             , Z const& z) noexcept
+  {
+    auto argz = pedantic(eve::arg)(z)/log_10(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log10(absz);
+    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))/log_10(as(real(z)))}, r);
+  }
+
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_
                                              , Z const& z) noexcept
   {
     auto argz = eve::arg(z)/log_10(as(real(z)));
     auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-    return Z{log10(absz), argz};
-  }
+    auto la = log10(absz);
+    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+   }
 
   //===-------------------------------------------------------------------------------------------
   //=== log2
   //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_, pedantic_type const &
+                                             , Z const& z) noexcept
+  {
+    auto argz = pedantic(eve::arg)(z)/log_2(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log2(absz);
+    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))/log_2(as(real(z)))}, r);
+  }
+
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_
                                              , Z const& z) noexcept
   {
     auto argz = eve::arg(z)/log_2(as(real(z)));
     auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-    return Z{log2(absz), argz};
-  }
+    auto la = log2(absz);
+    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+   }
 
   //===-------------------------------------------------------------------------------------------
   //=== log1p

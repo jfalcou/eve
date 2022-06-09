@@ -17,14 +17,25 @@ namespace tts
     auto diff = l-r;
     auto [rl, il] = l;
     auto [rr, ir] = r;
-
+    auto udr = eve::ulpdist(il, ir);
+    auto udi = eve::ulpdist(rl, rr);
+//     std::cout << "        udi " << udi << std::endl;
+//     std::cout << "        udr " << udr << std::endl;
+    udr = eve::if_else(eve::is_nan(udr), eve::inf(eve::as(udr)), udr);
+    udi = eve::if_else(eve::is_nan(udi), eve::inf(eve::as(udi)), udi);
     auto d = eve::if_else ( eve::almost(eve::is_real)(diff)
-                          , eve::ulpdist(rl, rr)
+                          , udr
                           , eve::if_else( eve::almost(eve::is_imag)(diff)
-                                        , eve::ulpdist(il, ir)
-                                        , eve::ulpdist(l, r)
+                                        , udi
+                                        , eve::max(udi, udr)
                                         )
                           );
+//     std::cout << " alisr    " << eve::almost(eve::is_real)(diff)<< std::endl;
+//     std::cout << " alisi    " << eve::almost(eve::is_imag)(diff)<< std::endl;
+//     std::cout << "        l " << l << std::endl;
+//     std::cout << "        r " << r << std::endl;
+//     std::cout << "        d " << d << std::endl;
+//     std::cout << "       md " << eve::maximum(d)<< std::endl;
     return eve::maximum(d);
   }
 
