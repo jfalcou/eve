@@ -9,10 +9,10 @@
 #include <eve/module/proba.hpp>
 #include <eve/platform.hpp>
 
-EVE_TEST_TYPES("Check eve::uniform_discrete_distribution_distribution behavior"
+TTS_CASE_TPL("Check eve::uniform_discrete_distribution_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   {
     auto d = eve::uniform_discrete_distribution{T(1), T(2)};

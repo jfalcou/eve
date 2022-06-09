@@ -11,10 +11,10 @@
 #include <eve/platform.hpp>
 
 
-EVE_TEST_TYPES("Check eve::ev_distribution behavior"
+TTS_CASE_TPL("Check eve::ev_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   auto inf  = eve::inf(eve::as<T>());
   {
