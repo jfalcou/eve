@@ -70,7 +70,7 @@ EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
   const int N = 22;
   std::array<c_t, N> inputs =
     { c_t(eve::zero(as<e_t>()),eve::zero(as<e_t>())),//0*
-     c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())), //1*
+      c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())), //1*
       c_t(eve::minf(as<e_t>()),eve::zero(as<e_t>())),//2*
       c_t(eve::nan(as<e_t>()),eve::zero(as<e_t>())), //3*
       c_t(eve::zero(as<e_t>()),eve::inf(as<e_t>())), //4*
@@ -95,17 +95,17 @@ EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
   std::array<c_t, N> expected =
     { c_t(eve::zero(as<e_t>()),eve::pio_2(as<e_t>())), //0*
       c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())),   //1*
-      c_t(eve::inf(as<e_t>()),-eve::pi(as<e_t>())),    //2*
+      c_t(eve::inf(as<e_t>()),eve::pi(as<e_t>())),     //2*
       c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //3*
       c_t(eve::inf(as<e_t>()),eve::pio_2(as<e_t>())),  //4*
-      c_t(eve::inf(as<e_t>()),eve::pio_4(as<e_t>())),    //5*
+      c_t(eve::inf(as<e_t>()),eve::pio_4(as<e_t>())),  //5*
       c_t(eve::inf(as<e_t>()),3*eve::pio_4(as<e_t>())),//6*
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //7*
-      c_t(eve::inf(as<e_t>()),-eve::pio_2(as<e_t>())),    //8*
-      c_t(eve::inf(as<e_t>()),-eve::pio_4(as<e_t>())),    //9*
-      c_t(eve::inf(as<e_t>()),-3*eve::pio_4(as<e_t>())),    //10*
+      c_t(eve::inf(as<e_t>()),-eve::pio_2(as<e_t>())), //8*
+      c_t(eve::inf(as<e_t>()),-eve::pio_4(as<e_t>())), //9*
+      c_t(eve::inf(as<e_t>()),-3*eve::pio_4(as<e_t>())),//10*
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //11*
-      c_t(eve::nan(as<e_t>()),-eve::pio_2(as<e_t>())),  //12
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),            //12
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //13*
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //14*
       c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //15*
@@ -120,6 +120,6 @@ EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
   for(int i=0; i < N; ++i)
   {
     TTS_ULP_EQUAL(eve::acosh(inputs[i]), expected[i], 0.5);
-//    TTS_ULP_EQUAL(eve::acosh(eve::conj(inputs[i])), eve::conj(expected[i]), 0.5);
+    TTS_ULP_EQUAL(eve::acosh(eve::conj(inputs[i])), eve::conj(expected[i]), 0.5);
   }
 };

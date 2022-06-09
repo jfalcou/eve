@@ -134,13 +134,18 @@ namespace eve::detail
                                              , Z const& z) noexcept
   {
     // acosh(a0) = +/-i acos(a0)
-    // Choosing the sign of multiplier to give nt2::real(acosh(a0)) >= 0
+    // Choosing the sign of multiplier to give real(acosh(a0)) >= 0
     // we have compatibility with C99.
     auto res = eve::acos(z);
-    auto lez = is_lez(imag(res));
+    auto lez = is_negative(imag(res));
     res *= eve::i;
-    return if_else(lez, res, -res);
-  }
+    auto nani = is_nan(imag(z));
+    res = if_else(lez, res, -res);
+    if (any(nani))
+      return if_else(nani && is_finite(real(z)), Z{nan(as(real(z))), nan(as(real(z)))}, res);
+    else
+      return res;
+      }
 
   //===-------------------------------------------------------------------------------------------
   //=== asinh
