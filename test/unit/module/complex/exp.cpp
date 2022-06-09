@@ -79,4 +79,5 @@ EVE_TEST_TYPES( "Check behavior of log2"
   TTS_ULP_EQUAL(eve::exp(z_t{nan, nan}),   (z_t{nan, nan}), 0.5);
   TTS_ULP_EQUAL(eve::exp(z_t{one, zer}),   (z_t{e, zer}), 0.5);
   TTS_ULP_EQUAL(eve::exp(z_t{zer, zer}),   (z_t{one, zer}), 0.5);
+  std::cout << eve::exp(nan) << std::endl;
 };

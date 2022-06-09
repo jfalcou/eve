@@ -172,9 +172,7 @@ namespace eve::detail
   {
     auto [rz, iz] = z;
     auto [s, c]   = sincos(iz);
-    auto rho = eve::exp(rz);
-    std::cout << "rz " << rz << std::endl;
-    std::cout << "rho " << rho << std::endl;
+    auto rho = if_else(is_nan(rz), allbits, eve::exp(rz));
     return if_else(is_real(z) || rz == minf(as(rz)),
                    Z{rho, zero(as(rho))},
                    Z{rho*c, rho*s});
@@ -218,14 +216,11 @@ namespace eve::detail
                                              , Z const& z) noexcept
   {
     auto u =  exp(z);
-    std::cout << "u " << u << std::endl;
     auto w =  u-one(as(imag(z))); //decu);
-    std::cout << "w " << w << std::endl;
     auto ru =  real(u);
     auto exceptionnal = (is_eqz(ru) ||(is_not_finite(u) || is_eqz(z)
                                        || is_nan(z)
                                        || is_not_less(abs(imag(z)), pio_2(as(imag(z))))));
-    std::cout << "exceptional " << exceptionnal<< std::endl;
     auto correct = z/log1p(w);
     auto real_case = Z{expm1(real(z)), zero(as(real(z)))};
     return  if_else(is_real(z), real_case, if_else(exceptionnal, w, w*correct));
