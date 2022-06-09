@@ -58,5 +58,5 @@ EVE_TEST( "Check behavior of exp2 on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::exp2(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::exp2(z_t{a0,a1}), init_with_std(a0, a1), 3);
 };
