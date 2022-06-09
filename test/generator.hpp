@@ -21,8 +21,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename V>
-  auto as_value(callable_object<V> const& v)
+  template<typename T, typename V> auto as_value(callable_object<V> const& v)
   {
     return v(eve::as<T>{});
   }
@@ -30,6 +29,20 @@ namespace eve::detail
 
 namespace tts
 {
+  //================================================================================================
+  // Constant wrapper
+  //================================================================================================
+  template<typename F> struct constant : F
+  {
+    constant(F f) : F(f) {}
+    using F::operator();
+  };
+
+  template<typename T, typename V> auto as_value(constant<V> const& v)
+  {
+    return v(eve::as<T>{});
+  }
+
   //================================================================================================
   // Poison wide data when using sub-sized types
   //================================================================================================
@@ -65,7 +78,7 @@ namespace tts
   // Customization point for argument building
   //================================================================================================
   template<eve::simd_value T>
-  auto produce(type<T> const& t, auto g, auto& rng, auto... args)
+  auto produce(type<T> const&, auto g, auto& rng, auto... args)
   {
     using e_t = eve::element_type_t<T>;
     auto data = produce(type<std::array<e_t,T::size()>>{},g,rng, args...);
@@ -82,6 +95,12 @@ namespace tts
   template<typename T, typename U = T> struct logicals
   {
     logicals(T v, U k) : start(v), range(k)  {}
+
+    template<typename D> auto operator()(tts::type<D>, auto&) const
+    {
+      using type = eve::as_logical_t<D>;
+      return as_value<type>(false);
+    }
 
     template<typename D> auto operator()(tts::type<D>, auto&, auto idx, auto...) const
     {
@@ -107,44 +126,58 @@ namespace tts
   };
 
   //================================================================================================
+  // Convert generated data to integral values
+  //================================================================================================
+  template<typename G>
+  struct as_integer
+  {
+    as_integer(G g) : generator_(g) {}
+    template<typename D> auto operator()(tts::type<D>, auto& rng, auto... args)
+    {
+      using i_t = eve::as_integer_t<eve::element_type_t<D>>;
+      return generator_(tts::type<i_t>{},rng, args...);
+    }
+
+    G generator_;
+  };
+
+  //================================================================================================
   // IEEE Special Constant value
   //================================================================================================
-  inline auto limits()
+  template<typename T>
+  inline auto limits(tts::type<T>)
   {
-    return [=]<typename T>(eve::as<T>, auto&)
+    return []()
     {
-      return []()
+      if constexpr(eve::floating_real_value<T>)
       {
-        if constexpr(eve::floating_real_value<T>)
+        struct values
         {
-          struct values
-          {
-            using type  = T;
-            type nan         = eve::nan     (eve::as<type>{});
-            type inf         = eve::inf     (eve::as<type>{});
-            type minf        = eve::minf    (eve::as<type>{});
-            type mzero       = eve::mzero   (eve::as<type>{});
-            type zero        = eve::zero   (eve::as<type>{});
-            type maxflint    = eve::maxflint(eve::as<type>{});
-            type valmax      = eve::valmax(eve::as<type>{});
-            type valmin      = eve::valmin(eve::as<type>{});
-            type mindenormal = eve::mindenormal(eve::as<type>{});
-          };
+          using type  = T;
+          type nan         = eve::nan     (eve::as<type>{});
+          type inf         = eve::inf     (eve::as<type>{});
+          type minf        = eve::minf    (eve::as<type>{});
+          type mzero       = eve::mzero   (eve::as<type>{});
+          type zero        = eve::zero   (eve::as<type>{});
+          type maxflint    = eve::maxflint(eve::as<type>{});
+          type valmax      = eve::valmax(eve::as<type>{});
+          type valmin      = eve::valmin(eve::as<type>{});
+          type mindenormal = eve::mindenormal(eve::as<type>{});
+        };
 
-          return values{};
-        }
-        else
+        return values{};
+      }
+      else
+      {
+        struct values
         {
-          struct values
-          {
-            using type  = T;
-            type valmax    = eve::valmax(eve::as<type>{});
-            type valmin    = eve::valmin(eve::as<type>{});
-          };
+          using type  = T;
+          type valmax    = eve::valmax(eve::as<type>{});
+          type valmin    = eve::valmin(eve::as<type>{});
+        };
 
-          return values{};
-        }
-      }();
-    };
+        return values{};
+      }
+    }();
   }
 }
