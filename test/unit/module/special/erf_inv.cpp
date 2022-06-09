@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of erf_inv"
+TTS_CASE_TPL( "Check return types of erf_inv"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,9 +27,9 @@ EVE_TEST_TYPES( "Check return types of erf_inv"
 //==================================================================================================
 // erf_inv  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of erf_inv on wide"
+TTS_CASE_WITH( "Check behavior of erf_inv on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-1.0, 1.0))
+        , tts::generate(tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0 )
 {

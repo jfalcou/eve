@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of beta"
+TTS_CASE_TPL( "Check return types of beta"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of beta"
 //==================================================================================================
 // beta  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of beta on wide"
+TTS_CASE_WITH( "Check behavior of beta on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 10.0)
-                             , eve::test::randoms(0.0,10.0))
+        , tts::generate(tts::randoms(0.0, 10.0)
+                             , tts::randoms(0.0,10.0))
         )
 <typename T>([[maybe_unused]] T const& a0, [[maybe_unused]] T const& a1 )
 {
@@ -41,8 +41,7 @@ EVE_TEST( "Check behavior of beta on wide"
 #if defined(__cpp_lib_math_special_functions)
   using elt_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL( eve::beta(a0, a1),  map([&](auto e, auto f) -> elt_t{ return std::beta(e, f); }, a0, a1), 32);
- 
+  TTS_ULP_EQUAL( eve::beta(a0, a1),  map([&](auto e, auto f) -> elt_t{ return std::beta(e, f); }, a0, a1), 64);
 
   TTS_ULP_EQUAL(beta(T(-0.0), T(-0.0)), T(std::beta(elt_t(-0.0), elt_t(-0.0))), 0);
   TTS_ULP_EQUAL(beta(T( 0.0), T( 0.0)), T(std::beta(elt_t(0.0), elt_t(0.0))), 0);

@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of exp_int"
+TTS_CASE_TPL( "Check return types of exp_int"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
@@ -34,9 +34,9 @@ EVE_TEST_TYPES( "Check return types of exp_int"
 //==================================================================================================
 // exp_int  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of exp_int on wide"
+TTS_CASE_WITH( "Check behavior of exp_int on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 10.0))
+        , tts::generate(tts::randoms(0.0, 10.0))
         )
 <typename T>(T const& a0 )
 {
