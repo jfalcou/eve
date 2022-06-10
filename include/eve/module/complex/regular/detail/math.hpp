@@ -103,6 +103,49 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sinh
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinh_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto [rz, iz] = z;
+    auto [s, c]   = sincos(iz);
+    auto [sh, ch] = sinhcosh(rz);
+    auto r = c*sh;
+    auto i = s*ch;
+    if (eve::all(is_finite(z))) return Z{r, i};
+    auto infrz = is_infinite(rz);
+    auto nanrz = is_nan(rz);
+    r = if_else(infrz && is_not_finite(iz), rz, r);
+    i = if_else(infrz && is_nan(iz), allbits, i);
+    r = if_else(nanrz, allbits, r);
+    i = if_else(nanrz, allbits, i);
+    i = if_else(is_real(z), zero, i);
+    r = if_else(is_imag(z), zero, r);
+    return Z{r, i};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== tanh
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::tanh_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto zz = z+z;
+    auto [rz, iz] = zz;
+    auto [s, c] = sincos(iz);
+    auto [sh, ch] = sinhcosh(rz);
+    auto tmp = c+ch;
+    auto rr = if_else(is_imag(z), zero, sh/tmp);
+    auto ii = if_else(is_real(z), zero, s/tmp);
+    return if_else(is_infinite(rz), Z{sign(rz), 0}, Z{rr, ii});
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== cos
   //===-------------------------------------------------------------------------------------------
   template<decorator D, typename Z>
@@ -124,6 +167,37 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cos_, Z const& z) noexcept
   {
     return cosh(eve::i*z);
+  }
+
+
+  //===-------------------------------------------------------------------------------------------
+  //=== sin
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sin_
+                                             , Z const& z) noexcept
+  {
+    auto j = i(as(z));
+    return -(j*sinh(j*z));
+  }
+
+//   template<typename Z>
+//   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sin_
+//                                              , pedantic_type const &, Z const& z) noexcept
+//   {
+//     return pedantic(sinh)(eve::i*z);
+//   }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== tan
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::tan_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto j = eve::i(as(z));
+    return -j*eve::tanh(j*z);
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -237,7 +311,7 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp_i_, Z const& z ) noexcept
   {
-    return exp(eve::i*z);
+    return exp(eve::i(as<Z>())*z);
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -246,7 +320,7 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::exp_ipi_, Z const& z ) noexcept
   {
-    auto [rz, iz] = eve::i*z;
+    auto [rz, iz] = eve::i(as<Z>())*z;
     auto [s, c]   = sinpicospi(iz);
     auto rho = exp(rz*pi(as(rz)));
     return if_else(is_real(z) || rz == minf(as(rz)),
@@ -385,7 +459,6 @@ namespace eve::detail
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
   }
-
 }
 
 #include <eve/module/complex/regular/detail/acos.hpp>
