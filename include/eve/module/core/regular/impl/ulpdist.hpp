@@ -50,7 +50,7 @@ namespace eve::detail
     else if constexpr(scalar_value<T>)
     {
       if (numeric(is_equal)(a, b)) return T(0);
-      if (is_unordered(a, b)) return nan(eve::as<T>());
+      if (is_unordered(a, b)) return inf(eve::as<T>());
       return nb_values(a , b )*half(eve::as(a));
     }
     else if constexpr(simd_value<T>)
@@ -59,7 +59,7 @@ namespace eve::detail
       auto bb = eve::detail::bitinteger(b);
       return if_else(numeric(is_equal)(a, b), eve::zero
                     , if_else (is_unordered(a, b)
-                              , eve::allbits
+                              , eve::inf(as(a))
                               , to_<T>(dist(bb, aa))
                               )*half(eve::as(a))
                     );
