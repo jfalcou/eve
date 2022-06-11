@@ -17,12 +17,15 @@ namespace tts
     auto diff = l-r;
     auto [rl, il] = l;
     auto [rr, ir] = r;
-
+    auto udr = eve::ulpdist(il, ir);
+    auto udi = eve::ulpdist(rl, rr);
+    udr = eve::if_else(eve::is_nan(udr), eve::inf(eve::as(udr)), udr);
+    udi = eve::if_else(eve::is_nan(udi), eve::inf(eve::as(udi)), udi);
     auto d = eve::if_else ( eve::almost(eve::is_real)(diff)
-                          , eve::ulpdist(rl, rr)
+                          , udr
                           , eve::if_else( eve::almost(eve::is_imag)(diff)
-                                        , eve::ulpdist(il, ir)
-                                        , eve::ulpdist(l, r)
+                                        , udi
+                                        , eve::max(udi, udr)
                                         )
                           );
     return eve::maximum(d);

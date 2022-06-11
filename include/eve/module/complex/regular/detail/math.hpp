@@ -26,16 +26,15 @@ namespace eve::detail
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : sqrt
   //===-------------------------------------------------------------------------------------------
-  template<decorator D, typename Z>
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sqrt_
-                                              , D const &
-                                              , Z const& z
+                                             , Z const& z
                                               ) noexcept
   {
     //always compute the sqrt of the complex with positive imaginary part
     //then conjugate if necessary
     auto [rz, iz] = z;
-    auto negimag = is_ltz(iz);
+    auto negimag = is_negative(iz);
     auto x = abs(rz);
     auto y = abs(iz);
     auto iaz = if_else(negimag, -iz, iz); // always >= 0 or -Nan
@@ -51,23 +50,22 @@ namespace eve::detail
     auto res = Z(if_else(is_real_z, sqrtx, w)
                 , if_else(is_real_z, zero, iaz*half(as(r))/w));
     res = if_else(gezrz, res, Z(imag(res), real(res)));
-    if constexpr(std::same_as<D, pedantic_type>)
+    if (any(is_not_finite(z))) [[unlikely]]
     {
-      auto infty = inf(as(iaz));
-      res = if_else(iaz == infty,  Z{infty, infty}, res);
-      res = if_else(logical_andnot(rz == -infty, is_nan(iz)), Z{if_else(iaz == infty, iaz, zero), infty}, res);
-      res = if_else(is_eqz(iz) && is_nan(rz), z, res);
-      res = if_else(is_nan(z), Z(nan(as(iz)), nan(as(iz))), res);
-      res = if_else(is_eqz(iz) && is_gez(rz), Z(sqrt(rz), zero(as(rz))), res);
+      res = if_else(rz == minf(as(rz))
+                   , if_else( is_nan(iz), Z{iz, minf(as(rz))},Z{zero(as(rz)), inf(as(rz))})
+                   , res
+                   );
+       res = if_else(rz == inf(as(rz))
+                   , if_else( is_nan(iz), Z{inf(as(rz)), iz}, Z{ inf(as(rz)), zero(as(rz)) })
+                   , res
+                   );
+       res = if_else(is_nan(rz), Z{rz, rz}, res);
+       auto infty = inf(as(iaz));
+       res = if_else(iaz == infty,  Z{infty, infty}, res);
     }
     return if_else(negimag, conj(res), res);
  }
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sqrt_, Z const& z) noexcept
-  {
-    return sqrt(regular_type(), z);
-  }
 
   //===-------------------------------------------------------------------------------------------
   //=== cosh
@@ -103,6 +101,49 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sinh
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinh_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto [rz, iz] = z;
+    auto [s, c]   = sincos(iz);
+    auto [sh, ch] = sinhcosh(rz);
+    auto r = c*sh;
+    auto i = s*ch;
+    if (eve::all(is_finite(z))) return Z{r, i};
+    auto infrz = is_infinite(rz);
+    auto nanrz = is_nan(rz);
+    r = if_else(infrz && is_not_finite(iz), rz, r);
+    i = if_else(infrz && is_nan(iz), allbits, i);
+    r = if_else(nanrz, allbits, r);
+    i = if_else(nanrz, allbits, i);
+    i = if_else(is_real(z), zero, i);
+    r = if_else(is_imag(z), zero, r);
+    return Z{r, i};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== tanh
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::tanh_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto zz = z+z;
+    auto [rz, iz] = zz;
+    auto [s, c] = sincos(iz);
+    auto [sh, ch] = sinhcosh(rz);
+    auto tmp = c+ch;
+    auto rr = if_else(is_imag(z), zero, sh/tmp);
+    auto ii = if_else(is_real(z), zero, s/tmp);
+    return if_else(is_infinite(rz), Z{sign(rz), 0}, Z{rr, ii});
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== cos
   //===-------------------------------------------------------------------------------------------
   template<decorator D, typename Z>
@@ -126,6 +167,30 @@ namespace eve::detail
     return cosh(eve::i*z);
   }
 
+
+  //===-------------------------------------------------------------------------------------------
+  //=== sin
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sin_
+                                             , Z const& z) noexcept
+  {
+    auto j = i(as(z));
+    return -(j*sinh(j*z));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== tan
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::tan_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto j = eve::i(as(z));
+    return -j*eve::tanh(j*z);
+  }
+
   //===-------------------------------------------------------------------------------------------
   //=== acosh
   //===-------------------------------------------------------------------------------------------
@@ -134,13 +199,18 @@ namespace eve::detail
                                              , Z const& z) noexcept
   {
     // acosh(a0) = +/-i acos(a0)
-    // Choosing the sign of multiplier to give nt2::real(acosh(a0)) >= 0
+    // Choosing the sign of multiplier to give real(acosh(a0)) >= 0
     // we have compatibility with C99.
     auto res = eve::acos(z);
-    auto lez = is_lez(imag(res));
+    auto lez = is_negative(imag(res));
     res *= eve::i;
-    return if_else(lez, res, -res);
-  }
+    auto nani = is_nan(imag(z));
+    res = if_else(lez, res, -res);
+    if (any(nani))
+      return if_else(nani && is_finite(real(z)), Z{nan(as(real(z))), nan(as(real(z)))}, res);
+    else
+      return res;
+      }
 
   //===-------------------------------------------------------------------------------------------
   //=== asinh
@@ -172,10 +242,58 @@ namespace eve::detail
   {
     auto [rz, iz] = z;
     auto [s, c]   = sincos(iz);
-    auto rho = exp(rz);
+    auto rho = if_else(is_nan(rz), allbits, eve::exp(rz));
     return if_else(is_real(z) || rz == minf(as(rz)),
                    Z{rho, zero(as(rho))},
                    Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp2
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp2_
+                                             , Z const& z) noexcept
+  {
+    auto [rz, iz] = z;
+    auto rho = exp2(rz);
+    auto [s, c]  = sincos(iz*log_2(as(rho)));
+    return if_else(is_real(z) || rz == minf(as(rz)),
+                   Z{rho, zero(as(rho))},
+                   Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp10
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp10_
+                                             , Z const& z) noexcept
+  {
+    auto [rz, iz] = z;
+    auto rho = exp10(rz);
+    auto [s, c]  = sincos(iz*log_10(as(rho)));
+    return if_else(is_real(z) || rz == minf(as(rz)),
+                   Z{rho, zero(as(rho))},
+                   Z{rho*c, rho*s});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== expm1
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::expm1_
+                                             , Z const& z) noexcept
+  {
+    auto u =  exp(z);
+    auto w =  u-one(as(imag(z))); //decu);
+    auto ru =  real(u);
+    auto exceptionnal = (is_eqz(ru) ||(is_not_finite(u) || is_eqz(z)
+                                       || is_nan(z)
+                                       || is_not_less(abs(imag(z)), pio_2(as(imag(z))))));
+    auto correct = z/log1p(w);
+    auto real_case = Z{expm1(real(z)), zero(as(real(z)))};
+    return  if_else(is_real(z), real_case, if_else(exceptionnal, w, w*correct));
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -184,7 +302,7 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::exp_i_, Z const& z ) noexcept
   {
-    return exp(eve::i*z);
+    return exp(eve::i(as<Z>())*z);
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -193,7 +311,7 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::exp_ipi_, Z const& z ) noexcept
   {
-    auto [rz, iz] = eve::i*z;
+    auto [rz, iz] = eve::i(as<Z>())*z;
     auto [s, c]   = sinpicospi(iz);
     auto rho = exp(rz*pi(as(rz)));
     return if_else(is_real(z) || rz == minf(as(rz)),
@@ -205,24 +323,88 @@ namespace eve::detail
   //=== log
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_, pedantic_type const &
+                                             , Z const& z) noexcept
+  {
+    auto argz = pedantic(eve::arg)(z);
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log(absz);
+    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))}, r);
+  }
+
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_
                                              , Z const& z) noexcept
   {
-      auto argz = eve::arg(z);
-      auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-      return Z{log(absz), argz};
+    auto argz = eve::arg(z);
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log(absz);
+    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
   }
 
   //===-------------------------------------------------------------------------------------------
   //=== log10
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_, pedantic_type const &
+                                             , Z const& z) noexcept
+  {
+    auto argz = pedantic(eve::arg)(z)/log_10(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log10(absz);
+    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))/log_10(as(real(z)))}, r);
+  }
+
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_
                                              , Z const& z) noexcept
   {
     auto argz = eve::arg(z)/log_10(as(real(z)));
     auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-    return Z{log10(absz), argz};
+    auto la = log10(absz);
+    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+   }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log2
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_, pedantic_type const &
+                                             , Z const& z) noexcept
+  {
+    auto argz = pedantic(eve::arg)(z)/log_2(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log2(absz);
+    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))/log_2(as(real(z)))}, r);
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_
+                                             , Z const& z) noexcept
+  {
+    auto argz = eve::arg(z)/log_2(as(real(z)));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto la = log2(absz);
+    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+   }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log1p
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log1p_
+                                             , Z const& z) noexcept
+  {
+    auto m = z+one(as(imag(z)));
+    auto theta = if_else((is_real(m) && is_nltz(real(m))), zero, arg(m)) ;
+    auto rz =  real(z);
+    auto iz2 =  sqr(imag(z));
+    using r_t = decltype(rz);
+
+    return Z{half(as<r_t>())*log1p(rz*(rz+r_t(2))+iz2), theta};
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -268,7 +450,6 @@ namespace eve::detail
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
   }
-
 }
 
 #include <eve/module/complex/regular/detail/acos.hpp>

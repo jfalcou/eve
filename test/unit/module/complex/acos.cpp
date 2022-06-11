@@ -60,72 +60,66 @@ EVE_TEST( "Check behavior of acos on wide"
   TTS_ULP_EQUAL(eve::acos(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
-
-EVE_TEST_TYPES( "Check return types of eve::exp", eve::test::scalar::ieee_reals)
+EVE_TEST_TYPES( "Check return types of eve::acos", eve::test::scalar::ieee_reals)
   <typename T>(eve::as<T>)
 {
-  auto ulp = (spy::stdlib_type() == spy::libcpp_) ? 100.0 : 2.5;
-   using e_t = eve::element_type_t<T>;
+  using e_t = eve::element_type_t<T>;
   using c_t = eve::complex<e_t>;
-  using s_t = std::complex<e_t>;
   using eve::as;
-  using eve::acos;
+  const int N = 22;
+  std::array<c_t, N> inputs =
+    { c_t(eve::zero(as<e_t>()),eve::zero(as<e_t>())),//0*
+      c_t(eve::inf(as<e_t>()),eve::zero(as<e_t>())), //1*
+      c_t(eve::minf(as<e_t>()),eve::zero(as<e_t>())),//2*
+      c_t(eve::nan(as<e_t>()),eve::zero(as<e_t>())), //3*
+      c_t(eve::zero(as<e_t>()),eve::inf(as<e_t>())), //4*
+      c_t(eve::inf(as<e_t>()),eve::inf(as<e_t>())),  //5*
+      c_t(eve::minf(as<e_t>()),eve::inf(as<e_t>())), //6*
+      c_t(eve::nan(as<e_t>()),eve::inf(as<e_t>())),  //7*
+      c_t(eve::zero(as<e_t>()),eve::minf(as<e_t>())),//8*
+      c_t(eve::inf(as<e_t>()),eve::minf(as<e_t>())), //9*
+      c_t(eve::minf(as<e_t>()),eve::minf(as<e_t>())),//10*
+      c_t(eve::nan(as<e_t>()),eve::minf(as<e_t>())), //11*
+      c_t(eve::zero(as<e_t>()),eve::nan(as<e_t>())), //12*
+      c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),  //13*
+      c_t(eve::minf(as<e_t>()),eve::nan(as<e_t>())), //14*
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),  //15*
+      c_t(eve::mzero(as<e_t>()),eve::zero(as<e_t>())),//16*
+      c_t(eve::one(as<e_t>()),eve::inf(as<e_t>())),   //17*
+      c_t(eve::one(as<e_t>()),eve::nan(as<e_t>())),   //18*
+      c_t(eve::minf(as<e_t>()),eve::one(as<e_t>())),  //19*
+      c_t(eve::inf(as<e_t>()),eve::one(as<e_t>())),   //20*
+      c_t(eve::nan(as<e_t>()),eve::one(as<e_t>())),   //21*
+    };
+  std::array<c_t, N> expected =
+     {c_t( eve::pio_2(as<e_t>())  ,eve::zero(as<e_t>())),     //0*
+      c_t( eve::zero(as<e_t>())   , eve::minf(as<e_t>())),    //1*
+      c_t( eve::pi(as<e_t>())    , eve::minf(as<e_t>())),     //2*
+      c_t( eve::nan(as<e_t>())    , eve::nan(as<e_t>())),     //3*
+      c_t( eve::pio_2(as<e_t>())  , eve::minf(as<e_t>())),    //4*
+      c_t( eve::pio_4(as<e_t>())  , eve::minf(as<e_t>())),    //5*
+      c_t( 3*eve::pio_4(as<e_t>()), eve::minf(as<e_t>())) ,   //6*
+      c_t( eve::nan(as<e_t>())    , eve::minf(as<e_t>())),    //7*
+      c_t( eve::pio_2(as<e_t>()) ,  eve::inf(as<e_t>())),     //8*
+      c_t( eve::pio_4(as<e_t>()) ,  eve::inf(as<e_t>())),     //9*
+      c_t( 3*eve::pio_4(as<e_t>()), eve::inf(as<e_t>())) ,    //10*
+      c_t( eve::nan(as<e_t>())    , eve::inf(as<e_t>())),     //11*
+      c_t( eve::pio_2(as<e_t>())  , eve::nan(as<e_t>())),     //12
+      c_t( eve::nan(as<e_t>())    , eve::minf(as<e_t>())),    //13*
+      c_t( eve::nan(as<e_t>())    , eve::minf(as<e_t>())),    //14*
+      c_t( eve::nan(as<e_t>())    , eve::nan(as<e_t>())),     //15*
+      c_t( eve::pio_2(as<e_t>())  ,eve::zero(as<e_t>())),     //16*
+      c_t( eve::pio_2(as<e_t>())  , eve::minf(as<e_t>())),    //17*
+      c_t( eve::nan(as<e_t>())    , eve::nan(as<e_t>())),     //18*
+      c_t( eve::pi(as<e_t>())     , eve::minf(as<e_t>())),    //19*
+      c_t( eve::zero(as<e_t>())   , eve::minf(as<e_t>())),    //20*
+      c_t( eve::nan(as<e_t>())    , eve::nan(as<e_t>())),     //21
+    };
 
-  // specific values tests
-#ifndef BOOST_SIMD_NO_INVALIDS
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan (as<T>()),  eve::zero(as<T>()))), c_t(eve::nan (as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan  (as<T>()), eve::one(as<T>()))),  c_t(eve::nan (as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan  (as<T>()), eve::inf(as<T>()))),  c_t(eve::nan (as<T>()), -eve::inf(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan  (as<T>()), eve::nan(as<T>()))),  c_t(eve::nan (as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::zero (as<T>()), eve::nan (as<T>()))), c_t(eve::pio_2(as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::one  (as<T>()), eve::nan (as<T>()))), c_t(eve::nan(as<T>()),  eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::inf  (as<T>()), eve::nan(as<T>()))),  c_t(eve::nan (as<T>()), eve::minf(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::one  (as<T>()), eve::inf (as<T>()))), c_t(eve::pio_2(as<T>()), -eve::inf(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::inf  (as<T>()), eve::one (as<T>()))), c_t(eve::zero(as<T>()), eve::minf (as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::inf  (as<T>()), eve::inf(as<T>()))),  c_t(eve::pio_4(as<T>()), eve::minf (as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::nan  (as<T>()), eve::one(as<T>()))),  c_t(eve::nan (as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::nan  (as<T>()), eve::inf(as<T>()))),  c_t(eve::nan (as<T>()), -eve::inf(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::nan  (as<T>()), eve::nan(as<T>()))),  c_t(eve::nan (as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::zero (as<T>()), eve::nan (as<T>()))), c_t(eve::pio_2(as<T>()), eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::one  (as<T>()), eve::nan (as<T>()))), c_t(eve::nan(as<T>()),  eve::nan(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::inf  (as<T>()), eve::nan(as<T>()))),  c_t(eve::nan (as<T>()), eve::minf(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::one  (as<T>()), eve::inf (as<T>()))), c_t(eve::pio_2(as<T>()), eve::minf(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::inf  (as<T>()), eve::one (as<T>()))), c_t(eve::pi(as<T>()), -eve::inf (as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::inf  (as<T>()), eve::inf(as<T>()))),  c_t(T(3)*eve::pio_4(as<T>()), eve::minf (as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan  (as<T>()), eve::one(as<T>()))),  cv(std::acos(s_t(eve::nan  (as<T>()), eve::one(as<T>())))),  ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan  (as<T>()), eve::inf(as<T>()))),  cv(std::acos(s_t(eve::nan  (as<T>()), eve::inf(as<T>())))),  ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::nan  (as<T>()), eve::nan(as<T>()))),  cv(std::acos(s_t(eve::nan  (as<T>()), eve::nan(as<T>())))),  ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::zero (as<T>()), eve::nan (as<T>()))), cv(std::acos(s_t(eve::zero (as<T>()), eve::nan (as<T>())))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::one  (as<T>()), eve::nan (as<T>()))), cv(std::acos(s_t(eve::one  (as<T>()), eve::nan (as<T>())))), ulp);
 
-
- TTS_ULP_EQUAL(eve::acos(c_t(eve::one  (as<T>()), eve::inf (as<T>()))), cv(std::acos(s_t(eve::one  (as<T>()), eve::inf (as<T>())))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::inf  (as<T>()), eve::one (as<T>()))), cv(std::acos(s_t(eve::inf  (as<T>()), eve::one (as<T>())))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::inf  (as<T>()), eve::inf(as<T>()))),  cv(std::acos(s_t(eve::inf  (as<T>()), eve::inf(as<T>())))),  ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::nan  (as<T>()), eve::one(as<T>()))), cv(std::acos(s_t(-eve::nan  (as<T>()), eve::one(as<T>())))),    ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::nan  (as<T>()), eve::inf(as<T>()))), cv(std::acos(s_t(-eve::nan  (as<T>()), eve::inf(as<T>())))),    ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::nan  (as<T>()), eve::nan(as<T>()))), cv(std::acos(s_t(-eve::nan  (as<T>()), eve::nan(as<T>())))),    ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::one  (as<T>()), eve::inf (as<T>()))),cv(std::acos(s_t(-eve::one  (as<T>()), eve::inf (as<T>())))),   ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::inf  (as<T>()), eve::one (as<T>()))),cv(std::acos(s_t(-eve::inf  (as<T>()), eve::one (as<T>())))),   ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::inf (as<T>()), eve::inf(as<T>()))),  cv(std::acos(s_t(-eve::inf  (as<T>()), eve::inf(as<T>())))),   ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::one  (as<T>()), eve::nan (as<T>()))),cv(std::acos(s_t(-eve::one  (as<T>()), eve::nan (as<T>())))),   ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::zero (as<T>()), eve::nan (as<T>()))),cv(std::acos(s_t(-eve::zero (as<T>()), eve::nan (as<T>())))),   ulp);
-
- TTS_ULP_EQUAL(eve::acos(c_t(eve::inf  (as<T>()), eve::nan(as<T>()))),  c_t(eve::nan(as<T>()), eve::minf   (as<T>())),   ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(-eve::inf (as<T>()), eve::nan(as<T>()))),  c_t(eve::nan(as<T>()), eve::minf   (as<T>())),   ulp);
-
-
-#endif
- TTS_ULP_EQUAL(eve::acos(c_t(eve::zero(as<T>()),  eve::zero(as<T>()))), c_t(eve::pio_2(as<T>()), eve::zero(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::mzero(as<T>()),  eve::zero(as<T>()))), c_t(eve::pio_2(as<T>()), eve::zero(as<T>())), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::one  (as<T>()), eve::one (as<T>()))),   c_t(0.904556894302381, -1.061275061905036), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::one  (as<T>()), eve::mone (as<T>()))),  c_t(0.904556894302381,  1.061275061905036), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::mone  (as<T>()), eve::one (as<T>()))),  c_t(2.237035759287412, -1.061275061905036), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(eve::mone  (as<T>()), eve::mone (as<T>()))), c_t(2.237035759287412,  1.061275061905036), ulp);
-
- TTS_ULP_EQUAL(eve::acos(c_t(0.5, -0.5)),  cv(std::acos(s_t(0.5, -0.5))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(1, 1)),       cv(std::acos(s_t(1, 1))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(1, 10)),      cv(std::acos(s_t(1, 10))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(10, 10)),     cv(std::acos(s_t(10, 10))), ulp);
- TTS_ULP_EQUAL(eve::acos(c_t(10, 1)),      cv(std::acos(s_t(10, 1))), ulp);
+  for(int i=0; i < N; ++i)
+  {
+    TTS_ULP_EQUAL(eve::acos(inputs[i]), expected[i], 0.5);
+    TTS_ULP_EQUAL(eve::acos(eve::conj(inputs[i])), eve::conj(expected[i]), 0.5);
+  }
 };

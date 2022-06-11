@@ -32,8 +32,8 @@ namespace eve
       using rtype = decltype(a0r);
       const rtype a_crossover(1.5);
       const rtype b_crossover(0.6417);
-      auto  ltzra0 = is_ltz(a0r);
-      auto  gtzia0 = is_gtz(a0i);
+      auto  ltzra0 = is_negative(a0r);
+      auto  gtzia0 = is_positive(a0i);
       //
       // Begin by insuring a0r >= 0 and imag(a0) >= 0 :
       //
