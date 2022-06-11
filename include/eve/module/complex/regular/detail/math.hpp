@@ -289,7 +289,7 @@ namespace eve::detail
   //=== log
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_, pedantic_type const &
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_
                                              , Z const& z) noexcept
   {
     auto argz = pedantic(eve::arg)(z);
@@ -297,16 +297,6 @@ namespace eve::detail
     auto la = log(absz);
     auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
     return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))}, r);
-  }
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_
-                                             , Z const& z) noexcept
-  {
-    auto argz = eve::arg(z);
-    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-    auto la = log(absz);
-    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
   }
 
   //===-------------------------------------------------------------------------------------------
