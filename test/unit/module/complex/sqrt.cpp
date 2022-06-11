@@ -117,7 +117,6 @@ EVE_TEST_TYPES( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
   using eve::sqrt;
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(sqrt(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(sqrt(conj(inputs[i])), conj(sqrt(inputs[i])));
   }
@@ -148,6 +147,4 @@ EVE_TEST_TYPES( "Check return types of eve::sqrt", eve::test::scalar::ieee_reals
   }
    TTS_ULP_EQUAL(eve::sqrt(c_t(-4)), c_t(0, 2), 0);
    TTS_ULP_EQUAL(eve::sqrt(T(-4)), eve::nan(as<T>()), 0);
-//TTS_ULP_EQUAL(eve::cmplx(eve::sqrt)(T(-4)), c_t(0, 2), 0);
-
 };

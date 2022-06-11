@@ -179,13 +179,6 @@ namespace eve::detail
     return -(j*sinh(j*z));
   }
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sin_
-//                                              , pedantic_type const &, Z const& z) noexcept
-//   {
-//     return pedantic(sinh)(eve::i*z);
-//   }
-
   //===-------------------------------------------------------------------------------------------
   //=== tan
   //===-------------------------------------------------------------------------------------------

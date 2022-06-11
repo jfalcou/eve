@@ -67,7 +67,6 @@ EVE_TEST_TYPES( "Check corner cases of sin", eve::test::scalar::ieee_reals)
   const int N = 11;
   auto zer = eve::zero(as<e_t>());
   auto inf = eve::inf(as<e_t>());
-//  auto minf = eve::minf(as<e_t>());
   auto nan = eve::nan(as<e_t>());
   auto one = eve::one(as<e_t>());
   std::array<c_t, N> inputs =
