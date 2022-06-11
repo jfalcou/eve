@@ -18,6 +18,7 @@ namespace eve::detail
   template<floating_real_value T>
   EVE_FORCEINLINE constexpr T exp_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
+    auto isnan = is_nan(x);
     if constexpr(scalar_value<T>)
     {
       if constexpr(has_emulated_abi_v<wide<T>>)
@@ -43,6 +44,7 @@ namespace eve::detail
       auto    xgemaxlog = x >= maxlog(eve::as(x));
       if constexpr( scalar_value<T> )
       {
+        if(isnan) return nan(as(x));
         if( xgemaxlog ) return inf(eve::as(x));
         if( xltminlog ) return zero(eve::as(x));
       }
@@ -71,11 +73,12 @@ namespace eve::detail
                  x); // x-h*t
         c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
       }
-      auto z = /*pedantic*/(ldexp)(c, k);
+      auto z = pedantic(ldexp)(c, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog, eve::zero, z);
         z = if_else(xgemaxlog, inf(eve::as(x)), z);
+        z = if_else(isnan, allbits, z);
       }
       return z;
     }

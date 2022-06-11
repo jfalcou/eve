@@ -63,26 +63,65 @@ EVE_TEST( "Check behavior of sqrt on wide"
 };
 
 
-EVE_TEST( "Check behavior of pedantic(sqrt) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
-        )
-  <typename T>(T const& a0, T const& a1 )
+EVE_TEST_TYPES( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
+  <typename T>(eve::as<T>)
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
-  using e_t = typename T::value_type;
-  using ce_t = eve::complex<e_t>;
-  using z_t = eve::wide<eve::complex<e_t>, typename T::cardinal_type>;
-  using c_t = std::complex<e_t>;
-  z_t b;
-  for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
+  using e_t = eve::element_type_t<T>;
+  using c_t = eve::complex<e_t>;
+  using eve::as;
+  const int N = 14;
+  auto zer = eve::zero(as<e_t>());
+  auto mzer = eve::mzero(as<e_t>());
+  auto inf = eve::inf(as<e_t>());
+  auto minf = eve::minf(as<e_t>());
+  auto mone = eve::mone(as<e_t>());
+  auto nan = eve::nan(as<e_t>());
+  auto one = eve::one(as<e_t>());
+  std::array<c_t, N> inputs =
+    {
+      c_t(zer,zer), //0
+      c_t(mzer,zer),//1
+      c_t(one,inf), //2
+      c_t(mone,inf),//3
+      c_t(nan,inf), //4
+      c_t(one,nan), //5
+      c_t(minf,one), //6
+      c_t(inf,one), //7
+      c_t(minf,-nan),//8
+      c_t(inf,nan), //9
+      c_t(nan,one), //10
+      c_t(nan,nan),  //11
+      c_t(e_t(4), zer),  //12
+      c_t(nan,zer)  //13
+    };
+
+  std::array<c_t, N> results =
+    {
+      c_t(zer,zer), //0
+      c_t(zer,zer),//1
+      c_t(inf,inf), //2
+      c_t(inf,inf),//3
+      c_t(inf,inf), //4
+      c_t(nan,nan), //5
+      c_t(zer,inf), //6
+      c_t(inf,zer), //7
+      c_t(nan,minf),//8
+      c_t(inf,nan), //9
+      c_t(nan,nan), //10
+      c_t(nan,nan),  //11
+      c_t(e_t(2), zer),  //12
+      c_t(nan,nan)  //13
+    };
+
+  using eve::conj;
+  using eve::sqrt;
+  for(int i=0; i < N; ++i)
   {
-    ce_t z = cv(std::sqrt(c_t(a0.get(i), a1.get(i))));
-    b.set(i, z);
+    TTS_IEEE_EQUAL(sqrt(inputs[i]), results[i]);
+    TTS_IEEE_EQUAL(sqrt(conj(inputs[i])), conj(sqrt(inputs[i])));
   }
-  TTS_ULP_EQUAL(eve::pedantic(eve::sqrt)(z_t{a0,a1}), b, ulp);
 };
+
 
 EVE_TEST_TYPES( "Check return types of eve::sqrt", eve::test::scalar::ieee_reals)
   <typename T>(eve::as<T>)
@@ -91,49 +130,6 @@ EVE_TEST_TYPES( "Check return types of eve::sqrt", eve::test::scalar::ieee_reals
   using e_t = eve::element_type_t<T>;
   using c_t = eve::complex<e_t>;
   using eve::as;
-  // specific values tests
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::inf(as<T>()))), c_t(eve::inf(as<T>())), ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),eve::zero(as<T>()))), c_t(eve::zero(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan(as<T>()),eve::nan(as<T>()))),c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::inf(as<T>()),eve::nan(as<T>()))),c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()))), c_t(0, eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan (as<T>()),eve::inf(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::one(as<T>()), eve::nan(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::inf(as<T>()), eve::nan(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),eve::nan(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan (as<T>()),eve::nan(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),eve::one(as<T>()))), c_t(eve::zero(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),eve::mone(as<T>()))),c_t(eve::zero(as<T>()),eve::minf(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::inf(as<T>()),eve::nan(as<T>()))),  c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan(as<T>()),eve::one(as<T>()))),  c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan(as<T>()),eve::nan(as<T>()))),  c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::one(as<T>()), -eve::nan(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::inf(as<T>()), -eve::nan(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),-eve::nan(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan (as<T>()),-eve::nan(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),-eve::one(as<T>()))), c_t(eve::zero(as<T>()),-eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::minf(as<T>()),-eve::mone(as<T>()))),c_t(eve::zero(as<T>()),-eve::minf(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::inf(as<T>()), -eve::nan(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan(as<T>()), -eve::one(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan(as<T>()), -eve::nan(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::nan (as<T>()),-eve::inf(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::one(as<T>()), eve::nan(as<T>()))), c_t(eve::nan(as<T>()),-eve::nan(as<T>())),ulp);
-
-  auto psqrt =  eve::pedantic(eve::sqrt);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::inf(as<T>()),eve::inf(as<T>()))),c_t(eve::inf(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::zero(as<T>()),eve::inf(as<T>()))),c_t(eve::inf(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::nan(as<T>()),eve::zero(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::one(as<T>()), eve::inf(as<T>()))), c_t(eve::inf(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::inf(as<T>()), eve::inf(as<T>()))), c_t(eve::inf(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::minf(as<T>()),eve::inf(as<T>()))), c_t(eve::inf(as<T>()),eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::inf(as<T>()), -eve::inf(as<T>()))), c_t(eve::inf(as<T>()),-eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::minf(as<T>()),-eve::inf(as<T>()))), c_t(eve::inf(as<T>()),-eve::inf(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::one(as<T>()),eve::nan(as<T>()))), c_t(eve::nan(as<T>()),eve::nan(as<T>())),ulp);
-  TTS_ULP_EQUAL(psqrt(c_t(eve::one(as<T>()),eve::zero(as<T>()))), c_t(eve::one(as<T>()),eve::zero(as<T>())),ulp);
-
-
-
-  TTS_ULP_EQUAL(eve::sqrt(c_t(eve::one(as<T>()), -eve::inf(as<T>()))), c_t(eve::inf(as<T>()),-eve::inf(as<T>())),ulp);
 
   TTS_ULP_EQUAL(eve::sqrt(c_t(1)), c_t(1), 0);
   TTS_ULP_EQUAL(eve::sqrt(c_t(eve::mone(as<T>()))), c_t(0, eve::one(as<T>())),ulp);
@@ -151,6 +147,4 @@ EVE_TEST_TYPES( "Check return types of eve::sqrt", eve::test::scalar::ieee_reals
   }
    TTS_ULP_EQUAL(eve::sqrt(c_t(-4)), c_t(0, 2), 0);
    TTS_ULP_EQUAL(eve::sqrt(T(-4)), eve::nan(as<T>()), 0);
-//  TTS_ULP_EQUAL(eve::cmplx(eve::sqrt)(T(-4)), c_t(0, 2), 0);
-
 };

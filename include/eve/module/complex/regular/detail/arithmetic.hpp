@@ -19,6 +19,12 @@ namespace eve::detail
   //==============================================================================================
   //  Unary functions
   //==============================================================================================
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_
+                                             , pedantic_type const &, auto const& z) noexcept
+  {
+    return pedantic(eve::hypot)(real(z), imag(z));
+  }
+
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
   {
     return eve::hypot(real(z), imag(z));
@@ -27,6 +33,12 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::arg_, auto const& z) noexcept
   {
     return eve::atan2(imag(z), real(z) );
+  }
+
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::arg_
+                                             , pedantic_type const &, auto const& z) noexcept
+  {
+    return eve::pedantic(eve::atan2)(imag(z), real(z) );
   }
 
   template<typename Z>
