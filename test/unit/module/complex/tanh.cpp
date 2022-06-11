@@ -55,7 +55,7 @@ EVE_TEST( "Check behavior of tanh on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::tanh(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::tanh(z_t{a0,a1}), init_with_std(a0, a1), 3.0);
 };
 
 EVE_TEST_TYPES( "Check corner cases of tanh", eve::test::scalar::ieee_reals)
