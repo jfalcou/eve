@@ -26,16 +26,15 @@ namespace eve::detail
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : sqrt
   //===-------------------------------------------------------------------------------------------
-  template<decorator D, typename Z>
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sqrt_
-                                              , D const &
-                                              , Z const& z
+                                             , Z const& z
                                               ) noexcept
   {
     //always compute the sqrt of the complex with positive imaginary part
     //then conjugate if necessary
     auto [rz, iz] = z;
-    auto negimag = is_ltz(iz);
+    auto negimag = is_negative(iz);
     auto x = abs(rz);
     auto y = abs(iz);
     auto iaz = if_else(negimag, -iz, iz); // always >= 0 or -Nan
@@ -51,23 +50,22 @@ namespace eve::detail
     auto res = Z(if_else(is_real_z, sqrtx, w)
                 , if_else(is_real_z, zero, iaz*half(as(r))/w));
     res = if_else(gezrz, res, Z(imag(res), real(res)));
-    if constexpr(std::same_as<D, pedantic_type>)
+    if (any(is_not_finite(z))) [[unlikely]]
     {
-      auto infty = inf(as(iaz));
-      res = if_else(iaz == infty,  Z{infty, infty}, res);
-      res = if_else(logical_andnot(rz == -infty, is_nan(iz)), Z{if_else(iaz == infty, iaz, zero), infty}, res);
-      res = if_else(is_eqz(iz) && is_nan(rz), z, res);
-      res = if_else(is_nan(z), Z(nan(as(iz)), nan(as(iz))), res);
-      res = if_else(is_eqz(iz) && is_gez(rz), Z(sqrt(rz), zero(as(rz))), res);
+      res = if_else(rz == minf(as(rz))
+                   , if_else( is_nan(iz), Z{iz, minf(as(rz))},Z{zero(as(rz)), inf(as(rz))})
+                   , res
+                   );
+       res = if_else(rz == inf(as(rz))
+                   , if_else( is_nan(iz), Z{inf(as(rz)), iz}, Z{ inf(as(rz)), zero(as(rz)) })
+                   , res
+                   );
+       res = if_else(is_nan(rz), Z{rz, rz}, res);
+       auto infty = inf(as(iaz));
+       res = if_else(iaz == infty,  Z{infty, infty}, res);
     }
     return if_else(negimag, conj(res), res);
  }
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sqrt_, Z const& z) noexcept
-  {
-    return sqrt(regular_type(), z);
-  }
 
   //===-------------------------------------------------------------------------------------------
   //=== cosh
