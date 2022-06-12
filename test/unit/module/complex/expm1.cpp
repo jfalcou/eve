@@ -38,16 +38,15 @@ TTS_CASE_WITH( "Check behavior of expm1 on scalar"
 };
 
 TTS_CASE_TPL( "Check corner cases of expm1", eve::test::scalar::ieee_reals)
-  <typename T>(tts::type<T>)
+<typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
-  using c_t = eve::complex<e_t>;
+  using c_t = eve::complex<T>;
   using eve::as;
   const int N = 12;
-  auto zer = eve::zero(as<e_t>());
-  auto inf = eve::inf(as<e_t>());
-  auto nan = eve::nan(as<e_t>());
-  auto one = eve::one(as<e_t>());
+  auto zer = eve::zero(as<T>());
+  auto inf = eve::inf(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one = eve::one(as<T>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0
@@ -86,7 +85,7 @@ TTS_CASE_TPL( "Check corner cases of expm1", eve::test::scalar::ieee_reals)
     TTS_IEEE_EQUAL(expm1(inputs[i]), results[i]) << "i " << i << " -> " << inputs[i] << "\n";
     TTS_IEEE_EQUAL(expm1(conj(inputs[i])), conj(expm1(inputs[i])));
   }
- auto eps = eve::eps(as<e_t>());
+ auto eps = eve::eps(as<T>());
  TTS_ULP_EQUAL(eve::expm1(c_t{eps, zer}),   (c_t{eps, zer}), 0.5);
  TTS_ULP_EQUAL(eve::expm1(c_t{zer, eps}),   (c_t{eve::sqr(eps)/2, eps}), 0.5);
 };

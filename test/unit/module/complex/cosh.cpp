@@ -31,8 +31,6 @@ TTS_CASE_WITH( "Check behavior of cosh on scalar"
     for(auto f : a1)
     {
       TTS_ULP_EQUAL(eve::cosh(eve::complex<e_t>(e, f)),  cv(std::cosh(c_t(e, f))), 2);
-      //     TTS_ULP_EQUAL(eve::pedantic(eve::cosh)(eve::complex<e_t>(e, f)),  cv(std::cosh(c_t(e, f))), 2);
-      TTS_ULP_EQUAL(eve::cosh(eve::complex<e_t>(e, f)),  cv(std::cosh(c_t(e, f))), 2.0);
     }
   }
 };
@@ -61,17 +59,16 @@ TTS_CASE_WITH( "Check behavior of cosh on wide"
   TTS_ULP_EQUAL(eve::cosh(z_t{a0,a1}), init_with_std(a0, a1), 2);
 };
 
-TTS_CASE_TPL( "Check corner cases of cosh", tts::bunch<eve::test::scalar::ieee_reals>)
-  <typename T>(tts::type<T>)
+TTS_CASE_TPL( "Check corner cases of cosh", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
-  using e_t = typename T::value_type;
-  using c_t = eve::complex<e_t>;
+  using c_t = eve::complex<T>;
   using eve::as;
   const int N = 12;
-  auto zer = eve::zero(as<e_t>());
-  auto inf = eve::inf(as<e_t>());
-  auto nan = eve::nan(as<e_t>());
-  auto one = eve::one(as<e_t>());
+  auto zer = eve::zero(as<T>());
+  auto inf = eve::inf(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one = eve::one(as<T>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0

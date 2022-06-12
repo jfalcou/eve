@@ -292,59 +292,66 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_
                                              , Z const& z) noexcept
   {
+    auto [rz, iz] = z;
+    auto infty = inf(as(rz));
     auto argz = pedantic(eve::arg)(z);
-    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto absz = if_else(is_nan(rz) && is_infinite(iz), infty, abs(z));
     auto la = log(absz);
-    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
-    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))}, r);
+    auto r = if_else(is_real(z) && is_positive(rz), Z{la, zero(as(rz))}, Z{la, argz});
+    if(eve::any(is_not_finite(z)))
+    {
+      r = if_else(is_eqz(z)
+                 , Z{minf(as(rz)), if_else(is_positive(rz), zero, pedantic(signnz)(iz)*pi(as(rz)))}
+                 , r);
+      r = if_else(is_infinite(rz) && is_nan(iz), Z{infty, iz}, r);
+    }
+    return r;
   }
 
   //===-------------------------------------------------------------------------------------------
   //=== log10
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_, pedantic_type const &
-                                             , Z const& z) noexcept
-  {
-    auto argz = pedantic(eve::arg)(z)/log_10(as(real(z)));
-    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-    auto la = log10(absz);
-    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
-    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))/log_10(as(real(z)))}, r);
-  }
-
-  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log10_
                                              , Z const& z) noexcept
   {
-    auto argz = eve::arg(z)/log_10(as(real(z)));
-    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto [rz, iz] = z;
+    auto infty = inf(as(rz));
+    auto argz = pedantic(eve::arg)(z)/log_10(as(rz));
+    auto absz = if_else(is_nan(rz) && is_infinite(iz), inf(as(argz)), abs(z));
     auto la = log10(absz);
-    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
-   }
+    auto r = if_else(is_real(z) && is_positive(rz), Z{la, zero(as(rz))}, Z{la, argz});
+    if(eve::any(is_not_finite(z)))
+    {
+      r = if_else(is_eqz(z)
+                 , Z{minf(as(rz)), if_else(is_positive(rz), zero, pedantic(signnz)(iz)*pi(as(rz))/log_10(as(rz)))}
+                 , r);
+      r = if_else(is_infinite(rz) && is_nan(iz), Z{infty, iz}, r);
+    }
+    return r;
+  }
 
   //===-------------------------------------------------------------------------------------------
   //=== log2
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_, pedantic_type const &
-                                             , Z const& z) noexcept
-  {
-    auto argz = pedantic(eve::arg)(z)/log_2(as(real(z)));
-    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
-    auto la = log2(absz);
-    auto r = if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
-    return if_else(is_eqz(z) && is_negative(real(z)), Z{minf(as(real(z))), pi(as(real(z)))/log_2(as(real(z)))}, r);
-  }
-
-  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log2_
                                              , Z const& z) noexcept
   {
-    auto argz = eve::arg(z)/log_2(as(real(z)));
-    auto absz = if_else(is_nan(real(z)) && (is_infinite(imag(z))), inf(as(argz)), abs(z));
+    auto [rz, iz] = z;
+    auto infty = inf(as(rz));
+    auto argz = pedantic(eve::arg)(z)/log_2(as(rz));
+    auto absz = if_else(is_nan(real(z)) && (is_infinite(iz)), inf(as(argz)), abs(z));
     auto la = log2(absz);
-    return if_else(is_real(z) && is_gez(real(z)), Z{la, zero(as(real(z)))}, Z{la, argz});
+    auto r = if_else(is_real(z) && is_positive(rz), Z{la, zero(as(rz))}, Z{la, argz});
+    if(eve::any(is_not_finite(z) || is_eqz(z)))
+    {
+      r = if_else(is_eqz(z)
+                 , Z{minf(as(rz)), if_else(is_positive(rz), zero, pedantic(signnz)(iz)*pi(as(rz))/log_2(as(rz)))}
+                 , r);
+      r = if_else(is_infinite(rz) && is_nan(iz), Z{infty, iz}, r);
+    }
+    return r;
   }
 
   //===-------------------------------------------------------------------------------------------

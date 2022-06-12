@@ -97,10 +97,10 @@ TTS_CASE_TPL( "Check return types of eve::abs", tts::bunch<eve::test::scalar::ie
   for(int i=0; i < N; ++i)
   {
     if((i != 2 && i != 1)){
-      // this curious test corresponds to the fact that neither boost::math::atanh nor boost::math::atanh are correct for inputs inf*i or -inf*i
+      // this curious test corresponds to the fact that neither std::atanh nor boost::math::atanh are correct for inputs (0, inf) or (0, -inf)
       // peculiarly they contredict the C99 specification that atanh is odd
-      // atanh must Behave "the same as C99 function catanh, defined in subclause 7.3.6.3 and G.5.2.3."
-      // It has to be removed when libc++ will be corrected
+      // atanh should behave "the same as C99 function catanh, defined in subclause 7.3.6.3 and G.5.2.3."
+      // the if clause has to be removed if/when libc++ will be corrected
       TTS_ULP_EQUAL(eve::atanh(inputs[i]), cv(boost::math::atanh(sc(inputs[i]))), ulp);
       TTS_ULP_EQUAL(eve::atanh(-inputs[i]), cv(boost::math::atanh(sc(-inputs[i]))), ulp);
     }

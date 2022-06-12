@@ -38,7 +38,6 @@ EVE_TEST( "Check behavior of exp10 on scalar"
     for(auto f : a1)
     {
       TTS_ULP_EQUAL(eve::exp10(eve::complex<e_t>(e, f)),  cv(std_exp10(c_t(e, f))), 2.5);
-      TTS_ULP_EQUAL(eve::exp10(eve::complex<e_t>(e, f)),  cv(std_exp10(c_t(e, f))), 2.5);
     }
   }
 };
