@@ -108,12 +108,10 @@ TTS_CASE_TPL( "Check return types of eve::log", tts::bunch<eve::test::scalar::ie
 
   TTS_ULP_EQUAL(eve::log(c_t(-4, 0)), c_t(eve::log(e_t(4)), eve::pi(as<e_t>())), 0);
   TTS_ULP_EQUAL(eve::log(e_t(-4)), eve::nan(as<e_t>()), 0);
-//TTS_ULP_EQUAL(eve::cmplx(eve::log)(T(-4)), c_t(eve::log(T(4)), eve::pi(as<e_t>())), 0);
 
-  //pedantic differences
-  TTS_ULP_EQUAL(pedantic(eve::log)(c_t(eve::minf (as<e_t>()), eve::inf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), 3*eve::pio_4(as<e_t>())), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log)(c_t(eve::inf  (as<e_t>()), eve::inf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), eve::pi(as<e_t>())/4), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log)(c_t(eve::minf (as<e_t>()), eve::minf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), -3*eve::pio_4(as<e_t>())), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log)(c_t(eve::inf  (as<e_t>()), eve::minf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), -eve::pi(as<e_t>())/4), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log)(c_t(eve::mzero(as<e_t>()))), c_t(eve::minf(as<e_t>()), eve::pi(as<e_t>())), 0.5);
+  TTS_ULP_EQUAL((eve::log)(c_t(eve::minf (as<e_t>()), eve::inf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), 3*eve::pio_4(as<e_t>())), 0.5);
+  TTS_ULP_EQUAL((eve::log)(c_t(eve::inf  (as<e_t>()), eve::inf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), eve::pi(as<e_t>())/4), 0.5);
+  TTS_ULP_EQUAL((eve::log)(c_t(eve::minf (as<e_t>()), eve::minf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), -3*eve::pio_4(as<e_t>())), 0.5);
+  TTS_ULP_EQUAL((eve::log)(c_t(eve::inf  (as<e_t>()), eve::minf(as<e_t>()))),  c_t(eve::inf (as<e_t>()), -eve::pi(as<e_t>())/4), 0.5);
+  TTS_ULP_EQUAL((eve::log)(c_t(eve::mzero(as<e_t>()))), c_t(eve::minf(as<e_t>()), eve::pi(as<e_t>())), 0.5);
 };
