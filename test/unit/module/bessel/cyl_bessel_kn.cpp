@@ -13,10 +13,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of cyl_bessel_kn"
+TTS_CASE_TPL( "Check return types of cyl_bessel_kn"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
  using i_t = eve::as_integer_t<v_t>;
@@ -32,9 +32,9 @@ EVE_TEST_TYPES( "Check return types of cyl_bessel_kn"
 //==================================================================================================
 //== integral orders
 //==================================================================================================
-EVE_TEST( "Check behavior of cyl_bessel_kn on wide with integral order"
+TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with integral order"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(0), eve::test::randoms(0.0, 10.0))
+        , tts::generate(tts::ramp(0), tts::randoms(0.0, 10.0))
         )
   <typename T>(T n , T a0 )
 {
@@ -147,10 +147,10 @@ EVE_TEST( "Check behavior of cyl_bessel_kn on wide with integral order"
 //==================================================================================================
 //== non integral orders
 //==================================================================================================
-EVE_TEST( "Check behavior of cyl_bessel_kn on wide with non integral order"
+TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 10.0)
-        , eve::test::randoms(0.0, 200.0))
+        , tts::generate(tts::randoms(0.0, 10.0)
+        , tts::randoms(0.0, 200.0))
         )
   <typename T>(T n, T a0 )
 {

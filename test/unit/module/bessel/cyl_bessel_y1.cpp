@@ -10,19 +10,19 @@
 #include <boost/math/special_functions/bessel.hpp>
 #include <boost/math/special_functions/bessel_prime.hpp>
 
-EVE_TEST_TYPES( "Check return types of cyl_bessel_y1"
+TTS_CASE_TPL( "Check return types of cyl_bessel_y1"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS(eve::cyl_bessel_y1(T(0)), T);
   TTS_EXPR_IS(eve::cyl_bessel_y1(v_t(0)), v_t);
 };
 
-EVE_TEST( "Check behavior of cyl_bessel_y1 on wide"
+TTS_CASE_WITH( "Check behavior of cyl_bessel_y1 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 200.0))
+        , tts::generate(tts::randoms(0.0, 200.0))
         )
   <typename T>(T const& a0)
 {

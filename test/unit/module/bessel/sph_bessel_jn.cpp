@@ -13,10 +13,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sph_bessel_jn"
+TTS_CASE_TPL( "Check return types of sph_bessel_jn"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
@@ -32,9 +32,9 @@ EVE_TEST_TYPES( "Check return types of sph_bessel_jn"
 //==================================================================================================
 //== integral orders
 //==================================================================================================
-EVE_TEST( "Check behavior of sph_bessel_jn on wide with integral order"
+TTS_CASE_WITH( "Check behavior of sph_bessel_jn on wide with integral order"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(0), eve::test::randoms(0.0, 20000.0))
+        , tts::generate(tts::ramp(0), tts::randoms(0.0, 20000.0))
         )
   <typename T>(T n, T a0)
 {

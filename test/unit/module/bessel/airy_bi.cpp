@@ -10,20 +10,20 @@
 #include <boost/math/special_functions/airy.hpp>
 
 
-EVE_TEST_TYPES( "Check return types of airy_bi"
+TTS_CASE_TPL( "Check return types of airy_bi"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS(eve::airy_bi(T(0)), T);
   TTS_EXPR_IS(eve::airy_bi(v_t(0)), v_t);
 };
 
- EVE_TEST( "Check behavior of airy_bi on wide"
+ TTS_CASE_WITH( "Check behavior of airy_bi on wide"
          , eve::test::simd::ieee_reals
-         , eve::test::generate(eve::test::randoms(-20.0, 0.0),
-                               eve::test::randoms(0.0, 20.0)
+         , tts::generate(tts::randoms(-20.0, 0.0),
+                               tts::randoms(0.0, 20.0)
                               )
          )
    <typename T>(T a0, T a1)
