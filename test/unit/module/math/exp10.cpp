@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of exp10"
+TTS_CASE_TPL( "Check return types of exp10"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of exp10"
 //==================================================================================================
 // exp10  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of exp10 on wide"
+TTS_CASE_WITH( "Check behavior of exp10 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::minlog10, eve::maxlog10)
-                              , eve::test::randoms(-1.0, 1.0)
+        , tts::generate ( tts::randoms(eve::minlog10, eve::maxlog10)
+                              , tts::randoms(-1.0, 1.0)
                               )
         )
 <typename T>(T const& a0, T const& a1)
@@ -49,10 +49,10 @@ EVE_TEST( "Check behavior of exp10 on wide"
   TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a1), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);
 };
 
-EVE_TEST_TYPES( "Check corner-cases of exp10"
+TTS_CASE_TPL( "Check corner-cases of exp10"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL ( eve::pedantic(eve::exp10)(T(1)), T(10), 0.5);
   TTS_IEEE_EQUAL( eve::pedantic(eve::exp10)(T(0)), T(1));

@@ -14,10 +14,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of hypot"
+TTS_CASE_TPL( "Check return types of hypot"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::hypot;
@@ -78,11 +78,11 @@ EVE_TEST_TYPES( "Check return types of hypot"
 //==================================================================================================
 //== hypot tests
 //==================================================================================================
-EVE_TEST( "Check behavior of hypot(wide)"
+TTS_CASE_WITH( "Check behavior of hypot(wide)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-100.0, 100.0)
-                              , eve::test::randoms(-100.0, 100.0)
-                              , eve::test::randoms(-100.0, 100.0)
+        , tts::generate ( tts::randoms(-100.0, 100.0)
+                              , tts::randoms(-100.0, 100.0)
+                              , tts::randoms(-100.0, 100.0)
                               )
         )
   <typename T>(T const& a0, T const& a1, T const& a2 )
@@ -99,32 +99,30 @@ EVE_TEST( "Check behavior of hypot(wide)"
   }
 };
 
-
 //==================================================================================================
 //== Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::hypot variants on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-100.0, 100.0),
-                              eve::test::limits())
-        )
-<typename M, typename T>(T const& a0, M const& cases)
+TTS_CASE_WITH ( "Check corner-cases behavior of eve::hypot variants on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(-100.0, 100.0))
+              )
+<typename T>(T const& a0)
 {
-  using type = typename M::type;
+  auto cases = tts::limits(tts::type<T>{});
 
   TTS_IEEE_EQUAL( eve::hypot(cases.nan, a0   ) , cases.nan   );
   TTS_EQUAL     ( eve::hypot(cases.minf, a0  ) , cases.inf   );
-  TTS_EQUAL     ( eve::hypot(cases.mzero, cases.mzero ) , type(0)     );
+  TTS_EQUAL     ( eve::hypot(cases.mzero, cases.mzero ) , T(0)     );
   TTS_EQUAL     ( eve::hypot(cases.valmax/2, cases.valmax/2) , cases.inf);
   TTS_EQUAL     ( eve::hypot(cases.valmin/2, cases.valmin/2) , cases.inf);
-  TTS_EQUAL     ( eve::pedantic(eve::hypot)(cases.mzero, cases.mzero ) , type(0)     );
+  TTS_EQUAL     ( eve::pedantic(eve::hypot)(cases.mzero, cases.mzero ) , T(0)     );
 
   TTS_IEEE_EQUAL( eve::pedantic(eve::hypot)(cases.nan, a0    ) , cases.nan   );
   TTS_EQUAL     ( eve::pedantic(eve::hypot)(cases.minf, a0   ) , cases.inf   );
   TTS_EQUAL     ( eve::pedantic(eve::hypot)(cases.nan, cases.minf  ) , cases.inf   );
   TTS_EQUAL     ( eve::pedantic(eve::hypot)(cases.inf, cases.nan   ) , cases.inf   );
 
-  TTS_EQUAL    ( eve::pedantic(eve::hypot)(cases.mzero, cases.mzero ) , type(0)     );
+  TTS_EQUAL    ( eve::pedantic(eve::hypot)(cases.mzero, cases.mzero ) , T(0)     );
   TTS_ULP_EQUAL( eve::pedantic(eve::hypot)(cases.valmin/2, cases.valmin/2) , cases.valmax/eve::sqrt_2(eve::as<T>()), 2);
   TTS_ULP_EQUAL( eve::pedantic(eve::hypot)(cases.valmax/2, cases.valmax/2) , cases.valmax/eve::sqrt_2(eve::as<T>()), 2);;
 };

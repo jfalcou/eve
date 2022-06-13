@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sech"
+TTS_CASE_TPL( "Check return types of sech"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,10 +39,9 @@ auto mini = []<typename T>(eve::as<T> const & tgt)
   return -maxi(tgt);
 };
 
-EVE_TEST( "Check behavior of sech on wide"
+TTS_CASE_WITH( "Check behavior of sech on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mini, maxi)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate( tts::randoms(tts::constant(mini), tts::constant(maxi)), tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1)
 {

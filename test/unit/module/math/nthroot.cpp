@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of nthroot"
+TTS_CASE_TPL( "Check return types of nthroot"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
@@ -32,12 +32,12 @@ EVE_TEST_TYPES( "Check return types of nthroot"
 //==================================================================================================
 // nthroot  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of nthroot on wide"
+TTS_CASE_WITH( "Check behavior of nthroot on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(-100.0,  100.0)
-                             , eve::test::randoms(0, eve::valmax)
-                             , eve::test::as_integer(eve::test::randoms(1, 5))
-                             , eve::test::as_integer(eve::test::randoms(1, 10))
+        , tts::generate( tts::randoms(-100.0,  100.0)
+                             , tts::randoms(0, eve::valmax)
+                             , tts::as_integer(tts::randoms(1, 5))
+                             , tts::as_integer(tts::randoms(1, 10))
                              )
         )
   <typename T, typename U>(T const& a0, T const& a1, U const& a2, U const& a3)
@@ -52,10 +52,10 @@ EVE_TEST( "Check behavior of nthroot on wide"
 };
 
 
-EVE_TEST_TYPES( "Check return types of nthroot"
+TTS_CASE_TPL( "Check return types of nthroot"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL(eve::nthroot(T(0), T(-1)), eve::inf(eve::as<T>()), 0);
   TTS_ULP_EQUAL(eve::nthroot(-T(0), T(-2)), eve::nan(eve::as<T>()), 0);

@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of exp"
+TTS_CASE_TPL( "Check return types of exp"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -32,19 +32,13 @@ EVE_TEST_TYPES( "Check return types of exp"
 //==================================================================================================
 // exp  tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const & tgt)
-{
-  return -eve::sqrt(eve::maxlog(tgt));
-};
-auto maxi = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::sqrt(eve::maxlog(tgt));
-};
+auto mini = tts::constant([]<typename T>(eve::as<T> const & tgt) { return -eve::sqrt(eve::maxlog(tgt)); });
+auto maxi = tts::constant([]<typename T>(eve::as<T> const & tgt) { return eve::sqrt(eve::maxlog(tgt)); });
 
-EVE_TEST( "Check behavior of exp on wide"
+TTS_CASE_WITH( "Check behavior of exp on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(mini, maxi)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate(tts::randoms(mini, maxi)
+                             , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1)
 {
@@ -58,10 +52,10 @@ EVE_TEST( "Check behavior of exp on wide"
   TTS_ULP_EQUAL(eve::expx2(a0, a1)      , map([](auto e, auto f) -> v_t { long double le = e; auto sig = eve::signnz(f); return std::exp(sig*le*le); }, a0, a1), 100);
 };
 
-EVE_TEST_TYPES( "Check expx2 2 parameters"
+TTS_CASE_TPL( "Check expx2 2 parameters"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   TTS_ULP_EQUAL (eve::expx2(T(1)), eve::exp(T(1)), 0.5);

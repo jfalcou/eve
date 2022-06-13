@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of minlog"
+TTS_CASE_TPL( "Check return types of minlog"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -29,10 +29,10 @@ EVE_TEST_TYPES( "Check return types of minlog"
 //==================================================================================================
 // minlog  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of minlog on wide"
+TTS_CASE_TPL( "Check behavior of minlog on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   TTS_ULP_EQUAL(eve::exp(eve::minlog(as<T>())), eve::zero(as<T>()), 0.0);

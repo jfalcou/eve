@@ -14,14 +14,14 @@
 //==================================================================================================
 // lpnorm(2, ...) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of lpnorm on wide"
+TTS_CASE_WITH( "Check behavior of lpnorm on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.5, 2.0)
+        , tts::generate( tts::randoms(0.0, eve::valmax)
+                             , tts::randoms(0.0, eve::valmax)
+                             , tts::randoms(0.5, 2.0)
+                             , tts::randoms(0.5, 2.0)
+                             , tts::randoms(0.0, eve::valmax)
+                             , tts::randoms(0.5, 2.0)
                              )
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
@@ -39,10 +39,10 @@ EVE_TEST( "Check behavior of lpnorm on wide"
 };
 
 #if !defined(EVE_NO_DENORMALS)
-EVE_TEST_TYPES( "Check behavior of pedantic(lpnorm(2, ...))"
+TTS_CASE_TPL( "Check behavior of pedantic(lpnorm(2, ...))"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   const auto tmax   = eve::valmax(eve::as<T>());

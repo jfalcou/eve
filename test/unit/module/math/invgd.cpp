@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of invgd"
+TTS_CASE_TPL( "Check return types of invgd"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,19 +27,13 @@ EVE_TEST_TYPES( "Check return types of invgd"
 //==================================================================================================
 // invgd  tests
 //==================================================================================================
-auto maxi = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::pio_2(tgt);
-};
-auto mini = []<typename T>(eve::as<T> const & tgt)
-{
-  return -eve::pio_2(tgt);
-};
+auto maxi = ::tts::constant([]<typename T>(eve::as<T> const & tgt) { return eve::pio_2(tgt); });
+auto mini = ::tts::constant([]<typename T>(eve::as<T> const & tgt) { return -eve::pio_2(tgt); });
 
-EVE_TEST( "Check behavior of invgd on wide"
+TTS_CASE_WITH( "Check behavior of invgd on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mini, maxi)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate( tts::randoms(mini, maxi)
+                             , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1)
 {

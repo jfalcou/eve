@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sinc"
+TTS_CASE_TPL( "Check return types of sinc"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,13 +28,13 @@ EVE_TEST_TYPES( "Check return types of sinc"
 //==================================================================================================
 // sinc  tests
 //==================================================================================================
-auto mini = [](auto tgt) { return eve::next(eve::mindenormal(tgt)); };
-auto maxi = [](auto tgt) { return eve::valmax(tgt)/2; };
+auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
+auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt)/2; });
 
-EVE_TEST( "Check behavior of sinc on wide"
+TTS_CASE_WITH( "Check behavior of sinc on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(mini, maxi)
-                            , eve::test::randoms(-10.0, 10.0))
+        , tts::generate(tts::randoms(mini, maxi)
+                            , tts::randoms(-10.0, 10.0))
         )
 <typename T>(T const& a0, T const& a1)
 {
