@@ -16,12 +16,11 @@ auto cv(std::complex <T> sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-TTS_CASE_WITH( "Check behavior of expm1 on scalar"
-        , tts::bunch<eve::test::scalar::ieee_reals>
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
-        )
-  <typename T>(T const& a0, T const& a1 )
+TTS_CASE_WITH ( "Check behavior of expm1 on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              ,tts::generate(tts::randoms(-10, 10),tts::randoms(-10, 10))
+              )
+<typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
