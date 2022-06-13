@@ -252,7 +252,7 @@ namespace eve::detail
                                              , Z const& z) noexcept
   {
     auto u =  exp(z);
-    auto w =  u-one(as(imag(z))); //decu);
+    auto w =  dec(u); 
     auto ru =  real(u);
     auto exceptionnal = (is_eqz(ru) ||(is_not_finite(u) || is_eqz(z)
                                        || is_nan(z)
@@ -361,7 +361,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log1p_
                                              , Z const& z) noexcept
   {
-    auto m = z+one(as(imag(z)));
+    auto m = inc(z);
     auto theta = if_else((is_real(m) && is_nltz(real(m))), zero, arg(m)) ;
     auto rz =  real(z);
     auto iz2 =  sqr(imag(z));

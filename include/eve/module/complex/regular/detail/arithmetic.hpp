@@ -48,6 +48,23 @@ namespace eve::detail
   }
 
   template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::dec_, Z const& z ) noexcept
+  {
+    return Z{dec(real(z)), imag(z)};
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::inc_, Z const& z ) noexcept
+  {
+    return Z{inc(real(z)), imag(z)};
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::oneminus_, Z const& z ) noexcept
+  {
+    return Z{oneminus(real(z)), -imag(z)};
+  }
+  template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::proj_, Z const& z) noexcept
   {
     using real_t = as< as_real_t<Z> >;
