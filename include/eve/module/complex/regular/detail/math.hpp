@@ -251,15 +251,15 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::expm1_
                                              , Z const& z) noexcept
   {
-    auto u =  exp(z);
-    auto w =  dec(u); 
-    auto ru =  real(u);
-    auto exceptionnal = (is_eqz(ru) ||(is_not_finite(u) || is_eqz(z)
-                                       || is_nan(z)
-                                       || is_not_less(abs(imag(z)), pio_2(as(imag(z))))));
-    auto correct = z/log1p(w);
-    auto real_case = Z{expm1(real(z)), zero(as(real(z)))};
-    return  if_else(is_real(z), real_case, if_else(exceptionnal, w, w*correct));
+    auto [rz, iz] = z;
+    auto sc = sincos(iz);
+    auto siz = get<0>(sc);
+    auto ciz = get<1>(sc);
+    auto cosm1 = [siz, ciz](auto b) {  return if_else(abs(ciz) < pio_4(as(b)), dec(ciz), -sqr(siz)/(inc(ciz))); };
+    auto r = fma(expm1(rz), ciz, cosm1(iz));
+    auto i = exp(rz)*siz;
+    r = if_else(rz == inf(as(rz)) && is_not_finite(iz), rz, r);
+    return  Z{r, if_else(is_real(z), zero, i)};
   }
 
   //===-------------------------------------------------------------------------------------------

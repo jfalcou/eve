@@ -23,13 +23,14 @@ TTS_CASE_WITH ( "Check behavior of expm1 on scalar"
 <typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
-  using c_t = std::complex<e_t>;
+//  using c_t = std::complex<e_t>;
+  using z_t = eve::as_complex_t<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
       TTS_RELATIVE_EQUAL( eve::expm1(eve::complex<e_t>(e, f))
-                        , cv(std::exp(c_t(e, f)))-eve::one(eve::as(e))
+                        , eve::dec(eve::exp(z_t(e, f)))
                         , 2e-5
                         );
     }
