@@ -16,10 +16,10 @@ auto cv(std::complex < T > const &sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of exp2 on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of exp2 on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        ,tts::generate(tts::randoms(-10, 10)
+                             ,tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -37,10 +37,10 @@ EVE_TEST( "Check behavior of exp2 on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of exp2 on wide"
+TTS_CASE_WITH( "Check behavior of exp2 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        ,tts::generate(tts::randoms(-10, 10)
+                             ,tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {

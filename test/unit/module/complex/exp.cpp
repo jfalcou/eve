@@ -18,10 +18,9 @@ auto cv(std::complex < T > const &sc)
 
 TTS_CASE_WITH( "Check behavior of exp on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
-        , tts::generate( tts::randoms(-10, 10)
-                             , tts::randoms(-10, 10))
+        , tts::generate( tts::randoms(-10, 10), tts::randoms(-10, 10))
         )
-  <typename T>(T const& a0, T const& a1 )
+<typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
@@ -59,10 +58,10 @@ TTS_CASE_WITH( "Check behavior of exp on wide"
   TTS_ULP_EQUAL(eve::exp(z_t{a0,a1}), init_with_std(a0, a1), 2);
 };
 
-EVE_TEST_TYPES( "Check behavior of log2"
+TTS_CASE_TPL( "Check behavior of log2"
         , eve::test::simd::ieee_reals
             )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
   using z_t = eve::as_complex_t<T>;
