@@ -12,10 +12,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
+TTS_CASE_TPL( "Check return types of eve::rat(scalar)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t =  eve::element_type_t<T>;
   TTS_EXPR_IS( eve::rat(T())                    , (kumi::tuple<T, T>)  );
@@ -27,9 +27,9 @@ EVE_TEST_TYPES( "Check return types of eve::rat(scalar)"
 //==================================================================================================
 // Tests for eve::rat
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::rat(simd)"
+TTS_CASE_WITH( "Check behavior of eve::rat(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(1.0))
+        , tts::generate ( tts::ramp(1.0))
         )
 <typename T>(T const& a0)
 {

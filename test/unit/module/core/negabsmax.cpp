@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of negabsmax"
+TTS_CASE_TPL( "Check return types of negabsmax"
               , eve::test::simd::signed_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::negabsmax(T(), T()  )  , T);
@@ -43,12 +43,12 @@ EVE_TEST_TYPES( "Check return types of negabsmax"
 //== negabsmax tests
 //==================================================================================================
 
-EVE_TEST( "Check behavior of negabsmax on all types full range"
+TTS_CASE_WITH( "Check behavior of negabsmax on all types full range"
         , eve::test::simd::signed_types
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3)
+        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3)
                               )
         )
 <typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
@@ -69,10 +69,10 @@ EVE_TEST( "Check behavior of negabsmax on all types full range"
   TTS_IEEE_EQUAL(negabsmax[t](a0, a1), eve::if_else(t, negabsmax(a0, a1), a0));
  };
 
-EVE_TEST_TYPES( "Check values of negabsmax"
+TTS_CASE_TPL( "Check values of negabsmax"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmax)(eve::nan(eve::as<T>())   , T(1)  ) , eve::nan(eve::as<T>()) );

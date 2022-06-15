@@ -11,8 +11,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::minimum(wide)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::minimum(wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -25,10 +25,10 @@ EVE_TEST_TYPES( "Check return types of eve::minimum(wide)", eve::test::simd::all
 //==================================================================================================
 // Tests for eve::minimum
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::minimum(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::minimum(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmin)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmin)
+                              , tts::logicals(0,3)
                               )
         )
 <typename T, typename L>(T const& a0, L const& l0)

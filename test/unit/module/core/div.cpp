@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of div"
+TTS_CASE_TPL( "Check return types of div"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -81,11 +81,11 @@ EVE_TEST_TYPES( "Check return types of div"
 //==================================================================================================
 //==  div simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of div on wide"
+TTS_CASE_WITH( "Check behavior of div on wide"
         , eve::test::simd::ieee_reals//all_types
-        , eve::test::generate ( eve::test::randoms(0, 100)
-                              , eve::test::randoms(1, 11)
-                              , eve::test::randoms(1, 11)
+        , tts::generate ( tts::randoms(0, 100)
+                              , tts::randoms(1, 11)
+                              , tts::randoms(1, 11)
                               )
         )
   <typename T>(T a0, T a1, T a2)
@@ -112,18 +112,19 @@ EVE_TEST( "Check behavior of div on wide"
 //==================================================================================================
 //== Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::div variants on wide"
-        , eve::test::simd::signed_integers
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::div variants on wide"
+            , eve::test::simd::signed_integers
+            )
+<typename T>(tts::type<T> tgt)
 {
-  using type = typename T::type;
+  using type = T;
   using eve::div;
   using eve::saturated;
-  TTS_EQUAL     ( saturated(div)(cases.valmin, type(-1)) , cases.valmax);
-  TTS_EQUAL     ( saturated(div)(type(3)     , type(0))  , cases.valmax);
-  TTS_EQUAL     ( saturated(div)(type(-3)    , type(0))  , cases.valmin);
+
+  auto cases = tts::limits(tgt);
+  TTS_EQUAL( saturated(div)(cases.valmin, type(-1)) , cases.valmax);
+  TTS_EQUAL( saturated(div)(type(3)     , type(0))  , cases.valmax);
+  TTS_EQUAL( saturated(div)(type(-3)    , type(0))  , cases.valmin);
 };
 
 
@@ -132,14 +133,14 @@ EVE_TEST( "Check corner-cases behavior of eve::div variants on wide"
 //==================================================================================================
 auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
-EVE_TEST( "Check behavior of div on signed types"
-        , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
+TTS_CASE_WITH ( "Check behavior of div on signed types"
+              , eve::test::simd::signed_types
+              , tts::generate ( tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
                               )
-        )
-  <typename T>( T a0, T a1, T a2)
+              )
+<typename T>( T a0, T a1, T a2)
 {
   using eve::div;
   using eve::saturated;

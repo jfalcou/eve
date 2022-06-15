@@ -12,10 +12,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of remdiv"
+TTS_CASE_TPL( "Check return types of remdiv"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using tup_t = kumi::tuple < T, T >;
@@ -29,15 +29,15 @@ EVE_TEST_TYPES( "Check return types of remdiv"
 //==================================================================================================
 //==  remdiv simd tests
 //==================================================================================================
-auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 1;};
+auto mini = []<typename T>(eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 1;};
 
-EVE_TEST( "Check behavior of remdiv on wide"
-        , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(mini, 100)
-                              , eve::test::randoms(mini, 100)
+TTS_CASE_WITH ( "Check behavior of remdiv on wide"
+              , eve::test::simd::all_types
+              , tts::generate ( tts::randoms(tts::constant(mini), 100)
+                              , tts::randoms(tts::constant(mini), 100)
                               )
-        )
-  <typename T>(T a0, T a1)
+              )
+<typename T>(T a0, T a1)
 {
   using eve::remdiv;
   using eve::detail::map;
@@ -61,13 +61,9 @@ EVE_TEST( "Check behavior of remdiv on wide"
 //==================================================================================================
 //== Test for fixed values
 //==================================================================================================
-EVE_TEST( "Check fixed-cases behavior of eve::remdiv"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::limits())
-        )
-<typename Z>(Z)
+TTS_CASE_TPL( "Check fixed-cases behavior of eve::remdiv", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
-  using T =  typename Z::type;
   using v_t = eve::element_type_t<T>;
   using eve::toward_zero;
 

@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of bit_ornot"
+TTS_CASE_TPL( "Check return types of bit_ornot"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -38,12 +38,12 @@ EVE_TEST_TYPES( "Check return types of bit_ornot"
 //==================================================================================================
 //  bit_ornot tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_ornot on integral types"
+TTS_CASE_WITH( "Check behavior of bit_ornot on integral types"
             , eve::test::simd::integers
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
+            , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                                  , tts::randoms(eve::valmin, eve::valmax)
+                                  , tts::randoms(eve::valmin, eve::valmax)
+                                  , tts::randoms(eve::valmin, eve::valmax)
                                   )
             )
 <typename T>(T const& a0, T const& a1, T const& a2,  T const& a3)
@@ -58,12 +58,12 @@ EVE_TEST( "Check behavior of bit_ornot on integral types"
   TTS_EQUAL( bit_ornot[test](a0, a1, a2),  eve::if_else(test, eve::bit_ornot(a0, eve::bit_and(a1, a2)), a0));
 };
 
-EVE_TEST( "Check behavior of bit_ornot on floating types"
+TTS_CASE_WITH( "Check behavior of bit_ornot on floating types"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(eve::valmin, eve::valmax)
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& a2,  T const& a3)

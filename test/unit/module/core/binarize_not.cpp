@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of binarize_not"
+TTS_CASE_TPL( "Check return types of binarize_not"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -39,9 +39,9 @@ EVE_TEST_TYPES( "Check return types of binarize_not"
 //==================================================================================================
 //== binarize_not tests
 //==================================================================================================
-EVE_TEST( "Check behavior of binarize_not(wide)"
+TTS_CASE_WITH( "Check behavior of binarize_not(wide)"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {

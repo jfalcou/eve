@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of fracscale"
+TTS_CASE_TPL( "Check return types of fracscale"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,9 +27,9 @@ EVE_TEST_TYPES( "Check return types of fracscale"
 //==================================================================================================
 //== fracscale simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of fracscale(wide) and diff on  floating types"
+TTS_CASE_WITH( "Check behavior of fracscale(wide) and diff on  floating types"
             , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(-100.0, 100.0))
+            , tts::generate ( tts::randoms(-100.0, 100.0))
             )
 <typename T>(T const& a0 )
 {
@@ -45,10 +45,10 @@ EVE_TEST( "Check behavior of fracscale(wide) and diff on  floating types"
 //==================================================================================================
 // fracscale[cond](simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of fracscale[cond](wide) on  floating types"
+TTS_CASE_WITH( "Check behavior of fracscale[cond](wide) on  floating types"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(0.0, 100.0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::randoms(0.0, 100.0)
+                              , tts::logicals(0, 3))
         )
   <typename T, typename M>(T const& a0, M const & t)
 {
@@ -78,5 +78,5 @@ EVE_TEST( "Check behavior of fracscale[cond](wide) on  floating types"
   TTS_EQUAL( eve::upward(fracscale[t])(a0, 4),     eve::if_else(t, a0-eve::ldexp(eve::ceil(   eve::ldexp(a0, 4)), -4), a0));
   TTS_EQUAL( eve::downward(fracscale[t])(a0, 4),   eve::if_else(t, a0-eve::ldexp(eve::floor(  eve::ldexp(a0, 4)), -4), a0));
   TTS_EQUAL( eve::toward_zero(fracscale[t])(a0, 4),eve::if_else(t, a0-eve::ldexp(eve::trunc(  eve::ldexp(a0, 4)), -4), a0));
-                                                                      
+
 };

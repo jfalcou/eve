@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::exponent(simd)"
+TTS_CASE_TPL( "Check return types of eve::exponent(simd)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
   using v_t = eve::element_type_t<T>;
@@ -27,10 +27,10 @@ EVE_TEST_TYPES( "Check return types of eve::exponent(simd)"
 //==================================================================================================
 // Tests for eve::exponent
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::exponent(simd)"
+TTS_CASE_WITH( "Check behavior of eve::exponent(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::between(-1.0, 1.0)
-                              , eve::test::logicals(0,3))
+        , tts::generate ( tts::between(-1.0, 1.0)
+                              , tts::logicals(0,3))
         )
 <typename T,  typename M>(T const& a0,  M const & t)
 {
@@ -45,10 +45,10 @@ EVE_TEST( "Check behavior of eve::exponent(simd)"
 //==================================================================================================
 // special tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::exponent(simd)"
+TTS_CASE_TPL( "Check return types of eve::exponent(simd)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
   using v_t = eve::element_type_t<T>;
@@ -57,5 +57,5 @@ EVE_TEST_TYPES( "Check return types of eve::exponent(simd)"
   TTS_EQUAL(eve::exponent(T(0)), i_t(0));
   TTS_EQUAL(eve::exponent(v_t(0)), vi_t(0));
   TTS_EQUAL(eve::exponent(T(1)), i_t(0));
-  TTS_EQUAL(eve::exponent(v_t(1)), vi_t(0)); 
+  TTS_EQUAL(eve::exponent(v_t(1)), vi_t(0));
 };

@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of rotl"
+TTS_CASE_TPL( "Check return types of rotl"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::rotl;
   using v_t = eve::element_type_t<T>;
@@ -36,22 +36,18 @@ EVE_TEST_TYPES( "Check return types of rotl"
  TTS_EXPR_IS( rotl(v_t(), si_t())  , v_t);
 };
 
-
-auto maxi = []<typename T>(eve::as<T> const & )
-{
-  using v_t = eve::element_type_t<T>;
-  return sizeof(v_t)*8-1;
-};
+auto maxi = []<typename T>(eve::as<T> const&) { return sizeof(eve::element_type_t<T>)*8-1; };
 
 //==================================================================================================
 //== rotl  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of rotl on wide"
-        , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(0, maxi))
-        )
-  <typename T>(T a0, T a1)
+TTS_CASE_WITH ( "Check behavior of rotl on wide"
+              , eve::test::simd::unsigned_integers
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(0, tts::constant(maxi))
+                              )
+              )
+<typename T>(T a0, T a1)
 {
   using eve::rotl;
   TTS_EQUAL( rotl(a0, 0u), a0);

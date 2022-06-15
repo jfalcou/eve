@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of fsm"
+TTS_CASE_TPL( "Check return types of fsm"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -42,20 +42,20 @@ EVE_TEST_TYPES( "Check return types of fsm"
 //==================================================================================================
 // fsm tests
 //==================================================================================================
-auto onepmileps = []<typename U>(eve::as<U>)
+auto onepmileps = tts::constant([]<typename U>(eve::as<U>)
 {
   return (eve::inc(1000*eve::eps(eve::as(eve::element_type_t<U>()))));
-};
+});
 
-auto onemmileps = []<typename U>(eve::as<U>)
+auto onemmileps = tts::constant([]<typename U>(eve::as<U>)
 {
   return (eve::oneminus(1000*eve::eps(eve::as(eve::element_type_t<U>()))));
-};
+});
 
-EVE_TEST( "Check precision behavior of fsm on real types"
+TTS_CASE_WITH( "Check precision behavior of fsm on real types"
         , eve::test::simd::ieee_reals
-        , eve::test::generate (  eve::test::randoms(onemmileps, onepmileps)
-                              ,  eve::test::randoms(onemmileps, onepmileps)
+        , tts::generate (  tts::randoms(onemmileps, onepmileps)
+                              ,  tts::randoms(onemmileps, onepmileps)
                               )
         )
 <typename T>(T const& a0, T const& a1)
@@ -71,11 +71,11 @@ EVE_TEST( "Check precision behavior of fsm on real types"
 //==================================================================================================
 //== fsm full range tests
 //==================================================================================================
-EVE_TEST( "Check behavior of fsm on all types full range"
+TTS_CASE_WITH( "Check behavior of fsm on all types full range"
         , eve::test::simd::all_types
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
                               )
         )
 <typename T>(  T const& a0, T const& a1, T const& a2)
@@ -93,12 +93,12 @@ EVE_TEST( "Check behavior of fsm on all types full range"
 //==================================================================================================
 //== fsm masked
 //==================================================================================================
-EVE_TEST( "Check behavior of fsm on all types full range"
+TTS_CASE_WITH( "Check behavior of fsm on all types full range"
         , eve::test::simd::all_types
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3)
+        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3)
                               )
         )
 <typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)

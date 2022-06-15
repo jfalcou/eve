@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of countl_one on wide"
+TTS_CASE_TPL( "Check return types of countl_one on wide"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,10 +27,10 @@ EVE_TEST_TYPES( "Check return types of countl_one on wide"
 //==================================================================================================
 // countl_one(simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of countl_one(wide) on unsigned integral "
+TTS_CASE_WITH( "Check behavior of countl_one(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3))
         )
 <typename T, typename M>(T const& a0, const M t)
 {

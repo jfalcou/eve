@@ -152,6 +152,19 @@ namespace tts
     G generator_;
   };
 
+  template<typename G>
+  struct as_signed_integer
+  {
+    as_signed_integer(G g) : generator_(g) {}
+    template<typename D> auto operator()(tts::type<D>, auto& rng, auto... args)
+    {
+      using i_t = eve::as_integer_t<eve::element_type_t<D>, signed>;
+      return generator_(tts::type<i_t>{},rng, args...);
+    }
+
+    G generator_;
+  };
+
   //================================================================================================
   // IEEE Special Constant value
   //================================================================================================

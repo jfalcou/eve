@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of negate"
+TTS_CASE_TPL( "Check return types of negate"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -33,10 +33,10 @@ EVE_TEST_TYPES( "Check return types of negate"
 //==================================================================================================
 //== negate tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of negate"
+TTS_CASE_TPL( "Check return types of negate"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
  if constexpr(eve::floating_value<T>)
   {
@@ -72,10 +72,10 @@ EVE_TEST_TYPES( "Check return types of negate"
 };
 
 
-EVE_TEST( "Check behavior of negate(wide)"
+TTS_CASE_WITH( "Check behavior of negate(wide)"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
+            , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                                  , tts::randoms(eve::valmin, eve::valmax)
                                   )
             )
 <typename T>(T const& a0, T const& a1 )

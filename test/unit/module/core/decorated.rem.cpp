@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of rem"
+TTS_CASE_TPL( "Check return types of rem"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
  using v_t = eve::element_type_t<T>;
 
@@ -47,11 +47,11 @@ EVE_TEST_TYPES( "Check return types of rem"
 //==================================================================================================
 //==  rem simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of rem on wide"
+TTS_CASE_WITH( "Check behavior of rem on wide"
         , eve::test::simd::integers//all_types
-        , eve::test::generate ( eve::test::randoms(0, 100)
-                              , eve::test::randoms(1, 11)
-                              , eve::test::randoms(1, 11)
+        , tts::generate ( tts::randoms(0, 100)
+                              , tts::randoms(1, 11)
+                              , tts::randoms(1, 11)
                               )
         )
   <typename T>(T a0, T , T a2)
@@ -73,17 +73,13 @@ EVE_TEST( "Check behavior of rem on wide"
 //==================================================================================================
 //== Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::rem variants on wide"
-        , eve::test::simd::signed_types
-        , eve::test::generate(eve::test::limits())
-        )
-<typename Z>(Z )
+TTS_CASE_TPL( "Check corner-cases behavior of eve::rem variants on wide", eve::test::simd::signed_types)
+<typename T>(tts::type<T>)
 {
   using eve::rem;
   using eve::downward;
   using eve::upward;
   using eve::to_nearest;
-  using T = typename Z::type;
   using v_t = eve::element_type_t<T>;
 
   // downward
@@ -175,15 +171,15 @@ EVE_TEST( "Check corner-cases behavior of eve::rem variants on wide"
 //==================================================================================================
 //==  conditional rem tests
 //==================================================================================================
-auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
+auto mini =[]<typename T>(eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
-EVE_TEST( "Check behavior of rem on signed types"
-        , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
+TTS_CASE_WITH ( "Check behavior of rem on signed types"
+              , eve::test::simd::signed_types
+              , tts::generate ( tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
                               )
-        )
+              )
   <typename T>( T a0, T a1, T a2)
 {
   using eve::rem;

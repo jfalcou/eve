@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sqrtvalmax"
+TTS_CASE_TPL( "Check return types of sqrtvalmax"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of sqrtvalmax"
 //==================================================================================================
 // sqrtvalmax  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of sqrtvalmax on wide"
+TTS_CASE_TPL( "Check behavior of sqrtvalmax on wide"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::downward;

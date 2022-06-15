@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_odd(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_odd(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -26,10 +26,10 @@ EVE_TEST_TYPES( "Check return types of eve::is_odd(simd)"
 //==================================================================================================
 // Tests for eve::is_odd
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::is_odd(simd) for IEEE "
+TTS_CASE_WITH( "Check behavior of eve::is_odd(simd) for IEEE "
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0)
+                              , tts::logicals(0, 3))
         )
 <typename T, typename M>(T const& a0,  M const & t)
 {
@@ -40,10 +40,10 @@ EVE_TEST( "Check behavior of eve::is_odd(simd) for IEEE "
   TTS_EQUAL(eve::is_odd[t](a0), eve::if_else(t, eve::is_odd(a0), eve::false_(eve::as(a0))));
 };
 
-EVE_TEST( "Check behavior of eve::is_odd(simd) for IEEE "
+TTS_CASE_WITH( "Check behavior of eve::is_odd(simd) for IEEE "
         , eve::test::simd::integers
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0)
+                              , tts::logicals(0, 3))
         )
 <typename T, typename M>(T const& a0,  M const & t)
 {

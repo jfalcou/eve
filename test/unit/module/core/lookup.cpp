@@ -12,9 +12,9 @@
 //==================================================================================================
 // arithmetic types
 //==================================================================================================
-EVE_TEST( "Check eve::lookup behavior on arithmetic wide"
+TTS_CASE_WITH( "Check eve::lookup behavior on arithmetic wide"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
 {
@@ -35,8 +35,8 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // product types
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::lookup behavior on product type wide", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::lookup behavior on product type wide", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>, eve::fixed<4>>;

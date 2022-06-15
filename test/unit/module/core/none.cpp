@@ -9,8 +9,8 @@
 #include <eve/module/core.hpp>
 #include <type_traits>
 
-EVE_TEST_TYPES("Check eve::none return type", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::none return type", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS( (eve::none(eve::logical<T>())) , bool);
   TTS_EXPR_IS( (eve::none(bool{})) , bool);
@@ -20,8 +20,8 @@ EVE_TEST_TYPES("Check eve::none return type", eve::test::simd::all_types)
   TTS_EXPECT    (eve::none(eve::false_(eve::as<T>())));
 };
 
-EVE_TEST_TYPES("Check eve::none[ignore]", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::none[ignore]", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   // complete
   {

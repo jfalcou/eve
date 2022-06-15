@@ -13,9 +13,9 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of agm"
+TTS_CASE_TPL( "Check return types of agm"
               , eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -26,10 +26,10 @@ EVE_TEST_TYPES( "Check return types of agm"
 //==================================================================================================
 //== agm tests
 //==================================================================================================
-EVE_TEST( "Check behavior of agm(wide)"
+TTS_CASE_WITH( "Check behavior of agm(wide)"
             , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(0, 100)
-                                  , eve::test::randoms(0, 100)
+            , tts::generate ( tts::randoms(0, 100)
+                                  , tts::randoms(0, 100)
                                   )
             )
 <typename T>(T const& a0, T const& a1 )
@@ -43,11 +43,11 @@ EVE_TEST( "Check behavior of agm(wide)"
 //==================================================================================================
 //==  conditional agm tests
 //==================================================================================================
-EVE_TEST( "Check behavior of  agm[cond](wide)"
+TTS_CASE_WITH( "Check behavior of  agm[cond](wide)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(0, 127)
-                              , eve::test::randoms(0, 127)
-                              , eve::test::randoms(0, 127)
+        , tts::generate ( tts::randoms(0, 127)
+                              , tts::randoms(0, 127)
+                              , tts::randoms(0, 127)
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& a2)

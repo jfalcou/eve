@@ -24,9 +24,9 @@ T std_scan(T simd, Op op)
   return T{arr.data()};
 }
 
-EVE_TEST( "Check behavior of default scan"
+TTS_CASE_WITH( "Check behavior of default scan"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50) )
+        , tts::generate ( tts::randoms(-50, 50) )
         )
 <typename T>(T simd)
 {
@@ -36,9 +36,9 @@ EVE_TEST( "Check behavior of default scan"
   TTS_RELATIVE_EQUAL(expected, actual, 0.0001);
 };
 
-EVE_TEST( "Check behavior of scan with min"
+TTS_CASE_WITH( "Check behavior of scan with min"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50) )
+        , tts::generate ( tts::randoms(-50, 50) )
         )
 <typename T>(T simd)
 {
@@ -47,8 +47,8 @@ EVE_TEST( "Check behavior of scan with min"
   TTS_EQUAL(expected, actual);
 };
 
-EVE_TEST_TYPES( "Check behavior of scan for logicals", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of scan for logicals", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   eve::logical<T> input    {[](int i, int) { return i != 3; }};
   eve::logical<T> expected {[](int i, int) { return i <  3; }};

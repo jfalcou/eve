@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of oneosqrteps"
+TTS_CASE_TPL( "Check return types of oneosqrteps"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -27,10 +27,10 @@ EVE_TEST_TYPES( "Check return types of oneosqrteps"
 //==================================================================================================
 // oneosqrteps  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of oneosqrteps on wide"
+TTS_CASE_TPL( "Check behavior of oneosqrteps on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::downward;

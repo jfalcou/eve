@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_lessgreater(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_lessgreater(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -27,11 +27,11 @@ EVE_TEST_TYPES( "Check return types of eve::is_lessgreater(simd)"
 //==================================================================================================
 //== Tests for eve::is_lessgreater
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::is_lessgreater(simd)"
+TTS_CASE_WITH( "Check behavior of eve::is_lessgreater(simd)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::reverse_ramp(4, 2)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0)
+                              , tts::reverse_ramp(4, 2)
+                              , tts::logicals(0, 3))
         )
 <typename T, typename M>(T const& a0, T const& a1, M const & t)
 {

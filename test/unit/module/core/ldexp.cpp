@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of ldexp"
+TTS_CASE_TPL( "Check return types of ldexp"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::ldexp;
   using eve::pedantic;
@@ -52,11 +52,11 @@ EVE_TEST_TYPES( "Check return types of ldexp"
 //==================================================================================================
 //ldexp  simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of ldexps on floatings"
+TTS_CASE_WITH( "Check behavior of ldexps on floatings"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-50, +50)
-                             , eve::test::randoms(-50, +50)
-                             , eve::test::logicals(0, 3))
+        , tts::generate(tts::randoms(-50, +50)
+                             , tts::randoms(-50, +50)
+                             , tts::logicals(0, 3))
         )
   <typename T, typename U>(T const& a0, T const& a11, U const & t)
 {
@@ -70,9 +70,9 @@ EVE_TEST( "Check behavior of ldexps on floatings"
 //==================================================================================================
 // ldexp  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of ldexp on wide"
+TTS_CASE_WITH( "Check behavior of ldexp on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-100.0, 100.0))
+        , tts::generate(tts::randoms(-100.0, 100.0))
         )
 <typename T>(T a0)
 {

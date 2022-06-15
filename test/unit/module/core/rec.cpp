@@ -12,8 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::rec", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::rec", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -37,25 +37,18 @@ EVE_TEST_TYPES( "Check return types of eve::rec", eve::test::simd::all_types)
 //==================================================================================================
 // Specific generator - valmin or valmin+1 if T is signed
 //==================================================================================================
-auto minimal = []<typename T>(eve::as<T> const & tgt)
-{
-  return -eve::smallestposval(tgt);
-};
-
-auto maximal = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::valmax(tgt) / 2;
-};
+auto mini = tts::constant([](auto tgt) { return -eve::smallestposval(tgt); });
+auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 //==================================================================================================
 // Tests for eve::rec
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::rec(eve::wide)"
-        , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(minimal, maximal)
-                              , eve::test::logicals(0,3)
+TTS_CASE_WITH ( "Check behavior of eve::rec(eve::wide)"
+              , eve::test::simd::all_types
+              , tts::generate ( tts::randoms(mini, maxi)
+                              , tts::logicals(0,3)
                               )
-        )
+              )
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using eve::detail::map;
