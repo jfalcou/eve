@@ -279,4 +279,20 @@ namespace eve
       return as_wide_as_t<Z,R>(m*r,-m*i);
     }
   };
+  
+  template<typename Z>
+  EVE_FORCEINLINE   auto to_complex( Z const & v) noexcept
+  requires (real_value<Z>)
+  {
+    return as_complex_t<Z>(v, 0);
+  }
+  
+  template<typename Z>
+  EVE_FORCEINLINE   auto to_complex(Z const & v) noexcept
+  requires (eve::is_complex_v<Z>)
+  {
+    return v;
+  }
+
+
 }

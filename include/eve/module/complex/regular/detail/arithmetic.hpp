@@ -17,6 +17,15 @@ namespace eve::detail
 {
 
   //==============================================================================================
+  //  trivial extension of some real unary functions
+  //==============================================================================================
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::ceil_, Z const& z) noexcept { return Z{ceil(real(z)), ceil(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::floor_, Z const& z) noexcept { return Z{floor(real(z)), floor(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::nearest_, Z const& z) noexcept { return Z{nearest(real(z)), nearest(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::trunc_, Z const& z) noexcept { return Z{trunc(real(z)), trunc(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::frac_, Z const& z) noexcept { return Z{frac(real(z)), frac(imag(z))}; }
+
+  //==============================================================================================
   //  Unary functions
   //==============================================================================================
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_

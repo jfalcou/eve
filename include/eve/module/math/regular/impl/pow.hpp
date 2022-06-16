@@ -68,7 +68,7 @@ namespace eve::detail
 
   }
 
-  template<floating_value T, integral_real_scalar_value U>
+  template<value T, integral_real_scalar_value U>
   EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   {
     if constexpr( std::is_unsigned_v<U> )
@@ -93,7 +93,7 @@ namespace eve::detail
     }
   }
 
-  template<real_simd_value T, integral_real_simd_value U>
+  template<simd_value T, integral_real_simd_value U>
   EVE_FORCEINLINE constexpr auto pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   {
     if constexpr(unsigned_value<U> )

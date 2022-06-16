@@ -106,10 +106,13 @@ namespace eve::detail
     if (eve::all(is_finite(z))) return Z{r, i};
     auto infrz = is_infinite(rz);
     auto nanrz = is_nan(rz);
-    r = if_else(infrz && is_not_finite(iz), rz, r);
-    i = if_else(infrz && is_nan(iz), allbits, i);
-    r = if_else(nanrz, allbits, r);
-    i = if_else(nanrz, allbits, i);
+    if (any(infrz || nanrz))
+    {
+      r = if_else(infrz && is_not_finite(iz), rz, r);
+      i = if_else(infrz && is_nan(iz), allbits, i);
+      r = if_else(nanrz, allbits, r);
+      i = if_else(nanrz, allbits, i);
+    }
     i = if_else(is_real(z), zero, i);
     r = if_else(is_imag(z), zero, r);
     return Z{r, i};
@@ -286,6 +289,21 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== log_abs
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_
+                                             , Z const& z) noexcept
+  {
+    auto rz = abs(real(z));
+    auto iz = abs(imag(z));
+    auto m = max(rz, iz);
+    auto t = if_else(rz == m, iz/rz, rz/iz);
+    t = fam(log(m), half(as(rz)), log1p(sqr(t)));
+    return if_else(is_infinite(z), inf(as(rz)), t);
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== log
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -370,15 +388,15 @@ namespace eve::detail
     return Z{half(as<r_t>())*log1p(rz*(rz+r_t(2))+iz2), theta};
   }
 
-  //===-------------------------------------------------------------------------------------------
-  //=== log_abs
-  //===-------------------------------------------------------------------------------------------
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_
-                                             , Z const& z) noexcept
-  {
-    return log(abs(z));
-  }
+//   //===-------------------------------------------------------------------------------------------
+//   //=== log_abs
+//   //===-------------------------------------------------------------------------------------------
+//   template<typename Z>
+//   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_
+//                                              , Z const& z) noexcept
+//   {
+//     return log(abs(z));
+//   }
 
   //===-------------------------------------------------------------------------------------------
   //=== rec
@@ -413,8 +431,10 @@ namespace eve::detail
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
   }
+
 }
 
 #include <eve/module/complex/regular/detail/acos.hpp>
 #include <eve/module/complex/regular/detail/asin.hpp>
 #include <eve/module/complex/regular/detail/atanh.hpp>
+#include <eve/module/complex/regular/detail/pow.hpp>

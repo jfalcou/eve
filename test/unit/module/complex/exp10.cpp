@@ -98,7 +98,6 @@ EVE_TEST_TYPES( "Check corner cases of exp10", eve::test::scalar::ieee_reals)
   auto test_exp10 = [](auto z){ return cv(std::exp(eve::log_10(eve::as<e_t>())*sc(z))); };
   for(int i=0; i < N; ++i)
   {
-     std::cout << "i " << i << " -> " << inputs[i] << std::endl;
      TTS_IEEE_EQUAL(exp10(inputs[i]), test_exp10(inputs[i]));
     TTS_IEEE_EQUAL(exp10(conj(inputs[i])), conj(exp10(inputs[i])));
   }

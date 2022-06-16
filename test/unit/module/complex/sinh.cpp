@@ -104,7 +104,6 @@ TTS_CASE_TPL( "Check corner cases of sinh", eve::test::scalar::ieee_reals)
   auto sh = eve::sinh;
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(sh(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(sh(-inputs[i]), -sh(inputs[i]));
     TTS_IEEE_EQUAL(sh(conj(inputs[i])), conj(sh(inputs[i])));

@@ -78,7 +78,7 @@ TTS_CASE_TPL( "Check corner cases of log2", eve::test::simd::ieee_reals)
     };
   using eve::conj;
   using eve::log2;
-  auto std_log2 = [](auto x) { return eve::log(x)/eve::log_2(eve::as<e_t>()); };
+  auto std_log2 = [](auto x) { return eve::log(x)/eve::log_2(eve::as<T>()); };
   for(int i=0; i < N; ++i)
   {
     TTS_IEEE_EQUAL(log2(inputs[i]), std_log2(inputs[i]));
