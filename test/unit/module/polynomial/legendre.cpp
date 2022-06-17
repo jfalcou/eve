@@ -136,19 +136,21 @@ TTS_CASE_WITH( "Check behavior of associated legendre p on wide"
 /////////////spherical legendre
 TTS_CASE_WITH ( "Check behavior of spherical legendre on wide"
               , eve::test::simd::ieee_reals
-              , tts::generate (tts::between(0, 3.14159)
+              , tts::generate ( tts::between(0, 3.14159)
                               , tts::as_integer(tts::ramp(0))
                               , tts::as_integer(tts::reverse_ramp(0))
                               )
               )
   <typename T, typename I>(T a0, I i0, I j0)
 {
+  using e_t = eve::element_type_t<T>;
+
   auto eve__slegendre  =  [](auto m, auto n, auto x) { return eve::sph(eve::legendre)(m, n, x); };
 
 #if defined(__cpp_lib_math_special_functions)
-  auto std_slegendre = [](auto m, auto n, auto x) { return std::sph_legendre(m, n, x); };
+  auto std_slegendre = [](auto m, auto n, auto x) -> e_t { return std::sph_legendre(m, n, x); };
 #else
-  auto boost_slegendre =  [](auto m, auto n, auto x) { return boost::math::spherical_harmonic_r(m, n, x, 0);};
+  auto boost_slegendre =  [](auto m, auto n, auto x) -> e_t { return boost::math::spherical_harmonic_r(m, n, x, 0);};
 #endif
 
   for(unsigned int k=0; k < eve::cardinal_v < T > ; ++k)

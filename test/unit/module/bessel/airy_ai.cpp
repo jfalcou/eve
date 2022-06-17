@@ -81,7 +81,7 @@ TTS_CASE_TPL( "Check return types of airy_ai"
   TTS_ULP_EQUAL(eve__airy_ai( T(-1))  ,  T(std__airy_ai( v_t(-1))  ), 10.0);
 
 
-   TTS_ABSOLUTE_EQUAL(eve__airy_ai(a0), map(std__airy_ai, a0), 0.0001);
-   TTS_RELATIVE_EQUAL(eve__airy_ai(a1), map(std__airy_ai, a1), 0.0001);
+   TTS_ABSOLUTE_EQUAL(eve__airy_ai(a0), map(std__airy_ai, a0), 0.0005);
+   TTS_RELATIVE_EQUAL(eve__airy_ai(a1), map(std__airy_ai, a1), 0.0005);
 
 };
