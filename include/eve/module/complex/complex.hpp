@@ -14,6 +14,7 @@
 #include <eve/module/complex/regular/complex.hpp>
 #include <eve/module/complex/regular/detail/arithmetic.hpp>
 #include <eve/module/complex/regular/detail/math.hpp>
+#include <eve/module/complex/regular/detail/special.hpp>
 #include <eve/module/complex/regular/detail/predicates.hpp>
 #include <eve/product_type.hpp>
 #include <ostream>
@@ -279,14 +280,14 @@ namespace eve
       return as_wide_as_t<Z,R>(m*r,-m*i);
     }
   };
-  
+
   template<typename Z>
   EVE_FORCEINLINE   auto to_complex( Z const & v) noexcept
   requires (real_value<Z>)
   {
     return as_complex_t<Z>(v, 0);
   }
-  
+
   template<typename Z>
   EVE_FORCEINLINE   auto to_complex(Z const & v) noexcept
   requires (eve::is_complex_v<Z>)

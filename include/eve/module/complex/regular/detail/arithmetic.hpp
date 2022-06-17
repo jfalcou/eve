@@ -26,6 +26,17 @@ namespace eve::detail
   template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::frac_, Z const& z) noexcept { return Z{frac(real(z)), frac(imag(z))}; }
 
   //==============================================================================================
+  //  trivial extension of some real binary functions
+  //==============================================================================================
+  template<typename Z1,  typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::maxabs_, Z1 const& z1, Z2 const& z2) noexcept { return max(abs(z1), abs(z2)); }
+  template<typename Z1,  typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::minabs_, Z1 const& z1, Z2 const& z2) noexcept { return min(abs(z1), abs(z2)); }
+  template<typename Z1,  typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::dist_, Z1 const& z1, Z2 const& z2) noexcept { return abs(z1-z2); }
+  template<typename Z1,  typename Z2,  typename Z3>
+
+  //==============================================================================================
   //  Unary functions
   //==============================================================================================
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_
