@@ -33,7 +33,6 @@ TTS_CASE_TPL("Random check for eve::cscd", eve::test::simd::ieee_reals)
   {
     auto vmin = e_t(-5000.);
     auto vmax = e_t(5000.);
-    EVE_ULP_RANGE_CHECK_WITH( T, eve::uniform_prng<e_t>(vmin, vmax),  std_cscd, eve::cscd,  16);
+    EVE_ULP_RANGE_CHECK_WITH( T, eve::uniform_prng<e_t>(vmin, vmax),  std_cscd, eve::cscd, 64);
   }
-
 };
