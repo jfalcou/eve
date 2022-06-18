@@ -137,6 +137,17 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== coth
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::coth_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    return rec(tanh(z));
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== cos
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -145,6 +156,28 @@ namespace eve::detail
     return cosh(eve::i(as(z))*z);
   }
 
+  //===-------------------------------------------------------------------------------------------
+  //=== cospi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cospi_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto [rz, iz] = eve::i*z;
+    auto [s, c]   = sinpicospi(iz);
+    auto [sh, ch] = sinhcosh(pi(as(rz))*rz);
+    auto r = c*ch;
+    auto i = s*sh;
+    i = if_else(is_imag(z) || is_real(z), zero, i);
+    auto res = Z(r, i);
+    if (any(is_not_finite(z)))
+    {
+      res = if_else(is_infinite(rz) && is_not_finite(iz), Z(inf(as(rz)), nan(as(rz))), res);
+      res = if_else(is_nan(rz) && is_infinite(iz),        Z(nan(as(rz)), nan(as(rz))), res);
+    }
+    return res;
+  }
 
   //===-------------------------------------------------------------------------------------------
   //=== sin
@@ -158,6 +191,34 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sinpi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinpi_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto [rz, iz] = eve::i*zz;
+    auto [s, c]   = sinpicospi(iz);
+    auto [sh, ch] = sinhcosh(rz*pi(as(rz)));
+    auto r = c*sh;
+    auto i = s*ch;
+    if (eve::all(is_finite(z))) return Z{r, i};
+    auto infrz = is_infinite(rz);
+    auto nanrz = is_nan(rz);
+    if (any(infrz || nanrz))
+    {
+      r = if_else(infrz && is_not_finite(iz), rz, r);
+      i = if_else(infrz && is_nan(iz), allbits, i);
+      r = if_else(nanrz, allbits, r);
+      i = if_else(nanrz, allbits, i);
+    }
+    i = if_else(is_real(z), zero, i);
+    r = if_else(is_imag(z), zero, r);
+    return Z{i, -r};
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== tan
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -167,6 +228,48 @@ namespace eve::detail
   {
     auto j = eve::i(as(z));
     return -j*eve::tanh(j*z);
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== tanpi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::tanpi_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto zz = eve::i*(z+z);
+    auto [rz, iz] = zz;
+    auto [s, c] = sincos(iz);
+    auto [sh, ch] = sinhcosh(rz);
+    auto tmp = c+ch;
+    auto rr = if_else(is_imag(z), zero, sh/tmp);
+    auto ii = if_else(is_real(z), zero, s/tmp);
+    return if_else(is_infinite(rz), Z{0, -sign(rz), 0}, Z{ii-rr});
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== cot
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cot_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto r = tan(z);
+    return if_else(is_infinite(r), Z{0, 0}, rec(r));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== cotpi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cotpi_
+                                             , Z const& z
+                                             ) noexcept
+  {
+    auto r = tanpi(z);
+    return if_else(is_infinite(r), Z{0, 0}, rec(r));
   }
 
   //===-------------------------------------------------------------------------------------------
