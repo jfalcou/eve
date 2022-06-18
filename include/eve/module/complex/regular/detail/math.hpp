@@ -161,22 +161,23 @@ namespace eve::detail
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cospi_
-                                             , Z const& z
+                                             , Z const& a0
                                              ) noexcept
   {
-    auto [rz, iz] = eve::i*z;
-    auto [s, c]   = sinpicospi(iz);
-    auto [sh, ch] = sinhcosh(pi(as(rz))*rz);
+    auto [rz, iz] = a0;
+    iz *= pi(as(iz));
+    auto [s, c]   = sinpicospi(rz);
+    auto [sh, ch] = sinhcosh(iz);
     auto r = c*ch;
-    auto i = s*sh;
-    i = if_else(is_imag(z) || is_real(z), zero, i);
-    auto res = Z(r, i);
-    if (any(is_not_finite(z)))
+    auto i = if_else(is_imag(a0) || is_real(a0),zero, -s*sh);
+    if (any(is_not_finite(a0)))
     {
-      res = if_else(is_infinite(rz) && is_not_finite(iz), Z(inf(as(rz)), nan(as(rz))), res);
-      res = if_else(is_nan(rz) && is_infinite(iz),        Z(nan(as(rz)), nan(as(rz))), res);
+      r = if_else(is_infinite(iz) && is_not_finite(rz), inf(as(r)), r);
+      i = if_else(is_infinite(iz) && is_not_finite(rz), nan(as(r)), i);
+      r = if_else(is_nan(iz) && is_infinite(rz), allbits, r);
+      i = if_else(is_nan(iz) && is_infinite(rz), allbits, i);
     }
-    return res;
+    return Z{r, i};
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -195,27 +196,26 @@ namespace eve::detail
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinpi_
-                                             , Z const& z
+                                             , Z const& a0
                                              ) noexcept
   {
-    auto [rz, iz] = eve::i*zz;
+    auto a00(eve::i*a0);
+    auto [rz, iz] = a00;
+    rz*= pi(as(rz));
     auto [s, c]   = sinpicospi(iz);
-    auto [sh, ch] = sinhcosh(rz*pi(as(rz)));
+    auto [sh, ch] = sinhcosh(rz);
     auto r = c*sh;
     auto i = s*ch;
-    if (eve::all(is_finite(z))) return Z{r, i};
-    auto infrz = is_infinite(rz);
-    auto nanrz = is_nan(rz);
-    if (any(infrz || nanrz))
+    if (any(is_not_finite(a00)))
     {
-      r = if_else(infrz && is_not_finite(iz), rz, r);
-      i = if_else(infrz && is_nan(iz), allbits, i);
-      r = if_else(nanrz, allbits, r);
-      i = if_else(nanrz, allbits, i);
+      r = if_else(is_infinite(rz) && is_not_finite(iz), rz, r);
+      i = if_else(is_infinite(rz) && is_nan(iz), iz, i);
+      r = if_else(is_nan(rz), rz, r);
+      i = if_else(is_nan(rz), rz, i);
+      i = if_else(is_real(a00), zero, i);
+      r = if_else(is_imag(a00), zero, r);
     }
-    i = if_else(is_real(z), zero, i);
-    r = if_else(is_imag(z), zero, r);
-    return Z{i, -r};
+    return Z{i, -r}; //eve::i*(-res);
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -230,6 +230,7 @@ namespace eve::detail
     return -j*eve::tanh(j*z);
   }
 
+
   //===-------------------------------------------------------------------------------------------
   //=== tanpi
   //===-------------------------------------------------------------------------------------------
@@ -238,14 +239,28 @@ namespace eve::detail
                                              , Z const& z
                                              ) noexcept
   {
-    auto zz = eve::i*(z+z);
-    auto [rz, iz] = zz;
-    auto [s, c] = sincos(iz);
-    auto [sh, ch] = sinhcosh(rz);
-    auto tmp = c+ch;
-    auto rr = if_else(is_imag(z), zero, sh/tmp);
-    auto ii = if_else(is_real(z), zero, s/tmp);
-    return if_else(is_infinite(rz), Z{0, -sign(rz), 0}, Z{ii-rr});
+//     auto [rz, iz] = a0+a0;
+//     iz*= pi(as(iz));
+//     auto [s, c] = sinpicospi(rz);
+//     auto [sh, ch] = sinhcosh(iz);
+//     auto tmp = c+ch;
+//     auto r = if_else(is_imag(a0), zero, s/tmp);
+//     auto i = if_else(is_real(a0), zero, sh/tmp);
+//     i = if_else(is_infinite(iz), sign(iz), r);
+//     r = if_else(is_infinite(iz), zero, i);
+//     return Z{r, i};
+
+
+    auto tanpih = [](auto z){
+      auto [rz, iz] = z+z;
+      auto [s, c] = sinpicospi(iz);
+      auto [sh, ch] = sinhcosh(pi(as(rz))*rz);
+      auto tmp = c+ch;
+      auto rr = if_else(is_imag(z), zero, sh/tmp);
+      auto ii = if_else(is_real(z), zero, s/tmp);
+      return if_else(is_infinite(rz), Z{sign(rz), 0}, Z{rr, ii});
+    };
+    return -(eve::i*tanpih(eve::i*z));
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -269,7 +284,8 @@ namespace eve::detail
                                              ) noexcept
   {
     auto r = tanpi(z);
-    return if_else(is_infinite(r), Z{0, 0}, rec(r));
+    r = if_else(is_infinite(r), Z{0, 0}, rec(r));
+    return if_else(is_real(z) && is_nan(z), z, r);
   }
 
   //===-------------------------------------------------------------------------------------------

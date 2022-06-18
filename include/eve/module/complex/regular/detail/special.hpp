@@ -16,12 +16,6 @@
 
 namespace eve::detail
 {
-
-  //==============================================================================================
-  // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec are here.
-  // acos asin atanh are in specific files included at the end
-  //==============================================================================================
-
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : tgamma
   //===-------------------------------------------------------------------------------------------
@@ -135,7 +129,7 @@ namespace eve::detail
     {
       auto lpi = Z{1.14472988584940017414342735, pi(as(g))};
       auto reala0 = is_real(a0);
-      f = if_else(negra0, lpi-log(a0)-f-log(sin(pi(as(g))*a0)), f);
+      f = if_else(negra0, lpi-log(a0)-f-log(sinpi(a0)), f);
       f = if_else (negra0 && reala0 && is_flint(real(a0)), Z{nan(as(g)), inf(as(g))}, f);
     }
     return f;
@@ -191,7 +185,8 @@ namespace eve::detail
 
     if(any(reflection))
     {
-      f = if_else(reflection, f-pi(as(g))*cot(pi(as(g))*a0), f);
+      std::cout << a0 <<  " -> " << cotpi(a0) << std::endl;
+      f = if_else(reflection, f-pi(as(g))*cotpi(a0), f);
       f = if_else (reflection && is_real(a0) && is_flint(real(a0)), Z{nan(as(g)), inf(as(g))}, f);
     }
     return f;

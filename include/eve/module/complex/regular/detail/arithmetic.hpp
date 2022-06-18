@@ -34,7 +34,13 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::minabs_, Z1 const& z1, Z2 const& z2) noexcept { return min(abs(z1), abs(z2)); }
   template<typename Z1,  typename Z2>
   EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::dist_, Z1 const& z1, Z2 const& z2) noexcept { return abs(z1-z2); }
-  template<typename Z1,  typename Z2,  typename Z3>
+
+  //==============================================================================================
+  //  trivial extension of some real ternary functions
+  //==============================================================================================
+  template<typename Z1,  typename Z2, real_value Z3>
+  EVE_FORCEINLINE auto complex_ternary_dispatch(eve::tag::lerp_, Z1 const& z1, Z2 const& z2, Z3 const& t) noexcept
+  { return lerp(abs(z1), abs(z2), t); }
 
   //==============================================================================================
   //  Unary functions

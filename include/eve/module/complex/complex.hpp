@@ -86,6 +86,7 @@ namespace eve
       return detail::complex_unary_dispatch(tag, d, z);
     }
 
+
     template<typename Tag, typename Z1, typename Z2>
     requires(like<Z1,complex> || like<Z2,complex>)
     EVE_FORCEINLINE friend  auto  tagged_dispatch ( Tag const& tag
@@ -94,6 +95,27 @@ namespace eve
                             ->    decltype(detail::complex_binary_dispatch(tag, z1, z2))
     {
       return detail::complex_binary_dispatch(tag, z1, z2);
+    }
+
+    template<typename Tag, typename Z1, typename Z2, typename Z3>
+    requires(like<Z1,complex> || like<Z2,complex> || like<Z3,complex>)
+    EVE_FORCEINLINE friend  auto  tagged_dispatch ( Tag const& tag
+                                                  , Z1 const& z1, Z2 const& z2, Z3 const& z3
+                                                  ) noexcept
+                            ->    decltype(detail::complex_ternary_dispatch(tag, z1, z2, z3))
+    {
+      return detail::complex_ternary_dispatch(tag, z1, z2, z3);
+    }
+
+    //==============================================================================================
+    // Constants support
+    //==============================================================================================
+    template<typename Tag, like<complex> Z>
+    requires( !detail::one_of<Tag, tag::i_> )
+    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
+    {
+      detail::callable_object<Tag> cst;
+      return Z{ cst(as<Type>{}), Type{0}};
     }
 
     //==============================================================================================
