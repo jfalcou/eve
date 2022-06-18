@@ -85,7 +85,7 @@ EVE_TEST_TYPES( "Check corner cases of sinpi", eve::test::scalar::ieee_reals)
     };
   std::array<c_t, N> results =
     {
-      c_t(one,   zer), //0
+      c_t(zer,zer), //0
       c_t(nan, -inf),  //1 not so sure
       c_t(nan,nan),    //2
       c_t(nan,nan),    //3

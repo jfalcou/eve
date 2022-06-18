@@ -18,8 +18,8 @@ EVE_TEST( "Check behavior of digamma"
 <typename T>(T const& , T const&  )
 {
   using e_t = typename T::value_type;
-//  using z_t = eve::complex<e_t>;
-  using z_t = eve::as_complex_t<T>;
+  using z_t = eve::complex<e_t>;
+//  using z_t = eve::as_complex_t<e_t>;
   z_t inf(eve::inf(eve::as<e_t>()), 0);
   z_t nan(eve::nan(eve::as<e_t>()), eve::nan(eve::as<e_t>()));
   z_t naninf(eve::nan(eve::as<e_t>()), eve::inf(eve::as<e_t>()));
@@ -30,9 +30,11 @@ EVE_TEST( "Check behavior of digamma"
   using eve::i;
   TTS_IEEE_EQUAL( eve::digamma(zer), naninf);
   TTS_IEEE_EQUAL( eve::digamma(-zer),naninf);
-  TTS_ULP_EQUAL( eve::digamma(one), z_t(7721566490153, 0), 0.5);
-  TTS_ULP_EQUAL( eve::digamma(two), z_t(0.422784335098467, 0), 0.5);
-  TTS_ULP_EQUAL( eve::digamma(three), z_t(0.922784335098467, 0), 0.5);
-  TTS_ULP_EQUAL( eve::digamma(z_t(-3.5, 0)), z_t(1.388870926359530, 0), 0.5);
-  TTS_ULP_EQUAL( eve::digamma(z_t(1, 1))   , z_t(9.465032062247669e-02, 1.076674047468581e+00), 4);
+  TTS_ULP_EQUAL( eve::real(eve::digamma(one)), e_t(-0.577215664901533), 25);
+  TTS_ULP_EQUAL( eve::real(eve::digamma(two)), e_t(0.422784335098467), 25);
+  TTS_ULP_EQUAL( eve::real(eve::digamma(three)), e_t(0.922784335098467), 25);
+  TTS_ULP_EQUAL( eve::real(eve::digamma(z_t(-3.5, 0))), e_t(1.388870926359530), 25);
+  TTS_ULP_EQUAL( eve::real(eve::digamma(z_t(-3.75, 0))), e_t(-1.692388598311321), 25);
+  TTS_ULP_EQUAL( eve::digamma(z_t(1, 1))   , z_t(9.465032062247669e-02, 1.076674047468581e+00), 16);
+  TTS_ULP_EQUAL( eve::digamma(z_t(-1, 1))   , z_t(0.594650320622477, 2.576674047468582), 4);
 };

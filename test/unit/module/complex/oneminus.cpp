@@ -23,7 +23,7 @@ EVE_TEST( "Check behavior of oneminus on scalar"
     for(auto f : a1)
     {
       c_t a(e, f);
-      TTS_ULP_EQUAL( eve::oneminus(a), c_t(eve::oneminus(e), f), 2);
+      TTS_ULP_EQUAL( eve::oneminus(a), c_t(eve::oneminus(e), -f), 2);
     }
   }
 };
@@ -37,5 +37,5 @@ EVE_TEST( "Check behavior of oneminus on wide"
 {
   using z_t = eve::as_complex_t<T>;
   z_t z(a0, a1);
-  TTS_ULP_EQUAL( eve::oneminus(z), z_t(eve::oneminus(a0), a1), 2);
+  TTS_ULP_EQUAL( eve::oneminus(z), z_t(eve::oneminus(a0), -a1), 2);
 };

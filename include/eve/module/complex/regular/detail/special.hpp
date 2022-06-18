@@ -66,13 +66,13 @@ namespace eve::detail
     auto o = Z{1, 0};
     f = if_else(is_eqz(z) || z == o, o, f);
     //adjust for negative real parts
+    auto reala0 = is_real(a0);
     if(any(negra0))
     {
-      auto reala0 = is_real(a0);
-      f = if_else(is_flint(real(a0)) && reala0, Z{nearest(real(z)), 0}, f);
-      f-=if_else(negra0, rec(-inv_pi(as(real(z)))*z*f*sin(pi(as(g))*z)), zero);
+      f = if_else(negra0, rec(-inv_pi(as(real(a0)))*a0*f*sinpi(a0)), zero);
       f = if_else (negra0 && reala0 && is_flint(real(a0)), Z{nan(as(sq2pi)), inf(as(sq2pi))}, f);
     }
+    f = if_else(is_gtz(real(a0)) && is_flint(real(a0)) && reala0, Z{nearest(real(f)), 0}, f);
     f = if_else (is_eqz(a0), Z(inf(as(g))*pedantic(signnz)(real(a0)), 0), f);
     return f;
   }
@@ -171,6 +171,7 @@ namespace eve::detail
 
     auto reflection = real(a0) < half(as(real(a0)));
     auto z = if_else(reflection, oneminus(a0), a0);
+
     auto d = Z{0, 0};
     auto n = d;
     for(int pp = N-1; pp >= 1; --pp){
@@ -185,7 +186,6 @@ namespace eve::detail
 
     if(any(reflection))
     {
-      std::cout << a0 <<  " -> " << cotpi(a0) << std::endl;
       f = if_else(reflection, f-pi(as(g))*cotpi(a0), f);
       f = if_else (reflection && is_real(a0) && is_flint(real(a0)), Z{nan(as(g)), inf(as(g))}, f);
     }

@@ -285,7 +285,8 @@ namespace eve::detail
   {
     auto r = tanpi(z);
     r = if_else(is_infinite(r), Z{0, 0}, rec(r));
-    return if_else(is_real(z) && is_nan(z), z, r);
+    r = if_else(is_real(z) && is_flint(real(z)*2) && is_not_flint(real(z)), zero, r);
+    return  if_else(is_real(z), Z{real(r), 0}, r);
   }
 
   //===-------------------------------------------------------------------------------------------

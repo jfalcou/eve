@@ -99,8 +99,9 @@ TTS_CASE_TPL( "Check corner cases of tanh", eve::test::scalar::ieee_reals)
   auto th = eve::tanh;
   for(int i=0; i < N; ++i)
   {
+    std::cout <<  "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(th(inputs[i]), results[i]);
-    TTS_IEEE_EQUAL(th(-inputs[i]), th(inputs[i]));
+    TTS_IEEE_EQUAL(th(-inputs[i]), -th(inputs[i]));
     TTS_IEEE_EQUAL(th(conj(inputs[i])), conj(th(inputs[i])));
   }
 };

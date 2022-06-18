@@ -30,7 +30,11 @@ EVE_TEST( "Check behavior of tgamma"
   TTS_IEEE_EQUAL( eve::tgamma(-zer), -inf);
   TTS_EQUAL( eve::tgamma(one), one );
   TTS_EQUAL( eve::tgamma(two), one);
-  TTS_ULP_EQUAL( eve::tgamma(three), two, 0.5);
-  TTS_ULP_EQUAL( eve::tgamma(z_t(-3.5, 0)), z_t(0.270088205852269, 0), 0.5);
+  TTS_ULP_EQUAL( eve::tgamma(three), two, 1);
+  TTS_ULP_EQUAL( eve::tgamma(z_t( 3.5, 0)), z_t(3.323350970447843, 0), 2.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(-3.5, 0)), z_t(0.270088205852269, 0), 2.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(3.75, 0)), z_t(4.422988410460251, 0), 2.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(-3.75, 0)), z_t(0.267866128861417, 0), 4);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(4, 0))    , z_t(6, 0)                , 2.5);
   TTS_ULP_EQUAL( eve::tgamma(z_t(1, 1))   , z_t( 0.498015668118356, - 0.154949828301811), 4);
 };

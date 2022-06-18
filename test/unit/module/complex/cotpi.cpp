@@ -97,13 +97,13 @@ EVE_TEST_TYPES( "Check corner cases of cotpi", eve::test::scalar::ieee_reals)
   auto test_cotangentpi = [](auto x){return eve::cot(eve::pi(eve::as<e_t>{})*x); };
   std::array<c_t, N> results =
     {
-      test_cotangentpi(c_t(zer,zer)), //0
+      c_t(nan,zer),  //0
       test_cotangentpi(c_t(one,inf)), //1
       test_cotangentpi(c_t(one,nan)), //2
       test_cotangentpi(c_t(inf,one)), //3
-      c_t(zer,one), //4
+      c_t(zer,-one),  //4
       test_cotangentpi(c_t(inf,nan)), //5
-      c_t(nan,zer), //6
+      c_t(nan,zer),   //6
       test_cotangentpi(c_t(nan,one)), //7
       test_cotangentpi(c_t(nan,nan))  //8
     };
@@ -111,7 +111,7 @@ EVE_TEST_TYPES( "Check corner cases of cotpi", eve::test::scalar::ieee_reals)
   {
     std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(cotangentpi(inputs[i]), results[i]);
-    TTS_IEEE_EQUAL(cotangentpi(-inputs[i]), cotangentpi(inputs[i]));
+    TTS_IEEE_EQUAL(cotangentpi(-inputs[i]), -cotangentpi(inputs[i]));
     TTS_IEEE_EQUAL(cotangentpi(conj(inputs[i])), conj(cotangentpi(inputs[i])));
   }
 };

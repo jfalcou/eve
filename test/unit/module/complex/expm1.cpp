@@ -87,5 +87,5 @@ TTS_CASE_TPL( "Check corner cases of expm1", eve::test::scalar::ieee_reals)
   }
  auto eps = eve::eps(as<T>());
  TTS_ULP_EQUAL(eve::expm1(c_t{eps, zer}),   (c_t{eps, zer}), 0.5);
- TTS_ULP_EQUAL(eve::expm1(c_t{zer, eps}),   (c_t{eve::sqr(eps)/2, eps}), 0.5);
+ TTS_ULP_EQUAL(eve::expm1(c_t{zer, eps}),   (c_t{-eve::sqr(eps)/2, eps}), 0.5);
 };

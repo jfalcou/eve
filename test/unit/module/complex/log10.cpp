@@ -92,10 +92,10 @@ TTS_CASE_TPL( "Check return types of eve::log10", eve::test::scalar::ieee_reals)
   using eve::pedantic;
   using c_t = eve::complex<T>;
 
-  TTS_ULP_EQUAL((eve::log10)(c_t(eve::mone(as<T>()))), c_t(eve::zero(as<T>()), eve::pi(as<T>())), 0.5);
+  TTS_ULP_EQUAL((eve::log10)(c_t(eve::mone(as<T>()))), c_t(eve::zero(as<T>()), eve::pi(as<T>())/eve::log_10(as<T>())), 0.5);
   TTS_ULP_EQUAL((eve::log10)(c_t(eve::one(as<T>()))), c_t(eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log10)(c_t(eve::zero(as<T>()), eve::one(as<T>()))),c_t(eve::zero(as<T>()), eve::pio_2(as<T>())), 0.5);
+  TTS_ULP_EQUAL((eve::log10)(c_t(eve::zero(as<T>()), eve::one(as<T>()))),c_t(eve::zero(as<T>()), eve::pio_2(as<T>())/eve::log_10(as<T>())), 0.5);
 
-  TTS_ULP_EQUAL(eve::log10(c_t(-4, 0)), c_t(eve::log10(T(4)), eve::pi(as<T>())), 0);
+  TTS_ULP_EQUAL(eve::log10(c_t(-4, 0)), c_t(eve::log10(T(4)), eve::pi(as<T>())/eve::log_10(as<T>())), 0);
   TTS_ULP_EQUAL(eve::log10(T(-4)), eve::nan(as<T>()), 0);
 };
