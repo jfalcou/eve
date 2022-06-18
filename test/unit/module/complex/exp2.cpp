@@ -31,8 +31,8 @@ TTS_CASE_WITH( "Check behavior of exp2 on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::exp2(eve::complex<e_t>(e, f)),  cv(std_exp2(c_t(e, f))), 2.5);
-      TTS_ULP_EQUAL(eve::exp2(eve::complex<e_t>(e, f)),  cv(std_exp2(c_t(e, f))), 2.5);
+      TTS_ULP_EQUAL(eve::exp2(eve::complex<e_t>(e, f)),  cv(std_exp2(c_t(e, f))), 4);
+      TTS_ULP_EQUAL(eve::exp2(eve::complex<e_t>(e, f)),  cv(std_exp2(c_t(e, f))), 4);
     }
   }
 };

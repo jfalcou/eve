@@ -64,10 +64,10 @@ TTS_CASE_TPL( "Check return types of cyl_bessel_j0"
   TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(0))  , eve::one(eve::as< T>()), 0.0);
 
 
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a0), map(std__cyl_bessel_j0, a0), 0.00001);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a1), map(std__cyl_bessel_j0, a1), 0.00001);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a2), map(std__cyl_bessel_j0, a2), 0.00001);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a3), map(std__cyl_bessel_j0, a3), 0.00001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a0), map(std__cyl_bessel_j0, a0), 0.0001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a1), map(std__cyl_bessel_j0, a1), 0.0001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a2), map(std__cyl_bessel_j0, a2), 0.0001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(a3), map(std__cyl_bessel_j0, a3), 0.0001);
 
 
   TTS_ULP_EQUAL(eve__cyl_bessel_j0(v_t(-1500)), std__cyl_bessel_j0(v_t(-1500)), 2.0);
@@ -89,9 +89,9 @@ TTS_CASE_TPL( "Check return types of cyl_bessel_j0"
   TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-0.5)),  T(std__cyl_bessel_j0( v_t(-0.5))), 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j0( T(-1))  ,  T(std__cyl_bessel_j0( v_t(-1))  ), 2.0);
 
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a0), map(std__cyl_bessel_j0, -a0), 0.00001);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a1), map(std__cyl_bessel_j0, -a1), 0.00001);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a2), map(std__cyl_bessel_j0, -a2), 0.00001);
-  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a3), map(std__cyl_bessel_j0, -a3), 0.00001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a0), map(std__cyl_bessel_j0, -a0), 0.0001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a1), map(std__cyl_bessel_j0, -a1), 0.0001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a2), map(std__cyl_bessel_j0, -a2), 0.0001);
+  TTS_RELATIVE_EQUAL(eve__cyl_bessel_j0(-a3), map(std__cyl_bessel_j0, -a3), 0.0001);
 };
 

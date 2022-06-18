@@ -59,7 +59,7 @@ TTS_CASE_TPL( "Check return types of sph_bessel_y1"
 
 
   TTS_ULP_EQUAL(eve__sph_bessel_y1(a0), map(std__sph_bessel_y1, a0), 130.0); //BMI2 ??
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(a1), map(std__sph_bessel_y1, a1), 20.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(a2), map(std__sph_bessel_y1, a2), 20.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(a1), map(std__sph_bessel_y1, a1), 32.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(a2), map(std__sph_bessel_y1, a2), 32.0);
 
 };

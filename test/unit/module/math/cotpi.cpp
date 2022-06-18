@@ -45,20 +45,16 @@ TTS_CASE_WITH ( "Check behavior of cotpi on wide"
 {
   using eve::detail::map;
   using eve::cotpi;
-  
+
   using eve::deginrad;
   using eve::pi;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = boost::math::sin_pi(e); return d ? boost::math::cos_pi(e)/d : eve::nan(eve::as(e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(cotpi)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cotpi)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cotpi)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(cotpi(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotpi(a1)                       , map(ref, a1), 2);
-  TTS_ULP_EQUAL(cotpi(a2)                       , map(ref, a2), 2);
-  TTS_ULP_EQUAL(cotpi(a3)                       , map(ref, a3), 2);
-  
-  
-  
-  
+  TTS_ULP_EQUAL(eve::quarter_circle(cotpi)(a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotpi)(a0)   , map(ref, a0), 2);
+  TTS_ULP_EQUAL(eve::half_circle(cotpi)(a1)   , map(ref, a1), 2);
+  TTS_ULP_EQUAL(cotpi(a0)                     , map(ref, a0), 2);
+  TTS_ULP_EQUAL(cotpi(a1)                     , map(ref, a1), 2);
+  TTS_ULP_EQUAL(cotpi(a2)                     , map(ref, a2), 2);
+  TTS_ULP_EQUAL(cotpi(a3)                     , map(ref, a3), 2);
 };

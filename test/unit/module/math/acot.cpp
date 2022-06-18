@@ -31,7 +31,7 @@ TTS_CASE_TPL( "Check return types of acot"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of acot on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate( tts::randoms(-1e20, 1e20) )
+        , tts::generate( tts::randoms(-1000.,+1000.) )
         )
 <typename T>(T const& a0 )
 {

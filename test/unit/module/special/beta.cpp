@@ -42,7 +42,6 @@ TTS_CASE_WITH( "Check behavior of beta on wide"
   using elt_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL( eve::beta(a0, a1),  map([&](auto e, auto f) -> elt_t{ return std::beta(e, f); }, a0, a1), 64);
-
   TTS_ULP_EQUAL(beta(T(-0.0), T(-0.0)), T(std::beta(elt_t(-0.0), elt_t(-0.0))), 0);
   TTS_ULP_EQUAL(beta(T( 0.0), T( 0.0)), T(std::beta(elt_t(0.0), elt_t(0.0))), 0);
   TTS_ULP_EQUAL(beta(T( 1.0), T( 1.0)), T(std::beta(elt_t(1.0), elt_t(1.0))), 0);
