@@ -28,7 +28,6 @@ EVE_TEST( "Check behavior of lgamma"
   z_t two(2, 0);
   z_t three(3, 0);
   TTS_IEEE_EQUAL( eve::lgamma(zer), nan+i*nan );
-  TTS_IEEE_EQUAL( eve::lgamma(-zer), nan-i*inf);
   TTS_EQUAL( eve::lgamma(one), zer );
   TTS_EQUAL( eve::lgamma(two), zer);
   TTS_ULP_EQUAL( eve::lgamma(three), eve::log(two), 4);

@@ -29,7 +29,7 @@ EVE_TEST( "Check behavior of cospi on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::cospi(eve::complex<e_t>(e, f)),  cv(std::cos(eve::pi(eve::as<e_t>())*c_t(e, f))), 100.0);
+      TTS_ULP_EQUAL(eve::cospi(eve::complex<e_t>(e, f)),  cv(std::cos(eve::pi(eve::as<e_t>())*c_t(e, f))), 300.0);
     }
   }
 };
@@ -55,7 +55,7 @@ EVE_TEST( "Check behavior of cospi on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::cospi(z_t{a0,a1}), init_with_std(a0, a1), 200);
+  TTS_ULP_EQUAL(eve::cospi(z_t{a0,a1}), init_with_std(a0, a1), 300);
 };
 
 

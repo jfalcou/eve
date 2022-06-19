@@ -36,7 +36,7 @@ EVE_TEST( "Check behavior of cotpi on scalar"
 //         std::cout << "f " << f << std::endl;
 //         std::cout << eve::tanpi(eve::complex<e_t>(e, f)) << std::endl;
 //         std::cout << eve::tan(eve::pi(eve::as<e_t>())*eve::complex<e_t>(e, f)) << std::endl;
-        TTS_ULP_EQUAL(eve::cotpi(eve::complex<e_t>(e, f)),  cv(std_cot(eve::pi(eve::as<e_t>())*c_t(e, f))), 100.0);
+        TTS_ULP_EQUAL(eve::cotpi(eve::complex<e_t>(e, f)),  cv(std_cot(eve::pi(eve::as<e_t>())*c_t(e, f))), 300.0);
       }
     }
 //  }

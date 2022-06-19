@@ -55,7 +55,7 @@ EVE_TEST( "Check behavior of sinpi on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::sinpi(z_t{a0,a1}), init_with_std(a0, a1), 100);
+  TTS_ULP_EQUAL(eve::sinpi(z_t{a0,a1}), init_with_std(a0, a1), 300);
 };
 
 
@@ -70,7 +70,6 @@ EVE_TEST_TYPES( "Check corner cases of sinpi", eve::test::scalar::ieee_reals)
   auto inf = eve::inf(as<e_t>());
   auto nan = eve::nan(as<e_t>());
   auto one = eve::one(as<e_t>());
-//  auto mze = eve::mzero(as<e_t>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0
@@ -99,7 +98,6 @@ EVE_TEST_TYPES( "Check corner cases of sinpi", eve::test::scalar::ieee_reals)
   auto sinpigent = eve::sinpi;
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << "-> " << results[i] << std::endl;
     TTS_IEEE_EQUAL(sinpigent(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(sinpigent(-inputs[i]), -sinpigent(inputs[i]));
     TTS_IEEE_EQUAL(sinpigent(conj(inputs[i])), conj(sinpigent(inputs[i])));
