@@ -21,7 +21,6 @@ EVE_TEST( "Check behavior of lgamma"
 //  using z_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using eve::i;
-  T inf(eve::inf(eve::as<T>()));
   T nan(eve::nan(eve::as<T>()));
   z_t one(1, 0);
   z_t zer(0, 0);
