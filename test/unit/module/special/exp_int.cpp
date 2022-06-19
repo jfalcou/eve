@@ -44,7 +44,7 @@ TTS_CASE_WITH( "Check behavior of exp_int on wide"
   using eve::as;
   for(int i=1; i < 4 ; ++i)
   {
-    TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 5);
+    TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 16);
   }
 
   if constexpr( eve::platform::supports_invalids )
@@ -52,7 +52,6 @@ TTS_CASE_WITH( "Check behavior of exp_int on wide"
     TTS_IEEE_EQUAL(exp_int(T(1), eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
     TTS_IEEE_EQUAL(exp_int(T(1), eve::inf(eve::as<T>()))   , T(0) );
   }
-
 
   for(int i=1; i < 4 ; ++i)
   {

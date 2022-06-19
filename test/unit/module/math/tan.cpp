@@ -50,19 +50,18 @@ TTS_CASE_WITH ( "Check behavior of tan on wide"
 {
   using eve::detail::map;
   using eve::tan;
-  
+
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return std::tan(double(e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(tan)(a0)      , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(tan)(a0)           , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(tan)(a1)           , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::full_circle(tan)(a0)          , map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::full_circle(tan)(a1)          , map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::full_circle(tan)(a2)          , map(ref, a2), 2);
-  TTS_ULP_EQUAL(tan(a0)                       , map(ref, a0), 2);
-  TTS_ULP_EQUAL(tan(a1)                       , map(ref, a1), 2);
-  TTS_ULP_EQUAL(tan(a2)                       , map(ref, a2), 2);
-  TTS_ULP_EQUAL(tan(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(tan(a4)                       , map(ref, a4), 2);
-  
+  TTS_ULP_EQUAL(eve::quarter_circle(tan)(a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(eve::half_circle(tan)(a0)   , map(ref, a0), 4);
+  TTS_ULP_EQUAL(eve::half_circle(tan)(a1)   , map(ref, a1), 4);
+  TTS_ULP_EQUAL(eve::full_circle(tan)(a0)   , map(ref, a0), 4);
+  TTS_ULP_EQUAL(eve::full_circle(tan)(a1)   , map(ref, a1), 4);
+  TTS_ULP_EQUAL(eve::full_circle(tan)(a2)   , map(ref, a2), 4);
+  TTS_ULP_EQUAL(tan(a0)                     , map(ref, a0), 4);
+  TTS_ULP_EQUAL(tan(a1)                     , map(ref, a1), 4);
+  TTS_ULP_EQUAL(tan(a2)                     , map(ref, a2), 4);
+  TTS_ULP_EQUAL(tan(a3)                     , map(ref, a3), 4);
+  TTS_ULP_EQUAL(tan(a4)                     , map(ref, a4), 4);
 };

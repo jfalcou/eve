@@ -48,9 +48,7 @@ TTS_CASE_WITH ( "Check behavior of tanh on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using eve::tanh;
-  
-  TTS_ULP_EQUAL(tanh(a0)      , map([](auto e) -> v_t { return std::tanh(double(e)); }, a0), 2);
-  TTS_ULP_EQUAL(tanh(a1)      , map([](auto e) -> v_t { return std::tanh(double(e)); }, a1), 2);
-  
-  
+  using eve::diff;
+  TTS_ULP_EQUAL(tanh(a0)      , map([](auto e) -> v_t { return std::tanh(double(e)); }  , a0), 4);
+  TTS_ULP_EQUAL(tanh(a1)      , map([](auto e) -> v_t { return std::tanh(double(e)); }  , a1), 4);
 };

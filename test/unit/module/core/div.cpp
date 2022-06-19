@@ -94,10 +94,10 @@ TTS_CASE_WITH( "Check behavior of div on wide"
   using eve::mul;
   using eve::saturated;
   using eve::detail::map;
-  TTS_ULP_EQUAL( eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( saturated(div)(a0, a2), map([&](auto e, auto f) { return saturated(div)(e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( div(a0, a1, a2), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL(saturated(div)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL( saturated(div)(a0, a2), map([&](auto e, auto f) { return saturated(div)(e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL( div(a0, a1, a2), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
+  TTS_ULP_EQUAL(saturated(div)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); }, a0, a1, a2), 1);
   if constexpr(eve::floating_value<T>)
   {
     

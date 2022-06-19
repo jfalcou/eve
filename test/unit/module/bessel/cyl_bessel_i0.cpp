@@ -64,9 +64,9 @@ TTS_CASE_TPL( "Check return types of cyl_bessel_i0"
   TTS_ULP_EQUAL(eve__cyl_bessel_i0( T(0))  , eve::zero(eve::as< T>()), 0.0);
 
 
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a0), map(std__cyl_bessel_i0, a0), 10.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a1), map(std__cyl_bessel_i0, a1), 10.0);
-  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a2), map(std__cyl_bessel_i0, a2), 10.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a0), map(std__cyl_bessel_i0, a0), 16.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a1), map(std__cyl_bessel_i0, a1), 16.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i0(a2), map(std__cyl_bessel_i0, a2), 16.0);
 
 };
 

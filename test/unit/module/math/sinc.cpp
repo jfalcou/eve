@@ -31,11 +31,10 @@ TTS_CASE_TPL( "Check return types of sinc"
 auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
 auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt)/2; });
 
-TTS_CASE_WITH( "Check behavior of sinc on wide"
-        , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(mini, maxi)
-                            , tts::randoms(-10.0, 10.0))
-        )
+TTS_CASE_WITH ( "Check behavior of sinc on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(mini, maxi), tts::randoms(-10.0, 10.0))
+              )
 <typename T>(T const& a0, T const& a1)
 {
   using eve::detail::map;

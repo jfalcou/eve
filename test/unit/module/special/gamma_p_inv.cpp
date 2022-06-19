@@ -41,7 +41,7 @@ TTS_CASE_WITH( "Check behavior of gamma_p_inv on wide"
   using eve::gamma_p_inv;
   TTS_RELATIVE_EQUAL( eve::gamma_p_inv(a0, a1)
                     , map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p_inv(f, e); }, a0, a1)
-                    , 1e-5
+                    , 1e-3
                     );
 
   auto bggpi =  [](auto e, auto f){return boost::math::gamma_p_inv(f, e); };

@@ -33,7 +33,7 @@ TTS_CASE_WITH( "Check behavior of default scan"
   T expected = std_scan(simd, eve::plus);
   T actual = eve::scan(simd);
 
-  TTS_RELATIVE_EQUAL(expected, actual, 0.0001);
+  TTS_RELATIVE_EQUAL(expected, actual, 0.0005);
 };
 
 TTS_CASE_WITH( "Check behavior of scan with min"

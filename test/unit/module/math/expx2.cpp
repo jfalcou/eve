@@ -45,11 +45,12 @@ TTS_CASE_WITH( "Check behavior of exp on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::expx2(a0)      , map([](auto e) -> v_t { long double le = e; return std::exp(le*le); }, a0), 100);
-  TTS_ULP_EQUAL(eve::expx2(a1)      , map([](auto e) -> v_t { long double le = e; return std::exp(le*le); }, a1), 2);
-  
-  
-  TTS_ULP_EQUAL(eve::expx2(a0, a1)      , map([](auto e, auto f) -> v_t { long double le = e; auto sig = eve::signnz(f); return std::exp(sig*le*le); }, a0, a1), 100);
+  TTS_ULP_EQUAL(eve::expx2(a0), map([](auto e) -> v_t { long double le = e; return std::exp(le*le); }, a0), 128);
+  TTS_ULP_EQUAL(eve::expx2(a1), map([](auto e) -> v_t { long double le = e; return std::exp(le*le); }, a1), 2);
+  TTS_ULP_EQUAL( eve::expx2(a0, a1)
+               , map([](auto e, auto f) -> v_t { long double le = e; auto sig = eve::signnz(f); return std::exp(sig*le*le); }, a0, a1)
+               , 128
+               );
 };
 
 TTS_CASE_TPL( "Check expx2 2 parameters"

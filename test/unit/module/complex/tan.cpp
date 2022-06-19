@@ -55,7 +55,7 @@ TTS_CASE_WITH( "Check behavior of tan on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::tan(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::tan(z_t{a0,a1}), init_with_std(a0, a1), 3);
 };
 
 

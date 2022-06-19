@@ -59,6 +59,5 @@ TTS_CASE_WITH( "Check behavior of cyl_bessel_y1 on wide"
   TTS_ULP_EQUAL(eve__cyl_bessel_y1( T(1))  ,  T(std__cyl_bessel_y1( v_t(1))  ), 2.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_y1( T(0))  , eve::minf(eve::as< T>()), 0.0);
 
-
-  TTS_ULP_EQUAL(eve__cyl_bessel_y1(a0), map(std__cyl_bessel_y1, a0), 32.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_y1(a0), map(std__cyl_bessel_y1, a0), 512.0);
 };

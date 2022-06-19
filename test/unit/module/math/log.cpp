@@ -30,8 +30,9 @@ TTS_CASE_TPL( "Check return types of log"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of log on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(0.0, eve::valmax)
-                             , tts::randoms(0.5, 2.0))
+        , tts::generate ( tts::randoms(eve::eps, eve::valmax)
+                        , tts::randoms(0.5, 2.0)
+                        )
         )
 <typename T>(T const& a0, T const& a1)
 {
