@@ -55,7 +55,7 @@ EVE_TEST( "Check behavior of cospi on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::cospi(z_t{a0,a1}), init_with_std(a0, a1), 100);
+  TTS_ULP_EQUAL(eve::cospi(z_t{a0,a1}), init_with_std(a0, a1), 200);
 };
 
 
@@ -99,7 +99,6 @@ EVE_TEST_TYPES( "Check corner cases of cospi", eve::test::scalar::ieee_reals)
   auto cospigent = eve::cospi;
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << "-> " << results[i] << std::endl;
     TTS_IEEE_EQUAL(cospigent(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(cospigent(-inputs[i]), results[i]);
     TTS_IEEE_EQUAL(cospigent(conj(inputs[i])), conj(results[i]));

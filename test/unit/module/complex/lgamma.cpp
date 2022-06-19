@@ -32,6 +32,6 @@ EVE_TEST( "Check behavior of lgamma"
   TTS_EQUAL( eve::lgamma(one), zer );
   TTS_EQUAL( eve::lgamma(two), zer);
   TTS_ULP_EQUAL( eve::lgamma(three), eve::log(two), 4);
-  TTS_ULP_EQUAL( eve::lgamma(z_t(-3.5, 0)), z_t(-1.309006684993043, 0), 1);
+  TTS_ULP_EQUAL( eve::lgamma(z_t(-3.5, 0)), z_t(-1.309006684993043, 0), 4);
   TTS_ULP_EQUAL( eve::lgamma(z_t(1, 1))   , z_t( -0.650923199301856, -0.301640320467534), 4);
 };
