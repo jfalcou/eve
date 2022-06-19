@@ -29,7 +29,7 @@ EVE_TEST( "Check behavior of tanpi on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::tanpi(eve::complex<e_t>(e, f)),  cv(std::tan(eve::pi(eve::as<e_t>())*c_t(e, f))), 100.0);
+      TTS_ULP_EQUAL(eve::tanpi(eve::complex<e_t>(e, f)),  cv(std::tan(eve::pi(eve::as<e_t>())*c_t(e, f))), 300.0);
     }
   }
 };
@@ -55,7 +55,7 @@ EVE_TEST( "Check behavior of tanpi on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::tanpi(z_t{a0,a1}), init_with_std(a0, a1), 100);
+  TTS_ULP_EQUAL(eve::tanpi(z_t{a0,a1}), init_with_std(a0, a1), 300);
 };
 
 

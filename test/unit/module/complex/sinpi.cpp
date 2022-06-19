@@ -29,7 +29,7 @@ EVE_TEST( "Check behavior of sinpi on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::sinpi(eve::complex<e_t>(e, f)),  cv(std::sin(eve::pi(eve::as<e_t>())*c_t(e, f))), 100.0);
+      TTS_ULP_EQUAL(eve::sinpi(eve::complex<e_t>(e, f)),  cv(std::sin(eve::pi(eve::as<e_t>())*c_t(e, f))), 300.0);
     }
   }
 };
