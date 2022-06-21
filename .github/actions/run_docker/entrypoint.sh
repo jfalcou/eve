@@ -7,11 +7,11 @@ cmake .. -G Ninja -DEVE_OPTIONS="$1" $2
 echo "::endgroup::"
 
 echo "::group:: Compiling Unit Tests"
-ninja -v unit -j 8
+ninja -v unit -j $4
 echo "::endgroup::"
 
 echo "::group:: Running Unit Tests"
-ctest --output-on-failure -j 8
+ctest --output-on-failure -j $4
 echo "::endgroup::"
 
 exit 0
