@@ -11,6 +11,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
+#include <eve/concept/logical.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -129,18 +130,6 @@ namespace eve
   //! - `double`
   //================================================================================================
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
-
-  //================================================================================================
-  //! @concept logical_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
-  //! The concept `logical_scalar_value<T>` is satisfied if and only if T is logical and scalar_value
-  //!
-  //! @groupheader{Examples}
-  //! - `logical<float>`
-  //! - `logical<int>`
-  //================================================================================================
-  template<typename T> concept logical_scalar_value           = scalar_value<T> && is_logical_v<T>;
 
   //================================================================================================
   //! @concept real_scalar_value
