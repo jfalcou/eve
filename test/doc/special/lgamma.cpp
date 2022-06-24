@@ -13,7 +13,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                = " << pf << '\n'
             << "-> lgamma(pf)        = " << eve::lgamma(pf) << '\n'
-            << "-> diff(lgamma)(pf)  = " << eve::diff(eve::lgamma)(pf) << '\n';
+            ;
 
   float xf = 4.0f;
 

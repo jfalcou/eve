@@ -62,19 +62,19 @@ EVE_TEST_TYPES( "Check return types of add"
   TTS_EXPR_IS( eve::saturated(eve::add)(v_t(), T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::add)(v_t(), v_t(), v_t()) , v_t);
 
-  //diff
+
   if constexpr(eve::floating_value<T>)
   {
-    using eve::diff_1st;
-    using eve::diff_2nd;
-    TTS_EXPR_IS( diff_1st(eve::add)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_1st(eve::add)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_1st(eve::add)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_1st(eve::add)(v_t(), v_t()) , v_t);
-    TTS_EXPR_IS( diff_2nd(eve::add)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_2nd(eve::add)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::add)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::add)(v_t(), v_t()) , v_t);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   }
 };
 
@@ -101,9 +101,9 @@ EVE_TEST( "Check behavior of add on wide"
   TTS_EQUAL( saturated(add)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(add)(saturated(add)(e, f), g); }, a0, a1, a2));
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL( eve::diff_1st(add)(a0, a2), eve::one(eve::as(a0)));
-    TTS_EQUAL( eve::diff_2nd(add)(a0, a2), eve::one(eve::as(a0)));
-    TTS_EQUAL( eve::diff_3rd(add)(a0, a1, a2), eve::one(eve::as(a0)));
+    
+    
+    
   }
 
 };

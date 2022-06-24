@@ -62,19 +62,19 @@ EVE_TEST_TYPES( "Check return types of sub"
   TTS_EXPR_IS( eve::saturated(eve::sub)(v_t(), T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::sub)(v_t(), v_t(), v_t()) , v_t);
 
-  //diff
+
   if constexpr(eve::floating_value<T>)
   {
-    using eve::diff_1st;
-    using eve::diff_2nd;
-    TTS_EXPR_IS( diff_1st(eve::sub)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_1st(eve::sub)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_1st(eve::sub)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_1st(eve::sub)(v_t(), v_t()) , v_t);
-    TTS_EXPR_IS( diff_2nd(eve::sub)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_2nd(eve::sub)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::sub)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::sub)(v_t(), v_t()) , v_t);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   }
 };
 
@@ -99,9 +99,9 @@ EVE_TEST( "Check behavior of sub on wide"
   TTS_EQUAL( saturated(sub)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(sub)(saturated(sub)(e, f), g); }, a0, a1, a2));
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL( eve::diff_1st(sub)(a0, a2), eve::one(eve::as(a0)));
-    TTS_EQUAL( eve::diff_2nd(sub)(a0, a2), eve::mone(eve::as(a0)));
-    TTS_EQUAL( eve::diff_3rd(sub)(a0, a1, a2), eve::mone(eve::as(a0)));
+    
+    
+    
   }
 
 };

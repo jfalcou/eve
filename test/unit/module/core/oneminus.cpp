@@ -39,8 +39,8 @@ EVE_TEST_TYPES( "Check return types of eve::oneminus", eve::test::simd::all_type
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::oneminus)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::oneminus)(v_t()) , v_t );
+
+
   }
 };
 
@@ -67,8 +67,6 @@ EVE_TEST( "Check behavior of eve::oneminus(eve::wide)"
     TTS_EQUAL(saturated(oneminus)(a0), eve::if_else(eve::is_eqz(a0), eve::one(eve::as(a0)), eve::zero));
   else
     TTS_EQUAL(saturated(oneminus)(a0), eve::if_else(a0 < eve::valmin(eve::as(a0)) + 2, eve::valmax(eve::as(a0)), oneminus(a0)));
-  if constexpr(eve::floating_real_value<T>)
-    TTS_EQUAL ( eve::diff(eve::oneminus)(a0), eve::mone(eve::as(a0)));
 };
 
 //==================================================================================================

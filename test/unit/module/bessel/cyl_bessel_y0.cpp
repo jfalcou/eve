@@ -62,16 +62,3 @@ EVE_TEST( "Check behavior of cyl_bessel_y0 on wide"
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_y0(a0), map(std__cyl_bessel_y0, a0), 0.001);
 };
-
-
-EVE_TEST( "Check behavior of diff(cyl_bessel_y0) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 60.0))
-        )
-  <typename T>(T a0 )
-{
-  using v_t =  eve::element_type_t<T>;
-  auto eve__diff_bessel_y0 =  [](auto x) { return eve::diff(eve::cyl_bessel_y0)(x); };
-  auto std__diff_bessel_y0 =  [](auto x)->v_t { return boost::math::cyl_neumann_prime(v_t(0), x); };
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_y0(a0),   map(std__diff_bessel_y0, a0), 1.0e-3);
-};

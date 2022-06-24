@@ -11,7 +11,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
             << "-> sind(pf)       = " << eve::sind(pf) << '\n'
-            << "-> diff(sind)(pf) = " << eve::diff(eve::sind)(pf) << '\n';
+            ;
 
   float xf = 3.0f;
 

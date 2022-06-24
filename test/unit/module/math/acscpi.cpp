@@ -42,13 +42,12 @@ EVE_TEST( "Check behavior of acscpi on wide"
   using v_t = eve::element_type_t<T>;
 
   auto sacscpi = [](auto e) -> v_t { return eve::radinpi(std::asin(1/e)); };
-  auto dacscpi = [](auto e) -> v_t { return eve::radinpi(-v_t(1)/(std::abs(e)*std::sqrt(e*e-1))); };
   TTS_ULP_EQUAL(eve::acscpi(a0)           , map(sacscpi, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscpi)(a0), map(dacscpi, a0), 2);
+
   TTS_ULP_EQUAL(eve::acscpi(a1)           , map(sacscpi, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscpi)(a1), map(dacscpi, a1), 2);
+
   TTS_ULP_EQUAL(eve::acscpi(a2)           , map(sacscpi, a2), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscpi)(a2), map(dacscpi, a2), 2);
+
   TTS_ULP_EQUAL(eve::acscpi(a3)           , map(sacscpi, a3), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscpi)(a3), map(dacscpi, a3), 2);
+
 };

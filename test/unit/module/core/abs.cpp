@@ -48,8 +48,8 @@ EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::simd::all_types)
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::abs)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::abs)(v_t()) , v_t );
+
+
   }
 };
 
@@ -123,21 +123,6 @@ EVE_TEST( "Check behavior of eve::saturated(eve::abs)(eve::wide)"
 };
 
 //==================================================================================================
-// Test for eve::diff(eve::abs)
-//==================================================================================================
-EVE_TEST( "Check behavior of eve::diff(eve::abs) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0)
-{
-  using eve::detail::map;
-  using v_t = eve::element_type_t<T>;
-
-  TTS_EQUAL ( eve::diff(eve::abs)(a0)
-            , map([](auto e) -> v_t { return e > 0 ? 1 : ((e <  0) ? -1 : 0); }, a0)
-            );
-};
 
 //==================================================================================================
 // Test for corner-cases values

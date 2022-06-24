@@ -15,7 +15,7 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> absmax(pf, qf)            = " << eve::absmax(pf, qf) << '\n'
-            << "-> diff(eve::absmax)(pf, qf) = " << eve::diff(eve::absmax)(pf, qf) << '\n'
+            
             << "-> pedantic(absmax)(pf, qf)  = " << eve::pedantic(eve::absmax)(pf, qf) << '\n'
             << "-> numeric(absmax)(pf, qf)   = " << eve::numeric(eve::absmax)(pf, qf) << '\n';
 

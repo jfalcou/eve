@@ -21,8 +21,8 @@ EVE_TEST_TYPES( "Check return types of eve::sqr_abs", eve::test::simd::ieee_real
 
   TTS_EXPR_IS( sqr_abs(T())                      , T );
   TTS_EXPR_IS( sqr_abs(v_t())                      , v_t );
-  TTS_EXPR_IS( eve::diff(eve::sqr_abs)(T()) , T );
-  TTS_EXPR_IS( eve::diff(eve::sqr_abs)(v_t()) , v_t );
+  
+  
 };
 
 
@@ -43,5 +43,5 @@ EVE_TEST( "Check behavior of eve::sqr_abs(eve::wide)"
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(sqr_abs(a0)      , map([](auto e) -> v_t { return e*e; }, a0) );
-  TTS_EQUAL(eve::diff(sqr_abs)(a0), 2*a0);
+  
 };

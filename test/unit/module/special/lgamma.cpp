@@ -36,7 +36,7 @@ EVE_TEST( "Check behavior of lgamma on wide"
   using v_t = eve::element_type_t<T>;
   using eve::lgamma;
   TTS_ULP_EQUAL( lgamma(a0),  map([&](auto e) -> v_t{ return std::lgamma(e); }, a0), 2);
-  TTS_ULP_EQUAL( eve::diff(lgamma)(a0),  eve::digamma(a0), 2);
+  
 
 
   TTS_ULP_EQUAL(lgamma(T(0.5)), T(std::lgamma(v_t(0.5))), 1. );

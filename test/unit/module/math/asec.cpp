@@ -41,14 +41,13 @@ EVE_TEST( "Check behavior of asec on wide"
   using v_t = eve::element_type_t<T>;
 
   auto sasec = [](auto e) -> v_t { return std::acos(1/e); };
-  auto dasec = [](auto e) -> v_t { return v_t(1)/(std::abs(e)*std::sqrt(e*e-1)); };
   TTS_ULP_EQUAL(eve::asec(a0)           , map(sasec, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asec)(a0), map(dasec, a0), 2);
+  
   TTS_ULP_EQUAL(eve::asec(a1)           , map(sasec, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asec)(a1), map(dasec, a1), 2);
+  
   TTS_ULP_EQUAL(eve::asec(a2)           , map(sasec, a2), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asec)(a2), map(dasec, a2), 2);
+  
   TTS_ULP_EQUAL(eve::asec(a3)           , map(sasec, a3), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asec)(a3), map(dasec, a3), 2);
+  
 
 };

@@ -62,19 +62,19 @@ EVE_TEST_TYPES( "Check return types of div"
   TTS_EXPR_IS( eve::saturated(eve::div)(v_t(), T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::div)(v_t(), v_t(), v_t()) , v_t);
 
-  //diff
+
   if constexpr(eve::floating_value<T>)
   {
-    using eve::diff_1st;
-    using eve::diff_2nd;
-    TTS_EXPR_IS( diff_1st(eve::div)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_1st(eve::div)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_1st(eve::div)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_1st(eve::div)(v_t(), v_t()) , v_t);
-    TTS_EXPR_IS( diff_2nd(eve::div)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_2nd(eve::div)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::div)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::div)(v_t(), v_t()) , v_t);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   }
 };
 
@@ -100,11 +100,11 @@ EVE_TEST( "Check behavior of div on wide"
   TTS_ULP_EQUAL(saturated(div)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); }, a0, a1, a2), 0.5);
   if constexpr(eve::floating_value<T>)
   {
-    TTS_EQUAL( eve::diff_1st(div)(a0, a1), eve::rec(a1));
-    TTS_EQUAL( eve::diff_2nd(div)(a0, a1), -a0*eve::rec(eve::sqr(a1)));
-    TTS_EQUAL( eve::diff_1st(div)(a0, a1, a2), eve::rec(a2*a1));
-    TTS_ULP_EQUAL( eve::diff_2nd(div)(a0, a1, a2), -a0*eve::rec(a2*eve::sqr(a1)), 2);
-    TTS_ULP_EQUAL( eve::diff_3rd(div)(a0, a1, a2), -a0*eve::rec(a1*eve::sqr(a2)), 2);
+    
+    
+    
+    
+    
   }
 };
 

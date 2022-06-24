@@ -11,7 +11,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                = " << pf << '\n'
             << "-> nearest(pf)       = " << eve::nearest(pf) << '\n'
-            << "-> diff(nearest)(pf) = " << eve::diff(eve::nearest)(pf) << '\n';
+            ;
 
   float xf = -32.768f;
 

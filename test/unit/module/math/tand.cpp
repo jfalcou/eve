@@ -47,7 +47,7 @@ EVE_TEST( "Check behavior of tand on wide"
 {
   using eve::detail::map;
   using eve::tand;
-  using eve::diff;
+  
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::cosd(e); return d ? eve::sind(e)/d: eve::nan(eve::as(e)); };
@@ -58,7 +58,4 @@ EVE_TEST( "Check behavior of tand on wide"
   TTS_ULP_EQUAL(tand(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(tand(a2)                       , map(ref, a2), 2);
 
-  auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
-
-  TTS_ULP_EQUAL(diff(tand)(a0), map([dinr](auto e) -> v_t { return  dinr*eve::sqr(eve::secd(e)); }, a0), 2);
 };

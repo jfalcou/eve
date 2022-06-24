@@ -54,16 +54,13 @@ EVE_TEST( "Check behavior of maxmag on all types full range"
   using eve::abs;
   using v_t = eve::element_type_t<T>;
   auto m = [](auto a, auto b, auto c)-> v_t {return maxmag(maxmag(a, b), c); };
-  auto dm1 = [](auto a, auto b, auto c)-> v_t {return eve::maxmag(a, b, c) == a? 1 : 0;  };
-  auto dm2 = [](auto a, auto b, auto c)-> v_t {return eve::maxmag(a, b, c) == b? 1 : 0;  };
-  auto dm3 = [](auto a, auto b, auto c)-> v_t {return eve::maxmag(a, b, c) == c? 1 : 0;  };
   TTS_ULP_EQUAL(maxmag((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(maxmag)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(maxmag)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(maxmag)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  
+  
+  
   TTS_IEEE_EQUAL(maxmag[t](a0, a1), eve::if_else(t, maxmag(a0, a1), a0));
 };
 

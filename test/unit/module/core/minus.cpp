@@ -39,8 +39,8 @@ EVE_TEST_TYPES( "Check return types of eve::minus", eve::test::simd::signed_type
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::minus)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::minus)(v_t()) , v_t );
+
+
   }
 };
 
@@ -103,21 +103,6 @@ EVE_TEST( "Check behavior of eve::saturated(eve::minus)(eve::wide)"
             );
 };
 
-//==================================================================================================
-// Test for eve::diff(eve::minus)
-//==================================================================================================
-EVE_TEST( "Check behavior of eve::diff(eve::minus) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0)
-{
-  using eve::detail::map;
-
-  TTS_EQUAL ( eve::diff(eve::minus)(a0)
-            , eve::mone(eve::as(a0))
-            );
-};
 
 //==================================================================================================
 // Test for corner-cases values

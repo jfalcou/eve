@@ -46,17 +46,10 @@ EVE_TEST( "Check behavior of sinpic on wide"
 {
   using eve::detail::map;
   using eve::sinpic;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   v_t dpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [dpi](auto e) -> v_t { return e ? eve::sinpi(e)/(dpi*e) : v_t(1); };
   TTS_ULP_EQUAL(sinpic(a0)                       , map(ref, a0), 3);
   TTS_ULP_EQUAL(sinpic(a1)                       , map(ref, a1), 3);
-  auto ds = [dpi](auto x) -> v_t {
-    auto [s, c] = eve::sinpicospi(x);
-    return x ? eve::fms(x*dpi, c, s)/(dpi*x*x) : v_t(0);
-
-  };
-  TTS_ULP_EQUAL(diff(sinpic)(a0), map(ds, a0), 3);
-  TTS_ULP_EQUAL(diff(sinpic)(a1), map(ds, a1), 3);
 };

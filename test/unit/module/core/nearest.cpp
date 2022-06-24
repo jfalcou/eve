@@ -28,8 +28,8 @@ EVE_TEST_TYPES( "Check return types of nearest"
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::nearest)(T())  , T);
-    TTS_EXPR_IS( eve::diff(eve::nearest)(v_t()), v_t);
+    
+    
   }
 };
 
@@ -54,7 +54,7 @@ EVE_TEST( "Check behavior of nearest on wide"
     TTS_EQUAL( eve::nearest(a0), T([&](auto i, auto) { return v_t(std::nearbyint(a0.get(i))); }));
     TTS_EQUAL( eve::int_(eve::nearest)(a0), wi_t([&](auto i, auto) { return i_t(std::nearbyint(a0.get(i))); }));
     TTS_EQUAL( eve::uint_(eve::nearest)(eve::abs(a0)), uwi_t([&](auto i, auto) { return ui_t(std::nearbyint(std::abs(a0.get(i)))); }));
-    TTS_EQUAL( eve::diff(eve::nearest)(a0), eve::zero(eve::as(a0)));
+    
   }
   else
   {

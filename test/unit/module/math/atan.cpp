@@ -40,6 +40,6 @@ EVE_TEST( "Check behavior of atan on wide"
 
   TTS_ULP_EQUAL(eve::atan(a0)      , map([](auto e) -> v_t { return std::atan(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::atan(a1)      , map([](auto e) -> v_t { return std::atan(e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atan)(a0), map([](auto e) -> v_t { return  v_t(1)/(e*e+1); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atan)(a1), map([](auto e) -> v_t { return  v_t(1)/(e*e+1); }, a1), 2);
+  
+  
 };

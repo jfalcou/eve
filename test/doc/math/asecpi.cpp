@@ -12,7 +12,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf               = " << pf << '\n'
     << "-> asecpi(pf)       = " << eve::asecpi(pf) << '\n'
-    << "-> diff(asecpi)(pf) = " << eve::diff(eve::asecpi)(pf) << '\n';
+    ;
 
   float xf = 1.0f;
   float yf = eve::inf(eve::as<float>());

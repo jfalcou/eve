@@ -40,6 +40,6 @@ EVE_TEST( "Check behavior of acosh on wide"
 
   TTS_ULP_EQUAL(eve::acosh(a0)      , map([](auto e) -> v_t { return std::acosh(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::acosh(a1)      , map([](auto e) -> v_t { return std::acosh(e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acosh)(a0), map([](auto e) -> v_t { return  v_t(1)/std::sqrt(e*e-1); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acosh)(a1), map([](auto e) -> v_t { return  v_t(1)/std::sqrt(e*e-1); }, a1), 2);
+  
+  
 };

@@ -14,8 +14,8 @@ int main()
     << "<- pf                      = " << pf << '\n'
     << "<- qf                      = " << qf << '\n'
     << "-> atan2(pf, qf)           = " << eve::atan2(pf, qf) << '\n'
-    << "-> diff_1st(atan2)(pf, qf) = " << eve::diff_1st(eve::atan2)(pf, qf) << '\n'
-    << "-> diff_2nd(atan2)(pf, qf) = " << eve::diff_2nd(eve::atan2)(pf, qf) << '\n';
+    
+    ;
 
   float xf = 2.0f;
   float yf = 10.0f;

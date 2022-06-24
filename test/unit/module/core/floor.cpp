@@ -32,8 +32,8 @@ EVE_TEST_TYPES( "Check return types of floor"
     TTS_EXPR_IS( eve::tolerant(eve::floor)(T())  , T);
     TTS_EXPR_IS( eve::tolerant(eve::floor)(v_t()), v_t);
 
-    TTS_EXPR_IS( eve::diff(eve::floor)(T())  , T);
-    TTS_EXPR_IS( eve::diff(eve::floor)(v_t()), v_t);
+
+
   }
 };
 
@@ -103,7 +103,7 @@ EVE_TEST_TYPES( "Check  with particular values"
 // floor(simd)  tests
 //==================================================================================================
 auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
+EVE_TEST( "Check behavior of floor(wide) "
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
         )
@@ -118,7 +118,7 @@ EVE_TEST( "Check behavior of floor(wide) and diff(floor(wide))"
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::floor(a0), map([&](auto e) -> v_t{ return v_t(std::floor(e)); }, a0));
-    TTS_EQUAL( eve::diff(eve::floor)(a0), eve::zero(eve::as(a0)));
+
     TTS_EQUAL( eve::int_(eve::floor)(a0), wi_t([&](auto i, auto) { return i_t(std::floor(a0.get(i))); }));
     TTS_EQUAL( eve::uint_(eve::floor)(eve::abs(a0)), uwi_t([&](auto i, auto) { return ui_t(std::floor(std::abs(a0.get(i)))); }));
   }

@@ -38,5 +38,5 @@ EVE_TEST( "Check behavior of acotd on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::acotd(a0)      , map([](auto e) -> v_t { return eve::radindeg(std::atan(1/e)); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acotd)(a0), map([](auto e) -> v_t { return  eve::radindeg(-v_t(1))/(e*e+1); }, a0), 2);
+  
 };

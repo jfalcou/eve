@@ -10,16 +10,11 @@ int main()
                eve::inf(eve::as<double>()), eve::minf(eve::as<double>()), eve::nan(eve::as<double>())};
 
   auto [s, c]    = eve::sinhcosh(pf);
-  auto [ds, dc]  = eve::diff(eve::sinhcosh)(pf);
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
             << "-> sinhcosh(pf)        = [" << '\n'
             << "                        " << s << ", \n"
             << "                        " << c << '\n'
-            << "                       ]\n"
-            << "-> diff(sinhcosh)(pf)  = [" << '\n'
-            << "                        " << ds << ", \n"
-            << "                        " << dc << '\n'
             << "                       ]\n";
 
   float xf = 2.3;

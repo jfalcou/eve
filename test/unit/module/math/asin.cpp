@@ -38,5 +38,5 @@ EVE_TEST( "Check behavior of asin on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::asin(a0)      , map([](auto e) -> v_t { return std::asin(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asin)(a0), map([](auto e) -> v_t { return  v_t(1)/std::sqrt(1-e*e); }, a0), 2);
+  
 };

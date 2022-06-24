@@ -16,9 +16,9 @@ int main()
     << "<- qf                          = " << qf << '\n'
     << "<- rf                          = " << rf << '\n'
     << "-> fanm(pf, qf, rf)            = " << eve::fanm(pf, qf, rf) << '\n'
-    << "-> diff_1st(fanm)(pf, qf, rf)  = " << eve::diff_1st(eve::fanm)(pf, qf, rf) << '\n'
-    << "-> diff_2nd(fanm)(pf, qf, rf)  = " << eve::diff_2nd(eve::fanm)(pf, qf, rf) << '\n'
-    << "-> diff_3rd(fanm)(pf, qf, rf)  = " << eve::diff_3rd(eve::fanm)(pf, qf, rf) << '\n';
+    
+    
+    ;
 
 
   float xf = 1.0f;
@@ -30,8 +30,8 @@ int main()
     << "<- yf                         = " << yf << '\n'
     << "<- zf                         = " << yf << '\n'
     << "-> fanm(xf, yf, zf)           = " << eve::fanm(xf, yf, zf) << '\n'
-    << "-> diff_1st(fanm)(xf, yf, zf) = " << eve::diff_1st(eve::fanm)(xf, yf, zf) << '\n'
-    << "-> diff_2nd(fanm)(xf, yf, zf) = " << eve::diff_2nd(eve::fanm)(xf, yf, zf) << '\n'
-    << "-> diff_3rd(fanm)(xf, yf, zf) = " << eve::diff_3rd(eve::fanm)(xf, yf, zf) << '\n';
+    
+    
+    ;
   return 0;
 }

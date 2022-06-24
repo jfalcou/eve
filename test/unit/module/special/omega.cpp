@@ -66,27 +66,3 @@ EVE_TEST( "Check behavior of omega on wide"
     }
   }
 };
-EVE_TEST( "Check behavior of diff omega on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(1.0, 1000)
-                             , eve::test::randoms(0.0, 1.0)
-                             , eve::test::randoms(-10.0, 0.0)
-                             )
-        )
-  <typename T>(T a0, T a1, T a2)
-{
-  using elt_t = eve::element_type_t<T>;
-  using eve::diff;
-  if constexpr( eve::platform::supports_invalids )
-  {
-    TTS_ULP_EQUAL(diff(eve::omega)(eve::nan(eve::as(a0))), eve::nan(eve::as(a0)), 0.0);
-    TTS_ULP_EQUAL(diff(eve::omega)(eve::inf(eve::as(a0))), eve::zero(eve::as(a0)), 0.0);
-    TTS_ULP_EQUAL(diff(eve::omega)(eve::minf(eve::as(a0))), eve::zero(eve::as(a0)), 0.0);
-    TTS_ULP_EQUAL(diff(eve::omega)(T(1)), T(0.5), 2.0);
-    auto domega = [](auto x) {auto om = eve::omega(x); return om/eve::inc(om); };
-    elt_t tol = 1000*eve::eps(eve::as<elt_t>());
-    TTS_RELATIVE_EQUAL(diff(eve::omega)(a0), domega(a0), tol);
-    TTS_RELATIVE_EQUAL(diff(eve::omega)(a1), domega(a1), tol);
-    TTS_RELATIVE_EQUAL(diff(eve::omega)(a2), domega(a2), tol);
-  }
-};

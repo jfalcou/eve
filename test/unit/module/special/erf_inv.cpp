@@ -37,10 +37,6 @@ EVE_TEST( "Check behavior of erf_inv on wide"
   using eve::erf_inv;
   using eve::as;
   TTS_ULP_EQUAL( erf_inv(a0),  map([](auto e){return boost::math::erf_inv(e);}, a0), 2);
-  auto derf_inv = [](auto e){return v_t(0.886226925452758013649)*std::exp(eve::sqr(erf_inv(e)));};
-  TTS_ULP_EQUAL( eve::diff(erf_inv)(a0),  map(derf_inv, a0), 2);
-
-
   TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(v_t(0.5))), 1. );
 
   if constexpr(eve::platform::supports_denormals)

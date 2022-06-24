@@ -42,14 +42,13 @@ EVE_TEST( "Check behavior of acscd on wide"
   using v_t = eve::element_type_t<T>;
 
   auto sacscd = [](auto e) -> v_t { return eve::radindeg(std::asin(1/e)); };
-  auto dacscd = [](auto e) -> v_t { return eve::radindeg(-v_t(1)/(std::abs(e)*std::sqrt(e*e-1))); };
   TTS_ULP_EQUAL(eve::acscd(a0)           , map(sacscd, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscd)(a0), map(dacscd, a0), 2);
+  
   TTS_ULP_EQUAL(eve::acscd(a1)           , map(sacscd, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscd)(a1), map(dacscd, a1), 2);
+  
   TTS_ULP_EQUAL(eve::acscd(a2)           , map(sacscd, a2), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscd)(a2), map(dacscd, a2), 2);
+  
   TTS_ULP_EQUAL(eve::acscd(a3)           , map(sacscd, a3), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acscd)(a3), map(dacscd, a3), 2);
+  
 
 };

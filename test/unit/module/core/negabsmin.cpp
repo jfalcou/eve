@@ -55,16 +55,13 @@ EVE_TEST( "Check behavior of negabsmin on all types full range"
   using v_t = eve::element_type_t<T>;
 
   auto m = [](auto a, auto b, auto c)-> v_t {return -eve::abs(eve::min(a, b, c)); };
-  auto dm1 = [](auto a, auto b, auto c)-> v_t {return eve::min(a, b, c) == a? -eve::sign(a) : 0;  };
-  auto dm2 = [](auto a, auto b, auto c)-> v_t {return eve::min(a, b, c) == b? -eve::sign(b) : 0;  };
-  auto dm3 = [](auto a, auto b, auto c)-> v_t {return eve::min(a, b, c) == c? -eve::sign(c) : 0;  };
   TTS_ULP_EQUAL(negabsmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(negabsmin)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(negabsmin)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(negabsmin)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+
+
+
   TTS_IEEE_EQUAL(negabsmin[t](a0, a1), eve::if_else(t, negabsmin(a0, a1), a0));
  };
 

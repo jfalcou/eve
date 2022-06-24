@@ -34,7 +34,7 @@ EVE_TEST( "Check behavior of fracscale(wide) and diff on  floating types"
 <typename T>(T const& a0 )
 {
   using eve::detail::map;
-  using eve::diff;
+  
   using eve::sqr;
   using eve::rec;
   TTS_ULP_EQUAL( eve::fracscale(a0, 4),  map([&](auto e) { return e-eve::ldexp(eve::nearest(eve::ldexp(e, 4)), -4); }, a0), 2);

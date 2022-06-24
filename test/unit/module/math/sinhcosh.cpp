@@ -45,7 +45,7 @@ auto mini = []<typename T>(eve::as<T> const & tgt)
 {
   using eve::detail::map;
   using eve::sinhcosh;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return std::cosh(e); };
   auto refs = [](auto e) -> v_t { return std::sinh(e); };

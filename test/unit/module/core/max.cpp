@@ -54,15 +54,12 @@ EVE_TEST( "Check behavior of max on all types full range"
   using eve::abs;
   using v_t = eve::element_type_t<T>;
   auto m = [](auto a, auto b, auto c)-> v_t {return std::max(std::max(a, b), c); };
-  auto dm1 = [](auto a, auto b, auto c)-> v_t {return eve::max(a, b, c) == a? 1 : 0;  };
-  auto dm2 = [](auto a, auto b, auto c)-> v_t {return eve::max(a, b, c) == b? 1 : 0;  };
-  auto dm3 = [](auto a, auto b, auto c)-> v_t {return eve::max(a, b, c) == c? 1 : 0;  };
   TTS_ULP_EQUAL(max((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(max)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (max)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(max)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(max)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(max)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+
+
+
   TTS_IEEE_EQUAL(max[t](a0, a1), eve::if_else(t, max(a0, a1), a0));
 };
 
