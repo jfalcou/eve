@@ -19,8 +19,8 @@ int main()
             << " <- qf                      = " << qf << '\n'
             << " -> mul(pf, qf)             = " << eve::mul(pf, qf) << '\n'
             << " -> pf * qf                 = " << pf * qf << '\n'
-            << " -> diff_1st(mul)(pf, qf)   = " <<  eve::diff_1st(eve::mul)(pf, qf) << '\n'
-            << " -> diff_2nd(mul)(pf, qf)   = " <<  eve::diff_2nd(eve::mul)(pf, qf) << '\n';
+            
+            ;
 
   std::int16_t xi = 100, yi = 32700;
 

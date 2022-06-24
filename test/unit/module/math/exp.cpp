@@ -40,8 +40,8 @@ EVE_TEST( "Check behavior of exp on wide"
 
   TTS_ULP_EQUAL(eve::exp(a0)      , map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::exp(a1)      , map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::exp)(a0), eve::exp(a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::exp)(a1), eve::exp(a1), 2);
+  
+  
   TTS_ULP_EQUAL(eve::pedantic(eve::exp)(a0)      , map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::pedantic(eve::exp)(a1)      , map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
 };

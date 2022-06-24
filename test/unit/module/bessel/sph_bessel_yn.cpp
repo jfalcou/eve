@@ -8,8 +8,7 @@
 #include "test.hpp"
 #include <eve/module/bessel.hpp>
 #include <boost/math/special_functions/bessel.hpp>
-#include <boost/math/special_functions/bessel_prime.hpp>
-#include <eve/detail/diff_div.hpp>
+
 
 //==================================================================================================
 //== Types tests
@@ -120,16 +119,3 @@ EVE_TEST( "Check behavior of sph_bessel_yn on wide with integral order"
   TTS_RELATIVE_EQUAL(eve__sph_bessel_yn(n, a0),   map(std__sph_bessel_yn, n, a0)   , 0.0025);
 };
 
-EVE_TEST( "Check behavior of diff(sph_bessel_j1) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(1.0, 10.0))
-        )
-  <typename T>(T a0 )
-{
-  auto eve__diff_bessel_yn =  [](auto n, auto x) { return eve::diff(eve::sph_bessel_yn)(n, x); };
-  auto y3 = [](auto x){ return eve::sph_bessel_yn(3, x); };
-  auto df = [y3](auto x){return eve::detail::centered_diffdiv(y3, x); };
-
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(3, a0),   df(a0), 5.0e-2);
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(1, a0),   eve::diff(eve::sph_bessel_y1)(a0), 5.0e-2);
-};

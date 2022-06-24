@@ -47,9 +47,9 @@ EVE_TEST( "Check behavior of invgd on wide"
   using v_t = eve::element_type_t<T>;
   using eve::invgd;
   using eve::sinh;
-  using eve::diff;
+  
   TTS_ULP_EQUAL(invgd(a0)      , map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a0), 2);
   TTS_ULP_EQUAL(invgd(a1)      , map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a1), 2);
-  TTS_ULP_EQUAL(diff(invgd)(a0), map([](auto e) -> v_t { return eve::sec(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(invgd)(a1), map([](auto e) -> v_t { return eve::sec(e); }, a1), 2);
+  
+  
 };

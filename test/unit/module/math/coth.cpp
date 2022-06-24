@@ -50,11 +50,11 @@ EVE_TEST( "Check behavior of coth on wide"
   using v_t = eve::element_type_t<T>;
   using eve::coth;
   using eve::sinh;
-  using eve::diff;
+  
   TTS_ULP_EQUAL(coth(a0)      , map([](auto e) -> v_t { return 1.0/std::tanh(double(e)); }, a0), 2);
   TTS_ULP_EQUAL(coth(a1)      , map([](auto e) -> v_t { return 1.0/std::tanh(double(e)); }, a1), 2);
-  TTS_ULP_EQUAL(diff(coth)(a0), map([](auto e) -> v_t { return -eve::sqr(eve::csch(e)); }, a0), 2);
-  TTS_ULP_EQUAL(diff(coth)(a1), map([](auto e) -> v_t { return -eve::sqr(eve::csch(e)); }, a1), 2);
+  
+  
 
   TTS_IEEE_EQUAL(eve::coth(T( 0 )), eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(eve::coth(T(-0.)), eve::minf(eve::as<T>()));

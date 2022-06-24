@@ -16,7 +16,7 @@ int main()
             << "<- qf                        = " << qf << '\n'
             << "-> absmin(pf, qf)            = " << eve::absmin(pf, qf) << '\n'
             << "-> pedantic(absmin)(pf, qf)  = " << eve::pedantic(eve::absmin)(pf, qf) << '\n'
-            << "-> diff(eve::absmin)(pf, qf) = " << eve::diff(eve::absmin)(pf, qf) << '\n'
+            
             << "-> numeric(absmin)(pf, qf)   = " << eve::numeric(eve::absmin)(pf, qf) << '\n';
 
   float xf = -4.0f;

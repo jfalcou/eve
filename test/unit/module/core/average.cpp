@@ -70,25 +70,6 @@ EVE_TEST( "Check behavior of average(wide)"
   }
 };
 
-//==================================================================================================
-//== diff(average) tests
-//==================================================================================================
-EVE_TEST( "Check behavior of diff(average)(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              )
-            )
-<typename T>( T const& a0, T const& a1, T const& a2 )
-{
-  using eve::average;
-  using eve::diff;
-  using eve::as;
-  using v_t =  eve::element_type_t<T>;
-  TTS_EQUAL( diff(average)(a0, a2), map([](auto , auto ) { return eve::half(as(v_t())); }, a0, a1));
-  TTS_EQUAL( diff(average)(a0, a1, a2), map([](auto , auto , auto ) { return v_t(1.0/3.0); }, a0, a1, a2));
-};
 
 //==================================================================================================
 //==  conditional average tests

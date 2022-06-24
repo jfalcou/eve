@@ -45,7 +45,7 @@ EVE_TEST( "Check behavior of sindcosd on wide"
 {
   using eve::detail::map;
   using eve::sindcosd;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return eve::cosd(e); };
   auto refs = [](auto e) -> v_t { return eve::sind(e); };

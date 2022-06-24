@@ -42,15 +42,9 @@ EVE_TEST( "Check behavior of sinhc on wide"
 {
   using eve::detail::map;
   using eve::sinhc;
-  using eve::diff;
+
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return e ? std::sinh(e)/e : v_t(1); };
   TTS_ULP_EQUAL(sinhc(a0)                       , map(ref, a0), 2);
   TTS_ULP_EQUAL(sinhc(a1)                       , map(ref, a1), 2);
-  auto ds = [](auto x) -> v_t {
-    auto [s, c] = eve::sinhcosh(x);
-    return x ? eve::fms(x, c, s)/(x*x) : v_t(0);
-  };
-  TTS_ULP_EQUAL(diff(sinhc)(a0), map(ds, a0), 2);
-  TTS_ULP_EQUAL(diff(sinhc)(a1), map(ds, a1), 2);
 };

@@ -13,7 +13,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
             << "-> dawson(pf)       = " << eve::dawson(pf) << '\n'
-            << "-> diff(dawson)(pf) = " << eve::diff(eve::dawson)(pf) << '\n';
+            ;
 
   float xf = 1.0f;
 

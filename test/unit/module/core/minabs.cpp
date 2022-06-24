@@ -54,16 +54,13 @@ EVE_TEST( "Check behavior of minabs on all types full range"
   using eve::abs;
   using v_t = eve::element_type_t<T>;
   auto m = [](auto a, auto b, auto c)-> v_t {return eve::min(eve::abs(a), eve::abs(b), eve::abs(c)); };
-  auto dm1 = [](auto a, auto b, auto c)-> v_t {return eve::minabs(a, b, c) == eve::abs(a)? eve::sign(a) : 0;  };
-  auto dm2 = [](auto a, auto b, auto c)-> v_t {return eve::minabs(a, b, c) == eve::abs(b)? eve::sign(b) : 0;  };
-  auto dm3 = [](auto a, auto b, auto c)-> v_t {return eve::minabs(a, b, c) == eve::abs(c)? eve::sign(c) : 0;  };
   TTS_ULP_EQUAL(minabs((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(minabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (minabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(minabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(minabs)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(minabs)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(minabs)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+  
+  
+  
   TTS_IEEE_EQUAL(minabs[t](a0, a1), eve::if_else(t, minabs(a0, a1), a0));
 };
 

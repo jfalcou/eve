@@ -21,7 +21,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/core.hpp>
 #include <eve/module/core/regular/core.hpp>
-#include <eve/module/core/diff/core.hpp>
 #include <eve/module/core/fuzzy/core.hpp>
 #include <eve/module/core/numeric/core.hpp>
 #include <eve/module/core/pedantic/core.hpp>

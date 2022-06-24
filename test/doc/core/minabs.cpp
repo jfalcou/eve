@@ -17,8 +17,8 @@ int main()
             << "-> minabs(pf, qf)            = " << eve::minabs(pf, qf) << '\n'
             << "-> pedantic(minabs)(pf, qf)  = " << eve::pedantic(eve::minabs)(pf, qf) << '\n'
             << "-> numeric(minabs)(pf, qf)   = " << eve::numeric(eve::minabs)(pf, qf) << '\n'
-            << "-> diff_1st(minabs)(pf, qf)  = " << eve::diff_1st(eve::minabs)(pf, qf) <<  '\n'
-            << "-> diff_2nd(minabs)(pf, qf)  = " << eve::diff_2nd(eve::minabs)(pf, qf) <<  '\n';
+            
+            ;
 
   float xf = -4.0f;
   float yf = 1.0f;

@@ -29,8 +29,8 @@ EVE_TEST_TYPES( "Check return types of eve::sign", eve::test::simd::all_types)
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::sign)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::sign)(v_t()) , v_t );
+
+
   }
 };
 
@@ -50,6 +50,5 @@ EVE_TEST( "Check behavior of eve::sign(eve::wide)"
 
   TTS_EQUAL(eve::sign(a0)      , map([](auto e) -> v_t { return e > 0 ? 1 :(e ? -1 : 0); }, a0) );
   TTS_EQUAL(eve::sign[mask](a0), eve::if_else(mask,eve::sign(a0),a0)                    );
-  if constexpr(eve::floating_real_value<T>)
-    TTS_EQUAL(eve::diff(eve::sign)(a0)      , T(0) );
+
 };

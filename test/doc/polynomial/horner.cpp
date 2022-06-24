@@ -29,7 +29,7 @@ int main()
             << "-> horner(xd, l)                            = " << eve::horner(xd, l)  << '\n'
             << "-> horner(xd, v)                            = " << eve::horner(xd, v)  << '\n'
             << "-> horner(xd, wv)                           = " << eve::horner(xd, wv) << '\n'
-            << "-> diff(horner)(x, 1, -2, 3, -4)            = " << eve::diff(eve::horner)(x, 1, -2, 3, -4)   << '\n';
+            ;
 
   double xs = 0.1;
 

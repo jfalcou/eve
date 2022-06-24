@@ -46,7 +46,7 @@ EVE_TEST( "Check behavior of secd on wide"
 {
   using eve::detail::map;
   using eve::secd;
-  using eve::diff;
+
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1.0l/boost::math::cos_pi(e/180.0l); };
@@ -57,9 +57,7 @@ EVE_TEST( "Check behavior of secd on wide"
   TTS_ULP_EQUAL(secd(a0)                       , map(ref, a0), 4);
   TTS_ULP_EQUAL(secd(a1)                       , map(ref, a1), 4);
   TTS_ULP_EQUAL(secd(a2)                       , map(ref, a2), 512);
-  auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
 
-  TTS_ULP_EQUAL(diff(secd)(a0), map([dinr](auto e) -> v_t { return  dinr*eve::secd(e)*eve::tand(e); }, a0), 2);
 };
 
 EVE_TEST_TYPES( "Check return types of secd"

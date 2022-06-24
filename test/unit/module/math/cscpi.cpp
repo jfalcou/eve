@@ -46,12 +46,12 @@ EVE_TEST( "Check behavior of cscpi on wide"
 {
   using eve::detail::map;
   using eve::cscpi;
-  using eve::diff;
+  using v_t = eve::element_type_t<T>;
+  auto ref = [](auto e) -> v_t {auto d = eve::sinpi(double(e));  return d ? 1.0/d :eve::nan(eve::as(e)); };
+
   using eve::deginrad;
   using eve::pi;
   using v_t = eve::element_type_t<T>;
-  long double ldpi = 3.1415926535897932384626433832795028841971693993751;
-  auto ref = [](auto e) -> v_t {auto d = eve::sinpi(double(e));  return d ? 1.0/d :eve::nan(eve::as(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(cscpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cscpi)(a0)           , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cscpi)(a1)           , map(ref, a1), 2);
@@ -59,8 +59,8 @@ EVE_TEST( "Check behavior of cscpi on wide"
   TTS_ULP_EQUAL(cscpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cscpi(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(cscpi(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(diff(cscpi)(a0), map([ldpi](auto e) -> v_t { return  -ldpi*cscpi(e)*eve::cotpi(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(cscpi)(a1), map([ldpi](auto e) -> v_t { return  -ldpi*cscpi(e)*eve::cotpi(e); }, a1), 2);
-  TTS_ULP_EQUAL(diff(cscpi)(a2), map([ldpi](auto e) -> v_t { return  -ldpi*cscpi(e)*eve::cotpi(e); }, a2), 2);
-  TTS_ULP_EQUAL(diff(cscpi)(a3), map([ldpi](auto e) -> v_t { return  -ldpi*cscpi(e)*eve::cotpi(e); }, a3), 2);
+
+
+
+
 };

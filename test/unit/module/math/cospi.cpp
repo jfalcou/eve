@@ -48,11 +48,10 @@ EVE_TEST( "Check behavior of cospi on wide"
 {
   using eve::detail::map;
   using eve::cospi;
-  using eve::diff;
+  
   using eve::deginrad;
   using eve::pi;
   using v_t = eve::element_type_t<T>;
-  long double ldpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [](auto e) -> v_t { return boost::math::cos_pi(e); };
   TTS_ULP_EQUAL(eve::quarter_circle(cospi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cospi)(a0)           , map(ref, a0), 2);
@@ -61,8 +60,8 @@ EVE_TEST( "Check behavior of cospi on wide"
   TTS_ULP_EQUAL(cospi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cospi(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(cospi(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(diff(cospi)(a0), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::sin_pi(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(cospi)(a1), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::sin_pi(e); }, a1), 2);
-  TTS_ULP_EQUAL(diff(cospi)(a2), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::sin_pi(e); }, a2), 2);
-  TTS_ULP_EQUAL(diff(cospi)(a3), map([ldpi](auto e) -> v_t { return  -ldpi*boost::math::sin_pi(e); }, a3), 2);
+  
+  
+  
+  
 };

@@ -45,7 +45,7 @@ EVE_TEST( "Check behavior of cscd on wide"
 {
   using eve::detail::map;
   using eve::cscd;
-  using eve::diff;
+
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { auto d = eve::sind(e);return d ? 1.0/d : eve::nan(eve::as(e)); };
@@ -55,7 +55,4 @@ EVE_TEST( "Check behavior of cscd on wide"
   TTS_ULP_EQUAL(eve::cscd(a0)                  , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::cscd(a1)                  , map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::cscd(a2)                  , map(ref, a2), 2);
-  auto dinr = 1.7453292519943295769236907684886127134428718885417e-2l;
-
-  TTS_ULP_EQUAL(diff(cscd)(a0), map([dinr](auto e) -> v_t { return  -dinr*cscd(e)*eve::cotd(e); }, a0), 2);
 };

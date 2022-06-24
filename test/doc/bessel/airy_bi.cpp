@@ -11,7 +11,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf          = " << pf << '\n'
             << "-> airy_bi(pf) = " << eve::airy_bi(pf) << '\n'
-            << "-> diff(airy_bi)(pf)  = " << eve::diff(eve::airy_bi)(pf) << '\n';
+            ;
 
 
   double xd = -1.0;

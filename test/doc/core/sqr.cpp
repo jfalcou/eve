@@ -13,7 +13,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
             << "-> sqr(pf)             = " << eve::sqr(pf) << '\n'
-            << "-> diff(sqr)(pf)       = " << eve::diff(eve::sqr)(pf) << '\n'
+            
             << "<- pi                  = " << pi << '\n'
             << "-> saturated(sqr)(pi)  = " << eve::saturated(eve::sqr)(pi) << '\n'
             << "-> sqr(pi)             = " << eve::sqr(pi) << '\n';

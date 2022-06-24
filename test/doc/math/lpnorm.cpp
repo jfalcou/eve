@@ -19,9 +19,9 @@ int main()
               << "<- z                            = " << z  << '\n'
               << "-> lpnorm(p, x, y, z)           = " << eve::lpnorm(p, x, y, z) << '\n'
               << "-> pedantic(lpnorm)(p, x, y, z) = " << eve::pedantic(eve::lpnorm)(p, x, y, z) << '\n'
-              << "-> diff_1st(lpnorm)(p, x, y, z) = " << eve::diff_1st(eve::lpnorm)(p, x, y, z) << '\n'
-              << "-> diff_2nd(lpnorm)(p, x, y, z) = " << eve::diff_2nd(eve::lpnorm)(p, x, y, z) << '\n'
-              << "-> diff_3rd(lpnorm)(p, x, y, z) = " << eve::diff_3rd(eve::lpnorm)(p, x, y, z) << '\n';
+              
+              
+              ;
 
   double        xf = 10.0;
   double        yf = 1.0;

@@ -37,11 +37,10 @@ EVE_TEST( "Check behavior of exp2 on wide"
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  auto l2 = std::log(2);
   TTS_ULP_EQUAL(eve::exp2(a0)      , map([](auto e) -> v_t { return std::exp2(e); }, a0), 30);
   TTS_ULP_EQUAL(eve::exp2(a1)      , map([](auto e) -> v_t { return std::exp2(e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::exp2)(a0), l2*eve::exp2(a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::exp2)(a1), l2*eve::exp2(a1), 2);
+  
+  
   TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(a0)      , map([](auto e) -> v_t { return std::exp2(e); }, a0), 30);
   TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(a1)      , map([](auto e) -> v_t { return std::exp2(e); }, a1), 2);
 };

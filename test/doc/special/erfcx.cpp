@@ -13,7 +13,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf        = " << pf << '\n'
             << "-> erfcx(pf) = " << eve::erfcx(pf) << '\n'
-            << "-> diff(erfcx)(pf)  = " << eve::diff(eve::erfcx)(pf) << '\n';
+            ;
 
   float xf = 4.0f;
 

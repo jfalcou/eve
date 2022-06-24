@@ -32,7 +32,7 @@ EVE_TEST_TYPES( "Check return types of round"
 //==================================================================================================
 // round(simd)  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of round(wide) and diff(round(wide))"
+EVE_TEST_TYPES( "Check behavior of round(wide))"
         , eve::test::simd::all_types
         )
   <typename T>(eve::as<T>)
@@ -48,9 +48,4 @@ EVE_TEST_TYPES( "Check behavior of round(wide) and diff(round(wide))"
   TTS_EQUAL(eve::toward_zero (eve::round)(T(1.3)), eve::trunc  (T(1.3)) );
   TTS_EQUAL(eve::to_nearest  (eve::round)(T(1.3)), eve::nearest(T(1.3)) );
   TTS_EQUAL(eve::round(T(1.3))                   , eve::nearest(T(1.3)) );
-  if constexpr(eve::floating_real_value<T>)
-  {
-    TTS_EQUAL(eve::diff(eve::round)(T(1.7))                   , T(0));
-    TTS_EQUAL(eve::diff(eve::round)(T(1.3))                   , T(0));
-  }
 };

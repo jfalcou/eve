@@ -40,8 +40,8 @@ EVE_TEST_TYPES( "Check return types of dec"
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::dec)(T())  , T);
-    TTS_EXPR_IS( eve::diff(eve::dec)(v_t()), v_t);
+
+
   }
 };
 
@@ -57,13 +57,11 @@ EVE_TEST( "Check behavior of dec(wide) and dec[cond](wide)"
 <typename T>(T const& a0 )
 {
   using v_t = eve::element_type_t<T>;
-  using eve::diff;
+
   TTS_EQUAL( eve::dec(a0), map([](auto e) ->v_t{ return v_t(e-1); }, a0));
   TTS_EQUAL( eve::dec[a0 > 64](a0), map([](auto e) ->v_t{ return v_t((e > 64) ?e-1 : e); }, a0));
   bool z = (a0.get(0) > 64);
   TTS_EQUAL( eve::dec[z](a0), map([&](auto e) ->v_t{ return v_t((z) ?e-1 : e); }, a0));
-  if constexpr(eve::floating_real_value<T>)
-    TTS_EQUAL( diff(eve::dec)(a0), eve::one(eve::as(a0)));
 
 };
 

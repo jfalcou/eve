@@ -38,5 +38,5 @@ EVE_TEST( "Check behavior of asinh on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::asinh(a0)      , map([](auto e) -> v_t { return std::asinh(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asinh)(a0), map([](auto e) -> v_t { return  v_t(1)/std::sqrt(e*e+1); }, a0), 2);
+  
 };

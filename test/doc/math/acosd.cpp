@@ -12,7 +12,7 @@ int main()
     << "---- simd" << '\n'
     << "<- pf              = " << pf << '\n'
     << "-> eve::acosd(pf)  = " << eve::acosd(pf) << '\n'
-    << "-> diff(acosd)(pf) = " << eve::diff(eve::acosd)(pf) << '\n';
+    ;
 
   float xf = 1.0f;
 

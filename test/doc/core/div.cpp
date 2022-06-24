@@ -12,8 +12,8 @@ int main()
             << " <- qf                    = " << qf << '\n'
             << " -> div(pf, qf)           = " << eve::div(pf, qf) << '\n'
             << " -> pf / qf               = " << pf / qf << '\n'
-            << " -> diff_1st(div)(pf, qf) = " <<  eve::diff_1st(eve::div)(pf, qf) << '\n'
-            << " -> diff_2nd(div)(pf, qf) = " <<  eve::diff_2nd(eve::div)(pf, qf) << '\n';
+            
+            ;
 
   std::int16_t xi = -32768, yi = -1;
 

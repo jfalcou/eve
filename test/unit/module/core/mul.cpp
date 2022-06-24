@@ -62,19 +62,19 @@ EVE_TEST_TYPES( "Check return types of mul"
   TTS_EXPR_IS( eve::saturated(eve::mul)(v_t(), T(), v_t()) , T);
   TTS_EXPR_IS( eve::saturated(eve::mul)(v_t(), v_t(), v_t()) , v_t);
 
-  //diff
+
   if constexpr(eve::floating_value<T>)
   {
-    using eve::diff_1st;
-    using eve::diff_2nd;
-    TTS_EXPR_IS( diff_1st(eve::mul)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_1st(eve::mul)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_1st(eve::mul)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_1st(eve::mul)(v_t(), v_t()) , v_t);
-    TTS_EXPR_IS( diff_2nd(eve::mul)(T(), T()  ) , T);
-    TTS_EXPR_IS( diff_2nd(eve::mul)(T(), v_t()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::mul)(v_t(), T()) , T);
-    TTS_EXPR_IS( diff_2nd(eve::mul)(v_t(), v_t()) , v_t);
+
+
+
+
+
+
+
+
+
+
   }
 };
 
@@ -97,24 +97,6 @@ EVE_TEST( "Check behavior of mul on wide"
   TTS_EQUAL( saturated(mul)(a0, a2), map([&](auto e, auto f) { return saturated(mul)(e, f); }, a0, a2));
   TTS_EQUAL( mul(a0, a1, a2), map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2));
   TTS_EQUAL( saturated(mul)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(mul)(saturated(mul)(e, f), g); }, a0, a1, a2));
-};
-
-EVE_TEST( "Check behavior of mul on wide"
-            , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(-100.0, 100.0)
-                                  , eve::test::randoms(-100.0, 100.0)
-                                  , eve::test::randoms(-100.0, 100.0)
-                                  )
-            )
-<typename T>(T const& a0, T const& a1, T const& a2)
-{
-  using eve::mul;
-  using eve::detail::map;
-
-  TTS_EQUAL( eve::diff_1st(mul)(a0, a2), a2);
-  TTS_EQUAL( eve::diff_2nd(mul)(a0, a2), a0);
-  TTS_EQUAL( eve::diff_3rd(mul)(a0, a1, a2), a1*a0);
-
 };
 
 //==================================================================================================

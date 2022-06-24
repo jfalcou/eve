@@ -41,6 +41,6 @@ EVE_TEST( "Check behavior of acsch on wide"
 
   TTS_ULP_EQUAL(eve::acsch(a0)      , map([](auto e) -> v_t { return std::asinh(1/e); }, a0), 2);
   TTS_ULP_EQUAL(eve::acsch(a1)      , map([](auto e) -> v_t { return std::asinh(1/e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acsch)(a0), map([](auto e) -> v_t { return  v_t(-1)/(std::abs(e)*std::sqrt(1+e*e)); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acsch)(a1), map([](auto e) -> v_t { return  v_t(-1)/(std::abs(e)*std::sqrt(1+e*e)); }, a1), 2);
+  
+  
 };

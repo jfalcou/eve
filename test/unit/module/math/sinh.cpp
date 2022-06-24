@@ -50,9 +50,9 @@ EVE_TEST( "Check behavior of sinh on wide"
   using v_t = eve::element_type_t<T>;
   using eve::sinh;
   using eve::cosh;
-  using eve::diff;
+  
   TTS_ULP_EQUAL(sinh(a0)      , map([](auto e) -> v_t { return std::sinh(e); }, a0), 2);
   TTS_ULP_EQUAL(sinh(a1)      , map([](auto e) -> v_t { return std::sinh(e); }, a1), 2);
-  TTS_ULP_EQUAL(diff(sinh)(a0), map([](auto e) -> v_t { return std::cosh(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(sinh)(a1), map([](auto e) -> v_t { return std::cosh(e); }, a1), 2);
+  
+  
 };

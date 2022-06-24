@@ -49,7 +49,7 @@ EVE_TEST( "Check behavior of cos on wide"
 {
   using eve::detail::map;
   using eve::sincos;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return std::cos(e); };
   auto refs = [](auto e) -> v_t { return std::sin(e); };

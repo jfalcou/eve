@@ -14,7 +14,7 @@ int main()
             << "<- p                = " << p << '\n'
             << "<- k                = " << k << '\n'
             << "-> gamma_p(p, k)    = " << eve::gamma_p(p, k) << '\n'
-            << "-> diff(eve::gamma_p)(p, k)  = " << eve::diff(eve::gamma_p)(p, k) << '\n';
+            ;
 
   float kf = 2.1;
   float pf = 1.3;

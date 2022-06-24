@@ -57,9 +57,9 @@ EVE_TEST( "Check behavior of negminabs on all types full range"
   TTS_ULP_EQUAL(eve::pedantic(negminabs)((a0), (a1), (a2)),  -eve::pedantic(eve::minabs)(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (negminabs)((a0), (a1), (a2)),  -eve::numeric(eve::minabs)(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(negminabs)((a0), (a1), (a2)), -eve::saturated(eve::minabs)(a0, a1, a2) , 2);
-  TTS_ULP_EQUAL(eve::diff_1st(negminabs)((a0), (a1), (a2)),  -eve::diff_1st(eve::minabs)(a0, a1, a2) , 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(negminabs)((a0), (a1), (a2)),  -eve::diff_2nd(eve::minabs)(a0, a1, a2) , 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(negminabs)((a0), (a1), (a2)),  -eve::diff_3rd(eve::minabs)(a0, a1, a2), 2);
+  
+  
+  
   TTS_IEEE_EQUAL(negminabs[t](a0, a1), eve::if_else(t, negminabs(a0, a1), a0));
  };
 

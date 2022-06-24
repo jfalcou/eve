@@ -21,4 +21,3 @@
 //! @}
 //==================================================================================================
 #include <eve/module/bessel/regular/bessel.hpp>
-#include <eve/module/bessel/diff/bessel.hpp>

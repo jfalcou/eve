@@ -25,9 +25,9 @@ int main()
             << "\n if the last fnms result ends by '0, -inf}', it means that\n"
             << " the system has no simd fnms family intrinsics\n"
             << " or is not configured to use them.\n\n"
-            << "-> diff_1st(fnma)(of, pf, qf)          = " << eve::diff_1st(eve::fnma)(of, pf, qf) << '\n'
-            << "-> diff_2nd(fnma)(of, pf, qf)          = " << eve::diff_2nd(eve::fnma)(of, pf, qf) << '\n'
-            << "-> diff_3rd(fnma)(of, pf, qf)          = " << eve::diff_3rd(eve::fnma)(of, pf, qf) << '\n';
+            
+            
+            ;
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'

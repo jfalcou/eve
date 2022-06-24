@@ -41,10 +41,6 @@ EVE_TEST( "Check behavior of erfc_inv on wide"
   using eve::erfc_inv;
   using eve::as;
   TTS_ULP_EQUAL( erfc_inv(a0),  map([](auto e){return boost::math::erfc_inv(e);}, a0), 2);
-  auto derfc_inv = [](auto e){return v_t(-0.886226925452758013649)*std::exp(eve::sqr(erfc_inv(e)));};
-  TTS_ULP_EQUAL( eve::diff(erfc_inv)(a0),  map(derfc_inv, a0), 2);
-
-
   TTS_ULP_EQUAL(erfc_inv(T(0.5)), T(boost::math::erfc_inv(v_t(0.5))), 1. );
 
   if constexpr( eve::platform::supports_invalids )

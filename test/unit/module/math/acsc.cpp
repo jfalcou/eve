@@ -42,13 +42,12 @@ EVE_TEST( "Check behavior of acsc on wide"
   using v_t = eve::element_type_t<T>;
 
   auto sacsc = [](auto e) -> v_t { return std::asin(1/e); };
-  auto dacsc = [](auto e) -> v_t { return -v_t(1)/(std::abs(e)*std::sqrt(e*e-1)); };
   TTS_ULP_EQUAL(eve::acsc(a0)           , map(sacsc, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acsc)(a0), map(dacsc, a0), 2);
+  
   TTS_ULP_EQUAL(eve::acsc(a1)           , map(sacsc, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acsc)(a1), map(dacsc, a1), 2);
+  
   TTS_ULP_EQUAL(eve::acsc(a2)           , map(sacsc, a2), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acsc)(a2), map(dacsc, a2), 2);
+  
   TTS_ULP_EQUAL(eve::acsc(a3)           , map(sacsc, a3), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::acsc)(a3), map(dacsc, a3), 2);
+  
 };

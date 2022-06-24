@@ -40,6 +40,6 @@ EVE_TEST( "Check behavior of atanpi on wide"
 
   TTS_ULP_EQUAL(eve::atanpi(a0)      , map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a0), 2);
   TTS_ULP_EQUAL(eve::atanpi(a1)      , map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atanpi)(a0), map([](auto e) -> v_t { return  eve::radinpi(v_t(1)/(e*e+1)); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atanpi)(a1), map([](auto e) -> v_t { return  eve::radinpi(v_t(1)/(e*e+1)); }, a1), 2);
+  
+  
 };

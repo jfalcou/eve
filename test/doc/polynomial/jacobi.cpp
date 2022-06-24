@@ -25,8 +25,8 @@ int main()
             << "-> jacobi(n, a, b 0.5)            = " << eve::jacobi(n, a, b, 0.5) << '\n'
             << "-> jacobi(n, a, b, x)             = " << eve::jacobi(n, a, b, x)   << '\n'
             << "-> jacobi(n, aa, b, x)            = " << eve::jacobi(n, aa, b, x)   << '\n'
-            << "-> diff(jacobi)(n, aa, b, x)      = " << eve::diff(eve::jacobi)(n, aa, b, x)   << '\n'
-            << "-> diff(jacobi)(n, aa, b, x, 2)   = " << eve::diff(eve::jacobi)(n, aa, b, x, 2)   << '\n'
+            
+            
     ;
 
   double xs = 0.5;

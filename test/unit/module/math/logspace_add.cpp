@@ -62,10 +62,10 @@ EVE_TEST( "Check behavior of logspace_add on wide"
   auto la3 = eve::log(a3);
   TTS_ULP_EQUAL(eve::logspace_add(la0, la1)      , eve::log(a0+a1), 2);
   TTS_ULP_EQUAL(eve::logspace_add(la2, la3)      , eve::log(a2+a3), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_add)(a0, a1), eve::rec(eve::inc(eve::exp(a1-a0))), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::logspace_add)(a2, a3), eve::rec(eve::inc(eve::exp(a3-a2))), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_add)(a0, a1), eve::rec(eve::inc(eve::exp(a0-a1))), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::logspace_add)(a2, a3), eve::rec(eve::inc(eve::exp(a2-a3))), 2);
+  
+  
+  
+  
   auto la4 = eve::log(a4);
   auto la5 = eve::log(a5);
   TTS_ULP_EQUAL(eve::logspace_add(la0, la1, la4)      , eve::log(a0+a1+a4), 2);

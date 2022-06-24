@@ -48,8 +48,8 @@ EVE_TEST( "Check behavior of atan2d on wide"
 
   TTS_ULP_EQUAL(eve::atan2d(a0, a1)      , map([](auto e, auto f) -> v_t { return eve::radindeg(std::atan2(e, f)); }, a0, a1), 2);
   TTS_ULP_EQUAL(eve::atan2d(a2, a3)      , map([](auto e, auto f) -> v_t { return eve::radindeg(std::atan2(e, f)); }, a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::atan2d)(a0, a1), map([](auto e, auto f) -> v_t { return  eve::radindeg(f/(e*e+f*f)); }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(eve::atan2d)(a2, a3), map([](auto e, auto f) -> v_t { return  eve::radindeg(f/(e*e+f*f)); }, a2, a3), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2d)(a0, a1), map([](auto e, auto f) -> v_t { return  eve::radindeg(e/(e*e+f*f)); }, a0, a1), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(eve::atan2d)(a2, a3), map([](auto e, auto f) -> v_t { return  eve::radindeg(e/(e*e+f*f)); }, a2, a3), 2);
+  
+  
+  
+  
 };

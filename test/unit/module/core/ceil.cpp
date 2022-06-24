@@ -32,8 +32,8 @@ EVE_TEST_TYPES( "Check return types of ceil"
     TTS_EXPR_IS( eve::tolerant(eve::ceil)(T())  , T);
     TTS_EXPR_IS( eve::tolerant(eve::ceil)(v_t()), v_t);
 
-    TTS_EXPR_IS( eve::diff(eve::ceil)(T())  , T);
-    TTS_EXPR_IS( eve::diff(eve::ceil)(v_t()), v_t);
+
+
   }
 };
 
@@ -81,7 +81,7 @@ EVE_TEST_TYPES( "Check  with specific values"
 // ceil(simd)  tests
 //==================================================================================================
 auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
+EVE_TEST( "Check behavior of ceil(wide) "
         , eve::test::simd::all_types
         , eve::test::generate(eve::test::randoms(min, +50))
         )
@@ -96,7 +96,7 @@ EVE_TEST( "Check behavior of ceil(wide) and diff(ceil(wide))"
   if constexpr(eve::floating_real_value<T>)
   {
     TTS_EQUAL( eve::ceil(a0), map([&](auto e) -> v_t{ return v_t(std::ceil(e)); }, a0));
-    TTS_EQUAL( eve::diff(eve::ceil)(a0), eve::zero(eve::as(a0)));
+
     TTS_EQUAL( eve::int_(eve::ceil)(a0), wi_t([&](auto i, auto) { return i_t(std::ceil(a0.get(i))); }));
     TTS_EQUAL( eve::uint_(eve::ceil)(eve::abs(a0)), uwi_t([&](auto i, auto) { return ui_t(std::ceil(std::abs(a0.get(i)))); }));
   }

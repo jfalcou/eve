@@ -41,14 +41,13 @@ EVE_TEST( "Check behavior of asecpi on wide"
   using v_t = eve::element_type_t<T>;
 
   auto sasecpi = [](auto e) -> v_t { return eve::radinpi(std::acos(1/e)); };
-  auto dasecpi = [](auto e) -> v_t { return eve::radinpi(v_t(1)/(std::abs(e)*std::sqrt(e*e-1))); };
   TTS_ULP_EQUAL(eve::asecpi(a0)           , map(sasecpi, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asecpi)(a0), map(dasecpi, a0), 2);
+  
   TTS_ULP_EQUAL(eve::asecpi(a1)           , map(sasecpi, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asecpi)(a1), map(dasecpi, a1), 2);
+  
   TTS_ULP_EQUAL(eve::asecpi(a2)           , map(sasecpi, a2), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asecpi)(a2), map(dasecpi, a2), 2);
+  
   TTS_ULP_EQUAL(eve::asecpi(a3)           , map(sasecpi, a3), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asecpi)(a3), map(dasecpi, a3), 2);
+  
 
 };

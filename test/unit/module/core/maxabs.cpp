@@ -54,16 +54,13 @@ EVE_TEST( "Check behavior of maxabs on all types full range"
   using eve::abs;
   using v_t = eve::element_type_t<T>;
   auto m = [](auto a, auto b, auto c)-> v_t {return eve::max(eve::abs(a), eve::abs(b), eve::abs(c)); };
-  auto dm1 = [](auto a, auto b, auto c)-> v_t {return eve::maxabs(a, b, c) == eve::abs(a)? eve::sign(a) : 0;  };
-  auto dm2 = [](auto a, auto b, auto c)-> v_t {return eve::maxabs(a, b, c) == eve::abs(b)? eve::sign(b) : 0;  };
-  auto dm3 = [](auto a, auto b, auto c)-> v_t {return eve::maxabs(a, b, c) == eve::abs(c)? eve::sign(c) : 0;  };
   TTS_ULP_EQUAL(maxabs((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(maxabs)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(maxabs)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(maxabs)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+
+
+
   TTS_IEEE_EQUAL(maxabs[t](a0, a1), eve::if_else(t, maxabs(a0, a1), a0));
 };
 

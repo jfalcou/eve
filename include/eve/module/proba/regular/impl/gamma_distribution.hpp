@@ -379,7 +379,8 @@ namespace eve
       auto dp = rec(p*(1-p));
       auto k = one(as<I>());
       if constexpr(floating_real_value<T>) k = d.k;
-      auto da = diff(gamma_p)(z, k)* dp;
+      auto dgamma_p = [](auto x, auto k){ return exp(dec(k) * log(x) - x - lgamma(k));};
+      auto da = dgamma_p(z, k)* dp;
       R db;
       if constexpr(floating_real_value<U> && floating_real_value<T>)
         db = eve::exp(k*eve::log(z)-z-eve::lgamma(k)+eve::log(d.theta))* dp;

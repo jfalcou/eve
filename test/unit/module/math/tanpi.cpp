@@ -48,11 +48,10 @@ EVE_TEST( "Check behavior of tanpi on wide"
 {
   using eve::detail::map;
   using eve::tanpi;
-  using eve::diff;
+  
   using eve::deginrad;
   using eve::pi;
   using v_t = eve::element_type_t<T>;
-  long double ldpi = 3.1415926535897932384626433832795028841971693993751;
   auto ref = [](auto e) -> v_t { auto d = boost::math::cos_pi(e); return d ? boost::math::sin_pi(e)/d : eve::nan(eve::as(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(tanpi)(a0)      , map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tanpi)(a0)           , map(ref, a0), 2);
@@ -61,8 +60,8 @@ EVE_TEST( "Check behavior of tanpi on wide"
   TTS_ULP_EQUAL(tanpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(tanpi(a3)                       , map(ref, a3), 2);
-  TTS_ULP_EQUAL(diff(tanpi)(a0), map([ldpi](auto e) -> v_t { return  ldpi*eve::sqr(eve::secpi(e)); }, a0), 2);
-  TTS_ULP_EQUAL(diff(tanpi)(a1), map([ldpi](auto e) -> v_t { return  ldpi*eve::sqr(eve::secpi(e)); }, a1), 2);
-  TTS_ULP_EQUAL(diff(tanpi)(a2), map([ldpi](auto e) -> v_t { return  ldpi*eve::sqr(eve::secpi(e)); }, a2), 2);
-  TTS_ULP_EQUAL(diff(tanpi)(a3), map([ldpi](auto e) -> v_t { return  ldpi*eve::sqr(eve::secpi(e)); }, a3), 2);
+  
+  
+  
+  
 };

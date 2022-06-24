@@ -25,6 +25,6 @@ int main()
             << "<- n                    = " << n << '\n'
             << "-> nthroot(xf, n)       = " << eve::nthroot(xf, n) << '\n'
             << "-> raw(nthroot)(xf, n)  = " << eve::raw(eve::nthroot)(xf, n) << '\n'
-            << "-> diff(nthroot)(xf, n) = " << eve::diff(eve::nthroot)(xf, n) << '\n';
+            ;
   return 0;
 }

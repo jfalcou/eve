@@ -13,7 +13,7 @@ int main()
             << "<- pf             = " << pf << '\n'
             << "-> w0             = " << w0 << '\n'
             << "-> wm1            = " << wm1<< '\n'
-            << "-> diff(eve::lambert)(pf)  = " << eve::diff(eve::lambert)(pf) << '\n';
+            ;
 
 
   float        xf = -0.2f;

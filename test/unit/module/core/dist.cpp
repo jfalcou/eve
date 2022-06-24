@@ -54,21 +54,3 @@ EVE_TEST( "Check behavior of dist(wide)"
                                                      else return d < 0 ? eve::valmax(eve::as(e)): d; }
                                                   , a0, a1), 2);
 };
-
-//==================================================================================================
-//== diff(dist) tests
-//==================================================================================================
-EVE_TEST( "Check behavior of diff(dist)(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(eve::valmin, eve::valmax)
-                              )
-            )
-<typename T>( T const& a0, T const& a1)
-{
-  using eve::dist;
-  using eve::as;
-  using v_t =  eve::element_type_t<T>;
-  TTS_EQUAL( eve::diff_1st(dist)(a0, a1), map([](auto x, auto y)  -> v_t{ return eve::sign(x-y); }, a0, a1));
-  TTS_EQUAL( eve::diff_2nd(dist)(a0, a1), map([](auto x, auto y)  -> v_t{ return eve::sign(y-x); }, a0, a1));
-};

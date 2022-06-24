@@ -46,7 +46,7 @@ EVE_TEST( "Check behavior of cos on wide"
 {
   using eve::detail::map;
   using eve::sinpicospi;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return eve::cospi(e); };
   auto refs = [](auto e) -> v_t { return eve::sinpi(e); };

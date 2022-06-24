@@ -49,7 +49,7 @@ EVE_TEST( "Check behavior of sin on wide"
 {
   using eve::detail::map;
   using eve::sin;
-  using eve::diff;
+  
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return std::sin(e); };
   TTS_ULP_EQUAL(eve::quarter_circle(sin)(a0)      , map(ref, a0), 2);
@@ -63,5 +63,5 @@ EVE_TEST( "Check behavior of sin on wide"
   TTS_ULP_EQUAL(sin(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(sin(a3)                       , map(ref, a3), 2);
   TTS_ULP_EQUAL(sin(a4)                       , map(ref, a4), 2);
-  TTS_ULP_EQUAL(diff(sin)(a0), map([](auto e) -> v_t { return  std::cos(e); }, a0), 2);
+  
 };

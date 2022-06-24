@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
-#include <eve/module/special/diff/gamma_p.hpp>
+#include <eve/module/special/regular/lgamma.hpp>
 #include <eve/module/special/regular/erfc_inv.hpp>
 #include <eve/detail/hz_device.hpp>
 
@@ -45,9 +45,10 @@ namespace eve::detail
     auto x0 = x;
     int i = 10;
     if (eve::none(notdone)) return x;
+    auto dgamma_p = [](auto x, auto k){ return exp(dec(k) * log(x) - x - lgamma(k));};
     while(i)
     {
-      auto dx = if_else(notdone, (gamma_p(x, k)-p)/diff(gamma_p)(x, k), zero);
+      auto dx = if_else(notdone, (gamma_p(x, k)-p)/dgamma_p(x, k), zero);
       x -= dx;
       if (i < 7) notdone = notdone && is_not_less(abs(dx), 4*eps(as(x))*max(eve::abs(x), one(as(x))));
       if (eve::none(notdone)) return x;

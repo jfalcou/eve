@@ -13,8 +13,8 @@ int main()
             << "<- pf                     = " << pf << '\n'
             << "<- qf                     = " << qf << '\n'
             << "-> fdim(pf, qf)           = " << eve::fdim(pf, qf) << '\n'
-            << "-> diff_1st(fdim)(pf, qf) = " << eve::diff_1st(eve::fdim)(pf, qf) << '\n'
-            << "-> diff_2nd(fdim)(pf, qf) = " << eve::diff_2nd(eve::fdim)(pf, qf) << '\n'
+            
+            
             << '\n';
 
   float xf = -eve::valmax(eve::as<float>());

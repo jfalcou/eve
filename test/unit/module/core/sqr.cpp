@@ -42,8 +42,8 @@ EVE_TEST_TYPES( "Check return types of eve::sqr", eve::test::simd::all_types)
 
   if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EXPR_IS( eve::diff(eve::sqr)(T()) , T );
-    TTS_EXPR_IS( eve::diff(eve::sqr)(v_t()) , v_t );
+    
+    
   }
 };
 
@@ -75,6 +75,6 @@ EVE_TEST( "Check behavior of eve::sqr(eve::wide)"
   }
   else if constexpr(eve::floating_real_value<T>)
   {
-    TTS_EQUAL(eve::diff(sqr)(a0), 2*a0);
+    
   }
 };

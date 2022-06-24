@@ -22,10 +22,10 @@ EVE_TEST_TYPES( "Check return types of eve::arg(simd)"
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::arg(T())                    , T   );
   TTS_EXPR_IS( eve::pedantic(eve::arg)(T())     , T   );
-  TTS_EXPR_IS( eve::diff(eve::arg)(T())         , T   );
+  
   TTS_EXPR_IS( eve::arg(v_t())                  , v_t );
   TTS_EXPR_IS( eve::pedantic(eve::arg)(v_t())   , v_t );
-  TTS_EXPR_IS( eve::diff(eve::arg)(v_t())       , v_t );
+  
 };
 
 //==================================================================================================
@@ -61,14 +61,3 @@ EVE_TEST( "Check behavior of eve::pedantic(eve::arg)(simd)"
   TTS_IEEE_EQUAL( eve::pedantic(eve::arg)(cases.nan    ), cases.nan   );
 };
 
-//==================================================================================================
-// Test for eve::diff(eve::arg)
-//==================================================================================================
-EVE_TEST( "Check behavior of eve::diff(eve::arg)(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& a0)
-{
-  TTS_EQUAL ( eve::diff(eve::arg)(a0), eve::zero(eve::as(a0)));
-};

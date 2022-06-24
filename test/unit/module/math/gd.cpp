@@ -49,9 +49,9 @@ EVE_TEST( "Check behavior of gd on wide"
   using v_t = eve::element_type_t<T>;
   using eve::gd;
   using eve::sinh;
-  using eve::diff;
+  
   TTS_ULP_EQUAL(gd(a0)      , map([](auto e) -> v_t { return std::atan(std::sinh(e)); }, a0), 2);
   TTS_ULP_EQUAL(gd(a1)      , map([](auto e) -> v_t { return std::atan(std::sinh(e)); }, a1), 2);
-  TTS_ULP_EQUAL(diff(gd)(a0), map([](auto e) -> v_t { return eve::sech(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(gd)(a1), map([](auto e) -> v_t { return eve::sech(e); }, a1), 2);
+  
+  
 };

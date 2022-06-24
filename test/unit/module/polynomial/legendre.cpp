@@ -48,7 +48,7 @@ EVE_TEST( "Check behavior of legendre p on wide"
     TTS_ULP_EQUAL(eve__legendrev(n, a0), T(boost_legendre), 100);
   }
   auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_p(i0.get(i), a0.get(i)); };
-  TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 100);
+  TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 200);
   for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
   {
     auto boost_legendre2 =  [&](auto i, auto) { return boost::math::legendre_p(i0.get(i), a0.get(j)); };
@@ -97,37 +97,6 @@ EVE_TEST( "Check behavior of legendre q on wide"
   }
 };
 
-EVE_TEST( "Check behavior of diff(legendre) on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
-        )
-  <typename T, typename I>(T const& a0,I const & i0)
-{
-  using v_t = eve::element_type_t<T>;
-  auto eve__legendrev  =  [](auto n, auto x) { return eve::diff(eve::legendre)(n, x); };
-  for(unsigned int n=0; n < 5; ++n)
-  {
-    auto boost_legendre =  [&](auto i, auto) { return boost::math::legendre_p_prime(n, a0.get(i)); };
-    TTS_ULP_EQUAL(eve__legendrev(n, a0), T(boost_legendre), 100);
-  }
-
-  auto boost_legendrev =  [&](auto i, auto) { return boost::math::legendre_p_prime(i0.get(i), a0.get(i)); };
-  TTS_ULP_EQUAL(eve__legendrev(i0    , a0), T(boost_legendrev), 100);
-
-  for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
-  {
-    auto boost_legendre2 =  [i0, a0, j](auto i, auto) { return boost::math::legendre_p_prime(i0.get(i), a0.get(j)); };
-    TTS_RELATIVE_EQUAL(eve__legendrev(i0 , a0.get(j)), T(boost_legendre2), 0.01);
-  }
-
-  for(unsigned int j=0; j < eve::cardinal_v<T>; ++j)
-  {
-    for(unsigned int n=0; n < eve::cardinal_v<T>; ++n)
-    {
-      TTS_RELATIVE_EQUAL(eve__legendrev(i0.get(j) , a0.get(n)), v_t(boost::math::legendre_p_prime(i0.get(j), a0.get(n))), 0.01);
-    }
-  }
-};
 
 /////////////associated p legendre
 EVE_TEST( "Check behavior of associated legendre p on wide"
@@ -152,10 +121,6 @@ EVE_TEST( "Check behavior of associated legendre p on wide"
     {
       for(unsigned int p=0; p < eve::cardinal_v < I > ; ++p)
       {
-#if defined(__cpp_lib_math_special_functions)
-        TTS_ULP_EQUAL(eve__legendrev(n, p, a0.get(k)), std_assoc(n, p, a0.get(k)), 100);
-#endif
-
         TTS_RELATIVE_EQUAL(cse__legendrev(n, p, a0.get(k)), boost_legendrev(n, p, a0.get(k)), 0.01);
       }
     }

@@ -86,7 +86,7 @@ EVE_TEST( "Check behavior of negate(wide)"
   TTS_ULP_EQUAL( negate(a0, a1), map([](auto e, auto f) -> v_t { return e*eve::sign(f); }, a0, a1), 2);
   if constexpr(eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( eve::diff_1st(negate)(a0, a1), eve::sign(a1), 2);
-    TTS_ULP_EQUAL( eve::diff_2nd(negate)(a0, a1), eve::zero(eve::as(a0)), 2);
+    
+    
   }
 };

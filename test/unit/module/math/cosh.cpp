@@ -50,9 +50,9 @@ EVE_TEST( "Check behavior of cosh on wide"
   using v_t = eve::element_type_t<T>;
   using eve::cosh;
   using eve::sinh;
-  using eve::diff;
+  
   TTS_ULP_EQUAL(cosh(a0)      , map([](auto e) -> v_t { return std::cosh(e); }, a0), 2);
   TTS_ULP_EQUAL(cosh(a1)      , map([](auto e) -> v_t { return std::cosh(e); }, a1), 2);
-  TTS_ULP_EQUAL(diff(cosh)(a0), map([](auto e) -> v_t { return std::sinh(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(cosh)(a1), map([](auto e) -> v_t { return std::sinh(e); }, a1), 2);
+  
+  
 };

@@ -11,7 +11,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                      = " << pf << '\n'
             << "-> cyl_bessel_j0(pf)       = " << eve::cyl_bessel_j0(pf) << '\n'
-            << "-> diff(cyl_bessel_j0)(pf) = " << eve::diff(eve::cyl_bessel_j0)(pf) << '\n';
+            ;
 
   double xd = -1.0;
 

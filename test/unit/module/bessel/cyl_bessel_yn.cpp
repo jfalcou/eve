@@ -174,15 +174,3 @@ EVE_TEST( "Check behavior of cyl_bessel_yn on wide with non integral order"
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_yn(n, a0),   map(std__cyl_bessel_yn, n, a0)   , 0.001);
 };
 
-EVE_TEST( "Check behavior of cyl_bessel_yn on wide with negative non integral order"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 10.0)
-                             , eve::test::randoms(0.0, 60.0))
-        )
-  <typename T>(T n, T a0 )
-{
-  using v_t = eve::element_type_t<T>;
-  auto eve__diff_bessel_yn =  [](auto n, auto x) { return eve::diff(eve::cyl_bessel_yn)(n, x); };
-  auto std__diff_bessel_yn =  [](auto n, auto x)->v_t { return boost::math::cyl_neumann_prime(n, x); };
-  TTS_RELATIVE_EQUAL(eve__diff_bessel_yn(n, a0),   map(std__diff_bessel_yn, n, a0)   , 1.0e-2);
-};

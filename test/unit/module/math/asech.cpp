@@ -38,5 +38,5 @@ EVE_TEST( "Check behavior of asech on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::asech(a0)      , map([](auto e) -> v_t { return std::acosh(1/e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::asech)(a0), map([](auto e) -> v_t { return  v_t(-1)/(e*std::sqrt(1-e*e)); }, a0), 2);
+  
 };

@@ -39,5 +39,5 @@ EVE_TEST( "Check behavior of atanh on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::atanh(a0)      , map([](auto e) -> v_t { return std::atanh(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::atanh)(a0), map([](auto e) -> v_t { return  v_t(-1)/(e*e-1); }, a0), 2);
+  
 };

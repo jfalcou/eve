@@ -29,7 +29,7 @@ int main()
             << "-> reverse_horner(xd, l)                            = " << eve::reverse_horner(xd, l)  << '\n'
             << "-> reverse_horner(xd, v)                            = " << eve::reverse_horner(xd, v)  << '\n'
             << "-> reverse_horner(xd, wv)                           = " << eve::reverse_horner(xd, wv) << '\n'
-            << "-> diff(reverse_horner)(x, 1, -2, 3, -4)            = " << eve::diff(eve::reverse_horner)(x, 1, -2, 3, -4)   << '\n';
+            ;
 
   double xs = 0.1;
 

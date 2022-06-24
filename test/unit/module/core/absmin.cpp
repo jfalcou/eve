@@ -55,16 +55,13 @@ EVE_TEST( "Check behavior of absmin on all types full range"
   using v_t = eve::element_type_t<T>;
 
   auto m = [](auto a, auto b, auto c)-> v_t {return eve::abs(eve::min(a, b, c)); };
-  auto dm1 = [](auto a, auto b, auto c)-> v_t {return eve::min(a, b, c) == a? eve::sign(a) : 0;  };
-  auto dm2 = [](auto a, auto b, auto c)-> v_t {return eve::min(a, b, c) == b? eve::sign(b) : 0;  };
-  auto dm3 = [](auto a, auto b, auto c)-> v_t {return eve::min(a, b, c) == c? eve::sign(c) : 0;  };
   TTS_ULP_EQUAL(absmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(absmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (absmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(absmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_1st(absmin)((a0), (a1), (a2)), map(dm1, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_2nd(absmin)((a0), (a1), (a2)), map(dm2, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::diff_3rd(absmin)((a0), (a1), (a2)), map(dm3, a0, a1, a2), 2);
+
+
+
   TTS_IEEE_EQUAL(absmin[t](a0, a1), eve::if_else(t, absmin(a0, a1), a0));
  };
 

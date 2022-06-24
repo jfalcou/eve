@@ -50,9 +50,9 @@ EVE_TEST( "Check behavior of csch on wide"
   using v_t = eve::element_type_t<T>;
   using eve::csch;
   using eve::coth;
-  using eve::diff;
+  
   TTS_ULP_EQUAL(csch(a0)      , map([](auto e) -> v_t { return 1.0/std::sinh(e); }, a0), 2);
   TTS_ULP_EQUAL(csch(a1)      , map([](auto e) -> v_t { return 1.0/std::sinh(e); }, a1), 2);
-  TTS_ULP_EQUAL(diff(csch)(a0), map([](auto e) -> v_t { return -csch(e)*coth(e); }, a0), 2);
-  TTS_ULP_EQUAL(diff(csch)(a1), map([](auto e) -> v_t { return -csch(e)*coth(e); }, a1), 2);
+  
+  
 };

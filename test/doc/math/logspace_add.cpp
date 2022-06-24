@@ -12,8 +12,8 @@ int main()
             << " <- pf                             = " << pf << '\n'
             << " <- qf                             = " << qf << '\n'
             << " -> logspace_add(pf, qf)           = " << eve::logspace_add(pf, qf) << '\n'
-            << " -> diff_1st(logspace_add)(pf, qf) = " << eve::diff_1st(eve::logspace_add)(pf, qf) << '\n'
-            << " -> diff_2nd(logspace_add)(pf, qf) = " << eve::diff_2nd(eve::logspace_add)(pf, qf) << '\n';
+            
+            ;
 
   float xi = 3, yi = 4;
 

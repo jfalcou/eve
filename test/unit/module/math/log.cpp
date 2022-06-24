@@ -40,8 +40,8 @@ EVE_TEST( "Check behavior of log on wide"
 
   TTS_ULP_EQUAL(eve::log(a0)      , map([](auto e) -> v_t { return std::log(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::log(a1)      , map([](auto e) -> v_t { return std::log(e); }, a1), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::log)(a0), eve::rec(a0), 2);
-  TTS_ULP_EQUAL(eve::diff(eve::log)(a1), eve::rec(a1), 2);
+  
+  
 };
 
 EVE_TEST_TYPES( "Check return types of log"
