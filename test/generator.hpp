@@ -131,7 +131,7 @@ namespace tts
     template<typename D> auto operator()(tts::type<D>, auto& rng, auto...)
     {
       using i_t = eve::as_integer_t<eve::element_type_t<D>>;
-      static tts::realistic_distribution<i_t> dist(0,8*sizeof(i_t)-1);
+      tts::realistic_distribution<i_t> dist(0,8*sizeof(i_t)-1);
       return dist(rng);
     }
   };
