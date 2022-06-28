@@ -42,10 +42,13 @@ TTS_CASE_WITH( "Check behavior of eve::fdim(simd) floating"
 
 };
 
+auto maxi = tts::constant([]< typename T>(eve::as<T> const &){return eve::valmax(eve::as<T>())/4; });
+auto mini = tts::constant([]< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())/4; });
+
 TTS_CASE_WITH( "Check behavior of eve::fdim(simd) integral"
         , eve::test::simd::integers
-             , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
-                             , tts::randoms(eve::valmin, eve::valmax))
+             , tts::generate ( tts::randoms(mini, maxi)
+                             , tts::randoms(mini, maxi))
         )
 <typename T>(T const& a0, T const& a1)
 {
@@ -53,5 +56,5 @@ TTS_CASE_WITH( "Check behavior of eve::fdim(simd) integral"
   using eve::as;
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::fdim(a0, a1), map([](auto e,  auto f) -> v_t
-                                   { return  (e >= f) ? v_t(long(e)-long(f)) : eve::zero(eve::as<v_t>()); }, a0, a1));
+                                   { return  (e >= f) ? v_t(e-f) : eve::zero(eve::as<v_t>()); }, a0, a1));
 };
