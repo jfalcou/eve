@@ -66,7 +66,7 @@ TTS_CASE_WITH ( "Check behavior of average(wide)"
   TTS_ULP_EQUAL( average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
   if constexpr(eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( average(a0, a1, a2), map([](auto e, auto f,  auto g) { return (e + f + g)/3; }, a0, a1, a2), 16);
+    TTS_ULP_EQUAL( average(a0, a1, a2), map([](auto e, auto f,  auto g) { return (g + f + e)/3; }, a0, a1, a2), 16);
   }
 };
 

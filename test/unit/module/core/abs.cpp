@@ -130,7 +130,6 @@ TTS_CASE_TPL( "Check corner-cases behavior of eve::abs variants on wide"
   }
   else
   {
-    TTS_EQUAL( eve::abs(cases.valmin ) , cases.valmin);
     TTS_EQUAL( eve::abs(cases.valmax ) , cases.valmax);
 
     if constexpr( eve::signed_value<T> )
