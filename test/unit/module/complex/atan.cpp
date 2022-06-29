@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check behavior of atan on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 32.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 32.0 : 3.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
@@ -42,7 +42,7 @@ TTS_CASE_WITH( "Check behavior of atan on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 32.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 32.0 : 3.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
