@@ -12,10 +12,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of average"
+TTS_CASE_TPL( "Check return types of average"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -51,13 +51,13 @@ EVE_TEST_TYPES( "Check return types of average"
 //==================================================================================================
 //== average tests
 //==================================================================================================
-EVE_TEST( "Check behavior of average(wide)"
-            , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  )
-            )
+TTS_CASE_WITH ( "Check behavior of average(wide)"
+              , eve::test::simd::all_types
+              , tts::generate ( tts::randoms(-1000., +1000.)
+                              , tts::randoms(-1000., +1000.)
+                              , tts::randoms(-1000., +1000.)
+                              )
+              )
 <typename T>(T const& a0, T const& a1, T const& a2 )
 {
   using eve::average;
@@ -66,7 +66,7 @@ EVE_TEST( "Check behavior of average(wide)"
   TTS_ULP_EQUAL( average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
   if constexpr(eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( average(a0, a1, a2), map([](auto e, auto f,  auto g) { return e/3 + f/3 + g/3; }, a0, a1, a2), 2);
+    TTS_ULP_EQUAL( average(a0, a1, a2), map([](auto e, auto f,  auto g) { return (g + f + e)/3; }, a0, a1, a2), 16);
   }
 };
 
@@ -74,11 +74,11 @@ EVE_TEST( "Check behavior of average(wide)"
 //==================================================================================================
 //==  conditional average tests
 //==================================================================================================
-EVE_TEST( "Check behavior of  average[cond](wide)"
+TTS_CASE_WITH( "Check behavior of  average[cond](wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(0, 127)
-                              , eve::test::randoms(0, 127)
-                              , eve::test::randoms(0, 127)
+        , tts::generate ( tts::randoms(0, 127)
+                              , tts::randoms(0, 127)
+                              , tts::randoms(0, 127)
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& a2)

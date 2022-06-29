@@ -16,8 +16,8 @@
 template<typename T>
 using tuple_t = kumi::tuple<std::int8_t,T,double>;
 
-EVE_TEST_TYPES( "Check compress store behaviour with tuples ", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check compress store behaviour with tuples ", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using N   = eve::fixed<T::size()>;
   using e_t = eve::element_type_t<T>;

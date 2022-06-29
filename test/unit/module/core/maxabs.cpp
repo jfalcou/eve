@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of maxabs"
+TTS_CASE_TPL( "Check return types of maxabs"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,12 +39,12 @@ EVE_TEST_TYPES( "Check return types of maxabs"
 // maxabs tests
 //==================================================================================================
 
-EVE_TEST( "Check behavior of maxabs on all types full range"
+TTS_CASE_WITH( "Check behavior of maxabs on all types full range"
         , eve::test::simd::all_types
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3)
+        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3)
                               )
         )
 <typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
@@ -64,10 +64,10 @@ EVE_TEST( "Check behavior of maxabs on all types full range"
   TTS_IEEE_EQUAL(maxabs[t](a0, a1), eve::if_else(t, maxabs(a0, a1), a0));
 };
 
-EVE_TEST_TYPES( "Check values of maxabs"
+TTS_CASE_TPL( "Check values of maxabs"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(eve::nan(eve::as<T>())   , T(1)  ) , eve::nan(eve::as<T>()) );

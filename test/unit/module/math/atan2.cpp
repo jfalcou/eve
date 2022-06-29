@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of atan2"
+TTS_CASE_TPL( "Check return types of atan2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,15 +30,15 @@ EVE_TEST_TYPES( "Check return types of atan2"
 //==================================================================================================
 // atan2  tests
 //==================================================================================================
-auto mini = [](auto tgt) { return eve::next(eve::mindenormal(tgt)); };
-auto maxi = [](auto tgt) { return eve::valmax(tgt)/2; };
+auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt)); });
+auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt)/2; });
 
-EVE_TEST( "Check behavior of atan2 on wide"
+TTS_CASE_WITH( "Check behavior of atan2 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mini, maxi)
-                             , eve::test::randoms(mini, maxi)
-                             , eve::test::randoms(-1.0, 1.0)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate( tts::randoms(mini, maxi)
+                             , tts::randoms(mini, maxi)
+                             , tts::randoms(-1.0, 1.0)
+                             , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
@@ -53,10 +53,10 @@ EVE_TEST( "Check behavior of atan2 on wide"
   
 };
 
-EVE_TEST_TYPES( "Check behavior of pedantic(atan2)"
+TTS_CASE_TPL( "Check behavior of pedantic(atan2)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::is_negative;
   using eve::is_positive;

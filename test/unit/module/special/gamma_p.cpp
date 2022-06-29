@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of gamma_p"
+TTS_CASE_TPL( "Check return types of gamma_p"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,16 +30,19 @@ EVE_TEST_TYPES( "Check return types of gamma_p"
 //==================================================================================================
 // gamma_p  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of gamma_p on wide"
+TTS_CASE_WITH( "Check behavior of gamma_p on wide"
         , eve::test::simd::ieee_reals //but there is a flaw in boost_gamma_p for double
-        , eve::test::generate(eve::test::randoms(0.0, 100.0)
-                             , eve::test::randoms(0.0, 5.0))
+        , tts::generate(tts::randoms(1.0, 100.0)
+                             , tts::randoms(1.0, 5.0))
         )
 <typename T>(T const& a0, T const& a1 )
 {
   using v_t = eve::element_type_t<T>;
   using eve::gamma_p;
-  TTS_ULP_EQUAL( eve::gamma_p(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(f, e); }, a0, a1), 40);
+  TTS_RELATIVE_EQUAL( eve::gamma_p(a0, a1)
+                    ,  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(f, e); }, a0, a1)
+                    , 1e-4
+                    );
 
   if constexpr( eve::platform::supports_invalids )
   {

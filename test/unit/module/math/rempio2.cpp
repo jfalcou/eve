@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of cos"
+TTS_CASE_TPL( "Check return types of cos"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -35,12 +35,12 @@ auto half_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt);
 auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::medium_type(), tgt); };
 
-EVE_TEST( "Check behavior of cos on wide"
+TTS_CASE_WITH( "Check behavior of cos on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
-                             , eve::test::randoms(mhalf_c, half_c)
-                             , eve::test::randoms(mmed, med)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate( tts::randoms(mquarter_c, quarter_c)
+                             , tts::randoms(mhalf_c, half_c)
+                             , tts::randoms(mmed, med)
+                             , tts::randoms(eve::valmin, eve::valmax))
                              )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {

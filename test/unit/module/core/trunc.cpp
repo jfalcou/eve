@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of trunc"
+TTS_CASE_TPL( "Check return types of trunc"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,10 +39,10 @@ EVE_TEST_TYPES( "Check return types of trunc"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  with nans and infs"
+TTS_CASE_TPL( "Check  with nans and infs"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-eve::eps(eve::as<T>()))), T(1));
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-2*eve::eps(eve::as<T>()))), T(1));
@@ -57,11 +57,12 @@ EVE_TEST_TYPES( "Check  with nans and infs"
 //==================================================================================================
 // trunc signed tests
 //==================================================================================================
-auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of trunc on wide"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(min, +50))
-        )
+auto mini = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
+
+TTS_CASE_WITH ( "Check behavior of trunc on wide"
+              , eve::test::simd::all_types
+              , tts::generate(tts::randoms(tts::constant(mini), +50))
+              )
 <typename T>(T const& a0 )
 {
   using wi_t = eve::as_integer_t<T>;

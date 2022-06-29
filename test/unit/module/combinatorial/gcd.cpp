@@ -12,21 +12,20 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::gcd"
-              , eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::gcd", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS(eve::gcd(T(), T()), T);
 };
 
-auto mini = []< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())+1; };
+auto mini = tts::constant([]<typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())+1; });
 
-EVE_TEST( "Check corner-cases behavior of eve::gcd on wide"
-        , eve::test::simd::integers
-        , eve::test::generate ( eve::test::randoms(mini, eve::valmax)
-                              , eve::test::randoms(mini, eve::valmax)
+TTS_CASE_WITH ( "Check corner-cases behavior of eve::gcd on wide"
+              , eve::test::simd::integers
+              , tts::generate ( tts::randoms(mini, eve::valmax)
+                              , tts::randoms(mini, eve::valmax)
                               )
-         )
+              )
   <typename T>(const T & a0,  const T & a1)
 {
   using eve::detail::map;
@@ -37,11 +36,8 @@ EVE_TEST( "Check corner-cases behavior of eve::gcd on wide"
 //==================================================================================================
 //=== Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check  behavior of eve::gcd on wide peculiar cases"
-        , eve::test::simd::all_types
-
-         )
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check  behavior of eve::gcd on wide peculiar cases", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::gcd;

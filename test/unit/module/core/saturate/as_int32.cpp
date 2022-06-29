@@ -8,14 +8,14 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 
-EVE_TEST_TYPES( "Check eve::saturate return type", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::saturate return type", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS(eve::saturate(T(),   eve::as<std::int32_t>()), T);
 };
 
-EVE_TEST_TYPES( "Check eve::saturate behavior", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::saturate behavior", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::saturate(T(0)    , eve::as<std::int32_t>() ), T(0)     );
   TTS_EQUAL(eve::saturate(T(42.69), eve::as<std::int32_t>() ), T(42.69) );

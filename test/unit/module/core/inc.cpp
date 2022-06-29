@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of inc"
+TTS_CASE_TPL( "Check return types of inc"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -48,12 +48,12 @@ EVE_TEST_TYPES( "Check return types of inc"
 //==================================================================================================
 // inc(simd)  tests
 //==================================================================================================
-auto valminp1 = []< typename T>(eve::as<T> const &){return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));};
+auto valminp1 = tts::constant([](auto tgt) { return eve::inc(eve::valmin(eve::as(tgt)));});
 
-EVE_TEST( "Check behavior of inc(wide) and inc[cond](wide)"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(valminp1, eve::valmax))
-        )
+TTS_CASE_WITH ( "Check behavior of inc(wide) and inc[cond](wide)"
+              , eve::test::simd::all_types
+              , tts::generate(tts::randoms(valminp1, eve::valmax))
+              )
 <typename T>(T const& a0 )
 {
   using v_t = eve::element_type_t<T>;
@@ -64,9 +64,9 @@ EVE_TEST( "Check behavior of inc(wide) and inc[cond](wide)"
   TTS_EQUAL( eve::inc[z](a0), map([&](auto e) ->v_t{ return v_t((z) ?e+1 : e); }, a0));
 };
 
-EVE_TEST( "Check behavior of saturated(inc)(wide) on integral types"
+TTS_CASE_WITH( "Check behavior of saturated(inc)(wide) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, valminp1))
+        , tts::generate(tts::randoms(eve::valmin, valminp1))
         )
 <typename T>(T const& a0 )
 {
@@ -83,9 +83,9 @@ EVE_TEST( "Check behavior of saturated(inc)(wide) on integral types"
  };
 
 
-EVE_TEST( "Check behavior of saturated(inc)(wide) on integral types"
+TTS_CASE_WITH( "Check behavior of saturated(inc)(wide) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, valminp1))
+        , tts::generate(tts::randoms(eve::valmin, valminp1))
         )
 <typename T>(T const& a0 )
 {

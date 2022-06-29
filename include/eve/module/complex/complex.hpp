@@ -16,7 +16,6 @@
 #include <eve/module/complex/regular/detail/math.hpp>
 #include <eve/module/complex/regular/detail/predicates.hpp>
 #include <eve/product_type.hpp>
-#include "eve/module/core/constant/one.hpp"
 #include <ostream>
 
 namespace eve

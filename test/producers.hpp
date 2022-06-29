@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 #include "test.hpp"
-#include "test_distribution.hpp"
 #include "measures.hpp"
 #include <tts/ranges.hpp>
 #include <eve/memory/align.hpp>
@@ -45,7 +44,7 @@ TTS_ULP_RANGE_CHECK(Producer, (EVE_VALUE), (T), Ref, New, Ulps);                
 
 namespace eve
 {
-  template<typename T> using uniform_prng = tts::prng_generator< T, prng<T>>;
+  template<typename T> using uniform_prng = tts::realistic_generator<T>;
 }
 
 namespace tts

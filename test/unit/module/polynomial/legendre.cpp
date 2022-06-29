@@ -15,11 +15,11 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of legendre on wide"
+TTS_CASE_TPL( "Check return types of legendre on wide"
               , eve::test::simd::ieee_reals
 
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using wi_t = eve::as_integer_t<T>;
@@ -34,9 +34,9 @@ EVE_TEST_TYPES( "Check return types of legendre on wide"
 //==================================================================================================
 //== legendre tests
 //==================================================================================================
-EVE_TEST( "Check behavior of legendre p on wide"
+TTS_CASE_WITH( "Check behavior of legendre p on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1, 1), eve::test::as_integer(eve::test::ramp(0)))
+        , tts::generate(tts::between(-1, 1), tts::as_integer(tts::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -66,9 +66,9 @@ EVE_TEST( "Check behavior of legendre p on wide"
 //==================================================================================================
 //== legendre tests
 //==================================================================================================
-EVE_TEST( "Check behavior of legendre q on wide"
+TTS_CASE_WITH( "Check behavior of legendre q on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::between(-1.0, 1.0), eve::test::as_integer(eve::test::ramp(0)))
+        , tts::generate(tts::between(-1.0, 1.0), tts::as_integer(tts::ramp(0)))
         )
   <typename T, typename I>(T const& a0,I const & i0)
 {
@@ -98,12 +98,13 @@ EVE_TEST( "Check behavior of legendre q on wide"
 };
 
 
-/////////////associated p legendre
-EVE_TEST( "Check behavior of associated legendre p on wide"
-        , eve::test::simd::ieee_doubles
-        , eve::test::generate(eve::test::between(-1.0, 1.0)
-                             , eve::test::as_integer(eve::test::ramp(0))
-                             , eve::test::as_integer(eve::test::reverse_ramp(0)))
+// associated p legendre
+// TODO: FIX LATER
+TTS_CASE_WITH( "Check behavior of associated legendre p on wide"
+        , eve::test::simd::ieee_reals
+        , tts::generate ( tts::between(-1.0, 1.0)
+                        , tts::as_integer(tts::ramp(0))
+                        , tts::as_integer(tts::reverse_ramp(0)))
         )
   <typename T, typename I>(T a0, I i0, I j0)
 {
@@ -134,20 +135,23 @@ EVE_TEST( "Check behavior of associated legendre p on wide"
 };
 
 /////////////spherical legendre
-EVE_TEST( "Check behavior of spherical legendre on wide"
-        , eve::test::simd::ieee_doubles
-        , eve::test::generate(eve::test::between(0, 3.14159)
-                             , eve::test::as_integer(eve::test::ramp(0))
-                             , eve::test::as_integer(eve::test::reverse_ramp(0)))
-        )
+TTS_CASE_WITH ( "Check behavior of spherical legendre on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::between(0, 3.14159)
+                              , tts::as_integer(tts::ramp(0))
+                              , tts::as_integer(tts::reverse_ramp(0))
+                              )
+              )
   <typename T, typename I>(T a0, I i0, I j0)
 {
+  using e_t = eve::element_type_t<T>;
+
   auto eve__slegendre  =  [](auto m, auto n, auto x) { return eve::sph(eve::legendre)(m, n, x); };
 
 #if defined(__cpp_lib_math_special_functions)
-  auto std_slegendre = [](auto m, auto n, auto x) { return std::sph_legendre(m, n, x); };
+  auto std_slegendre = [](auto m, auto n, auto x) -> e_t { return std::sph_legendre(m, n, x); };
 #else
-  auto boost_slegendre =  [](auto m, auto n, auto x) { return boost::math::spherical_harmonic_r(m, n, x, 0);};
+  auto boost_slegendre =  [](auto m, auto n, auto x) -> e_t { return boost::math::spherical_harmonic_r(m, n, x, 0);};
 #endif
 
   for(unsigned int k=0; k < eve::cardinal_v < T > ; ++k)
@@ -157,9 +161,9 @@ EVE_TEST( "Check behavior of spherical legendre on wide"
       for(unsigned int p=0; p < n ; ++p)
       {
 #if defined(__cpp_lib_math_special_functions)
-        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), std_slegendre(n, p, a0.get(k)), 0.001);
+        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), std_slegendre(n, p, a0.get(k)), 0.01);
 #else
-        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), boost_slegendre(n, p, a0.get(k)), 0.001);
+        TTS_RELATIVE_EQUAL(eve__slegendre(n, p, a0.get(k)), boost_slegendre(n, p, a0.get(k)), 0.01);
 #endif
       }
     }
@@ -169,6 +173,6 @@ EVE_TEST( "Check behavior of spherical legendre on wide"
 #if defined(__cpp_lib_math_special_functions)
   TTS_ULP_EQUAL(eve__slegendre(i0, j0, a0), map(std_slegendre, i0, j0, a0), 100);
 #else
-  TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), map(boost_slegendre, i0, j0, a0), 0.001);
+  TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), map(boost_slegendre, i0, j0, a0), 0.01);
 #endif
 };

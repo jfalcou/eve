@@ -27,6 +27,15 @@ namespace eve::detail
       {
         constexpr auto shift = Shift*sizeof(T);
         using i_t = as_integer_t<wide<T,N>, unsigned>;
+        using ec_t = expected_cardinal_t<T,abi_t<T, N>>;
+
+        if constexpr(N::value < 16)
+        {
+          v = bit_cast( bit_cast(v,as<wide<T,ec_t>>())
+                      & as_logical_t<wide<T,ec_t>>([](auto i, auto) { return i<N::value; }).mask()
+                      , as(v)
+                      );
+        }
 
         auto const b  = bit_cast(v, as<i_t>());
         auto result = bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));

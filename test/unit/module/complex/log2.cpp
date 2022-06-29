@@ -18,10 +18,10 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of log2 on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of log2 on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        ,tts::generate(tts::randoms(-10, 10)
+                             ,tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -38,10 +38,10 @@ EVE_TEST( "Check behavior of log2 on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of log2 on wide"
+TTS_CASE_WITH( "Check behavior of log2 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        ,tts::generate(tts::randoms(-10, 10)
+                             ,tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -62,8 +62,8 @@ EVE_TEST( "Check behavior of log2 on wide"
   TTS_ULP_EQUAL(eve::log2(z_t{a0,a1}), init_with_std(a0, a1), 2);
 };
 
-EVE_TEST_TYPES( "Check return types of eve::log2", eve::test::simd::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::log2", eve::test::simd::ieee_reals)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::pedantic;

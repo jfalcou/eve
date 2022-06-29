@@ -10,9 +10,9 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of shr"
-              , eve::test::simd::unsigned_types
-              )<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of shr"
+            , eve::test::simd::unsigned_integers
+            )<typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;
@@ -35,39 +35,35 @@ EVE_TEST_TYPES( "Check return types of shr"
   TTS_EXPR_IS( eve::shr(v_t(), vu_t()) , v_t);
 };
 
-
 //==================================================================================================
 // shr tests
 //==================================================================================================
 auto shift_max = []< typename T>(eve::as<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
 
-EVE_TEST( "Check behavior of shr on integral types"
-        , eve::test::simd::unsigned_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
+TTS_CASE_WITH ( "Check behavior of shr on integral types"
+              , eve::test::simd::unsigned_integers
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(0u, tts::constant(shift_max))
                               )
-        )
+              )
 <typename T>( T const& a0, T const& a1
                                 )
 {
   using eve::shr;
   using eve::saturated;
   TTS_EQUAL( shr(a0, a1), T([&](auto i, auto) { return shr(a0.get(i), a1.get(i)); }));
-
 };
 
-
-EVE_TEST( "Check behavior of shr with scalar shift on integral types"
-        , eve::test::simd::unsigned_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
+TTS_CASE_WITH ( "Check behavior of shr with scalar shift on integral types"
+              , eve::test::simd::unsigned_integers
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(0u, tts::constant(shift_max))
                               )
-        )
-<typename T, typename I>(T const& a0,I a1)
+              )
+<typename T, typename I>(T const& a0, I a1)
 {
   using eve::shr;
   using eve::saturated;
   auto val = a1.get(0);
   TTS_EQUAL( shr(a0, val), T([&](auto i, auto) { return shr(a0.get(i), val); }));
-
 };

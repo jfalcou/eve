@@ -10,8 +10,8 @@
 #include "test.hpp"
 
 
-EVE_TEST_TYPES( "Check behavior of arithmetic as_value", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of arithmetic as_value", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   e_t max_value = std::numeric_limits<e_t>::max();
@@ -55,8 +55,8 @@ EVE_TEST_TYPES( "Check behavior of arithmetic as_value", eve::test::simd::all_ty
   }
 };
 
-EVE_TEST_TYPES( "Check behavior of logical as_value", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of logical as_value", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   {
     using U = eve::logical<T>;

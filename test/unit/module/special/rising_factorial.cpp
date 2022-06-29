@@ -14,9 +14,9 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::rising_factorial"
+TTS_CASE_TPL( "Check return types of eve::rising_factorial"
               , eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS(eve::raw(eve::rising_factorial)(int(), T()), T);
 
@@ -25,10 +25,10 @@ EVE_TEST_TYPES( "Check return types of eve::rising_factorial"
 //==================================================================================================
 //== Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check corner-cases behavior of eve::rising_factorial wide"
+TTS_CASE_TPL( "Check corner-cases behavior of eve::rising_factorial wide"
         , eve::test::simd::ieee_reals
          )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
    auto ulp = sizeof(eve::element_type_t<T>) == 4 ? 70 : 40;

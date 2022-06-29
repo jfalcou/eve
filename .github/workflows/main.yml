@@ -40,28 +40,30 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang       , arch: x86    , opts: -msse2                , status: 1 }
-        - { comp: gcc         , arch: x86    , opts: -msse2                , status: 1 }
-        - { comp: clang       , arch: x86    , opts: -mssse3               , status: 1 }
-        - { comp: gcc         , arch: x86    , opts: -mssse3               , status: 1 }
-        - { comp: clang       , arch: x86    , opts: -msse4.2              , status: 1 }
-        - { comp: gcc         , arch: x86    , opts: -msse4.2              , status: 1 }
-        - { comp: clang       , arch: x86    , opts: -mavx                 , status: 1 }
-        - { comp: gcc         , arch: x86    , opts: -mavx                 , status: 1 }
-        - { comp: clang       , arch: x86    , opts: -mavx2                , status: 1 }
-        - { comp: gcc         , arch: x86    , opts: -mavx2                , status: 1 }
-        - { comp: clang       , arch: x86_sde, opts: -march=skylake-avx512 , status: 1 }
-        - { comp: gcc         , arch: x86_sde, opts: -march=skylake-avx512 , status: 1 }
+        - { comp: clang       , arch: x86    , opts: -msse2                }
+        - { comp: gcc         , arch: x86    , opts: -msse2                }
+        - { comp: clang       , arch: x86    , opts: -mssse3               }
+        - { comp: gcc         , arch: x86    , opts: -mssse3               }
+        - { comp: clang       , arch: x86    , opts: -msse4.2              }
+        - { comp: gcc         , arch: x86    , opts: -msse4.2              }
+        - { comp: clang       , arch: x86    , opts: -mavx                 }
+        - { comp: gcc         , arch: x86    , opts: -mavx                 }
+        - { comp: clang       , arch: x86    , opts: -mavx2                }
+        - { comp: gcc         , arch: x86    , opts: -mavx2                }
+        - { comp: clang       , arch: x86_sde, opts: -march=skylake-avx512 }
+        - { comp: gcc         , arch: x86_sde, opts: -march=skylake-avx512 }
 
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_tests
-        with:
-          options:        '"${{ matrix.cfg.opts }}"'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:        '${{ matrix.cfg.status }}'
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja -v unit -j 8
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 8
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup

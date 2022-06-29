@@ -14,10 +14,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of geommean"
+TTS_CASE_TPL( "Check return types of geommean"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -40,11 +40,11 @@ EVE_TEST_TYPES( "Check return types of geommean"
 //==================================================================================================
 //== geommean tests
 //==================================================================================================
-EVE_TEST( "Check behavior of geommean(wide)"
+TTS_CASE_WITH( "Check behavior of geommean(wide)"
             , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(-100, 100)
-                                  , eve::test::randoms(-100, 100)
-                                  , eve::test::randoms(-100, 100)
+            , tts::generate ( tts::randoms(-100, 100)
+                                  , tts::randoms(-100, 100)
+                                  , tts::randoms(-100, 100)
                                   )
             )
 <typename T>(T const& a0, T const& a1, T const& a2 )

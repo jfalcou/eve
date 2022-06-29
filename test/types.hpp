@@ -6,68 +6,26 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/detail/meta.hpp>
-#include <tuple>
+#include <array>
 
-namespace eve::test::scalar
-{
-  using detail::types;
-
-  inline constexpr types< std::int8_t , std::int16_t
-                        , std::int32_t, std::int64_t
-                        >                                   signed_integers   = {};
-
-  inline constexpr types< std::uint8_t  , std::uint16_t
-                        , std::uint32_t , std::uint64_t
-                        >                                   unsigned_integers = {};
-  inline constexpr types< std::int8_t   , std::int16_t
-                        , std::int32_t  , std::int64_t
-                        , std::uint8_t  , std::uint16_t
-                        , std::uint32_t , std::uint64_t
-                        >                                   integers          = {};
-  inline constexpr types<float, double>                     ieee_reals        = {};
-  inline constexpr types<float>                             ieee_floats       = {};
-  inline constexpr types<double>                            ieee_doubles      = {};
-  inline constexpr types<std::uint64_t>                     uints_64          = {};
-  inline constexpr types<std::uint32_t>                     uints_32          = {};
-  inline constexpr types<std::uint16_t>                     uints_16          = {};
-  inline constexpr types<std::uint8_t>                      uints_8           = {};
-  inline constexpr types<std::int64_t>                      ints_64           = {};
-  inline constexpr types<std::int32_t>                      ints_32           = {};
-  inline constexpr types<std::int16_t>                      ints_16           = {};
-  inline constexpr types<std::int8_t>                       ints_8            = {};
-
-  inline constexpr types< float       , double
-                        , std::int8_t , std::int16_t
-                        , std::int32_t, std::int64_t
-                        >                                   signed_types      = {};
-  inline constexpr auto                                     unsigned_types    = unsigned_integers;
-  inline constexpr types< float         , double
-                        , std::int8_t   , std::int16_t
-                        , std::int32_t  , std::int64_t
-                        , std::uint8_t  , std::uint16_t
-                        , std::uint32_t , std::uint64_t
-                        >                                   all_types         = {};
-}
-
-namespace eve::detail
+namespace eve::test
 {
   template<typename T, typename Indexes> struct to_wide;
 
   template<typename T, std::size_t... N>
   struct to_wide<T, std::index_sequence<N...>>
   {
-    using type = types<as_wide_t<T,fixed<1ULL << N>>...>;
+    using type = ::tts::types<as_wide_t<T,eve::fixed<1ULL << N>>...>;
   };
 
   template<typename T, typename I>
   using to_wide_t = typename to_wide<T,I>::type;
 
   template<typename L> struct wides;
-  template<typename... Ts> struct wides<types<Ts...>>
+  template<typename... Ts> struct wides<::tts::types<Ts...>>
   {
     // Precomputed # of repetitions based on ABI and sizeof(T)
-    static constexpr std::array<std::size_t,9> cardinal_map()
+    static constexpr std::array<std::size_t,9> cardinals()
     {
       // This is a precomputed map of the maximum number of cardinal to generate depending
       // on the current ABI bits size. This prevents us to use std::bit_width and other complex
@@ -82,58 +40,60 @@ namespace eve::detail
       };
     };
 
-    using type = concatenate_t< to_wide_t < Ts
-                                          , std::make_index_sequence<cardinal_map()[sizeof(Ts)]>
-                                          >...
-                              >;
+    using type = tts::concatenate_t < to_wide_t < Ts
+                                                , std::make_index_sequence<cardinals()[sizeof(Ts)]>
+                                                >...
+                                    >;
   };
 
   // Prevent calling remove_cvref_t
-  template<typename L> struct wides<L const>            : wides<L>            {};
-  template<typename L> struct wides<L&>                 : wides<L>            {};
+  template<typename L> struct wides<L const>  : wides<L>  {};
+  template<typename L> struct wides<L&>       : wides<L>  {};
+
+  template<typename L> using wides_t = typename wides<L>::type;
+
+  using sizes = tts::types< std::integral_constant<int,    8>
+                          , std::integral_constant<int,   16>
+                          , std::integral_constant<int,   32>
+                          , std::integral_constant<int,   64>
+                          , std::integral_constant<int,  128>
+                          , std::integral_constant<int,  256>
+                          , std::integral_constant<int,  512>
+                          , std::integral_constant<int, 1024>
+                          >;
+
+  using cardinals = tts::types< eve::fixed<   1>
+                              , eve::fixed<   2>
+                              , eve::fixed<   4>
+                              , eve::fixed<   8>
+                              , eve::fixed<  16>
+                              , eve::fixed<  32>
+                              , eve::fixed<  64>
+                              , eve::fixed< 128>
+                              , eve::fixed< 256>
+                              , eve::fixed< 512>
+                              , eve::fixed<1024>
+                              >;
+}
+
+namespace eve::test::scalar
+{
+  using ieee_reals        = ::tts::real_types;
+  using signed_integers   = ::tts::int_types;
+  using signed_types      = ::tts::signed_types;
+  using signed_integers   = ::tts::int_types;
+  using unsigned_integers = ::tts::uint_types;
+  using integers          = ::tts::integral_types;
+  using all_types         = ::tts::arithmetic_types;
 }
 
 namespace eve::test::simd
 {
-  inline constexpr detail::wides< decltype(scalar::signed_integers) >::type   signed_integers   {};
-  inline constexpr detail::wides< decltype(scalar::unsigned_integers) >::type unsigned_integers {};
-  inline constexpr detail::wides< decltype(scalar::integers) >::type          integers          {};
-  inline constexpr detail::wides< decltype(scalar::ieee_reals) >::type        ieee_reals        {};
-  inline constexpr detail::wides< decltype(scalar::ieee_floats) >::type       ieee_floats       {};
-  inline constexpr detail::wides< decltype(scalar::ieee_doubles) >::type      ieee_doubles      {};
-  inline constexpr detail::wides< decltype(scalar::uints_64) >::type          uints_64          {};
-  inline constexpr detail::wides< decltype(scalar::uints_32) >::type          uints_32          {};
-  inline constexpr detail::wides< decltype(scalar::uints_16) >::type          uints_16          {};
-  inline constexpr detail::wides< decltype(scalar::uints_8 ) >::type          uints_8           {};
-  inline constexpr detail::wides< decltype(scalar::ints_64) >::type           ints_64           {};
-  inline constexpr detail::wides< decltype(scalar::ints_32) >::type           ints_32           {};
-  inline constexpr detail::wides< decltype(scalar::ints_16) >::type           ints_16           {};
-  inline constexpr detail::wides< decltype(scalar::ints_8 ) >::type           ints_8            {};
-  inline constexpr detail::wides< decltype(scalar::signed_types) >::type      signed_types      {};
-  inline constexpr auto                                   unsigned_types    = unsigned_integers;
-  inline constexpr detail::wides< decltype(scalar::all_types) >::type         all_types         {};
-
-  using detail::types;
-  inline constexpr types< std::integral_constant<int,    8>
-                        , std::integral_constant<int,   16>
-                        , std::integral_constant<int,   32>
-                        , std::integral_constant<int,   64>
-                        , std::integral_constant<int,  128>
-                        , std::integral_constant<int,  256>
-                        , std::integral_constant<int,  512>
-                        , std::integral_constant<int, 1024>
-                        > sizes = {};
-
-  inline constexpr types< eve::fixed<   1>
-                        , eve::fixed<   2>
-                        , eve::fixed<   4>
-                        , eve::fixed<   8>
-                        , eve::fixed<  16>
-                        , eve::fixed<  32>
-                        , eve::fixed<  64>
-                        , eve::fixed< 128>
-                        , eve::fixed< 256>
-                        , eve::fixed< 512>
-                        , eve::fixed<1024>
-                        > cardinals = {};
+  using ieee_reals        = eve::test::wides<::tts::real_types>::type;
+  using signed_integers   = eve::test::wides<::tts::int_types>::type;
+  using signed_types      = eve::test::wides<::tts::signed_types>::type;
+  using signed_integers   = eve::test::wides<::tts::int_types>::type;
+  using unsigned_integers = eve::test::wides<::tts::uint_types>::type;
+  using integers          = eve::test::wides<::tts::integral_types>::type;
+  using all_types         = eve::test::wides<::tts::arithmetic_types>::type;
 }

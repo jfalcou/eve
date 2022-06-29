@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of cot"
+TTS_CASE_TPL( "Check return types of cot"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,23 +28,24 @@ EVE_TEST_TYPES( "Check return types of cot"
 //==================================================================================================
 // cot  tests
 //==================================================================================================
-auto mquarter_c  = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
-auto quarter_c   = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
-auto mhalf_c = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
-auto mfull_c =[]<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
-auto full_c =[]<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
-auto half_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
-auto mmed   = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
-auto med    = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto mquarter_c = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_4(tgt); };
+auto quarter_c  = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_4(tgt); };
+auto mhalf_c    = []<typename T>(eve::as<T> const & tgt){  return -eve::pio_2(tgt); };
+auto mfull_c    = []<typename T>(eve::as<T> const & tgt){  return -eve::pi(tgt);    };
+auto full_c     = []<typename T>(eve::as<T> const & tgt){  return  eve::pi(tgt);    };
+auto half_c     = []<typename T>(eve::as<T> const & tgt){  return  eve::pio_2(tgt); };
+auto mmed       = []<typename T>(eve::as<T> const & tgt){  return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto med        = []<typename T>(eve::as<T> const & tgt){  return  eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
 
-EVE_TEST( "Check behavior of cot on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
-                             , eve::test::randoms(mhalf_c, half_c)
-                             , eve::test::randoms(mfull_c ,full_c)
-                             , eve::test::randoms(mmed, med)
-                             , eve::test::randoms(eve::valmin, eve::valmax))
-                             )
+TTS_CASE_WITH ( "Check behavior of cot on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::randoms(tts::constant(mquarter_c), tts::constant(quarter_c))
+                              , tts::randoms(tts::constant(mhalf_c)   , tts::constant(half_c))
+                              , tts::randoms(tts::constant(mfull_c)   , tts::constant(full_c))
+                              , tts::randoms(tts::constant(mmed)      , tts::constant(med))
+                              , tts::randoms(eve::valmin, eve::valmax)
+                              )
+              )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4)
 {
   using eve::detail::map;

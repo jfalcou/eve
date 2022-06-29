@@ -10,10 +10,10 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-EVE_TEST( "Check detail::to_logical"
-        , eve::test::simd::all_types
-        , eve::test::generate( eve::test::randoms(0,2) )
-        )
+TTS_CASE_WITH ( "Check detail::to_logical"
+              , eve::test::simd::all_types
+              , ::tts::generate ( tts::randoms{0,2} )
+              )
 <typename T>(T mixed_values)
 {
   eve::as_logical_t<T> all_true(true);

@@ -16,8 +16,8 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // if_else
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide<tuple> if_else", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::wide<tuple> if_else", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
@@ -52,8 +52,8 @@ EVE_TEST_TYPES( "Check eve::wide<tuple> if_else", eve::test::scalar::all_types)
 //==================================================================================================
 // replace_ignored
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide<tuple> replace_ignored", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::wide<tuple> replace_ignored", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;

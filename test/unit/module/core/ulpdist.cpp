@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of ulpdist"
+TTS_CASE_TPL( "Check return types of ulpdist"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -25,10 +25,10 @@ EVE_TEST_TYPES( "Check return types of ulpdist"
   TTS_EXPR_IS( eve::ulpdist(v_t(), v_t()) , v_t);
 };
 
-EVE_TEST_TYPES( "Check return types of ulpdist"
+TTS_CASE_TPL( "Check return types of ulpdist"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::ulpdist;
   using eve::as;

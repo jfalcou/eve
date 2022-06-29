@@ -12,9 +12,8 @@
 #include <bit>
 #include <random>
 
-EVE_TEST_TYPES("compress_store_swizzle_mask_num 4 elements",
-               eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("compress_store_swizzle_mask_num 4 elements",eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using mask_t = eve::logical<eve::wide<T, eve::fixed<4>>>;
 
@@ -59,8 +58,8 @@ EVE_TEST_TYPES("compress_store_swizzle_mask_num 4 elements",
   run(eve::ignore_last(2));
 };
 
-EVE_TEST_TYPES("compress_store_swizzle_mask_num 8 elements",
-               eve::test::scalar::all_types)<typename T>(eve::as<T>)
+TTS_CASE_TPL("compress_store_swizzle_mask_num 8 elements",eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using mask_t = eve::logical<eve::wide<T, eve::fixed<8>>>;
 
@@ -118,8 +117,8 @@ EVE_TEST_TYPES("compress_store_swizzle_mask_num 8 elements",
   }
 };
 
-EVE_TEST_TYPES("compress_store_swizzle_mask_num 16 elements",
-               eve::test::scalar::all_types)<typename T>(eve::as<T>)
+TTS_CASE_TPL("compress_store_swizzle_mask_num 16 elements",eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using mask_t = eve::logical<eve::wide<T, eve::fixed<16>>>;
 

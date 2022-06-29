@@ -16,10 +16,10 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of exp_ipi on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of exp_ipi on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -37,10 +37,9 @@ EVE_TEST( "Check behavior of exp_ipi on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of exp_ipi on wide"
+TTS_CASE_WITH( "Check behavior of exp_ipi on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        , tts::generate(tts::randoms(-10, 10), tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -60,6 +59,4 @@ EVE_TEST( "Check behavior of exp_ipi on wide"
     return b;
   };
   TTS_ULP_EQUAL(eve::exp_ipi(z_t{a0,a1}), init_with_std(a0, a1), 300.0);
-  std::cout << eve::exp_ipi(ce_t(1, 2)) << std::endl;
-  std::cout << std::exp(-2*pis)<< std::endl;
 };

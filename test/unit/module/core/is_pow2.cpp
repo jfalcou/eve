@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of is_pow2 on wide"
+TTS_CASE_TPL( "Check return types of is_pow2 on wide"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,9 +27,9 @@ EVE_TEST_TYPES( "Check return types of is_pow2 on wide"
 //==================================================================================================
 // is_pow2(simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of is_pow2(wide) on unsigned integral "
+TTS_CASE_WITH( "Check behavior of is_pow2(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::ramp(1))
+        , tts::generate(tts::ramp(1))
         )
 <typename T>(T const& a0)
 {

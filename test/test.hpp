@@ -15,21 +15,18 @@
 
 int main(int argc, char const **argv)
 {
-  std::cout << "[EVE] - Target: "
-            << ::tts::cyan << ::tts::typename_<EVE_CURRENT_API> << ::tts::reset
-            << " - Assertions: ";
+  std::cout << "[EVE] - Target: " << ::tts::typename_<EVE_CURRENT_API> << " - Assertions: ";
 
 #ifdef NDEBUG
-  std::cout << ::tts::red << "Disabled" << ::tts::reset << " - ";;
+  std::cout << "Disabled - ";
 #else
-  std::cout << ::tts::green << "Enabled" << ::tts::reset << "  - ";
+  std::cout << "Enabled  - ";
 #endif
 
-  ::tts::options parser{argc,argv};
-  std::mt19937::result_type seed(18102008);
-  seed = parser.value({"-s", "--seed"}, seed);
+  ::tts::initialize(argc,argv);
+  auto seed = ::tts::random_seed(18102008);
 
-  std::cout << "PRNG Seed: " << ::tts::cyan << seed << ::tts::reset << std::endl;
+  std::cout << "PRNG Seed: " << seed << std::endl;
 
   eve_entry_point(argc, argv);
   return tts::report(0,0);

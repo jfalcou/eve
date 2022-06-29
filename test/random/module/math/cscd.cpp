@@ -10,8 +10,8 @@
 #include "generator.hpp"
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 
-EVE_TEST_TYPES("Random check for eve::cscd", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::cscd", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto std_cscd = [](auto e) -> e_t{ return 1.0l/(boost::math::sin_pi(((long double)e)/180.0l)); };
@@ -33,7 +33,6 @@ EVE_TEST_TYPES("Random check for eve::cscd", eve::test::simd::ieee_reals)
   {
     auto vmin = e_t(-5000.);
     auto vmax = e_t(5000.);
-    EVE_ULP_RANGE_CHECK_WITH( T, eve::uniform_prng<e_t>(vmin, vmax),  std_cscd, eve::cscd,  16);
+    EVE_ULP_RANGE_CHECK_WITH( T, eve::uniform_prng<e_t>(vmin, vmax),  std_cscd, eve::cscd, 64);
   }
-
 };

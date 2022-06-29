@@ -8,8 +8,8 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 
-EVE_TEST_TYPES( "Check eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -25,8 +25,8 @@ EVE_TEST_TYPES( "Check eve::gather behavior with 32 bits indexes", eve::test::si
   TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0], eve::cardinal_t<T>{} ), maps) );
 };
 
-EVE_TEST_TYPES( "Check eve::gather behavior with 64 bits indexes", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::gather behavior with 64 bits indexes", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -42,8 +42,8 @@ EVE_TEST_TYPES( "Check eve::gather behavior with 64 bits indexes", eve::test::si
   TTS_EQUAL( ref, eve::gather(eve::as_aligned(&data[0], eve::cardinal_t<T>{} ), maps) );
 };
 
-EVE_TEST_TYPES( "Check unaligned eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check unaligned eve::gather behavior with 32 bits indexes", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -58,8 +58,8 @@ EVE_TEST_TYPES( "Check unaligned eve::gather behavior with 32 bits indexes", eve
   TTS_EQUAL( ref, eve::gather(&data[0], maps) );
 };
 
-EVE_TEST_TYPES( "Check unaligned eve::gather behavior with 64 bits indexes", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check unaligned eve::gather behavior with 64 bits indexes", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 

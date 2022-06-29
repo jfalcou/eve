@@ -14,8 +14,8 @@
 //==================================================================================================
 // Construct from multiple existing wides
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide tuple like constructor", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::wide tuple like constructor", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   constexpr auto sz = T::size();
   using wide_grid   = eve::wide<udt::grid2d, eve::fixed<T::size()>>;

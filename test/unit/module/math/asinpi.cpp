@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of asinpi"
+TTS_CASE_TPL( "Check return types of asinpi"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,9 +28,9 @@ EVE_TEST_TYPES( "Check return types of asinpi"
 //==================================================================================================
 // asinpi  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of asinpi on wide"
+TTS_CASE_WITH( "Check behavior of asinpi on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-1, 1))
+        , tts::generate(tts::randoms(-1, 1))
         )
 <typename T>(T const& a0 )
 {

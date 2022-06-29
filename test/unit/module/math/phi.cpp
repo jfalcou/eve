@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of phi"
+TTS_CASE_TPL( "Check return types of phi"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -29,10 +29,10 @@ EVE_TEST_TYPES( "Check return types of phi"
 //==================================================================================================
 // phi  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of phi on wide"
+TTS_CASE_TPL( "Check behavior of phi on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::downward;

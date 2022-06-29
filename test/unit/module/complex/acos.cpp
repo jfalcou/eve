@@ -16,10 +16,10 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of acos on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of acos on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -35,10 +35,10 @@ EVE_TEST( "Check behavior of acos on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of acos on wide"
+TTS_CASE_WITH( "Check behavior of acos on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-5, 5)
-                             , eve::test::randoms(-5, 5))
+        , tts::generate(tts::randoms(-5, 5)
+                             , tts::randoms(-5, 5))
         )
   <typename T>(T const& a0, T const&  a1)
 {
@@ -60,10 +60,11 @@ EVE_TEST( "Check behavior of acos on wide"
   TTS_ULP_EQUAL(eve::acos(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
-EVE_TEST_TYPES( "Check return types of eve::acos", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+
+TTS_CASE_TPL( "Check return types of eve::exp", tts::bunch<eve::test::scalar::ieee_reals>)
+<typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
+  using e_t = typename T::value_type;
   using c_t = eve::complex<e_t>;
   using eve::as;
   const int N = 22;

@@ -12,10 +12,10 @@
 
 #include "find_generic_test.hpp"
 
-EVE_TEST_TYPES("Check find_if", algo_test::selected_types)
-<typename T>(eve::as<T> as_t)
+TTS_CASE_TPL("Check find_if", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
-  algo_test::find_generic_test(as_t, eve::algo::find_if,
+  algo_test::find_generic_test(eve::as<T>{}, eve::algo::find_if,
   [](auto, auto, auto expected, auto actual) {
     TTS_EQUAL(actual, expected);
   });

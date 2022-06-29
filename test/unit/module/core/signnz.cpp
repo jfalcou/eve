@@ -12,8 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::signnz", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::signnz", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -37,10 +37,10 @@ EVE_TEST_TYPES( "Check return types of eve::signnz", eve::test::simd::all_types)
 //==================================================================================================
 // Tests for eve::signnz
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::signnz(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::signnz(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-10, +10)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(-10, +10)
+                              , tts::logicals(0,3)
                               )
         )
 <typename T, typename M>(T const& a0, M const& mask)

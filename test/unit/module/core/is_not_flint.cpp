@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_not_flint(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_not_flint(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -28,22 +28,15 @@ EVE_TEST_TYPES( "Check return types of eve::is_not_flint(simd)"
 //==================================================================================================
 // Tests for eve::is_not_flint
 //==================================================================================================
-auto mfo2 = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::maxflint(tgt);
-};
+auto mf2 = tts::constant([](auto const& tgt) { return eve::maxflint(tgt)*4; });
 
-auto mf2 = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::maxflint(tgt)*4;
-};
-
-EVE_TEST( "Check behavior of eve::is_not_flint(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(mfo2, mf2)
-                              , eve::test::logicals(0, 3))
-        )
+TTS_CASE_WITH ( "Check behavior of eve::is_not_flint(simd)"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(eve::maxflint, mf2)
+                              , tts::logicals(0, 3)
+                              )
+              )
 <typename T, typename M>(T const& a0, T const& a1,  M const & t)
 {
   using eve::detail::map;

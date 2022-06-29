@@ -10,19 +10,10 @@
 #include <eve/module/complex.hpp>
 #include <complex>
 
-// template < typename T >
-// auto cv(std::complex <T> sc)
-// {
-//   return eve::complex<T>(sc.real(), sc.imag());
-// }
-
-EVE_TEST_TYPES( "Check behavior of log2"
-        , eve::test::simd::ieee_reals
-            )
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of log2", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using eve::as;
-//   using e_t = eve::element_type_t<T>;
   using z_t = eve::as_complex_t<T>;
 //   auto inf = eve::inf(as<T>());
 //   auto minf = eve::minf(as<T>());

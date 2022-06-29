@@ -10,9 +10,9 @@
 //==================================================================================================
 // Construct from a list of values
 //==================================================================================================
-EVE_TEST( "Check eve::wide enumerating constructor"
+TTS_CASE_WITH( "Check eve::wide enumerating constructor"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T ref, L logical_ref)
 {
@@ -51,8 +51,8 @@ EVE_TEST( "Check eve::wide enumerating constructor"
 //==================================================================================================
 // Construct from a single value
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using l_t = eve::logical<eve::element_type_t<T>>;
 
@@ -91,9 +91,9 @@ EVE_TEST_TYPES( "Check eve::wide splat constructor", eve::test::simd::all_types)
 //==================================================================================================
 // Raw storage access
 //==================================================================================================
-EVE_TEST( "Check eve::wide raw storage handling"
+TTS_CASE_WITH( "Check eve::wide raw storage handling"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
 {
@@ -119,9 +119,9 @@ EVE_TEST( "Check eve::wide raw storage handling"
 //==================================================================================================
 // Slice API
 //==================================================================================================
-EVE_TEST( "Check eve::wide::slice behavior"
+TTS_CASE_WITH( "Check eve::wide::slice behavior"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T d, L ld)
 {
@@ -159,9 +159,9 @@ EVE_TEST( "Check eve::wide::slice behavior"
 //==================================================================================================
 // Combine API
 //==================================================================================================
-EVE_TEST( "Check eve::wide::combine behavior"
+TTS_CASE_WITH( "Check eve::wide::combine behavior"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T d, L ld)
 {

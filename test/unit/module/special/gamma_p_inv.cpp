@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of gamma_p_inv"
+TTS_CASE_TPL( "Check return types of gamma_p_inv"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,16 +30,19 @@ EVE_TEST_TYPES( "Check return types of gamma_p_inv"
 //==================================================================================================
 // gamma_p_inv  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of gamma_p_inv on wide"
+TTS_CASE_WITH( "Check behavior of gamma_p_inv on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(0.0, 1.0)
-                             , eve::test::randoms(0.0, 100.0))
+        , tts::generate(tts::randoms(0.0, 1.0)
+                             , tts::randoms(0.0, 100.0))
         )
 <typename T>(T const& a0, T const& a1 )
 {
   using v_t = eve::element_type_t<T>;
   using eve::gamma_p_inv;
-  TTS_ULP_EQUAL( eve::gamma_p_inv(a0, a1),  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p_inv(f, e); }, a0, a1), 33);
+  TTS_RELATIVE_EQUAL( eve::gamma_p_inv(a0, a1)
+                    , map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p_inv(f, e); }, a0, a1)
+                    , 1e-3
+                    );
 
   auto bggpi =  [](auto e, auto f){return boost::math::gamma_p_inv(f, e); };
   if constexpr( eve::platform::supports_invalids )

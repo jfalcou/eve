@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of roundscale"
+TTS_CASE_TPL( "Check return types of roundscale"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,9 +27,9 @@ EVE_TEST_TYPES( "Check return types of roundscale"
 //==================================================================================================
 //== roundscale simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of roundscale(wide) and diff on  floating types"
+TTS_CASE_WITH( "Check behavior of roundscale(wide) and diff on  floating types"
             , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(-100.0, 100.0))
+            , tts::generate ( tts::randoms(-100.0, 100.0))
             )
 <typename T>(T const& a0 )
 {
@@ -45,10 +45,10 @@ EVE_TEST( "Check behavior of roundscale(wide) and diff on  floating types"
 //==================================================================================================
 // roundscale[cond](simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of roundscale[cond](wide) on  floating types"
+TTS_CASE_WITH( "Check behavior of roundscale[cond](wide) on  floating types"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(0.0, 100.0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::randoms(0.0, 100.0)
+                              , tts::logicals(0, 3))
         )
   <typename T, typename M>(T const& a0, M const & t)
 {

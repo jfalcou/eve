@@ -14,11 +14,11 @@
 
 #include <algorithm>
 
-EVE_TEST_TYPES("Check reverse inplace", algo_test::selected_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check reverse inplace", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_inplace_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::reverse,
     [](auto f, auto l, auto o) {
       std::reverse_copy(f, l, o);

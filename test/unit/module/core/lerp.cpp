@@ -11,10 +11,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of lerp"
-              , eve::test::simd::ieee_reals
-              )
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of lerp", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,18 +28,15 @@ EVE_TEST_TYPES( "Check return types of lerp"
 //==================================================================================================
 // lerp tests
 //==================================================================================================
-auto mini = []<typename U>(eve::as<U>)
-{
-  return (-eve::sqrtvalmax(eve::as(eve::element_type_t<U>())));
-};
+auto mini = tts::constant([](auto tgt) { return -eve::sqrtvalmax(tgt); });
 
-EVE_TEST( "Check behavior of lerp on ieee floating"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate (  eve::test::randoms(mini, eve::sqrtvalmax)
-                              ,  eve::test::randoms(mini, eve::sqrtvalmax)
-                              ,  eve::test::randoms(0.0, 1.0)
+TTS_CASE_WITH ( "Check behavior of lerp on ieee floating"
+              , eve::test::simd::ieee_reals
+              , tts::generate (  tts::randoms(mini, eve::sqrtvalmax)
+                              ,  tts::randoms(mini, eve::sqrtvalmax)
+                              ,  tts::randoms(0.0, 1.0)
                               )
-        )
+              )
 <typename T>(  T const& a0, T const& a1, T const& a2)
 {
   using eve::lerp;

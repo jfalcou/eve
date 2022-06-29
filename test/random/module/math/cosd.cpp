@@ -11,8 +11,8 @@
 #include <cmath>
 #include <eve/detail/function/tmp/boost_math_cospi.hpp>
 
-EVE_TEST_TYPES("Random check for eve::cosd", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::cosd", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto std_cosd = [](auto e) -> e_t{ return boost::math::cos_pi(((long double)e)/180.0l); };
@@ -34,6 +34,6 @@ EVE_TEST_TYPES("Random check for eve::cosd", eve::test::simd::ieee_reals)
   {
     auto vmin = e_t(-5000.);
     auto vmax = e_t(5000.);
-    EVE_ULP_RANGE_CHECK_WITH( T, eve::uniform_prng<e_t>(vmin, vmax),  std_cosd, eve::cosd,  40);
+    EVE_ULP_RANGE_CHECK_WITH( T, eve::uniform_prng<e_t>(vmin, vmax),  std_cosd, eve::cosd, 64);
   }
 };

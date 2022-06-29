@@ -8,10 +8,10 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 
-EVE_TEST_TYPES("Check basic constants behavior"
+TTS_CASE_TPL("Check basic constants behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;
@@ -36,10 +36,10 @@ EVE_TEST_TYPES("Check basic constants behavior"
   }
 };
 
-EVE_TEST_TYPES( "Check ieee754 constants"
+TTS_CASE_TPL( "Check ieee754 constants"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using elt_t = eve::element_type_t<T>;

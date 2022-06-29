@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of omega"
+TTS_CASE_TPL( "Check return types of omega"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::omega(T())  ,T);
@@ -26,11 +26,11 @@ EVE_TEST_TYPES( "Check return types of omega"
 //==================================================================================================
 // omega  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of omega on wide"
+TTS_CASE_WITH( "Check behavior of omega on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(1.0, 1000)
-                             , eve::test::randoms(0.0, 1.0)
-                             , eve::test::randoms(-10.0, 0.0)
+        , tts::generate(tts::randoms(1.0, 1000)
+                             , tts::randoms(0.0, 1.0)
+                             , tts::randoms(-10.0, 0.0)
                              )
         )
   <typename T>(T a0, T a1, T a2)

@@ -15,11 +15,11 @@
 #include <algorithm>
 #include <functional>
 
-EVE_TEST_TYPES("Check inclusive_scan_inplace", algo_test::selected_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check inclusive_scan_inplace", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_inplace_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::inclusive_scan_inplace,
     [](auto f, auto l, auto o, auto init) {
       std::inclusive_scan(f, l, o, std::plus<>{}, init);

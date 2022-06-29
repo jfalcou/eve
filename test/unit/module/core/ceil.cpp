@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of ceil"
+TTS_CASE_TPL( "Check return types of ceil"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -40,10 +40,10 @@ EVE_TEST_TYPES( "Check return types of ceil"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  with specific values"
+TTS_CASE_TPL( "Check  with specific values"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::ceil(T(-1)), T(-1));
   TTS_EQUAL(eve::ceil(T(-2)), T(-2));
@@ -80,11 +80,11 @@ EVE_TEST_TYPES( "Check  with specific values"
 //==================================================================================================
 // ceil(simd)  tests
 //==================================================================================================
-auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of ceil(wide) "
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(min, +50))
-        )
+auto min = tts::constant([]< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; });
+TTS_CASE_WITH ( "Check behavior of ceil(wide))"
+              , eve::test::simd::all_types
+              , tts::generate(tts::randoms(min, +50))
+              )
 <typename T>(T const& a0 )
 {
   using eve::detail::map;

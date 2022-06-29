@@ -9,8 +9,8 @@
 #include <eve/module/core.hpp>
 #include <type_traits>
 
-EVE_TEST_TYPES("Check eve::any return type", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::any return type", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS( (eve::any(eve::logical<T>())), bool);
   TTS_EXPR_IS( (eve::any(bool{})) , bool);
@@ -20,8 +20,8 @@ EVE_TEST_TYPES("Check eve::any return type", eve::test::simd::all_types)
   TTS_EXPECT_NOT(eve::any(eve::false_(eve::as<T>())));
 };
 
-EVE_TEST_TYPES("Check eve::any[ignore]", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::any[ignore]", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   // complete
   {
@@ -114,8 +114,8 @@ EVE_TEST_TYPES("Check eve::any[ignore]", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES("Check any(top_bits)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check any(top_bits)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
   TTS_EXPECT_NOT(eve::any(eve::top_bits(logical(false))));

@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sinhc"
+TTS_CASE_TPL( "Check return types of sinhc"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,16 +28,12 @@ EVE_TEST_TYPES( "Check return types of sinhc"
 //==================================================================================================
 // sinhc  tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const & tgt)
-{
-  return -eve::maxlog(tgt);
-};
+auto mini = tts::constant([]<typename T>(eve::as<T> const & tgt) { return -eve::maxlog(tgt); });
 
-EVE_TEST( "Check behavior of sinhc on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(mini, eve::maxlog)
-                            , eve::test::randoms(-10.0, 10.0))
-        )
+TTS_CASE_WITH ( "Check behavior of sinhc on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(mini, eve::maxlog), tts::randoms(-10.0, 10.0))
+              )
 <typename T>(T const& a0, T const& a1)
 {
   using eve::detail::map;

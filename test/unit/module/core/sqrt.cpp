@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sqrt"
+TTS_CASE_TPL( "Check return types of sqrt"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -35,9 +35,9 @@ EVE_TEST_TYPES( "Check return types of sqrt"
 //==================================================================================================
 // sqrt simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of sqrt(wide) and diff on  floating types"
+TTS_CASE_WITH( "Check behavior of sqrt(wide) and diff on  floating types"
             , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+            , tts::generate ( tts::randoms(eve::valmin, eve::valmax))
             )
 <typename T>(T const& a0 )
 {
@@ -52,9 +52,9 @@ EVE_TEST( "Check behavior of sqrt(wide) and diff on  floating types"
 //==================================================================================================
 // sqrt[cond](simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of sqrt[cond](wide) on  floating types"
+TTS_CASE_WITH( "Check behavior of sqrt[cond](wide) on  floating types"
             , eve::test::simd::ieee_reals
-            , eve::test::generate ( eve::test::randoms(0.0, eve::valmax))
+            , tts::generate ( tts::randoms(0.0, eve::valmax))
             )
 <typename T>(T const& a0 )
 {

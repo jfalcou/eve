@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of lpnorm"
+TTS_CASE_TPL( "Check return types of lpnorm"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -40,10 +40,10 @@ EVE_TEST_TYPES( "Check return types of lpnorm"
 //==================================================================================================
 
 #if !defined(EVE_NO_DENORMALS)
-EVE_TEST_TYPES( "Check behavior of pedantic(lpnorm(3, )"
+TTS_CASE_TPL( "Check behavior of pedantic(lpnorm(3, )"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
  using v_t = eve::element_type_t<T>;
 

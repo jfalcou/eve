@@ -12,10 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of dec"
-            , eve::test::simd::all_types
-            )
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of dec", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,7 +25,6 @@ EVE_TEST_TYPES( "Check return types of dec"
   TTS_EXPR_IS( eve::dec[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS( eve::dec[bool()](T())  , T);
   TTS_EXPR_IS( eve::dec[bool()](v_t()), v_t);
-
 
   TTS_EXPR_IS( eve::saturated(eve::dec)(T())  , T);
   TTS_EXPR_IS( eve::saturated(eve::dec)(v_t()), v_t);
@@ -48,12 +45,16 @@ EVE_TEST_TYPES( "Check return types of dec"
 //==================================================================================================
 // dec(simd)  tests
 //==================================================================================================
-auto valminp1 = []< typename T>(eve::as<T> const &){return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));};
+auto valminp1 = tts::constant ( []< typename T>(eve::as<T> const &)
+                                {
+                                  return eve::inc(eve::valmin(eve::as(eve::element_type_t<T>())));
+                                }
+                              );
 
-EVE_TEST( "Check behavior of dec(wide) and dec[cond](wide)"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(valminp1, eve::valmax))
-        )
+TTS_CASE_WITH ( "Check behavior of dec(wide) and dec[cond](wide)"
+              , eve::test::simd::all_types
+              , tts::generate(tts::randoms(valminp1, eve::valmax))
+              )
 <typename T>(T const& a0 )
 {
   using v_t = eve::element_type_t<T>;
@@ -65,9 +66,9 @@ EVE_TEST( "Check behavior of dec(wide) and dec[cond](wide)"
 
 };
 
-EVE_TEST( "Check behavior of saturated(dec)(wide) on integral types"
+TTS_CASE_WITH( "Check behavior of saturated(dec)(wide) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, valminp1))
+        , tts::generate(tts::randoms(eve::valmin, valminp1))
         )
 <typename T>(T const& a0 )
 {
@@ -84,9 +85,9 @@ EVE_TEST( "Check behavior of saturated(dec)(wide) on integral types"
  };
 
 
-EVE_TEST( "Check behavior of saturated(dec)(wide) on integral types"
+TTS_CASE_WITH( "Check behavior of saturated(dec)(wide) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, valminp1))
+        , tts::generate(tts::randoms(eve::valmin, valminp1))
         )
 <typename T>(T const& a0 )
 {

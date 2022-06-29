@@ -9,8 +9,8 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST_TYPES( "Check complex::operator+", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check complex::operator+", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using c_t   = eve::complex<T>;
   using w_t   = eve::wide<T>;
@@ -75,8 +75,8 @@ EVE_TEST_TYPES( "Check complex::operator+", eve::test::scalar::ieee_reals)
   TTS_EQUAL((rv     + z_v1  ) , (wc_t{[&](auto i, auto){ return z_v1.get(i) + rv.get(i);}}));
 };
 
-EVE_TEST_TYPES( "Check complex::operator-", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check complex::operator-", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using c_t   = eve::complex<T>;
   using w_t   = eve::wide<T>;
@@ -152,8 +152,8 @@ EVE_TEST_TYPES( "Check complex::operator-", eve::test::scalar::ieee_reals)
   TTS_EQUAL((rv     - z_v1  ) , (wc_t{[&](auto i, auto){ return rv.get(i)   - z_v1.get(i);}}));
 };
 
-EVE_TEST_TYPES( "Check complex::operator*", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check complex::operator*", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using c_t   = eve::complex<T>;
   using w_t   = eve::wide<T>;
@@ -219,8 +219,8 @@ EVE_TEST_TYPES( "Check complex::operator*", eve::test::scalar::ieee_reals)
 };
 
 
-EVE_TEST_TYPES( "Check complex::operator/", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check complex::operator/", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using c_t   = eve::complex<T>;
   using w_t   = eve::wide<T>;

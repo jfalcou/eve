@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of mantissa"
+TTS_CASE_TPL( "Check return types of mantissa"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -26,10 +26,10 @@ EVE_TEST_TYPES( "Check return types of mantissa"
 //==================================================================================================
 // mantissa  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of mantissa on wide"
+TTS_CASE_WITH( "Check behavior of mantissa on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::logicals(0,3))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax)
+                              , tts::logicals(0,3))
         )
 <typename T,  typename M>(T const& a0,  M const & t)
 {
@@ -40,10 +40,10 @@ EVE_TEST( "Check behavior of mantissa on wide"
   TTS_EQUAL( eve::mantissa[t](a0), eve::if_else(t, eve::mantissa(a0), a0));
 };
 
-EVE_TEST_TYPES( "Check behavior of mantissa on wide"
+TTS_CASE_TPL( "Check behavior of mantissa on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   if constexpr(eve::platform::supports_invalids)
   {
