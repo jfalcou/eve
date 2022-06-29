@@ -10,19 +10,19 @@
 #include <tuple>
 #include <cmath>
 
-EVE_TEST_TYPES( "Check return types of eve::ifrexp(simd)"
+TTS_CASE_TPL( "Check return types of eve::ifrexp(simd)"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   TTS_EXPR_IS(eve::ifrexp(T()), (kumi::tuple<T,eve::as_integer_t<T,signed>>));
   TTS_EXPR_IS(eve::pedantic(eve::ifrexp)(T()), (kumi::tuple<T,eve::as_integer_t<T,signed>>));
 };
 
-EVE_TEST_TYPES("Check (eve::ifrexp behavior"
+TTS_CASE_TPL("Check (eve::ifrexp behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T,signed>;
   {

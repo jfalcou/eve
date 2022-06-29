@@ -62,8 +62,8 @@ void swap_ranges_test_page_ends(auto tgt, auto alg)
   algo_test::two_ranges_test(tgt, test);
 }
 
-EVE_TEST_TYPES("Check swap ranges", algo_test::selected_pairs_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check swap ranges", algo_test::selected_pairs_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto native_tgt = eve::as<eve::wide<e_t>>{};
@@ -72,5 +72,5 @@ EVE_TEST_TYPES("Check swap ranges", algo_test::selected_pairs_types)
 
   auto with_cardinal = eve::algo::swap_ranges[eve::algo::force_cardinal<T::size()>];
 
-  swap_ranges_test_page_ends(tgt, with_cardinal[eve::algo::unroll<1>][eve::algo::no_aligning]);
+  swap_ranges_test_page_ends(eve::as<T>{}, with_cardinal[eve::algo::unroll<1>][eve::algo::no_aligning]);
 };

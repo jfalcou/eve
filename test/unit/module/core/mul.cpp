@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of mul"
+TTS_CASE_TPL( "Check return types of mul"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -81,11 +81,11 @@ EVE_TEST_TYPES( "Check return types of mul"
 //==================================================================================================
 //==  mul simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of mul on wide"
+TTS_CASE_WITH( "Check behavior of mul on wide"
             , eve::test::simd::integers
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
-                                  , eve::test::randoms(eve::valmin, eve::valmax)
+            , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                                  , tts::randoms(eve::valmin, eve::valmax)
+                                  , tts::randoms(eve::valmin, eve::valmax)
                                   )
             )
 <typename T>(T const& a0, T const& a1, T const& a2)
@@ -102,15 +102,15 @@ EVE_TEST( "Check behavior of mul on wide"
 //==================================================================================================
 //==  conditional mul tests on simd
 //==================================================================================================
-auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
+auto mini = []<typename T>(eve::as<T> const&) { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0;};
 
-EVE_TEST( "Check behavior of mul on signed types"
-        , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
+TTS_CASE_WITH ( "Check behavior of mul on signed types"
+              , eve::test::simd::signed_types
+              , tts::generate ( tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
                               )
-        )
+              )
 <typename T>( T const& a0, T const& a1, T const& a2)
 {
   using eve::mul;

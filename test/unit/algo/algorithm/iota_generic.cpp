@@ -14,11 +14,11 @@
 
 #include <numeric>
 
-EVE_TEST_TYPES("Check iota", algo_test::selected_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check iota", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_inplace_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::iota,
     [](auto f, auto l, auto o, auto init) {
       std::iota(o, o + (l - f), init);

@@ -11,9 +11,9 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::bernouilli"
+TTS_CASE_TPL( "Check return types of eve::bernouilli"
               , eve::test::simd::unsigned_integers)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using d_t = eve::wide<double, eve::cardinal_t<T>>;
   using v_t = eve::element_type_t<T>;
@@ -24,11 +24,11 @@ EVE_TEST_TYPES( "Check return types of eve::bernouilli"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check corner-cases behavior of eve::bernouilli on wide"
+TTS_CASE_TPL( "Check corner-cases behavior of eve::bernouilli on wide"
         , eve::test::simd::unsigned_integers
 
          )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
   using d_t = eve::wide<double, eve::cardinal_t<T>>;

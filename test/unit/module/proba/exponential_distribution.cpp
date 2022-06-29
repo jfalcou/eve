@@ -12,10 +12,10 @@
 #include <eve/platform.hpp>
 #include <cmath>
 
-EVE_TEST_TYPES("Check eve::exponential_distribution behavior"
+TTS_CASE_TPL("Check eve::exponential_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using elt_t =  eve::element_type_t<T>;
   auto inf  = eve::inf(eve::as<T>());

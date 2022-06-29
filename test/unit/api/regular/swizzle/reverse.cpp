@@ -20,10 +20,10 @@ void reverse_test(T x)
   TTS_EQUAL(eve::shuffle(x, eve::as_pattern([](auto i, auto c) { return c-i-1;})), expected);
 }
 
-EVE_TEST( "Check behavior of reverse"
+TTS_CASE_WITH( "Check behavior of reverse"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::logicals(0,3))
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::logicals(0,3))
         )
 <typename T, typename L>(T const& a, L const& l)
 {

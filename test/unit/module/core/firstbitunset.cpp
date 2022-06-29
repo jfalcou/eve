@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::firstbitunset(simd)"
+TTS_CASE_TPL( "Check return types of eve::firstbitunset(simd)"
               , eve::test::simd::unsigned_integers
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::firstbitunset(T()), T  );
@@ -24,10 +24,10 @@ EVE_TEST_TYPES( "Check return types of eve::firstbitunset(simd)"
 //==================================================================================================
 // Tests for eve::firstbitunset
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::firstbitunset(simd)"
+TTS_CASE_WITH( "Check behavior of eve::firstbitunset(simd)"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate ( eve::test::ramp(0)
-                              ,  eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0)
+                              ,  tts::logicals(0, 3))
         )
 <typename T, typename M>(T const& a0, const M t)
 {

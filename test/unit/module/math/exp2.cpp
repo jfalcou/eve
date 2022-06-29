@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of exp2"
+TTS_CASE_TPL( "Check return types of exp2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of exp2"
 //==================================================================================================
 // exp2  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of exp2 on wide"
+TTS_CASE_WITH( "Check behavior of exp2 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::minlog2, eve::maxlog2)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate(tts::randoms(eve::minlog2, eve::maxlog2)
+                             , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1)
 {
@@ -45,10 +45,10 @@ EVE_TEST( "Check behavior of exp2 on wide"
   TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(a1)      , map([](auto e) -> v_t { return std::exp2(e); }, a1), 2);
 };
 
-EVE_TEST_TYPES( "Check return types of exp2"
+TTS_CASE_TPL( "Check return types of exp2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL (eve::pedantic(eve::exp2)(T(1)), T(2), 0.5);
   TTS_IEEE_EQUAL(eve::pedantic(eve::exp2)(T(0)), T(1));
@@ -86,10 +86,10 @@ EVE_TEST_TYPES( "Check return types of exp2"
 };
 
 
-EVE_TEST_TYPES("Check float64 & float32(eve::exp2) behavior"
+TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior"
               , eve::test::simd::integers
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using fl_t =  eve::as_floating_point_t<T>;

@@ -11,8 +11,8 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
-EVE_TEST_TYPES( "Check behavior of slide_left shuffle", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of slide_left shuffle", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = kumi::tuple<std::int8_t,T,double>;
   using w_t = eve::wide<s_t>;

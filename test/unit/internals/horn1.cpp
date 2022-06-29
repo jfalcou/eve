@@ -27,8 +27,8 @@ template<typename T> constexpr auto coeff2()
   else                                    return 0x4000000000000000ULL;
 }
 
-EVE_TEST_TYPES( "Check behavior of detail::horn", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of detail::horn", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::detail::horn1;

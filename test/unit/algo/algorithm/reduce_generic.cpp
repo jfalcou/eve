@@ -115,8 +115,8 @@ void all_test_cases(eve::as<T> tgt, Alg basic_reduce)
   }
 }
 
-EVE_TEST_TYPES("Check reduce", algo_test::selected_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check reduce", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
-  all_test_cases(tgt, eve::algo::reduce);
+  all_test_cases(eve::as<T>{}, eve::algo::reduce);
 };

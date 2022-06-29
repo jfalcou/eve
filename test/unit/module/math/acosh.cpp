@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of acosh"
+TTS_CASE_TPL( "Check return types of acosh"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of acosh"
 //==================================================================================================
 // acosh  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of acosh on wide"
+TTS_CASE_WITH( "Check behavior of acosh on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(1.0, eve::valmax)
-                             , eve::test::randoms(1.0, 100.0))
+        , tts::generate(tts::randoms(1.0, eve::valmax)
+                             , tts::randoms(1.0, 100.0))
         )
 <typename T>(T const& a0, T const& a1 )
 {

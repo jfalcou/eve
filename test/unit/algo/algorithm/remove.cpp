@@ -23,8 +23,8 @@
 #include <iterator>
 #include <vector>
 
-EVE_TEST_TYPES("Check remove_if basics", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check remove_if basics", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
 
@@ -38,8 +38,8 @@ EVE_TEST_TYPES("Check remove_if basics", algo_test::selected_types)
   TTS_EXPECT(std::all_of(v.begin(), v.end(), [](auto x) { return x > 10; }));
 };
 
-EVE_TEST_TYPES("Check remove aligned_ptr", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check remove aligned_ptr", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   alignas(64) std::array<e_t, 23> data;
@@ -127,12 +127,12 @@ void remove_generic_test_page_ends(eve::as<T>, Algo alg)
   }
 }
 
-EVE_TEST_TYPES("Check remove test", algo_test::selected_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check remove test", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
-  remove_generic_test_page_ends(tgt, eve::algo::remove);
-  remove_generic_test_page_ends(tgt, eve::algo::remove[eve::algo::unroll<3>]);
+  remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove);
+  remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::unroll<3>]);
   // FIX-#816
   if constexpr (T::size() < eve::expected_cardinal_v<eve::element_type_t<T>>) return;
-  remove_generic_test_page_ends(tgt, eve::algo::remove[eve::algo::force_cardinal<T::size()>]);
+  remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::force_cardinal<T::size()>]);
 };

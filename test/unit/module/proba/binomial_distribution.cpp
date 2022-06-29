@@ -10,10 +10,10 @@
 #include <eve/module/proba.hpp>
 #include <eve/platform.hpp>
 
-EVE_TEST_TYPES("Check eve::binomial_distribution behavior"
+TTS_CASE_TPL("Check eve::binomial_distribution behavior"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   {
     auto bino = eve::binomial_distribution{T(4), T(0.25)};

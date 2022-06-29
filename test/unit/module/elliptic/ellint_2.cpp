@@ -16,10 +16,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of ellint_2"
+TTS_CASE_TPL( "Check return types of ellint_2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -34,10 +34,10 @@ EVE_TEST_TYPES( "Check return types of ellint_2"
 //==================================================================================================
 // ellint_2  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of ellint_2 on wide"
+TTS_CASE_WITH( "Check behavior of ellint_2 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(0, 1.0)
-                             , eve::test::randoms(0, eve::pio_2))
+        , tts::generate( tts::randoms(0, 1.0)
+                             , tts::randoms(0, eve::pio_2))
         )
 <typename T>(T const& k, T const& phi)
 {

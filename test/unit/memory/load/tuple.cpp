@@ -24,8 +24,8 @@ using tuple_t = kumi::tuple<std::int8_t,T,double>;
 //==================================================================================================
 // Load tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t   = tuple_t<T>;
   using w_t   = eve::wide<tuple_t<T>>;

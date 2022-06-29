@@ -12,8 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::minus", eve::test::simd::signed_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::minus", eve::test::simd::signed_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -47,10 +47,10 @@ EVE_TEST_TYPES( "Check return types of eve::minus", eve::test::simd::signed_type
 //==================================================================================================
 // Tests for eve::minus
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::minus(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::minus(eve::wide)"
         , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(-10, +10)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(-10, +10)
+                              , tts::logicals(0,3)
                               )
         )
 <typename T, typename M>(T const& a0, M const& mask)
@@ -62,27 +62,13 @@ EVE_TEST( "Check behavior of eve::minus(eve::wide)"
   TTS_EQUAL(eve::minus[mask](a0), eve::if_else(mask,eve::minus(a0),a0)                    );
 };
 
-EVE_TEST( "Check behavior of eve::minus(scalar) - signed types"
-        , eve::test::scalar::signed_types
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
-        )
-<typename T>(T const& data )
-{
-  for(auto a0 :data)
-  {
-    TTS_EQUAL(eve::minus(a0), -a0                   );
-    TTS_EQUAL(eve::minus[true ](a0), eve::minus(a0) );
-    TTS_EQUAL(eve::minus[false](a0), a0             );
-  }
-};
-
 //==================================================================================================
 // Tests for eve::saturated(eve::minus)
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::saturated(eve::minus)(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::saturated(eve::minus)(eve::wide)"
         , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::logicals(0,3)
                               )
         )
 <typename T, typename M>(T const& a0, M const& mask )
@@ -107,19 +93,16 @@ EVE_TEST( "Check behavior of eve::saturated(eve::minus)(eve::wide)"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::minus variants on wide"
-        , eve::test::simd::signed_types
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::minus variants on wide", eve::test::simd::signed_types)
+<typename T>(tts::type<T> tgt)
 {
-  using type = typename T::type;
+  auto cases = tts::limits(tgt);
 
-  if constexpr( eve::floating_real_value<type> )
+  if constexpr( eve::floating_real_value<T> )
   {
     TTS_IEEE_EQUAL( eve::minus(cases.nan    ) , cases.nan   );
     TTS_IEEE_EQUAL( eve::minus(cases.minf   ) , cases.inf   );
-    TTS_EQUAL     ( eve::minus(cases.mzero  ) , type(0)     );
+    TTS_EQUAL     ( eve::minus(cases.mzero  ) , T(0)        );
     TTS_EQUAL     ( eve::minus(cases.valmin ) , cases.valmax);
     TTS_EQUAL     ( eve::minus(cases.valmax ) , cases.valmin);
   }

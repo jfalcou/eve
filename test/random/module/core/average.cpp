@@ -10,8 +10,8 @@
 #include "generator.hpp"
 #include <cmath>
 
-EVE_TEST_TYPES("Random check for eve::average", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::average", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   auto std_average = [](auto e) { return std::midpoint(e, eve::one(eve::as(e))); };
   auto  my_average = [](auto e) { return eve::average (e, eve::one(eve::as(e))); };

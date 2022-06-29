@@ -14,11 +14,11 @@
 
 #include <algorithm>
 
-EVE_TEST_TYPES("Check transform_inplace", algo_test::selected_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check transform_inplace", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_inplace_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::transform_inplace,
     [](auto f, auto l, auto o, auto op) {
       std::transform(f, l, o, op);

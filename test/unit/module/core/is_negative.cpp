@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_negative(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_negative(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -26,10 +26,10 @@ EVE_TEST_TYPES( "Check return types of eve::is_negative(simd)"
 // Tests for eve::is_negative
 //==================================================================================================
 
-EVE_TEST( "Check behavior of eve::is_negative(simd)"
+TTS_CASE_WITH( "Check behavior of eve::is_negative(simd)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::ramp(0.0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0.0)
+                              , tts::logicals(0, 3))
         )
 <typename T, typename M>(T  a0,  M const & t)
 {
@@ -49,20 +49,18 @@ EVE_TEST( "Check behavior of eve::is_negative(simd)"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::is_negative on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::is_negative on wide", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> const& tgt)
 {
-  using type = typename T::type;
   using eve::as;
-  TTS_EQUAL( eve::is_negative(cases.nan    ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_negative(-cases.nan   ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_negative(cases.minf   ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_negative(cases.inf    ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_negative(cases.zero   ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_negative(cases.mzero  ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_negative(cases.valmin ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_negative(cases.valmax ) , eve::false_(as<type>()));
+
+  auto cases = tts::limits(tgt);
+  TTS_EQUAL( eve::is_negative(cases.nan    ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_negative(-cases.nan   ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_negative(cases.minf   ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_negative(cases.inf    ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_negative(cases.zero   ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_negative(cases.mzero  ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_negative(cases.valmin ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_negative(cases.valmax ) , eve::false_(as<T>()));
 };

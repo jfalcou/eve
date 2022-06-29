@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of pow"
+TTS_CASE_TPL( "Check return types of pow"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,12 +30,12 @@ EVE_TEST_TYPES( "Check return types of pow"
 //==================================================================================================
 // pow  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of pow on wide"
+TTS_CASE_WITH( "Check behavior of pow on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(0, eve::valmax)
-                             , eve::test::randoms(eve::valmin, eve::valmax)
-                             , eve::test::randoms(0.0, 1.0)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate( tts::randoms(0, eve::valmax)
+                             , tts::randoms(eve::valmin, eve::valmax)
+                             , tts::randoms(0.0, 1.0)
+                             , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
@@ -51,10 +51,10 @@ EVE_TEST( "Check behavior of pow on wide"
 };
 
 
-EVE_TEST_TYPES( "Check  pow"
+TTS_CASE_TPL( "Check  pow"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   if constexpr(eve::floating_value<T>)
   {

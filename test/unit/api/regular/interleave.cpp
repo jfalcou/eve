@@ -17,10 +17,10 @@ const auto loader = []<std::size_t... N>(auto const& d, auto card, std::index_se
 //==================================================================================================
 // interleave test
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of interleave on arithmetic data"
+TTS_CASE_TPL( "Check behavior of interleave on arithmetic data"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   [&]<std::size_t... Rs>( std::index_sequence<Rs...>)
   {
@@ -58,10 +58,10 @@ EVE_TEST_TYPES( "Check behavior of interleave on arithmetic data"
   }(std::index_sequence<1,2,3,4,5,8,16>{});
 };
 
-EVE_TEST_TYPES( "Check behavior of interleave on logical data"
+TTS_CASE_TPL( "Check behavior of interleave on logical data"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using l_t = eve::logical<T>;
 

@@ -18,10 +18,10 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of sqrt on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of sqrt on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -37,10 +37,10 @@ EVE_TEST( "Check behavior of sqrt on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of sqrt on wide"
+TTS_CASE_WITH( "Check behavior of sqrt on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        , tts::generate(tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -62,21 +62,19 @@ EVE_TEST( "Check behavior of sqrt on wide"
   TTS_ULP_EQUAL(eve::sqrt(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
-
-EVE_TEST_TYPES( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
-  using c_t = eve::complex<e_t>;
+  using c_t = eve::complex<T>;
   using eve::as;
   const int N = 14;
-  auto zer = eve::zero(as<e_t>());
-  auto mzer = eve::mzero(as<e_t>());
-  auto inf = eve::inf(as<e_t>());
-  auto minf = eve::minf(as<e_t>());
-  auto mone = eve::mone(as<e_t>());
-  auto nan = eve::nan(as<e_t>());
-  auto one = eve::one(as<e_t>());
+  auto zer = eve::zero(as<T>());
+  auto mzer = eve::mzero(as<T>());
+  auto inf = eve::inf(as<T>());
+  auto minf = eve::minf(as<T>());
+  auto mone = eve::mone(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one = eve::one(as<T>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0
@@ -91,7 +89,7 @@ EVE_TEST_TYPES( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
       c_t(inf,nan), //9
       c_t(nan,one), //10
       c_t(nan,nan),  //11
-      c_t(e_t(4), zer),  //12
+      c_t(T(4), zer),  //12
       c_t(nan,zer)  //13
     };
 
@@ -109,7 +107,7 @@ EVE_TEST_TYPES( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
       c_t(inf,nan), //9
       c_t(nan,nan), //10
       c_t(nan,nan),  //11
-      c_t(e_t(2), zer),  //12
+      c_t(T(2), zer),  //12
       c_t(nan,nan)  //13
     };
 
@@ -122,13 +120,11 @@ EVE_TEST_TYPES( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)
   }
 };
 
-
-EVE_TEST_TYPES( "Check return types of eve::sqrt", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of sqrt", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 0.5;
-  using e_t = eve::element_type_t<T>;
-  using c_t = eve::complex<e_t>;
+  using c_t = eve::complex<T>;
   using eve::as;
 
   TTS_ULP_EQUAL(eve::sqrt(c_t(1)), c_t(1), 0);

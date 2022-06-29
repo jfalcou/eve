@@ -11,25 +11,24 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_not_nan(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_not_nan(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS( eve::is_not_nan(T())                    , logical<T>   );
-  TTS_EXPR_IS( eve::is_not_nan(v_t())                  , logical<v_t> );
+  TTS_EXPR_IS( eve::is_not_nan(T())   , logical<T>   );
+  TTS_EXPR_IS( eve::is_not_nan(v_t()) , logical<v_t> );
 };
 
 //==================================================================================================
 // Tests for eve::is_not_nan
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::is_not_nan(simd)"
-        , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::logicals(0, 3))
-        )
+TTS_CASE_WITH ( "Check behavior of eve::is_not_nan(simd)"
+              , eve::test::simd::all_types
+              , tts::generate ( tts::ramp(0), tts::logicals(0, 3))
+              )
 <typename T, typename M>(T const& a0,  M const & t)
 {
   using eve::detail::map;
@@ -42,18 +41,19 @@ EVE_TEST( "Check behavior of eve::is_not_nan(simd)"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::is_not_nan on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::is_not_nan on wide"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(tts::type<T> tgt)
 {
-  using type = typename T::type;
   using eve::as;
-  TTS_EQUAL( eve::is_not_nan(cases.nan    ) , eve::false_(as<type>()) );
-  TTS_EQUAL( eve::is_not_nan(cases.minf   ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_not_nan(cases.inf    ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_not_nan(cases.mzero  ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_not_nan(cases.valmin ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_not_nan(cases.valmax ) , eve::true_(as<type>()));
+
+  auto cases = tts::limits(tgt);
+
+  TTS_EQUAL( eve::is_not_nan(cases.nan    ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_not_nan(cases.minf   ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_not_nan(cases.inf    ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_not_nan(cases.mzero  ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_not_nan(cases.valmin ) , eve::true_ (as<T>()));
+  TTS_EQUAL( eve::is_not_nan(cases.valmax ) , eve::true_ (as<T>()));
 };

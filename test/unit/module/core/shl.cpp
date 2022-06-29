@@ -10,10 +10,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of shl"
-              , eve::test::simd::unsigned_types
+TTS_CASE_TPL( "Check return types of shl"
+              , eve::test::simd::unsigned_integers
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
   using i_t  = eve::as_integer_t<T, signed>;
@@ -42,29 +42,27 @@ EVE_TEST_TYPES( "Check return types of shl"
 //==================================================================================================
 auto shift_max = []< typename T>(eve::as<T> const &){return sizeof(eve::element_type_t<T>)*8-1;};
 
-EVE_TEST( "Check behavior of shl on integral types"
-        , eve::test::simd::unsigned_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
+TTS_CASE_WITH ( "Check behavior of shl on integral types"
+              , eve::test::simd::unsigned_integers
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(0u, tts::constant(shift_max))
                               )
-        )
+              )
 <typename T>(T const& a0, T const& a1)
 {
   using eve::shl;
   TTS_EQUAL( shl(a0, a1), T([&](auto i, auto) { return shl(a0.get(i), a1.get(i)); }));
-
 };
 
-EVE_TEST( "Check behavior of shl with scalar shift on integral types"
-        , eve::test::simd::unsigned_types
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::randoms(0u, shift_max)
+TTS_CASE_WITH ( "Check behavior of shl with scalar shift on integral types"
+              , eve::test::simd::unsigned_integers
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::randoms(0u, tts::constant(shift_max))
                               )
-        )
+              )
 <typename T, typename I>(T const& a0,I a1)
 {
   using eve::shl;
   auto val = a1.get(0);
   TTS_EQUAL( shl(a0, val), T([&](auto i, auto) { return shl(a0.get(i), val); }));
-
 };

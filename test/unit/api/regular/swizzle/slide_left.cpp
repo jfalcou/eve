@@ -22,11 +22,9 @@ auto slide_left_pattern = eve::fix_pattern<N> ( [](auto i, auto c)
 //==================================================================================================
 // slide_left test
 //==================================================================================================
-EVE_SAFE_TEST ( "Check behavior of slide_left swizzle"
+TTS_CASE_WITH ( "Check behavior of slide_left swizzle"
               , eve::test::simd::all_types
-              , eve::test::generate ( eve::test::randoms(-50, 50)
-                                    , eve::test::logicals(0, 1)
-                                    )
+              , tts::generate (tts::randoms(-50, 50), tts::logicals(0, 1))
               )
 <typename T, typename L>(T simd, L logicals)
 {
@@ -44,7 +42,11 @@ EVE_SAFE_TEST ( "Check behavior of slide_left swizzle"
                 return l_t{ (i+Shift::value) < c};
               };
 
-    TTS_EQUAL(eve::slide_left(simd,eve::index<Shift::value>)    , ref);
+    TTS_EQUAL(eve::slide_left(simd,eve::index<Shift::value>)    , ref)
+    << "simd: " << simd << "\n"
+    << "ref: " << ref << "\n"
+    << "SHFT: " << Shift::value << "\n"
+    << "out: " << eve::slide_left(simd,eve::index<Shift::value>) << "\n";
     TTS_EQUAL(eve::slide_left(logicals,eve::index<Shift::value>), lref);
 
     TTS_EQUAL( eve::shuffle(simd,slide_left_pattern<Shift::value,T::size()>)     , ref   );

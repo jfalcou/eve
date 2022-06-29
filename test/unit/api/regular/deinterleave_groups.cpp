@@ -106,15 +106,13 @@ void deinterleave_groups_test()
 
 // To increase the number of cases,
 // since we don't have any intrinsics code at the moment.
-constexpr eve::detail::wides<
-  eve::detail::types<std::int8_t, std::uint16_t,
-                     std::int32_t, float,
-                     std::uint64_t, double>>::type less_test_types;
+using less_test_types =  eve::test::wides < tts::types< std::int8_t, std::uint16_t,
+                                                        std::int32_t, float,
+                                                        std::uint64_t, double
+                                          >           >::type;
 
-EVE_TEST_TYPES( "Check behavior of deinterleave on arithmetic data"
-              , less_test_types
-              )
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of deinterleave on arithmetic data", less_test_types)
+<typename T>(tts::type<T>)
 {
   constexpr std::ptrdiff_t max_fields_count = 5;
   // maybe unsused for gcc bug

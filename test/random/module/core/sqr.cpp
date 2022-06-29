@@ -9,8 +9,8 @@
 #include "producers.hpp"
 #include "generator.hpp"
 
-EVE_TEST_TYPES("Random check for eve::sqr", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Random check for eve::sqr", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   auto vmin = eve::valmin(eve::as<e_t>());

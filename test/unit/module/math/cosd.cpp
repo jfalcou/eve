@@ -16,10 +16,10 @@
 //==================================================================================================
 // Types tests
 // //==================================================================================================
-// EVE_TEST_TYPES( "Check return types of cosd"
+// TTS_CASE_TPL( "Check return types of cosd"
 //             , eve::test::simd::ieee_reals
 //             )
-// <typename T>(eve::as<T>)
+// <typename T>(tts::type<T>)
 // {
 //   using v_t = eve::element_type_t<T>;
 
@@ -30,18 +30,11 @@
 //==================================================================================================
 //== cosd  tests
 //==================================================================================================
-auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto quarter_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
-auto mmed   = []<typename T>(eve::as<T> const & ){  return -5000; };
-auto med    = []<typename T>(eve::as<T> const & ){  return  5000; };
-
-EVE_TEST( "Check behavior of cosd on wide"
+TTS_CASE_WITH( "Check behavior of cosd on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
-                             , eve::test::randoms(mhalf_c, half_c)
-                             , eve::test::randoms(mmed, med))
+        , tts::generate( tts::randoms(-45 ,45)
+                             , tts::randoms(-90, 90)
+                             , tts::randoms(-5000, 5000))
         )
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
@@ -60,10 +53,10 @@ EVE_TEST( "Check behavior of cosd on wide"
   TTS_ULP_EQUAL(cosd(a2)                       , map(ref, a2), 420);
 };
 
-EVE_TEST_TYPES( "Check return types of cosd"
+TTS_CASE_TPL( "Check return types of cosd"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL(eve::cosd(T(1))      , T(0.9998476951563912391570115588139148516927403105832)    , 0.5 );
   TTS_ULP_EQUAL(eve::cosd(T(-1))     , T(0.9998476951563912391570115588139148516927403105832)    , 0.5 );

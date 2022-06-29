@@ -16,10 +16,10 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of cosh on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of cosh on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -36,10 +36,10 @@ EVE_TEST( "Check behavior of cosh on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of cosh on wide"
+TTS_CASE_WITH( "Check behavior of cosh on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        , tts::generate(tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -61,10 +61,10 @@ EVE_TEST( "Check behavior of cosh on wide"
 };
 
 
-EVE_TEST( "Check behavior of pedantic(cosh) on wide"
+TTS_CASE_WITH( "Check behavior of pedantic(cosh) on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        , tts::generate(tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -81,10 +81,10 @@ EVE_TEST( "Check behavior of pedantic(cosh) on wide"
   TTS_ULP_EQUAL(eve::pedantic(eve::cosh)(z_t{a0,a1}), b, 2.0);
 };
 
-EVE_TEST_TYPES( "Check corner cases of cosh", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check corner cases of cosh", tts::bunch<eve::test::scalar::ieee_reals>)
+  <typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
+  using e_t = typename T::value_type;
   using c_t = eve::complex<e_t>;
   using eve::as;
   const int N = 24;

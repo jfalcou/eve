@@ -8,9 +8,9 @@
 #include "test.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of if_else on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(-100,+100))
+TTS_CASE_WITH( "Check behavior of if_else on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate(tts::randoms(-100,+100))
         )
 <typename T>(T const& a0 )
 {
@@ -26,9 +26,9 @@ EVE_TEST( "Check behavior of if_else on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of if_else on wide"
+TTS_CASE_WITH( "Check behavior of if_else on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-100,+100))
+        , tts::generate(tts::randoms(-100,+100))
         )
 <typename T>(T const& a0 )
 {

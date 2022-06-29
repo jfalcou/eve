@@ -36,11 +36,11 @@ struct copy_backward_no_static_assert_ : TraitsSupport
 inline constexpr auto copy_backward_no_static_assert = eve::algo::function_with_traits<copy_backward_no_static_assert_>[eve::algo::copy_backward.get_traits()];
 
 
-EVE_TEST_TYPES("Check copy to a different range", algo_test::selected_pairs_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check copy to a different range", algo_test::selected_pairs_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_to_generic_test(
-    tgt,
+    eve::as<T>{},
     copy_backward_no_static_assert,
     [](auto f, auto l, auto o) {
       std::copy(f, l, o);

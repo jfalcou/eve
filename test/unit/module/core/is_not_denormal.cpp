@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_not_denormal(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_not_denormal(simd)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -36,13 +36,14 @@ auto lastdenormal = []<typename T>(eve::as<T> const & tgt)
   return eve::prev(eve::smallestposval(tgt));
 };
 
-EVE_TEST( "Check behavior of eve::is_not_denormal(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::smallestposval, mini)
-                              , eve::test::randoms(eve::mindenormal, lastdenormal)
-                              , eve::test::randoms(eve::zero, mini)
-                              , eve::test::logicals(0, 3))
-        )
+TTS_CASE_WITH ( "Check behavior of eve::is_not_denormal(simd)"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::randoms(eve::smallestposval, tts::constant(mini))
+                              , tts::randoms(eve::mindenormal, tts::constant(lastdenormal))
+                              , tts::randoms(eve::zero, tts::constant(mini))
+                              , tts::logicals(0, 3)
+                              )
+              )
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const & t)
 {
   using eve::detail::map;

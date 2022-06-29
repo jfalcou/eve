@@ -13,8 +13,8 @@
 // slide_right test
 //==================================================================================================
 
-EVE_TEST_TYPES("Check behavior of slide_right shuffle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of slide_right shuffle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T x{[](int i, int size) { return i - size; }};
   T y{[](int i, int     ) { return i; }};

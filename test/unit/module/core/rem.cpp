@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of rem"
+TTS_CASE_TPL( "Check return types of rem"
           , eve::test::simd::all_types
           )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::rem;
@@ -54,13 +54,13 @@ EVE_TEST_TYPES( "Check return types of rem"
 //==================================================================================================
 auto mini = [] < typename T > (eve::as<T> const &){ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0;};
 
-EVE_TEST( "Check behavior of rem on wide"
+TTS_CASE_WITH( "Check behavior of rem on wide"
         , eve::test::simd::ieee_reals//all_types
-        , eve::test::generate ( eve::test::randoms(mini, 100)
-                              , eve::test::randoms(mini, 100)
-                              )
+        , tts::generate ( tts::randoms(tts::constant(mini), 100)
+                        , tts::randoms(tts::constant(mini), 100)
+                        )
         )
-  <typename T>(T a0, T a1)
+<typename T>(T a0, T a1)
 {
   using eve::rem;
   using eve::pedantic;
@@ -77,13 +77,9 @@ EVE_TEST( "Check behavior of rem on wide"
 //==================================================================================================
 //== Test for fixed values
 //==================================================================================================
-EVE_TEST( "Check fixed-cases behavior of eve::rem"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::limits())
-        )
-<typename Z>(Z)
+TTS_CASE_TPL( "Check fixed-cases behavior of eve::rem", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
-  using T =  typename Z::type;
   using v_t = eve::element_type_t<T>;
   using eve::rem;
 
@@ -108,7 +104,7 @@ EVE_TEST( "Check fixed-cases behavior of eve::rem"
   TTS_EQUAL(rem(T(12), v_t(4)), T(0));
   TTS_EQUAL(rem(T( 1), v_t(2)), T(1));
   TTS_EQUAL(eve::toward_zero(rem)(T( 4), v_t(3)), T(1));
-  if (eve::floating_real_value<T>)
+  if constexpr (eve::floating_real_value<T>)
     TTS_IEEE_EQUAL(eve::pedantic(rem)(T( 4), T(0)), eve::nan(eve::as<T>()));
   else
     TTS_EQUAL(eve::pedantic(rem)(T( 4), T(0)), T(4));
@@ -118,22 +114,23 @@ EVE_TEST( "Check fixed-cases behavior of eve::rem"
 //==================================================================================================
 //==  conditional rem tests
 //==================================================================================================
-EVE_TEST( "Check behavior of rem on signed types"
-        , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
-                              , eve::test::randoms(mini, 127)
+TTS_CASE_WITH ( "Check behavior of rem on signed types"
+              , eve::test::simd::signed_types
+              , tts::generate ( tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
+                              , tts::randoms(tts::constant(mini), 127)
                               )
-        )
-  <typename T>( T a0, T a1, T a2)
+              )
+<typename T>( T a0, T a1, T a2)
 {
   using eve::rem;
   using eve::is_nez;
   using eve::pedantic;
   using eve::detail::map;
-  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? rem(e, f) : e ; }, a0, a2), 48);
+  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? pedantic(rem)(e, f) : e ; }, a0, a2), 160);
+
   a2 = eve::if_else(a2 >= 0, eve::one, a2);
-  TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 48);
+  TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 160);
 
   TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? rem(e, f) : e ; }, a0, a1, a2), 2);
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);

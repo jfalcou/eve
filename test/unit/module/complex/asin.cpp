@@ -23,14 +23,14 @@ auto sc(eve::complex < T > ec)
   return std::complex<T>(eve::real(ec), eve::imag(ec));
 }
 
-EVE_TEST( "Check behavior of asin on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
-        )
-  <typename T>(T const& a0, T const& a1 )
+TTS_CASE_WITH ( "Check behavior of asin on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              , tts::generate( tts::randoms(-10, 10)
+                              , tts::randoms(-10, 10)
+                              )
+              )
+<typename T>(T const& a0, T const& a1 )
 {
-  std::cout << "------------- " << (spy::stdlib == spy::libcpp_)<< std::endl;
   auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 3.5;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
@@ -43,14 +43,14 @@ EVE_TEST( "Check behavior of asin on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of asin on wide"
+TTS_CASE_WITH( "Check behavior of asin on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-5, 5)
-                             , eve::test::randoms(-5, 5))
+        , tts::generate(tts::randoms(-5, 5)
+                             , tts::randoms(-5, 5))
         )
-  <typename T>(T const& a0, T const&  a1)
+<typename T>(T const& a0, T const&  a1)
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 4.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
@@ -68,18 +68,17 @@ EVE_TEST( "Check behavior of asin on wide"
   TTS_ULP_EQUAL(eve::asin(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
-EVE_TEST_TYPES( "Check corner cases of asinh", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check corner casesof eve::asin", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
-  using c_t = eve::complex<e_t>;
+  using c_t = eve::complex<T>;
   using eve::as;
   const int N = 12;
-  auto zer = eve::zero(as<e_t>());
-  auto mzer = eve::mzero(as<e_t>());
-  auto inf = eve::inf(as<e_t>());
-  auto nan = eve::nan(as<e_t>());
-  auto one = eve::one(as<e_t>());
+  auto zer = eve::zero(as<T>());
+  auto mzer = eve::mzero(as<T>());
+  auto inf = eve::inf(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one = eve::one(as<T>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0
@@ -97,33 +96,31 @@ EVE_TEST_TYPES( "Check corner cases of asinh", eve::test::scalar::ieee_reals)
     };
   using eve::conj;
   using eve::asin;
-//  auto j = eve::i(eve::as<e_t>{});
+
   auto test_asin = [](auto z){ return cv(std::asin(sc(z))); };
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(asin(inputs[i]), test_asin(inputs[i]));
     TTS_IEEE_EQUAL(asin(-inputs[i]), -asin(inputs[i]));
     TTS_IEEE_EQUAL(asin(conj(inputs[i])), conj(asin(inputs[i])));
   }
 };
 
-
-EVE_TEST_TYPES( "Check return types of eve::asin", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::asin", tts::bunch<eve::test::scalar::ieee_reals>)
+<typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
+  using e_t = typename T::value_type;
   using c_t = eve::complex<e_t>;
   using s_t = std::complex<e_t>;
   using eve::as;
   auto s_asin = [](auto x){return cv(boost::math::asin(x)); };
 
-  TTS_ULP_EQUAL(eve::asin(c_t(eve::zero(as<T>()),  eve::zero(as<T>()))),   s_asin(s_t(eve::zero(as<T>()),  eve::zero(as<T>())))  ,2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(eve::mzero(as<T>()),  eve::zero(as<T>()))),  s_asin(s_t(eve::mzero(as<T>()),  eve::zero(as<T>()))) ,2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(eve::one  (as<T>()), eve::one (as<T>()))),   s_asin(s_t(eve::one  (as<T>()), eve::one (as<T>())))  ,2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(eve::one  (as<T>()), eve::mone (as<T>()))),  s_asin(s_t(eve::one  (as<T>()), eve::mone (as<T>()))) ,2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(eve::mone  (as<T>()), eve::one (as<T>()))),  s_asin(s_t(eve::mone  (as<T>()), eve::one (as<T>()))) ,2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(eve::mone  (as<T>()), eve::mone (as<T>()))), s_asin(s_t(eve::mone  (as<T>()), eve::mone (as<T>()))),2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(eve::zero(as<e_t>()),  eve::zero(as<e_t>()))),   s_asin(s_t(eve::zero(as<e_t>()),  eve::zero(as<e_t>())))  ,2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(eve::mzero(as<e_t>()),  eve::zero(as<e_t>()))),  s_asin(s_t(eve::mzero(as<e_t>()),  eve::zero(as<e_t>()))) ,2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(eve::one  (as<e_t>()), eve::one (as<e_t>()))),   s_asin(s_t(eve::one  (as<e_t>()), eve::one (as<e_t>())))  ,2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(eve::one  (as<e_t>()), eve::mone (as<e_t>()))),  s_asin(s_t(eve::one  (as<e_t>()), eve::mone (as<e_t>()))) ,2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(eve::mone  (as<e_t>()), eve::one (as<e_t>()))),  s_asin(s_t(eve::mone  (as<e_t>()), eve::one (as<e_t>()))) ,2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(eve::mone  (as<e_t>()), eve::mone (as<e_t>()))), s_asin(s_t(eve::mone  (as<e_t>()), eve::mone (as<e_t>()))),2.0);
 
   TTS_ULP_EQUAL(eve::asin(c_t(1, 1)),       s_asin(s_t(1, 1)),        2.0);
   TTS_ULP_EQUAL(eve::asin(c_t(1, 10)),      s_asin(s_t(1, 10)),       2.0);

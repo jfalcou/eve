@@ -83,8 +83,8 @@ void stack_buffer_load_store_test(T x)
   TTS_EQUAL(x, eve::load(std::as_const(buf4).ptr(), eve::lane<T::size()>));
 }
 
-EVE_TEST_TYPES("stack_buffer load/store",  eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("stack_buffer load/store",  eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T x{[](int i, int) { return i; }};
   stack_buffer_load_store_test(x);

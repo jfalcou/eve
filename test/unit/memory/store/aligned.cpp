@@ -17,9 +17,9 @@ namespace
 //==================================================================================================
 // Aligned store tests
 //==================================================================================================
-EVE_TEST( "Check store behavior with aligned pointers"
+TTS_CASE_WITH( "Check store behavior with aligned pointers"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
 {
@@ -57,9 +57,9 @@ EVE_TEST( "Check store behavior with aligned pointers"
 //==================================================================================================
 // Aligned store tests
 //==================================================================================================
-EVE_TEST( "Check store behavior with pointer of different alignment"
+TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1),eve::test::logicals(1,2))
+        , tts::generate(tts::ramp(1),tts::logicals(1,2))
         )
 <typename T, typename L>(T data, L logical_data)
 {
@@ -72,7 +72,8 @@ EVE_TEST( "Check store behavior with pointer of different alignment"
 
     if constexpr (A*sizeof(eve::element_type_t<D>) >= T::alignment())
     {
-      if(::tts::verbose_status) std::cout << "With alignment: " << A << std::endl;
+      if(::tts::arguments()[{"-v","--verbose"}])
+        std::cout << "With alignment: " << A << std::endl;
 
       eve::aligned_ptr<eve::element_type_t<D>, eve::fixed<A>> ptr{f};
       eve::store(d, ptr);

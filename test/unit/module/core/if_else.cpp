@@ -11,8 +11,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::if_else", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::if_else", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using sT =  eve::element_type_t<T>;
   using eve::logical;
@@ -58,13 +58,13 @@ EVE_TEST_TYPES( "Check return types of eve::if_else", eve::test::simd::all_types
   TTS_EXPR_IS( eve::if_else(sT(), sT()          , T()           ) , T          );
 };
 
-EVE_TEST( "Check behavior of eve::if_else(logical,logical,logical) and eve::if_else(logical,wide,wide)"
+TTS_CASE_WITH( "Check behavior of eve::if_else(logical,logical,logical) and eve::if_else(logical,wide,wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-10, +10)
-                              , eve::test::randoms(-10, +10)
-                              , eve::test::logicals(0,3)
-                              , eve::test::logicals(0,3)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(-10, +10)
+                              , tts::randoms(-10, +10)
+                              , tts::logicals(0,3)
+                              , tts::logicals(0,3)
+                              , tts::logicals(0,3)
                               )
         )
 <typename T, typename M>( T const &a1,  T const & a2
@@ -119,10 +119,10 @@ EVE_TEST( "Check behavior of eve::if_else(logical,logical,logical) and eve::if_e
     TTS_IEEE_EQUAL( if_else(um0, a1, allbits), map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, um0, a1));
 };
 
-EVE_TEST( "Check behavior of eve::if_else(conditional, a, b)"
-        , eve::test::simd::uints_8
-        , eve::test::generate ( eve::test::randoms(-10, +10), eve::test::logicals(0,3) )
-        )
+TTS_CASE_WITH ( "Check behavior of eve::if_else(conditional, a, b)"
+              , eve::test::wides<tts::types<std::uint8_t>>::type
+              , tts::generate ( tts::randoms(-10, +10), tts::logicals(0,3) )
+              )
 <typename T, typename L>( T const &a, L const& l )
 {
   {

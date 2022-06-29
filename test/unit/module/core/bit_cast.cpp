@@ -10,10 +10,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of bit_cast"
+TTS_CASE_TPL( "Check return types of bit_cast"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using ut_t = eve::as_integer_t<T, unsigned>;
   using it_t = eve::as_integer_t<T, signed>;
@@ -30,9 +30,9 @@ EVE_TEST_TYPES( "Check return types of bit_cast"
 //==================================================================================================
 //== bit_cast tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_cast(simd) on integral types"
+TTS_CASE_WITH( "Check behavior of bit_cast(simd) on integral types"
             , eve::test::simd::all_types
-            , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+            , tts::generate ( tts::randoms(eve::valmin, eve::valmax))
             )
 <typename T>( T const& a0)
 {

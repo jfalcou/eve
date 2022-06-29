@@ -15,11 +15,11 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of horner on wide"
+TTS_CASE_TPL( "Check return types of horner on wide"
         , eve::test::simd::all_types
 
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
@@ -35,9 +35,9 @@ EVE_TEST_TYPES( "Check return types of horner on wide"
 //==================================================================================================
 //== horner tests
 //==================================================================================================
-EVE_TEST( "Check behavior of horner on wide"
+TTS_CASE_WITH( "Check behavior of horner on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::ramp(0))
+        , tts::generate(tts::ramp(0))
         )
 <typename T>(T const& a0)
 {

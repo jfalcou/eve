@@ -22,8 +22,8 @@ auto slide_left_pattern = eve::fix_pattern<N> ( [](auto i, auto c)
 //==================================================================================================
 // slide_left test
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of slide_left swizzle", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of slide_left swizzle", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = kumi::tuple<std::int8_t,T,double>;
   using w_t = eve::wide<s_t>;

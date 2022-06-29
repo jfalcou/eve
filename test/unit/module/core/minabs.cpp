@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of minabs"
+TTS_CASE_TPL( "Check return types of minabs"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,12 +39,12 @@ EVE_TEST_TYPES( "Check return types of minabs"
 // minabs tests
 //==================================================================================================
 
-EVE_TEST( "Check behavior of minabs on all types full range"
+TTS_CASE_WITH( "Check behavior of minabs on all types full range"
         , eve::test::simd::all_types
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3)
+        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3)
                               )
         )
 <typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
@@ -64,10 +64,10 @@ EVE_TEST( "Check behavior of minabs on all types full range"
   TTS_IEEE_EQUAL(minabs[t](a0, a1), eve::if_else(t, minabs(a0, a1), a0));
 };
 
-EVE_TEST_TYPES( "Check values of minabs"
+TTS_CASE_TPL( "Check values of minabs"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_IEEE_EQUAL(eve::pedantic(eve::minabs)(eve::nan(eve::as<T>())   , T(1)  ) , eve::nan(eve::as<T>()) );

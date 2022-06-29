@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of manhattan"
+TTS_CASE_TPL( "Check return types of manhattan"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -31,11 +31,11 @@ EVE_TEST_TYPES( "Check return types of manhattan"
 // manhattan tests
 //==================================================================================================
 
-EVE_TEST( "Check behavior of manhattan on all types full range"
+TTS_CASE_WITH( "Check behavior of manhattan on all types full range"
         , eve::test::simd::ieee_reals
-        , eve::test::generate (  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::randoms(eve::valmin, eve::valmax)
+        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::randoms(eve::valmin, eve::valmax)
                               )
         )
 <typename T>(  T const& a0, T const& a1, T const& a2)

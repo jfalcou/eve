@@ -18,8 +18,8 @@
 #include <array>
 #include <vector>
 
-EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
@@ -158,8 +158,8 @@ EVE_TEST_TYPES("Check preprocess_range for contiguous iterators", algo_test::sel
     uc_it{}, uc_it{});
 };
 
-EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check preprocess_range for eve ptr iterators", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<T::size()>;
@@ -209,8 +209,8 @@ EVE_TEST_TYPES("Check preprocess_range for eve ptr iterators", algo_test::select
   run_test(arr.cbegin(), arr.cend());
 };
 
-EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("contiguous ranges", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
@@ -272,8 +272,8 @@ EVE_TEST_TYPES("contiguous ranges", algo_test::selected_types)
   }
 };
 
-EVE_TEST_TYPES("cardinal/type manipulation", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("cardinal/type manipulation", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
 

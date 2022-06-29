@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of inv_pi"
+TTS_CASE_TPL( "Check return types of inv_pi"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -29,10 +29,10 @@ EVE_TEST_TYPES( "Check return types of inv_pi"
 //==================================================================================================
 // inv_pi  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of inv_pi on wide"
+TTS_CASE_TPL( "Check behavior of inv_pi on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::downward;

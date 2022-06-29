@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of expm1"
+TTS_CASE_TPL( "Check return types of expm1"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of expm1"
 //==================================================================================================
 // expm1  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of expm1 on wide"
+TTS_CASE_WITH( "Check behavior of expm1 on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::minlog, eve::maxlog)
-                             , eve::test::randoms(-1.0, 1.0))
+        , tts::generate(tts::randoms(eve::minlog, eve::maxlog)
+                             , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1)
 {
@@ -46,10 +46,10 @@ EVE_TEST( "Check behavior of expm1 on wide"
   TTS_ULP_EQUAL(eve::pedantic(eve::expm1)(a1)      , map([](auto e) -> v_t { return std::expm1(e); }, a1), 2);
 };
 
-EVE_TEST_TYPES( "Check return types of expm1"
+TTS_CASE_TPL( "Check return types of expm1"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   if constexpr( eve::platform::supports_invalids )
   {

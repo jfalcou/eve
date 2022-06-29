@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of bitofsign"
+TTS_CASE_TPL( "Check return types of bitofsign"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -34,9 +34,9 @@ EVE_TEST_TYPES( "Check return types of bitofsign"
 //==================================================================================================
 // bitofsign(simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bitofsign(wide)"
+TTS_CASE_WITH( "Check behavior of bitofsign(wide)"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0 )
 {
@@ -47,9 +47,9 @@ EVE_TEST( "Check behavior of bitofsign(wide)"
 //==================================================================================================
 // bitofsign[cond](simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bitofsign(wide)"
+TTS_CASE_WITH( "Check behavior of bitofsign(wide)"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0 )
 {

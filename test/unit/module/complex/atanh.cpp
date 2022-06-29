@@ -22,14 +22,14 @@ auto sc(eve::complex < T > cv)
   return std::complex<T>(eve::real(cv), eve::imag(cv));
 }
 
-EVE_TEST( "Check behavior of atanh on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of atanh on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 4.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
@@ -41,10 +41,10 @@ EVE_TEST( "Check behavior of atanh on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of atanh on wide"
+TTS_CASE_WITH( "Check behavior of atanh on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        , tts::generate(tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -67,11 +67,11 @@ EVE_TEST( "Check behavior of atanh on wide"
 };
 
 
-EVE_TEST_TYPES( "Check return types of eve::abs", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::abs", tts::bunch<eve::test::scalar::ieee_reals>)
+  <typename T>(tts::type<T>)
 {
   auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 0.5;
-  using e_t = eve::element_type_t<T>;
+  using e_t = typename T::value_type;
   using c_t = eve::complex<e_t>;
   using eve::as;
   const int N = 16;

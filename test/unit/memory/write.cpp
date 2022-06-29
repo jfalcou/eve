@@ -14,10 +14,10 @@
 //==================================================================================================
 // Write scalar to pointer-like entity
 //==================================================================================================
-EVE_TEST_TYPES( "Check write to pointers"
+TTS_CASE_TPL( "Check write to pointers"
               , eve::test::scalar::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   auto [data, idx] = page<T , eve::expected_cardinal_t<T> >();
 
@@ -34,10 +34,10 @@ EVE_TEST_TYPES( "Check write to pointers"
 //==================================================================================================
 // Write scalar to Contiguous Iterators
 //==================================================================================================
-EVE_TEST_TYPES( "Check write to Contiguous Iterators"
+TTS_CASE_TPL( "Check write to Contiguous Iterators"
               , eve::test::scalar::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   auto [data, idx] = page<T , eve::expected_cardinal_t<T> >();
 
@@ -50,10 +50,10 @@ EVE_TEST_TYPES( "Check write to Contiguous Iterators"
 //==================================================================================================
 // Write scalar to soa_ptr
 //==================================================================================================
-EVE_TEST_TYPES( "Check write to soa_ptr"
+TTS_CASE_TPL( "Check write to soa_ptr"
               , eve::test::scalar::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   int    x = 0;
   T      y = T(1);

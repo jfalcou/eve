@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of significants"
+TTS_CASE_TPL( "Check return types of significants"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -24,10 +24,10 @@ EVE_TEST_TYPES( "Check return types of significants"
   TTS_EXPR_IS( eve::significants(v_t(), int()), v_t);
 };
 
-EVE_TEST_TYPES( "Check significants"
+TTS_CASE_TPL( "Check significants"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_IEEE_EQUAL(eve::significants(T(1.234567), 0), eve::nan(eve::as<T>()) );
   TTS_ULP_EQUAL(eve::significants(T(1.234567), 1), T(1.) , 0.5);

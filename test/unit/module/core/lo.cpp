@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of lo on wide"
+TTS_CASE_TPL( "Check return types of lo on wide"
             , eve::test::simd::unsigned_integers
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using sd_t= eve::detail::downgrade_t<v_t>;
@@ -28,9 +28,9 @@ EVE_TEST_TYPES( "Check return types of lo on wide"
 //==================================================================================================
 // lo(simd) tests
 //==================================================================================================
-EVE_TEST( "Check behavior of lo(wide) on unsigned integral "
+TTS_CASE_WITH( "Check behavior of lo(wide) on unsigned integral "
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate(tts::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {

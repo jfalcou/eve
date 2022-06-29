@@ -12,8 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::plus", eve::test::simd::signed_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::plus", eve::test::simd::signed_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 

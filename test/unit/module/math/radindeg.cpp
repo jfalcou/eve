@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of radindeg"
+TTS_CASE_TPL( "Check return types of radindeg"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,19 +28,13 @@ EVE_TEST_TYPES( "Check return types of radindeg"
 //==================================================================================================
 // radindeg  tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::valmin(tgt)/60;
-};
-auto maxi = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::valmax(tgt)/60;
-};
+auto mini = tts::constant([](auto const& tgt) { return eve::valmin(tgt)/60; });
+auto maxi = tts::constant([](auto const& tgt) { return eve::valmax(tgt)/60; });
 
-EVE_TEST( "Check behavior of radindeg on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(mini, maxi))
-        )
+TTS_CASE_WITH ( "Check behavior of radindeg on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(mini, maxi))
+              )
 <typename T>(T const& a0 )
 {
   TTS_ULP_EQUAL( eve::radindeg(a0), a0*T(57.295779513082320876798154814105170332405472466565), 2);

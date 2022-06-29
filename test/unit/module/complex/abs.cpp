@@ -8,10 +8,10 @@
 #include "test.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of abs on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
+TTS_CASE_WITH( "Check behavior of abs on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate ( tts::randoms(-1000.0, +1000.0)
+                              , tts::randoms(-1000.0, +1000.0)
                               )
         )
 <typename T>(T const& a0, T const& a1 )
@@ -21,10 +21,10 @@ EVE_TEST( "Check behavior of abs on scalar"
       TTS_EQUAL( eve::abs(eve::complex(e, f)), eve::hypot(e,f) );
 };
 
-EVE_TEST( "Check behavior of abs on wide"
+TTS_CASE_WITH( "Check behavior of abs on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
+        , tts::generate ( tts::randoms(-1000.0, +1000.0)
+                              , tts::randoms(-1000.0, +1000.0)
                               )
         )
 <typename T>(T const& a0, T const& a1 )

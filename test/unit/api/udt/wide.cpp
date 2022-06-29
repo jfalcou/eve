@@ -36,8 +36,8 @@ TTS_CASE("Check User Defined Type properties with respect to SIMDification")
 //==================================================================================================
 // Sizeof
 //==================================================================================================
-EVE_TEST_TYPES( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::wide<tuple> binary size", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using c_t = eve::cardinal_t<eve::wide<udt::grid2d>>;
   using d_t = eve::cardinal_t<eve::wide<udt::label_position>>;
@@ -169,8 +169,8 @@ TTS_CASE( "Check eve::wide<udt> constructor from piecewise data")
   TTS_EQUAL(get<1>(vpl), eve::wide<int>([](int i, int  ) { return i-1; } ));
 };
 
-EVE_TEST_TYPES( "Check eve::wide extract<Idx...>", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check eve::wide extract<Idx...>", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using w_t = eve::wide<udt::label_position>;
   using c_t = eve::cardinal_t<w_t>;

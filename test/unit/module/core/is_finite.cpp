@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_finite(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_finite(simd)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -26,10 +26,9 @@ EVE_TEST_TYPES( "Check return types of eve::is_finite(simd)"
 //==================================================================================================
 // Tests for eve::is_finite
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::is_finite(simd) for IEEE"
+TTS_CASE_WITH( "Check behavior of eve::is_finite(simd) for IEEE"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0), tts::logicals(0, 3))
         )
 <typename T, typename M>(T  a0,  M const & t)
 {
@@ -40,10 +39,9 @@ EVE_TEST( "Check behavior of eve::is_finite(simd) for IEEE"
   TTS_EQUAL(eve::is_finite[t](a0), eve::if_else(t, eve::is_finite(a0), eve::false_(eve::as(a0))));
 };
 
-EVE_TEST( "Check behavior of eve::is_finite(simd) for integer"
+TTS_CASE_WITH( "Check behavior of eve::is_finite(simd) for integer"
         , eve::test::simd::integers
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0), tts::logicals(0, 3))
         )
 <typename T, typename M>(T  a0,  M const & t)
 {
@@ -55,20 +53,17 @@ EVE_TEST( "Check behavior of eve::is_finite(simd) for integer"
 //==================================================================================================
 // Test cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::is_finite on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::is_finite on wide", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
 {
-  using type = typename T::type;
   using eve::as;
-  TTS_EQUAL( eve::is_finite(cases.nan    ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_finite(-cases.nan   ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_finite(cases.minf   ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_finite(cases.inf    ) , eve::false_(as<type>()));
-  TTS_EQUAL( eve::is_finite(cases.zero   ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_finite(cases.mzero  ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_finite(cases.valmin ) , eve::true_(as<type>()));
-  TTS_EQUAL( eve::is_finite(cases.valmax ) , eve::true_(as<type>()));
+  auto cases= tts::limits(tgt);
+  TTS_EQUAL( eve::is_finite(cases.nan    ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_finite(-cases.nan   ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_finite(cases.minf   ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_finite(cases.inf    ) , eve::false_(as<T>()));
+  TTS_EQUAL( eve::is_finite(cases.zero   ) , eve::true_(as<T>()));
+  TTS_EQUAL( eve::is_finite(cases.mzero  ) , eve::true_(as<T>()));
+  TTS_EQUAL( eve::is_finite(cases.valmin ) , eve::true_(as<T>()));
+  TTS_EQUAL( eve::is_finite(cases.valmax ) , eve::true_(as<T>()));
 };

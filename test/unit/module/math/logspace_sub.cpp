@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of logspace_sub"
+TTS_CASE_TPL( "Check return types of logspace_sub"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -39,14 +39,14 @@ EVE_TEST_TYPES( "Check return types of logspace_sub"
 //==================================================================================================
 // logspace_sub  tests
 //==================================================================================================
-EVE_TEST( "Check behavior of logspace_sub on wide"
+TTS_CASE_WITH( "Check behavior of logspace_sub on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.0, eve::valmax)
-                             , eve::test::randoms(0.5, 2.0)
+        , tts::generate( tts::randoms(0.0, eve::valmax)
+                             , tts::randoms(0.0, eve::valmax)
+                             , tts::randoms(0.5, 2.0)
+                             , tts::randoms(0.5, 2.0)
+                             , tts::randoms(0.0, eve::valmax)
+                             , tts::randoms(0.5, 2.0)
                              )
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
@@ -65,6 +65,6 @@ EVE_TEST( "Check behavior of logspace_sub on wide"
   
   auto la4 = eve::log(a4);
   auto la5 = eve::log(a5);
-  TTS_ULP_EQUAL(eve::logspace_sub(la0, la1, la4)      , eve::log(a0-a1-a4), 2);
-  TTS_ULP_EQUAL(eve::logspace_sub(la2, la3, la5)      , eve::log(a2-a3-a5), 2);
+  TTS_ULP_EQUAL(eve::logspace_sub(la0, la1, la4), eve::log(a0-a1-a4), 16);
+  TTS_ULP_EQUAL(eve::logspace_sub(la2, la3, la5), eve::log(a2-a3-a5), 16);
 };

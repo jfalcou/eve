@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of sindcosd"
+TTS_CASE_TPL( "Check return types of sindcosd"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,19 +28,13 @@ EVE_TEST_TYPES( "Check return types of sindcosd"
 //==================================================================================================
 // sindcosd  tests
 //==================================================================================================
-auto mquarter_c  = []<typename T>(eve::as<T> const & ){  return T(-45); };
-auto quarter_c   = []<typename T>(eve::as<T> const & ){  return T( 45); };
-auto mhalf_c = []<typename T>(eve::as<T> const & ){  return T(-90 ); };
-auto half_c  = []<typename T>(eve::as<T> const & ){  return T( 90 ); };
-auto mmed   = []<typename T>(eve::as<T> const & ){  return T(-360); };
-auto med    = []<typename T>(eve::as<T> const & ){  return T( 360); };
-
-EVE_TEST( "Check behavior of sindcosd on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(mquarter_c, quarter_c)
-                             , eve::test::randoms(mhalf_c, half_c)
-                             , eve::test::randoms(mmed, med))
-                             )
+TTS_CASE_WITH ( "Check behavior of sindcosd on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::randoms(-45 , 45 )
+                              , tts::randoms(-90 , 90 )
+                              , tts::randoms(-360, 360)
+                              )
+              )
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::detail::map;

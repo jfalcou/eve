@@ -181,8 +181,8 @@ struct collect_indexes_generic_test
   }
 };
 
-EVE_TEST_TYPES("Check collect indexes, lots", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check collect indexes, lots", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using tgt_t = eve::wide<T, eve::fixed<eve::expected_cardinal_v<std::int64_t>>>;
   algo_test::page_ends_test(eve::as<tgt_t>{}, collect_indexes_generic_test{});

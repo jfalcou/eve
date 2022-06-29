@@ -33,8 +33,8 @@ TTS_CASE("Check behavior of deinterleave_groups_shuffle pattern")
                                       4, 5, 6, 7, 12, 13, 14, 15>{}));
 };
 
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle size 1, swizzle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle size 1, swizzle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T field_markers { [](int i, int) { return ((i & 1) ? 0xB : 0xA) << 4; } };
   T in { [](int i, int) {
@@ -59,8 +59,8 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle size 1, swizzle", 
 };
 
 // This is identity
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle G >= N, swizzle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle G >= N, swizzle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T expected { [](int i, int) { return i;  }};
 
@@ -73,8 +73,8 @@ EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle G >= N, swizzle", 
 };
 
 
-EVE_TEST_TYPES("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, swizzle", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, swizzle", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   T expected { [](int i, int size) {
     if (i < size / 2) return 0xA0 | (i & 0xf);

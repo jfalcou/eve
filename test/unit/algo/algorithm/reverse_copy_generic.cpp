@@ -14,11 +14,11 @@
 
 #include <algorithm>
 
-EVE_TEST_TYPES("Check reverse_copy", algo_test::selected_pairs_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check reverse_copy", algo_test::selected_pairs_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_to_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::reverse_copy,
     [](auto f, auto l, auto o) {
       std::reverse_copy(f, l, o);

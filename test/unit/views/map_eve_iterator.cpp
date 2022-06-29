@@ -29,8 +29,8 @@ struct store_op
   }
 };
 
-EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
+<typename T>(tts::type<T>)
 {
   alignas(sizeof(T)) std::array<eve::element_type_t<T>, T::size()> data;
   std::iota(data.begin(), data.end(), 0);
@@ -38,7 +38,7 @@ EVE_TEST_TYPES("Check ptr_iterator", algo_test::selected_types)
   auto values = load_op{0}(T{[](int i, int) { return i; }});
   auto replace = [&](auto v, auto ignore) { return eve::replace_ignored(v, ignore, decltype(v){0}); };
 
-  auto run_test_one_pair = [&](auto f_, auto l_) {
+    auto run_test_one_pair = [&](auto f_, auto l_) {
     auto map_r = eve::views::map_convert(eve::algo::as_range(f_, l_), load_op{0}, store_op{0});
     algo_test::iterator_sentinel_test(map_r.begin(), map_r.end(), values, replace);
 

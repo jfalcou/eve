@@ -14,10 +14,10 @@
 //==================================================================================================
 // SWAG test
 //==================================================================================================
-EVE_TEST( "Check behavior of SWAGs swizzle"
+TTS_CASE_WITH( "Check behavior of SWAGs swizzle"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50)
-                              , eve::test::logicals(1, 2)
+        , tts::generate ( tts::randoms(-50, 50)
+                              , tts::logicals(1, 2)
                               )
         )
 <typename T, typename L>(T data, L logicals)

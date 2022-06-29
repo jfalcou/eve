@@ -14,9 +14,9 @@
 
 #include <algorithm>
 
-EVE_TEST_TYPES("Check that we can copy to an address after beginning (copy/copy_backward difference)",
+TTS_CASE_TPL("Check that we can copy to an address after beginning (copy/copy_backward difference)",
                algo_test::selected_types)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   auto page = algo_test::allocate_page<eve::element_type_t<T>>();
   std::iota(page.begin(), page.end(), 0);

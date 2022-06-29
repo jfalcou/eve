@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of bit_floor on unsigned wide"
+TTS_CASE_TPL( "Check return types of bit_floor on unsigned wide"
               , eve::test::simd::all_types
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -26,10 +26,10 @@ EVE_TEST_TYPES( "Check return types of bit_floor on unsigned wide"
 //==================================================================================================
 // bit_floor simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_floor(wide) on unsigned integral types"
+TTS_CASE_WITH( "Check behavior of bit_floor(wide) on unsigned integral types"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate(eve::test::randoms(0, +50)
-                             , eve::test::logicals(0, 3))
+        , tts::generate(tts::randoms(0, +50)
+                             , tts::logicals(0, 3))
         )
   <typename T, typename U>(T const& a0, U const & t)
 {

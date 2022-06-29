@@ -11,10 +11,10 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::is_ordered(simd)"
+TTS_CASE_TPL( "Check return types of eve::is_ordered(simd)"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -27,11 +27,11 @@ EVE_TEST_TYPES( "Check return types of eve::is_ordered(simd)"
 //==================================================================================================
 //== Tests for eve::is_ordered
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::is_ordered(simd)"
+TTS_CASE_WITH( "Check behavior of eve::is_ordered(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::ramp(0)
-                              , eve::test::reverse_ramp(4, 2)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::ramp(0)
+                              , tts::reverse_ramp(4, 2)
+                              , tts::logicals(0, 3))
         )
 <typename T, typename M>(T a0, T const& a1, M const & t)
 {
@@ -47,16 +47,14 @@ EVE_TEST( "Check behavior of eve::is_ordered(simd)"
 //==================================================================================================
 //== Tests for eve::is_ordered corner cases for floating
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::is_ordered(simd)"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::limits())
-        )
-<typename aT>(aT const& cases)
+TTS_CASE_TPL( "Check behavior of eve::is_ordered(simd)", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
 {
-  using T = typename aT::type;
+  using v_t = eve::element_type_t<T>;
   using eve::detail::map;
   using eve::as;
-  using v_t = eve::element_type_t<T>;
+
+  auto cases = tts::limits(tgt);
 
   TTS_EQUAL(eve::is_ordered(cases.nan, cases.nan ) , eve::false_(as<T>()));
   TTS_EQUAL(eve::is_ordered(cases.nan, T(1)      ) , eve::false_(as<T>()));

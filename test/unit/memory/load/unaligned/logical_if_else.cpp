@@ -15,9 +15,9 @@
 //==================================================================================================
 // Conditionally load into wide from an unaligned pointer
 //==================================================================================================
-EVE_TEST( "Check load to logical from unaligned pointer with alternatives"
+TTS_CASE_WITH( "Check load to logical from unaligned pointer with alternatives"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::logicals(1,2))
+        , tts::generate(tts::logicals(1,2))
         )
 <typename T>(T others)
 {

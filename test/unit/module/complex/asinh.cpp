@@ -17,10 +17,10 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of asinh on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+TTS_CASE_WITH( "Check behavior of asinh on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -36,10 +36,10 @@ EVE_TEST( "Check behavior of asinh on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of asinh on wide"
+TTS_CASE_WITH( "Check behavior of asinh on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-5, 5)
-                             , eve::test::randoms(-5, 5))
+        , tts::generate(tts::randoms(-5, 5)
+                             , tts::randoms(-5, 5))
         )
   <typename T>(T const& a0, T const&  a1)
 {
@@ -61,21 +61,20 @@ EVE_TEST( "Check behavior of asinh on wide"
   TTS_ULP_EQUAL(eve::asinh(z_t{a0,a1}), init_with_std(a0, a1), ulp);
 };
 
-EVE_TEST_TYPES( "Check corner cases of asinh", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check corner cases of asinh", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
-  using c_t = eve::complex<e_t>;
+  using c_t = eve::complex<T>;
   using eve::as;
   const int N = 12;
-  auto zer = eve::zero(as<e_t>());
-  auto mzer = eve::mzero(as<e_t>());
-  auto inf = eve::inf(as<e_t>());
-  auto minf = eve::minf(as<e_t>());
-  auto nan = eve::nan(as<e_t>());
-  auto one = eve::one(as<e_t>());
-  auto pio_2 = eve::pio_2(as<e_t>());
-  auto pio_4 = eve::pio_4(as<e_t>());
+  auto zer = eve::zero(as<T>());
+  auto mzer = eve::mzero(as<T>());
+  auto inf = eve::inf(as<T>());
+  auto minf = eve::minf(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one = eve::one(as<T>());
+  auto pio_2 = eve::pio_2(as<T>());
+  auto pio_4 = eve::pio_4(as<T>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0
@@ -112,7 +111,6 @@ EVE_TEST_TYPES( "Check corner cases of asinh", eve::test::scalar::ieee_reals)
   using eve::asinh;
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(asinh(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(asinh(-inputs[i]), -asinh(inputs[i]));
     TTS_IEEE_EQUAL(asinh(conj(inputs[i])), conj(asinh(inputs[i])));

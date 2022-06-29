@@ -13,8 +13,8 @@
 //==================================================================================================
 // Type tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check comparison operators' return types", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check comparison operators' return types", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::logical;
@@ -50,10 +50,10 @@ EVE_TEST_TYPES( "Check comparison operators' return types", eve::test::simd::all
 //==================================================================================================
 // Value tests
 //==================================================================================================
-EVE_TEST( "Check comparison operators behavior between wide"
+TTS_CASE_WITH( "Check comparison operators behavior between wide"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50)
-                              , eve::test::randoms(-50, 50)
+        , tts::generate ( tts::randoms(-50, 50)
+                              , tts::randoms(-50, 50)
                               )
         )
 <typename T> (T lhs, T rhs)
@@ -80,10 +80,10 @@ EVE_TEST( "Check comparison operators behavior between wide"
   TTS_EQUAL((lhs >= rhs), ref_gte );
 };
 
-EVE_TEST( "Check comparison operators behavior between wide & scalar"
+TTS_CASE_WITH( "Check comparison operators behavior between wide & scalar"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50)
-                              , eve::test::randoms(-50, 50)
+        , tts::generate ( tts::randoms(-50, 50)
+                              , tts::randoms(-50, 50)
                               )
         )
 <typename T> (T lhs, T rhs)
@@ -106,8 +106,8 @@ EVE_TEST( "Check comparison operators behavior between wide & scalar"
   TTS_EQUAL((lhs >= val), ref_gte );
 };
 
-EVE_TEST_TYPES( "Check comparison operators behavior with NaNs", eve::test::simd::ieee_reals)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check comparison operators behavior with NaNs", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 

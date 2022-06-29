@@ -10,10 +10,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of bit_not"
+TTS_CASE_TPL( "Check return types of bit_not"
         , eve::test::simd::all_types
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
@@ -31,10 +31,10 @@ EVE_TEST_TYPES( "Check return types of bit_not"
 //==================================================================================================
 //  bit_not simd tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bit_not(simd) on integral types"
+TTS_CASE_WITH( "Check behavior of bit_not(simd) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3))
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3))
         )
 <typename T, typename U>(T const& a0, U const & t)
 {
@@ -45,10 +45,10 @@ EVE_TEST( "Check behavior of bit_not(simd) on integral types"
   TTS_EQUAL( eve::bit_not[t](a0), eve::if_else(t, eve::bit_not(a0), a0));
 };
 
-EVE_TEST( "Check behavior of bit_not(simd) on floating types"
+TTS_CASE_WITH( "Check behavior of bit_not(simd) on floating types"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              ,  eve::test::logicals(0, 3))
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              ,  tts::logicals(0, 3))
         )
 <typename T, typename U>(T const& a0, U const & t)
 {

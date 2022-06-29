@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of maxlog2"
+TTS_CASE_TPL( "Check return types of maxlog2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -29,10 +29,10 @@ EVE_TEST_TYPES( "Check return types of maxlog2"
 //==================================================================================================
 // maxlog2  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of maxlog2 on wide"
+TTS_CASE_TPL( "Check behavior of maxlog2 on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   TTS_ULP_EQUAL(eve::exp2(eve::maxlog2(as<T>())), eve::inf(as<T>()), 0.0);

@@ -14,18 +14,18 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::lcm"
+TTS_CASE_TPL( "Check return types of eve::lcm"
               , eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS(eve::lcm(T(), T()), T);
 };
 
 
-EVE_TEST( "Check corner-cases behavior of eve::lcm on wide"
+TTS_CASE_WITH( "Check corner-cases behavior of eve::lcm on wide"
         , eve::test::simd::integers
-        , eve::test::generate ( eve::test::randoms(1, eve::sqrtvalmax)
-                              , eve::test::randoms(1, eve::sqrtvalmax)
+        , tts::generate ( tts::randoms(1, eve::sqrtvalmax)
+                              , tts::randoms(1, eve::sqrtvalmax)
                               )
          )
   <typename T>(const T & a0,  const T & a1)
@@ -39,11 +39,11 @@ EVE_TEST( "Check corner-cases behavior of eve::lcm on wide"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST_TYPES( "Check  behavior of eve::lcm on wide peculiar cases"
+TTS_CASE_TPL( "Check  behavior of eve::lcm on wide peculiar cases"
         , eve::test::simd::all_types
 
          )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::lcm;

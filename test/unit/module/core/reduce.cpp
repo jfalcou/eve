@@ -11,8 +11,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::reduce(wide)", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::reduce(wide)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( (eve::reduce(T{})                       ) , v_t  );
@@ -24,10 +24,10 @@ EVE_TEST_TYPES( "Check return types of eve::reduce(wide)", eve::test::simd::all_
 //==================================================================================================
 // Arithmetic tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of eve::reduce(eve::wide)"
+TTS_CASE_TPL( "Check behavior of eve::reduce(eve::wide)"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   T data = [](auto i, auto c) { return i<c/2 ? 10*(i+1) : -(10*(i+1)+1); };
   data += 1;
@@ -49,9 +49,9 @@ EVE_TEST_TYPES( "Check behavior of eve::reduce(eve::wide)"
 //==================================================================================================
 // Logical tests
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::reduce(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::reduce(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::logicals(0,3) )
+        , tts::generate ( tts::logicals(0,3) )
         )
 <typename T>(T const& a0)
 {

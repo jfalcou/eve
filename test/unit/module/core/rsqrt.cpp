@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of rsqrt"
+TTS_CASE_TPL( "Check return types of rsqrt"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,15 +30,12 @@ EVE_TEST_TYPES( "Check return types of rsqrt"
 //==================================================================================================
 //== rsqrt  tests
 //==================================================================================================
-auto maximal = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::valmax(tgt) / 2;
-};
+auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt)/2;});
 
-EVE_TEST( "Check behavior of rsqrt on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(eve::smallestposval, maximal))
-        )
+TTS_CASE_WITH ( "Check behavior of rsqrt on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(eve::smallestposval, maxi))
+              )
 <typename T>(T const& a0 )
 {
   using v_t = eve::element_type_t<T>;
@@ -48,10 +45,8 @@ EVE_TEST( "Check behavior of rsqrt on wide"
 
 };
 
-EVE_TEST_TYPES( "Check behavior of pedantic(rsqrt)"
-              , eve::test::simd::ieee_reals
-              )
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 

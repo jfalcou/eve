@@ -9,9 +9,9 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of proj on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(-1000.0, 1000.0))
+TTS_CASE_WITH( "Check behavior of proj on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate(tts::randoms(-1000.0, 1000.0))
         )
 <typename T>(T const& a0 )
 {
@@ -23,9 +23,9 @@ EVE_TEST( "Check behavior of proj on scalar"
   }
 };
 
-EVE_TEST( "Check behavior of proj on wide"
+TTS_CASE_WITH( "Check behavior of proj on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-1000.0, 1000.0))
+        , tts::generate(tts::randoms(-1000.0, 1000.0))
         )
 <typename T>(T const& a0 )
 {

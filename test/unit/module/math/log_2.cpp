@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of log_2"
+TTS_CASE_TPL( "Check return types of log_2"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
@@ -29,10 +29,10 @@ EVE_TEST_TYPES( "Check return types of log_2"
 //==================================================================================================
 // log_2  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of log_2 on wide"
+TTS_CASE_TPL( "Check behavior of log_2 on wide"
         , eve::test::simd::ieee_reals
         )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::downward;

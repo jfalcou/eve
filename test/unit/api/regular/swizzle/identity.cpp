@@ -17,10 +17,10 @@ inline constexpr auto identity = eve::fix_pattern<N>( [](int i, int){ return i; 
 //==================================================================================================
 // Identity test
 //==================================================================================================
-EVE_TEST( "Check behavior of identity swizzle"
+TTS_CASE_WITH( "Check behavior of identity swizzle"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-50, 50)
-                              , eve::test::logicals(1, 2)
+        , tts::generate ( tts::randoms(-50, 50)
+                              , tts::logicals(1, 2)
                               )
         )
 <typename T, typename L>(T data, L logicals)

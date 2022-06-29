@@ -14,11 +14,11 @@
 
 #include <algorithm>
 
-EVE_TEST_TYPES("Check trasnform_to", algo_test::selected_pairs_types)
-<typename T>(eve::as<T> tgt)
+TTS_CASE_TPL("Check trasnform_to", algo_test::selected_pairs_types)
+<typename T>(tts::type<T>)
 {
   algo_test::transform_to_generic_test(
-    tgt,
+    eve::as<T>{},
     eve::algo::transform_to,
     [](auto f, auto l, auto o, auto op) {
       (void)op;

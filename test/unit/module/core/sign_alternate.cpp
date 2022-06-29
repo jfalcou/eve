@@ -12,8 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::sign_alternate", eve::test::simd::signed_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::sign_alternate", eve::test::simd::signed_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -24,10 +24,10 @@ EVE_TEST_TYPES( "Check return types of eve::sign_alternate", eve::test::simd::si
 //==================================================================================================
 // Tests for eve::sign_alternate
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::sign_alternate(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::sign_alternate(eve::wide)"
         , eve::test::simd::signed_types
-        , eve::test::generate ( eve::test::randoms(-100, +100)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(-100, +100)
+                              , tts::logicals(0,3)
                               )
         )
 <typename T, typename M>(T const& a00, M const& mask)

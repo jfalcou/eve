@@ -9,10 +9,10 @@
 #include <eve/module/complex.hpp>
 #include <eve/module/math.hpp>
 
-EVE_TEST( "Check behavior of arg on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate(eve::test::randoms(-1000.0, 1000.0)
-                             , eve::test::randoms(-1000.0, 1000.0))
+TTS_CASE_WITH( "Check behavior of arg on scalar"
+        , tts::bunch<eve::test::scalar::ieee_reals>
+        , tts::generate(tts::randoms(-1000.0, 1000.0)
+                             , tts::randoms(-1000.0, 1000.0))
         )
 <typename T>(T const& a0, T const& a1 )
 {
@@ -21,10 +21,10 @@ EVE_TEST( "Check behavior of arg on scalar"
       TTS_EQUAL( eve::arg(eve::complex(e, f)), eve::atan2(f, e) );
 };
 
-EVE_TEST( "Check behavior of arg on wide"
+TTS_CASE_WITH( "Check behavior of arg on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-1000.0, 1000.0)
-                             , eve::test::randoms(-1000.0, 1000.0))
+        , tts::generate(tts::randoms(-1000.0, 1000.0)
+                             , tts::randoms(-1000.0, 1000.0))
         )
 <typename T>(T const& a0, T const& a1 )
 {

@@ -11,8 +11,8 @@
 //==================================================================================================
 // type tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of logical operators on wide", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of logical operators on wide", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -28,10 +28,10 @@ EVE_TEST_TYPES( "Check return types of logical operators on wide", eve::test::si
 //==================================================================================================
 // wide (*) wide tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bitwise operators on eve::wide"
+TTS_CASE_WITH( "Check behavior of bitwise operators on eve::wide"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::logicals(0,2)
-                              , eve::test::logicals(0,2)
+        , tts::generate ( tts::logicals(0,2)
+                              , tts::logicals(0,2)
                               )
         )
 <typename T>(T a0, T a1)
@@ -45,9 +45,9 @@ EVE_TEST( "Check behavior of bitwise operators on eve::wide"
 //==================================================================================================
 // scalar (*) wide tests
 //==================================================================================================
-EVE_TEST( "Check behavior of bitwise operators on wide and scalar"
+TTS_CASE_WITH( "Check behavior of bitwise operators on wide and scalar"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::logicals(0,2) )
+        , tts::generate ( tts::logicals(0,2) )
         )
 <typename T>(T a0)
 {

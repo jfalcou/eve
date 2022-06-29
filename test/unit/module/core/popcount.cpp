@@ -11,10 +11,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::popcount(simd)"
+TTS_CASE_TPL( "Check return types of eve::popcount(simd)"
               , eve::test::simd::unsigned_integers
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::popcount(T()), T  );
@@ -24,10 +24,10 @@ EVE_TEST_TYPES( "Check return types of eve::popcount(simd)"
 //==================================================================================================
 // Tests for eve::popcount
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::popcount(simd)"
+TTS_CASE_WITH( "Check behavior of eve::popcount(simd)"
         , eve::test::simd::unsigned_integers
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax)
-                              , eve::test::logicals(0, 3))
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                              , tts::logicals(0, 3))
         )
 <typename T, typename M>(T const& a0, M const& )
 {

@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of digamma"
+TTS_CASE_TPL( "Check return types of digamma"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -27,10 +27,10 @@ EVE_TEST_TYPES( "Check return types of digamma"
 //==================================================================================================
 // digamma  tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check behavior of digamma on wide"
-              , eve::test::simd::ieee_floats
-              )
-  <typename T>(eve::as<T> )
+TTS_CASE_TPL( "Check behavior of digamma on wide"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(tts::type<T>)
 {
   using eve::digamma;
   if constexpr( eve::platform::supports_invalids )
@@ -62,9 +62,9 @@ EVE_TEST_TYPES( "Check behavior of digamma on wide"
   TTS_ULP_EQUAL(digamma(T(-1.5)), T(0.70315664064524318722569033366791109947350706200623L), ulp);
 };
 
-EVE_TEST( "Check behavior of digamma on wide"
-        , eve::test::simd::ieee_floats
-        , eve::test::generate(eve::test::randoms(0.4, 4.0))
+TTS_CASE_WITH( "Check behavior of digamma on wide"
+        , eve::test::simd::ieee_reals
+        , tts::generate(tts::randoms(0.4, 4.0))
         )
 <typename T>(T const& a0)
 {

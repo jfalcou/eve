@@ -8,14 +8,14 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 
-EVE_TEST_TYPES("Check eve::count_true return type", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::count_true return type", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   TTS_EXPR_IS( (eve::count_true(eve::logical<T>())) , std::ptrdiff_t);
 };
 
-EVE_TEST_TYPES("Check eve::count_true behavior", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::count_true behavior", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   constexpr auto cardinal = eve::cardinal_v<T>;
 
@@ -41,8 +41,8 @@ EVE_TEST_TYPES("Check eve::count_true behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES("Check eve::count_true behavior with ignore", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::count_true behavior with ignore", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   eve::logical<T> data(true);
   constexpr auto cardinal = eve::cardinal_v<T>;
@@ -64,8 +64,8 @@ EVE_TEST_TYPES("Check eve::count_true behavior with ignore", eve::test::simd::al
   }
 };
 
-EVE_TEST_TYPES("Check eve::count_true top_bits", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL("Check eve::count_true top_bits", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   eve::logical<T> x(false);
 

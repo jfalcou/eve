@@ -16,9 +16,9 @@
 //==================================================================================================
 // Load into wide from an aligned pointer
 //==================================================================================================
-EVE_TEST( "Check load to wides from aligned pointer"
+TTS_CASE_WITH( "Check load to wides from aligned pointer"
         , eve::test::simd::all_types
-        , eve::test::generate(eve::test::ramp(1))
+        , tts::generate(tts::ramp(1))
         )
 <typename T>(T reference)
 {
@@ -45,8 +45,8 @@ EVE_TEST( "Check load to wides from aligned pointer"
 //==================================================================================================
 // Realigned load tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check load to wides from re-aligned pointer", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check load to wides from re-aligned pointer", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 

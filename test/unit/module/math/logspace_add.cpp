@@ -14,10 +14,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of logspace_add"
+TTS_CASE_TPL( "Check return types of logspace_add"
             , eve::test::simd::ieee_reals
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -38,20 +38,18 @@ EVE_TEST_TYPES( "Check return types of logspace_add"
 //==================================================================================================
 // logspace_add  tests
 //==================================================================================================
-auto maxi = []<typename T>(eve::as<T> const & tgt)
-{
-  return eve::valmax(tgt)/3;
-};
-EVE_TEST( "Check behavior of logspace_add on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate( eve::test::randoms(0.0, maxi)
-                             , eve::test::randoms(0.0, maxi)
-                             , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.5, 2.0)
-                             , eve::test::randoms(0.0, maxi)
-                             , eve::test::randoms(0.5, 2.0)
-                             )
-        )
+auto maxi = tts::constant([]<typename T>(eve::as<T> const & tgt) { return eve::valmax(tgt)/3; });
+
+TTS_CASE_WITH ( "Check behavior of logspace_add on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate ( tts::randoms(0.0, maxi)
+                              , tts::randoms(0.0, maxi)
+                              , tts::randoms(0.5, 2.0)
+                              , tts::randoms(0.5, 2.0)
+                              , tts::randoms(0.0, maxi)
+                              , tts::randoms(0.5, 2.0)
+                              )
+              )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
 {
   using eve::detail::map;

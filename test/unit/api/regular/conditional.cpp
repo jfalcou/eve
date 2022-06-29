@@ -30,8 +30,8 @@ template<typename Type, typename Cond> void check_conditional_bits()
 }
 #endif
 
-EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "ignore_all behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -67,8 +67,8 @@ EVE_TEST_TYPES( "ignore_all behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "ignore_none behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -111,8 +111,8 @@ EVE_TEST_TYPES( "ignore_none behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "keep_first behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -164,8 +164,8 @@ EVE_TEST_TYPES( "keep_first behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "ignore_last behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -217,8 +217,8 @@ EVE_TEST_TYPES( "ignore_last behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "keep_last behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -272,8 +272,8 @@ EVE_TEST_TYPES( "keep_last behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "ignore_first behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -327,8 +327,8 @@ EVE_TEST_TYPES( "ignore_first behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;
@@ -393,8 +393,8 @@ EVE_TEST_TYPES( "keep_between behavior", eve::test::simd::all_types)
   }
 };
 
-EVE_TEST_TYPES( "ignore_first/last behavior", eve::test::simd::all_types)
-<typename type>(eve::as<type>)
+TTS_CASE_TPL( "ignore_first/last behavior", eve::test::simd::all_types)
+<typename type>(tts::type<type>)
 {
   using eve::logical;
   using eve::relative_conditional_expr;

@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::frexp(simd)"
+TTS_CASE_TPL( "Check return types of eve::frexp(simd)"
               , eve::test::simd::ieee_reals
               )
-  <typename T>(eve::as<T>)
+  <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS( eve::frexp(T()), (kumi::tuple<T, T>) );
@@ -28,9 +28,9 @@ EVE_TEST_TYPES( "Check return types of eve::frexp(simd)"
 //==================================================================================================
 // Tests for eve::frexp
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::frexp(simd)"
+TTS_CASE_WITH( "Check behavior of eve::frexp(simd)"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(eve::valmin, eve::valmax))
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax))
         )
 <typename T>(T const& a0)
 {
@@ -51,13 +51,13 @@ EVE_TEST( "Check behavior of eve::frexp(simd)"
 //==================================================================================================
 // Test for corner-cases values pedantic !
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::pedantic(eve::frexp) variants on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::pedantic(eve::frexp) variants on wide"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(tts::type<T> tgt)
 {
-  using type = typename T::type;
+  auto cases = tts::limits(tgt);
+
   {
     auto [x, n] = eve::pedantic(eve::frexp)(cases.nan);
     TTS_IEEE_EQUAL(x, cases.nan);
@@ -92,7 +92,7 @@ EVE_TEST( "Check corner-cases behavior of eve::pedantic(eve::frexp) variants on 
   if constexpr(eve::platform::supports_denormals)
   {
     auto [x, n] = eve::pedantic(eve::frexp)(cases.mindenormal);
-    TTS_EQUAL(x, eve::half(eve::as<type>()));
-    TTS_EQUAL(n, (eve::minlog2denormal(eve::as<type>())+2));
+    TTS_EQUAL(x, eve::half(eve::as<T>()));
+    TTS_EQUAL(n, (eve::minlog2denormal(eve::as<T>())+2));
   }
 };

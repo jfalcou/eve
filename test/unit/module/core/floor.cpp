@@ -13,10 +13,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of floor"
+TTS_CASE_TPL( "Check return types of floor"
               , eve::test::simd::all_types
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -41,10 +41,10 @@ EVE_TEST_TYPES( "Check return types of floor"
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check  with particular values"
+TTS_CASE_TPL( "Check  with particular values"
               , eve::test::simd::ieee_reals
               )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::floor(static_cast<T>(-1.3)), T(-2));
   TTS_EQUAL(eve::floor(static_cast<T>(-1.5)), T(-2));
@@ -102,11 +102,12 @@ EVE_TEST_TYPES( "Check  with particular values"
 //==================================================================================================
 // floor(simd)  tests
 //==================================================================================================
-auto min = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
-EVE_TEST( "Check behavior of floor(wide) "
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::randoms(min, +50))
-        )
+auto mini = tts::constant([]< typename T>(eve::as<T>){return eve::signed_value<T> ? -50 : 0;});
+
+TTS_CASE_WITH ( "Check behavior of floor(wide)"
+              , eve::test::simd::all_types
+              , tts::generate(tts::randoms(mini, +50))
+              )
 <typename T>(T const& a0 )
 {
   using eve::detail::map;

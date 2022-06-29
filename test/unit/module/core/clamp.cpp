@@ -11,9 +11,9 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of clamp"
+TTS_CASE_TPL( "Check return types of clamp"
         , eve::test::simd::all_types
-        )<typename T>(eve::as<T>)
+        )<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -30,16 +30,16 @@ EVE_TEST_TYPES( "Check return types of clamp"
 //==================================================================================================
 // clamp simd tests
 //==================================================================================================
-auto val1 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6); ;};
-auto val2 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*2;};
-auto val3 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*3;};
-auto val4 = []< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*4;};
+auto val1 = ::tts::constant([]< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6); ;});
+auto val2 = ::tts::constant([]< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*2;});
+auto val3 = ::tts::constant([]< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*3;});
+auto val4 = ::tts::constant([]< typename T>(eve::as<T> const &){return (eve::valmax(eve::as(eve::element_type_t<T>()))/6)*4;});
 
-EVE_TEST( "Check behavior of clamp(wide) and diff  on all types"
+TTS_CASE_WITH( "Check behavior of clamp(wide) and diff  on all types"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(val1       , val4)
-                              , eve::test::randoms(eve::valmin, val2)
-                              , eve::test::randoms(val3, eve::valmax)
+        , tts::generate ( tts::randoms(val1       , val4)
+                              , tts::randoms(eve::valmin, val2)
+                              , tts::randoms(val3, eve::valmax)
                               )
         )<typename T>( T const& a0, T const& a1, T const& a2 )
 {

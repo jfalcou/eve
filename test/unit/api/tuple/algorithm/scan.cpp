@@ -10,8 +10,8 @@
 #include "test.hpp"
 
 
-EVE_TEST_TYPES( "Check behavior of scan", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of scan", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = kumi::tuple<std::int8_t,T,double>;
   using w_t = eve::wide<s_t>;
@@ -39,8 +39,8 @@ EVE_TEST_TYPES( "Check behavior of scan", eve::test::scalar::all_types)
 };
 
 
-EVE_TEST_TYPES( "Check behavior of scan, same type", eve::test::scalar::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check behavior of scan, same type", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
 {
   using s_t = kumi::tuple<T,T,T>;
   using w_t = eve::wide<s_t>;

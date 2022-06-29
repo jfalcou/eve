@@ -12,10 +12,10 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of bit_ceil on wide"
+TTS_CASE_TPL( "Check return types of bit_ceil on wide"
             , eve::test::simd::all_types
             )
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -26,12 +26,12 @@ EVE_TEST_TYPES( "Check return types of bit_ceil on wide"
 //==================================================================================================
 // bit_ceil simd tests
 //==================================================================================================
-auto maxi = []< typename T>(eve::as<T> const &){return eve::valmax(eve::as<T>())/2; }; // over valmax/2 bit_ceil is UB so don't test
-auto mini = []< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())/4; }; //negative values all return 1;
-EVE_TEST( "Check behavior of bit_ceil(wide) on integral types"
+auto maxi = tts::constant([]< typename T>(eve::as<T> const &){return eve::valmax(eve::as<T>())/2; }); // over valmax/2 bit_ceil is UB so don't test
+auto mini = tts::constant([]< typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())/4; }); //negative values all return 1;
+TTS_CASE_WITH( "Check behavior of bit_ceil(wide) on integral types"
         , eve::test::simd::integers
-        , eve::test::generate(eve::test::randoms(mini, maxi)
-                             , eve::test::logicals(0, 3))
+        , tts::generate(tts::randoms(mini, maxi)
+                             , tts::logicals(0, 3))
         )
 <typename T, typename U>(T const& a0, U const & t)
 {
@@ -42,10 +42,10 @@ EVE_TEST( "Check behavior of bit_ceil(wide) on integral types"
   TTS_EQUAL( eve::bit_ceil[t](a0), eve::if_else(t, eve::bit_ceil(a0), a0));
 };
 
-EVE_TEST( "Check behavior of bit_ceil(wide) on floating"
+TTS_CASE_WITH( "Check behavior of bit_ceil(wide) on floating"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, eve::valmax)
-                             ,  eve::test::logicals(0, 3))
+        , tts::generate(tts::randoms(-10, eve::valmax)
+                             ,  tts::logicals(0, 3))
         )
 <typename T, typename U>(T const& a0, U const & t)
 {

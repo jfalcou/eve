@@ -12,8 +12,8 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-EVE_TEST_TYPES( "Check return types of eve::next", eve::test::simd::all_types)
-<typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check return types of eve::next", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
 {
  using v_t   = eve::element_type_t<T>;
   using i_t   = eve::as_integer_t<  T, signed>;
@@ -31,10 +31,10 @@ EVE_TEST_TYPES( "Check return types of eve::next", eve::test::simd::all_types)
 //==================================================================================================
 // Tests for eve::next
 //==================================================================================================
-EVE_TEST( "Check behavior of eve::next(eve::wide)"
+TTS_CASE_WITH( "Check behavior of eve::next(eve::wide)"
         , eve::test::simd::all_types
-        , eve::test::generate ( eve::test::randoms(-10, +10)
-                              , eve::test::logicals(0,3)
+        , tts::generate ( tts::randoms(-10, +10)
+                              , tts::logicals(0,3)
                               )
         )
   <typename T, typename M>(T const& a0, M const& t)
@@ -61,17 +61,16 @@ EVE_TEST( "Check behavior of eve::next(eve::wide)"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-EVE_TEST( "Check corner-cases behavior of eve::next variants on wide"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+TTS_CASE_TPL( "Check corner-cases behavior of eve::next variants on wide", eve::test::simd::all_types)
+<typename T>(tts::type<T> const& tgt)
 {
-  using type = typename T::type;
   using eve::next;
   using eve::pedantic;
   using eve::saturated;
-  if constexpr(eve::floating_real_value<type>)
+
+  auto cases = tts::limits(tgt);
+
+  if constexpr(eve::floating_real_value<T>)
   {
     TTS_IEEE_EQUAL(next(cases.nan    ) , cases.nan   );
     TTS_IEEE_EQUAL(next(cases.minf   ) , cases.valmin);
@@ -85,8 +84,8 @@ EVE_TEST( "Check corner-cases behavior of eve::next variants on wide"
       TTS_EQUAL     (next(cases.valmax ) , cases.inf);
     }
 
-    TTS_EQUAL     (next(type(-1))      , type(-1)+eve::eps(eve::as<type>())/2 );
-    TTS_EQUAL     (next(type(1))       , type( 1)+eve::eps(eve::as<type>())   );
+    TTS_EQUAL     (next(T(-1))      , T(-1)+eve::eps(eve::as<T>())/2 );
+    TTS_EQUAL     (next(T(1))       , T( 1)+eve::eps(eve::as<T>())   );
 
     TTS_IEEE_EQUAL(pedantic(next)(cases.nan    ) , cases.nan   );
     TTS_IEEE_EQUAL(pedantic(next)(cases.minf   ) , cases.valmin);
@@ -100,29 +99,29 @@ EVE_TEST( "Check corner-cases behavior of eve::next variants on wide"
     }
 
     TTS_EQUAL     (pedantic(next)(cases.valmax ) , cases.inf);
-    TTS_EQUAL     (pedantic(next)(type(-1))            , type(-1)+eve::eps(eve::as<type>())/2 );
-    TTS_EQUAL     (pedantic(next)(type(1))             , type( 1)+eve::eps(eve::as<type>())   );
+    TTS_EQUAL     (pedantic(next)(T(-1))            , T(-1)+eve::eps(eve::as<T>())/2 );
+    TTS_EQUAL     (pedantic(next)(T(1))             , T( 1)+eve::eps(eve::as<T>())   );
   }
   else
   {
-    TTS_EQUAL(next(type(0))                  , type(1));
-    TTS_EQUAL(next(type(1))                  , type(2));
-    TTS_EQUAL(saturated(next)(type(0))       , type(1));
-    TTS_EQUAL(saturated(next)(type(1))       , type(2));
+    TTS_EQUAL(next(T(0))                  , T(1));
+    TTS_EQUAL(next(T(1))                  , T(2));
+    TTS_EQUAL(saturated(next)(T(0))       , T(1));
+    TTS_EQUAL(saturated(next)(T(1))       , T(2));
     TTS_EQUAL(saturated(next)(cases.valmax ) , cases.valmax);
   }
 };
-EVE_TEST( "Check corner-cases behavior of eve::next with 2 parameters"
-        , eve::test::simd::all_types
-        , eve::test::generate(eve::test::limits())
-        )
-<typename T>(T const& cases)
+
+TTS_CASE_TPL( "Check corner-cases behavior of eve::next with 2 parameters", eve::test::simd::all_types)
+<typename T>(tts::type<T> const& tgt)
 {
-  using type = typename T::type;
   using eve::next;
   using eve::pedantic;
   using eve::saturated;
-  if constexpr(eve::floating_real_value<type>)
+
+  auto cases = tts::limits(tgt);
+
+  if constexpr(eve::floating_real_value<T>)
   {
     TTS_IEEE_EQUAL(next(cases.nan,  2) , cases.nan   );
     TTS_IEEE_EQUAL(next(cases.minf, 2) , next(cases.valmin));
@@ -136,8 +135,8 @@ EVE_TEST( "Check corner-cases behavior of eve::next with 2 parameters"
     }
 
     TTS_IEEE_EQUAL(next(cases.valmax,2), cases.nan);
-    TTS_EQUAL     (next(type(-1),   2) , type(-1)+eve::eps(eve::as<type>()) );
-    TTS_EQUAL     (next(type(1),    2) , type( 1)+eve::eps(eve::as<type>())*2   );
+    TTS_EQUAL     (next(T(-1),   2) , T(-1)+eve::eps(eve::as<T>()) );
+    TTS_EQUAL     (next(T(1),    2) , T( 1)+eve::eps(eve::as<T>())*2   );
 
     TTS_IEEE_EQUAL(pedantic(next)(cases.nan,  2) , cases.nan   );
     TTS_IEEE_EQUAL(pedantic(next)(cases.minf, 2) , next(cases.valmin));
@@ -150,15 +149,15 @@ EVE_TEST( "Check corner-cases behavior of eve::next with 2 parameters"
     }
 
     TTS_IEEE_EQUAL(pedantic(next)(cases.valmax,2) , cases.nan);
-    TTS_EQUAL     (pedantic(next)(type(-1),   2)  , type(-1)+eve::eps(eve::as<type>()) );
-    TTS_EQUAL     (pedantic(next)(type(1),    2)  , type( 1)+eve::eps(eve::as<type>())*2   );
+    TTS_EQUAL     (pedantic(next)(T(-1),   2)  , T(-1)+eve::eps(eve::as<T>()) );
+    TTS_EQUAL     (pedantic(next)(T(1),    2)  , T( 1)+eve::eps(eve::as<T>())*2   );
   }
   else
   {
-    TTS_EQUAL(next(type(0), 2)                  , type(2));
-    TTS_EQUAL(next(type(1), 2)                  , type(3));
-    TTS_EQUAL(saturated(next)(type(0), 2)       , type(2));
-    TTS_EQUAL(saturated(next)(type(1), 2)       , type(3));
+    TTS_EQUAL(next(T(0), 2)                  , T(2));
+    TTS_EQUAL(next(T(1), 2)                  , T(3));
+    TTS_EQUAL(saturated(next)(T(0), 2)       , T(2));
+    TTS_EQUAL(saturated(next)(T(1), 2)       , T(3));
     TTS_EQUAL(saturated(next)(cases.valmax, 2)  , cases.valmax);
   }
 };
