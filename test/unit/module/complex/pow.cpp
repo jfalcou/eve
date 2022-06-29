@@ -51,7 +51,7 @@ TTS_CASE_WITH ( "Check behavior of pow on wide"
     return cv(std::pow(c_t(a2.get(i), a3.get(i)),  c_t(eve::abs(a0.get(i)), 0)));
   };
 
-  TTS_ULP_EQUAL( eve::pow(a, b) , z_t{init_with_std}, 300);
+  TTS_ULP_EQUAL( eve::pow(a, b) , z_t{init_with_std}, 400);
   TTS_ULP_EQUAL( eve::pow(a, 2u), eve::sqr(a), 300);
   TTS_ULP_EQUAL( eve::pow(a, 3u), eve::sqr(a)*a,  300);
   TTS_ULP_EQUAL( eve::pow(eve::abs(a0), b)   , z_t{init_with_std1}, 300);
