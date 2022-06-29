@@ -31,7 +31,7 @@ TTS_CASE_WITH ( "Check behavior of expm1 on scalar"
     {
       TTS_RELATIVE_EQUAL( eve::expm1(eve::complex<e_t>(e, f))
                         , eve::dec(eve::exp(z_t(e, f)))
-                        , 2e-5
+                        , 4e-3
                         );
     }
   }

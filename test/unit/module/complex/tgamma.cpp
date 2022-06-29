@@ -9,10 +9,10 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of tgamma"
+TTS_CASE_WITH( "Check behavior of tgamma"
         , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
+        ,tts::generate ( tts::randoms(-1000.0, +1000.0)
+                              , tts::randoms(-1000.0, +1000.0)
                               )
         )
 <typename T>(T const& , T const&  )

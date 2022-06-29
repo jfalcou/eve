@@ -46,7 +46,7 @@ TTS_CASE_WITH ( "Check behavior of log10 on wide"
   TTS_ULP_EQUAL(eve::log10(z_t{a0,a1}), eve::log(z_t{a0, a1})/eve::log_10(eve::as<e_t>()), 2);
 };
 
-TTS_CASE_TPL( "Check corner cases of eve::log10", tts::bunch<eve::test::scalar::ieee_reals>)
+TTS_CASE_TPL( "Check corner cases of eve::log10", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using c_t = eve::complex<T>;
@@ -86,7 +86,7 @@ TTS_CASE_TPL( "Check corner cases of eve::log10", tts::bunch<eve::test::scalar::
 };
 
 TTS_CASE_TPL( "Check return types of eve::log10", eve::test::scalar::ieee_reals)
-<typename T>(eve::as<T>)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::pedantic;

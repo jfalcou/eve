@@ -48,7 +48,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_
                                              , pedantic_type const &, auto const& z) noexcept
   {
-    return pedantic(eve::hypot)(real(z), imag(z));
+    return eve::pedantic(eve::hypot)(real(z), imag(z));
   }
 
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept

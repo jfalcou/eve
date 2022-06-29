@@ -16,28 +16,26 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-EVE_TEST( "Check behavior of tanpi on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate( eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
-        )
-  <typename T>(T const& a0, T const& a1 )
+TTS_CASE_WITH ( "Check behavior of tanpi on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              , tts::generate(tts::randoms(-10, 10), tts::randoms(-10, 10))
+              )
+<typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
-  {
     for(auto f : a1)
-    {
-      TTS_ULP_EQUAL(eve::tanpi(eve::complex<e_t>(e, f)),  cv(std::tan(eve::pi(eve::as<e_t>())*c_t(e, f))), 300.0);
-    }
-  }
+      TTS_ULP_EQUAL ( eve::tanpi(eve::complex<e_t>(e, f))
+                    , cv(std::tan(eve::pi(eve::as<e_t>())*c_t(e, f)))
+                    , 300.0
+                    );
 };
 
-EVE_TEST( "Check behavior of tanpi on wide"
+TTS_CASE_WITH( "Check behavior of tanpi on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        ,tts::generate(tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -59,8 +57,8 @@ EVE_TEST( "Check behavior of tanpi on wide"
 };
 
 
-EVE_TEST_TYPES( "Check corner cases of tanpi", eve::test::scalar::ieee_reals)
-  <typename T>(eve::as<T>)
+TTS_CASE_TPL( "Check corner cases of tanpi", eve::test::scalar::ieee_reals)
+  <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   using c_t = eve::complex<e_t>;

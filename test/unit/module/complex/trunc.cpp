@@ -8,12 +8,10 @@
 #include "test.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of trunc on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
-                              )
-        )
+TTS_CASE_WITH ( "Check behavior of trunc on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              )
 <typename T>(T const& a0, T const& a1 )
 {
   for(auto e : a0)
@@ -23,12 +21,10 @@ EVE_TEST( "Check behavior of trunc on scalar"
     }
 };
 
-EVE_TEST( "Check behavior of trunc on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
-                              )
-        )
+TTS_CASE_WITH ( "Check behavior of trunc on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              )
 <typename T>(T const& a0, T const& a1 )
 {
   using z_t = eve::as_complex_t<T>;

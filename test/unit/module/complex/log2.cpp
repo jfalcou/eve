@@ -50,7 +50,7 @@ TTS_CASE_WITH( "Check behavior of log2 on wide"
 TTS_CASE_TPL( "Check corner cases of log2", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  using c_t = eve::complex<T>;
+  using c_t = eve::as_complex_t<T>;
   using eve::as;
   const int N = 14;
   auto zer = eve::zero(as<T>());
@@ -95,9 +95,7 @@ TTS_CASE_TPL( "Check return types of eve::log2", eve::test::scalar::ieee_reals)
 
   TTS_ULP_EQUAL((eve::log2)(c_t(eve::mone(as<T>()))), c_t(eve::zero(as<T>()), eve::pi(as<T>())/eve::log_2(eve::as<T>())), 0.5);
   TTS_ULP_EQUAL((eve::log2)(c_t(eve::one(as<T>()))), c_t(eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::zero(as<T>()), eve::one(as<T>()))),c_t(eve::zero(as<T>()), eve::pio_2(as<T>())/eve::log_2(eve::as<e_t>())), 0.5);
-
-  TTS_ULP_EQUAL(eve::log2(c_t(-4, 0)), c_t(eve::log2(T(4)), eve::pi(as<T>())/eve::log_2(eve::as<e_t>())), 0);
+  TTS_ULP_EQUAL((eve::log2)(c_t(eve::zero(as<T>()), eve::one(as<T>())))
+               , c_t(eve::zero(as<T>()), eve::pio_2(as<T>())/eve::log_2(eve::as<T>())), 0.5);
   TTS_ULP_EQUAL(eve::log2(T(-4)), eve::nan(as<T>()), 0);
-
 };

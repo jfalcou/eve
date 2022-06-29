@@ -10,12 +10,12 @@
 #include <eve/module/complex.hpp>
 #include <complex>
 
-EVE_TEST( "Check behavior of maxabs on wide"
+TTS_CASE_WITH( "Check behavior of maxabs on wide"
         , eve::test::simd::ieee_reals
-        , eve::test::generate(eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10)
-                             , eve::test::randoms(-10, 10))
+        ,tts::generate(tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {

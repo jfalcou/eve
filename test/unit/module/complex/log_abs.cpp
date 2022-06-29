@@ -8,27 +8,23 @@
 #include "test.hpp"
 #include <eve/module/complex.hpp>
 
-EVE_TEST( "Check behavior of log_abs on scalar"
-        , eve::test::scalar::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
+TTS_CASE_WITH ( "Check behavior of log_abs on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              , tts::generate ( tts::randoms(-1000.0, +1000.0)
+                              , tts::randoms(-1000.0, +1000.0)
                               )
-        )
+              )
 <typename T>(T const& a0, T const& a1 )
 {
   for(auto e : a0)
     for(auto f : a1)
-    {
       TTS_ULP_EQUAL( eve::log_abs(eve::complex(e, f)), eve::log(eve::hypot(e,f)), 0.5);
-    }
 };
 
-EVE_TEST( "Check behavior of log_abs on wide"
-        , eve::test::simd::ieee_reals
-        , eve::test::generate ( eve::test::randoms(-1000.0, +1000.0)
-                              , eve::test::randoms(-1000.0, +1000.0)
-                              )
-        )
+TTS_CASE_WITH ( "Check behavior of log_abs on wide"
+              , eve::test::simd::ieee_reals
+              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              )
 <typename T>(T const& a0, T const& a1 )
 {
   using z_t = eve::as_complex_t<T>;
@@ -38,5 +34,4 @@ EVE_TEST( "Check behavior of log_abs on wide"
   TTS_ULP_EQUAL( eve::log_abs(z_t{nan,inf}), inf, 0.5);
   TTS_ULP_EQUAL( eve::log_abs(z_t{inf, inf}), inf, 0.5);
   TTS_ULP_EQUAL( eve::log_abs(z_t{nan, nan}), nan, 0.5);
-
 };

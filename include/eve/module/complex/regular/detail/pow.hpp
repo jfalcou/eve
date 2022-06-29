@@ -13,6 +13,7 @@
 #include <eve/module/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
 #include <boost/math/complex/atanh.hpp>
+
 namespace eve
 {
   namespace detail
@@ -69,7 +70,6 @@ namespace eve
           auto rr = to_complex(pow(real(z1), z2));
           r = if_else(realz1, rr, r);
         }
-
       }
       r = if_else(is_eqz(z2),  r_t{1, 0}, r);
      return r;
