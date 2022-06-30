@@ -32,5 +32,9 @@ namespace eve
 #   endif
   inline constexpr bool supports_simd = true;
 # endif
+
+  //================================================================================================
+  // Types & object s for ABI/API detection
+  using current_abi_type = EVE_CURRENT_ABI;
 }
 
