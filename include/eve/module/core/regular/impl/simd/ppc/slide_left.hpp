@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/lo.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/conditional.hpp>
+#include <eve/detail/remove_garbage.hpp>
 
 namespace eve::detail
 {
@@ -39,14 +39,7 @@ namespace eve::detail
       {
         constexpr unsigned char offset = (Shift * sizeof(T)) << 3;
         __vector signed char shift = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,offset};
-        that_t result = vec_slo( v.storage(), shift );
-
-        // Mask noises from smaller sized registers
-        if constexpr(N::value < expected_cardinal_v<T>)
-        {
-          result &= keep_first(N::value-Shift).mask(as(result)).bits();
-        }
-
+        that_t result = vec_slo( remove_garbage(v).storage(), shift );
         return result;
       }
     }
