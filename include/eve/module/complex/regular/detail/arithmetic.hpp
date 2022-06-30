@@ -17,12 +17,38 @@ namespace eve::detail
 {
 
   //==============================================================================================
+  //  trivial extension of some real unary functions
+  //==============================================================================================
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::ceil_, Z const& z) noexcept { return Z{ceil(real(z)), ceil(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::floor_, Z const& z) noexcept { return Z{floor(real(z)), floor(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::nearest_, Z const& z) noexcept { return Z{nearest(real(z)), nearest(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::trunc_, Z const& z) noexcept { return Z{trunc(real(z)), trunc(imag(z))}; }
+  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::frac_, Z const& z) noexcept { return Z{frac(real(z)), frac(imag(z))}; }
+
+  //==============================================================================================
+  //  trivial extension of some real binary functions
+  //==============================================================================================
+  template<typename Z1,  typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::maxabs_, Z1 const& z1, Z2 const& z2) noexcept { return max(abs(z1), abs(z2)); }
+  template<typename Z1,  typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::minabs_, Z1 const& z1, Z2 const& z2) noexcept { return min(abs(z1), abs(z2)); }
+  template<typename Z1,  typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::dist_, Z1 const& z1, Z2 const& z2) noexcept { return abs(z1-z2); }
+
+  //==============================================================================================
+  //  trivial extension of some real ternary functions
+  //==============================================================================================
+  template<typename Z1,  typename Z2, real_value Z3>
+  EVE_FORCEINLINE auto complex_ternary_dispatch(eve::tag::lerp_, Z1 const& z1, Z2 const& z2, Z3 const& t) noexcept
+  { return lerp(abs(z1), abs(z2), t); }
+
+  //==============================================================================================
   //  Unary functions
   //==============================================================================================
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_
                                              , pedantic_type const &, auto const& z) noexcept
   {
-    return pedantic(eve::hypot)(real(z), imag(z));
+    return eve::pedantic(eve::hypot)(real(z), imag(z));
   }
 
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
@@ -47,6 +73,23 @@ namespace eve::detail
     return Z{real(z), -imag(z)};
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::dec_, Z const& z ) noexcept
+  {
+    return Z{dec(real(z)), imag(z)};
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::inc_, Z const& z ) noexcept
+  {
+    return Z{inc(real(z)), imag(z)};
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::oneminus_, Z const& z ) noexcept
+  {
+    return Z{oneminus(real(z)), -imag(z)};
+  }
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::proj_, Z const& z) noexcept
   {
