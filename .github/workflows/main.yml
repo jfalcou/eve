@@ -40,18 +40,19 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang       , arch: x86    , opts: -msse2                }
-        - { comp: gcc         , arch: x86    , opts: -msse2                }
-        - { comp: clang       , arch: x86    , opts: -mssse3               }
-        - { comp: gcc         , arch: x86    , opts: -mssse3               }
-        - { comp: clang       , arch: x86    , opts: -msse4.2              }
-        - { comp: gcc         , arch: x86    , opts: -msse4.2              }
-        - { comp: clang       , arch: x86    , opts: -mavx                 }
-        - { comp: gcc         , arch: x86    , opts: -mavx                 }
-        - { comp: clang       , arch: x86    , opts: -mavx2                }
-        - { comp: gcc         , arch: x86    , opts: -mavx2                }
-        - { comp: clang       , arch: x86_sde, opts: -march=skylake-avx512 }
-        - { comp: gcc         , arch: x86_sde, opts: -march=skylake-avx512 }
+        - { comp: clang       , arch: x86     , opts: -msse2                }
+        - { comp: clang       , arch: x86_asan, opts: -msse2                }
+        - { comp: gcc         , arch: x86     , opts: -msse2                }
+        - { comp: clang       , arch: x86     , opts: -mssse3               }
+        - { comp: gcc         , arch: x86     , opts: -mssse3               }
+        - { comp: clang       , arch: x86     , opts: -msse4.2              }
+        - { comp: gcc         , arch: x86     , opts: -msse4.2              }
+        - { comp: clang       , arch: x86     , opts: -mavx                 }
+        - { comp: gcc         , arch: x86     , opts: -mavx                 }
+        - { comp: clang       , arch: x86     , opts: -mavx2                }
+        - { comp: gcc         , arch: x86     , opts: -mavx2                }
+        - { comp: clang       , arch: x86_sde , opts: -march=skylake-avx512 }
+        - { comp: gcc         , arch: x86_sde , opts: -march=skylake-avx512 }
 
     steps:
       - name: Fetch current branch
