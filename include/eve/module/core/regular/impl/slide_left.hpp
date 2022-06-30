@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/slide_right.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
