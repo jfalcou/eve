@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/module/core/regular/slide_right.hpp>
+#include <eve/detail/remove_garbage.hpp>
 
 namespace eve::detail
 {
@@ -39,11 +39,7 @@ namespace eve::detail
     else  if constexpr( c == category::float32x4  )
     {
       // Clean up garbage if needed
-      if constexpr(N::value == 2) v = bit_cast( slide_right ( bit_cast(v,as<wide<T,fixed<4>>>())
-                                                            , index<2>
-                                                            )
-                                              , as(v)
-                                              );
+      v = slide_garbage(v);
 
       if constexpr( current_api >= sse3 )
       {
@@ -63,11 +59,7 @@ namespace eve::detail
     else  if constexpr( c == category::int32x4 || c == category::uint32x4 )
     {
       // Clean up garbage if needed
-      if constexpr(N::value == 2) v = bit_cast( slide_right ( bit_cast(v,as<wide<T,fixed<4>>>())
-                                                            , index<2>
-                                                            )
-                                              , as(v)
-                                              );
+      v = slide_garbage(v);
 
       constexpr auto shuf =  _MM_SHUFFLE(1, 0, 3, 2);
       __m128i sum64;
@@ -81,14 +73,7 @@ namespace eve::detail
     else  if constexpr( c == category::uint8x16 || c == category::int8x16 )
     {
       // Clean up garbage if needed
-      if constexpr(N::value < 16)
-      {
-        v = bit_cast( slide_right ( bit_cast(v,as<wide<T,fixed<16>>>())
-                                  , index<16-N::value>
-                                  )
-                    , as(v)
-                    );
-      }
+      v = slide_garbage(v);
 
       // https://stackoverflow.com/questions/36998538/fastest-way-to-horizontally-sum-sse-unsigned-byte-vector
       __m128i vsum = _mm_sad_epu8(v, _mm_setzero_si128());

@@ -8,15 +8,15 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/remove_garbage.hpp>
 #include <eve/detail/function/simd/x86/specifics.hpp>
-#include <eve/conditional.hpp>
 
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
   EVE_FORCEINLINE wide<T,N> slide_left_ ( EVE_SUPPORTS(sse2_)
-                                            , wide<T,N> v, index_t<Shift>
-                                            ) noexcept
+                                        , wide<T,N> v, index_t<Shift>
+                                        ) noexcept
   requires(Shift <= N::value) && x86_abi<abi_t<T, N>>
   {
           if constexpr(Shift == 0)        return v;
@@ -27,20 +27,9 @@ namespace eve::detail
       {
         constexpr auto shift = Shift*sizeof(T);
         using i_t = as_integer_t<wide<T,N>, unsigned>;
-        using ec_t = expected_cardinal_t<T,abi_t<T, N>>;
 
-        if constexpr(N::value < 16)
-        {
-          v = bit_cast( bit_cast(v,as<wide<T,ec_t>>())
-                      & as_logical_t<wide<T,ec_t>>([](auto i, auto) { return i<N::value; }).mask()
-                      , as(v)
-                      );
-        }
-
-        auto const b  = bit_cast(v, as<i_t>());
-        auto result = bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));
-
-        return result;
+        auto const  b = bit_cast(detail::remove_garbage(v), as<i_t>());
+        return bit_cast(i_t(_mm_bsrli_si128( b, shift)), as(v));
       }
       else if constexpr( std::same_as<abi_t<T, N>,x86_256_>)
       {

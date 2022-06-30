@@ -9,14 +9,14 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/conditional.hpp>
+#include <eve/detail/remove_garbage.hpp>
 
 namespace eve::detail
 {
   template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
   EVE_FORCEINLINE wide<T,N> slide_left_ ( EVE_SUPPORTS(neon128_)
-                                            , wide<T,N> v, index_t<Shift>
-                                            ) noexcept
+                                        , wide<T,N> v, index_t<Shift>
+                                        ) noexcept
   requires(Shift<=N::value) && arm_abi<abi_t<T, N>>
   {
     using that_t  = wide<T,N>;
@@ -33,6 +33,9 @@ namespace eve::detail
     {
       constexpr auto c = categorize<that_t>();
       that_t z{0}, result;
+
+      // Clean up potential garbage
+      v = remove_garbage(v);
 
             if constexpr( c == category::int64x2    ) result = vextq_s64(v,z,Shift);
       else  if constexpr( c == category::uint64x2   ) result = vextq_u64(v,z,Shift);
@@ -55,7 +58,6 @@ namespace eve::detail
         using f_t = as_integer_t<wide<T,N>>;
         result = bit_cast( slide_left(bit_cast(v,as<f_t>{}), index<Shift>), as(v) );
       }
-
       return result;
     }
   }
