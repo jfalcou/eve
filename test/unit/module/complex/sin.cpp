@@ -90,7 +90,6 @@ TTS_CASE_TPL( "Check corner cases of sin", eve::test::scalar::ieee_reals)
 
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(sine(inputs[i]), test_sine(inputs[i]));
     TTS_IEEE_EQUAL(sine(-inputs[i]), -sine(inputs[i]));
     TTS_IEEE_EQUAL(sine(conj(inputs[i])), conj(sine(inputs[i])));

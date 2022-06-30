@@ -9,29 +9,31 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 
-TTS_CASE_WITH ( "Check behavior of abs on scalar"
+TTS_CASE_WITH ( "Check behavior of oneminus on scalar"
               , tts::bunch<eve::test::scalar::ieee_reals>
-              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              , tts::generate(tts::randoms(0, 100), tts::randoms(-10, 10))
               )
 <typename T>(T const& a0, T const& a1 )
 {
-  using eve::pedantic;
-  for(auto e : a0)
+  using e_t = typename T::value_type;
+  using c_t = eve::complex<e_t>;
+   for(auto e : a0)
+  {
     for(auto f : a1)
     {
-      TTS_EQUAL( eve::abs(eve::complex(e, f)), eve::hypot(e,f) );
-      TTS_EQUAL( pedantic(eve::abs)(eve::complex(e, f)), pedantic(eve::hypot)(e,f) );
+      c_t a(e, f);
+      TTS_ULP_EQUAL( eve::oneminus(a), c_t(eve::oneminus(e), -f), 2);
     }
+  }
 };
 
-TTS_CASE_WITH ( "Check behavior of abs on wide"
+TTS_CASE_WITH ( "Check behavior of oneminus on wide"
               , eve::test::simd::ieee_reals
-              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              , tts::generate(tts::randoms(0, 100), tts::randoms(-10, 10))
               )
 <typename T>(T const& a0, T const& a1 )
 {
-  using eve::pedantic;
   using z_t = eve::as_complex_t<T>;
-  TTS_EQUAL( eve::abs(z_t{a0,a1}), eve::hypot(a0,a1) );
-  TTS_EQUAL( eve::pedantic(eve::abs)(z_t{a0,a1}), eve::pedantic(eve::hypot)(a0,a1) );
+  z_t z(a0, a1);
+  TTS_ULP_EQUAL( eve::oneminus(z), z_t(eve::oneminus(a0), -a1), 2);
 };

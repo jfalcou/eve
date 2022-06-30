@@ -16,6 +16,7 @@
 #include <eve/module/math/pedantic/exp2.hpp>
 #include <eve/module/math/pedantic/exp.hpp>
 #include <eve/module/math/pedantic/expm1.hpp>
+#include <eve/module/math/pedantic/hypot.hpp>
 #include <eve/module/math/pedantic/log10.hpp>
 #include <eve/module/math/pedantic/log.hpp>
 #include <eve/module/math/pedantic/lpnorm.hpp>

@@ -35,8 +35,5 @@ TTS_CASE_WITH( "Check behavior of is_finite on wide"
   using e_t = typename T::value_type;
   using z_t = eve::wide<eve::complex<e_t>, typename T::cardinal_type>;
 
-  auto test1 = eve::is_finite(z_t{a0,a1});
-  auto test2 = eve::is_finite(a0) && eve::is_finite(a1);
-  std::cout << test1 << "   " << test2 << std::endl;
   TTS_EQUAL( eve::is_finite(z_t{a0,a1}), (eve::is_finite(a0) && eve::is_finite(a1)) );
 };

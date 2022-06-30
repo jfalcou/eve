@@ -66,7 +66,7 @@ namespace eve
     {
       using c_t = eve::as_complex_t<U>;
       auto [s, c] = sincos(theta);
-      return c_t{rho*c, rho*s};
+      return c_t{rho*c, if_else(is_eqz(s), zero, rho*s)};
     }
   }
 }

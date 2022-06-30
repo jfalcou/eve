@@ -6,32 +6,32 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include "measures.hpp"
 #include <eve/module/complex.hpp>
 
-TTS_CASE_WITH ( "Check behavior of abs on scalar"
+TTS_CASE_WITH ( "Check behavior of log_abs on scalar"
               , tts::bunch<eve::test::scalar::ieee_reals>
-              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              , tts::generate ( tts::randoms(-1000.0, +1000.0)
+                              , tts::randoms(-1000.0, +1000.0)
+                              )
               )
 <typename T>(T const& a0, T const& a1 )
 {
-  using eve::pedantic;
   for(auto e : a0)
     for(auto f : a1)
-    {
-      TTS_EQUAL( eve::abs(eve::complex(e, f)), eve::hypot(e,f) );
-      TTS_EQUAL( pedantic(eve::abs)(eve::complex(e, f)), pedantic(eve::hypot)(e,f) );
-    }
+      TTS_ULP_EQUAL( eve::log_abs(eve::complex(e, f)), eve::log(eve::hypot(e,f)), 0.5);
 };
 
-TTS_CASE_WITH ( "Check behavior of abs on wide"
+TTS_CASE_WITH ( "Check behavior of log_abs on wide"
               , eve::test::simd::ieee_reals
               , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
               )
 <typename T>(T const& a0, T const& a1 )
 {
-  using eve::pedantic;
   using z_t = eve::as_complex_t<T>;
-  TTS_EQUAL( eve::abs(z_t{a0,a1}), eve::hypot(a0,a1) );
-  TTS_EQUAL( eve::pedantic(eve::abs)(z_t{a0,a1}), eve::pedantic(eve::hypot)(a0,a1) );
+  TTS_ULP_EQUAL( eve::log_abs(z_t{a0,a1}), eve::log(eve::hypot(a0,a1)), 0.5);
+  auto inf = eve::inf(eve::as<T>());
+  auto nan = eve::nan(eve::as<T>());
+  TTS_ULP_EQUAL( eve::log_abs(z_t{nan,inf}), inf, 0.5);
+  TTS_ULP_EQUAL( eve::log_abs(z_t{inf, inf}), inf, 0.5);
+  TTS_ULP_EQUAL( eve::log_abs(z_t{nan, nan}), nan, 0.5);
 };

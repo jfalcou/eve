@@ -8,8 +8,6 @@
 #include "test.hpp"
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
-#include <eve/module/math.hpp>
-#include <eve/module/core.hpp>
 #include <complex>
 
 template < typename T >
@@ -27,13 +25,12 @@ TTS_CASE_WITH( "Check behavior of log2 on scalar"
 {
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
-  auto std_log2 = [](auto x){return cv(std::log(x)/eve::log_2(eve::as<e_t>())); };
+  auto std_log2 = [](auto x){return std::log(x)/eve::log_2(eve::as<e_t>()); };
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::log2(eve::complex<e_t>(e, f)),  std_log2(c_t(e, f)), 2);
-      TTS_ULP_EQUAL(eve::log2(eve::complex<e_t>(e, f)),  std_log2(c_t(e, f)), 2.0);
+      TTS_ULP_EQUAL(eve::log2(eve::complex<e_t>(e, f)),  cv(std_log2(c_t(e, f))), 2);
     }
   }
 };
@@ -46,78 +43,59 @@ TTS_CASE_WITH( "Check behavior of log2 on wide"
   <typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
-  using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
-  using c_t = std::complex<e_t>;
-  auto std_log2 = [](auto x, auto y){return cv(std::log(c_t(x, y))/eve::log_2(eve::as(x))); };
-  auto init_with_std = [std_log2](auto a0,  auto a1){
-    z_t b;
-    for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
-    {
-      ce_t z(std_log2(a0.get(i), a1.get(i)));
-      b.set(i, z);
-    }
-    return b;
-  };
-  TTS_ULP_EQUAL(eve::log2(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::log2(z_t{a0,a1}), eve::log(z_t{a0, a1})/eve::log_2(eve::as<e_t>()), 2);
 };
 
-TTS_CASE_TPL( "Check return types of eve::log2", eve::test::simd::ieee_reals)
-  <typename T>(tts::type<T>)
+TTS_CASE_TPL( "Check corner cases of log2", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using c_t = eve::as_complex_t<T>;
+  using eve::as;
+  const int N = 14;
+  auto zer = eve::zero(as<T>());
+  auto mzer = eve::mzero(as<T>());
+  auto inf = eve::inf(as<T>());
+  auto minf = eve::minf(as<T>());
+  auto nan = eve::nan(as<T>());
+  auto one = eve::one(as<T>());
+  std::array<c_t, N> inputs =
+    {
+      c_t(mzer,zer), //0
+      c_t(zer,zer),  //1
+      c_t(one,inf),  //2
+      c_t(one,nan),  //3
+      c_t(minf,one), //4
+      c_t(minf,zer), //5
+      c_t(inf,one),  //6
+      c_t(inf,zer),  //7
+      c_t(inf,inf),  //8
+      c_t(inf, nan), //9
+      c_t(minf,nan), //10
+      c_t(nan,one),  //11
+      c_t(nan,inf),  //12
+      c_t(nan,nan)   //13
+    };
+  using eve::conj;
+  using eve::log2;
+  auto std_log2 = [](auto x) { return eve::log(x)/eve::log_2(eve::as<T>()); };
+  for(int i=0; i < N; ++i)
+  {
+    TTS_IEEE_EQUAL(log2(inputs[i]), std_log2(inputs[i]));
+    TTS_IEEE_EQUAL(log2(conj(inputs[i])), conj(log2(inputs[i])));
+  }
+};
+
+TTS_CASE_TPL( "Check return types of eve::log2", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::pedantic;
-  using c_t = eve::as_complex_t<T>;
+  using c_t = eve::complex<T>;
 
-  auto scale = [](auto a,  auto b){
-    return eve::as_complex_t<T>(a, b)/eve::log_2(as<T>());
-   };
-
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), eve::mone(as<T>()))), scale(eve::inf(as<T>()), -eve::pi(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf(as<T>()), 0)), scale(eve::inf(as<T>()), 0), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf(as<T>()), 0)), scale(eve::inf(as<T>()), eve::pi(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan(as<T>()), eve::nan(as<T>()))),     scale(eve::nan(as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), eve::zero(as<T>()))),  scale(eve::inf(as<T>()), eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), eve::zero(as<T>()))),  scale(eve::inf(as<T>()), eve::pi(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), eve::zero(as<T>()))),  scale(eve::inf (as<T>()), eve::zero (as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::one  (as<T>()), eve::inf (as<T>()))),  scale(eve::inf(as<T>()), eve::pio_2(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::one  (as<T>()), eve::nan (as<T>()))),  scale(eve::nan(as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), eve::one (as<T>()))),  scale(eve::inf(as<T>()), eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), eve::one(as<T>()))),   scale(eve::inf(as<T>()), eve::pi(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), eve::one (as<T>()))),  scale(eve::inf (as<T>()), eve::zero (as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), eve::one(as<T>()))),   scale(eve::nan (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), eve::mone(as<T>()))),  scale(eve::nan (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), eve::nan(as<T>()))),   scale(eve::nan (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::one  (as<T>()), -eve::inf (as<T>()))), scale(eve::inf(as<T>()), -eve::pio_2(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::one  (as<T>()), -eve::nan (as<T>()))), scale(eve::nan(as<T>()), -eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), -eve::one (as<T>()))), scale(eve::inf(as<T>()), -eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), -eve::one(as<T>()))),  scale(eve::inf(as<T>()), -eve::pi(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), -eve::one (as<T>()))), scale(eve::inf (as<T>()), -eve::zero (as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), -eve::one(as<T>()))),  scale(eve::nan (as<T>()), -eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), -eve::mone(as<T>()))), scale(eve::nan (as<T>()), -eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), -eve::nan(as<T>()))),  scale(eve::nan (as<T>()), -eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan(as<T>()), eve::zero(as<T>()))),    scale(eve::nan(as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::zero(as<T>()), eve::zero(as<T>()))),   scale(eve::minf(as<T>()), eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), eve::inf(as<T>()))),   scale(eve::inf (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), eve::inf(as<T>()))),   scale(eve::inf (as<T>()), eve::nan(as<T>())/4), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), eve::minf(as<T>()))),  scale(eve::inf (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::inf  (as<T>()), eve::minf(as<T>()))),  scale(eve::inf (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::mzero(as<T>()), eve::zero(as<T>()))),  scale(eve::minf(as<T>()), eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), eve::inf(as<T>()))),   scale(eve::inf (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::nan  (as<T>()), -eve::inf(as<T>()))),  scale(eve::inf (as<T>()), -eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::minf (as<T>()), eve::nan(as<T>()))),   scale(eve::nan (as<T>()), eve::nan(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::mone(as<T>()), eve::zero(as<T>()))),   scale(eve::zero(as<T>()), eve::pi(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::one(as<T>()), eve::zero(as<T>()))),    scale(eve::zero(as<T>()), eve::zero(as<T>())), 0.5);
-  TTS_ULP_EQUAL((eve::log2)(c_t(eve::zero(as<T>()), eve::one(as<T>()))),    scale(eve::zero(as<T>()), eve::pio_2(as<T>())), 0.5);
-
-  TTS_ULP_EQUAL(eve::log2(c_t(-4, 0)), scale(eve::log2(T(4)), eve::pi(as<T>())), 0);
+  TTS_ULP_EQUAL((eve::log2)(c_t(eve::mone(as<T>()))), c_t(eve::zero(as<T>()), eve::pi(as<T>())/eve::log_2(eve::as<T>())), 0.5);
+  TTS_ULP_EQUAL((eve::log2)(c_t(eve::one(as<T>()))), c_t(eve::zero(as<T>())), 0.5);
+  TTS_ULP_EQUAL((eve::log2)(c_t(eve::zero(as<T>()), eve::one(as<T>())))
+               , c_t(eve::zero(as<T>()), eve::pio_2(as<T>())/eve::log_2(eve::as<T>())), 0.5);
   TTS_ULP_EQUAL(eve::log2(T(-4)), eve::nan(as<T>()), 0);
-//TTS_ULP_EQUAL(eve::cmplx(eve::log2)(T(-4)), c_t(eve::log2(T(4)), eve::pi(as<T>())), 0);
-
-  //pedantic differences
-  TTS_ULP_EQUAL(pedantic(eve::log2)(c_t(eve::minf (as<T>()), eve::inf(as<T>()))),   scale(eve::inf (as<T>()), 3*eve::pio_4(as<T>())), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log2)(c_t(eve::inf  (as<T>()), eve::inf(as<T>()))),   scale(eve::inf (as<T>()), eve::pi(as<T>())/4), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log2)(c_t(eve::minf (as<T>()), eve::minf(as<T>()))),  scale(eve::inf (as<T>()), -3*eve::pio_4(as<T>())), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log2)(c_t(eve::inf  (as<T>()), eve::minf(as<T>()))),  scale(eve::inf (as<T>()), -eve::pi(as<T>())/4), 0.5);
-  TTS_ULP_EQUAL(pedantic(eve::log2)(c_t(eve::mzero(as<T>()), eve::zero(as<T>()))),  scale(eve::minf(as<T>()), eve::pi(as<T>())), 0.5);
 };

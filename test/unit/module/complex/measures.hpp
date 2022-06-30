@@ -19,6 +19,8 @@ namespace tts
     auto [rr, ir] = r;
     auto udr = eve::ulpdist(il, ir);
     auto udi = eve::ulpdist(rl, rr);
+    if(eve::is_eqz(eve::maximum(udr))) return eve::maximum(udi);
+    if(eve::is_eqz(eve::maximum(udi))) return eve::maximum(udr);
     udr = eve::if_else(eve::is_nan(udr), eve::inf(eve::as(udr)), udr);
     udi = eve::if_else(eve::is_nan(udi), eve::inf(eve::as(udi)), udi);
     auto d = eve::if_else ( eve::almost(eve::is_real)(diff)

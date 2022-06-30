@@ -16,28 +16,26 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-TTS_CASE_WITH( "Check behavior of tan on scalar"
-        , tts::bunch<eve::test::scalar::ieee_reals>
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
-        )
-  <typename T>(T const& a0, T const& a1 )
+TTS_CASE_WITH ( "Check behavior of tanpi on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              , tts::generate(tts::randoms(-10, 10), tts::randoms(-10, 10))
+              )
+<typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
-  {
     for(auto f : a1)
-    {
-      TTS_ULP_EQUAL(eve::tan(eve::complex<e_t>(e, f)),  cv(std::tan(c_t(e, f))), 3.0);
-    }
-  }
+      TTS_ULP_EQUAL ( eve::tanpi(eve::complex<e_t>(e, f))
+                    , cv(std::tan(eve::pi(eve::as<e_t>())*c_t(e, f)))
+                    , 300.0
+                    );
 };
 
-TTS_CASE_WITH( "Check behavior of tan on wide"
+TTS_CASE_WITH( "Check behavior of tanpi on wide"
         , eve::test::simd::ieee_reals
         ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -45,7 +43,7 @@ TTS_CASE_WITH( "Check behavior of tan on wide"
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_ch = [](auto x, auto y){return std::tan(c_t(x, y)); };
+  auto std_ch = [](auto x, auto y){return std::tan(eve::pi(eve::as<e_t>())*c_t(x, y)); };
   auto init_with_std = [std_ch](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
@@ -55,11 +53,11 @@ TTS_CASE_WITH( "Check behavior of tan on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::tan(z_t{a0,a1}), init_with_std(a0, a1), 3);
+  TTS_ULP_EQUAL(eve::tanpi(z_t{a0,a1}), init_with_std(a0, a1), 300);
 };
 
 
-TTS_CASE_TPL( "Check corner cases of tan", eve::test::scalar::ieee_reals)
+TTS_CASE_TPL( "Check corner cases of tanpi", eve::test::scalar::ieee_reals)
   <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
@@ -83,15 +81,29 @@ TTS_CASE_TPL( "Check corner cases of tan", eve::test::scalar::ieee_reals)
       c_t(nan,one), //7
       c_t(nan,nan)  //8
     };
+
+  auto test_tangentpi = [](auto x){return eve::tan(eve::pi(eve::as<e_t>{})*x); };
+  std::array<c_t, N> results =
+    {
+      test_tangentpi(c_t(zer,zer)), //0
+      test_tangentpi(c_t(one,inf)), //1
+      test_tangentpi(c_t(one,nan)), //2
+      test_tangentpi(c_t(inf,one)), //3
+      c_t(zer,one), //4
+      test_tangentpi(c_t(inf,nan)), //5
+      c_t(nan,zer), //6
+      test_tangentpi(c_t(nan,one)), //7
+      test_tangentpi(c_t(nan,nan))  //8
+    };
+
+
   using eve::conj;
-  auto tangent = eve::tan;
-  auto j = eve::i(eve::as<e_t>{});
-  auto test_tangent = [j](auto x){return -j*eve::tanh(j*x); };
+  auto tangentpi = eve::tanpi;
   for(int i=0; i < N; ++i)
   {
-    std::cout <<  "i " << i << " -> " << inputs[i] << std::endl;
-    TTS_IEEE_EQUAL(tangent(inputs[i]), test_tangent(inputs[i]));
-    TTS_IEEE_EQUAL(tangent(-inputs[i]), -tangent(inputs[i]));
-    TTS_IEEE_EQUAL(tangent(conj(inputs[i])), conj(tangent(inputs[i])));
+    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
+    TTS_IEEE_EQUAL(tangentpi(inputs[i]), results[i]);
+    TTS_IEEE_EQUAL(tangentpi(-inputs[i]), -results[i]);
+    TTS_IEEE_EQUAL(tangentpi(conj(inputs[i])), conj(results[i]));
   }
 };

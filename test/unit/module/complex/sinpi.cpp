@@ -16,28 +16,25 @@ auto cv(std::complex < T > sc)
   return eve::complex<T>(sc.real(), sc.imag());
 }
 
-TTS_CASE_WITH( "Check behavior of sinh on scalar"
-        ,  tts::bunch<eve::test::scalar::ieee_reals>
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
-        )
-  <typename T>(T const& a0, T const& a1 )
+TTS_CASE_WITH ( "Check behavior of sinpi on scalar"
+              , tts::bunch<eve::test::scalar::ieee_reals>
+              , tts::generate(tts::randoms(-10, 10), tts::randoms(-10, 10))
+              )
+<typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
-  {
     for(auto f : a1)
-    {
-      TTS_ULP_EQUAL(eve::sinh(eve::complex<e_t>(e, f)),  cv(std::sinh(c_t(e, f))), 3.0);
-    }
-  }
+      TTS_ULP_EQUAL ( eve::sinpi(eve::complex<e_t>(e, f))
+                    , cv(std::sin(eve::pi(eve::as<e_t>())*c_t(e, f))), 300.0
+                    );
 };
 
-TTS_CASE_WITH( "Check behavior of sinh on wide"
+TTS_CASE_WITH( "Check behavior of sinpi on wide"
         , eve::test::simd::ieee_reals
         ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
+                             , tts::randoms(-10, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -45,7 +42,7 @@ TTS_CASE_WITH( "Check behavior of sinh on wide"
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_ch = [](auto x, auto y){return std::sinh(c_t(x, y)); };
+  auto std_ch = [](auto x, auto y){return std::sin(eve::pi(eve::as<e_t>())*c_t(x, y)); };
   auto init_with_std = [std_ch](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
@@ -55,57 +52,51 @@ TTS_CASE_WITH( "Check behavior of sinh on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::sinh(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::sinpi(z_t{a0,a1}), init_with_std(a0, a1), 300);
 };
 
-TTS_CASE_TPL( "Check corner cases of sinh", eve::test::scalar::ieee_reals)
+
+TTS_CASE_TPL( "Check corner cases of sinpi", eve::test::scalar::ieee_reals)
   <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
   using c_t = eve::complex<e_t>;
   using eve::as;
-  const int N = 11;
+  const int N = 9;
   auto zer = eve::zero(as<e_t>());
   auto inf = eve::inf(as<e_t>());
-//  auto minf = eve::minf(as<e_t>());
   auto nan = eve::nan(as<e_t>());
   auto one = eve::one(as<e_t>());
   std::array<c_t, N> inputs =
     {
       c_t(zer,zer), //0
-      c_t(zer,inf), //1
-      c_t(zer,nan), //2
-      c_t(one,nan), //3
-      c_t(inf,zer), //4
-      c_t(inf,one), //5
-      c_t(inf,inf), //6
-      c_t(inf,nan), //7
-      c_t(nan,zer), //8
-      c_t(nan,one), //9
-      c_t(nan,nan)  //10
+      c_t(one,inf), //1
+      c_t(one,nan), //2
+      c_t(inf,one), //3
+      c_t(inf,inf), //4
+      c_t(inf,nan), //5
+      c_t(nan,zer), //6
+      c_t(nan,one), //7
+      c_t(nan,nan)  //8
     };
-
   std::array<c_t, N> results =
     {
       c_t(zer,zer), //0
-      c_t(zer,nan), //1
-      c_t(zer,nan), //2
-      c_t(nan,nan), //3
-      c_t(inf,zer), //4
-      inf*eve::exp_i(one), //5
-      c_t(inf,nan), //6
-      c_t(inf,nan), //7
-      c_t(nan,zer), //8
-      c_t(nan,nan), //9
-      c_t(nan,nan)  //10
+      c_t(nan, -inf),  //1 not so sure
+      c_t(nan,nan),    //2
+      c_t(nan,nan),    //3
+      c_t(nan, inf),   //4
+      c_t(nan,nan),    //5
+      c_t(nan,zer),    //6
+      c_t(nan,nan),    //7
+      c_t(nan,nan)     //8
     };
-
   using eve::conj;
-  auto sh = eve::sinh;
+  auto sinpigent = eve::sinpi;
   for(int i=0; i < N; ++i)
   {
-    TTS_IEEE_EQUAL(sh(inputs[i]), results[i]);
-    TTS_IEEE_EQUAL(sh(-inputs[i]), -sh(inputs[i]));
-    TTS_IEEE_EQUAL(sh(conj(inputs[i])), conj(sh(inputs[i])));
+    TTS_IEEE_EQUAL(sinpigent(inputs[i]), results[i]);
+    TTS_IEEE_EQUAL(sinpigent(-inputs[i]), -sinpigent(inputs[i]));
+    TTS_IEEE_EQUAL(sinpigent(conj(inputs[i])), conj(sinpigent(inputs[i])));
   }
 };

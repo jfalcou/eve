@@ -47,12 +47,12 @@ TTS_CASE_WITH( "Check behavior of acosh on wide"
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_ch = [](auto x, auto y){return std::acosh(c_t(x, y)); };
-  auto init_with_std = [std_ch](auto a0,  auto a1){
+  auto std_ach = [](auto x, auto y){return std::acosh(c_t(x, y)); };
+  auto init_with_std = [std_ach](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
     {
-      ce_t z = cv(std_ch(a0.get(i), a1.get(i)));
+      ce_t z = cv(std_ach(a0.get(i), a1.get(i)));
       b.set(i, z);
     }
     return b;
