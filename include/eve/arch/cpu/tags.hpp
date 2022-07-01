@@ -16,6 +16,23 @@
 namespace eve
 {
   //================================================================================================
+  // SPY SIMD API wrapper
+  template<typename Base, auto API> struct simd_api : Base
+  {
+    using api_type = std::decay_t<decltype(API)>;
+
+    constexpr api_type const& value() const noexcept { return API; }
+
+    template<typename Stream>
+    friend Stream& operator<<(Stream& os, simd_api a) { return os << a.value(); }
+    friend constexpr bool operator==(simd_api , auto o) noexcept { return API == o.value(); }
+    friend constexpr bool operator> (simd_api , auto o) noexcept { return API >  o.value(); }
+    friend constexpr bool operator>=(simd_api , auto o) noexcept { return API >= o.value(); }
+    friend constexpr bool operator< (simd_api , auto o) noexcept { return API <  o.value(); }
+    friend constexpr bool operator<=(simd_api , auto o) noexcept { return API <= o.value(); }
+  };
+
+  //================================================================================================
   // Dispatching tag for generic implementation
   struct cpu_
   {
@@ -35,6 +52,9 @@ namespace eve
 #define EVE_WIDE_LOGICAL_NAMESPACE  inline
 #define EVE_BIT_LOGICAL_NAMESPACE
 #endif
+
+  using undefined_simd_ = simd_api<simd_, spy::undefined_simd_>;
+  inline constexpr undefined_simd_ undefined_simd   = {};
 
   //================================================================================================
   // Dispatching tag for emulated SIMD implementation of large register

@@ -15,7 +15,6 @@ namespace eve
 {
   template<typename T>
   struct logical;
-  struct neon128_;
 }
 
 #if defined(EVE_HW_ARM)
