@@ -18,7 +18,7 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH( "Check behavior of cotpi on scalar"
               , tts::bunch<eve::test::scalar::ieee_reals>
-              , tts::generate(tts::randoms(-10, 10), tts::randoms(-10, 10))
+              , tts::generate(tts::randoms(1, 10), tts::randoms(1, 10))
               )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -33,8 +33,8 @@ TTS_CASE_WITH( "Check behavior of cotpi on scalar"
 
 TTS_CASE_WITH( "Check behavior of cotpi on wide"
         , eve::test::simd::ieee_reals
-        ,tts::generate(tts::randoms(-10, 10)
-                             , tts::randoms(-10, 10))
+        ,tts::generate(tts::randoms(1, 10)
+                             , tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -98,7 +98,6 @@ TTS_CASE_TPL( "Check corner cases of cotpi", eve::test::scalar::ieee_reals)
     };
   for(int i=0; i < N; ++i)
   {
-    std::cout << "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(cotangentpi(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(cotangentpi(-inputs[i]), -cotangentpi(inputs[i]));
     TTS_IEEE_EQUAL(cotangentpi(conj(inputs[i])), conj(cotangentpi(inputs[i])));

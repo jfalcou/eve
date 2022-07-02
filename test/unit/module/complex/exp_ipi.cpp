@@ -18,8 +18,8 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH( "Check behavior of exp_ipi on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
-        , tts::generate( tts::randoms(-10, 10)
-                             , tts::randoms(-10, 10))
+        , tts::generate( tts::randoms(1, 10)
+                             , tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -39,7 +39,7 @@ TTS_CASE_WITH( "Check behavior of exp_ipi on scalar"
 
 TTS_CASE_WITH( "Check behavior of exp_ipi on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(-10, 10), tts::randoms(-10, 10))
+        , tts::generate(tts::randoms(1, 10), tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
