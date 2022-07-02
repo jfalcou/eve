@@ -1,6 +1,13 @@
 # action.yml
 name: 'Checks installation process'
 description: 'Checks installation process'
+inputs:
+  branch:  # Current branch
+    description: ' Current branch'
+    required: false
+    default: 'main'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.branch }}

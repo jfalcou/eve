@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Configure, install the library and check for proper installation
         uses: ./.github/actions/integration
+        with:
+          branch: '${{ github.head_ref }}'
 
   specials:
     needs: install
