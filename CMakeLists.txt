@@ -9,7 +9,13 @@ cmake_minimum_required(VERSION 3.2)
 ## Setup project
 ## =================================================================================================
 project(eve LANGUAGES CXX)
-set(PROJECT_VERSION 1.20.5.0)
+
+set(EVE_MAJOR_VERSION 2022)
+set(EVE_MINOR_VERSION 3)
+set(EVE_PATCH_VERSION 0)
+set(EVE_VERSION ${EVE_MAJOR_VERSION}.${EVE_MINOR_VERSION}.${EVE_PATCH_VERSION})
+
+set(PROJECT_VERSION   ${EVE_VERSION})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake )
 
 ## =================================================================================================
@@ -23,8 +29,7 @@ endif()
 ## Configuration
 ## =================================================================================================
 include(config/options)
-include(config/install)
-include(config/dependencies)
+include(config/eve-install)
 
 ## =================================================================================================
 ## Documentation target
@@ -37,6 +42,7 @@ endif()
 ## Test and Benchmarks target
 ## =================================================================================================
 if( EVE_BUILD_TEST )
+  include(config/dependencies)
   include(CTest)
   include(target/add_parent_target)
   include(config/compiler)

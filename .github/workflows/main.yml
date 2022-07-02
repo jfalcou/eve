@@ -9,6 +9,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
+  install:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - {test: installation , mode: 0 }
+        - {test: FetchContents, mode: 1 }
+        - {test: CPM          , mode: 2 }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v2
+      - name: Check EVE works with ${{ matrix.cfg.test }}
+        uses: ./.github/actions/integration
+        with:
+          branch: '${{ github.head_ref }}'
+          mode: '${{ matrix.cfg.mode }}'
+
   specials:
     runs-on: self-hosted
     strategy:
