@@ -77,8 +77,8 @@ namespace eve::detail
     {
       auto [vl, vh] = v.slice();
       auto [wl, wh] = w.slice();
-      return logical<wide<T,N>> { self_logand(EVE_CURRENT_API{},vl, wl)
-                                , self_logand(EVE_CURRENT_API{},vh, wh)
+      return logical<wide<T,N>> { self_logand(eve::current_api,vl, wl)
+                                , self_logand(eve::current_api,vh, wh)
                                 };
     }
     else if constexpr ( !abi_t::is_wide_logical )
@@ -133,8 +133,8 @@ namespace eve::detail
     {
       auto [vl, vh] = v.slice();
       auto [wl, wh] = w.slice();
-      return logical<wide<T,N>> { self_logor(EVE_CURRENT_API{},vl, wl)
-                                , self_logor(EVE_CURRENT_API{},vh, wh)
+      return logical<wide<T,N>> { self_logor(eve::current_api,vl, wl)
+                                , self_logor(eve::current_api,vh, wh)
                                 };
     }
     else if constexpr ( !abi_t::is_wide_logical )

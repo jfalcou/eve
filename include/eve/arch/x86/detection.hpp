@@ -18,15 +18,17 @@ namespace eve
   //================================================================================================
   template<auto Version> inline bool is_supported(spy::x86_simd_info<Version> const &) noexcept
   {
-          if constexpr( Version == sse2.version   ) return detail::cpuid_states.supports_sse2();
-    else  if constexpr( Version == sse3.version   ) return detail::cpuid_states.supports_sse3();
-    else  if constexpr( Version == ssse3.version  ) return detail::cpuid_states.supports_ssse3();
-    else  if constexpr( Version == sse4_1.version ) return detail::cpuid_states.supports_sse4_1();
-    else  if constexpr( Version == sse4_2.version ) return detail::cpuid_states.supports_sse4_2();
-    else  if constexpr( Version == avx.version    ) return detail::cpuid_states.supports_avx();
-    else  if constexpr( Version == avx2.version   ) return detail::cpuid_states.supports_avx2();
-    else  if constexpr( Version == avx512.version ) return detail::cpuid_states.supports_avx512F();
-    else                                            return false;
+    using namespace detail;
+
+          if constexpr( Version == sse2.value().version   ) return cpuid_states.supports_sse2();
+    else  if constexpr( Version == sse3.value().version   ) return cpuid_states.supports_sse3();
+    else  if constexpr( Version == ssse3.value().version  ) return cpuid_states.supports_ssse3();
+    else  if constexpr( Version == sse4_1.value().version ) return cpuid_states.supports_sse4_1();
+    else  if constexpr( Version == sse4_2.value().version ) return cpuid_states.supports_sse4_2();
+    else  if constexpr( Version == avx.value().version    ) return cpuid_states.supports_avx();
+    else  if constexpr( Version == avx2.value().version   ) return cpuid_states.supports_avx2();
+    else  if constexpr( Version == avx512.value().version ) return cpuid_states.supports_avx512F();
+    else                                                    return false;
   }
 
   inline bool is_supported(fma3_ const &) noexcept  { return detail::cpuid_states.supports_fma3();}
