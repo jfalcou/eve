@@ -29,7 +29,7 @@ TTS_CASE_TPL( "Check return types of omega"
 TTS_CASE_WITH( "Check behavior of omega on wide"
         , eve::test::simd::ieee_reals
         , tts::generate(tts::randoms(1.0, 1000)
-                             , tts::randoms(0.0, 1.0)
+                             , tts::randoms(0.01, 1.0)
                              , tts::randoms(-10.0, 0.0)
                              )
         )
