@@ -14,16 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        cfg:
+        - {test: installation , mode: 0 }
+        - {test: FetchContents, mode: 1 }
+        - {test: CPM          , mode: 2 }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
-      - name: Configure, install the library and check for proper installation
+      - name: Check EVE works with ${{ matrix.cfg.test }}
         uses: ./.github/actions/integration
         with:
           branch: '${{ github.head_ref }}'
+          mode: '${{ matrix.cfg.mode }}'
 
   specials:
-    needs: install
     runs-on: self-hosted
     strategy:
       fail-fast: false
@@ -49,7 +54,6 @@ jobs:
         uses: ./.github/actions/cleanup
 
   mainline:
-    needs: install
     runs-on: self-hosted
     strategy:
       fail-fast: false
@@ -86,7 +90,6 @@ jobs:
 
   supplemental:
     runs-on: ubuntu-latest
-    needs: install
     strategy:
       fail-fast: false
       matrix:
