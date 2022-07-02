@@ -25,4 +25,12 @@ ninja test_eve
 cd ..
 echo "::endgroup::"
 
+echo "::group::Test EVE via CPM"
+mkdir cpm-test && cd cpm-test
+cmake ../integration/cpm-test -G Ninja -DEVE_SHA1=$1
+ninja test_eve
+./test_eve
+cd ..
+echo "::endgroup::"
+
 return 0;
