@@ -28,15 +28,15 @@ TTS_CASE_TPL( "Check return types of agm"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of agm(wide)"
             , eve::test::simd::ieee_reals
-            , tts::generate ( tts::randoms(0, 100)
-                                  , tts::randoms(0, 100)
+            , tts::generate ( tts::randoms(0, 10)
+                                  , tts::randoms(0, 10)
                                   )
             )
 <typename T>(T const& a0, T const& a1 )
 {
   using eve::agm;
   using eve::detail::map;
-  TTS_ULP_EQUAL( agm(a0, a1), ((a0+a1)/eve::ellint_1((a0-a1)/(a0+a1)))*eve::pio_4(eve::as(a0)), 5);
+  TTS_RELATIVE_EQUAL( agm(a0, a1), ((a0+a1)/eve::ellint_1((a0-a1)/(a0+a1)))*eve::pio_4(eve::as(a0)), 0.005);
 };
 
 
@@ -45,9 +45,9 @@ TTS_CASE_WITH( "Check behavior of agm(wide)"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of  agm[cond](wide)"
         , eve::test::simd::ieee_reals
-        , tts::generate ( tts::randoms(0, 127)
-                              , tts::randoms(0, 127)
-                              , tts::randoms(0, 127)
+        , tts::generate ( tts::randoms(0, 10)
+                              , tts::randoms(0, 10)
+                              , tts::randoms(0, 10)
                               )
         )
 <typename T>(T const& a0, T const& a1, T const& a2)
