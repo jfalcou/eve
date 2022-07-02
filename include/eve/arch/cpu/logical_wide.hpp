@@ -191,7 +191,7 @@ namespace eve
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( Cardinal::value == 2 * Half::value )
 #endif
-                  : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
+                  : storage_base(detail::combine(eve::current_api, l, h))
     {}
 
     //==============================================================================================
@@ -245,14 +245,14 @@ namespace eve
     //==============================================================================================
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of unsigned integral.
-    EVE_FORCEINLINE auto bits()   const noexcept { return detail::to_bits(EVE_CURRENT_API{},*this); }
+    EVE_FORCEINLINE auto bits()   const noexcept { return detail::to_bits(eve::current_api,*this); }
 
     //! @brief Computes a eve::wide containing the bit pattern of current logical.
     //! This bit patterns is contained in a eve::wide of `Type`.
-    EVE_FORCEINLINE auto mask()   const noexcept { return detail::to_mask(EVE_CURRENT_API{},*this); }
+    EVE_FORCEINLINE auto mask()   const noexcept { return detail::to_mask(eve::current_api,*this); }
 
     //! Returns a bitset corresponding to the current logical values.
-    EVE_FORCEINLINE auto bitmap() const noexcept { return detail::to_bitmap(EVE_CURRENT_API{},*this); }
+    EVE_FORCEINLINE auto bitmap() const noexcept { return detail::to_bitmap(eve::current_api,*this); }
 
     //==============================================================================================
     // Logical operations
@@ -261,7 +261,7 @@ namespace eve
     template<typename U>
     friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U, Cardinal>> const& w) noexcept
     {
-      return detail::self_logand(EVE_CURRENT_API{},v,w);
+      return detail::self_logand(eve::current_api,v,w);
     }
 
     //! Perform a logical and operation between a eve::logical and a scalar
@@ -282,7 +282,7 @@ namespace eve
     template<typename U>
     friend EVE_FORCEINLINE auto operator||(logical const& v, logical<wide<U, Cardinal>> const& w) noexcept
     {
-      return detail::self_logor(EVE_CURRENT_API{},v,w);
+      return detail::self_logor(eve::current_api,v,w);
     }
 
     //! Perform a logical or operation between a eve::logical and a scalar

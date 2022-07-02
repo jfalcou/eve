@@ -12,6 +12,7 @@
 
 #include <cstddef>
 #include <concepts>
+#include <ostream>
 
 namespace eve
 {
@@ -23,8 +24,7 @@ namespace eve
 
     constexpr api_type const& value() const noexcept { return API; }
 
-    template<typename Stream>
-    friend Stream& operator<<(Stream& os, simd_api a) { return os << a.value(); }
+    friend std::ostream& operator<<(std::ostream& os, simd_api a) { return os << a.value(); }
     friend constexpr bool operator==(simd_api , auto o) noexcept { return API == o.value(); }
     friend constexpr bool operator> (simd_api , auto o) noexcept { return API >  o.value(); }
     friend constexpr bool operator>=(simd_api , auto o) noexcept { return API >= o.value(); }
