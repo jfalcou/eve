@@ -9,7 +9,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
+  install:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v2
+      - name: Configure, install the library and check for proper installation
+        uses: ./.github/actions/integration
+
   specials:
+    needs: install
     runs-on: self-hosted
     strategy:
       fail-fast: false
@@ -35,6 +47,7 @@ jobs:
         uses: ./.github/actions/cleanup
 
   mainline:
+    needs: install
     runs-on: self-hosted
     strategy:
       fail-fast: false
@@ -71,6 +84,7 @@ jobs:
 
   supplemental:
     runs-on: ubuntu-latest
+    needs: install
     strategy:
       fail-fast: false
       matrix:

@@ -1,0 +1,6 @@
+# action.yml
+name: 'Checks installation process'
+description: 'Checks installation process'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
