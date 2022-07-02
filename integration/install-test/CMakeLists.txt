@@ -10,5 +10,5 @@ project(eve-install-test LANGUAGES CXX)
 set(CMAKE_PREFIX_PATH "/usr/local/lib")
 
 find_package(eve)
-add_executable(test_eve main.cpp)
+add_executable(test_eve ../main.cpp)
 target_link_libraries(test_eve PUBLIC ${EVE_LIBRARIES})
