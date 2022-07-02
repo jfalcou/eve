@@ -46,26 +46,26 @@ namespace eve
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
   //================================================================================================
-  struct sse2_    : simd_   {};
-  struct sse3_    : sse2_   {};
-  struct ssse3_   : sse3_   {};
-  struct sse4_1_  : ssse3_  {};
-  struct sse4_2_  : sse4_1_ {};
-  struct avx_     : sse4_2_ {};
-  struct avx2_    : avx_    {};
-  struct avx512_  : avx2_   {};
+  struct sse2_    : simd_api<simd_   , spy::sse2_>    {};
+  struct sse3_    : simd_api<sse2_   , spy::sse3_>    {};
+  struct ssse3_   : simd_api<sse3_   , spy::ssse3_>   {};
+  struct sse4_1_  : simd_api<ssse3_  , spy::sse41_>   {};
+  struct sse4_2_  : simd_api<sse4_1_ , spy::sse42_>   {};
+  struct avx_     : simd_api<sse4_2_ , spy::avx_>     {};
+  struct avx2_    : simd_api<avx_    , spy::avx2_>    {};
+  struct avx512_  : simd_api<avx2_   , spy::avx512_>  {};
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY
   //================================================================================================
-  inline constexpr auto sse2   = spy::sse2_;
-  inline constexpr auto sse3   = spy::sse3_;
-  inline constexpr auto ssse3  = spy::ssse3_;
-  inline constexpr auto sse4_1 = spy::sse41_;
-  inline constexpr auto sse4_2 = spy::sse42_;
-  inline constexpr auto avx    = spy::avx_;
-  inline constexpr auto avx2   = spy::avx2_;
-  inline constexpr auto avx512 = spy::avx512_;
+  inline constexpr sse2_   sse2   = {};
+  inline constexpr sse3_   sse3   = {};
+  inline constexpr ssse3_  ssse3  = {};
+  inline constexpr sse4_1_ sse4_1 = {};
+  inline constexpr sse4_2_ sse4_2 = {};
+  inline constexpr avx_    avx    = {};
+  inline constexpr avx2_   avx2   = {};
+  inline constexpr avx512_ avx512 = {};
 
   //================================================================================================
   // Specific ISA tags

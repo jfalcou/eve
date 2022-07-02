@@ -14,7 +14,6 @@ namespace eve
 {
   template<typename T>
   struct logical;
-  struct ppc_;
 }
 
 #if defined(EVE_HW_POWERPC)

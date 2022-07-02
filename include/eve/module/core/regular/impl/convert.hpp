@@ -96,7 +96,7 @@ namespace eve::detail
         using i_t = as<logical<as_integer_t<Out,signed>>>;
         return bit_cast(convert(v,i_t{}),as<out_t>{});
       }
-      else  return convert_impl(EVE_RETARGET(EVE_CURRENT_API),v,tgt);
+      else  return convert_impl(EVE_RETARGET(current_api_type),v,tgt);
     }
     else  if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
     {
@@ -190,7 +190,7 @@ namespace eve::detail
       else
       {
         // Fallbacks to architecture-specific cases
-        return convert_impl(EVE_RETARGET(EVE_CURRENT_API), v0, tgt);
+        return convert_impl(EVE_RETARGET(current_api_type), v0, tgt);
       }
     }
   }

@@ -227,7 +227,7 @@ namespace eve
 #if !defined(EVE_DOXYGEN_INVOKED)
     requires( Cardinal::value == 2 * Half::value )
 #endif
-                  : storage_base(detail::combine(EVE_CURRENT_API{}, l, h))
+                  : storage_base(detail::combine(eve::current_api, l, h))
     {}
 
     //==============================================================================================

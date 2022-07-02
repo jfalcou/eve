@@ -31,7 +31,7 @@ namespace tag { struct TAG {}; }                                                
     template<typename... Args>                                                                     \
     concept supports_ ## TAG = requires(Args&&... args)                                            \
     {                                                                                              \
-      { TAG( delay_t{}, EVE_CURRENT_API{}, EVE_FWD(args)...) };                                    \
+      { TAG( delay_t{}, eve::current_api, EVE_FWD(args)...) };                                    \
     };                                                                                             \
                                                                                                    \
     template<typename Dummy>                                                                       \
@@ -66,7 +66,7 @@ namespace tag { struct TAG {}; }                                                
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
-          return TAG( delay_t{}, EVE_CURRENT_API{}                                                 \
+          return TAG( delay_t{}, eve::current_api                                                 \
                     , EVE_FWD(d), EVE_FWD(args)...                                                 \
                     );                                                                             \
         }                                                                                          \

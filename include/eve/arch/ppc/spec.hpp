@@ -51,14 +51,16 @@ namespace eve
 #    define __bool bool
 #  endif
 
-#  if !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_PPC_VMX)
+#  if !defined(EVE_ABI_DETECTED) && defined(SPY_SIMD_IS_PPC_VMX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   define EVE_CURRENT_API ::eve::vmx_
 #   define EVE_ABI_NAMESPACE ppc_abi_v0
-#  elif !defined(EVE_CURRENT_ABI) && defined(SPY_SIMD_IS_PPC_VSX)
+#   define EVE_ABI_DETECTED
+#  elif !defined(EVE_ABI_DETECTED) && defined(SPY_SIMD_IS_PPC_VSX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   define EVE_CURRENT_API ::eve::vsx_
 #   define EVE_ABI_NAMESPACE ppc_abi_v0
+#   define EVE_ABI_DETECTED
 #  endif
 # endif
 

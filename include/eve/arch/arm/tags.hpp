@@ -39,14 +39,14 @@ namespace eve
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
   //================================================================================================
-  struct neon128_ : simd_     {};
-  struct asimd_   : neon128_  {};
+  struct neon128_ : simd_api<simd_   , spy::neon_>  {};
+  struct asimd_   : simd_api<neon128_, spy::asimd_> {};
 
   //================================================================================================
   // NEON extension tag objects
   //================================================================================================
-  inline constexpr auto neon  = spy::neon_;
-  inline constexpr auto asimd = spy::asimd_;
+  inline constexpr neon128_ neon  = {};
+  inline constexpr asimd_   asimd = {};
 
   //================================================================================================
   // ARM ABI concept

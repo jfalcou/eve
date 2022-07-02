@@ -72,7 +72,7 @@ TTS_CASE("aligned_ptr constructor from more resticted")
 
 TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
-  constexpr auto size = EVE_CURRENT_ABI::bytes;
+  constexpr auto size = eve::current_abi_type::bytes;
 
   alignas(size) std::array<std::byte, 2 * size> values;
   TTS_EQUAL(eve::as_aligned(&values[ 0 ]).get()   , &values[ 0 ]);

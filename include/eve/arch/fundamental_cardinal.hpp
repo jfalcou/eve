@@ -42,7 +42,7 @@ namespace eve
   //!    #### Helper types
   //!
   //!    @code{.cpp}
-  //!    template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
+  //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
   //!    using fundamental_cardinal_t = typename fundamental_cardinal<Type, ABI>::type;
   //!    @endcode
   //!
@@ -50,28 +50,28 @@ namespace eve
   //!    #### Helper variable template
   //!
   //!    @code{.cpp}
-  //!    template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
+  //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
   //!    inline constexpr auto fundamental_cardinal_v = fundamental_cardinal_t<Type, ABI>::value;
   //!    @endcode
   //!
   //!    @code{.cpp}
   //!    // Cardinal template inline variable to use with functions like eve::load
-  //!    template<typename Type, typename ABI = EVE_CURRENT_ABI>
+  //!    template<typename Type, typename ABI = eve::current_abi_type>
   //!    inline constexpr fundamental_cardinal<Type,ABI> const fundamental = {};
   //!    @endcode
   //! @}
   //================================================================================================
-  template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
+  template<typename Type, regular_abi ABI = eve::current_abi_type>
   struct fundamental_cardinal
       : fixed<ABI::template fundamental_cardinal<Type>>
   {
     using type = fixed<ABI::template fundamental_cardinal<Type>>;
   };
 
-  template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
+  template<typename Type, regular_abi ABI = eve::current_abi_type>
   using fundamental_cardinal_t = typename fundamental_cardinal<Type, ABI>::type;
 
-  template<typename Type, regular_abi ABI = EVE_CURRENT_ABI>
+  template<typename Type, regular_abi ABI = eve::current_abi_type>
   constexpr inline auto fundamental_cardinal_v = fundamental_cardinal<Type, ABI>::value;
 
   //================================================================================================
@@ -94,6 +94,6 @@ namespace eve
     using type = fixed<detail::min_fundamental<kumi::as_tuple_t<T>,ABI>::value>;
   };
 
-  template<typename Type, typename ABI = EVE_CURRENT_ABI>
+  template<typename Type, typename ABI = eve::current_abi_type>
   inline constexpr fundamental_cardinal<Type,ABI> const fundamental = {};
 }

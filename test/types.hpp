@@ -30,7 +30,7 @@ namespace eve::test
       // This is a precomputed map of the maximum number of cardinal to generate depending
       // on the current ABI bits size. This prevents us to use std::bit_width and other complex
       // computations.
-      switch(EVE_CURRENT_ABI::bits)
+      switch(eve::current_abi_type::bits)
       {
         case 64 : return {0,5,4,0,3,0,0,0,2};
         case 128: return {0,6,5,0,4,0,0,0,3};

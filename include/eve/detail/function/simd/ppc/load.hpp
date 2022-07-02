@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
-      if constexpr( current_api >= spy::vsx_ )
+      if constexpr( current_api >= eve::vsx )
       {
         if constexpr( std::is_integral_v<T> )
         {
@@ -37,7 +37,7 @@ namespace eve::detail
           return vec_vsx_ld(0, ptr);
         }
       }
-      else if constexpr( current_api >= spy::vmx_ )
+      else if constexpr( current_api >= eve::vmx )
       {
         if constexpr( sizeof(T) <= 8 )
         {
@@ -67,7 +67,7 @@ namespace eve::detail
   {
     if constexpr( N::value * sizeof(T) >= ppc_::bytes )
     {
-      if constexpr( current_api >= spy::vsx_ )
+      if constexpr( current_api >= eve::vsx )
       {
         if constexpr( std::is_integral_v<T> )
         {
@@ -79,7 +79,7 @@ namespace eve::detail
           return vec_vsx_ld(0, ptr.get());
         }
       }
-      else if constexpr( current_api >= spy::vmx_ )
+      else if constexpr( current_api >= eve::vmx )
       {
         if constexpr( sizeof(T) <= 8 )
         {
