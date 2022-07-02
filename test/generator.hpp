@@ -187,6 +187,9 @@ namespace tts
           type valmax      = eve::valmax(eve::as<type>{});
           type valmin      = eve::valmin(eve::as<type>{});
           type mindenormal = eve::mindenormal(eve::as<type>{});
+          type smallestposval = eve::smallestposval(eve::as<type>{});
+          type mone       = eve::mone   (eve::as<type>{});
+          type one        = eve::one   (eve::as<type>{});
         };
 
         return values{};
