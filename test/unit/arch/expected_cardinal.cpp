@@ -5,9 +5,9 @@
   SPDX-License-Identifier: MIT
 **/
 //==================================================================================================
-#include <eve/wide.hpp>
-
 #include "test.hpp"
+
+#include <eve/wide.hpp>
 
 TTS_CASE("Check for 64 bits ABI expected cardinal")
 {
