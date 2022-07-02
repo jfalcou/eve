@@ -52,7 +52,7 @@ TTS_CASE_WITH ( "Check behavior of remdiv on wide"
   }
   else
   {
-    auto thrs = std::same_as<eve::element_type_t<T>,float> ? 5e-4 : 5e-13;
+    auto thrs = std::same_as<eve::element_type_t<T>,float> ? 5e-4 : 5e-12;
     TTS_RELATIVE_EQUAL( r, map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), thrs);//fma not avail scalar double it seems
     TTS_RELATIVE_EQUAL( d, map([](auto e, auto f) { return toward_zero(eve::div)(e, f); }, a0, a1), thrs);//fma not avail scalar double it seems
   }
