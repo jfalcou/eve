@@ -39,4 +39,23 @@ then
   echo "::endgroup::"
 fi
 
+
+if [ $2 -eq 3 ]
+then
+  echo "::group::Prepare EVE repository for branch " $1
+  mkdir build && cd build
+  cmake .. -G Ninja
+  ninja install > /dev/null
+  CURRENT_SHA1=`git rev-parse HEAD`
+  cd ..
+  echo "::endgroup::"
+
+  echo "::group::Test EVE multi-architecture support"
+  mkdir multi-test && cd multi-test
+  cmake ../test/integration/multi-arch -G Ninja
+  ninja multi-arch
+  ./multi-arch
+  echo "::endgroup::"
+fi
+
 return 0;
