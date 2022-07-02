@@ -30,10 +30,11 @@ TTS_CASE_TPL("Check return types of sph_bessel_yn", eve::test::simd::ieee_reals)
 //==================================================================================================
 //== integral orders
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of sph_bessel_yn on wide with integral order",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(0), tts::randoms(0.0, 20000.0)))
-<typename T>(T n, T a0)
+TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
+        , eve::test::simd::ieee_reals
+        , tts::generate(tts::ramp(0), tts::randoms(1, 200.0))
+        )
+  <typename T>(T n, T a0)
 {
   using v_t               = eve::element_type_t<T>;
   auto eve__sph_bessel_yn = [](auto n, auto x) { return eve::sph_bessel_yn(n, x); };

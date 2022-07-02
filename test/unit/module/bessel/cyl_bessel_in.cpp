@@ -32,10 +32,13 @@ TTS_CASE_TPL("Check return types of cyl_bessel_in", eve::test::simd::ieee_reals)
 //==================================================================================================
 //== integral orders
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of cyl_bessel_in on wide with integral order",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(0), tts::randoms(0.0, 10.0)))
-<typename T>(T n, T a0)
+
+TTS_CASE_WITH( "Check behavior of cyl_bessel_in on wide with integral order"
+             , eve::test::simd::ieee_reals
+             , tts::generate(tts::ramp(0),
+                             tts::randoms(1.0, 10.0))
+             )
+  <typename T>(T n , T a0)
 {
   using v_t               = eve::element_type_t<T>;
   auto eve__cyl_bessel_in = [](auto n, auto x) { return eve::cyl_bessel_in(n, x); };

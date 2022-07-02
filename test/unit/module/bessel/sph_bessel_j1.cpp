@@ -19,12 +19,13 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::sph_bessel_j1(v_t(0)), v_t);
 };
 
-TTS_CASE_WITH("Check behavior of sph_bessel_j1 on wide",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 5.5),
-                            tts::randoms(5.5, 9.5),
-                            tts::randoms(9.5, 60.0)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+ TTS_CASE_WITH( "Check behavior of sph_bessel_j1 on wide"
+        , eve::test::simd::ieee_reals
+        , tts::generate(tts::randoms(0.1, 5.5),
+                              tts::randoms(5.5, 9.5),
+                              tts::randoms(9.5, 60.0))
+         )
+   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t               = eve::element_type_t<T>;
   auto eve__sph_bessel_j1 = [](auto x) { return eve::sph_bessel_j1(x); };
@@ -56,7 +57,7 @@ TTS_CASE_WITH("Check behavior of sph_bessel_j1 on wide",
   TTS_ULP_EQUAL(eve__sph_bessel_j1(T(1)), T(std__sph_bessel_j1(v_t(1))), 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(T(0)), eve::zero(eve::as<T>()), 0.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_j1(a0), map(std__sph_bessel_j1, a0), 40.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j1(a0), map(std__sph_bessel_j1, a0), 80.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(a1), map(std__sph_bessel_j1, a1), 40.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(a2), map(std__sph_bessel_j1, a2), 40.0);
 };
