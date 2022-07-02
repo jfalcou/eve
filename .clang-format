@@ -30,17 +30,18 @@ BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 ColumnLimit: 100
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+PackConstructorInitializers: CurrentLine
 Cpp11BracedListStyle: true
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: false
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex:           '^<eve/'
+  - Regex:           '^"'
     Priority:        0
-  - Regex:           '<[[:alnum:].]+>'
+  - Regex:           '^<eve/'
     Priority:        1
-#IndentCaseBlocks: true
+  - Regex:           '<[[:alnum:].]+>'
+    Priority:        2
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash
 IndentRequires: false
@@ -49,10 +50,9 @@ IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: false
 Language: Cpp
 MaxEmptyLinesToKeep: 1
-NamespaceIndentation: All
+NamespaceIndentation: Inner
 PointerAlignment: Right
 ReflowComments: true
-
 SortIncludes: true
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: false
@@ -76,3 +76,12 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: c++20
 UseTab: Never
+PPIndentWidth: 2
+ReferenceAlignment: Left
+StatementMacros:
+  - TTS_CASE
+  - TTS_CASE_TPL
+  - TTS_CASE_WITH
+SpacesInLineCommentPrefix:
+  Minimum:         1
+  Maximum:         -1

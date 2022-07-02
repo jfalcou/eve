@@ -16,7 +16,8 @@ namespace eve
   //! @{
   //! @var cyl_bessel_j0
   //!
-  //! @brief Callable object computing \f$ J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \f$.
+  //! @brief Callable object computing \f$ J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau
+  //! )\,\mathrm {d} \tau \f$.
   //!
   //! **Required header:** `#include <eve/module/bessel.hpp>`
   //!
@@ -38,7 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
+  //! Computes  [elementwise](@ref glossary_elementwise) the value of
   //! \f$ J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \f$.
   //!
   //! It is the solution of \f$ x^{2}y''+xy'+x^2y=0\f$ for which \f$ y(0) = 1\f$.
@@ -50,7 +51,8 @@ namespace eve
   //!   * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!
-  //!     The expression `eve::diff(eve::cyl_bessel_j0)(x)` computes the derivative of the function at `x`.
+  //!     The expression `eve::diff(eve::cyl_bessel_j0)(x)` computes the derivative of the function
+  //!     at `x`.
   //!
   //! #### Example
   //!
