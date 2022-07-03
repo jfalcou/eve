@@ -80,7 +80,7 @@ TTS_CASE_WITH( "Check behavior of lambert on wide"
     {
       auto[w0, wm1] = eve::lambert(a1);
       TTS_ULP_EQUAL(w0, map(std_w0, a1) , 512.0);
-      TTS_ULP_EQUAL(wm1,map(std_wm1, a1), 512.0);
+      TTS_RELATIVE_EQUAL(wm1,map(std_wm1, a1), 0.001);
     }
     {
       elt_t tol = 10000*eve::eps(eve::as<elt_t>());
@@ -92,7 +92,7 @@ TTS_CASE_WITH( "Check behavior of lambert on wide"
       elt_t tol = 10000*eve::eps(eve::as<elt_t>());
       auto[w0, wm1] = eve::lambert(a3);
       TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), tol);
-      TTS_ABSOLUTE_EQUAL(wm1,map(std_wm1, a3), tol);
+      TTS_RELATIVE_EQUAL(wm1,map(std_wm1, a3), 0.001);
     }
  }
 };
@@ -148,7 +148,7 @@ TTS_CASE_WITH( "Check behavior of lambert on wide"
     {
       auto[w0, wm1] = eve::lambert(a1);
       TTS_ULP_EQUAL(w0, map(std_w0, a1) , 512.0);
-      TTS_ULP_EQUAL(wm1,map(std_wm1, a1), 512.0);
+      TTS_RELATIVE_EQUAL(wm1,map(std_wm1, a1), 0.001);
     }
     {
       elt_t tol = 10000*eve::eps(eve::as<elt_t>());
@@ -160,7 +160,7 @@ TTS_CASE_WITH( "Check behavior of lambert on wide"
       elt_t tol = 10000*eve::eps(eve::as<elt_t>());
       auto[w0, wm1] = eve::lambert(a3);
       TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), tol);
-      TTS_ABSOLUTE_EQUAL(wm1,map(std_wm1, a3), tol);
+      TTS_RELATIVE_EQUAL(wm1,map(std_wm1, a3), 0.001);
     }
  }
 };
