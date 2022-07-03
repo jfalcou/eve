@@ -17,7 +17,7 @@ AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Always
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterReturnType: TopLevelDefinitions
@@ -25,30 +25,49 @@ AlwaysBreakTemplateDeclarations: MultiLine
 BinPackArguments: false
 BinPackParameters: false
 BreakBeforeBinaryOperators: NonAssignment
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: true
+  BeforeWhile: true
+  IndentBraces: false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakInheritanceList: BeforeComma
 ColumnLimit: 100
-ConstructorInitializerAllOnOneLineOrOnePerLine: true
+PackConstructorInitializers: CurrentLine
 Cpp11BracedListStyle: true
 ExperimentalAutoDetectBinPacking: false
 FixNamespaceComments: false
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex:           '^<eve/'
+  - Regex:           '^"'
     Priority:        0
-  - Regex:           '<[[:alnum:].]+>'
+  - Regex:           '^<eve/'
     Priority:        1
-#IndentCaseBlocks: true
+  - Regex:           '<[[:alnum:].]+>'
+    Priority:        2
 IndentCaseLabels: false
 IndentPPDirectives: AfterHash
+IndentRequires: false
 IndentWidth: 2
 IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: false
 Language: Cpp
 MaxEmptyLinesToKeep: 1
-NamespaceIndentation: All
+NamespaceIndentation: Inner
 PointerAlignment: Right
 ReflowComments: true
 SortIncludes: true
@@ -74,3 +93,12 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: c++20
 UseTab: Never
+PPIndentWidth: 2
+ReferenceAlignment: Left
+StatementMacros:
+  - TTS_CASE
+  - TTS_CASE_TPL
+  - TTS_CASE_WITH
+SpacesInLineCommentPrefix:
+  Minimum:         1
+  Maximum:         -1
