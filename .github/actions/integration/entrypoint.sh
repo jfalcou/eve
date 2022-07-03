@@ -53,7 +53,7 @@ then
   echo "::group::Test EVE multi-architecture support"
   mkdir multi-test && cd multi-test
   cmake ../test/integration/multi-arch -G Ninja
-  ninja multi-arch
+  ninja
   ./multi-arch
   echo "::endgroup::"
 fi

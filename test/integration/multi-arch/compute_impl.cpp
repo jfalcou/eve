@@ -5,18 +5,20 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include "compute.hpp"
-#include <eve/forward.hpp>
+#include <eve/algo/transform.hpp>
+#include <eve/function/sqrt.hpp>
+#include <eve/wide.hpp>
+#include <iostream>
 #include <span>
 
-// This pre-instanciated template use the current_api object to change whenever compiled
-template <> void compute<eve::current_api>(std::span<float>);
-
-// This is the single implementation for when we don't know which API we care for
-template<> void compute<eve::undefined_simd>(std::span<float> data)
+// Function compiled once for each SIMD API
+extern "C" void compute_kernel(float* data, std::size_t size)
 {
-  std::cout << "  >> compute with: scalar\n";
-  std::transform( data.begin(), data.end(), data.begin()
-                , [](auto e) { return eve::sqrt(e + e * 3); }
-                );
+  std::cout << ">> compute with: " << eve::current_api << "\n";
+  std::cout << ">> eve::wide is: " << eve::wide<float>::size() << " elements large.\n";
+
+  // Do some computation
+  eve::algo::transform_inplace( std::span{data,size}
+                              , [](auto e) { return eve::sqrt(e + e * 3); }
+                              );
 }

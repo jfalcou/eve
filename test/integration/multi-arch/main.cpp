@@ -5,9 +5,11 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
-#include "compute.hpp"
 #include <iostream>
 #include <vector>
+#include <span>
+
+void compute(std::span<float> data);
 
 int main()
 {

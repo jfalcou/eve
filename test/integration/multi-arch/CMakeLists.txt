@@ -10,12 +10,12 @@ set(CMAKE_PREFIX_PATH "/usr/local/lib")
 find_package(eve)
 
 eve_build_variants( NAME compute
-                    INTERFACE eve_lib
-                    TARGET  regular sse4 haswell
-                    OPTIONS "-msse2"  "-msse4.1" "-mavx2"
-                    SOURCES compute_impl.cpp
+                    INTERFACE   ${EVE_LIBRARIES}
+                    TARGET      sse2 sse4 haswell
+                    OPTIONS     "-msse2"  "-msse4.1" "-mavx2"
+                    SOURCES     compute_impl.cpp
                   )
 
 add_executable(multi-arch main.cpp compute.cpp)
-target_link_libraries(multi-arch  PUBLIC ${eve_compute_variants})
+target_link_libraries(multi-arch PUBLIC ${EVE_LIBRARIES})
 
