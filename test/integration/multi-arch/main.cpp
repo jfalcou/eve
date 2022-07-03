@@ -5,30 +5,19 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+#include "compute.hpp"
 #include <iostream>
-#include <eve/wide.hpp>
-#include <eve/detection.hpp>
-
-void compute(float* data, eve::avx2_  );
-void compute(float* data, eve::sse4_1_);
-void compute(float* data, eve::sse2_  );
-
-void compute(float* data)
-{
-       if( eve::is_supported(eve::avx2)   ) compute(data,eve::avx2);
-  else if( eve::is_supported(eve::sse4_1) ) compute(data,eve::sse4_1);
-  else if( eve::is_supported(eve::sse2)   ) compute(data,eve::sse2);
-}
+#include <vector>
 
 int main()
 {
-  float data[] = {1,2,3,4,5,6,7,8};
+  std::vector<float> data{1,2,3,4,5,6,7,8,10,20,30,40,50,60,70,80,90,100,1000,10000};
 
   std::cout << "Before:\n";
   for(auto e : data) std::cout << e << " ";
   std::cout << "\n";
 
-  compute(&data[0]);
+  compute(data);
 
   std::cout << "After:\n";
   for(auto e : data) std::cout << e << " ";
