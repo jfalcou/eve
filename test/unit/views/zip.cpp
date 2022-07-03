@@ -9,6 +9,7 @@
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/views/convert.hpp>
+#include <eve/views/iota.hpp>
 #include <eve/views/zip.hpp>
 
 #include <vector>
@@ -120,4 +121,14 @@ TTS_CASE("zip force_type")
     auto zipped = eve::views::zip(v, c)[eve::algo::force_type<std::int8_t>];
     TTS_TYPE_IS(decltype(zipped), decltype(expected));
   }
+};
+
+TTS_CASE("zip_with_iota, should align")
+{
+  std::array<std::uint32_t, 64> i;
+  auto zipped = eve::views::zip(i , eve::views::iota(0));
+  auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
+  TTS_CONSTEXPR_EXPECT_NOT(decltype(processed.traits())::contains(eve::algo::no_aligning));
+  TTS_CONSTEXPR_EXPECT(eve::algo::unaligned_iterator<decltype(processed.begin())>);
+  TTS_CONSTEXPR_EXPECT_NOT(eve::algo::always_aligned_iterator<decltype(processed.begin())>);
 };

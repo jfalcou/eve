@@ -54,6 +54,9 @@ TTS_CASE("eve::views::convert, preprocess test")
     TTS_TYPE_IS(decltype(processed.begin()), I);
     TTS_TYPE_IS(decltype(processed.end()), S);
 
+    TTS_CONSTEXPR_EQUAL(eve::algo::partially_aligned_iterator<decltype(processed.begin())>,
+                        eve::algo::partially_aligned_iterator<ExpectedRawF>);
+
     // Two converting iterators is mostly the same thing, except for when the range has more info
     auto cf = eve::views::convert(r.begin(), tgt);
     auto cl = eve::views::convert(r.end(), tgt);
@@ -97,7 +100,7 @@ TTS_CASE("eve::views::convert, preprocess test")
 
     common_test(eve::algo::as_range(f, l),
                 eve::as<To>{}, eve::algo::traits{}, a_it{}, u_it{},
-                eve::algo::traits{eve::algo::no_aligning});
+                eve::algo::traits{});
   }
 };
 
