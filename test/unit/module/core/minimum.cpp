@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of eve::minimum(eve::wide)"
                               , tts::logicals(0,3)
                               )
         )
-<typename T, typename L>(T const& a0, L const& )
+<typename T, typename L>(T const& a0, L const& l0)
 {
   using v_t = eve::element_type_t<T>;
   v_t min_value = a0.front();

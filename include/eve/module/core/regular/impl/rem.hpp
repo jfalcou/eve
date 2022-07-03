@@ -56,7 +56,8 @@ namespace eve::detail
                   , allbits
                   , if_else(is_eqz(a)
                            , a
-                           , fnma(b, trunc(next(div(a,b))), a)
+                           , fnma(b, trunc(div(a,b)), a)
+                            // ,  a-b*trunc(div(a,b))
                            )
                   );
   }
@@ -66,7 +67,7 @@ namespace eve::detail
                             , T const &a, T const &b
                             ) noexcept
   requires  (is_one_of<D>(types<toward_zero_type, downward_type, upward_type
-                         , downward_type,  to_nearest_type> {}))
+                         ,  to_nearest_type> {}))
   {
     if constexpr(has_native_abi_v<T>) return fnma(b, D()(eve::div)(a,b), a);
     else                              return apply_over(D()(rem), a, b);

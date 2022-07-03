@@ -127,12 +127,27 @@ TTS_CASE_WITH ( "Check behavior of rem on signed types"
   using eve::is_nez;
   using eve::pedantic;
   using eve::detail::map;
-  TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? pedantic(rem)(e, f) : e ; }, a0, a2), 160);
+  if constexpr( eve::supports_fma3 )
+  {
 
-  a2 = eve::if_else(a2 >= 0, eve::one, a2);
-  TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 160);
+    TTS_ULP_EQUAL( pedantic(rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? pedantic(rem)(e, f) : e ; }, a0, a2), 160);
 
-  TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? rem(e, f) : e ; }, a0, a1, a2), 2);
-  a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? rem(e, f) : e ; }, a0, a1, a2), 2);
+    a2 = eve::if_else(a2 >= 0, eve::one, a2);
+    TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return pedantic(rem)(e, f); }, a0, a2), 160);
+
+    TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? pedantic(rem)(e, f) : e ; }, a0, a1, a2), 2);
+    a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
+    TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? pedantic(rem)(e, f) : e ; }, a0, a1, a2), 2);
+  }
+  else
+  {
+    TTS_ULP_EQUAL( (rem[is_nez(a2)])(a0, a2), map([](auto e, auto f) {return is_nez(f) ? rem(e, f) : e ; }, a0, a2), 160);
+
+    a2 = eve::if_else(a2 >= 0, eve::one, a2);
+    TTS_ULP_EQUAL( rem[is_nez(a2)](a0, a2), map([](auto e, auto f) {return rem(e, f); }, a0, a2), 160);
+
+    TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? rem(e, f) : e ; }, a0, a1, a2), 2);
+    a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
+    TTS_ULP_EQUAL( rem[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? rem(e, f) : e ; }, a0, a1, a2), 2);
+  }
 };
