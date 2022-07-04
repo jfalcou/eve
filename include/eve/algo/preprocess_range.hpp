@@ -85,15 +85,11 @@ namespace eve::algo
 
     auto deduced = []
     {
-      if constexpr( !partially_aligned_iterator<I> )
-        return traits {};
-      else
-      {
-        if constexpr( std::same_as<I, S> && !always_aligned_iterator<I> )
-          return algo::traits(no_aligning, divisible_by_cardinal);
-        else
-          return algo::traits(no_aligning);
-      }
+      if constexpr( partially_aligned_iterator<I> &&
+                    std::same_as<I, S> &&
+                    !always_aligned_iterator<I> )
+          return algo::traits(divisible_by_cardinal);
+      else return algo::traits();
     }();
 
     return preprocess_range_result { default_to(traits_, deduced), f, l};

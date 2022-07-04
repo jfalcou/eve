@@ -66,7 +66,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
       eve::algo::ptr_iterator<ap, N>{},
       u_it{}
     );
-    TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<decltype(processed.begin())>);
   }
 
   // const aligned_pointer
@@ -78,7 +78,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
       eve::algo::ptr_iterator<ap, N>{},
       uc_it{}
     );
-    TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<decltype(processed.begin())>);
   }
 
   // two aligned_pointers
@@ -90,7 +90,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
       eve::algo::ptr_iterator<ap, N>{},
       eve::algo::ptr_iterator<ap, N>{}
     );
-    TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<decltype(processed.begin())>);
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
   }
 
@@ -103,7 +103,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
       eve::algo::ptr_iterator<ap, N>{},
       eve::algo::ptr_iterator<ap, N>{}
     );
-    TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::no_aligning));
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<decltype(processed.begin())>);
     TTS_CONSTEXPR_EXPECT(decltype(processed.traits())::contains(eve::algo::divisible_by_cardinal));
   }
 
@@ -195,14 +195,13 @@ TTS_CASE_TPL("Check preprocess_range for eve ptr iterators", algo_test::selected
     run_one_test(u_f, a_l, eve::algo::traits(eve::algo::unroll<2>));
     if constexpr ( N{}() >= expected_N{}())
     {
-      run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning, eve::algo::divisible_by_cardinal));
-      run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::no_aligning));
+      run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>, eve::algo::divisible_by_cardinal));
     }
     else
     {
       run_one_test(a_f, a_l, eve::algo::traits(eve::algo::unroll<2>));
-      run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
     }
+    run_one_test(a_f, u_l, eve::algo::traits(eve::algo::unroll<2>));
   };
 
   run_test(arr.begin(), arr.end());

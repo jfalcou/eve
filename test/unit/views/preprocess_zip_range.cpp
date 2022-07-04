@@ -130,9 +130,7 @@ TTS_CASE("preprocess zip range, traits")
     auto zipped = eve::views::zip(c, i);
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
-    eve::algo::traits expected_traits{ };
-
-    TTS_TYPE_IS(decltype(processed.traits()), decltype(expected_traits));
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
     TTS_TYPE_IS(decltype(processed.begin()), zip_uc_it_ui_it);
     TTS_TYPE_IS(decltype(processed.end()), zip_uc_it_ui_it);
   }
@@ -144,9 +142,8 @@ TTS_CASE("preprocess zip range, traits")
     auto zipped = eve::views::zip(af_ul(c), i);
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
-    eve::algo::traits expected_traits{ eve::algo::no_aligning };
-
-    TTS_TYPE_IS(decltype(processed.traits()), decltype(expected_traits));
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<zip_ac_it_ui_it>);
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
     TTS_TYPE_IS(decltype(processed.begin()), zip_ac_it_ui_it);
     TTS_TYPE_IS(decltype(processed.end()), zip_uc_it_ui_it);
   }
@@ -158,9 +155,9 @@ TTS_CASE("preprocess zip range, traits")
     auto zipped = eve::views::zip(c, af_ul(i));
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
-    eve::algo::traits expected_traits{ eve::algo::no_aligning };
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<zip_uc_it_ai_it>);
 
-    TTS_TYPE_IS(decltype(processed.traits()), decltype(expected_traits));
+    TTS_TYPE_IS(decltype(processed.traits()), decltype(eve::algo::traits{}));
     TTS_TYPE_IS(decltype(processed.begin()), zip_uc_it_ai_it);
     TTS_TYPE_IS(decltype(processed.end()), zip_uc_it_ui_it);
   }
@@ -172,8 +169,9 @@ TTS_CASE("preprocess zip range, traits")
     auto zipped = eve::views::zip(af_al(c), i);
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, zipped);
 
-    eve::algo::traits expected_traits{ eve::algo::no_aligning, eve::algo::divisible_by_cardinal };
+    eve::algo::traits expected_traits{ eve::algo::divisible_by_cardinal };
 
+    TTS_CONSTEXPR_EXPECT(eve::algo::partially_aligned_iterator<zip_ac_it_ui_it>);
     TTS_TYPE_IS(decltype(processed.traits()), decltype(expected_traits));
     TTS_TYPE_IS(decltype(processed.begin()), zip_ac_it_ui_it);
     TTS_TYPE_IS(decltype(processed.end()), zip_ac_it_ui_it);
