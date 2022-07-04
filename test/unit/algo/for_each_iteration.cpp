@@ -48,6 +48,7 @@ TTS_CASE("eve.algo for_each_iteration, selection")
 
   auto f = fix.unaligned_begin() + 3;
   auto l = f + 40;
+  auto a_f = fix.aligned_begin();
 
   using u_it = decltype(f);
   using a_it = decltype(fix.aligned_begin());
@@ -85,6 +86,18 @@ TTS_CASE("eve.algo for_each_iteration, selection")
 
     TTS_EQUAL(sel.base, f);
     TTS_TYPE_IS(decltype(sel.base), u_it);
+  }
+
+  // aligned f
+  {
+    auto tr  = eve::algo::traits();
+    auto sel = eve::algo::for_each_iteration(tr, a_f, l);
+
+    TTS_TYPE_IS(decltype(sel),
+                (eve::algo::detail::for_each_iteration_precise_f<decltype(tr), a_it, u_it>));
+
+    TTS_EQUAL(sel.base, a_f);
+    TTS_TYPE_IS(decltype(sel.base), a_it);
   }
 };
 

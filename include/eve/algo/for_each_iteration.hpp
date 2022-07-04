@@ -190,10 +190,9 @@ namespace eve::algo
     auto operator()(Traits traits, I f, S l) const
     {
       EVE_ASSERT(f != l, "for_each_iteration requires a non-empty range");
-           if constexpr (!Traits::contains(no_aligning))          return detail::for_each_iteration_aligning{traits, f, l};
-      else if constexpr (Traits::contains(divisible_by_cardinal)) return detail::for_each_iteration_precise_f_l{traits, f, l};
-      else                                                        return detail::for_each_iteration_precise_f{traits, f, l};
+           if constexpr (!Traits::contains(no_aligning) && !partially_aligned_iterator<I> ) return detail::for_each_iteration_aligning{traits, f, l};
+      else if constexpr (Traits::contains(divisible_by_cardinal)                          ) return detail::for_each_iteration_precise_f_l{traits, f, l};
+      else                                                                                  return detail::for_each_iteration_precise_f{traits, f, l};
     }
-
   } inline constexpr for_each_iteration;
 }
