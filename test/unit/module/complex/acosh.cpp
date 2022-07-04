@@ -23,14 +23,13 @@ TTS_CASE_WITH( "Check behavior of acosh on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib_type() == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::acosh(eve::complex<e_t>(e, f)),  cv(std::acosh(c_t(e, f))), ulp);
+      TTS_RELATIVE_EQUAL(eve::acosh(eve::complex<e_t>(e, f)),  cv(std::acosh(c_t(e, f))), 0.001);
     }
   }
 };
@@ -42,7 +41,6 @@ TTS_CASE_WITH( "Check behavior of acosh on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib_type() == spy::libcpp_) ? 100.0 : 2.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
@@ -57,7 +55,7 @@ TTS_CASE_WITH( "Check behavior of acosh on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::acosh(z_t{a0,a1}), init_with_std(a0, a1), ulp);
+  TTS_RELATIVE_EQUAL(eve::acosh(z_t{a0,a1}), init_with_std(a0, a1), 0.001);
 };
 
 
@@ -105,7 +103,7 @@ TTS_CASE_TPL( "Check return types of eve::abs", tts::bunch<eve::test::scalar::ie
       c_t(eve::inf(as<e_t>()),-eve::pio_4(as<e_t>())), //9*
       c_t(eve::inf(as<e_t>()),-3*eve::pio_4(as<e_t>())),//10*
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //11*
-      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),            //12
+      c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //12
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //13*
       c_t(eve::inf(as<e_t>()),eve::nan(as<e_t>())),    //14*
       c_t(eve::nan(as<e_t>()),eve::nan(as<e_t>())),    //15*
