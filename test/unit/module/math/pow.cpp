@@ -41,12 +41,12 @@ TTS_CASE_WITH( "Check behavior of pow on wide"
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::pow(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 64);
-  TTS_ULP_EQUAL(eve::pow(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3), 64);
-  
-  
-  
-  
+  TTS_RELATIVE_EQUAL(eve::pow(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 0.001);
+  TTS_RELATIVE_EQUAL(eve::pow(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3), 0.001);
+
+
+
+
 };
 
 

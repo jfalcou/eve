@@ -58,5 +58,5 @@ TTS_CASE_WITH( "Check behavior of exp_ipi on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::exp_ipi(z_t{a0,a1}), init_with_std(a0, a1), 300.0);
+  TTS_ULP_EQUAL(eve::exp_ipi(z_t{a0,a1}), init_with_std(a0, a1), 600.0);
 };

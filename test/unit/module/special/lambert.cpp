@@ -75,7 +75,7 @@ TTS_CASE_WITH( "Check behavior of lambert on wide"
     {
       auto[w0, wm1] = eve::lambert(a0);
       TTS_ULP_EQUAL(w0, map(std_w0, a0), 10.0);
-      TTS_ULP_EQUAL(wm1,map(std_wm1, a0), 10.0);
+      TTS_RELATIVE_EQUAL(wm1,map(std_wm1, a0), 0.001);
     }
     {
       auto[w0, wm1] = eve::lambert(a1);
