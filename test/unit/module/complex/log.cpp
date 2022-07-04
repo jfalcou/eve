@@ -57,7 +57,7 @@ TTS_CASE_WITH( "Check behavior of log on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::log(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::log(z_t{a0,a1}), init_with_std(a0, a1), 20);
 };
 
 TTS_CASE_TPL( "Check corner cases of log", eve::test::scalar::ieee_reals)
