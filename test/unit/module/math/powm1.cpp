@@ -34,7 +34,7 @@ TTS_CASE_WITH( "Check behavior of powm1 on wide"
              , tts::generate( tts::randoms(1.0, 10.0)
                             , tts::randoms(-1.0, 1.0))
              )
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+<typename T>(T const& a0, T const& a1)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
