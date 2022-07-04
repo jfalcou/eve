@@ -47,9 +47,9 @@ TTS_CASE_WITH( "Check behavior of exp on wide"
 
   TTS_ULP_EQUAL(eve::expx2(a0), map([](auto e) -> v_t { long double le = e; return std::exp(le*le); }, a0), 200);
   TTS_ULP_EQUAL(eve::expx2(a1), map([](auto e) -> v_t { long double le = e; return std::exp(le*le); }, a1), 2);
-  TTS_ULP_EQUAL( eve::expx2(a0, a1)
+  TTS_RELATIVE_EQUAL( eve::expx2(a0, a1)
                , map([](auto e, auto f) -> v_t { long double le = e; auto sig = eve::signnz(f); return std::exp(sig*le*le); }, a0, a1)
-               , 200
+               , 0.001
                );
 };
 

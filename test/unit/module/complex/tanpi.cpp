@@ -53,7 +53,7 @@ TTS_CASE_WITH( "Check behavior of tanpi on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::tanpi(z_t{a0,a1}), init_with_std(a0, a1), 300);
+  TTS_ULP_EQUAL(eve::tanpi(z_t{a0,a1}), init_with_std(a0, a1), 500);
 };
 
 

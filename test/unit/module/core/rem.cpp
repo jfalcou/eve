@@ -66,7 +66,7 @@ TTS_CASE_WITH( "Check behavior of rem on wide"
   using eve::pedantic;
   using eve::detail::map;
 
-  auto thrs = std::same_as<eve::element_type_t<T>,float> ? 5e-4 : 5e-13;
+  auto thrs = std::same_as<eve::element_type_t<T>,float> ? 5e-4 : 5e-12;
   TTS_RELATIVE_EQUAL( pedantic(rem)(a0, a1), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a1), thrs);
 
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
