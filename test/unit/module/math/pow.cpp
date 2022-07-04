@@ -24,7 +24,6 @@ TTS_CASE_TPL( "Check return types of pow"
   TTS_EXPR_IS( eve::pow(T(), T())  , T);
   TTS_EXPR_IS( eve::pow(v_t(), v_t()), v_t);
   TTS_EXPR_IS( eve::pow(T(), v_t()), T);
-//  TTS_EXPR_IS( eve::pow(v_t(), T()), T);
 };
 
 //==================================================================================================
@@ -34,7 +33,7 @@ TTS_CASE_WITH( "Check behavior of pow on wide"
         , eve::test::simd::ieee_reals
         , tts::generate( tts::randoms(0, eve::valmax)
                              , tts::randoms(eve::valmin, eve::valmax)
-                             , tts::randoms(0.0, 1.0)
+                             , tts::randoms(0.1, 1.0)
                              , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
