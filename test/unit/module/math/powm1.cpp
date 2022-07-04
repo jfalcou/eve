@@ -31,22 +31,15 @@ TTS_CASE_TPL( "Check return types of powm1"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of powm1 on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate( tts::randoms(0, eve::valmax)
-                             , tts::randoms(eve::valmin, eve::valmax)
-                             , tts::randoms(1.0, 10.0)
-                             , tts::randoms(-1.0, 1.0))
-        )
+             , tts::generate( tts::randoms(1.0, 10.0)
+                            , tts::randoms(-1.0, 1.0))
+             )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_RELATIVE_EQUAL(eve::powm1(a0, a1)      , map([](auto e, auto f) -> v_t { return eve::pow(double(e), double(f))-1; }, a0, a1), 0.001);
-  TTS_RELATIVE_EQUAL(eve::powm1(a2, a3)      , map([](auto e, auto f) -> v_t { return eve::pow(double(e), double(f))-1; }, a2, a3), 0.001);
-
-
-
-
 };
 
 
