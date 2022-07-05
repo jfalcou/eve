@@ -5,6 +5,7 @@
   SPDX-License-Identifier: MIT
 */
 //==================================================================================================
+//! [compute]
 #include <eve/forward.hpp>
 #include <eve/detection.hpp>
 
@@ -15,10 +16,7 @@
 
 void compute(std::span<float> data)
 {
-  /*
-    We find and keep the proper runtime variant and store it once in a static variable,
-    saving the cost of detection for every other calls.
-  */
+  // Load the dynamic library
   static auto handle = []()
   {
     void* handle = nullptr;
@@ -28,9 +26,7 @@ void compute(std::span<float> data)
     return handle;
   }();
 
-  /*
-    In the same way, we fetch and store the actual symbol once
-  */
+  // Fetch the function pointer from its symbol
   static auto impl = [](auto h)
   {
     using func_t  = void (*)(float*, std::size_t);
@@ -38,6 +34,7 @@ void compute(std::span<float> data)
     return f;
   }(handle);
 
-  // If we got something, we call the actual implementation
+  // Call the actual implementation
   if(impl) impl(data.data(), data.size());
 }
+//! [compute]

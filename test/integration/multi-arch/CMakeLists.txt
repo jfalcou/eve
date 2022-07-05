@@ -13,7 +13,7 @@ eve_build_variants( NAME compute
                     INTERFACE   ${EVE_LIBRARIES}
                     TARGET      sse2 sse4 haswell
                     OPTIONS     "-msse2"  "-msse4.1" "-mavx2"
-                    SOURCES     compute_impl.cpp
+                    SOURCES     kernel.cpp
                   )
 
 add_executable(multi-arch main.cpp compute.cpp)
