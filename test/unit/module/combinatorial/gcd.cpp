@@ -18,7 +18,7 @@ TTS_CASE_TPL( "Check return types of eve::gcd", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::gcd(T(), T()), T);
 };
 
-auto mini = tts::constant([]<typename T>(eve::as<T> const &){return eve::valmin(eve::as<T>())+1; });
+auto mini = tts::constant([]<typename T>(eve::as<T> const &){return eve::inc(eve::valmin(eve::as<T>())); });
 
 TTS_CASE_WITH ( "Check corner-cases behavior of eve::gcd on wide"
               , eve::test::simd::integers
