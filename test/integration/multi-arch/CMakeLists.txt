@@ -17,5 +17,6 @@ eve_build_variants( NAME compute
                   )
 
 add_executable(multi-arch main.cpp compute.cpp)
+add_dependencies(multi-arch ${eve_compute_variants})
 target_link_libraries(multi-arch PUBLIC ${EVE_LIBRARIES})
 
