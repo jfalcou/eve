@@ -14,7 +14,7 @@
 #include <sstream>
 #include <unistd.h>
 
-void compute(std::span<float> data)
+auto load_kernel()
 {
   // Load the dynamic library
   static auto handle = []()
@@ -26,13 +26,18 @@ void compute(std::span<float> data)
     return handle;
   }();
 
+  return handle;
+}
+
+void compute(std::span<float> data)
+{
   // Fetch the function pointer from its symbol
   static auto impl = [](auto h)
   {
     using func_t  = void (*)(float*, std::size_t);
-    func_t f = handle ? (func_t)(dlsym(h, "compute_kernel")) : nullptr;
+    func_t f = h ? (func_t)(dlsym(h, "compute_kernel")) : nullptr;
     return f;
-  }(handle);
+  }(load_kernel());
 
   // Call the actual implementation
   if(impl) impl(data.data(), data.size());

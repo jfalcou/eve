@@ -58,7 +58,7 @@ The code looks like this:
 @snippet test/integration/multi-arch/compute.cpp compute
 
 What is going on inside `compute` ?
-  + We first open the correct dynamic library depending on the actual SIMD support detected at
+  + `load_kernel` opens the correct dynamic library depending on the actual SIMD support detected at
     runtime via eve::is_supported. Notice the names of the .so files, we will go back to those
     afterward but understand that they are arbitrary. To do so, we use *Immediately Invoked Lambda
     Expressions* to perform this initialisation.
