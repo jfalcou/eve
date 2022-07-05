@@ -12,8 +12,9 @@ hardware.
 A first solution could be to just recompile a given kernel with different architecture settings and
 link everything. Then, at runtime, use eve::is_supported to choose the correct implementation
 between the available ones. However, in attempting to solve the problem in this way, you'll face issues as the
-core of **EVE** is based on templated callable object, you may end up violating the One Definition
-Rule and end up with a binary containing the incorrect symbols and implementations.
+core of **EVE** is based on templated callable object, you may end up violating the
+[One Definition Rule](https://en.cppreference.com/w/cpp/language/definition) and end up with a
+binary containing the incorrect symbols and implementations.
 
 # From static to dynamic dispatch
 A more successful approach is isolate the various version of a given kernel into separate dynamic
