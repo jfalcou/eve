@@ -12,9 +12,10 @@
 
 namespace eve::detail
 {
-  template<floating_value T>
-  EVE_FORCEINLINE auto sph_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
-  {
-    return  if_else(x == inf(as(x)), zero, -cos(x)/sqr(x)-sinc(x));
-  }
+template<floating_value T>
+EVE_FORCEINLINE auto
+sph_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
+{
+  return if_else(x == inf(as(x)), zero, -cos(x) / sqr(x) - sinc(x));
+}
 }
