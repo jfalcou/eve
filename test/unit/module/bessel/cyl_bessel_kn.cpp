@@ -154,16 +154,6 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
 //==================================================================================================
 //== non integral orders
 //==================================================================================================
-<<<<<<< HEAD
-TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with non integral order",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 10.0), tts::randoms(0.0, 200.0)))
-<typename T>(T n, T a0)
-{
-  using v_t               = eve::element_type_t<T>;
-  auto eve__cyl_bessel_kn = [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
-  auto std__cyl_bessel_kn = [](auto n, auto x) -> v_t { return boost::math::cyl_bessel_k(n, x); };
-=======
 TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
         , eve::test::simd::ieee_reals
         , tts::generate(tts::randoms(0.1, 10.0)
@@ -174,26 +164,6 @@ TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
    using v_t = eve::element_type_t<T>;
    auto eve__cyl_bessel_kn =  [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
    auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k(n, double(x)); };
-
-   if constexpr( eve::platform::supports_invalids )
-   {
-     TTS_ULP_EQUAL(eve__cyl_bessel_kn(T(0.5), eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
-     TTS_ULP_EQUAL(eve__cyl_bessel_kn(T(2.5), eve::inf(eve::as<T>())), eve::zero(eve::as<T>()), 0);
-     TTS_ULP_EQUAL(eve__cyl_bessel_kn(T(3.5), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
-   }
-   // large x
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(3.5), v_t(1500)),  eve::zero(eve::as<v_t>()),  10.0);
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(2.5), v_t(50)),   std__cyl_bessel_kn(v_t(2.5), v_t(50)),   10.0);
-   // forward
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(2.5), v_t(10)),    std__cyl_bessel_kn(v_t(2.5), v_t(10))   , 10.0);
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(3.5), v_t(5)),     std__cyl_bessel_kn(v_t(3.5), v_t(5))    , 10.0);
-   // serie
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(2.5), v_t(0.1)),   std__cyl_bessel_kn(v_t(2.5), v_t(0.1))  , 10.0);
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(3.5), v_t(0.2)),   std__cyl_bessel_kn(v_t(3.5), v_t(0.2))  , 10.0);
-   // besseljy
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(10.5), v_t(8)),    std__cyl_bessel_kn(v_t(10.5), v_t(8))   , 10.0);
-   TTS_ULP_EQUAL(eve__cyl_bessel_kn(v_t(10.5), v_t(8)),    std__cyl_bessel_kn(v_t(10.5), v_t(8))   , 10.0);
->>>>>>> b393bc82e (bessel)
 
   if constexpr( eve::platform::supports_invalids )
   {
