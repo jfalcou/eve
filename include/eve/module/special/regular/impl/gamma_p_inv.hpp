@@ -69,10 +69,11 @@ namespace eve::detail
     auto xmed =  average(xlo, xhi);
     while (eve::any(notdone))
     {
-      auto test = (gamma_p(xmed, k) <  p);
+      auto gmp = gamma_p(xmed, k);
+      auto test = (gmp <  p);
       xlo = if_else(test, xmed, xlo);
       xhi = if_else(test, xhi, xmed);
-      notdone = ulpdist(xlo, xhi) > 1;
+      notdone = (ulpdist(xlo, xhi) > 1) && gmp != 0;
       xmed = average(xlo, xhi);
     }
     xmed = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), xmed));
