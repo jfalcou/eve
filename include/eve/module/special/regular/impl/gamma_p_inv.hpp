@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<real_value T, real_value U>
-  EVE_FORCEINLINE  common_compatible_t<T, U> gamma_p_inv_(EVE_SUPPORTS(cpu_)
+  common_compatible_t<T, U> gamma_p_inv_(EVE_SUPPORTS(cpu_)
                               , T a
                               , U b) noexcept
   {
