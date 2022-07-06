@@ -52,14 +52,17 @@ namespace eve::detail
                            , T const &a
                            , T const &b) noexcept
   {
-    return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b)
-                  , allbits
-                  , if_else(is_eqz(a)
-                           , a
-                           , fnma(b, trunc(div(a,b)), a)
-                            // ,  a-b*trunc(div(a,b))
-                           )
-                  );
+    if constexpr( current_api == neon && simd_value<T>) return map(rem,a,b);
+    else
+    {
+      return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b)
+                    , allbits
+                    , if_else(is_eqz(a)
+                            , a
+                            , fnma(b, trunc(div(a,b) ), a)
+                            )
+                    );
+    }
   }
 
   template<real_value T, decorator D>
