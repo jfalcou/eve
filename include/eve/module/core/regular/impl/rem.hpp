@@ -52,13 +52,17 @@ namespace eve::detail
                            , T const &a
                            , T const &b) noexcept
   {
-    return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b)
-                  , allbits
-                  , if_else(is_eqz(a)
-                           , a
-                           , fnma(b, trunc(next(div(a,b))), a)
-                           )
-                  );
+    if constexpr( current_api == neon && simd_value<T>) return map(rem,a,b);
+    else
+    {
+      return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b)
+                    , allbits
+                    , if_else(is_eqz(a)
+                            , a
+                            , fnma(b, trunc(div(a,b) ), a)
+                            )
+                    );
+    }
   }
 
   template<real_value T, decorator D>
@@ -66,7 +70,7 @@ namespace eve::detail
                             , T const &a, T const &b
                             ) noexcept
   requires  (is_one_of<D>(types<toward_zero_type, downward_type, upward_type
-                         , downward_type,  to_nearest_type> {}))
+                         ,  to_nearest_type> {}))
   {
     if constexpr(has_native_abi_v<T>) return fnma(b, D()(eve::div)(a,b), a);
     else                              return apply_over(D()(rem), a, b);

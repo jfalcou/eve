@@ -18,10 +18,10 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH ( "Check behavior of pow on wide"
               , eve::test::simd::ieee_reals
-              , tts::generate ( tts::randoms(-10, 10)
-                              , tts::randoms(-10, 10)
-                              , tts::randoms(-10, 10)
-                              , tts::randoms(-10, 10)
+              , tts::generate ( tts::randoms(0.1, 10)
+                              , tts::randoms(0.1, 10)
+                              , tts::randoms(0.1, 10)
+                              , tts::randoms(0.1, 10)
                               )
               )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )

@@ -19,8 +19,8 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH( "Check behavior of asinh on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
-        , tts::generate( tts::randoms(-10, 10)
-                             , tts::randoms(-10, 10))
+        , tts::generate( tts::randoms(1, 10)
+                             , tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -38,8 +38,8 @@ TTS_CASE_WITH( "Check behavior of asinh on scalar"
 
 TTS_CASE_WITH( "Check behavior of asinh on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(-5, 5)
-                             , tts::randoms(-5, 5))
+        , tts::generate(tts::randoms(1, 5)
+                             , tts::randoms(1, 5))
         )
   <typename T>(T const& a0, T const&  a1)
 {

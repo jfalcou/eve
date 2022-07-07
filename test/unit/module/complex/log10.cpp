@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of log10 on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::log10(eve::complex<e_t>(e, f)),  cv(std_log10(c_t(e, f))), 2);
+      TTS_ULP_EQUAL(eve::log10(eve::complex<e_t>(e, f)),  cv(std_log10(c_t(e, f))), 5);
     }
   }
 };

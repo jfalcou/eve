@@ -18,8 +18,8 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH( "Check behavior of tan on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
+        ,tts::generate(tts::randoms(1, 10)
+                             ,tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -36,8 +36,8 @@ TTS_CASE_WITH( "Check behavior of tan on scalar"
 
 TTS_CASE_WITH( "Check behavior of tan on wide"
         , eve::test::simd::ieee_reals
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
+        ,tts::generate(tts::randoms(1, 10)
+                             ,tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -89,7 +89,6 @@ TTS_CASE_TPL( "Check corner cases of tan", eve::test::scalar::ieee_reals)
   auto test_tangent = [j](auto x){return -j*eve::tanh(j*x); };
   for(int i=0; i < N; ++i)
   {
-    std::cout <<  "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(tangent(inputs[i]), test_tangent(inputs[i]));
     TTS_IEEE_EQUAL(tangent(-inputs[i]), -tangent(inputs[i]));
     TTS_IEEE_EQUAL(tangent(conj(inputs[i])), conj(tangent(inputs[i])));

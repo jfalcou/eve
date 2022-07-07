@@ -56,7 +56,7 @@ TTS_CASE_WITH ( "Check behavior of eve::rec(eve::wide)"
 
   TTS_ULP_EQUAL ( eve::rec(a0)
                 , map([](auto e) -> v_t { return e ? v_t(1/e) : eve::valmax(eve::as<v_t>()); }, a0)
-                , 0.5
+                , 2.5
                 );
 
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask,eve::rec(a0),a0));

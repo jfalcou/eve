@@ -25,7 +25,10 @@ namespace eve::detail
 
     if constexpr ( eve::current_api >= eve::asimd )
     {
+      using ec_t  = expected_cardinal_t<T,abi_t<T, N>>;
+
             if constexpr( N::value == 1           ) return v.get(0);
+      else  if constexpr( N::value < ec_t::value  ) return butterfly_reduction(v, eve::min).get(0);
       else  if constexpr( c == category::float64x2) return vminvq_f64(v);
       else  if constexpr( c == category::float32x2) return vminv_f32 (v);
       else  if constexpr( c == category::float32x4) return vminvq_f32(v);

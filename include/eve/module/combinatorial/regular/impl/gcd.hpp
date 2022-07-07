@@ -161,7 +161,7 @@ namespace eve::detail
     }
     else
     {
-      return apply_over(gcd, a, b);
+      return apply_over(raw(gcd), a, b);
     }
   }
 

@@ -25,8 +25,8 @@ auto sc(eve::complex < T > ec)
 
 TTS_CASE_WITH ( "Check behavior of asin on scalar"
               , tts::bunch<eve::test::scalar::ieee_reals>
-              , tts::generate( tts::randoms(-10, 10)
-                              , tts::randoms(-10, 10)
+              , tts::generate( tts::randoms(1, 10)
+                              , tts::randoms(1, 10)
                               )
               )
 <typename T>(T const& a0, T const& a1 )
@@ -38,15 +38,15 @@ TTS_CASE_WITH ( "Check behavior of asin on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(boost::math::asin(c_t(e, f))), ulp);
+      TTS_RELATIVE_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(boost::math::asin(c_t(e, f))), ulp);
     }
   }
 };
 
 TTS_CASE_WITH( "Check behavior of asin on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(-5, 5)
-                             , tts::randoms(-5, 5))
+        , tts::generate(tts::randoms(1, 5)
+                             , tts::randoms(1, 5))
         )
 <typename T>(T const& a0, T const&  a1)
 {

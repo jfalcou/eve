@@ -230,9 +230,9 @@ TTS_CASE_WITH ( "Check behavior of div on signed types"
   using eve::to_nearest;
   using eve::is_nez;
   using eve::detail::map;
-  TTS_EQUAL( downward(div[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? downward(div)(e, f): e; }, a0, a2));
-  TTS_EQUAL( upward(div[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? upward(div)(e, f): e; }, a0, a2));
-  TTS_EQUAL( to_nearest(div[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? to_nearest(div)(e, f): e; }, a0, a2));
+  TTS_ULP_EQUAL( downward(div[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? downward(div)(e, f): e; }, a0, a2), 2.5);
+  TTS_ULP_EQUAL( upward(div[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? upward(div)(e, f): e; }, a0, a2), 2.5);
+  TTS_ULP_EQUAL( to_nearest(div[is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(f) ? to_nearest(div)(e, f): e; }, a0, a2), 2.5);
 
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
   TTS_EQUAL( downward(div[a2 > T(64)])(a0, a1), map([](auto e, auto f, auto g) { return  g > 64 ? downward(div)(e, f): e; }, a0, a1, a2));

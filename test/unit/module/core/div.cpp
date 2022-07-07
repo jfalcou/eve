@@ -65,16 +65,16 @@ TTS_CASE_TPL( "Check return types of div"
 
   if constexpr(eve::floating_value<T>)
   {
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
   }
 };
 
@@ -100,11 +100,11 @@ TTS_CASE_WITH( "Check behavior of div on wide"
   TTS_ULP_EQUAL(saturated(div)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); }, a0, a1, a2), 1);
   if constexpr(eve::floating_value<T>)
   {
-    
-    
-    
-    
-    
+
+
+
+
+
   }
 };
 
@@ -147,8 +147,8 @@ TTS_CASE_WITH ( "Check behavior of div on signed types"
   using eve::is_nez;
   using eve::detail::map;
   a2 = eve::if_else(a2 > 0, eve::zero, a2);
-  TTS_ULP_EQUAL( div[is_nez(a2)](a0, a2), map([](auto e, auto f) {return is_nez(f) ? div(e, f) : e ; }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( saturated(div[is_nez(a0)&&is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(e)&&is_nez(f) ? saturated(div)(e, f): e; }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( div[is_nez(a2)](a0, a2), map([](auto e, auto f) {return is_nez(f) ? div(e, f) : e ; }, a0, a2), 2.5);
+  TTS_ULP_EQUAL( saturated(div[is_nez(a0)&&is_nez(a2)])(a0, a2), map([](auto e, auto f) { return  is_nez(e)&&is_nez(f) ? saturated(div)(e, f): e; }, a0, a2), 2.5);
 
   a1 =  eve::if_else(eve::is_eqz(a1), eve::one, a1);
   TTS_ULP_EQUAL( div[a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) {return g > 64 ? div(e, f) : e ; }, a0, a1, a2), 0.5);

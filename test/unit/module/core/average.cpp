@@ -52,7 +52,7 @@ TTS_CASE_TPL( "Check return types of average"
 //== average tests
 //==================================================================================================
 TTS_CASE_WITH ( "Check behavior of average(wide)"
-              , eve::test::simd::all_types
+              , eve::test::simd::ieee_reals
               , tts::generate ( tts::randoms(-1000., +1000.)
                               , tts::randoms(-1000., +1000.)
                               , tts::randoms(-1000., +1000.)
@@ -70,6 +70,24 @@ TTS_CASE_WITH ( "Check behavior of average(wide)"
   }
 };
 
+TTS_CASE_WITH ( "Check behavior of average(wide)"
+              , eve::test::simd::integers
+              , tts::generate ( tts::randoms(-10, +10)
+                              , tts::randoms(-10, +10)
+                              , tts::randoms(-10, +10)
+                              )
+              )
+<typename T>(T const& a0, T const& a1, T const& a2 )
+{
+  using eve::average;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL( average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_ULP_EQUAL( average(a0, a1, a2), map([](auto e, auto f,  auto g) { return (g + f + e)/3; }, a0, a1, a2), 16);
+  }
+};
 
 //==================================================================================================
 //==  conditional average tests

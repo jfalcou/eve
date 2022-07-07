@@ -18,7 +18,7 @@ TTS_CASE_WITH ( "Check behavior of log_abs on scalar"
 {
   for(auto e : a0)
     for(auto f : a1)
-      TTS_ULP_EQUAL( eve::log_abs(eve::complex(e, f)), eve::log(eve::hypot(e,f)), 0.5);
+      TTS_ULP_EQUAL( eve::log_abs(eve::complex(e, f)), eve::log(eve::hypot(e,f)), 2);
 };
 
 TTS_CASE_WITH ( "Check behavior of log_abs on wide"
@@ -28,7 +28,7 @@ TTS_CASE_WITH ( "Check behavior of log_abs on wide"
 <typename T>(T const& a0, T const& a1 )
 {
   using z_t = eve::as_complex_t<T>;
-  TTS_ULP_EQUAL( eve::log_abs(z_t{a0,a1}), eve::log(eve::hypot(a0,a1)), 0.5);
+  TTS_ULP_EQUAL( eve::log_abs(z_t{a0,a1}), eve::log(eve::hypot(a0,a1)), 100);
   auto inf = eve::inf(eve::as<T>());
   auto nan = eve::nan(eve::as<T>());
   TTS_ULP_EQUAL( eve::log_abs(z_t{nan,inf}), inf, 0.5);

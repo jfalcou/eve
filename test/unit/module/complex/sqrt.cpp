@@ -20,12 +20,12 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH( "Check behavior of sqrt on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
-        , tts::generate( tts::randoms(-10, 10)
-                             , tts::randoms(-10, 10))
+        , tts::generate( tts::randoms(1, 10)
+                             , tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 50.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
@@ -39,12 +39,12 @@ TTS_CASE_WITH( "Check behavior of sqrt on scalar"
 
 TTS_CASE_WITH( "Check behavior of sqrt on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(-10, 10)
-                             , tts::randoms(-10, 10))
+        , tts::generate(tts::randoms(1, 10)
+                             , tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 50.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t =  eve::as_complex_t<T>;

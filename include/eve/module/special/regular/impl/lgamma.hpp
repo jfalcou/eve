@@ -96,7 +96,7 @@ namespace eve::detail
   }
 
   template<floating_real_value T>
-  EVE_FORCEINLINE constexpr T lgamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  constexpr T lgamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {

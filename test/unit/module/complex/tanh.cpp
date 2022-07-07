@@ -18,8 +18,8 @@ auto cv(std::complex < T > sc)
 
 TTS_CASE_WITH( "Check behavior of tanh on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
+        ,tts::generate(tts::randoms(1, 10)
+                             ,tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -36,8 +36,8 @@ TTS_CASE_WITH( "Check behavior of tanh on scalar"
 
 TTS_CASE_WITH( "Check behavior of tanh on wide"
         , eve::test::simd::ieee_reals
-        ,tts::generate(tts::randoms(-10, 10)
-                             ,tts::randoms(-10, 10))
+        ,tts::generate(tts::randoms(1, 10)
+                             ,tts::randoms(1, 10))
         )
   <typename T>(T const& a0, T const& a1 )
 {
@@ -99,7 +99,6 @@ TTS_CASE_TPL( "Check corner cases of tanh", eve::test::scalar::ieee_reals)
   auto th = eve::tanh;
   for(int i=0; i < N; ++i)
   {
-    std::cout <<  "i " << i << " -> " << inputs[i] << std::endl;
     TTS_IEEE_EQUAL(th(inputs[i]), results[i]);
     TTS_IEEE_EQUAL(th(-inputs[i]), -th(inputs[i]));
     TTS_IEEE_EQUAL(th(conj(inputs[i])), conj(th(inputs[i])));

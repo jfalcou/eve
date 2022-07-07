@@ -44,7 +44,7 @@ TTS_CASE_WITH( "Check behavior of exp_int on wide"
   using eve::as;
   for(int i=1; i < 4 ; ++i)
   {
-    TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 16);
+    TTS_ULP_EQUAL( exp_int(i, a0),  map([i](auto e){return boost::math::expint(i, e);}, a0), 24);
   }
 
   if constexpr( eve::platform::supports_invalids )

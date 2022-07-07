@@ -30,7 +30,7 @@ namespace eve::detail
       auto    xgemaxlog = xx >= maxlog(eve::as(xx));
       if constexpr( scalar_value<T> )
       {
-        if( is_eqz(xx) )
+        if( is_eqz(xx) || is_nan(xx) )
           return xx;
         if( xgemaxlog )
           return inf(eve::as<T>());
@@ -79,7 +79,7 @@ namespace eve::detail
       if constexpr( simd_value<T> )
       {
         k = if_else(xgemaxlog, inf(eve::as<T>()), k);
-        k = if_else(is_eqz(xx), xx, k);
+        k = if_else(is_eqz(xx)|| is_nan(xx), xx, k);
         k = if_else(xlelogeps, eve::mone, k);
       }
       return k;

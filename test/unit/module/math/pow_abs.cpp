@@ -32,8 +32,8 @@ TTS_CASE_TPL( "Check return types of pow_abs"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of pow_abs on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate( tts::randoms(eve::valmin, eve::valmax)
-                             , tts::randoms(eve::valmin, eve::valmax)
+        , tts::generate( tts::randoms(1, 10)
+                             , tts::randoms(-1.0, 1.0)
                              , tts::randoms(-1.0, 1.0)
                              , tts::randoms(-1.0, 1.0))
         )

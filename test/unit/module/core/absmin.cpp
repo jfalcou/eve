@@ -38,16 +38,23 @@ TTS_CASE_TPL( "Check return types of absmin"
 //==================================================================================================
 // absmin tests
 //==================================================================================================
+auto vmin = tts::constant( []<typename T>(eve::as<T> const & tgt){
+                             {
+                               constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
+                               return eve::valmin(tgt) + sign;
+                             }
+                           }
+                         );
 
 TTS_CASE_WITH( "Check behavior of absmin on all types full range"
         , eve::test::simd::all_types
-        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::logicals(0, 3)
-                              )
-        )
-<typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
+             , tts::generate (  tts::randoms(vmin, eve::valmax)
+                             ,  tts::randoms(vmin, eve::valmax)
+                             ,  tts::randoms(vmin, eve::valmax)
+                             ,  tts::logicals(0, 3)
+                             )
+             )
+                           <typename T, typename M>(  T const& a0, T const& a1, T const& a2, M const & t)
 {
   using eve::absmin;
   using eve::detail::map;

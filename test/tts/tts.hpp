@@ -420,7 +420,6 @@ namespace tts::detail
   template<typename Generator, typename... Types> struct test_generators
   {
     test_generators(const char* id, Generator g, Types...) : name(id), generator(g) {}
-
     friend auto operator<<(test_generators tg, auto body)
     {
       return test::acknowledge( { tg.name
@@ -632,241 +631,186 @@ namespace tts
   }                                                                                                 \
 }()                                                                                                 \
 
+#include <cstring>
+#include <array>
+namespace tts::detail
+{
+  template<typename T, std::size_t N>
+  struct block
+  {
+    block() : nbelems{0} {}
+    block(std::size_t sz) : storage{} ,nbelems{sz} {}
+    std::size_t size()      const { return nbelems; }
+    std::size_t capacity()  const { return N; }
+    std::size_t empty()     const { return nbelems == 0; }
+    void resize(std::size_t n)  { nbelems = n; }
+    void push_back(T v)         { storage[nbelems] = v; nbelems++; }
+    void push_front(T v)        { insert(begin(),v); }
+    void insert(auto it, T v)
+    {
+      std::memmove(it+1, it, size()*sizeof(T));
+      *it = v;
+      nbelems++;
+    }
+    void clear() { nbelems = 0; }
+    T&  back()       { return storage[size()-1]; }
+    T   back() const { return storage[size()-1]; }
+    T&  front()       { return storage[0]; }
+    T   front() const { return storage[0]; }
+    T&  operator[](std::size_t i)       { return storage[i]; }
+    T   operator[](std::size_t i) const { return storage[i]; }
+    auto begin()  { return  &storage[0]; }
+    auto end()    { return begin() + nbelems; }
+    auto begin()  const { return &storage[0]; }
+    auto end()    const { return begin() + nbelems; }
+    private:
+    std::array<T,N> storage;
+    std::size_t     nbelems;
+  };
+}
+#include <algorithm>
 #include <cmath>
 #include <limits>
-#include <numeric>
 #include <random>
 #include <type_traits>
 namespace tts
 {
-  namespace detail
+  template<typename T>
+  struct fp_dist
   {
-    template<typename T> auto dec(T x)  { return x-T(1); }
-    template<typename T> auto inc(T x)  { return x+T(1); }
-    template<typename T> T    abs_s(T x)
+    using result_type = T;
+    struct param_type
     {
-      if constexpr( std::is_unsigned_v<T>) return x;
+      param_type( T pa = 0, T pb = 1
+                , std::size_t sz = 65536
+                , T mnp = std::numeric_limits<T>::epsilon()
+                , T mxp = 1./std::numeric_limits<T>::epsilon()
+                )
+                : a(pa), b(pb), n(sz), minpos(mnp), maxpos(mxp)
+      {
+        if(b<a) std::swap(a,b);
+        if(a < -maxpos)             a = -maxpos;
+        else if(a>0 && a < minpos)  a =  minpos;
+        if(b > maxpos)              b =  maxpos;
+        else if(b<0 && b < -minpos) b = -minpos;
+      }
+      T a, b;
+      std::size_t n;
+      T minpos, maxpos;
+    };
+    fp_dist()                                     noexcept : fp_dist(param_type{}) {}
+    fp_dist(T a, T b)                             noexcept : fp_dist(param_type{a,b}) {}
+    fp_dist(T a, T b, std::size_t n)              noexcept : fp_dist(param_type{a,b,n}) {}
+    fp_dist(T a, T b, std::size_t n, T mn )       noexcept : fp_dist(param_type{a,b,n,mn}) {}
+    fp_dist(T a, T b, std::size_t n, T mn, T mx)  noexcept : fp_dist(param_type{a,b,n,mn,mx}) {}
+    fp_dist(param_type const& pr)                 noexcept { param(pr); }
+    param_type const& param() const { return params; }
+    void param(param_type const& p)
+    {
+      params = p;
+      find_limits();
+      find_indexes(1+params.minpos/2);
+      selector.param( std::uniform_int_distribution<std::size_t>::param_type(0, size()-1));
+    }
+    auto size() const noexcept  { return sizes.back(); }
+    auto min()  const noexcept  { return params.a; }
+    auto max()  const noexcept  { return params.b; }
+    template< class Generator > result_type operator()( Generator& gen )
+    {
+      auto p  = selector(gen);
+      auto it = std::upper_bound(sizes.begin(), sizes.end(), p) - 1;
+      auto i  = std::distance(sizes.begin(),it);
+      return generate(limits[i],limits[i+1],p - *it,params.n);
+    }
+    tts::detail::block<T,7>                     limits;
+    tts::detail::block<std::size_t,7>           sizes;
+    std::uniform_int_distribution<std::size_t>  selector;
+    param_type                                  params;
+    private:
+    void find_limits() noexcept
+    {
+      limits.clear();
+      std::array<T,7> zs{-params.maxpos,-1,-params.minpos,0,params.minpos,1,params.maxpos};
+      for(auto z : zs)
+      {
+        if(z>=params.a && z<=params.b) limits.push_back(z);
+      }
+      if(limits.empty()) { limits.push_back(params.a); limits.push_back(params.b);}
       else
       {
-        return x == std::numeric_limits<T>::min() ? std::numeric_limits<T>::max()
-                                                  : (x<0 ? -x : x);
+        if(limits.front() > params.a)  { limits.push_front(params.a); }
+        if(limits.back()  < params.b)  { limits.push_back(params.b);  }
       }
     }
-    template< typename T = double > struct fp_realistic_distribution
+    void find_indexes(std::size_t nbzero) noexcept
     {
-      using result_type = T;
-      struct param_type
+      sizes.resize(limits.size());
+      std::size_t t = 0;
+      sizes[0]    = 0;
+      for(std::size_t i=1;i<limits.size()-1;++i)
       {
-        T a, b;
-        param_type(T aa, T bb) : a(aa),  b(bb) {};
-      };
-      fp_realistic_distribution() : fp_realistic_distribution(0.0, 0.1) { }
-      fp_realistic_distribution(T aa, T bb)
-        : a(std::min(aa, bb)),
-          b(std::max(aa, bb)),
-          nb(300),
-          sd(T(0),T(1)),
-          ird(1, nb-1){
-      };
-      explicit fp_realistic_distribution( const param_type& params )
-        : a(params.a),
-          b(params.b),
-          nb(300),
-          sd(T(0),T(1)),
-          ird(1, nb-1){};
-      void reset(){
-        sd.reset();
-        ird.reset();
-      };
-      template< class Generator > result_type operator()( Generator& gen )
-      {
-        return (*this)(gen, a, b);
+        t += (limits[i] == 0 || limits[i-1] == 0)  ? nbzero : params.n;
+        sizes[i] = t;
       }
-      template< class Generator > result_type operator()( Generator& gen, result_type aa, result_type bb)
-      {
-        result_type res;
-        if(aa == bb) res = aa;
-        else if(bb <= aa+result_type(0.5)) res = aa+(bb-aa)*sd(gen);
-        else if((aa >= 0 && bb <= 1) || (bb <= 0 && aa >= -1)) res = aa+(bb-aa)*sd(gen);
-        else if(aa >= -1 && bb <= 1) res =((sd(gen)*(bb-aa) > -aa) ? aa : bb)*sd(gen);
-        else
-        {
-          auto i = ird(gen);
-          if (aa >= 1)
-          {
-            auto la =  std::log2(aa);
-            auto f =  std::log2(bb)-la;
-            auto rand = sd(gen);
-            auto x = la+f*(i-1+rand)/nb;
-            res = std::min(std::exp2(x), bb);
-          }
-          else if (bb <= -1)
-          {
-            res = -(*this)(gen, std::abs(bb), std::abs(aa));
-          }
-          else if (aa >= 0)
-          {
-            if(i == 1)
-            {
-              auto r = sd(gen);
-              if (r> aa) res =r;
-              else {i = 2;res = 0; }
-            }
-            else res = (*this)(gen, result_type(1), bb);
-          }
-          else if (bb <= 0)
-          {
-            if(i == 1)
-            {
-              auto r = sd(gen);
-              if (r> -bb) res =-r;
-              else { i = 2; res = 0;}
-            }
-            else res = (*this)(gen, result_type(-1), aa);
-          }
-          else
-          {
-            auto z = result_type(0);
-            auto choice = sd(gen)*std::midpoint(bb, -aa) <  bb/2;
-            if (choice)
-            {
-              res = (*this)(gen, z, bb);
-            }
-            else
-            {
-              res = (*this)(gen, aa, z);
-            }
-          }
-        }
-        return res;
-      }
-      template< class Generator > result_type operator()( Generator& g, const param_type& params );
-      param_type  param() const noexcept { return {a, b}; }
-      void        param( const param_type& params ) noexcept
-      {
-        a = params.a;
-        b = params.b;
-      }
-      result_type min()  const noexcept {return a; };
-      result_type max()  const noexcept {return b; };
-    private:
-      T a;
-      T b;
-      int nb;
-      std::uniform_real_distribution<T> sd;
-      std::uniform_int_distribution<int> ird;
-    };
-    template< typename T = int32_t > struct integral_realistic_distribution
+      sizes.back() = t + (limits.back() == 0 ? nbzero : params.n);
+    }
+   static T generate(T va, T vb, std::size_t p, std::size_t n) noexcept
     {
-      using result_type = T;
-      struct param_type
+      const auto eval = [](double x, double y, double i, double sz) -> double
       {
-        T a;
-        T b;
-        param_type(T aa, T bb) : a(aa),  b(bb){};
+        if(x<1) return 1./std::exp2(std::lerp(std::log2(1./y), std::log2(1./x), i/sz));
+        else    return    std::exp2(std::lerp(std::log2(x)   , std::log2(y)   , i/sz));
       };
-      integral_realistic_distribution() : integral_realistic_distribution(std::numeric_limits<T>::min(), std::numeric_limits<T>::max()) { }
-      integral_realistic_distribution( T aa, T bb, int nbb = 300)
-        : a(std::min(aa, bb)),
-          b(std::max(aa, bb)),
-          nb(nbb),
-          sd(0.0, 1.0),
-          ird(a, b),
-          ird2(1, nb) {};
-      explicit integral_realistic_distribution( const param_type& params )
-        : a(params.a),
-          b(params.b),
-          nb(params.nb),
-          sd(0.0, 1.0),
-          ird(a, b),
-          ird2(1, nb) {};
-      void reset(){
-        ird.reset();
-        ird2.reset();
-      };
-      template< class Generator > result_type operator()( Generator& gen )
-      {
-        return (*this)(gen, a, b);
-      }
-      template< class Generator > result_type operator()( Generator& gen, result_type aa, result_type bb)
-      {
-        result_type res(0);
-        if(detail::abs_s(aa) < 256 && detail::abs_s(bb) < 256)
-        {
-          res = ird(gen);
-        }
-        auto l2 = [](auto x){return std::log2(detail::inc(double(x)));   };
-        auto e2 = [](auto x){return detail::dec(T(std::round(std::exp2(x)))); };
-        if(aa == bb) res = aa;
-        else
-        {
-          auto i = ird2(gen);
-          if (aa >= 0)
-          {
-            auto la =  l2(aa);
-            auto lb =  l2(bb);
-            auto f =   lb-la;
-            auto rand = sd(gen);
-            auto x = la+f*(i-1+rand)/nb;
-            res = e2(x);
-          }
-          else if (bb <= 0)
-          {
-            res = -(*this)(gen, detail::abs_s(bb), detail::abs_s(aa));
-          }
-          else
-          {
-            auto z = result_type(0);
-            auto choice = sd(gen)*std::midpoint(detail::abs_s(bb), detail::abs_s(aa)) <  bb/2;
-            if (choice)
-            {
-              res = (*this)(gen, z,detail::abs_s(bb));
-            }
-            else
-            {
-              res = -(*this)(gen, z, detail::abs_s(aa));
-            }
-          }
-        }
-        return res;
-      }
-      template< class Generator > result_type operator()( Generator& g, const param_type& params );
-      param_type param() const noexcept { return {a, b}; }
-      void param( const param_type& params ) noexcept
-      {
-        a = params.a;
-        b = params.b;
-      }
-      result_type min()  const noexcept { return a; };
-      result_type max()  const noexcept { return b; };
-    private:
-      T a;
-      T b;
-      int nb;
-      std::uniform_real_distribution<float> sd;
-      std::uniform_int_distribution<int> ird;
-      std::uniform_int_distribution<int> ird2;
-    };
-  }
-  template<typename T>
-  struct realistic_distribution : tts::detail::integral_realistic_distribution<T>
-  {
-    using parent = tts::detail::integral_realistic_distribution<T>;
-    using parent::parent;
+      if(va==0 || vb==0)  return 0.;
+      auto f = va<0 ? -1 : 1;
+      return f * eval(f * va, f * vb,p,n-1);
+    }
   };
   template<typename T>
-  requires(std::is_floating_point_v<T>)
-  struct realistic_distribution<T>  : tts::detail::fp_realistic_distribution<T>
+  struct  char_dist
+       : std::uniform_int_distribution < std::conditional_t< std::is_signed_v<T>
+                                                            , short
+                                                            , unsigned short
+                                        > >
   {
-    using parent = tts::detail::fp_realistic_distribution<T>;
+    using parent = std::uniform_int_distribution< std::conditional_t<std::is_signed_v<T>
+                                                                    , short
+                                                                    , unsigned short
+                                                                    >
+                                                >;
+    using result_type = T;
     using parent::parent;
+    template< class Generator > result_type operator()( Generator& gen )
+    {
+      return static_cast<result_type>(parent::operator()(gen));
+    }
   };
+  template<typename T>
+  struct choose_distribution;
+  template<std::integral T>
+  requires(sizeof(T) > 1)
+  struct choose_distribution<T>
+  {
+    using type = std::uniform_int_distribution<T>;
+  };
+  template<std::integral T>
+  requires(sizeof(T) == 1)
+  struct choose_distribution<T>
+  {
+    using type = char_dist<T>;
+  };
+  template<std::floating_point T>
+  struct choose_distribution<T>
+  {
+    using type = fp_dist<T>;
+  };
+  template<typename T>
+  using realistic_distribution = typename choose_distribution<T>::type;
 }
 #include <tuple>
 namespace tts
 {
   template<typename T, typename V> auto as_value(V const& v) { return static_cast<T>(v); }
-
   template<typename T> auto produce(type<T> const& t, auto g, auto& rng, auto... others)
   {
     return g(t,rng, others...);
@@ -969,7 +913,6 @@ namespace tts
       tts::realistic_distribution<D> dist(as_value<D>(mini), as_value<D>(maxi));
       return  dist(rng);
     }
-
     Mn mini;
     Mx maxi;
   };
@@ -1042,15 +985,11 @@ namespace tts
       auto precision = ::tts::arguments().value({"--precision"}, -1);
       bool hexmode   = ::tts::arguments()[{"-x","--hex"}];
       bool scimode   = ::tts::arguments()[{"-s","--scientific"}];
-
       if(precision != -1 ) os << std::setprecision(precision);
             if(hexmode) os << std::hexfloat;
       else  if(scimode) os << std::scientific << e << std::defaultfloat;
-
       os << e;
-
       if(hexmode || scimode) os << std::defaultfloat;
-
       return os.str();
     }
     else if constexpr( support_to_string<T> )
@@ -1401,8 +1340,8 @@ namespace tts
 #define TTS_PRECISION(L,R,N,U,F,P,...)      TTS_PRECISION_ ## __VA_ARGS__ (L,R,N,U,F,P)
 #define TTS_PRECISION_(L,R,N,U,F,P)         TTS_PRECISION_IMPL(L,R,N,U,F,P,TTS_FAIL)
 #define TTS_PRECISION_REQUIRED(L,R,N,U,F,P) TTS_PRECISION_IMPL(L,R,N,U,F,P,TTS_FATAL)
-#define TTS_ABSOLUTE_EQUAL(L,R,N,...) TTS_PRECISION(L,R,N,"unit", ::tts::absolute_distance, 16, __VA_ARGS__ )
-#define TTS_RELATIVE_EQUAL(L,R,N,...) TTS_PRECISION(L,R,N,"%"   , ::tts::relative_distance, 16, __VA_ARGS__ )
+#define TTS_ABSOLUTE_EQUAL(L,R,N,...) TTS_PRECISION(L,R,N,"unit", ::tts::absolute_distance, 8, __VA_ARGS__ )
+#define TTS_RELATIVE_EQUAL(L,R,N,...) TTS_PRECISION(L,R,N,"%"   , ::tts::relative_distance, 8, __VA_ARGS__ )
 #define TTS_ULP_EQUAL(L,R,N,...)      TTS_PRECISION(L,R,N,"ULP" , ::tts::ulp_distance     , 2, __VA_ARGS__ )
 #define TTS_IEEE_EQUAL(L,R,...)       TTS_ULP_EQUAL(L, R, 0, __VA_ARGS__ )
 #include <type_traits>
@@ -1448,7 +1387,7 @@ namespace tts::detail
   if( !failures.empty( ) )                                                                          \
   {                                                                                                 \
     FAILURE ( "Expected: "  << TTS_STRING(SEQ1) << " == " << TTS_STRING(SEQ2)                       \
-                            << " but values differ from more than " << N << " "<< UNIT              \
+                            << " but values differ by more than " << N << " "<< UNIT                \
             );                                                                                      \
                                                                                                     \
     for(auto f : failures)                                                                          \
