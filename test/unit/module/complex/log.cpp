@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of log on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::log(eve::complex<e_t>(e, f)),  cv(std::log(c_t(e, f))), 2);
+      TTS_ULP_EQUAL(eve::log(eve::complex<e_t>(e, f)),  cv(std::log(c_t(e, f))), 4);
     }
   }
 };
@@ -57,7 +57,7 @@ TTS_CASE_WITH( "Check behavior of log on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::log(z_t{a0,a1}), init_with_std(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::log(z_t{a0,a1}), init_with_std(a0, a1), 20);
 };
 
 TTS_CASE_TPL( "Check corner cases of log", eve::test::scalar::ieee_reals)

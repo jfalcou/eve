@@ -32,8 +32,8 @@ TTS_CASE_TPL( "Check return types of gamma_p_inv"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of gamma_p_inv on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(0.0, 1.0)
-                             , tts::randoms(0.0, 100.0))
+        , tts::generate(tts::randoms(0.1, 1.0)
+                             , tts::randoms(0.1, 100.0))
         )
 <typename T>(T const& a0, T const& a1 )
 {
@@ -41,7 +41,7 @@ TTS_CASE_WITH( "Check behavior of gamma_p_inv on wide"
   using eve::gamma_p_inv;
   TTS_RELATIVE_EQUAL( eve::gamma_p_inv(a0, a1)
                     , map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p_inv(f, e); }, a0, a1)
-                    , 1e-3
+                    , 4
                     );
 
   auto bggpi =  [](auto e, auto f){return boost::math::gamma_p_inv(f, e); };

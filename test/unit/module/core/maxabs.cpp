@@ -35,15 +35,22 @@ TTS_CASE_TPL( "Check return types of maxabs"
   TTS_EXPR_IS(eve::maxabs(v_t(), v_t(), v_t()), v_t);
 };
 
+auto vmin = tts::constant( []<typename T>(eve::as<T> const & tgt){
+                             {
+                               constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
+                               return eve::valmin(tgt) + sign;
+                             }
+                           }
+                         );
 //==================================================================================================
 // maxabs tests
 //==================================================================================================
 
 TTS_CASE_WITH( "Check behavior of maxabs on all types full range"
         , eve::test::simd::all_types
-        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::randoms(eve::valmin, eve::valmax)
+        , tts::generate (  tts::randoms(vmin, eve::valmax)
+                              ,  tts::randoms(vmin, eve::valmax)
+                              ,  tts::randoms(vmin, eve::valmax)
                               ,  tts::logicals(0, 3)
                               )
         )

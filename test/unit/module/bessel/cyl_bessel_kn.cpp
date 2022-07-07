@@ -39,8 +39,8 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
 {
   using v_t = eve::element_type_t<T>;
 
-  auto eve__cyl_bessel_kn = [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
-  auto std__cyl_bessel_kn = [](auto n, auto x) -> v_t { return boost::math::cyl_bessel_k(n, x); };
+  auto eve__cyl_bessel_kn =  [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
+  auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k(n, double(x)); };
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -154,14 +154,16 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
 //==================================================================================================
 //== non integral orders
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with non integral order",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 10.0), tts::randoms(0.0, 200.0)))
-<typename T>(T n, T a0)
+TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
+        , eve::test::simd::ieee_reals
+        , tts::generate(tts::randoms(0.1, 10.0)
+        , tts::randoms(0.0, 10.0))
+        )
+  <typename T>(T n, T a0 )
 {
-  using v_t               = eve::element_type_t<T>;
-  auto eve__cyl_bessel_kn = [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
-  auto std__cyl_bessel_kn = [](auto n, auto x) -> v_t { return boost::math::cyl_bessel_k(n, x); };
+   using v_t = eve::element_type_t<T>;
+   auto eve__cyl_bessel_kn =  [](auto n, auto x) { return eve::cyl_bessel_kn(n, x); };
+   auto std__cyl_bessel_kn =  [](auto n, auto x)->v_t { return boost::math::cyl_bessel_k(n, double(x)); };
 
   if constexpr( eve::platform::supports_invalids )
   {

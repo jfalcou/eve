@@ -33,8 +33,8 @@ TTS_CASE_TPL( "Check return types of pow1p"
 TTS_CASE_WITH( "Check behavior of pow1p on wide"
         , eve::test::simd::ieee_reals
         , tts::generate( tts::randoms(0, eve::valmax)
-                             , tts::randoms(eve::valmin, eve::valmax)
-                             , tts::randoms(0.0, 1.0)
+                             , tts::randoms(0.5, 10.0)
+                             , tts::randoms(-1.0, 1.0)
                              , tts::randoms(-1.0, 1.0))
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
@@ -44,10 +44,10 @@ TTS_CASE_WITH( "Check behavior of pow1p on wide"
 
   TTS_ULP_EQUAL(eve::pow1p(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(double(e+1), double(f)); }, a0, a1), 64);
   TTS_ULP_EQUAL(eve::pow1p(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(double(e+1), double(f)); }, a2, a3), 64);
-  
-  
-  
-  
+
+
+
+
 };
 
 

@@ -35,15 +35,22 @@ TTS_CASE_TPL( "Check return types of maxmag"
   TTS_EXPR_IS(eve::maxmag(v_t(), v_t(), v_t()), v_t);
 };
 
+auto vmin = tts::constant( []<typename T>(eve::as<T> const & tgt){
+                             {
+                               constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
+                               return eve::valmin(tgt) + sign;
+                             }
+                           }
+                         );
 //==================================================================================================
 // maxmag tests
 //==================================================================================================
 
 TTS_CASE_WITH( "Check behavior of maxmag on all types full range"
         , eve::test::simd::all_types
-        , tts::generate (  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::randoms(eve::valmin, eve::valmax)
-                              ,  tts::randoms(eve::valmin, eve::valmax)
+        , tts::generate (  tts::randoms(vmin, eve::valmax)
+                              ,  tts::randoms(vmin, eve::valmax)
+                              ,  tts::randoms(vmin, eve::valmax)
                               ,  tts::logicals(0, 3)
                               )
         )
@@ -58,9 +65,9 @@ TTS_CASE_WITH( "Check behavior of maxmag on all types full range"
   TTS_ULP_EQUAL(eve::pedantic(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric (maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  
-  
-  
+
+
+
   TTS_IEEE_EQUAL(maxmag[t](a0, a1), eve::if_else(t, maxmag(a0, a1), a0));
 };
 

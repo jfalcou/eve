@@ -43,7 +43,7 @@ namespace eve::detail
                      , allbits
                      , if_else(is_eqz(a) || is_infinite(b)
                               , a
-                              , rem(a, b)
+                              ,  pedantic(fnma)(b, trunc(div(a,b)), a)//rem(a, b)
                               )
                      );  //as remainder
      }

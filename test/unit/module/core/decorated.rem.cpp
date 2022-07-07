@@ -49,7 +49,7 @@ TTS_CASE_TPL( "Check return types of rem"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of rem on wide"
         , eve::test::simd::integers//all_types
-        , tts::generate ( tts::randoms(0, 100)
+        , tts::generate ( tts::randoms(1, 100)
                               , tts::randoms(1, 11)
                               , tts::randoms(1, 11)
                               )

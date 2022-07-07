@@ -23,14 +23,13 @@ TTS_CASE_WITH( "Check behavior of atan on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 32.0 : 3.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::atan(eve::complex<e_t>(e, f)),  cv(std::atan(c_t(e, f))), ulp);
+      TTS_RELATIVE_EQUAL(eve::atan(eve::complex<e_t>(e, f)),  cv(std::atan(c_t(e, f))), 0.001);
     }
   }
 };
@@ -42,7 +41,6 @@ TTS_CASE_WITH( "Check behavior of atan on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 32.0 : 3.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
@@ -57,7 +55,7 @@ TTS_CASE_WITH( "Check behavior of atan on wide"
     }
     return b;
   };
-  TTS_ULP_EQUAL(eve::atan(z_t{a0,a1}), init_with_std(a0, a1), ulp);
+  TTS_RELATIVE_EQUAL(eve::atan(z_t{a0,a1}), init_with_std(a0, a1), 0.001);
 };
 
 

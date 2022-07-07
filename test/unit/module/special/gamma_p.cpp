@@ -41,7 +41,7 @@ TTS_CASE_WITH( "Check behavior of gamma_p on wide"
   using eve::gamma_p;
   TTS_RELATIVE_EQUAL( eve::gamma_p(a0, a1)
                     ,  map([&](auto e, auto f) -> v_t{ return boost::math::gamma_p(f, e); }, a0, a1)
-                    , 1e-4
+                    , 1e-3
                     );
 
   if constexpr( eve::platform::supports_invalids )

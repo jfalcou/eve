@@ -21,11 +21,12 @@ TTS_CASE_TPL( "Check return types of eve::lcm"
   TTS_EXPR_IS(eve::lcm(T(), T()), T);
 };
 
+auto maxi = tts::constant([]<typename T>(eve::as<T> const &){return eve::min(eve::valmax(eve::as<T>()), T(10000)); });
 
 TTS_CASE_WITH( "Check corner-cases behavior of eve::lcm on wide"
         , eve::test::simd::integers
-        , tts::generate ( tts::randoms(1, eve::sqrtvalmax)
-                              , tts::randoms(1, eve::sqrtvalmax)
+        , tts::generate ( tts::randoms(1, maxi)
+                              , tts::randoms(1, maxi)
                               )
          )
   <typename T>(const T & a0,  const T & a1)
