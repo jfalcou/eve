@@ -15,11 +15,12 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_in
-  //!   @brief Computes  \f$ I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$.
+  //!   @brief Computes  the modified Bessel functions of the first kind,
+  //!    \f$ I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$.
   //!
   //!   It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -37,13 +38,13 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   [real value](@ref eve::real_value) order of the function (non necessarily integral),
+  //!     * `n`:  order of the function (non necessarily integral),
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$\displaystyle I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$
+  //!    the value of \f$\displaystyle I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$
   //!    is returned.
   //!
   //!  @groupheader{Example}

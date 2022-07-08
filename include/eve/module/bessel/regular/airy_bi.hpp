@@ -21,7 +21,7 @@ namespace eve
   //!  \f$Ai(0) = \frac1{3^{1/6}\Gamma(2/3)}\f$ and
   //!  \f$Ai'(0) =\frac{3^{1/6}}{\Gamma(1/3)}\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -39,7 +39,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!

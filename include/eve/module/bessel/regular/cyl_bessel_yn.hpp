@@ -15,12 +15,13 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_yn
-  //!   @brief Computes \f$ Y_{n}(x)=\frac{2(z/2)^{-n}}{\sqrt\pi\, \Gamma(1/2-n)}\int _{1}^{\infty}\frac{\cos x\tau}
+  //!   @brief Computes the Bessel functions of the second kind,
+  //!   \f$ Y_{n}(x)=\frac{2(z/2)^{-n}}{\sqrt\pi\, \Gamma(1/2-n)}\int _{1}^{\infty}\frac{\cos x\tau}
   //!   {(\tau^2-1)^{n+1/2}}\,\mathrm {d} \tau \f$.
   //!
   //!   It is a solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -31,20 +32,20 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_real_value N, eve::floating_real_value T >
+  //!      template< eve::real_value N, eve::floating_real_value T >
   //!      T cyl_bessel_yn(N n, T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   [real value](@ref eve::real_value) order of the function (non necessarily integral)
+  //!     * `n`:   [real value](@ref eve::real_value) order of the function.
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
   //!    **Return value**
   //!
-  //!    value of  \f$\displaystyle Y_{n}(x)=\frac{2(z/2)^{-n}}{\sqrt\pi\,
+  //!    the value of  \f$\displaystyle Y_{n}(x)=\frac{2(z/2)^{-n}}{\sqrt\pi\,
   //!    \Gamma(1/2-n)}\int _{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{n+1/2}}\,\mathrm {d} \tau \f$.
   //!    is returned.
   //!

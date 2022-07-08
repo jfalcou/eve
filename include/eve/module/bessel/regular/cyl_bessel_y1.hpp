@@ -15,12 +15,13 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_y1
-  //!   @brief Computes \f$ Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
+  //!   @brief Computes the Bessel function of the second kind,
+  //!    \f$ Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
   //!   {(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
   //!
   //!  It is a solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -38,11 +39,11 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$\displaystyle Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
+  //!    the value of \f$\displaystyle Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
   //!    {(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
   //!    is returned.
   //!

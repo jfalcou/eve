@@ -15,12 +15,13 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_k0
-  //!   @brief Computes  \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}
+  //!   @brief Computes the modified Bessel function of the second kind,
+  //!   \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}
   //!   {\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
   //!
   //!  It is a solution \f$ x^{2}y''+xy'-x^2y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -38,11 +39,11 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$ \displaystyle K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}
+  //!    the value of \f$ \displaystyle K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}
   //!    {\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$
   //!    is returned.
   //!

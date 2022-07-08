@@ -15,12 +15,13 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_kn
-  //!   @brief Computes \f$ K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}
+  //!   @brief Computes the modified Bessel function of the second kind,
+  //!    \f$ K_n(x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}
   //!   {(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
   //!
   //!   It is the solution of \f$ x^{2}y''+xy'-(x^2+n^2)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -38,13 +39,13 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   [real value](@ref eve::real_value) order of the function (non necessarily integral)
+  //!     * `n`:   order of the function (non necessarily integral)
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$\displaystyle K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi}
+  //!    the value of \f$\displaystyle K_n(x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi}
   //!    \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$
   //!    is returned.
   //!

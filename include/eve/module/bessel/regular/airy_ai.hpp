@@ -20,7 +20,7 @@ namespace eve
   //!  It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
   //! \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -38,11 +38,11 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$
+  //!    the value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$
   //!    is returned.
   //!
   //!  @groupheader{Example}

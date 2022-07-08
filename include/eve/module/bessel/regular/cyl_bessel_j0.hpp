@@ -15,12 +15,13 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_j0
-  //!   @brief Computes \f$ J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau)
+  //!   @brief Computes  the Bessel function of the first kind,
+  //!   \f$ J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau)
   //!   \,\mathrm {d} \tau \f$.
   //!
   //!  It is the solution of \f$ x^{2}y''+xy'+x^2y=0\f$ for which \f$ y(0) = 1\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -38,11 +39,11 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$ \displaystyle J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \f$
+  //!    the value of \f$ \displaystyle J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \f$
   //!    is returned.
   //!
   //!  @groupheader{Example}

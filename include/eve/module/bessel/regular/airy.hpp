@@ -21,7 +21,7 @@ namespace eve
 //!   This function is designed to be faster than two separate calls to
 //!   eve::airy_ai and eve::airy_bi.
 //!
-//!   **Alternative Header**
+//!   **Defined in Header**
 //!
 //!   @code
 //!   #include <eve/module/bessel.hpp>
@@ -39,7 +39,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
+//!     * `x` :  [real floating argument](@ref eve::floating_real__value).
 //!
 //!    **Return value**
 //!

@@ -15,11 +15,12 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_k1
-  //!   @brief Computes \f$ K_1(x)=\int_{0}^{\infty} e^{-x \cosh \tau} \cosh \tau\,\mathrm{d}\tau\f$.
+  //!   @brief Computes the modified Bessel function of the second kind,
+  //!   \f$ K_1(x)=\int_{0}^{\infty} e^{-x \cosh \tau} \cosh \tau\,\mathrm{d}\tau\f$.
   //!
   //!   It is a solution of \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -37,11 +38,11 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  positive [real floating value](@ref eve::floating_real_value) argument.
+  //!     * `x` :  positive [real floating argument](@ref eve::floating_real__value).
   //!
   //!    **Return value**
   //!
-  //!    value of \f$ \displaystyle K_1(x)=\int_{0}^{\infty} e^{-x \cosh \tau}
+  //!    the value of \f$ \displaystyle K_1(x)=\int_{0}^{\infty} e^{-x \cosh \tau}
   //!    \cosh \tau\,\mathrm{d}\tau\f$
   //!    is returned.
   //!
