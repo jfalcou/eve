@@ -14,53 +14,46 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var airy_bi
-  //!
-  //! @brief Callable object computing the airy_bi function.
-  //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the airy_bi function                                       |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //! Computes  [elementwise](@ref glossary_elementwise) the value of
-  //! \f$ Bi(x) = \frac1{\pi}\int_{0}^{\infty} \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+\sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$.
+  //!   @var airy_bi
+  //!   @brief Computes the airy function \f$ Bi(x)\f$.
   //!
   //!  It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
-  //! \f$Bi(0) = \frac1{3^{1/6}\Gamma(2/3)}\f$ and
-  //! \f$Bi'(0) =\frac{3^{1/6}}{\Gamma(1/3)}\f$.
+  //!  \f$Ai(0) = \frac1{3^{1/6}\Gamma(2/3)}\f$ and
+  //!  \f$Ai'(0) =\frac{3^{1/6}}{\Gamma(1/3)}\f$.
   //!
-  //! ---
+  //!   **Alternative Header**
   //!
-  //! #### Supported decorators
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!   @groupheader{Callable Signatures}
   //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T airy_bi(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!     The expression `eve::diff(eve::airy_bi)(x)` computes the derivative of the function at `x`.
+  //!   **Parameters**
   //!
+  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
   //!
-  //! #### Example
+  //!    **Return value**
   //!
-  //! @godbolt{doc/bessel/airy_bi.cpp}
+  //!     value of \f$ Bi(x) = \frac1{\pi}\int_{0}^{\infty}
+  //!     \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
+  //!     \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$.
+  //!     is returned.
   //!
-  //!  @}
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/bessel/airy_bi.cpp}
+  //! @}
   //================================================================================================
+
   EVE_MAKE_CALLABLE(airy_bi_, airy_bi);
 }
 
