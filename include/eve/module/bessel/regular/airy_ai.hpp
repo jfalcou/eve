@@ -42,7 +42,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    value of \f$ Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$
+  //!    value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$
   //!    is returned.
   //!
   //!  @groupheader{Example}

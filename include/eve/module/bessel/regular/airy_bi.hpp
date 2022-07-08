@@ -43,7 +43,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!     value of \f$ Bi(x) = \frac1{\pi}\int_{0}^{\infty}
+  //!     value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
   //!     \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
   //!     \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
   //!     is returned.
