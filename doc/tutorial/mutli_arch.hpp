@@ -36,14 +36,14 @@ The code breaks down this way:
   + We start by including all the necessary include files for the algorithms, functions and types we
     will use.
   + We define the `compute_kernel` function. This function takes a pointer and a size as parameters
-    and is declared `extern "C"` to prevent unwanted C++ mangling of the symbol. This is a typical
-    process for dynamic library.
-  + Inside `compute_kernel`, we display some informations about the SIMD API we will be using and
+    and is declared `extern "C"` to prevent unwanted C++ mangling of the symbol. This is typical for
+    dynamic libraries.
+  + Inside `compute_kernel`, we display some information about the SIMD API we are using and
     proceed to the computation. As a quick way to handle the data, we pass a `std::span` to our
     algorithm.
 
 Nothing special is required except for the `extern "C"` attribute. If we want to get around this
-limitation and have an arbitrary function taking arbitrary C++ types as parameters, there are different
+limitation and have a function taking arbitrary C++ types as parameters, there are different
 strategies.  One such strategy is to use the mangled name to export a function returning an array or
 structure containing all the pre-computed functions pointers from the `.so` library.
 
@@ -128,7 +128,8 @@ Let's get into the details:
     and `libcompute_haswell.so`. Notice how the suffixes are arbitrary. They just need to correspond
     to any naming scheme you see fit and those names will have to be used in the dynamic loading function.
   + To perform this compilation, we use the `EVE_LIBRARIES` interface that contains all the proper
-    setup for compiling **EVE** code.
+    setup for compiling **EVE** code. If you need t specify more options, defines an new interface
+    using `EVE_LIBRARIES`.
   + We add our executable target that just compiles a main file and the compute function. To be sure
     we don't forget to compile the libraries when we compile the main executable, we use the exported
     `eve_compute_variants` macro that contains the list of targets created by `eve_build_variants`.

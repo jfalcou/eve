@@ -40,6 +40,6 @@ void compute(std::span<float> data)
   }(load_kernel());
 
   // Call the actual implementation
-  if(impl) impl(data.data(), data.size());
+  impl(data.data(), data.size());
 }
 //! [compute]

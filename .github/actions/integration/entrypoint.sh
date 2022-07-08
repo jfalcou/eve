@@ -1,7 +1,13 @@
 #!/bin/sh -l
 set -e
 
-if [ $2 -eq 0 ]
+# ID for various tests
+INSTALL_TEST=0
+FETCH_TEST=1
+CPM_TEST=2
+MULTIARCH_TEST=3
+
+if [ $2 -eq $INSTALL_TEST ]
 then
   echo "::group::Prepare EVE repository for branch " $1
   mkdir build && cd build
@@ -19,7 +25,7 @@ then
   echo "::endgroup::"
 fi
 
-if [ $2 -eq 1 ]
+if [ $2 -eq $FETCH_TEST ]
 then
   echo "::group::Test EVE via FetchContent"
   mkdir fetch-test && cd fetch-test
@@ -29,7 +35,7 @@ then
   echo "::endgroup::"
 fi
 
-if [ $2 -eq 2 ]
+if [ $2 -eq $CPM_TEST ]
 then
   echo "::group::Test EVE via CPM"
   mkdir cpm-test && cd cpm-test
@@ -40,7 +46,7 @@ then
 fi
 
 
-if [ $2 -eq 3 ]
+if [ $2 -eq $MULTIARCH_TEST ]
 then
   echo "::group::Prepare EVE repository for branch " $1
   mkdir build && cd build
@@ -52,7 +58,7 @@ then
 
   echo "::group::Test EVE multi-architecture support"
   mkdir multi-test && cd multi-test
-  cmake ../test/integration/multi-arch -G Ninja
+  cmake ../examples/multi-arch -G Ninja
   ninja multi-arch
   ./multi-arch
   echo "::endgroup::"
