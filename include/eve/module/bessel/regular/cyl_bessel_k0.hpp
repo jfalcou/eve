@@ -14,49 +14,42 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_k0
+  //!   @var cyl_bessel_k0
+  //!   @brief Computes  \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}
+  //!   {\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
   //!
-  //! @brief Callable object computing  \f$ K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}{\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
+  //!  It is a solution \f$ x^{2}y''+xy'-x^2y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Alternative Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the modified cyl_bessel_k0 function of the second kind     |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T cyl_bessel_k0(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
   //!
-  //!`x`:  positive  [floating_real_value](@ref eve::floating_real_value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    value of \f$ \displaystyle K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}
+  //!    {\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$
+  //!    is returned.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
-  //!  \f$ \displaystyle K_0(x)=\int_{0}^{\infty}\frac{\cos(x\tau)}{\sqrt{\tau^2+1}}\,\mathrm{d}\tau\f$.
+  //!  @groupheader{Example}
   //!
-  //! It is a solution of \f$ x^{2}y''+xy'-x^2y=0\f$ for which \f$ y(0) = \infty\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::cyl_bessel_k0)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/cyl_bessel_k0.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/bessel/cyl_bessel_k0.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_k0_, cyl_bessel_k0);
 }
