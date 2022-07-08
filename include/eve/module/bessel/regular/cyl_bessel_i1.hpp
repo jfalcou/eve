@@ -11,52 +11,43 @@
 
 namespace eve
 {
-  //================================================================================================
+   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_i1
+  //!   @var cyl_bessel_i1
+  //!   @brief Computes \f$ I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$.
   //!
-  //! @brief Callable object computing \f$ I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$.
+  //!  It is the solution of  \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Alternative Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_i1 function                                 |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T cyl_bessel_i1(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
   //!
-  //!`x`:   positive [floating_real_value](@ref eve::floating_real_value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    value of  \f$ \displaystyle I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$
+  //!    is returned.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
-  //! \f$ \displaystyle I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$.
+  //!  @groupheader{Example}
   //!
-  //! It is the solution of \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = 0\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::cyl_bessel_i1)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/cyl_bessel_i1.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/bessel/cyl_bessel_i1.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_i1_, cyl_bessel_i1);
 }

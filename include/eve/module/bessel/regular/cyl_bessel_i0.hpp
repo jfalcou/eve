@@ -14,49 +14,40 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_i0
-  //!
-  //! @brief Callable object computing \f$ I_0(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\,\mathrm{d}\tau\f$.
-  //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the modified cyl_bessel_i0 function of the first kind      |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   positive [floating_real_value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
-  //!  \f$ \displaystyle I_0(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\,\mathrm{d}\tau\f$.
+  //!   @var cyl_bessel_i0
+  //!   @brief Computes  \f$ I_0(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\,\mathrm{d}\tau\f$.
   //!
   //! It is the solution of \f$ x^{2}y''+xy'-x^2y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //! ---
+  //!   **Alternative Header**
   //!
-  //! #### Supported decorators
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!   @groupheader{Callable Signatures}
   //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T cyl_bessel_i0(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!     The expression `eve::diff(eve::cyl_bessel_i0)(x)` computes the derivative of the function at `x`.
+  //!   **Parameters**
   //!
-  //! #### Example
+  //!     * `x` :   positive [real floating value](@ref eve::floating_real_value) argument.
   //!
-  //! @godbolt{doc/bessel/cyl_bessel_i0.cpp}
+  //!    **Return value**
   //!
-  //!  @}
+  //!    value of \f$ \displaystyle I_0(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\,\mathrm{d}\tau\f$
+  //!    is returned.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/bessel/cyl_bessel_i0.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_i0_, cyl_bessel_i0);
 }
