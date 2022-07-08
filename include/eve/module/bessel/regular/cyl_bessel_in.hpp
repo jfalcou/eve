@@ -38,6 +38,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!     * `n`:   [real value](@ref eve::real_value) order of the function (non necessarily integral),
+  //!
   //!     * `x` :  [real floating value](@ref eve::floating_real_value) argument.
   //!
   //!    **Return value**
