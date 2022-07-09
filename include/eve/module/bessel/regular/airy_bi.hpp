@@ -50,7 +50,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/airy_bi.cpp}
+  //!  @godbolt{doc/bessel/regular/airy_bi.cpp}
   //! @}
   //================================================================================================
 

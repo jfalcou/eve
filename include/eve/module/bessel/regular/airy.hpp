@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/bessel/airy.cpp}
+//!  @godbolt{doc/bessel/regular/airy.cpp}
 //! @}
 
   EVE_MAKE_CALLABLE(airy_, airy);

@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/sph_bessel_y1.cpp}
+  //!  @godbolt{doc/bessel/regular/sph_bessel_y1.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sph_bessel_y1_, sph_bessel_y1);

@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/cyl_bessel_yn.cpp}
+  //!  @godbolt{doc/bessel/regular/cyl_bessel_yn.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_yn_, cyl_bessel_yn);

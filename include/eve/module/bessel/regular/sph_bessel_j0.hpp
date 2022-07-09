@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/sph_bessel_j0.cpp}
+  //!  @godbolt{doc/bessel/regular/sph_bessel_j0.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sph_bessel_j0_, sph_bessel_j0);
