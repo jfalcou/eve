@@ -14,50 +14,42 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var bernouilli
+  //!   @var bernouilli
+  //!   @brief Computes the nth bernouilli number \f$b_n\f$ as a double.
   //!
-  //! @brief Callable object computing bernouilli numbers sequence.
+  //!   **Alternative Header**
   //!
-  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | bernouilli numbers sequence   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value N >
+  //!      auto bernouilli(N n) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `n` :  unsigned argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`n`:   [unsigned value](@ref eve::value).
+  //!    the value of the nth bernouilli number
+  //!    is returned.
   //!
-  //! **Return value**
+  //!    The result element type is always double to try to avoid overflow
+  //!    and its cardinal is the same as the entry in case of an simd call.
   //!
-  //! The result element type is always double to try to avoid overflow
-  //! and its cardinal is the same as the entry in case of an simd call.
+  //!  @groupheader{Example}
   //!
-  //!@warning
-  //!    this function will overflow as soon as the input is even and greater than 260
-  //!    But all odd index values are properly computed as they are all 0 except \f$b_1 = -1/2\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/combinatorial/bernouilli.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/combinatorial/bernouilli.cpp}
+  //! @}
   //================================================================================================
-
   namespace tag { struct bernouilli_; }
   template<> struct supports_conditional<tag::bernouilli_> : std::false_type {};
 

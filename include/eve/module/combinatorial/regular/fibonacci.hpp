@@ -14,71 +14,51 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var fibonacci
+  //!   @var fibonacci
+  //!   @brief Computes the  nth element of a fibonacci sequence \f$(f_i)_{i\in \mathbb{N}}\f$.
   //!
-  //! @brief Callable object computing the nth value of the fibonacci sequence.
+  //!     The sequence is defined by the recurrence relations :
   //!
-  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
+  //!     * \f$f_0 = x\f$
+  //!     * \f$f_1 = y\f$
+  //!     * \f$f_{n+2} = f_{n+1} + f_{n},  n > 0\f$
   //!
-  //! #### Members Functions
+  //!     but is computed using the Binet formula.
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the nth value of the fibonacci sequence  |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   **Alternative Header**
   //!
-  //! ---
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U, unsigned_value N > auto operator()( T x, U y, N n ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @groupheader{Callable Signatures}
   //!
-  //! **Parameters**
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T,  eve::floating_real_value,  unsigned_value N>
+  //!      auto fibonacci(T x, U y, N n) noexcept requires eve::compatible< T, U >;
+  //!   }
+  //!   @endcode
   //!
-  //!`x`, `y`:   [floating values](@ref eve::value).
+  //!   **Parameters**
   //!
-  //!`n`:   [unsigned value](@ref eve::value).
+  //!   `x`, `y`:   [floating arguments](@ref eve::floating_real_value) : \f$f_0\f$ and \f$f_1\f$.
   //!
-  //! **Return value**
+  //!   `n`:   [index](@ref eve::unsigned_value) of the value to be returned
   //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the two first parameters,
-  //! vectorized with the cardinality of the third one if necessary.
+  //!    **Return value**
   //!
-  //! The recurrence formula defining the fibonacci sequence is:
+  //!    the value of the  nth element of a fibonacci sequence beginning by `x` and  `y`
+  //!    is returned.
   //!
-  //!      - r(0) = x
-  //!      - r(1) = y
-  //!      - r(i+2) = r(i+1)+r(i),  i > 2
+  //!    The return type is the [common compatible type of `T`, and `U`](@ref eve::compatible).
   //!
-  //! The function return elementwise r(n), but the result is computed using the Binet formula.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::fibonacci
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `fibonacci[cond](x, ...)` is equivalent to `if_else(cond,fibonacci(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/combinatorial/fibonacci.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/combinatorial/fibonacci.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(fibonacci_, fibonacci);
 }
