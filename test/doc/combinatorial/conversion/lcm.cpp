@@ -6,8 +6,6 @@ int main()
 {
   using w_t = eve::wide<std::int8_t, eve::fixed<4>>;
   w_t pi8 = {93, 25, 32, 37}, qi8 = {42, 10, 27, 102};
-  using w32_t = eve::wide<std::int32_t, eve::fixed<4>>;
-  w32_t pi32 = {93, 25, 32, 37}, qi32 = {42, 10, 27, 102};
 
   std::cout << "---- simd" << '\n'
             << " <- pi8                        = " << pi8 << '\n'
