@@ -9,7 +9,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << " <- pi16           = " << pi16 << '\n'
-            << " -> nth_prime(pi16)   = " << eve::nth_prime(pi16) << '\n'
             << " -> uint32(nth_prime)(pi16)   = " << eve::uint32(eve::nth_prime)(pi16) << '\n'
             << " -> float32(nth_prime)(pi16)  = " << eve::float32(eve::nth_prime)(pi16) << '\n'
             << " -> float32(nth_prime(pi16))  = " << eve::float32(eve::nth_prime(pi16)) << "// mind the parentheses\n\n";

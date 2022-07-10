@@ -14,54 +14,66 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var nth_prime
+  //!   @var nth_prime
+  //!   @brief Returns the nth nth_prime number (n < 10000).
   //!
-  //! @brief Callable object performing the computation the nth prime integer.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | unsigned integral nth_prime   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value N >
+  //!      eve::as_wide_as<M, double> nth_prime(N n) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `n` :  unsigned argument (less than 10000).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`n`:   [unsigned value](@ref eve::value).
+  //!     the value of the nth nth_prime number is returned.
   //!
-  //! **Return value**
+  //!     Almost no computations are made, the results are from a lookup table.
+  //!     The result element type is the same as the input one unless a converter
+  //!     is applied to `nth_prime` (see below).
   //!
-  //! The result element type is the same as the input one unless a converter is applied to `nth_prime`.
-  //! See the example below.
+  //!     2 is the first prime. It is returned for n=0.
   //!
-  //! Almost no computations are made, the results are from a lookup table.
+  //!     If the output is of integral type, an incorrect computation will return 0, but
+  //!     if the result has been converted to a floating value (by modifying
+  //!     the object function semantic) incorrect computation will return nan
   //!
-  //! 2 is the first prime number (n=0). If the output is of integral type incorrect computation will return 0, but
-  //! if the result has been converted to a floating value (by concerting the object function) incorrect computation will return nan
+  //!     @warning
+  //!        this function will return 0 (or nan) as soon as the correct
+  //!        result will not be exactly represented in the output type or
+  //!        (for the current implementation) if n is greater or equal to 10000.
   //!
-  //!@warning
-  //!    this function will return 0 (or nan) as soon as the correct result will not be exactly represented
-  //!    in the output type or (for the current impl/ementation) if n is greater or equal to 10000.
+  //!   **Example**
   //!
-  //! ---
+  //!     @godbolt{doc/combinatorial/regular/nth_prime.cpp}
   //!
-  //! #### Supported decorators
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //!  no decorators are supported
+  //!   * Optimized Conversion Call
   //!
-  //! #### Example
+  //!     If the input types are integral, the result is succeptible
+  //!     not to be representable in the input type. A converter can be applied to choose
+  //!     the output type and get the correct result.
   //!
-  //! @godbolt{doc/combinatorial/nth_prime.cpp}
+  //!    **Example**
   //!
-  //!  @}
+  //!      @godbolt{doc/combinatorial/conversion/nth_prime.cpp}
+  //! @}
   //================================================================================================
+
   namespace tag { struct nth_prime_; }
 
   template<>
