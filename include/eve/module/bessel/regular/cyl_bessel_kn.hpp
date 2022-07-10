@@ -14,52 +14,44 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_kn
+  //!   @var cyl_bessel_kn
+  //!   @brief Computes the modified Bessel function of the second kind,
+  //!    \f$ K_n(x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}
+  //!   {(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
   //!
-  //! @brief Callable object computing the cyl_bessel_kn function, \f$ K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
+  //!   It is the solution of \f$ x^{2}y''+xy'-(x^2+n^2)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the modified cyl_bessel_kn function of second kind         |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value N, eve::floating_real_value T >
+  //!      T cyl_bessel_kn(N n, T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value N, floating_real_value T  > auto operator()( N n, T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `n`:   order of the function (non necessarily integral)
   //!
-  //!`n`:   [real_value](@ref eve::real_value) order of the function (non necessarily integral)
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!`x`:  positive [floating_real_value](@ref eve::floating_real_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!   The value of \f$\displaystyle K_n(x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi}
+  //!   \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$ is returned.
   //!
-  //! \f$\displaystyle K(n, x)=\frac{\Gamma(n+1/2)(2x)^n}{\sqrt\pi} \int_{0}^{\infty}\frac{\cos\tau}{(\tau^2+x^2)^{n+1/2}}\,\mathrm{d}\tau\f$.
+  //!   @groupheader{Example}
   //!
-  //!
-  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::cyl_bessel_kn)(n, x)` computes the derivative of the function at `x`.
-  //!
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/cyl_bessel_kn.cpp}
-  //!
-  //!  @}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_kn.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_kn_, cyl_bessel_kn);
 }

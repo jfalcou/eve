@@ -14,49 +14,41 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_j1
+  //!   @var cyl_bessel_j1
+  //!   @brief Computes the Bessel function of the first kind,
+  //!   \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
   //!
-  //! @brief Callable object computing \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
+  //!   It is the solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_j1 function   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T cyl_bessel_j1(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!   The value of \f$ \displaystyle J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )
+  //!   \,\mathrm {d} \tau \f$ is returned.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
-  //! \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
+  //!   @groupheader{Example}
   //!
-  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = 0\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::cyl_bessel_j1)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/cyl_bessel_j1.cpp}
-  //!
-  //!  @}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_j1.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_j1_, cyl_bessel_j1);
 }

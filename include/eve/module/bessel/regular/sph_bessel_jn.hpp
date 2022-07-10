@@ -14,51 +14,44 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var sph_bessel_jn
+  //!   @var sph_bessel_jn
+  //!   @brief Computes the spherical Bessel functions of the first kind,
+  //!   \f$ j_{n}(x)= \sqrt{\frac\pi{2x}}J_{n+1/2}(x)\f$.
   //!
-  //! @brief Callable object computing the sph_bessel_jn function,  \f$ j_{n}(x)= \sqrt{\frac\pi{2x}}J_{n+1/2}(x)\f$.
+  //!   It is the solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = 0\f$
+  //!   if \f$n \ne 0\f$ else \f$1\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the sph_bessel_jn function                                 |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::integral_real_value N, eve::floating_real_value T >
+  //!      T sph_bessel_jn(N n, T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value N, floating_real_value T  > auto operator()( N n, T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `n`:   order of the function. Order must be positive,
   //!
-  //!`n`:   [real_value](@ref eve::real_value) order of the function (integral and positive)
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value) (positive).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!   The value of \f$ \displaystyle j_{n}(x)=
+  //!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\sin x}x\f$ is returned.
   //!
-  //! \f$\displaystyle  j_{n}(x)= \sqrt{\frac\pi{2x}}J_{n+1/2}(x)\f$.
+  //!   @groupheader{Example}
   //!
-  //! It is the solution of \f$ x^{2}y''+xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = 0\f$ if \f$n \ne 0\f$ else \f$1\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::sph_bessel_jn)(n, x)` computes the derivative of the function at `x`.
-  //!
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/sph_bessel_jn.cpp}
-  //!
-  //!  @}
+  //!   @godbolt{doc/bessel/regular/sph_bessel_jn.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sph_bessel_jn_, sph_bessel_jn);
 }

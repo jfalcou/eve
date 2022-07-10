@@ -14,50 +14,41 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var airy_ai
+  //!   @var airy_ai
+  //!   @brief Computes the airy function \f$ Ai(x)\f$.
   //!
-  //! @brief Callable object computing the airy_ai function.
+  //!   It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
+  //!   \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the airy_ai function                                       |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T airy_ai(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos
+  //!    \left( \frac{t^3}{3}+xt \right) \,dt\f$ is returned.
   //!
-  //! Computes  [elementwise](@ref glossary_elementwise) the value of
-  //! \f$ Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$.
+  //!   @groupheader{Example}
   //!
-  //!  It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
-  //! \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::airy_ai)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/airy_ai.cpp}
-  //!
-  //!  @}
+  //!   @godbolt{doc/bessel/regular/airy_ai.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(airy_ai_, airy_ai);
 }
