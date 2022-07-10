@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/combinatorial/regular/gcd.hpp>
-
+#include <iostream>
 
 namespace eve::detail
 {
@@ -50,17 +50,18 @@ namespace eve::detail
   template<value T>
   auto lcm_(EVE_SUPPORTS(cpu_), upgrade_converter const &, T a, T b) noexcept
   {
-    using elt_t =  element_type_t<T>;
     using up_t = upgrade_t<T>;
     using fup_t = upgrade_t<as_floating_point_t<T>>;
-    if constexpr(std::is_same_v<elt_t, float>)
+    using efup_t = element_type_t<fup_t>;
+    if constexpr(std::is_same_v<efup_t, float>)
     {
       auto r = lcm(to_<fup_t>(a),to_<fup_t>(b));
       return convert(r, as<element_type_t<up_t>>());
     }
     else // double element
     {
-      return lcm(a, b);
+      auto r = lcm(to_<fup_t>(a),to_<fup_t>(b));
+      return convert(r, as<element_type_t<up_t>>());
     }
   }
 }

@@ -18,7 +18,7 @@ namespace eve
   //!   @brief Computes the gretest common divisor of the inputs.
   //!
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/combinatorial.hpp>
@@ -47,9 +47,10 @@ namespace eve
   //!    the greatest common divisor is defined only if `p` and `n` element are [flint](@ref eve::is_flint). If any
   //!    of the arguments is not flint the result is undefined.
   //!
-  //!  @groupheader{Example}
+  //!   **Example**
   //!
-  //!  @godbolt{doc/combinatorial/gcd.cpp}
+  //!     @godbolt{doc/combinatorial/regular/gcd.cpp}
+  //!
   //! @}
   //================================================================================================
   namespace tag { struct gcd_; }

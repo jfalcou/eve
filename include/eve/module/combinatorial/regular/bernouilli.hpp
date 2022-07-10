@@ -17,7 +17,7 @@ namespace eve
   //!   @var bernouilli
   //!   @brief Computes the nth bernouilli number \f$b_n\f$ as a double.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/combinatorial.hpp>
@@ -29,7 +29,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< eve::unsigned_value N >
-  //!      auto bernouilli(N n) noexcept;
+  //!      eve::as_wide_as<M, double> bernouilli(N n) noexcept;
   //!   }
   //!   @endcode
   //!
@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/combinatorial/bernouilli.cpp}
+  //!  @godbolt{doc/combinatorial/regular/bernouilli.cpp}
   //! @}
   //================================================================================================
   namespace tag { struct bernouilli_; }

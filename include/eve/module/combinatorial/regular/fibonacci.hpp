@@ -25,7 +25,7 @@ namespace eve
   //!
   //!     but is computed using the Binet formula.
   //!
-  //!   **Alternative Header**
+  //!   **Defined in Header**
   //!
   //!   @code
   //!   #include <eve/module/combinatorial.hpp>
@@ -36,28 +36,26 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_real_value T,  eve::floating_real_value,  unsigned_value N>
-  //!      auto fibonacci(T x, U y, N n) noexcept requires eve::compatible< T, U >;
+  //!      template< eve::unsigned_value N, eve::floating_real_value T,  eve::floating_real_value>
+  //!      eve::common_compatible_t<T, U> fibonacci(N n, T x, U y)
+  //!      noexcept requires eve::compatible< T, U >;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!   `x`, `y`:   [floating arguments](@ref eve::floating_real_value) : \f$f_0\f$ and \f$f_1\f$.
-  //!
   //!   `n`:   [index](@ref eve::unsigned_value) of the value to be returned
+  //!
+  //!   `x`, `y`:   [floating arguments](@ref eve::floating_real_value) : \f$f_0\f$ and \f$f_1\f$.
   //!
   //!    **Return value**
   //!
   //!    the value of the  nth element of a fibonacci sequence beginning by `x` and  `y`
   //!    is returned.
   //!
-  //!    The return type is the [common compatible type of `T`, and `U`](@ref eve::compatible).
-  //!
-  //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/combinatorial/fibonacci.cpp}
+  //!  @godbolt{doc/combinatorial/regular/fibonacci.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(fibonacci_, fibonacci);
