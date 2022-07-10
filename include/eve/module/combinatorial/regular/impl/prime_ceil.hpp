@@ -22,7 +22,8 @@ namespace eve::detail
     {
       auto first = T(0);
       auto last = max_n;
-      n =  if_else(n > nth_prime(max_n), zero, n);
+      auto toobig = n > nth_prime(max_n);
+      n =  if_else(toobig, zero, n);
       while (eve::any(inc(first) < last))
       {
         T mid = average(first, last);
@@ -33,7 +34,7 @@ namespace eve::detail
       }
       auto tmp =  nth_prime(first);
       auto t = tmp >= n;
-      return if_else( t, tmp, nth_prime(last));
+      return if_else(toobig, zero, if_else( t, tmp, nth_prime(last)));
     }
     else
       return apply_over(prime_ceil, n);

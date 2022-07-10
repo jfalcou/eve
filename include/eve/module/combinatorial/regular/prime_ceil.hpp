@@ -14,72 +14,52 @@ namespace eve
   //================================================================================================
   //! @addtogroup combinatorial
   //! @{
-  //! @var prime_ceil
+  //!   @var prime_ceil
+  //!   @brief Returns the the least prime greater or equal to the input.
   //!
-  //! @brief Callable object computing the least prime greater or equal to the input.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | unsigned integral prime_ceil                               |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value N >
+  //!      N prime_ceil(N n) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `n` :  unsigned argument.
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`n`:   [unsigned value](@ref eve::value).
+  //!     The result element type is the same as the input one unless a converter
+  //!     is applied (see below).
   //!
-  //! **Return value**
+  //!     @warning
+  //!       this function will return 0 (or nan, see below) as soon as the input is greater than 104729.
   //!
-  //! The result element type is the same as the input one unless a converter is applied.
+  //!   **Example**
   //!
-  //! A binary search is performed using eve::nth_prime.
+  //!     @godbolt{doc/combinatorial/regular/prime_ceil.cpp}
   //!
-  //!@warning
-  //!    this function will return 0 (or nan) as soon as the input is greater than 104729.
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //! ---
+  //!   * Optimized Conversion Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The converters eve::float_,  eve::double_, eve::floating_ can be applied to
+  //!     produce a floating point output.
   //!
-  //!  Higher-order function generating a masked version of eve::prime_ceil
+  //!    **Example**
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `prime_ceil[cond](x, ...)` is equivalent to `if_else(cond,prime_ceil(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported converters
-  //!
-  //!  * eve::float_,  eve::double_, eve::floating_
-  //!
-  //!     The expression `d(prime_ceil)(x)` where d in one of these 3 converters is supported
-  //!     and produce a floating point output.
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/combinatorial/prime_ceil.cpp}
-  //!
-  //!  @}
+  //!      @godbolt{doc/combinatorial/conversion/prime_ceil.cpp}
+  //! @}
   //================================================================================================
   namespace tag { struct prime_ceil_; }
 
