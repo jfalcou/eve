@@ -18,9 +18,9 @@ namespace eve
   //!   @brief Computes the spherical Bessel function of the second kind,
   //!   \f$ y_{0}(x)= \sqrt{\frac\pi{2x}}Y_{1/2}(x) \f$.
   //!
-  //!  It is the solution of \f$ x^{2}y''+2xy'+x^2 y=0\f$ for which \f$ y(0) = -\infty\f$.
+  //!   It is the solution of \f$ x^{2}y''+2xy'+x^2 y=0\f$ for which \f$ y(0) = -\infty\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -40,14 +40,13 @@ namespace eve
   //!
   //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of \f$\displaystyle y_{0}(x)=-\frac{\cos x }{x}\f$
-  //!    is returned.
+  //!   The value of \f$\displaystyle y_{0}(x)=-\frac{\cos x }{x}\f$ is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/sph_bessel_y0.cpp}
+  //!   @godbolt{doc/bessel/regular/sph_bessel_y0.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sph_bessel_y0_, sph_bessel_y0);

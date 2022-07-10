@@ -21,7 +21,7 @@ namespace eve
   //!
   //!   It is a solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -43,15 +43,15 @@ namespace eve
   //!
   //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of  \f$\displaystyle Y_{n}(x)=\frac{2(z/2)^{-n}}{\sqrt\pi\,
-  //!    \Gamma(1/2-n)}\int _{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{n+1/2}}\,\mathrm {d} \tau \f$.
-  //!    is returned.
+  //!   The value of  \f$\displaystyle Y_{n}(x)=\frac{2(z/2)^{-n}}{\sqrt\pi\,
+  //!   \Gamma(1/2-n)}\int _{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{n+1/2}}\,\mathrm {d} \tau \f$
+  //!   is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/cyl_bessel_yn.cpp}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_yn.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_yn_, cyl_bessel_yn);

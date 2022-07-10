@@ -17,10 +17,10 @@ namespace eve
   //!   @var airy_ai
   //!   @brief Computes the airy function \f$ Ai(x)\f$.
   //!
-  //!  It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
-  //! \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
+  //!   It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
+  //!   \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -42,12 +42,12 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    the value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos \left( \frac{t^3}{3}+xt \right) \,dt\f$
-  //!    is returned.
+  //!    The value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos
+  //!    \left( \frac{t^3}{3}+xt \right) \,dt\f$ is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/airy_ai.cpp}
+  //!   @godbolt{doc/bessel/regular/airy_ai.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(airy_ai_, airy_ai);

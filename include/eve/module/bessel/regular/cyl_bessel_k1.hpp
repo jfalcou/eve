@@ -20,7 +20,7 @@ namespace eve
   //!
   //!   It is a solution of \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -40,15 +40,14 @@ namespace eve
   //!
   //!     * `x` :  positive [real floating argument](@ref eve::floating_real__value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of \f$ \displaystyle K_1(x)=\int_{0}^{\infty} e^{-x \cosh \tau}
-  //!    \cosh \tau\,\mathrm{d}\tau\f$
-  //!    is returned.
+  //!   The value of \f$ \displaystyle K_1(x)=\int_{0}^{\infty} e^{-x \cosh \tau}
+  //!   \cosh \tau\,\mathrm{d}\tau\f$ is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/cyl_bessel_k1.cpp}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_k1.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_k1_, cyl_bessel_k1);

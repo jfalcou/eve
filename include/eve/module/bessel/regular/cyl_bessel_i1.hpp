@@ -18,9 +18,9 @@ namespace eve
   //!   @brief Computes  the modified Bessel function of the first kind,
   //!   \f$ I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$.
   //!
-  //!  It is the solution of  \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = 0\f$.
+  //!   It is the solution of  \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -40,14 +40,14 @@ namespace eve
   //!
   //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of  \f$ \displaystyle I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$
-  //!    is returned.
+  //!   The value of  \f$ \displaystyle I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}
+  //!   \cos\tau\,\mathrm{d}\tau\f$ is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/cyl_bessel_i1.cpp}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_i1.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_i1_, cyl_bessel_i1);

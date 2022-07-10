@@ -18,9 +18,9 @@ namespace eve
   //!   @brief Computes the the spherical Bessel functions of the second kind,
   //!   \f$ y_{n}(x)= \sqrt{\frac\pi{2x}}Y_{n+1/2}(x)\f$.
   //!
-  //!  It is a solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = -\infty\f$
+  //!   It is a solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = -\infty\f$
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -42,15 +42,15 @@ namespace eve
   //!
   //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of \f$ \displaystyle y_{n}(x)=
-  //!    (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\cos x}x\f$
-  //!    is returned.
+  //!   The value of \f$ \displaystyle y_{n}(x)=
+  //!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\cos x}x\f$
+  //!   is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/sph_bessel_yn.cpp}
+  //!   @godbolt{doc/bessel/regular/sph_bessel_yn.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sph_bessel_yn_, sph_bessel_yn);

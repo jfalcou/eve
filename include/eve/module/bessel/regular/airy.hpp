@@ -21,7 +21,7 @@ namespace eve
 //!   This function is designed to be faster than two separate calls to
 //!   eve::airy_ai and eve::airy_bi.
 //!
-//!   **Defined in Header**
+//!   **Defined in header**
 //!
 //!   @code
 //!   #include <eve/module/bessel.hpp>
@@ -43,7 +43,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    the tuple { eve::airy_ai (x), eve::airy_bi (x) } is returned.
+//!    The tuple `{eve::airy_ai (x), eve::airy_bi (x)}` is returned.
 //!
 //!  @groupheader{Example}
 //!

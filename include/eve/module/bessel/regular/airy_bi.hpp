@@ -21,7 +21,7 @@ namespace eve
   //!  \f$Ai(0) = \frac1{3^{1/6}\Gamma(2/3)}\f$ and
   //!  \f$Ai'(0) =\frac{3^{1/6}}{\Gamma(1/3)}\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -43,7 +43,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!     value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
+  //!     The value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
   //!     \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
   //!     \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
   //!     is returned.

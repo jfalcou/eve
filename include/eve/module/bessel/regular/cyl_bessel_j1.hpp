@@ -18,9 +18,9 @@ namespace eve
   //!   @brief Computes the Bessel function of the first kind,
   //!   \f$ J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$.
   //!
-  //!  It is the solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = 0\f$.
+  //!   It is the solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -40,14 +40,14 @@ namespace eve
   //!
   //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of \f$ \displaystyle J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )\,\mathrm {d} \tau \f$
-  //!    is returned.
+  //!   The value of \f$ \displaystyle J_1(x)=\frac1{\pi }\int _{0}^{\pi}\cos(\tau-x\sin \tau )
+  //!   \,\mathrm {d} \tau \f$ is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/cyl_bessel_j1.cpp}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_j1.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_j1_, cyl_bessel_j1);

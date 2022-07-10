@@ -16,11 +16,12 @@ namespace eve
   //! @{
   //!   @var cyl_bessel_in
   //!   @brief Computes  the modified Bessel functions of the first kind,
-  //!    \f$ I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$.
+  //!   \f$ I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}
+  //!   {k!\,\Gamma (k+n +1)}}\f$.
   //!
   //!   It is the solution of \f$ x^{2}y''+xy'+(x^2-n^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -42,14 +43,14 @@ namespace eve
   //!
   //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    the value of \f$\displaystyle I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}{\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$
-  //!    is returned.
+  //!   The value of \f$\displaystyle I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}
+  //!   {\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$ is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/cyl_bessel_in.cpp}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_in.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_in_, cyl_bessel_in);
