@@ -14,47 +14,40 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var sph_bessel_y0
+  //!   @var sph_bessel_y0
+  //!   @brief Computes the spherical Bessel function of the second kind,
+  //!   \f$ y_{0}(x)= \sqrt{\frac\pi{2x}}Y_{1/2}(x) \f$.
   //!
-  //! @brief Callable object computing \f$ y_{0}(x)= \sqrt{\frac\pi{2x}}Y_{1/2}(x) \f$.
+  //!   It is the solution of \f$ x^{2}y''+2xy'+x^2 y=0\f$ for which \f$ y(0) = -\infty\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the sph_bessel_y0 function   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T sph_bessel_y0(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!   The value of \f$\displaystyle y_{0}(x)=-\frac{\cos x }{x}\f$ is returned.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
-  //! \f$ Y_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \f$.
+  //!   @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::sph_bessel_y0)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/sph_bessel_y0.cpp}
-  //!
-  //!  @}
+  //!   @godbolt{doc/bessel/regular/sph_bessel_y0.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sph_bessel_y0_, sph_bessel_y0);
 }

@@ -11,45 +11,45 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup bessel
-  //! @{
-  //! @var airy
-  //!
-  //! @brief Callable object computing the airy function \f$ Ai(x)\f$ and \f$ Bi(x)\f$.
-  //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the airy function                                          |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes simultaneously and [elementwise](@ref glossary_elementwise) the values of
-  //!  [airy_ai](@ref airy_ai) and [airy_bi](@ref airy_bi).
-  //!
-  //! ---
-  //!
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/airy.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+
+//================================================================================================
+//! @addtogroup bessel
+//! @{
+//!   @var airy
+//!   @brief Computes the airy functions values \f$ Ai(x)\f$ and \f$ Bi(x)\f$.
+//!
+//!   This function is designed to be faster than two separate calls to
+//!   eve::airy_ai and eve::airy_bi.
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/bessel.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      kumi::tuple<T, T> airy(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [real floating argument](@ref eve::floating_real__value).
+//!
+//!    **Return value**
+//!
+//!    The tuple `{eve::airy_ai (x), eve::airy_bi (x)}` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/bessel/regular/airy.cpp}
+//! @}
+
   EVE_MAKE_CALLABLE(airy_, airy);
 }
 

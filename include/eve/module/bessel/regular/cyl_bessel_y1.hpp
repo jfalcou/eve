@@ -14,50 +14,42 @@ namespace eve
   //================================================================================================
   //! @addtogroup bessel
   //! @{
-  //! @var cyl_bessel_y1
+  //!   @var cyl_bessel_y1
+  //!   @brief Computes the Bessel function of the second kind,
+  //!    \f$ Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
+  //!   {(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
   //!
-  //! @brief Callable object computing \f$ Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
+  //!   It is a solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = \infty\f$.
   //!
-  //! **Required header:** `#include <eve/module/bessel.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/bessel.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the cyl_bessel_y1 function of the second kind              |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T cyl_bessel_y1(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!   The value of \f$\displaystyle Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}
+  //!   {(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$ is returned.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the value of
+  //!   @groupheader{Example}
   //!
-  //! \f$\displaystyle Y_1(x)=\frac2{\pi}\int_{1}^{\infty}\frac{\cos x\tau}{(\tau^2-1)^{3/2}}\,\mathrm{d}\tau\f$.
-  //!
-  //! It is a solution of \f$ x^{2}y''+xy'+(x^2-1)y=0\f$ for which \f$ y(0) = \infty\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff(eve::cyl_bessel_y1)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/bessel/cyl_bessel_y1.cpp}
-  //!
-  //!  @}
+  //!   @godbolt{doc/bessel/regular/cyl_bessel_y1.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cyl_bessel_y1_, cyl_bessel_y1);
 }
