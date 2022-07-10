@@ -45,7 +45,7 @@ function(eve_build_variants)
   set(variants "")
   foreach(tgt opt IN ZIP_LISTS _args_TARGET _args_OPTIONS)
     if(NOT _args_QUIET)
-      message(STATUS "[EVE] Configuring target '${_args_NAME}' on for ${tgt} with '${opt}'")
+      message(STATUS "[EVE] Configuring target '${_args_NAME}' for target: '${tgt}' with options: '${opt}'")
     endif()
 
     eve_build_support(NAME "${_args_NAME}" INTERFACE "${_args_INTERFACE}" TARGET ${tgt} OPTIONS "${opt}" SOURCES ${_args_SOURCES})

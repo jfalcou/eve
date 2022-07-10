@@ -20,9 +20,9 @@ auto load_kernel()
   static auto handle = []()
   {
     void* handle = nullptr;
-    if(!handle && eve::is_supported(eve::avx2)  ) handle = dlopen("./libcompute_haswell.so", RTLD_NOW);
-    if(!handle && eve::is_supported(eve::sse4_1)) handle = dlopen("./libcompute_sse4.so", RTLD_NOW);
-    if(!handle && eve::is_supported(eve::sse2)  ) handle = dlopen("./libcompute_sse2.so", RTLD_NOW);
+    if(!handle && eve::is_supported(eve::avx2)  ) handle = dlopen("./libcompute_perfect.so" , RTLD_NOW);
+    if(!handle && eve::is_supported(eve::sse4_1)) handle = dlopen("./libcompute_advanced.so", RTLD_NOW);
+    if(!handle && eve::is_supported(eve::sse2)  ) handle = dlopen("./libcompute_basic.so"   , RTLD_NOW);
     return handle;
   }();
 

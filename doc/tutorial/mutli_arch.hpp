@@ -44,8 +44,8 @@ The code breaks down this way:
 
 Nothing special is required except for the `extern "C"` attribute. If we want to get around this
 limitation and have a function taking arbitrary C++ types as parameters, there are different
-strategies.  One such strategy is to use the mangled name to export a function returning an array or
-structure containing all the pre-computed functions pointers from the `.so` library.
+strategies. One such strategy is to use the mangled name to export a function returning an array or
+[structure containing all the pre-computed functions pointers](http://community.qnx.com/sf/docman/do/downloadDocument/projects.toolchain/docman.root.articles/doc1154) from the `.so` library.
 
 ## Writing the dynamic function hub
 We now need to write an actual `compute` function that our users will call. This is the place where
@@ -97,7 +97,10 @@ suffix. For each suffixes, the corresponding options will be used from [OPTIONS]
 Optionally, you can pass an `INTERFACE` name to be used for compiling each of the targets.
 Optionally, the `QUIET` flag will remove error messages.
 
-OK, let's say we want to compile our kernel for SSE2, SSE4.1 and AVX2.
+Once called, `eve_build_variants`sets up a variable in the current scope named `eve_${NAME}_variants`
+that contains the list of target building the shared libraries. It can be used to setup dependencies.
+
+Let's say we want to compile our kernel for SSE2, SSE4.1 and AVX2.
 The CMake code will be looking like:
 
 ```cmake
@@ -106,33 +109,39 @@ project(eve-multi-arch LANGUAGES CXX)
 
 find_package(eve)
 
-eve_build_variants( NAME        compute
-                    INTERFACE   ${EVE_LIBRARIES}
-                    TARGET      sse2 sse4 haswell
-                    OPTIONS     "-msse2"  "-msse4.1" "-mavx2"
+add_library(setup INTERFACE)
+target_link_libraries(setup INTERFACE ${EVE_LIBRARIES})
+target_compile_options(setup INTERFACE "-O3")
+
+eve_build_variants( NAME compute
+                    INTERFACE   setup
+                    TARGET      basic advanced perfect
+                    OPTIONS     "-msse2"  "-msse4.1" "-march=haswell"
                     SOURCES     kernel.cpp
                   )
 
 add_executable(multi-arch main.cpp compute.cpp)
 add_dependencies(multi-arch ${eve_compute_variants})
-target_link_libraries(multi-arch PUBLIC ${EVE_LIBRARIES})
+target_link_libraries(multi-arch PUBLIC setup ${CMAKE_DL_LIBS})
+
 ```
 
 Let's get into the details:
   + After the classical CMake basics, we use `find_package` to grab **EVE**. Depending on your
     **EVE** installation path, you may have to specify `CMAKE_PREFIX_PATH` for CMake to find it.
+  + We define an INTERFACE library that use the main **EVE** interface and add some customisation.
   + We call `eve_build_variants` to build a set of targets. The base name will be `compute` and there
-    are three different target suffixes: `sse2`, `sse4`, `haswell`. For each of those, the following
-    options will be used:  `-msse2`, `-msse4.1`, `-mavx2`. Each target is compiled with its corresponding
-    options. In the end, we expect three libraries to be compiled: `libcompute_sse2.so`, `libcompute_sse4.so`,
-    and `libcompute_haswell.so`. Notice how the suffixes are arbitrary. They just need to correspond
+    are three different target suffixes: `basic`, `advanced`, `perfect`. For each of those, the following
+    options will be used:  `-msse2`, `-msse4.1`, `-march=haswell`. Each target is compiled with its corresponding
+    options. In the end, we expect three libraries to be compiled: `libcompute_basic.so`, `libcompute_advanced.so`,
+    and `libcompute_perfect.so`. Notice how the suffixes are arbitrary. They just need to correspond
     to any naming scheme you see fit and those names will have to be used in the dynamic loading function.
-  + To perform this compilation, we use the `EVE_LIBRARIES` interface that contains all the proper
-    setup for compiling **EVE** code. If you need t specify more options, defines an new interface
-    using `EVE_LIBRARIES`.
+  + To perform this compilation, we use the `setup` interface we customized earlier.
   + We add our executable target that just compiles a main file and the compute function. To be sure
     we don't forget to compile the libraries when we compile the main executable, we use the exported
     `eve_compute_variants` macro that contains the list of targets created by `eve_build_variants`.
+    Because we use `dlopen`, we need to link with the appropriate library which is conveniently
+    provided by `CMAKE_DL_LIBS`.
 
 That's all. Once generated, this CMake file will let you compile the `multi-arch` target that will
 trigger the compilation of the three libraries. Once compiled, the execution of the multi-arch
@@ -141,13 +150,13 @@ executable will produce some output:
 ```bash
 Before:
 1 2 3 4 5 6 7 8 10 20 30 40 50 60 70 80 90 100 1000 10000
->> compute with: X86 AVX2
+>> compute with: X86 AVX2 (with FMA3 support)
 >> eve::wide is: 8 elements large.
 After:
 2 2.82843 3.4641 4 4.47214 4.89898 5.2915 5.65685 6.32456 8.94427 10.9545 12.6491 14.1421 15.4919 16.7332 17.8885 18.9737 20 63.2456 200
 ```
 
-The complete project is available as a test in `test\integration\multi-arch`. As an exercise,
+The complete project is available as in the `examples\multi-arch` folder. As an exercise,
 try to modify the code to handle AVX512 and check everything still works.
 
 # Conclusion
