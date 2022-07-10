@@ -33,7 +33,7 @@ namespace eve::detail
         last =  if_else (test, last, mid);
       }
       auto z = nth_prime(first);
-      z =  if_else((((last == T(maxi)) && (n < T(next))) || (first < T(maxi-1))) && (n > 2), z, zero);
+      z =  if_else((((last == T(maxi)) && (n < T(next))) || (first < T(maxi-1))) && (n >= 2), z, zero);
       return z;
     }
     else

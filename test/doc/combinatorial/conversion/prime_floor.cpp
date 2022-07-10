@@ -10,11 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << " <- pi32              = " << pi32 << '\n'
-            << " -> prime_floor(pi32) = " << eve::prime_floor(pi32) << " // note 0 meaning out of implemented range\n";
-
-  std::uint32_t xi = 18;
-  std::cout << "---- scalar" << '\n'
-            << " xi                 = " << xi << '\n'
-            << " -> prime_floor(xi) = " << eve::prime_floor(xi) << '\n';
+            << " -> float32(prime_floor)(pi32) = " << eve::float32(eve::prime_floor)(pi32) << " // note -nan meaning out of implemented range\n";
   return 0;
 }
