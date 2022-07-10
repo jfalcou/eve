@@ -46,11 +46,11 @@ namespace eve
   //!       this function will return 0 (or nan, see below) as soon as the input
   //!       is greater than 104729 or less than 2.
   //!
-  //!   **Example**
+  //!   @groupheader{Example}
   //!
   //!     @godbolt{doc/combinatorial/regular/prime_floor.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Optimized Conversion Call
   //!

@@ -41,26 +41,27 @@ namespace eve
   //!
   //!     the value of the nth nth_prime number is returned.
   //!
-  //!     Almost no computations are made, the results are from a lookup table.
-  //!     The result element type is the same as the input one unless a converter
-  //!     is applied to `nth_prime` (see below).
-  //!
-  //!     2 is the first prime. It is returned for n=0.
-  //!
   //!     If the output is of integral type, an incorrect computation will return 0, but
   //!     if the result has been converted to a floating value (by modifying
   //!     the object function semantic) incorrect computation will return nan
   //!
-  //!     @warning
-  //!        this function will return 0 (or nan) as soon as the correct
-  //!        result will not be exactly represented in the output type or
-  //!        (for the current implementation) if n is greater or equal to 10000.
+  //!     This function will return 0 (or nan) as soon as the correct
+  //!     result will not be exactly represented in the output type or
+  //!     (for the current implementation) if n is greater or equal to 10000.
+  //!
+  //!   **Notes**
+  //!
+  //!     * Almost no computations are made, the results are from a lookup table.
+  //!       The result element type is the same as the input one unless a converter
+  //!       is applied to `nth_prime` (see below).
+  //!
+  //!     * 2 is the first prime. It is returned for n=0.
   //!
   //!   **Example**
   //!
   //!     @godbolt{doc/combinatorial/regular/nth_prime.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Optimized Conversion Call
   //!

@@ -25,7 +25,7 @@ namespace eve
   //!
   //!     but is computed using the Binet formula.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/combinatorial.hpp>

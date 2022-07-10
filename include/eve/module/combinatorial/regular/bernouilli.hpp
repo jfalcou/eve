@@ -17,7 +17,7 @@ namespace eve
   //!   @var bernouilli
   //!   @brief Computes the nth bernouilli number \f$b_n\f$ as a double.
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/combinatorial.hpp>

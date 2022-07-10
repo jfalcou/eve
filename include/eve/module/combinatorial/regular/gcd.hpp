@@ -18,7 +18,7 @@ namespace eve
   //!   @brief Computes the gretest common divisor of the inputs.
   //!
   //!
-  //!   **Defined in Header**
+  //!   **Defined in header**
   //!
   //!   @code
   //!   #include <eve/module/combinatorial.hpp>

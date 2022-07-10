@@ -49,11 +49,11 @@ namespace eve
   //!    [flint](@ref eve::is_flint). If any
   //!    of the arguments is not flint the result is undefined.
   //!
-  //!   **Example**
+  //!  @groupheader{Example}
   //!
   //!     @godbolt{doc/combinatorial/regular/lcm.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Optimized Conversion Call
   //!

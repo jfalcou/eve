@@ -45,11 +45,11 @@ namespace eve
   //!     @warning
   //!       this function will return 0 (or nan, see below) as soon as the input is greater than 104729.
   //!
-  //!   **Example**
+  //!   @groupheader{Example}
   //!
   //!     @godbolt{doc/combinatorial/regular/prime_ceil.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Optimized Conversion Call
   //!

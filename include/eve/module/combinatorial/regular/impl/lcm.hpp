@@ -9,7 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/combinatorial/regular/gcd.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
