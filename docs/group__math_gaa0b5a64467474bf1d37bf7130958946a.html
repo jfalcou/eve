@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_gaa0b5a64467474bf1d37bf713
 
 <p>Callable object computing the nth root: \(x^{1/n}\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1901"></a>
+<h4><a class="anchor" id="autotoc_md1848"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -165,7 +165,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>nthroot[cond](x, ...)</code> is equivalent to <code>if_else(cond,nthroot(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1905"></a>
+<h4><a class="anchor" id="autotoc_md1852"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></li>
@@ -177,7 +177,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `diff_1st(nthroot)(x,n)`
   diff of \f$f\f$, where \f$f\f$ is the function \f$x \rightarrow \ x^{1/n}\f$.
-</pre> <h4><a class="anchor" id="autotoc_md1906"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1853"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -206,16 +206,15 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                    = &quot;</span> &lt;&lt; n &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot(xf, n)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>(xf, n) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; raw(nthroot)(xf, n)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>(<a class="code hl_variable" href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>)(xf, n) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(nthroot)(xf, n) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>)(xf, n) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="agroup__core_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Callable object computing the negative infinity value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:57</div></div>
 <div class="ttc" id="agroup__math_gaa0b5a64467474bf1d37bf7130958946a_html_gaa0b5a64467474bf1d37bf7130958946a"><div class="ttname"><a href="group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a></div><div class="ttdeci">constexpr callable_nthroot_ nthroot</div><div class="ttdoc">Callable object computing the nth root: .</div><div class="ttdef"><b>Definition:</b> nthroot.hpp:87</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

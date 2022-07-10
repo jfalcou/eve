@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gad3071564e3dd31bf2aacba41
 
 <p>Callable object computing the equality predicate. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md678"></a>
+<h4><a class="anchor" id="autotoc_md615"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -164,7 +164,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>is_equal[cond](x, y)</code> is equivalent to <code>if_else(cond,is_equal(x, y),false(as(is_equal(x, y))))</code></p>
 <p >&mdash; //! &mdash;</p>
-<h4><a class="anchor" id="autotoc_md680"></a>
+<h4><a class="anchor" id="autotoc_md617"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></li>
@@ -180,7 +180,7 @@ Supported decorators</h4>
   - if `t` is a floating_value then the relative error of confusing is `x` and `y` is less than `t` \f$(|x-y| \le t \max(|x|, |y|))\f$.
   - if `t` is a positive integral_value then there are not more than `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
   - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-</pre> <h4><a class="anchor" id="autotoc_md681"></a>
+</pre> <h4><a class="anchor" id="autotoc_md618"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -208,7 +208,7 @@ Example</h4>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_gad3071564e3dd31bf2aacba41aa2079e7_html_gad3071564e3dd31bf2aacba41aa2079e7"><div class="ttname"><a href="group__core_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a></div><div class="ttdeci">constexpr callable_is_equal_ is_equal</div><div class="ttdoc">Callable object computing the equality predicate.</div><div class="ttdef"><b>Definition:</b> is_equal.hpp:98</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

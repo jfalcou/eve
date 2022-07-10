@@ -138,7 +138,7 @@ $(document).ready(function(){initNavTree('group__special_gae09a3d5ef50adfebd1d42
 </div><div class="memdoc">
 
 <p>Callable object computing the normalized lower incomplete \(\Gamma\) function : \(\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\). </p>
-<h4><a class="anchor" id="autotoc_md2155"></a>
+<h4><a class="anchor" id="autotoc_md2106"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -164,10 +164,10 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>gamma_p[cond](x, ...)</code> is equivalent to <code>if_else(cond,gamma_p(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md2159"></a>
+<h4><a class="anchor" id="autotoc_md2110"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md2160"></a>
+<h4><a class="anchor" id="autotoc_md2111"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
@@ -185,7 +185,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- p                = &quot;</span> &lt;&lt; p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- k                = &quot;</span> &lt;&lt; k &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gamma_p(p, k)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_gae09a3d5ef50adfebd1d42611611cae5a.html#gae09a3d5ef50adfebd1d42611611cae5a">eve::gamma_p</a>(p, k) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(eve::gamma_p)(p, k)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__special_gae09a3d5ef50adfebd1d42611611cae5a.html#gae09a3d5ef50adfebd1d42611611cae5a">eve::gamma_p</a>)(p, k) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> kf = 2.1;</div>
 <div class="line">  <span class="keywordtype">float</span> pf = 1.3;</div>
@@ -196,9 +196,8 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__special_gae09a3d5ef50adfebd1d42611611cae5a_html_gae09a3d5ef50adfebd1d42611611cae5a"><div class="ttname"><a href="group__special_gae09a3d5ef50adfebd1d42611611cae5a.html#gae09a3d5ef50adfebd1d42611611cae5a">eve::gamma_p</a></div><div class="ttdeci">constexpr callable_gamma_p_ gamma_p</div><div class="ttdoc">Callable object computing the normalized lower incomplete  function : .</div><div class="ttdef"><b>Definition:</b> gamma_p.hpp:75</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

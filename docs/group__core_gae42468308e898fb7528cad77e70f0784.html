@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gae42468308e898fb7528cad77
 
 <p>Callable object computing the is_nan logical value. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md772"></a>
+<h4><a class="anchor" id="autotoc_md709"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -156,10 +156,10 @@ Members Functions</h4>
 <p ><code>x</code>: <a class="el" href="concepteve_1_1value.html">value</a>.</p>
 <p ><b>Return value</b></p>
 <p >The call:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784">is_nan</a>(x);</div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical_3_01T_01_4.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784">is_nan</a>(x);</div>
 <div class="ttc" id="agroup__core_gae42468308e898fb7528cad77e70f0784_html_gae42468308e898fb7528cad77e70f0784"><div class="ttname"><a href="group__core_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784">eve::is_nan</a></div><div class="ttdeci">constexpr callable_is_nan_ is_nan</div><div class="ttdoc">Callable object computing the is_nan logical value.</div><div class="ttdef"><b>Definition:</b> is_nan.hpp:85</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
-</div><!-- fragment --><p >is semantically equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical.html">logical&lt;T&gt;</a> r;</div>
+<div class="ttc" id="astructeve_1_1logical_3_01T_01_4_html"><div class="ttname"><a href="structeve_1_1logical_3_01T_01_4.html">eve::logical&lt; T &gt;</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
+</div><!-- fragment --><p >is semantically equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical_3_01T_01_4.html">logical&lt;T&gt;</a> r;</div>
 <div class="line"><span class="keywordflow">if</span>   <span class="keyword">constexpr</span>(<a class="code hl_concept" href="concepteve_1_1floating__real__value.html">floating_real_value&lt;T&gt;</a>) r = <a class="code hl_variable" href="group__core_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">is_not_equal</a>(x, x);</div>
 <div class="line"><span class="keywordflow">else</span> <span class="keyword">constexpr</span>(<a class="code hl_concept" href="concepteve_1_1integral__real__value.html">integral_real_value&lt;T&gt;</a>) r = <a class="code hl_variable" href="group__core_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">false_</a>(<a class="code hl_struct" href="structeve_1_1as.html">as</a>(x));</div>
 <div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
@@ -175,10 +175,10 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>is_nan[cond](x)</code> is equivalent to <code>if_else(cond,is_nan(x),false(as(is_nan(x))))</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md776"></a>
+<h4><a class="anchor" id="autotoc_md713"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md777"></a>
+<h4><a class="anchor" id="autotoc_md714"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -205,7 +205,7 @@ Example</h4>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Callable object computing the negative infinity value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:57</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

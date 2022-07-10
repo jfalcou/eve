@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gad8c0f5b1fcc6893e05d6460f
 
 <p>Callable object computing the is_normal logical value. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md811"></a>
+<h4><a class="anchor" id="autotoc_md748"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -156,10 +156,10 @@ Members Functions</h4>
 <p ><code>x</code>: <a class="el" href="concepteve_1_1value.html">value</a>.</p>
 <p ><b>Return value</b></p>
 <p >The call:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_gad8c0f5b1fcc6893e05d6460f7846006e.html#gad8c0f5b1fcc6893e05d6460f7846006e">is_normal</a>(x);</div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical_3_01T_01_4.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_gad8c0f5b1fcc6893e05d6460f7846006e.html#gad8c0f5b1fcc6893e05d6460f7846006e">is_normal</a>(x);</div>
 <div class="ttc" id="agroup__core_gad8c0f5b1fcc6893e05d6460f7846006e_html_gad8c0f5b1fcc6893e05d6460f7846006e"><div class="ttname"><a href="group__core_gad8c0f5b1fcc6893e05d6460f7846006e.html#gad8c0f5b1fcc6893e05d6460f7846006e">eve::is_normal</a></div><div class="ttdeci">constexpr callable_is_normal_ is_normal</div><div class="ttdoc">Callable object computing the is_normal logical value.</div><div class="ttdef"><b>Definition:</b> is_normal.hpp:83</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
-</div><!-- fragment --><p >is semantically equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical.html">logical&lt;T&gt;</a> r;</div>
+<div class="ttc" id="astructeve_1_1logical_3_01T_01_4_html"><div class="ttname"><a href="structeve_1_1logical_3_01T_01_4.html">eve::logical&lt; T &gt;</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
+</div><!-- fragment --><p >is semantically equivalent to: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical_3_01T_01_4.html">logical&lt;T&gt;</a> r;</div>
 <div class="line"><span class="keywordflow">if</span>   <span class="keyword">constexpr</span>(<a class="code hl_concept" href="concepteve_1_1floating__real__value.html">floating_real_value&lt;T&gt;</a>) r = <a class="code hl_variable" href="group__core_gae4625c98cb401e459e64f3ef3574c56c.html#gae4625c98cb401e459e64f3ef3574c56c">is_not_denormal</a>(x) &amp;&amp; <a class="code hl_variable" href="group__core_gadb59eac8d4aed0fa759b6feadcefc406.html#gadb59eac8d4aed0fa759b6feadcefc406">is_finite</a>(x) &amp;&amp; <a class="code hl_variable" href="group__core_ga9138a027fc4acf4517e8e1f2b898ed2d.html#ga9138a027fc4acf4517e8e1f2b898ed2d">is_nez</a>(x);</div>
 <div class="line"><span class="keywordflow">else</span> <span class="keyword">constexpr</span>(<a class="code hl_concept" href="concepteve_1_1integral__real__value.html">integral_real_value&lt;T&gt;</a>) r = <a class="code hl_variable" href="group__core_ga9138a027fc4acf4517e8e1f2b898ed2d.html#ga9138a027fc4acf4517e8e1f2b898ed2d">is_nez</a>(x);</div>
 <div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
@@ -174,10 +174,10 @@ Members Functions</h4>
 <p ><code>cond</code> : conditional expression</p>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>is_normal[cond](x)</code> is equivalent to <code>if_else(cond,is_normal(x),false(as(is_normal(x))))</code></p>
-<h4><a class="anchor" id="autotoc_md814"></a>
+<h4><a class="anchor" id="autotoc_md751"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md815"></a>
+<h4><a class="anchor" id="autotoc_md752"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -210,7 +210,7 @@ Example</h4>
 <div class="ttc" id="agroup__core_gae72600e71c0e7744eb75e5dc754bda7e_html_gae72600e71c0e7744eb75e5dc754bda7e"><div class="ttname"><a href="group__core_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e">eve::mindenormal</a></div><div class="ttdeci">constexpr callable_mindenormal_ mindenormal</div><div class="ttdoc">Callable object computing the least denormal positive value.</div><div class="ttdef"><b>Definition:</b> mindenormal.hpp:57</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

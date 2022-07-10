@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_ga9f1d326d08e1125ddd0a032f
 
 <p>Callable object performing the simultaneous computations of sinh and cosh. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md2000"></a>
+<h4><a class="anchor" id="autotoc_md1947"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -164,10 +164,10 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>sinhcosh[cond](x, ...)</code> is equivalent to <code>if_else(cond,sinhcosh(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md2004"></a>
+<h4><a class="anchor" id="autotoc_md1951"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md2005"></a>
+<h4><a class="anchor" id="autotoc_md1952"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -181,16 +181,11 @@ Example</h4>
 <div class="line">               <a class="code hl_variable" href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), <a class="code hl_variable" href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), <a class="code hl_variable" href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> [s, c]    = <a class="code hl_variable" href="group__math_ga9f1d326d08e1125ddd0a032fa7a179af.html#ga9f1d326d08e1125ddd0a032fa7a179af">eve::sinhcosh</a>(pf);</div>
-<div class="line">  <span class="keyword">auto</span> [ds, dc]  = <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__math_ga9f1d326d08e1125ddd0a032fa7a179af.html#ga9f1d326d08e1125ddd0a032fa7a179af">eve::sinhcosh</a>)(pf);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                  = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sinhcosh(pf)        = [&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; s &lt;&lt; <span class="stringliteral">&quot;, \n&quot;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; c &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;                       ]\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(sinhcosh)(pf)  = [&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; ds &lt;&lt; <span class="stringliteral">&quot;, \n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; dc &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;                       ]\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 2.3;</div>
@@ -201,14 +196,13 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sinhcosh(xf) = [&quot;</span> &lt;&lt; ss &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; sc &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Callable object computing the negative infinity value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:57</div></div>
 <div class="ttc" id="agroup__core_gae72600e71c0e7744eb75e5dc754bda7e_html_gae72600e71c0e7744eb75e5dc754bda7e"><div class="ttname"><a href="group__core_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e">eve::mindenormal</a></div><div class="ttdeci">constexpr callable_mindenormal_ mindenormal</div><div class="ttdoc">Callable object computing the least denormal positive value.</div><div class="ttdef"><b>Definition:</b> mindenormal.hpp:57</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
 <div class="ttc" id="agroup__math_ga9f1d326d08e1125ddd0a032fa7a179af_html_ga9f1d326d08e1125ddd0a032fa7a179af"><div class="ttname"><a href="group__math_ga9f1d326d08e1125ddd0a032fa7a179af.html#ga9f1d326d08e1125ddd0a032fa7a179af">eve::sinhcosh</a></div><div class="ttdeci">constexpr callable_sinhcosh_ sinhcosh</div><div class="ttdoc">Callable object performing the simultaneous computations of sinh and cosh.</div><div class="ttdef"><b>Definition:</b> sinhcosh.hpp:73</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

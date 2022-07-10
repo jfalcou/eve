@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('structeve_1_1expected__cardinal.html',
 
 <p><code>#include &lt;eve/arch/expected_cardinal.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Type, regular_abi ABI = ::eve::emulated_&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Type, regular_abi ABI = eve::current_abi_type&gt;<br />
 struct eve::expected_cardinal&lt; Type, ABI &gt;</div><p >Computes the expected cardinal of a given type. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/arch/expected_cardinal.hpp&gt;</code></p>
 <p ><a class="el" href="structeve_1_1expected__cardinal.html" title="Computes the expected cardinal of a given type.">eve::expected_cardinal</a> computed the cardinal of the register able to store values of type <code>Type</code> for a given SIMD <code>ABI</code> as a native register type.</p>
@@ -151,17 +151,17 @@ Member types</h4>
  </p>
 <h4><a class="anchor" id="autotoc_md3"></a>
 Helper types</h4>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = EVE_CURRENT_ABI&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = eve::current_abi_type&gt;</div>
 <div class="line"><span class="keyword">using </span>expected_cardinal_t = <span class="keyword">typename</span> <a class="code hl_class" href="structeve_1_1fixed.html">expected_cardinal&lt;Type, ABI&gt;::type</a>;</div>
 <div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed&lt; ABI::template expected_cardinal&lt; Type &gt; &gt;</a></div></div>
 </div><!-- fragment --><p ><br  />
  </p>
 <h4><a class="anchor" id="autotoc_md4"></a>
 Helper variable template</h4>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = EVE_CURRENT_ABI&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = eve::current_abi_type&gt;</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> expected_cardinal_v = expected_cardinal_t&lt;Type, ABI&gt;::value;</div>
 </div><!-- fragment --><div class="fragment"><div class="line"><span class="comment">// Cardinal template inline variable to use with functions like eve::load</span></div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, <span class="keyword">typename</span> ABI = EVE_CURRENT_ABI&gt;</div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, <span class="keyword">typename</span> ABI = eve::current_abi_type&gt;</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <a class="code hl_struct" href="structeve_1_1expected__cardinal.html">expected_cardinal&lt;Type,ABI&gt;</a> <span class="keyword">const</span> expected = {};</div>
 <div class="ttc" id="astructeve_1_1expected__cardinal_html"><div class="ttname"><a href="structeve_1_1expected__cardinal.html">eve::expected_cardinal</a></div><div class="ttdoc">Computes the expected cardinal of a given type.</div><div class="ttdef"><b>Definition:</b> expected_cardinal.hpp:69</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->

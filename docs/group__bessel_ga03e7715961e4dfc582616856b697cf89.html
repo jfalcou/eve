@@ -137,31 +137,25 @@ $(document).ready(function(){initNavTree('group__bessel_ga03e7715961e4dfc5826168
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing \( y_{0}(x)= \sqrt{\frac\pi{2x}}Y_{1/2}(x) \). </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/bessel.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md105"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the sph_bessel_y0 function   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; <span class="keywordtype">float</span>ing_real_value T &gt; <span class="keyword">auto</span> operator()( T x ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<p>Computes the spherical Bessel function of the second kind, \( y_{0}(x)= \sqrt{\frac\pi{2x}}Y_{1/2}(x) \). </p>
+<p >It is the solution of \( x^{2}y&#39;&#39;+2xy&#39;+x^2 y=0\) for which \( y(0) = -\infty\).</p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__bessel_ga03e7715961e4dfc582616856b697cf89.html#ga03e7715961e4dfc582616856b697cf89">sph_bessel_y0</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__bessel_ga03e7715961e4dfc582616856b697cf89_html_ga03e7715961e4dfc582616856b697cf89"><div class="ttname"><a href="group__bessel_ga03e7715961e4dfc582616856b697cf89.html#ga03e7715961e4dfc582616856b697cf89">eve::sph_bessel_y0</a></div><div class="ttdeci">constexpr callable_sph_bessel_y0_ sph_bessel_y0</div><div class="ttdoc">Computes the spherical Bessel function of the second kind, .</div><div class="ttdef"><b>Definition:</b> sph_bessel_y0.hpp:52</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating_real_value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Computes <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of \( Y_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \).</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md108"></a>
-Supported decorators</h4>
 <ul>
-<li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
+<li><code>x</code> : real floating argument.</li>
 </ul>
-<pre class="fragment"> The expression `eve::diff(eve::sph_bessel_y0)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md109"></a>
-Example</h4>
+<p ><b>Return value</b></p>
+<p >The value of \(\displaystyle y_{0}(x)=-\frac{\cos x }{x}\) is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -175,7 +169,7 @@ Example</h4>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sph_bessel_y0(pf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga03e7715961e4dfc582616856b697cf89.html#ga03e7715961e4dfc582616856b697cf89">eve::sph_bessel_y0</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(sph_bessel_y0)(pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__bessel_ga03e7715961e4dfc582616856b697cf89.html#ga03e7715961e4dfc582616856b697cf89">eve::sph_bessel_y0</a>)(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xd = -1.0;</div>
 <div class="line"> </div>
@@ -186,9 +180,7 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__bessel_ga03e7715961e4dfc582616856b697cf89_html_ga03e7715961e4dfc582616856b697cf89"><div class="ttname"><a href="group__bessel_ga03e7715961e4dfc582616856b697cf89.html#ga03e7715961e4dfc582616856b697cf89">eve::sph_bessel_y0</a></div><div class="ttdeci">constexpr callable_sph_bessel_y0_ sph_bessel_y0</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> sph_bessel_y0.hpp:59</div></div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

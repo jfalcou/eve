@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gaf23afad64ceaef8914f279dc
 
 <p>Callable object computing the round operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1168"></a>
+<h4><a class="anchor" id="autotoc_md1105"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -165,7 +165,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>round[cond](x, ...)</code> is equivalent to <code>if_else(cond,round(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1172"></a>
+<h4><a class="anchor" id="autotoc_md1109"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__core_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6" title="Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.">eve::downward</a></p>
@@ -183,7 +183,7 @@ Supported decorators</h4>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
 </ul>
 <pre class="fragment"> The expression `diff(round)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md1173"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1110"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -219,7 +219,7 @@ Example</h4>
 <div class="ttc" id="agroup__core_gaa9bc64a3f84f5fdc046854ead9bdf7f6_html_gaa9bc64a3f84f5fdc046854ead9bdf7f6"><div class="ttname"><a href="group__core_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">eve::downward</a></div><div class="ttdeci">constexpr downward_type const downward</div><div class="ttdoc">Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:161</div></div>
 <div class="ttc" id="agroup__core_gac2364bc5fee398715edefffe3c260223_html_gac2364bc5fee398715edefffe3c260223"><div class="ttname"><a href="group__core_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">eve::to_nearest</a></div><div class="ttdeci">constexpr to_nearest_type const to_nearest</div><div class="ttdoc">Higher-order Callable Object imbuing rounding to nearest semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:162</div></div>
 <div class="ttc" id="agroup__core_gaf23afad64ceaef8914f279dc10f03faf_html_gaf23afad64ceaef8914f279dc10f03faf"><div class="ttname"><a href="group__core_gaf23afad64ceaef8914f279dc10f03faf.html#gaf23afad64ceaef8914f279dc10f03faf">eve::round</a></div><div class="ttdeci">constexpr callable_round_ round</div><div class="ttdoc">Callable object computing the round operation.</div><div class="ttdef"><b>Definition:</b> round.hpp:95</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga137e79b9fcabc8ebe46e75b3
 
 <p>Callable object computing a generalized fold operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1156"></a>
+<h4><a class="anchor" id="autotoc_md1093"></a>
 Member Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -165,7 +165,7 @@ Member Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>reduce[cond](x, ...)</code> is equivalent to <code>if_else(cond,reduce(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1160"></a>
+<h4><a class="anchor" id="autotoc_md1097"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8" title="Higher-order Callable Object allowing reduction to generate wide results instead of scalars.">eve::splat</a></li>
@@ -173,7 +173,7 @@ Supported decorators</h4>
 <pre class="fragment">The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
 using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result
 in all lanes.
-</pre> <h4><a class="anchor" id="autotoc_md1161"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1098"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -206,7 +206,7 @@ Example</h4>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_ga137e79b9fcabc8ebe46e75b300beaf03_html_ga137e79b9fcabc8ebe46e75b300beaf03"><div class="ttname"><a href="group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03">eve::reduce</a></div><div class="ttdeci">constexpr callable_reduce_ reduce</div><div class="ttdoc">Callable object computing a generalized fold operation.</div><div class="ttdef"><b>Definition:</b> reduce.hpp:81</div></div>
 <div class="ttc" id="agroup__core_gab3e62d0320771141e199eeb36af09ed8_html_gab3e62d0320771141e199eeb36af09ed8"><div class="ttname"><a href="group__core_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8">eve::splat</a></div><div class="ttdeci">constexpr splat_type const splat</div><div class="ttdoc">Higher-order Callable Object allowing reduction to generate wide results instead of scalars.</div><div class="ttdef"><b>Definition:</b> splat.hpp:44</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

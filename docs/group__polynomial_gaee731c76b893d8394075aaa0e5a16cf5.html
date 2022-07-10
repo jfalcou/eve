@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gaee731c76b893d83940
 
 <p>Callable object computing the gegenbauer operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md2037"></a>
+<h4><a class="anchor" id="autotoc_md1984"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -171,13 +171,13 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>gegenbauer[cond](x, ...)</code> is equivalent to <code>if_else(cond,gegenbauer(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md2042"></a>
+<h4><a class="anchor" id="autotoc_md1989"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
 </ul>
 <pre class="fragment"> The expression `diff(gegenbauer)(n,l,x)` computes the derivative of the function relative to `x`.
-</pre> <h4><a class="anchor" id="autotoc_md2043"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1990"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -203,7 +203,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, 0.3)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">eve::gegenbauer</a>(n, l, 0.3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, -3.0/8.0, 0.3) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">eve::gegenbauer</a>(n, -3.0/8.0, 0.3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, x)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">eve::gegenbauer</a>(n, l, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(gegenbauer)(n, l, x)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">eve::gegenbauer</a>)(n, l, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xs = 3.0;</div>
 <div class="line">  <span class="keywordtype">double</span> ll = 0.1;</div>
@@ -214,9 +214,8 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__polynomial_gaee731c76b893d8394075aaa0e5a16cf5_html_gaee731c76b893d8394075aaa0e5a16cf5"><div class="ttname"><a href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">eve::gegenbauer</a></div><div class="ttdeci">constexpr callable_gegenbauer_ gegenbauer</div><div class="ttdoc">Callable object computing the gegenbauer operation.</div><div class="ttdef"><b>Definition:</b> gegenbauer.hpp:86</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_ga84bdaf88941577d9b23999ae
 
 <p>Callable object computing the simultaneous computation of sin an cos of an argument in degrees. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1983"></a>
+<h4><a class="anchor" id="autotoc_md1930"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -155,14 +155,14 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >The computation returns a pair and is semantically equivalent to <code>{sind(x), cosd(x)}</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1986"></a>
+<h4><a class="anchor" id="autotoc_md1933"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__math_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::quarter_circle</a>, <a class="el" href="group__math_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9" title="Higher-order Callable Object imbuing a limited range standard semantic onto other Callable Objects.">eve::half_circle</a>, eve::full_circle,</p>
 <p class="startli">provide a balance between speed and range limitation.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1987"></a>
+<h4><a class="anchor" id="autotoc_md1934"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -175,16 +175,11 @@ Example</h4>
 <div class="line">  wide_ft pf = {1.0f, 0.0f, <a class="code hl_variable" href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 180.0f};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> [s, c]    = <a class="code hl_variable" href="group__math_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">eve::sindcosd</a>(pf);</div>
-<div class="line">  <span class="keyword">auto</span> [ds, dc]  = <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__math_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">eve::sindcosd</a>)(pf);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                  = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sindcosd(pf)        = [&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; s &lt;&lt; <span class="stringliteral">&quot;, \n&quot;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; c &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;                       ]\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(sindcosd)(pf)  = [&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; ds &lt;&lt; <span class="stringliteral">&quot;, \n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;                        &quot;</span> &lt;&lt; dc &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;                       ]\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 2.3;</div>
@@ -195,11 +190,10 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sindcosd(xf) = [&quot;</span> &lt;&lt; ss &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; sc &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
 <div class="ttc" id="agroup__math_ga84bdaf88941577d9b23999ae965b631b_html_ga84bdaf88941577d9b23999ae965b631b"><div class="ttname"><a href="group__math_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">eve::sindcosd</a></div><div class="ttdeci">constexpr callable_sindcosd_ sindcosd</div><div class="ttdoc">Callable object computing the simultaneous computation of sin an cos of an argument in degrees.</div><div class="ttdef"><b>Definition:</b> sindcosd.hpp:61</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

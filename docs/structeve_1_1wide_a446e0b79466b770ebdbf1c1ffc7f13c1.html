@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('structeve_1_1wide_a446e0b79466b770ebdb
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Type , typename Cardinal &gt; </div>
+template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
 <div class="memtemplate">
 template&lt;std::size_t Slice&gt; </div>
 <table class="mlabels">
@@ -163,17 +163,18 @@ eve::lower_</dd></dl>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Generates the wide [1 ... N]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> i + 1;};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> r = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> + 1;};</div>
 <div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> = r.<a class="code hl_function" href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">slice</a>(eve::lower_);</div>
 <div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> = r.<a class="code hl_function" href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">slice</a>(eve::upper_);</div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
 <div class="ttc" id="agroup__core_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr callable_hi_ hi</div><div class="ttdoc">Callable object computing the higher part of the values.</div><div class="ttdef"><b>Definition:</b> hi.hpp:59</div></div>
 <div class="ttc" id="agroup__core_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr callable_lo_ lo</div><div class="ttdoc">Callable object computing the lower part of the values.</div><div class="ttdef"><b>Definition:</b> lo.hpp:59</div></div>
 <div class="ttc" id="astructeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3_html_ac93011212ddf6a39c16f4f011462bdb3"><div class="ttname"><a href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">eve::wide::slice</a></div><div class="ttdeci">auto slice() const</div><div class="ttdoc">Slice a eve::wide into two eve::wide of half cardinal. Does not participate in overload resolution if...</div><div class="ttdef"><b>Definition:</b> wide.hpp:302</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

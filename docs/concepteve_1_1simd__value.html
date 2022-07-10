@@ -130,13 +130,13 @@ $(document).ready(function(){initNavTree('concepteve_1_1simd__value.html',''); i
 <p >The concept <code>simd_value&lt;T&gt;</code> is satisfied if and only if T verifies that <code>std::is_same_v&lt;cardinal_t&lt;T&gt;,scalar_cardinal&gt; == false</code>.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
-<li><code><a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;&gt;</code></li>
+<li><code>eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;&gt;</code></li>
 <li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;</code> </li>
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1simd__value.html">eve::simd_value</a> =  !std::same_as&lt;eve::cardinal_t&lt;T&gt;, scalar_cardinal&gt;</div>
-<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:32</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

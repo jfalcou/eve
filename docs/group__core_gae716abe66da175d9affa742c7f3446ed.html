@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gae716abe66da175d9affa742c
 
 <p>Callable object computing the min operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1015"></a>
+<h4><a class="anchor" id="autotoc_md952"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -167,27 +167,31 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>min[cond](x, ...)</code> is equivalent to <code>if_else(cond,min(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1019"></a>
+<h4><a class="anchor" id="autotoc_md956"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
 </ul>
-<pre class="fragment"> The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour, that is
-  for two parameters (on an  [elementwise](@ref glossary_elementwise) basis) semanticaly equivalent to:
-  `(x &lt; y) ? x : y` and this behaviour is also ensured on n parameters calls as if this scheme
-  was recursively used.
+<pre class="fragment"> The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour,
+ that is
+  for two parameters (on an  [elementwise](@ref glossary_elementwise) basis) semanticaly
+  equivalent to:
+  `(x &lt; y) ? x : y` and this behaviour is also ensured on n parameters calls as if this
+  scheme was recursively used.
 </pre><ul>
 <li><a class="el" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></li>
 </ul>
-<pre class="fragment"> The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
+<pre class="fragment"> The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a
+ `Nan`, the corresponding
   output element will not be a `Nan`.
 </pre><ul>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
 </ul>
 <pre class="fragment"> The expression `diff&lt; N &gt;(min)(x,args,...)` computes the partial
   derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  their minimum is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-</pre> <h4><a class="anchor" id="autotoc_md1020"></a>
+  their minimum is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to
+  \f$x_N\f$ else 0.
+</pre> <h4><a class="anchor" id="autotoc_md957"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -210,8 +214,8 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; min(pf, qf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; pedantic(min)(pf, qf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; numeric(min)(pf, qf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a>(<a class="code hl_variable" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_1st(min)(pf, qf)  = &quot;</span> &lt;&lt;  <a class="code hl_variable" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a>(<a class="code hl_variable" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(pf, qf) &lt;&lt;  <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_2nd(min)(pf, qf)  = &quot;</span> &lt;&lt;  <a class="code hl_variable" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a>(<a class="code hl_variable" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(pf, qf) &lt;&lt;  <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            </div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = <a class="code hl_variable" href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
@@ -224,16 +228,14 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; numeric(min)(xf, yf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a>(<a class="code hl_variable" href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga0f1f689a82eba82d3e7b36b97b8c15e6_html_ga0f1f689a82eba82d3e7b36b97b8c15e6"><div class="ttname"><a href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a></div><div class="ttdeci">constexpr diff_type&lt; 2 &gt; const diff_2nd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:125</div></div>
-<div class="ttc" id="agroup__core_ga77bcbd0260750a88b913fd304baed476_html_ga77bcbd0260750a88b913fd304baed476"><div class="ttname"><a href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff_1st</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:92</div></div>
 <div class="ttc" id="agroup__core_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:52</div></div>
 <div class="ttc" id="agroup__core_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Callable object computing the negative infinity value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:57</div></div>
-<div class="ttc" id="agroup__core_gae716abe66da175d9affa742c7f3446ed_html_gae716abe66da175d9affa742c7f3446ed"><div class="ttname"><a href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a></div><div class="ttdeci">constexpr callable_min_ min</div><div class="ttdoc">Callable object computing the min operation.</div><div class="ttdef"><b>Definition:</b> min.hpp:99</div></div>
+<div class="ttc" id="agroup__core_gae716abe66da175d9affa742c7f3446ed_html_gae716abe66da175d9affa742c7f3446ed"><div class="ttname"><a href="group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a></div><div class="ttdeci">constexpr callable_min_ min</div><div class="ttdoc">Callable object computing the min operation.</div><div class="ttdef"><b>Definition:</b> min.hpp:104</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

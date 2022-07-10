@@ -139,25 +139,21 @@ $(document).ready(function(){initNavTree('group__polynomial_ga63f3bcbf440bab3965
 
 <p>Callable object computing the newton operation: \(\sum_{i = 0}^n c_i\prod_{j = 0}^i (x-n_i)\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md2067"></a>
+<h4><a class="anchor" id="autotoc_md2014"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the newton operation    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
+<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the newton operation   </td></tr>
 </table>
 <hr  />
 <div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, range <span class="keyword">auto</span> c, range <span class="keyword">auto</span> n) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> x, std::inputiterator <span class="keyword">auto</span> firstcoef, std::inputiterator <span class="keyword">auto</span> sentinel, std::inputiterator <span class="keyword">auto</span> firstnode) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
 </div><!-- fragment --><hr  />
 <p ><b>Parameters</b></p>
 <p ><code>x</code>: <a class="el" href="concepteve_1_1value.html">value x</a>.</p>
-<p ><code>c</code>, <code>n</code>`: <a class="el" href="concepteve_1_1value.html">values </a> Range containing the coefficients</p>
-<p ><code>firstcoef</code>, <code>sentinel</code>,<code>firstnode</code>: std::input_iterator conforming pair of iterators through the coefficients and start of the nodes</p>
+<p ><code>c</code>, <code>n</code>`: <a class="el" href="concepteve_1_1value.html">values </a> Range containing respectively the coefficients and the nodes</p>
 <p ><b>Return value</b></p>
 <p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of polynomial function(s) represented in newton form by the coefficients and the nodes.</p>
 <p >The result type is of the compatibility type of the coefficients and the evaluation value <code>x</code>.</p>
@@ -167,14 +163,7 @@ Members Functions</h4>
 </ul>
 </dd></dl>
 <hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f" title="Callable object computing the newton operation: .">eve::newton</a></p>
-<p ><b>Parameters</b></p>
-<p ><code>cond</code> : conditional expression</p>
-<p ><b>Return value</b></p>
-<p >A Callable object so that the expression <code>newton[cond](x, ...)</code> is equivalent to <code>if_else(cond,newton(x, ...),x)</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md2072"></a>
+<h4><a class="anchor" id="autotoc_md2018"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
@@ -186,7 +175,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `numeric(newton)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   `fma(a,x,b)`.
-</pre> <h4><a class="anchor" id="autotoc_md2073"></a>
+</pre> <h4><a class="anchor" id="autotoc_md2019"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -195,33 +184,26 @@ Example</h4>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int  , eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line"> </div>
 <div class="line">  wide_ft xd = {-0.3, 0.5, 0.0, 2.0};</div>
-<div class="line">  wide_ft x(0.5);</div>
 <div class="line">  std::vector&lt;float&gt; v {1, -2, 3, -4};</div>
 <div class="line">  std::list&lt;float&gt;   l {1, -2, 3, -4};</div>
 <div class="line">  std::vector&lt;float&gt;   n {1, 2, 6};</div>
-<div class="line">  std::vector&lt;wide_ft&gt; wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                          = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                           = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- l and v contain  {1, -2, 3, -4} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n       contains { 1, 2, 6} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }&quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, l, n)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, l, n)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, v, n)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, v, n)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, &amp;l[0], &amp;v[4], &amp;n[0])             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, &amp;v[0], &amp;v[4], &amp;n[0]) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, wv, n)                           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, wv, n) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, v, n)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, v, n)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga63f3bcbf440bab39651168653ec0079f_html_ga63f3bcbf440bab39651168653ec0079f"><div class="ttname"><a href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a></div><div class="ttdeci">constexpr callable_newton_ newton</div><div class="ttdoc">Callable object computing the newton operation: .</div><div class="ttdef"><b>Definition:</b> newton.hpp:97</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="agroup__polynomial_ga63f3bcbf440bab39651168653ec0079f_html_ga63f3bcbf440bab39651168653ec0079f"><div class="ttname"><a href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a></div><div class="ttdeci">constexpr callable_newton_ newton</div><div class="ttdoc">Callable object computing the newton operation: .</div><div class="ttdef"><b>Definition:</b> newton.hpp:77</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -21,11 +21,13 @@ var searchData=
   ['exp_18',['exp',['../group__math_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42',1,'eve']]],
   ['exp10_19',['exp10',['../group__math_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a',1,'eve']]],
   ['exp2_20',['exp2',['../group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51',1,'eve']]],
-  ['exp_5fint_21',['exp_int',['../group__special_gae3e83c43d4d111542f98b45ff2205134.html#gae3e83c43d4d111542f98b45ff2205134',1,'eve']]],
-  ['exp_5fpi_22',['exp_pi',['../group__math_gaf8a7fc5bc2a6781106d1d54b83cdc0d8.html#gaf8a7fc5bc2a6781106d1d54b83cdc0d8',1,'eve']]],
-  ['expm1_23',['expm1',['../group__math_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745',1,'eve']]],
-  ['exponent_24',['exponent',['../group__core_ga720ef267847ac42c18eb45878ccf32b5.html#ga720ef267847ac42c18eb45878ccf32b5',1,'eve']]],
-  ['exponentmask_25',['exponentmask',['../group__core_ga9c49e96e0543e6b6719260adde8cca87.html#ga9c49e96e0543e6b6719260adde8cca87',1,'eve']]],
-  ['expx2_26',['expx2',['../group__math_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011',1,'eve']]],
-  ['extreme_5fvalue_5fskewness_27',['extreme_value_skewness',['../group__math_gaa9b21aecc3a956e01ffdc658398add11.html#gaa9b21aecc3a956e01ffdc658398add11',1,'eve']]]
+  ['exp_5fi_21',['exp_i',['../group__complex_ga2949d21bf825780b8c4ce4011904eebc.html#ga2949d21bf825780b8c4ce4011904eebc',1,'eve']]],
+  ['exp_5fint_22',['exp_int',['../group__special_gae3e83c43d4d111542f98b45ff2205134.html#gae3e83c43d4d111542f98b45ff2205134',1,'eve']]],
+  ['exp_5fipi_23',['exp_ipi',['../group__complex_ga1be92505c979a40bc2c6e2ad52f8988b.html#ga1be92505c979a40bc2c6e2ad52f8988b',1,'eve']]],
+  ['exp_5fpi_24',['exp_pi',['../group__math_gaf8a7fc5bc2a6781106d1d54b83cdc0d8.html#gaf8a7fc5bc2a6781106d1d54b83cdc0d8',1,'eve']]],
+  ['expm1_25',['expm1',['../group__math_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745',1,'eve']]],
+  ['exponent_26',['exponent',['../group__core_ga720ef267847ac42c18eb45878ccf32b5.html#ga720ef267847ac42c18eb45878ccf32b5',1,'eve']]],
+  ['exponentmask_27',['exponentmask',['../group__core_ga9c49e96e0543e6b6719260adde8cca87.html#ga9c49e96e0543e6b6719260adde8cca87',1,'eve']]],
+  ['expx2_28',['expx2',['../group__math_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011',1,'eve']]],
+  ['extreme_5fvalue_5fskewness_29',['extreme_value_skewness',['../group__math_gaa9b21aecc3a956e01ffdc658398add11.html#gaa9b21aecc3a956e01ffdc658398add11',1,'eve']]]
 ];

@@ -137,32 +137,27 @@ $(document).ready(function(){initNavTree('group__bessel_ga40e333409894e1ca14d956
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing \( J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \). </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/bessel.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md45"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the cyl_bessel_j0 function   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; <span class="keywordtype">float</span>ing_real_value T &gt; <span class="keyword">auto</span> operator()( T x ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating_real_value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Computes <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of \( J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )\,\mathrm {d} \tau \).</p>
+<p>Computes the Bessel function of the first kind, \( J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau)
+  \,\mathrm {d} \tau \). </p>
 <p >It is the solution of \( x^{2}y&#39;&#39;+xy&#39;+x^2y=0\) for which \( y(0) = 1\).</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md48"></a>
-Supported decorators</h4>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34">cyl_bessel_j0</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__bessel_ga40e333409894e1ca14d956fc96a3da34_html_ga40e333409894e1ca14d956fc96a3da34"><div class="ttname"><a href="group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34">eve::cyl_bessel_j0</a></div><div class="ttdeci">constexpr callable_cyl_bessel_j0_ cyl_bessel_j0</div><div class="ttdoc">Computes the Bessel function of the first kind, .</div><div class="ttdef"><b>Definition:</b> cyl_bessel_j0.hpp:54</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
+<li><code>x</code> : real floating argument.</li>
 </ul>
-<pre class="fragment"> The expression `eve::diff(eve::cyl_bessel_j0)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md49"></a>
-Example</h4>
+<p ><b>Return value</b></p>
+<p >The value of \( \displaystyle J_0(x)=\frac1{\pi }\int _{0}^{\pi}\cos(x\sin \tau )
+  \,\mathrm {d} \tau \) is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -176,7 +171,7 @@ Example</h4>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cyl_bessel_j0(pf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34">eve::cyl_bessel_j0</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(cyl_bessel_j0)(pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34">eve::cyl_bessel_j0</a>)(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xd = -1.0;</div>
 <div class="line"> </div>
@@ -187,9 +182,7 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__bessel_ga40e333409894e1ca14d956fc96a3da34_html_ga40e333409894e1ca14d956fc96a3da34"><div class="ttname"><a href="group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34">eve::cyl_bessel_j0</a></div><div class="ttdeci">constexpr callable_cyl_bessel_j0_ cyl_bessel_j0</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> cyl_bessel_j0.hpp:61</div></div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

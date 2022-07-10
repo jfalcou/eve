@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gaa9a5f13618342522ebb924a8
 
 <p>Callable object computing the fused multiply-add operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md588"></a>
+<h4><a class="anchor" id="autotoc_md525"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -166,7 +166,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>fma[cond](x, ...)</code> is equivalent to <code>if_else(cond,fma(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md592"></a>
+<h4><a class="anchor" id="autotoc_md529"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
@@ -183,7 +183,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `diff_1st(fma)(x,y,z)`, `diff_2nd(fma)(x,y,z)` and `diff_3rd(fma)(x,y,z)` compute the partial
   derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ xy+z\f$.
-</pre> <h4><a class="anchor" id="autotoc_md593"></a>
+</pre> <h4><a class="anchor" id="autotoc_md530"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -212,9 +212,9 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n if the last fma result ends by &#39;0, inf}&#39;, it is because\n&quot;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; the system has no simd fma family intrinsics\n&quot;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; or is not configured to use them.\n\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; diff_1st(fma)(of, pf, qf)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a>(<a class="code hl_variable" href="group__core_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a>)(of, pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; diff_2nd(fma)(of, pf, qf)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a>(<a class="code hl_variable" href="group__core_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a>)(of, pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; diff_3rd(fma)(of, pf, qf)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0">eve::diff_3rd</a>(<a class="code hl_variable" href="group__core_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a>)(of, pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            </div>
+<div class="line">            </div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; std::setprecision(10) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- vm                                = &quot;</span> &lt;&lt; vm &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -230,14 +230,11 @@ Example</h4>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr callable_valmax_ valmax</div><div class="ttdoc">Callable object computing the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:54</div></div>
 <div class="ttc" id="agroup__core_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr callable_eps_ eps</div><div class="ttdoc">Callable object computing the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:61</div></div>
-<div class="ttc" id="agroup__core_ga0f1f689a82eba82d3e7b36b97b8c15e6_html_ga0f1f689a82eba82d3e7b36b97b8c15e6"><div class="ttname"><a href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a></div><div class="ttdeci">constexpr diff_type&lt; 2 &gt; const diff_2nd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:125</div></div>
-<div class="ttc" id="agroup__core_ga77bcbd0260750a88b913fd304baed476_html_ga77bcbd0260750a88b913fd304baed476"><div class="ttname"><a href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff_1st</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:92</div></div>
 <div class="ttc" id="agroup__core_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
 <div class="ttc" id="agroup__core_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:52</div></div>
-<div class="ttc" id="agroup__core_gaa4398b2ef5de81cacafc812406adf5d0_html_gaa4398b2ef5de81cacafc812406adf5d0"><div class="ttname"><a href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0">eve::diff_3rd</a></div><div class="ttdeci">constexpr diff_type&lt; 3 &gt; const diff_3rd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:158</div></div>
 <div class="ttc" id="agroup__core_gaa9a5f13618342522ebb924a864555cc1_html_gaa9a5f13618342522ebb924a864555cc1"><div class="ttname"><a href="group__core_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a></div><div class="ttdeci">constexpr callable_fma_ fma</div><div class="ttdoc">Callable object computing the fused multiply-add operation.</div><div class="ttdef"><b>Definition:</b> fma.hpp:97</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

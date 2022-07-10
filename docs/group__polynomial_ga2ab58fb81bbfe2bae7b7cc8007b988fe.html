@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga2ab58fb81bbfe2bae7
 
 <p>Callable object computing the reverse_horner operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md2074"></a>
+<h4><a class="anchor" id="autotoc_md2020"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -180,7 +180,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>reverse_horner[cond](x, ...)</code> is equivalent to <code>if_else(cond,reverse_horner(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md2079"></a>
+<h4><a class="anchor" id="autotoc_md2025"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
@@ -192,7 +192,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `numeric(reverse_horner)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
   `fma(a,x,b)`.
-</pre> <h4><a class="anchor" id="autotoc_md2080"></a>
+</pre> <h4><a class="anchor" id="autotoc_md2026"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -212,7 +212,6 @@ Example</h4>
 <div class="line">  wide_ft x(0.5);</div>
 <div class="line">  std::vector&lt;float&gt; v {-4, 3, -2, 1};</div>
 <div class="line">  std::list&lt;float&gt;   l {-4, 3, -2, 1};</div>
-<div class="line">  <span class="keywordtype">float</span> ca[4] = {-4, 3, -2, 1};</div>
 <div class="line">  std::vector&lt;wide_ft&gt; wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -221,15 +220,12 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- l and v contain  {-4, 3, -2, 1} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }&quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, 1, -2, 3, -4)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, 1, -2, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, eve::one, -2, 3, -4))         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, <a class="code hl_variable" href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">eve::one</a>, -2, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(0.5 1, b, 3, -4)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(0.5, 1, b, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(x, 1, -2, 3, -4)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, 1, -2, 3, -4)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, l)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, l)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, v)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, v)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, eve::one, &amp;v[1], &amp;v[4])       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, <a class="code hl_variable" href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">eve::one</a>, &amp;v[1], &amp;v[4]) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, std::begin(ca), std::end(ca)) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, std::begin(ca), std::end(ca) ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, wv)                           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>(xd, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(reverse_horner)(x, 1, -2, 3, -4)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a>)(x, 1, -2, 3, -4)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xs = 0.1;</div>
 <div class="line"> </div>
@@ -239,10 +235,8 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
-<div class="ttc" id="agroup__core_ga6a98ab15a9dca6c0d761b0505b222cc5_html_ga6a98ab15a9dca6c0d761b0505b222cc5"><div class="ttname"><a href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">eve::one</a></div><div class="ttdeci">constexpr callable_one_ one</div><div class="ttdoc">Callable object computing the 1 value.</div><div class="ttdef"><b>Definition:</b> one.hpp:51</div></div>
 <div class="ttc" id="agroup__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe_html_ga2ab58fb81bbfe2bae7b7cc8007b988fe"><div class="ttname"><a href="group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe">eve::reverse_horner</a></div><div class="ttdeci">constexpr callable_reverse_horner_ reverse_horner</div><div class="ttdoc">Callable object computing the reverse_horner operation.</div><div class="ttdef"><b>Definition:</b> reverse_horner.hpp:105</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

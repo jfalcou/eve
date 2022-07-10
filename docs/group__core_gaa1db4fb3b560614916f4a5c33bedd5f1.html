@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gaa1db4fb3b560614916f4a5c3
 
 <p>Callable object computing the count_true value. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md489"></a>
+<h4><a class="anchor" id="autotoc_md421"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -156,20 +156,20 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >an int value: the number of non zero elements in <code>x</code>.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md492"></a>
+<h4><a class="anchor" id="autotoc_md424"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md493"></a>
+<h4><a class="anchor" id="autotoc_md425"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1logical.html">eve::logical&lt;eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = eve::logical&lt;eve::wide&lt;float, eve::fixed&lt;4&gt;&gt;&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1logical.html">eve::logical&lt;float&gt;</a>  xf = <span class="keyword">true</span>;</div>
+<div class="line">  eve::logical&lt;float&gt;  xf = <span class="keyword">true</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf         = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -186,7 +186,6 @@ Example</h4>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_gaa1db4fb3b560614916f4a5c33bedd5f1_html_gaa1db4fb3b560614916f4a5c33bedd5f1"><div class="ttname"><a href="group__core_gaa1db4fb3b560614916f4a5c33bedd5f1.html#gaa1db4fb3b560614916f4a5c33bedd5f1">eve::count_true</a></div><div class="ttdeci">constexpr callable_count_true_ count_true</div><div class="ttdoc">Callable object computing the count_true value.</div><div class="ttdef"><b>Definition:</b> count_true.hpp:57</div></div>
 <div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:487</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
