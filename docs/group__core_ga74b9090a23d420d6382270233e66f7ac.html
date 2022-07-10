@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga74b9090a23d420d638227023
 
 <p>Callable object computing the if_else operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md650"></a>
+<h4><a class="anchor" id="autotoc_md587"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -161,9 +161,9 @@ Members Functions</h4>
 <div class="line">}</div>
 <div class="line"><span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(scalar_value&lt; U &gt; &amp;&amp; scalar_value&lt; V &gt;)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i &lt; cardinal_v&lt; T &gt;; ++i)</div>
+<div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>=0; i &lt; cardinal_v&lt; T &gt;; ++<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>)</div>
 <div class="line">  {</div>
-<div class="line">    r[i] = xx[i] ? y : z;</div>
+<div class="line">    r[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] = xx[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] ? y : z;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"><span class="keywordflow">else</span></div>
@@ -171,14 +171,15 @@ Members Functions</h4>
 <div class="line">  <span class="keyword">using </span>C = wide&lt; element_t&lt; T &gt;, cardinal_t&lt; UV &gt;&gt;;</div>
 <div class="line">  <span class="keyword">auto</span> xx = C(x);</div>
 <div class="line">  UV r;</div>
-<div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i&lt;cardinal_v&lt; UV &gt;; ++i)</div>
+<div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>=0; i&lt;cardinal_v&lt; UV &gt;; ++<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>)</div>
 <div class="line">  {</div>
-<div class="line">    r[i] = xx[i] ? y[i] : z[i];</div>
+<div class="line">    r[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] = xx[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] ? y[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] : z[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>];</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:70</div></div>
+<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:71</div></div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
 </div><!-- fragment --><p >if <code>U</code>, <code>V</code> and <code>T</code> are scalar or if <code>U</code> or <code>V</code> are simd_values the result is of type <code>UV</code>, otherwise it is of type <code>wide&lt; UV, cardinal_t&lt; T &gt;&gt;</code>.</p>
-<h4><a class="anchor" id="autotoc_md652"></a>
+<h4><a class="anchor" id="autotoc_md589"></a>
 Possible optimizations</h4>
 <p >The following calls where <code>x</code>, <code>y</code> and <code>z</code> are values can be optimized:</p>
 <ul>
@@ -191,10 +192,10 @@ Possible optimizations</h4>
 <li><code>if_else(x, mone&lt; T &gt;(), z )</code> writing: <code>if_else(x, eve::mone_, z   )</code></li>
 <li><code>if_else(x, zero&lt; T &gt;(), z )</code> writing: <code>if_else(x, eve::zero_, z   )</code></li>
 </ul>
-<h4><a class="anchor" id="autotoc_md653"></a>
+<h4><a class="anchor" id="autotoc_md590"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md654"></a>
+<h4><a class="anchor" id="autotoc_md591"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -220,7 +221,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::if_else(lsi, pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a>(lsi, <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  iT               ssi = 3, xi = 3, yi = 4;</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1logical.html">eve::logical&lt;iT&gt;</a> lssi = <span class="keyword">false</span>;</div>
+<div class="line">  eve::logical&lt;iT&gt; lssi = <span class="keyword">false</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; ssi =                         = &quot;</span> &lt;&lt; ssi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -233,8 +234,7 @@ Example</h4>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_ga74b9090a23d420d6382270233e66f7ac_html_ga74b9090a23d420d6382270233e66f7ac"><div class="ttname"><a href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a></div><div class="ttdeci">constexpr callable_if_else_ if_else</div><div class="ttdoc">Callable object computing the if_else operation.</div><div class="ttdef"><b>Definition:</b> if_else.hpp:100</div></div>
 <div class="ttc" id="agroup__math_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

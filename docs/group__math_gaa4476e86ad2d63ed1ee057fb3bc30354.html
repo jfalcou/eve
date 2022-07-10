@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_gaa4476e86ad2d63ed1ee057fb
 
 <p>Callable object computing the atan2 operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1699"></a>
+<h4><a class="anchor" id="autotoc_md1646"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -170,7 +170,7 @@ Members Functions</h4>
  In all other cases, the result is standard conformant.
 </pre><p> The result type is the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the two parameters.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1702"></a>
+<h4><a class="anchor" id="autotoc_md1649"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
@@ -187,7 +187,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `diff_1st(atan2)(x,y)` and `diff_2nd(atan2)(x,y)` computes the partial
   derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{atan2}(x,y)\f$.
-</pre> <h4><a class="anchor" id="autotoc_md1703"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1650"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -205,8 +205,8 @@ Example</h4>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                      = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; atan2(pf, qf)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_1st(atan2)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a>(<a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_2nd(atan2)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a>(<a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    </div>
+<div class="line">    ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 2.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = 10.0f;</div>
@@ -217,10 +217,8 @@ Example</h4>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; atan2(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga0f1f689a82eba82d3e7b36b97b8c15e6_html_ga0f1f689a82eba82d3e7b36b97b8c15e6"><div class="ttname"><a href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a></div><div class="ttdeci">constexpr diff_type&lt; 2 &gt; const diff_2nd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:125</div></div>
-<div class="ttc" id="agroup__core_ga77bcbd0260750a88b913fd304baed476_html_ga77bcbd0260750a88b913fd304baed476"><div class="ttname"><a href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff_1st</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:92</div></div>
 <div class="ttc" id="agroup__math_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr callable_atan2_ atan2</div><div class="ttdoc">Callable object computing the atan2 operation.</div><div class="ttdef"><b>Definition:</b> atan2.hpp:94</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

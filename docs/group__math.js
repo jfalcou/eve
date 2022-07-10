@@ -31,7 +31,7 @@ var group__math =
     [ "eve::catalan", "group__math_ga241bb5895d45922c3d0767e7845c43ff.html#ga241bb5895d45922c3d0767e7845c43ff", null ],
     [ "eve::cbrt", "group__math_ga5520218c452db7b34e883bf0f7a14488.html#ga5520218c452db7b34e883bf0f7a14488", null ],
     [ "eve::cbrt_pi", "group__math_ga1ca12d4cabb390240a7acd732bf0b828.html#ga1ca12d4cabb390240a7acd732bf0b828", null ],
-    [ "eve::conj", "group__math_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951", null ],
+    [ "eve::conj", "group__math_ga2b5301bdf4ede6885c99aff10202ac91.html#ga2b5301bdf4ede6885c99aff10202ac91", null ],
     [ "eve::cos", "group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86", null ],
     [ "eve::cos_1", "group__math_ga265ad476486d614ca2697324bc06e2f1.html#ga265ad476486d614ca2697324bc06e2f1", null ],
     [ "eve::cosd", "group__math_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000", null ],

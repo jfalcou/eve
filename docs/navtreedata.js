@@ -26,41 +26,41 @@ var NAVTREE =
 [
   [ "E.V.E", "index.html", [
     [ "The Expressive Vector Engine", "index.html", [
-      [ "Video materials", "index.html#autotoc_md2237", null ],
-      [ "Bibliographic References", "index.html#autotoc_md2238", null ]
+      [ "Video materials", "index.html#autotoc_md2188", null ],
+      [ "Bibliographic References", "index.html#autotoc_md2189", null ]
     ] ],
     [ "Installation & Quick Start", "install.html", [
-      [ "Pre-requisites", "install.html#autotoc_md2259", null ],
-      [ "Retrieving the source", "install.html#autotoc_md2260", [
-        [ "Github", "install.html#autotoc_md2261", null ],
-        [ "CPM", "install.html#autotoc_md2262", null ],
-        [ "SPACK", "install.html#autotoc_md2263", null ],
-        [ "AUR", "install.html#autotoc_md2264", null ],
-        [ "Conan", "install.html#autotoc_md2265", null ],
-        [ "VCPKG", "install.html#autotoc_md2266", null ]
+      [ "Pre-requisites", "install.html#autotoc_md2210", null ],
+      [ "Retrieving the source", "install.html#autotoc_md2211", [
+        [ "Github", "install.html#autotoc_md2212", null ],
+        [ "CPM", "install.html#autotoc_md2213", null ],
+        [ "SPACK", "install.html#autotoc_md2214", null ],
+        [ "AUR", "install.html#autotoc_md2215", null ],
+        [ "Conan", "install.html#autotoc_md2216", null ],
+        [ "VCPKG", "install.html#autotoc_md2217", null ]
       ] ],
-      [ "Installation from Source", "install.html#autotoc_md2267", [
-        [ "Setting up the Library", "install.html#autotoc_md2268", null ],
-        [ "Building the Documentation", "install.html#autotoc_md2269", null ]
+      [ "Installation from Source", "install.html#autotoc_md2218", [
+        [ "Setting up the Library", "install.html#autotoc_md2219", null ],
+        [ "Building the Documentation", "install.html#autotoc_md2220", null ]
       ] ],
-      [ "Using the library", "install.html#autotoc_md2270", [
-        [ "Compilation", "install.html#autotoc_md2271", null ],
-        [ "Instruction Set Selection", "install.html#autotoc_md2272", null ],
-        [ "Execution", "install.html#autotoc_md2273", null ]
+      [ "Using the library", "install.html#autotoc_md2221", [
+        [ "Compilation", "install.html#autotoc_md2222", null ],
+        [ "Instruction Set Selection", "install.html#autotoc_md2223", null ],
+        [ "Execution", "install.html#autotoc_md2224", null ]
       ] ],
-      [ "Advanced options", "install.html#autotoc_md2274", null ]
+      [ "Advanced options", "install.html#autotoc_md2225", null ]
     ] ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.03.0", "changelog.html#autotoc_md2275", [
-        [ "What's Changed", "changelog.html#autotoc_md2276", null ],
-        [ "New Contributors", "changelog.html#autotoc_md2277", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md2226", [
+        [ "What's Changed", "changelog.html#autotoc_md2227", null ],
+        [ "New Contributors", "changelog.html#autotoc_md2228", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md2278", [
-        [ "What's Changed", "changelog.html#autotoc_md2279", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md2229", [
+        [ "What's Changed", "changelog.html#autotoc_md2230", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md2280", null ]
+      [ "Version beta.2020.09", "changelog.html#autotoc_md2231", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -93,10 +93,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__conditional.html",
-"group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e",
-"install.html#autotoc_md2260",
-"structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20"
+"group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665",
+"group__core_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed",
+"group__special_ga9eae818e09cb161b0209418f0b1166f0.html#ga9eae818e09cb161b0209418f0b1166f0",
+"structeve_1_1keep__last_a4b92f71c5570ec96efdc6d5d21353961.html#a4b92f71c5570ec96efdc6d5d21353961"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

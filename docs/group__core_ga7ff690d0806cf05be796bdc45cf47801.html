@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga7ff690d0806cf05be796bdc4
 
 <p>Callable object computing the "not less or equal to" predicate. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md864"></a>
+<h4><a class="anchor" id="autotoc_md801"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -164,7 +164,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>is_not_less_equal[cond](x, y)</code> is equivalent to <code>if_else(cond,is_not_less_equal(x, y),false(as(is_not_less_equal(x, y))))</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md868"></a>
+<h4><a class="anchor" id="autotoc_md805"></a>
 Supported decorators</h4>
 <ul>
 <li><code>definitely</code></li>
@@ -176,7 +176,7 @@ Supported decorators</h4>
   - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
   - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
   - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-</pre> <h4><a class="anchor" id="autotoc_md869"></a>
+</pre> <h4><a class="anchor" id="autotoc_md806"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -204,7 +204,7 @@ Example</h4>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_ga7ff690d0806cf05be796bdc45cf47801_html_ga7ff690d0806cf05be796bdc45cf47801"><div class="ttname"><a href="group__core_ga7ff690d0806cf05be796bdc45cf47801.html#ga7ff690d0806cf05be796bdc45cf47801">eve::is_not_less_equal</a></div><div class="ttdeci">constexpr callable_is_not_less_equal_ is_not_less_equal</div><div class="ttdoc">Callable object computing the &quot;not less or equal to&quot; predicate.</div><div class="ttdef"><b>Definition:</b> is_not_less_equal.hpp:86</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

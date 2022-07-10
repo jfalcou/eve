@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_gaad00c9d24af2d29a5ab7656a
 
 <p>Callable object computing \(2^x\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1811"></a>
+<h4><a class="anchor" id="autotoc_md1758"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -170,14 +170,14 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>exp2[cond](x, ...)</code> is equivalent to <code>if_else(cond,exp2(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1815"></a>
+<h4><a class="anchor" id="autotoc_md1762"></a>
 Supported converters</h4>
 <ul>
 <li><p class="startli">eve::float_, eve::double_, <a class="el" href="group__core_gaed175cd947b502a735e216cd1fce6d90.html#gaed175cd947b502a735e216cd1fce6d90" title="convert a eve::real_value to a floating point based eve::floating_real_value of same size.">eve::floating_</a></p>
 <p class="startli">The expression <code>d(exp2)(x)</code> where d in one of these 3 converters is supported if x is an <a class="el" href="concepteve_1_1integral__value.html">integral value</a> and produce a floating point output.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1816"></a>
+<h4><a class="anchor" id="autotoc_md1763"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__core_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">eve::saturated</a></p>
@@ -186,7 +186,7 @@ Supported decorators</h4>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
 </ul>
 <pre class="fragment"> The expression `diff(exp2)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md1817"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1764"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -206,7 +206,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                  = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2(pf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(exp2)(pf)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a>)(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            </div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; exp2(pi)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a>(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; float32(exp2)(pi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a>(<a class="code hl_variable" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a>)(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; float64(exp2)(pi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gabe14f9b1a3924cee1ca3676c2a7846b8.html#gabe14f9b1a3924cee1ca3676c2a7846b8">eve::float64</a>(<a class="code hl_variable" href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a>)(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -223,7 +223,6 @@ Example</h4>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_ga274dac2c4e1dfa15f47d228529791c5a_html_ga274dac2c4e1dfa15f47d228529791c5a"><div class="ttname"><a href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a></div><div class="ttdeci">constexpr converter_type&lt; float &gt; const float32</div><div class="ttdoc">convert a eve::real_value to a float32 based eve::floating_real_value.</div><div class="ttdef"><b>Definition:</b> converter.hpp:121</div></div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_gabe14f9b1a3924cee1ca3676c2a7846b8_html_gabe14f9b1a3924cee1ca3676c2a7846b8"><div class="ttname"><a href="group__core_gabe14f9b1a3924cee1ca3676c2a7846b8.html#gabe14f9b1a3924cee1ca3676c2a7846b8">eve::float64</a></div><div class="ttdeci">constexpr converter_type&lt; double &gt; const float64</div><div class="ttdoc">convert a eve::real_value to a float64 based eve::floating_real_value.</div><div class="ttdef"><b>Definition:</b> converter.hpp:145</div></div>
 <div class="ttc" id="agroup__core_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Callable object computing the negative infinity value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:57</div></div>
@@ -232,7 +231,7 @@ Example</h4>
 <div class="ttc" id="agroup__math_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="agroup__math_gaad00c9d24af2d29a5ab7656a3a975c51_html_gaad00c9d24af2d29a5ab7656a3a975c51"><div class="ttname"><a href="group__math_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a></div><div class="ttdeci">constexpr callable_exp2_ exp2</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> exp2.hpp:117</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

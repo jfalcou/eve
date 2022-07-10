@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_gaf682b1982dca12b59434101b
 
 <p>Callable object computing the binarize operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md332"></a>
+<h4><a class="anchor" id="autotoc_md264"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -155,9 +155,9 @@ Members Functions</h4>
 <p ><code>c</code>: <a class="el" href="concepteve_1_1value.html">logical value</a>. <code>v</code>: <a class="el" href="concepteve_1_1value.html">scalar value</a> defaulting to 1.</p>
 <p ><b>Return value</b></p>
 <p >The call:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_gaf682b1982dca12b59434101b59aa2a68.html#gaf682b1982dca12b59434101b59aa2a68">binarize</a>(c,v);</div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical_3_01T_01_4.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_gaf682b1982dca12b59434101b59aa2a68.html#gaf682b1982dca12b59434101b59aa2a68">binarize</a>(c,v);</div>
 <div class="ttc" id="agroup__core_gaf682b1982dca12b59434101b59aa2a68_html_gaf682b1982dca12b59434101b59aa2a68"><div class="ttname"><a href="group__core_gaf682b1982dca12b59434101b59aa2a68.html#gaf682b1982dca12b59434101b59aa2a68">eve::binarize</a></div><div class="ttdeci">constexpr callable_binarize_ binarize</div><div class="ttdoc">Callable object computing the binarize operation.</div><div class="ttdef"><b>Definition:</b> binarize.hpp:83</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
+<div class="ttc" id="astructeve_1_1logical_3_01T_01_4_html"><div class="ttname"><a href="structeve_1_1logical_3_01T_01_4.html">eve::logical&lt; T &gt;</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
 </div><!-- fragment --><p >is semantically equivalent to:</p>
 <div class="fragment"><div class="line">T r = <a class="code hl_variable" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">if_else</a>(c, T(v), T(0));</div>
 <div class="ttc" id="agroup__core_ga74b9090a23d420d6382270233e66f7ac_html_ga74b9090a23d420d6382270233e66f7ac"><div class="ttname"><a href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac">eve::if_else</a></div><div class="ttdeci">constexpr callable_if_else_ if_else</div><div class="ttdoc">Callable object computing the if_else operation.</div><div class="ttdef"><b>Definition:</b> if_else.hpp:100</div></div>
@@ -169,10 +169,10 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>binarize[cond](x, ...)</code> is equivalent to <code>if_else(cond,binarize(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md336"></a>
+<h4><a class="anchor" id="autotoc_md268"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md337"></a>
+<h4><a class="anchor" id="autotoc_md269"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -202,7 +202,7 @@ Example</h4>
 <div class="ttc" id="agroup__core_gaa4d31095ad4a8a7f19a8002765638fc6_html_gaa4d31095ad4a8a7f19a8002765638fc6"><div class="ttname"><a href="group__core_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">eve::false_</a></div><div class="ttdeci">constexpr callable_false__ false_</div><div class="ttdoc">Callable object computing the logical false_ value.</div><div class="ttdef"><b>Definition:</b> false.hpp:52</div></div>
 <div class="ttc" id="agroup__core_gac1255364700394f5b94065c935208f42_html_gac1255364700394f5b94065c935208f42"><div class="ttname"><a href="group__core_gac1255364700394f5b94065c935208f42.html#gac1255364700394f5b94065c935208f42">eve::true_</a></div><div class="ttdeci">constexpr callable_true__ true_</div><div class="ttdoc">Callable object computing the logical true_ value.</div><div class="ttdef"><b>Definition:</b> true.hpp:52</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

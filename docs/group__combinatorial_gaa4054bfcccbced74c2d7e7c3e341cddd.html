@@ -138,7 +138,7 @@ $(document).ready(function(){initNavTree('group__combinatorial_gaa4054bfcccbced7
 </div><div class="memdoc">
 
 <p>Callable object computing rising_factorial function i.e. \(\frac{\Gamma(x+a)}{\Gamma(a)}\). </p>
-<h4><a class="anchor" id="autotoc_md2200"></a>
+<h4><a class="anchor" id="autotoc_md2151"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -164,7 +164,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>rising_factorial[cond](x, ...)</code> is equivalent to <code>if_else(cond,rising_factorial(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md2204"></a>
+<h4><a class="anchor" id="autotoc_md2155"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></li>
@@ -188,7 +188,7 @@ Supported decorators</h4>
      `pedantic(diff_1st)(rising_factorial)(a,x)`
 
   will compute the derivative of `pedantic(rising_factorial)` relative to the first parameter.
-</pre> <h4><a class="anchor" id="autotoc_md2205"></a>
+</pre> <h4><a class="anchor" id="autotoc_md2156"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -207,8 +207,8 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- x                                  = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; rising_factorial(n, x)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a>(n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; pedantic(rising_factorial)(n, x)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a>)(n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; diff_1st(rising_factorial)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a>(<a class="code hl_variable" href="group__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; diff_2nd(rising_factorial)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a>(<a class="code hl_variable" href="group__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            </div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xi = 1.8;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -219,10 +219,8 @@ Example</h4>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd_html_gaa4054bfcccbced74c2d7e7c3e341cddd"><div class="ttname"><a href="group__combinatorial_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a></div><div class="ttdeci">constexpr callable_rising_factorial_ rising_factorial</div><div class="ttdoc">Callable object computing rising_factorial function i.e. .</div><div class="ttdef"><b>Definition:</b> rising_factorial.hpp:94</div></div>
-<div class="ttc" id="agroup__core_ga0f1f689a82eba82d3e7b36b97b8c15e6_html_ga0f1f689a82eba82d3e7b36b97b8c15e6"><div class="ttname"><a href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a></div><div class="ttdeci">constexpr diff_type&lt; 2 &gt; const diff_2nd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:125</div></div>
-<div class="ttc" id="agroup__core_ga77bcbd0260750a88b913fd304baed476_html_ga77bcbd0260750a88b913fd304baed476"><div class="ttname"><a href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff_1st</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:92</div></div>
 <div class="ttc" id="agroup__core_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

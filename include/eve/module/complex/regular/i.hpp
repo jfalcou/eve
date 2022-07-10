@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var i
   //!
-  //! @brief Callable object computing the pure imaginary (\f$\i\f$) value.
+  //! @brief Callable object computing the pure imaginary (\f$i\f$) value.
   //!
   //! **Required header:** `#include <eve/module/complex.hpp>`
   //!

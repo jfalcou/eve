@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga43ce3760cd377286d328b640
 
 <p>Callable object computing the fused sub-negate-multiply operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md634"></a>
+<h4><a class="anchor" id="autotoc_md571"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -166,7 +166,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>fsnm[cond](x, ...)</code> is equivalent to <code>if_else(cond,fsnm(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md638"></a>
+<h4><a class="anchor" id="autotoc_md575"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
@@ -183,7 +183,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `diff_1st(fsnm)(x,y,z)`, `diff_2nd(fsnm)(x,y,z)` and `diff_3rd(fsnm)(x,y,z)` compute the partial
   derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ -x-y z\f$.
-</pre> <h4><a class="anchor" id="autotoc_md639"></a>
+</pre> <h4><a class="anchor" id="autotoc_md576"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -203,9 +203,9 @@ Example</h4>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                          = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- rf                          = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm(pf, qf, rf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>(pf, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_1st(fsnm)(pf, qf, rf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a>(<a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>)(pf, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_2nd(fsnm)(pf, qf, rf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a>(<a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>)(pf, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_3rd(fsnm)(pf, qf, rf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0">eve::diff_3rd</a>(<a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>)(pf, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    </div>
+<div class="line">    </div>
+<div class="line">    ;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
@@ -217,16 +217,13 @@ Example</h4>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                         = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- zf                         = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm(xf, yf, zf)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>(xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_1st(fsnm)(xf, yf, zf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a>(<a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>)(xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_2nd(fsnm)(xf, yf, zf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a>(<a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>)(xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_3rd(fsnm)(xf, yf, zf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0">eve::diff_3rd</a>(<a class="code hl_variable" href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a>)(xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    </div>
+<div class="line">    </div>
+<div class="line">    ;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga0f1f689a82eba82d3e7b36b97b8c15e6_html_ga0f1f689a82eba82d3e7b36b97b8c15e6"><div class="ttname"><a href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6">eve::diff_2nd</a></div><div class="ttdeci">constexpr diff_type&lt; 2 &gt; const diff_2nd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:125</div></div>
 <div class="ttc" id="agroup__core_ga43ce3760cd377286d328b640fd01549b_html_ga43ce3760cd377286d328b640fd01549b"><div class="ttname"><a href="group__core_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b">eve::fsnm</a></div><div class="ttdeci">constexpr callable_fsnm_ fsnm</div><div class="ttdoc">Callable object computing the fused sub-negate-multiply operation.</div><div class="ttdef"><b>Definition:</b> fsnm.hpp:97</div></div>
-<div class="ttc" id="agroup__core_ga77bcbd0260750a88b913fd304baed476_html_ga77bcbd0260750a88b913fd304baed476"><div class="ttname"><a href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476">eve::diff_1st</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff_1st</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:92</div></div>
-<div class="ttc" id="agroup__core_gaa4398b2ef5de81cacafc812406adf5d0_html_gaa4398b2ef5de81cacafc812406adf5d0"><div class="ttname"><a href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0">eve::diff_3rd</a></div><div class="ttdeci">constexpr diff_type&lt; 3 &gt; const diff_3rd</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:158</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

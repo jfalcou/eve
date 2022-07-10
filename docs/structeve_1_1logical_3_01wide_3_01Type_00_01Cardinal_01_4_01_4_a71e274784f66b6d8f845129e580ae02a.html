@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('structeve_1_1logical_3_01wide_3_01Type
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Type , typename Cardinal &gt; </div>
+template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
 <div class="memtemplate">
 template&lt;std::size_t Slice&gt; </div>
 <table class="mlabels">
@@ -131,7 +131,7 @@ template&lt;std::size_t Slice&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="structeve_1_1logical.html">eve::logical</a>&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::slice </td>
+          <td class="memname">auto eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::slice </td>
           <td>(</td>
           <td class="paramtype">slice_t&lt; Slice &gt;&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -145,7 +145,7 @@ template&lt;std::size_t Slice&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Return the upper or lower half-sized slice of a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>. Does not participate in overload resolution if <code>Cardinal::value == 1</code>. </p>
+<p>Return the upper or lower half-sized slice of a eve::logical. Does not participate in overload resolution if <code>Cardinal::value == 1</code>. </p>
 <dl class="section see"><dt>See also</dt><dd>eve::upper_ </dd>
 <dd>
 eve::lower_</dd></dl>
@@ -164,16 +164,16 @@ eve::lower_</dd></dl>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Generates the logical&lt;wide&gt; [true false true .. ]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1logical.html">eve::logical&lt;eve::wide&lt;int&gt;</a>&gt; r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> i%2 == 0;};</div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>%2 == 0;};</div>
 <div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> = r.slice(eve::lower_);</div>
 <div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> = r.slice(eve::upper_);</div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
 <div class="ttc" id="agroup__core_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr callable_hi_ hi</div><div class="ttdoc">Callable object computing the higher part of the values.</div><div class="ttdef"><b>Definition:</b> hi.hpp:59</div></div>
 <div class="ttc" id="agroup__core_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr callable_lo_ lo</div><div class="ttdoc">Callable object computing the lower part of the values.</div><div class="ttdef"><b>Definition:</b> lo.hpp:59</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

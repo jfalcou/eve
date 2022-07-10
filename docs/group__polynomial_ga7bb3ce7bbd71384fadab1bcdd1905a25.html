@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga7bb3ce7bbd71384fad
 
 <p>Callable object computing the hermite operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md2044"></a>
+<h4><a class="anchor" id="autotoc_md1991"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -158,7 +158,7 @@ Members Functions</h4>
 <p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of the 'physicists' hermite polynomial of order <code>n</code> at <code>x</code>:</p>
 <p >The result type is of the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the parameters.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md2047"></a>
+<h4><a class="anchor" id="autotoc_md1994"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
@@ -170,7 +170,7 @@ Supported decorators</h4>
 <p class="startli">These object functions can be used to create a sequence of values evaluated at the same <code>x</code>, and for rising <code>n</code>.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md2048"></a>
+<h4><a class="anchor" id="autotoc_md1995"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -194,7 +194,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(3, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(n, 2.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(n, x)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; diff(hermite)(n, x) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a>(<a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>)(n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xs = 3.0;</div>
 <div class="line"> </div>
@@ -204,9 +204,8 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga5bbd9036e48f8aac4216a0869806e1df_html_ga5bbd9036e48f8aac4216a0869806e1df"><div class="ttname"><a href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df">eve::diff</a></div><div class="ttdeci">constexpr diff_type&lt; 1 &gt; const diff</div><div class="ttdoc">Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> derivative.hpp:59</div></div>
 <div class="ttc" id="agroup__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25_html_ga7bb3ce7bbd71384fadab1bcdd1905a25"><div class="ttname"><a href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a></div><div class="ttdeci">constexpr callable_hermite_ hermite</div><div class="ttdoc">Callable object computing the hermite operation.</div><div class="ttdef"><b>Definition:</b> hermite.hpp:69</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('structeve_1_1logical_3_01wide_3_01Type
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Type , typename Cardinal &gt; </div>
+template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
 <div class="memtemplate">
 template&lt;std::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>, <a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a> &gt; Generator&gt; </div>
 <table class="mlabels">
@@ -131,7 +131,7 @@ template&lt;std::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structeve_1_1logical.html">eve::logical</a>&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::logical </td>
+          <td class="memname">eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::logical </td>
           <td>(</td>
           <td class="paramtype">Generator &amp;&amp;&#160;</td>
           <td class="paramname"><em>g</em></td><td>)</td>
@@ -145,7 +145,7 @@ template&lt;std::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a <a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. </p>
+<p>Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. </p>
 <p >The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
 <div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t <a class="code hl_struct" href="structeve_1_1cardinal.html">cardinal</a>);</div>
 <div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition:</b> generator.hpp:46</div></div>
@@ -168,10 +168,10 @@ template&lt;std::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Generates the wide [true false true .. ]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1logical.html">eve::logical&lt;eve::wide&lt;int&gt;</a>&gt; r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> i%2 == 0;};</div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>%2 == 0;};</div>
 <div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga363ef2755547b60b16b00bfb
 
 <p>Callable object computing the ifnot_else operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md655"></a>
+<h4><a class="anchor" id="autotoc_md592"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -155,10 +155,10 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >The call <code><a class="el" href="group__core_ga363ef2755547b60b16b00bfb58ef21e9.html#ga363ef2755547b60b16b00bfb58ef21e9" title="Callable object computing the ifnot_else operation.">eve::ifnot_else</a></code><code>(x, y, z)</code> performs a choice between the elements of <code>y</code> and <code>z</code> according to the truth value of the elements of <code>x</code>. It is merely syntaxic sugar for <code><a class="el" href="group__core_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Callable object computing the if_else operation.">eve::if_else</a></code><code>(x, z, y)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md658"></a>
+<h4><a class="anchor" id="autotoc_md595"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md659"></a>
+<h4><a class="anchor" id="autotoc_md596"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -184,7 +184,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::ifnot_else(lsi, pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga363ef2755547b60b16b00bfb58ef21e9.html#ga363ef2755547b60b16b00bfb58ef21e9">eve::ifnot_else</a>(lsi, <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  iT               ssi = 3, xi = 3, yi = 4;</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1logical.html">eve::logical&lt;iT&gt;</a> lssi = <span class="keyword">false</span>;</div>
+<div class="line">  eve::logical&lt;iT&gt; lssi = <span class="keyword">false</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; ssi =                            = &quot;</span> &lt;&lt; ssi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -197,8 +197,7 @@ Example</h4>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core_ga363ef2755547b60b16b00bfb58ef21e9_html_ga363ef2755547b60b16b00bfb58ef21e9"><div class="ttname"><a href="group__core_ga363ef2755547b60b16b00bfb58ef21e9.html#ga363ef2755547b60b16b00bfb58ef21e9">eve::ifnot_else</a></div><div class="ttdeci">constexpr callable_ifnot_else_ ifnot_else</div><div class="ttdoc">Callable object computing the ifnot_else operation.</div><div class="ttdef"><b>Definition:</b> ifnot_else.hpp:61</div></div>
 <div class="ttc" id="agroup__math_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

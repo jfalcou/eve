@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('concepteve_1_1value.html',''); initRes
 <div class="textblock"><p >The concept <code>value&lt;T&gt;</code> is satisfied if and only if T satisfies either <code><a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value.">eve::scalar_value</a></code> or <code><a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a></code>.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
-<li><code><a class="el" href="structeve_1_1logical.html" title="Wrapper for SIMD compatible logical types.">eve::logical</a>&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;&gt;</code></li>
+<li><code>eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;&gt;</code></li>
 <li><code>float</code></li>
 <li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;std::uint64_t&gt;</code></li>
 <li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;int, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;1&gt;&gt;</code> </li>
@@ -134,8 +134,8 @@ $(document).ready(function(){initNavTree('concepteve_1_1value.html',''); initRes
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> =  <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value&lt;T&gt;</a> || <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value&lt;T&gt;</a></div>
-<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:70</div></div>
-<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:32</div></div>
+<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:71</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

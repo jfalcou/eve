@@ -120,6 +120,9 @@ $(document).ready(function(){initNavTree('group__simd__types.html',''); initResi
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#friend-members">Friends</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">SIMD related types<div class="ingroups"><a class="el" href="group__simd.html">EVE</a></div></div></div>
 </div><!--header-->
@@ -132,6 +135,9 @@ $(document).ready(function(){initNavTree('group__simd__types.html',''); initResi
 Modules</h2></td></tr>
 <tr class="memitem:group__arch"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__arch.html">Architecture related Types and Helpers</a></td></tr>
 <tr class="memdesc:group__arch"><td class="mdescLeft">&#160;</td><td class="mdescRight">This module defines the types and helpers functions to properly handle architecture specific components. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__complex"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__complex.html">Complex Numbers</a></td></tr>
+<tr class="memdesc:group__complex"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complex Numbers. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__conditional"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__conditional.html">Conditional Expressions</a></td></tr>
 <tr class="memdesc:group__conditional"><td class="mdescLeft">&#160;</td><td class="mdescRight">Types and operations to defines conditional mask expressions. <br /></td></tr>
@@ -148,8 +154,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1scalar__cardinal.html">eve::scalar_cardinal</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cardinal type for scalar values.  <a href="structeve_1_1scalar__cardinal.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1logical.html">eve::logical&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for SIMD compatible logical types.  <a href="structeve_1_1logical.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1logical_3_01T_01_4.html">eve::logical&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for SIMD compatible logical types.  <a href="structeve_1_1logical_3_01T_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for SIMD registers holding logical types with compile-time size.  <a href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#details">More...</a><br /></td></tr>
@@ -160,16 +166,36 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1top__bits.html">eve::top_bits&lt; Logical &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cheapest to get bitset for simd logical.  <a href="structeve_1_1top__bits.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1complex.html">eve::complex&lt; Type &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD-compatible representation of complex numbers.  <a href="structeve_1_1complex.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1pattern__t.html">eve::pattern_t&lt; I &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuffling pattern.  <a href="structeve_1_1pattern__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gac59e565ee91812449127aeb2f325ec1b"><td class="memItemLeft" align="right" valign="top"><a id="gac59e565ee91812449127aeb2f325ec1b" name="gac59e565ee91812449127aeb2f325ec1b"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>eve::complex&lt; Type &gt;::value_type</b> = Type</td></tr>
+<tr class="memdesc:gac59e565ee91812449127aeb2f325ec1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Underlying type. <br /></td></tr>
+<tr class="separator:gac59e565ee91812449127aeb2f325ec1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa34627be7639b90041fe2859728660e8"><td class="memItemLeft" align="right" valign="top"><a id="gaa34627be7639b90041fe2859728660e8" name="gaa34627be7639b90041fe2859728660e8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>eve::complex&lt; Type &gt;::complex</b> (Type r=0) noexcept</td></tr>
+<tr class="memdesc:gaa34627be7639b90041fe2859728660e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:gaa34627be7639b90041fe2859728660e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friend-members" name="friend-members"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ga0aef00cfb869cd94127c7c17703c9935"><td class="memItemLeft" align="right" valign="top"><a id="ga0aef00cfb869cd94127c7c17703c9935" name="ga0aef00cfb869cd94127c7c17703c9935"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>eve::complex&lt; Type &gt;::operator&lt;&lt;</b> (std::ostream &amp;os, like&lt; <a class="el" href="structeve_1_1complex.html">complex</a> &gt; auto const &amp;z)</td></tr>
+<tr class="memdesc:ga0aef00cfb869cd94127c7c17703c9935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stream insertion operator. <br /></td></tr>
+<tr class="separator:ga0aef00cfb869cd94127c7c17703c9935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gac6d945f9d3ef36b189eb255dfe2ade19"><td class="memItemLeft" align="right" valign="top"><a id="gac6d945f9d3ef36b189eb255dfe2ade19" name="gac6d945f9d3ef36b189eb255dfe2ade19"></a>
-constexpr <a class="el" href="structeve_1_1scalar__cardinal.html">scalar_cardinal</a> const&#160;</td><td class="memItemRight" valign="bottom"><b>eve::scalar</b> = {}</td></tr>
-<tr class="memdesc:gac6d945f9d3ef36b189eb255dfe2ade19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cardinal object representing the cardinal of <a class="el" href="concepteve_1_1scalar__value.html">scalar values</a>. <br /></td></tr>
-<tr class="separator:gac6d945f9d3ef36b189eb255dfe2ade19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga11b65eff854b205c9f9ef8dbd559bb9b"><td class="memItemLeft" align="right" valign="top"><a id="ga11b65eff854b205c9f9ef8dbd559bb9b" name="ga11b65eff854b205c9f9ef8dbd559bb9b"></a>
 constexpr std::ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><b>eve::na_</b> = -1</td></tr>
 <tr class="memdesc:ga11b65eff854b205c9f9ef8dbd559bb9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag for zeroing swizzle index. <br /></td></tr>

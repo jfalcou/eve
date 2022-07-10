@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga8769c9b7cb829f6cb787848e
 
 <p>Callable object computing the is_not_flint logical value. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md830"></a>
+<h4><a class="anchor" id="autotoc_md767"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -156,9 +156,9 @@ Members Functions</h4>
 <p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating_real_value</a>.</p>
 <p ><b>Return value</b></p>
 <p >The call:</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_ga8769c9b7cb829f6cb787848e5cd35e05.html#ga8769c9b7cb829f6cb787848e5cd35e05">is_not_flint</a>(x);</div>
+<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1logical_3_01T_01_4.html">logical&lt;T&gt;</a> r = <a class="code hl_variable" href="group__core_ga8769c9b7cb829f6cb787848e5cd35e05.html#ga8769c9b7cb829f6cb787848e5cd35e05">is_not_flint</a>(x);</div>
 <div class="ttc" id="agroup__core_ga8769c9b7cb829f6cb787848e5cd35e05_html_ga8769c9b7cb829f6cb787848e5cd35e05"><div class="ttname"><a href="group__core_ga8769c9b7cb829f6cb787848e5cd35e05.html#ga8769c9b7cb829f6cb787848e5cd35e05">eve::is_not_flint</a></div><div class="ttdeci">constexpr callable_is_not_flint_ is_not_flint</div><div class="ttdoc">Callable object computing the is_not_flint logical value.</div><div class="ttdef"><b>Definition:</b> is_not_flint.hpp:86</div></div>
-<div class="ttc" id="astructeve_1_1logical_html"><div class="ttname"><a href="structeve_1_1logical.html">eve::logical</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
+<div class="ttc" id="astructeve_1_1logical_3_01T_01_4_html"><div class="ttname"><a href="structeve_1_1logical_3_01T_01_4.html">eve::logical&lt; T &gt;</a></div><div class="ttdoc">Wrapper for SIMD compatible logical types.</div><div class="ttdef"><b>Definition:</b> logical.hpp:36</div></div>
 </div><!-- fragment --><p >is semantically equivalent to: <code>is_nez(frac(x))</code></p>
 <p >This means that <code>x</code> is a <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a> not representing an integer (flint is a shorcut for 'floating integer').</p>
 <hr  />
@@ -168,12 +168,12 @@ Members Functions</h4>
 <p ><code>cond</code> : conditional expression</p>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>is_not_flint[cond](x)</code> is equivalent to <code>if_else(cond,is_not_flint(x),false(as(is_not_flint(x))))</code></p>
-<h4><a class="anchor" id="autotoc_md833"></a>
+<h4><a class="anchor" id="autotoc_md770"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a> Pedantically speaking flint stands for floating integer. The call <code>pedantic(is_flint)(x)</code> considers that integral typed values are not floating and so <code>pedantic(is_not_flint)(x)</code> returns true for all elements of this types. Moreover a floating point value is pedantically deemed as flint only is the next representable value is not flint, so great floating values are not pedantically flint.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md834"></a>
+<h4><a class="anchor" id="autotoc_md771"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -204,7 +204,7 @@ Example</h4>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:62</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

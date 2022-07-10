@@ -37,7 +37,7 @@ var hierarchy =
     [ "eve::keep_between", "structeve_1_1keep__between.html", null ],
     [ "eve::keep_first", "structeve_1_1keep__first.html", null ],
     [ "eve::keep_last", "structeve_1_1keep__last.html", null ],
-    [ "eve::logical< T >", "structeve_1_1logical.html", null ],
+    [ "eve::logical< T >", "structeve_1_1logical_3_01T_01_4.html", null ],
     [ "eve::algo::views::map_iterator< I, LoadOp, StoreOp >", "structeve_1_1algo_1_1views_1_1map__iterator.html", null ],
     [ "map_iterator", "structmap__iterator.html", null ],
     [ "map_load_op", "structmap__load__op.html", null ],
@@ -64,6 +64,9 @@ var hierarchy =
     [ "eve::soa_ptr< Ptrs >", "structeve_1_1soa__ptr.html", null ],
     [ "eve::stack_buffer< T >", "structeve_1_1stack__buffer.html", null ],
     [ "eve::struct_support< Self, Fields >", "structeve_1_1struct__support.html", null ],
+    [ "eve::struct_support< complex< Type >, Type, Type >", "structeve_1_1struct__support.html", [
+      [ "eve::complex< Type >", "structeve_1_1complex.html", null ]
+    ] ],
     [ "eve::supports_like< Wrapper, Self >", "structeve_1_1supports__like.html", null ],
     [ "eve::supports_ordering< Type >", "structeve_1_1supports__ordering.html", null ],
     [ "eve::top_bits< Logical >", "structeve_1_1top__bits.html", null ],
@@ -73,11 +76,9 @@ var hierarchy =
     [ "eve::detail::wide_storage< as_register_t< Type, Cardinal, abi_t< Type, Cardinal > > >", null, [
       [ "eve::wide< Type, Cardinal >", "structeve_1_1wide.html", null ]
     ] ],
-    [ "eve::detail::wide_storage< as_register_t< value_type, N, abi_t< value_type, N > > >", null, [
+    [ "eve::detail::wide_storage< as_register_t< Type, N, abi_t< Type, N > > >", null, [
+      [ "eve::wide< value_type_t< I >, N >", "structeve_1_1wide.html", null ],
       [ "eve::wide< value_type, N >", "structeve_1_1wide.html", null ]
-    ] ],
-    [ "eve::detail::wide_storage< as_register_t< value_type_t< I >, N, abi_t< value_type_t< I >, N > > >", null, [
-      [ "eve::wide< value_type_t< I >, N >", "structeve_1_1wide.html", null ]
     ] ],
     [ "eve::algo::views::zip_iterator< Is >", "structeve_1_1algo_1_1views_1_1zip__iterator.html", null ],
     [ "zip_iterator", "structzip__iterator.html", null ],
