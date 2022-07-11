@@ -156,7 +156,7 @@ After:
 2 2.82843 3.4641 4 4.47214 4.89898 5.2915 5.65685 6.32456 8.94427 10.9545 12.6491 14.1421 15.4919 16.7332 17.8885 18.9737 20 63.2456 200
 ```
 
-The complete project is available as in the `examples\multi-arch` folder. As an exercise,
+The complete project is available as in the `examples/multi-arch` folder. As an exercise,
 try to modify the code to handle AVX512 and check everything still works.
 
 # Conclusion
