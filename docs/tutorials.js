@@ -32,5 +32,14 @@ var tutorials =
         [ "Context-sensitive mask", "conditional.html#autotoc_md2236", null ]
       ] ],
       [ "Conclusion", "conditional.html#autotoc_md2237", null ]
+    ] ],
+    [ "Handling Multiple Architecture Targets", "multiarch.html", [
+      [ "The Issue", "multiarch.html#autotoc_md2254", null ],
+      [ "From static to dynamic dispatch", "multiarch.html#autotoc_md2255", [
+        [ "Writing the kernel", "multiarch.html#autotoc_md2256", null ],
+        [ "Writing the dynamic function hub", "multiarch.html#autotoc_md2257", null ],
+        [ "Compiling and Using Dynamic Kernels", "multiarch.html#autotoc_md2258", null ]
+      ] ],
+      [ "Conclusion", "multiarch.html#autotoc_md2259", null ]
     ] ]
 ];
