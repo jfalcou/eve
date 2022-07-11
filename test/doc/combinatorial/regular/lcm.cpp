@@ -1,8 +1,10 @@
 #include <eve/module/combinatorial.hpp>
 #include <eve/wide.hpp>
+
 #include <iostream>
 
-int main()
+int
+main()
 {
   using w32_t = eve::wide<std::int32_t, eve::fixed<4>>;
   w32_t pi32 = {93, 25, 32, 37}, qi32 = {42, 10, 27, 102};
