@@ -62,10 +62,6 @@ var concepts =
       [ "floating_real_simd_value", "concepteve_1_1floating__real__simd__value.html", null ],
       [ "integral_real_simd_value", "concepteve_1_1integral__real__simd__value.html", null ],
       [ "has_store_equivalent", "concepteve_1_1has__store__equivalent.html", null ],
-      [ "distribution", "concepteve_1_1distribution.html", null ],
-      [ "continuous", "concepteve_1_1continuous.html", null ],
-      [ "discrete", "concepteve_1_1discrete.html", null ],
-      [ "mixed", "concepteve_1_1mixed.html", null ],
       [ "like", "concepteve_1_1like.html", null ],
       [ "have_common_type", "concepteve_1_1have__common__type.html", null ]
     ] ]
