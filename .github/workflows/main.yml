@@ -16,9 +16,10 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - {test: installation , mode: 0 }
-        - {test: FetchContents, mode: 1 }
-        - {test: CPM          , mode: 2 }
+        - {test: Installation       , mode: 0 }
+        - {test: FetchContents      , mode: 1 }
+        - {test: CPM                , mode: 2 }
+        - {test: Multi-architecture , mode: 3 }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
