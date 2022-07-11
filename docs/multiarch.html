@@ -131,7 +131,25 @@ From static to dynamic dispatch</h1>
 <h2><a class="anchor" id="autotoc_md2256"></a>
 Writing the kernel</h2>
 <p >Let's write a small function that will consume a pointer to a data block containing <code>float</code> values and the size of the data block to process. Inside this kernel, we'll use some algorithms to vectorise this process.</p>
-<div class="fragment"></div><!-- fragment --><p >The code breaks down this way:</p><ul>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/transform.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;span&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> compute_kernel(<span class="keywordtype">float</span>* data, std::size_t size)</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; compute with: &quot;</span> &lt;&lt; eve::current_api &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; eve::wide is: &quot;</span> &lt;&lt; <a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;float&gt;::size</a>() &lt;&lt; <span class="stringliteral">&quot; elements large.\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_variable" href="group__algorithms_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0">eve::algo::transform_inplace</a>( std::span{data,size}</div>
+<div class="line">                              , [](<span class="keyword">auto</span> e) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(e + e * 3); }</div>
+<div class="line">                              );</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__algorithms_gabcfe49a76c53b5567df06523ded73cc0_html_gabcfe49a76c53b5567df06523ded73cc0"><div class="ttname"><a href="group__algorithms_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0">eve::algo::transform_inplace</a></div><div class="ttdeci">constexpr auto transform_inplace</div><div class="ttdoc">same as;</div><div class="ttdef"><b>Definition:</b> transform.hpp:72</div></div>
+<div class="ttc" id="agroup__core_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object computing the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:98</div></div>
+<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition:</b> wide.hpp:386</div></div>
+</div><!-- fragment --><p >The code breaks down this way:</p><ul>
 <li>We start by including all the necessary include files for the algorithms, functions and types we will use.</li>
 <li>We define the <code>compute_kernel</code> function. This function takes a pointer and a size as parameters and is declared <code>extern "C"</code> to prevent unwanted C++ mangling of the symbol. This is typical for dynamic libraries.</li>
 <li>Inside <code>compute_kernel</code>, we display some information about the SIMD API we are using and proceed to the computation. As a quick way to handle the data, we pass a <code>std::span</code> to our algorithm.</li>
@@ -141,7 +159,43 @@ Writing the kernel</h2>
 Writing the dynamic function hub</h2>
 <p >We now need to write an actual <code>compute</code> function that our users will call. This is the place where most of the OS-dependent code will be written. The example we give is made to work on Linux. For a more OS-independent way to handle dynamic loading, you can have a look at <a href="https://www.gnu.org/software/libtool/manual/html_node/Using-libltdl.html">libltdl</a> or use your preferred OS API.</p>
 <p >The code looks like this:</p>
-<div class="fragment"></div><!-- fragment --><p >What is going on inside <code>compute</code> ?</p><ul>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/forward.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/detection.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;dlfcn.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;span&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> load_kernel()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Load the dynamic library</span></div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">auto</span> handle = []()</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordtype">void</span>* handle = <span class="keyword">nullptr</span>;</div>
+<div class="line">    <span class="keywordflow">if</span>(!handle &amp;&amp; eve::is_supported(eve::avx2)  ) handle = dlopen(<span class="stringliteral">&quot;./libcompute_perfect.so&quot;</span> , RTLD_NOW);</div>
+<div class="line">    <span class="keywordflow">if</span>(!handle &amp;&amp; eve::is_supported(eve::sse4_1)) handle = dlopen(<span class="stringliteral">&quot;./libcompute_advanced.so&quot;</span>, RTLD_NOW);</div>
+<div class="line">    <span class="keywordflow">if</span>(!handle &amp;&amp; eve::is_supported(eve::sse2)  ) handle = dlopen(<span class="stringliteral">&quot;./libcompute_basic.so&quot;</span>   , RTLD_NOW);</div>
+<div class="line">    <span class="keywordflow">return</span> handle;</div>
+<div class="line">  }();</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> handle;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> compute(std::span&lt;float&gt; data)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Fetch the function pointer from its symbol</span></div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">auto</span> impl = [](<span class="keyword">auto</span> h)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">using </span>func_t  = void (*)(<span class="keywordtype">float</span>*, std::size_t);</div>
+<div class="line">    func_t f = h ? (func_t)(dlsym(h, <span class="stringliteral">&quot;compute_kernel&quot;</span>)) : <span class="keyword">nullptr</span>;</div>
+<div class="line">    <span class="keywordflow">return</span> f;</div>
+<div class="line">  }(load_kernel());</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Call the actual implementation</span></div>
+<div class="line">  impl(data.data(), data.size());</div>
+<div class="line">}</div>
+</div><!-- fragment --><p >What is going on inside <code>compute</code> ?</p><ul>
 <li><code>load_kernel</code> opens the correct dynamic library depending on the actual SIMD support detected at runtime via eve::is_supported. Notice the names of the .so files, we will go back to those afterward but understand that they are arbitrary. To do so, we use <em>Immediately Invoked Lambda Expressions</em> to perform this initialisation.</li>
 <li>Next, we load the <code>compute_kernel</code> symbol from the handle we just loaded. As opening and fetching pointer to symbol can be costly, we will make it so those tasks are done once by storing both results in static variables.</li>
 <li>Once everything is loaded and setup, we call the function pointer with the appropriate parameters.</li>
