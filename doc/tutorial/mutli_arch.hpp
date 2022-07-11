@@ -30,7 +30,7 @@ Let's write a small function that will consume a pointer to a data block contain
 and the size of the data block to process. Inside this kernel, we'll use some algorithms to
 vectorise this process.
 
-@snippet test/integration/multi-arch/kernel.cpp kernel
+@snippet examples/multi-arch/kernel.cpp kernel
 
 The code breaks down this way:
   + We start by including all the necessary include files for the algorithms, functions and types we
@@ -56,7 +56,7 @@ preferred OS API.
 
 The code looks like this:
 
-@snippet test/integration/multi-arch/compute.cpp compute
+@snippet examples/multi-arch/compute.cpp compute
 
 What is going on inside `compute` ?
   + `load_kernel` opens the correct dynamic library depending on the actual SIMD support detected at
