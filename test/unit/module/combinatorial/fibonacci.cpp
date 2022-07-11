@@ -6,16 +6,16 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+
 #include <eve/module/combinatorial.hpp>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL( "Check return types of eve::fibonacci"
-              , eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of eve::fibonacci", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  using i_t = eve::as_integer_t<T, unsigned>;
+  using i_t   = eve::as_integer_t<T, unsigned>;
   using elt_t = eve::element_type_t<T>;
   TTS_EXPR_IS(eve::fibonacci(i_t(), T(), T()), T);
   TTS_EXPR_IS(eve::fibonacci(std::uint8_t(), T(), T()), T);
@@ -28,13 +28,11 @@ TTS_CASE_TPL( "Check return types of eve::fibonacci"
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-TTS_CASE_TPL( "Check corner-cases behavior of eve::fibonacci on wide"
-        , eve::test::simd::ieee_reals
-         )
-  <typename T>(tts::type<T>)
+TTS_CASE_TPL("Check corner-cases behavior of eve::fibonacci on wide", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
 {
   using eve::as;
   using i_t = eve::as_integer_t<T, unsigned>;
-  TTS_EQUAL(eve::fibonacci(9u, T(1), T(1)) , T(55));
-  TTS_EQUAL(eve::fibonacci(i_t(9), T(1), T(1)) , T(55));
+  TTS_EQUAL(eve::fibonacci(9u, T(1), T(1)), T(55));
+  TTS_EQUAL(eve::fibonacci(i_t(9), T(1), T(1)), T(55));
 };
