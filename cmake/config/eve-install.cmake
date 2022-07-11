@@ -21,6 +21,7 @@ add_library(eve::eve ALIAS eve_lib)
 ## Install target with versionned folder
 ## =================================================================================================
 install(TARGETS   eve_lib EXPORT eve_lib  DESTINATION "${MAIN_DEST}")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/eve            DESTINATION "${INSTALL_DEST}")
-install(FILES     ${PROJECT_SOURCE_DIR}/cmake/eve-config.cmake DESTINATION "${MAIN_DEST}")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/eve               DESTINATION "${INSTALL_DEST}" )
+install(FILES     ${PROJECT_SOURCE_DIR}/cmake/eve-config.cmake    DESTINATION "${MAIN_DEST}"    )
+install(FILES     ${PROJECT_SOURCE_DIR}/cmake/eve-multiarch.cmake DESTINATION "${MAIN_DEST}"    )
 install(EXPORT    eve_lib DESTINATION "${MAIN_DEST}")

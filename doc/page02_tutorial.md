@@ -20,3 +20,7 @@ These tutorials cover topics for improving your usage of SIMD instructions set w
 **EVE** high-level interface to take advantage of well-known, efficient SIMD idioms.
 
 - \subpage conditional
+
+**Advanced Topics**
+
+- \subpage multiarch
