@@ -14,64 +14,42 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var erf
+  //!   @var erf
+  //!   @brief Computes the error function \f$ \displaystyle \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x}
+  //!   e^{-t^2}\mbox{d}t\f$
   //!
-  //! @brief Callable object computing the eroror function. \f$ \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
+  //!   **Defined in header**
   //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the erf operation                                          |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T erf(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( floating_real_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!    the value of the error function is returned. In particular:
   //!
-  //! **Return value**
+  //!      - If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!      - If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+  //!      - If the argument is Nan, nan returned.
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
+  //!  @groupheader{Example}
   //!
-  //! The result type is of the same type as the  parameter.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::erf
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `erf[cond](x, ...)` is equivalent to `if_else(cond,erf(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(erf)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/erf.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/special/regular/erf.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(erf_, erf);
 }

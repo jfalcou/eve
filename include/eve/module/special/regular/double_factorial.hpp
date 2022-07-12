@@ -12,55 +12,43 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup combinatorial
+  //! @addtogroup special
   //! @{
-  //! @var double_factorial
+  //!   @var double_factorial
+  //!   @brief Computes the double_Factorial value of unsigned integral values less than 300
   //!
-  //! @brief Callable object computing unsigned integral double_factorial.
+  //!   double factorial is defined by \f$\displaystyle (2n)!! =
+  //!   \prod_{i=1}^n (2i)\f$ and \f$\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\f$
   //!
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | unsigned integral double_factorial   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value N >
+  //!      eve::as_double_as<N, double> double_factorial(N n) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
   //!
-  //!`n`:   [unsigned value](@ref eve::value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    the value of the double_Factorial is returned.
   //!
-  //!double factorial is defined by \f$\displaystyle (2n)!! = \prod_{i=1}^n (2i)\f$ and \f$\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\f$
+  //!  @groupheader{Example}
   //!
-  //! The result element type is always double to try to avoid overflow
-  //! and its cardinal is the same as the entry in case of an simd call.
-  //!
-  //!@warning
-  //!    this function will overflow as soon as the input is greater than 300.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/double_factorial.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/special/regular/double_factorial.cpp}
+  //! @}
   //================================================================================================
-
-  namespace tag { struct double_factorial_; }
-  template<> struct supports_conditional<tag::double_factorial_> : std::false_type {};
-
   EVE_MAKE_CALLABLE(double_factorial_, double_factorial);
 }
 

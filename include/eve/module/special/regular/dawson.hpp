@@ -14,64 +14,39 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var dawson
-  //!
-  //! @brief Callable object computing the dawson function. \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the dawson operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the dawson function.
-  //!
-  //! The result type is of the same type as the  parameter.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::dawson
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `dawson[cond](x, ...)` is equivalent to `if_else(cond,dawson(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
+  //!   @var dawson
+  //!   @brief Computes the Dawson function \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x}
+  //!   e^{t^2} \mbox{d}t\f$
   //!
   //!
-  //!     The expression `diff(dawson)(x)` computes the derivative of the function at `x`.
+  //!   **Defined in header**
   //!
-  //! #### Example
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! @godbolt{doc/special/dawson.cpp}
+  //!   @groupheader{Callable Signatures}
   //!
-  //!  @}
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T dawson(T x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+  //!
+  //!    **Return value**
+  //!
+  //!    the value of the Dawson is returned.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/special/regular/dawson.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(dawson_, dawson);
 }
