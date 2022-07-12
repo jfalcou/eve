@@ -10,13 +10,15 @@
 
 TTS_CASE("Check for plain_scalar_value on regular types" )
 {
-  TTS_EXPECT( eve::plain_scalar_value<signed char>);
-  TTS_EXPECT( eve::plain_scalar_value<short>      );
-  TTS_EXPECT( eve::plain_scalar_value<int>        );
+  TTS_EXPECT( eve::plain_scalar_value<signed char>  );
+  TTS_EXPECT( eve::plain_scalar_value<short>        );
+  TTS_EXPECT( eve::plain_scalar_value<int>          );
+  TTS_EXPECT( eve::plain_scalar_value<decltype(1LL)>);
 
-  TTS_EXPECT( eve::plain_scalar_value<unsigned char>      );
-  TTS_EXPECT( eve::plain_scalar_value<unsigned short>     );
-  TTS_EXPECT( eve::plain_scalar_value<unsigned int>       );
+  TTS_EXPECT( eve::plain_scalar_value<unsigned char>  );
+  TTS_EXPECT( eve::plain_scalar_value<unsigned short> );
+  TTS_EXPECT( eve::plain_scalar_value<unsigned int>   );
+  TTS_EXPECT( eve::plain_scalar_value<decltype(1ULL)> );
 
   TTS_EXPECT( eve::plain_scalar_value<float>  );
   TTS_EXPECT( eve::plain_scalar_value<double> );
@@ -40,6 +42,7 @@ TTS_CASE("Check for plain_scalar_value on cstdint/def types" )
 
 TTS_CASE("Check for plain_scalar_value on unsupported types" )
 {
+  TTS_EXPECT_NOT( eve::plain_scalar_value<char>                         );
   TTS_EXPECT_NOT( eve::plain_scalar_value<long double>                  );
   TTS_EXPECT_NOT( eve::plain_scalar_value<bool>                         );
   TTS_EXPECT_NOT( eve::plain_scalar_value<void*>                        );

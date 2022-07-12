@@ -144,7 +144,7 @@ bessel_jy(T n, T x) noexcept
   }
   else
   {
-    T a    = T(0.25L) - mu2;
+    T a    = T(0.25) - mu2;
     T q    = T(1);
     T p    = -xi / T(2);
     T br   = T(2) * x;
@@ -338,7 +338,7 @@ bessel_jy(T nu, T x) noexcept
 
   auto case_ge = [=](auto x, T& nmu, T& npmu, T& nnu1, T& jmu)
   {
-    T a    = T(0.25L) - mu2;
+    T a    = T(0.25) - mu2;
     T q    = T(1);
     T p    = -xi / T(2);
     T br   = T(2) * x;
