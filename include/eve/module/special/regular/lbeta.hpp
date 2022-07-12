@@ -13,66 +13,42 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var lbeta
+  //!   @var lbeta
+  //!   @brief Computes the natural logarithm of the beta function.
   //!
-  //! @brief Callable object computing the logarithm of the beta function.
+  //!   **Defined in header**
   //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the lbeta operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T lbeta(T x) noexcept;
   //!
-  //! ---
+  //!      template< eve::floating_real_value T, eve::floating_real_value U >
+  //!      eve:common_compatible_value<T,U>  lbeta(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [strictly positive real floating argument](@ref eve::floating_real_value).
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!     * `y` :  [strictly positive real floating argument](@ref eve::floating_real_value).
   //!
-  //! **Return value**
+  //!    **Return value**
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \log\left(\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\right)\f$.
+  //!    the value of the  logarithm of the beta function is returned.
   //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::lbeta
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `lbeta[cond](x, ...)` is equivalent to `if_else(cond,lbeta(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!
-  //!  *  eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
-  //!
-  //!
-  //!    The expression `derivative_1st(lbeta)(x,y)` and `derivative_2nd(lbeta)(x,y)` computes the partial
-  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \log(\mbox{B}(x,y))\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/lbeta.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/special/regular/lbeta.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(lbeta_, lbeta);
 }

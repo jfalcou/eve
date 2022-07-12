@@ -15,64 +15,40 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var gamma_p_inv
+  //!   @var gamma_p_inv
+  //!   @brief Computes the inverse of the normalized lower incomplete \f$\Gamma\f$ function :
+  //!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
   //!
-  //! @brief Callable object computing the normalized lower incomplete \f$\Gamma\f$ function.
+  //!   **Defined in header**
   //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the gamma_p_inv operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T, eve::floating_real_value U >
+  //!      eve:common_compatible_value<T,U>  gamma_p_inv(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( floating_real_value auto x, floating_real_value auto y) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [real floating arguments](@ref eve::floating_real_value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`:    [floating real value](@ref eve::floating_real_value).
+  //!    the value of the  the inverse of the normalized lower incomplete
+  //!    \f$\Gamma\f$ function relative to the first parameter
+  //!    is returned.
   //!
+  //!  @groupheader{Example}
   //!
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) computes the inverse of normalized lower incomplete \f$\Gamma\f$ function :
-  //! \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
-  //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::gamma_p_inv
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `gamma_p_inv[cond](x, ...)` is equivalent to `if_else(cond,gamma_p_inv(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/gamma_p_inv.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/special/regular/gamma_p.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(gamma_p_inv_, gamma_p_inv);
 }

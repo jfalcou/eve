@@ -14,63 +14,39 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var gamma_p
-  //!
-  //! @brief Callable object computing the normalized lower incomplete \f$\Gamma\f$ function :
+  //!   @var gamma_p
+  //!   @brief Computes the normalized lower incomplete \f$\Gamma\f$ function :
   //!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
   //!
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the gamma_p operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T  gamma_p(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( floating_real_value auto x, floating_real_value auto y) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `y`:  [real floating arguments](@ref eve::floating_real_value).
   //!
-  //!`x`, `y`:   [floating real value](@ref eve::floating_real_value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    the value of the normalized lower incomplete \f$\Gamma\f$ function
+  //!    is returned.
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) computes the normalized lower incomplete \f$\Gamma\f$ function :
-  //! \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+  //!  @groupheader{Example}
   //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::gamma_p
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `gamma_p[cond](x, ...)` is equivalent to `if_else(cond,gamma_p(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/gamma_p.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/special/regular/gamma_p.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(gamma_p_, gamma_p);
 }

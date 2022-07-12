@@ -14,24 +14,41 @@ namespace eve
   //================================================================================================
   //! @addtogroup special
   //! @{
-  //! @var exp_int
+  //!   @var exp_int
+  //!   @brief Computes the exponential integral
+  //!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$.
   //!
-  //! @brief Callable object computing the exp_int function.
+  //!   **Defined in header**
   //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the exp_int operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value N, eve::floating_real_value T >
+  //!      T exp_int(N n, T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //! #### Example
+  //!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
   //!
-  //! @godbolt{doc/special/exp_int.cpp}
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //!  @}
+  //!    **Return value**
+  //!
+  //!    the value of the exponential integral is returned.
+  //!    is returned.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/special/regular/exp_int.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(exp_int_, exp_int);
 }

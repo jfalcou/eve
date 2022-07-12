@@ -12,57 +12,44 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup combinatorial
+  //! @addtogroup special
   //! @{
-  //! @var factorial
+  //!   @var factorial
+  //!   @brief Computes the  factorial of unsigned integral values \f$\displaystyle n! = \prod_{i=1}^n i\f$.
   //!
-  //! @brief Callable object computing factorial of  unsigned integers \f$\displaystyle n! = \prod_{i=1}^n i\f$.
+  //!   **Defined in header**
   //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` |  factorial of  unsigned integers                           |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value N >
+  //!      eve::as_floating_point_value<N> factorial(N x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`n`:   [value](@ref eve::value) must be positive and flint (if floating point).
+  //!    the value of \f$ n!\f$ is returned.
   //!
-  //! **Return value**
-  //!
-  //! If the entry is an [integral_value](eve::integral_value), the result [element type](eve::element_type)
-  //! is always double to try to avoid overflow and its cardinal is the same as the entry in case of an simd call.
-  //!
-  //! If the entry is a [floating_point_value](eve::floating_point_value) which must be a flint,
-  //! the result is of the same type as the entry.
-  //!
-  //!@warning
+  //!  @warning
   //!    this function will overflow as soon as the input is greater than 171 for integral or double entries
   //!    and if the entry is greater than 34 for float.
   //!
-  //! ---
   //!
-  //! #### Supported decorators
+  //!  @groupheader{Example}
   //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/factorial.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-
-  namespace tag { struct factorial_; }
-  template<> struct supports_conditional<tag::factorial_> : std::false_type {};
-
+  //!  @godbolt{doc/special/regular/factorial.cpp}
+  //! @}
   EVE_MAKE_CALLABLE(factorial_, factorial);
 }
 
