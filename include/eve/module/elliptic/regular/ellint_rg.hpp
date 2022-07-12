@@ -11,83 +11,53 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup elliptic
-  //! @{
-  //! @var ellint_rg
-  //!
-  //! @brief Callable object computing the the Carlson's elliptic integral
-  //!        \f$\frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
-  //!                                    +y\sin^2\theta\sin^2\phi
-  //!                                    +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$
-  //!
-  //! **Required header:** `#include <eve/module/elliptic.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ellint_rg operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_real_value auto  x
-  //!                , floating_real_value auto y)
-  //!                , floating_real_value auto zconst noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`, `z`:   [floating real values](@ref eve::floating_real_value).
-  //!
-  //!  This computes the Carlson's elliptic integral
-  //!
-  //! \f[ R_G(x, y, z) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi} \sqrt{x\sin^2\theta\cos^2\phi
-  //!                                                                                +y\sin^2\theta\sin^2\phi
-  //!                                                                                +z\cos^2\theta} \mbox{d}\theta\mbox{d}\phi\f]
-  //!
-  //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
-  //!
-  //!  Parameters `x` and `y` and `z`must be non-negative.
-  //!  In any other case the result is nan.
-  //!
-  //! **Return value**
-  //!
-  //!Returns  [elementwise](@ref glossary_elementwise) Carlson's integral.
-  //!
-  //! The result type is of the compatibility type of the three parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::ellint_rg
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ellint_rg[cond](x, ...)` is equivalent to `if_else(cond,ellint_rg(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/elliptic/ellint_rg.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(ellint_rg_, ellint_rg);
+//================================================================================================
+//! @addtogroup elliptic
+//! @{
+//!   @var ellint_rg
+//!   @brief Computes the Carlson's elliptic integral
+//!   \f$ \mathbf{R}_\mathbf{G}(x, y) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi}
+//!   \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
+//!   +y\sin^2\theta\sin^2\phi
+//!   +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/elliptic.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T
+//!              , eve::floating_real_value U
+//!              , eve::floating_real_value V >
+//!      eve::common_compatible_value<T, U, V> ellint_rg(T x, U y, V z) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!   `x`, `y`, `z`:   [floating real arguments](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!     * the value of the \f$\mathbf{R}_\mathbf{G}\f$ Carlson elliptic integral is returned:
+//!
+//!   **Notes**
+//!
+//!     - `x` and `y` and `z` must be non-negative.
+//!     - In any other case the result is nan.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(ellint_rg_, ellint_rg);
 }
 
 #include <eve/module/elliptic/regular/impl/ellint_rg.hpp>

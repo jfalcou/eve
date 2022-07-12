@@ -11,85 +11,66 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup elliptic
-  //! @{
-  //! @var ellint_d
-  //!
-  //! @brief Callable object computing the \f$\mbox{D}\f$ elliptic integrals  :
-  //!        \f$\int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}} \scriptstyle\;\mathrm{d}t\f$.
-  //!
-  //! **Required header:** `#include <eve/module/elliptic.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ellint_d operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_real_value auto k) const noexcept;
-  //!  auto operator()(floating_real_value auto phi, floating_real_value auto k) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`phi`, `k`:   [floating real values](@ref eve::floating_real_value).
-  //!
-  //! computes the complete and incomplete D elliptic integrals  :
-  //!
-  //!\f[ F(\phi,k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}\mbox{d}t\f]
-  //!
-  //!The complete case corresponds to \f$\phi = \pi/2\f$.
-  //!
-  //!  - `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is nan.
-  //!
-  //!  - In the complete case this means \f$|k| \le 1\f$.
-  //!
-  //!  In any other case the result is nan.
-  //!
-  //!@warning
-  //!  Be aware that as \f$\pi/2\f$ is not exactly represented by floating point values the result of the incomplete
-  //!  function with a \f$\phi\f$ value near \f$\pi/2\f$ can differ a lot with the result of the complete call.
-  //!
-  //! **Return value**
-  //!
-  //!Returns  [elementwise](@ref glossary_elementwise) the elliptic integral of the first kind.
-  //!
-  //! The result type is of the compatibility type of the three parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::ellint_d
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ellint_d[cond](x, ...)` is equivalent to `if_else(cond,ellint_d(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/elliptic/ellint_d.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(ellint_d_, ellint_d);
+//================================================================================================
+//! @addtogroup elliptic
+//! @{
+//!   @var ellint_d
+//!   @brief Computes the \f$\mbox{D}\f$ elliptic integrals  :
+//!        \f$ \mathbf{D}(\phi, k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
+//!        \scriptstyle\;\mathrm{d}t\f$ and
+//!        \f$ \mathbf{D}(k) = \int_0^{\pi/2} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
+//!        \scriptstyle\;\mathrm{d}t\f$.
+//!
+//!   Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
+//!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
+//!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/elliptic.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      T ellint_d(T k) noexcept;                                                //1
+//!
+//!      template< eve::floating_real_value T, eve::floating_real_value U >
+//!      eve::common_compatible_value<T, U> ellint_d(T phi, U k) noexcept;        //2
+//!   }
+//!
+//!    1. complete \f$\mbox{D}\f$  elliptic integrals.
+//!    2. incomplete\f$\mbox{D}\f$ elliptic integrals.
+//!
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!   `phi`:   [floating real Jacobi amplitude](@ref eve::floating_real_value).
+//!
+//!   `k`:   [floating real elliptic modulus](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!     1. the complete elliptic integral ( corresponding to \f$ \phi = \pi/2 \f$ ) is returned.
+//!     2. the incomplete elliptic integral of the first kind is returned:
+//!
+//!   **Notes**
+//!
+//!     - `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is nan.
+//!
+//!     - In the complete case this means \f$|k| \le 1\f$.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/elliptic/regular/ellint_d.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(ellint_d_, ellint_d);
 }
 
 #include <eve/module/elliptic/regular/impl/ellint_d.hpp>

@@ -14,73 +14,46 @@ namespace eve
   //================================================================================================
   //! @addtogroup elliptic
   //! @{
-  //! @var ellint_rf
+  //!   @var ellint_rf
+  //!   @brief Computes the Carlson's elliptic integral
+  //!   \f$  \mathbf{R}_\mathbf{F}(x, y) = \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+  //!   (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$.\
   //!
-  //! @brief Callable object computing the Carlson's elliptic integral
-  //!        \f$\frac12 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$
+  //!   **Defined in header**
   //!
-  //! **Required header:** `#include <eve/module/elliptic.hpp>`
+  //!   @code
+  //!   #include <eve/module/elliptic.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ellint_rf operation                                    |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T
+  //!              , eve::floating_real_value U
+  //!              , eve::floating_real_value V >
+  //!      eve::common_compatible_value<T, U, V> ellint_rf(T x, U y, V z) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
- //!  auto operator()( floating_real_value auto x
-  //!                , floating_real_value auto y)
-  //!                , floating_real_value auto zconst noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   `x`, `y`, `z`:   [floating real arguments](@ref eve::floating_real_value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`, `z`:   [floating values](@ref eve::value).
+  //!     * the value of the \f$\mathbf{R}_\mathbf{F}\f$ Carlson elliptic integral is returned:
   //!
-  //!  This computes the Carlson's elliptic integral
+  //!   **Notes**
   //!
-  //!  \f[ R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t\f]
+  //!     - `x` and `y` and `z` must be non-negative and at most one zero.
+  //!     - In any other case the result is nan.
   //!
-  //!  as described in  Carlson, Numerische Mathematik, vol 33, 1 (1979)
+  //!  @groupheader{Example}
   //!
-  //!  parameters must be non-negative and at most one zero or the result is nan.
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) the Carlson's integral.
-  //!
-  //! The result type is of the compatibility type of the three parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::ellint_rf
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ellint_rf[cond](x, ...)` is equivalent to `if_else(cond,ellint_rf(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/elliptic/ellint_rf.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(ellint_rf_, ellint_rf);
 }
