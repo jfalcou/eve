@@ -4,6 +4,6 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-add_subdirectory(pedantic)
-add_subdirectory(raw)
-add_subdirectory(regular)
+
+make_unit( "doc.special.raw" lrising_factorial.cpp    )
+make_unit( "doc.special.raw" rising_factorial.cpp     )

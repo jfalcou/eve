@@ -11,50 +11,44 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //! @var omega
-  //!
-  //! @brief Callable object computing the Wright \f$\omega\f$ function inverse of \f$ x-> \log x+x\f$
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the omega operation                                        |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the omega function.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(omega)(x)` computes the derivative  of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/omega.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(omega_, omega);
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var omega
+//!   @brief Computes the the Wright \f$\omega\f$ the inverse function of \f$ x \rightarrow \log
+//!   x+x\f$
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      T omega(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!
+//!    **Return value**
+//!
+//!    the value of the Wright \f$\omega\f$ function
+//!    is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/special/regular/omega.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(omega_, omega);
 }
 
 #include <eve/module/special/regular/impl/omega.hpp>

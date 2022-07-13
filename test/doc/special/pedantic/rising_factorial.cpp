@@ -13,13 +13,6 @@ int main()
   std::cout << "---- simd" << std::setprecision(17) << '\n'
             << " <- n                                  = " << n << '\n'
             << " <- x                                  = " << x << '\n'
-            << " -> rising_factorial(n, x)             = " << eve::rising_factorial(n, x) << '\n';
-
-  double xi = 1.8;
-  std::cout << "---- scalar" << '\n'
-            << " xi                          = " << xi << '\n'
-            << " -> rising_factorial(7, xi)  = " << eve::rising_factorial(7, xi) << '\n';
-
-
+            << " -> pedantic(rising_factorial)(n, x)   = " << eve::pedantic(eve::rising_factorial)(n, x) << '\n';
   return 0;
 }

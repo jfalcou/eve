@@ -13,11 +13,11 @@
 #include <eve/module/special/regular/dawson.hpp>
 #include <eve/module/special/regular/digamma.hpp>
 #include <eve/module/special/regular/double_factorial.hpp>
+#include <eve/module/special/regular/erf.hpp>
+#include <eve/module/special/regular/erf_inv.hpp>
 #include <eve/module/special/regular/erfc.hpp>
 #include <eve/module/special/regular/erfc_inv.hpp>
 #include <eve/module/special/regular/erfcx.hpp>
-#include <eve/module/special/regular/erf.hpp>
-#include <eve/module/special/regular/erf_inv.hpp>
 #include <eve/module/special/regular/exp_int.hpp>
 #include <eve/module/special/regular/factorial.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
