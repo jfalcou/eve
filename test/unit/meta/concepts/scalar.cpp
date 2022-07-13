@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/concept/scalar.hpp>
+#include <eve/wide.hpp>
 
 TTS_CASE("Check for plain_scalar_value on regular types" )
 {
@@ -42,11 +43,13 @@ TTS_CASE("Check for plain_scalar_value on cstdint/def types" )
 
 TTS_CASE("Check for plain_scalar_value on unsupported types" )
 {
-  TTS_EXPECT_NOT( eve::plain_scalar_value<char>                         );
-  TTS_EXPECT_NOT( eve::plain_scalar_value<long double>                  );
-  TTS_EXPECT_NOT( eve::plain_scalar_value<bool>                         );
-  TTS_EXPECT_NOT( eve::plain_scalar_value<void*>                        );
+  TTS_EXPECT_NOT( eve::plain_scalar_value<char>                                );
+  TTS_EXPECT_NOT( eve::plain_scalar_value<long double>                         );
+  TTS_EXPECT_NOT( eve::plain_scalar_value<bool>                                );
+  TTS_EXPECT_NOT( eve::plain_scalar_value<void*>                               );
   TTS_EXPECT_NOT((eve::plain_scalar_value<kumi::tuple<int,float,std::int8_t>> ));
+  TTS_EXPECT_NOT((eve::plain_scalar_value<eve::wide<float>>                   ));
+  TTS_EXPECT_NOT((eve::plain_scalar_value<eve::wide<kumi::tuple<int,float>>>  ));
 };
 
 TTS_CASE("Check for product_scalar_value on product_type" )

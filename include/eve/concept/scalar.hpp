@@ -22,7 +22,7 @@ namespace detail
   template<typename T> struct is_natural : std::false_type {};
 
   template<typename T>
-  requires(std::integral<T> && (sizeof(T) <= 8) && !std::same_as<T,bool> && !std::same_as<T,char>)
+  requires(std::integral<T> && (sizeof(T) <= 8) && !detail::one_of<T, bool, char>)
   struct is_natural<T> : std::true_type {};
 
   template<typename T>
@@ -38,9 +38,18 @@ namespace detail
   {
     if constexpr( kumi::product_type<T> )
     {
-      return kumi::size_v<T> ? kumi::all_of(kumi::flatten_all(kumi::as_tuple_t<T> {}),
-                                            []<typename M>(M) { return plain_scalar_value<M>; })
-                             : false;
+      if constexpr(kumi::size<T>::value != 0)
+      {
+        using flatten_t = kumi::result::flatten_all_t<T>;
+        return []<std::size_t... I>( std::index_sequence<I...> )
+        {
+          return (plain_scalar_value<kumi::element_t<I,flatten_t>> && ... && true);
+        }(std::make_index_sequence<kumi::size<flatten_t>::value>{});
+      }
+      else
+      {
+        return false;
+      }
     }
     else { return false; }
   }
