@@ -10,43 +10,43 @@
 
 namespace eve
 {
- //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //!   @var zeta
-  //!   @brief Computes the Riemann \f$\zeta\f$ function:
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var zeta
+//!   @brief Computes the Riemann \f$\zeta\f$ function:
 //!        \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
-  //!
-  //!   **Defined in header**
-  //!
-  //!   @code
-  //!   #include <eve/module/special.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::floating_real_value T >
-  //!      T zeta(T x) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
-  //!
-  //!    **Return value**
-  //!
-  //!    the value of  Riemann \f$\zeta\f$ function is returned.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/special/regular/zeta.cpp}
-  //! @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(zeta_, zeta);
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      T zeta(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!
+//!    **Return value**
+//!
+//!    the value of  Riemann \f$\zeta\f$ function is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/special/regular/zeta.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(zeta_, zeta);
 }
 
 #include <eve/module/special/regular/impl/zeta.hpp>
