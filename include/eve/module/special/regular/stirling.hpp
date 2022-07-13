@@ -10,68 +10,47 @@
 
 namespace eve
 {
-//================================================================================================
-//! @addtogroup special
-//! @{
-//! @var stirling
-//!
-//! @brief Callable object computing an approximation of the
-//!        \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12}
-//!        e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$, where \f$P\f$ is a polynomial.
-//!
-//!
-//! #### Members Functions
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the stirling operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, floating_value U > auto operator()( Tx ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
-//!
-//! **Return value**
-//!
-//! Returns [elementwise](@ref glossary_elementwise) \f$\sqrt{2 \pi} x^{x-\frac12} e^{-x} \left( 1 +
-//! \frac1{x} P(\frac1{x})\right)\f$
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::stirling
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `stirling[cond](x, ...)` is equivalent to
-//!  `if_else(cond,stirling(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/special/stirling.cpp}
-//!
-//!  @}
-//================================================================================================
-EVE_MAKE_CALLABLE(stirling_, stirling);
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var stirling
+  //!   @brief Computes the Stirling approximation of the \f$\Gamma\f$ function.
+  //!
+  //!   **Defined in header**
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T >
+  //!      T stirling(T x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+  //!
+  //!     * `y` :  [real floating argument](@ref eve::floating_real_value).
+  //!
+  //!    **Return value**
+  //!
+  //!    the value of an approximation of the
+  //!    \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12}
+  //!    e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$, where \f$P\f$ is a polynomial,
+  //!    is returned.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/special/regular/stirling.cpp}
+  //! @}
+  //================================================================================================
+  EVE_MAKE_CALLABLE(stirling_, stirling);
 }
 
 #include <eve/module/special/regular/impl/stirling.hpp>

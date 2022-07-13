@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var lambert
-//!   @brief Computes the
+//!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
 //!
 //!   **Defined in header**
 //!

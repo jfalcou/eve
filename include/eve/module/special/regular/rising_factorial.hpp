@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var rising_factorial
-//!   @brief Computes the natural logarithm of the rising_factorial function i.e.
+//!   @brief Computes the  rising_factorial function i.e.
 //!   \f$\frac{\Gamma(x+a)}{\Gamma(x)}\f$.
 //!
 //!   **Defined in header**
