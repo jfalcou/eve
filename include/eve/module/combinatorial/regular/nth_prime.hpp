@@ -29,7 +29,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      eve::as_wide_as<M, double> nth_prime(N n) noexcept;
+//!      eve::as_wide_as< double, N > nth_prime(N n) noexcept;
 //!   }
 //!   @endcode
 //!
