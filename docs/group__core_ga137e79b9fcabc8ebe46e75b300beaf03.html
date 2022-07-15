@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga137e79b9fcabc8ebe46e75b3
 
 <p>Callable object computing a generalized fold operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1093"></a>
+<h4><a class="anchor" id="autotoc_md1051"></a>
 Member Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -165,7 +165,7 @@ Member Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>reduce[cond](x, ...)</code> is equivalent to <code>if_else(cond,reduce(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1097"></a>
+<h4><a class="anchor" id="autotoc_md1055"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8" title="Higher-order Callable Object allowing reduction to generate wide results instead of scalars.">eve::splat</a></li>
@@ -173,7 +173,7 @@ Supported decorators</h4>
 <pre class="fragment">The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
 using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result
 in all lanes.
-</pre> <h4><a class="anchor" id="autotoc_md1098"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1056"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

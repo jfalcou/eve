@@ -11,82 +11,61 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup combinatorial
-  //! @{
-  //! @var prime_floor
-  //!
-  //! @brief Callable object computing the greater prime integer less or equal to the input.
-  //!
-  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | unsigned integral prime_floor   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`n`:   [unsigned value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //! The result element type is the same as the input one unless a converter is applied.
-  //!
-  //! A binary search is performed using nth_prime.
-  //!
-  //!@warning
-  //!    this function will return 0 (or nan) as soon as the input is greater than 104729 or less than 2.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::prime_floor
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `prime_floor[cond](x, ...)` is equivalent to `if_else(cond,prime_floor(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported converters
-  //!
-  //!  * eve::float_,  eve::double_, eve::floating_
-  //!
-  //!     The expression `d(prime_floor)(x)` where d in one of these 3 converters is supported
-  //!     and produce a floating point output.
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/combinatorial/prime_floor.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  namespace tag { struct prime_floor_; }
+//================================================================================================
+//! @addtogroup combinatorial
+//! @{
+//!   @var prime_floor
+//!   @brief Returns the the greatest prime less or equal to the input.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/combinatorial.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::unsigned_value N >
+//!      N prime_floor(N n) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `n` :  unsigned argument. If `n` is greater than 104'729, behavior is undefined.
+//!
+//!   **Return value**
+//!   The greatest prime less or equal to `n`.
+//!   The result type is the same as the input one unless a converter is applied (see below).
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/combinatorial/regular/prime_floor.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Optimized Conversion Call
+//!
+//!     The converters eve::float_,  eve::double_, eve::floating_ can be applied to
+//!     produce a floating point output.
+//!
+//!    **Example**
+//!
+//!    @godbolt{doc/combinatorial/conversion/prime_floor.cpp}
+//! @}
+//================================================================================================
+namespace tag
+{
+  struct prime_floor_;
+}
 
-  template<>
-  struct supports_optimized_conversion<tag::prime_floor_> : std::true_type {};
+template<> struct supports_optimized_conversion<tag::prime_floor_> : std::true_type
+{};
 
-  EVE_MAKE_CALLABLE(prime_floor_, prime_floor);
+EVE_MAKE_CALLABLE(prime_floor_, prime_floor);
 }
 
 #include <eve/module/combinatorial/regular/impl/prime_floor.hpp>

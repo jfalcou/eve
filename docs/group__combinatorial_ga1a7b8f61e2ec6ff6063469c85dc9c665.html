@@ -137,62 +137,39 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga1a7b8f61e2ec6ff
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the least prime greater or equal to the input. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/combinatorial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md46"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">unsigned integral prime_ceil    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()( <a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1unsigned__value_html"><div class="ttname"><a href="concepteve_1_1unsigned__value.html">eve::unsigned_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:63</div></div>
+<p>Returns the smallest prime greater or equal to the input. </p>
+<p ><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">unsigned</span>_value N &gt;</div>
+<div class="line">   N <a class="code hl_variable" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">prime_ceil</a>(N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665_html_ga1a7b8f61e2ec6ff6063469c85dc9c665"><div class="ttname"><a href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a></div><div class="ttdeci">constexpr callable_prime_ceil_ prime_ceil</div><div class="ttdoc">Returns the smallest prime greater or equal to the input.</div><div class="ttdef"><b>Definition:</b> prime_ceil.hpp:68</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1value.html">unsigned value</a>.</p>
-<p ><b>Return value</b></p>
-<p >The result element type is the same as the input one unless a converter is applied.</p>
-<p >A binary search is performed using <a class="el" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c" title="Callable object performing the computation the nth prime integer.">eve::nth_prime</a>.</p>
-<dl class="section warning"><dt>Warning</dt><dd>this function will return 0 (or nan) as soon as the input is greater than 104729.</dd></dl>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665" title="Callable object computing the least prime greater or equal to the input.">eve::prime_ceil</a></p>
-<p ><b>Parameters</b></p>
-<p ><code>cond</code> : conditional expression</p>
-<p ><b>Return value</b></p>
-<p >A Callable object so that the expression <code>prime_ceil[cond](x, ...)</code> is equivalent to <code>if_else(cond,prime_ceil(x, ...),x)</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md50"></a>
-Supported converters</h4>
 <ul>
-<li><p class="startli">eve::float_, eve::double_, <a class="el" href="group__core_gaed175cd947b502a735e216cd1fce6d90.html#gaed175cd947b502a735e216cd1fce6d90" title="convert a eve::real_value to a floating point based eve::floating_real_value of same size.">eve::floating_</a></p>
-<p class="startli">The expression <code>d(prime_ceil)(x)</code> where d in one of these 3 converters is supported and produce a floating point output.</p>
-</li>
+<li><code>n</code> : unsigned argument. If <code>n</code> is greater than 104'729, behavior is undefined.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md51"></a>
-Supported decorators</h4>
-<p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md52"></a>
-Example</h4>
+<p ><b>Return value</b> The smallest prime greater or equal to <code>n</code>. The result type is the same as the input one unless a converter is applied (see below).</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  w32_t pi32 = {0, 6, 6542, 15, 104729, 104730, 10000, 1000};</div>
+<div class="line">  w32_t pi32  = {0, 6, 6542, 15, 104729, 104730, 10000, 1000};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi32                      = &quot;</span> &lt;&lt; pi32 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; prime_ceil(pi32)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a>(pi32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; float32(prime_ceil)(pi32) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a>(<a class="code hl_variable" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a>)(pi32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; prime_ceil(pi32)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a>(pi32)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; // note 0 meaning out of implemented range\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::uint32_t xi = 18;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -200,10 +177,34 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; prime_ceil(xi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665_html_ga1a7b8f61e2ec6ff6063469c85dc9c665"><div class="ttname"><a href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a></div><div class="ttdeci">constexpr callable_prime_ceil_ prime_ceil</div><div class="ttdoc">Callable object computing the least prime greater or equal to the input.</div><div class="ttdef"><b>Definition:</b> prime_ceil.hpp:89</div></div>
-<div class="ttc" id="agroup__core_ga274dac2c4e1dfa15f47d228529791c5a_html_ga274dac2c4e1dfa15f47d228529791c5a"><div class="ttname"><a href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a></div><div class="ttdeci">constexpr converter_type&lt; float &gt; const float32</div><div class="ttdoc">convert a eve::real_value to a float32 based eve::floating_real_value.</div><div class="ttdef"><b>Definition:</b> converter.hpp:121</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li><p class="startli">Optimized Conversion Call</p>
+<p class="startli">The converters eve::float_, eve::double_, <a class="el" href="group__core_gaed175cd947b502a735e216cd1fce6d90.html#gaed175cd947b502a735e216cd1fce6d90" title="convert a eve::real_value to a floating point based eve::floating_real_value of same size.">eve::floating_</a> can be applied to produce a floating point output.</p>
+<p class="startli"><b>Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line">  w32_t pi32  = {0, 6, 6542, 15, 104729, 104730, 10000, 1000};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi32                      = &quot;</span> &lt;&lt; pi32 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; float32(prime_ceil)(pi32) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a>(<a class="code hl_variable" href="group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665">eve::prime_ceil</a>)(pi32)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; // note nan meaning out of implemented range\n&quot;</span>;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core_ga274dac2c4e1dfa15f47d228529791c5a_html_ga274dac2c4e1dfa15f47d228529791c5a"><div class="ttname"><a href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a></div><div class="ttdeci">constexpr converter_type&lt; float &gt; const float32</div><div class="ttdoc">convert a eve::real_value to a float32 based eve::floating_real_value.</div><div class="ttdef"><b>Definition:</b> converter.hpp:121</div></div>
+</div><!-- fragment --> </li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->
