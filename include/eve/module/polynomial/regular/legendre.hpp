@@ -102,8 +102,8 @@ namespace eve
 //!       The expression `sph(legendre)(l, m, theta)` returns the spherical associated
 //!       Legendre function of degree l, order m, and polar angle theta in radian
 //!       (that is the classical spherical harmonic with \f$\phi = 0\f$),
-//!       i.e. \f$\displaystyle\
-  //!       (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
+//!       i.e. \f$\displaystyle
+//!       (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
 //!
 //!       **Example**
 //!
