@@ -37,16 +37,12 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!   `x`, `y`:   [floating real arguments](@ref eve::floating_real_value).
+//!     * `x`, `y`: [floating real arguments](@ref eve::floating_real_value). `x` and `y` must be
+//!                 strictly positive and `y` non zero or the result is NaN.
 //!
 //!   **Return value**
 //!
-//!     * the value of the \f$\mathbf{R}_\mathbf{C}\f$ elliptic integral is returned:
-//!
-//!   **Notes**
-//!
-//!     - `x` and `y` must be strictly positive and `y` non zero.
-//!     - In any other case the result is nan.
+//!    the value of the \f$\mathbf{R}_\mathbf{C}\f$ elliptic integral is returned.
 //!
 //!  @groupheader{Example}
 //!

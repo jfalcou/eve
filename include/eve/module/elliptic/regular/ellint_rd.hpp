@@ -16,6 +16,7 @@ namespace eve
 //! @{
 //!   @var ellint_rd
 //!   @brief Computes the Carlson's elliptic integral
+//!
 //!   \f$  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
 //!   (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$.
 //!
@@ -39,21 +40,18 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!   `x`, `y`, `z`:   [floating real arguments](@ref eve::floating_real_value).
+//!     * `x`, `y`: [floating real arguments](@ref eve::floating_real_value). `x` and `y` must be
+//!       strictly positive and `y` non zero. In any other case, the result is NaN.
+//!     * `z`: strictly positive [floating real arguments](@ref eve::floating_real_value). In any other
+//!       case, the result is NaN.
 //!
 //!   **Return value**
 //!
-//!     * the value of the \f$\mathbf{R}_\mathbf{D}\f$ Carlson elliptic integral is returned:
+//!   the value of the \f$\mathbf{R}_\mathbf{D}\f$ Carlson elliptic integral is returned:
 //!
-//!   **Notes**
+//!   @groupheader{Example}
 //!
-//!     - `x` and `y` must be strictly positive and `y` non zero.
-//!     - `z` must be greater than 0.
-//!     - In any other case the result is nan.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
+//!   @godbolt{doc/elliptic/regular/ellint_rc.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(ellint_rd_, ellint_rd);

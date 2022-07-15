@@ -40,16 +40,13 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!   `x`, `y`, `z`:   [floating real arguments](@ref eve::floating_real_value).
+  //!     * `x`, `y`, `z`:  [floating real arguments](@ref eve::floating_real_value).
+  //!                       All those arguments must be non-negative and at most one zero or the
+  //!                       the result is NaN.
   //!
   //!   **Return value**
   //!
-  //!     * the value of the \f$\mathbf{R}_\mathbf{F}\f$ Carlson elliptic integral is returned:
-  //!
-  //!   **Notes**
-  //!
-  //!     - `x` and `y` and `z` must be non-negative and at most one zero.
-  //!     - In any other case the result is nan.
+  //!   the value of the \f$\mathbf{R}_\mathbf{F}\f$ Carlson elliptic integral is returned:
   //!
   //!  @groupheader{Example}
   //!

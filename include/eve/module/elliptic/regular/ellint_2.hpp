@@ -50,20 +50,16 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!   `phi`:   [floating real Jacobi amplitude](@ref eve::floating_real_value).
+//!     * `phi`:   [floating real Jacobi amplitude](@ref eve::floating_real_value).
 //!
-//!   `k`:   [floating real elliptic modulus](@ref eve::floating_real_value).
+//!     * `k`:  [floating real elliptic modulus](@ref eve::floating_real_value).
+//!             `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is NaN. In the complete
+//!             case, this means \f$|k| \le 1\f$.
 //!
 //!   **Return value**
 //!
 //!     1. the complete ( corresponding to \f$ \phi = \pi/2 \f$ ) is returned.
-//!     2. the incomplete elliptic integrals is returned:
-//!
-//!   **Notes**
-//!
-//!     - `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is nan.
-//!
-//!     - In the complete case this means \f$|k| \le 1\f$.
+//!     2. the incomplete elliptic integrals is returned.
 //!
 //!  @groupheader{Example}
 //!
