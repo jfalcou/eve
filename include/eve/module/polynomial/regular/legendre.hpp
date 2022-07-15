@@ -42,7 +42,8 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!   1.) legendre polynomial of order n
+//!   1. Legendre polynomial of order n
+//!   2. Associated Legendre polynomial of orders m, n
 //!   **Parameters**
 //!
 //!     * `n`, `m` :  [integral positive arguments](@ref eve::integrall_value).

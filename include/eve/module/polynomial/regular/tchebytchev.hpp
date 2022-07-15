@@ -44,7 +44,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    the value of the polynomial at `x` is returned.
+//!    the value of the polynomial at `x` is returned. (the polynomial can be evaluated anywhere).
 //!
 //!  @groupheader{Example}
 //!
