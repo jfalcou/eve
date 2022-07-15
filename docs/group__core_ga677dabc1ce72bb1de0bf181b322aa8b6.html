@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga677dabc1ce72bb1de0bf181b
 
 <p>Callable object computing the scaled rouding. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1111"></a>
+<h4><a class="anchor" id="autotoc_md1069"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -165,14 +165,14 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>roundscale[cond](x, ...)</code> is equivalent to <code>if_else(cond,roundscale(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1115"></a>
+<h4><a class="anchor" id="autotoc_md1073"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__core_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223" title="Higher-order Callable Object imbuing rounding to nearest semantic onto other Callable Objects.">eve::to_nearest</a>, <a class="el" href="group__core_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028" title="Higher-order Callable Object imbuing rounding toward zero semantic onto other Callable Objects.">eve::toward_zero</a>, <a class="el" href="group__core_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80" title="Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.">eve::upward</a>, <a class="el" href="group__core_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6" title="Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.">eve::downward</a></p>
 <p class="startli">If d is one of these 4 decorators The call <code>d(roundscale)(x)</code>, call is equivalent to <code><a class="el" href="group__core_ga3b2f3edbfac7f9e75a410245b728d96d.html#ga3b2f3edbfac7f9e75a410245b728d96d" title="Callable object computing the ldexp operation: .">eve::ldexp</a>(d(</code><code><a class="el" href="group__core_gaf23afad64ceaef8914f279dc10f03faf.html#gaf23afad64ceaef8914f279dc10f03faf" title="Callable object computing the round operation.">eve::round</a></code><code>)(</code><code><a class="el" href="group__core_ga3b2f3edbfac7f9e75a410245b728d96d.html#ga3b2f3edbfac7f9e75a410245b728d96d" title="Callable object computing the ldexp operation: .">eve::ldexp</a></code><code>(a0,scale), -scale))</code></p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1116"></a>
+<h4><a class="anchor" id="autotoc_md1074"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga8769c9b7cb829f6cb787848e
 
 <p>Callable object computing the is_not_flint logical value. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md767"></a>
+<h4><a class="anchor" id="autotoc_md725"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -168,12 +168,12 @@ Members Functions</h4>
 <p ><code>cond</code> : conditional expression</p>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>is_not_flint[cond](x)</code> is equivalent to <code>if_else(cond,is_not_flint(x),false(as(is_not_flint(x))))</code></p>
-<h4><a class="anchor" id="autotoc_md770"></a>
+<h4><a class="anchor" id="autotoc_md728"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a> Pedantically speaking flint stands for floating integer. The call <code>pedantic(is_flint)(x)</code> considers that integral typed values are not floating and so <code>pedantic(is_not_flint)(x)</code> returns true for all elements of this types. Moreover a floating point value is pedantically deemed as flint only is the next representable value is not flint, so great floating values are not pedantically flint.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md771"></a>
+<h4><a class="anchor" id="autotoc_md729"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

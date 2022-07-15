@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('intro-03.html',''); initResizable(); }
 <div class="contents">
 <div class="textblock"><p >In the previous tutorials, we built a SIMD function to compute those cartesian-polar conversions and we used them in the context of a SIMD algorithm to apply them over an arbitrary set of data. While doing so, we introduced the eve::views::zip component that helped us gather multiple ranges into a single one. This worked by feeding eve::algo::transform_to's lambda a tuple of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
 <p >This interaction between SIMD register and tuple-like types is very interesting and <b>EVE</b> provides different ways to take advantage of these interactions. In this tutorial, we'll go over how <b>EVE</b> can help you design SIMD-aware tuple to write higher level SIMD code.</p>
-<h1><a class="anchor" id="autotoc_md2247"></a>
+<h1><a class="anchor" id="autotoc_md2205"></a>
 Tuple of SIMD registers</h1>
 <p >If we go back to the initial scalar conversion functions, we can actually merge both <code>rho</code> and <code>theta</code> functions in a single <code>to_polar</code> function that will return a tuple of float containing both results of the conversion.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
@@ -150,7 +150,7 @@ Tuple of SIMD registers</h1>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --><p >This version of the code just works out of the box. <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> is just a C++ type and thus interacts normally with other standard components.</p>
-<h1><a class="anchor" id="autotoc_md2248"></a>
+<h1><a class="anchor" id="autotoc_md2206"></a>
 SIMD register of tuples</h1>
 <p >If the previous code is fine, it has the disadvantage of not being compatible to the general SIMD principle of <b>EVE</b>. Indeed, <code>std::tuple</code> is not a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a> even when it contains <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
 <p >A better model should allow us to use <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of tuples. To do so, we use <a href="https://jfalcou.github.io/kumi/"><b>kumi::tuple</b></a> instead of <code>std::tuple</code>. This change is due to the higher flexibility of <a href="https://jfalcou.github.io/kumi/">kumi::tuple</a> and its system of extension. <a href="https://jfalcou.github.io/kumi/"><b>kumi</b></a>, as a library is integrated within <b>EVE</b> through the <code>eve/product_type.hpp</code> header file and does not need any special setup.</p>
@@ -192,7 +192,7 @@ SIMD register of tuples</h1>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algorithms_ga023d457444697194cbb8dcf21bcb236e_html_ga023d457444697194cbb8dcf21bcb236e"><div class="ttname"><a href="group__algorithms_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a></div><div class="ttdeci">constexpr auto transform_to</div><div class="ttdoc">SIMD version of std::transform.</div><div class="ttdef"><b>Definition:</b> transform.hpp:112</div></div>
 <div class="ttc" id="agroup__views_ga351e71cb38111c22884bb11fc51211a4_html_ga351e71cb38111c22884bb11fc51211a4"><div class="ttname"><a href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::algo::views::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Given relaxed_iterors and relaxed ranges, zips them together (creates a single object)....</div><div class="ttdef"><b>Definition:</b> zip.hpp:144</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2249"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2207"></a>
 Conclusion</h1>
 <p >In this tutorial, we managed to:</p><ul>
 <li>handle tuple in SIMD context using <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and <a href="https://jfalcou.github.io/kumi/"><b>kumi::tuple</b></a></li>

@@ -26,41 +26,41 @@ var NAVTREE =
 [
   [ "E.V.E", "index.html", [
     [ "The Expressive Vector Engine", "index.html", [
-      [ "Video materials", "index.html#autotoc_md2188", null ],
-      [ "Bibliographic References", "index.html#autotoc_md2189", null ]
+      [ "Video materials", "index.html#autotoc_md2146", null ],
+      [ "Bibliographic References", "index.html#autotoc_md2147", null ]
     ] ],
     [ "Installation & Quick Start", "install.html", [
-      [ "Pre-requisites", "install.html#autotoc_md2210", null ],
-      [ "Retrieving the source", "install.html#autotoc_md2211", [
-        [ "Github", "install.html#autotoc_md2212", null ],
-        [ "CPM", "install.html#autotoc_md2213", null ],
-        [ "SPACK", "install.html#autotoc_md2214", null ],
-        [ "AUR", "install.html#autotoc_md2215", null ],
-        [ "Conan", "install.html#autotoc_md2216", null ],
-        [ "VCPKG", "install.html#autotoc_md2217", null ]
+      [ "Pre-requisites", "install.html#autotoc_md2168", null ],
+      [ "Retrieving the source", "install.html#autotoc_md2169", [
+        [ "Github", "install.html#autotoc_md2170", null ],
+        [ "CPM", "install.html#autotoc_md2171", null ],
+        [ "SPACK", "install.html#autotoc_md2172", null ],
+        [ "AUR", "install.html#autotoc_md2173", null ],
+        [ "Conan", "install.html#autotoc_md2174", null ],
+        [ "VCPKG", "install.html#autotoc_md2175", null ]
       ] ],
-      [ "Installation from Source", "install.html#autotoc_md2218", [
-        [ "Setting up the Library", "install.html#autotoc_md2219", null ],
-        [ "Building the Documentation", "install.html#autotoc_md2220", null ]
+      [ "Installation from Source", "install.html#autotoc_md2176", [
+        [ "Setting up the Library", "install.html#autotoc_md2177", null ],
+        [ "Building the Documentation", "install.html#autotoc_md2178", null ]
       ] ],
-      [ "Using the library", "install.html#autotoc_md2221", [
-        [ "Compilation", "install.html#autotoc_md2222", null ],
-        [ "Instruction Set Selection", "install.html#autotoc_md2223", null ],
-        [ "Execution", "install.html#autotoc_md2224", null ]
+      [ "Using the library", "install.html#autotoc_md2179", [
+        [ "Compilation", "install.html#autotoc_md2180", null ],
+        [ "Instruction Set Selection", "install.html#autotoc_md2181", null ],
+        [ "Execution", "install.html#autotoc_md2182", null ]
       ] ],
-      [ "Advanced options", "install.html#autotoc_md2225", null ]
+      [ "Advanced options", "install.html#autotoc_md2183", null ]
     ] ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.03.0", "changelog.html#autotoc_md2226", [
-        [ "What's Changed", "changelog.html#autotoc_md2227", null ],
-        [ "New Contributors", "changelog.html#autotoc_md2228", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md2184", [
+        [ "What's Changed", "changelog.html#autotoc_md2185", null ],
+        [ "New Contributors", "changelog.html#autotoc_md2186", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md2229", [
-        [ "What's Changed", "changelog.html#autotoc_md2230", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md2187", [
+        [ "What's Changed", "changelog.html#autotoc_md2188", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md2231", null ]
+      [ "Version beta.2020.09", "changelog.html#autotoc_md2189", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],

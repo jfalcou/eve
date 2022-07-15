@@ -11,57 +11,50 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup combinatorial
-  //! @{
-  //! @var bernouilli
-  //!
-  //! @brief Callable object computing bernouilli numbers sequence.
-  //!
-  //! **Required header:** `#include <eve/module/combinatorial.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | bernouilli numbers sequence   |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto n ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`n`:   [unsigned value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //! The result element type is always double to try to avoid overflow
-  //! and its cardinal is the same as the entry in case of an simd call.
-  //!
-  //!@warning
-  //!    this function will overflow as soon as the input is even and greater than 260
-  //!    But all odd index values are properly computed as they are all 0 except \f$b_1 = -1/2\f$.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/combinatorial/bernouilli.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup combinatorial
+//! @{
+//!   @var bernouilli
+//!   @brief Computes the nth Bernouilli number \f$b_n\f$ as a double.
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/combinatorial.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::unsigned_value N >
+//!      eve::as_wide_as<double, N> bernouilli(N n) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `n` :  unsigned argument.
+//!
+//!    **Return value**
+//!
+//!    The value of the nth Bernouilli number is returned.
+//!    The result's element type is double to avoid overflow and its cardinal is the same as 'n'.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/combinatorial/regular/bernouilli.cpp}
+//! @}
+//================================================================================================
+namespace tag
+{
+  struct bernouilli_;
+}
+template<> struct supports_conditional<tag::bernouilli_> : std::false_type
+{};
 
-  namespace tag { struct bernouilli_; }
-  template<> struct supports_conditional<tag::bernouilli_> : std::false_type {};
-
-  EVE_MAKE_CALLABLE(bernouilli_, bernouilli);
+EVE_MAKE_CALLABLE(bernouilli_, bernouilli);
 }
 
 #include <eve/module/combinatorial/regular/impl/bernouilli.hpp>
