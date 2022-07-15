@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup combinatorial
 //! @{
 //!   @var bernouilli
-//!   @brief Computes the nth bernouilli number \f$b_n\f$ as a double.
+//!   @brief Computes the nth Bernouilli number \f$b_n\f$ as a double.
 //!
 //!   **Defined in header**
 //!
@@ -29,7 +29,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      eve::as_wide_as<M, double> bernouilli(N n) noexcept;
+//!      eve::as_wide_as<N, double> bernouilli(N n) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -39,11 +39,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    the value of the nth bernouilli number
-//!    is returned.
-//!
-//!    The result element type is always double to try to avoid overflow
-//!    and its cardinal is the same as the entry in case of an simd call.
+//!    The value of the nth Bernouilli number is returned.
+//!    The result's element type is double to avoid overflow and its cardinal is the same as 'n'.
 //!
 //!  @groupheader{Example}
 //!

@@ -15,8 +15,7 @@ namespace eve
 //! @addtogroup combinatorial
 //! @{
 //!   @var gcd
-//!   @brief Computes the gretest common divisor of the inputs.
-//!
+//!   @brief Computes the greatest common divisor of the inputs.
 //!
 //!   **Defined in header**
 //!
@@ -36,7 +35,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!   `p`, `n`:   [real values](@ref eve::value).
+//!   `p`, `n`: [Real values](@ref eve::value).
 //!
 //!    **Return value**
 //!
@@ -45,7 +44,7 @@ namespace eve
 //!
 //!    @warning
 //!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not
-//!    integral the greatest common divisor is defined only if `p` and `n` element are [flint](@ref
+//!    integral the greatest common divisor is defined only if `p` and `n` elements are [flint](@ref
 //!    eve::is_flint). If any of the arguments is not flint the result is undefined.
 //!
 //!   **Example**
@@ -58,9 +57,6 @@ namespace tag
 {
   struct gcd_;
 }
-
-template<> struct supports_optimized_conversion<tag::gcd_> : std::true_type
-{};
 
 EVE_MAKE_CALLABLE(gcd_, gcd);
 }

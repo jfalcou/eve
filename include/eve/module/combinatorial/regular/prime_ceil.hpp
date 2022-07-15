@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup combinatorial
 //! @{
 //!   @var prime_ceil
-//!   @brief Returns the the least prime greater or equal to the input.
+//!   @brief Returns the smallest prime greater or equal to the input.
 //!
 //!   **Defined in Header**
 //!
@@ -35,20 +35,15 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  unsigned argument.
+//!     * `n` :  unsigned argument. If `n` is greater than 104'729, behavior is undefined.
 //!
 //!   **Return value**
-//!
-//!     The result element type is the same as the input one unless a converter
-//!     is applied (see below).
-//!
-//!     @warning
-//!       this function will return 0 (or nan, see below) as soon as the input is greater than
-//!       104729.
+//!   The smallest prime greater or equal to `n`.
+//!   The result type is the same as the input one unless a converter is applied (see below).
 //!
 //!   @groupheader{Example}
 //!
-//!     @godbolt{doc/combinatorial/regular/prime_ceil.cpp}
+//!   @godbolt{doc/combinatorial/regular/prime_ceil.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -59,7 +54,7 @@ namespace eve
 //!
 //!    **Example**
 //!
-//!      @godbolt{doc/combinatorial/conversion/prime_ceil.cpp}
+//!    @godbolt{doc/combinatorial/conversion/prime_ceil.cpp}
 //! @}
 //================================================================================================
 namespace tag
