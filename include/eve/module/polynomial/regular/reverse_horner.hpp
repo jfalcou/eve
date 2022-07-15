@@ -46,15 +46,15 @@ namespace eve
 //!`x`:   [value x](@ref eve::value).
 //!
 //!`o`:   [callable_one_ ](@ref eve::value). Put eve::one here to have an unitary polynomial and a
-//!small optimization
+//! small optimization
 //!
 //!`args`:   [values ](@ref eve::value) expansion pack associated to \f$(a_{n-i})_{i_0\le i \le
-//!n}\f$. \f$i_0\f$ is 1 if o is present else 0
+//! n}\f$. \f$i_0\f$ is 1 if o is present else 0
 //!
 //!`r`:   [values ](@ref eve::value) Range containing the coefficients in the same conditions
 //!
 //!`first`, `sentinel`:   std::input_iterator conforming pair of iterators through the coefficients
-//!in the same conditions
+//! in the same conditions
 //!
 //! **Return value**
 //!
