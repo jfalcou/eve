@@ -137,75 +137,58 @@ $(document).ready(function(){initNavTree('group__elliptic_ga3e59785e4e4746bfe4ad
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the Carlson's elliptic integral \(\frac12 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\). </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/elliptic.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1227"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the ellint_rf operation    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<p >~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp} */ /** auto operator()( floating_real_value auto x */ /** , floating_real_value auto y) , floating_real_value auto zconst noexcept; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
-<p ><b>Parameters</b></p>
-<p ><code>x</code>, <code>y</code>, <code>z</code>: <a class="el" href="concepteve_1_1value.html">floating values</a>.</p>
-<p >This computes the Carlson's elliptic integral</p>
-<p class="formulaDsp">
-\[ R_F(x, y, z) = \frac12 \int_{0}^{\infty} [(t+x)(t+y)(t+z)]^{-1/2} \mbox{d}t\]
-</p>
-<p >as described in Carlson, Numerische Mathematik, vol 33, 1 (1979)</p>
-<p >parameters must be non-negative and at most one zero or the result is nan.</p>
+<p>Computes the Carlson's elliptic integral \(  \mathbf{R}_\mathbf{F}(x, y) = \mathbf{R}_\mathbf{D}(x, y) =
+  \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+  (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\). </p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T</div>
+<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> U</div>
+<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> V &gt;</div>
+<div class="line">   eve::common_compatible_value&lt;T, U, V&gt; <a class="code hl_variable" href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14">ellint_rf</a>(T x, U y, V z) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
+<div class="ttc" id="agroup__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14_html_ga3e59785e4e4746bfe4ad3d4c05677d14"><div class="ttname"><a href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14">eve::ellint_rf</a></div><div class="ttdeci">constexpr callable_ellint_rf_ ellint_rf</div><div class="ttdoc">Computes the Carlson's elliptic integral .</div><div class="ttdef"><b>Definition:</b> ellint_rf.hpp:56</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
+<ul>
+<li><code>x</code>, <code>y</code>, <code>z</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real arguments</a>. All those arguments must be non-negative and at most one zero or the the result is NaN.</li>
+</ul>
 <p ><b>Return value</b></p>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the Carlson's integral.</p>
-<p >The result type is of the compatibility type of the three parameters.</p>
-<hr  />
-<p >~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp} auto operator[]( conditional_expression auto cond ) const noexcept; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
-<p >Higher-order function generating a masked version of <a class="el" href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14" title="Callable object computing the Carlson&#39;s elliptic integral .">eve::ellint_rf</a></p>
-<p ><b>Parameters</b></p>
-<p ><code>cond</code> : conditional expression</p>
-<p ><b>Return value</b></p>
-<p >A Callable object so that the expression <code>ellint_rf[cond](x, ...)</code> is equivalent to <code>if_else(cond,ellint_rf(x, ...),x)</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1231"></a>
-Supported decorators</h4>
-<p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md1232"></a>
-Example</h4>
+<p >the value of the \(\mathbf{R}_\mathbf{F}\) Carlson elliptic integral is returned:</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
 <div class="line">{</div>
 <div class="line">  wide_ft pf = {1.0f, 0.0f, 1.5f, 3.0f};</div>
 <div class="line">  wide_ft qf = {1.0f, 4.0f, 0.2f, 0.5f};</div>
-<div class="line">  wide_ft rf = {2.0f, 1.0f, 0.1f, 0.4f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                    = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                    = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- rf                    = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rf(pf, qf, rf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14">eve::ellint_rf</a>(pf, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__elliptic_gac988dfdbc128cb466584e60b61c1eeef.html#gac988dfdbc128cb466584e60b61c1eeef">eve::ellint_rc</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 3.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = 0.5f;</div>
-<div class="line">  <span class="keywordtype">float</span> zf = 1.0f;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                    = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                    = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- zf                    = &quot;</span> &lt;&lt; zf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rf(xf, yf, zf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14">eve::ellint_rf</a>(xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__elliptic_gac988dfdbc128cb466584e60b61c1eeef.html#gac988dfdbc128cb466584e60b61c1eeef">eve::ellint_rc</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14_html_ga3e59785e4e4746bfe4ad3d4c05677d14"><div class="ttname"><a href="group__elliptic_ga3e59785e4e4746bfe4ad3d4c05677d14.html#ga3e59785e4e4746bfe4ad3d4c05677d14">eve::ellint_rf</a></div><div class="ttdeci">constexpr callable_ellint_rf_ ellint_rf</div><div class="ttdoc">Callable object computing the Carlson's elliptic integral .</div><div class="ttdef"><b>Definition:</b> ellint_rf.hpp:85</div></div>
+<div class="ttc" id="agroup__elliptic_gac988dfdbc128cb466584e60b61c1eeef_html_gac988dfdbc128cb466584e60b61c1eeef"><div class="ttname"><a href="group__elliptic_gac988dfdbc128cb466584e60b61c1eeef.html#gac988dfdbc128cb466584e60b61c1eeef">eve::ellint_rc</a></div><div class="ttdeci">constexpr callable_ellint_rc_ ellint_rc</div><div class="ttdoc">computes the degenerate Carlson's elliptic integral .</div><div class="ttdef"><b>Definition:</b> ellint_rc.hpp:52</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>

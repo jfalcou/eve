@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('install.html',''); initResizable(); })
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_page01_info"></a></p>
-<h1><a class="anchor" id="autotoc_md2168"></a>
+<h1><a class="anchor" id="autotoc_md2120"></a>
 Pre-requisites</h1>
 <p ><b>EVE</b> requires a C++20 compliant compiler. Here is the current minimal compiler version supported:</p>
 <table class="markdownTable">
@@ -157,15 +157,15 @@ Pre-requisites</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2169"></a>
+<h1><a class="anchor" id="autotoc_md2121"></a>
 Retrieving the source</h1>
-<h2><a class="anchor" id="autotoc_md2170"></a>
+<h2><a class="anchor" id="autotoc_md2122"></a>
 Github</h2>
 <p ><b>EVE</b> is available on GitHub and can be retrieved via the following command: <br  />
 </p>
 <pre class="fragment">$ git clone  https://github.com/jfalcou/eve.git
 </pre><p >This retrieves the <code>main</code> branch which contains the latest stable version. Development happens live on <code>main</code> so if you need stability, use a tagged versions.</p>
-<h2><a class="anchor" id="autotoc_md2171"></a>
+<h2><a class="anchor" id="autotoc_md2123"></a>
 CPM</h2>
 <p >You can install <b>EVE</b> directly via <a href="https://github.com/cpm-cmake/CPM.cmake">CPM</a>. After <a href="https://github.com/cpm-cmake/CPM.cmake#adding-cpm">adding CPM to your CMake setup</a>, just add the following commands:</p>
 <div class="fragment"><div class="line">include(CPM)</div>
@@ -178,16 +178,16 @@ CPM</h2>
 <div class="line">                &quot;EVE_BUILD_BENCHMARKS OFF&quot;</div>
 <div class="line">                &quot;EVE_BUILD_DOCUMENTATION OFF&quot;</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2172"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2124"></a>
 SPACK</h2>
 <p ><b>EVE</b> is <a href="https://spack.readthedocs.io/en/latest/package_list.html#eve"><b>available</b></a> via <a href="https://spack.readthedocs.io/en/latest/getting_started.html"><b>SPACK</b></a>:</p>
 <div class="fragment"><div class="line">$ spack install eve</div>
 </div><!-- fragment --><p >Once installed, you can use <b>EVE</b> headers directly from your <a href="https://spack.readthedocs.io/en/latest/getting_started.html"><b>SPACK</b></a> installation.</p>
-<h2><a class="anchor" id="autotoc_md2173"></a>
+<h2><a class="anchor" id="autotoc_md2125"></a>
 AUR</h2>
 <p ><b>EVE</b> is available on Arch-Linux via an <a href="https://aur.archlinux.org/packages/eve-git/"><b>AUR package</b></a>.</p>
 <div class="fragment"><div class="line">$ yay -S eve-git</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2174"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2126"></a>
 Conan</h2>
 <p ><a href="https://conan.io/center/"><b>Conan Center</b></a> hosts <b>EVE</b> as the <a href="https://conan.io/center/jfalcou-eve"><code>jfalcou-eve</code> package</a>.</p>
 <p >To use <b>EVE</b>, just add <code>jfalcou-eve/v2021.10.0</code> in the <code>[requires]</code> section of your <code>conanfile.txt</code></p>
@@ -196,14 +196,14 @@ Conan</h2>
 <div class="line"> </div>
 <div class="line">[generators]</div>
 <div class="line">cmake</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2175"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2127"></a>
 VCPKG</h2>
 <p ><b>EVE</b> can be fetched from <a href="https://vcpkgx.com/details.html?package=eve">VCPKG</a>. Note that, as of now, we still don't support MSVC.</p>
 <div class="fragment"><div class="line">$ vcpkg install eve</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2176"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2128"></a>
 Installation from Source</h1>
 <p >If you didn't fetched <b>EVE</b> from a package manager, you'll need to install it via our CMake system.</p>
-<h2><a class="anchor" id="autotoc_md2177"></a>
+<h2><a class="anchor" id="autotoc_md2129"></a>
 Setting up the Library</h2>
 <p >Create a <code>build</code> directory here and enter it. Once in the <code>build</code> directory, you can use <b>CMake</b> to generate the build system for <b>EVE</b>.</p>
 <p >We recommend using <a href="https://ninja-build.org/">Ninja</a> but any build system is fine.</p>
@@ -215,15 +215,15 @@ $ cmake .. -G Ninja
 </pre><p >You can select an alternative installation path by specifying the <code>CMAKE_INSTALL_PREFIX</code> option at configuration time.</p>
 <pre class="fragment">$ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install
 $ ninja install
-</pre><h2><a class="anchor" id="autotoc_md2178"></a>
+</pre><h2><a class="anchor" id="autotoc_md2130"></a>
 Building the Documentation</h2>
 <p >You can rebuild <b>EVE</b> documentation if you have the latest version of Doxygen installed using the <code>doxygen</code> target: <br  />
 </p>
 <div class="fragment"><div class="line">ninja doxygen</div>
 </div><!-- fragment --><p >The resulting HTML files will be available in the <code>doc</code> folder.</p>
-<h1><a class="anchor" id="autotoc_md2179"></a>
+<h1><a class="anchor" id="autotoc_md2131"></a>
 Using the library</h1>
-<h2><a class="anchor" id="autotoc_md2180"></a>
+<h2><a class="anchor" id="autotoc_md2132"></a>
 Compilation</h2>
 <p >Once installed, you can compile the following code to check if everything is alright.</p>
 <div class="fragment"><div class="line"><span class="comment">//==================================================================================================</span></div>
@@ -255,12 +255,12 @@ Compilation</h2>
 </pre><p >Don't forget the <code>--std=c++20</code> option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.</p>
 <p >You can notice we use the <code>-O3 -DNEDBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
 <p >The <code>-DNDEBUG</code> setting can be omitted but then asserts will be inserted into the code to prevent logic errors.</p>
-<h2><a class="anchor" id="autotoc_md2181"></a>
+<h2><a class="anchor" id="autotoc_md2133"></a>
 Instruction Set Selection</h2>
 <p >The SIMD instruction sets that <b>EVE</b> uses is decided at compile time. You can use <code>-march=native</code> if you're sure your code won't be executed anywhere else.</p>
 <p >You can also select a specific instructions set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.</p>
 <pre class="fragment">$ g++ test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output
-</pre><h2><a class="anchor" id="autotoc_md2182"></a>
+</pre><h2><a class="anchor" id="autotoc_md2134"></a>
 Execution</h2>
 <p >Once done, execute the binary. If you compiled for SSE4.1 for example, you'll end up with the following results:</p>
 <pre class="fragment">$ ./output
@@ -268,7 +268,7 @@ Execution</h2>
  2*x   = (2, 4, 6, 8)
  x^0.5 = (1, 1.41421, 1.73205, 2)
 </pre><p >That's it, <b>EVE</b> is properly installed and ready to use.</p>
-<h1><a class="anchor" id="autotoc_md2183"></a>
+<h1><a class="anchor" id="autotoc_md2135"></a>
 Advanced options</h1>
 <p >If you want to dig a bit further, you can pass additional options to <code>cmake</code> to activate additional features.</p>
 <table class="markdownTable">

@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('algo_rationale.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_internals_algo"></a></p>
-<h1><a class="anchor" id="autotoc_md2148"></a>
+<h1><a class="anchor" id="autotoc_md2100"></a>
 General Principles</h1>
 <p >SIMD algorithms are complex to design, implement and tests as a lot of care has to be put into details like correct tail handling, alignment handling or unrolling.</p>
 <p ><b>EVE</b>'s algorithms and views module is designed to simplify such design while:</p>
@@ -133,24 +133,24 @@ General Principles</h1>
 </ul>
 <p >All those features are usable through generic interfaces to allow for reuse of similar loops structure at the cost of some idiosyncrasies.</p>
 <p >For a in-depth discussion about those issues, you can take a look at the Algorithms section of our <a href="https://www.youtube.com/embed/WZGNCPBMInI?t=1412">CppCon talk</a>.</p>
-<h1><a class="anchor" id="autotoc_md2149"></a>
+<h1><a class="anchor" id="autotoc_md2101"></a>
 Basic Components</h1>
-<h2><a class="anchor" id="autotoc_md2150"></a>
+<h2><a class="anchor" id="autotoc_md2102"></a>
 Reusable loops</h2>
 <p >Many algorithms require some form of <code>while(f != l)</code> loop. However, with SIMD, even this simple operation is non trivial. <b>EVE</b> algorithm building-blocks provide implementation for the most frequent loop structure. Those loops can then customized and reused without having to care about the actual range type used. For example, eve::mismatch is implemented as a customized call to eve::find.</p>
-<h2><a class="anchor" id="autotoc_md2151"></a>
+<h2><a class="anchor" id="autotoc_md2103"></a>
 Ranges or Iterators</h2>
-<h3><a class="anchor" id="autotoc_md2152"></a>
+<h3><a class="anchor" id="autotoc_md2104"></a>
 General concepts</h3>
 <p >Iterators are more fundamental than ranges. However, ranges can have some extra information like, for example, that instead of <code>begin()</code> it has <code>aligned_begin()</code> and the algorithm can use that. So the interfaces are <code>range</code> based. We don't generally accept <code>iterator</code> in interfaces just because it increases the maintenance. The eve::algo::as_range can be used to turn iterators pair into a <b>EVE</b> compatible range.</p>
 <p >One case where it can be very awkward to use ranges instead of iterators is in multi-range algorithms , like <code>transform_to</code>. In this case, unless we have some reason no to, we allow for passing anything that zips to <code>range</code>, i.e. <code>range</code>, <code>iterator</code> or <code>iterator</code>,<code>range</code>. Exceptions are documented and have <code>static_assert</code>s that will tell you it's not supported*.</p>
-<h3><a class="anchor" id="autotoc_md2153"></a>
+<h3><a class="anchor" id="autotoc_md2105"></a>
 Relaxed concepts</h3>
 <p >Many things that we want to accept in the interfaces as <code>range</code> and/or <code>iterator</code> are not ideal for writing code against. We also need to strip things like <code>vector::iterator</code> to pointers. What also we want is to associate a <code>cardinal</code> with <code>iterator</code>.</p>
 <p >This is why we have two layers: <code><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></code>/<code><a class="el" href="structrelaxed__iterator.html" title="anything that can be reasonably converted to an iterator: std::contigious_iterator,...">relaxed_iterator</a></code> and <code>iterator</code>. There are a few things that <code>relaxed_*</code> should be able to do but the main one is <code>preprocess_range(traits, f, l)</code> which returns enhanced <code>traits</code> and <code>iterator</code> pair.</p>
-<h1><a class="anchor" id="autotoc_md2154"></a>
+<h1><a class="anchor" id="autotoc_md2106"></a>
 Customization</h1>
-<h2><a class="anchor" id="autotoc_md2155"></a>
+<h2><a class="anchor" id="autotoc_md2107"></a>
 Algorithms traits</h2>
 <p ><b>EVE</b> allows to customize algorithms with traits. Traits are passed via <code>[]</code> and can ve combined.</p>
 <p >The more common ones are:</p>

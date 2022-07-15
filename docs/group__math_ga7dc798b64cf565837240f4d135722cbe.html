@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_ga7dc798b64cf565837240f4d1
 
 <p>Callable object computing the pow_abs function \(|x|^y\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1824"></a>
+<h4><a class="anchor" id="autotoc_md1776"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -182,7 +182,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>pow_abs[cond](x, ...)</code> is equivalent to <code>if_else(cond,pow_abs(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1828"></a>
+<h4><a class="anchor" id="autotoc_md1780"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a> The expression <code>raw(pow_abs)(x,y)</code> merely returns <code>exp(y*log(|x|)</code> which is must faster way to compute the result than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.</li>
@@ -190,7 +190,7 @@ Supported decorators</h4>
 </ul>
 <pre class="fragment"> The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
   derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.
-</pre> <h4><a class="anchor" id="autotoc_md1829"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1781"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

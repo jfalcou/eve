@@ -1,10 +1,12 @@
 #include <eve/module/elliptic.hpp>
 #include <eve/wide.hpp>
+
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
-int main()
+int
+main()
 {
   wide_ft pf = {1.0f, 0.0f, 1.5f, 3.0f};
   wide_ft qf = {1.0f, 4.0f, 0.2f, 0.5f};

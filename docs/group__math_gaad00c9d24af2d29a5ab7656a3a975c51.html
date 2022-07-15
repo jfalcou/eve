@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_gaad00c9d24af2d29a5ab7656a
 
 <p>Callable object computing \(2^x\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1716"></a>
+<h4><a class="anchor" id="autotoc_md1668"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -170,14 +170,14 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>exp2[cond](x, ...)</code> is equivalent to <code>if_else(cond,exp2(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1720"></a>
+<h4><a class="anchor" id="autotoc_md1672"></a>
 Supported converters</h4>
 <ul>
 <li><p class="startli">eve::float_, eve::double_, <a class="el" href="group__core_gaed175cd947b502a735e216cd1fce6d90.html#gaed175cd947b502a735e216cd1fce6d90" title="convert a eve::real_value to a floating point based eve::floating_real_value of same size.">eve::floating_</a></p>
 <p class="startli">The expression <code>d(exp2)(x)</code> where d in one of these 3 converters is supported if x is an <a class="el" href="concepteve_1_1integral__value.html">integral value</a> and produce a floating point output.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1721"></a>
+<h4><a class="anchor" id="autotoc_md1673"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__core_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">eve::saturated</a></p>
@@ -186,7 +186,7 @@ Supported decorators</h4>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
 </ul>
 <pre class="fragment"> The expression `diff(exp2)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md1722"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1674"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
