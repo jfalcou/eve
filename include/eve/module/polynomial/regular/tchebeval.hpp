@@ -14,69 +14,64 @@ namespace eve
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
-//! @var tchebeval
+//!   @var tchebeval
+//!   @brief evaluates a polynomial on the tchebytchev polynomial basis.
 //!
-//! @brief Callable object computing the tchebeval operation.
+//!   If \f$(a_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial,
+//!   the Tchebeval scheme evaluates the polynom \f$\sum_0^{n-1} a_i T_{i}(x)\f$,
+//!   where \f$T_{i}\f$ is the \f$i^{th}\f$ Tchebytchev polynomial of the first kind.
 //!
-//! **Required header:** `#include <eve/module/polynomial.hpp>`
+//!   **Defined in header**
 //!
-//! #### Members Functions
+//!   @code
+//!   #include <eve/module/polynomial.hpp>
+//!   @endcode
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | evaluate a polynomial using the tchebeval algorithm        |
+//!   @groupheader{Callable Signatures}
 //!
-//! ---
+//!   @code
+//!   namespace eve
+//!   {
+//!     template< eve::floating_real_value T, eve::floating_real_value Cs ...>
+//!     T tchebeval(T x, Cs ... cs) noexcept;
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()(value auto x, value auto... cs) const noexcept;
-//!  auto operator()(value auto x, range auto r) const noexcept;
-//!  auto operator()(value auto x, auto a,  auto b, auto r) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     template< eve::floating_real_value T, eve::range R>
+//!     T tchebeval(T x, R r) noexcept;
 //!
-//! ---
+//!     template< eve::floating_real_value T, eve::floating_real_value U
+//!             , eve::floating_real_value V, eve::range R>
+//!     T tchebeval(T x, R r) noexcept;
+//!   }
+//!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [value](@ref eve::value).
+//!     * `x` : [real floating argument](@ref eve::floating_real_value).
 //!
-//!`a`, `b`:   [values](@ref eve::value). If present,  they are the bounds of the interval for which
-//!the tchebytchev polynomial
-//!       must be evaluated ( -1 and 1 by default). A change of variable \f$ x -> \frac{2x-a-b}{b-a}
-//!       is internally performed.
-//!`
-//!`cs`:   [values ](@ref eve::value) expansion pack associated to the coefficients \f$(c_i)_{i_0\le
-//!i \lt n}\f$.
+//!     * `a`, `b` : [real floating arguments](@ref eve::floating_real_value).
+//!       If present,  they are the bounds of   the interval for which the tchebytchev polynomial
+//!       must be evaluated ( -1 and 1 by default). A change of variable
+//!       \f$ x -> \frac{2x-a-b}{b-a}\f$ is internally performed.
 //!
-//!`r`:   [values ](@ref eve::value) Range containing the coefficients in the same conditions
+//!     * `cs`: [values ](@ref eve::value) expansion pack associated to the
+//!        coefficients \f$(a_i)_{0\le i \lt n}\f$.
 //!
-//! **Return value**
+//!     * `r` : [range](@ref eve::range) containing The polynomial coefficients.
 //!
-//! Returns [elementwise](@ref glossary_elementwise) the value of tchebytchev polynomial function
-//! represented by the coefficients in increasing index order at `x`.
+//!    **Return value**
 //!
-//! I.e if \f$c_0, ...c_{n-1}\f$ are the \f$n\f$ given coefficients, the object function computes:
-//! \f$\displaymath c_0/2+\sum_1^n c_i T_i(x)\f$,  where the T_i are the n first tchebytchev
-//! polynomials of first kind
+//!    the value of the polynom at  `x` is returned.
 //!
+//!    **Notes**
+//!      If the coefficients are simd values of cardinal N, this means you simultaneously
+//!      compute the values of N polynomials.
+//!        *  If x is scalar, the polynomials are all computed at the same point
+//!        *  If x is simd, the nth polynomial is computed on the nth value of x
 //!
-//! The result type is of the compatibility type of the  coefficients and the evaluation value `x`.
+//!  @groupheader{Example}
 //!
-//! The values are evaluted in linear \f$O(n)\f$ time.
-//!
-//!@warning
-//!   If the coefficients are simd values of cardinal N, this means you simultaneously compute the
-//!   values of N polynomials.
-//!   *  If x is scalar, the polynomials are all computed at the same point
-//!   *  If x is simd, the nth polynomial is computed on the nth value of x
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/polynomial/tchebeval.cpp}
-//!
-//!  @}
+//!  @godbolt{doc/polynomial/regular/tchebeval.cpp}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(tchebeval_, tchebeval);
 }
