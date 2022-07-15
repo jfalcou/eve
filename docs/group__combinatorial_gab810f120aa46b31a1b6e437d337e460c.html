@@ -137,46 +137,74 @@ $(document).ready(function(){initNavTree('group__combinatorial_gab810f120aa46b31
 </table>
 </div><div class="memdoc">
 
-<p>Callable object performing the computation the nth prime integer. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/combinatorial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md41"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">unsigned integral nth_prime   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; <span class="keywordtype">unsigned</span>_value T &gt; <span class="keyword">auto</span> operator()( T n ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<p>Returns the nth prime number. </p>
+<p ><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">unsigned</span>_value N &gt;</div>
+<div class="line">   eve::as_wide_as&lt;M, double&gt; <a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">nth_prime</a>(N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__combinatorial_gab810f120aa46b31a1b6e437d337e460c_html_gab810f120aa46b31a1b6e437d337e460c"><div class="ttname"><a href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a></div><div class="ttdeci">constexpr callable_nth_prime_ nth_prime</div><div class="ttdoc">Returns the nth prime number.</div><div class="ttdef"><b>Definition:</b> nth_prime.hpp:77</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1value.html">unsigned value</a>.</p>
+<ul>
+<li><code>n</code> : unsigned argument. If n is greater than 10'000, behavior is undefined.</li>
+</ul>
 <p ><b>Return value</b></p>
-<p >The result element type is the same as the input one unless a converter is applied to <code>nth_prime</code>. See the example below.</p>
-<p >Almost no computations are made, the results are from a lookup table.</p>
-<p >2 is the first prime number (n=0). If the output is of integral type incorrect computation will return 0, but if the result has been converted to a floating value (by concerting the object function) incorrect computation will return nan</p>
-<dl class="section warning"><dt>Warning</dt><dd>this function will return 0 (or nan) as soon as the correct result will not be exactly represented in the output type or (for the current impl/ementation) if n is greater or equal to 10000.</dd></dl>
-<hr  />
-<h4><a class="anchor" id="autotoc_md44"></a>
-Supported decorators</h4>
-<p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md45"></a>
-Example</h4>
+<p >The value of the nth prime number is returned.</p>
+<p ><b>Notes</b></p>
+<ul>
+<li>2 is the first prime. It is returned for n=0.</li>
+<li>Almost no computations are made, the results are from a lookup table. The result element type is the same as the input one unless a converter is applied to <a class="el" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c" title="Returns the nth prime number.">eve::nth_prime</a> (see below).</li>
+</ul>
+<p ><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using </span>w16_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line">  w16_t pi16  = {52, 53, 6541, 6542, 0, 1, 999, 10000};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi16              = &quot;</span> &lt;&lt; pi16 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; nth_prime(pi16)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>(pi16)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; // note the 0 outputs meaning overflow or out of range\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::uint16_t xi = 18;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; xi                   = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; nth_prime(xi)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
+</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li><p class="startli">Optimized Conversion Call</p>
+<p class="startli">If the input types are integral, the result is susceptible not to be representable in the input type. A converter can be applied to choose the output type and get the correct result.</p>
+<p class="startli"><b>Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">using </span>w16_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  w16_t pi16 = {52, 53, 6541, 6542, 0, 1, 999, 10000};</div>
+<div class="line">  w16_t pi16  = {52, 53, 6541, 6542, 0, 1, 999, 10000};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi16           = &quot;</span> &lt;&lt; pi16 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; nth_prime(pi16)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>(pi16) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; uint32(nth_prime)(pi16)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga1dbf1967fa31abbc08b1ce14a8252acb.html#ga1dbf1967fa31abbc08b1ce14a8252acb">eve::uint32</a>(<a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>)(pi16) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; float32(nth_prime)(pi16)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a>(<a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>)(pi16) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; float32(nth_prime(pi16))  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a>(<a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>(pi16)) &lt;&lt; <span class="stringliteral">&quot;// mind the parentheses\n\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; float32(nth_prime(pi16))  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a>(<a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>(pi16))</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;// mind the parentheses\n\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::uint16_t xi = 18;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -184,11 +212,11 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; nth_prime(xi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__combinatorial_gab810f120aa46b31a1b6e437d337e460c_html_gab810f120aa46b31a1b6e437d337e460c"><div class="ttname"><a href="group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c">eve::nth_prime</a></div><div class="ttdeci">constexpr callable_nth_prime_ nth_prime</div><div class="ttdoc">Callable object performing the computation the nth prime integer.</div><div class="ttdef"><b>Definition:</b> nth_prime.hpp:70</div></div>
 <div class="ttc" id="agroup__core_ga1dbf1967fa31abbc08b1ce14a8252acb_html_ga1dbf1967fa31abbc08b1ce14a8252acb"><div class="ttname"><a href="group__core_ga1dbf1967fa31abbc08b1ce14a8252acb.html#ga1dbf1967fa31abbc08b1ce14a8252acb">eve::uint32</a></div><div class="ttdeci">constexpr converter_type&lt; std::uint32_t &gt; const uint32</div><div class="ttdoc">convert a eve::real_value to a uint32 based eve::integral_real_value.</div><div class="ttdef"><b>Definition:</b> converter.hpp:217</div></div>
 <div class="ttc" id="agroup__core_ga274dac2c4e1dfa15f47d228529791c5a_html_ga274dac2c4e1dfa15f47d228529791c5a"><div class="ttname"><a href="group__core_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">eve::float32</a></div><div class="ttdeci">constexpr converter_type&lt; float &gt; const float32</div><div class="ttdoc">convert a eve::real_value to a float32 based eve::floating_real_value.</div><div class="ttdef"><b>Definition:</b> converter.hpp:121</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --> </li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->

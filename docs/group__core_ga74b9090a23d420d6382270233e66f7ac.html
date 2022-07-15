@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__core_ga74b9090a23d420d638227023
 
 <p>Callable object computing the if_else operation. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md587"></a>
+<h4><a class="anchor" id="autotoc_md545"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -179,7 +179,7 @@ Members Functions</h4>
 <div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:71</div></div>
 <div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
 </div><!-- fragment --><p >if <code>U</code>, <code>V</code> and <code>T</code> are scalar or if <code>U</code> or <code>V</code> are simd_values the result is of type <code>UV</code>, otherwise it is of type <code>wide&lt; UV, cardinal_t&lt; T &gt;&gt;</code>.</p>
-<h4><a class="anchor" id="autotoc_md589"></a>
+<h4><a class="anchor" id="autotoc_md547"></a>
 Possible optimizations</h4>
 <p >The following calls where <code>x</code>, <code>y</code> and <code>z</code> are values can be optimized:</p>
 <ul>
@@ -192,10 +192,10 @@ Possible optimizations</h4>
 <li><code>if_else(x, mone&lt; T &gt;(), z )</code> writing: <code>if_else(x, eve::mone_, z   )</code></li>
 <li><code>if_else(x, zero&lt; T &gt;(), z )</code> writing: <code>if_else(x, eve::zero_, z   )</code></li>
 </ul>
-<h4><a class="anchor" id="autotoc_md590"></a>
+<h4><a class="anchor" id="autotoc_md548"></a>
 Supported decorators</h4>
 <p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md591"></a>
+<h4><a class="anchor" id="autotoc_md549"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

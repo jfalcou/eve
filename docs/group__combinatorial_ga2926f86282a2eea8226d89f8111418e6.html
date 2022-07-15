@@ -137,77 +137,66 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga2926f86282a2eea
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the nth value of the fibonacci sequence. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/combinatorial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md23"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the nth value of the fibonacci sequence    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; <span class="keywordtype">float</span>ing_value T, <span class="keywordtype">float</span>ing_value U, <span class="keywordtype">unsigned</span>_value N &gt; <span class="keyword">auto</span> operator()( T x, U y, N n ) <span class="keyword">const</span> <span class="keyword">noexcept</span> <span class="keyword">requires</span> compatible&lt; T, U &gt;;</div>
+<p>Computes the nth element of the Fibonacci sequence \((f_i)_{i\in \mathbb{N}}\). </p>
+<p >The sequence is defined by the recurrence relations :</p>
+<ul>
+<li>\(f_0 = x\)</li>
+<li>\(f_1 = y\)</li>
+<li>\(f_{n+2} = f_{n+1} + f_{n},  n &gt; 0\)</li>
+</ul>
+<p >but is computed using the <a href="https://mathworld.wolfram.com/BinetsFibonacciNumberFormula.html">Binet formula</a>.</p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">unsigned</span>_value N, eve::<span class="keywordtype">float</span>ing_real_value T, eve::<span class="keywordtype">float</span>ing_real_value U&gt;</div>
+<div class="line">   <span class="keyword">requires</span> eve::compatible&lt;T, U&gt;</div>
+<div class="line">   eve::common_compatible_t&lt;T, U&gt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">fibonacci</a>(N n, T x, U y) <span class="keyword">noexcept</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__combinatorial_ga2926f86282a2eea8226d89f8111418e6_html_ga2926f86282a2eea8226d89f8111418e6"><div class="ttname"><a href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a></div><div class="ttdeci">constexpr callable_fibonacci_ fibonacci</div><div class="ttdoc">Computes the nth element of the Fibonacci sequence .</div><div class="ttdef"><b>Definition:</b> fibonacci.hpp:61</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">floating values</a>.</p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1value.html">unsigned value</a>.</p>
+<p ><code>n</code>: <a class="el" href="concepteve_1_1unsigned__value.html">index</a> of the value to be returned</p>
+<p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating point arguments</a> : \(f_0\) and \(f_1\).</p>
 <p ><b>Return value</b></p>
-<p >The result type is the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the two first parameters, vectorized with the cardinality of the third one if necessary.</p>
-<p >The recurrence formula defining the fibonacci sequence is: </p><pre class="fragment"> - r(0) = x
- - r(1) = y
- - r(i+2) = r(i+1)+r(i),  i &gt; 2
-</pre><p> The function return elementwise r(n), but the result is computed using the Binet formula.</p>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6" title="Callable object computing the nth value of the fibonacci sequence.">eve::fibonacci</a></p>
-<p ><b>Parameters</b></p>
-<p ><code>cond</code> : conditional expression</p>
-<p ><b>Return value</b></p>
-<p >A Callable object so that the expression <code>fibonacci[cond](x, ...)</code> is equivalent to <code>if_else(cond,fibonacci(x, ...),x)</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md27"></a>
-Supported decorators</h4>
-<p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md28"></a>
-Example</h4>
+<p >The value of the nth element of the Fibonacci sequence beginning by <code>x</code> and <code>y</code> is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  w32_t n = {13, 25, 32, 180, 1, 2, 3, 4};</div>
+<div class="line">  <span class="keyword">using </span>w32_t  = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line">  w32_t n      = {13, 25, 32, 180, 1, 2, 3, 4};</div>
 <div class="line">  <span class="keyword">using </span>wf32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  wf32_t a = {1, 2, 3, 4, 0.5, 0.33, -4.5, 0};</div>
-<div class="line">  wf32_t b = {2, 3, 4, 0.5, 0.33, -4.5, 0, 1};</div>
+<div class="line">  wf32_t a     = {1, 2, 3, 4, 0.5, 0.33, -4.5, 0};</div>
+<div class="line">  wf32_t b     = {2, 3, 4, 0.5, 0.33, -4.5, 0, 1};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- n                        = &quot;</span> &lt;&lt; n &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- a                        = &quot;</span> &lt;&lt; a &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- b                        = &quot;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; fibonacci(n, a, b)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a>(n, a, b) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; fibonacci(4u, a, b)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a>(4u, a, b)&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; fibonacci(4u, a, b)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a>(4u, a, b) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; fibonacci(n, 1.0f, 3.0f) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a>(n, 1.0f, 3.0f) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; fibonacci(n, 1.0f, b)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a>(n, 1.0f, b) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::uint32_t ns = 10;</div>
-<div class="line">  <span class="keywordtype">float</span>    as = 1;</div>
-<div class="line">  <span class="keywordtype">float</span>    bs = 1;</div>
+<div class="line">  <span class="keywordtype">float</span>         as = 1;</div>
+<div class="line">  <span class="keywordtype">float</span>         bs = 1;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; ns                           = &quot;</span> &lt;&lt; ns &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; as                           = &quot;</span> &lt;&lt; as &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; bs                           = &quot;</span> &lt;&lt; bs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; fibonacci(ns, as, bs)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a>(ns, as, bs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__combinatorial_ga2926f86282a2eea8226d89f8111418e6_html_ga2926f86282a2eea8226d89f8111418e6"><div class="ttname"><a href="group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6">eve::fibonacci</a></div><div class="ttdeci">constexpr callable_fibonacci_ fibonacci</div><div class="ttdoc">Callable object computing the nth value of the fibonacci sequence.</div><div class="ttdef"><b>Definition:</b> fibonacci.hpp:83</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>

@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_ga9556715e0b694c52d6905858
 
 <p>Callable object computing the logspace_add operation: \(\log\left(\sum_{i = 0}^n e^{x_i}\right)\). </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1831"></a>
+<h4><a class="anchor" id="autotoc_md1789"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -166,7 +166,7 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >A Callable object so that the expression <code>logspace_add[cond](x, ...)</code> is equivalent to <code>if_else(cond,logspace_add(x, ...),x)</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1835"></a>
+<h4><a class="anchor" id="autotoc_md1793"></a>
 Supported decorators</h4>
 <ul>
 <li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_ga0f1f689a82eba82d3e7b36b97b8c15e6.html#ga0f1f689a82eba82d3e7b36b97b8c15e6" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_2nd</a>, <a class="el" href="group__core_gaa4398b2ef5de81cacafc812406adf5d0.html#gaa4398b2ef5de81cacafc812406adf5d0" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_3rd</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
@@ -175,7 +175,7 @@ Supported decorators</h4>
  diff of the function relative to its Nth parameter. The returned value is 0 if N is
  greater that the actual number of parameters, otherwise if the parameters are
  \f$ x_1, ... x_n \f$ returns \f$ \displaystyle\frac{e^{x_N}}{e^{x_1} + ... + e^{x_n}} \f$
-</pre> <h4><a class="anchor" id="autotoc_md1836"></a>
+</pre> <h4><a class="anchor" id="autotoc_md1794"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"> </div>
