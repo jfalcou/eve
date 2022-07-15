@@ -14,83 +14,101 @@ namespace eve
   //================================================================================================
   //! @addtogroup polynomial
   //! @{
-  //! @var legendre
+  //!   @var legendre
+  //!   @brief Computes the value of the Legendre and associated
+  //!   Legendre polynomials of order `n` at `x`:
   //!
-  //! @brief Callable object evaluating the legendre functions.
+  //!    * The Legendre polynomial of order n is given by \f$\displaystyle \mbox{L}_{n}(x)
+  //!      = \frac{e^x}{n!}\frac{d^n}{dx^n}(x^ne^{-x})\f$.
+  //!    *  The associated legendre polynomial is given by  \f$\displaystyle \mbox{L}_{n}^{m} =
+  //!      (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\f$.
   //!
-  //! **Required header:** `#include <eve/module/polynomial.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/polynomial.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the legendre operation                                     |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template< eve::integral_value N, eve::floating_real_value T >
+  //!      eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( integral_value l, floating_value x) const noexcept;
-  //!  auto operator()( integral_value l, integral_value m, floating_value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     template< eve::integral_value N, eve::integral_value M, eve::floating_real_value T >
+  //!      eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
+  //!   }
+  //!   @endcode
   //!
-  //! **Parameters**
+  //!   1.) legendre polynomial of order n
+  //!   **Parameters**
   //!
-  //!`l`, `m`:   [real values](@ref eve::real_value). `l` and `m` must be [flint](eve::is_flint) or the result is U.B.
+  //!     * `n`, `m` :  [integral positive arguments](@ref eve::integrall_value).
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value). `x` must be in the \f$[-1, 1]\f$ interval or the result is nan.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //! **Return value**
+  //!    **Return value**
   //!
-  //!With two parameters returns [elementwise](@ref glossary_elementwise) the value of the first kind Legendre polynomial of degree `l` at `x`.
+  //!    the value of the polynomial at `x` is returned.
   //!
-  //!With three parameters returns [elementwise](@ref glossary_elementwise) the value of the associated Legendre "polynomial" of degree `l`, order `m` at `x`.
+  //!  @groupheader{Example}
   //!
-  //!The result type is of the [index compatible values](@ref index_compatible_values) type of the  parameters.
+  //!  @godbolt{doc/polynomial/regular/legendre.cpp}
   //!
-  //!@warning
-  //! using float based inputs (instead of double) may introduce inaccuracies (peculiarly in the associated polynomials computation).
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::p_kind, eve::q_kind
+  //!     * eve::p_kind, eve::q_kind
   //!
   //!     The expression `p_kind(legendre)(n,x)` is equivalent to `legendre(n,x)`.
   //!
-  //!     The expression `q_kind(legendre)(n,x)` return the value at `x` of the second kind legendre function of order `n`.
+  //!     The expression `q_kind(legendre)(n,x)` return the value at `x` of the
+  //!     second kind legendre function of order `n`.
   //!
+  //!     **Example**
   //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
+  //!        @godbolt{doc/polynomial/kind/legendre.cpp}
   //!
+  //!     * eve::successor
   //!
-  //!     The expression `diff(legendre)(...,x)` computes the derivative of the p_kind function relative to `x`.
+  //!       The expression `successor(legendre)(l, x, ln, lnm1)`
+  //!       (or `successor(legendre)(l, m, x, ln, lnm1)`)
+  //!       implements the three term recurrence relation for the
+  //!       (associated) Legendre polynomials,
+  //!       \f$\displaystyle \mbox{P}^m_{l+1} =
+  //!       \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\f$
+  //!       These functions can be used to create a sequence of values evaluated at
+  //!       the same `x` and for rising `l`.
+  //!       (  \f$m = 0\f$ and no \f$m\f$ in call are equivalent here).
   //!
-  //!  * eve::successor
+  //!       **Example**
   //!
-  //!     The expression `successor(legendre)(l, x, ln, lnm1)` (or `successor(legendre)(l, m, x, ln, lnm1)`)
-  //!     implements the three term recurrence relation for the (associated) Legendre polynomials,
-  //!     \f$\displaystyle \mbox{P}^m_{l+1} = \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\f$
-  //!     This object function can be used to create a sequence of values evaluated at the same `x` and for rising `l`.
-  //!     (  \f$m = 0\f$ and no \f$m\f$ in call are equivalent here).
+  //!          @godbolt{doc/polynomial/successor/legendre.cpp}
   //!
-  //!  * eve::condon_shortley
+  //!     * eve::condon_shortley
   //!
-  //!     The expression `condon_shortley(legendre)(l, m, x)` multiplies the associated
-  //!     legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
-  //!     to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math.
+  //!       The expression `condon_shortley(legendre)(l, m, x)` multiplies the associated
+  //!       legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
+  //!       to match the definition given by Abramowitz and Stegun (8.6.6). This is currently
+  //!       the version implemented in boost::math 1.79.
   //!
-  //!  * eve::sph
+  //!     **Example**
   //!
-  //!     The expression `sph(legendre)(l, m, theta)` returns the spherical associated Legendre function
-  //!     of degree l, order m, and polar angle theta in radian (that is the classical spherical harmonic with \f$\phi = 0\$),
-  //!     i.e. \f$\displaystyle\ (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
+  //!        @godbolt{doc/polynomial/condon_shortley/legendre.cpp}
   //!
-  //! #### Example
+  //!     * eve::sph
   //!
-  //! @godbolt{doc/polynomial/legendre.cpp}
+  //!       The expression `sph(legendre)(l, m, theta)` returns the spherical associated
+  //!       Legendre function of degree l, order m, and polar angle theta in radian
+  //!       (that is the classical spherical harmonic with \f$\phi = 0\f$),
+  //!       i.e. \f$\displaystyle\
+  //!       (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
   //!
-  //!  @}
+  //!       **Example**
+  //!
+  //!          @godbolt{doc/polynomial/sph/legendre.cpp}
+  //!@}
   //================================================================================================
   EVE_MAKE_CALLABLE(legendre_, legendre);
 }

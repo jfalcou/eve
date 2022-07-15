@@ -14,57 +14,63 @@ namespace eve
   //================================================================================================
   //! @addtogroup polynomial
   //! @{
-  //! @var hermite
+  //!   @var hermite
+  //!   @brief Computes the value of the 'physicists' Hermite polynomial of order `n` at `x`:
   //!
-  //! @brief Callable object computing the hermite operation.
+  //!   The physicists Hermite  polynomials are a sequence of orthogonal polynomials relative to
+  //!   \f$e^{-x^2}\f$ on the \f$[-\infty, +\infty]\f$ interval satisfying the following
+  //!   recurrence relation:
+  //!     * \f$ \mathbf{H}_0(x) = 1\f$.
+  //!     * \f$ \mathbf{H}_1(x) = 2x\f$.
+  //!     * \f$ \mathbf{H}_n(x) = 2x\mathbf{H}_{n-1}(x) -2(n-1)\mathbf{H}_{n-2}x\f$.
   //!
-  //! **Required header:** `#include <eve/module/polynomial.hpp>`
+  //!   **Defined in header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/polynomial.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the hermite operation   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template< eve::integral_value N, eve::floating_real_value T >
+  //!      eve::as_wide_as<T, N> hermite(N n, T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!   auto operator()( integral_real_value auto n, floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `n` :  [integral positive argument](@ref eve::integrall_value).
   //!
-  //!`n`:   [integral real valuex](@ref eve::integral_real_value) or integral constant.
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //!`x`:   [floating valuex](@ref eve::floating_value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    the value of the 'physicists' hermite polynomial
+  //!    \f$ \displaystyle \mathbf{H}_n(x) = (-1)^n e^{x^2}\frac{d}{dx^n}e^{-x^2}\f$
+  //!    is returned.
   //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the 'physicists' hermite polynomial of order `n` at `x`:
+  //!  @groupheader{Example}
   //!
-  //!The result type is of the [common compatible type](@ref common_compatible) of the  parameters.
+  //!  @godbolt{doc/special/regular/hermite.cpp}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(hermite)(n,x)` computes the derivative of the function relative to `x`.
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!  * eve::successor
   //!
-  //!     The expression `successor(hermite)(n, x, Hn, Hnm1)` implements the three terms recurrence relation for the Hermite polynomials,
+  //!     The expression `successor(hermite)(n, x, Hn, Hnm1)` implements the three terms recurrence
+  //!     relation for the physicists Hermite polynomials,
   //!     \f$\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\f$
   //!
-  //!     These object functions can be used to create a sequence of values evaluated at the same `x`, and for rising `n`.
+  //!     This function can be used to create a sequence of values evaluated at the same `x`,
+  //!     and for rising `n`.
   //!
-  //! #### Example
+  //!     **Example**
   //!
-  //! @godbolt{doc/polynomial/hermite.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/special/successor/hermite.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(hermite_, hermite);
 }

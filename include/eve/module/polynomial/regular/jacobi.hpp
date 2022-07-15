@@ -11,58 +11,58 @@
 
 namespace eve
 {
-  //================================================================================================
+ //================================================================================================
   //! @addtogroup polynomial
   //! @{
-  //! @var jacobi
+  //!   @var jacobi
+  //!   @brief Computes the value of the Jacobi polynomials \f$P^{\alpha, \beta}_n(x)\f$.
   //!
-  //! @brief Callable object evaluating the jacobi polynomial: \f$P^{\alpha, \beta}_n(x)\f$
+  //!   The Jacobi  polynomials are a sequence of orthogonal polynomials relative
+  //!   to \f$(1-x)^{\alpha}(1+x)^{\beta}\f$, for \f$\alpha \f$ and \f$\beta \f$ greater than -1,
+  //!   on the \f$[-1, +1]\f$ interval.
   //!
-  //! **Required header:** `#include <eve/module/polynomial.hpp>`
+  //!   They can be defined via a Rodrigues formula:
+  //!    \f$\displaystyle P^{\alpha, \beta}_n(x) = \frac{(-1)^n}{2^n n!}(1-x)^{-\alpha}
+  //!    (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\f$.
   //!
-  //! #### Members Functions
+  //!   **Defined in header**
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the jacobi operation                                       |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   #include <eve/module/polynomial.hpp>
+  //!   @endcode
   //!
-  //! ---
+  //!   @groupheader{Callable Signatures}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto n,  floating_value alpha,  floating_value beta, floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template< eve::integral_value N
+  //!             , eve::floating_real_value T
+  //!             , eve::floating_real_value A
+  //!             , eve::floating_real_value B>
+  //!      eve::as_wide_as<common_compatible_value<T, A, B>, N>
+  //!      jacobi(N n, T x, A alpha,  B beta) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! **Parameters**
+  //!   **Parameters**
   //!
-  //!`n`:   [value](@ref eve::value). Must be a flint
+  //!     * `n` :  [integral positive argument](@ref eve::integrall_value).
   //!
-  //!`x`:   [floating value](@ref eve::floating_value).
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
-  //!`alpha`, `beta`:   [floating valuse](@ref eve::floating_value).
+  //!     * `alpha`, `beta`:   [floating arguments](@ref eve::floating_value).
   //!
-  //! **Return value**
+  //!    **Return value**
   //!
-  //! \f$P^{\alpha, \beta}_n(x)\f$
+  //!    the value of the plynomial \f$P^{\alpha, \beta}_n(x)\f$
+  //!    is returned.
   //!
-  //!The result type is of the [common compatible type](@ref common_compatible) type of the  parameters.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/polynomial/regular/jacobi.cpp}
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!     The expression `diff(jacobi)(...,x)` computes the derivative of the function relative to `x`.
-  //!
-  //!     The expression `diff(jacobi)(...,x,k)` computes the derivative of order k of the function relative to `x`.
-  //!
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/polynomial/jacobi.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(jacobi_, jacobi);
 }

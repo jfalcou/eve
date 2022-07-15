@@ -37,6 +37,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!     template< eve::integral_value T eve::floating_real_value T, eve::floating_real_value U >
+  //!     eve::as_wide_as<eve::common_compatible_value<T, U>, N>
   //!     auto  gegenbauer(N n, T lambda, U x) noexcept;
   //!   }
   //!   @endcode
@@ -52,8 +53,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    the value of \f$ \mathbf{C}_n^\lambda(x)f$
-  //!    is returned.
+  //!    the value of \f$ \mathbf{C}_n^\lambda(x)f$ is returned.
   //!
   //!  @groupheader{Example}
   //!

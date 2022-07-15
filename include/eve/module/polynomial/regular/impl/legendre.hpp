@@ -258,7 +258,9 @@ namespace eve
       EVE_ASSERT(eve::all(m <= l)               , "sph(legendre)(l, m, theta): some m are greater than l");
       auto ll = convert(l, as<element_type_t<T>>());
       auto mm = convert(m, as<element_type_t<T>>());
-      auto p0 = legendre(l, m, cos(theta));
+      using r_t =  eve::common_compatible_t < T, decltype(ll), decltype(mm)>;
+      r_t p0(theta);
+      p0 = eve::legendre(l, m, cos(p0));
       p0 *= sqrt(((2*ll+1)/(4*pi(as(theta))))*exp(lgamma(ll-mm+1)-lgamma(ll+mm+1)));
      return if_else(is_odd(m), -p0, p0);
     }

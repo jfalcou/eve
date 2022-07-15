@@ -4,8 +4,6 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-add_subdirectory(regular)
-add_subdirectory(successor)
-add_subdirectory(kind)
-add_subdirectory(condon_shortley)
-add_subdirectory(sph)
+
+make_unit( "doc.polynomial.kind" legendre.cpp           )
+make_unit( "doc.polynomial.kind" tchebytchev.cpp        )

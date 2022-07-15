@@ -35,7 +35,7 @@ namespace eve
   //! @return
   //! A @callable performing the same kind of operation but incrementind some parameter(s) v
   //!
-  //! Actually supported by eve::laguerre
+  //! Actually supported by eve::laguerre,  eve::legendre
   //!
   //!  @}
   //================================================================================================
