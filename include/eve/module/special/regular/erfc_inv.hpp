@@ -14,66 +14,42 @@ namespace eve
 //================================================================================================
 //! @addtogroup special
 //! @{
-//! @var erfc_inv
+//!   @var erfc_inv
+//!   @brief Computes the complementar error function \f$ \displaystyle
+//!   \mbox{erf}(x)=1-\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
 //!
-//! @brief Callable object computing the inverse of the \f$\mbox{erfc}\f$ function.
+//!   **Defined in header**
 //!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the erfc_inv operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      T erfc_inv(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()( floating_real_value auto x) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!       Must be in interval  \f$[0, 2]\f$ else nan is returned.
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!    the value of the inverse error function is returned. In particular:
 //!
-//! **Return value**
+//!      - If the argument is \f$\pm0\f$, \f$1\f$ is returned.
+//!      - If the argument is \f$2\f$, \f$\-infty\f$ is returned.
+//!      - If the argument is \f$0\f$,\f$\infty\f$ is returned.
+//!      - If the argument is Nan, nan is returned.
 //!
-//! Returns [elementwise](@ref glossary_elementwise) `y` such that `erfc(y)==x`
-//!
-//! The result type is of the same type as the  parameter.
-//! The function returns Nan outside of the interval \f$[0,2]\f$.
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::erfc_inv
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `erfc_inv[cond](x, ...)` is equivalent to
-//!  `if_else(cond,erfc_inv(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff(erfc_inv)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/special/erfc_inv.cpp}
-//!
-//!  @}
+//!  @godbolt{doc/special/regular/erfc_inv.cpp}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(erfc_inv_, erfc_inv);
 }
