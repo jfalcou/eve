@@ -27,9 +27,6 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T >
-//!      T lbeta(T x) noexcept;
-//!
 //!      template< eve::floating_real_value T, eve::floating_real_value U >
 //!      eve:common_compatible_value<T,U>  lbeta(T x, U y) noexcept;
 //!   }
@@ -41,13 +38,13 @@ namespace eve
 //!
 //!     * `y` :  [strictly positive real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the  logarithm of the beta function is returned.
+//!   The value of the logarithm of the beta function is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/lbeta.cpp}
+//!   @godbolt{doc/special/regular/lbeta.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lbeta_, lbeta);

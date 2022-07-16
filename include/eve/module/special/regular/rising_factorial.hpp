@@ -15,8 +15,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var rising_factorial
-//!   @brief Computes the  rising_factorial function i.e.
-//!   \f$\frac{\Gamma(x+a)}{\Gamma(x)}\f$.
+//!   @brief Computes the Rising Factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(x)}\f$.
 //!
 //!   **Defined in header**
 //!
@@ -40,25 +39,27 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the natural logarithm of the rising_factorial is returned.
+//!   The value of the natural logarithm of the rising_factorial is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/rising_factorial.cpp}
+//!   @godbolt{doc/special/regular/rising_factorial.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
+//!   @groupheader{Semantic Modifiers}
 //!
-//!  * eve::raw
+//!   * eve::raw
 //!
 //!     The expression `raw(rising_factorial)(a,x)` uses the crude formula with all
-//!     its limitations and inacurracies and return a Nan if `a` and `a+x` are
+//!     its limitations and innacuracies and return a Nan if `a` and `a+x` are
 //!     not both positive.
+//!
+//!      **Example**
 //!
 //!     @godbolt{doc/special/raw/rising_factorial.cpp}
 //!
-//!  * eve::pedantic
+//!   * eve::pedantic
 //!
 //!     The expression `pedantic(rising_factorial)(a,x)` uses reflection tricks and computes
 //!     the function for all real `a` and `x`, returning nan if the result is really undefined.

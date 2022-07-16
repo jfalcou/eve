@@ -37,13 +37,13 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of `eve::sign(eve::tgamma(x))` is rturned (without computing `eve::tgamma(x)`);
+//!   The value of `eve::sign(eve::tgamma(x))` is returned (without computing `eve::tgamma(x)`);
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/signgam.cpp}
+//!   @godbolt{doc/special/regular/signgam.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(signgam_, signgam);

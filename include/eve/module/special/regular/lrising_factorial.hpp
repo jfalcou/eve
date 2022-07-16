@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var lrising_factorial
-//!   @brief Computes the natural logarithm of the rising_factorial function i.e.
+//!   @brief Computes the natural logarithm of the Rising Factorial function i.e.
 //!   \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
 //!
 //!   **Defined in header**
@@ -40,13 +40,13 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the natural logarithm of the rising_factorial is returned.
+//!   The value of the natural logarithm of the rising_factorial is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/lrising_factorial.cpp}
+//!   @godbolt{doc/special/regular/lrising_factorial.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

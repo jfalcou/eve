@@ -38,20 +38,18 @@ namespace eve
 //!
 //!     * `n` :  [integer or flint argument](@ref eve::value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      - the value of \f$ \log n!\f$ is returned.
-//!      - If the entry is an [integral value](eve::integral_value),
-//!        the result [element type](eve::element_type)
-//!        is always double to try to avoid overflow and its cardinal
-//!        is the same as the entry in case of an simd call.
-//!      - If the entry is a [floating point value](eve::floating_point_value)
-//!        which must be a flint,  the result is of the same type as the entry.
-//!      - If n elements are not integer or flint the result is undefined.
+//!   The value of \f$ \log n!\f$ is returned with the following considerations:
+//!     * If the entry is an [integral value](eve::integral_value), the result
+//!       [element type](eve::element_type) is always double to try to avoid overflow.
+//!     * If the entry is a [floating point value](eve::floating_point_value)
+//!       which must be a flint,  the result is of the same type as the entry.
+//!     * If `n` elements are not integer or flint the result is undefined.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/lfactorial.cpp}
+//!   @godbolt{doc/special/regular/lfactorial.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lfactorial_, lfactorial);

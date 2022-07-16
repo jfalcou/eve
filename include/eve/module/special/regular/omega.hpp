@@ -38,10 +38,9 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the Wright \f$\omega\f$ function
-//!    is returned.
+//!   The value of the Wright \f$\omega\f$ function is returned.
 //!
 //!  @groupheader{Example}
 //!

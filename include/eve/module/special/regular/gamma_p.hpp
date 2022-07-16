@@ -15,8 +15,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var gamma_p
-//!   @brief Computes the normalized lower incomplete \f$\Gamma\f$ function :
-//!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+//!   @brief Computes the normalized lower incomplete \f$\Gamma\f$ function.
 //!
 //!   **Defined in header**
 //!
@@ -38,14 +37,14 @@ namespace eve
 //!
 //!     * `x`, `y`:  [real floating arguments](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the normalized lower incomplete \f$\Gamma\f$ function
-//!    is returned.
+//!   The value of the normalized lower incomplete \f$\Gamma\f$ function is returned as
+//!   \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/gamma_p.cpp}
+//!   @godbolt{doc/special/regular/gamma_p.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(gamma_p_, gamma_p);

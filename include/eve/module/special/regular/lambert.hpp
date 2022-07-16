@@ -37,16 +37,18 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The result is the kumi pair of the two branches values. The branches are not defined for
-//!    input less than \f$e^{-1}\f$ in that case they return nan.
+//!   A tuple of the two branch values of the Lambert functionis returned with the following
+//!   considerations:
 //!
-//!    As for input positive only one branch exist the two values returned are equal.
+//!     * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
+//!       returned are NaN.
+//!     * If the inputs are positive, only one branch exist and the two returned values are equal.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/lambert.cpp}
+//!   @godbolt{doc/special/regular/lambert.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lambert_, lambert);

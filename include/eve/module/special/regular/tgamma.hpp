@@ -37,13 +37,13 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of \f$\Gamma\f$ is returned.
+//!   The value of \f$\Gamma\f$ is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/tgamma.cpp}
+//!   @godbolt{doc/special/regular/tgamma.cpp}
 //! @}
 //================================================================================================
 

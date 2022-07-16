@@ -38,10 +38,9 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the normalized complementary error function
-//!    is returned.
+//!   The value of the normalized complementary error function is returned.
 //!
 //!  @groupheader{Example}
 //!

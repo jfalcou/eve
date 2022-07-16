@@ -38,16 +38,18 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the complementary error function is returned. In particular:
+//!   The value of the complementary error function is returned. In particular:
 //!
-//!      - If the argument is \f$\pm0\f$, \f$1\f$ is returned.
-//!      - If the argument is \f$\infty\f$, \f$1\f$ is returned.
-//!      - If the argument is \f$-\infty\f$,\f$2\f$ is returned.
-//!      - If the argument is Nan, nan is returned.
+//!     * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
+//!     * If the argument is \f$\infty\f$, \f$1\f$ is returned.
+//!     * If the argument is \f$-\infty\f$,\f$2\f$ is returned.
+//!     * If the argument is Nan, nan is returned.
 //!
-//!  @godbolt{doc/special/regular/erf.cpp}
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/erf.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(erfc_, erfc);

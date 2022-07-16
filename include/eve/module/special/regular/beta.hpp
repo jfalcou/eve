@@ -39,14 +39,13 @@ namespace eve
 //!
 //!     * `y` :  [strictly positive real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$
-//!    is returned.
+//!   The value of \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$ is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/beta.cpp}
+//!   @godbolt{doc/special/regular/beta.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(beta_, beta);

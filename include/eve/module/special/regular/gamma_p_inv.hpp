@@ -16,8 +16,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var gamma_p_inv
-//!   @brief Computes the inverse of the normalized lower incomplete \f$\Gamma\f$ function :
-//!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+//!   @brief Computes the inverse of the normalized lower incomplete \f$\Gamma\f$ function.
 //!
 //!   **Defined in header**
 //!
@@ -39,11 +38,11 @@ namespace eve
 //!
 //!     * `x`, `y`:  [real floating arguments](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the  the inverse of the normalized lower incomplete
-//!    \f$\Gamma\f$ function relative to the first parameter
-//!    is returned.
+//!  The value of the  inverse of the normalized lower incomplete \f$\Gamma\f$ function
+//!  relative to the first parameter is returned as  :
+//!  \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
 //!
 //!  @groupheader{Example}
 //!

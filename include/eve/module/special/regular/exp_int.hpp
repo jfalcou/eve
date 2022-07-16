@@ -40,10 +40,9 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the exponential integral is returned.
-//!    is returned.
+//!   The value of the exponential integral is returned.
 //!
 //!  @groupheader{Example}
 //!

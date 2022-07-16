@@ -41,14 +41,16 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    the value of the inverse error function is returned. In particular:
+//!    The value of the inverse error function is returned. In particular:
 //!
-//!      - If the argument is \f$\pm0\f$, \f$1\f$ is returned.
-//!      - If the argument is \f$2\f$, \f$\-infty\f$ is returned.
-//!      - If the argument is \f$0\f$,\f$\infty\f$ is returned.
-//!      - If the argument is Nan, nan is returned.
+//!      * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
+//!      * If the argument is \f$2\f$, \f$-\infty\f$ is returned.
+//!      * If the argument is \f$0\f$,\f$\infty\f$ is returned.
+//!      * If the argument is NaN, NaN is returned.
 //!
-//!  @godbolt{doc/special/regular/erfc_inv.cpp}
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/erfc_inv.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(erfc_inv_, erfc_inv);

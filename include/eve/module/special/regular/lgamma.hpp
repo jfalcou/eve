@@ -38,14 +38,13 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the  logarithm of the absolute value
-//!    of the \f$\Gamma\f$ function is returned.
+//!   The value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/lgamma.cpp}
+//!   @godbolt{doc/special/regular/lgamma.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lgamma_, lgamma);

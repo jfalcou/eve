@@ -29,8 +29,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<, eve::floating_real_value S, eve::floating_real_value T, eve::floating_real_value
-//!      U > eve:common_compatible_value<S, T, U>  $name$(S s, T x, U y) noexcept;
+//!      template< eve::floating_real_value S
+//!              , eve::floating_real_value T
+//!              , eve::floating_real_value U>
+//!      eve:common_compatible_value<S, T, U>  $name$(S s, T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -40,13 +42,13 @@ namespace eve
 //!
 //!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the incomplete beta function is returned.
+//!   The value of the incomplete beta function is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/betainc.cpp}
+//!   @godbolt{doc/special/regular/betainc.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(betainc_, betainc);

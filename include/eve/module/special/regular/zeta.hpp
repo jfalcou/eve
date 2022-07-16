@@ -14,8 +14,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var zeta
-//!   @brief Computes the Riemann \f$\zeta\f$ function:
-//!        \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$
+//!   @brief Computes the Riemann \f$\zeta\f$ function.
 //!
 //!   **Defined in header**
 //!
@@ -37,13 +36,14 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of  Riemann \f$\zeta\f$ function is returned.
+//!   The value of the Riemann function defined as
+//!   \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$  is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/zeta.cpp}
+//!   @godbolt{doc/special/regular/zeta.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(zeta_, zeta);

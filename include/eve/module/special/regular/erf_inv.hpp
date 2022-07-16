@@ -39,12 +39,12 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     - the value `y` such that `erf(y)==x` is returned.
-//!     - for `x` outside of \f$[-1,1]\f$ the result is Nan.
+//!   The value `y` such that `erf(y)==x` is returned. For `x` outside of \f$[-1,1]\f$, the result
+//!   is NaN.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/erf_inv.cpp}
+//!   @godbolt{doc/special/regular/erf_inv.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(erf_inv_, erf_inv);

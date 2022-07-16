@@ -18,7 +18,6 @@ namespace eve
 //!   @brief Computes the Dawson function \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x}
 //!   e^{t^2} \mbox{d}t\f$
 //!
-//!
 //!   **Defined in header**
 //!
 //!   @code
@@ -39,13 +38,13 @@ namespace eve
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the Dawson is returned.
+//!   the value of the Dawson function for `x` is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/dawson.cpp}
+//!   @godbolt{doc/special/regular/dawson.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(dawson_, dawson);

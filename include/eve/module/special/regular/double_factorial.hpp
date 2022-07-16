@@ -15,9 +15,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var double_factorial
-//!   @brief Computes the double_Factorial value of unsigned integral values less than 300
+//!   @brief Computes the double factorial of `n`
 //!
-//!   double factorial is defined by \f$\displaystyle (2n)!! =
+//!   THe double factorial is defined as \f$\displaystyle (2n)!! =
 //!   \prod_{i=1}^n (2i)\f$ and \f$\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\f$
 //!
 //!   **Defined in header**
@@ -40,13 +40,13 @@ namespace eve
 //!
 //!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the double_Factorial is returned.
+//!   The value of the double factorial of `n` is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/double_factorial.cpp}
+//!   @godbolt{doc/special/regular/double_factorial.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(double_factorial_, double_factorial);
