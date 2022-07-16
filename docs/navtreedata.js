@@ -26,41 +26,41 @@ var NAVTREE =
 [
   [ "E.V.E", "index.html", [
     [ "The Expressive Vector Engine", "index.html", [
-      [ "Video materials", "index.html#autotoc_md2098", null ],
-      [ "Bibliographic References", "index.html#autotoc_md2099", null ]
+      [ "Video materials", "index.html#autotoc_md1950", null ],
+      [ "Bibliographic References", "index.html#autotoc_md1951", null ]
     ] ],
     [ "Installation & Quick Start", "install.html", [
-      [ "Pre-requisites", "install.html#autotoc_md2120", null ],
-      [ "Retrieving the source", "install.html#autotoc_md2121", [
-        [ "Github", "install.html#autotoc_md2122", null ],
-        [ "CPM", "install.html#autotoc_md2123", null ],
-        [ "SPACK", "install.html#autotoc_md2124", null ],
-        [ "AUR", "install.html#autotoc_md2125", null ],
-        [ "Conan", "install.html#autotoc_md2126", null ],
-        [ "VCPKG", "install.html#autotoc_md2127", null ]
+      [ "Pre-requisites", "install.html#autotoc_md1972", null ],
+      [ "Retrieving the source", "install.html#autotoc_md1973", [
+        [ "Github", "install.html#autotoc_md1974", null ],
+        [ "CPM", "install.html#autotoc_md1975", null ],
+        [ "SPACK", "install.html#autotoc_md1976", null ],
+        [ "AUR", "install.html#autotoc_md1977", null ],
+        [ "Conan", "install.html#autotoc_md1978", null ],
+        [ "VCPKG", "install.html#autotoc_md1979", null ]
       ] ],
-      [ "Installation from Source", "install.html#autotoc_md2128", [
-        [ "Setting up the Library", "install.html#autotoc_md2129", null ],
-        [ "Building the Documentation", "install.html#autotoc_md2130", null ]
+      [ "Installation from Source", "install.html#autotoc_md1980", [
+        [ "Setting up the Library", "install.html#autotoc_md1981", null ],
+        [ "Building the Documentation", "install.html#autotoc_md1982", null ]
       ] ],
-      [ "Using the library", "install.html#autotoc_md2131", [
-        [ "Compilation", "install.html#autotoc_md2132", null ],
-        [ "Instruction Set Selection", "install.html#autotoc_md2133", null ],
-        [ "Execution", "install.html#autotoc_md2134", null ]
+      [ "Using the library", "install.html#autotoc_md1983", [
+        [ "Compilation", "install.html#autotoc_md1984", null ],
+        [ "Instruction Set Selection", "install.html#autotoc_md1985", null ],
+        [ "Execution", "install.html#autotoc_md1986", null ]
       ] ],
-      [ "Advanced options", "install.html#autotoc_md2135", null ]
+      [ "Advanced options", "install.html#autotoc_md1987", null ]
     ] ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.03.0", "changelog.html#autotoc_md2136", [
-        [ "What's Changed", "changelog.html#autotoc_md2137", null ],
-        [ "New Contributors", "changelog.html#autotoc_md2138", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md1988", [
+        [ "What's Changed", "changelog.html#autotoc_md1989", null ],
+        [ "New Contributors", "changelog.html#autotoc_md1990", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md2139", [
-        [ "What's Changed", "changelog.html#autotoc_md2140", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md1991", [
+        [ "What's Changed", "changelog.html#autotoc_md1992", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md2141", null ]
+      [ "Version beta.2020.09", "changelog.html#autotoc_md1993", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -93,8 +93,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c",
-"group__core_gaf1ba6612bfd82759bf6150e2e353e7d3.html#gaf1ba6612bfd82759bf6150e2e353e7d3",
+"group__complex_ga1be92505c979a40bc2c6e2ad52f8988b.html#ga1be92505c979a40bc2c6e2ad52f8988b",
+"group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08",
 "group__struct.html",
 "structeve_1_1logical_3_01T_01_4.html"
 ];

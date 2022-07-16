@@ -12,69 +12,42 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //! @var lgamma
-  //!
-  //! @brief Callable object computing the logarithm of the \f$\Gamma\f$ function.
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the lgamma operation                                       |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( floating_real_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \log(|\Gamma(x)|)\f$
-  //!
-  //! The result type is of the same type as the  parameter.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::lgamma
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `lgamma[cond](x, ...)` is equivalent to `if_else(cond,lgamma(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(lgamma)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/lgamma.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(lgamma_, lgamma);
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var lgamma
+//!   @brief Computes the natural logarithm of the absolute value of the \f$\Gamma\f$ function.
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      eve:common_compatible_value<T,U> lgamma(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!   The value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/lgamma.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(lgamma_, lgamma);
 }
 
 #include <eve/module/special/regular/impl/lgamma.hpp>

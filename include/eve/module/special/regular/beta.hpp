@@ -10,70 +10,45 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //! @var beta
-  //!
-  //! @brief Callable object computing the beta function. \f$\mbox{B}(x,y)=\int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the beta operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`:   [values](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
-  //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::beta
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `beta[cond](x, ...)` is equivalent to `if_else(cond,beta(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //! * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
-  //!
-  //!
-  //!:   The expression `diff_1st(beta)(x,y)` and `diff_2nd(beta)(x,y)` computes the partial
-  //!    derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \mbox{B}(x,y)\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/beta.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(beta_, beta);
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var beta
+//!   @brief Computes the beta function. \f$\displaystyle \mathbb{B}(x,y) =
+//!   \int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T, eve::floating_real_value U >
+//!      eve:common_compatible_value<T,U>  beta(T x,U y) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [strictly positive real floating argument](@ref eve::floating_real_value).
+//!
+//!     * `y` :  [strictly positive real floating argument](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!   The value of \f$\displaystyle \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$ is returned.
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/beta.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(beta_, beta);
 }
 
 #include <eve/module/special/regular/impl/beta.hpp>

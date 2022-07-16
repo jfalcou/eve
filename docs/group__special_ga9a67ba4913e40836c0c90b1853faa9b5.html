@@ -137,41 +137,24 @@ $(document).ready(function(){initNavTree('group__special_ga9a67ba4913e40836c0c90
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the logarithm of the \(\Gamma\) function. </p>
-<h4><a class="anchor" id="autotoc_md2044"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the lgamma operation    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()( <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">floating_real_value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
+<p>Computes the natural logarithm of the absolute value of the \(\Gamma\) function. </p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   <a class="code hl_namespace" href="namespaceeve.html">eve</a>:common_compatible_value&lt;T,U&gt; <a class="code hl_variable" href="group__special_ga9a67ba4913e40836c0c90b1853faa9b5.html#ga9a67ba4913e40836c0c90b1853faa9b5">lgamma</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__special_ga9a67ba4913e40836c0c90b1853faa9b5_html_ga9a67ba4913e40836c0c90b1853faa9b5"><div class="ttname"><a href="group__special_ga9a67ba4913e40836c0c90b1853faa9b5.html#ga9a67ba4913e40836c0c90b1853faa9b5">eve::lgamma</a></div><div class="ttdeci">constexpr callable_lgamma_ lgamma</div><div class="ttdoc">Computes the natural logarithm of the absolute value of the  function.</div><div class="ttdef"><b>Definition:</b> lgamma.hpp:50</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> \(\displaystyle \log(|\Gamma(x)|)\)</p>
-<p >The result type is of the same type as the parameter.</p>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator[]( conditional_expression <span class="keyword">auto</span> cond ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p >Higher-order function generating a masked version of <a class="el" href="group__special_ga9a67ba4913e40836c0c90b1853faa9b5.html#ga9a67ba4913e40836c0c90b1853faa9b5" title="Callable object computing the logarithm of the  function.">eve::lgamma</a></p>
-<p ><b>Parameters</b></p>
-<p ><code>cond</code> : conditional expression</p>
-<p ><b>Return value</b></p>
-<p >A Callable object so that the expression <code>lgamma[cond](x, ...)</code> is equivalent to <code>if_else(cond,lgamma(x, ...),x)</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md2048"></a>
-Supported decorators</h4>
 <ul>
-<li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
 </ul>
-<pre class="fragment"> The expression `diff(lgamma)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md2049"></a>
-Example</h4>
+<p ><b>Return value</b></p>
+<p >The value of the logarithm of the absolute value of the \(\Gamma\) function is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -199,7 +182,6 @@ Example</h4>
 <div class="ttc" id="agroup__core_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Callable object computing the nan value.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Callable object computing the negative infinity value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:57</div></div>
 <div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
-<div class="ttc" id="agroup__special_ga9a67ba4913e40836c0c90b1853faa9b5_html_ga9a67ba4913e40836c0c90b1853faa9b5"><div class="ttname"><a href="group__special_ga9a67ba4913e40836c0c90b1853faa9b5.html#ga9a67ba4913e40836c0c90b1853faa9b5">eve::lgamma</a></div><div class="ttdeci">constexpr callable_lgamma_ lgamma</div><div class="ttdoc">Callable object computing the logarithm of the  function.</div><div class="ttdef"><b>Definition:</b> lgamma.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 

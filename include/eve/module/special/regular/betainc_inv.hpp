@@ -11,72 +11,47 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //! @var betainc_inv
-  //!
-  //! @brief Callable object computing the inverse relative to the first parameter
-  //!        of the beta incomplete function.
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the betainc_inv operation                                  |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U, floating_value V > auto operator()( T s, U x, V y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`:   [values](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value of the inverse of incomplete beta function
-  //!relative to the first parameter.
-  //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::betainc_inv
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `betainc_inv[cond](x, ...)` is equivalent to `if_else(cond,betainc_inv(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //! * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!:   The expression `diff(betainc_inv)(s,x,y)` computes the partial
-  //!    diff of \f$f\f$, where \f$f\f$ is the function \f$s \rightarrow \ \mbox{B}(s,x,y)\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/betainc_inv.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(betainc_inv_, betainc_inv);
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var betainc_inv
+//!   @brief Computes the inverse relative to the first parameter of the beta incomplete function.
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template < eve::floating_real_value S
+//!               , eve::floating_real_value T
+//!               , eve::floating_real_value U>
+//!      eve:common_compatible_value<S, T, U>  betainc_inv(S s, T x, U y) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `s` :  [real floating argument](@ref eve::floating_real_value).
+//!
+//!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!   The value of inverse of incomplete beta function relative to the first parameter
+//!   is returned.
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/betainc_inv.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(betainc_inv_, betainc_inv);
 }
 
 #include <eve/module/special/regular/impl/betainc_inv.hpp>

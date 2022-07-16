@@ -11,54 +11,47 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //! @var lambert
-  //!
-  //! @brief Callable object computing the lambert function inverse of \f$ x-> xe^x \f$
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the lambert operation                                      |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //! `x`:   [floating_real_value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //! Returns [elementwise](@ref glossary_elementwise) the value of the lambert function.
-  //!
-  //! The result type is the kumi pair of the two branches values. The branches are not defined for
-  //! input less than \f$e^{-1}\f$ in that case they return nan.
-  //! As for input positive only one branch exist the two values returned are equal.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(lambert)(x)` computes the derivative of each branch of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/lambert.cpp}
-  //!
-  //! @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(lambert_, lambert);
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var lambert
+//!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      kumi::tuple<T, T> lambert(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!   A tuple of the two branch values of the Lambert functionis returned with the following
+//!   considerations:
+//!
+//!     * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
+//!       returned are NaN.
+//!     * If the inputs are positive, only one branch exist and the two returned values are equal.
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/lambert.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(lambert_, lambert);
 }
 
 #include <eve/module/special/regular/impl/lambert.hpp>
