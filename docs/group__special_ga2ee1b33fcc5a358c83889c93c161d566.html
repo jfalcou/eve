@@ -137,30 +137,25 @@ $(document).ready(function(){initNavTree('group__special_ga2ee1b33fcc5a358c83889
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the Wright \(\omega\) function inverse of \( x-&gt; \log x+x\). </p>
-<h4><a class="anchor" id="autotoc_md2056"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the omega operation   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt; value T &gt; <span class="keyword">auto</span> operator()( T x ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<p>Computes the the Wright \(\omega\) the inverse function of \( x \rightarrow \log
+  x+x\). </p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">omega</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__special_ga2ee1b33fcc5a358c83889c93c161d566_html_ga2ee1b33fcc5a358c83889c93c161d566"><div class="ttname"><a href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a></div><div class="ttdeci">constexpr callable_omega_ omega</div><div class="ttdoc">Computes the the Wright  the inverse function of .</div><div class="ttdef"><b>Definition:</b> omega.hpp:50</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating_real_value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of the omega function.</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md2059"></a>
-Supported decorators</h4>
 <ul>
-<li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
 </ul>
-<pre class="fragment"> The expression `diff(omega)(x)` computes the derivative  of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md2060"></a>
-Example</h4>
+<p ><b>Return value</b></p>
+<p >The value of the Wright \(\omega\) function is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -183,7 +178,6 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::omega(xf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a>(xf)&lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_ga2ee1b33fcc5a358c83889c93c161d566_html_ga2ee1b33fcc5a358c83889c93c161d566"><div class="ttname"><a href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a></div><div class="ttdeci">constexpr callable_omega_ omega</div><div class="ttdoc">Callable object computing the Wright  function inverse of .</div><div class="ttdef"><b>Definition:</b> omega.hpp:57</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>

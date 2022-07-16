@@ -6,45 +6,45 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/module/special.hpp>
-#include <cmath>
 
+#include <eve/module/special.hpp>
+
+#include <cmath>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL( "Check return types of digamma"
-            , eve::test::simd::ieee_reals
-            )
+TTS_CASE_TPL("Check return types of digamma", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS( eve::digamma(T())  , T);
-  TTS_EXPR_IS( eve::digamma(v_t()), v_t);
+  TTS_EXPR_IS(eve::digamma(T()), T);
+  TTS_EXPR_IS(eve::digamma(v_t()), v_t);
 };
 
 //==================================================================================================
 // digamma  tests
 //==================================================================================================
-TTS_CASE_TPL( "Check behavior of digamma on wide"
-            , eve::test::simd::ieee_reals
-            )
+TTS_CASE_TPL("Check behavior of digamma on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::digamma;
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(digamma(eve::nan(eve::as<T>()))  , eve::nan(eve::as<T>()) );
-    TTS_IEEE_EQUAL(digamma(eve::inf(eve::as<T>()))  , eve::inf(eve::as<T>()) );
-    TTS_IEEE_EQUAL(digamma(eve::minf(eve::as<T>())) , eve::nan(eve::as<T>()) );
+    TTS_IEEE_EQUAL(digamma(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(digamma(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
+    TTS_IEEE_EQUAL(digamma(eve::minf(eve::as<T>())), eve::nan(eve::as<T>()));
   }
   auto ulp = 2.0;
   TTS_ULP_EQUAL(digamma(T(0.125)), T(-8.3884926632958548678027429230863430000514460424495L), ulp);
   TTS_ULP_EQUAL(digamma(T(0.5)), T(-1.9635100260214234794409763329987555671931596046604L), ulp);
   TTS_ULP_EQUAL(digamma(T(1)), T(-0.57721566490153286060651209008240243104215933593992L), ulp);
-  TTS_ULP_EQUAL(digamma(T(1.5)), T(0.036489973978576520559023667001244432806840395339566L), ulp * 40);
-  TTS_ULP_EQUAL(digamma(T(1.5) - T(1)/32), T(0.00686541147073577672813890866512415766586241385896200579891429L), ulp * 100);
+  TTS_ULP_EQUAL(
+      digamma(T(1.5)), T(0.036489973978576520559023667001244432806840395339566L), ulp * 40);
+  TTS_ULP_EQUAL(digamma(T(1.5) - T(1) / 32),
+                T(0.00686541147073577672813890866512415766586241385896200579891429L),
+                ulp * 100);
   TTS_ULP_EQUAL(digamma(T(2)), T(0.42278433509846713939348790991759756895784066406008L), ulp);
   TTS_ULP_EQUAL(digamma(T(8)), T(2.0156414779556099965363450527747404261006978069172L), ulp);
   TTS_ULP_EQUAL(digamma(T(12)), T(2.4426616799758120167383652547949424463027180089374L), ulp);
@@ -62,11 +62,7 @@ TTS_CASE_TPL( "Check behavior of digamma on wide"
   TTS_ULP_EQUAL(digamma(T(-1.5)), T(0.70315664064524318722569033366791109947350706200623L), ulp);
 };
 
-TTS_CASE_WITH( "Check behavior of digamma on wide"
-        , eve::test::simd::ieee_reals
-        , tts::generate(tts::randoms(0.4, 4.0))
-        )
-<typename T>(T const& a0)
-{
-  TTS_ULP_EQUAL(eve::digamma(a0), T(map(eve::digamma, a0)), 2);
-};
+TTS_CASE_WITH("Check behavior of digamma on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0.4, 4.0)))
+<typename T>(T const& a0) { TTS_ULP_EQUAL(eve::digamma(a0), T(map(eve::digamma, a0)), 2); };

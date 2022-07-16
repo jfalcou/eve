@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['factorial_0',['factorial',['../group__combinatorial_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2',1,'eve']]],
+  ['factorial_0',['factorial',['../group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2',1,'eve']]],
   ['false_5f_1',['false_',['../group__core_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6',1,'eve']]],
   ['fam_2',['fam',['../group__core_ga2d39b164847cc7f9beaf56659102ed94.html#ga2d39b164847cc7f9beaf56659102ed94',1,'eve']]],
   ['fanm_3',['fanm',['../group__core_ga4f4ca543d5f16fa535a0307128ec27aa.html#ga4f4ca543d5f16fa535a0307128ec27aa',1,'eve']]],

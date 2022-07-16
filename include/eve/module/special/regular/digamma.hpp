@@ -11,67 +11,43 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup special
-  //! @{
-  //! @var digamma
-  //!
-  //! @brief Callable object computing logarithmic derivative of the \f$\Gamma\f$ function.
-  //!
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the digamma operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns [elementwise](@ref glossary_elementwise) the value  the logarithmic derivative
-  //!of the \f$\Gamma\f$ function.
-  //!
-  //! The result type is of the same type as the  parameter.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::digamma
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `digamma[cond](x, ...)` is equivalent to `if_else(cond,digamma(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/special/digamma.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(digamma_, digamma);
+//================================================================================================
+//! @addtogroup special
+//! @{
+//!   @var digamma
+//!   @brief Computes the Digamma function i.e. the logarithmic derivative of the \f$\Gamma\f$
+//!   function.
+//!
+//!   **Defined in header**
+//!
+//!   @code
+//!   #include <eve/module/special.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_real_value T >
+//!      T digamma(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!
+//!   **Return value**
+//!
+//!   The value of the Digamma function: \f$\frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/special/regular/digamma.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(digamma_, digamma);
 }
 
 #include <eve/module/special/regular/impl/digamma.hpp>

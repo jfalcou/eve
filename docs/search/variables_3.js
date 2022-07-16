@@ -14,6 +14,6 @@ var searchData=
   ['digamma_11',['digamma',['../group__special_ga9eae818e09cb161b0209418f0b1166f0.html#ga9eae818e09cb161b0209418f0b1166f0',1,'eve']]],
   ['dist_12',['dist',['../group__core_gaeff40f4fe2a2e24a0b2337002530c452.html#gaeff40f4fe2a2e24a0b2337002530c452',1,'eve']]],
   ['div_13',['div',['../group__core_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5',1,'eve']]],
-  ['double_5ffactorial_14',['double_factorial',['../group__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58',1,'eve']]],
+  ['double_5ffactorial_14',['double_factorial',['../group__special_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58',1,'eve']]],
   ['downward_15',['downward',['../group__core_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6',1,'eve']]]
 ];
