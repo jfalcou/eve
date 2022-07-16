@@ -44,6 +44,7 @@ make_unit("unit.algo" algorithm/find_like_special_cases.cpp)
 make_unit("unit.algo" algorithm/inclusive_scan_inplace_generic.cpp)
 make_unit("unit.algo" algorithm/inclusive_scan_to_generic.cpp)
 make_unit("unit.algo" algorithm/reduce_generic.cpp)
+make_unit("unit.algo" algorithm/transform_reduce_generic.cpp)
 make_unit("unit.algo" algorithm/sums_special_cases.cpp)
 
 # shuffles
