@@ -3,7 +3,7 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
+##==================================================================================================
 
-add_subdirectory(masked)
-add_subdirectory(regular)
-add_subdirectory(saturated)
+make_unit( "doc.core.saturated" abs.cpp                  )
+make_unit( "doc.core.saturated" add.cpp                  )

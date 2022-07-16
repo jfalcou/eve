@@ -15,76 +15,71 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var abs
+  //!   @var abs
+  //!   @brief Computes the
   //!
-  //! @brief Callable object computing the absolute value.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the absolute value of its parameter               |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T abs(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto const& x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //! `x`:  An instance of eve::value
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    value containing the [elementwise](@ref glossary_elementwise)
+  //!    absolute value of `x` if it is representable in this type.
   //!
-  //! A value with the same type as `x` containing the [elementwise](@ref glossary_elementwise)
-  //! absolute value of `x` if it is representable in this type. More specifically, for signed
-  //! integers the absolute value of eve::valmin is not representable and the result is undefined.
+  //!  **Notes**
   //!
-  //! @warning  `abs` is also a standard library function name and there possibly exists a C macro
-  //! version which may be called instead of the **EVE** version.<br/>
-  //! To avoid this, use the eve::abs notation.
+  //!    * More specifically, for signed integers : the absolute value of eve::valmin
+  //!      is not representable and the result is undefined.
   //!
-  //! ---
+  //!    * abs is also a standard library function name and there possibly
+  //!      exists a C macro version which may be called instead of the EVE version.
+  //!      To avoid confusion, use the eve::abs notation.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Example}
   //!
-  //!  Higher-order function generating a masked version of eve::abs
+  //!  @godbolt{doc/core//regular/abs.cpp}
   //!
-  //!  **Parameters**
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //!  `cond` : conditional expression
+  //!   * Masked Call
   //!
-  //!  **Return value**
+  //!     The call `eve;::abs[mask](x)` provides a masked version of `eve::abs` which is
+  //!     equivalent to `if_else (mask, abs(x), x)`.
   //!
-  //!  A Callable object so that the expression `abs[cond](x)` is equivalent to `if_else(cond,abs(x),x)`
+  //!      **Example**
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/abs.cpp}
   //!
   //!   * eve::saturated
   //!
+  //!     The call `eve::saturated(eve::abs)(x)` computes a saturated version of eve::abs.
   //!
-  //!     The expression `eve::saturated(eve::abs)(x)` computes the saturated absolute value of `x`.
   //!     More specifically, for any signed integer value `x`, the expression
   //!     `eve::saturated(eve::abs)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
   //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
+  //!      **Example**
   //!
-  //!
-  //!     The expression `eve::diff( eve::abs )(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/abs.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/abs.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(abs_, abs);
 }

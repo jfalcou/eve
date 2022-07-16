@@ -14,60 +14,51 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var agm
+  //!   @var agm
+  //!   @brief Computes the arithmetic-geometric mean.
   //!
-  //! @brief Callable object computing the agm of two floating values.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the arithmetic-geometric mean  operation                   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T, eve::floating_value U >
+  //!      eve::common_compatible_t<T, U> agm(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                                    requires (compatiblevalues< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `y`:  arguments.
   //!
-  //!`x`, `y`:   [floating point values](@ref eve::floating_real_value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The value of the arithmetic-geometric mean is returned. No overflow can occur.
+  //!      The two parameters must share the same sign.
   //!
-  //!  the arithmetic-geometric mean of `x` and `y`. No overflow occurs. The two parameters must share the same sign.
+  //!  @groupheader{Example}
   //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!  @godbolt{doc/core//regular/agm.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::agm
+  //!     The call `eve::agm[mask](x, ...)` provides a masked version of `agm` which is
+  //!     equivalent to `if_else(mask, agm(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `agm[cond](x, y)` is equivalent to `if_else(cond,agm(x, y),x)`
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/agm.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/agm.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(agm_, agm);
 }

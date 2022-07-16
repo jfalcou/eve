@@ -14,75 +14,69 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var add
+  //!   @var add
+  //!   @brief Computes the
   //!
-  //! @brief Callable object performing the sum of multiple values.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sum of its parameter                          |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T ... >
+  //!      eve::common_compatible_t<T, ...> add(T ... x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto const&... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x...` :  [arguments](eve::value).
   //!
-  //! `xs`:  Instances of eve::value
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of the sum of the (range) arguments is returned.
   //!
-  //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
-  //! [elementwise](@ref glossary_elementwise) sum of all `xs`.
+  //!   **Note**
   //!
-  //!@warning
-  //!   Although the infix notation with `+` is supported for two parameters, the `+` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion.
+  //!     Take care that for floating entries, the addition is only 'almost' associative.
+  //!     This call perform additions in reverse incoming order.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core//regular/add.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::add
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve::add[mask](x, ...)` provides a masked
+  //!     version of `add` which is
+  //!     equivalent to `if_else(mask, add(x, ...), x)`
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `add[cond](x0,xs...)` is equivalent
-  //!  to `if_else(cond,add(x0,xs...),x0)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/add.cpp}
   //!
   //!   * eve::saturated
   //!
+  //!     The call `eve::saturated(eve::add)(...)` computes
+  //!     a saturated version of `eve::add`.
   //!
-  //!     The expression `eve::saturated(eve::add)(xs...)` computes the saturated sum of all `xs`.
+  //!     Take care that for signed integral
+  //!     entries this kind of addition is not associative at all.
+  //!     This call perform saturated additions in reverse incoming order.
   //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
+  //!      **Example**
   //!
-  //!
-  //!     The expression `eve::diff_nth<N>(eve::add)(xs...)` computes the derivative of the sum
-  //!     of `xs...` over the Nth parameters.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/add.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/add.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(add_, add);
 }

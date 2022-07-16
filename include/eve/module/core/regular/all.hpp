@@ -15,61 +15,53 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //! @var all
+  //!   @var all
+  //!   @brief Computes the
   //!
-  //! @brief Callable object computing the all value.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the all value                           |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::logical_value T >
+  //!      bool all(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument(@ref eve::logical_value).
   //!
-  //!`x`:   [value](@ref eve::value).
-  //!`x`:   [value](@ref eve::top_bits).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    A bool value which is true if and only if all elements of `x` are true_
+  //!    is returned.
   //!
-  //!A bool value which is true if and only if all elements of `x` are not zero.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/all.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::all
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::all[mask](x)` provides a masked
+  //!     version of `all` which is
+  //!     equivalent to : all not masked elements are true.
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/all.cpp}
   //!
-  //!  A Callable object so that the expression `all[cond](x)` is equivalent to `if_else(cond,all(x),false)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/all.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(all_, all);
 }

@@ -20,7 +20,6 @@ int main()
   std::cout << "---- scalar" << '\n'
             << " xi                 = " << xi << '\n'
             << " yi                 = " << yi << '\n'
-            << " -> agm(xi, yi) = " << eve::agm(xi, yi) << '\n';
-
+            << " -> agm(xi, yi)     = " << eve::agm(xi, yi) << '\n';
   return 0;
 }
