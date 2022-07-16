@@ -40,11 +40,10 @@ namespace eve
 //!      template< eve::floating_real_value T,  eve::floating_real_value U >
 //!      eve::common_compatible_value<T, U> ellint_1(T phi, U k) noexcept;        //2
 //!   }
+//!   @endcode
 //!
 //!    1. complete elliptic integrals of the first kind.
 //!    2. incomplete elliptic integrals of the first kind.
-//!
-//!   @endcode
 //!
 //!   **Parameters**
 //!

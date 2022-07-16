@@ -42,11 +42,11 @@ namespace eve
 //!      template< eve::floating_real_value T, eve::floating_real_value U >
 //!      eve::common_compatible_value<T, U> ellint_d(T phi, U k) noexcept;        //2
 //!   }
+//!   @endcode
 //!
 //!    1. complete \f$\mbox{D}\f$  elliptic integrals.
 //!    2. incomplete\f$\mbox{D}\f$ elliptic integrals.
 //!
-//!   @endcode
 //!
 //!   **Parameters**
 //!
