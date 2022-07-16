@@ -150,13 +150,14 @@ $(document).ready(function(){initNavTree('group__elliptic_ga973c72150eb089562695
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T,  eve::<span class="keywordtype">float</span>ing_real_value U &gt;</div>
 <div class="line">   eve::common_compatible_value&lt;T, U&gt; <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>(T <a class="code hl_variable" href="group__math_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">phi</a>, U k) <span class="keyword">noexcept</span>;        <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="line"> </div>
-<div class="line"> 1. complete elliptic integrals of the first kind.</div>
-<div class="line"> 2. incomplete elliptic integrals of the first kind.</div>
-<div class="ttc" id="agroup__elliptic_ga973c72150eb0895626950fe21e83390e_html_ga973c72150eb0895626950fe21e83390e"><div class="ttname"><a href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">eve::ellint_1</a></div><div class="ttdeci">constexpr callable_ellint_1_ ellint_1</div><div class="ttdoc">Computes the elliptic integrals of the first kind :  and .</div><div class="ttdef"><b>Definition:</b> ellint_1.hpp:67</div></div>
+<div class="ttc" id="agroup__elliptic_ga973c72150eb0895626950fe21e83390e_html_ga973c72150eb0895626950fe21e83390e"><div class="ttname"><a href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">eve::ellint_1</a></div><div class="ttdeci">constexpr callable_ellint_1_ ellint_1</div><div class="ttdoc">Computes the elliptic integrals of the first kind :  and .</div><div class="ttdef"><b>Definition:</b> ellint_1.hpp:66</div></div>
 <div class="ttc" id="agroup__math_ga25a5a4327793847943fd76abc0af6f17_html_ga25a5a4327793847943fd76abc0af6f17"><div class="ttname"><a href="group__math_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">eve::phi</a></div><div class="ttdeci">constexpr callable_phi_ phi</div><div class="ttdoc">Callable object computing the golden ratio : .</div><div class="ttdef"><b>Definition:</b> phi.hpp:49</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
+</div><!-- fragment --><ol type="1">
+<li>complete elliptic integrals of the first kind.</li>
+<li>incomplete elliptic integrals of the first kind.</li>
+</ol>
+<p ><b>Parameters</b></p>
 <ul>
 <li><code>phi</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real Jacobi amplitude</a>.</li>
 <li><code>k</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real elliptic modulus</a>. <code>k</code> must verify \(k^2\sin^2\phi \le 1\) or the result is NaN. In the complete case this means \(|k| \le 1\).</li>
