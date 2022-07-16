@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::double_factorial</title>
+<title>E.V.E: eve::factorial</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__special_ga6941228238dd401d770993cc6f5309f2.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('group__combinatorial_gaf3d9978112857cd
 </div>
 
 <div class="contents">
-<a id="gaf3d9978112857cdad70a9e8e77dbaf58" name="gaf3d9978112857cdad70a9e8e77dbaf58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf3d9978112857cdad70a9e8e77dbaf58">&#9670;&nbsp;</a></span>double_factorial</h2>
+<a id="ga6941228238dd401d770993cc6f5309f2" name="ga6941228238dd401d770993cc6f5309f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6941228238dd401d770993cc6f5309f2">&#9670;&nbsp;</a></span>factorial</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__combinatorial_gaf3d9978112857cd
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::double_factorial = {}</td>
+          <td class="memname">eve::factorial = {}</td>
         </tr>
       </table>
   </td>
@@ -137,53 +137,47 @@ $(document).ready(function(){initNavTree('group__combinatorial_gaf3d9978112857cd
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing unsigned integral double_factorial. </p>
-<h4><a class="anchor" id="autotoc_md1973"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">unsigned integral double_factorial   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()( <a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1unsigned__value_html"><div class="ttname"><a href="concepteve_1_1unsigned__value.html">eve::unsigned_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:63</div></div>
+<p>Computes \(\displaystyle n! = \prod_{i=1}^n i\). </p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::value N &gt;</div>
+<div class="line">   eve::as_floating_point_value&lt;N&gt; <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a>(N x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__special_ga6941228238dd401d770993cc6f5309f2_html_ga6941228238dd401d770993cc6f5309f2"><div class="ttname"><a href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">eve::factorial</a></div><div class="ttdeci">constexpr callable_factorial_ factorial</div><div class="ttdoc">Computes .</div><div class="ttdef"><b>Definition:</b> factorial.hpp:53</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1value.html">unsigned value</a>.</p>
+<ul>
+<li><code>n</code> : <a class="el" href="concepteve_1_1unsigned__value.html">unsigned argument</a>.</li>
+</ul>
 <p ><b>Return value</b></p>
-<p >double factorial is defined by \(\displaystyle (2n)!! = \prod_{i=1}^n (2i)\) and \(\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\)</p>
-<p >The result element type is always double to try to avoid overflow and its cardinal is the same as the entry in case of an simd call.</p>
-<dl class="section warning"><dt>Warning</dt><dd>this function will overflow as soon as the input is greater than 300.</dd></dl>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1976"></a>
-Supported decorators</h4>
-<p >no decorators are supported</p>
-<h4><a class="anchor" id="autotoc_md1977"></a>
-Example</h4>
+<p >The value of \( n!\) is returned.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function will overflow as soon as the input is greater than 171 for integral or double entries and if the entry is greater than 34 for float.</dd></dl>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  w32_t pi32 = {1, 2, 3, 4, 5, 6, 181, 182};</div>
+<div class="line">  w32_t pi32 = {93, 25, 32, 180, 1, 2, 3, 4};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(17) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi32                   = &quot;</span> &lt;&lt; pi32 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; double_factorial(pi32) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58">eve::double_factorial</a>(pi32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi32              = &quot;</span> &lt;&lt; pi32 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; factorial(pi32)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">eve::factorial</a>(pi32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::uint32_t xi = 18;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; xi                      = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; double_factorial(xi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58">eve::double_factorial</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; xi                   = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; factorial(xi)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">eve::factorial</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58_html_gaf3d9978112857cdad70a9e8e77dbaf58"><div class="ttname"><a href="group__combinatorial_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58">eve::double_factorial</a></div><div class="ttdeci">constexpr callable_double_factorial_ double_factorial</div><div class="ttdoc">Callable object computing unsigned integral double_factorial.</div><div class="ttdef"><b>Definition:</b> double_factorial.hpp:64</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>
