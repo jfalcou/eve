@@ -3,7 +3,7 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-set(MAIN_DEST     "lib")
+set(MAIN_DEST     "lib/eve")
 set(INSTALL_DEST  "include")
 
 ## =================================================================================================

@@ -1,0 +1,83 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#pragma once
+
+#include <eve/module/core/regular/shl.hpp>
+#include <eve/detail/overload.hpp>
+
+namespace eve
+{
+  //================================================================================================
+  //! @addtogroup core
+  //! @{
+  //! @var bit_shl
+  //!
+  //! @brief Callable object computing the logical left shift operation.
+  //!
+  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | the logical left shift operation   |
+  //! | `operator[]` | Construct a conditional version of current function object |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template< value T, integral_real_value U > auto operator()( T x, U n ) const noexcept requires bit_compatible< T, U >;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   An instance of a [value](@ref eve::value).
+  //!
+  //!`n`:   An instance of an [integral_value](@ref eve::integral_value).
+  //!
+  //! **Return value**
+  //!
+  //!Computes the [elementwise](@ref glossary_elementwise) logical left shift of the first parameter
+  //!by the second one.
+  //!
+  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an [simd value](@ref eve::simd_value).
+  //!
+  //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
+  //!all elements of n must belong to the
+  //!interval: \f$[0, N[\f$ or the result is undefined.
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //!  Higher-order function generating a masked version of eve::bit_shl
+  //!
+  //!  **Parameters**
+  //!
+  //!  `cond` : conditional expression
+  //!
+  //!  **Return value**
+  //!
+  //!  A Callable object so that the expression `bit_shl[cond](x, ...)` is equivalent to `if_else(cond,bit_shl(x, ...),x)`
+  //!
+  //! ---
+  //!
+  //! #### Supported decorators
+  //!
+  //!  no decorators are supported
+  //!
+  //! #### Example
+  //!
+  //! @godbolt{doc/core/bit_shl.cpp}
+  //!
+  //!  @}
+  //================================================================================================
+  EVE_ALIAS_CALLABLE(shl_, bit_shl);
+}
