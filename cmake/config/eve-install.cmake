@@ -3,8 +3,9 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-set(MAIN_DEST     "lib/eve")
-set(INSTALL_DEST  "include")
+include(GNUInstallDirs)
+set(MAIN_DEST     "${CMAKE_INSTALL_LIBDIR}/eve")
+set(INSTALL_DEST  "${CMAKE_INSTALL_INCLUDEDIR}")
 
 ## =================================================================================================
 ## Exporting target for external use
@@ -21,8 +22,8 @@ add_library(eve::eve ALIAS eve_lib)
 ## =================================================================================================
 ## Install target with versioned folder
 ## =================================================================================================
-install(TARGETS   eve_lib EXPORT eve_lib  DESTINATION "${MAIN_DEST}")
+install(TARGETS   eve_lib EXPORT eve_export_set DESTINATION "${MAIN_DEST}")
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/eve               DESTINATION "${INSTALL_DEST}" )
 install(FILES     ${PROJECT_SOURCE_DIR}/cmake/eve-config.cmake    DESTINATION "${MAIN_DEST}"    )
 install(FILES     ${PROJECT_SOURCE_DIR}/cmake/eve-multiarch.cmake DESTINATION "${MAIN_DEST}"    )
-install(EXPORT    eve_lib NAMESPACE "eve::" DESTINATION "${MAIN_DEST}")
+install(EXPORT    eve_export_set NAMESPACE "eve::" DESTINATION "${MAIN_DEST}")
