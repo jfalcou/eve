@@ -13,63 +13,53 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
-  //! @var any
+  //!   @var any
+  //!   @brief Computes a bool value which is true if and only if any elements of `x` is not zero.
   //!
-  //! @brief Callable object computing the any value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the any value                           |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      bool any(eve::as_logical<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument(@ref eve::logical_value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
-  //!`x`:   [value](@ref eve::top_bits).
+  //!    A bool value which is true if and only if any elements of `x` is not zero
+  //!    is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!A bool value which is true if and only if any of elements of `x` is not zero.
+  //!  @godbolt{doc/core//regular/any.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::any
+  //!     The call `eve::any[mask](x)` provides a masked
+  //!     version of `any` which is
+  //!     equivalent to : any not masked elements is not zero.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/any.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `any[cond](x)` is equivalent to `if_else(cond,any(x),false)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/any.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(any_, any);
 }

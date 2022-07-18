@@ -13,69 +13,59 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_and
+  //!   @var bit_and
+  //!   @brief Computes the bitwise AND of its arguments.
   //!
-  //! @brief Callable object computing the bitwise AND operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bitwise AND operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts... >
+  //!      T bit_and(T x, Ts... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:       first argument.
+  //!     * `xs...` :  other arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //! a0, `xs`:  Instances of eve::value
+  //!      The value of the bitwise AND of its arguments in the type of the first one
+  //!      is returned.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //! A value of the same type as a0 containing the
-  //! [elementwise](@ref glossary_elementwise) bitwise AND of a0 and all `xs` following the
-  //! [bitwise operations semantic](@ref glossary_bitwise).
+  //!      Although the infix notation with `&` is supported for two parameters, the `&` operator on
+  //!      standard scalar types is the original one and so can lead to automatic promotion.
+  //!      Moreover, and due to C++ limitations is not available for floating point scalar entries.
   //!
-  //!@warning
-  //!   Although the infix notation with `&` is supported for two parameters, the `&` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion and due to C++
-  //!   limitation is not available for floating point scalar entries.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/bit_and.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::bit_and
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::bit_and[mask](x, ...)` provides a masked
+  //!     version of `bit_and` which is
+  //!     equivalent to `if_else(mask, bit_and(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_and[cond](x, ...)` is equivalent to `if_else(cond,bit_and(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_and.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_and.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_and_, bit_and);
 }

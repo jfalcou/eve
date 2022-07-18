@@ -17,6 +17,37 @@
 //!
 //! @}
 //==================================================================================================
+//==================================================================================================
+//! @addtogroup core
+//! @{
+//! @defgroup core_arithmetic  arithmetic operations
+//! @ingroup core
+//! Core arithmetic functions
+//!
+//! @defgroup core_bitops bitwise functions
+//! @ingroup core
+//!
+//! @defgroup core_constants  constants
+//! @ingroup core
+//!
+//! @defgroup core_decorators  decorators
+//! @ingroup core
+//!
+//! @defgroup core_horizontal  horizontal operations
+//! @ingroup core
+//!
+//! @defgroup core_internal  internal representation and IEEE
+//! @ingroup core
+//!
+//! @defgroup core_conversions conversions
+//! @ingroup core
+//!
+//! @defgroup core_simd proper SIMD operations
+//! @ingroup core
+//!
+//! @}
+//==================================================================================================
+
 #include <eve/module/core/constant/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/core.hpp>

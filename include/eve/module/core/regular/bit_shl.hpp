@@ -13,71 +13,64 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_shl
+  //!   @var bit_shl
+  //!   @brief Computes a logical left shift.
   //!
-  //! @brief Callable object computing the logical left shift operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logical left shift operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T , integral_value N >
+  //!      T bit_shl(T x, N n) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, integral_real_value U > auto operator()( T x, U n ) const noexcept requires bit_compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument(@ref eve::value). to be shifted.
   //!
-  //! **Parameters**
+  //!     * `n`:    [shift](@ref eve::integral_value).
   //!
-  //!`x`:   An instance of a [value](@ref eve::value).
+  //!    **Return value**
   //!
-  //!`n`:   An instance of an [integral_value](@ref eve::integral_value).
+  //!    The value of the logical left shift
+  //!    is returned.
   //!
-  //! **Return value**
+  //!   **Notes**
   //!
-  //!Computes the [elementwise](@ref glossary_elementwise) logical left shift of the first parameter
-  //!by the second one.
+  //!     * The call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is
+  //!       an [simd value](@ref eve::simd_value).
   //!
-  //!the call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is an [simd value](@ref eve::simd_value).
+  //!     * The types must share the same cardinal or be scalar and if \f$N\f$
+  //!       is the size in bits  of the element type of `T`,
+  //!       all elements of n must belong to the
+  //!       interval: \f$[0, N[\f$ or the result is undefined.
   //!
-  //!The types must share the same cardinal or be scalar and if \f$N\f$ is the size in bits  of the element type of `T`,
-  //!all elements of n must belong to the
-  //!interval: \f$[0, N[\f$ or the result is undefined.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/bit_shl.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::bit_shl
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::bit_shl[mask](x, ...)` provides a masked
+  //!     version of `bit_shl` which is
+  //!     equivalent to `if_else(mask, bit_shl(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_shl[cond](x, ...)` is equivalent to `if_else(cond,bit_shl(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_shl.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_shl.cpp}
+  //! @}
   //================================================================================================
   EVE_ALIAS_CALLABLE(shl_, bit_shl);
 }

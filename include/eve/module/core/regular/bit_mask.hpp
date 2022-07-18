@@ -12,65 +12,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_mask
+  //!   @var bit_mask
+  //!   @brief Computes a bit mask full of zeroes or ones
   //!
-  //! @brief Callable object computing a bit mask.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of a bit mask   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T bit_mask(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [real value](@ref eve::real_value).
+  //!      For each [elementwise](@ref glossary_elementwise) of `x`:
   //!
-  //! **Return value**
+  //!        *  if the [element](@ref glossary_elementwise) is zero, an element
+  //!           with all bits unset is returned.
+  //!        *  else an element of the type with all bits set is returned.
   //!
-  //!For each [elementwise](@ref glossary_elementwise) of `x`:
+  //!  @groupheader{Example}
   //!
-  //!  *  if the [element](@ref glossary_elementwise) is zero, an element with all bits unset is returned.
-  //!  *  else an element of the type with all bits set is returned.
+  //!  @godbolt{doc/core//regular/bit_mask.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::bit_mask
+  //!     The call `eve::bit_mask[mask](x)` provides a masked
+  //!     version of `bit_mask` which is
+  //!     equivalent to `if_else(mask, bit_mask(x), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_mask[cond](x, ...)` is equivalent to `if_else(cond,bit_mask(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_mask.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_mask.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_mask_, bit_mask);
 }

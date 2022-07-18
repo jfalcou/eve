@@ -5,6 +5,7 @@
 ##==================================================================================================
 ##==================================================================================================
 
+<<<<<<< HEAD
 make_unit( "doc.core" abs.cpp                  )
 make_unit( "doc.core" absmax.cpp               )
 make_unit( "doc.core" absmin.cpp               )
@@ -210,3 +211,9 @@ make_unit( "doc.core" valmax.cpp               )
 make_unit( "doc.core" valmin.cpp               )
 make_unit( "doc.core" zero.cpp                 )
 make_unit( "doc.core" zip.cpp                  )
+=======
+add_subdirectory(masked)
+add_subdirectory(raw)
+add_subdirectory(regular)
+add_subdirectory(saturated)
+>>>>>>> d9c39faa5 (all core b*.hpp)

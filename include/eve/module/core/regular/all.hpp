@@ -13,60 +13,25 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
-  //! @var all
+  //!   @var all
+  //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero_
   //!
-  //! @brief Callable object computing the all value.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the all value                           |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!`x`:   [value](@ref eve::top_bits).
-  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      bool all(T x) noexcept;
+  //!   }
+  //!   @endcode
   //! **Return value**
-  //!
-  //!A bool value which is true if and only if all elements of `x` are not zero.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::all
-  //!
+  //!    A bool value which is true if and only if all elements of `x` are not zero_
+  //!    is returned.
   //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `all[cond](x)` is equivalent to `if_else(cond,all(x),false)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
+  //!     The call `eve::all[mask](x)` provides a masked
+  //!     version of `all` which is
+  //!     equivalent to : all not masked elements are not zero.
   //! @godbolt{doc/core/all.cpp}
   //!
   //!  @}

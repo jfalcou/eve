@@ -13,69 +13,59 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_or
+  //!   @var bit_or
+  //!   @brief Computes the bitwise OR of its arguments.
   //!
-  //! @brief Callable object computing the bitwise OR operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bitwise OR operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts... >
+  //!      T bit_or(T x, Ts... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:       first argument.
+  //!     * `xs...` :  other arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //! a0, `xs`:  Instances of eve::value
+  //!      The value of the bitwise OR of its arguments in the type of the first one
+  //!      is returned.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //! A value of the same type as a0 containing the
-  //! [elementwise](@ref glossary_elementwise) bitwise OR of a0 and all `xs` following the
-  //! [bitwise operations semantic](@ref glossary_bitwise).
+  //!      Although the infix notation with `|` is supported for two parameters, the `|` operator on
+  //!      standard scalar types is the original one and so can lead to automatic promotion.
+  //!      Moreover, and due to C++ limitations is not available for floating point scalar entries.
   //!
-  //!@warning
-  //!   Although the infix notation with `|` is supported for two parameters, the `|` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion and due to C++
-  //!   limitation is not available for floating point scalar entries.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/bit_or.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::bit_or
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::bit_or[mask](x, ...)` provides a masked
+  //!     version of `bit_or` which is
+  //!     equivalent to `if_else(mask, bit_or(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_or[cond](x, ...)` is equivalent to `if_else(cond,bit_or(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_or.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_or.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_or_, bit_or);
 }

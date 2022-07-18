@@ -13,66 +13,51 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_select
+  //!   @var bit_select
+  //!   @brief selects bits from a mask and two entries.
   //!
-  //! @brief Callable object computing the bit_select operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bit_select operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!   {   template< value T, value U > bit_select)( T m, U x, U y )
+  //!       requires compatible< T,U> noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T m, U x, U y ) const noexcept
-  //!  requires compatible< T,U>;
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * `m`:   mask [value](@ref eve::value)
   //!
-  //! **Parameters**
+  //!   * `y`, `z`:   selection [values](@ref eve::real_value)
   //!
-  //!`m`:   mask [value](@ref eve::value)
+  //!     * `x` :  argument.
   //!
-  //!`y`, `z`:   selection [real values](@ref eve::real_value)
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      * In a short way (omitting casting details to bring all bit sizes of the parameters equal), it means that the result is
+  //!        composed of the bits of `x` for which the corresponding bit of `m` is set
+  //!        and the bits of  `y` for which the corresponding bit of `m` is unset.
   //!
-  //!The types T and U must be  bit_compatible and the call
+  //!      * If `T` or `U` is an [simd value](@ref eve::simd_value), the type of the result has the element type
+  //!        of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
+  //!        The value of the selected bits is returned.
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!r==bit_select(m,x,y)
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Example}
   //!
-  //!is semantically equivalent to
+  //!  @godbolt{doc/core//regular/bit_select.cpp}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!r = bit_or(bit_and(x, m), bit_andnot(y, m))
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!In a short way (omitting casting details to bring all bit sizes of the parameters equal), it means that the result is
-  //!composed of the bits of `x` for which the corresponding bit of `m` is set
-  //!and the bits of  `y` for which the corresponding bit of `m` is unset.
-  //!
-  //!If `T` or `U` is an [simd value](@ref eve::simd_value), the type of the result has the element type
-  //! of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_select.cpp}
-  //!
+  //!  @groupheader{Semantic Modifiers}
   //!  @}
   //================================================================================================
 
