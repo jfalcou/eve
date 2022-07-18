@@ -33,7 +33,7 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algos
   //! @{
   //!   @var copy
   //!   @brief SIMD optimized copy algorithm
@@ -101,11 +101,13 @@ namespace eve::algo
   };
 
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algos
   //! @{
   //!   @var copy_backward
-  //!   @brief Configurable @callable performing backward copy between two ranges' or
-  //!          between a range and an iterator.
+  //!   @brief SIMD optimized backward copy algorithm
+  //!
+  //!   Configurable @callable performing backward copy between two ranges' or between a range and
+  //!   an iterator.
   //!
   //!   By default, eve::algo::copy_backward will be unrolled by a factor of 4, align memory
   //!   accesses and perform conversions if needed.

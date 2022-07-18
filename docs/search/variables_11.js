@@ -9,7 +9,7 @@ var searchData=
   ['read_6',['read',['../group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818',1,'eve']]],
   ['real_7',['real',['../group__complex_ga59c3b80b72894e8fe0487d8fc2bf216e.html#ga59c3b80b72894e8fe0487d8fc2bf216e',1,'eve']]],
   ['rec_8',['rec',['../group__core_ga9e1abef2b02773654dd566b466e9586a.html#ga9e1abef2b02773654dd566b466e9586a',1,'eve']]],
-  ['reduce_9',['reduce',['../group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03',1,'eve']]],
+  ['reduce_9',['reduce',['../group__algos_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376',1,'eve::algo::reduce()'],['../group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03',1,'eve::reduce()']]],
   ['regular_10',['regular',['../group__core_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253',1,'eve']]],
   ['rem_11',['rem',['../group__core_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657',1,'eve']]],
   ['rempio2_12',['rempio2',['../group__math_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45',1,'eve']]],

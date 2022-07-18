@@ -1,4 +1,5 @@
 #include <eve/algo/copy.hpp>
+#include <tts/tts.hpp>
 #include <iostream>
 #include <vector>
 
@@ -8,21 +9,21 @@ int main()
   std::vector<double>  to_vector(from_vector.size());
   std::vector<double>  to_vector_z(from_vector.size());
 
-  std::cout << "from_vector     = ";
-  for(auto e : from_vector) std::cout << e << " ";
-  std::cout << "\n";
+  std::cout << "from_vector     = "
+            << tts::as_string(from_vector)
+            << "\n";
 
   eve::algo::copy(from_vector, to_vector);
 
-  std::cout << "to_vector       = ";
-  for(auto e : to_vector) std::cout << e << " ";
-  std::cout << "\n";
+  std::cout << "to_vector       = "
+            << tts::as_string(to_vector)
+            << "\n";
 
   eve::algo::copy( eve::algo::views::zip(from_vector, to_vector_z) );
 
-  std::cout << "to_vector (zip) = ";
-  for(auto e : to_vector_z) std::cout << e << " ";
-  std::cout << "\n";
+  std::cout << "to_vector (zip) = "
+            << tts::as_string(to_vector_z)
+            << "\n";
 
   return 0;
 }

@@ -59,7 +59,9 @@ class SendToGodbolt extends HTMLElement {
                                         "compiler":
                                         {
                                             "id": "clang1400",
-                                            "libs": [ {"id": "eve", "version": "trunk"}],
+                                            "libs": [ {"id": "eve", "version": "trunk"}
+                                                    , {"id": "tts", "version": "trunk"}
+                                                    ],
                                             "options": "-O0 -std=c++20 -DEVE_NO_FORCEINLINE"
                                         }
                                       }

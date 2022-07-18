@@ -1,22 +1,17 @@
 #include <eve/module/core.hpp>
 #include <eve/algo.hpp>
+#include <tts/tts.hpp>
 #include <iostream>
 #include <numeric>
 #include <vector>
-
-void print(auto r) {
-  for (auto x : r) {
-    std::cout << x << " ";
-  }
-  std::cout << '\n';
-}
 
 int main()
 {
   std::vector<float>  v = {1.0f, 2.0f, 3.0f, 4.0f};
 
-  std::cout << " -> v                                                                                               = ";
-  print(v);
+  std::cout << " -> v                                                                                               = "
+            << tts::as_string(v)
+            << "\n";
 
   std::cout << " -> eve::algo::transform_reduce(v, [](auto x) { return x + x }, 0.)                                 = "
             << eve::algo::transform_reduce(v, [](auto x) { return x + x; }, 0.) << "\n";
