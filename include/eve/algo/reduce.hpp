@@ -60,7 +60,7 @@ namespace eve::algo
       }
     };
 
-    template <typename Rng, typename Op, typename Zero, typename U>
+    template <eve::algo::relaxed_range Rng, typename Op, typename Zero, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
       auto cvt_rng = views::convert(EVE_FWD(rng), as<U>{});
@@ -80,12 +80,67 @@ namespace eve::algo
       return d.finish();
     }
 
-    template <typename Rng, typename U>
+    template <eve::algo::relaxed_range Rng, typename U>
     EVE_FORCEINLINE U operator()(Rng&& rng, U init) const
     {
       return operator()(EVE_FWD(rng), std::pair{eve::add, eve::zero}, init);
     }
   };
 
+
+  //================================================================================================
+  //! @addtogroup algorithms
+  //! @{
+  //!  @var reduce
+  //!
+  //!  @brief SIMD optimized version of std::reduce
+  //!
+  //!   Configurable @callable performing a SIMD optimized version of the reduce
+  //!   By default, the operation will be unrolled by a factor of 4, align memory accesses and
+  //!   perform conversions if needed.
+  //!
+  //!  Due to the nature of how simd algorithms work we need a zero for the operation,
+  //!  so instead of plus you pass {op, zero} where zero is identity for the op.
+  //!  Instead of zero it can be benefitial to pass eve's constants like `eve::zero`, `eve::one`
+  //!  because we sometimes have a better implementation.
+  //!
+  //!  Unfortunatly passing eve's constants instead of init is not supported at the moment.
+  //!
+  //!  @note: the interface differs from the standard because we wanted to match our transform_reduce.
+  //!
+  //!  @note: compiler can autovectorize reductions, especially with special options.
+  //!        Maybe you don't need a library implementation.
+  //!
+  //!   **Alternative Header**
+  //!
+  //!   @code
+  //!   #include <eve/algo.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve::algo
+  //!   {
+  //!     template <eve::algo::relaxed_range Rng, typename U>
+  //!     U reduce(Rng&& rng, U init);  // 1
+  //!
+  //!     template <eve::algo::relaxed_range Rng, typename Op, typename Zero, typename U>
+  //!     U reduce(Rng&& rng, std::pair<Op, Zero> op_zero, U init)  // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!    * `rng` - relaxed_range - input range to process
+  //!    * init - initial value. Also type of init matches the result type
+  //!    * op_zero - pair of reduction operation (commutative/associative) and an identity (zero) for it.
+  //!                default op_zero is eve::plus, eve::zero.
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/algo/reduce.cpp}
+  //! }@
+  //================================================================================================
   inline constexpr auto reduce = function_with_traits<reduce_>[default_simple_algo_traits];
 }

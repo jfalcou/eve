@@ -46,6 +46,7 @@
 #include <eve/algo/swap_ranges.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/transform.hpp>
+#include <eve/algo/transform_reduce.hpp>
 #include <eve/views/backward.hpp>
 #include <eve/views/convert.hpp>
 #include <eve/views/iota.hpp>
