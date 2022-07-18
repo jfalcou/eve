@@ -12,73 +12,47 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_conversions
   //! @{
-  //! @var binarize
+  //!   @var binarize
+  //!   @brief transform logical values to numerical values
   //!
-  //! @brief Callable object computing the binarize operation.
+  //!   binarize(c, v) is semantically  equivalent to: if_else(c, v, T(0));
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the binarize operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value C  >
+  //!      C binarize(eve::as_logical<C> c) noexcept;            //1
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, scalar_value V > T operator()( Logical< T >  c, V v = 1 ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      template< eve::real_value V,  eve::logical_value C >
+  //!      T binarize(C, c, T v = T(1)) noexcept;                //2
+  //!   }
+  //!   @endcode
   //!
-  //! **Parameters**
+  //!   **Parameters**
   //!
-  //!`c`:   [logical value](@ref eve::value).
-  //!`v`:   [scalar value](@ref eve::value) defaulting to 1.
+  //!     * `c` :  [condition](@ref eve::logical_value).
   //!
-  //! **Return value**
+  //!     * `x` :  [value](@ref eve::value) to return if the condition is met (C(1) if omitted).
   //!
-  //!The call:
+  //!    **Return value**
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = binarize(c,v);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      * 1) The value of if_else(c, v, T(0)); is returned.
+  //!      * 2) The value of if_else(c, C(1), C(0)); is returned.
   //!
-  //!is semantically  equivalent to:
+  //!  @groupheader{Example}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!T r = if_else(c, T(v), T(0));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::binarize
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `binarize[cond](x, ...)` is equivalent to `if_else(cond,binarize(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/binarize.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/binarize.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(binarize_, binarize);
 }

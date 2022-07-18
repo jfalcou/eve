@@ -12,63 +12,57 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_floor
+  //!   @var bit_floor
+  //!   @brief If `x` is not zero, computes the largest integral power of two
+  //!   that is not greater than `x`.
   //!
-  //! @brief Callable object computing the bit_floor operation.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bit_floor operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T bit_floor(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      * The value of the largest integral power of two
+  //!        that is not greater than `x` is returned.
   //!
-  //!If `x` is not zero, computes [elementwise](@ref glossary_elementwise)  the largest integral power of two that is not greater than `x`.
-  //!If an  [element](@ref glossary_elementwise) of `x` is zero, the corresponding result  [element](@ref glossary_elementwise) is zero.
+  //!      * If `x` is zero returns zero.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core//regular/bit_floor.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::bit_floor
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve::bit_floor[mask](x, ...)` provides a masked
+  //!     version of `bit_floor` which is
+  //!     equivalent to `if_else(mask, bit_floor(x, ...), x)`
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `bit_floor[cond](x, ...)` is equivalent to `if_else(cond,bit_floor(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_floor.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_floor.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_floor_, bit_floor);
 }

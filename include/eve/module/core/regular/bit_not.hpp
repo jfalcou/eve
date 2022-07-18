@@ -11,63 +11,53 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+   //================================================================================================
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_not
+  //!   @var bit_not
+  //!   @brief comutes the ones complement of the parameter.
   //!
-  //! @brief Callable object computing the ones' complement operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ones' complement operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T bit_not(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [real value](@ref eve::real_value).
+  //!    The value of the bitwise NOT of the parameter is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Computes the bitwise NOT of the parameter
+  //!  @godbolt{doc/core//regular/bit_not.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::bit_not
+  //!     The call `eve::bit_not[mask](x, ...)` provides a masked
+  //!     version of `bit_not` which is
+  //!     equivalent to `if_else(mask, bit_not(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/bit_not.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_not[cond](x, ...)` is equivalent to `if_else(cond,bit_not(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_not.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_not_, bit_not);
 }

@@ -5,5 +5,6 @@
 ##==================================================================================================
 
 add_subdirectory(masked)
+add_subdirectory(raw)
 add_subdirectory(regular)
 add_subdirectory(saturated)

@@ -13,12 +13,10 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
   //!   @var abs
-  //!   @brief Computes the
-  //!
-  //!   $details$
+  //!   @brief Computes the absolute value of the parameter.
   //!
   //!   **Defined in Header**
   //!

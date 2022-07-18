@@ -12,63 +12,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_ceil
+  //!   @var bit_ceil
+  //!   @brief Computes the smallest integral power of two that is not smaller than `x`.
   //!
-  //! @brief Callable object computing the bit_ceil operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bit_ceil operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T bit_ceil(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!    The value of the smallest integral power of two that is not smaller than `x`
+  //!    is returned.
   //!
-  //! **Return value**
+  //!   If that value is not representable in `T`, the behavior is undefined.
   //!
-  //!Computes [elementwise](@ref glossary_elementwise) the smallest integral power of two that is not smaller than `x`.
-  //!If that value is not representable in `T`, the behavior is undefined.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/bit_ceil.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::bit_ceil
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::bit_ceil[mask](x, ...)` provides a masked
+  //!     version of `bit_ceil` which is
+  //!     equivalent to `if_else(mask, bit_ceil(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_ceil[cond](x, ...)` is equivalent to `if_else(cond,bit_ceil(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_ceil.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_ceil.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_ceil_, bit_ceil);
 }

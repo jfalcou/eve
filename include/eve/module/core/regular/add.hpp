@@ -12,12 +12,10 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
   //!   @var add
-  //!   @brief Computes the
-  //!
-  //!   $details$
+  //!   @brief Computes the sum of its arguments.
   //!
   //!   **Defined in Header**
   //!
@@ -41,7 +39,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    The value of the sum of the (range) arguments is returned.
+  //!    The value of the sum of the arguments is returned.
   //!
   //!   **Note**
   //!

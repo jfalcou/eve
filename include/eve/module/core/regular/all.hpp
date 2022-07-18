@@ -13,12 +13,10 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
   //!   @var all
-  //!   @brief Computes the
-  //!
-  //!   $details$
+  //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero_
   //!
   //!   **Defined in Header**
   //!
@@ -31,7 +29,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::logical_value T >
+  //!      template< eve::value T >
   //!      bool all(T x) noexcept;
   //!   }
   //!   @endcode
@@ -42,7 +40,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    A bool value which is true if and only if all elements of `x` are true_
+  //!    A bool value which is true if and only if all elements of `x` are not zero_
   //!    is returned.
   //!
   //!  @groupheader{Example}
@@ -55,7 +53,7 @@ namespace eve
   //!
   //!     The call `eve::all[mask](x)` provides a masked
   //!     version of `all` which is
-  //!     equivalent to : all not masked elements are true.
+  //!     equivalent to : all not masked elements are not zero.
   //!
   //!      **Example**
   //!

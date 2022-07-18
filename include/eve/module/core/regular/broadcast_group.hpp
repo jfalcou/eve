@@ -16,6 +16,42 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup core_simd
+  //! @{
+  //!   @var broadcast_group
+  //!   @brief Computes the    TODO
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T broadcast_group(T x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  argument.
+  //!
+  //!    **Return value**
+  //!
+  //!    The value of TODO
+  //!    is returned.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core//regular/broadcast_group.cpp}
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(broadcast_group_, broadcast_group);
 }
 

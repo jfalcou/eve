@@ -12,14 +12,12 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
   //!   @var absmax
   //!   @brief Computes the absolute value of the maximal element
   //!
   //!   This is equivalent to eve::abs ( eve::max )(...). but can be subject to optimizations.
-  //!
-  //!   $details$
   //!
   //!   **Defined in Header**
   //!

@@ -12,51 +12,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_cast
+  //!   @var bit_cast
+  //!   @brief Computes a a bitwise reinterpretation of an object.
   //!
-  //! @brief Callable object computing a bitwise reinterpretation of the object.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core/regular/bit_cast.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Obtain a value of type To by reinterpreting the object representation of from  |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!   {   template<value From, scalar_value To>
+  //!       To bit_castuto operator()(From x, as<To> t) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<real_value From, scalar_real_value To>
-  //!  auto operator()(From x, as<To> t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! @param
-  //! x: instance of a [value](@ref eve::value) to be casted
+  //!  **Template parameters**
   //!
-  //! @tparam
-  //! To: [value] to which `x` is casted
+  //!     * To: scalar type to which each element of `x` is casted
   //!
-  //! **Return value**
+  //!    **Return value**
   //!
-  //!Obtain a value of type To by reinterpreting the object representation
-  //!of from. Every bit in the value representation of the returned To object is
-  //!equal to the corresponding bit in the object representation of from.
+  //!    The bits of x of type From reinterpreted as being those of a variable of type To
+  //!    is returned.
   //!
-  //! ---
+  //!    Every bit in the value representation of the returned To object is equal to the
+  //!    corresponding bit in the object representation of from.
+  //!    The values of padding bits in the returned To object are unspecified.
   //!
-  //! #### Supported decorators
+  //!    If there is no value of type To corresponding to the value
+  //!    representation produced, the behavior is undefined. If there are multiple
+  //!    such values, which value is produced is unspecified.
   //!
-  //!  no decorators are supported
+  //!  @groupheader{Example}
   //!
-  //! #### Example
+  //!  @godbolt{doc/core//regular/bit_cast.cpp}
   //!
-  //! @godbolt{doc/core/bit_cast.cpp}
-  //!
-  //!  @}
-  //================================================================================================z
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(bit_cast_, bit_cast);
 }
 #endif

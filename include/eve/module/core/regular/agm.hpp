@@ -12,12 +12,10 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
   //!   @var agm
   //!   @brief Computes the arithmetic-geometric mean.
-  //!
-  //!   $details$
   //!
   //!   **Defined in Header**
   //!

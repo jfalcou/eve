@@ -13,71 +13,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_ornot
+  //!   @var bit_ornot
+  //!   @brief Computes the bitwise ORNOT of its arguments.
   //!
-  //! @brief Callable object computing the bitwise ORNOT operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bitwise ORNOT operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts... >
+  //!      T bit_ornot(T x, Ts... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:       first argument.
+  //!     * `xs...` :  other arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //! a0, `xs`:  Instances of eve::value
+  //!     * For two parameters it computes the  bitwise ORNOT of the two parameters
+  //!     * For more than two parameters the call is  semantically equivalent to to `bit_ornot(a0, bit_or(xs...))`
+  //!     *  The value returned is in the type of the first parameter
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //! The value returned is of same type as `a0` and follows the
-  //! [bitwise operations semantic](@ref glossary_bitwise).
-  //! * For two parameters it computes the  bitwise ORNOT of the two parameters
-  //! * For more than two parameters the call is  semantically equivalent to to `bit_ornot(a0, bit_or(xs...))`
+  //!  @godbolt{doc/core//regular/bit_ornot.cpp}
   //!
-  //!@warning
-  //!  the call `bit_ornot(x, y)` is semantically equivalent to `x | ~y` if `x` or  `y`
-  //!  is an  [simd value](@ref eve::simd_value), but the pure scalar calls imply the original C++ operators
-  //!  an may not exist due to C++ limitations.<br> Moreover if an hardware intrinsic exists,  the infix syntax
-  //!  will not be able to use it.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve::bit_ornot[mask](x, ...)` provides a masked
+  //!     version of `bit_ornot` which is
+  //!     equivalent to `if_else(mask, bit_ornot(x, ...), x)`
   //!
-  //!  Higher-order function generating a masked version of eve::bit_ornot
+  //!      **Example**
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_ornot[cond](x, ...)` is equivalent to `if_else(cond,bit_ornot(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_ornot.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_ornot.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_ornot_, bit_ornot);
 }

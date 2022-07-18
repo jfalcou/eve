@@ -12,63 +12,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_width
+  //!   @var bit_width
+  //!   @brief Computes elementwise the number of bits needed to store the parameter.
   //!
-  //! @brief Callable object computing the bit_width operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bit_width operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T bit_width(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< unsigned_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!    The value of  number of bits needed to store the value `x`,  i.e.
+  //!    \f$1+\lfloor\log2(x)\rfloor\f$
+  //!    is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!If x is not zero, calculates the number of bits needed to store the value `x`,
-  //!that is \f$1+\lfloor\log2(x)\rfloor\f$. If `x` is zero, returns zero.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::bit_width
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_width[cond](x, ...)` is equivalent to `if_else(cond,bit_width(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_width.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/bit_width.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_width_, bit_width);
 }

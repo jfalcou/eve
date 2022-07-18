@@ -13,69 +13,53 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var bit_xor
+  //!   @var bit_xor
+  //!   @brief Computes the bitwise XOR of its arguments.
   //!
-  //! @brief Callable object computing the bitwise XOR operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bitwise XOR operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts... >
+  //!      T bit_xor(T x, Ts... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:       first argument.
+  //!     * `xs...` :  other arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //! a0, `xs`:  Instances of eve::value
+  //!      The value of the bitwise XOR of its arguments in the type of the first one
+  //!      is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //! A value of the same type as a0 containing the
-  //! [elementwise](@ref glossary_elementwise) bitwise XOR of a0 and all `xs` following the
-  //! [bitwise operations semantic](@ref glossary_bitwise).
+  //!  @godbolt{doc/core//regular/bit_xor.cpp}
   //!
-  //!@warning
-  //!   Although the infix notation with `^` is supported for two parameters, the `^` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion and due to C++
-  //!   limitation is not available for floating point scalar entries.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve::bit_xor[mask](x, ...)` provides a masked
+  //!     version of `bit_xor` which is
+  //!     equivalent to `if_else(mask, bit_xor(x, ...), x)`
   //!
-  //!  Higher-order function generating a masked version of eve::bit_xor
+  //!      **Example**
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_xor[cond](x, ...)` is equivalent to `if_else(cond,bit_xor(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_xor.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/bit_xor.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_xor_, bit_xor);
 }

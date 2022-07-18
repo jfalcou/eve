@@ -12,14 +12,12 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
   //!   @var absmin
   //!   @brief Computes the absolute value of the minimal element
   //!
   //!   This is equivalent to eve::abs ( eve::min )(...). but can be subject to optimizations.
-  //!
-  //!   $details$
   //!
   //!   **Defined in Header**
   //!

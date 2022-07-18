@@ -12,67 +12,62 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var bitofsign
+  //!   @var bitofsign
+  //!   @brief Computes the value in the input type of the bit of sign.
   //!
-  //! @brief Callable object computing the bitofsign value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the bitofsign value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T bitofsign(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!    The value of the bit of sign is returned.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!The call `bitofsign(x)` is semantically equivalent to `x & signmask(as(x))`.
+  //!      * bitofsign does NOT return  a [logical value](@ref eve::value)
   //!
-  //!@warning
-  //!   Take care that for  [floating real values](@ref eve::value) bitofsign does NOT return
-  //!   a [logical value](@ref eve::value) that can be tested, but `mzero(as(x))` if `x` is negative
-  //!   and  `zero(as(x))` if `x` is positive, which both satisfy the `is_eqz` predicate.
+  //!      * In particular,  take care that for  [floating real values](@ref eve::value) bitofsign does NOT return
+  //!        a [logical value](@ref eve::value) that can be tested, but `mzero(as(x))` if `x` is negative
+  //!        and  `zero(as(x))` if `x` is positive, which both satisfy the eve::is_eqz predicate.
   //!
-  //! ---
+  //!      * If you want to test if the bit of sign is set eve::is_negative is the right function to call.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Example}
   //!
-  //!  Higher-order function generating a masked version of eve::bitofsign
+  //!  @godbolt{doc/core//regular/bitofsign.cpp}
   //!
-  //!  **Parameters**
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  `cond` : conditional expression
+  //!   * Masked Call
   //!
-  //!  **Return value**
+  //!     The call `eve::bitofsign[mask](x, ...)` provides a masked
+  //!     version of `bitofsign` which is
+  //!     equivalent to `if_else(mask, bitofsign(x, ...), x)`
   //!
-  //!  A Callable object so that the expression `bitofsign[cond](x, ...)` is equivalent to `if_else(cond,bitofsign(x, ...),x)`
+  //!      **Example**
   //!
-  //! ---
+  //!        @godbolt{doc/core/masked/bitofsign.cpp}
   //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bitofsign.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bitofsign_, bitofsign);
 }
