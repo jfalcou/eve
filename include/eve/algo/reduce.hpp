@@ -89,7 +89,7 @@ namespace eve::algo
 
 
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algos
   //! @{
   //!  @var reduce
   //!
@@ -99,17 +99,16 @@ namespace eve::algo
   //!   By default, the operation will be unrolled by a factor of 4, align memory accesses and
   //!   perform conversions if needed.
   //!
-  //!  Due to the nature of how simd algorithms work we need a zero for the operation,
-  //!  so instead of plus you pass {op, zero} where zero is identity for the op.
-  //!  Instead of zero it can be benefitial to pass eve's constants like `eve::zero`, `eve::one`
-  //!  because we sometimes have a better implementation.
+  //!  Due to the nature of how SIMD algorithms work, the reduce operation has to be paired with its,
+  //!  neutral element. For example, for add you pass `{add, zero}` as zero is the identity for add.
+  //!  Instead of zero it can be beneficial to pass eve's constants like `eve::zero`, `eve::one`
+  //!  because sometimes the implementation can be improved
   //!
-  //!  Unfortunatly passing eve's constants instead of init is not supported at the moment.
-  //!
-  //!  @note: the interface differs from the standard because we wanted to match our transform_reduce.
-  //!
-  //!  @note: compiler can autovectorize reductions, especially with special options.
-  //!        Maybe you don't need a library implementation.
+  //!  @note
+  //!         * The interface differs from the standard to be homogeneous with
+  //!         eve::algo::transform_reduce.
+  //!         * Compilers can auto-vectorize reductions, especially with special options.
+  //!           Maybe you don't need a library implementation.
   //!
   //!   **Alternative Header**
   //!
@@ -123,24 +122,32 @@ namespace eve::algo
   //!   namespace eve::algo
   //!   {
   //!     template <eve::algo::relaxed_range Rng, typename U>
-  //!     U reduce(Rng&& rng, U init);  // 1
+  //!     U reduce(Rng&& rng, U init);                              // 1
   //!
   //!     template <eve::algo::relaxed_range Rng, typename Op, typename Zero, typename U>
   //!     U reduce(Rng&& rng, std::pair<Op, Zero> op_zero, U init)  // 2
   //!   }
   //!   @endcode
   //!
+  //!   1. Reduces the range `rng` along with the initial value `init` using regular addition.
+  //!   2. Reduces the range `rng` along with the initial value `init` over `op_zero`.
+  //!
   //!   **Parameters**
   //!
-  //!    * `rng` - relaxed_range - input range to process
-  //!    * init - initial value. Also type of init matches the result type
-  //!    * op_zero - pair of reduction operation (commutative/associative) and an identity (zero) for it.
-  //!                default op_zero is eve::plus, eve::zero.
+  //!    * `rng`:       Relaxed range  input range to process
+  //!    * `init`:      Initial value. Also type of init matches the result type
+  //!    * `op_zero`:   Pair of reduction operation (commutative/associative) and an identity (zero)
+  //!                   for it. Default add_zero is `{eve::plus, eve::zero}`.
+  //!
+  //!   **Return value**
+  //!
+  //!   1. Sum of `init` and every elements of `rng`.
+  //!   2. Generalized sum of `init` and every elements of `rng` using `op_zero`.
   //!
   //!   @groupheader{Example}
   //!
   //!   @godbolt{doc/algo/reduce.cpp}
-  //! }@
+  //! @}
   //================================================================================================
   inline constexpr auto reduce = function_with_traits<reduce_>[default_simple_algo_traits];
 }

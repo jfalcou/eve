@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::copy_backward</title>
+<title>E.V.E: eve::algo::reduce</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algorithms_ga48d1396b69183e081e82a9bc91102376.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
 </div>
 
 <div class="contents">
-<a id="gaf168a34bbecbde1efbbe2344e95fa32c" name="gaf168a34bbecbde1efbbe2344e95fa32c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf168a34bbecbde1efbbe2344e95fa32c">&#9670;&nbsp;</a></span>copy_backward</h2>
+<a id="ga48d1396b69183e081e82a9bc91102376" name="ga48d1396b69183e081e82a9bc91102376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga48d1396b69183e081e82a9bc91102376">&#9670;&nbsp;</a></span>reduce</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::copy_backward = function_with_traits&lt;copy_backward_&gt;[default_simple_algo_traits]</td>
+          <td class="memname">eve::algo::reduce = function_with_traits&lt;reduce_&gt;[default_simple_algo_traits]</td>
         </tr>
       </table>
   </td>
@@ -137,56 +137,72 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/copy.hpp&gt;</code></p>
+<p><code>#include &lt;eve/algo/reduce.hpp&gt;</code></p>
 
-<p>SIMD optimized backward copy algorithm. </p>
-<p >Configurable <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing backward copy between two ranges' or between a range and an iterator.</p>
-<p >By default, eve::algo::copy_backward will be unrolled by a factor of 4, align memory accesses and perform conversions if needed.</p>
-<dl class="section note"><dt>Note</dt><dd>If you want to copy between ranges of the same scalar type, use <code>std::memmove</code>.</dd></dl>
+<p>SIMD optimized version of std::reduce. </p>
+<p >Configurable <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing a SIMD optimized version of the reduce By default, the operation will be unrolled by a factor of 4, align memory accesses and perform conversions if needed.</p>
+<p >Due to the nature of how SIMD algorithms work, the reduce operation has to be paired with its, neutral element. For example, for add you pass <code>{add, zero}</code> as zero is the identity for add. Instead of zero it can be beneficial to pass eve's constants like <code><a class="el" href="group__core_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Callable object computing the O value.">eve::zero</a></code>, <code><a class="el" href="group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Callable object computing the 1 value.">eve::one</a></code> because sometimes the implementation can be improved</p>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>The interface differs from the standard to be homogeneous with eve::algo::transform_reduce.</li>
+<li>Compilers can auto-vectorize reductions, especially with special options. Maybe you don't need a library implementation.</li>
+</ul>
+</dd></dl>
 <p><b>Alternative Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2&gt;</div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">copy_backward</a>(R1&amp;&amp; r1, R2&amp;&amp; r2) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;;    <span class="comment">//  1</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng, <span class="keyword">typename</span> U&gt;</div>
+<div class="line">  U <a class="code hl_variable" href="group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03">reduce</a>(Rng&amp;&amp; rng, U init);                              <span class="comment">// 1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">copy_backward</a>(zipped_range_pair <span class="keyword">auto</span>&amp;&amp; r);                        <span class="comment">//  2</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng, <span class="keyword">typename</span> Op, <span class="keyword">typename</span> Zero, <span class="keyword">typename</span> U&gt;</div>
+<div class="line">  U <a class="code hl_variable" href="group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03">reduce</a>(Rng&amp;&amp; rng, std::pair&lt;Op, Zero&gt; op_zero, U init)  <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c_html_gaf168a34bbecbde1efbbe2344e95fa32c"><div class="ttname"><a href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">eve::algo::copy_backward</a></div><div class="ttdeci">constexpr auto copy_backward</div><div class="ttdoc">SIMD optimized backward copy algorithm.</div><div class="ttdef"><b>Definition:</b> copy.hpp:153</div></div>
+<div class="ttc" id="agroup__core_ga137e79b9fcabc8ebe46e75b300beaf03_html_ga137e79b9fcabc8ebe46e75b300beaf03"><div class="ttname"><a href="group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03">eve::reduce</a></div><div class="ttdeci">constexpr callable_reduce_ reduce</div><div class="ttdoc">Callable object computing a generalized fold operation.</div><div class="ttdef"><b>Definition:</b> reduce.hpp:81</div></div>
 </div><!-- fragment --><ol type="1">
-<li>Copy the elements of from <code>r1</code> to <code>r2</code>.</li>
-<li>Copy the elements of from <code>get&lt;0&gt;(r)</code> to <code>get&lt;1&gt;(r)</code>.</li>
+<li>Reduces the range <code>rng</code> along with the initial value <code>init</code> using regular addition.</li>
+<li>Reduces the range <code>rng</code> along with the initial value <code>init</code> over <code>op_zero</code>.</li>
 </ol>
-<p >The elements are copied in reverse order (the last element is copied first), but their relative order is preserved. Due to the specificities of the SIMD algorithm, the second can not be an iterator. Use the zip based overload to do so.</p>
 <p ><b>Parameters</b></p>
 <ul>
-<li><code>r1</code> : The range of elements or an iterator to the beginning of the elements to copy from</li>
-<li><code>r2</code> : A range of the destination elements</li>
-<li><code>r</code> : A eve::algo::zipped_range_pair of ranges and/or iterators.</li>
+<li><code>rng</code>: Relaxed range input range to process</li>
+<li><code>init</code>: Initial value. Also type of init matches the result type</li>
+<li><code>op_zero</code>: Pair of reduction operation (commutative/associative) and an identity (zero) for it. Default add_zero is <code>{<a class="el" href="group__core_gad742f5ce084044535470a38bca2d1cc5.html#gad742f5ce084044535470a38bca2d1cc5" title="Callable object computing the plus unary operation.">eve::plus</a>, <a class="el" href="group__core_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Callable object computing the O value.">eve::zero</a>}</code>.</li>
 </ul>
+<p ><b>Return value</b></p>
+<ol type="1">
+<li>Sum of <code>init</code> and every elements of <code>rng</code>.</li>
+<li>Generalized sum of <code>init</code> and every elements of <code>rng</code> using <code>op_zero</code>.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/copy.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo/as_range.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;numeric&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  std::vector&lt;int&gt; from_vector = {1,2,3,4,5,6,7,8,9,10};</div>
-<div class="line">  std::vector&lt;int&gt; to_vector(15);</div>
+<div class="line">  std::vector&lt;double&gt;  v = {1.2,2.3,3.4,4.5,5.6,6.7};</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">eve::algo::copy_backward</a>(from_vector, eve::algo::as_range(to_vector.end()-10, to_vector.end()) );</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(from_vector)</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                        = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::reduce(v, 0.)                                 = &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algorithms_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">eve::algo::reduce</a>(v, 0.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::reduce(v, std::pair{eve::mul, 1.}, 1.)        = &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algorithms_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">eve::algo::reduce</a>(v, std::pair{<a class="code hl_variable" href="group__core_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">eve::mul</a>, 1.}, 1.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; std::reduce(v.begin(), v.end(), 1., std::multiplies&lt;&gt;{}) = &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algorithms_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">std::reduce</a>(v.begin(), v.end(), 1., std::multiplies&lt;&gt;{}) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__algorithms_ga48d1396b69183e081e82a9bc91102376_html_ga48d1396b69183e081e82a9bc91102376"><div class="ttname"><a href="group__algorithms_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">eve::algo::reduce</a></div><div class="ttdeci">constexpr auto reduce</div><div class="ttdoc">SIMD optimized version of std::reduce.</div><div class="ttdef"><b>Definition:</b> reduce.hpp:152</div></div>
+<div class="ttc" id="agroup__core_ga06eee505775e24c81fa5f5b22382251f_html_ga06eee505775e24c81fa5f5b22382251f"><div class="ttname"><a href="group__core_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">eve::mul</a></div><div class="ttdeci">constexpr callable_mul_ mul</div><div class="ttdoc">Callable object computing the mul operation.</div><div class="ttdef"><b>Definition:</b> mul.hpp:101</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

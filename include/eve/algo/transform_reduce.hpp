@@ -95,7 +95,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 };
 
 //================================================================================================
-//! @addtogroup algorithms
+//! @addtogroup algos
 //! @{
 //!  @var transform_reduce
 //!
@@ -105,26 +105,19 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 //!  By default, the operation will be unrolled by a factor of 4, align memory accesses and
 //!  perform conversions if needed.
 //!
-//!  Due to the nature of how simd algorithms work we need a zero for the reduce operation,
-//!  so instead of plus you pass {add, zero} where zero is identity for the add operation.
-//!  Instead of zero it can be benefitial to pass eve's constants like `eve::zero`, `eve::one`
-//!  because we sometimes have a better implementation.
+//!  Due to the nature of how SIMD algorithms work, the reduce operation has to be paired with its,
+//!  neutral element. For example, for add you pass `{add, zero}` as zero is the identity for add.
+//!  Instead of zero it can be beneficial to pass eve's constants like `eve::zero`, `eve::one`
+//!  because sometimes the implementation can be improved
 //!
-//!  Unfortunatly passing eve's constants instead of init is not supported at the moment.
-//!
-//!  @note: the interface differs from the standard because we felt this better matches our usecase:
-//!        do unary transformation and then accumulate that.
-//!
-//!  @note: we do not provide two range interface because we felt it would confuse things.
-//!         Use zip to get that effect.
-//!
-//!  @note: transform_reduce is needed in the world where views::map exist because views::map is
-//!  more
-//!         flexible and therefore needs more from the operation. In transform_reduce we don't need
-//!         the map_op to be a template, for example.
-//!
-//!  @note: compiler can autovectorize reductions, especially with special options.
-//!         Maybe you don't need a library implementation.
+//!  @note
+//!         * The interface differs from the standard because we felt this better matches our use case:
+//!           do unary transformation and then accumulate that.
+//!         * Multiple range interface is omitted for simplicity. Use eve::zip to get that effect.
+//!         * eve::transform_reduce requires less requirement on the operations than eve::views::map.
+//!           In transform_reduce we don't need the map_op to be a template, for example.
+//!         * Compilers can auto-vectorize reductions, especially with special options.
+//!           Maybe you don't need a library implementation.
 //!
 //!   **Alternative Header**
 //!
@@ -132,34 +125,45 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 //!   #include <eve/algo.hpp>
 //!   @endcode
 //!
+//!   @groupheader{Callable Signatures}
 //!   @code
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename MapOp, typename U>
-//!     U transform_reduce(Rng&& rng, MapOp map_op, U init);  // 1
+//!     U transform_reduce(Rng&& rng, MapOp map_op, U init);                                    // 1
 //!
-//!     template<eve::algo::relaxed_range Rng, typename MapOp,
-//!              typename AddOp, typename Zero, typename U>
-//!     U transform_reduce(Rng&& rng, MapOp map_op, std::pair<AddOp, Zero> add_zero, U init);  // 2
+//!     template< eve::algo::relaxed_range Rng, typename MapOp
+//!             , typename AddOp, typename Zero, typename U
+//!             >
+//!     U transform_reduce(Rng&& rng, MapOp map_op, std::pair<AddOp, Zero> add_zero, U init);   // 2
 //!   }
 //!   @endcode
 //!
+//!   1. Applies `map_op` to each element in the range `rng` and reduces the results along with the
+//!      initial value `init` using regular addition as the reduce operation.
+//!
+//!   2. Applies `map_op` to each element in the range `rng` and reduces the results along with the
+//!      initial value `init` using the `add_zero` reduce operation and neutral element.
+//!
 //!   **Parameters**
 //!
-//!    * `rng` - relaxed_range - input range to process
-//!    * init - initial value. Also type of init matches the result type
-//!    * map_op - transformation operation
-//!    * add_zero - pair of reduction operation (commutative/associative) and an identity (zero) for it.
-//!                default add_zero is eve::plus, eve::zero.
+//!    * `rng`:       Relaxed range  input range to process
+//!    * `init`:      Initial value. Also type of init matches the result type
+//!    * `map_op`:    Transformation operation
+//!    * `add_zero`:  Pair of reduction operation (commutative/associative) and an identity (zero)
+//!                   for it. Default add_zero is `{eve::plus, eve::zero}`.
 //!
-//!  **Required header:** `#include <eve/algo/transform_reduce.hpp>`
+//!   **Return value**
+//!
+//!   1. Sum of `init` and `map_op` applied on each element of `rng`.
+//!   2. Generalized sum of `init` and `map_op` applied on each element of `rng` using `add_zero`.
 //!
 //!   @groupheader{Example}
 //!
-//! @godbolt{doc/algo/transform_reduce.cpp}
+//!   @godbolt{doc/algo/transform_reduce.cpp}
 //!
-//! }@
+//! @}
 //================================================================================================
-inline constexpr auto transform_reduce =
-    function_with_traits<transform_reduce_>[default_simple_algo_traits];
+inline constexpr
+auto transform_reduce = function_with_traits<transform_reduce_>[default_simple_algo_traits];
 }

@@ -1,11 +1,10 @@
 var group__algorithms =
 [
+    [ "Algorithms", "group__algos.html", "group__algos" ],
     [ "Concepts", "group__algo__concepts.html", "group__algo__concepts" ],
     [ "Views", "group__views.html", "group__views" ],
     [ "eve::algo::ptr_iterator< Ptr, Cardinal >", "structeve_1_1algo_1_1ptr__iterator.html", null ],
     [ "eve::algo::range_ref_wrapper< Rng >", "structeve_1_1algo_1_1range__ref__wrapper.html", null ],
-    [ "eve::algo::copy", "group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378", null ],
-    [ "eve::algo::copy_backward", "group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c", null ],
     [ "eve::algo::fill", "group__algorithms.html#ga432fd8a2cb308dad3994a596ab6b11b7", null ],
     [ "eve::algo::for_each", "group__algorithms_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0", null ],
     [ "eve::algo::iota", "group__algorithms_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a", null ],

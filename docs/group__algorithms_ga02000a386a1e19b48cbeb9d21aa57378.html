@@ -165,6 +165,7 @@ $(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48c
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/copy.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
@@ -174,21 +175,21 @@ $(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48c
 <div class="line">  std::vector&lt;double&gt;  to_vector(from_vector.size());</div>
 <div class="line">  std::vector&lt;double&gt;  to_vector_z(from_vector.size());</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span>;</div>
-<div class="line">  <span class="keywordflow">for</span>(<span class="keyword">auto</span> e : from_vector) std::cout &lt;&lt; e &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(from_vector)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_variable" href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">eve::algo::copy</a>(from_vector, to_vector);</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector       = &quot;</span>;</div>
-<div class="line">  <span class="keywordflow">for</span>(<span class="keyword">auto</span> e : to_vector) std::cout &lt;&lt; e &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector       = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(to_vector)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_variable" href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">eve::algo::copy</a>( <a class="code hl_variable" href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::algo::views::zip</a>(from_vector, to_vector_z) );</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector (zip) = &quot;</span>;</div>
-<div class="line">  <span class="keywordflow">for</span>(<span class="keyword">auto</span> e : to_vector_z) std::cout &lt;&lt; e &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector (zip) = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(to_vector_z)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>

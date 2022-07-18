@@ -24,18 +24,18 @@ namespace eve
 
     constexpr api_type const& value() const noexcept { return API; }
 
-    friend std::ostream& operator<<(std::ostream& os, simd_api a) { return os << API; }
+    friend std::ostream& operator<<(std::ostream& os, simd_api) { return os << API; }
 
     template<typename B, auto O>
-    friend constexpr bool operator==(simd_api , simd_api<B,O> o) noexcept { return API == O; }
+    friend constexpr bool operator==(simd_api , simd_api<B,O> ) noexcept { return API == O; }
     template<typename B, auto O>
-    friend constexpr bool operator> (simd_api , simd_api<B,O> o) noexcept { return API >  O; }
+    friend constexpr bool operator> (simd_api , simd_api<B,O> ) noexcept { return API >  O; }
     template<typename B, auto O>
-    friend constexpr bool operator>=(simd_api , simd_api<B,O> o) noexcept { return API >= O; }
+    friend constexpr bool operator>=(simd_api , simd_api<B,O> ) noexcept { return API >= O; }
     template<typename B, auto O>
-    friend constexpr bool operator< (simd_api , simd_api<B,O> o) noexcept { return API <  O; }
+    friend constexpr bool operator< (simd_api , simd_api<B,O> ) noexcept { return API <  O; }
     template<typename B, auto O>
-    friend constexpr bool operator<=(simd_api , simd_api<B,O> o) noexcept { return API <= O; }
+    friend constexpr bool operator<=(simd_api , simd_api<B,O> ) noexcept { return API <= O; }
   };
 
   //================================================================================================

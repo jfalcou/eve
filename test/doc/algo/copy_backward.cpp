@@ -1,5 +1,6 @@
 #include <eve/algo/copy.hpp>
 #include <eve/algo/as_range.hpp>
+#include <tts/tts.hpp>
 #include <iostream>
 #include <vector>
 
@@ -10,11 +11,11 @@ int main()
 
   eve::algo::copy_backward(from_vector, eve::algo::as_range(to_vector.end()-10, to_vector.end()) );
 
-  std::cout << "from_vector = ";
-  for (auto i: from_vector) std::cout << i << " ";
-  std::cout << "\n";
+  std::cout << "from_vector     = "
+            << tts::as_string(from_vector)
+            << "\n";
 
-  std::cout << "to_vector   = ";
-  for (auto i: to_vector) std::cout << i << " ";
-  std::cout << "\n";
+  std::cout << "from_vector     = "
+            << tts::as_string(to_vector)
+            << "\n";
 }

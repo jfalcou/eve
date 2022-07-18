@@ -12,7 +12,7 @@ var searchData=
   ['rebase_9',['rebase',['../structeve_1_1or__.html#a2646ba4aeead4382e1a22f58755b7257',1,'eve::or_']]],
   ['rebind_10',['rebind',['../structeve_1_1aligned__allocator_1_1rebind.html',1,'eve::aligned_allocator&lt; T, Lanes &gt;::rebind&lt; U &gt;'],['../structeve_1_1aligned__ptr.html#ad093d3fbfa02d18d397c33ecbc5b81ad',1,'eve::aligned_ptr::rebind()'],['../structeve_1_1wide.html#a68f8b26fc435b652492ebb9163b30ed5',1,'eve::wide::rebind()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a814d09107a0280ceb564cf053d075dee',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::rebind()']]],
   ['rec_11',['rec',['../group__core_ga9e1abef2b02773654dd566b466e9586a.html#ga9e1abef2b02773654dd566b466e9586a',1,'eve']]],
-  ['reduce_12',['reduce',['../group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03',1,'eve']]],
+  ['reduce_12',['reduce',['../group__core_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03',1,'eve::reduce()'],['../group__algos_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376',1,'eve::algo::reduce()']]],
   ['regular_13',['regular',['../group__core_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253',1,'eve']]],
   ['relaxed_5fiterator_14',['relaxed_iterator',['../structrelaxed__iterator.html',1,'']]],
   ['relaxed_5frange_15',['relaxed_range',['../structrelaxed__range.html',1,'']]],
