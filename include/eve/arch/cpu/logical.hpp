@@ -58,12 +58,6 @@ template<plain_scalar_value T> struct logical<T>
   //! Construct from a `bool`
   EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
 
-  //! Construct from a plain_scalar_value
-  template<plain_scalar_value U>
-  EVE_FORCEINLINE explicit constexpr logical(U v) noexcept
-      : value_((v != 0) ? true_mask : false_mask)
-  {}
-
   //==============================================================================================
   //! @}
   //==============================================================================================
@@ -88,7 +82,7 @@ template<plain_scalar_value T> struct logical<T>
   //==============================================================================================
   EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
 
-  template<real_scalar_value U>
+  template<plain_scalar_value U>
   friend EVE_FORCEINLINE logical operator&&(logical v, logical<U> w) noexcept
   {
     return logical {v.value() && w.value()};
@@ -104,7 +98,7 @@ template<plain_scalar_value T> struct logical<T>
     return logical {v && w.value()};
   }
 
-  template<real_scalar_value U>
+  template<plain_scalar_value U>
   friend EVE_FORCEINLINE logical operator||(logical v, logical<U> w) noexcept
   {
     return logical {v.value() || w.value()};
@@ -170,7 +164,6 @@ template<plain_scalar_value T> struct logical<T>
     return os << (v.value_ ? "true" : "false");
   }
 
-  private:
   bits_type value_;
 };
 //================================================================================================

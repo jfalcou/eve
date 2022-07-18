@@ -16,7 +16,7 @@ namespace detail
   template<typename T> struct is_natural : std::false_type {};
 
   template<typename T>
-  requires(std::integral<T> && (sizeof(T) <= 8) && !detail::one_of<T, bool, char>)
+  requires(std::integral<T> && (sizeof(T) <= 8) && !std::same_as<T, bool>)
   struct is_natural<T> : std::true_type {};
 
   template<typename T>

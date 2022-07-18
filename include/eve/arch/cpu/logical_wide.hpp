@@ -133,9 +133,9 @@ struct EVE_MAY_ALIAS logical<wide<Type, Cardinal>>
   EVE_FORCEINLINE explicit logical(Ptr ptr) noexcept : storage_base(load(ptr, Cardinal {}))
   {}
 
-  //! Constructs a eve::logical by splatting a scalar value in all lanes
+  //! Constructs a eve::logical by splatting a logical scalar value in all lanes
   template<plain_scalar_value S>
-  EVE_FORCEINLINE explicit logical(S v) noexcept
+  EVE_FORCEINLINE logical(logical<S> v) noexcept
       : storage_base(detail::make(eve::as<logical> {}, v))
   {}
 
