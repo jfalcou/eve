@@ -47,16 +47,15 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral positive argument](@ref eve::integrall_value).
+//!     * `n` :  [integral positive argument](@ref eve::integral_value).
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
 //!     * `alpha`, `beta`:   [floating arguments](@ref eve::floating_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the plynomial \f$P^{\alpha, \beta}_n(x)\f$
-//!    is returned.
+//!   The value of the polynomial \f$P^{\alpha, \beta}_n(x)\f$ is returned.
 //!
 //!  @groupheader{Example}
 //!

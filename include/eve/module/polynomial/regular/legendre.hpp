@@ -35,41 +35,42 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value N, eve::floating_real_value T >
-//!      eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
+//!     eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
 //!
 //!     template< eve::integral_value N, eve::integral_value M, eve::floating_real_value T >
-//!      eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
+//!     eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
 //!   }
 //!   @endcode
 //!
 //!   1. Legendre polynomial of order n
 //!   2. Associated Legendre polynomial of orders m, n
+//!
 //!   **Parameters**
 //!
-//!     * `n`, `m` :  [integral positive arguments](@ref eve::integrall_value).
+//!     * `n`, `m` :  [integral positive arguments](@ref eve::integral_value).
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
 //!    **Return value**
 //!
-//!    the value of the polynomial at `x` is returned.
+//!    The value of the polynomial at `x` is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/polynomial/regular/legendre.cpp}
+//!   @godbolt{doc/polynomial/regular/legendre.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
+//!   @groupheader{Semantic Modifiers}
 //!
 //!     * eve::p_kind, eve::q_kind
 //!
-//!     The expression `p_kind(legendre)(n,x)` is equivalent to `legendre(n,x)`.
+//!       The expression `p_kind(legendre)(n,x)` is equivalent to `legendre(n,x)`.
 //!
-//!     The expression `q_kind(legendre)(n,x)` return the value at `x` of the
-//!     second kind legendre function of order `n`.
+//!       The expression `q_kind(legendre)(n,x)` return the value at `x` of the
+//!       second kind legendre function of order `n`.
 //!
-//!     **Example**
+//!       **Example**
 //!
-//!        @godbolt{doc/polynomial/kind/legendre.cpp}
+//!       @godbolt{doc/polynomial/kind/legendre.cpp}
 //!
 //!     * eve::successor
 //!
@@ -85,7 +86,7 @@ namespace eve
 //!
 //!       **Example**
 //!
-//!          @godbolt{doc/polynomial/successor/legendre.cpp}
+//!       @godbolt{doc/polynomial/successor/legendre.cpp}
 //!
 //!     * eve::condon_shortley
 //!
@@ -94,9 +95,9 @@ namespace eve
 //!       to match the definition given by Abramowitz and Stegun (8.6.6). This is currently
 //!       the version implemented in boost::math 1.79.
 //!
-//!     **Example**
+//!       **Example**
 //!
-//!        @godbolt{doc/polynomial/condon_shortley/legendre.cpp}
+//!       @godbolt{doc/polynomial/condon_shortley/legendre.cpp}
 //!
 //!     * eve::sph
 //!
@@ -108,7 +109,7 @@ namespace eve
 //!
 //!       **Example**
 //!
-//!          @godbolt{doc/polynomial/sph/legendre.cpp}
+//!       @godbolt{doc/polynomial/sph/legendre.cpp}
 //!@}
 //================================================================================================
 EVE_MAKE_CALLABLE(legendre_, legendre);

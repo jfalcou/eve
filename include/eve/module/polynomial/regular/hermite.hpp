@@ -42,23 +42,23 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral positive argument](@ref eve::integrall_value).
+//!     * `n` :  [integral positive argument](@ref eve::integral_value).
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of the 'physicists' hermite polynomial
-//!    \f$ \displaystyle \mathbf{H}_n(x) = (-1)^n e^{x^2}\frac{d}{dx^n}e^{-x^2}\f$
-//!    is returned.
+//!   The value of the 'physicists' hermite polynomial
+//!   \f$ \displaystyle \mathbf{H}_n(x) = (-1)^n e^{x^2}\frac{d}{dx^n}e^{-x^2}\f$
+//!   is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/hermite.cpp}
+//!   @godbolt{doc/polynomial/regular/hermite.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
+//!   @groupheader{Semantic Modifiers}
 //!
-//!  * eve::successor
+//!   * eve::successor
 //!
 //!     The expression `successor(hermite)(n, x, Hn, Hnm1)` implements the three terms recurrence
 //!     relation for the physicists Hermite polynomials,
@@ -69,7 +69,7 @@ namespace eve
 //!
 //!     **Example**
 //!
-//!        @godbolt{doc/special/successor/hermite.cpp}
+//!     @godbolt{doc/polynomial/successor/hermite.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(hermite_, hermite);

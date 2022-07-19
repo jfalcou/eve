@@ -42,12 +42,12 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!   1.) laguerre polynomial of order n
-//!   2.) associated laguerre polynomial of orders n, m.
+//!   1. Evaluate the laguerre polynomial of order n
+//!   2. Evaluate the associated laguerre polynomial of orders n, m.
 //!
 //!   **Parameters**
 //!
-//!     * `n`, `m` :  [integral positive arguments](@ref eve::integrall_value).
+//!     * `n`, `m` :  [integral positive arguments](@ref eve::integral_value).
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
 //!
@@ -55,13 +55,13 @@ namespace eve
 //!
 //!    the value of the polynomial at `x` is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/polynomial/regular/laguerre.cpp}
+//!   @godbolt{doc/polynomial/regular/laguerre.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
+//!   @groupheader{Semantic Modifiers}
 //!
-//!  * eve::successor
+//!   * eve::successor
 //!
 //!     The expression `successor(laguerre)(n, x, ln, lnm1)` implements the three term
 //!     recurrence relation for the Laguerre polynomials,
@@ -74,12 +74,12 @@ namespace eve
 //!     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$ The expression
 //!     `successor(laguerre)(n, x, Ln, Lnm1)` implements the three terms recurrence
 //!
-//!     These functions can be used to create a sequence of values evaluated at the same `x`(and
+//!     These functions can be used to create a sequence of values evaluated at the same `x` (and
 //!     `m`) and for rising `n`.
 //!
 //!     **Example**
 //!
-//!        @godbolt{doc/polynomial/successor/laguerre.cpp}
+//!     @godbolt{doc/polynomial/successor/laguerre.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(laguerre_, laguerre);

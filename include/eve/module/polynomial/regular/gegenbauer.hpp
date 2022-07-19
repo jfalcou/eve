@@ -44,20 +44,20 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral argument](@ref eve::integrall_value).
+//!     * `n` :  [integral argument](@ref eve::integral_value).
 //!
 //!     * `lambda` :  [real floating argument](@ref eve::floating_real_value).
 //!                   Must be greater than \f$-\frac12\f$.
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value) .
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    the value of \f$ \mathbf{C}_n^\lambda(x)f$ is returned.
+//!   The value of \f$ \mathbf{C}_n^\lambda(x)f$ is returned.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/special/regular/gegenbauer.cpp}
+//!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(gegenbauer_, gegenbauer);
