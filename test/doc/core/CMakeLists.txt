@@ -4,6 +4,7 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
+add_subdirectory(fuzzy)
 add_subdirectory(masked)
 add_subdirectory(raw)
 add_subdirectory(regular)

@@ -13,74 +13,64 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var floor
+  //!   @var floor
+  //!   @brief Computes the largest integer not greater than the input.
   //!
-  //! @brief Callable object computing the floor operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the floor operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T floor(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!    The largest integer not greater than `x`.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the greatest integer not greater than `x`.
+  //!  @godbolt{doc/core//regular/floor.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::floor
+  //!     The call `eve;::floor[mask](x)` provides a masked version of `eve::floor` which is
+  //!     equivalent to `if_else (mask, floor(x), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/floor.cpp}
   //!
-  //!  **Return value**
+  //!   * eve::tolerant
   //!
-  //!  A Callable object so that the expression `floor[cond](x, ...)` is equivalent to `if_else(cond,floor(x, ...),x)`
+  //!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`,
+  //!     where `x` must be a floating value.
   //!
-  //! ---
+  //!      * If `tol` is a floating value computes the floor with
+  //!        a tolerance `tol` using Hagerty's FL5 function.
+  //!      * If `tol` is an integral value n compute the floor of
+  //!        the next nth representable value in the `x` type.
+  //!      * If `tol` is omitted the tolerance is taken to 3 times
+  //!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::tolerant
-  //!
-  //!
-  //!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`, where `x` must be a floating value..
-  //!
-  //!      - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
-  //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
-  //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(floor)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/floor.cpp}
-  //!
-  //!  @}
+  //!      @godbolt{doc/core//fuzzy/floor.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(floor_, floor);
 }

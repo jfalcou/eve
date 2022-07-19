@@ -5,6 +5,5 @@
 ##==================================================================================================
 ##==================================================================================================
 
-make_unit( "doc.core.saturated" abs.cpp                  )
-make_unit( "doc.core.saturated" add.cpp                  )
-make_unit( "doc.core.saturated" convert.cpp              )
+make_unit( "doc.core.fuzzy" ceil.cpp                )
+make_unit( "doc.core.fuzzy" floor.cpp               )
