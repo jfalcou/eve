@@ -12,64 +12,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var countl_one
+  //!   @var countl_one
+  //!   @brief Computes the number of consecutive 1 in a value starting from left.
   //!
-  //! @brief Callable object computing the number of consecutive 1 bits left.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the number of consecutive 1 bits left   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T countl_one(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(unsigned_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!      The value of the number of consecutive 1 ("one") bits in the value of `x`, starting
+  //!      from the most significant bit ("left"), with same type as `x`,
+  //!      is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Returns the number of consecutive 1 ("one") bits in the value of `x`, starting
-  //!from the most significant bit ("left"), with same type as `x`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::countl_one
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `countl_one[cond](x, ...)`
-  //!  is equivalent to `if_else(cond,countl_one(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/countl_one.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/countl_one.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(countl_one_, countl_one);
 }
