@@ -56,7 +56,7 @@ namespace eve
   //!
   //!      **Example**
   //!
-  //!        @godbolt{doc/core/masked/$name$.cpp}
+  //!        @godbolt{doc/core/masked/count_true.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(count_true_, count_true);
