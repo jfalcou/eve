@@ -10,14 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf           = " << pf << '\n'
-            << "-> dec(pf)       = " << eve::dec(pf) << '\n'
-            ; 
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf           = " << xf << '\n'
-            << "-> eve::dec(xf) = " << eve::dec(xf) << '\n';
-
+            << "-> dec[pf > 0.0f](pf)       = " << eve::dec[pf > 0.0f](pf) << '\n';
   return 0;
 }
