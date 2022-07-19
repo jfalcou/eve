@@ -13,76 +13,72 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_conversions
   //! @{
-  //! @var convert
+  //!   @var convert
+  //!   @brief Converts a value to another type.
   //!
-  //! @brief Callable object converting a value to another type.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` |  converts a value to a value of another type               |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template<value T, scalar_value Target>
+  //!      Target convert( T x, as_<Target> t)  noexcept
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<value T, scalar_value Target>
-  //!  auto operator()( T const& x, as_<Target> const& t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:   [value](@ref eve::value) to convert.
   //!
-  //! **Parameters**
+  //!     * `t`:   [Type wrapper](@ref eve::as) instance embedding the type to convert `x` to.
   //!
-  //!`x`:   [value](@ref eve::value) to convert.
+  //!    **Return value**
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type to convert `x` to.
+  //!      * conversion of `x` is the `Target` type is returned.
   //!
-  //! **Return value**
+  //!      * The call `convert(x, as(t))` is semantically equivalent to:
   //!
-  //!For a [value](@ref eve::value) `x` and any type `Target` the expression:
+  //!        @code
+  //!        Target r;
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = convert(x, as_<Target>{});
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!        if constexpr( scalar_value<T> )
+  //!        {
+  //!          r = static_cast<Target>(x);
+  //!        }
+  //!        else if constexpr( simd_value<T> )
+  //!        {
+  //!           for(std::size_t i=;i<x.size();++i)
+  //!           r[i] = static_cast<Target>(x[i]);
+  //!        }
+  //!        @endcode
   //!
-  //!is semantically equivalent to:
+  //!      *  Conversion operated by [eve::convert](#eve::convert) follows the regular rules of
+  //!         C++ type conversion, including the cases leading to Undefined Behaviors.
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!Target r;
   //!
-  //!if constexpr( scalar_value<T> )
-  //!{
-  //!  r = static_cast<Target>(x);
-  //!}
-  //!else if constexpr( simd_value<T> )
-  //!{
-  //!  for(std::size_t i=;i<x.size();++i)
-  //!    r[i] = static_cast<Target>(x[i]);
-  //!}
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Example}
   //!
-  //!@warning
-  //!   Conversion operated by [eve::convert](#eve::convert) follows the regular rules of
-  //!   C++ type conversion, including the cases leading to Undefined Behaviors.
+  //!  @godbolt{doc/core//regular/convert.cpp}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * eve::saturated
-  //!
   //!
   //!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to
   //!     the type wrapped by `t`.
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/convert.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/convert.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(convert_, convert);
 }

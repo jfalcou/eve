@@ -15,77 +15,56 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var clamp
+  //!   @var clamp
+  //!   @brief Computes the largest integer not greater than the input.
   //!
-  //! @brief Callable object clamping a value between two others.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the clamping operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U,  eve::value V>
+  //!      auto clamp(T x, U lo, V hi) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value T, real_value U, real_value V > auto operator()( T x, U lo, V hi ) const noexcept
-  //!  requires compatible< T, U > && compatible< T, V >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` : value to clamp.
   //!
-  //! **Parameters**
+  //!     * `lo`, `hi`: [the boundary values](@ref eve::value) to clamp `x` to.
   //!
-  //!`x`:    [value](@ref eve::value) to clamp.
+  //!    **Return value**
   //!
-  //!`lo`, `hi`:    the boundary [values](@ref eve::value) to clamp `x` to.
+  //!       Each [element](@ref glossary_elementwise)  of the result contains:
+  //!          *  `lo`, if `x` is less than `lo`.
+  //!          *  `hi`, if `hi` is less than `x`.
+  //!          *  otherwise `x`.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Each [element](@ref glossary_elementwise)  of the result contains:
-  //!   -  `lo`, if `x` is less than `lo`.
-  //!   -  `hi`, if `hi` is less than `x`.
-  //!   -  otherwise `x`.
+  //!  @godbolt{doc/core//regular/clamp.cpp}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //!@warning
-  //!    Contrary to the standard implementation `clamp` does not return a reference.
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve;::clamp[mask](x)` provides a masked version of `eve::clamp` which is
+  //!     equivalent to `if_else (mask, clamp(x), x)`.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::clamp
+  //!        @godbolt{doc/core/masked/clamp.cpp}
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `clamp[cond](x, ...)` is equivalent to `if_else(cond,clamp(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_1st(clamp)(x,y,z)`, `diff_2nd(clam)(x,y,z)` and `diff_3rd(clam)(x,y,z)` computes the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ \mbox{clamp}(x,y,z)\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/clamp.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   namespace tag { struct clamp_; }
 

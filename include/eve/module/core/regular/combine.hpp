@@ -13,86 +13,43 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+   //================================================================================================
+  //! @addtogroup core_simd
   //! @{
-  //! @var combine
+  //!   @var combine
+  //!   @brief Computes the TODO
   //!
-  //! @brief Callable object computing **TODO: FILL THIS BLANK**.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | **TODO: FILL THIS BLANK**   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     TODO
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<**TODO: FILL THIS BLANK**>
-  //!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   }
+  //!   @endcode
   //!
-  //! **Parameters**
+  //!   **Parameters**
   //!
-  //!`x`:   **TODO: FILL THIS BLANK**
+  //!     * `x` :  argument.
   //!
-  //!OTHER PARAMETERS
-  //!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of TODO
+  //!    is returned.
   //!
-  //!For **TODO: FILL THIS BLANK**:
+  //!  @groupheader{Example}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = combine(**TODO: FILL THIS BLANK**);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically equivalent to:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!Target r;
-  //!
-  //!if constexpr( scalar_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!else if constexpr( simd_value<T> )
-  //!{
-  //!  **TODO: FILL THIS BLANK**
-  //!}
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::combine
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `combine[cond](x, ...)` is equivalent to `if_else(cond,combine(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/combine.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/combine.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(combine_, combine);
 }

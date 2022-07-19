@@ -5,9 +5,5 @@
 ##==================================================================================================
 ##==================================================================================================
 
-
-add_subdirectory(fuzzy)
-add_subdirectory(masked)
-add_subdirectory(raw)
-add_subdirectory(regular)
-add_subdirectory(saturated)
+make_unit( "doc.core.fuzzy" ceil.cpp                )
+make_unit( "doc.core.fuzzy" floor.cpp               )

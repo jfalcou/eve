@@ -12,47 +12,52 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
-  //! @var count_true
+  //!   @var count_true
+  //!   @brief Computes the number of non 0 elements
   //!
-  //! @brief Callable object computing the count_true value.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the count_true value                    |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T count_true(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  int operator()(value auto x) const noexcept;
-  //!  int operator()(instance_of<top_bits> auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [value](@ref eve::value).
-  //!`x`:   [top_bits](@ref eve::top_bits)
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of the number of non 0 elements
+  //!    is returned.
   //!
-  //!  an int value: the number of non zero elements in `x`.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/count_true.cpp}
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! #### Supported decorators
+  //!   * Masked Call
   //!
-  //!  no decorators are supported
+  //!     The call `eve::$name$[mask](x, ...)` provides a masked
+  //!     version of `count_true which count the non masked non zero element
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/count_true.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/$name$.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(count_true_, count_true);
 }
