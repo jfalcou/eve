@@ -12,63 +12,61 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var inc
+  //!   @var inc
+  //!   @brief \f$ x \rightarrow x+1\f$.
   //!
-  //! @brief Callable object computing the inc unary operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the inc unary operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T inc(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!    The value of `x`+1 is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
-  //!The result is `x+1`.
+  //!  @godbolt{doc/core//regular/inc.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::inc
+  //!     The call `eve::inc[mask](x, ...)` provides a masked
+  //!     version of `inc` which is
+  //!     equivalent to `if_else(mask, inc(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/inc.cpp}
   //!
-  //!  **Return value**
+  //!   * eve::saturated
   //!
-  //!  A Callable object so that the expression `inc[cond](x, ...)` is equivalent to `if_else(cond,inc(x, ...),x)`
+  //!       The call `saturated(inc)(x)` computes the saturated increment of `x`.
+  //!       The only interest of this behaviour is that
+  //!       for integral type T  `saturated(inc)(Valmax< T >())` returns `Valmax< T >()`.
   //!
-  //! ---
+  //!      **Example**
   //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/inc.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/inc.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(inc_, inc);
 }

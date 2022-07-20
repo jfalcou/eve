@@ -20,6 +20,10 @@
 //==================================================================================================
 //! @addtogroup core
 //! @{
+//!
+//! @defgroup core_accuracy  accuracy
+//! @ingroup core
+//!
 //! @defgroup core_arithmetic  arithmetic operations
 //! @ingroup core
 //! Core arithmetic functions

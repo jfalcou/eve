@@ -11,48 +11,48 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_accuracy
   //! @{
-  //! @var sum_of_prod
+  //!   @var sum_of_prod
+  //!   @brief Computes the sum of products operation with better accuracy
+  //!   than the naive formula.
   //!
-  //! @brief Callable object computing the sum_of_prod operation.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the sum_of_prod operation                                      |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_real_value T
+  //!              , eve::floating_real_value U
+  //!              , eve::floating_real_value V
+  //!              , eve::floating_real_value W>
+  //!      T sum_of_prod(T x, U y, V z, W t ) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y, V z, W t ) const noexcept requires compatible< T, U, V, W>;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `y`, `z`, `t`:  |floating value arguments](@ref floating_value).
   //!
-  //!`x`, `y`, `z`, `t`:   [values](@ref eve::value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of `x*y+z*t`,  with better precision if correct fma is available,
+  //!    is returned.
   //!
-  //!computes [elementwise](@ref glossary_elementwise) accurately x*y+z*t:
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/sum_of_prod.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/sum_of_prod.cpp}
+  //! @}
   //================================================================================================
-
   namespace tag { struct sum_of_prod_; }
   template<> struct supports_conditional<tag::sum_of_prod_> : std::false_type {};
 

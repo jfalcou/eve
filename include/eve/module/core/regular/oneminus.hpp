@@ -12,76 +12,67 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var oneminus
+  //!   @var oneminus
+  //!   @brief \f$ x \rightarrow 1-x\f$.
   //!
-  //! @brief Callable object computing the oneminus operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the oneminus operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      T oneminus(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!    The value of 1-`x` is returned.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) `1-x` with the type of `x`.
+  //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
+  //!      the result type, the corresponding result [element](@ref glossary_elementwise) is undefined.
   //!
-  //!@warning
-  //!    If an  [element](@ref glossary_elementwise) of the expected result is not representable in
-  //!    the result type, the corresponding result [element](@ref glossary_elementwise) is undefined.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/oneminus.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::oneminus
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::oneminus[mask](x, ...)` provides a masked
+  //!     version of `oneminus` which is
+  //!     equivalent to `if_else(mask, oneminus(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/oneminus.cpp}
   //!
-  //!  A Callable object so that the expression `oneminus[cond](x, ...)` is equivalent to `if_else(cond,oneminus(x, ...),x)`
+  //!   * eve::saturated
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * `saturated`
-  //!
-  //!  
-  //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
+  //!      The call `saturated(oneminus)(x)` is semantically equivalent to `eve::saturated(eve::sub)( eve::one (as(x)), x)`
   //!      and is never undefined.
-  //!  
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!  
-  //!     The expression `diff(oneminus)(x)` computes the derivative of the function at `x`.
+  //!      **Example**
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/oneminus.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/oneminus.cpp}
+  //! @}
   //================================================================================================
+
   EVE_MAKE_CALLABLE(oneminus_, oneminus);
 }
 

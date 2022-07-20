@@ -31,10 +31,16 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< eve::value T >
-  //!      T count_true(T x) noexcept;
+  //!      T count_true(T x) noexcept;                 //1
+  //!   }
+  //!      template< eve::top_bits M >
+  //!      as_wide_as<unsigned, M> any(M m) noexcept;  //2
   //!   }
   //!   @endcode
   //!
+  //!   * 1. The T value  of the number of non 0 elements.
+  //!   * 2  The unsigned  value  of the number of non 0 elements.
+   //!
   //!   **Parameters**
   //!
   //!     * `x` :  argument.

@@ -30,9 +30,15 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< eve::value T >
-  //!      bool any(eve::as_logical<T> x) noexcept;
+  //!      bool any(eve::as_logical<T> x) noexcept;  //1
+  //!
+  //!      template< eve::top_bits M >
+  //!      bool any(M m) noexcept;                   //2
   //!   }
   //!   @endcode
+  //!
+  //!   * 1. A bool value which is true if and only if any elements of `x` is not zero.
+  //!   * 2  A bool value which is true if and only if any top bits elements of `x` is not zero.
   //!
   //!   **Parameters**
   //!
