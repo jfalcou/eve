@@ -21,7 +21,7 @@
 //! @addtogroup core
 //! @{
 //!
-//! @defgroup core_accuracy  accuracy
+//! @defgroup core_accuracy  accuracy helpers
 //! @ingroup core
 //!
 //! @defgroup core_arithmetic  arithmetic operations
