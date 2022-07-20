@@ -137,42 +137,29 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
 </table>
 </div><div class="memdoc">
 
-<p>Callable object evaluating the tchebytchev polynomial of degree n at x. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1938"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the tchebytchev operation   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()( <a class="code hl_concept" href="concepteve_1_1integral__real__value.html">integral_real_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:83</div></div>
-<div class="ttc" id="aconcepteve_1_1integral__real__value_html"><div class="ttname"><a href="concepteve_1_1integral__real__value.html">eve::integral_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:113</div></div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1integral__real__value.html">integral real valuex</a> or integral constant.</p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating valuex</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of the tchebytchev polynomial of first kind and order <code>n</code> at <code>x</code> \(T_n(x)\):</p>
-<p >The result type is of the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the parameters.</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1941"></a>
-Supported decorators</h4>
+<p>Computes the value of the Tchebytchev polynomial of order <code>n</code> at <code>x</code>: </p>
 <ul>
-<li><p class="startli"><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></p>
-<p class="startli">The expression <code>diff(tchebytchev)(n,x)</code> computes the derivative of the function relative to <code>x</code>.</p>
-</li>
-<li><p class="startli"><a class="el" href="group__polynomial_ga2f8b95159d4e36163c98074b5d9ed14a.html#ga2f8b95159d4e36163c98074b5d9ed14a" title="Higher-order Callable Object imbuing kind_1 behaviour onto other Callable Objects.">eve::kind_1</a>, kind_2</p>
-<p class="startli">The expression <code>kind_1(tchebytchev)(n,x)</code> is identical to <code>tchebytchev(n,x)</code>. The expression <code>kind_2(tchebytchev)(n,x)</code> evaluates the nth polynominial of tchebytchev of second kind \(U_n\) at <code>x</code>.</p>
-</li>
-<li><p class="startli"><a class="el" href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
-<p class="startli">The expression <code>successor(tchebytchev)( x, yn, ynm1)</code> computes the value of \(T_{n+1}(x)\) (resp. \(U_{n+1}(x)\)) knowing the values yn = f$T_n(x) \( and   ynm1 = f$T_{n-1}(x)\), (resp. yn = f$U_n(x) \( and   ynm1 = f$U_{n-1}(x)\)).</p>
-</li>
+<li>The Tchebytchev polynomial of order n is given by \( \displaystyle \mbox{T}_{n}(x)
+     = \cos(n\arccos(x))\) on \([-1, +1]\)</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1942"></a>
-Example</h4>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">tchebytchev</a>(N n, T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__polynomial_ga5262bc83278d307e1c920cc1cb608838_html_ga5262bc83278d307e1c920cc1cb608838"><div class="ttname"><a href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a></div><div class="ttdeci">constexpr callable_tchebytchev_ tchebytchev</div><div class="ttdoc">Computes the value of the Tchebytchev polynomial of order n at x:</div><div class="ttdef"><b>Definition:</b> tchebytchev.hpp:79</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
+<ul>
+<li><code>n</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive arguments</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
+</ul>
+<p ><b>Return value</b></p>
+<p >The value of the polynomial at <code>x</code> is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -206,9 +193,86 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga5262bc83278d307e1c920cc1cb608838_html_ga5262bc83278d307e1c920cc1cb608838"><div class="ttname"><a href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a></div><div class="ttdeci">constexpr callable_tchebytchev_ tchebytchev</div><div class="ttdoc">Callable object evaluating the tchebytchev polynomial of degree n at x.</div><div class="ttdef"><b>Definition:</b> tchebytchev.hpp:72</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li><p class="startli"><a class="el" href="group__polynomial_ga2f8b95159d4e36163c98074b5d9ed14a.html#ga2f8b95159d4e36163c98074b5d9ed14a" title="Higher-order Callable Object imbuing kind_1 behaviour onto other Callable Objects.">eve::kind_1</a>, <a class="el" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed" title="Higher-order Callable Object imbuing kind_2 behaviour onto other Callable Objects.">eve::kind_2</a></p>
+<p class="startli">The expression <code>kind_1(tchebytchev)(n,x)</code> is identical to <code>tchebytchev(n,x)</code>. The expression <code>kind_2(tchebytchev)(n,x)</code> evaluates the nth polynomial of tchebytchev of second kind \( \displaystyle U_n(x) =  \frac{\sin(n\arccos x)}{\sin(\arccos x)}\) at <code>x</code> on \([-1, +1]\).</p>
+<p class="startli"><b>Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  wide_ft x(0.5);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                              = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                               = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                               = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(n, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(3, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(n, 2.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(n, x)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line"> </div>
+<div class="line">    ;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">double</span> xs = 3.0;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs                              = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(4, xs)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(4, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__polynomial_gad08a257dca4c3f388a56941c57cebbed_html_gad08a257dca4c3f388a56941c57cebbed"><div class="ttname"><a href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a></div><div class="ttdeci">constexpr kind_2_type const kind_2</div><div class="ttdoc">Higher-order Callable Object imbuing kind_2 behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> kind.hpp:130</div></div>
+</div><!-- fragment --></li>
+<li><p class="startli"><a class="el" href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
+<p class="startli">The expression <code>successor(tchebytchev)( x, tn, tnm1)</code> computes the value of \(T_{n+1}(x)\) knowing the values tn = \(T_n(x)\) and tnm1 = \(T_{n-1}(x)\),</p>
+<p class="startli">This function can be used to create a sequence of values evaluated at the same <code>x</code> and for rising <code>n</code>.</p>
+<p class="startli"><b>Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd             = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n              = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::array&lt;wide_ft, 8&gt; t;</div>
+<div class="line">  t[0] = <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(0, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[0]          =  &quot;</span> &lt;&lt;  t[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  t[1] = <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(1, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[1]          = &quot;</span> &lt;&lt;  t[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> = 2; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;= 7; ++<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>)</div>
+<div class="line">  {</div>
+<div class="line">    t[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] = <a class="code hl_variable" href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(xd, t[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1], t[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-2]);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  t[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> }</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
+<div class="ttc" id="agroup__polynomial_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr successor_type const successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> successor.hpp:42</div></div>
+</div><!-- fragment --> </li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->

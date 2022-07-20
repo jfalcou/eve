@@ -16,11 +16,15 @@
 //! @addtogroup simd
 //! @{
 //!
-//! @defgroup   simd_types  SIMD related types
-//! @brief Types and functions wrappers for SIMD registers and related operations
+//!   @defgroup   simd_types  SIMD related types
+//!   @brief      SIMD related types
 //!
-//! @defgroup   functions Functions
-//! @brief  This module provides all the numerical functions and function objects
+//!   Types and functions wrappers for SIMD registers and related operations
+//!
+//!   @defgroup   functions Functions
+//!   @brief  Numerical function objects
+//!
+//!   This module provides all the numerical functions and function objects usable on **EVE** types.
 //!
 //! @}
 //==================================================================================================
@@ -29,8 +33,10 @@
 //! @addtogroup simd_types
 //! @{
 //!   @defgroup   arch    Architecture related Types and Helpers
-//!   @brief  This module defines the types and helpers functions to properly handle
-//!           architecture specific components
+//!   @brief Architecture related Types and Helpers
+//!
+//!   This module defines the types and helpers functions to properly handle
+//!    architecture specific components
 //! @}
 //==================================================================================================
 

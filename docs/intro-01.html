@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('intro-01.html',''); initResizable(); }
   <div class="headertitle"><div class="title">Basic Operations </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md2000"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md1952"></a>
 Initial problem</h1>
 <p >Let's say we want to convert 2D cartesian coordinates to 2D polar coordinates. This is a rather common exercise and will only require basic arithmetic and trigonometric functions.</p>
 <p >Cartesian coordinates are usually represented by a pair of floating point values \((x,y)\). In a similar way, polar coordinate can be represented as a pair \((\rho,\theta)\) where \(\rho\) represents the length of the ray and \(\theta\) represents the angle with the X axis.</p>
@@ -140,7 +140,7 @@ Initial problem</h1>
 <div class="ttc" id="agroup__core_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object computing the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:98</div></div>
 <div class="ttc" id="agroup__math_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr callable_atan2_ atan2</div><div class="ttdoc">Callable object computing the atan2 operation.</div><div class="ttdef"><b>Definition:</b> atan2.hpp:94</div></div>
 </div><!-- fragment --><p >As expected, the code only requires arithmetic operations and some trigonometry. Fellow mathematicians in the audience may have some remarks on this code. For now, we will deal with the fact that it requires \(\theta\) to be in radians and that the accuracy of computing \(\rho\) this way is maybe sub-optimal. We will address those concerns later.</p>
-<h1><a class="anchor" id="autotoc_md2001"></a>
+<h1><a class="anchor" id="autotoc_md1953"></a>
 From scalar to SIMD using eve::wide</h1>
 <p >The next step is to work a SIMD version of those functions. When dealing with SIMD data types, one has to remember that a single operation has to be performed on multiple values. There, we will be working on multiple <code>x</code>and <code>y</code> to computes multiple \(\rho\) and \(\theta\).</p>
 <p >SIMD instructions sets provides architecture-specific types for SIMD register along with ISA specific functions. Of course, handling such types and functions is highly non-portable. To overcome this issue, <b>EVE</b> provides a generic, architecture agnostic type for SIMD computation: <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
@@ -165,7 +165,7 @@ From scalar to SIMD using eve::wide</h1>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --><p ><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> behaves like a regular type and can just be dropped as a replacement for any C++ arithmetic types.</p>
-<h1><a class="anchor" id="autotoc_md2002"></a>
+<h1><a class="anchor" id="autotoc_md1954"></a>
 Handling eve::wide</h1>
 <p >The remaining question is how to put data inside an instance of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> so we can write tests for our SIMD cartesian to polar conversion function.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -202,7 +202,7 @@ Handling eve::wide</h1>
 <div class="fragment"><div class="line">(4, 4, 4, 4, 4, 4, 4, 4) (1.5, 3, 4.5, 6, 7.5, 9, 10.5, 12) =&gt; (4.272, 5, 6.0208, 7.2111, 8.5, 9.84886, 11.2361, 12.6491)</div>
 <div class="line">(4, 4, 4, 4, 4, 4, 4, 4) (1.5, 3, 4.5, 6, 7.5, 9, 10.5, 12) =&gt; (0.358771, 0.643501, 0.844154, 0.982794, 1.08084, 1.15257, 1.20682, 1.24905)</div>
 </div><!-- fragment --><p >As expected, <b>EVE</b> code scales naturally with the selected architecture at compile time.</p>
-<h1><a class="anchor" id="autotoc_md2003"></a>
+<h1><a class="anchor" id="autotoc_md1955"></a>
 Mathematical Epilogue</h1>
 <p >As stated earlier, we are currently using a slightly brutal computation for \(\rho\). Indeed, if the magnitudes of <code>x</code> and <code>y</code> vary greatly, we may end up with overflow or cancellation, both classic IEEE 754 floating-point issues.</p>
 <p >Computing the square root of the sum of the squares of x and y, without undue overflow or underflow at intermediate stages of the computation is the job of a very specific function: <code>std::hypot</code>. Quite handily, <b>EVE</b> also proposes a SIMD implementation via <a class="el" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="Callable object computing the hypot operation.">eve::hypot</a>.</p>
@@ -215,7 +215,7 @@ Mathematical Epilogue</h1>
 <div class="line">  <span class="keywordflow">return</span>  <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__math_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the hypot operation.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:92</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2004"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1956"></a>
 Conclusion</h1>
 <p >In this first tutorial, we managed to:</p><ul>
 <li>get familiar with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>, the main SIMD enabling type from <b>EVE</b></li>

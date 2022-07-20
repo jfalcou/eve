@@ -137,41 +137,30 @@ $(document).ready(function(){initNavTree('group__polynomial_ga7bb3ce7bbd71384fad
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the hermite operation. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1901"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the hermite operation   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()( <a class="code hl_concept" href="concepteve_1_1integral__real__value.html">integral_real_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:83</div></div>
-<div class="ttc" id="aconcepteve_1_1integral__real__value_html"><div class="ttname"><a href="concepteve_1_1integral__real__value.html">eve::integral_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:113</div></div>
+<p>Computes the value of the 'physicists' Hermite polynomial of order <code>n</code> at <code>x</code>: </p>
+<p >The physicists Hermite polynomials are a sequence of orthogonal polynomials relative to \(e^{-x^2}\) on the \([-\infty, +\infty]\) interval satisfying the following recurrence relation:</p><ul>
+<li>\( \mathbf{H}_0(x) = 1\).</li>
+<li>\( \mathbf{H}_1(x) = 2x\).</li>
+<li>\( \mathbf{H}_n(x) = 2x\mathbf{H}_{n-1}(x) -2(n-1)\mathbf{H}_{n-2}x\).</li>
+</ul>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">hermite</a>(N n, T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25_html_ga7bb3ce7bbd71384fadab1bcdd1905a25"><div class="ttname"><a href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a></div><div class="ttdeci">constexpr callable_hermite_ hermite</div><div class="ttdoc">Computes the value of the 'physicists' Hermite polynomial of order n at x:</div><div class="ttdef"><b>Definition:</b> hermite.hpp:75</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1integral__real__value.html">integral real valuex</a> or integral constant.</p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating valuex</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of the 'physicists' hermite polynomial of order <code>n</code> at <code>x</code>:</p>
-<p >The result type is of the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the parameters.</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1904"></a>
-Supported decorators</h4>
 <ul>
-<li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
+<li><code>n</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
 </ul>
-<pre class="fragment"> The expression `diff(hermite)(n,x)` computes the derivative of the function relative to `x`.
-</pre><ul>
-<li><p class="startli"><a class="el" href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
-<p class="startli">The expression <code>successor(hermite)(n, x, Hn, Hnm1)</code> implements the three terms recurrence relation for the Hermite polynomials, \(\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\)</p>
-<p class="startli">These object functions can be used to create a sequence of values evaluated at the same <code>x</code>, and for rising <code>n</code>.</p>
-</li>
-</ul>
-<h4><a class="anchor" id="autotoc_md1905"></a>
-Example</h4>
+<p ><b>Return value</b></p>
+<p >The value of the 'physicists' hermite polynomial \( \displaystyle \mathbf{H}_n(x) = (-1)^n e^{x^2}\frac{d}{dx^n}e^{-x^2}\) is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -204,9 +193,48 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25_html_ga7bb3ce7bbd71384fadab1bcdd1905a25"><div class="ttname"><a href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a></div><div class="ttdeci">constexpr callable_hermite_ hermite</div><div class="ttdoc">Callable object computing the hermite operation.</div><div class="ttdef"><b>Definition:</b> hermite.hpp:69</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li><p class="startli"><a class="el" href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
+<p class="startli">The expression <code>successor(hermite)(n, x, Hn, Hnm1)</code> implements the three terms recurrence relation for the physicists Hermite polynomials, \(\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\)</p>
+<p class="startli">This function can be used to create a sequence of values evaluated at the same <code>x</code>, and for rising <code>n</code>.</p>
+<p class="startli"><b>Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd             = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n              = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::array&lt;wide_ft, 8&gt; h;</div>
+<div class="line">  h[0] = <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(0, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[0]          =  &quot;</span> &lt;&lt;  h[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  h[1] = <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(1, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[1]          = &quot;</span> &lt;&lt;  h[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> = 2; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;= 7; ++<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>)</div>
+<div class="line">  {</div>
+<div class="line">    h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] = <a class="code hl_variable" href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a>(<a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>)(<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1, xd, h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1], h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-2]);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> }</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
+<div class="ttc" id="agroup__polynomial_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__polynomial_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr successor_type const successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> successor.hpp:42</div></div>
+</div><!-- fragment --> </li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->

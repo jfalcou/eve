@@ -6,44 +6,43 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+
 #include <eve/module/polynomial.hpp>
-#include <cmath>
+
 #include <array>
+#include <cmath>
 #include <vector>
 
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL( "Check return types of reverse_horner on wide"
-        , eve::test::simd::ieee_reals
-        )
+TTS_CASE_TPL("Check return types of reverse_horner on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
-  TTS_EXPR_IS( eve::reverse_horner(T(), T())  , T);
-  TTS_EXPR_IS( eve::reverse_horner(T(), T(), T())  , T);
-  TTS_EXPR_IS( eve::reverse_horner(T(), T(), T())  , T);
-  TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), v_t())  , T);
-  TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), int())  , T);
-  TTS_EXPR_IS( eve::reverse_horner(T(), v_t(), i_t())  , T);
-  TTS_EXPR_IS( eve::reverse_horner(v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::reverse_horner(T(), T()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), T(), T()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), T(), T()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), v_t()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), int()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), i_t()), T);
+  TTS_EXPR_IS(eve::reverse_horner(v_t(), v_t(), v_t()), v_t);
 };
 
 //==================================================================================================
 //== reverse_horner tests
 //==================================================================================================
-TTS_CASE_WITH( "Check behavior of reverse_horner on wide"
-        , eve::test::simd::ieee_reals
-        , tts::generate(tts::ramp(0))
-        )
+TTS_CASE_WITH("Check behavior of reverse_horner on wide",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::ramp(0)))
 <typename T>(T const& a0)
 {
-  using eve::reverse_horner;
   using eve::fma;
-  using eve::pedantic;
   using eve::numeric;
   using eve::one;
+  using eve::pedantic;
+  using eve::reverse_horner;
   using v_t = eve::element_type_t<T>;
   //============================================================================
   //== variadic
@@ -68,11 +67,10 @@ TTS_CASE_WITH( "Check behavior of reverse_horner on wide"
     //============================================================================
     //== ranges
     //============================================================================
-    std::vector<v_t> tab0; // std does not want array of size 0
+    std::vector<v_t>   tab0; // std does not want array of size 0
     std::array<v_t, 1> tab1 = {1};
     std::array<v_t, 2> tab2 = {2, 1};
     std::array<v_t, 3> tab3 = {3, 2, 1};
-
 
     TTS_EQUAL((reverse_horner)(a0, tab0), T(0));
     TTS_EQUAL((reverse_horner)(a0, tab1), T(1));

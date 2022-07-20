@@ -4,12 +4,8 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 
-make_unit( "doc.polynomial" gegenbauer.cpp     )
-make_unit( "doc.polynomial" hermite.cpp        )
-make_unit( "doc.polynomial" horner.cpp         )
-make_unit( "doc.polynomial" jacobi.cpp         )
-make_unit( "doc.polynomial" laguerre.cpp       )
-make_unit( "doc.polynomial" legendre.cpp       )
-make_unit( "doc.polynomial" newton.cpp         )
-make_unit( "doc.polynomial" reverse_horner.cpp )
-make_unit( "doc.polynomial" tchebytchev.cpp    )
+add_subdirectory(regular)
+add_subdirectory(successor)
+add_subdirectory(kind)
+add_subdirectory(condon_shortley)
+add_subdirectory(sph)
