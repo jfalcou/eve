@@ -14,14 +14,14 @@ Installation & Quick Start {#install}
 
 In term of SIMD extension sets, we actively supports (ie code is optimized and regularly tested) the following:
 
-  - **Intel**
-    - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
-    - AVX, AVX2, FMA3
-    - AVX512 in SKylake-AVX512 mode (F, CD, VL, DQ, BW)
-  - **ARM**
-    - NEON A32 (64 & 128 bits)
-    - NEON A64 (64 & 128 bits)
-    - ASIMD
+- **Intel**
+  - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
+  - AVX, AVX2, FMA3
+  - AVX512 in SKylake-AVX512 mode (F, CD, VL, DQ, BW)
+- **ARM**
+  - NEON A32 (64 & 128 bits)
+  - NEON A64 (64 & 128 bits)
+  - ASIMD
 
 The following instructions are tentatively supported (ie code is incomplete and not tested in depth):
 
@@ -32,17 +32,19 @@ The following instructions are tentatively supported (ie code is incomplete and 
 # Retrieving the source
 
 ## Github
+
 **EVE** is available on GitHub and can be retrieved via the following command:
 <br/>
 
 @verbatim
-$ git clone  https://github.com/jfalcou/eve.git
+$ git clone  <https://github.com/jfalcou/eve.git>
 @endverbatim
 
 This retrieves the `main` branch which contains the latest stable version. Development happens
 live on `main` so if you need stability, use a tagged versions.
 
 ## CPM
+
 You can install **EVE** directly via [CPM](https://github.com/cpm-cmake/CPM.cmake). After
 [adding CPM to your CMake setup](https://github.com/cpm-cmake/CPM.cmake#adding-cpm), just
 add the following commands:
@@ -61,24 +63,27 @@ CPMAddPackage(
 ```
 
 ## SPACK
+
 **EVE** is [**available**](https://spack.readthedocs.io/en/latest/package_list.html#eve
 ) via [**SPACK**](https://spack.readthedocs.io/en/latest/getting_started.html):
 
 ```bash
-$ spack install eve
+spack install eve
 ```
 
 Once installed, you can use **EVE** headers directly from your
 [**SPACK**](https://spack.readthedocs.io/en/latest/getting_started.html) installation.
 
 ## AUR
+
 **EVE** is available on Arch-Linux via an [**AUR package**](https://aur.archlinux.org/packages/eve-git/).
 
 ```bash
-$ yay -S eve-git
+yay -S eve-git
 ```
 
 ## Conan
+
 [**Conan Center**](https://conan.io/center/) hosts **EVE** as the
 [`jfalcou-eve` package](https://conan.io/center/jfalcou-eve).
 
@@ -94,55 +99,60 @@ cmake
 ```
 
 ## VCPKG
+
 **EVE** can be fetched from [VCPKG](https://vcpkgx.com/details.html?package=eve). Note that, as of
 now, we still don't support MSVC.
 
 ```bash
-$ vcpkg install eve
+vcpkg install eve
 ```
 
 # Installation from Source
+
 If you didn't fetched **EVE** from a package manager, you'll need to install it via our CMake
 system.
 
 ## Setting up the Library
-Create a `build` directory here and enter it. Once in the `build` directory, you can use  **CMake**
-to generate the build system for **EVE**.
 
-We recommend using [Ninja](https://ninja-build.org/) but any build system is fine.
+With **CMake**, generate the build system for **EVE**. We recommend using
+[Ninja](https://ninja-build.org/) but any build system is fine.
 
 @verbatim
-$ mkdir build
-$ cd build
-$ cmake .. -G Ninja
+$ cmake -B build -G Ninja
 @endverbatim
 
 Once **CMake** completes, you can use the `install` target to build and install **EVE**. By default,
-the library will be installed in the `/usr/local`directory, thus requiring root privileges on Linux.
+the library will be installed in the `/usr/local` directory, thus requiring root privileges on Linux.
 
-@verbatim
-$ ninja install
-@endverbatim
+```bash
+cmake --install build                # cmake >=3.15
+cmake --build build --target install # cmake <3.15
+```
 
-You can select an alternative installation path by specifying the `CMAKE_INSTALL_PREFIX` option at configuration time.
+You can select an alternative installation path with the '--prefix' flag (CMake 3.15) or by
+specifying the `CMAKE_INSTALL_PREFIX` option at configuration time.
 
-@verbatim
-$ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install
-$ ninja install
-@endverbatim
+```bash
+cmake --install build --prefix path/to/install                  # cmake >=3.15
+
+cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=path/to/install # cmake <3.15
+cmake --build build --target install                            # cmake <3.15
+```
 
 ## Building the Documentation
+
 You can rebuild **EVE** documentation if you have the latest version of Doxygen installed
 using the `doxygen` target:
 <br/>
 
 @code
-ninja doxygen
+cmake --build build --target doxygen
 @endcode
 
 The resulting HTML files will be available in the `doc` folder.
 
 # Using the library
+
 ## Compilation
 
 Once installed, you can compile the following code to check if everything is alright.
@@ -185,6 +195,22 @@ $ ./output
 
 That's it, **EVE** is properly installed and ready to use.
 
+## Use in CMake
+
+Once installed, **EVE** may be consumed though its config-file **CMake** package. Simply find and
+link against **EVE's** **CMake** target, as you would any other **CMake** library, and then
+configure and build your **CMake** project.
+
+```cmake
+add_executable(use-eve main.cpp)
+find_package(eve CONFIG REQUIRED)
+target_link_libraries(use-eve PRIVATE eve::eve)
+```
+
+> If a custom installation prefix was used, ensure your **EVE** installation is within **CMake's**
+  search path with the use of the **CMake** variables **eve_ROOT** (CMake 3.12), **eve_DIR**, or
+  **CMAKE_PREFIX_PATH**.
+
 # Advanced options
 
 If you want to dig a bit further, you can pass additional options to `cmake` to
@@ -192,12 +218,14 @@ activate additional features.
 
 | Option | Effect       | Target               |
 |--------|:-------------|:---------------------|
-| `EVE_BUILD_TEST`      | Enable unit tests for **EVE** (`ON` by default).       | `ninja unit`        |
-| `EVE_BUILD_BENCHMARKS`| Enable benchmark tests for **EVE** (`OFF` by default). | `ninja benchmarks`  |
-| `EVE_BUILD_RANDOM`    | Enable random tests for **EVE** (`OFF` by default).    | `ninja random`      |
+| `EVE_BUILD_TEST`      | Enable unit tests for **EVE** (`ON` by default).       | `unit`        |
+| `EVE_BUILD_BENCHMARKS`| Enable benchmark tests for **EVE** (`OFF` by default). | `benchmarks`  |
+| `EVE_BUILD_RANDOM`    | Enable random tests for **EVE** (`OFF` by default).    | `random`      |
 
-There is currently over 2000 tests, so compiling all unit tests may require a large machine or
-some time. We recommend compiling in parallel using `-j`.
+There is currently over 2000 tests, so compiling all unit tests may require a large machine or some
+time. We recommend compiling in parallel using `-j`.
+All available **CMake** targets may be listed via `cmake --build build --target help`, each of which
+may be built individually.
 
 Some options are also available to control some other aspects
 
