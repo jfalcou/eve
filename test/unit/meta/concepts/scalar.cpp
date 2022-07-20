@@ -43,9 +43,7 @@ TTS_CASE("Check for plain_scalar_value on cstdint/def types" )
 
 TTS_CASE("Check for plain_scalar_value on unsupported types" )
 {
-  TTS_EXPECT_NOT( eve::plain_scalar_value<char>                                );
   TTS_EXPECT_NOT( eve::plain_scalar_value<long double>                         );
-  TTS_EXPECT_NOT( eve::plain_scalar_value<bool>                                );
   TTS_EXPECT_NOT( eve::plain_scalar_value<void*>                               );
   TTS_EXPECT_NOT((eve::plain_scalar_value<kumi::tuple<int,float,std::int8_t>> ));
   TTS_EXPECT_NOT((eve::plain_scalar_value<eve::wide<float>>                   ));
@@ -103,10 +101,9 @@ TTS_CASE("Check for arithmetic_scalar_value on product_type" )
 TTS_CASE("Check for arithmetic_scalar_value on unsupported types" )
 {
   TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<long double>             );
-  TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<bool>                    );
   TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<void*>                   );
   TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<>>)          );
-  TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<int,bool>>)  );
+  TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<int,long double>>)  );
 };
 
 template<eve::plain_scalar_value T>       auto check_overload(T)  { return +1;  }

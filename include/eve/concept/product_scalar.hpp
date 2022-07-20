@@ -33,8 +33,25 @@ namespace detail
       return ( check_scalar<kumi::element_t<I,T>>()&& ... && true );
     }(std::make_index_sequence<kumi::size<T>::value>{});
   }
+
+  template<typename T>
+  static constexpr bool is_product() noexcept
+  {
+    if constexpr(kumi::product_type<T>)
+    {
+      return []<std::size_t... I>( std::index_sequence<I...> )
+      {
+        if constexpr(sizeof...(I) == 0) return false;
+        else return ( check_scalar<kumi::element_t<I,T>>()&& ... && true );
+      }(std::make_index_sequence<kumi::size<T>::value>{});
+    }
+    else
+    {
+      return false;
+    }
+  }
 }
 
 template<typename T>
-concept product_scalar_value = detail::check_scalar<T>();
+concept product_scalar_value = detail::is_product<T>();
 }
