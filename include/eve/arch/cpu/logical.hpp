@@ -55,8 +55,9 @@ template<plain_scalar_value T> struct logical<T>
   //! Default constructor
   EVE_FORCEINLINE constexpr logical() = default;
 
-  //! Construct from a `bool`
-  EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
+  //! Construct from a `bool`-like value
+  EVE_FORCEINLINE constexpr
+  logical(std::convertible_to<bool> auto v) noexcept : value_(v ? true_mask : false_mask) {}
 
   //==============================================================================================
   //! @}
