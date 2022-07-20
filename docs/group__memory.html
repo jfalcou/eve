@@ -126,9 +126,18 @@ $(document).ready(function(){initNavTree('group__memory.html',''); initResizable
   <div class="headertitle"><div class="title">Memory Management<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__arch.html">Architecture related Types and Helpers</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>SIMD-aware container for product types.  
-<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p >SIMD-aware container for product types. </p>
+<p ><b>EVE</b> provides various element to simplify the management of SIMD-compatible memory like functions and allocators for requesting SIMD-compatible block of memory, pointer wrapper to discriminate aligned memory from regular one, and alignment computation functions.</p>
+<p ><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/memory.hpp&gt;</span> </div>
+</div><!-- fragment --><p ><b>Required header:</b> <code>#include &lt;eve/memory/soa_vector.hpp&gt;</code></p>
+<p >soa_vector is a container similar to <code>std::vector</code> but optimized to store [product types](eve::product_type) using a Structure Of Array layout compatible with SIMD processing.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Value type stored inside <code>eve::soa_vector</code> </td></tr>
+  </table>
+  </dd>
+</dl>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>

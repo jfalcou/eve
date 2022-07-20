@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::jacobi</title>
+<title>E.V.E: eve::tchebeval</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('group__polynomial_ga9fa0403edd79d74a9f
 </div>
 
 <div class="contents">
-<a id="ga9fa0403edd79d74a9fce76f06af3727d" name="ga9fa0403edd79d74a9fce76f06af3727d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga9fa0403edd79d74a9fce76f06af3727d">&#9670;&nbsp;</a></span>jacobi</h2>
+<a id="ga0c1415eb0f5bd49dc31cdb1e044e7291" name="ga0c1415eb0f5bd49dc31cdb1e044e7291"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0c1415eb0f5bd49dc31cdb1e044e7291">&#9670;&nbsp;</a></span>tchebeval</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga9fa0403edd79d74a9f
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::jacobi = {}</td>
+          <td class="memname">eve::tchebeval = {}</td>
         </tr>
       </table>
   </td>
@@ -137,72 +137,81 @@ $(document).ready(function(){initNavTree('group__polynomial_ga9fa0403edd79d74a9f
 </table>
 </div><div class="memdoc">
 
-<p>Computes the value of the Jacobi polynomials \(P^{\alpha, \beta}_n(x)\). </p>
-<p >The Jacobi polynomials are a sequence of orthogonal polynomials relative to \((1-x)^{\alpha}(1+x)^{\beta}\), for \(\alpha \) and \(\beta \) greater than -1, on the \([-1, +1]\) interval.</p>
-<p >They can be defined via a Rodrigues formula: \(\displaystyle P^{\alpha, \beta}_n(x) = \frac{(-1)^n}{2^n n!}(1-x)^{-\alpha}
-   (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\).</p>
+<p>Evaluates a polynomial on the Tchebytchev polynomial basis. </p>
+<p >If \((a_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial, the Tchebeval scheme evaluates the polynom \(\sum_0^{n-1} a_i T_{i}(x)\), where \(T_{i}\) is the \(i^{th}\) Tchebytchev polynomial of the first kind.</p>
 <p ><b>Defined in header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> N</div>
-<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T</div>
-<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> A</div>
-<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> B&gt;</div>
-<div class="line">   eve::as_wide_as&lt;common_compatible_value&lt;T, A, B&gt;, N&gt;</div>
-<div class="line">   <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">jacobi</a>(N n, T x, A alpha,  B <a class="code hl_variable" href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">beta</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> Cs ...&gt;</div>
+<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">tchebeval</a>(T x, Cs ... cs) <span class="keyword">noexcept</span>;                                     <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T, eve::range R&gt;</div>
+<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">tchebeval</a>(T x, R r) <span class="keyword">noexcept</span>;                                           <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> U</div>
+<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> V, eve::range R&gt;</div>
+<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">tchebeval</a>(T x, U a, V b,  R r) <span class="keyword">noexcept</span>;                                <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
-<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:42</div></div>
-<div class="ttc" id="agroup__polynomial_ga9fa0403edd79d74a9fce76f06af3727d_html_ga9fa0403edd79d74a9fce76f06af3727d"><div class="ttname"><a href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a></div><div class="ttdeci">constexpr callable_jacobi_ jacobi</div><div class="ttdoc">Computes the value of the Jacobi polynomials .</div><div class="ttdef"><b>Definition:</b> jacobi.hpp:66</div></div>
-<div class="ttc" id="agroup__special_ga28cfdcc15a0eb0150019bbc1e6652ceb_html_ga28cfdcc15a0eb0150019bbc1e6652ceb"><div class="ttname"><a href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">eve::beta</a></div><div class="ttdeci">constexpr callable_beta_ beta</div><div class="ttdoc">Computes the beta function. .</div><div class="ttdef"><b>Definition:</b> beta.hpp:51</div></div>
+<div class="ttc" id="agroup__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291_html_ga0c1415eb0f5bd49dc31cdb1e044e7291"><div class="ttname"><a href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a></div><div class="ttdeci">constexpr callable_tchebeval_ tchebeval</div><div class="ttdoc">Evaluates a polynomial on the Tchebytchev polynomial basis.</div><div class="ttdef"><b>Definition:</b> tchebeval.hpp:80</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
+</div><!-- fragment --><ol type="1">
+<li>Evaluates the Tchebytchev polynomial using a variadic list of coefficients.</li>
+<li>Evaluates the Tchebytchev polynomial using a range of coefficients.</li>
+<li>Evaluates the Tchebytchev polynomial using a range of coefficients in interval <code>[a,b]</code>.</li>
+</ol>
+<p ><b>Parameters</b></p>
 <ul>
-<li><code>n</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive argument</a>.</li>
 <li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
-<li><code>alpha</code>, <code>beta</code>: <a class="el" href="concepteve_1_1floating__value.html">floating arguments</a>.</li>
+<li><code>a</code>, <code>b</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating arguments</a>. If present, they are the bounds of the interval for which the Tchebytchev polynomial must be evaluated ( -1 and 1 by default). A change of variable \( x -&gt; \frac{2x-a-b}{b-a}\) is internally performed.</li>
+<li><code>cs</code>: <a class="el" href="concepteve_1_1value.html">values </a> expansion pack associated to the coefficients \((a_i)_{0\le i \lt n}\).</li>
+<li><code>r</code> : range containing The polynomial coefficients.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >The value of the polynomial \(P^{\alpha, \beta}_n(x)\) is returned.</p>
+<p >the value of the polynom at <code>x</code> is returned.</p>
+<p ><b>Notes</b> If the coefficients are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.</p><ul>
+<li>If x is scalar, the polynomials are all computed at the same point</li>
+<li>If x is simd, the nth polynomial is computed on the nth value of x</li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;list&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int64_t   , eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line"> </div>
-<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  wide_ft xd = {-0.3, 0.5, 0.0, 2.0};</div>
+<div class="line">  wide_ft b  = {-2, 10.5, -4, 0.1};</div>
+<div class="line"> </div>
 <div class="line">  wide_ft x(0.5);</div>
-<div class="line">  wide_ft aa{-0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1.0};</div>
-<div class="line">  <span class="keywordtype">double</span> a = -3/8.0;</div>
-<div class="line">  <span class="keywordtype">double</span> b = 0.25;</div>
+<div class="line">  std::vector&lt;float&gt; v {1, -2, 3, -4};</div>
+<div class="line">  std::list&lt;float&gt;   l {1, -2, 3, -4};</div>
+<div class="line">  std::vector&lt;wide_ft&gt; wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                             = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                              = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                              = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, a, b, xd)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(n, a, b, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(4, a, b, xd)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(4, a, b, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(4, a, b, x)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(4, a, b, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, a, b 0.5)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(n, a, b, 0.5) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, a, b, x)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(n, a, b, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, aa, b, x)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(n, aa, b, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            </div>
-<div class="line">            </div>
-<div class="line">    ;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                       = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                        = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- l and v contain  {1, -2, 3, -4} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }&quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebeval(xd, 1, -2, 3, -4)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a>(xd, 1.0f, -2.0f, 3.0f, -4.0f) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebeval(xd, l)                         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a>(xd, l)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebeval(xd, v)                         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a>(xd, v)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebeval(xd, wv)                        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a>(xd, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebeval(xd, 0.0f, 1.0f, wv)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a>(xd, 0.0f, 1.0f, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xs = 0.5;</div>
+<div class="line">  <span class="keywordtype">double</span> xs = 0.1;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs               = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(4, xs)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a>(4, a, b, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs                                       = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebeval(xs, 1.5, 2.0, 4.0)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a>(xs, 1.5, 2.0, 4.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
