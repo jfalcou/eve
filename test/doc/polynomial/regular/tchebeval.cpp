@@ -11,7 +11,6 @@ int main()
 {
 
   wide_ft xd = {-0.3, 0.5, 0.0, 2.0};
-  wide_ft b  = {-2, 10.5, -4, 0.1};
 
   wide_ft x(0.5);
   std::vector<float> v {1, -2, 3, -4};
