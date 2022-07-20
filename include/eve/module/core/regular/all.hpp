@@ -30,18 +30,23 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< eve::value T >
-  //!      bool all(T x) noexcept;
+  //!      bool all(T x) noexcept;   //1
+  //!
+  //!      template< eve::top_bits M >
+  //!      bool all(M m) noexcept;   //2
   //!   }
   //!   @endcode
   //!
-  //!   **Parameters**
+  //!   * 1. A bool value which is true if and only if all elements of `x` are not zero.
+  //!   * 2  A bool value which is true if and only if all top bits elements of `x` are not zero.
   //!
   //!     * `x` :  argument(@ref eve::logical_value).
   //!
+  //!     * `m` :  argument(@ref eve::top_bits).
+  //!
   //!    **Return value**
   //!
-  //!    A bool value which is true if and only if all elements of `x` are not zero_
-  //!    is returned.
+  //!    A bool value.
   //!
   //!  @groupheader{Example}
   //!
