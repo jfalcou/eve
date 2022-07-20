@@ -118,7 +118,7 @@ With **CMake**, generate the build system for **EVE**. We recommend using
 [Ninja](https://ninja-build.org/) but any build system is fine.
 
 @verbatim
-$ cmake -B build -G Ninja
+cmake -B build -G Ninja
 @endverbatim
 
 Once **CMake** completes, you can use the `install` target to build and install **EVE**. By default,
@@ -162,7 +162,7 @@ Once installed, you can compile the following code to check if everything is alr
 To do so, use your C++20 aware favorite compiler, for example g++.
 
 @verbatim
-$ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include -o output
+$ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include/eve-<version> -o output
 @endverbatim
 
 Don't forget the `--std=c++20` option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.
@@ -178,7 +178,7 @@ The SIMD instruction sets that **EVE** uses is decided at compile time. You can 
 You can also select a specific instructions set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.
 
 @verbatim
-$ g++ test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output
+$ g++ test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include/eve-<version> -o output
 @endverbatim
 
 ## Execution
