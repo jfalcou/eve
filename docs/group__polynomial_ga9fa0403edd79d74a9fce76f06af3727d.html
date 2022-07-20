@@ -137,41 +137,36 @@ $(document).ready(function(){initNavTree('group__polynomial_ga9fa0403edd79d74a9f
 </table>
 </div><div class="memdoc">
 
-<p>Callable object evaluating the jacobi polynomial: \(P^{\alpha, \beta}_n(x)\). </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1913"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the jacobi operation    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>operator[]</code>   </td><td class="markdownTableBodyLeft">Construct a conditional version of current function object   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n,  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> alpha,  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <a class="code hl_variable" href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">beta</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:83</div></div>
-<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
+<p>Computes the value of the Jacobi polynomials \(P^{\alpha, \beta}_n(x)\). </p>
+<p >The Jacobi polynomials are a sequence of orthogonal polynomials relative to \((1-x)^{\alpha}(1+x)^{\beta}\), for \(\alpha \) and \(\beta \) greater than -1, on the \([-1, +1]\) interval.</p>
+<p >They can be defined via a Rodrigues formula: \(\displaystyle P^{\alpha, \beta}_n(x) = \frac{(-1)^n}{2^n n!}(1-x)^{-\alpha}
+   (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\).</p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> N</div>
+<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T</div>
+<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> A</div>
+<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> B&gt;</div>
+<div class="line">   eve::as_wide_as&lt;common_compatible_value&lt;T, A, B&gt;, N&gt;</div>
+<div class="line">   <a class="code hl_variable" href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">jacobi</a>(N n, T x, A alpha,  B <a class="code hl_variable" href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">beta</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:42</div></div>
+<div class="ttc" id="agroup__polynomial_ga9fa0403edd79d74a9fce76f06af3727d_html_ga9fa0403edd79d74a9fce76f06af3727d"><div class="ttname"><a href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a></div><div class="ttdeci">constexpr callable_jacobi_ jacobi</div><div class="ttdoc">Computes the value of the Jacobi polynomials .</div><div class="ttdef"><b>Definition:</b> jacobi.hpp:66</div></div>
 <div class="ttc" id="agroup__special_ga28cfdcc15a0eb0150019bbc1e6652ceb_html_ga28cfdcc15a0eb0150019bbc1e6652ceb"><div class="ttname"><a href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">eve::beta</a></div><div class="ttdeci">constexpr callable_beta_ beta</div><div class="ttdoc">Computes the beta function. .</div><div class="ttdef"><b>Definition:</b> beta.hpp:51</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>n</code>: <a class="el" href="concepteve_1_1value.html">value</a>. Must be a flint</p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</p>
-<p ><code>alpha</code>, <code>beta</code>: <a class="el" href="concepteve_1_1floating__value.html">floating valuse</a>.</p>
-<p ><b>Return value</b></p>
-<p >\(P^{\alpha, \beta}_n(x)\)</p>
-<p >The result type is of the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> type of the parameters.</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1916"></a>
-Supported decorators</h4>
 <ul>
-<li><p class="startli"><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></p>
-<p class="startli">The expression <code>diff(jacobi)(...,x)</code> computes the derivative of the function relative to <code>x</code>.</p>
-<p class="startli">The expression <code>diff(jacobi)(...,x,k)</code> computes the derivative of order k of the function relative to <code>x</code>.</p>
-</li>
+<li><code>n</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
+<li><code>alpha</code>, <code>beta</code>: <a class="el" href="concepteve_1_1floating__value.html">floating arguments</a>.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1917"></a>
-Example</h4>
+<p ><b>Return value</b></p>
+<p >The value of the polynomial \(P^{\alpha, \beta}_n(x)\) is returned.</p>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -211,7 +206,6 @@ Example</h4>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga9fa0403edd79d74a9fce76f06af3727d_html_ga9fa0403edd79d74a9fce76f06af3727d"><div class="ttname"><a href="group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d">eve::jacobi</a></div><div class="ttdeci">constexpr callable_jacobi_ jacobi</div><div class="ttdoc">Callable object evaluating the jacobi polynomial: .</div><div class="ttdef"><b>Definition:</b> jacobi.hpp:67</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --> 
 </div>

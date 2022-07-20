@@ -137,46 +137,33 @@ $(document).ready(function(){initNavTree('group__polynomial_ga63f3bcbf440bab3965
 </table>
 </div><div class="memdoc">
 
-<p>Callable object computing the newton operation: \(\sum_{i = 0}^n c_i\prod_{j = 0}^i (x-n_i)\). </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/polynomial.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1924"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the newton operation   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, range <span class="keyword">auto</span> c, range <span class="keyword">auto</span> n) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
-</div><!-- fragment --><hr  />
-<p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1value.html">value x</a>.</p>
-<p ><code>c</code>, <code>n</code>`: <a class="el" href="concepteve_1_1value.html">values </a> Range containing respectively the coefficients and the nodes</p>
+<p>Implement the Newton scheme to evaluate polynomials. </p>
+<p >If \((a_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by decreasing power order, and \((c_i)_{0\le i\le n-2}\) the nodes, the Newton scheme evaluates the polynom \(p\) at \(x\) using the following formula :</p>
+<p >\( \displaystyle p(x) = (((a_0(x-c_0)+a_1)(x-c_1)+ ... )(x-c_{n-2}) + a_{n-1})\)</p>
+<p ><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T, eve::Range C, eve::Range N&gt;</div>
+<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">newton</a>(T x, C c, N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__polynomial_ga63f3bcbf440bab39651168653ec0079f_html_ga63f3bcbf440bab39651168653ec0079f"><div class="ttname"><a href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a></div><div class="ttdeci">constexpr callable_newton_ newton</div><div class="ttdoc">Implement the Newton scheme to evaluate polynomials.</div><div class="ttdef"><b>Definition:</b> newton.hpp:77</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:23</div></div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
+<ul>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
+<li><code>r</code> : range containing The coefficients by decreasing power order.</li>
+<li><code>n</code> : range containing The nodes by decreasing power order.</li>
+</ul>
 <p ><b>Return value</b></p>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the value of polynomial function(s) represented in newton form by the coefficients and the nodes.</p>
-<p >The result type is of the compatibility type of the coefficients and the evaluation value <code>x</code>.</p>
-<dl class="section warning"><dt>Warning</dt><dd>If the coefficients are simd values of cardinal N, this means you compute the values of N polynomials.<ul>
+<p >The value of the polynom at <code>x</code> is returned.</p>
+<p ><b>Notes</b></p>
+<p >If the coefficients or nodes are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.</p><ul>
 <li>If x is scalar, the polynomials are all computed at the same point</li>
 <li>If x is simd, the nth polynomial is computed on the nth value of x</li>
 </ul>
-</dd></dl>
-<hr  />
-<h4><a class="anchor" id="autotoc_md1928"></a>
-Supported decorators</h4>
-<ul>
-<li><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></li>
-</ul>
-<pre class="fragment"> The expression `pedantic(newton)(...)` computes the result using `pedantic(fma)(a,x,b)` for `a*x+b` instead of
-  `fma(a,x,b)`.
-</pre><ul>
-<li><a class="el" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></li>
-</ul>
-<pre class="fragment"> The expression `numeric(newton)(...)` computes the result using `numeric(fma)(a,x,b)` for `a*x+b` instead of
-  `fma(a,x,b)`.
-</pre> <h4><a class="anchor" id="autotoc_md1929"></a>
-Example</h4>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -202,9 +189,15 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, v, n)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, v, n)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga63f3bcbf440bab39651168653ec0079f_html_ga63f3bcbf440bab39651168653ec0079f"><div class="ttname"><a href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a></div><div class="ttdeci">constexpr callable_newton_ newton</div><div class="ttdoc">Callable object computing the newton operation: .</div><div class="ttdef"><b>Definition:</b> newton.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li><p class="startli"><a class="el" href="group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a>, <a class="el" href="group__core_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></p>
+<p class="startli">If d denotes one of these modifiers, the expression <code>d(eve::newton)(...)</code> computes the result using <code>d(eve::fma)</code> instead of <code><a class="el" href="group__core_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1" title="Callable object computing the fused multiply-add operation.">eve::fma</a></code> in internal computation.</p>
+<p class="startli">This is intended to insure more accurate computations where needed. This has no cost if the system has hard wired fma but is very expansive if it is not the case. </p>
+</li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->

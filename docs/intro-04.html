@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('intro-04.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p >In the previous tutorial, we laid out how <b>EVE</b> can use SIMD-aware tuples to handle more complex cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.</p>
-<h1><a class="anchor" id="autotoc_md2012"></a>
+<h1><a class="anchor" id="autotoc_md1964"></a>
 Adapting UDT to SIMD processing</h1>
 <p >Using tuples as a random bag of values returned from functions is somewhat lackluster. Indeed, one would prefer names over field numbers, thus rising the level of abstraction.</p>
 <p >Following this trend, we can rewrite our scalar <code>to_polar</code> function to return a proper structure.</p>
@@ -196,7 +196,7 @@ Adapting UDT to SIMD processing</h1>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
 </div><!-- fragment --><p >Note how the semantic improved by being able to explicitly states we return a SIMD register made of instance of <code>polar_coords</code>.</p>
-<h1><a class="anchor" id="autotoc_md2013"></a>
+<h1><a class="anchor" id="autotoc_md1965"></a>
 Creating SIMD-aware UDT</h1>
 <p >All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build a new user-defined type directly usable as a SIMD type. <b>EVE</b> provides an intrusive protocol to do just that via the use of the <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> helper.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/product_type.hpp&gt;</span></div>
@@ -228,7 +228,7 @@ Creating SIMD-aware UDT</h1>
 <li>We then define friend functions to assign names to numbered fields. As the structure thus defined will be usable in both scalar and SIMD context, we use the <a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a> concept to overload them. <code><a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a>&lt;polar_coords&gt;</code> used as a parameters concept means that the function accepts any type that behaves like a <code>polar_coords</code>, i.e <code>polar_coords</code> and <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;polar_coords&gt;</code>. Such function can also be defined as regular function, but this form is easier and safer.</li>
 </ul>
 <p >This is the bare minimum we can do with <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>. Additional operators can be added along with stream insertion. Check <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> documentation for more informations.</p>
-<h1><a class="anchor" id="autotoc_md2014"></a>
+<h1><a class="anchor" id="autotoc_md1966"></a>
 Storage and Processing</h1>
 <p >The last step in this situation is now to process multiples <code>udt::polar_coords</code> using algorithms. The most efficient way to do so is to use eve::soa_vector as a container for SIMD-aware types, either adapted or created using <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>.</p>
 <p >eve::soa_vector provides a <code>std::vector</code>-like interface but perform automatic Structure of Array storage optimisation, ensures the best alignment possible for each sub-members and is directly usable as <b>EVE</b> algorithm input or output.</p>
@@ -302,7 +302,7 @@ Storage and Processing</h1>
 <div class="line">}</div>
 <div class="ttc" id="agroup__math_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr callable_cos_ cos</div><div class="ttdoc">Callable object computing cos.</div><div class="ttdef"><b>Definition:</b> cos.hpp:72</div></div>
 <div class="ttc" id="agroup__math_gaf171d35de1087cbe903e3c5748cf19f3_html_gaf171d35de1087cbe903e3c5748cf19f3"><div class="ttname"><a href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a></div><div class="ttdeci">constexpr callable_sin_ sin</div><div class="ttdoc">Callable object computing sin.</div><div class="ttdef"><b>Definition:</b> sin.hpp:72</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2015"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md1967"></a>
 Conclusion</h1>
 <p >In this tutorial, we managed to:</p><ul>
 <li>adapt existing UDT to be compatible with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></li>

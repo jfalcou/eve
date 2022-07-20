@@ -11,81 +11,86 @@
 
 namespace eve::detail
 {
-  //================================================================================================
-  //== Horner with iterators
-  //================================================================================================
-  template<value T0, std::input_iterator IT>
-  EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        , numeric_type const &
-                                        , T0 xx, IT const & first, IT const & last) noexcept
-  requires ((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
-  {
-    return detail::reverse_horner_impl(numeric_type(), xx, first, last);
-  }
+//================================================================================================
+//== Horner with iterators
+//================================================================================================
+template<value T0, std::input_iterator IT>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0        xx,
+                IT const& first,
+                IT const& last) noexcept
+    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+{
+  return detail::reverse_horner_impl(numeric_type(), xx, first, last);
+}
 
+//================================================================================================
+//== Horner with iterators and leading unitary coefficient
+//================================================================================================
 
-  //================================================================================================
-  //== Horner with iterators and leading unitary coefficient
-  //================================================================================================
+template<value T0, std::input_iterator IT>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0 xx,
+                callable_one_ const&,
+                IT const& first,
+                IT const& last) noexcept
+    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+{
+  return detail::reverse_horner_impl(numeric_type(), xx, one, first, last);
+}
 
-  template<value T0, std::input_iterator IT>
-  EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        , numeric_type const &
-                                        , T0 xx
-                                        , callable_one_ const &
-                                        , IT const & first, IT const & last) noexcept
-  requires ((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
-  {
-    return detail::reverse_horner_impl(numeric_type(), xx, one, first, last);
-  }
+//================================================================================================
+//== Horner with ranges
+//================================================================================================
+template<value T0, range R>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
+    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+{
+  return detail::reverse_horner_impl(numeric_type(), xx, r);
+}
 
-  //================================================================================================
-  //== Horner with ranges
-  //================================================================================================
-  template<value T0, range R>
-  EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        ,  numeric_type const &
-                                        , T0 xx, R const & r) noexcept
-  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
-  {
-    return detail::reverse_horner_impl(numeric_type(), xx, r);
-  }
+//================================================================================================
+//== Horner with ranges and leading unitary coefficient
+//================================================================================================
+template<value T0, range R>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0 xx,
+                callable_one_ const&,
+                R const& r) noexcept
+    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+{
+  return detail::reverse_horner_impl(numeric_type(), xx, one, r);
+}
 
-  //================================================================================================
-  //== Horner with ranges and leading unitary coefficient
-  //================================================================================================
-  template<value T0, range R>
-  EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        ,  numeric_type const &
-                                        , T0 xx
-                                        , callable_one_ const &
-                                        , R const & r) noexcept
-  requires (compatible_values<T0, typename R::value_type> && (!simd_value<R>))
-  {
-    return detail::reverse_horner_impl(numeric_type(), xx, one, r);
-  }
+//================================================================================================
+//== Horner variadic N parameters (((..(a*x+b)*x+c)*x + ..)..)
+//================================================================================================
+template<value T0, value... Ts>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, Ts... args) noexcept
+{
+  return reverse_horner_impl(numeric_type(), x, args...);
+}
 
-  //================================================================================================
-  //== Horner variadic N parameters (((..(a*x+b)*x+c)*x + ..)..)
-  //================================================================================================
-  template< value T0
-          , value ...Ts>
-  EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        , numeric_type const &
-                                        , T0 x, Ts... args) noexcept
-  {
-    return reverse_horner_impl(numeric_type(), x, args...);
-  }
+//================================================================================================
+//== N parameters with unitary first coefficient (((..(a*x+b)*x+c)*x + ..)..)
+//================================================================================================
 
-  //================================================================================================
-  //== N parameters with unitary first coefficient (((..(a*x+b)*x+c)*x + ..)..)
-  //================================================================================================
-
-  template<value T0, value ...Ts>
-  EVE_FORCEINLINE constexpr auto reverse_horner_(EVE_SUPPORTS(cpu_)
-                                        , numeric_type const &
-                                        , T0 x, callable_one_ const &, Ts... args) noexcept
-  {
-    return reverse_horner_impl(numeric_type(), x, one, args...);
-  }
+template<value T0, value... Ts>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0 x,
+                callable_one_ const&,
+                Ts... args) noexcept
+{
+  return reverse_horner_impl(numeric_type(), x, one, args...);
+}
 }

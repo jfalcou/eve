@@ -7,36 +7,36 @@ var eve_dev =
       [ "Masked operations support", "design_rationale.html#rationale-mask", null ]
     ] ],
     [ "SIMD Algorithms", "algo_rationale.html", [
-      [ "General Principles", "algo_rationale.html#autotoc_md1952", null ],
-      [ "Basic Components", "algo_rationale.html#autotoc_md1953", [
-        [ "Reusable loops", "algo_rationale.html#autotoc_md1954", null ],
-        [ "Ranges or Iterators", "algo_rationale.html#autotoc_md1955", [
-          [ "General concepts", "algo_rationale.html#autotoc_md1956", null ],
-          [ "Relaxed concepts", "algo_rationale.html#autotoc_md1957", null ]
+      [ "General Principles", "algo_rationale.html#autotoc_md1904", null ],
+      [ "Basic Components", "algo_rationale.html#autotoc_md1905", [
+        [ "Reusable loops", "algo_rationale.html#autotoc_md1906", null ],
+        [ "Ranges or Iterators", "algo_rationale.html#autotoc_md1907", [
+          [ "General concepts", "algo_rationale.html#autotoc_md1908", null ],
+          [ "Relaxed concepts", "algo_rationale.html#autotoc_md1909", null ]
         ] ]
       ] ],
-      [ "Customization", "algo_rationale.html#autotoc_md1958", [
-        [ "Algorithms traits", "algo_rationale.html#autotoc_md1959", null ]
+      [ "Customization", "algo_rationale.html#autotoc_md1910", [
+        [ "Algorithms traits", "algo_rationale.html#autotoc_md1911", null ]
       ] ]
     ] ],
     [ "Components Semantic", "glossary_semantic.html", [
-      [ "Property of EVE types", "glossary_semantic.html#autotoc_md1963", [
-        [ "Cardinal", "glossary_semantic.html#autotoc_md1964", null ],
-        [ "Element type", "glossary_semantic.html#autotoc_md1965", null ],
-        [ "ABI traits", "glossary_semantic.html#autotoc_md1966", null ]
+      [ "Property of EVE types", "glossary_semantic.html#autotoc_md1915", [
+        [ "Cardinal", "glossary_semantic.html#autotoc_md1916", null ],
+        [ "Element type", "glossary_semantic.html#autotoc_md1917", null ],
+        [ "ABI traits", "glossary_semantic.html#autotoc_md1918", null ]
       ] ],
-      [ "Operations Classification", "glossary_semantic.html#autotoc_md1967", [
-        [ "Generalized Element Access", "glossary_semantic.html#autotoc_md1968", null ],
+      [ "Operations Classification", "glossary_semantic.html#autotoc_md1919", [
+        [ "Generalized Element Access", "glossary_semantic.html#autotoc_md1920", null ],
         [ "Element-wise Operations", "glossary_semantic.html#glossary_elementwise", null ],
         [ "Reductions", "glossary_semantic.html#glossary_reduction", null ]
       ] ],
-      [ "Function Semantic", "glossary_semantic.html#autotoc_md1969", [
+      [ "Function Semantic", "glossary_semantic.html#autotoc_md1921", [
         [ "Arithmetic Functions", "glossary_semantic.html#glossary_arithmetic", null ],
         [ "Bitwise Functions", "glossary_semantic.html#glossary_bitwise", null ],
         [ "Logical Functions", "glossary_semantic.html#glossary_logical", null ],
         [ "Constant Functions", "glossary_semantic.html#glossary_constant", null ],
-        [ "General Principles", "glossary_semantic.html#autotoc_md1970", null ],
-        [ "Precision handling", "glossary_semantic.html#autotoc_md1971", null ]
+        [ "General Principles", "glossary_semantic.html#autotoc_md1922", null ],
+        [ "Precision handling", "glossary_semantic.html#autotoc_md1923", null ]
       ] ]
     ] ],
     [ "Development Environment", "dev_environment.html", [
@@ -44,8 +44,8 @@ var eve_dev =
       [ "Running EVE docker", "dev_environment.html#dev_docker_helper", null ]
     ] ],
     [ "Building for Testing", "dev_cmake.html", [
-      [ "CMake setup", "dev_cmake.html#autotoc_md1960", null ],
-      [ "Compiling EVE Unit Tests", "dev_cmake.html#autotoc_md1961", null ],
-      [ "Compiling EVE Random Tests", "dev_cmake.html#autotoc_md1962", null ]
+      [ "CMake setup", "dev_cmake.html#autotoc_md1912", null ],
+      [ "Compiling EVE Unit Tests", "dev_cmake.html#autotoc_md1913", null ],
+      [ "Compiling EVE Random Tests", "dev_cmake.html#autotoc_md1914", null ]
     ] ]
 ];

@@ -22,7 +22,7 @@ var searchData=
   ['plus_19',['plus',['../group__core_gad742f5ce084044535470a38bca2d1cc5.html#gad742f5ce084044535470a38bca2d1cc5',1,'eve']]],
   ['pointer_20',['pointer',['../structeve_1_1aligned__ptr.html#a01fcaadfc18462725723c6ab049a7153',1,'eve::aligned_ptr']]],
   ['polar_21',['polar',['../group__complex_gac311c86da504a8af90fab3cbbc1e3e2c.html#gac311c86da504a8af90fab3cbbc1e3e2c',1,'eve']]],
-  ['polynomial_20related_20functions_22',['Polynomial related functions',['../group__polynomial.html',1,'']]],
+  ['polynomial_20functions_22',['Polynomial functions',['../group__polynomial.html',1,'']]],
   ['popcount_23',['popcount',['../group__core_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322',1,'eve']]],
   ['pow_24',['pow',['../group__math_ga9e50f660c1ffa0aec9d549a822e5d2fb.html#ga9e50f660c1ffa0aec9d549a822e5d2fb',1,'eve']]],
   ['pow1p_25',['pow1p',['../group__math_gaf5caf2f837c183fa5924d05b64b24def.html#gaf5caf2f837c183fa5924d05b64b24def',1,'eve']]],

@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/regular/horner.hpp>
 #include <eve/module/polynomial/numeric/impl/horner.hpp>
+#include <eve/module/polynomial/regular/horner.hpp>
