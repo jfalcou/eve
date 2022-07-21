@@ -37,7 +37,7 @@ The following instructions are tentatively supported (ie code is incomplete and 
 <br/>
 
 @verbatim
-$ git clone  <https://github.com/jfalcou/eve.git>
+$ git clone https://github.com/jfalcou/eve.git
 @endverbatim
 
 This retrieves the `main` branch which contains the latest stable version. Development happens
