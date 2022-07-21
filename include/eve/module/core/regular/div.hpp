@@ -13,106 +13,88 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var div
+  //!   @var div
+  //!   @brief Computes the  division of multiple values.
   //!
-  //! @brief Callable object performing the division of multiple values.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the absolute value of its parameter               |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value Ts ... >
+  //!      eve::common_compatible_t<T, Ts, ...> div(Ts ... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto const& x, eve::value auto const&... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `...xs` :  arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //! `x`    Instance of eve::value.
+  //!      If the arguments are \f$(x_i)_{0\le i\le n}/\f$ The value of \f$x/\prod_1^n x_i\f$
+  //!      is returned.
   //!
-  //! `xs`:  Instances of eve::value. Behavior is undefined if the expected result type is integral and any `xs` is  equal to 0.
+  //!    **Notes**
   //!
-  //! **Return value**
+  //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
-  //! A value of the [common compatible type](@ref common_compatible) of `x` and all `xs` containing the
-  //! [elementwise](@ref glossary_elementwise) division of `x` by all `xs`.
-  //! The result is semantically equivalent to `x/mul(xs...)`
+  //!      * Although the infix notation with `/` is supported, the `/` operator on
+  //!        standard scalar types is the original one and so can lead to automatic promotion.
   //!
-  //! With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
+  //!  @groupheader{Example}
   //!
-  //!@warning
-  //!   Although the infix notation with `/` is supported, the `/` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion.
+  //!  @godbolt{doc/core//regular/div.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::div
+  //!     The call `eve::div[mask](x, ...)` provides a masked
+  //!     version of `div` which is
+  //!     equivalent to `if_else(mask, div(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `div[cond](x0,xs...)` is equivalent
-  //!  to `if_else(cond,div(x0,xs...),x0)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/div.cpp}
   //!
   //!   * eve::saturated
   //!
+  //!       The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated
+  //!       division of `x` by  all `xs`. The result is semantically equivalent to
+  //!       `x/saturated(mul)(xs...)` but is always defined even if the denominator is 0.
   //!
-  //!     The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated division of `x` by
-  //!     all `xs`. The result is semantically equivalent to `x/saturated(mul)(xs...)` but is always defined even
-  //!     if the denominator is 0.
+  //!       The relevant cases are just in fact  the division by 0 for integral types
+  //!       in which case the result is [`eve::Valmin(as(x))`](@ref eve::valmin) or
+  //!       [`eve::Valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
+  //!       the division of [`eve::Valmin(as(x))`](@ref eve::valmin)
+  //!       by -1 that produces [`eve::Valmax(as(x))`](@ref eve::valmax).
   //!
-  //!     The relevant cases are just in fact  the division by 0 for integral types in which case the result
-  //!     is [`eve::Valmin(as(x))`](@ref eve::valmin) or
-  //!     [`eve::Valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
-  //!     the division of [`eve::Valmin(as(x))`](@ref eve::valmin)
-  //!     by -1 that produces [`eve::Valmax(as(x))`](@ref eve::valmax).
+  //!      **Example**
   //!
-  //!   * eve::toward_zero
+  //!        @godbolt{doc/core/saturated/div.cpp}
   //!
-  //!     The call `toward_zero(div)(x, y)`  computes  `trunc(div(x, y))`.
+  //!   * eve::toward_zero, eve::downward, eve::upward, eve::to_nearest
   //!
-  //!   * eve::downward
+  //!       The calls `d(div)(x, y)` where d is one of these 4 decorators produce respectively
   //!
-  //!     The call `downward(div)(x, y)`  computes  `floor(div(x, y))`.
+  //!           * `eve::trunc (div(x, y))` for eve::toward_zero.
+  //!           * `eve::floor (div(x, y))` for deve::downward.
+  //!           * `eve::ceil (div(x, y))`  for eve::upward.
+  //!           * `eve::nearest (div(x,y))`for eve::to_nearest.
   //!
-  //!   * eve::upward
+  //!      **Example**
   //!
-  //!     The call `upward(div)(x, y)`  computes  `ceil(div(x, y))`.
-  //!
-  //!   * eve::to_nearest
-  //!
-  //!     The call `to_nearest(div)(x, y)`  computes  `nearest(div(x,y))`.
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff_nth<N>(eve::div)(x, xs...)` computes the derivative of the division
-  //!     over the Nth parameter.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/div.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/roundings/div.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(div_, div);
 }

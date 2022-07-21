@@ -50,7 +50,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/diff_of_prod.cpp}
+  //!  @godbolt{doc/core/regular/diff_of_prod.cpp}
   //! @}
   //================================================================================================
 
