@@ -50,7 +50,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/sum_of_prod.cpp}
+  //!  @godbolt{doc/core/regular/sum_of_prod.cpp}
   //! @}
   //================================================================================================
   namespace tag { struct sum_of_prod_; }

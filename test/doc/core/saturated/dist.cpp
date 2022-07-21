@@ -12,14 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                       = " << pf << '\n'
             << "<- qf                       = " << qf << '\n'
-            << "-> dist(pf, qf)             = " << eve::dist(pf, qf) << '\n';
-
-  int16_t xf = -eve::valmax(eve::as<int16_t>());
-  int16_t yf = eve::valmax(eve::as<int16_t>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                       = " << xf << '\n'
-            << "<- yf                       = " << yf << '\n'
-            << "-> dist(xf, yf)             = " << eve::dist(xf, yf) << '\n';
+            << "-> saturated(dist)(pf, qf) = " << eve::saturated(eve::dist)(pf, qf)
+            << '\n';
   return 0;
 }

@@ -45,7 +45,6 @@
 //!
 //! @defgroup core_conversions conversions
 //! @ingroup core
-//!
 //! @defgroup core_simd proper SIMD operations
 //! @ingroup core
 //!

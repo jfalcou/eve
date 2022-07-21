@@ -13,90 +13,68 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var mul
+  //!   @var mul
+  //!   @brief Computes the sum of its arguments.
   //!
-  //! @brief Callable object computing the mul operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the mul operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value Ts ... >
+  //!      eve::common_compatible_t<Ts, ...> mul(Ts ... x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                  requires (compatiblevalues< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `... xs` :  [arguments](eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `args`:   [values](@ref eve::value).
+  //!    The value of the sum of the arguments is returned.
   //!
-  //! **Return value**
+  //!   **Note**
   //!
-  //!Return the multiplication of the [values](@ref eve::value).
+  //!     Take care that for floating entries, the multiplication is only 'almost' associative.
+  //!     This call perform multiplications in reverse incoming order.
   //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!  @groupheader{Example}
   //!
-  //! The call `mul(x, args, ...)` is equivalent to `(x * args * ...)` if `x` or one of the `args`
-  //! is an  [simd value](@ref eve::simd_value).
+  //!  @godbolt{doc/core//regular/mul.cpp}
   //!
-  //!@warning
-  //!   Although the infix notation with `*` is supported for two parameters, the `*` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve::mul[mask](x, ...)` provides a masked
+  //!     version of `mul` which is
+  //!     equivalent to `if_else(mask, mul(x, ...), x)`
   //!
-  //!  Higher-order function generating a masked version of eve::mul
+  //!      **Example**
   //!
-  //!  **Parameters**
+  //!        @godbolt{doc/core/masked/mul.cpp}
   //!
-  //!  `cond` : conditional expression
+  //!   * eve::saturated
   //!
-  //!  **Return value**
+  //!     The call `saturated(mul)(args...)` computes the saturated  multiplication `args...`.
+  //!     The saturation is obtained in the [common compatible type](@ref common_compatible)
+  //!     of the N parameters. The computation is done as if all arguments were
+  //!     converted to this type and the saturated multiplication applied recursively on all parameters.
+  //!     No overflow occurs.
   //!
-  //!  A Callable object so that the expression `mul[cond](x, ...)` is equivalent to `if_else(cond,mul(x, ...),x)`
+  //!      **Example**
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::saturated
-  //!
-  //!
-  //!     The call `saturated(mul)(x, args...)` computes the saturated  multiplication of `x` and `args...`. The saturation is obtained in the
-  //!     [common compatible type](@ref common_compatible) of the N parameters. The computation is done as if all arguments were
-  //!     converted to this type and the saturated multiplication applied recursively on all parameters. No overflow occurs.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_< N >(mul)(x,args,...)` computes the partial
-  //!      diff of the function relative to the Nth parameter.
-  //!
-  //!      If the actual parameters are \f$x_1, ... x_n\f$ the value returned is
-  //!      \f$\prod_{i \neq N} x_i\f$ if \f$1\le N \le n\f$ otherwise 0.
-  //!
-  //!      @warning
-  //!        This is only available for floating point entries.
-  //!
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/mul.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/mul.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(mul_, mul);
 }

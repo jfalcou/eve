@@ -13,75 +13,69 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var sub
+  //!   @var sub
+  //!   @brief Computes the sum of its arguments.
   //!
-  //! @brief Callable object performing the difference of multiple values.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the absolute value of its parameter               |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value Ts ...>
+  //!      eve::common_compatible_t<Ts, ...> sub(Ts ... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto const&... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `... xs` :  [arguments](eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //! `xs`:  Instances of eve::value
+  //!    The value of the difference  of the the first argument with the sum of fall other
+  //!    is returned.
   //!
-  //! **Return value**
+  //!   **Note**
   //!
-  //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
-  //! [elementwise](@ref glossary_elementwise) difference of all `xs`: `sub(x0, x1, ...,  xn)` is
-  //! semantically equivalent to `sub(x0, add(x1, ...,  xn))`.
+  //!     Take care that for floating entries, this operation  is only 'almost' associative.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core//regular/sub.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::sub
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve::sub[mask](x, ...)` provides a masked
+  //!     version of `sub` which is
+  //!     equivalent to `if_else(mask, sub(x, ...), x)`
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `sub[cond](x0,xs...)` is equivalent
-  //!  to `if_else(cond,sub(x0,xs...),x0)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/sub.cpp}
   //!
   //!   * eve::saturated
   //!
+  //!     The call `eve::saturated(eve::sub)(...)` computes
+  //!     a saturated version of `eve::sub`.
   //!
-  //!     The expression `eve::saturated(eve::sub)(xs...)` computes the saturated difference of
-  //!     all `xs`.
+  //!     Take care that for signed integral
+  //!     entries this kind ofoperation  is highly order depênding. We do not recommand
+  //!     to use it for more than 2 parameters.
   //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
+  //!      **Example**
   //!
-  //!
-  //!     The expression `eve::diff_nth<N>(eve::sub)(xs...)` computes the derivative of the difference
-  //!     of `xs...` over the Nth parameters.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/sub.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/sub.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sub_, sub);
 }

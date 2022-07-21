@@ -11,9 +11,7 @@ int main()
             << " <- pf                    = " << pf << '\n'
             << " <- qf                    = " << qf << '\n'
             << " -> div(pf, qf)           = " << eve::div(pf, qf) << '\n'
-            << " -> pf / qf               = " << pf / qf << '\n'
-            
-            ;
+            << " -> pf / qf               = " << pf / qf << '\n';
 
   std::int16_t xi = -32768, yi = -1;
 
@@ -21,7 +19,6 @@ int main()
             << " xi                        = " << xi << '\n'
             << " yi                        = " << yi << '\n'
             << " -> div(xi, yi)            = " << eve::div(xi, yi) << '\n'
-            << " -> saturated(div(xi, yi)) = " << eve::saturated(eve::div)(xi, yi) << '\n'
             << " -> xi / yi                = " << xi / yi << '\n' // C++ promotion to int
             << " -> std::int16_t( xi / yi) = "<< std::int16_t( xi / yi) << '\n';
 
