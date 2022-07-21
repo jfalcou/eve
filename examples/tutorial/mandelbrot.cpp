@@ -82,14 +82,14 @@ struct mandelbrot
   {
     wide_t step([](auto n, auto){return n; }); // produce a vector containing {0, 1, ..., wide_t::static_size-1}
     for (int i = 0; i < size; ++i) {
-      cwide_t z0{T(i) / T(size) * x_range + x_min};
+      cwide_t z0{T(i) / T(size) * x_range + x_min, 0};
       wide_t fac{y_range / T(size)};
       wide_t y_min_t{y_min};
       for (int j = 0; j < size; j += eve::cardinal_v<wide_t>) {
         int iteration = 0;
         eve::imag(z0) = eve::fma(step + j, fac, y_min_t);
 
-        cwide_t z{0};
+        cwide_t z{0,0};
         wide_i iter{0};
         wide_l mask;
         do {
