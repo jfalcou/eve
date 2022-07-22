@@ -37,7 +37,7 @@ The following instructions are tentatively supported (ie code is incomplete and 
 <br/>
 
 @verbatim
-$ git clone https://github.com/jfalcou/eve.git
+$ git clone <https://github.com/jfalcou/eve.git>
 @endverbatim
 
 This retrieves the `main` branch which contains the latest stable version. Development happens
@@ -121,22 +121,18 @@ With **CMake**, generate the build system for **EVE**. We recommend using
 cmake -B build -G Ninja
 @endverbatim
 
-Once **CMake** completes, you can use the `install` target to build and install **EVE**. By default,
-the library will be installed in the `/usr/local` directory, thus requiring root privileges on Linux.
+Since **EVE** is header only, once **CMake** completes, you can install **EVE** without building. By
+default, the library will be installed globally to your system, in `/usr/local` for Linux, thus
+requiring root privileges.
 
 ```bash
-cmake --install build                # cmake >=3.15
-cmake --build build --target install # cmake <3.15
+cmake --install build
 ```
 
-You can select an alternative installation path with the '--prefix' flag (CMake 3.15) or by
-specifying the `CMAKE_INSTALL_PREFIX` option at configuration time.
+An alternative installation prefix can be specified with the '--prefix' flag.
 
 ```bash
-cmake --install build --prefix path/to/install                  # cmake >=3.15
-
-cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=path/to/install # cmake <3.15
-cmake --build build --target install                            # cmake <3.15
+cmake --install build --prefix path/to/install
 ```
 
 ## Building the Documentation
