@@ -13,8 +13,8 @@ include(FetchContent)
 
 # Retrieve EVE
 FetchContent_Declare(eve
-  GIT_REPOSITORY https://github.com/jfalcou/eve.git
-  GIT_TAG        ${EVE_SHA1}
+  GIT_REPOSITORY "https://github.com/jfalcou/eve.git"
+  GIT_TAG        "$ENV{GITHUB_SHA}"
   )
 
 FetchContent_MakeAvailable(eve)

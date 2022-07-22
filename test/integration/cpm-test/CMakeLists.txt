@@ -13,8 +13,8 @@ include(cpm.cmake)
 
 # Add dependencies
 CPMAddPackage ( NAME eve
-                GITHUB_REPOSITORY jfalcou/eve
-                GIT_TAG ${EVE_SHA1}
+                GITHUB_REPOSITORY jfalcou/eve/pull/1338
+                GIT_TAG 5d0a8f47ce1f305565ffd0d3b0d6ddb5bdfa3cab
                 OPTIONS "EVE_BUILD_TEST OFF"
                         "EVE_BUILD_BENCHMARKS OFF"
                         "EVE_BUILD_DOCUMENTATION OFF"

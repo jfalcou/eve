@@ -9,104 +9,103 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   install:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - {test: Installation       , mode: 0 }
-        - {test: FetchContents      , mode: 1 }
-        - {test: CPM                , mode: 2 }
-        - {test: Multi-architecture , mode: 3 }
+          - { test: Installation, mode: 0 }
+          - { test: FetchContents, mode: 1 }
+          - { test: CPM, mode: 2 }
+          - { test: Multi-architecture, mode: 3 }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
       - name: Check EVE works with ${{ matrix.cfg.test }}
         uses: ./.github/actions/integration
         with:
-          branch: '${{ github.head_ref }}'
-          mode: '${{ matrix.cfg.mode }}'
+          branch: "${{ github.head_ref }}"
+          mode: "${{ matrix.cfg.mode }}"
 
-  specials:
-    runs-on: self-hosted
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: clang_libcpp, arch: x86     , opts: -msse2    , status: 1 }
-        - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
+  # specials:
+  #   runs-on: self-hosted
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cfg:
+  #       - { comp: clang_libcpp, arch: x86     , opts: -msse2    , status: 1 }
+  #       - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
+  #       - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
+  #       - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
 
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v2
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         '${{ matrix.cfg.status }}'
-          cpu:            8
-      - name: Always execute
-        if: ${{ always() }}
-        uses: ./.github/actions/cleanup
+  #   steps:
+  #     - name: Fetch current branch
+  #       uses: actions/checkout@v2
+  #     - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+  #       uses: ./.github/actions/run_docker
+  #       with:
+  #         options:        '${{ matrix.cfg.opts }}'
+  #         cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+  #         status:         '${{ matrix.cfg.status }}'
+  #         cpu:            8
+  #     - name: Always execute
+  #       if: ${{ always() }}
+  #       uses: ./.github/actions/cleanup
 
-  mainline:
-    runs-on: self-hosted
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: clang       , arch: x86     , opts: -msse2                }
-        - { comp: clang       , arch: x86_asan, opts: -msse2                }
-        - { comp: gcc         , arch: x86     , opts: -msse2                }
-        - { comp: clang       , arch: x86     , opts: -mssse3               }
-        - { comp: gcc         , arch: x86     , opts: -mssse3               }
-        - { comp: clang       , arch: x86     , opts: -msse4.2              }
-        - { comp: gcc         , arch: x86     , opts: -msse4.2              }
-        - { comp: clang       , arch: x86     , opts: -mavx                 }
-        - { comp: gcc         , arch: x86     , opts: -mavx                 }
-        - { comp: clang       , arch: x86     , opts: -mavx2                }
-        - { comp: gcc         , arch: x86     , opts: -mavx2                }
-        - { comp: clang       , arch: x86_sde , opts: -march=skylake-avx512 }
-        - { comp: gcc         , arch: x86_sde , opts: -march=skylake-avx512 }
+  # mainline:
+  #   runs-on: self-hosted
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cfg:
+  #       - { comp: clang       , arch: x86     , opts: -msse2                }
+  #       - { comp: clang       , arch: x86_asan, opts: -msse2                }
+  #       - { comp: gcc         , arch: x86     , opts: -msse2                }
+  #       - { comp: clang       , arch: x86     , opts: -mssse3               }
+  #       - { comp: gcc         , arch: x86     , opts: -mssse3               }
+  #       - { comp: clang       , arch: x86     , opts: -msse4.2              }
+  #       - { comp: gcc         , arch: x86     , opts: -msse4.2              }
+  #       - { comp: clang       , arch: x86     , opts: -mavx                 }
+  #       - { comp: gcc         , arch: x86     , opts: -mavx                 }
+  #       - { comp: clang       , arch: x86     , opts: -mavx2                }
+  #       - { comp: gcc         , arch: x86     , opts: -mavx2                }
+  #       - { comp: clang       , arch: x86_sde , opts: -march=skylake-avx512 }
+  #       - { comp: gcc         , arch: x86_sde , opts: -march=skylake-avx512 }
 
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v2
-      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        run: |
-          mkdir build && cd build
-          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compiling Unit Tests
-        run:  cd build && ninja -v unit -j 8
-      - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 8
-      - name: Always execute
-        if: ${{ always() }}
-        uses: ./.github/actions/cleanup
+  #   steps:
+  #     - name: Fetch current branch
+  #       uses: actions/checkout@v2
+  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+  #       run: |
+  #         mkdir build && cd build
+  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+  #     - name: Compiling Unit Tests
+  #       run:  cd build && ninja -v unit -j 8
+  #     - name: Running Unit Tests
+  #       run: cd build && ctest --output-on-failure -j 8
+  #     - name: Always execute
+  #       if: ${{ always() }}
+  #       uses: ./.github/actions/cleanup
 
-  supplemental:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: clang       , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: gcc         , arch: x86.ci , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: clang       , arch: x86    , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
-        - { comp: gcc         , arch: x86.ci , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
+  # supplemental:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cfg:
+  #       - { comp: clang       , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
+  #       - { comp: gcc         , arch: x86.ci , opts: -DEVE_NO_SIMD         , status: 1 }
+  #       - { comp: clang       , arch: x86    , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
+  #       - { comp: gcc         , arch: x86.ci , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
 
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v2
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:        '${{ matrix.cfg.status }}'
-          cpu:            3
+  #   steps:
+  #     - name: Fetch current branch
+  #       uses: actions/checkout@v2
+  #     - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+  #       uses: ./.github/actions/run_docker
+  #       with:
+  #         options:        '${{ matrix.cfg.opts }}'
+  #         cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+  #         status:        '${{ matrix.cfg.status }}'
+  #         cpu:            3

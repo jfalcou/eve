@@ -1,6 +1,8 @@
 #!/bin/sh -l
 set -e
 
+printenv
+
 # ID for various tests
 INSTALL_TEST=0
 FETCH_TEST=1
