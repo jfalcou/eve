@@ -1,37 +1,40 @@
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
+#include <iomanip>
 
-using wide_ft = eve::wide <float, eve::fixed<4>>;
+using wide_t = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft rf = { 0.0f, 1.0f, -1.0f, -0.5f};
-  wide_ft qf = { 1.0f, -1.0f, -0.5f, 0.0f};
-  wide_ft pf = { 1.0f, 2.0f, -5.0f, 0.1f};
+  float es  = eve::eps(eve::as<float>());
+  float esm1 = es-1.0f;
+  float esp1 = es+1.0f;
+  float vm  = eve::valmax(eve::as<float>());
+  wide_t qf = {2, -3, esp1,  vm};
+  wide_t pf = {3, -2, esm1,  2 };
+  wide_t of = {4, -1, 1.0f, -vm};
 
-  std::cout
-    << "---- simd" << '\n'
-    << "<- pf                          = " << pf << '\n'
-    << "<- qf                          = " << qf << '\n'
-    << "<- rf                          = " << rf << '\n'
-    << "-> fsnm(pf, qf, rf)            = " << eve::fsnm(pf, qf, rf) << '\n'
-    
-    
-    ;
+  std::cout << "---- simd" << '\n'
+            << " <- of                                = " << of << '\n'
+            << " <- pf                                = " << pf << '\n'
+            << " <- qf                                = " << qf << '\n'
+            << " -> pedantic(fsnm)(of, pf, qf)         = " << eve::pedantic(eve::fsnm)(of, pf, qf) << '\n'
+            << " -> numeric(fsnm)(of, pf, qf)          = " << eve::numeric(eve::fsnm)(of, pf, qf) << '\n'
+            << " -> fsnm(of, pf, qf)                   = " << eve::fsnm(of, pf, qf) << '\n'
+            << "\n if the last fsnm result ends by '0, inf}', it is because\n"
+            << " the system has no simd fsnm fsnmily intrinsics\n"
+            << " or is not configured to use them.\n\n";
 
-
-  float xf = 1.0f;
-  float yf = 0.5f;
-  float zf = 0.5f;
-  std::cout
-    << "---- scalar"  << '\n'
-    << "<- xf                         = " << xf << '\n'
-    << "<- yf                         = " << yf << '\n'
-    << "<- zf                         = " << yf << '\n'
-    << "-> fsnm(xf, yf, zf)           = " << eve::fsnm(xf, yf, zf) << '\n'
-    
-    
-    ;
+  std::cout << "---- scalar" << std::setprecision(10) << '\n'
+            << " <- vm                                = " << vm << '\n'
+            << " -> pedantic(fsnm)(vm, 2.0f, -vm)      = " << eve::pedantic(eve::fsnm)(vm, 2.0f, -vm) << '\n'
+            << " -> numeric(fsnm)(vm, 2.0f, -vm)       = " << eve::numeric(eve::fsnm)(vm, 2.0f, -vm) << '\n'
+            << " -> fsnm(vm, 2.0f, -vm)                = " << eve::fsnm(vm, 2.0f, -vm) << '\n'
+            << " <- esm1                              = " << esm1 << '\n'
+            << " <- esp1                              = " << esp1 << '\n'
+            << " -> pedantic(fsnm)(1.0f, esp1, esm1)   = " << eve::pedantic(eve::fsnm)(1.0f, esp1, esm1) << '\n'
+            << " -> numeric(fsnm)(1.0f, esp1, esm1)    = " << eve::numeric(eve::fsnm)(1.0f, esp1, esm1)  << '\n'
+            << " -> fsnm(-1.0f, esp1, esm1)            = " << eve::fsnm(-1.0f, esp1, esm1) << '\n';
   return 0;
 }

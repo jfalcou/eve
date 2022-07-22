@@ -10,8 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf           = " << pf << '\n'
-            << "-> dec(pf)       = " << eve::dec(pf) << '\n'
-            ; 
+            << "-> dec(pf)       = " << eve::dec(pf) << '\n'; 
 
   float xf = 1.0f;
 

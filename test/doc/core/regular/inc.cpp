@@ -10,8 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
-            << "-> eve::inc(pf)  = " << eve::inc(pf) << '\n'
-            ;
+            << "-> eve::inc(pf)  = " << eve::inc(pf) << '\n';
 
   float xf = 1.0f;
 

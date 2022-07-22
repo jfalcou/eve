@@ -15,8 +15,7 @@ int main()
     << "<- pi                       = " << pi << '\n'
     << "-> oneminus(pi)             = " << eve::oneminus(pi) << '\n'
     << "-> saturated(oneminus(pi))  = " << eve::saturated(eve::oneminus)(pi) << '\n'
-    << "-> oneminus(pf))            = " << eve::oneminus(pf) << '\n'
-    ;
+    << "-> oneminus(pf))            = " << eve::oneminus(pf) << '\n';
 
   float xf = 2.0f;
 

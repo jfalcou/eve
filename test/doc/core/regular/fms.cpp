@@ -24,10 +24,7 @@ int main()
             << " -> fms(of, pf, qf)                   =    " << eve::fms(of, pf, qf) << '\n'
             << "\n if the last fms result ends by '0, inf}', it is because\n"
             << " the system has no simd fms family intrinsics\n"
-            << " or is not configured to use them.\n\n"
-            
-            
-            ;
+            << " or is not configured to use them.\n\n";
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'

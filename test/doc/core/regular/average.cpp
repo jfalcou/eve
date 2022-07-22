@@ -35,13 +35,8 @@ int main()
   std::cout << "---- multi" << '\n'
             << " <- pf                               = " << pf << '\n'
             << " <- qf                               = " << qf << '\n'
-            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n'
-            
-            ;
+            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n';
 
-  std::cout << "---- multi parameters" << '\n'
-            
-            
-            ;
+  std::cout << "---- multi parameters" << '\n';
   return 0;
 }

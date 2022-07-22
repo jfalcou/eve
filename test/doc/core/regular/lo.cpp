@@ -25,8 +25,6 @@ int main()
             <<  std::hex << "<- x      = " << x   << '\n'
             << "-> lo(x)  = " << eve::lo(x) << '\n'
             << "<- y      = " << y   << '\n'
-            << "-> lo(y)  = " << int(eve::lo(y)) << '\n'
-
-    ;
+            << "-> lo(y)  = " << int(eve::lo(y)) << '\n' ;
   return 0;
 }

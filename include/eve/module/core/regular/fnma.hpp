@@ -13,86 +13,72 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_fma_family
   //! @{
-  //! @var fnma
+  //!   @var fnma
+  //!   @brief Computes the fused negate multiply add of its three parameters.
   //!
-  //! @brief Callable object computing the fused negate-multiply-add operation.
+  //!   The call `fnma(x, y, z)` is similar to `-x*y+z` as if calculated to infinite precision
+  //!   and rounded once to fit the result as much as supported by the hardware.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fused negate-multiply-add operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      eve::compatible_value_t fnma(T x, U y,  V z) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
-  //!  requires compatible< T, U > && compatible< T, V >;
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`, `z` :  arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`, `z`:   [values](@ref eve::value)
+  //!    The value of `-x*y+z` as if calculated to infinite precision
+  //!    and rounded once is returned,  but only if the hardware is in capacity
+  //!    to do it at reasonnable cost.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!The call `fnma(x, y, z)` is similar to `-x*y+z` as if calculated to infinite precision and rounded once
-  //!to fit the result as much as supported by the hardware.
+  //!       This `fnma` implementation provides those properties for all
+  //!       [integral real value](@ref eve::integral_real_value)
+  //!       and when possible for [floating real value](@ref eve::floating_real_value).
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
+  //!  @groupheader{Example}
   //!
-  //!@warning Note
-  //!    This `fnma` implementation provides those properties for all [integral real value](@ref eve::integral_real_value)
-  //!     and when possible for [floating real value](@ref eve::floating_real_value).
+  //!  @godbolt{doc/core//regular/fnma.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::fnma
+  //!     The call `eve::fnma[mask](x, ...)` provides a masked
+  //!     version of `fnma` which is
+  //!     equivalent to `if_else(mask, fnma(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/fnma.cpp}
   //!
-  //!  **Return value**
+  //!   * eve::pedantic, eve::numeric
   //!
-  //!  A Callable object so that the expression `fnma[cond](x, ...)` is equivalent to `if_else(cond,fnma(x, ...),x)`
+  //!       * The call `pedantic(fnma)(x,y,z)` ensures the one rounding property.
+  //!       This can be very expensive if the system has no hardware capability.
   //!
-  //! ---
+  //!       * The call `numeric(fnma)(x,y,z)` ensures the full compliance to fnma properties.
+  //!        This can be very expensive if the system has no hardware capability.
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(fnma)(x,y,z)` ensures the one rounding property. This can be very expensive if the
-  //!      system has no hardware capability.
-  //!  * eve::numeric
-  //!
-  //!
-  //!     The call `numeric(fnma)(x,y,z)` ensures the full compliance to fnma properties. This can be very expensive if the
-  //!      system has no hardware capability.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_1st(fnma)(x,y,z)`, `diff_2nd(fnma)(x,y,z)` and `diff_3rd(fnma)(x,y,z)` compute the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ -xy+z\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/fnma.cpp}
-  //!
-  //!  @}
+  //!       * see the above regular example.
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(fnma_, fnma);
 }

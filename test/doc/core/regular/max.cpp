@@ -18,9 +18,7 @@ int main()
             << "<- qf                     = " << qf << '\n'
             << "-> max(pf, qf)            = " << eve::max(pf, qf) << '\n'
             << "-> pedantic(max)(pf, qf)  = " << eve::pedantic(eve::max)(pf, qf) << '\n'
-            << "-> numeric(max)(pf, qf)   = " << eve::numeric(eve::max)(pf, qf) << '\n'
-            
-            ;
+            << "-> numeric(max)(pf, qf)   = " << eve::numeric(eve::max)(pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());

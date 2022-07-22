@@ -10,8 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
-            << "-> trunc(pf)      = " << eve::trunc(pf) << '\n'
-            ;
+            << "-> trunc(pf)      = " << eve::trunc(pf) << '\n';
 
   float xf = -32.768f;
 

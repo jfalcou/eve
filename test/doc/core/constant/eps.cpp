@@ -16,7 +16,7 @@ int main()
             << "-> eps(as(wxi))          = " << eve::eps(eve::as(wxi))     << '\n';
 
   float        xf;
-  doube        xd;
+  double       xd;
 
   std::cout << "---- scalar" << '\n'
             << "-> eps(as<float>())         = " << eve::eps(eve::as<float>()) << '\n'

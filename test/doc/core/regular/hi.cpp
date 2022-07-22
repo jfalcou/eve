@@ -23,8 +23,6 @@ int main()
             <<  std::hex << "<- x      = " << x   << '\n'
             << "-> hi(x)  = " << eve::hi(x) << '\n'
             << "<- y      = " << y   << '\n'
-            << "-> hi(y)  = " << int(eve::hi(y)) << '\n'
-
-    ;
+            << "-> hi(y)  = " << int(eve::hi(y)) << '\n';
   return 0;
 }

@@ -13,9 +13,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                         = " << pf << '\n'
             << "<- qf                         = " << qf << '\n'
-            << "-> negatenz(pf, qf)           = " << eve::negatenz(pf, qf) << '\n'
-            
-            ;
+            << "-> negatenz(pf, qf)           = " << eve::negatenz(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -0.0f;

@@ -17,6 +17,43 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var constant
+  //!   @brief Computes a floating constant from its scalar hexadecimal integral representation.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T, auto BitsPattern >
+  //!      T constant(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  argument.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::constant<Bitpattern>(as<T>())` returns a value of type T
+  //!      from the bits found in Bitpattern.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/constant.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var Constant

@@ -15,9 +15,7 @@ int main()
             << " -> add(pi, qi) = " << eve::add(pi, qi) << '\n'
             << " -> pi + qi                 = " << pi + qi << '\n'
             <<  " -> saturated(add)(pi, qi) = " << eve::saturated(eve::add)(pi, qi) << '\n'
-            << " -> pf + qf                 = " << pf + qf << '\n'
-            
-            ;
+            << " -> pf + qf                 = " << pf + qf << '\n';
 
   std::int16_t xi = 100, yi = 32700;
 
@@ -29,9 +27,6 @@ int main()
 
   std::cout << "---- multi parameters" << '\n'
             << " -> add(pi,pi,pi,1)                     = " << eve::add(pi, pi, pi, 1) << '\n'
-            << " -> saturated(add)(pi,12,pi,pi)         = " << eve::saturated(eve::add)(pi, 12, pi,pi) << '\n'
-            
-            
-            ;
+            << " -> saturated(add)(pi,12,pi,pi)         = " << eve::saturated(eve::add)(pi, 12, pi,pi) << '\n';
   return 0;
 }

@@ -15,10 +15,12 @@ int main()
     << "<- pf                          = " << pf << '\n'
     << "<- qf                          = " << qf << '\n'
     << "<- rf                          = " << rf << '\n'
-    << "-> fnma(pf, qf, rf)            = " << eve::fnma(pf, qf, rf) << '\n'
-    
-    
-    ;
+    << " -> pedantic(fnma)(pf, qf, rf) = " << eve::pedantic(eve::fnma)(pf, qf, rf) << '\n'
+    << " -> numeric(fnma)(pf, qf, rf)  = " << eve::numeric(eve::fnma)(pf, qf, rf) << '\n'
+    << " -> fnma(pf, qf, rf)           = " << eve::fnma(pf, qf, rf) << '\n'
+    << "\n if the last fnma result ends by '0, inf}', it is because\n"
+    << " the system has no simd fnma fnmaily intrinsics\n"
+    << " or is not configured to use them.\n\n";
 
 
   float xf = 0.5f;
@@ -29,9 +31,6 @@ int main()
     << "<- xf                         = " << xf << '\n'
     << "<- yf                         = " << yf << '\n'
     << "<- zf                         = " << yf << '\n'
-    << "-> fnma(xf, yf, zf)           = " << eve::fnma(xf, yf, zf) << '\n'
-    
-    
-    ;
+    << "-> fnma(xf, yf, zf)           = " << eve::fnma(xf, yf, zf) << '\n';
   return 0;
 }

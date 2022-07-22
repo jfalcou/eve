@@ -19,6 +19,11 @@ int main()
             << " <- of                                = " << of << '\n'
             << " <- pf                                = " << pf << '\n'
             << " <- qf                                = " << qf << '\n'
-            << " -> fanm[pf+of > 0](of, pf, qf)        = " << eve::fanm[pf+of > 0](of, pf, qf) << '\n';
+            << " -> pedantic(fam)(of, pf, qf)         = " << eve::pedantic(eve::fam)(of, pf, qf) << '\n'
+            << " -> numeric(fam)(of, pf, qf)          = " << eve::numeric(eve::fam)(of, pf, qf) << '\n'
+            << " -> fam(of, pf, qf)                   = " << eve::fam(of, pf, qf) << '\n'
+            << "\n if the last fam result ends by '0, inf}', it is because\n"
+            << " the system has no simd fam family intrinsics\n"
+            << " or is not configured to use them.\n\n";
   return 0;
 }

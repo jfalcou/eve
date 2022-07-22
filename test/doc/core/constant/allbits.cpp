@@ -19,8 +19,8 @@ int main()
   std::int16_t xi;
 
   std::cout << "---- scalar" << '\n'
-            << "-> allbits(as<float>())         = " << eve::allbits(eve::as(float>()) << '\n'
-            << "-> allbits(as<std::int16_t>())  = " << eve::allbits(eve::as(std::int16_t>()) << '\n'
+            << "-> allbits(as<float>())         = " << eve::allbits(eve::as<float>()) << '\n'
+            << "-> allbits(as<std::int16_t>())  = " << eve::allbits(eve::as<std::int16_t>()) << '\n'
             << "-> allbits(as<xf))              = " << eve::allbits(eve::as(xf)) << '\n'
             << "-> allbits(as<xi))              = " << eve::allbits(eve::as(xi)) << '\n';
 

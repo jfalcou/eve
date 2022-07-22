@@ -28,14 +28,14 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::value T ... >
-  //!      eve::common_compatible_t<T, ...> add(T ... x) noexcept;
+  //!      template< eve::value Ts ... >
+  //!      eve::common_compatible_t<Ts, ...> add(Ts ... xs) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x...` :  [arguments](eve::value).
+  //!     * `...xs` :  [arguments](eve::value).
   //!
   //!    **Return value**
   //!

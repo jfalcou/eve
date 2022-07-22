@@ -19,6 +19,6 @@ int main()
             << " <- of                                = " << of << '\n'
             << " <- pf                                = " << pf << '\n'
             << " <- qf                                = " << qf << '\n'
-            << " -> fanm[pf+of > 0](of, pf, qf)        = " << eve::fanm[pf+of > 0](of, pf, qf) << '\n';
+            << " -> fnam[pf+of > 0](of, pf, qf)        = " << eve::fnam[pf+of > 0](of, pf, qf) << '\n';
   return 0;
 }

@@ -22,8 +22,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
             << "-> n                   = " << n  << '\n'
-            << "-> d                   = " << d  << '\n' ;
-
+            << "-> d                   = " << d  << '\n';
 
   double        xf = -3.0/5.0;
   auto [xn, xd] = eve::rat(xf);
@@ -31,7 +30,6 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf                  = " << xf << '\n'
             << "-> xn                  = " << xn << '\n'
-            << "-> xd                  = " << xd << '\n' ;
-            ;
+            << "-> xd                  = " << xd << '\n';
   return 0;
 }

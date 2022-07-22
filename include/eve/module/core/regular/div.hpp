@@ -40,12 +40,13 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      If the arguments are \f$(x_i)_{0\le i\le n}/\f$ The value of \f$x/\prod_1^n x_i\f$
+  //!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x/\prod_1^n x_i\f$
   //!      is returned.
   //!
   //!    **Notes**
   //!
-  //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y` if `x` or  `y` is an  [simd value](@ref eve::simd_value).
+  //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`
+  //!        if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
   //!      * Although the infix notation with `/` is supported, the `/` operator on
   //!        standard scalar types is the original one and so can lead to automatic promotion.

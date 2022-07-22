@@ -12,86 +12,72 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_fma_family
   //! @{
-  //! @var fam
+  //!   @var fam
+  //!   @brief Computes the fused add multiply of its three parameters.
   //!
-  //! @brief Callable object computing the fused add-multiply operation.
+  //!   The call `fam(x, y, z)` is similar to `x+y*z` as if calculated to infinite precision
+  //!   and rounded once to fit the result as much as supported by the hardware.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fused add-multiply operation                           |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      eve::compatible_value_t fam(T x, U y,  V z) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
-  //!  requires compatible< T,U> && compatible< T, V >;
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`, `z` :  arguments.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`, `z`:   [values](@ref eve::value)
+  //!    The value of `x+y*z` as if calculated to infinite precision
+  //!    and rounded once is returned,  but only if the hardware is in capacity
+  //!    to do it at reasonnable cost.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!The call `fam(x, y, z)` is similar to `x+y*z` as if calculated to infinite precision and rounded once
-  //!to fit the result as much as supported by the hardware.
+  //!       This `fam` implementation provides those properties for all
+  //!       [integral real value](@ref eve::integral_real_value)
+  //!       and when possible for [floating real value](@ref eve::floating_real_value).
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
+  //!  @groupheader{Example}
   //!
-  //!@warning Note
-  //!    This `fam` implementation provides those properties for all [integral real value](@ref eve::integral_real_value)
-  //!     and when possible for [floating real value](@ref eve::floating_real_value).
+  //!  @godbolt{doc/core//regular/fam.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::fam
+  //!     The call `eve::fam[mask](x, ...)` provides a masked
+  //!     version of `fam` which is
+  //!     equivalent to `if_else(mask, fam(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/fam.cpp}
   //!
-  //!  **Return value**
+  //!   * eve::pedantic, eve::numeric
   //!
-  //!  A Callable object so that the expression `fam[cond](x, ...)` is equivalent to `if_else(cond,fam(x, ...),x)`
+  //!       * The call `pedantic(fam)(x,y,z)` ensures the one rounding property.
+  //!       This can be very expensive if the system has no hardware capability.
   //!
-  //! ---
+  //!       * The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties.
+  //!        This can be very expensive if the system has no hardware capability.
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(fam)(x,y,z)` ensures the one rounding property. This can be very expensive if the
-  //!      system has no hardware capability.
-  //!  * eve::numeric
-  //!
-  //!
-  //!     The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties. This can be very expensive if the
-  //!      system has no hardware capability.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_1st(fam)(x,y,z)`, `diff_2nd(fam)(x,y,z)` and `diff_3rd(fam)(x,y,z)` compute the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y,z) \rightarrow \ x+y z\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/fam.cpp}
-  //!
-  //!  @}
+  //!       * see the above regular example.
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(fam_, fam);
 }
