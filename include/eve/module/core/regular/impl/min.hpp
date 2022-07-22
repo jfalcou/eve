@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_less.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
@@ -30,7 +31,7 @@ template<real_scalar_value T>
 EVE_FORCEINLINE auto
 min_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  return if_else(b < a, b, a);
+  return b < a ? b : a;
 }
 
 template<real_simd_value T>
@@ -65,4 +66,16 @@ min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   ((that = min(that, r_t(args))), ...);
   return that;
 }
+
+//================================================================================================
+// Predicate case
+//================================================================================================
+template<typename Callable>
+EVE_FORCEINLINE auto
+min_(EVE_SUPPORTS(cpu_), Callable f)
+{
+  if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::min;
+  else return [f](auto x, auto y) { return if_else(f(y, x), y, x); };
+}
+
 }
