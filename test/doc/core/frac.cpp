@@ -12,8 +12,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
-            << "-> frac(pf)       = " << eve::frac(pf) << '\n'
-            ;
+            << "-> frac(pf)       = " << eve::frac(pf) << '\n';
 
   float xf = -327.68f;
 

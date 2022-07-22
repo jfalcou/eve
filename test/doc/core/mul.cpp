@@ -18,9 +18,7 @@ int main()
             << " <- pf                      = " << pf << '\n'
             << " <- qf                      = " << qf << '\n'
             << " -> mul(pf, qf)             = " << eve::mul(pf, qf) << '\n'
-            << " -> pf * qf                 = " << pf * qf << '\n'
-            
-            ;
+            << " -> pf * qf                 = " << pf * qf << '\n';
 
   std::int16_t xi = 100, yi = 32700;
 

@@ -15,7 +15,7 @@ namespace eve
   //! @addtogroup core_bitops
   //! @{
   //!   @var bit_not
-  //!   @brief comutes the ones complement of the parameter.
+  //!   @brief computes the ones complement of the parameter.
   //!
   //!   **Defined in Header**
   //!

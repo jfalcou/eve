@@ -40,8 +40,8 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    The value of the difference  of the the first argument with the sum of fall other
-  //!    is returned.
+  //!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x-\sum_1^n x_i\f$
+  //!      is returned.
   //!
   //!   **Note**
   //!

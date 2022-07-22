@@ -11,8 +11,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf              = " << pf << '\n'
             << "-> sqrt(pf)        = " << eve::sqrt(pf) << '\n'
-            << "-> raw(sqrt)(pf)   = " << eve::raw(eve::sqrt)(pf) << '\n'
-            ;
+            << "-> raw(sqrt)(pf)   = " << eve::raw(eve::sqrt)(pf) << '\n';
 
 
   float xf = 32.768f;

@@ -12,9 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                       = " << pf << '\n'
             << "<- qf                       = " << qf << '\n'
-            << "-> negate(pf, qf)           = " << eve::negate(pf, qf) << '\n'
-            
-            ;
+            << "-> negate(pf, qf)           = " << eve::negate(pf, qf) << '\n';
 
   float xf = 4.0f;
   float yf = -1.0f;

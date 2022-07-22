@@ -11,8 +11,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
-            << "-> rec)(pf)      = " << eve::rec(pf) << '\n'
-            ;
+            << "-> rec)(pf)      = " << eve::rec(pf) << '\n';
 
   float xf = 1.0f;
 

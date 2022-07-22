@@ -16,32 +16,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var as_value
+  //!   @var as_value
+  //!   @brief Converts an eve constant or just a value to a type.
   //!
-  //! @brief Callable object that converts eve constant or just a value to a type.
-  //! Useful in a generic context
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the resulting value                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< typename From, eve::value T >
+  //!      T as_value(From f, as<T> const & t) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < typename From, value T > T operator()( From from, as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `from` :  either anything convertible to T or an eve constant.
   //!
-  //!  From: either smth convertible to T or one of eve/constant
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!       T equivalent of from
   //!
-  //! T equivalent of from
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/as_value.cpp}
+  //! @}
+  //================================================================================================
 
   EVE_MAKE_CALLABLE(as_value_, as_value);
 

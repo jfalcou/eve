@@ -14,10 +14,7 @@ int main()
             << " <- xi                          = " << xi << '\n'
             << " <- lo                          = " << lo << '\n'
             << " <- hi                          = " << hi << '\n'
-            << " -> clamp(xi, lo, hi)           = " << eve::clamp(xi, lo, hi) << '\n'
-            
-            
-            ;
+            << " -> clamp(xi, lo, hi)           = " << eve::clamp(xi, lo, hi) << '\n';
 
   float sxi = 3, slo = 3, shi = 4;
   std::cout << "---- scalar" << '\n'

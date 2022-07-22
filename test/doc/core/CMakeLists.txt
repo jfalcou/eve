@@ -6,6 +6,7 @@
 ##==================================================================================================
 
 
+add_subdirectory(constant)
 add_subdirectory(fuzzy)
 add_subdirectory(masked)
 add_subdirectory(raw)

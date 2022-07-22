@@ -10,12 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pi                = " << pi << '\n'
-            << "-> firstbitunset(pi) = " << eve::firstbitunset(pi) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                = " << xf << '\n'
-            << "-> firstbitunset(xf) = " << eve::firstbitunset(xf) << '\n';
+            << "-> firstbitunset[pi > 4](pi) = " << eve::firstbitunset[pi > 4](pi) << '\n';
   return 0;
 }

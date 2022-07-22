@@ -10,8 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
-            << "-> floor(pf)      = " << eve::floor(pf) << '\n'
-            ;
+            << "-> floor(pf)      = " << eve::floor(pf) << '\n';
 
   float xf = -32.768f;
 

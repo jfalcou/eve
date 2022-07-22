@@ -17,40 +17,40 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+   //================================================================================================
+  //! @addtogroup core_constants
   //! @{
-  //! @var bitincrement
+  //!   @var bitincrement
+  //!   @brief Computes the constant of type T in which the only bit set is the least significant
   //!
-  //! @brief Callable object computing the bit increment.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the bitincrement constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T bitincrement(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::bitincrement(as<T>())` returns a value of type T in which the only bit
+  //!      set is the least significant
   //!
-  //! the call `eve::bitincrement(as<T>())` returns a value of type T such as each element has all
-  //! bits exept the lowest set to zero.
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bitincrement.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/bitincrement.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bitincrement_, bitincrement);

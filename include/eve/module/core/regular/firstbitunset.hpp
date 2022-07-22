@@ -12,63 +12,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var firstbitunset
+  //!   @var firstbitunset
+  //!   @brief Computes [elementwise](@ref glossary_elementwise) the bit pattern
+  //!   in which the only bit set (if it exists) is the first bit unset in the input.
   //!
-  //! @brief Callable object computing the firstbitunset operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the firstbitunset operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value T >
+  //!      T firstbitunset(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [unsigned value](@ref eve::unsigned_value).
+  //!       Computes [elementwise](@ref glossary_elementwise) the bit pattern in
+  //!       which the only bit set (if it exists) is
+  //!       the first bit unset (beginning with the least significant bit) in the input.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Computes [elementwise](@ref glossary_elementwise) the bit pattern in which the only bit set (if it exists) is
-  //!the first bit unset (beginning with the least significant bit) in the input.
+  //!  @godbolt{doc/core//regular/firstbitunset.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::firstbitunset
+  //!     The call `eve::firstbitunset[mask](x)` provides a masked
+  //!     version of `firstbitunset` which is
+  //!     equivalent to `if_else(mask, firstbitunset(x), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/firstbitunset.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `firstbitunset[cond](x, ...)` is equivalent to `if_else(cond,firstbitunset(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/firstbitunset.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(firstbitunset_, firstbitunset);
 }

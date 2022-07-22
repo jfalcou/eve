@@ -18,44 +18,44 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var eps
+  //!   @var $name$
+  //!   @brief Computes the the machine epsilon.
   //!
-  //! @brief Callable object computing the machine epsilon.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the eps constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T $name$(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      the call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
+  //!      positive value `x` of the type such that `1+x !=  x`.
   //!
-  //! the call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
-  //! positive value `x` of the type such that `1+x !=  x`.
+  //!      * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one
+  //!      * If T is a  [floating value](@ref eve::floating_value) the elements returned are equal to
+  //!           * 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is float
+  //!           * 1.1920929e-07f        if the [elements type](@ref eve::element_type) is double
   //!
-  //!  * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one
-  //!  * If T is a  [floating real value](@ref eve::floating_real_value) the elements returned are equal to
-  //!        - 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is float
-  //!        - 1.1920929e-07f        if the [elements type](@ref eve::element_type) is double
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/eps.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/$name$.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(eps_, eps);

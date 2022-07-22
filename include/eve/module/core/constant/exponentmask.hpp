@@ -17,41 +17,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var exponentmask
+  //!   @var exponentmask
+  //!   @brief Computes the the exponent bit mask of IEEE float or double.
   //!
-  //! @brief Callable object computing the exponent bit mask.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the exponentmask constant                         |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      as_unsigned<T> exponentmask(as<T> t) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > auto operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     `t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
-  //!
-  //! the call `eve::exponentmask(as<T>())` returns [elementwise](@ref glossary_elementwise), the
-  //! integral mask to extract the exponent bits of an ieee floating value. The element values are:
+  //!       the call `eve::exponentmask(as<T>())` returns [elementwise](@ref glossary_elementwise), the
+  //!       integral mask to extract the exponent bits of an ieee floating value. The element values are:
   //!        - 0x7f800000 if the [element type](@ref eve::element_type) is float
   //!        - 0x7ff0000000000000LL if the [element type](@ref eve::element_type) is double
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/exponentmask.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/exponentmask.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(exponentmask_, exponentmask);
