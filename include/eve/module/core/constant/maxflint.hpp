@@ -18,41 +18,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var maxflint
+  //!   @var maxflint
+  //!   @brief Computes the the greatest floating point representing an integer and
+  //!   such that n != n+1.
   //!
-  //! @brief Callable object computing the greatest real n representing an integer and
-  //! such that n != n+1.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the maxflint constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T maxflint(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::maxflint(as<T>())` is semantically equivalent to:
+  //!        * T(16777216.0f) if eve::element_type_t<T> is float.
+  //!        * T(9007199254740992.0) if eve::element_type_t<T> is double.
   //!
-  //! the call `eve::maxflint(as<T>())` is semantically equivalent to
-  //!   - T(16777216.0f) if eve::element_type_t<T> is float
-  //!   - T(9007199254740992.0) if eve::element_type_t<T> is double
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/maxflint.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/maxflint.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maxflint_, maxflint);

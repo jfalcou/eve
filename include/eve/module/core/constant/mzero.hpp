@@ -17,6 +17,47 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var mzero
+  //!   @brief Computes the negative zero value
+  //!
+  //!    For integral type there is n odifference between eve::zero and eve::mzero,
+  //!    but for floating ones the bit of sign differs.
+  //!
+  //!    However, eve::mzero always satisfies the aquality predicate with eve::zero.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T mzero(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  argument.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::mzero(as<T>())` is semantically equivalent to `T(-0.0)`.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/mzero.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var mzero

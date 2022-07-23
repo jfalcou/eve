@@ -17,6 +17,45 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var mantissamask
+  //!   @brief Computes the mask to extract the mantissa bits of an ieee floating value.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_unsigned<T> mantissamask(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  argument.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::mantissamask(as<T>())` returns [elementwise](@ref glossary_elementwise), the
+  //!      integral mask to extract the mantissa bits of an ieee floating value. The element values are:
+  //!        - 0x807FFFFFU if the [element type](@ref eve::element_type) is float
+  //!        - 0x800FFFFFFFFFFFFFULL if the [element type](@ref eve::element_type) is double
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/mantissamask.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var mantissamask

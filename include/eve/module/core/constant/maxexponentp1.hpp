@@ -17,40 +17,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var maxexponentp1
+  //!   @var maxexponentp1
+  //!   @brief Computes the  the greatest exponent of a floating point IEEE value plus one.
   //!
-  //! @brief Callable object computing the greatest exponent value plus one.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the maxexponentp1 constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_integer<T> maxexponentp1(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_real_value T > auto operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
-  //!
-  //! the call `eve::maxexponentp1(as<T>())` is semantically equivalent to
+  //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
   //!   - as_integer_t<T>(128) if eve::element_type_t<T> is float
   //!   - as_integer_t<T>(1024) if eve::element_type_t<T> is double
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/maxexponentp1.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/maxexponentp1.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maxexponentp1_, maxexponentp1);

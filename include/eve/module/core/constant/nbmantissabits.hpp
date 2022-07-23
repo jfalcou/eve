@@ -18,40 +18,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var nbmantissabits
+  //!   @var $name$
+  //!   @brief Returns the number of mantissa bits of a floating point value.
   //!
-  //! @brief Callable object computing the number of mantissa bits.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the nbmantissabits constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T $name$(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::limitexponent(as<T>())` is semantically equivalent to:
+  //!         * as_integer_t<T>(23) if eve::element_type_t<T> is float
+  //!         * as_integer_t<T>(52) if eve::element_type_t<T> is double
   //!
-  //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
-  //!   - as_integer_t<T>(23) if eve::element_type_t<T> is float
-  //!   - as_integer_t<T>(52) if eve::element_type_t<T> is double
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/nbmantissabits.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/$name$.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(nbmantissabits_, nbmantissabits);

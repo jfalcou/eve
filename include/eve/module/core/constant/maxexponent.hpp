@@ -17,40 +17,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var maxexponent
+  //!   @var maxexponent
+  //!   @brief Computes the  the greatest exponent of a floating point IEEE value
   //!
-  //! @brief Callable object computing the greatest exponent value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the maxexponent constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_integer<T> maxexponent(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_real_value T > auto operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //! **Return value**
+  //!    **Return value**
   //!
   //! the call `eve::limitexponent(as<T>())` is semantically equivalent to
   //!   - as_integer_t<T>(127) if eve::element_type_t<T> is float
   //!   - as_integer_t<T>(1023) if eve::element_type_t<T> is double
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/maxexponent.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/maxexponent.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maxexponent_, maxexponent);
