@@ -7,3 +7,4 @@
 
 make_unit( "doc.core.fuzzy" ceil.cpp                )
 make_unit( "doc.core.fuzzy" floor.cpp               )
+make_unit( "doc.core.fuzzy" is_equal.cpp            )

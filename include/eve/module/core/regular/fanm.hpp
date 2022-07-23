@@ -16,7 +16,7 @@ namespace eve
   //! @addtogroup core_fma_family
   //! @{
   //!   @var fanm
-  //!   @brief Computes the fused add multiply of its three parameters.
+  //!   @brief Computes the fused add negate multiply of its three parameters.
   //!
   //!   The call `fanm(x, y, z)` is similar to `x-y*z` as if calculated to infinite precision
   //!   and rounded once to fit the result as much as supported by the hardware.

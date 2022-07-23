@@ -11,79 +11,59 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_flint
+  //!   @var is_flint
+  //!   @brief Returns a logical true  if and only if the element value is a floating value
+  //!   representing an integer
   //!
-  //! @brief Callable object computing the is_flint logical value.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_flint logical value              |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      eve::as_logical<T> is_flint(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_real_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!     The call `eve;::is_flint[mask](x)` is semantically  equivalent to: `eve::is_eqz (eve::frac (x))`;
   //!
-  //!The call:
+  //!     This means that x is a [floating real value](@ref eve::floating_real_value) representing an integer
+  //!     (flint is a shorcut for 'floating integer').
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_flint(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Example}
   //!
-  //!is semantically  equivalent to: `eve::is_eqz(eve::frac(x))`;
+  //!  @godbolt{doc/core/regular/is_flint.cpp}
   //!
-  //!This means that x is a [floating real value](@ref eve::floating_real_value) representing an integer
-  //!(flint is a shorcut for 'floating integer').
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve;::is_flint[mask](x)` provides a masked version of `eve::is_flint` which is
+  //!     equivalent to `if_else (mask, is_flint(x), eve::false( eve::as(x)))`.
   //!
-  //!  Higher-order function generating a masked version of eve::is_flint
+  //!      **Example**
   //!
-  //!  **Parameters**
+  //!        @godbolt{doc/core/masked/is_flint.cpp}
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_flint[cond](x)` is equivalent to
-  //! `if_else(cond,is_flint(x),false(as(is_flint(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!     Pedantically speaking flint stands for floating integer. The call `pedantic(is_flint)(x)` considers
-  //!      that integral typed values are not floating and so `pedantic(is_flint)(x)` returns false for all elements of this types. Moreover a
-  //!      floating point value is pedantically deemed as flint only is the next representable value is not flint, so
-  //!      great floating values are not pedantically flint.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_flint.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_flint_, is_flint);
 }
 
