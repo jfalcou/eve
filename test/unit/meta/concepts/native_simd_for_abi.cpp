@@ -68,24 +68,24 @@ TTS_CASE_TPL( "Check that wide<T,N,ppc*> does not satisfy native_simd_for_abi wi
 };
 #elif defined(SPY_SIMD_IS_ARM_FIXED_SVE)
 TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM SVE ABI"
-            , TTS_NUMERIC_TYPES
+            , ::tts::arithmetic_types
             )
 <typename T>(::tts::type<T>)
 {
   using eve::wide;
   using eve::logical;
 
-  if constexpr( eve::current_api.width == 128)
+  if constexpr( eve::current_api.value().width == 128)
   {
     TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , eve::arm_sve_128_> ));
     TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_sve_128_> ));
   }
-  else if constexpr( eve::current_api.width == 256)
+  else if constexpr( eve::current_api.value().width == 256)
   {
     TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , eve::arm_sve_256_> ));
     TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_sve_256_> ));
   }
-  else if constexpr( eve::current_api.width == 512)
+  else if constexpr( eve::current_api.value().width == 512)
   {
     TTS_EXPECT((eve::native_simd_for_abi<wide<T>          , eve::arm_sve_512_> ));
     TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_sve_512_> ));
