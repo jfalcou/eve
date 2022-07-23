@@ -20,6 +20,43 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var oneosqrteps
+  //!   @brief Computes the  the inverse of the square root of the machine epsilon.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T oneosqrteps(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::oneosqrteps(as<T>())`  is semantically equivalent to
+  //!      `eve::rec (eve::sqrt (eve::eps (as<T>())))`
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/oneosqrteps.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var oneosqrteps

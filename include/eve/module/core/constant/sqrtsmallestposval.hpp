@@ -21,42 +21,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var sqrtsmallestposval
+  //!   @var sqrtsmallestposval
+  //!   @brief Computes the square root of the eve::smallestposval.
   //!
-  //! @brief Callable object computing the greatest value less
-  //! than the square root of the greatest value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sqrtsmallestposval constant                           |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T sqrtsmallestposval(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::sqrtsmallestposval(as<T>())` is semantically equivalent to
+  //!      `eve::sqrt (eve::smallestposval(as<T>())`.
   //!
-  //! the call `eve::sqrtsmallestposval(as<T>())` is the square root of`eve::smallestposval(as<T>())`.
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/sqrtsmallestposval.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/sqrtsmallestposval.cpp}
   //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(sqrtsmallestposval_, sqrtsmallestposval);
 
   namespace detail

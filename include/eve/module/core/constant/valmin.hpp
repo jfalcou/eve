@@ -16,41 +16,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var valmin
+  //!   @var valmin
+  //!   @brief Computes the the lowest representable value.
   //!
-  //! @brief Callable object computing the lowest representable value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the valmin constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T valmin(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < value T > T operator()( as<T> const & t ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::valmin(as<T>())` is semantically equivalent to
+  //!     `T(std::numeric_limits<element_type_t<T>>::``lowest())`
   //!
-  //! the call `eve::valmin(as<T>())` is semantically equivalent to  `T(std::numeric_limits<element_type_t<T>>::``lowest())`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/valmin.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/valmin.cpp}
   //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(valmin_, valmin);
 
   namespace detail

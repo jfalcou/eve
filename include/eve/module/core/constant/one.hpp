@@ -14,38 +14,38 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var one
+  //!   @var one
+  //!   @brief Computes the constant \f$1\f$.
   //!
-  //! @brief Callable object computing the 1 value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the one constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T one(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::one(as<T>())` is semantically equivalent to `T(1)`
   //!
-  //! the call `eve::one(as<T>())` is semantically equivalent to `T(1)`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/one.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/one.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(one_, one);
@@ -56,7 +56,7 @@ namespace eve
     {
       return T(1);
     }
-    
+
     template<typename T, typename D>
     EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type> {}))

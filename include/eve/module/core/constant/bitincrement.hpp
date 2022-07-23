@@ -41,7 +41,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  argument.
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
   //!    **Return value**
   //!

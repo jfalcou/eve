@@ -18,41 +18,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var smallestposval
+  //!   @var smallestposval
+  //!   @brief Computes the smallest normal positive value.
   //!
-  //! @brief Callable object computing the smallest normal positive value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the smallestposval constant                       |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T smallestposval(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::smallestposval(as<T>())` is semantically equivalent to:
+  //!        * T(1) if eve::element_type_t<T> is integral
+  //!        * T(1.1754944e-38f)if eve::element_type_t<T> is float
+  //!        * T(2.225073858507201e-308) if eve::element_type_t<T> is double
   //!
-  //! the call `eve::smallestposval(as<T>())` is semantically equivalent to:
-  //!   - T(1) if eve::element_type_t<T> is integral
-  //!   - T(1.1754944e-38f)if eve::element_type_t<T> is float
-  //!   - T(2.225073858507201e-308) if eve::element_type_t<T> is double
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/smallestposval.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/smallestposval.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(smallestposval_, smallestposval);

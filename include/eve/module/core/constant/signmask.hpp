@@ -18,6 +18,43 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var signmask
+  //!   @brief Computes a value in which the most significant bit is the only bit set.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T signmask(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::signmask(as<T>())` returns a value of type T for which each element has
+  //!      all its bits unset except the highest.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/signmask.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var signmask
