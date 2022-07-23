@@ -48,6 +48,7 @@
 #include <eve/module/core/regular/ifnot_else.hpp>
 #include <eve/module/core/regular/interleave.hpp>
 #include <eve/module/core/regular/interleave_shuffle.hpp>
+#include <eve/module/core/regular/last_true.hpp>
 #include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/lookup.hpp>
 #include <eve/module/core/regular/maximum.hpp>
