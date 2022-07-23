@@ -94,6 +94,9 @@ TTS_CASE_WITH("Check predicate version of min",
   TTS_EXPR_IS(eve::min(eve::is_less), eve::callable_min_);
   TTS_EQUAL(eve::min(eve::is_less)(a0, a1), eve::min(a0, a1));
 
+  TTS_EXPR_IS(eve::min(eve::is_greater), eve::callable_max_);
+  TTS_EQUAL(eve::min(eve::is_greater)(a0, a1), eve::max(a0, a1));
+
   auto pred = [](auto a, auto b) { return eve::abs(a) < eve::abs(b);};
   TTS_EQUAL(eve::min(pred)(a0, a1), eve::if_else(pred(a1,a0),a1,a0));
 
@@ -101,11 +104,11 @@ TTS_CASE_WITH("Check predicate version of min",
   using e_t = eve::element_type_t<T>;
   using w_t = eve::wide<kumi::tuple<e_t,e_t>, eve::cardinal_t<T>>;
 
-  w_t a { [](auto i, auto) { return i%2 ? i+1 : 0; }
+  w_t a { [](auto i, auto) { return i%2 ? i/2+1 : 0; }
         , [](auto i, auto) { return i+1; }
         };
 
-  w_t b { [](auto i, auto) { return i%2 ? i : 0; }
+  w_t b { [](auto i, auto) { return i%2 ? i/2 : 0; }
         , [](auto i, auto) { return -(i+1); }
         };
 

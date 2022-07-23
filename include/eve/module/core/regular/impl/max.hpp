@@ -14,6 +14,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail
@@ -75,6 +76,7 @@ EVE_FORCEINLINE auto
 max_(EVE_SUPPORTS(cpu_), Callable f)
 {
   if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::max;
+  else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::min;
   else return [f](auto x, auto y) { return if_else(f(y, x), x, y); };
 }
 
