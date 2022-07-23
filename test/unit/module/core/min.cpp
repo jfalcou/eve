@@ -96,4 +96,21 @@ TTS_CASE_WITH("Check predicate version of min",
 
   auto pred = [](auto a, auto b) { return eve::abs(a) < eve::abs(b);};
   TTS_EQUAL(eve::min(pred)(a0, a1), eve::if_else(pred(a1,a0),a1,a0));
+
+  // Check for stability a la Stepanov
+  using e_t = eve::element_type_t<T>;
+  using w_t = eve::wide<kumi::tuple<e_t,e_t>, eve::cardinal_t<T>>;
+
+  w_t a { [](auto i, auto) { return i%2 ? i+1 : 0; }
+        , [](auto i, auto) { return i+1; }
+        };
+
+  w_t b { [](auto i, auto) { return i%2 ? i : 0; }
+        , [](auto i, auto) { return -(i+1); }
+        };
+
+  w_t ref { [=](auto i, auto) { return i%2 ? b.get(i) : a.get(i); } };
+
+  auto less_1st = [](auto a, auto b) { return get<0>(a) < get<0>(b); };
+  TTS_EQUAL( eve::min(less_1st)(a,b), ref );
 };

@@ -75,7 +75,7 @@ EVE_FORCEINLINE auto
 max_(EVE_SUPPORTS(cpu_), Callable f)
 {
   if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::max;
-  else return [f](auto x, auto y) { return if_else(f(x, y), y, x); };
+  else return [f](auto x, auto y) { return if_else(f(y, x), x, y); };
 }
 
 }
