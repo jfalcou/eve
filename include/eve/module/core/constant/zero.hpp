@@ -14,38 +14,38 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var zero
+  //!   @var zero
+  //!   @brief Computes the constant 0
   //!
-  //! @brief Callable object computing the O value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the zero constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T zero(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::zero(as<T>())` is semantically equivalent to  `T(0)`.
   //!
-  //! the call `eve::zero(as<T>())` is semantically equivalent to  `T(0)`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/zero.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/zero.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(zero_, zero);

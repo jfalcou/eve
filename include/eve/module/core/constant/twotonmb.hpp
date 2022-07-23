@@ -17,40 +17,40 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_constants
   //! @{
-  //! @var twotonmb
+  //!   @var nbmantissabits
+  //!   @brief Computes the  2 power of the number of mantissa bits of a floating value.
   //!
-  //! @brief Callable object computing the 2 power of the number of mantissa bits.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the two to the nbmantissabits power               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T nbmantissabits(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!       The call `eve::twotonmb(as<T>())` is semantically equivalent to
+  //!      `eve::exp2 (T(eve::nbmantissabits (as<eve::element_type_t<T>>())))`
   //!
-  //! the call `eve::twotonmb(as<T>())` is semantically equivalent to
-  //! `eve::exp2(T(eve::nbmantissabits(as<eve::element_type_t<T>>())))`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/twotonmb.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/nbmantissabits.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(twotonmb_, twotonmb);

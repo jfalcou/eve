@@ -18,6 +18,43 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var sqrteps
+  //!   @brief Computes the square root of the machine epsilon.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T sqrteps(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::sqrteps(as<T>())` is semantically equivalent to
+  //!      `eve::sqrt (eve::eps (as<T>()))`
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/sqrteps.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var sqrteps

@@ -20,6 +20,43 @@
 
 namespace eve
 {
+ //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var sqrtvalmax
+  //!   @brief Computes the the greatest value less than the square root of eve::valmax.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T sqrtvalmax(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::sqrtvalmax(as<T>())` is the greatest number of the type whose  square
+  //!      is less or equal to `eve::valmax(as<T>())`.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/sqrtvalmax.cpp}
+  //! @}
+  //================================================================================================
+
   //================================================================================================
   //! @addtogroup core
   //! @{
