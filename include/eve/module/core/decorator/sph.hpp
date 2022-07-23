@@ -25,7 +25,7 @@ namespace eve
 
   using sph_type = decorated<sph_()>;
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var sph
   //!

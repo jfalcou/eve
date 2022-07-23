@@ -12,70 +12,59 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var ifrexp
+  //!   @var ifrexp
+  //!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
+  //!   pair of mantissa and exponent of the floating value,
   //!
-  //! @brief Callable object computing the ifrexp pair of values.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the ifrexp pair of values   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      kumi::tuple<T, eve::as_integer<T>> ifrexp(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [floating_real_value](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!     Computes the [elementwise](@ref glossary_elementwise) ieee ifrexp of the floating value,
+  //!     returning a pair `{m,e}`  of values `m` being of the same type as `x` and `e` of
+  //!     the associated integral type, which are related by
+  //!     \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
   //!
-  //!    Computes the [elementwise](@ref glossary_elementwise) ieee ifrexp of the floating value,
-  //!    returning a pair `{m,e}`  of values `m` being of the same type as `x` and `e` of the asscociated integral type,
-  //!    which are related by
-  //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
+  //!     However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
   //!
-  //!    However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core/regular/ifrexp.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::ifrexp
+  //!   * eve::pedantic
   //!
-  //!  **Parameters**
+  //!     The call `eve::pedantic(eve::ifrexp)(x)` takes also properly care of the cases where
+  //!     \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
+  //!     denormal cases.
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ifrexp[cond](x, ...)` is equivalent to `if_else(cond,ifrexp(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(ifrexp)(x)` takes also properly care of the cases where \f$x = \pm0, \pm\infty\f$ or is a Nan,
-  //!      where \f$m=x\f$ and \f$e=0\f$ and of the denormal cases.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/ifrexp.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/saturated/abs.cpp}
+  //! @}
   //================================================================================================
 
   namespace tag { struct ifrexp_; }

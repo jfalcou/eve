@@ -25,7 +25,7 @@ namespace eve
 
   using cyl_type = decorated<cyl_()>;
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var cyl
   //!

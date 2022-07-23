@@ -13,90 +13,89 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var if_else
+  //!   @var if_else
+  //!   @brief Computes the results of a choice under condition
   //!
-  //! @brief Callable object computing the if_else operation.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the if_else operation   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U, eve::value V >
+  //!      auto if_else(T x, U, y, V z ) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
-  //!  requires  compatible< U, V >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`: condition
+  //!     * `y`, `z`:  choice arguments.
   //!
-  //!`x`, `y`, `z`:   [values](@ref eve::value)
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!      The call `if_else(x, y, z)` performs a choice between the elements of `y` and `z`
+  //!      according to the truth value
+  //!      of the elements of `x`.
   //!
-  //!The call `if_else(x, y, z)` performs a choice between the elements of `y` and `z` according to the truth value
-  //!of the elements of `x`.
+  //!      Let `UV` be the compatibility result of `U` and `V`.
+  //!      The call `auto r = if_else(x, y, z)` is semantically equivalent to:
   //!
-  //!Let `UV` be the compatibility result of `U` and `V`.
-  //!The call `auto r = if_else(x, y, z)` is semantically equivalent to:
+  //!      @code
+  //!      if constexpr(scalar_value< T >)
+  //!      {
+  //!        return x ? UV(y) : UV(z);
+  //!      }
+  //!      else if constexpr(scalar_value< U > && scalar_value< V >)
+  //!      {
+  //!        for(int i=0; i < cardinal_v< T >; ++i)
+  //!        {
+  //!          r[i] = xx[i] ? y : z;
+  //!        }
+  //!      }
+  //!      else
+  //!      {
+  //!        using C = eve:wide< element_t< T >, cardinal_t< UV >>;
+  //!        auto xx = C(x);
+  //!        UV r;
+  //!        for(int i=0; i<cardinal_v< UV >; ++i)
+  //!        {
+  //!          r[i] = xx[i] ? y[i] : z[i];
+  //!        }
+  //!      }
+  //!      @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  if constexpr(scalar_value< T >)
-  //!  {
-  //!    return x ? UV(y) : UV(z);
-  //!  }
-  //!  else if constexpr(scalar_value< U > && scalar_value< V >)
-  //!  {
-  //!    for(int i=0; i < cardinal_v< T >; ++i)
-  //!    {
-  //!      r[i] = xx[i] ? y : z;
-  //!    }
-  //!  }
-  //!  else
-  //!  {
-  //!    using C = wide< element_t< T >, cardinal_t< UV >>;
-  //!    auto xx = C(x);
-  //!    UV r;
-  //!    for(int i=0; i<cardinal_v< UV >; ++i)
-  //!    {
-  //!      r[i] = xx[i] ? y[i] : z[i];
-  //!    }
-  //!  }
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      if `U`, `V` and `T` are scalar or if `U` or `V` are simd_values the
+  //!      result is of type `UV`, otherwise it is of type  `wide< UV, cardinal_t< T >>`.
   //!
-  //!  if `U`, `V` and `T` are scalar or if `U` or `V` are simd_values the result is of type `UV`,
-  //!  otherwise it is of type  `wide< UV, cardinal_t< T >>`.
+  //!   **Possible optimizations*
   //!
-  //! #### Possible optimizations
+  //!     The following calls where `x`, `y` and `z` are values can be optimized:
   //!
-  //! The following calls where `x`, `y` and `z` are values can be optimized:
+  //!        * `if_else(x, y, allbits< T >()) ` writing: `if_else(x, y, eve::allbits_)`
+  //!        * `if_else(x, y, one< T >()    ) ` writing: `if_else(x, y, eve::one_    )`
+  //!        * `if_else(x, y, mone< T >()   ) ` writing: `if_else(x, y, eve::mone_   )`
+  //!        * `if_else(x, y, zero< T >()   ) ` writing: `if_else(x, y, eve::zero_   )`
+  //!        * `if_else(x, allbits< T >(), z) ` writing: `if_else(x, eve::allbits_, z)`
+  //!        * `if_else(x, one< T >(), z    ) ` writing: `if_else(x, eve::one_, z    )`
+  //!        * `if_else(x, mone< T >(), z   ) ` writing: `if_else(x, eve::mone_, z   )`
+  //!        * `if_else(x, zero< T >(), z   ) ` writing: `if_else(x, eve::zero_, z   )`
   //!
-  //!   * `if_else(x, y, allbits< T >()) ` writing: `if_else(x, y, eve::allbits_)`
-  //!   * `if_else(x, y, one< T >()    ) ` writing: `if_else(x, y, eve::one_    )`
-  //!   * `if_else(x, y, mone< T >()   ) ` writing: `if_else(x, y, eve::mone_   )`
-  //!   * `if_else(x, y, zero< T >()   ) ` writing: `if_else(x, y, eve::zero_   )`
-  //!   * `if_else(x, allbits< T >(), z) ` writing: `if_else(x, eve::allbits_, z)`
-  //!   * `if_else(x, one< T >(), z    ) ` writing: `if_else(x, eve::one_, z    )`
-  //!   * `if_else(x, mone< T >(), z   ) ` writing: `if_else(x, eve::mone_, z   )`
-  //!   * `if_else(x, zero< T >(), z   ) ` writing: `if_else(x, eve::zero_, z   )`
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
+  //!  @godbolt{doc/core/regular/if_else.cpp}
   //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/if_else.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(if_else_, if_else);
 }
 

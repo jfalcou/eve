@@ -25,7 +25,7 @@ namespace eve
 
   using compensated_type = decorated<compensated_()>;
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var compensated
   //!

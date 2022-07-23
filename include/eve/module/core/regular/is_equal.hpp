@@ -17,68 +17,67 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_equal
+  //!   @var is_equal
+  //!   @brief Returns a logical true  if and only if the element value are equal.
   //!
-  //! @brief Callable object computing the equality predicate.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the equality predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      auto is_equal(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `y` :  arguments
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!     Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
+  //!     between `x` and `y`. The infix notation `x == y` can also be used.
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
-  //!between `x` and `y`. The infix notation `x == y` can also be used.
+  //!   **Note**
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!      Although the infix notation with `==` is supported, the `==` operator on
+  //!      standard scalar types is the original one and so returns bool result, not `eve::logical`.
   //!
-  //!@warning
-  //!   Although the infix notation with `==` is supported, the `==` operator on
-  //!   standard scalar types is the original one and so returns bool result, not `logical`.
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core/regular/is_equal.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::is_equal
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve;::abs[mask](x)` provides a masked version of `eve::is_equal` which is
+  //!     equivalent to `if_else (mask, is_equal(x, y), false_
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `is_equal[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_equal(x, y),false(as(is_equal(x, y))))`
-  //!
-  //! ---  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/is_equal.cpp}
   //!
   //!  * eve::numeric
   //!
-  //!
   //!     The expression `numeric(is_equal)(x,y)` considers that Nan values are equal.
   //!
-  //!  * `almost`
+  //!      **Example**
   //!
+  //!        @godbolt{doc/core/pedantic/is_equal.cpp}
+  //!
+  //!  * `almost`
   //!
   //!     The expression `almost(is_equal)(x, y, t)` where `x` and `y` must be floating point values, evals to
   //!      true if and only if `x` is almost equal to `y`.
@@ -88,13 +87,11 @@ namespace eve
   //!      - if `t` is a positive integral_value then there are not more than `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
   //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/is_equal.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/fuzzy/is_equal.cpp}
+  //! @}
   //================================================================================================
-
   EVE_IMPLEMENT_CALLABLE(is_equal_, is_equal);
 
   namespace detail

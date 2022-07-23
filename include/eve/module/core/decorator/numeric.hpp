@@ -21,7 +21,7 @@ namespace eve
 
   using numeric_type = decorated<numeric_()>;
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var numeric
   //!

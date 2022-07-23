@@ -70,7 +70,11 @@
 //!
 //! @defgroup core_internal  internal representation and IEEE
 //! @ingroup core
-//! Operations related to classical IEEE libc functions
+//! Operations related to classical IEEE functions
+//!
+//! @defgroup core_predicates  predicates
+//! @ingroup core
+//! Operations returning logical values
 //!
 //! @defgroup core_conversions Conversions
 //! @ingroup core

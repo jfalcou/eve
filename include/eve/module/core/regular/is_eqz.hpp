@@ -12,68 +12,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_eqz
+  //!   @var is_eqz
+  //!   @brief Returns a logical true  if and only if the element value is zero.
   //!
-  //! @brief Callable object computing the equality to zero predicate.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the equality to zero predicate                             |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_eqz(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [values](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!    The truth value of x == 0
+  //!    is returned.
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
-  //!between `x` and 0.
+  //!  @groupheader{Example}
   //!
-  //!The result type is `logical< T >`.
+  //!  @godbolt{doc/core/regular/is_eqz.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::is_eqz
+  //!     The call `eve;::is_eqz[mask](x)` provides a masked version of `eve::is_eqz` which is
+  //!     equivalent to `if_else (mask, is_eqz(x), eve::false( eve::as(x)))`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/is_eqz.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_eqz[cond](x)` is equivalent to
-  //! `if_else(cond,is_eqz(x),false(as(is_eqz(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_eqz.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
 
   namespace detail

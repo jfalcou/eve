@@ -56,7 +56,7 @@ namespace eve
   //!
   //!  @godbolt{doc/core//regular/abs.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
@@ -77,7 +77,19 @@ namespace eve
   //!      **Example**
   //!
   //!        @godbolt{doc/core/saturated/abs.cpp}
-  //! @}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve;::abs[mask](x)` provides a masked version of `eve::abs` which is
+  //!     equivalent to `if_else (mask, $name$(x), x)`.
+  //!
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/masked/abs.cpp}
+  //!
+   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(abs_, abs);
 }
