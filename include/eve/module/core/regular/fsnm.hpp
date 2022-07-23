@@ -13,6 +13,75 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_fma_family
+  //! @{
+  //!   @var fsnm
+  //!   @brief Computes the fused negate substact multiply of its three parameters.
+  //!
+  //!   The call `fsnm(x, y, z)` is similar to `-x-y*z` as if calculated to infinite precision
+  //!   and rounded once to fit the result as much as supported by the hardware.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::real_value T >
+  //!      eve::compatible_value_t fsnm(T x, U y,  V z) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`, `y`, `z` :  arguments.
+  //!
+  //!    **Return value**
+  //!
+  //!    The value of `-x-y*z` as if calculated to infinite precision
+  //!    and rounded once is returned,  but only if the hardware is in capacity
+  //!    to do it at reasonnable cost.
+  //!
+  //!    **Note**
+  //!
+  //!       This `fsnm` implementation provides those properties for all
+  //!       [integral real value](@ref eve::integral_real_value)
+  //!       and when possible for [floating real value](@ref eve::floating_real_value).
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core//regular/fsnm.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve::fsnm[mask](x, ...)` provides a masked
+  //!     version of `fsnm` which is
+  //!     equivalent to `if_else(mask, fsnm(x, ...), x)`
+  //!
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/masked/fsnm.cpp}
+  //!
+  //!   * eve::pedantic, eve::numeric
+  //!
+  //!       * The call `pedantic(fsnm)(x,y,z)` ensures the one rounding property.
+  //!       This can be very expensive if the system has no hardware capability.
+  //!
+  //!       * The call `numeric(fsnm)(x,y,z)` ensures the full compliance to fsnm properties.
+  //!        This can be very expensive if the system has no hardware capability.
+  //!
+  //!       * see the above regular example.
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var fsnm

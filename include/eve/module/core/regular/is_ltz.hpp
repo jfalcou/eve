@@ -12,67 +12,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_ltz
+  //!   @var is_ltz
+  //!   @brief Returns a logical true  if and only if the element value is less than 0.
   //!
-  //! @brief Callable object computing the less than zero predicate.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the less than zero predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_ltz(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [values](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!    The truth value of
+  //!    is returned.
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) `x < 0`.
+  //!  @groupheader{Example}
   //!
-  //!The result type is `logical< T >`.
+  //!    Returns [elementwise](@ref glossary_elementwise) `x < 0`.
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::is_ltz
+  //!     The call `eve;::is_ltz[mask](x)` provides a masked version of `eve::is_ltz` which is
+  //!     equivalent to `if_else (mask, is_ltz(x), eve::false( eve::as(x)))`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/is_ltz.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_ltz[cond](x)` is equivalent to
-  //! `if_else(cond,is_ltz(x),false(as(is_ltz(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_ltz.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
 }
 

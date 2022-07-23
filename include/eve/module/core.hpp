@@ -21,20 +21,20 @@
 //! @addtogroup core
 //! @{
 //!
-//! @defgroup core_accuracy  accuracy helpers
+//! @defgroup core_accuracy  Accuracy helpers
 //! @ingroup core
 //! These functions allows performing some basic arithmetis operations with greater acuracy
 //! even when and upgraded type is not available.
 //!
-//! @defgroup core_arithmetic  arithmetic operations
+//! @defgroup core_arithmetic  Arithmetic operations
 //! @ingroup core
 //! Core arithmetic functions
 //!
-//! @defgroup core_bitops bitwise functions
+//! @defgroup core_bitops Bitwise functions
 //! @ingroup core
 //! These functions are low level and acting on the bit representation of the involved datas.
 //!
-//! @defgroup core_constants  constants
+//! @defgroup core_constants  Constants
 //! @ingroup core
 //! Basic useful constants (scalar and SIMD)
 //!
@@ -43,13 +43,13 @@
 //!    * ct(t)              where t is an instance of a type T
 //! Where ct denotes the constant name.
 //!
-//! @defgroup core_decorators  decorators
+//! @defgroup core_decorators  Decorators
 //! @ingroup core
 //! Core semantic modifiers
 //!
-//! @defgroup core_fma_family  fma family
+//! @defgroup core_fma_family  Fused multiply add family
 //! @ingroup core
-//! These functions implements acurate versions of the operations
+//! These functions implements accurate versions of the operations
 //! \f$\pm x \pm yz\f$ and \f$\pm xy \pm z\f$.
 //!
 //! The required accuracy is in two directions
@@ -64,15 +64,15 @@
 //! By themselves tne regular version of these function acts the naive (and less accurate way)
 //! if the intrinsics are not at hand.
 //!
-//! @defgroup core_horizontal  horizontal operations
+//! @defgroup core_horizontal  Horizontal operations
 //! @ingroup core
 //! Operations providing a scalar value from SIMD vectors
 //!
-//! @defgroup core_internal  internal representation and IEEE
+//! @defgroup core_internal  Internal representation and IEEE
 //! @ingroup core
 //! Operations related to classical IEEE functions
 //!
-//! @defgroup core_predicates  predicates
+//! @defgroup core_predicates  Predicates
 //! @ingroup core
 //! Operations returning logical values
 //!
