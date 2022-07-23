@@ -103,7 +103,7 @@ TTS_CASE_TPL("Check eve::first_true", eve::test::simd::all_types)
     }
 
     x = true;
-    TTS_EQUAL(eve::first_true[eve::ignore_first(T::size())](x), std::nullopt);
+    TTS_EQUAL(eve::first_true[eve::ignore_last(T::size())](x), std::nullopt);
   }
 };
 

@@ -7,14 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/any.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/logical.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/arch/top_bits.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/any.hpp>
-#include <eve/module/core/constant/true.hpp>
 
 #include <optional>
 
@@ -22,30 +15,33 @@ namespace eve::detail
 {
   // Internal helper
   template <logical_simd_value Logical>
-  EVE_FORCEINLINE std::ptrdiff_t first_true_guaranteed(top_bits<Logical> mmask)
+  EVE_FORCEINLINE std::ptrdiff_t last_true_guaranteed(top_bits<Logical> mmask)
   {
     if constexpr ( !top_bits<Logical>::is_aggregated )
     {
-      return std::countr_zero(mmask.as_int()) / top_bits<Logical>::bits_per_element;
+      auto raw_mmask = mmask.as_int();
+      std::ptrdiff_t rbit_offset = std::countl_zero(raw_mmask);
+      std::ptrdiff_t bit_offset = 8 * sizeof(raw_mmask) - 1 - rbit_offset;
+      return bit_offset / top_bits<Logical>::bits_per_element;
     }
     else
     {
-      auto half_mmask = mmask.storage[1];
-      int offset = Logical::size() / 2;
+      auto half_mmask = mmask.storage[0];
+      int offset = 0;
 
       // trying to make a cmove (otherwise does not cmove, I think I tested)
-      if (mmask.storage[0])
+      if (mmask.storage[1])
       {
-        offset = 0;
-        half_mmask = mmask.storage[0];
+        offset = Logical::size() / 2;
+        half_mmask = mmask.storage[1];
       }
 
-      return first_true_guaranteed(half_mmask) + offset;
+      return last_true_guaranteed(half_mmask) + offset;
     }
   }
 
   template<logical_simd_value T, relative_conditional_expr C>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_SUPPORTS(cpu_), C const &cond, T const &v) noexcept
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {};
     else if constexpr ( has_emulated_abi_v<T> )
@@ -54,8 +50,7 @@ namespace eve::detail
       std::ptrdiff_t last = first + cond.count(eve::as<T>{});
 
       while (first != last) {
-        if (v.get(first)) return first;
-        ++first;
+        if (v.get(--last)) return last;
       }
 
       return {};
@@ -67,26 +62,26 @@ namespace eve::detail
       if ( !eve::any(v) ) return {};
 
       top_bits mmask{v, cond};
-      if constexpr ( C::is_complete ) return first_true_guaranteed(mmask);
-      else                            return first_true(mmask);
+      if constexpr ( C::is_complete ) return last_true_guaranteed(mmask);
+      else                            return last_true(mmask);
     }
     else
     {
       top_bits mmask{v, cond};
-      return first_true(mmask);
+      return last_true(mmask);
     }
   }
 
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_SUPPORTS(cpu_), bool v) noexcept
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_SUPPORTS(cpu_), bool v) noexcept
   {
     if (!v) return std::nullopt;
     return 0;
   }
 
   template<value T>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_SUPPORTS(cpu_), T const &v) noexcept
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
-    if constexpr ( !scalar_value<T> ) return eve::first_true[ignore_none](v);
+    if constexpr ( !scalar_value<T> ) return eve::last_true[ignore_none](v);
     else
     {
       if (!v) return std::nullopt;
@@ -95,10 +90,9 @@ namespace eve::detail
   }
 
   template <logical_simd_value Logical>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> first_true_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
+  EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
   {
     if (!any(mmask)) return {};
-    return first_true_guaranteed(mmask);
+    return last_true_guaranteed(mmask);
   }
-
-}  // namespace eve
+}
