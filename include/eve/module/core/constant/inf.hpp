@@ -18,38 +18,39 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var inf
+  //!   @var inf
+  //!   @brief Computes the infinity ieee value.
   //!
-  //! @brief Callable object computing the infinity ieee value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the inf constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T inf(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_real_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::inf(as<T>())` is semantically equivalent to
+  //!      `T(std::numeric_limits<eve::element_type_t<T>>::``infinity())`
   //!
-  //! the call `eve::inf(as<T>())` is semantically equivalent to  `T(std::numeric_limits<eve::element_type_t<T>>::``infinity())`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/inf.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/inf.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(inf_, inf);

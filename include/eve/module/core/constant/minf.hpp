@@ -19,6 +19,42 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var minf
+  //!   @brief Computes the -infinity ieee value.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T minf(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  argument.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::minf(as<T>())` is semantically equivalent to
+  //!      `T(-std::numeric_limits<eve::element_type_t<T>>::``infinity())`
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/minf.cpp}
+  //! @}
+  //================================================================================================
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var minf

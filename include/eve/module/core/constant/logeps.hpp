@@ -19,38 +19,39 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_constants
   //! @{
-  //! @var logeps
+  //!   @var logeps
+  //!   @brief Computes the natural logarithm of the machine [epsilon](@ref eve::eps).
   //!
-  //! @brief Callable object computing the logaritm of the machine epsilon.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the logeps constant                               |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T logeps(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::logeps(as<T>())` is semantically equivalent
+  //!      to eve::log (eve::eps (eve::as<T>())).
   //!
-  //! the call `eve::logeps(as<T>())` is semantically equivalent to `eve::log(eve::eps(as<T>()))`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/logeps.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/logeps.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(logeps_, logeps);

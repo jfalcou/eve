@@ -18,6 +18,44 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var mindenormal
+  //!   @brief Computes the smallest denormal positive value.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T mindenormal(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  argument.
+  //!
+  //!    **Return value**
+  //!
+  //!     The call `eve::mindenormal(as<T>())` is semantically equivalent to:
+  //!       * T(1.4013e-45f) if eve::element_type_t<T> is float
+  //!       * T(4.94066e-324) if eve::element_type_t<T> is double
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/mindenormal.cpp}
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var mindenormal

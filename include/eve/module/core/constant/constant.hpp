@@ -53,43 +53,6 @@ namespace eve
   //! @}
   //================================================================================================
 
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var Constant
-  //!
-  //! @brief Callable object computing a floating constant from its scalar hexadecimal integral representation |
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | generates a floating constant from its scalar hexadecimal integral representation |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_real_value T, auto BitsPattern > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! @tparam
-  //! `T`:   type of the output constant
-  //! `BitsPattern': hexadecimal integral representation of the floating scalar constant
-  //!
-  //! **Return value**
-  //!
-  //! the call `eve::Constant<T, Bitpattern>()` is semantically equivalent to
-  //! T(eve::bit_cast(Bitpattern, `as<element_type_t<T>>()))`
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/constant.cpp}
-  //!
-  //! @}
-  //================================================================================================
-
   template<typename T, auto BitsPattern>
   EVE_FORCEINLINE auto Constant(eve::as<T> const & = {})
   {

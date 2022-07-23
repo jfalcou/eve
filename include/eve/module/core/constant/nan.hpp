@@ -15,39 +15,39 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_constants
   //! @{
-  //! @var nan
+  //!   @var nan
+  //!   @brief Computes the IEEE NaN constant
   //!
-  //! @brief Callable object computing the nan value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the nan constant                                  |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T nan(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The call `eve::nan(as<T>())`  is semantically equivalent to  `T(0.0/0.0)`.
   //!
-  //! the call `eve::nan(as<T>())` is semantically equivalent to  `T(0.0/0.0)`
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/nan.cpp}
-  //!
+  //!  @godbolt{doc/core/constant/nan.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(nan_, nan);
