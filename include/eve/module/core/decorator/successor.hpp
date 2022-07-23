@@ -21,7 +21,7 @@ namespace eve
 
   using successor_type = decorated<successor_()>;
   //================================================================================================
-  //! @addtogroup polynomial
+  //! @addtogroup core_decorators
   //! @{
   //! @var successor
   //!

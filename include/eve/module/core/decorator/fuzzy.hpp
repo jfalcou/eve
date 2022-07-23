@@ -27,7 +27,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var almost
   //!
@@ -75,7 +75,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var definitely
   //!
@@ -124,7 +124,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var tolerant
   //!

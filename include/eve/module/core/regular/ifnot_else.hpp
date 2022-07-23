@@ -11,50 +11,45 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var ifnot_else
+  //!   @var ifnot_else
+  //!   @brief `eve::ifnot_else``(x, y, z)`syntaxic sugar for `eve::if_else``(x, z, y)`
   //!
-  //! @brief Callable object computing the ifnot_else operation.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ifnot_else operation   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U, eve::value V >
+  //!      auto ifnot_else(T x, U, y, V z ) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept
-  //!  requires  compatible< U, V >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`: condition
+  //!     * `y`, `z`:  choice arguments.
   //!
-  //!`x`, `y`, `z`:   [values](@ref eve::value)
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!     The call `eve::ifnot_else``(x, y, z)`is equivalent to `eve::if_else``(x, z, y)`
   //!
-  //!The call `eve::ifnot_else``(x, y, z)`  performs a choice between the elements of `y` and `z` according to the truth value
-  //!of the elements of `x`. It is merely syntaxic sugar for `eve::if_else``(x, z, y)`
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core/regular/ifnot_else.cpp}
   //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/ifnot_else.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   namespace tag { struct ifnot_else_; }
   template<> struct supports_conditional<tag::ifnot_else_> : std::false_type {};
 

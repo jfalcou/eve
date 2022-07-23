@@ -28,7 +28,7 @@ namespace eve
   };
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var regular
   //!

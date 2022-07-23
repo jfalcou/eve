@@ -21,7 +21,7 @@ namespace eve
   using saturated_type = decorated<saturated_()>;
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorators
   //! @{
   //! @var saturated
   //!
