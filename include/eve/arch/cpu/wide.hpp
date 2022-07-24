@@ -139,14 +139,14 @@ namespace eve
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     requires requires(S v) { static_cast<Type>(v); }
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
         : storage_base(detail::make(eve::as<wide> {}, static_cast<Type>(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
-    template<arithmetic_scalar_value S0, arithmetic_scalar_value S1, arithmetic_scalar_value... Ss>
+    template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide(S0 v0, S1 v1, Ss... vs) noexcept
         requires( (Cardinal::value == 2 + sizeof...(vs))
                   && std::is_convertible_v<S0,Type>
@@ -227,7 +227,7 @@ namespace eve
     }
 
     //! @brief Assignment of a scalar value by splatting it in all lanes
-    template<arithmetic_scalar_value S> EVE_FORCEINLINE wide& operator=(S v) noexcept
+    template<scalar_value S> EVE_FORCEINLINE wide& operator=(S v) noexcept
     {
       wide that(v);
       swap(that);
@@ -242,7 +242,7 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Set the value of a given lane
-    EVE_FORCEINLINE void set(std::size_t i, arithmetic_scalar_value auto v) noexcept
+    EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
     {
       detail::insert(*this, i, v);
     }
@@ -392,7 +392,7 @@ namespace eve
 
     //! @brief Perform a bitwise and between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<arithmetic_scalar_value U, typename M>
+    template<scalar_value U, typename M>
     friend EVE_FORCEINLINE auto operator&(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, wide<U, M>>)
@@ -404,7 +404,7 @@ namespace eve
 
     //! @brief Perform a bitwise and between all lanes of a eve::wide and a scalar
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
@@ -416,7 +416,7 @@ namespace eve
 
     //! @brief Perform a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
@@ -439,7 +439,7 @@ namespace eve
 
     //! @brief Perform a bitwise or between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<arithmetic_scalar_value U, typename M>
+    template<scalar_value U, typename M>
     friend EVE_FORCEINLINE auto operator|(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, wide<U, M>>)
@@ -451,7 +451,7 @@ namespace eve
 
     //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
@@ -463,7 +463,7 @@ namespace eve
 
     //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
@@ -485,7 +485,7 @@ namespace eve
 
     //! @brief Perform a bitwise xor between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
-    template<arithmetic_scalar_value U, typename M>
+    template<scalar_value U, typename M>
     friend EVE_FORCEINLINE auto operator^(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, wide<U, M>>)
@@ -497,7 +497,7 @@ namespace eve
 
     //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
@@ -509,7 +509,7 @@ namespace eve
 
     //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
@@ -758,12 +758,12 @@ namespace eve
     }
 
     //! @brief Element-wise equality comparison of a eve::wide and a scalar value
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator==(wide v, S w) noexcept { return v == wide {w}; }
 
     //! @brief Element-wise equality comparison of a scalar value and a eve::wide
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator==(S v, wide w) noexcept { return w == v; }
 
@@ -774,12 +774,12 @@ namespace eve
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator!=(wide v, S w) noexcept { return v != wide {w}; }
 
     //! @brief Element-wise inequality comparison of a scalar value and a eve::wide
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     requires requires(S s) { wide {s}; }
     friend EVE_FORCEINLINE auto operator!=(S v, wide w) noexcept { return w != v; }
 
@@ -793,7 +793,7 @@ namespace eve
     }
 
     //! @brief Element-wise less-than comparison between a eve::wide and a scalar
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<(wide v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -803,7 +803,7 @@ namespace eve
     }
 
     //! @brief Element-wise less-than comparison between a scalar and a eve::wide
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<(S v, wide w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -822,7 +822,7 @@ namespace eve
     }
 
     //! @brief Element-wise greater-than comparison between a eve::wide and a scalar
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>(wide v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -832,7 +832,7 @@ namespace eve
     }
 
     //! @brief Element-wise greater-than comparison between a scalar and a eve::wide
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>(S v, wide w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -851,7 +851,7 @@ namespace eve
     }
 
     //! @brief Element-wise greater-or-equal comparison between a eve::wide and a scalar
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>=(wide v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -861,7 +861,7 @@ namespace eve
     }
 
     //! @brief Element-wise greater-or-equal comparison between a scalar and a eve::wide
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator>=(S v, wide w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -880,7 +880,7 @@ namespace eve
     }
 
     //! @brief Element-wise less-or-equal comparison between a eve::wide and a scalar
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<=(wide v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
@@ -890,7 +890,7 @@ namespace eve
     }
 
     //! @brief Element-wise less-or-equal comparison between a scalar and a eve::wide
-    template<arithmetic_scalar_value S>
+    template<scalar_value S>
     friend EVE_FORCEINLINE auto operator<=(S v, wide w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(supports_ordering_v<Type>)
