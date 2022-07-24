@@ -3,7 +3,7 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.18)
 enable_testing()
 
 ## =================================================================================================
