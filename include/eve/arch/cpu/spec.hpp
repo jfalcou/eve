@@ -11,7 +11,7 @@
 
 #if !defined(EVE_ABI_DETECTED)
 #  define EVE_CURRENT_ABI ::eve::emulated_
-#  define EVE_CURRENT_API ::eve::cpu_
+#  define EVE_CURRENT_API ::eve::undefined_simd_
 #  define EVE_STRICT_EMULATION
 #  define EVE_ABI_DETECTED
 #  define EVE_ABI_NAMESPACE cpu_abi_v0
