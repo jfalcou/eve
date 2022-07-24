@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve::detail
@@ -60,6 +59,6 @@ namespace eve::detail
 
     };
     ((that = next(that,args)),...);
-    return if_else(is_even(sizeof...(args)) && is_ltz(sgn),  eve::allbits, sgn*that);
+    return if_else((sizeof...(args) % 2 == 0) && is_ltz(sgn),  eve::allbits, sgn*that);
   }
 }

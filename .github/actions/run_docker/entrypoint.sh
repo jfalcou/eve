@@ -1,4 +1,6 @@
 #!/bin/sh -l
+set -e
+
 compile_target()
 {
   echo "::group::Compiling $1" ;
@@ -47,7 +49,6 @@ test_targets()
   return 0;
 }
 
-set -e
 echo "::group:: Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
 mkdir build
 cd build
@@ -65,11 +66,11 @@ then
   echo "::endgroup::"
 else
   echo "::group:: Compiling Unit Tests"
-  compile_targets ../cmake/toolchain/specific.json $4
+  compile_targets ../cmake/toolchain/$5 $4
   echo "::endgroup::"
 
   echo "::group:: Running Unit Tests"
-  test_targets    ../cmake/toolchain/specific.json $4
+  test_targets    ../cmake/toolchain/$5 $4
   echo "::endgroup::"
 fi;
 

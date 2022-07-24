@@ -18,6 +18,10 @@ inputs:
     description: 'CPU Count'
     required: false
     default: '8'
+  specific:  # specific JSON for targets
+    description: 'Specific targets'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -26,3 +30,4 @@ runs:
     - ${{ inputs.cmake-options }}
     - ${{ inputs.status }}
     - ${{ inputs.cpu }}
+    - ${{ inputs.specific }}

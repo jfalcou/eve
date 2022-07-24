@@ -28,7 +28,9 @@ concept plain_scalar_value = detail::one_of<T,
                                             std::uint8_t,
                                             std::uint16_t,
                                             std::uint32_t,
-                                            std::uint64_t>;
+                                            std::uint64_t,
+                                            std::size_t,
+                                            std::ptrdiff_t>;
 
 namespace detail
 {
