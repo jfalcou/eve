@@ -2,14 +2,15 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "print.hpp"
+#include <tts/tts.hpp>
 
 int main()
 {
   std::vector<int>  v = {2,5,-9,3,-8,2,-5,7,-2,3};
 
-  std::cout << " -> v                                  = ";
-  doc_utils::print(v);
+  std::cout << " -> v                                  = "
+            << tts::as_string(v)
+            << "\n";
 
   std::cout << " -> eve::algo::all_of(v, i*i >= 4)     = "
             << std::boolalpha << eve::algo::all_of(v, [](auto i){ return i*i >= 4; })<< "\n";
