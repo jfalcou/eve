@@ -11,6 +11,7 @@
 #include <eve/arch/cpu/base.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
+#include <eve/concept/invocable.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/concept/scalar.hpp>
@@ -103,21 +104,12 @@ namespace eve
     //! @brief Default constructor
     //! This operation is a no-op unless `Type` satisfies eve::product_type and has a non trivial
     //! default constructor.
-    EVE_FORCEINLINE wide()
-#if !defined(EVE_DOXYGEN_INVOKED)
-        requires(std::is_trivially_constructible_v<Type>)
-    {}
+    EVE_FORCEINLINE wide() requires(std::is_trivially_constructible_v<Type>) {}
 
-    EVE_FORCEINLINE wide() requires(!std::is_trivially_constructible_v<Type>)
-        : wide(Type {}) {}
-#else
-  {}
-#endif
+    EVE_FORCEINLINE wide() requires(!std::is_trivially_constructible_v<Type>) : wide(Type {}) {}
 
-        //! Constructs from ABI-specific storage
-        EVE_FORCEINLINE wide(storage_type const& r) noexcept
-        : storage_base(r)
-    {}
+    //! Constructs from ABI-specific storage
+    EVE_FORCEINLINE wide(storage_type const& r) noexcept : storage_base(r) {}
 
     //! @brief Constructs a eve::wide from a pair of @iterator.
     //! Construction is done piecewise unless the @iterator{s} are @raiterator{s}.
@@ -129,10 +121,8 @@ namespace eve
     //! Construction is done piecewise unless the @iterator{s} extracted from `r` are
     //! @raiterator{s}.
     template<detail::range Range>
+    requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
     EVE_FORCEINLINE explicit wide(Range&& r) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!std::same_as<storage_type, std::remove_reference_t<Range>>)
-#endif
         : wide(std::begin(EVE_FWD(r)), std::end(EVE_FWD(r)))
     {}
 
@@ -143,8 +133,8 @@ namespace eve
 
     //! Constructs a eve::wide from a SIMD compatible pointer
     template<detail::data_source... Ptr>
-    requires(kumi::product_type<Type>) EVE_FORCEINLINE
-        explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
+    requires(kumi::product_type<Type>)
+    EVE_FORCEINLINE explicit wide(eve::soa_ptr<Ptr...> ptr) noexcept
         : storage_base(load(ptr, Cardinal {}))
     {}
 
@@ -158,13 +148,10 @@ namespace eve
     //! Constructs a eve::wide from a sequence of scalar values of proper size
     template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide(S0 v0, S1 v1, Ss... vs) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
-        requires(
-            (Cardinal::value == 2 + sizeof...(vs))
-            && std::is_convertible_v<
-                S0,
-                Type> && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>))
-#endif
+        requires( (Cardinal::value == 2 + sizeof...(vs))
+                  && std::is_convertible_v<S0,Type>
+                  && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
+                )
         : storage_base(detail::make(eve::as<wide> {},
                                     static_cast<Type>(v0),
                                     static_cast<Type>(v1),
@@ -174,9 +161,7 @@ namespace eve
     //! Constructs a eve::wide from a sequence of values
     template<typename S0, typename... Ss>
     explicit EVE_FORCEINLINE wide(S0 const& v0, Ss const&...vs) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
         requires kumi::sized_product_type<Type, sizeof...(Ss) + 1>
-#endif
         : storage_base(kumi::map([]<typename W>(auto const& n, W const&) { return W {n}; },
                                  kumi::make_tuple(v0, vs...),
                                  *this))
@@ -199,8 +184,6 @@ namespace eve
     //!
     //! **Example:**
     //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/qosv89e14)
-    //!
     //! @code
     //! #include <eve/wide.hpp>
     //! #include <iostream>
@@ -214,7 +197,7 @@ namespace eve
     //! @endcode
     //!
     //==============================================================================================
-    template<std::invocable<size_type, size_type> Generator>
+    template<eve::invocable<size_type, size_type> Generator>
     EVE_FORCEINLINE wide(Generator&& g) noexcept
         : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
     {}
@@ -223,9 +206,7 @@ namespace eve
     //! Does not participate in overload resolution if `Cardinal::value != 2 * Half::value`.
     template<typename Half>
     EVE_FORCEINLINE wide(wide<Type, Half> const& l, wide<Type, Half> const& h) noexcept
-#if !defined(EVE_DOXYGEN_INVOKED)
-        requires(Cardinal::value == 2 * Half::value)
-#endif
+    requires(Cardinal::value == 2 * Half::value)
         : storage_base(detail::combine(eve::current_api, l, h))
     {}
 
@@ -281,8 +262,6 @@ namespace eve
     //!
     //! **Example:**
     //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/cq9xs97fz)
-    //!
     //! @code
     //! #include <eve/wide.hpp>
     //! #include <iostream>
@@ -299,10 +278,7 @@ namespace eve
     //! @endcode
     //!
     //==============================================================================================
-    EVE_FORCEINLINE auto slice() const
-#if !defined(EVE_DOXYGEN_INVOKED)
-        requires(Cardinal::value > 1)
-#endif
+    EVE_FORCEINLINE auto slice() const requires(Cardinal::value > 1)
     {
       return detail::slice(*this);
     }
@@ -317,8 +293,6 @@ namespace eve
     //! @param s A tag indicating which slice is required
     //!
     //! **Example:**
-    //!
-    //! [**See it live on Compiler Explorer**](https://godbolt.org/z/x7n8azx78)
     //!
     //! @code
     //! #include <eve/wide.hpp>
@@ -338,10 +312,7 @@ namespace eve
     //
     //==============================================================================================
     template<std::size_t Slice>
-    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const
-#if !defined(EVE_DOXYGEN_INVOKED)
-        requires(Cardinal::value > 1)
-#endif
+    EVE_FORCEINLINE auto slice(slice_t<Slice> s) const requires(Cardinal::value > 1)
     {
       return detail::slice(*this, s);
     }
@@ -404,7 +375,6 @@ namespace eve
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
-
     {
       return detail::self_bitnot(v);
     }

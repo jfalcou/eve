@@ -44,10 +44,17 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
   using tb_storage  = typename eve::top_bits<logical>::storage_type;
   using ABI         = typename logical::abi_type;
 
-       if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(tb_storage{}));
-  else if constexpr (!ABI::is_wide_logical)              TTS_TYPE_IS(tb_storage, typename logical::storage_type);
-  else if constexpr (std::same_as<ABI, eve::x86_128_>)   TTS_TYPE_IS(tb_storage, std::uint16_t);
-  else if constexpr (std::same_as<ABI, eve::x86_256_>)   TTS_TYPE_IS(tb_storage, std::uint32_t);
+       if constexpr (eve::has_aggregated_abi_v<logical>)    TTS_EXPECT(expect_array(tb_storage{}));
+  else if constexpr (!ABI::is_wide_logical)                 TTS_TYPE_IS(tb_storage, typename logical::storage_type);
+  else if constexpr (std::same_as<ABI, eve::x86_128_>)      TTS_TYPE_IS(tb_storage, std::uint16_t);
+  else if constexpr (std::same_as<ABI, eve::arm_sve_128_>)  TTS_TYPE_IS(tb_storage, std::uint16_t);
+  else if constexpr (std::same_as<ABI, eve::x86_256_>)      TTS_TYPE_IS(tb_storage, std::uint32_t);
+  else if constexpr (std::same_as<ABI, eve::arm_sve_256_>)  TTS_TYPE_IS(tb_storage, std::uint32_t);
+  else if constexpr (std::same_as<ABI, eve::arm_sve_512_>)
+  {
+    if constexpr(logical::size() <= 32) TTS_TYPE_IS(tb_storage, std::uint32_t);
+    else                                TTS_TYPE_IS(tb_storage, std::uint64_t);
+  }
   else if constexpr (eve::arm_abi<ABI>)
   {
          if constexpr(T::size() == 1)                      TTS_TYPE_IS(tb_storage, std::uint8_t);
