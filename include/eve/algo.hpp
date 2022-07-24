@@ -43,6 +43,8 @@
 #include <eve/algo/reduce.hpp>
 #include <eve/algo/remove.hpp>
 #include <eve/algo/reverse.hpp>
+#include <eve/algo/min_element.hpp>
+#include <eve/algo/min_value.hpp>
 #include <eve/algo/swap_ranges.hpp>
 #include <eve/algo/traits.hpp>
 #include <eve/algo/transform.hpp>
