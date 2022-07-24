@@ -1,55 +1,47 @@
 #!/bin/sh -l
 set -e
 
-printenv
-
 # ID for various tests
 INSTALL_TEST=0
 FETCH_TEST=1
 CPM_TEST=2
 MULTIARCH_TEST=3
 
-if [ $2 -eq $INSTALL_TEST ]
-then
+configure_and_ctest() {
+  test_regex=$1
+
+  cmake -B build -S . -G Ninja \
+    -DEVE_BUILD_INTEGRATION=ON \
+    -DEVE_BUILD_TEST=OFF       \
+    -DEVE_BUILD_DOCUMENTATION=OFF
+
+  # eve build not required: cmake --build build
+  ctest --test-dir build --output-on-failure -R $test_regex
+}
+
+if [ $2 -eq $INSTALL_TEST ]; then
   echo "::group::Prepare EVE repository for branch " $1
-  mkdir build && cd build
-  cmake .. -G Ninja
-  ninja install | grep cmake
-  CURRENT_SHA1=`git rev-parse HEAD`
-  cd ..
+  configure_and_ctest integration.install-eve.exe
   echo "::endgroup::"
 
   echo "::group::Test EVE via the install target"
-  mkdir install-test && cd install-test
-  cmake ../test/integration/install-test -G Ninja
-  ninja test_eve
-  ./test_eve
+  ctest --test-dir build --output-on-failure -R integration.install.exe
   echo "::endgroup::"
 fi
 
-if [ $2 -eq $FETCH_TEST ]
-then
+if [ $2 -eq $FETCH_TEST ]; then
   echo "::group::Test EVE via FetchContent"
-  mkdir fetch-test && cd fetch-test
-  cmake ../test/integration/fetch-test -G Ninja -DEVE_SHA1=$1
-  ninja test_eve
-  ./test_eve
+  configure_and_ctest integration.fetch.exe
   echo "::endgroup::"
 fi
 
-if [ $2 -eq $CPM_TEST ]
-then
+if [ $2 -eq $CPM_TEST ]; then
   echo "::group::Test EVE via CPM"
-  mkdir cpm-test && cd cpm-test
-  cmake ../test/integration/cpm-test -G Ninja -DEVE_SHA1=$1
-  ninja test_eve
-  ./test_eve
+  configure_and_ctest integration.cpm.exe
   echo "::endgroup::"
 fi
 
-
-if [ $2 -eq $MULTIARCH_TEST ]
-then
+if [ $2 -eq $MULTIARCH_TEST ]; then
   echo "::group::Prepare EVE repository for branch " $1
   mkdir build && cd build
   cmake .. -G Ninja
