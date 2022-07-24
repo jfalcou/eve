@@ -147,7 +147,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 //!
 //!   **Parameters**
 //!
-//!    * `rng`:       Relaxed range  input range to process
+//!    * `rng`:       Relaxed input range to process
 //!    * `init`:      Initial value. Also type of init matches the result type
 //!    * `map_op`:    Transformation operation
 //!    * `add_zero`:  Pair of reduction operation (commutative/associative) and an identity (zero)

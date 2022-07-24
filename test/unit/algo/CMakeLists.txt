@@ -40,6 +40,12 @@ make_unit("unit.algo" algorithm/mismatch_generic.cpp)
 
 make_unit("unit.algo" algorithm/find_like_special_cases.cpp)
 
+# min/max ---------------
+make_unit("unit.algo" algorithm/min_element_generic.cpp)
+make_unit("unit.algo" algorithm/min_value_generic.cpp)
+make_unit("unit.algo" algorithm/minmax_special_cases.cpp)
+
+
 # sums ------------------
 make_unit("unit.algo" algorithm/inclusive_scan_inplace_generic.cpp)
 make_unit("unit.algo" algorithm/inclusive_scan_to_generic.cpp)

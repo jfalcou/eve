@@ -80,6 +80,21 @@ namespace eve::algo
     }
   };
 
+  template <typename Op, typename T>
+  struct bind_first
+  {
+    Op op;
+    T v;
+
+    bind_first(Op op, T v) : op(op), v(v) {}
+
+    EVE_FORCEINLINE auto operator()(auto x) const
+    {
+      return op(v, x);
+    }
+  };
+
+
   struct do_nothing
   {
     EVE_FORCEINLINE auto operator()(auto x) const { return x; }
