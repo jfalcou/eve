@@ -12,69 +12,58 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var frac
+  //!   @var frac
+  //!   @brief Computes the fractional part of the input.
   //!
-  //! @brief Callable object computing the fractional part of a value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the fractional part of a value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T frac(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument.
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!        Returns a value with the same type as `x`  containing the
+  //!        [elementwise](@ref glossary_elementwise) fractional part of `x`
+  //!        with the same sign as `x`.
   //!
-  //! **Return value**
+  //!        In particular:
+  //!          * If an [element](@ref glossary_elementwise) of `x` is
+  //!            \f$\pm0\f$,  \f$\pm0\f$ is returned.
+  //!          * If an [element](@ref glossary_elementwise) of `x` is
+  //!            \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
   //!
-  //!Returns a value with the same type as `x`  containing the [elementwise](@ref glossary_elementwise) fractional part of `x` with the same sign as `x`.
+  //!  @groupheader{Example}
   //!
-  //!In particular:
-  //! * If an [element](@ref glossary_elementwise) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
-  //! * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
+  //!  @godbolt{doc/core//regular/frac.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::frac
+  //!     The call `eve;::frac[mask](x)` provides a masked version of `eve::frac` which is
+  //!     equivalent to `if_else (mask, frac(x), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `frac[cond](x, ...)` is equivalent to `if_else(cond,frac(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(frac)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/frac.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/frac.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(frac_, frac);
 }

@@ -19,6 +19,7 @@ int main()
             << " <- of                                = " << of << '\n'
             << " <- pf                                = " << pf << '\n'
             << " <- qf                                = " << qf << '\n'
+            << " -> of*pf+qf                          = " << of*pf+qf << '\n'
             << " -> pedantic(fma)(of, pf, qf)         = " << eve::pedantic(eve::fma)(of, pf, qf) << '\n'
             << " -> numeric(fma)(of, pf, qf)          = " << eve::numeric(eve::fma)(of, pf, qf) << '\n'
             << " -> fma(of, pf, qf)                   = " << eve::fma(of, pf, qf) << '\n'

@@ -15,69 +15,62 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var fracscale
+  //!   @var fracscale
+  //!   @brief Computes the smallest integer not less than the input.
   //!
-  //! @brief Callable object computing the fractional scaled part.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of the fractional scaled part             |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, int scale >
+  //!      T fracscale(T x, int scale) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x, int scale) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!       `x`:      [floating value](@ref eve::floating_value).
   //!
-  //! **Parameters**
+  //!       `scale` : int or std::integral_constant of int type limited to the range [0, 15].
   //!
-  //!`x`:      [floating real value](@ref eve::floating_real_value).
+  //!    **Return value**
   //!
-  //!`scale` : int or std::integral_constant of int type limited to the range [0, 15].
+  //!          Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
+  //!          The number of fraction bits retained is specified by scale. By default the internal
+  //!          rounding after scaling is done to nearest integer.
+  //!          The call is equivalent to `a0-roundscale(a0,scale)`
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //! Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
-  //! The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integer.
-  //! The call is equivalent to `a0-roundscale(a0,scale)`
+  //!  @godbolt{doc/core//regular/fracscale.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modyfiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::fracscale
+  //!     The call `eve;::fracscale[mask](x, scale)` provides a masked version of `eve::fracscale` which is
+  //!     equivalent to `if_else (mask, fracscale(x, scale), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `fracscale[cond](x, ...)` is equivalent to `if_else(cond,fracscale(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/fracscale.cpp}
   //!
   //!  * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
   //!
   //!     If d is one of these 4 decorators
-  //!     The call `d(fracscale)(x)`, call is equivalent to  `a0-d(roundscale)(a0, scale)`
+  //!     The call `d(fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/fracscale.cpp}
-  //!
-  //!  @}
+  //!      @godbolt{doc/core//roundings/fracscale.cpp}
+  //! @}
   //================================================================================================
   namespace tag
   {
