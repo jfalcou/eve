@@ -2,7 +2,6 @@
 
 # EVE - the Expressive Vector Engine
 
-[![E.V.E CI](https://github.com/jfalcou/eve/actions/workflows/main.yml/badge.svg)](https://github.com/jfalcou/eve/actions/workflows/main.yml)
 [![Licence](https://img.shields.io/github/license/jfalcou/eve?style=plastic)](https://img.shields.io/github/license/jfalcou/eve?style=plastic)
 [![Discord](https://img.shields.io/discord/692734675726237696?style=plastic)](https://discord.gg/8A4Q4HkhcW)
 
