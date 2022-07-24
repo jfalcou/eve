@@ -47,12 +47,15 @@ endfunction()
 eve_build_and_ctest(cpm-test
     "-Deve_git_head=${eve_git_head}"
     "-Deve_SOURCE_DIR=${eve_SOURCE_DIR}"
+    # cpm-test internally sets EVE_* configure options
 )
 
 ## ===== Fetch =====
 eve_build_and_ctest(fetch-test
     "-Deve_git_head=${eve_git_head}"
     "-Deve_SOURCE_DIR=${eve_SOURCE_DIR}"
+    "-DEVE_BUILD_TEST=OFF"
+    "-DEVE_BUILD_DOCUMENTATION=OFF"
 )
 
 ## ===== Install =====

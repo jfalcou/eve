@@ -5,6 +5,7 @@
 ##==================================================================================================
 cmake_minimum_required(VERSION 3.19)
 project(eve-cpm-test LANGUAGES CXX)
+enable_testing()
 
 message(STATUS "Testing CPM for commit ${eve_git_head}")
 
@@ -23,3 +24,4 @@ CPMAddPackage ( NAME eve
 # Use EVE
 add_executable(test_eve ../main.cpp)
 target_link_libraries(test_eve PUBLIC eve::eve)
+add_test(NAME test_eve COMMAND test_eve)

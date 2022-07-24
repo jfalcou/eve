@@ -5,6 +5,7 @@
 ##==================================================================================================
 cmake_minimum_required(VERSION 3.19)
 project(eve-fetch-test LANGUAGES CXX)
+enable_testing()
 
 message(STATUS "Testing FetchContent for commit ${eve_git_head}")
 
@@ -22,3 +23,4 @@ FetchContent_MakeAvailable(eve)
 
 add_executable(test_eve ../main.cpp)
 target_link_libraries(test_eve PUBLIC eve::eve)
+add_test(NAME test_eve COMMAND test_eve)
