@@ -10,73 +10,64 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_negative
+  //!   @var is_negative
+  //!   @brief Returns a logical true  if and only if the element value
   //!
-  //! @brief Callable object computing the is_negative logical value.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_negative logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_negative(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  argument.
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!      For signed types The call `is_negative(x)`
+  //!      [elementwise](@ref glossary_elementwise) returns true
+  //!      if and only if the bit of sign (most significant bit) is set.
   //!
-  //!For signed types The call `is_negative(x)` [elementwise](@ref glossary_elementwise) returns true
-  //!if and only if the bit of sign (most significant bit) is set.
+  //!   **Note**
   //!
-  //!@warning
-  //!   this function coincides with `is_ltz` on [integral real values](@ref eve::value),
-  //!   but for [floating real values](@ref eve::value) `T`, `is_negative(mzero<`T`>)` is true and
-  //!   if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although
-  //!   not undefined.
+  //!     this function coincides with `is_ltz` on [integral real values](@ref eve::value),
+  //!     but for [floating values](@ref eve::floating_value) `T`, `is_negative(mzero<`T`>)` is true and
+  //!     if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although
+  //!     not undefined.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core/regular/is_negative.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::is_negative
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve;::is_negative[mask](x)` provides a masked version of `eve::is_negative` which is
+  //!     equivalent to `if_else (mask, is_negative(x), eve::false( eve::as(x)))`.
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `is_negative[cond](x)` is equivalent to
-  //! `if_else(cond,is_negative(x),false(as(is_negative(x))))`
+  //!        @godbolt{doc/core/masked/is_negative.cpp}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_negative.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_negative_, is_negative);
 }
 

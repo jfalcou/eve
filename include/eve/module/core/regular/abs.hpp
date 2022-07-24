@@ -29,7 +29,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      T abs(T x) noexcept;
   //!   }
   //!   @endcode
@@ -54,7 +54,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/abs.cpp}
+  //!  @godbolt{doc/core/regular/abs.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!
@@ -78,18 +78,7 @@ namespace eve
   //!
   //!        @godbolt{doc/core/saturated/abs.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The call `eve;::abs[mask](x)` provides a masked version of `eve::abs` which is
-  //!     equivalent to `if_else (mask, $name$(x), x)`.
-  //!
-  //!      **Example**
-  //!
-  //!        @godbolt{doc/core/masked/abs.cpp}
-  //!
-   //! @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(abs_, abs);
 }

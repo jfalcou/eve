@@ -12,69 +12,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var fdim
+  //!   @var fmod
+  //!   @brief Computes the fmodolute value of the parameter.
   //!
-  //! @brief Callable object computing the positive difference.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the fdim operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      T fmod(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value T, real_value U> auto operator()( T x, U y ) const noexcept
-  //!  requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y` :  arguments.
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`:    [values](@ref eve::value)
+  //!       Returns the  [elementwise](@ref glossary_elementwise) positive difference between `x` and `y`:
+  //!          * if `x>y`,   x-y is returned
+  //!          * if `x<=y`,  +0 is returned
+  //!          * otherwise a `Nan` is returned
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Returns the  [elementwise](@ref glossary_elementwise) positive difference between `x` and `y`:
-  //! * if `x>y`,   x-y is returned
-  //! * if `x<=y`,  +0 is returned
-  //! * otherwise a `Nan` is returned
+  //!  @godbolt{doc/core//regular/fmod.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::fdim
+  //!     The call `eve;::fmod[mask](x)` provides a masked version of `eve::fmod` which is
+  //!     equivalent to `if_else (mask, fmod(x), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/fmod.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `fdim[cond](x, ...)` is equivalent to `if_else(cond,fdim(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff<br>
-  //!
-  //!       The expression `diff_1st(fim)(x,y)` and `diff_2nd(fim)(x,y)` computes the partial
-  //!       derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ \max(0,x-y)\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/fdim.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(fdim_, fdim);
 }

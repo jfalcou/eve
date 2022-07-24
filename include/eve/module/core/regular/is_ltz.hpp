@@ -41,12 +41,12 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!    The truth value of
-  //!    is returned.
+  //!
+  //!    Returns [elementwise](@ref glossary_elementwise) `x < 0`.
   //!
   //!  @groupheader{Example}
   //!
-  //!    Returns [elementwise](@ref glossary_elementwise) `x < 0`.
+  //!     @godbolt{doc/core/regular/is_ltz.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

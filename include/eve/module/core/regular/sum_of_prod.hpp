@@ -18,8 +18,6 @@ namespace eve
   //!   @brief Computes the sum of products operation with better accuracy
   //!   than the naive formula.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code
@@ -41,7 +39,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x`, `y`, `z`, `t`:  |floating value arguments](@ref floating_value).
+  //!     * `x`, `y`, `z`, `t`:  [floating value arguments](@ref eve::floating_value).
   //!
   //!    **Return value**
   //!
@@ -51,6 +49,17 @@ namespace eve
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/core/regular/sum_of_prod.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * eve::pedantic
+  //!
+  //!     The call `eve::pedantic(eve::sum_of_prod)(x, y, z, t)` computes a pedantic
+  //!     version of eve::sum_of_prod.
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/pedantic/sum_of_prod.cpp}
+  //!
   //! @}
   //================================================================================================
   namespace tag { struct sum_of_prod_; }
