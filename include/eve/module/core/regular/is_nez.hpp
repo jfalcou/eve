@@ -92,7 +92,7 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // logical masked case
-  template<conditional_expr C, real_value U>
+  template<conditional_expr C, value U>
   EVE_FORCEINLINE auto is_nez_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
   {
     return is_not_equal[cond](u, zero(as(u)));

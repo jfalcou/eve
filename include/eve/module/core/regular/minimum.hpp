@@ -30,12 +30,12 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( real_value x) const noexcept;
+  //!  auto operator()( value x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   a [real value](@ref eve::real_value)
+  //!`x`:   a [real value](@ref eve::value)
   //!
   //! **Return value**
   //!

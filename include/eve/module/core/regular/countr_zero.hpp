@@ -28,7 +28,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      T countr_zero(T x) noexcept;
   //!   }
   //!   @endcode

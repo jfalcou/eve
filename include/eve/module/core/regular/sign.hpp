@@ -41,12 +41,12 @@ namespace eve
   //!
   //!Computes  [elementwise](@ref glossary_elementwise) the sign of `x`.
   //!
-  //!For [real value](@ref eve::real_value) `x` is semantically equivalent to:
+  //!For [real value](@ref eve::value) `x` is semantically equivalent to:
   //!  * If x is greater than 0, 1 is returned.
   //!  * If x is less than 0,  -1 is returned.
   //!  * If x is zero, x is returned.
   //!
-  //!Moreover for  [floating real value](@ref eve::floating_real_value)
+  //!Moreover for  [floating real value](@ref eve::floating_value)
   //!if x is `Nan`, the result is `Nan`
   //!
   //! ---

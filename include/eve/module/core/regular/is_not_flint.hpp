@@ -30,12 +30,12 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_real_value auto x ) const noexcept;
+  //!  auto operator()(floating_value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating_real_value](@ref eve::floating_real_value).
+  //!`x`:   [floating_value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
@@ -47,7 +47,7 @@ namespace eve
   //!
   //!is semantically  equivalent to: `is_nez(frac(x))`
   //!
-  //!This means that `x` is a [floating real value](@ref eve::floating_real_value) not representing an integer
+  //!This means that `x` is a [floating real value](@ref eve::floating_value) not representing an integer
   //!(flint is a shorcut for 'floating integer').
   //!
   //! ---

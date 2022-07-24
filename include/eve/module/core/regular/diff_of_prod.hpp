@@ -29,10 +29,10 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_real_value T
-  //!              , eve::floating_real_value U
-  //!              , eve::floating_real_value V
-  //!              , eve::floating_real_value W>
+  //!      template< eve::floating_value T
+  //!              , eve::floating_value U
+  //!              , eve::floating_value V
+  //!              , eve::floating_value W>
   //!      T diff_of_prod(T x, U y, V z, W t ) noexcept;
   //!   }
   //!   @endcode

@@ -44,7 +44,7 @@ namespace eve
   //!
   //!     The call `eve;::is_flint[mask](x)` is semantically  equivalent to: `eve::is_eqz (eve::frac (x))`;
   //!
-  //!     This means that x is a [floating real value](@ref eve::floating_real_value) representing an integer
+  //!     This means that x is a [floating real value](@ref eve::floating_value) representing an integer
   //!     (flint is a shorcut for 'floating integer').
   //!
   //!  @groupheader{Example}

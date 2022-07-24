@@ -33,7 +33,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      T broadcast_group(T x) noexcept;
   //!   }
   //!   @endcode

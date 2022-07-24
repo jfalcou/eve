@@ -33,7 +33,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      eve::as_integer_t<T> exponent(T x) noexcept;
   //!   }
   //!   @endcode

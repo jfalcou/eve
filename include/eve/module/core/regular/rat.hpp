@@ -37,8 +37,8 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating_real_value](@ref eve::value).
-  //!`tol`: [floating_real_value](@ref eve::value). By  default `tol` is equal to `T(1.0e-6)*``eve::abs``(x)`.
+  //!`x`:   [floating_value](@ref eve::value).
+  //!`tol`: [floating_value](@ref eve::value). By  default `tol` is equal to `T(1.0e-6)*``eve::abs``(x)`.
   //!
   //! **Return values**
   //!

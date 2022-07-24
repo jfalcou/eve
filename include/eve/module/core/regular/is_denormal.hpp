@@ -29,7 +29,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      eve::as_logical<T> is_denormal(T x) noexcept;
   //!   }
   //!   @endcode
@@ -43,8 +43,8 @@ namespace eve
   //!     The call `is_denormal(x)` is semantically  equivalent to:
   //!
   //!     @code
-  //!       if   constexpr(floating_real_value<T>) return (abs(x) < Smallestposval(as(x))) && is_nez(x);
-  //!       else constexpr(integral_real_value<T>) return false_(as(x));
+  //!       if   constexpr(floating_value<T>) return (abs(x) < Smallestposval(as(x))) && is_nez(x);
+  //!       else constexpr(integral_value<T>) return false_(as(x));
   //!    @endcode
   //!
   //!  @groupheader{Example}
