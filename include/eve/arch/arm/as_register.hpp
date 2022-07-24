@@ -109,7 +109,7 @@ namespace eve
 }
 #endif
 
-#if defined(EVE_HW_ARM) || defined(EVE_HW_ARM_SVE)
+#if defined(EVE_HW_ARM)
 namespace eve
 {
   // ---------------------------------------------------------------------------------------------
