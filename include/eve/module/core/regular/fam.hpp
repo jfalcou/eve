@@ -31,7 +31,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      eve::compatible_value_t fam(T x, U y,  V z) noexcept;
   //!   }
   //!   @endcode
@@ -49,8 +49,8 @@ namespace eve
   //!    **Note**
   //!
   //!       This `fam` implementation provides those properties for all
-  //!       [integral real value](@ref eve::integral_real_value)
-  //!       and when possible for [floating real value](@ref eve::floating_real_value).
+  //!       [integral real value](@ref eve::integral_value)
+  //!       and when possible for [floating real value](@ref eve::floating_value).
   //!
   //!  @groupheader{Example}
   //!

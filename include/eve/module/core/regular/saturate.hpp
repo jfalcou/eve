@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< real_value T, real_scalar_value Target>
+  //!  template< value T, real_scalar_value Target>
   //!  auto operator()( T const& x, as_<Target> const& t) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
@@ -44,7 +44,7 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!For an  `x` of [real value](@ref eve::real_value) `Target`, the expression:
+  //!For an  `x` of [real value](@ref eve::value) `Target`, the expression:
   //!
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!T  r = saturate(x, as_<Target>{});

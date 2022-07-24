@@ -42,8 +42,8 @@ namespace eve
   //!
   //!     The call `is_finite(x)` is semantically  equivalent to:
   //!     @code
-  //!     if   constexpr(floating_real_value<T>) return is_not_nan(x-x);
-  //!     else constexpr(integral_real_value<T>) return true_(as(x));
+  //!     if   constexpr(floating_value<T>) return is_not_nan(x-x);
+  //!     else constexpr(integral_value<T>) return true_(as(x));
   //!     @endcode
   //!
   //!  @groupheader{Example}

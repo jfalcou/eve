@@ -101,16 +101,16 @@ namespace eve
   //! @{
   //! @var float32
   //!
-  //! @brief  convert a eve::real_value to a float32 based eve::floating_real_value.
+  //! @brief  convert a eve::value to a float32 based eve::floating_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <float, cardinal_t<T>>,
@@ -125,16 +125,16 @@ namespace eve
   //! @{
   //! @var float64
   //!
-  //! @brief  convert a eve::real_value to a float64 based eve::floating_real_value.
+  //! @brief  convert a eve::value to a float64 based eve::floating_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <double, cardinal_t<T>>,
@@ -149,16 +149,16 @@ namespace eve
   //! @{
   //! @var uint8
   //!
-  //! @brief  convert a eve::real_value to a uint8 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a uint8 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <std::uint8_t, cardinal_t<T>>,
@@ -173,16 +173,16 @@ namespace eve
   //! @{
   //! @var uint16
   //!
-  //! @brief  convert a eve::real_value to a uint16 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a uint16 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <std::uint16_t, cardinal_t<T>>,
@@ -197,16 +197,16 @@ namespace eve
   //! @{
   //! @var uint32
   //!
-  //! @brief  convert a eve::real_value to a uint32 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a uint32 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <std::uint32_t, cardinal_t<T>>,
@@ -221,16 +221,16 @@ namespace eve
   //! @{
   //! @var uint64
   //!
-  //! @brief  convert a eve::real_value to a uint64 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a uint64 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <std::uint64_t, cardinal_t<T>>,
@@ -245,16 +245,16 @@ namespace eve
   //! @{
   //! @var int8
   //!
-  //! @brief  convert a eve::real_value to a int8 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a int8 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <std::int8_t, cardinal_t<T>>,
@@ -269,16 +269,16 @@ namespace eve
   //! @{
   //! @var int16
   //!
-  //! @brief  convert a eve::real_value to a int16 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a int16 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value, of type wide <std::int16_t, cardinal_t<T>>,
@@ -293,16 +293,16 @@ namespace eve
   //! @{
   //! @var int32
   //!
-  //! @brief  convert a eve::real_value to a int32 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a int32 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value of type wide <std::int32t, cardinal_t<T>>,
@@ -317,16 +317,16 @@ namespace eve
   //! @{
   //! @var int64
   //!
-  //! @brief  convert a eve::real_value to a int64 based eve::integral_real_value.
+  //! @brief  convert a eve::value to a int64 based eve::integral_value.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value of type wide <std::int64_t, cardinal_t<T>>,
@@ -345,16 +345,16 @@ namespace eve
   //! @{
   //! @var int_
   //!
-  //! @brief  convert a eve::real_value to a signed integral based eve::integral_real_value of same size.
+  //! @brief  convert a eve::value to a signed integral based eve::integral_value of same size.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value of type wide <i_t, cardinal_t<T>>,
@@ -372,16 +372,16 @@ namespace eve
   //! @{
   //! @var uint_
   //!
-  //! @brief  convert a eve::real_value to a unsigned integral based eve::integral_real_value of same size.
+  //! @brief  convert a eve::value to a unsigned integral based eve::integral_value of same size.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value of type wide <i_t, cardinal_t<T>>,
@@ -399,16 +399,16 @@ namespace eve
   //! @{
   //! @var floating_
   //!
-  //! @brief  convert a eve::real_value to a floating point based eve::floating_real_value of same size.
+  //! @brief  convert a eve::value to a floating point based eve::floating_value of same size.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value of type wide <i_t, cardinal_t<T>>,
@@ -426,16 +426,16 @@ namespace eve
   //! @{
   //! @var upgrade_
   //!
-  //! @brief  convert a eve::real_value to a  eve::real_value of the upgraded base type.
+  //! @brief  convert a eve::value to a  eve::value of the upgraded base type.
   //!
   //! #### Members Functions
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < real_value T> auto operator()(T x) const noexcept;
+  //!  template < value T> auto operator()(T x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! @param x
-  //! An instance of eve::callable or eve::real_value
+  //! An instance of eve::callable or eve::value
   //!
   //! @return
   //!   * if x is an eve::simd_value, returns a value of type wide <i_t, cardinal_t<T>>,

@@ -43,8 +43,8 @@ namespace eve
   //!
   //!     The call `is_infinite(x)` is semantically  equivalent to:
   //!     @code
-  //!     if   constexpr(floating_real_value<T>) return is_equal(abs(x), inf(as(x));
-  //!     else constexpr(integral_real_value<T>) return false_(as(x));
+  //!     if   constexpr(floating_value<T>) return is_equal(abs(x), inf(as(x));
+  //!     else constexpr(integral_value<T>) return false_(as(x));
   //!     @endcode
   //!
   //!  @groupheader{Example}

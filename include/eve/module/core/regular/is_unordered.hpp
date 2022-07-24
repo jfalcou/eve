@@ -49,8 +49,8 @@ namespace eve
   //!is semantically  equivalent to:
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
-  //!if   constexpr(floating_real_value<T>) r = is_nan(x) || is_nan(y);
-  //!else constexpr(integral_real_value<T>) r = False<T>();
+  //!if   constexpr(floating_value<T>) r = is_nan(x) || is_nan(y);
+  //!else constexpr(integral_value<T>) r = False<T>();
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---

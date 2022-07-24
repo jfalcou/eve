@@ -105,7 +105,7 @@ namespace eve
 
     // -----------------------------------------------------------------------------------------------
     // logical masked case
-    template<conditional_expr C, real_value U, real_value V>
+    template<conditional_expr C, value U, value V>
     EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(cpu_), C const &cond, U const &u, V const &v) noexcept
     {
       return logical_mask_op(cond, is_greater, u, v);

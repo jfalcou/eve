@@ -41,12 +41,12 @@ namespace eve
   //!
   //!Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
   //!
-  //!For [real value](@ref eve::real_value) `x` is semantically equivalent to:
+  //!For [real value](@ref eve::value) `x` is semantically equivalent to:
   //!  * If x is positive, 1 is returned.
   //!  * If x is negative  -1 is returned.
   //!  * If x is `Nan`, the result is `Nan`.
   //!
-  //! For   [floating real value](@ref eve::floating_real_value) the positivity is only here based on the bit of sign.
+  //! For   [floating real value](@ref eve::floating_value) the positivity is only here based on the bit of sign.
   //! In particular -0.0 is negative and +0.0 is positive.
   //!
   //! ---

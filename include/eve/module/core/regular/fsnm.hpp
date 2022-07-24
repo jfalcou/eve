@@ -32,7 +32,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value T >
+  //!      template< eve::value T >
   //!      eve::compatible_value_t fsnm(T x, U y,  V z) noexcept;
   //!   }
   //!   @endcode
@@ -50,8 +50,8 @@ namespace eve
   //!    **Note**
   //!
   //!       This `fsnm` implementation provides those properties for all
-  //!       [integral real value](@ref eve::integral_real_value)
-  //!       and when possible for [floating real value](@ref eve::floating_real_value).
+  //!       [integral real value](@ref eve::integral_value)
+  //!       and when possible for [floating real value](@ref eve::floating_value).
   //!
   //!  @groupheader{Example}
   //!
@@ -117,8 +117,8 @@ namespace eve
   //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
   //!
   //!@warning Note
-  //!    This `fsnm` implementation provides those properties for all [integral real value](@ref eve::integral_real_value)
-  //!     and when possible for [floating real value](@ref eve::floating_real_value).
+  //!    This `fsnm` implementation provides those properties for all [integral real value](@ref eve::integral_value)
+  //!     and when possible for [floating real value](@ref eve::floating_value).
   //!
   //! ---
   //!

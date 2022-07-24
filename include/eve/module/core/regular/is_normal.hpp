@@ -30,7 +30,7 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(real_value auto x ) const noexcept;
+  //!  auto operator()(value auto x ) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -48,8 +48,8 @@ namespace eve
   //!is semantically  equivalent to:
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
   //!logical<T> r;
-  //!if   constexpr(floating_real_value<T>) r = is_not_denormal(x) && is_finite(x) && is_nez(x);
-  //!else constexpr(integral_real_value<T>) r = is_nez(x);
+  //!if   constexpr(floating_value<T>) r = is_not_denormal(x) && is_finite(x) && is_nez(x);
+  //!else constexpr(integral_value<T>) r = is_nez(x);
   //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! ---

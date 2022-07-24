@@ -33,13 +33,13 @@ namespace eve
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, integral_real_value U > auto operator()( T x, U n ) const noexcept
+  //!  template< floating_value T, integral_value U > auto operator()( T x, U n ) const noexcept
   //!  requires compatible< T, U >;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [floating real value](@ref eve::floating_value).
   //!
   //!`n`:   [integral real value](@ref eve::integral_value).
   //!
