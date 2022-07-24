@@ -4,6 +4,7 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 cmake_minimum_required(VERSION 3.2)
+enable_testing()
 
 ## =================================================================================================
 ## Setup project
@@ -50,10 +51,14 @@ if( EVE_BUILD_TEST )
   include(config/pch)
 
   include(target/targets)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/test/)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/examples/)
+  add_subdirectory("${PROJECT_SOURCE_DIR}/test/")
+  add_subdirectory("${PROJECT_SOURCE_DIR}/examples/")
+endif()
+
+if( EVE_BUILD_INTEGRATION )
+  add_subdirectory("${PROJECT_SOURCE_DIR}/test/integration")
 endif()
 
 if( EVE_BUILD_BENCHMARKS )
-  add_subdirectory(${PROJECT_SOURCE_DIR}/benchmarks/)
+  add_subdirectory("${PROJECT_SOURCE_DIR}/benchmarks/")
 endif()

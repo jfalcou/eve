@@ -4,21 +4,21 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 cmake_minimum_required(VERSION 3.19)
-project(eve-install-test LANGUAGES CXX)
+project(eve-fetch-test LANGUAGES CXX)
 
-message(STATUS "Testing FetchContent for branch ${EVE_SHA1}")
+message(STATUS "Testing FetchContent for commit ${eve_git_head}")
 
 # Enable FetchContent
 include(FetchContent)
 
-# Retrieve EVE
+# Retrieve EVE from relative git directory
 FetchContent_Declare(eve
-  GIT_REPOSITORY "https://github.com/jfalcou/eve.git"
-  GIT_TAG        "$ENV{GITHUB_SHA}"
-  )
-
-FetchContent_MakeAvailable(eve)
+  GIT_REPOSITORY "${eve_SOURCE_DIR}"
+  GIT_TAG "${eve_git_head}"
+)
 
 # make available
+FetchContent_MakeAvailable(eve)
+
 add_executable(test_eve ../main.cpp)
 target_link_libraries(test_eve PUBLIC eve::eve)

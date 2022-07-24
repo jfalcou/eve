@@ -4,17 +4,17 @@
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 cmake_minimum_required(VERSION 3.19)
-project(eve-install-test LANGUAGES CXX)
+project(eve-cpm-test LANGUAGES CXX)
 
-message(STATUS "Testing FetchContent for branch ${EVE_SHA1}")
+message(STATUS "Testing CPM for commit ${eve_git_head}")
 
 # Setup CPM
 include(cpm.cmake)
 
 # Add dependencies
 CPMAddPackage ( NAME eve
-                GITHUB_REPOSITORY jfalcou/eve/pull/1338
-                GIT_TAG 5d0a8f47ce1f305565ffd0d3b0d6ddb5bdfa3cab
+                GIT_REPOSITORY "${eve_SOURCE_DIR}"
+                GIT_TAG "${eve_git_head}"
                 OPTIONS "EVE_BUILD_TEST OFF"
                         "EVE_BUILD_BENCHMARKS OFF"
                         "EVE_BUILD_DOCUMENTATION OFF"
