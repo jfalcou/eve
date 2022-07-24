@@ -6,7 +6,7 @@
 
 int main()
 {
-  std::vector<int> v{12,0,5,-9,3,-8,2,-5,7,21,2,0,-4};
+  std::vector<int> v{12, 0, 5, -9, 3, 0, 5};
 
   std::cout << " -> v                                               = "
             << tts::as_string(v)
@@ -18,8 +18,8 @@ int main()
   auto posn  = eve::algo::find_if_not(v, [](auto x){return x < 0; });
   std::cout << " <- eve::algo::find_if_not(v, x < 0) - v.begin()    = " << posn - v.begin()  << "\n";
 
-  auto pos21 = eve::algo::find(v, 5);
-  std::cout << " <- eve::algo::find(v, 5) - v.begin()               = " << pos21 - v.begin() << "\n";
+  auto pos_v = eve::algo::find(v, 5);
+  std::cout << " <- eve::algo::find(v, 5) - v.begin()               = " << pos_v - v.begin() << "\n";
 
   return 0;
 }
