@@ -16,11 +16,11 @@ namespace eve
   //================================================================================================
   // ABI tags for all ARM bits SIMD registers
   //================================================================================================
-  template<std::size_t Size, bool Logical> struct sve_abi_
+  template<std::size_t Size> struct sve_abi_
   {
     static constexpr std::size_t bits             = Size;
     static constexpr std::size_t bytes            = Size/8;
-    static constexpr bool        is_wide_logical  = Logical;
+    static constexpr bool        is_wide_logical  = false;
 
     template<typename Type>
     static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 8);
@@ -32,9 +32,9 @@ namespace eve
     static constexpr std::size_t fundamental_cardinal = 8 / sizeof(Type);
   };
 
-  struct arm_sve_128_ : sve_abi_<128,false> {};
-  struct arm_sve_256_ : sve_abi_<256,false> {};
-  struct arm_sve_512_ : sve_abi_<512,false> {};
+  struct arm_sve_128_ : sve_abi_<128> {};
+  struct arm_sve_256_ : sve_abi_<256> {};
+  struct arm_sve_512_ : sve_abi_<512> {};
 
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
