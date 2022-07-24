@@ -7,7 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/arm/tags.hpp>
+#include <eve/arch/arm/sve/tags.hpp>
+#include <eve/arch/arm/neon/tags.hpp>
 
 #if defined( SPY_SIMD_IS_ARM )
   #if defined( SPY_OS_IS_LINUX )

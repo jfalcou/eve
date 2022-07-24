@@ -1,4 +1,0 @@
-{ "unit.arch.exe":      "^unit.arch\\..*\\.exe"
-, "unit.meta.exe":      "^unit.meta\\..*\\.exe"
-, "unit.internals.exe": "^unit.internals\\..*\\.exe"
-}

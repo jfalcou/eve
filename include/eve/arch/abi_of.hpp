@@ -9,6 +9,7 @@
 
 #include <eve/detail/spy.hpp>
 #include <eve/arch/tags.hpp>
+#include <eve/arch/spec.hpp>
 
 namespace eve
 {
@@ -41,6 +42,13 @@ namespace eve
         {
           if constexpr(!f64 && width <= 16) return ppc_{};
           else                              return emulated_{};
+        }
+        else if constexpr( spy::simd_instruction_set == spy::fixed_sve_ )
+        {
+          if constexpr(spy::simd_instruction_set.width == 128)      return arm_sve_128_{};
+          else if constexpr(spy::simd_instruction_set.width == 256) return arm_sve_256_{};
+          else if constexpr(spy::simd_instruction_set.width == 512) return arm_sve_512_{};
+          else                                                      return emulated_{};
         }
         else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {

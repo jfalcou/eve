@@ -10,7 +10,8 @@
 #if !defined(EVE_NO_SIMD)
 #  include <eve/arch/x86/spec.hpp>
 #  include <eve/arch/ppc/spec.hpp>
-#  include <eve/arch/arm/spec.hpp>
+#  include <eve/arch/arm/sve/spec.hpp>
+#  include <eve/arch/arm/neon/spec.hpp>
 #endif
 
 #include <eve/arch/cpu/spec.hpp>

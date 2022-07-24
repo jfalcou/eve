@@ -1,6 +1,0 @@
-{
-  "unit.api.exe": "^unit.api\\..*\\.exe"
-, "unit.memory.exe": "^unit.memory\\..*\\.exe"
-, "unit.algo.exe": "^unit.algo\\..*\\.exe"
-, "unit.views.exe": "^unit.views\\..*\\.exe"
-}
