@@ -46,7 +46,7 @@ namespace eve
   //!
   //!  @godbolt{doc/core//regular/ceil.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!

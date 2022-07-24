@@ -39,7 +39,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    The value of `x`-1 is returned.
+  //!    The value of `x-1` is returned.
   //!
   //!  @groupheader{Example}
   //!

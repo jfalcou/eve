@@ -53,7 +53,7 @@ namespace eve
   //!
   //!  @godbolt{doc/core//regular/clamp.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!

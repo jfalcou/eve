@@ -35,13 +35,12 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x`, `y` :  [arguments](eve::value).
+  //!     * `x`, `y` :  [arguments](@ref eve::value).
   //!
   //!    **Return value**
   //!
   //!    The value of the distance of the arguments is returned,  i.e. `eve::abs (x-y)`.
   //!
-
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/core//regular/dist.cpp}
