@@ -56,6 +56,7 @@ namespace eve
   //!
   //!     The call `eve::pedantic(eve::diff_of_prod)(x, y, z, t)` computes a pedantic
   //!     version of eve::diff_of_prod.
+  //!
   //!      **Example**
   //!
   //!        @godbolt{doc/core/pedantic/diff_of_prod.cpp}

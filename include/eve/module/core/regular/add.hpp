@@ -35,7 +35,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `xs ...` :  [arguments](eve::value).
+  //!     * `xs ...` :  [arguments](@ref eve::value).
   //!
   //!    **Return value**
   //!
@@ -56,7 +56,7 @@ namespace eve
   //!
   //!     The call `eve::add[mask](x, ...)` provides a masked
   //!     version of `add` which is
-  //!     equivalent to `if_else(mask, add(x, ...), x)`
+  //!     equivalent to `if_else(mask, eve::add(x, ...), x)`
   //!
   //!      **Example**
   //!

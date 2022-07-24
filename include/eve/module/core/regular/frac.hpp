@@ -53,7 +53,7 @@ namespace eve
   //!
   //!  @godbolt{doc/core//regular/frac.cpp}
   //!
-  //!  @groupheader{Semantic Modyfiers}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!

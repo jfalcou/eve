@@ -56,6 +56,7 @@ namespace eve
   //!
   //!     The call `eve::pedantic(eve::sum_of_prod)(x, y, z, t)` computes a pedantic
   //!     version of eve::sum_of_prod.
+  //!
   //!      **Example**
   //!
   //!        @godbolt{doc/core/pedantic/sum_of_prod.cpp}
