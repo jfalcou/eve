@@ -30,6 +30,7 @@
 #include <eve/algo/equal.hpp>
 #include <eve/algo/fill.hpp>
 #include <eve/algo/find.hpp>
+#include <eve/algo/find_backward.hpp>
 #include <eve/algo/for_each.hpp>
 #include <eve/algo/for_each_iteration.hpp>
 #include <eve/algo/inclusive_scan.hpp>

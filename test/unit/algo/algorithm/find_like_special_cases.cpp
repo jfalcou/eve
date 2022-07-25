@@ -8,12 +8,7 @@
 
 #include "unit/algo/algo_test.hpp"
 
-#include <eve/algo/all_of.hpp>
-#include <eve/algo/any_of.hpp>
-#include <eve/algo/find.hpp>
-#include <eve/algo/equal.hpp>
-#include <eve/algo/mismatch.hpp>
-#include <eve/algo/none_of.hpp>
+#include <eve/algo.hpp>
 
 #include "unit/algo/udt.hpp"
 
@@ -54,9 +49,12 @@ TTS_CASE("eve.algo.all/any/none/find_if, empty")
 
 TTS_CASE("eve.algo.find value")
 {
-  std::vector<int> const v{1, 2, 3, 4};
+  std::vector<int> const v{1, 2, 3, 4, 3, 5};
   std::vector<int>::const_iterator found = eve::algo::find[eve::algo::no_aligning](v, 3);
   TTS_EQUAL((found - v.begin()), 2);
+
+  std::vector<int>::const_iterator found_b = eve::algo::find_backward[eve::algo::no_aligning](v, 3);
+  TTS_EQUAL(found_b - v.begin(), static_cast<int>(v.size() - 2));
 };
 
 TTS_CASE("eve.algo.find point")
