@@ -36,6 +36,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!     * `x` :  argument.
+  //!     * `t` :  [Type wrapper](@ref eve::as) instance embedding the type of the result.
   //!
   //!  **Template parameters**
   //!

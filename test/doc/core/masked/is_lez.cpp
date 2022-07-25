@@ -10,12 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
-            << "-> is_lez(pf) = " << eve::is_lez(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf         = " << xf << '\n'
-            << "-> is_lez(xf) = " << eve::is_lez(xf) << '\n';
+            << "-> is_lez[pf > 0](pf) = " << eve::is_lez[pf > 0](pf) << '\n';
   return 0;
 }

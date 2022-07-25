@@ -41,7 +41,7 @@ namespace eve
   //!
   //!    The value of the bit of sign is returned.
   //!
-  //!    **Note**
+  //!    **Notes**
   //!
   //!      * bitofsign does NOT return  a [logical value](@ref eve::value)
   //!
@@ -54,19 +54,6 @@ namespace eve
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/core//regular/bitofsign.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The call `eve::bitofsign[mask](x, ...)` provides a masked
-  //!     version of `bitofsign` which is
-  //!     equivalent to `if_else(mask, bitofsign(x, ...), x)`
-  //!
-  //!      **Example**
-  //!
-  //!        @godbolt{doc/core/masked/bitofsign.cpp}
-  //!
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bitofsign_, bitofsign);

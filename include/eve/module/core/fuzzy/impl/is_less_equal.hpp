@@ -32,7 +32,7 @@ namespace eve::detail
                                 , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(almost(is_less_equal), a, b, 3*eps(as(a)));
+    return arithmetic_call(is_less_equal, almost_type(), a, b, 3*eps(as(a)));
   }
 
   template<floating_real_value T, floating_real_value U>
@@ -58,9 +58,9 @@ namespace eve::detail
       using c_t = std::conditional_t<scalar_value<T>, U, T>;
       c_t aa(a);
       c_t bb(b);
-      return almost(is_less_equal)(aa, bb, tol);
+      return is_less_equal(almost_type(), aa, bb, tol);
     }
-    else return arithmetic_call(almost(is_less_equal), a, b, tol);
+    else return arithmetic_call(is_less_equal, almost_type(), a, b, tol);
   }
 
   template<floating_real_value T, value V>
@@ -76,7 +76,7 @@ namespace eve::detail
       {
         using c_t = as_wide_t<T, cardinal_t<V>>;
         using i_t = as_integer_t<T, unsigned>;
-        return almost(is_less_equal)(c_t(a), c_t(b), convert(tol, as<i_t>()));
+        return is_less_equal(almost_type(), c_t(a), c_t(b), convert(tol, as<i_t>()));
       }
       else
       {

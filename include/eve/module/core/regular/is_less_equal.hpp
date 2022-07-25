@@ -17,89 +17,66 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_less_equal
+  //!   @var is_less_equal
+  //!   @brief Returns a logical true  if and only if the element value of the first parameter is
+  //!          less or equal to the second one.
   //!
-  //! @brief Callable object computing the "less or equal to" predicate.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "less or equal to" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::as_logical<T> is_less_equal(T x,U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y` :  argument.
   //!
-  //!  Higher-order function generating a masked version of eve::is_less_equal
+  //!   **Return value**
   //!
-  //!  **Parameters**
+  //!    The call `eve::is_less_equal(x,y)`  is semantically  equivalent to `x >= y`:
   //!
-  //!  `cond` : conditional expression
+  //!  @groupheader{Example}
   //!
-  //!  **Return value**
+  //!  @godbolt{doc/core/regular/is_less_equal.cpp}
   //!
-  //!  A Callable object so that the expression `is_less_equal[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_less_equal(x, y),false(as(is_less_equal(x, y)))`
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve;::is_less_equal[mask](x,y)` provides a masked version of `eve::is_less_equal` which is
+  //!     equivalent to `if_else (mask, is_less_equal(x), eve::false( eve::as(x,y)))`.
   //!
-  //! **Parameters**
+  //!      **Example**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!        @godbolt{doc/core/masked/is_less_equal.cpp}
   //!
-  //! **Return value**
+  //!  * `almost`
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise)
-  //! comparison test result between `x` and `y`. The infix notation `x <= y` can also be used.
+  //!     The expression `definitely(is_less_equal)(x, y, t)` where `x` and `y` must be
+  //!      floating point values, evals to true if and only if `x` is almost less than `y`.
+  //!      This means that:
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!      - if `t` is a floating_value then  \f$x <  y + t \max(|x|, |y|)\f$
+  //!      - if `t` is a positive integral_value then \f$x <  \mbox{next}(y, t)\f$;
+  //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
-  //!@warning
-  //!   Although the infix notation with `<=` is supported, the `<=` operator on
-  //!   standard scalar types is the original one and so returns bool result, not `logical`.
+  //!      **Example**
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_less_equal
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_less_equal[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_less_equal(x, y),false(as(is_less_equal(x, y))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_less_equal.cpp}
-  //!
-  //!  @}
+  //!         @godbolt{doc/core/fuzzy/is_less_equal.cpp}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_less_equal_, is_less_equal);
 
   namespace detail

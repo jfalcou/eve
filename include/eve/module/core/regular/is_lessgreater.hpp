@@ -13,68 +13,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_lessgreater
+  //!   @var is_lessgreater
+  //!   @brief Returns a logical true  if and only if the elements pair are not equal or unordered.
   //!
-  //! @brief Callable object computing the "less or greater to" predicate.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "less or greater to" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::as_logical<T> is_lessgreater(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `y` :  arguments.
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!    The call `eve::is_lessgreater(x, y)`  is semantically  equivalent to `x < y || x > y`:
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) comparison test result
-  //!between `x` and `y`.
+  //!  @groupheader{Example}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!  @godbolt{doc/core/regular/is_lessgreater.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::is_lessgreater
+  //!     The call `eve;::is_lessgreater[mask](x, y)` provides a masked version of `eve::is_lessgreater` which is
+  //!     equivalent to `if_else (mask, is_lessgreater(x, y), eve::false( eve::as(x)))`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/is_lessgreater.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_lessgreater[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_lessgreater(x, y),false(as(is_lessgreater(x, y))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_lessgreater.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
 }
 

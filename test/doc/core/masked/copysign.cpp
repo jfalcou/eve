@@ -14,14 +14,6 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
             << "<- qf               = " << qf << '\n'
-            << "-> copysign(pf, qf) = " << eve::copysign(pf, qf) << '\n';
-
-  float xf = 4.0f;
-  float yf = -1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf               = " << xf << '\n'
-            << "<- yf               = " << yf << '\n'
-            << "-> copysign(xf, yf) = " << eve::copysign(xf, yf) << '\n';
+            << "-> copysign[pf < qf](pf, qf) = " << eve::copysign[pf < qf](pf, qf) << '\n';
   return 0;
 }

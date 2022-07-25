@@ -20,4 +20,12 @@ namespace eve::detail
   {
     return pedantic(rem)(a, b);
   }
+
+//   template<conditional_expr C, real_value T, real_value U>
+//   EVE_FORCEINLINE auto fmod_(EVE_SUPPORTS(cpu_), C const &cond, T const &a, U const &b) noexcept
+//       requires compatible_values<T, U>
+//   {
+//    return mask_op(  cond, eve::fmod, a, b);
+//   }
+
 }

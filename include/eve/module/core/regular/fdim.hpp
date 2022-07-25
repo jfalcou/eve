@@ -14,8 +14,8 @@ namespace eve
   //================================================================================================
   //! @addtogroup core_arithmetic
   //! @{
-  //!   @var fmod
-  //!   @brief Computes the fmodolute value of the parameter.
+  //!   @var fdim
+  //!   @brief Computes the fdimolute value of the parameter.
   //!
   //!   **Defined in Header**
   //!
@@ -29,7 +29,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< eve::value T, eve::value U >
-  //!      T fmod(T x, U y) noexcept;
+  //!      T fdim(T x, U y) noexcept;
   //!   }
   //!   @endcode
   //!
@@ -46,18 +46,18 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/fmod.cpp}
+  //!  @godbolt{doc/core/regular/fdim.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::fmod[mask](x)` provides a masked version of `eve::fmod` which is
-  //!     equivalent to `if_else (mask, fmod(x), x)`.
+  //!     The call `eve;::fdim[mask](x)` provides a masked version of `eve::fdim` which is
+  //!     equivalent to `if_else (mask, fdim(x), x)`.
   //!
   //!      **Example**
   //!
-  //!        @godbolt{doc/core/masked/fmod.cpp}
+  //!        @godbolt{doc/core/masked/fdim.cpp}
   //!
   //! @}
   //================================================================================================

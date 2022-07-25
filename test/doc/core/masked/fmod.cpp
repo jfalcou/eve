@@ -11,7 +11,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                     = " << pf << '\n'
-            << "<- qf                     = " << qf << '\n'
-            << "-> fdim[pf > qf](pf, qf)  = " << eve::fdim[pf > qf](pf, qf) << '\n'; 
+            << "<- qf                     = " << qf << '\n';
+//            << "-> fmod[pf > qf](pf, qf)  = " << eve::fmod[pf > qf](pf, qf) << '\n';
   return 0;
 }

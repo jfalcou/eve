@@ -36,16 +36,12 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `... xs` :  [arguments](eve::value).
+  //!     * `... xs` :  [arguments](@ref eve::value).
   //!
   //!    **Return value**
   //!
-  //!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x-\sum_1^n x_i\f$
+  //!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x_0-\sum_1^n x_i\f$
   //!      is returned.
-  //!
-  //!   **Note**
-  //!
-  //!     Take care that for floating entries, this operation  is only 'almost' associative.
   //!
   //!  @groupheader{Example}
   //!

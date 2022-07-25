@@ -9,8 +9,8 @@ int main()
   wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf         = " << pf << '\n'
-            << "-> is_eqz(pf) = " << eve::is_eqz(pf) << '\n';
+            << "<- pf                          = " << pf << '\n'
+            << "-> is_eqz[is_positive(pf)](pf) = " << eve::is_eqz[eve::is_positive(pf)](pf) << '\n';
 
   float xf = 1.0f;
 

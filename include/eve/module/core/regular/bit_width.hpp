@@ -28,14 +28,14 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::value T >
+  //!      template< eve::unsigned_value T >
   //!      T bit_width(T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  argument.
+  //!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
   //!
   //!    **Return value**
   //!
