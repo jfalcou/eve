@@ -18,3 +18,7 @@
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/movemask.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/detail/function/simd/arm/sve/movemask.hpp>
+#endif

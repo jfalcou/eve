@@ -13,13 +13,6 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
-    requires ( !abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
-  {
-    return std::pair{v.storage(), eve::lane<1>};
-  }
-
   template<typename T, typename N>
   EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
     requires ( abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
@@ -54,6 +47,13 @@ namespace eve::detail
     }();
 
     return std::pair{raw,  eve::lane<sizeof(T) == 2 ? 2: 1>};
+  }
+
+  template<real_scalar_value T, typename N>
+  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
+    requires ( !abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
+  {
+    return std::pair{v.storage(), eve::lane<1>};
   }
 
 }

@@ -33,7 +33,11 @@ generator.
 | X86_avx512_no_native | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.sde.cmake  -DEVE_OPTIONS='-march=skylake-avx512'  |
 | Aarch64(arm-v8)      | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake                                           |
 | Arm (arm-v7)         | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake                                               |
+| Arm (sve-128)        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve128.cmake                                            |
+| Arm (sve-256)        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve256.cmake                                            |
+| Arm (sve-512)        | cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve512.cmake                                            |
 | wasm                 | emcmake cmake .. -G Ninja  -DCMAKE_TOOLCHAIN_FILE='../cmake/toolchain/emcc.cmake'                                       |
+
 
 Once run, your build folder should contain all the necessary artifact to compile and run **EVE**
 test suite.

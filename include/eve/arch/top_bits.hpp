@@ -59,8 +59,7 @@ namespace eve
     static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
                                           (has_emulated_abi_v<logical_type> && static_size > 64);
 
-    //! Checks if current architecture use compact bool representation
-    static constexpr bool is_avx512_logical = !abi_type::is_wide_logical;
+    static constexpr bool is_avx512_logical = (current_api == avx512);
 
     //! logical or half size
     using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
@@ -327,7 +326,7 @@ namespace eve
         if constexpr ( static_bits_size < 64 ) return (std::uint32_t) res;
         else                                   return res;
       }
-      else if constexpr(!Logical::abi_type::is_wide_logical) return storage.value;
+      else if constexpr (is_avx512_logical) return storage.value;
       else return storage;
     }
 

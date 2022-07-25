@@ -29,5 +29,4 @@ namespace eve::detail
     if constexpr (N() <= 32)  return std::pair{(std::uint32_t) res, eve::lane<1>};
     else                      return std::pair{res, eve::lane<1>};
   }
-
 }

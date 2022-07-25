@@ -249,10 +249,12 @@ namespace eve::detail
   //================================================================================================
   template<typename T, typename N, data_source Pointer>
   EVE_FORCEINLINE logical<wide<T, N>>
-  load_ ( EVE_SUPPORTS(cpu_), ignore_none_ const&, safe_type const&
-        , eve::as<logical<wide<T, N>>> const &tgt, Pointer ptr
-        ) noexcept
-  requires( dereference_as<logical<T>, Pointer>::value && !x86_abi<abi_t<T, N>> )
+                  load_(EVE_SUPPORTS(cpu_),
+                        ignore_none_ const&,
+                        safe_type const&,
+                        eve::as<logical<wide<T, N>>> const                &tgt,
+                        Pointer ptr) noexcept requires(dereference_as<logical<T>, Pointer>::value
+                                       && !x86_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
   {
     if constexpr ( std::same_as<abi_t<T, N>, aggregated_> ) return aggregate_load(tgt,ptr);
     else return
