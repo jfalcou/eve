@@ -69,5 +69,5 @@ add_test(
   --verbose
   --prefix  "${eve_ROOT}")
 
-eve_build_and_ctest(install-test "-Deve_DIR=${eve_ROOT}/lib")
+eve_build_and_ctest(install-test "-Deve_ROOT=${eve_ROOT}")
 set_tests_properties(integration.install.exe PROPERTIES DEPENDS integration.install-eve.exe)
