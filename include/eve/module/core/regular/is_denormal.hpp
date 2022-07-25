@@ -50,10 +50,32 @@ namespace eve
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/core/regular/is_denormal.cpp}
+   //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve;::is_denormal[mask](x)` provides a masked version of `eve::is_denormal` which is
+  //!     equivalent to `if_else (mask, is_denormal(x), eve::false( eve::as(x)))`.
+  //!
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/masked/is_denormal.cpp}
   //!
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
+
+  namespace detail
+  {
+    // -----------------------------------------------------------------------------------------------
+    // logical masked case
+    template<conditional_expr C, value U, value V>
+    EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+    {
+      return logical_mask_op(cond, is_denormal, u);
+    }
+  }
 }
 
 #include <eve/module/core/regular/impl/is_denormal.hpp>

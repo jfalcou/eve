@@ -10,12 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf          = " << pf << '\n'
-            << "-> is_even(pf) = " << eve::is_even(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> is_even(xf) = " << eve::is_even(xf) << '\n';
+            << "-> is_even[pf > 0](pf) = " << eve::is_even[pf > 0](pf) << '\n';
   return 0;
 }

@@ -10,12 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf          = " << pf << '\n'
-            << "-> is_imag(pf) = " << eve::is_imag(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> is_imag(xf) = " << eve::is_imag(xf) << '\n';
+            << "-> is_imag[is_positive(pf)](pf) = " << eve::is_imag[eve::is_positive(pf)](pf) << '\n';
   return 0;
 }

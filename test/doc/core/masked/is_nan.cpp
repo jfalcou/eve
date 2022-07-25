@@ -11,12 +11,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
-            << "-> is_nan(pf) = " << eve::is_nan(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf         = " << xf << '\n'
-            << "-> is_nan(xf) = " << eve::is_nan(xf) << '\n';
-  return 0;
+            << "-> is_nan[pf > 0](pf) = " << eve::is_nan[pf > 0](pf) << '\n';
+ return 0;
 }

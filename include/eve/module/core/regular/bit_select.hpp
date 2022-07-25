@@ -57,7 +57,6 @@ namespace eve
   //!
   //!  @godbolt{doc/core//regular/bit_select.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
   //!  @}
   //================================================================================================
 

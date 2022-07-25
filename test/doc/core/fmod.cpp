@@ -12,6 +12,18 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                     = " << pf << '\n'
             << "<- qf                     = " << qf << '\n'
-            << "-> fdim[pf > qf](pf, qf)  = " << eve::fdim[pf > qf](pf, qf) << '\n'; 
+            << "-> fmod(pf, qf)           = " << eve::fmod(pf, qf) << '\n'
+
+
+            << '\n';
+
+  float xf = -eve::valmax(eve::as<float>());
+  float yf = eve::valmax(eve::as<float>());
+
+  std::cout << "---- scalar" << '\n'
+            << "<- xf           = " << xf << '\n'
+            << "<- yf           = " << yf << '\n'
+            << "-> fmod(xf, yf) = " << eve::fmod(xf, yf) << '\n'
+            << '\n';
   return 0;
 }

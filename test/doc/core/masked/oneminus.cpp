@@ -13,17 +13,7 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pi                       = " << pi << '\n'
-    << "-> oneminus(pi)             = " << eve::oneminus(pi) << '\n'
-    << "-> saturated(oneminus(pi))  = " << eve::saturated(eve::oneminus)(pi) << '\n'
-    << "-> oneminus(pf))            = " << eve::oneminus(pf) << '\n'
-    ;
-
-  float xf = 2.0f;
-
-  std::cout
-    << "---- scalar"  << '\n'
-    << "<- xf                       = " << xf << '\n'
-    << "-> oneminus(xf)             = " << eve::oneminus(xf) << '\n';
-
+    << "-> oneminus[pi < 0](pi)     = " << eve::oneminus[pi < 0](pi) << '\n'
+    << "-> oneminus[pf < 0](pf))    = " << eve::oneminus[pf < 0](pf) << '\n';
   return 0;
 }

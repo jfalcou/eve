@@ -11,12 +11,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf              = " << pf << '\n'
-            << "-> is_infinite(pf) = " << eve::is_infinite(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> is_infinite(xf) = " << eve::is_infinite(xf) << '\n';
+            << "-> is_infinite[pf > 0](pf) = " << eve::is_infinite[pf > 0](pf) << '\n';
   return 0;
 }

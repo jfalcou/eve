@@ -18,81 +18,66 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_less
+  //!   @var is_less
+  //!   @brief Returns a logical true  if and only if the element value of the first parameter is
+  //!          less than the second one.
   //!
-  //! @brief Callable object computing the "less than" predicate.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "less than" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::as_logical<T> is_less(T x,U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y` :  argument.
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!    The call `eve::is_less(x,y)`  is semantically  equivalent to `x < y`:
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) comparison test result
-  //!between `x` and `y`. The infix notation `x < y` can also be used.
+  //!  @godbolt{doc/core/regular/is_less.cpp}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!@warning
-  //!   Although the infix notation with `<` is supported, the `<` operator on
-  //!   standard scalar types is the original one and so returns bool result, not `logical`.
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve;::is_less[mask](x,y)` provides a masked version of `eve::is_less` which is
+  //!     equivalent to `if_else (mask, is_less(x), eve::false( eve::as(x,y)))`.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::is_less
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_less[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_less(x, y),false(as(is_less(x, y))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/is_less.cpp}
   //!
   //!  * `definitely`
   //!
-  //!
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
-  //!      floating point values, evals to true if and only if and only if `x` is definitely less than `y`.
+  //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
   //!      This means that:
   //!
-  //!      - if `t` is a floating_value then  \f$(x < y - t \max(|x|, |y|))\f$
-  //!      - if `t` is a positive integral_value then \f$(x < \mbox{prev}(y, t)\f$;
+  //!      - if `t` is a floating_value then  \f$x > y - t \max(|x|, |y|)\f$
+  //!      - if `t` is a positive integral_value then \f$x < \mbox{next}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/is_less.cpp}
-  //!
-  //!  @}
+  //!         @godbolt{doc/core/fuzzy/is_less.cpp}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_less_, is_less);
 
   namespace detail

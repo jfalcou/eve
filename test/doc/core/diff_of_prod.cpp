@@ -15,7 +15,7 @@ int main()
             << " <- tf                           = " << tf << '\n'
             << " <- zf                           = " << zf << '\n'
             << " -> xf*yf-tf*zf                  = " << (xf*yf)-(tf*zf) << '\n'
-            << " -> diff_of_prod(xf, yf, tf, zf) = " << eeve::diff_of_prod(xf, yf, tf, zf) << '\n';
+            << " -> diff_of_prod(xf, yf, tf, zf) = " << eve::diff_of_prod(xf, yf, tf, zf) << '\n';
 
   return 0;
 }

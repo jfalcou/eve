@@ -77,7 +77,7 @@ namespace eve
   //!      if `U`, `V` and `T` are scalar or if `U` or `V` are simd_values the
   //!      result is of type `UV`, otherwise it is of type  `wide< UV, cardinal_t< T >>`.
   //!
-  //!   **Possible optimizations*
+  //!   **Possible optimizations**
   //!
   //!     The following calls where `x`, `y` and `z` are values can be optimized:
   //!

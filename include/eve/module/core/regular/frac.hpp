@@ -37,17 +37,15 @@ namespace eve
   //!
   //!     * `x` :  argument.
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!        Returns a value with the same type as `x`  containing the
+  //!     *  Returns a value with the same type as `x`  containing the
   //!        [elementwise](@ref glossary_elementwise) fractional part of `x`
   //!        with the same sign as `x`.
   //!
   //!        In particular:
-  //!          * If an [element](@ref glossary_elementwise) of `x` is
-  //!            \f$\pm0\f$,  \f$\pm0\f$ is returned.
-  //!          * If an [element](@ref glossary_elementwise) of `x` is
-  //!            \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
+  //!          * If an [element](@ref glossary_elementwise) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is returned.
+  //!          * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a `Nan` is returned.
   //!
   //!  @groupheader{Example}
   //!

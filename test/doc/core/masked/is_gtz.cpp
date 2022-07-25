@@ -10,12 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
-            << "-> is_gtz(pf) = " << eve::is_gtz(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf         = " << xf << '\n'
-            << "-> is_gtz(xf) = " << eve::is_gtz(xf) << '\n';
+            << "-> is_gtz[pf > 0](pf) = " << eve::is_gtz[pf > 0](pf) << '\n';
   return 0;
 }

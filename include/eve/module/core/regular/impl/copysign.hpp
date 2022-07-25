@@ -40,4 +40,12 @@ namespace eve::detail
   {
     return bit_or(bitofsign(b), bit_notand(signmask(eve::as(a)), a));
   }
+
+   template<conditional_expr C, floating_real_value T, floating_real_value U>
+  auto copysign_(EVE_SUPPORTS(cpu_), C const &cond, T x, U y)
+  requires floating_value<common_compatible_t<T, U>>
+  {
+   return mask_op(  cond, eve::copysign, x, y);
+  }
+
 }

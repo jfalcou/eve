@@ -63,7 +63,7 @@ namespace eve
   //!
   //!      **Example**
   //!
-  //!        @godbolt{doc/core/saturated/abs.cpp}
+  //!        @godbolt{doc/core/pedantic/ifrexp.cpp}
   //! @}
   //================================================================================================
 

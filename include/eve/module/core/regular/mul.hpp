@@ -40,7 +40,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    The value of the sum of the arguments is returned.
+  //!    The value of the product of the arguments is returned.
   //!
   //!   **Note**
   //!

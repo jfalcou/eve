@@ -39,7 +39,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!      * `x`: either ssomething convertible to T or an of eve constant
+  //!      * `x`: either something convertible to T or an of eve constant
   //!      * `t` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
   //!
   //!    **Return value**
