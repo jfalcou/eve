@@ -1,18 +1,18 @@
 # action.yml
-name: 'Checks installation process'
-description: 'Checks installation process'
+name: "Checks installation process"
+description: "Checks installation process"
 inputs:
-  branch:  # Current branch
-    description: 'Current branch'
+  branch: # Current branch
+    description: "Current branch"
     required: false
-    default: 'main'
-  mode:  # Mode
-    description: 'Current test'
+    default: "main"
+  mode: # Mode
+    description: "Current test"
     required: false
     default: 0
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
   args:
     - ${{ inputs.branch }}
     - ${{ inputs.mode }}
