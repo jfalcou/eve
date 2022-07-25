@@ -7,13 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/algo/array_utils.hpp>
-#include <eve/algo/common_forceinline_lambdas.hpp>
-#include <eve/algo/concepts.hpp>
-#include <eve/algo/for_each_iteration.hpp>
-#include <eve/algo/preprocess_range.hpp>
-#include <eve/algo/traits.hpp>
 #include <eve/module/core.hpp>
+#include <eve/algo/views/backward.hpp>
+#include <eve/algo/common_forceinline_lambdas.hpp>
 
 #include <array>
 
@@ -22,32 +18,42 @@ namespace eve::algo
 namespace detail
 {
   // needed to forceinline
-  struct find_branchless_lambda
+  struct find_backwrad_branchless_lambda
   {
     std::optional<std::ptrdiff_t> *match;
 
     EVE_FORCEINLINE bool operator()(auto test) const
     {
-      auto _m = eve::first_true(test);
+      auto _m = eve::last_true(test);
       if( _m ) *match = _m;
       return _m.has_value();
     }
   };
 }
 
-template<typename TraitsSupport> struct find_if_ : TraitsSupport
+template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
 {
-  template<typename UnalignedI, typename P> struct delegate
+  template<typename UnalignedFwdI, typename P> struct delegate
   {
-    explicit delegate(UnalignedI found, P p) : found(found), p(p) {}
+    UnalignedFwdI found;
+    P p;
+
+    explicit delegate(UnalignedFwdI found, P p) : found(found), p(p) {}
+
+    void set_found(auto back_it, std::ptrdiff_t m) {
+      found = unalign(back_it.base) - iterator_cardinal_v<UnalignedFwdI> + m;
+    }
 
     EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {
       eve::logical  test  = p(eve::load[ignore](it));
-      std::optional match = eve::first_true[ignore](test);
+
+      auto rignore = eve::reverse_conditional(ignore, eve::as(test));
+
+      std::optional match = eve::last_true[rignore](test);
       if( !match ) return false;
 
-      found = unalign(it) + *match;
+      set_found(it, *match);
       return true;
     }
 
@@ -61,39 +67,38 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 
       // TODO: this might not be ideal, see: #764
       std::optional<std::ptrdiff_t> match;
-      std::size_t pos = find_branchless(tests, detail::find_branchless_lambda {&match});
-      found           = unalign(arr[0]) + (pos * iterator_cardinal_v<I>)+*match;
+      std::size_t pos = find_branchless(tests, detail::find_backwrad_branchless_lambda {&match});
+
+      set_found(arr[0] + pos * iterator_cardinal_v<I>, *match);
 
       return true;
     }
-
-    UnalignedI found;
-    P          p;
   };
 
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
   {
     if( rng.begin() == rng.end() ) return unalign(rng.begin());
 
-    auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
+    auto processed = preprocess_range(TraitsSupport::get_traits(), views::backward(EVE_FWD(rng)));
 
-    auto l = unalign(processed.begin()) + (processed.end() - processed.begin());
+    auto f = unalign(processed.end().base);
+    auto l = unalign(processed.begin().base);
 
-    delegate<unaligned_t<decltype(processed.begin())>, P> d {l, p};
+    delegate<unaligned_t<decltype(processed.begin().base)>, P> d {l, p};
     algo::for_each_iteration(processed.traits(), processed.begin(), processed.end())(d);
-    return unalign(rng.begin()) + (d.found - processed.begin());
+    return unalign(rng.begin()) + (d.found - f);
   }
 };
 
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!  @var find_if
+//!  @var find_if_backward
 //!
-//!  @brief SIMD version of std::find_if
+//!  @brief finds the last entry that matches the predicate.
 //!
-//!  Configurable @callable performing a SIMD optimized version of the find_if
-//!  By default, the operation will be unrolled by a factor of 4, and align memory accesses.
+//!  Similar effect can be achieved with `find_if(views::reverse)` but this one is faster/
+//!  Default unrolling 4, alignes accesses by default.
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -105,7 +110,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename P>
-//!     auto find_if(Rng&& rng, P p) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_if_backward(Rng&& rng, P p) -> eve::unalign_t<decltype(rng.begin())>;
 //!   }
 //!   @endcode
 //!
@@ -116,22 +121,22 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 //!
 //!   **Return value**
 //!
-//!   Iterator on the element found or past the end if not (same as std)
+//!   Iterator on the element found or past the end if nothing was found.
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/algo/find.cpp}
+//!   @godbolt{doc/algo/find_backward.cpp}
 //!
 //! @}
 //================================================================================================
-inline constexpr auto find_if = function_with_traits<find_if_>[default_simple_algo_traits];
+inline constexpr auto find_if_backward = function_with_traits<find_if_backward_>[default_simple_algo_traits];
 
-template<typename TraitsSupport> struct find_ : TraitsSupport
+template<typename TraitsSupport> struct find_backward_ : TraitsSupport
 {
   template<relaxed_range Rng>
   EVE_FORCEINLINE auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const
   {
-    return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
+    return find_if_backward[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
   }
 };
 
@@ -140,7 +145,7 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 //! @{
 //!  @var find
 //!
-//!  @brief a version of find_if with a value to find instead of a predicate to test.
+//!  @brief a version of find_if_backward with a value to find instead of a predicate to test.
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -152,7 +157,7 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng>
-//!     auto find(Rng&& rng, eve::value_type_t<Rng> v) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_backward(Rng&& rng, eve::value_type_t<Rng> v) -> eve::unalign_t<decltype(rng.begin())>;
 //!   }
 //!   @endcode
 //!   **Parameters**
@@ -162,24 +167,24 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 //!
 //!   **Return value**
 //!
-//!   Iterator on the element found or past the end if not found (same as std)
+//!   Iterator on the element found or past the end if not found
 //!
-//!   @see find_if
+//!   @see find_if_backward
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/algo/find.cpp}
+//!   @godbolt{doc/algo/find_backward.cpp}
 //!
 //! @}
 //================================================================================================
 
-inline constexpr auto find = function_with_traits<find_>[find_if.get_traits()];
+inline constexpr auto find_backward = function_with_traits<find_backward_>[find_if_not.get_traits()];
 
-template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
+template<typename TraitsSupport> struct find_if_not_backward_ : TraitsSupport
 {
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
   {
-    return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});
+    return find_if_backward[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});
   }
 };
 
@@ -188,7 +193,7 @@ template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 //! @{
 //!  @var find_if_not
 //!
-//!  @brief a version of `eve::algo::find_if` where the preicate is negated
+//!  @brief a version of `eve::algo::find_if_not` where the preicate is negated
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -211,15 +216,16 @@ template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 //!
 //!   **Return value**
 //!
-//!   Iterator on the element found or past the end if not found (same as std)
+//!   Iterator on the element found or past the end if not found
 //!
 //!   @see find_if
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/algo/find.cpp}
+//!   @godbolt{doc/algo/find_backward.cpp}
 //!
 //! @}
 //================================================================================================
-inline constexpr auto find_if_not = function_with_traits<find_if_not_>[find_if.get_traits()];
+inline constexpr auto find_if_not_backward = function_with_traits<find_if_not_backward_>[find_if_not.get_traits()];
+
 }
