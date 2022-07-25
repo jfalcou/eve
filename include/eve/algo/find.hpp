@@ -95,6 +95,8 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 //!  Configurable @callable performing a SIMD optimized version of the find_if
 //!  By default, the operation will be unrolled by a factor of 4, and align memory accesses.
 //!
+//!   **Alternative Header**
+//!
 //!   @code
 //!   #include <eve/algo.hpp>
 //!   @endcode
@@ -141,6 +143,8 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 //!  @var find
 //!
 //!  @brief a version of find_if with a value to find instead of a predicate to test.
+//!
+//!   **Alternative Header**
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -189,6 +193,8 @@ template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 //!  @var find_if_not
 //!
 //!  @brief a version of `eve::algo::find_if` where the preicate is negated
+//!
+//!   **Alternative Header**
 //!
 //!   @code
 //!   #include <eve/algo.hpp>

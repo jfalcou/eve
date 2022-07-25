@@ -2,14 +2,15 @@
 #include <eve/algo.hpp>
 #include <iostream>
 #include <vector>
-#include "print.hpp"
+#include <tts/tts.hpp>
 
 int main()
 {
   std::vector<int>  v = {2,6,-10,32,-8,2,-6,8,-2,4};
 
-  std::cout << " -> v                                  = ";
-  doc_utils::print(v);
+  std::cout << " -> v                                  = "
+            << tts::as_string(v)
+            << "\n";
 
   std::cout << " -> eve::algo::any_of(v, i >= 4)       = "
             << std::boolalpha << eve::algo::any_of(v, [](auto i){ return i >= 4; })<< "\n";
