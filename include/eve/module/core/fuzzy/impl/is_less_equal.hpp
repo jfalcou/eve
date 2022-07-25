@@ -32,7 +32,7 @@ namespace eve::detail
                                 , U const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(is_less_equal, almost_type(), a, b, 3*eps(as(a)));
+    return arithmetic_call(almost(is_less_equal), a, b, 3*eps(as(a)));
   }
 
   template<floating_real_value T, floating_real_value U>
@@ -42,7 +42,7 @@ namespace eve::detail
                                 , logical<U> const &b) noexcept
   requires compatible_values<T, U>
   {
-    return arithmetic_call(is_less_equal, a, b);
+    return arithmetic_call(almost(is_less_equal), a, b);
   }
 
   template<floating_real_value T, floating_real_value U, real_value V>
@@ -60,7 +60,7 @@ namespace eve::detail
       c_t bb(b);
       return is_less_equal(almost_type(), aa, bb, tol);
     }
-    else return arithmetic_call(is_less_equal, almost_type(), a, b, tol);
+    else return arithmetic_call(almost(is_less_equal), a, b, tol);
   }
 
   template<floating_real_value T, value V>
