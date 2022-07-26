@@ -7,9 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/cpu/tags.hpp>
-#include <eve/arch/wasm/tags.hpp>
-#include <eve/arch/x86/tags.hpp>
-#include <eve/arch/ppc/tags.hpp>
-#include <eve/arch/arm/sve/tags.hpp>
-#include <eve/arch/arm/neon/tags.hpp>
+#include <eve/detail/spy.hpp>
+
+// We successfully detected some native SIMD
+#if defined(SPY_ARCH_IS_WASM) && !defined(EVE_NO_SIMD)
+#  define EVE_SUPPORTS_NATIVE_SIMD
+#  define EVE_HW_WASM
+#  define EVE_INCLUDE_WASM_HEADER
+#endif
