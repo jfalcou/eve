@@ -23,28 +23,25 @@ TTS_CASE_WITH( "Check behavior of average on wide"
   auto b = z_t(a2, a3);
   TTS_ULP_EQUAL( eve::div(a, b), a/b, 0.5);
   TTS_ULP_EQUAL( eve::pedantic(eve::div)(a, b), a/b, 10);
-  if (eve::cardinal_v<T> == 1)
   {
-    {
-      z_t c(1, eve::inf(eve::as(a0)));
-      z_t rr(0, 0);
-      z_t  d = eve::pedantic(eve::div)(a, c);
-      TTS_ULP_EQUAL( d, rr, 0.5);
-      TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
-    }
-    {
-      z_t c(eve::inf(eve::as(a0)), 1);
-      z_t rp(0, 0);
-      z_t  d = eve::pedantic(eve::div)(a, c);
-      TTS_ULP_EQUAL( d, rp, 0.5);
-      TTS_ULP_EQUAL( eve::div(a, c), rp, 0.5);
-    }
-    {
-      z_t c(eve::inf(eve::as(a0)), eve::inf(eve::as(a0)));
-      z_t rr(0, 0);
-      z_t  d = eve::pedantic(eve::div)(a, c);
-      TTS_ULP_EQUAL( d, rr, 0.5);
-      TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
-    }
+    z_t c(1, eve::inf(eve::as(a0)));
+    z_t rr(0, 0);
+    z_t  d = eve::pedantic(eve::div)(a, c);
+    TTS_ULP_EQUAL( d, rr, 0.5);
+    TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
+  }
+  {
+    z_t c(eve::inf(eve::as(a0)), 1);
+    z_t rp(0, 0);
+    z_t  d = eve::pedantic(eve::div)(a, c);
+    TTS_ULP_EQUAL( d, rp, 0.5);
+    TTS_ULP_EQUAL( eve::div(a, c), rp, 0.5);
+  }
+  {
+    z_t c(eve::inf(eve::as(a0)), eve::inf(eve::as(a0)));
+    z_t rr(0, 0);
+    z_t  d = eve::pedantic(eve::div)(a, c);
+    TTS_ULP_EQUAL( d, rr, 0.5);
+    TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
   }
 };

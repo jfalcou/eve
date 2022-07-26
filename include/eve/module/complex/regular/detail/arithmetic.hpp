@@ -107,7 +107,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
   {
     auto [zr, zi] = z;
-    return fma(zr, zr, zi);
+    return fma(zr, zr, zi*zi);
   }
 
   template<typename Z>
