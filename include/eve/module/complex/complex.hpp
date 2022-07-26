@@ -216,7 +216,7 @@ namespace eve
       auto [c, d] = o;
       real(self) = a*c-b*d;
       imag(self) = a*d+b*c;
-      return self;
+    return self;
     }
 
     EVE_FORCEINLINE friend auto& operator*=(like<complex> auto& self, callable_i_ const&) noexcept
