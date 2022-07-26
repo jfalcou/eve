@@ -34,14 +34,22 @@ TTS_CASE_WITH( "Check behavior of average on wide"
     }
     {
       z_t c(eve::inf(eve::as(a0)), a0);
-      z_t rp(c);
       z_t rr(eve::inf(eve::as(a0)), eve::nan(eve::as(a0)));
+      z_t a(1, 0);
       z_t  d = eve::pedantic(eve::mul)(a, c);
-      TTS_ULP_EQUAL( d, rp, 0.5);
-      TTS_ULP_EQUAL( eve::mul(a, c), c, 0.5);
+      TTS_ULP_EQUAL( d, c, 0.5);
+      TTS_ULP_EQUAL( eve::mul(a, c), rr, 0.5);
     }
     {
       z_t c(eve::inf(eve::as(a0)), a0);
+      z_t rr(eve::inf(eve::as(a0)), eve::minf(eve::as(a0)));
+      z_t  d = eve::pedantic(eve::mul)(a, c);
+      TTS_ULP_EQUAL( d, rr, 0.5);
+      TTS_ULP_EQUAL( eve::mul(a, c), rr, 0.5);
+    }
+    {
+      z_t ca(eve::inf(eve::as(a0)), 1.5);
+      z_t c(1, 0);
       z_t rr(eve::inf(eve::as(a0)), eve::minf(eve::as(a0)));
       z_t  d = eve::pedantic(eve::mul)(a, c);
       TTS_ULP_EQUAL( d, rr, 0.5);

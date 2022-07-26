@@ -101,7 +101,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
   {
     auto [zr, zi] = z;
-    return Z{fms(zr, zr, zi), 2*zr*zi};
+    return Z{fms(zr, zr, zi*zi), 2*zr*zi};
   }
 
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
