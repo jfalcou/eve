@@ -101,10 +101,23 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
   {
     auto [zr, zi] = z;
-    return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
+    return Z{fms(zr, zr, zi), 2*zr*zi};
   }
 
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
+  {
+    auto [zr, zi] = z;
+    return fma(zr, zr, zi);
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, pedantic_type const &, Z const& z) noexcept
+  {
+    auto [zr, zi] = z;
+    return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
+  }
+
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, pedantic_type const &, auto const& z) noexcept
   {
     auto [zr, zi] = z;
     return sum_of_prod(zr, zr, zi, zi);
