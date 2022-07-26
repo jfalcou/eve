@@ -35,10 +35,11 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang_libcpp, arch: x86     , opts: -msse2    , status: 1 }
-        - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
+        - { comp: clang_libcpp, arch: x86     , opts: -msse2    , status: 1, cmake: cmake}
+        - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1, cmake: cmake}
+        - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1, cmake: cmake}
+        - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1, cmake: cmake}
+
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
@@ -49,7 +50,8 @@ jobs:
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:         '${{ matrix.cfg.status }}'
           cpu:            8
-          specific:       ${{ matrix.cfg.arch }}.json'
+          specific:       '${{ matrix.cfg.arch }}.json'
+          cmake:          '${{ matrix.cfg.cmake }}'
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
@@ -95,14 +97,14 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, cpu: 3 , arch: x86     , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: gcc  , cpu: 3 , arch: x86.ci  , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: clang, cpu: 3 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
+        - { comp: clang, cpu: 3 , arch: x86     , opts: -DEVE_NO_SIMD         , status: 1, cmake: cmake }
+        - { comp: gcc  , cpu: 3 , arch: x86.ci  , opts: -DEVE_NO_SIMD         , status: 1, cmake: cmake }
+        - { comp: clang, cpu: 3 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1, cmake: cmake }
 #        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
-        - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
-        - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
-        - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
-        - { comp: clang, cpu: 3 , arch: wasm    , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi, status: 0, cmake: cmake}
+        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi, status: 0, cmake: cmake}
+        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi, status: 0, cmake: cmake}
+        - { comp: clang       , arch: wasm    , opts: ""        , status: 0, cmake: "emcmake cmake"}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
@@ -111,5 +113,6 @@ jobs:
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:        '${{ matrix.cfg.status }}'
+          status:         '${{ matrix.cfg.status }}'
+          cmake:          '${{ matrix.cfg.cmake }}'
           cpu:            ${{ matrix.cfg.cpu }}

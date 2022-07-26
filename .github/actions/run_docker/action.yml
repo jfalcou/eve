@@ -22,6 +22,10 @@ inputs:
     description: 'Specific targets'
     required: false
     default: ''
+  cmake:  # specific CMAKE call for targets
+    description: 'CMake Wrapper'
+    required: false
+    default: 'cmake'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -31,3 +35,4 @@ runs:
     - ${{ inputs.status }}
     - ${{ inputs.cpu }}
     - ${{ inputs.specific }}
+    - ${{ inputs.cmake }}
