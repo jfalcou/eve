@@ -100,11 +100,11 @@ jobs:
         - { comp: clang, cpu: 3 , arch: x86     , opts: -DEVE_NO_SIMD         , status: 1, cmake: cmake }
         - { comp: gcc  , cpu: 3 , arch: x86.ci  , opts: -DEVE_NO_SIMD         , status: 1, cmake: cmake }
         - { comp: clang, cpu: 3 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1, cmake: cmake }
-#        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
-        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi, status: 0, cmake: cmake}
-        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi, status: 0, cmake: cmake}
-        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi, status: 0, cmake: cmake}
-        - { comp: clang       , arch: wasm    , opts: ""        , status: 0, cmake: "emcmake cmake"}
+#        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1, cmake: cmake }
+        - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0, cmake: cmake}
+        - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0, cmake: cmake}
+        - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0, cmake: cmake}
+        - { comp: clang, cpu: 3 , arch: wasm    , opts: ""                    , status: 0, cmake: "emcmake cmake"}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
@@ -116,3 +116,4 @@ jobs:
           status:         '${{ matrix.cfg.status }}'
           cmake:          '${{ matrix.cfg.cmake }}'
           cpu:            ${{ matrix.cfg.cpu }}
+          specific:       '${{ matrix.cfg.arch }}.json'
