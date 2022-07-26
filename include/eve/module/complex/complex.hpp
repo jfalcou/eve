@@ -52,7 +52,7 @@ namespace eve
     {
       os << real(z);
       auto i = imag(z);
-      if(i >= 0) os << '+' << i; else os << '-' << -i;
+      if(is_positive(i)) os << '+' << i; else os << '-' << -i;
       return os << 'i';
     }
 
@@ -214,8 +214,8 @@ namespace eve
     {
       auto [a, b] = self;
       auto [c, d] = o;
-      real(self) = a*c-b*d; //diff_of_prod(a, c, b, d);
-      imag(self) = a*d+b*c; //sum_of_prod(a, d, b, c);
+      real(self) = a*c-b*d;
+      imag(self) = a*d+b*c;
       return self;
     }
 
