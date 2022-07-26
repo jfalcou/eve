@@ -8,6 +8,7 @@
 #pragma once
 
 #if !defined(EVE_NO_SIMD)
+#  include <eve/arch/wasm/spec.hpp>
 #  include <eve/arch/x86/spec.hpp>
 #  include <eve/arch/ppc/spec.hpp>
 #  include <eve/arch/arm/sve/spec.hpp>

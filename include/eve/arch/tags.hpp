@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/cpu/tags.hpp>
+#include <eve/arch/wasm/tags.hpp>
 #include <eve/arch/x86/tags.hpp>
 #include <eve/arch/ppc/tags.hpp>
 #include <eve/arch/arm/sve/tags.hpp>
