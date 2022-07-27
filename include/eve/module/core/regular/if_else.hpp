@@ -39,7 +39,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!     * `x`: condition
-  //!     * `y`, `z`:  choice arguments.
+  //!     * `y`, `z`:  choice [arguments](@ref eve::value).
   //!
   //!   **Return value**
   //!

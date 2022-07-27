@@ -15,7 +15,7 @@ namespace eve
   //! @addtogroup core_arithmetic
   //! @{
   //!   @var add
-  //!   @brief Computes the sum of its arguments.
+  //!   @brief Computes the sum of its [arguments](@ref eve::value).
   //!
   //!   **Defined in Header**
   //!
@@ -44,7 +44,7 @@ namespace eve
   //!   **Note**
   //!
   //!     Take care that for floating entries, the addition is only 'almost' associative.
-  //!     This call perform additions in reverse incoming order.
+  //!     This call performs additions in reverse incoming order.
   //!
   //!  @groupheader{Example}
   //!

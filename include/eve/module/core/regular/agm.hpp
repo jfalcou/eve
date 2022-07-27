@@ -35,7 +35,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x`, `y`:  arguments.
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
   //!    **Return value**
   //!

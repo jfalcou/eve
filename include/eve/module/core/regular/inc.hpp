@@ -35,7 +35,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  argument.
+  //!     * `x` :  [argument](@ref eve::value).
   //!
   //!    **Return value**
   //!
@@ -61,7 +61,7 @@ namespace eve
   //!
   //!       The call `saturated(inc)(x)` computes the saturated increment of `x`.
   //!       The only interest of this behaviour is that
-  //!       for integral type T  `saturated(inc)(Valmax< T >())` returns `Valmax< T >()`.
+  //!       for integral type T the call  `saturated(inc)(Valmax<T>())` returns `Valmax<T>()`.
   //!
   //!      **Example**
   //!

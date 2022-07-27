@@ -41,7 +41,7 @@ namespace eve
   //!
   //!   * `y`, `z`:   selection [values](@ref eve::value)
   //!
-  //!     * `x` :  argument.
+  //!     * `x` :  [argument](@ref eve::value).
   //!
   //!    **Return value**
   //!
