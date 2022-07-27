@@ -37,10 +37,16 @@ namespace eve::detail
                                    ) noexcept
   requires(has_native_abi_v<T>)
   {
-
-    T mcd = -c * d;
-    T err = fma(c, d, mcd);
-    T dop = fms(a, b, mcd);
-    return if_else(is_finite(err), dop + err, dop);
+    if constexpr(spy::supports::fma_ || std::same_as<T, float>)
+    {
+      T mcd = -c * d;
+      T err = fma(c, d, mcd);
+      T dop = fms(a, b, mcd);
+      return if_else(is_finite(err), dop + err, dop);
+    }
+    else
+    {
+      return a*b+c*d;
+    }
   }
 }

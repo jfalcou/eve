@@ -23,6 +23,9 @@ namespace eve::detail
                                    , const W& d
                                    ) noexcept
   {
-    return sum_of_prod(a, b, c, d);
+    T mcd = -c * d;
+    T err = pedantic(fma)(c, d, mcd);
+    T dop = pedantic(fms)(a, b, mcd);
+    return if_else(is_finite(err), dop + err, dop);
   }
 }
