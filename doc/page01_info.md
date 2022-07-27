@@ -36,9 +36,9 @@ The following instructions are tentatively supported (ie code is incomplete and 
 **EVE** is available on GitHub and can be retrieved via the following command:
 <br/>
 
-@verbatim
-$ git clone https://github.com/jfalcou/eve.git
-@endverbatim
+```bash
+git clone https://github.com/jfalcou/eve.git
+```
 
 This retrieves the `main` branch which contains the latest stable version. Development happens
 live on `main` so if you need stability, use a tagged versions.
@@ -204,7 +204,7 @@ target_link_libraries(use-eve PRIVATE eve::eve)
 ```
 
 > If a custom installation prefix was used, ensure your **EVE** installation is within **CMake's**
-  search path with the use of the **CMake** variables **eve_ROOT** (CMake 3.12), **eve_DIR**, or
+  search path with the use of the **CMake** variables **eve_ROOT**, **eve_DIR**, or
   **CMAKE_PREFIX_PATH**.
 
 # Advanced options
@@ -212,11 +212,12 @@ target_link_libraries(use-eve PRIVATE eve::eve)
 If you want to dig a bit further, you can pass additional options to `cmake` to
 activate additional features.
 
-| Option | Effect       | Target               |
-|--------|:-------------|:---------------------|
-| `EVE_BUILD_TEST`      | Enable unit tests for **EVE** (`ON` by default).       | `unit`        |
-| `EVE_BUILD_BENCHMARKS`| Enable benchmark tests for **EVE** (`OFF` by default). | `benchmarks`  |
-| `EVE_BUILD_RANDOM`    | Enable random tests for **EVE** (`OFF` by default).    | `random`      |
+|Option                   |Effect                                                   |Target        |
+|-------------------------|:--------------------------------------------------------|:-------------|
+| `EVE_BUILD_TEST`        |Enable unit tests for **EVE** (`ON` by default).         | `unit`       |
+| `EVE_BUILD_BENCHMARKS`  |Enable benchmark tests for **EVE** (`OFF` by default).   | `benchmarks` |
+| `EVE_BUILD_RANDOM`      |Enable random tests for **EVE** (`OFF` by default).      | `random`     |
+| `EVE_BUILD_INTEGRATION` |Enable integration tests for **EVE** (`OFF` by default). | `integration`|
 
 There is currently over 2000 tests, so compiling all unit tests may require a large machine or some
 time. We recommend compiling in parallel using `-j`.

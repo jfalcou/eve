@@ -40,7 +40,7 @@ endfunction()
 
 
 ##==================================================================================================
-## Run Integration Tests
+## Create Integration Tests
 ##==================================================================================================
 
 ## ===== CPM =====
@@ -71,3 +71,11 @@ add_test(
 
 eve_build_and_ctest(install-test "-Deve_ROOT=${eve_ROOT}")
 set_tests_properties(integration.install.exe PROPERTIES DEPENDS integration.install-eve.exe)
+
+## ==== Aggregated ====
+add_custom_target(integration
+  COMMAND
+  "${CMAKE_CTEST_COMMAND}"
+  --test-dir "${PROJECT_BINARY_DIR}"
+  --output-on-failure
+  -R integration\.[a-z-]+\.exe)
