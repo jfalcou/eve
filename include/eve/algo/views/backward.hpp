@@ -94,7 +94,7 @@ namespace eve::algo::views
         else                                                          return backward_iterator<I>{wrapped};
       }
     }
-  } backward;
+  } constexpr backward;
 
 
   template <relaxed_iterator I>

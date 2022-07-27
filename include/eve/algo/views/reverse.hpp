@@ -87,7 +87,7 @@ namespace eve::algo::views
         else                                                           return reverse_iterator<I>{wrapped};
       }
     }
-  } reverse;
+  } constexpr reverse;
 
   template <relaxed_iterator I>
   struct reverse_iterator : operations_with_distance
