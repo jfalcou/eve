@@ -18,7 +18,7 @@ namespace eve
   //! @addtogroup core_arithmetic
   //! @{
   //!   @var fracscale
-  //!   @brief Computes the smallest integer not less than the input.
+  //!   @brief Computes the reduced part of the scaled input.
   //!
   //!   **Defined in Header**
   //!
@@ -64,7 +64,7 @@ namespace eve
   //!
   //!        @godbolt{doc/core/masked/fracscale.cpp}
   //!
-  //!  * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
+  //!   * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
   //!
   //!     If d is one of these 4 decorators
   //!     The call `d(fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`

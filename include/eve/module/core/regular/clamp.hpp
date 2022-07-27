@@ -57,8 +57,8 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::clamp[mask](x)` provides a masked version of `eve::clamp` which is
-  //!     equivalent to `if_else (mask, clamp(x), x)`.
+  //!     The call `eve;::clamp[mask](x, ...)` provides a masked version of `eve::clamp` which is
+  //!     equivalent to `if_else (mask, clamp(x, ...), x)`.
   //!
   //!      **Example**
   //!

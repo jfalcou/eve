@@ -16,7 +16,7 @@ namespace eve
   //! @addtogroup core_arithmetic
   //! @{
   //!   @var sub
-  //!   @brief Computes the sum of its arguments.
+  //!   @brief Computes the sum of its [arguments](@ref eve::value).
   //!
   //!   **Defined in Header**
   //!
@@ -65,7 +65,7 @@ namespace eve
   //!     a saturated version of `eve::sub`.
   //!
   //!     Take care that for signed integral
-  //!     entries this kind ofoperation  is highly order depênding. We do not recommand
+  //!     entries this kind of operation is highly order dependant. We do not recommand
   //!     to use it for more than 2 parameters.
   //!
   //!      **Example**

@@ -36,7 +36,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  argument.
+  //!     * `x` :  [argument](@ref eve::value).
   //!
   //!    **Return value**
   //!
@@ -62,11 +62,11 @@ namespace eve
   //!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`,
   //!     where `x` must be a floating value.
   //!
-  //!      * If `tol` is a floating value computes the floor with
+  //!      * If `tol` is a floating value, computes the floor with
   //!        a tolerance `tol` using Hagerty's FL5 function.
-  //!      * If `tol` is an integral value n compute the floor of
+  //!      * If `tol` is an integral value n, computes the floor of
   //!        the next nth representable value in the `x` type.
-  //!      * If `tol` is omitted the tolerance is taken to 3 times
+  //!      * If `tol` is omitted, the tolerance is taken to 3 times
   //!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!
   //!      @godbolt{doc/core//fuzzy/floor.cpp}

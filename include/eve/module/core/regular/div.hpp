@@ -36,7 +36,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `...xs` :  arguments.
+  //!     * `...xs` :  [arguments](@ref eve::value).
   //!
   //!    **Return value**
   //!
@@ -48,7 +48,8 @@ namespace eve
   //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`
   //!        if `x` or  `y` is an  [simd value](@ref eve::simd_value).
   //!
-  //!      * Although the infix notation with `/` is supported, the `/` operator on
+  //!      * Although the infix notation with `/` is supported for
+  //!        two parameters, the `/` operator on
   //!        standard scalar types is the original one and so can lead to automatic promotion.
   //!
   //!  @groupheader{Example}

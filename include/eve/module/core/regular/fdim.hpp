@@ -15,7 +15,7 @@ namespace eve
   //! @addtogroup core_arithmetic
   //! @{
   //!   @var fdim
-  //!   @brief Computes the fdimolute value of the parameter.
+  //!   @brief Computes the positive difference between the two parameters.
   //!
   //!   **Defined in Header**
   //!
@@ -35,7 +35,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x`, `y` :  arguments.
+  //!     * `x`, `y` :  [arguments](@ref eve::value).
   //!
   //!   **Return value**
   //!

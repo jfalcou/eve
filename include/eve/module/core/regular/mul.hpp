@@ -16,7 +16,7 @@ namespace eve
   //! @addtogroup core_arithmetic
   //! @{
   //!   @var mul
-  //!   @brief Computes the sum of its arguments.
+  //!   @brief Computes the sum of its [arguments](@ref eve::value).
   //!
   //!   **Defined in Header**
   //!
@@ -45,7 +45,7 @@ namespace eve
   //!   **Note**
   //!
   //!     Take care that for floating entries, the multiplication is only 'almost' associative.
-  //!     This call perform multiplications in reverse incoming order.
+  //!     This call performs multiplications in reverse incoming order.
   //!
   //!  @groupheader{Example}
   //!

@@ -35,7 +35,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  argument.
+  //!     * `x` :  [argument](@ref eve::value).
   //!
   //!    **Return value**
   //!
@@ -61,7 +61,7 @@ namespace eve
   //!
   //!       The call `saturated(dec)(x)` computes the saturated decrement of `x`.
   //!       The only interest of this behaviour is that
-  //!       for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
+  //!       for integral type T  the call `saturated(dec)(Valmin<T>())` returns `Valmin<T>()`.
   //!
   //!      **Example**
   //!
