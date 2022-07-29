@@ -21,3 +21,7 @@
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/friends.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_WASM_HEADER)
+#  include <eve/detail/function/simd/wasm/friends.hpp>
+#endif
