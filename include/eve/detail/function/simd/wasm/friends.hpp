@@ -39,7 +39,7 @@ self_eq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == int32x4 ) return type {wasm_i32x4_eq(v, w)};
   else if constexpr( c == int64x2 ) return type {wasm_i64x2_eq(v, w)};
   else if constexpr( c == uint8x16 ) return type {wasm_i8x16_eq(v, w)};
-  else if constexpr( c == uint16x8 ) return type {wasm_i16x4_eq(v, w)};
+  else if constexpr( c == uint16x8 ) return type {wasm_i16x8_eq(v, w)};
   else if constexpr( c == uint32x4 ) return type {wasm_i32x4_eq(v, w)};
   else if constexpr( c == uint64x2 ) return type {wasm_i64x2_eq(v, w)};
 }
@@ -67,7 +67,7 @@ self_neq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == int32x4 ) return type {wasm_i32x4_ne(v, w)};
   else if constexpr( c == int64x2 ) return type {wasm_i64x2_ne(v, w)};
   else if constexpr( c == uint8x16 ) return type {wasm_i8x16_ne(v, w)};
-  else if constexpr( c == uint16x8 ) return type {wasm_i16x4_ne(v, w)};
+  else if constexpr( c == uint16x8 ) return type {wasm_i16x8_ne(v, w)};
   else if constexpr( c == uint32x4 ) return type {wasm_i32x4_ne(v, w)};
   else if constexpr( c == uint64x2 ) return type {wasm_i64x2_ne(v, w)};
 }
@@ -95,7 +95,7 @@ self_less(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == int32x4 ) return type {wasm_i32x4_lt(v, w)};
   else if constexpr( c == int64x2 ) return type {wasm_i64x2_lt(v, w)};
   else if constexpr( c == uint8x16 ) return type {wasm_u8x16_lt(v, w)};
-  else if constexpr( c == uint16x8 ) return type {wasm_u16x4_lt(v, w)};
+  else if constexpr( c == uint16x8 ) return type {wasm_u16x8_lt(v, w)};
   else if constexpr( c == uint32x4 ) return type {wasm_u32x4_lt(v, w)};
   else if constexpr( c == uint64x2 ) return type {wasm_u64x2_lt(v, w)};
 }
@@ -116,7 +116,7 @@ self_greater(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == int32x4 ) return type {wasm_i32x4_gt(v, w)};
   else if constexpr( c == int64x2 ) return type {wasm_i64x2_gt(v, w)};
   else if constexpr( c == uint8x16 ) return type {wasm_u8x16_gt(v, w)};
-  else if constexpr( c == uint16x8 ) return type {wasm_u16x4_gt(v, w)};
+  else if constexpr( c == uint16x8 ) return type {wasm_u16x8_gt(v, w)};
   else if constexpr( c == uint32x4 ) return type {wasm_u32x4_gt(v, w)};
   else if constexpr( c == uint64x2 ) return type {wasm_u64x2_gt(v, w)};
 }
@@ -137,7 +137,7 @@ self_geq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == int32x4 ) return type {wasm_i32x4_ge(v, w)};
   else if constexpr( c == int64x2 ) return type {wasm_i64x2_ge(v, w)};
   else if constexpr( c == uint8x16 ) return type {wasm_u8x16_ge(v, w)};
-  else if constexpr( c == uint16x8 ) return type {wasm_u16x4_ge(v, w)};
+  else if constexpr( c == uint16x8 ) return type {wasm_u16x8_ge(v, w)};
   else if constexpr( c == uint32x4 ) return type {wasm_u32x4_ge(v, w)};
   else if constexpr( c == uint64x2 ) return type {wasm_u64x2_ge(v, w)};
 }
@@ -158,7 +158,7 @@ self_leq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == int32x4 ) return type {wasm_i32x4_le(v, w)};
   else if constexpr( c == int64x2 ) return type {wasm_i64x2_le(v, w)};
   else if constexpr( c == uint8x16 ) return type {wasm_u8x16_le(v, w)};
-  else if constexpr( c == uint16x8 ) return type {wasm_u16x4_le(v, w)};
+  else if constexpr( c == uint16x8 ) return type {wasm_u16x8_le(v, w)};
   else if constexpr( c == uint32x4 ) return type {wasm_u32x4_le(v, w)};
   else if constexpr( c == uint64x2 ) return type {wasm_u64x2_le(v, w)};
 }
