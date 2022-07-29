@@ -51,7 +51,7 @@ namespace eve
     using parent  = cpu_;
   };
 
-# if defined(SPY_SIMD_IS_X86_AVX512)
+# if defined(SPY_SIMD_IS_X86_AVX512) || defined(SPY_SIMD_IS_ARM_FIXED_SVE)
 #define EVE_WIDE_LOGICAL_NAMESPACE
 #define EVE_BIT_LOGICAL_NAMESPACE   inline
 #else

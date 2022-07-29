@@ -10,6 +10,7 @@ set(  SOURCES
       expected_cardinal.cpp
       fundamental_cardinal.cpp
       top_bits.cpp
+      new_arch_first_tests.cpp
    )
 
 make_unit( "unit.arch" ${SOURCES} )
