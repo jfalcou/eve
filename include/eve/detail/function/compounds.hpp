@@ -31,3 +31,8 @@
 #  include <eve/detail/function/simd/arm/sve/bit_compounds.hpp>
 #  include <eve/detail/function/simd/arm/sve/arithmetic_compounds.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_WASM_HEADER)
+#  include <eve/detail/function/simd/wasm/bit_compounds.hpp>
+#  include <eve/detail/function/simd/wasm/arithmetic_compounds.hpp>
+#endif
