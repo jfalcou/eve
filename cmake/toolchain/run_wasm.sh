@@ -5,4 +5,4 @@
 ##==================================================================================================
 #!/bin/sh
 
-node --experimental-wasm-simd  --experimental-wasm-bigint $@
+node --experimental-wasm-simd  --experimental-wasm-bigint --wasm-simd-post-mvp $@
