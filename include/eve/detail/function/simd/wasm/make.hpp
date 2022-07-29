@@ -36,8 +36,8 @@ make(eve::as<wide<T, S>>, Vs... vs) noexcept requires std::same_as<abi_t<T, S>, 
     if constexpr( c == float32x4 ) return wasm_f32x4_make(vs..., 0.f, 0.f);
     if constexpr( c == int32x4 ) return wasm_i32x4_make(vs..., 0, 0);
     if constexpr( c == uint32x4 ) return wasm_u32x4_make(vs..., 0, 0);
-    if constexpr( c == int16x8 ) return wasm_i16x8_make(vs..., 0, 0, 0, 0, 0, 0, 0);
-    if constexpr( c == uint16x8 ) return wasm_u16x8_make(vs..., 0, 0, 0, 0, 0, 0, 0);
+    if constexpr( c == int16x8 ) return wasm_i16x8_make(vs..., 0, 0, 0, 0, 0, 0);
+    if constexpr( c == uint16x8 ) return wasm_u16x8_make(vs..., 0, 0, 0, 0, 0, 0);
     if constexpr( c == int8x16 )
       return wasm_i8x16_make(vs..., 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     if constexpr( c == uint8x16 )
@@ -95,7 +95,7 @@ make(eve::as<wide<T, S>> const&, V v) noexcept requires wasm_abi<abi_t<T, S>>
     else if constexpr( c == category::int32x4 ) return wasm_i32x4_splat(v);
     else if constexpr( c == category::int64x2 ) return wasm_i64x2_splat(v);
     else if constexpr( c == category::uint8x16 ) return wasm_u8x16_splat(v);
-    else if constexpr( c == category::uint16x8 ) return wasm_u16x4_splat(v);
+    else if constexpr( c == category::uint16x8 ) return wasm_u16x8_splat(v);
     else if constexpr( c == category::uint32x4 ) return wasm_u32x4_splat(v);
     else if constexpr( c == category::uint64x2 ) return wasm_u64x2_splat(v);
   }
