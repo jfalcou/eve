@@ -1,4 +1,4 @@
 {
   "unit.meta.exe":        "^unit.meta\\..*\\.exe",
-  "unit.arch.new_arch_first_tests.exe": "^unit.arch.new_arch_first_tests.exe"
+  "unit.arch.exe":        "^unit.arch\\..*\\.exe"
 }

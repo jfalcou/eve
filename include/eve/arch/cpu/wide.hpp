@@ -770,7 +770,7 @@ namespace eve
     //! @brief Element-wise inequality comparison of two eve::wide
     friend EVE_FORCEINLINE auto operator!=(wide v, wide w) noexcept
     {
-      return detail::self_neq(v, w);
+      return detail::self_neq(eve::current_api, v, w);
     }
 
     //! @brief Element-wise inequality comparison of a eve::wide and a scalar value

@@ -177,7 +177,7 @@ namespace eve
     //! @endcode
     //!
     //==============================================================================================
-    template<std::invocable<size_type,size_type> Generator>
+    template<eve::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
                   : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
     {}
@@ -443,7 +443,7 @@ namespace eve
     //! @brief Element-wise inequality comparison of two eve::logical
     friend EVE_FORCEINLINE logical operator!=(logical v, logical w) noexcept
     {
-      return detail::self_neq(v,w);
+      return detail::self_neq(eve::current_api, v,w);
     }
 
     //! @brief Element-wise inequality comparison of a eve::logical and a scalar value

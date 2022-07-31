@@ -29,7 +29,7 @@ namespace eve::detail
   }
 
   template<real_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_neq(wide<T, N> const &v, wide<T, N> const &w) noexcept
+  EVE_FORCEINLINE auto self_neq(vmx_ const&, wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return logical<wide<T,N>>(vec_cmpne(v.storage(), w.storage()));

@@ -38,17 +38,10 @@ namespace eve
 
   namespace detail
   {
-    template <logical_simd_value Logical>
-    Logical to_logical(eve::top_bits<Logical> mmask);
-
     template<typename T, relative_conditional_expr C>
-    EVE_FORCEINLINE as_logical_t<T> to_non_wide_logical(C cond, eve::as<T> const&)
+    EVE_FORCEINLINE as_logical_t<T> to_avx512_logical(C cond, eve::as<T> const&)
     {
-      using type  = as_logical_t<T>;
-
-      auto value = top_bits<type>(cond);
-
-      return detail::to_logical(value);
+      return top_bits<as_logical_t<T>>(cond).storage;
     }
   }
 
@@ -284,12 +277,11 @@ namespace eve
     //! Compute the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
-      using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
 
-      if constexpr( !abi_t::is_wide_logical )
+      if constexpr( current_api == avx512 )
       {
-        return detail::to_non_wide_logical(*this, as<T>());
+        return detail::to_avx512_logical(*this, as<T>());
       }
       else
       {
@@ -421,11 +413,11 @@ namespace eve
     //! Compute the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
-      using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
-      if constexpr( !abi_t::is_wide_logical )
+
+      if constexpr( current_api == avx512 )
       {
-        return detail::to_non_wide_logical(*this, as<T>());
+        return detail::to_avx512_logical(*this, as<T>());
       }
       else
       {
@@ -561,12 +553,11 @@ namespace eve
     //! Compute the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
     {
-      using abi_t = typename T::abi_type;
       using type  = as_logical_t<T>;
 
-      if constexpr( !abi_t::is_wide_logical )
+      if constexpr( current_api == avx512 )
       {
-        return detail::to_non_wide_logical(*this, as<T>());
+        return detail::to_avx512_logical(*this, as<T>());
       }
       else
       {

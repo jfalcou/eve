@@ -47,9 +47,10 @@ namespace eve
   //================================================================================================
   // SVE extensions tag objects
   //================================================================================================
-  inline constexpr sve128_  sve128  = {};
-  inline constexpr sve256_  sve256  = {};
-  inline constexpr sve512_  sve512  = {};
+  inline constexpr sve_fixed_ sve_fixed = {};
+  inline constexpr sve128_    sve128    = {};
+  inline constexpr sve256_    sve256    = {};
+  inline constexpr sve512_    sve512    = {};
 
   //================================================================================================
   // ARM SVE ABI concept

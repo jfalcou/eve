@@ -167,7 +167,7 @@ self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<
 //================================================================================================
 template<real_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
-                self_neq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
+                self_neq( sse2_ const&, wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
   constexpr auto f = to_integer(cmp_flt::neq_uq);
@@ -217,7 +217,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 
 template<real_value T, typename N>
 EVE_FORCEINLINE auto
-self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<abi_t<T, N>>
+self_neq(sse2_ const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   if constexpr( !abi_t<T, N>::is_wide_logical )
   {

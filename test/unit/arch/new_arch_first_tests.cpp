@@ -132,25 +132,29 @@ TTS_CASE_TPL("Slice all wides", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE("Make aggregated logical") {
+TTS_CASE("Make aggregated logical")
+{
   using N = eve::fixed<eve::expected_cardinal_v<double> * 2>;
-  eve::logical<eve::wide<double, N>> l { [](int i, int) { return i % 2 == 0; } };
+  eve::logical<eve::wide<double, N>> l {[](int i, int) { return i % 2 == 0; }};
 
-  for( int i = 0; i != l.size(); ++i ) {
+  for( int i = 0; i != l.size(); ++i )
+  {
     bool test = i % 2 == 0;
     TTS_EQUAL(test, l.get(i)) << i;
   }
 };
 
+
 TTS_CASE_TPL("Make all logicals", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using e_t = eve::element_type_t<T>;
+  using e_t                      = eve::element_type_t<T>;
   constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<e_t>;
 
   eve::logical<T> x {[](int i, int) { return i % 2 == 0; }};
 
-  for( int i = 0; i != T::size(); ++i ) {
+  for( int i = 0; i != T::size(); ++i )
+  {
     bool test = i % 2 == 0;
     TTS_EQUAL(test, x.get(i));
   }
@@ -162,6 +166,33 @@ TTS_CASE_TPL("Make all logicals", eve::test::simd::all_types)
     {
       bool test = (i < T::size()) ? i % 2 == 0 : false;
       TTS_EQUAL(test, full.get(i)) << i;
+    }
+  }
+};
+
+TTS_CASE_TPL("Make all logicals (splat)", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using e_t                      = eve::element_type_t<T>;
+  constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<e_t>;
+
+  eve::logical<T> x {true}, y {false};
+
+  for( int i = 0; i != T::size(); ++i )
+  {
+    TTS_EXPECT(x.get(i));
+    TTS_EXPECT_NOT(y.get(i));
+  }
+
+  if constexpr( !eve::has_emulated_abi_v<decltype(x)> && T::size() < min_n )
+  {
+    using full_t = eve::logical<eve::wide<e_t, eve::fixed<min_n>>>;
+    auto full_x = eve::bit_cast(x, eve::as<full_t>{});
+    auto full_y = eve::bit_cast(y, eve::as<full_t>{});
+    for( int i = 0; i != full_x.size(); ++i )
+    {
+      TTS_EQUAL(i < T::size(), full_x.get(i));
+      TTS_EXPECT_NOT(full_y.get(i));
     }
   }
 };

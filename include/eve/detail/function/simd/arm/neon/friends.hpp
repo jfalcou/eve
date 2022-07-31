@@ -85,7 +85,7 @@ namespace eve::detail
   // operator!= implementation
   //================================================================================================
   template<real_value T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> self_neq(wide<T,N> v, wide<T,N> w) noexcept
+  EVE_FORCEINLINE logical<wide<T, N>> self_neq(neon128_ const&, wide<T,N> v, wide<T,N> w) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     return !(v == w);

@@ -225,7 +225,7 @@ namespace eve::detail
 
   //================================================================================================
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
+  EVE_FORCEINLINE auto self_neq(cpu_ const&, Wide const& v,Wide const& w) noexcept
   requires( kumi::product_type<element_type_t<Wide>> )
   {
     if constexpr( detail::tag_dispatchable<tag::is_not_equal_,Wide,Wide> )
@@ -246,7 +246,7 @@ namespace eve::detail
   }
 
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
+  EVE_FORCEINLINE auto self_neq(cpu_ const&, Wide const& v,Wide const& w) noexcept
   {
     constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e != f); };
 

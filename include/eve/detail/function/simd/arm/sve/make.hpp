@@ -21,7 +21,7 @@ namespace eve::detail
 //================================================================================================
 template<real_scalar_value T, typename N, typename... Vs>
 EVE_FORCEINLINE auto
-make(eve::as<wide<T, N>> const&, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
+make(eve::as<wide<T, N>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
 
@@ -45,7 +45,7 @@ make(eve::as<wide<T, N>> const&, Vs... vs) noexcept requires sve_abi<abi_t<T, N>
 //================================================================================================
 template<real_scalar_value T, typename N>
 EVE_FORCEINLINE auto
-make(eve::as<wide<T, N>> const&, T x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
+make(eve::as<wide<T, N>>, T x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
 {
   // This may be suboptimal, we a one instruction iota on sve
   if constexpr( N::value < eve::fundamental_cardinal_v<T> )
@@ -78,15 +78,38 @@ make(eve::as<wide<T, N>> const&, T x) noexcept requires sve_abi<abi_t<T, N>> &&(
 //================================================================================================
 template<real_scalar_value T, typename N, typename... Vs>
 EVE_FORCEINLINE auto
-make(as<logical<wide<T, N>>> const&, Vs... vs) noexcept  requires sve_abi<abi_t<T, N>>
+make(as<logical<wide<T, N>>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 {
   using bits_type = typename logical<wide<T, N>>::bits_type;
   using e_t       = element_type_t<bits_type>;
 
-  auto bits = make(as<bits_type>{}, (vs ? (e_t)-1 : 0) ...);
+  auto bits = make(as<bits_type> {}, (vs ? (e_t)-1 : 0)...);
   return svcmpne(svptrue_b8(), bits, (e_t)0);
 }
 
 // svdup_n_bNN
+
+template<real_scalar_value T, typename N, typename V>
+EVE_FORCEINLINE auto
+make(eve::as<logical<wide<T, N>>>, V x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
+{
+  using f_t = fundamental_cardinal_t<T>;
+
+  if constexpr( N::value < f_t::value )
+  {
+    return [&]<std::size_t... i>(std::index_sequence<i...> const&)
+    {
+      return make(as<logical<wide<T, f_t>>> {}, (i < N::value ? x : false)...);
+    }
+    (std::make_index_sequence<f_t::value>());
+  }
+  else
+  {
+    if constexpr( sizeof(T) == 1 ) return svdup_b8(x);
+    else if constexpr( sizeof(T) == 2 ) return svdup_b16(x);
+    else if constexpr( sizeof(T) == 4 ) return svdup_b32(x);
+    else if constexpr( sizeof(T) == 8 ) return svdup_b64(x);
+  }
+}
 
 }
