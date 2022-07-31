@@ -11,50 +11,46 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+   //================================================================================================
+  //! @addtogroup core_internal
   //! @{
-  //! @var hi
+  //!   @var hi
+  //!   @brief Computes the most signiicant half of each lane.
   //!
-  //! @brief Callable object computing the higher part of the values.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the higher part of the values           |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      auto hi(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( integral_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [integral value](@ref eve::integral_value).
+  //!      * Computes the [elementwise](@ref glossary_elementwise) higher
+  //!        significant half of the  value bits,
+  //!        returning each element as an unsigned integer of half the size of the input element.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!    Computes the [elementwise](@ref glossary_elementwise) higher half of the  value,
-  //!    returning each element as an unsigned integer of half the size of the input element.
+  //!      If you also need the lower part `lohi` is more efficient.
   //!
-  //!    If you also need the lower part `lohi` is more efficient.
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/hi.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/hi.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(hi_, hi);
 }

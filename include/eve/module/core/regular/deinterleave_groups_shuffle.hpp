@@ -14,7 +14,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_simd
   //! @{
   //! @var deinterleave_groups_shuffle
   //!

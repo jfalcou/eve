@@ -16,6 +16,57 @@
 namespace eve
 {
   //================================================================================================
+  //! @addtogroup core_predicates
+  //! @{
+  //!   @var is_nez
+  //!   @brief Returns a logical true  if and only if the element value is not zero.
+  //!
+  //!   $details$
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_nez(T x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [argument](@ref eve::value).
+  //!
+  //!   **Return value**
+  //!
+  //!    The truth value of x != 0
+  //!    is returned.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/regular/is_nez.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve;::is_nez[mask](x)` provides a masked version of `eve::is_nez` which is
+  //!     equivalent to `if_else (mask, is_nez(x), eve::false( eve::as(x)))`.
+  //!
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/masked/is_nez.cpp}
+  //!
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   //! @addtogroup core
   //! @{
   //! @var is_nez
@@ -77,7 +128,6 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_nez_, is_nez);
 }
 

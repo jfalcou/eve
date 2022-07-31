@@ -10,66 +10,58 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_ngtz
+  //!   @var is_ngtz
+  //!   @brief Returns a logical true  if and only if the element value is not greater than zero.
   //!
-  //! @brief Callable object computing the "not greater than zero" predicate.
+  //!   $details$
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "not greater than zero" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_ngtz(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //!`x`:   [values](@ref eve::value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!    Returns [elementwise](@ref glossary_elementwise) `!(x > 0)`.
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) `!(x > 0)`.
+  //!   **Note**
   //!
-  //!The result type is `logical< T >`.
+  //!    This is not equivalent to `(x <= 0)` for floating values.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core/regular/is_ngtz.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::is_ngtz
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve;::is_ngtz[mask](x)` provides a masked version of `eve::is_ngtz` which is
+  //!     equivalent to `if_else (mask, is_ngtz(x), eve::false( eve::as(x)))`.
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `is_ngtz[cond](x)` is equivalent to
-  //! `if_else(cond,is_ngtz(x),false(as(is_ngtz(x))))`
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_ngtz.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/masked/is_ngtz.cpp}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_ngtz_, is_ngtz);
 }
 
