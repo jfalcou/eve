@@ -177,7 +177,7 @@ namespace eve
     //! @endcode
     //!
     //==============================================================================================
-    template<std::invocable<size_type,size_type> Generator>
+    template<eve::invocable<size_type,size_type> Generator>
     EVE_FORCEINLINE logical(Generator &&g) noexcept
                   : storage_base(detail::fill(as<logical>{}, EVE_FWD(g)))
     {}
