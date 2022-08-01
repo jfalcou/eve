@@ -12,66 +12,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_real
+  //!   @var is_not_real
+  //!   @brief Returns a logical true  if and only if the element value is inot real.
   //!
-  //! @brief Callable object computing the is_not_real logical value.
+  //!   For real entries 0return false.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_not_real logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      eve::as_logical<T> is_not_real(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //!`x`:   [floating value](@ref eve::floating_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!    Returns [elementwise](@ref glossary_elementwise) false for real entries.
   //!
-  //!The call  `is_not_real(x)` is semantcally equivalent to `is_nez(imag(x))`
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core/regular/is_not_real.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_real
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve;::is_not_real[mask](x)` provides a masked version of `eve::is_not_real` which is
+  //!     equivalent to `if_else (mask, is_not_real(x), eve::false( eve::as(x)))`.
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/is_not_real.cpp}
   //!
-  //!  A Callable object so that the expression `is_not_real[cond](x)` is equivalent to
-  //! `if_else(cond,is_not_real(x),false(as(is_not_real(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_not_real.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
-
   EVE_MAKE_CALLABLE(is_not_real_, is_not_real);
 }
 

@@ -18,8 +18,6 @@ namespace eve
   //!   @brief If `x` is not zero, computes the largest integral power of two
   //!   that is not greater than `x`.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

@@ -17,8 +17,6 @@ namespace eve
   //!   @var is_eqz
   //!   @brief Returns a logical true  if and only if the element value is zero.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

@@ -16,8 +16,6 @@ namespace eve
   //!   @var is_ngez
   //!   @brief Returns a logical true  if and only if the element value is not greater or equal to 0.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

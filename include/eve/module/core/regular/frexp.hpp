@@ -18,8 +18,6 @@ namespace eve
   //!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
   //!   pair of mantissa and exponent of the floating value,
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

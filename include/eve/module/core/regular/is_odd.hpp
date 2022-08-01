@@ -11,76 +11,56 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_odd
+  //!   @var is_odd
+  //!   @brief Returns a logical true  if and only if the element value is even.
   //!
-  //! @brief Callable object computing the is_odd logical value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_odd logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_odd(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!     The call `is_odd(x)` is semantically  equivalent to:
+  //!      @code
+  //!      if constexpr(floating_value<T>)   return (x != dec(x)) && eve::is_even(dec(x));
+  //!      else constexpr(integral_value<T>) return eve::is_nez (x & one(as(x));
+  //!      @endcode
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!The call:
+  //!  @godbolt{doc/core/regular/is_odd.cpp}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_odd(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if constexpr(floating_value<T>)   r =  (a != dec(a)) && is_even(dec(a));
-  //!else constexpr(integral_value<T>) r = is_equal(x, (x/2)*2);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve;::is_odd[mask](x)` provides a masked version of `eve::is_odd` which is
+  //!     equivalent to `if_else (mask, is_odd(x), eve::false( eve::as(x)))`.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::is_odd
+  //!        @godbolt{doc/core/masked/is_odd.cpp}
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_odd[cond](x)` is equivalent to
-  //! `if_else(cond,is_odd(x),false(as(is_odd(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_odd.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_odd_, is_odd);
 }
 

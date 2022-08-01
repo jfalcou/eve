@@ -22,8 +22,6 @@ namespace eve
   //!   @var is_equal
   //!   @brief Returns a logical true  if and only if the element value are equal.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code
@@ -62,7 +60,7 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::abs[mask](x)` provides a masked version of `eve::is_equal` which is
+  //!     The call `eve::is_equal[mask](x)` provides a masked version of `eve::is_equal` which is
   //!     equivalent to `if_else (mask, is_equal(x, y), false_
   //!
   //!      **Example**

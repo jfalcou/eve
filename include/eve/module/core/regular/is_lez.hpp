@@ -17,8 +17,6 @@ namespace eve
   //!   @var is_lez
   //!   @brief Returns a logical true  if and only if the element value is less or equal to 0.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

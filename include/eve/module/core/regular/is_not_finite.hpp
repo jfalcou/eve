@@ -11,74 +11,57 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_finite
+  //!   @var is_not_finite
+  //!   @brief Returns a logical true  if and only if the element is not a finite value
   //!
-  //! @brief Callable object computing the is_not_finite logical value.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_not_finite logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!The call:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_not_finite(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_value<T>) r = is_nan(x-x);
-  //!else constexpr(integral_value<T>) r = false_(as(x));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_not_finite
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_finite[cond](x)` is equivalent to
-  //! `if_else(cond,is_not_finite(x),false(as(is_not_finite(x))))`
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_not_finite.cpp}
-  //!
-  //!  @}
-  //================================================================================================
 
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_not_finite(T x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [argument](@ref eve::value).
+  //!
+  //!   **Return value**
+  //!
+  //!     The call `is_not_finite(x)` is semantically  equivalent to:
+  //!     @code
+  //!     if   constexpr(floating_value<T>) return is_nan(x-x);
+  //!     else constexpr(integral_value<T>) return false_(as(x));
+  //!     @endcode
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/regular/is_not_finite.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve;::is_not_finite[mask](x)` provides a masked version of `eve::is_not_finite` which is
+  //!     equivalent to `if_else (mask, is_not_finite(x), eve::false( eve::as(x)))`.
+  //!
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/masked/is_not_finite.cpp}
+  //!
+  //! @}
+  //================================================================================================
   EVE_MAKE_CALLABLE(is_not_finite_, is_not_finite);
 }
 

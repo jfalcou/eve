@@ -12,58 +12,50 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_less_equal
+  //!   @var is_less_equal
+  //!   @brief Returns a logical true  if and only if the element value of the first parameter is
+  //!          less or equal to the second one.
   //!
-  //! @brief Callable object computing the "not less or equal to" predicate.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "not less or equal to" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::as_logical<T> is_less_equal(T x,U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!    The call `eve::is_less_equal(x,y)`  is semantically  equivalent to `!(x <= y)`:
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) comparison test result
-  //!between `x` and `y`. The infix notation `x > y` can also be used.
+  //!  @godbolt{doc/core/regular/is_less_equal.cpp}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve;::is_less_equal[mask](x,y)` provides a masked version of `eve::is_less_equal` which is
+  //!     equivalent to `if_else (mask, is_less_equal(x), eve::false( eve::as(x,y)))`.
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_less_equal
+  //!      **Example**
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_less_equal[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_not_less_equal(x, y),false(as(is_not_less_equal(x, y))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/is_less_equal.cpp}
   //!
   //!  * `definitely`
   //!
@@ -72,17 +64,15 @@ namespace eve
   //!      floating point values, evals to true if and only if and only if `x` is definitely not less or equal to `y`.
   //!      This means that the pair `x, y` is unordered or:
   //!
-  //!      - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
-  //!      - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
-  //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+  //!      * if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+  //!      * if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
+  //!      * if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/is_not_less_equal.cpp}
-  //!
-  //!  @}
+  //!         @godbolt{doc/core/fuzzy/is_less_equal.cpp}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);
 }
 

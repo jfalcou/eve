@@ -17,8 +17,6 @@ namespace eve
   //!   @var is_infinite
   //!   @brief Returns a logical true  if and only if the element is an infinite value
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

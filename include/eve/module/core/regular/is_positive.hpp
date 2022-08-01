@@ -11,73 +11,63 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_positive
+  //!   @var is_positive
+  //!   @brief Returns a logical true  if and only if the element value is signed and
+  //!   has its sign bit not set
   //!
-  //! @brief Callable object computing the is_positive logical value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_positive logical value           |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::signed_value T >
+  //!      eve::as_logical<T> is_positive(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!      For signed types The call `is_positive(x)`
+  //!      [elementwise](@ref glossary_elementwise) returns true
+  //!      if and only if the bit of sign (most significant bit) is not set.
   //!
-  //! **Return value**
+  //!   **Note**
   //!
-  //!For signed types The call `is_positive(x)` [elementwise](@ref glossary_elementwise) returns true
-  //!if and only if the bit of sign (most significant bit) is unset.
+  //!     this function coincides with `is_gez` on [integral real values](@ref eve::value),
+  //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false and
+  //!     if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control although
+  //!     not undefined.
   //!
-  //!@warning
-  //!   this function coincides with `is_gez` on [integral real values](@ref eve::value),
-  //!   but for [floating real values](@ref eve::value) `T`, `is_positive(Mzero<`T`>)` is false and
-  //!   if `x` is a Nan the result depends of the bit of sign of `x` which can be out of control although
-  //!   not undefined.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core/regular/is_positive.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::is_positive
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve;::is_positive[mask](x)` provides a masked version of `eve::is_positive` which is
+  //!     equivalent to `if_else (mask, is_positive(x), eve::false( eve::as(x)))`.
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/is_positive.cpp}
   //!
-  //!  A Callable object so that the expression `is_positive[cond](x)` is equivalent to
-  //! `if_else(cond,is_positive(x),false(as(is_positive(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_positive.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_positive_, is_positive);
 }
 

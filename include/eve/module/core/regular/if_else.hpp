@@ -18,8 +18,6 @@ namespace eve
   //!   @var if_else
   //!   @brief Computes the results of a choice under condition
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

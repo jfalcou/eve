@@ -12,75 +12,56 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_infinite
+  //!   @var is_not_infinite
+  //!   @brief Returns a logical true  if and only if the element is not an infinite value
   //!
-  //! @brief Callable object computing the is_not_infinite logical value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_not_infinite logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_not_infinite(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!     The call `is_not_infinite(x)` is semantically  equivalent to:
+  //!     @code
+  //!     if   constexpr(floating_value<T>) return is_not_equal(abs(x), inf(as(x));
+  //!     else constexpr(integral_value<T>) return true_(as(x));
+  //!     @endcode
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!The call:
+  //!  @godbolt{doc/core/regular/is_not_infinite.cpp}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_not_infinite(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_value<T>) r = is_not_equal(abs(x), inf(as(x));
-  //!else constexpr(integral_value<T>) r = false_(as(x));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve;::is_not_infinite[mask](x)` provides a masked version of `eve::is_not_infinite` which is
+  //!     equivalent to `if_else (mask, is_not_infinite(x), eve::false( eve::as(x)))`.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_infinite
+  //!        @godbolt{doc/core/masked/is_not_infinite.cpp}
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_infinite[cond](x)` is equivalent to
-  //! `if_else(cond,is_not_infinite(x),false(as(is_not_infinite(x))))`
-  //!
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_not_infinite.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_not_infinite_, is_not_infinite);
 }
 

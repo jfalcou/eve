@@ -16,8 +16,6 @@ namespace eve
   //!   @var is_finite
   //!   @brief Returns a logical true  if and only if the element is a finite value
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

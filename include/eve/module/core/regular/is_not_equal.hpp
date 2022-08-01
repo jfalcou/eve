@@ -17,84 +17,79 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_equal
+  //!   @var is_not_equal
+  //!   @brief Returns a logical true  if and only if the element value are not equal.
   //!
-  //! @brief Callable object computing the equality predicate.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the equality predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      auto is_not_equal(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y` :  arguments
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!     Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
+  //!     between `x` and `y`. The infix notation `x != y` can also be used.
   //!
-  //! **Return value**
+  //!   **Note**
   //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
-  //!between `x` and `y`. The infix notation `x != y` can also be used.
+  //!      Although the infix notation with `==` is supported, the `!=` operator on
+  //!      standard scalar types is the original one and so returns bool result, not `eve::logical`.
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+  //!  @groupheader{Example}
   //!
-  //!@warning
-  //!   Although the infix notation with `!=` is supported, the `!=` operator on
-  //!   standard scalar types is the original one and so returns bool result, not `logical`.
+  //!  @godbolt{doc/core/regular/is_not_equal.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_equal
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::is_not_equal[mask](x)` provides a masked version of `eve::is_not_equal` which is
+  //!     equivalent to `if_else (mask, is_not_equal(x, y), false_
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_equal[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_not_equal(x, y),false(as(is_not_equal(x, y))))`
-  //!
-  //! ---  //! ---
-  //!
-  //! #### Supported decorators
+  //!        @godbolt{doc/core/masked/is_not_equal.cpp}
   //!
   //!  * eve::numeric
   //!
+  //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are not equal.
   //!
-  //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are equal.
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/pedantic/is_not_equal.cpp}
   //!
   //!  * `definitely`
-  //!
   //!
   //!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point values, evals to
   //!      true if and only if `x` is almost equal to `y`.
   //!      This means that:
   //!
-  //!      - if `t` is a floating_value then the relative error of not confusing is `x` and `y` is greater than `t` \f$(|x-y| \ge t \max(|x|, |y|))\f$.
-  //!      - if `t` is a positive integral_value then there are more than `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
-  //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
+  //!      * if `t` is a floating_value then the relative error of not confusing is `x` and `y` is greater than `t` \f$(|x-y| \ge t \max(|x|, |y|))\f$.
+  //!      * if `t` is a positive integral_value then there are more than `t` values of the type of `x` representable in the interval \f$[x,y[\f$.
+  //!      * if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/is_not_equal.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/fuzzy/is_not_equal.cpp}
+  //! @}
   //================================================================================================
-
   EVE_IMPLEMENT_CALLABLE(is_not_equal_, is_not_equal);
 
   namespace detail

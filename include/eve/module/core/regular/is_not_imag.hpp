@@ -12,74 +12,54 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_imag
+  //!   @var is_not_imag
+  //!   @brief Returns a logical true  if and only if the element value is not imaginary.
   //!
-  //! @brief Callable object computing the is_not_imag logical value.
+  //!   For real entries 0 is the only imaginary number: its real part is 0!
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_not_imag logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      eve::as_logical<T> is_not_imag(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //!`x`:   [floating value](@ref eve::floating_value).
+  //!   **Return value**
   //!
-  //! **Return value**
+  //!    Returns [elementwise](@ref glossary_elementwise) `x != 0` for real entries.
   //!
-  //!The call:
+  //!  @groupheader{Example}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = is_not_imag(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core/regular/is_not_imag.cpp}
   //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!auto r = is_nez(real(x));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve;::is_not_imag[mask](x)` provides a masked version of `eve::is_not_imag` which is
+  //!     equivalent to `if_else (mask, is_not_imag(x), eve::false( eve::as(x)))`.
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_imag
+  //!      **Example**
   //!
-  //!  **Parameters**
+  //!        @godbolt{doc/core/masked/is_not_imag.cpp}
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_imag[cond](x)` is equivalent to
-  //! `if_else(cond,is_not_imag(x),false(as(is_not_imag(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_not_imag.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_not_imag_, is_not_imag);
 }
 

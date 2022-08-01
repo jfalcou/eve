@@ -63,14 +63,14 @@ namespace eve
   //!
   //!        @godbolt{doc/core/masked/is_less.cpp}
   //!
-  //!  * `definitely`
+  //!   * `definitely`
   //!
   //!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
-  //!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
+  //!      floating point values, evals to true if and only if `x` is definitely less than `y`.
   //!      This means that:
   //!
-  //!      - if `t` is a floating_value then  \f$x > y - t \max(|x|, |y|)\f$
-  //!      - if `t` is a positive integral_value then \f$x < \mbox{next}(y, t)\f$;
+  //!      - if `t` is a floating_value then  \f$x <  y - t \max(|x|, |y|)\f$
+  //!      - if `t` is a positive integral_value then \f$x < \mbox{prev}(y, t)\f$;
   //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
   //!
   //!      **Example**

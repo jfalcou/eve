@@ -12,74 +12,56 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_nan
+  //!   @var is_not_nan
+  //!   @brief Returns a logical true  if and only if the element value is not NaN
   //!
-  //! @brief Callable object computing the is_not_nan logical value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_not_nan logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_not_nan(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!       The call `eve::is_not_nan(x)`  is semantically  equivalent to:
   //!
-  //! **Return value**
+  //!       @code
+  //!         if   constexpr(floating_value<T>) return is_equal(x, x);
+  //!         else constexpr(integral_value<T>) return true_(as(x));
   //!
-  //!The call:
+  //!  @groupheader{Example}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_not_nan(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core/regular/is_not_nan.cpp}
   //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_value<T>) r = is_equal(x, x);
-  //!else constexpr(integral_value<T>) r = true_(as(x));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve;::is_not_nan[mask](x)` provides a masked version of `eve::is_not_nan` which is
+  //!     equivalent to `if_else (mask, is_not_nan(x), eve::false( eve::as(x)))`.
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_nan
+  //!      **Example**
   //!
-  //!  **Parameters**
+  //!        @godbolt{doc/core/masked/is_not_nan.cpp}
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_nan[cond](x)` is equivalent to
-  //! `if_else(cond,is_not_nan(x),false(as(is_not_nan(x))))`
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_not_nan.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_not_nan_, is_not_nan);
 }
 

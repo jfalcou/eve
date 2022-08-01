@@ -19,8 +19,6 @@ namespace eve
   //!   @var broadcast
   //!   @brief Computes the
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

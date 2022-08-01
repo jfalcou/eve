@@ -19,8 +19,6 @@ namespace eve
   //!   @var combine
   //!   @brief Computes the TODO
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

@@ -16,8 +16,6 @@ namespace eve
   //!   @var is_even
   //!   @brief Returns a logical true  if and only if the element value is even.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

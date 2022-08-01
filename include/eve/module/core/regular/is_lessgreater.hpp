@@ -18,8 +18,6 @@ namespace eve
   //!   @var is_lessgreater
   //!   @brief Returns a logical true  if and only if the elements pair are not equal or unordered.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

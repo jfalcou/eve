@@ -16,8 +16,6 @@ namespace eve
   //!   @var is_denormal
   //!   @brief Returns a logical true if and only if the element value is denormal.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code
@@ -43,8 +41,10 @@ namespace eve
   //!     The call `is_denormal(x)` is semantically  equivalent to:
   //!
   //!     @code
-  //!       if   constexpr(floating_value<T>) return (abs(x) < Smallestposval(as(x))) && is_nez(x);
-  //!       else constexpr(integral_value<T>) return false_(as(x));
+  //!       if constexpr(floating_value<T>)
+  //!         return (eve::abs(x) < eve::smallestposval(as(x))) && is_nez(x);
+  //!       else constexpr(integral_value<T>)
+  //!         return eve::false_(as(x));
   //!    @endcode
   //!
   //!  @groupheader{Example}
@@ -55,7 +55,8 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::is_denormal[mask](x)` provides a masked version of `eve::is_denormal` which is
+  //!     The call `eve;::is_denormal[mask](x)` provides a masked version
+  //!     of `eve::is_denormal` which is
   //!     equivalent to `if_else (mask, is_denormal(x), eve::false( eve::as(x)))`.
   //!
   //!      **Example**

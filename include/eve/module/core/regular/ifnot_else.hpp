@@ -17,8 +17,6 @@ namespace eve
   //!   @var ifnot_else
   //!   @brief `eve::ifnot_else``(x, y, z)`syntaxic sugar for `eve::if_else``(x, z, y)`
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

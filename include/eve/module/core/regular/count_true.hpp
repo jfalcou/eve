@@ -17,8 +17,6 @@ namespace eve
   //!   @var count_true
   //!   @brief Computes the number of non 0 elements
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code

@@ -13,76 +13,53 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_ordered
+  //!   @var is_ordered
+  //!   @brief Returns a logical true  if and only no parameter is NaN.
   //!
-  //! @brief Callable object computing the is_ordered logical value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_ordered logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::as_logical<T> is_ordered(T x,U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!    The call `eve::is_ordered(x,y)`  is semantically  equivalent
+  //!    to `eve::is_not_nan(x) && eve::is_not_nan(y)`:
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!The call:
+  //!  @godbolt{doc/core/regular/is_ordered.cpp}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_ordered(x, y);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_value<T>) r = is_not_nan(x) && is_not_nan(y);
-  //!else constexpr(integral_value<T>) r = true_<T>();
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve;::is_ordered[mask](x,y)` provides a masked version of `eve::is_ordered` which is
+  //!     equivalent to `if_else (mask, is_ordered(x), eve::false( eve::as(x,y)))`.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::is_ordered
+  //!        @godbolt{doc/core/masked/is_ordered.cpp}
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_ordered[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_ordered(x, y),false(as(is_ordered(x, y))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_ordered.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
 }
 

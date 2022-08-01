@@ -21,8 +21,6 @@ namespace eve
   //!   @var is_nez
   //!   @brief Returns a logical true  if and only if the element value is not zero.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code
@@ -64,69 +62,6 @@ namespace eve
   //!        @godbolt{doc/core/masked/is_nez.cpp}
   //!
   //! @}
-  //================================================================================================
-
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var is_nez
-  //!
-  //! @brief Callable object computing the "not equal to zero" predicate.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the "not equal to zero" predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [values](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) inequality test result
-  //!between `x` and 0.
-  //!
-  //!The result type is `logical< T >`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_nez
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_nez[cond](x)` is equivalent to
-  //! `if_else(cond,is_nez(x),false(as(is_nez(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_nez.cpp}
-  //!
-  //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(is_nez_, is_nez);
 }

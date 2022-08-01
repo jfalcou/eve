@@ -17,7 +17,7 @@ namespace eve
   //!   @var is_imag
   //!   @brief Returns a logical true  if and only if the element value is imaginary.
   //!
-  //!   $details$
+  //!   For real entries 0 is the only imaginary number: its real part is 0!
   //!
   //!   **Defined in Header**
   //!

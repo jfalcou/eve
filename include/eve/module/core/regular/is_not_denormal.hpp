@@ -11,74 +11,60 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_not_denormal
+  //!   @var is_denormal
+  //!   @brief Returns a logical true if and only if the element value is not denormal.
   //!
-  //! @brief Callable object computing the is_not_denormal logical value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_not_denormal logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_not_denormal(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!     The call `is_not_denormal(x)` is semantically  equivalent to:
   //!
-  //! **Return value**
+  //!     @code
+  //!       if constexpr(floating_value<T>)
+  //!          return (eve::abs(x) >=  eve::smallestposval(as(x))) || is_eqz(x);
+  //!       else constexpr(integral_value<T>)
+  //!          return eve::true_(as(x));
+  //!    @endcode
   //!
-  //!The call:
+  //!  @groupheader{Example}
   //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_not_denormal(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/core/regular/is_not_denormal.cpp}
+   //!
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_value<T>) r = is_not_less(abs(x), Smallestposval(as(x))) || is_eqz(x);
-  //!else constexpr(integral_value<T>) r = false_(as(x));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve;::is_not_denormal[mask](x)` provides a masked version
+  //!     of `eve::is_not_denormal` which is
+  //!     equivalent to `if_else (mask, is_not_denormal(x), eve::false( eve::as(x)))`.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::is_not_denormal
+  //!        @godbolt{doc/core/masked/is_denormal.cpp}
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_not_denormal[cond](x)` is equivalent to
-  //! `if_else(cond,is_not_denormal(x),false(as(is_not_denormal(x))))`
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_not_denormal.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-
   EVE_MAKE_CALLABLE(is_not_denormal_, is_not_denormal);
 }
 

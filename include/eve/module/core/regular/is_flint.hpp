@@ -11,14 +11,12 @@
 
 namespace eve
 {
- //================================================================================================
+  //================================================================================================
   //! @addtogroup core_predicates
   //! @{
   //!   @var is_flint
   //!   @brief Returns a logical true  if and only if the element value is a floating value
   //!   representing an integer
-  //!
-  //!   $details$
   //!
   //!   **Defined in Header**
   //!

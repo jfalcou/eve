@@ -17,8 +17,6 @@ namespace eve
   //!   @var is_ltz
   //!   @brief Returns a logical true  if and only if the element value is less than 0.
   //!
-  //!   $details$
-  //!
   //!   **Defined in Header**
   //!
   //!   @code
