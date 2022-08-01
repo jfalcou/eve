@@ -11,67 +11,46 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+   //================================================================================================
+  //! @addtogroup core_internal
   //! @{
-  //! @var mantissa
+  //!   @var mantissa
+  //!   @brief Computes the IEEE mantissa of the floating value.
   //!
-  //! @brief Callable object computing the mantissa value.
+  //!    The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
+  //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!    The exception is when \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$).
   //!
-  //! #### Members Functions
+  //!   **Defined in Header**
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the mantissa value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! ---
+  //!   @groupheader{Callable Signatures}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T mantissa(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! **Parameters**
+  //!   **Parameters**
   //!
-  //!`x`:   [floating_value](@ref eve::value).
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Return value**
+  //!    **Return value**
   //!
-  //!    Computes the [elementwise](@ref glossary_elementwise) ieee mantissa of the floating value.
+  //!    The value of the IEEE mantissa.
+  //!    is returned.
   //!
-  //!    The mantissa \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
-  //!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$ (except for \f$x = \pm0, \pm\infty\f$ or is a Nan,
-  //!    where \f$m=x\f$ and \f$e=0\f$).
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::mantissa
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `mantissa[cond](x, ...)` is equivalent to `if_else(cond,mantissa(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/mantissa.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/mantissa.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(mantissa_, mantissa);
 }

@@ -15,68 +15,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var ldexp
+  //!   @var ldexp
+  //!   @brief Computes ldexp(x, n): \f$\textstyle x 2^n\f$.
   //!
-  //! @brief Callable object computing the ldexp operation: \f$\textstyle x 2^n\f$.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ldexp operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::integral_value N >
+  //!      eve::common_compatible_t<T, U> ldexp(T x, N n) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, integral_value U > auto operator()( T x, U n ) const noexcept
-  //!  requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:  [floating argument](@ref eve::floating_value).
   //!
-  //! **Parameters**
+  //!     * `n` :  [integral value argument](@ref eve::integral_value).
   //!
-  //!`x`:   [floating real value](@ref eve::floating_value).
+  //!    **Return value**
   //!
-  //!`n`:   [integral real value](@ref eve::integral_value).
+  //!    The value of \f$\textstyle x 2^n\f$ is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!the call `ldexp(x,n)` is semantically equivalent to  \f$\textstyle x 2^n\f$:
+  //!  @godbolt{doc/core//regular/ldexp.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::ldexp
+  //!     The call `eve::ldexp[mask](x, ...)` provides a masked
+  //!     version of `ldexp` which is
+  //!     equivalent to `if_else(mask, ldexp(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/ldexp.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ldexp[cond](x, n)` is equivalent to `if_else(cond,ldexp(x, n),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/ldexp.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-  namespace tag { struct ldexp_; }
-
   namespace detail
   {
     template<typename T, typename U>

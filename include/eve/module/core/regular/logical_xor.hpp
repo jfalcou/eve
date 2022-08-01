@@ -12,50 +12,45 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_logical
   //! @{
-  //! @var logical_xor
+  //!   @var logical_xor
+  //!   @brief Computes the logical XOR of its [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the logical XOR operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logical XOR operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      auto logical_xor(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!      Returns the logical XOR of the two parameters following the
+  //!      [logical operations semantic](@ref glossary_logical).
   //!
-  //! **Return value**
+  //!      The call `logical_xor(x, y)` is semantically equivalent to `(x && !y) || (!x && y)`.
   //!
-  //!Computes  logical XOR of the two parameters following the
-  //![logical operations semantic](@ref glossary_logical).
+  //!  @groupheader{Example}
   //!
-  //!the call `logical_xor(x, y)` is semantically equivalent to `(x && !y) || (!x && y)`.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/logical_xor.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/logical_or.cpp}
+  //! @}
   //================================================================================================
-     
+
+   
   namespace tag { struct logical_xor_; }
   template<> struct supports_conditional<tag::logical_xor_> : std::false_type {};
   

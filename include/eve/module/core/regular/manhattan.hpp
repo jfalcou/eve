@@ -12,77 +12,62 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var manhattan
+  //!   @var manhattan
+  //!   @brief Computes the manhattan norm (\f$l_&\f$)  of its [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the manhattan operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the manhattan operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value Ts ... >
+  //!      eve::common_compatible_t<Ts, ...> manhattan(Ts ... xs) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                                    requires (compatiblevalues< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `xs ...` :  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `args`:   [value](@ref eve::value)
+  //!    The value of the sum of the arguments is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!  @godbolt{doc/core//regular/manhattan.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::manhattan
+  //!     The call `eve::manhattan[mask](x, ...)` provides a masked
+  //!     version of `manhattan` which is
+  //!     equivalent to `if_else(mask, eve::manhattan(x, ...), x)`
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/manhattan.cpp}
   //!
-  //!  **Return value**
+  //!   * eve::pedantic
   //!
-  //!  A Callable object so that the expression `manhattan[cond](x, ...)` is equivalent to `if_else(cond,manhattan(x, ...),x)`
+  //!     The call `eve::pedantic(eve::manhattan)(...)` computes
+  //!     a pedantic version of `eve::manhattan`.
+  //!     returning \f$\infty\f$ as soon as one of its parameter is infinite,
+  //!     regardless of possible `Nan` values.
   //!
-  //! ---
+  //!      **Example**
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
-  //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_< N >(manhattan)(x,args...)` computes the partial
-  //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!      greater that the actual number of parameters, otherwise it is the [sign](./sign.html) of the `N`th parameter value.
-  //!
-  //!  !!! Warning
-  //!      This is only available for floating point entries.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/manhattan.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/pedantic/manhattan.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(manhattan_, manhattan);
 }

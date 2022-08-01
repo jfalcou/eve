@@ -12,63 +12,51 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_predicates
   //! @{
-  //! @var is_pow2
+  //!   @var is_pow2
+  //!   @brief Returns a logical true  if and only if the element value is a power of 2.
   //!
-  //! @brief Callable object computing the is_pow2 predicate.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the is_pow2 predicate   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical<T> is_pow2(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //! `x`:   [unsigned value](@ref eve::value).
+  //!    Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //! Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
+  //!  @godbolt{doc/core/regular/is_pow2.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::is_pow2
+  //!     The call `eve;::is_pow2[mask](x)` provides a masked version of `eve::is_pow2` which is
+  //!     equivalent to `if_else (mask, is_pow2(x), eve::false( eve::as(x)))`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/is_pow2.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_pow2[cond](x)` is equivalent to
-  //! `if_else(cond,is_pow2(x),false(as(is_pow2(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_pow2.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(is_pow2_, is_pow2);
 }

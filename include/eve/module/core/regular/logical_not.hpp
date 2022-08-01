@@ -15,48 +15,46 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_logical
   //! @{
-  //! @var logical_not
+  //!   @var logical_or
+  //!   @brief Computes the logical NOT of its [argument](@ref eve::value).
   //!
-  //! @brief Callable object computing the logical NOT operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logical NOT operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::as_logical_t<T> logical_or(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!      The call `logical_not(x)` is semantically equivalent to `is_eqz(x)`.
+  //!      Infix notation can be used with `!x`.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!Computes  the logical NOT of the parameter.
+  //!      Although the infix notation with `!` is supported, the `!` operator on
+  //!      standard scalar types is the original one and so will return bool instead of eve::logical_value.
   //!
-  //!the call `logical_not(x)` is semantically equivalent to `is_eqz(x)`. Infix notation can be used with `!x`
+  //!  @groupheader{Example}
   //!
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/logical_not.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/logical_or.cpp}
+  //! @}
   //================================================================================================
-
   namespace tag { struct logical_not_; }
   template<> struct supports_conditional<tag::logical_not_> : std::false_type {};
 

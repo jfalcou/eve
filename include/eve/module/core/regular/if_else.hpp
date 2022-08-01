@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core_arithmetic
+  //! @addtogroup core_logical
   //! @{
   //!   @var if_else
   //!   @brief Computes the results of a choice under condition

@@ -72,6 +72,10 @@
 //! @ingroup core
 //! Operations related to classical IEEE functions
 //!
+//! @defgroup core_logical  logical operations
+//! @ingroup core
+//! Logical operations
+//!
 //! @defgroup core_predicates  Predicates
 //! @ingroup core
 //! Operations returning logical values

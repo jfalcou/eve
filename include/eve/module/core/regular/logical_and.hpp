@@ -14,51 +14,50 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_logical
   //! @{
-  //! @var logical_and
+  //!   @var logical_and
+  //!   @brief Computes the logical AND of its [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the logical AND operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logical AND operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      auto logical_and(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!     Returns the logical AND of the two parameters following the
+  //!     [logical operations semantic](@ref glossary_logical).
   //!
-  //! **Return value**
   //!
-  //!Computes  logical AND of the two parameters following the
-  //![logical operations semantic](@ref glossary_logical).
+  //!      The call `logical_and(x, y)` is semantically equivalent to `x && y`
+  //!      if `x` or  `y` is an  [simd value](@ref eve::simd_value) and does not shortcut.
   //!
-  //!the call `logical_and(x, y)` is semantically equivalent to `x && y`
-  //!if `x` or  `y` is an  [simd value](@ref eve::simd_value) and does not shortcut.
+  //!    **Note**
   //!
-  //! ---
+  //!      Although the infix notation with `&&` is supported, the `&&` operator on
+  //!      standard scalar types is the original one and so will return bool instead of eve::logical_value.
   //!
-  //! #### Supported decorators
+  //!  @groupheader{Example}
   //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/logical_and.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/logical_and.cpp}
+  //! @}
   //================================================================================================
-
   namespace tag { struct logical_and_; }
   template<> struct supports_conditional<tag::logical_and_> : std::false_type {};
 

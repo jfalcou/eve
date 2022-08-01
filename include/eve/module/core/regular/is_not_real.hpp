@@ -15,9 +15,9 @@ namespace eve
   //! @addtogroup core_predicates
   //! @{
   //!   @var is_not_real
-  //!   @brief Returns a logical true  if and only if the element value is inot real.
+  //!   @brief Returns a logical true  if and only if the element value is not real.
   //!
-  //!   For real entries 0return false.
+  //!   For real entries always return false.
   //!
   //!   **Defined in Header**
   //!

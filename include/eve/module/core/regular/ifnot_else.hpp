@@ -12,7 +12,7 @@
 namespace eve
 {
  //================================================================================================
-  //! @addtogroup core_arithmetic
+  //! @addtogroup core_logical
   //! @{
   //!   @var ifnot_else
   //!   @brief `eve::ifnot_else``(x, y, z)`syntaxic sugar for `eve::if_else``(x, z, y)`

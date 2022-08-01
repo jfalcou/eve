@@ -12,49 +12,44 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_logical
   //! @{
-  //! @var logical_notand
+  //!   @var logical_notand
+  //!   @brief Computes the logical NOTAND of its [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the elementwise NOTAND operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the elementwise NOTAND operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      auto logical_notand(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!     Returns the logical NOTAND of the two parameters following the
+  //!     [logical operations semantic](@ref glossary_logical).
   //!
-  //! **Return value**
   //!
-  //!Computes  elementwise NOTAND of the two parameters following the
-  //![logical operations semantic](@ref glossary_logical).
+  //!      The call `logical_notand(x, y)` is semantically equivalent to `!x && y`
+  //!      if `x` or  `y` is an  [simd value](@ref eve::simd_value) and  does not shortcut.
   //!
-  //!the call `logical_notand(x, y)` is semantically equivalent to `!x && y`
-  //!if `x` or  `y` is an  [simd value](@ref eve::simd_value).
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/logical_notand.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/logical_notand.cpp}
+  //! @}
   //================================================================================================
 
   namespace tag { struct logical_notand_; }

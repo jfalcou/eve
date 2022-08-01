@@ -10,64 +10,43 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
+ //================================================================================================
+  //! @addtogroup core_internal
   //! @{
-  //! @var lohi
+  //!   @var lohi
+  //!   @brief Computes the the lohi pair of values.
   //!
-  //! @brief Callable object computing the lohi pair of values.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the lohi pair of values   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      auto lohi(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(integral_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [integral_value](@ref eve::value).
+  //!      * Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
+  //!        the input values, as a pair of unsigned integers
   //!
-  //! **Return value**
+  //!      * The call lohi(x) is_semantically equivalent to [eve::lo(x), eve::hi(x)]
   //!
-  //!    Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
-  //!    the input values, as a pair of unsigned integers
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::lohi
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `lohi[cond](x, ...)` is equivalent to `if_else(cond,lohi(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/lohi.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/lo.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(lohi_, lohi);
 }
