@@ -1,6 +1,9 @@
 #!/bin/sh -l
 set -e
 
+# Setup github/worspace as safe
+git config --global --add safe.directory /github/workspace
+
 # ID for various tests
 INSTALL_TEST=0
 FETCH_TEST=1

@@ -43,7 +43,7 @@ Running **EVE** CI docker can be done by moving to **EVE** source folder than ru
 command:
 
 @verbatim
-docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v4
+docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v6
 @endverbatim
 
 This will give you access to an interactive shell running inside the Docker Image. We strongly
@@ -54,7 +54,7 @@ an instance of Docker.
 # .bashrc
 dockhere()
 {
-  docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v4
+  docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v6
 }
 @endverbatim
 
@@ -63,7 +63,7 @@ From there, you can navigate to the source folder by `cd` into your folder:
 @verbatim
 @:~/space/eve$ pwd                              # From eve directory
 /home/dyarosh/space/eve
-@:dockhere jfalcou/compilers:v4                 # Get docker with compilers
+@:dockhere jfalcou/compilers:v6                 # Get docker with compilers
 root@302ed6f6f4fa:                              # We are in docker in root
 root@302ed6f6f4fa:/# cd /home/dyarosh/space/eve # Go back to eve directory
 root@302ed6f6f4fa:/home/dyarosh/space/eve#      # Done
