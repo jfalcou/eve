@@ -9,13 +9,7 @@ int main()
   wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf          = " << pf << '\n'
-            << "-> is_nlez(pf) = " << eve::is_nlez(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> is_nlez(xf) = " << eve::is_nlez(xf) << '\n';
+            << "<- pf         = " << pf << '\n'
+            << "-> is_nlez[pf <  -0.5](pf) = " << eve::is_nlez[pf <  -0.5](pf) << '\n';
   return 0;
 }

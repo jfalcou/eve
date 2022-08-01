@@ -12,16 +12,8 @@ int main()
                 eve::nan(eve::as<float>()), -2.0f,  -eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "<- qf                   = " << qf << '\n'
-            << "-> is_unordered(pf, qf) = " << eve::is_unordered(pf, qf) << '\n';
-
-  float xf = 4.0f;
-  float yf = -1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                   = " << xf << '\n'
-            << "<- yf                   = " << yf << '\n'
-            << "-> is_unordered(xf, yf) = " << eve::is_unordered(xf, yf) << '\n';
+            << "<- pf                            = " << pf << '\n'
+            << "<- qf                            = " << qf << '\n'
+            << "-> is_unordered[pf > qf](pf, qf) = " << eve::is_unordered[pf > qf](pf, qf) << '\n';
   return 0;
 }

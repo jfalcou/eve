@@ -10,12 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pi          = " << pi << '\n'
-            << "-> is_pow2(pi) = " << eve::is_pow2(pi) << '\n';
+            << "-> is_pow2[pi < 10](pi) = " << eve::is_pow2[pi < 10](pi) << '\n';
 
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> is_pow2(xf) = " << eve::is_pow2(xf) << '\n';
   return 0;
 }

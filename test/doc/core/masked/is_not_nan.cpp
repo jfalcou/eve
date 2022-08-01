@@ -10,13 +10,7 @@ int main()
                 eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), -eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf             = " << pf << '\n'
-            << "-> is_not_nan(pf) = " << eve::is_not_nan(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf             = " << xf << '\n'
-            << "-> is_not_nan(xf) = " << eve::is_not_nan(xf) << '\n';
-  return 0;
+            << "<- pf                     = " << pf << '\n'
+            << "-> is_not_nan[pf > 0](pf) = " << eve::is_not_nan[pf > 0](pf) << '\n';
+ return 0;
 }

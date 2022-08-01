@@ -10,8 +10,8 @@ int main()
   wide_ft qf = {1.0f, -1.0f, -1.0f, 2.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf              = " << pf << '\n'
-            << "<- qf              = " << qf << '\n'
-            << "-> is_equal[pf > 0](pf, qf) = " << eve::is_equal[pf > 0](pf, qf) << '\n';
+            << "<- pf                         = " << pf << '\n'
+            << "<- qf                         = " << qf << '\n'
+            << "-> is_greater[pf > 0](pf, qf) = " << eve::is_greater[pf > 0](pf, qf) << '\n';
   return 0;
 }

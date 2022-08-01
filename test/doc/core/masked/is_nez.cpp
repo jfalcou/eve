@@ -10,6 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
-            << "-> is_nez[pf <  -0.5](pf) = " << eve::is_nezz[pf <  -0.5](pf) << '\n';
+            << "-> is_nez[pf <  -0.5](pf) = " << eve::is_nez[pf <  -0.5](pf) << '\n';
   return 0;
 }

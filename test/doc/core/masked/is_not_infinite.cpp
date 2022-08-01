@@ -10,13 +10,7 @@ int main()
                 eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                  = " << pf << '\n'
-            << "-> is_not_infinite(pf) = " << eve::is_not_infinite(pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> is_not_infinite(xf) = " << eve::is_not_infinite(xf) << '\n';
+            << "<- pf                          = " << pf << '\n'
+            << "-> is_not_infinite[pf > 0](pf) = " << eve::is_not_infinite[pf > 0](pf) << '\n';
   return 0;
 }

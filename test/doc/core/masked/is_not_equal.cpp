@@ -10,16 +10,8 @@ int main()
   wide_ft qf = {1.0f, -1.0f, -1.0f, -2.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "<- qf                   = " << qf << '\n'
-            << "-> is_not_equal(pf, qf) = " << eve::is_not_equal(pf, qf) << '\n';
-
-  float xf = 1.0f;
-  float yf = 2.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                   = " << xf << '\n'
-            << "<- yf                   = " << yf << '\n'
-            << "-> is_not_equal(xf, yf) = " << eve::is_not_equal(xf, yf) << '\n';
+            << "<- pf                              = " << pf << '\n'
+            << "<- qf                              = " << qf << '\n'
+            << "-> is_not_equal[pf > 0.5f](pf, qf) = " << eve::is_not_equal[pf > 0.5f]((pf, qf) << '\n';
   return 0;
 }
