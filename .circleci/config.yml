@@ -59,7 +59,7 @@ commands:
 ##==================================================================================================
 random_jobs: &random_jobs
   docker:
-    - image: jfalcou/compilers:v4
+    - image: jfalcou/compilers:v6
   parameters:
     tool:
       type: string
