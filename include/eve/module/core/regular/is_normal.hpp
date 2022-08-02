@@ -48,12 +48,12 @@ namespace eve
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/core/regular/is_normal.cpp}
-   //!
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::is_normal[mask](x)` provides a masked version of `eve::is_normal` which is
+  //!     The call `eve::is_normal[mask](x)` provides a masked version of `eve::is_normal` which is
   //!     equivalent to `if_else (mask, is_normal(x), eve::false( eve::as(x)))`.
   //!
   //!      **Example**
