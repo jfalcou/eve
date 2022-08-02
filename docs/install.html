@@ -163,8 +163,8 @@ Retrieving the source</h1>
 Github</h2>
 <p ><b>EVE</b> is available on GitHub and can be retrieved via the following command: <br  />
 </p>
-<pre class="fragment">$ git clone  https://github.com/jfalcou/eve.git
-</pre><p >This retrieves the <code>main</code> branch which contains the latest stable version. Development happens live on <code>main</code> so if you need stability, use a tagged versions.</p>
+<div class="fragment"><div class="line">git clone https://github.com/jfalcou/eve.git</div>
+</div><!-- fragment --><p >This retrieves the <code>main</code> branch which contains the latest stable version. Development happens live on <code>main</code> so if you need stability, use a tagged versions.</p>
 <h2><a class="anchor" id="autotoc_md1927"></a>
 CPM</h2>
 <p >You can install <b>EVE</b> directly via <a href="https://github.com/cpm-cmake/CPM.cmake">CPM</a>. After <a href="https://github.com/cpm-cmake/CPM.cmake#adding-cpm">adding CPM to your CMake setup</a>, just add the following commands:</p>
@@ -181,12 +181,12 @@ CPM</h2>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1928"></a>
 SPACK</h2>
 <p ><b>EVE</b> is <a href="https://spack.readthedocs.io/en/latest/package_list.html#eve"><b>available</b></a> via <a href="https://spack.readthedocs.io/en/latest/getting_started.html"><b>SPACK</b></a>:</p>
-<div class="fragment"><div class="line">$ spack install eve</div>
+<div class="fragment"><div class="line">spack install eve</div>
 </div><!-- fragment --><p >Once installed, you can use <b>EVE</b> headers directly from your <a href="https://spack.readthedocs.io/en/latest/getting_started.html"><b>SPACK</b></a> installation.</p>
 <h2><a class="anchor" id="autotoc_md1929"></a>
 AUR</h2>
 <p ><b>EVE</b> is available on Arch-Linux via an <a href="https://aur.archlinux.org/packages/eve-git/"><b>AUR package</b></a>.</p>
-<div class="fragment"><div class="line">$ yay -S eve-git</div>
+<div class="fragment"><div class="line">yay -S eve-git</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1930"></a>
 Conan</h2>
 <p ><a href="https://conan.io/center/"><b>Conan Center</b></a> hosts <b>EVE</b> as the <a href="https://conan.io/center/jfalcou-eve"><code>jfalcou-eve</code> package</a>.</p>
@@ -199,27 +199,23 @@ Conan</h2>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md1931"></a>
 VCPKG</h2>
 <p ><b>EVE</b> can be fetched from <a href="https://vcpkgx.com/details.html?package=eve">VCPKG</a>. Note that, as of now, we still don't support MSVC.</p>
-<div class="fragment"><div class="line">$ vcpkg install eve</div>
+<div class="fragment"><div class="line">vcpkg install eve</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md1932"></a>
 Installation from Source</h1>
 <p >If you didn't fetched <b>EVE</b> from a package manager, you'll need to install it via our CMake system.</p>
 <h2><a class="anchor" id="autotoc_md1933"></a>
 Setting up the Library</h2>
-<p >Create a <code>build</code> directory here and enter it. Once in the <code>build</code> directory, you can use <b>CMake</b> to generate the build system for <b>EVE</b>.</p>
-<p >We recommend using <a href="https://ninja-build.org/">Ninja</a> but any build system is fine.</p>
-<pre class="fragment">$ mkdir build
-$ cd build
-$ cmake .. -G Ninja
-</pre><p >Once <b>CMake</b> completes, you can use the <code>install</code> target to build and install <b>EVE</b>. By default, the library will be installed in the <code>/usr/local</code>directory, thus requiring root privileges on Linux.</p>
-<pre class="fragment">$ ninja install
-</pre><p >You can select an alternative installation path by specifying the <code>CMAKE_INSTALL_PREFIX</code> option at configuration time.</p>
-<pre class="fragment">$ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=path/to/install
-$ ninja install
-</pre><h2><a class="anchor" id="autotoc_md1934"></a>
+<p >With <b>CMake</b>, generate the build system for <b>EVE</b>. We recommend using <a href="https://ninja-build.org/">Ninja</a> but any build system is fine.</p>
+<pre class="fragment">cmake -B build -G Ninja
+</pre><p >Since <b>EVE</b> is header only, once <b>CMake</b> completes, you can install <b>EVE</b> without building. By default, the library will be installed globally to your system, in <code>/usr/local</code> for Linux, thus requiring root privileges.</p>
+<div class="fragment"><div class="line">cmake --install build</div>
+</div><!-- fragment --><p >An alternative installation prefix can be specified with the '&ndash;prefix' flag.</p>
+<div class="fragment"><div class="line">cmake --install build --prefix path/to/install</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md1934"></a>
 Building the Documentation</h2>
 <p >You can rebuild <b>EVE</b> documentation if you have the latest version of Doxygen installed using the <code>doxygen</code> target: <br  />
 </p>
-<div class="fragment"><div class="line">ninja doxygen</div>
+<div class="fragment"><div class="line">cmake --build build --target doxygen</div>
 </div><!-- fragment --><p >The resulting HTML files will be available in the <code>doc</code> folder.</p>
 <h1><a class="anchor" id="autotoc_md1935"></a>
 Using the library</h1>
@@ -249,9 +245,9 @@ Compilation</h2>
 <div class="line">}</div>
 <div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
 <div class="ttc" id="agroup__core_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Callable object computing the square root.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:98</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><p >To do so, use your C++20 aware favorite compiler, for example g++.</p>
-<pre class="fragment">$ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include -o output
+<pre class="fragment">$ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include/eve-&lt;version&gt; -o output
 </pre><p >Don't forget the <code>--std=c++20</code> option to be sure to activate C++20 support. If you use a different compiler, check your compiler user's manual to use the proper option.</p>
 <p >You can notice we use the <code>-O3 -DNEDBUG</code> options. This is required if you want to be sure to get the best performance out of <b>EVE</b>.</p>
 <p >The <code>-DNDEBUG</code> setting can be omitted but then asserts will be inserted into the code to prevent logic errors.</p>
@@ -259,7 +255,7 @@ Compilation</h2>
 Instruction Set Selection</h2>
 <p >The SIMD instruction sets that <b>EVE</b> uses is decided at compile time. You can use <code>-march=native</code> if you're sure your code won't be executed anywhere else.</p>
 <p >You can also select a specific instructions set by using the proper option(s) from your compiler. For example, let's compile for exactly SSE4.1.</p>
-<pre class="fragment">$ g++ test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include -o output
+<pre class="fragment">$ g++ test.cpp -std=c++20  -msse4.1 -O3 -DNDEBUG -I/path/to/install/include/eve-&lt;version&gt; -o output
 </pre><h2><a class="anchor" id="autotoc_md1938"></a>
 Execution</h2>
 <p >Once done, execute the binary. If you compiled for SSE4.1 for example, you'll end up with the following results:</p>
@@ -268,20 +264,31 @@ Execution</h2>
  2*x   = (2, 4, 6, 8)
  x^0.5 = (1, 1.41421, 1.73205, 2)
 </pre><p >That's it, <b>EVE</b> is properly installed and ready to use.</p>
-<h1><a class="anchor" id="autotoc_md1939"></a>
+<h2><a class="anchor" id="autotoc_md1939"></a>
+Use in CMake</h2>
+<p >Once installed, <b>EVE</b> may be consumed though its config-file <b>CMake</b> package. Simply find and link against <b>EVE's</b> <b>CMake</b> target, as you would any other <b>CMake</b> library, and then configure and build your <b>CMake</b> project.</p>
+<div class="fragment"><div class="line">add_executable(use-eve main.cpp)</div>
+<div class="line">find_package(eve CONFIG REQUIRED)</div>
+<div class="line">target_link_libraries(use-eve PRIVATE eve::eve)</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p >&zwj;If a custom installation prefix was used, ensure your <b>EVE</b> installation is within <b>CMake's</b> search path with the use of the <b>CMake</b> variables <b>eve_ROOT</b>, <b>eve_DIR</b>, or <b>CMAKE_PREFIX_PATH</b>. </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md1940"></a>
 Advanced options</h1>
 <p >If you want to dig a bit further, you can pass additional options to <code>cmake</code> to activate additional features.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadLeft">Effect   </th><th class="markdownTableHeadLeft">Target    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>EVE_BUILD_TEST</code>   </td><td class="markdownTableBodyLeft">Enable unit tests for <b>EVE</b> (<code>ON</code> by default).   </td><td class="markdownTableBodyLeft"><code>ninja unit</code>    </td></tr>
+<td class="markdownTableBodyNone"><code>EVE_BUILD_TEST</code>   </td><td class="markdownTableBodyLeft">Enable unit tests for <b>EVE</b> (<code>ON</code> by default).   </td><td class="markdownTableBodyLeft"><code>unit</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>EVE_BUILD_BENCHMARKS</code>   </td><td class="markdownTableBodyLeft">Enable benchmark tests for <b>EVE</b> (<code>OFF</code> by default).   </td><td class="markdownTableBodyLeft"><code>ninja benchmarks</code>    </td></tr>
+<td class="markdownTableBodyNone"><code>EVE_BUILD_BENCHMARKS</code>   </td><td class="markdownTableBodyLeft">Enable benchmark tests for <b>EVE</b> (<code>OFF</code> by default).   </td><td class="markdownTableBodyLeft"><code>benchmarks</code>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>EVE_BUILD_RANDOM</code>   </td><td class="markdownTableBodyLeft">Enable random tests for <b>EVE</b> (<code>OFF</code> by default).   </td><td class="markdownTableBodyLeft"><code>ninja random</code>   </td></tr>
+<td class="markdownTableBodyNone"><code>EVE_BUILD_RANDOM</code>   </td><td class="markdownTableBodyLeft">Enable random tests for <b>EVE</b> (<code>OFF</code> by default).   </td><td class="markdownTableBodyLeft"><code>random</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>EVE_BUILD_INTEGRATION</code>   </td><td class="markdownTableBodyLeft">Enable integration tests for <b>EVE</b> (<code>OFF</code> by default).   </td><td class="markdownTableBodyLeft"><code>integration</code>   </td></tr>
 </table>
-<p >There is currently over 2000 tests, so compiling all unit tests may require a large machine or some time. We recommend compiling in parallel using <code>-j</code>.</p>
+<p >There is currently over 2000 tests, so compiling all unit tests may require a large machine or some time. We recommend compiling in parallel using <code>-j</code>. All available <b>CMake</b> targets may be listed via <code>cmake --build build --target help</code>, each of which may be built individually.</p>
 <p >Some options are also available to control some other aspects</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">

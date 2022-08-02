@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::copy</title>
+<title>E.V.E: eve::algo::any_of</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_gadb225ef69783f14a452b345fbcc4c55d.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48c
 </div>
 
 <div class="contents">
-<a id="ga02000a386a1e19b48cbeb9d21aa57378" name="ga02000a386a1e19b48cbeb9d21aa57378"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga02000a386a1e19b48cbeb9d21aa57378">&#9670;&nbsp;</a></span>copy</h2>
+<a id="gadb225ef69783f14a452b345fbcc4c55d" name="gadb225ef69783f14a452b345fbcc4c55d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadb225ef69783f14a452b345fbcc4c55d">&#9670;&nbsp;</a></span>any_of</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48c
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::copy = function_with_traits&lt;copy_&gt;[default_simple_algo_traits]</td>
+          <td class="memname">eve::algo::any_of = function_with_traits&lt;any_of_&gt;[default_simple_algo_traits]</td>
         </tr>
       </table>
   </td>
@@ -137,63 +137,50 @@ $(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48c
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/copy.hpp&gt;</code></p>
+<p><code>#include &lt;eve/algo/any_of.hpp&gt;</code></p>
 
-<p>SIMD optimized copy algorithm. </p>
-<p >Configurable <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing a SIMD optimized version of the copy. By default, the operation will be unrolled by a factor of 4, align memory accesses and perform conversions if needed.</p>
-<dl class="section note"><dt>Note</dt><dd>If you want to copy elements of same scalar type, use <code>std::memmove</code>.</dd></dl>
-<p><b>Alternative Header</b></p>
+<p>a SIMD version of <code>std::any_of</code> </p>
+<p >Tests if any of the elements in the range match the predicate. by default aligns and unrolls 4 times.</p>
+<p ><b>Alternative Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2&gt;</div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">copy</a>(R1&amp;&amp; r1, R2&amp;&amp; r2) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;;    <span class="comment">//  1</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">copy</a>(zipped_range_pair <span class="keyword">auto</span>&amp;&amp; r);                        <span class="comment">//  2</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng, <span class="keyword">typename</span> P&gt;</div>
+<div class="line">  <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__algos_gadb225ef69783f14a452b345fbcc4c55d.html#gadb225ef69783f14a452b345fbcc4c55d">any_of</a>(Rng&amp;&amp; rng, P p);</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algorithms_ga02000a386a1e19b48cbeb9d21aa57378_html_ga02000a386a1e19b48cbeb9d21aa57378"><div class="ttname"><a href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">eve::algo::copy</a></div><div class="ttdeci">constexpr auto copy</div><div class="ttdoc">SIMD optimized copy algorithm.</div><div class="ttdef"><b>Definition:</b> copy.hpp:79</div></div>
-</div><!-- fragment --><ol type="1">
-<li>Copy the elements of from <code>r1</code> to <code>r2</code>.</li>
-<li>Copy the elements of from <code>get&lt;0&gt;(r)</code> to <code>get&lt;1&gt;(r)</code>.</li>
-</ol>
-<p ><b>Parameters</b></p>
+<div class="ttc" id="agroup__algos_gadb225ef69783f14a452b345fbcc4c55d_html_gadb225ef69783f14a452b345fbcc4c55d"><div class="ttname"><a href="group__algos_gadb225ef69783f14a452b345fbcc4c55d.html#gadb225ef69783f14a452b345fbcc4c55d">eve::algo::any_of</a></div><div class="ttdeci">constexpr auto any_of</div><div class="ttdoc">a SIMD version of std::any_of</div><div class="ttdef"><b>Definition:</b> any_of.hpp:104</div></div>
+</div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>r1</code> : The range of elements or an iterator to the beginning of the elements to copy from</li>
-<li><code>r2</code> : A range or an iterator to the beginning of the destination elements</li>
-<li><code>r</code> : An eve::algo::zipped_range_pair of ranges and/or iterators.</li>
+<li><code>rng</code>: Relaxed input range to process</li>
+<li>'p': Predicate</li>
 </ul>
+<p ><b>Return value</b></p>
+<p ><code>true</code> if <code>p</code> returns true for at least one element in the range, <code>false</code> otherwise. Returns <code>false</code> if the range is empty.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/copy.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  std::vector&lt;double&gt;  from_vector = {2.5,6.8,-10.62,3.2,-8.8,2.7,-6.66,8.5,-2.01,4.8};</div>
-<div class="line">  std::vector&lt;double&gt;  to_vector(from_vector.size());</div>
-<div class="line">  std::vector&lt;double&gt;  to_vector_z(from_vector.size());</div>
+<div class="line">  std::vector&lt;int&gt;  v = {2,6,-10,32,-8,2,-6,8,-2,4};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(from_vector)</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                  = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">eve::algo::copy</a>(from_vector, to_vector);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::any_of(v, i &gt;= 4)       = &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_variable" href="group__algos_gadb225ef69783f14a452b345fbcc4c55d.html#gadb225ef69783f14a452b345fbcc4c55d">eve::algo::any_of</a>(v, [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>){ <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &gt;= 4; })&lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector       = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__algorithms_ga02000a386a1e19b48cbeb9d21aa57378.html#ga02000a386a1e19b48cbeb9d21aa57378">eve::algo::copy</a>( <a class="code hl_variable" href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::algo::views::zip</a>(from_vector, to_vector_z) );</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector (zip) = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector_z)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::any_of(v, eve::is_odd)  = &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_variable" href="group__algos_gadb225ef69783f14a452b345fbcc4c55d.html#gadb225ef69783f14a452b345fbcc4c55d">eve::algo::any_of</a>(v, <a class="code hl_variable" href="group__core_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e">eve::is_odd</a>)&lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__views_ga351e71cb38111c22884bb11fc51211a4_html_ga351e71cb38111c22884bb11fc51211a4"><div class="ttname"><a href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::algo::views::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Given relaxed_iterors and relaxed ranges, zips them together (creates a single object)....</div><div class="ttdef"><b>Definition:</b> zip.hpp:144</div></div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
+<div class="ttc" id="agroup__core_ga48a2d616acbfb726c6e0e476ecbed23e_html_ga48a2d616acbfb726c6e0e476ecbed23e"><div class="ttname"><a href="group__core_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e">eve::is_odd</a></div><div class="ttdeci">constexpr callable_is_odd_ is_odd</div><div class="ttdoc">Callable object computing the is_odd logical value.</div><div class="ttdef"><b>Definition:</b> is_odd.hpp:84</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -203,7 +190,7 @@ $(document).ready(function(){initNavTree('group__algorithms_ga02000a386a1e19b48c
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="group__algorithms.html">Algorithms and Views</a></li>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

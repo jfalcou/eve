@@ -46,21 +46,22 @@ var NAVTREE =
       [ "Using the library", "install.html#autotoc_md1935", [
         [ "Compilation", "install.html#autotoc_md1936", null ],
         [ "Instruction Set Selection", "install.html#autotoc_md1937", null ],
-        [ "Execution", "install.html#autotoc_md1938", null ]
+        [ "Execution", "install.html#autotoc_md1938", null ],
+        [ "Use in CMake", "install.html#autotoc_md1939", null ]
       ] ],
-      [ "Advanced options", "install.html#autotoc_md1939", null ]
+      [ "Advanced options", "install.html#autotoc_md1940", null ]
     ] ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.03.0", "changelog.html#autotoc_md1940", [
-        [ "What's Changed", "changelog.html#autotoc_md1941", null ],
-        [ "New Contributors", "changelog.html#autotoc_md1942", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md1941", [
+        [ "What's Changed", "changelog.html#autotoc_md1942", null ],
+        [ "New Contributors", "changelog.html#autotoc_md1943", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md1943", [
-        [ "What's Changed", "changelog.html#autotoc_md1944", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md1944", [
+        [ "What's Changed", "changelog.html#autotoc_md1945", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md1945", null ]
+      [ "Version beta.2020.09", "changelog.html#autotoc_md1946", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -93,10 +94,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c",
-"group__core_gaf47a88cced054b2d5bc4b4f4ed8debd1.html#gaf47a88cced054b2d5bc4b4f4ed8debd1",
-"group__special_gae3e83c43d4d111542f98b45ff2205134.html#gae3e83c43d4d111542f98b45ff2205134",
-"structeve_1_1keep__last.html#a64e620d72dadf1a643ef816c8ec69332"
+"group__bessel_gab49ce5283b3eccf7e436b2307dc44072.html#gab49ce5283b3eccf7e436b2307dc44072",
+"group__core_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784",
+"group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2",
+"structeve_1_1keep__between.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

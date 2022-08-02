@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::wide::slice</title>
+<title>E.V.E: eve/arch/arm/sve Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structeve_1_1wide_a446e0b79466b770ebdbf1c1ffc7f13c1.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('dir_57dae0b203c1f5518321e59aeb54d716.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -116,75 +116,17 @@ $(document).ready(function(){initNavTree('structeve_1_1wide_a446e0b79466b770ebdb
 </iframe>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">sve Directory Reference</div></div>
+</div><!--header-->
 <div class="contents">
-<a id="a446e0b79466b770ebdbf1c1ffc7f13c1" name="a446e0b79466b770ebdbf1c1ffc7f13c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a446e0b79466b770ebdbf1c1ffc7f13c1">&#9670;&nbsp;</a></span>slice() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
-<div class="memtemplate">
-template&lt;std::size_t Slice&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto <a class="el" href="structeve_1_1wide.html">eve::wide</a>&lt; Type, Cardinal &gt;::slice </td>
-          <td>(</td>
-          <td class="paramtype">slice_t&lt; Slice &gt;&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return the upper or lower half-sized slice of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. Does not participate in overload resolution if <code>Cardinal::value == 1</code>. </p>
-<dl class="section see"><dt>See also</dt><dd>eve::upper_ </dd>
-<dd>
-eve::lower_</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>A tag indicating which slice is required</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Example:</b></p>
-<p ><a href="https://godbolt.org/z/x7n8azx78"><b>See it live on Compiler Explorer</b></a></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="comment">// Generates the wide [1 ... N]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> r = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> + 1;};</div>
-<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> = r.<a class="code hl_function" href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">slice</a>(eve::lower_);</div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> = r.<a class="code hl_function" href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">slice</a>(eve::upper_);</div>
-<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
-<div class="ttc" id="agroup__core_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr callable_hi_ hi</div><div class="ttdoc">Callable object computing the higher part of the values.</div><div class="ttdef"><b>Definition:</b> hi.hpp:59</div></div>
-<div class="ttc" id="agroup__core_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr callable_lo_ lo</div><div class="ttdoc">Callable object computing the lower part of the values.</div><div class="ttdef"><b>Definition:</b> lo.hpp:59</div></div>
-<div class="ttc" id="astructeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3_html_ac93011212ddf6a39c16f4f011462bdb3"><div class="ttname"><a href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">eve::wide::slice</a></div><div class="ttdeci">auto slice() const</div><div class="ttdoc">Slice a eve::wide into two eve::wide of half cardinal. Does not participate in overload resolution if...</div><div class="ttdef"><b>Definition:</b> wide.hpp:302</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
-</div><!-- fragment --> 
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1wide.html">wide</a></li>
+    <li class="navelem"><a class="el" href="dir_37aeed337be603fe9d2e51217e93bd20.html">eve</a></li><li class="navelem"><a class="el" href="dir_75511718cc874ffc7aae4c68d9dc7621.html">arch</a></li><li class="navelem"><a class="el" href="dir_5547dbfcbc25514aed00098a5285fc32.html">arm</a></li><li class="navelem"><a class="el" href="dir_57dae0b203c1f5518321e59aeb54d716.html">sve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->
