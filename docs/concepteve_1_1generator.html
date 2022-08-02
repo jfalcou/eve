@@ -123,15 +123,15 @@ $(document).ready(function(){initNavTree('concepteve_1_1generator.html',''); ini
 
 <p><code>#include &lt;eve/concept/generator.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >The concept <code>generator&lt;Constant,Type&gt;</code> is satisfied if <code>Constant{}( <a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;type&gt;() )</code> is well formed.</p>
+<div class="textblock"><p >The concept <code>generator&lt;Constant,Type&gt;</code> is satisfied if <code>Constant{}( <a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>&lt;Type&gt;() )</code> is well formed.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
 <li><code>eve::callable_one_</code> </li>
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Constant, <span class="keyword">typename</span> Type&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1generator.html">eve::generator</a> =  !kumi::product_type&lt;Constant&gt; &amp;&amp; detail::is_generator&lt;Constant,Type&gt;::value</div>
-<div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition:</b> generator.hpp:46</div></div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1generator.html">eve::generator</a> =  !kumi::product_type&lt;Constant&gt; &amp;&amp; detail::is_generator&lt;Constant, Type&gt;::value</div>
+<div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition:</b> generator.hpp:47</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

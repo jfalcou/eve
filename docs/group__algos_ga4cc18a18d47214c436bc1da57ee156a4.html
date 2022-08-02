@@ -1,0 +1,233 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::algo::mismatch</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2022.03.00</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="contents">
+<a id="ga4cc18a18d47214c436bc1da57ee156a4" name="ga4cc18a18d47214c436bc1da57ee156a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4cc18a18d47214c436bc1da57ee156a4">&#9670;&nbsp;</a></span>mismatch</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::algo::mismatch = function_with_traits&lt;mismatch_&gt;[find_if.get_traits()]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;eve/algo/mismatch.hpp&gt;</code></p>
+
+<p>a SIMD version of <code>std::mismatch</code> </p>
+<p >Finds the point where two ranges are different (accepts anything that zips together as a range of 2 things). By default aligns and unrolls 4 times.</p>
+<p ><b>Alternative Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span> &lt;zipped_range_pair Rng&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">mismatch</a>(Rng&amp;&amp; rng) -&gt; unalinged_t&lt;<span class="keyword">decltype</span>(rng.begin())&gt;;       <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span> &lt;zipped_range_pair Rng, <span class="keyword">typename</span> P&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">mismatch</a>(Rng&amp;&amp; rng, P p) -&gt; unalinged_t&lt;<span class="keyword">decltype</span>(rng.begin())&gt;;  <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">mismatch</a>(R1&amp;&amp; r1, R2&amp;&amp; r2) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;         <span class="comment">// 3</span></div>
+<div class="line">     -&gt; <a class="code hl_struct" href="structeve_1_1algo_1_1views_1_1zip__iterator.html">eve::views::zip_iterator</a>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2, <span class="keyword">typename</span> P&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">mismatch</a>(R1&amp;&amp; r1, R2&amp;&amp; r2, P p) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;    <span class="comment">// 4</span></div>
+<div class="line">     -&gt; <a class="code hl_struct" href="structeve_1_1algo_1_1views_1_1zip__iterator.html">eve::views::zip_iterator</a>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__algos_ga4cc18a18d47214c436bc1da57ee156a4_html_ga4cc18a18d47214c436bc1da57ee156a4"><div class="ttname"><a href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">eve::algo::mismatch</a></div><div class="ttdeci">constexpr auto mismatch</div><div class="ttdoc">a SIMD version of std::mismatch</div><div class="ttdef"><b>Definition:</b> mismatch.hpp:114</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1views_1_1zip__iterator_html"><div class="ttname"><a href="structeve_1_1algo_1_1views_1_1zip__iterator.html">eve::algo::views::zip_iterator</a></div><div class="ttdoc">A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...</div><div class="ttdef"><b>Definition:</b> zip_iterator.hpp:303</div></div>
+</div><!-- fragment --><ol type="1">
+<li>Compare both halves of zipped_range_pair for equality</li>
+<li>Compare both halves of zipped_range_pair for equivalence using predicate P</li>
+<li>Compare r1 and r2 that zip together to zip_range_pair for equality</li>
+<li>Compare r1 and r2 that zip together to zip_range_pair for equivalence using predicate P</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>1. and 3. will convert to common type to do equality comparison if necessary to get the same for custom predicate, use <code>[<a class="el" href="structeve_1_1common__type.html" title="Computes a type that can represent all values in a list of types.">common_type</a>]</code> trait on your <code>zip</code>.</dd>
+<dd>
+to better understand the <code>zip</code> interfaces, have a look at <code>examples/algorithms/using_existing/memcmp_...</code> or <code>examples/algorithms/using_existing/case_insensitive...</code>.</dd></dl>
+<p><b>Parameters</b></p>
+<ul>
+<li><code>rng</code>: zipped pair of 2 ranges to compare</li>
+<li>'r1<code>,</code>r2<code>- two separate components that</code>zip<code>to a</code>zipped_range_pair<code> *</code>p` - binary predicate for equivelence testing.</li>
+</ul>
+<p ><b>Return value</b></p>
+<p ><code>eve::views::zip_iterator</code> to the place where the mismatch happend. (if not found, will point past the end of both halves).</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;int&gt;  v = {2,5,-9,  9,  3,-8,2,-5,7,-2,3};</div>
+<div class="line">  std::vector&lt;int&gt;  w = {2,5,-9, -9, -9,-8,2,-5,7,-2,3};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                             = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; w                             = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(w)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> [vv, ww] = <a class="code hl_variable" href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">eve::algo::mismatch</a>(v, w);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- auto [vv, ww]                 = eve::algo::mismatch(v, ww);\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; mismatch at &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a>(vv) &lt;&lt; <span class="stringliteral">&quot; != &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a>(ww) &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// ignoring sign</span></div>
+<div class="line">  <span class="keyword">auto</span> [no_sign_vv, no_sign_ww] = <a class="code hl_variable" href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">eve::algo::mismatch</a>(v, w, [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> y) {</div>
+<div class="line">    <span class="keywordflow">return</span> x == y || x == -y;</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- auto [no_sign_vv, no_sign_ww] = eve::algo::mismatch(v, w, [](...){ });\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; mismatch at &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a>(no_sign_vv) &lt;&lt; <span class="stringliteral">&quot; != &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a>(no_sign_ww) &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__memory_ga1b643b7f66cbab0cbbb3bf454dd82818_html_ga1b643b7f66cbab0cbbb3bf454dd82818"><div class="ttname"><a href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a></div><div class="ttdeci">constexpr callable_read_ read</div><div class="ttdoc">Callable object reading single value from memory.</div><div class="ttdef"><b>Definition:</b> read.hpp:53</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

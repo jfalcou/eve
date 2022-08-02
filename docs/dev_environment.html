@@ -137,17 +137,17 @@ Docker setup</h1>
 <h1><a class="anchor" id="dev_docker_helper"></a>
 Running EVE docker</h1>
 <p >Running <b>EVE</b> CI docker can be done by moving to <b>EVE</b> source folder than run the following command:</p>
-<pre class="fragment">docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v4
+<pre class="fragment">docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v6
 </pre><p >This will give you access to an interactive shell running inside the Docker Image. We strongly advice to make a small Bash function that you can add to your bash profile to easily spin up an instance of Docker.</p>
 <pre class="fragment"># .bashrc
 dockhere()
 {
-  docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v4
+  docker run -i -t -v${PWD}:${PWD} jfalcou/compilers:v6
 }
 </pre><p >From there, you can navigate to the source folder by <code>cd</code> into your folder:</p>
 <pre class="fragment">@:~/space/eve$ pwd                              # From eve directory
 /home/dyarosh/space/eve
-@:dockhere jfalcou/compilers:v4                 # Get docker with compilers
+@:dockhere jfalcou/compilers:v6                 # Get docker with compilers
 root@302ed6f6f4fa:                              # We are in docker in root
 root@302ed6f6f4fa:/# cd /home/dyarosh/space/eve # Go back to eve directory
 root@302ed6f6f4fa:/home/dyarosh/space/eve#      # Done

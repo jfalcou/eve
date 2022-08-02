@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::copy_backward</title>
+<title>E.V.E: eve::algo::equal</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_ga2115b0f84f22d092050976f6f845a0b6.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
 </div>
 
 <div class="contents">
-<a id="gaf168a34bbecbde1efbbe2344e95fa32c" name="gaf168a34bbecbde1efbbe2344e95fa32c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf168a34bbecbde1efbbe2344e95fa32c">&#9670;&nbsp;</a></span>copy_backward</h2>
+<a id="ga2115b0f84f22d092050976f6f845a0b6" name="ga2115b0f84f22d092050976f6f845a0b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2115b0f84f22d092050976f6f845a0b6">&#9670;&nbsp;</a></span>equal</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::copy_backward = function_with_traits&lt;copy_backward_&gt;[default_simple_algo_traits]</td>
+          <td class="memname">eve::algo::equal = function_with_traits&lt;equal_&gt;[all_of.get_traits()]</td>
         </tr>
       </table>
   </td>
@@ -137,55 +137,69 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/copy.hpp&gt;</code></p>
+<p><code>#include &lt;eve/algo/equal.hpp&gt;</code></p>
 
-<p>SIMD optimized backward copy algorithm. </p>
-<p >Configurable <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing backward copy between two ranges' or between a range and an iterator.</p>
-<p >By default, eve::algo::copy_backward will be unrolled by a factor of 4, align memory accesses and perform conversions if needed.</p>
-<dl class="section note"><dt>Note</dt><dd>If you want to copy between ranges of the same scalar type, use <code>std::memmove</code>.</dd></dl>
-<p><b>Alternative Header</b></p>
+<p>a SIMD version of <code>std::equal</code> </p>
+<p >Tests wether two ranges are equal (accepts anything that zips together as a range of 2 things) By default aligns and unrolls 4 times.</p>
+<p ><b>Alternative Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2&gt;</div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">copy_backward</a>(R1&amp;&amp; r1, R2&amp;&amp; r2) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;;    <span class="comment">//  1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">copy_backward</a>(zipped_range_pair <span class="keyword">auto</span>&amp;&amp; r);                        <span class="comment">//  2</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;zipped_range_pair Rng&gt;</div>
+<div class="line">  <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">equal</a>(Rng&amp;&amp; rng);                                             <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span> &lt;zipped_range_pair Rng, <span class="keyword">typename</span> P&gt;</div>
+<div class="line">  <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">equal</a>(Rng&amp;&amp; rng, P p);                                        <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2&gt;</div>
+<div class="line">  <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">equal</a>(R1&amp;&amp; r1, R2&amp;&amp; r2) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;;        <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> R1, <span class="keyword">typename</span> R2, <span class="keyword">typename</span> P&gt;</div>
+<div class="line">  <span class="keywordtype">bool</span> <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">equal</a>(R1&amp;&amp; r1, R2&amp;&amp; r2, P p) <span class="keyword">requires</span> zip_to_range&lt;R1, R2&gt;;  <span class="comment">// 4</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c_html_gaf168a34bbecbde1efbbe2344e95fa32c"><div class="ttname"><a href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">eve::algo::copy_backward</a></div><div class="ttdeci">constexpr auto copy_backward</div><div class="ttdoc">SIMD optimized backward copy algorithm.</div><div class="ttdef"><b>Definition:</b> copy.hpp:153</div></div>
+<div class="ttc" id="agroup__algos_ga2115b0f84f22d092050976f6f845a0b6_html_ga2115b0f84f22d092050976f6f845a0b6"><div class="ttname"><a href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">eve::algo::equal</a></div><div class="ttdeci">constexpr auto equal</div><div class="ttdoc">a SIMD version of std::equal</div><div class="ttdef"><b>Definition:</b> equal.hpp:111</div></div>
 </div><!-- fragment --><ol type="1">
-<li>Copy the elements of from <code>r1</code> to <code>r2</code>.</li>
-<li>Copy the elements of from <code>get&lt;0&gt;(r)</code> to <code>get&lt;1&gt;(r)</code>.</li>
+<li>Compare both halves of zipped_range_pair for equality</li>
+<li>Compare both halves of zipped_range_pair for equivalence using predicate P</li>
+<li>Compare r1 and r2 that zip together to zip_range_pair for equality</li>
+<li>Compare r1 and r2 that zip together to zip_range_pair for equivalence using predicate P</li>
 </ol>
-<p >The elements are copied in reverse order (the last element is copied first), but their relative order is preserved. Due to the specificities of the SIMD algorithm, the second can not be an iterator. Use the zip based overload to do so.</p>
-<p ><b>Parameters</b></p>
+<dl class="section note"><dt>Note</dt><dd>1. and 3. will convert to common type to do equality comparison if necessary to get the same for custom predicate, use <code>[<a class="el" href="structeve_1_1common__type.html" title="Computes a type that can represent all values in a list of types.">common_type</a>]</code> trait on your <code>zip</code>.</dd>
+<dd>
+to better understand the <code>zip</code> interfaces, have a look at <code>examples/algorithms/using_existing/memcmp_...</code> or <code>examples/algorithms/using_existing/case_insensitive...</code>.</dd></dl>
+<p><b>Parameters</b></p>
 <ul>
-<li><code>r1</code> : The range of elements or an iterator to the beginning of the elements to copy from</li>
-<li><code>r2</code> : A range of the destination elements</li>
-<li><code>r</code> : A eve::algo::zipped_range_pair of ranges and/or iterators.</li>
+<li><code>rng</code>: zipped pair of 2 ranges to compare</li>
+<li>'r1<code>,</code>r2<code>- two separate components that</code>zip<code>to a</code>zipped_range_pair<code> *</code>p` - binary predicate for equivelence testing.</li>
 </ul>
+<p ><b>Return value</b></p>
+<p >bool wether any values matched the predicate</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/copy.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo/as_range.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  std::vector&lt;int&gt; from_vector = {1,2,3,4,5,6,7,8,9,10};</div>
-<div class="line">  std::vector&lt;int&gt; to_vector(15);</div>
+<div class="line">  std::vector&lt;int&gt;  v = {2,5,-9,3,-8,2,-5,7,-2,3};</div>
+<div class="line">  std::vector&lt;int&gt;  w = {-9,3,-8,2,2,5,-5,7,-2,3};</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__algorithms_gaf168a34bbecbde1efbbe2344e95fa32c.html#gaf168a34bbecbde1efbbe2344e95fa32c">eve::algo::copy_backward</a>(from_vector, eve::algo::as_range(to_vector.end()-10, to_vector.end()) );</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(from_vector)</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                       = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector)</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; w                       = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(w)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::equal(v, v)  = &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">eve::algo::equal</a>(v, v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::equal(v, w)  = &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_variable" href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">eve::algo::equal</a>(v, w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -196,7 +210,7 @@ $(document).ready(function(){initNavTree('group__algorithms_gaf168a34bbecbde1efb
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="group__algorithms.html">Algorithms and Views</a></li>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('intro-02.html',''); initResizable(); }
 <div class="contents">
 <div class="textblock"><p ><a class="el" href="intro-01.html">In the previous tutorial</a>, we managed to convert a sequential function into a function using SIMD types and functions. In general, such function is meant to be applied to a large set of data instead of a single register.</p>
 <p >As for usual sequential computation, we want to lift ourselves from raw loops and think using algorithms. <b>EVE</b> provides such ready-to-use SIMD aware algorithms and this tutorial will take a look at how to handle them.</p>
-<h1><a class="anchor" id="autotoc_md1957"></a>
+<h1><a class="anchor" id="autotoc_md1958"></a>
 Initial problem</h1>
 <p >Let's try to apply our sequential conversion function over data stored in <code>std::vector</code> using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
@@ -159,7 +159,7 @@ Initial problem</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Very similar code, except for the fact the input data are passed directly without using iterators.</p>
-<h1><a class="anchor" id="autotoc_md1958"></a>
+<h1><a class="anchor" id="autotoc_md1959"></a>
 Toward SIMD Algorithms</h1>
 <p >We can turn this range-based code into a SIMD-aware call to one of the algorithms defined in eve::algo. All algorithms in <b>EVE</b> are range-based thus simplifying the transition from code using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
@@ -191,7 +191,7 @@ Toward SIMD Algorithms</h1>
 <li>eve::algo::transform_to takes a single input range. To pass multiple parallel ranges, we use eve::views::zip that constructs a view over them.</li>
 <li>as we consume a zipped range, the data passed to the lambda function behaves like a tuple. We will dive into details of this tuple later but for now just remember you can retrieve the data member exactly like with a regular tuple (using <code>get</code> or structured bindings).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md1959"></a>
+<h1><a class="anchor" id="autotoc_md1960"></a>
 Tuning algorithms</h1>
 <p >In SIMD algorithms we by default assume that the provided operation is simple (a few instructions), since this is the common case. This means we use aligned reads and do unrolling, which is an important optimisation. However, for a complex case, like here, it is beneficial to opt out.</p>
 <p ><b>EVE</b> provides various traits to customize algorithms behavior. The two main traits we're interested in are:</p>
@@ -223,7 +223,7 @@ Tuning algorithms</h1>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algorithms_ga4e752623318f5d75907ed9f732c826a1_html_ga4e752623318f5d75907ed9f732c826a1"><div class="ttname"><a href="group__algorithms_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdoc">Traits for disabling alignment handling in algorithm.</div><div class="ttdef"><b>Definition:</b> traits.hpp:89</div></div>
 </div><!-- fragment --><p >Best strategy is always to benchmark your code and tune algorithms accordingly.</p>
-<h1><a class="anchor" id="autotoc_md1960"></a>
+<h1><a class="anchor" id="autotoc_md1961"></a>
 Conclusion</h1>
 <p >In this tutorial, we managed to:</p><ul>
 <li>use a simple algorithms from <b>EVE</b> algorithms set</li>

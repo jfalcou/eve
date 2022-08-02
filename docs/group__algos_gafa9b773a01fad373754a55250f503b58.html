@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::wide::slice</title>
+<title>E.V.E: eve::algo::min_value</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_gafa9b773a01fad373754a55250f503b58.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,51 +117,83 @@ $(document).ready(function(){initNavTree('structeve_1_1wide_ac93011212ddf6a39c16
 </div>
 
 <div class="contents">
-<a id="ac93011212ddf6a39c16f4f011462bdb3" name="ac93011212ddf6a39c16f4f011462bdb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac93011212ddf6a39c16f4f011462bdb3">&#9670;&nbsp;</a></span>slice() <span class="overload">[1/2]</span></h2>
+<a id="gafa9b773a01fad373754a55250f503b58" name="gafa9b773a01fad373754a55250f503b58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa9b773a01fad373754a55250f503b58">&#9670;&nbsp;</a></span>min_value</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="structeve_1_1wide.html">eve::wide</a>&lt; Type, Cardinal &gt;::slice </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td class="memname">eve::algo::min_value = function_with_traits&lt;min_value_&gt;[default_simple_algo_traits]</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Slice a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of half cardinal. Does not participate in overload resolution if <code>Cardinal::value == 1</code>. </p>
-<p ><b>Example:</b></p>
-<p ><a href="https://godbolt.org/z/cq9xs97fz"><b>See it live on Compiler Explorer</b></a></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<p><code>#include &lt;eve/algo/min_value.hpp&gt;</code></p>
+
+<p>SIMD algorithm that returns minimum value in the range. </p>
+<p >C++ standard only has <code>std::min_element</code> that returns iterator to the minimum element. We have that too (see: <code>eve::algo::min_element</code>) but it's slower then just getting the value. So we also provide <code>min_value</code> for when you don't care about the position. By default unrolls by 4 and aligned all memory accesses.</p>
+<dl class="section note"><dt>Note</dt><dd>for equivalent elements we return the first amoung equal. </dd>
+<dd>
+we assume that <code><a class="el" href="group__core_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Callable object computing the &quot;less than&quot; predicate.">eve::is_less</a></code> defined for your type is total order. (this comes up when switching min with max)</dd></dl>
+<p><b>Alternative Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng, <span class="keyword">typename</span> Less&gt;</div>
+<div class="line">  std::optional&lt;eve::value_type_t&lt;Rng&gt;&gt; <a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">min_value</a>(Rng&amp;&amp; rng, Less less);          <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng&gt;</div>
+<div class="line">  std::optional&lt;eve::value_type_t&lt;Rng&gt;&gt; <a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">min_value</a>(Rng&amp;&amp; rng);                    <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__algos_gafa9b773a01fad373754a55250f503b58_html_gafa9b773a01fad373754a55250f503b58"><div class="ttname"><a href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a></div><div class="ttdeci">constexpr auto min_value</div><div class="ttdoc">SIMD algorithm that returns minimum value in the range.</div><div class="ttdef"><b>Definition:</b> min_value.hpp:97</div></div>
+</div><!-- fragment --><ol type="1">
+<li>Returns the minimum value, according to less. If the range is empty - returns nullopt.</li>
+<li>Same as 1 but the less is <a class="el" href="group__core_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Callable object computing the &quot;less than&quot; predicate.">eve::is_less</a></li>
+</ol>
+<p ><b>Parameters</b></p>
+<ul>
+<li><code>rng</code>: Relaxed input range to process</li>
+<li><code>less</code>: SIMD strict weak ordering.</li>
+</ul>
+<p ><b>Return value</b></p>
+<p >minimum value from the range. If the input range was empty, it's <code>std::nullopt</code>.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="comment">// Generates the wide [1 ... N]</span></div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a> r = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> + 1;};</div>
-<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::vector&lt;int&gt; v{ 2, -1, 4, -1, 0 };</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span>[<a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>,<a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>] = r.<a class="code hl_function" href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">slice</a>();</div>
-<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                       = &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v)                                 = &quot;</span></div>
+<div class="line">            &lt;&lt; *<a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a>(v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_element(v) - v.begin()                   = &quot;</span></div>
+<div class="line">            &lt;&lt; eve::algo::min_element(v) - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v, eve::is_greater)                = &quot;</span></div>
+<div class="line">            &lt;&lt; *<a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a>(v, <a class="code hl_variable" href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v, eve::is_greater) - v.begin()    = &quot;</span></div>
+<div class="line">            &lt;&lt; eve::algo::min_element(v, <a class="code hl_variable" href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>) - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
-<div class="ttc" id="agroup__core_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr callable_hi_ hi</div><div class="ttdoc">Callable object computing the higher part of the values.</div><div class="ttdef"><b>Definition:</b> hi.hpp:59</div></div>
-<div class="ttc" id="agroup__core_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr callable_lo_ lo</div><div class="ttdoc">Callable object computing the lower part of the values.</div><div class="ttdef"><b>Definition:</b> lo.hpp:59</div></div>
-<div class="ttc" id="astructeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3_html_ac93011212ddf6a39c16f4f011462bdb3"><div class="ttname"><a href="structeve_1_1wide_ac93011212ddf6a39c16f4f011462bdb3.html#ac93011212ddf6a39c16f4f011462bdb3">eve::wide::slice</a></div><div class="ttdeci">auto slice() const</div><div class="ttdoc">Slice a eve::wide into two eve::wide of half cardinal. Does not participate in overload resolution if...</div><div class="ttdef"><b>Definition:</b> wide.hpp:302</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:64</div></div>
+<div class="ttc" id="agroup__core_gac8e72f365c26b0d3373799e5e3a5f384_html_gac8e72f365c26b0d3373799e5e3a5f384"><div class="ttname"><a href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a></div><div class="ttdeci">constexpr callable_is_greater_ is_greater</div><div class="ttdoc">Callable object computing the &quot;greater than&quot; predicate.</div><div class="ttdef"><b>Definition:</b> is_greater.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -171,7 +203,7 @@ template&lt;arithmetic_scalar_value Type, typename Cardinal &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1wide.html">wide</a></li>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->
