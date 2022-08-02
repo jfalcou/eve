@@ -14,14 +14,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
-            << "-> minabs(pf, qf)            = " << eve::minabs(pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> minabs(xf, yf)            = " << eve::minabs(xf, yf) << '\n';
+            << "-> pedantic(minmag)(pf, qf) = " << eve::pedantic(eve::minmag)(pf, qf) << '\n'
+            << "-> numeric(minmag)(pf, qf)  = " << eve::numeric(eve::minmag)(pf, qf) << '\n';
    return 0;
 }

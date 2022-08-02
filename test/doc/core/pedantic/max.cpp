@@ -16,14 +16,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                     = " << pf << '\n'
             << "<- qf                     = " << qf << '\n'
-            << "-> min(pf, qf)            = " << eve::min(pf, qf) << '\n';
-
-  float xf = 1.0f;
-  float yf = eve::nan(eve::as<float>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                     = " << xf << '\n'
-            << "<- yf                     = " << yf << '\n'
-            << "-> min(xf, yf) =          = " << eve::min(xf, yf) << '\n';
+            << "-> pedantic(max)(pf, qf)  = " << eve::pedantic(eve::max)(pf, qf) << '\n'
+            << "-> numeric(max)(pf, qf)   = " << eve::numeric(eve::max)(pf, qf) << '\n';
   return 0;
 }

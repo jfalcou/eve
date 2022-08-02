@@ -14,9 +14,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
-            << "-> maxmag(pf, qf)            = " << eve::maxmag(pf, qf) << '\n'
-            << "-> pedantic(maxmag)(pf, qf) = " << eve::pedantic(eve::maxmag)(pf, qf) << '\n'
-            << "-> numeric(maxmag)(pf, qf)  = " << eve::numeric(eve::maxmag)(pf, qf) << '\n';
+            << "-> maxmag(pf, qf)            = " << eve::maxmag(pf, qf) << '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -24,8 +22,6 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
-            << "-> maxmag(xf, yf)            = " << eve::maxmag(xf, yf) << '\n'
-            << "-> pedantic(maxmag)(xf, yf) = " << eve::pedantic(eve::maxmag)(xf, yf) << '\n'
-            << "-> numeric(maxmag)(xf, yf)  = " << eve::numeric(eve::maxmag)(xf, yf) << '\n';
+            << "-> maxmag(xf, yf)            = " << eve::maxmag(xf, yf) << '\n';
    return 0;
 }
