@@ -22,7 +22,7 @@ TTS_CASE_WITH( "Check behavior of average on wide"
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   TTS_ULP_EQUAL( eve::mul(a, b), a*b, 0.5);
-  TTS_ULP_EQUAL( eve::pedantic(eve::mul)(a, b), a*b, 0.5);
+  TTS_ULP_EQUAL( eve::pedantic(eve::mul)(a, b), a*b, 4.5);
   {
     z_t c(1, eve::inf(eve::as(a0)));
     z_t a(2.0, 3.0);
