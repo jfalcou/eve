@@ -50,7 +50,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/max.cpp}
+  //!  @godbolt{doc/core/regular/max.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

@@ -12,58 +12,62 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var modf
+  //!   @var modf
+  //!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
+  //!   pair of  fractional and integral parts of the value,
   //!
-  //! @brief Callable object computing the modf operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the modf operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      kumi::tuple<T, T> modf(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!     A pair of values containing respectively the [elementwise](@ref glossary_elementwise)
+  //!     fractional and integral parts of `x`,
+  //!     each having the type and sign of `x`.
   //!
-  //! **Return value**
+  //!     In particular:
+  //!       * If `x` is infinite `{Nan, x}` is returned.
+  //!       * If `x` is a `Nan`  `{Nan, Nan}` is returned.
   //!
-  //!A pair of values containing respectively the [elementwise](@ref glossary_elementwise) fractional and integral parts of `x`,
-  //!each having the type and sign of `x`.
+  //!  @groupheader{Example}
   //!
-  //!In particular:
-  //!  * If `x` is infinite `{Nan, x}` is returned.
-  //!  * If `x` is a `Nan`  `{Nan, Nan}` is returned.
+  //!  @godbolt{doc/core/regular/modf.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! #### Supported decorators
+  //!   * eve::pedantic
   //!
-  //!  * eve::pedantic
+  //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite,
+  //!     `{0, x}` is returned.
   //!
+  //!      **Example**
   //!
-  //!     The call `pedantic(modf)(x)` ensures standard conformity : if `x` is infinite, `{0, x}` is returned.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/modf.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/pedantic/modf.cpp}
+  //! @}
   //================================================================================================
-     
+
   namespace tag { struct modf_; }
   template<> struct supports_conditional<tag::modf_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(modf_, modf);
 }
 

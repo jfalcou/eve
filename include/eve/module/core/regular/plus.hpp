@@ -12,70 +12,58 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var plus
+  //!   @var plus
+  //!   @brief Computes the opposite of the parameter that must be signed.
   //!
-  //! @brief Callable object computing the plus unary operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the plus unary operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T plus(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value  auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!       Returns x
   //!
-  //! **Return value**
+  //!    **Note**
+  //!       Although the operator notation with `+` is supported, the `+` operator on
+  //!       standard scalar type is the original one and so can lead to automatic promotion.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) `+x` which generally is a no-op.
+  //!  @groupheader{Example}
   //!
-  //!@warning
-  //!   Although the operator notation with `+` is supported, the `+` operator on
-  //!   standard scalar type is the original one and so can lead to automatic promotion.
+  //!  @godbolt{doc/core/regular/plus.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::plus
+  //!     The call `eve;::plus[mask](x)` provides a masked version of `eve::plus` which is
+  //!     equivalent to `if_else (mask, plus(x), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/plus.cpp}
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/saturated/plus.cpp}
   //!
-  //!  A Callable object so that the expression `plus[cond](x, ...)` is equivalent to `if_else(cond,plus(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/plus.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
-     
-  namespace tag { struct plus_; }
-  template<> struct supports_conditional<tag::plus_> : std::false_type {};
-  
   EVE_MAKE_CALLABLE(plus_, plus);
 }
 

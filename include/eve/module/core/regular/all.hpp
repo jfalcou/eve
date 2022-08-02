@@ -16,7 +16,7 @@ namespace eve
   //! @addtogroup core_horizontal
   //! @{
   //!   @var all
-  //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero_
+  //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero.
   //!
   //!   @code
   //!   namespace eve

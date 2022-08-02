@@ -13,91 +13,75 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var maxmag
+  //!   @var maxmag
+  //!   @brief Computes the  maximum  of the absolute value of its [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the maxmag operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the maxmag operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts ... >
+  //!      eve::common_compatible_t<T, Ts...> maxmag(T x, Ts ... xs) noexcept;
   //!
-  //! ---
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `xs...` :  [arguments](@ref eve::value).
   //!
-  //!`x`, `args`:   [values](@ref eve::value)
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!      The [elementwise](@ref glossary_elementwise) element of greatest absolute value is returned.
   //!
-  //!the [elementwise](@ref glossary_elementwise) element of greatest absolute value is returned.
+  //!      For instance for two elements:
   //!
-  //!For instance for two elements:
+  //!        * If `|x| >  |y|`,  `x` is returned.
+  //!        * If `|x| <  |y|`,  `y` is returned.
+  //!        * Otherwise `max(x, y)` is returned.
   //!
-  //!  * If `|x| >  |y|`,  `x` is returned.
-  //!  * If `|x| <  |y|`,  `y` is returned.
-  //!  * Otherwise `max(x, y)` is returned.
+  //!      For n parameters the result is computed as if this scheme was recursively used.
   //!
-  //!For n parameters the result is computed as if this scheme was recursively used.
+  //!   **Notes**
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!     * If any element of the inputs is a `Nan`, the corresponding output element
+  //!       is system-dependent.
   //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core/regular/maxmag.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::maxmag
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::maxmag[mask](x, ...)` provides a masked
+  //!     version of `maxmag` which is
+  //!     equivalent to `if_else(mask, maxmag(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/maxmag.cpp}
   //!
-  //!  A Callable object so that the expression `maxmag[cond](x, ...)` is equivalent to `if_else(cond,maxmag(x, ...),x)`
+  //!   * eve::pedantic, eve::numeric
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
-  //!
-  //!  * eve::numeric
+  //!      The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators
+  //!      is identical except that if  `|x| == |y|`, `d(max)` is used.
   //!
   //!
-  //!      The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
+  //!     **Example**
   //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(maxmag)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their maxmag is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/maxmag.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/pedantic/maxmag.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maxmag_, maxmag);
 }

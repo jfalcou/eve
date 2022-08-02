@@ -12,62 +12,52 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
-  //! @var maximum
+  //!   @var maximum
+  //!   @brief Computes the maximal value of an simd vector
   //!
-  //! @brief Callable object computing maximal element.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | computes the maximal element of a real value               |
-  //! | `operator[]` | Construct a masked version of current function object      |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::element_type_t<T> maximum(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameter**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument(@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   a [real value](@ref eve::value)
+  //!    The scalar maximal value.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!returns a [scalar value](@ref eve::scalar_value) containing the maximal element
+  //!  @godbolt{doc/core/regular/maximum.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::maximum
+  //!     The call `eve::maximum[mask](x)` provides a masked
+  //!     version of `maximum` which is
+  //!     equivalent to : ``maximum(if_else(mask, x, valmin(as(x))))`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/maximum.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `maximum[cond](x)` is equivalent to `maximum(if_else(cond, x, valmin(as(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/maximum.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(maximum_, maximum);
 }

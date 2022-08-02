@@ -12,78 +12,69 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var minus
+  //!   @var minus
+  //!   @brief Computes the opposite of the parameter that must be signed.
   //!
-  //! @brief Callable object computing the minus unary operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the minus unary operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T minus(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!       Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
+  //!       The result is  the opposite of `x` if this value is representable in the type of `x`.
+  //!       More specifically, for signed integers the opposite value of [their lowest finite value](@ref eve::valmin)
+  //!       is not representable and the result is undefined behaviour.
   //!
-  //! **Return value**
+  //!    **Note**
+  //!       Although the operator notation with `-` is supported, the `-` operator on
+  //!       standard scalar type is the original one and so can lead to automatic promotion.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
-  //!The result is  the opposite of `x` if this value is representable in the type of `x`.
-  //!More specifically, for signed integers the opposite value of [their lowest finite value](@ref eve::valmin)
-  //!is not representable and the result is undefined behaviour.
+  //!  @groupheader{Example}
   //!
-  //!@warning
-  //!   Although the operator notation with `-` is supported, the `-` operator on
-  //!   standard scalar type is the original one and so can lead to automatic promotion.
+  //!  @godbolt{doc/core/regular/minus.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::minus
+  //!     The call `eve;::minus[mask](x)` provides a masked version of `eve::minus` which is
+  //!     equivalent to `if_else (mask, minus(x), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/minus.cpp}
   //!
-  //!  **Return value**
+  //!   * eve::saturated
   //!
-  //!  A Callable object so that the expression `minus[cond](x, ...)` is equivalent to `if_else(cond,minus(x, ...),x)`
+  //!     The call `eve::saturated(eve::minus)(x)` computes a saturated version of eve::minus.
   //!
-  //! ---
+  //!     More specifically, for any signed integer value `x`, the expression
+  //!     `eve::saturated(eve::minus)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
   //!
-  //! #### Supported decorators
+  //!      **Example**
   //!
-  //!  * `saturated`
+  //!        @godbolt{doc/core/saturated/minus.cpp}
   //!
-  //!
-  //!     The call `saturated(minus)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
-  //!      for integral signed type T  `saturated(minus)(eve::valmin< T >())` returns `eve::valmax< T >()` and is not u.b.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(minus)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/minus.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(minus_, minus);
 }

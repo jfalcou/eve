@@ -26,7 +26,7 @@ namespace eve
   template<auto Param> using diff_type = decorated<diff_<Param>()>;
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorator
   //! @{
   //!  @var diff
   //!
@@ -59,7 +59,7 @@ namespace eve
   [[maybe_unused]] inline constexpr diff_type<1> const diff      = {};
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorator
   //! @{
   //!  @var diff_1st
   //!
@@ -92,7 +92,7 @@ namespace eve
   [[maybe_unused]] inline constexpr diff_type<1> const diff_1st  = {};
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorator
   //! @{
   //!  @var diff_2nd
   //!
@@ -125,7 +125,7 @@ namespace eve
   [[maybe_unused]] inline constexpr diff_type<2> const diff_2nd  = {};
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorator
   //! @{
   //!  @var diff_3rd
   //!
@@ -158,7 +158,7 @@ namespace eve
   [[maybe_unused]] inline constexpr diff_type<3> const diff_3rd  = {};
 
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_decorator
   //! @{
   //!  @var diff_nth
   //!

@@ -7,70 +7,76 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/constant/one.hpp>
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
-  //! @var none
+  //!   @var none
+  //!   @brief Computes a bool value which is true if and only if all elements of `x` are 0.
   //!
-  //! @brief Callable object computing the none value.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the none value                          |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      bool none(T x) noexcept;   //1
   //!
-  //! ---
+  //!      template< eve::top_bits M >
+  //!      bool none(M m) noexcept;   //2
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * 1. A bool value which is true if and only if all elements of `x` are  zero.
+  //!   * 2  A bool value which is true if and only if all top bits elements of `x` are zero.
   //!
-  //! **Parameters**
+  //!   **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!     * `x` :  argument(@ref eve::logical_value).
   //!
-  //! **Return value**
+  //!     * `m` :  argument(@ref eve::top_bits).
   //!
-  //!A bool value
+  //!    **Return value**
   //!
-  //! ---
+  //!    A bool value.
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Example}
   //!
-  //!  Higher-order function generating a masked version of eve::none
+  //!  @godbolt{doc/core//regular/none.cpp}
   //!
-  //!  **Parameters**
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  `cond` : conditional expression
+  //!   * Masked Call
   //!
-  //!  **Return value**
+  //!     The call `eve::none[mask](x)` provides a masked
+  //!     version of `none` which is
+  //!     equivalent to : all not masked elements are  zero.
   //!
-  //!  A Callable object so that the expression `none[cond](x, ...)` is equivalent to `if_else(cond,none(x, ...),x)`
+  //!      **Example**
   //!
-  //! ---
+  //!        @godbolt{doc/core/masked/none.cpp}
   //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/none.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(none_, none);
 }
 
 #include <eve/module/core/regular/impl/none.hpp>
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/none.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/none.hpp>
+#endif

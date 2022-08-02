@@ -8,55 +8,58 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var nb_values
+  //!   @var nb_values
+  //!   @brief Computes the  number of values representable in the type between the
+  //!   [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the nb_values operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the nb_values operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T nb_values(T x, T y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!      Returns the number of values representable in the type in the interval `[x, y[`
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!computes the number of values representable in the type in the interval `[x, y[`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/nb_values.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core//regular/nb_values.cpp}
   //================================================================================================
-     
-  namespace tag { struct nb_values_; }
-  template<> struct supports_conditional<tag::nb_values_> : std::false_type {};
-  
-  EVE_MAKE_CALLABLE(nb_values_, nb_values);
+ EVE_MAKE_CALLABLE(nb_values_, nb_values);
 }
 
 #include <eve/module/core/regular/impl/nb_values.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/nb_values.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/nb_values.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/nb_values.hpp>
+#endif

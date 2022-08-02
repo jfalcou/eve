@@ -12,72 +12,58 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_horizontal
   //! @{
-  //! @var minimum
+  //!   @var minimum
+  //!   @brief Computes the maximal value of an simd vector
   //!
-  //! @brief Callable object computing minimal element.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | computes the minimal element of a real value               |
-  //! | `operator[]` | Construct a masked version of current function object      |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      eve::element_type_t<T> minimum(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameter**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  argument(@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   a [real value](@ref eve::value)
+  //!    The scalar minimal value.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!returns a [scalar value](@ref eve::scalar_value) containing the minimal element
+  //!  @godbolt{doc/core/regular/minimum.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::minimum
+  //!     The call `eve::minimum[mask](x)` provides a masked
+  //!     version of `minimum` which is
+  //!     equivalent to : ``minimum(if_else(mask, x, valmax(as(x))))`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
+  //!        @godbolt{doc/core/masked/minimum.cpp}
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `minimum[cond](x)` is equivalent to `minimum(if_else(cond, x, valmax(as(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/minimum.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
- EVE_MAKE_CALLABLE(minimum_, minimum);
+  EVE_MAKE_CALLABLE(minimum_, minimum);
 }
 
 #include <eve/module/core/regular/impl/minimum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/minimum.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/minimum.hpp>
 #endif

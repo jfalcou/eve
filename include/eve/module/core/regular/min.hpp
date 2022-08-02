@@ -7,101 +7,82 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
-//================================================================================================
-//! @addtogroup core
-//! @{
-//! @var min
-//!
-//! @brief Callable object computing the min operation.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! #### Members Functions
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the min operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-//!                                       requires (compatible_values< T, Ts > && ...);
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`x`, `args`, ...
-//!:   [values](@ref eve::value)
-//!
-//! **Return value**
-//!
-//! Computes the [elementwise](@ref glossary_elementwise) minimum of the parameters.
-//!
-//! The result type is the [common compatible type](@ref common_compatible) of the parameters.
-//!
-//!@warning
-//!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::min
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `min[cond](x, ...)` is equivalent to
-//!  `if_else(cond,min(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  * eve::pedantic
-//!
-//!
-//!     The call `pedantic(min)(x, args, ...)`  ensures the conformity to the standard behaviour,
-//!     that is
-//!      for two parameters (on an  [elementwise](@ref glossary_elementwise) basis) semanticaly
-//!      equivalent to:
-//!      `(x < y) ? x : y` and this behaviour is also ensured on n parameters calls as if this
-//!      scheme was recursively used.
-//!
-//!  * eve::numeric
-//!
-//!
-//!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a
-//!     `Nan`, the corresponding
-//!      output element will not be a `Nan`.
-//!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff< N >(min)(x,args,...)` computes the partial
-//!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-//!      their minimum is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to
-//!      \f$x_N\f$ else 0.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/min.cpp}
-//!
-//!  @}
-//================================================================================================
-EVE_MAKE_CALLABLE(min_, min);
+  //================================================================================================
+  //! @addtogroup core_arithmetic
+  //! @{
+  //!   @var min
+  //!   @brief Computes the  minimum  of its [arguments](@ref eve::value).
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts ... >
+  //!      eve::common_compatible_t<T, Ts...> min(T x, Ts ... xs) noexcept;
+  //!
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`, `xs...` :  [arguments](@ref eve::value).
+  //!
+  //!    **Return value**
+  //!
+  //!    The value of the minimum  of the arguments is returned.
+  //!
+  //!   **Notes**
+  //!
+  //!     * If any element of the inputs is a `Nan`, the corresponding output element
+  //!       is system-dependent.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/regular/min.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve::min[mask](x, ...)` provides a masked
+  //!     version of `min` which is
+  //!     equivalent to `if_else(mask, min(x, ...), x)`
+  //!
+  //!      **Example**
+  //!
+  //!        @godbolt{doc/core/masked/min.cpp}
+  //!
+  //!   * eve::pedantic, eve::numeric
+  //!
+  //!     * The call `pedantic(min)(x,args,...)`  ensures the conformity
+  //!       to the standard behaviour, that is
+  //!       for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
+  //!       to be semanticaly equivalent to:
+  //!       `(x < y) ? x : y` and this behaviour is also ensured on n parameters calls
+  //!       as if this scheme was recursively used.
+  //!
+  //!     *  The call `numeric(min)(x,args,...)`  ensures that  if any element of the
+  //!        inputs is not a `Nan`, the corresponding
+  //!        output element will not be a `Nan`.
+  //!
+  //!     **Example**
+  //!
+  //!        @godbolt{doc/core/pedantic/min.cpp}
+  //! @}
+  //================================================================================================
+  EVE_MAKE_CALLABLE(min_, min);
 }
 
 #include <eve/module/core/regular/impl/min.hpp>

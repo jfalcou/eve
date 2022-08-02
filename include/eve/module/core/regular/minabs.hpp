@@ -7,98 +7,80 @@
 //==================================================================================================
 #pragma once
 
-
-#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var minabs
+  //!   @var minabs
+  //!   @brief Computes the  minimum  of the absolute value of its [arguments](@ref eve::value).
   //!
-  //! @brief Callable object computing the minabs operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the minabs operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value Ts ... >
+  //!      eve::common_compatible_t<T, Ts...> minabs(T x, Ts ... xs) noexcept;
   //!
-  //! ---
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`, `xs...` :  [arguments](@ref eve::value).
   //!
-  //!`x`, `args`:   [values](@ref eve::value)
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of the minimum of the absolute value of the arguments is returned.
   //!
-  //!the [elementwise](@ref glossary_elementwise) greatest absolute value is returned.
+  //!   **Notes**
   //!
-  //!For instance for two elements:
+  //!     * If any element of the inputs is a `Nan`, the corresponding output element
+  //!       is system-dependent.
   //!
-  //!  * If `|x| <   |y|`,  `|x|` is returned.
-  //!  * If `|x| >   |y|`,  `|y|` is returned.
-  //!  * Otherwise `min(|x|, |y|)` is returned.
+  //!  @groupheader{Example}
   //!
-  //!For n parameters the result is computed as if this scheme was recursively used.
+  //!  @godbolt{doc/core/regular/minabs.cpp}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve::minabs[mask](x, ...)` provides a masked
+  //!     version of `minabs` which is
+  //!     equivalent to `if_else(mask, minabs(x, ...), x)`
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::minabs
+  //!        @godbolt{doc/core/masked/minabs.cpp}
   //!
-  //!  **Parameters**
+  //!   * eve::pedantic, eve::numeric
   //!
-  //!  `cond` : conditional expression
+  //!     * The call `pedantic(minabs)(x,args,...)`  ensures the conformity
+  //!       to the standard behaviour, that is
+  //!       for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
+  //!       to be semanticaly equivalent to:
+  //!       `(|x| < |y|) ? |x| : |y|` and this behaviour is also ensured on n parameters calls
+  //!       as if this scheme was recursively used.
   //!
-  //!  **Return value**
+  //!     *  The call `numeric(minabs)(x,args,...)`  ensures that  if any element of the
+  //!        inputs is not a `Nan`, the corresponding
+  //!        output element will not be a `Nan`.
   //!
-  //!  A Callable object so that the expression `minabs[cond](x, ...)` is equivalent to `if_else(cond,minabs(x, ...),x)`
+  //!     **Example**
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(max)` is used.
-  //!
-  //!  * eve::numeric
-  //!
-  //!
-  //!      The behaviour is the same except that if  `|x| == |y|`, `numeric(max)` is used.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(minabs)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their minabs is \f$m\f$, the value returned is elementwise \f$\mathrm{sign}(x_N)\f$ if \f$m\f$ is equal to \f$|x_N|\f$ else 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/minabs.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/pedantic/minabs.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(minabs_, minabs);
 }
