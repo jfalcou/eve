@@ -8,97 +8,66 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/arch.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var negmaxabs
+  //!   @var negmaxabs
+  //!   @brief Computes the negated value of the element of  the maximal absolute value.
   //!
-  //! @brief Callable object computing the negmaxabs operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the negmaxabs operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T,  eve::value Ts ...>
+  //!      eve::common_compatible_value<T, Ts ...> negmaxabs( T x, Ts ... xs ) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`,  `...xs`: [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `args`:   [values](@ref eve::value)
+  //!    The negated negated value of the element of the maximal  absolute value
+  //!    is returned.
   //!
-  //! **Return value**
+  //!    **Note**
   //!
-  //!the greatest absolute value is returned.
+  //!     If any element of the inputs is a NaN,
+  //!     the corresponding output element is system-dependent.
   //!
-  //!For instance for two elements:
+  //!  @groupheader{Example}
   //!
-  //!  * If `x >  y`,  `-|x|` is returned.
-  //!  * If `x <  y`,  `-|y|` is returned.
-  //!  * Otherwise `-max(|x|, |y|)` is returned.
+  //!  @godbolt{doc/core//regular/negmaxabs.cpp}
   //!
-  //!For n parameters the result is computed as if this scheme was recursively used.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!   * Masked Call
   //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
+  //!     The call `eve::negmaxabs[mask](x, ...)` provides a masked version of `eve::negmaxabs` which is
+  //!     equivalent to `eve::if_else (mask, negmaxabs(x, ...), x)`
   //!
-  //! ---
+  //!      **Example**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!        @godbolt{doc/core/masked/negmaxabs.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::negmaxabs
+  //!   * eve::pedantic,  eve::numeric
   //!
-  //!  **Parameters**
+  //!     The call `d(eve::negmaxabs)(...)`, where d is one of these two decorators has the
+  //!     same behaviour,  but internaly `d(eve::max)` is used.
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `negmaxabs[cond](x, ...)` is equivalent to `if_else(cond,negmaxabs(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The behaviour is the same except that if  `|x|` or `|y|` is a nan, `pedantic(max)` is used.
-  //!
-  //!  * eve::numeric
-  //!
-  //!
-  //!      The behaviour is the same except that if   `|x|` or `|y|` is a nan, `numeric(max)` is used.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(negmaxabs)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their negmaxabs is \f$m\f$, the value returned is elementwise \f$-\mathrm{sign}(x_N)\f$ if \f$m\f$
-  //!      is equal to \f$|x_N|\f$ else 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/negmaxabs.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negmaxabs_, negmaxabs);
 }

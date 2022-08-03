@@ -13,7 +13,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core_arithmetic
+  //! @addtogroup core_internal
   //! @{
   //!   @var nb_values
   //!   @brief Computes the  number of values representable in the type between the

@@ -1,3 +1,4 @@
+//==================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
@@ -6,75 +7,62 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var nearest
+  //!   @var nearest
+  //!   @brief Computes the nearest integer to the input.
   //!
-  //! @brief Callable object computing the nearest operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the nearest operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T nearest(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!      Computes  [elementwise](@ref glossary_elementwise) the integer nearest to `x`.
   //!
-  //! **Return value**
+  //!      If `x` is an exact half-integer the rouding is made to the nearest even integer.
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the integer nearest to `x`.
+  //!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
+  //!      This function object implements the `FE_TONEAREST` version.
   //!
-  //!If `x` is an exact half-integer the rouding is made to the nearest even integer.
+  //!  @groupheader{Example}
   //!
-  //!The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
-  //!    This function object implements the `FE_DOWNWARD` version.
+  //!  @godbolt{doc/core/regular/nearest.cpp}
   //!
-  //!The call to `nearest(a)` is equivalent to the call `round(a, to_nearest)`.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve;::nearest[mask](x)` provides a masked version of `eve::nearest` which is
+  //!     equivalent to `if_else (mask, nearest(x), x)`.
   //!
-  //!  Higher-order function generating a masked version of eve::nearest
+  //!      **Example**
   //!
-  //!  **Parameters**
+  //!        @godbolt{doc/core/masked/nearest.cpp}
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `nearest[cond](x, ...)` is equivalent to `if_else(cond,nearest(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/nearest.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(nearest_, nearest);
 }

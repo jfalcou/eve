@@ -13,64 +13,52 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var negate
+  //!   @var negate
+  //!   @brief Computes the [elementwise](@ref glossary_elementwise) product of the first parameter
+  //!   by the sign of the second.
   //!
-  //! @brief Callable object computing the negate operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the negate operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::common_compatible_t<T, U> negate(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x, value auto y) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`:   [value](@ref eve::value) to negate.
+  //!      The [elementwise](@ref glossary_elementwise) product of the first parameter
+  //!      by the sign of the second is returned.
   //!
-  //!`y`:   [value](@ref eve::value) whose sign will be used to negate `x`.
+  //!  @groupheader{Example}
   //!
-  //! **Return value**
+  //!  @godbolt{doc/core//regular/negate.cpp}
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) product of the first parameter by the sign of the second.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! ---
+  //!   * Masked Call
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     The call `eve::negate[mask](x, ...)` provides a masked
+  //!     version of `negate` which is
+  //!     equivalent to `if_else(mask, negate(x, ...), x)`
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::negate
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `negate[cond](x, ...)` is equivalent to `if_else(cond,negate(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/negate.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/raw/negate.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negate_, negate);
 }

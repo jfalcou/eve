@@ -8,73 +8,63 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var negatenz
+  //!   @var negatenz
+  //!   @brief Computes the [elementwise](@ref glossary_elementwise) product of the first parameter
+  //!   by the never zero sign of the second.
   //!
-  //!  @brief Callable object computing the negatenz function.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the negatenz operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::common_compatible_t<T, U> negatenz(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x, value auto y ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!   **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!      The [elementwise](@ref glossary_elementwise) product of the first parameter
+  //!      by the never zero sign of the second is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) product of the first parameter by the never zero sign of the second.
+  //!  @godbolt{doc/core//regular/negatenz.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::negatenz
+  //!     The call `eve::negatenz[mask](x, ...)` provides a masked
+  //!     version of `negatenz` which is
+  //!     equivalent to `if_else(mask, negatenz(x, ...), x)`
+  //!      **Example**
   //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `negatenz[cond](x, ...)` is equivalent to `if_else(cond,negatenz(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!    The expression `diff(negatenz)(x)` computes the derivative of the function relative to `x`.
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/negatenz.cpp}
-  //!
-  //!  @}
+  //!        @godbolt{doc/core/raw/negatenz.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negatenz_, negatenz);
 }
 
 #include <eve/module/core/regular/impl/negatenz.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/negatenz.hpp>
+#endif

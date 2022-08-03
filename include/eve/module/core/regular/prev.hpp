@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/concept/value.hpp>
@@ -20,66 +20,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var prev
+  //!   @var prev
+  //!   @brief Computes the nth previous representable element
   //!
-  //! @brief Callable object computing the prevt operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the prevt operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::integral_value N >
+  //!      eve::common_compatible_t<T, U> prev(T x, N n = 1) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, integral_value U > auto operator()( T x, U n = 1 ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:  [floating argument](@ref eve::floating_value).
   //!
-  //! **Parameters**
+  //!     * `n` :  [integral value argument](@ref eve::integral_value).
   //!
-  //!`x`, `n`:   [values](@ref eve::value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of the nth representable value less than `x` is returned.
+  //!    If `n` is zero returns `x`.
   //!
-  //!computes [elementwise](@ref glossary_elementwise), the `n`th  representable value less than `x`.
-  //!If `n` is zero returns `x`.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/prev.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::prev
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::prev[mask](x, ...)` provides a masked
+  //!     version of `prev` which is
+  //!     equivalent to `if_else(mask, prev(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/prev.cpp}
   //!
-  //!  A Callable object so that the expression `prev[cond](x, ...)` is equivalent to `if_else(cond,prev(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(prev)(x)` distinguish -0.0 and +0.0 for floating point point inputs and so `pedantic(prev)(0.0)` is -0.0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/prev.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   namespace tag { struct prev_; }
 

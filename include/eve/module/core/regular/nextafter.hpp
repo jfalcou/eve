@@ -7,50 +7,67 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/pedantic.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_gez.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/assert.hpp>
+#include <type_traits>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var nextafter
+  //!   @var nextafter
+  //!   @brief Computes the nth next representable element
   //!
-  //! @brief Callable object computing the nextafter operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the nextafter operation   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::value U >
+  //!      eve::common_compatible_t<T, U> nextafter(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`, `y`:  [arguments](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`, `y`:   [values](@ref eve::value).
+  //!      The value of the next representable value greater than `x` in the `y` direction
+  //!      is returned.
+  //!      If `y == x` returns `x`.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!computes [elementwise](@ref glossary_elementwise) the representable value next to `x` in the direction of `y`.
+  //!  @godbolt{doc/core//regular/nextafter.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //! #### Supported decorators
+  //!   * Masked Call
   //!
-  //!  no decorators are supported
+  //!     The call `eve::nextafter[mask](x, ...)` provides a masked
+  //!     version of `nextafter` which is
+  //!     equivalent to `if_else(mask, nextafter(x, ...), x)`
   //!
-  //! #### Example
+  //!      **Example**
   //!
-  //! @godbolt{doc/core/nextafter.cpp}
+  //!        @godbolt{doc/core/masked/nextafter.cpp}
   //!
-  //!  @}
+  //! @}
   //================================================================================================
 
   namespace tag { struct nextafter_; }

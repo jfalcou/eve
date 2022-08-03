@@ -8,96 +8,68 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/arch.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var negabsmin
+  //!   @var negabsmin
+  //!   @brief Computes the negated absolute value of the minimal element
   //!
-  //! @brief Callable object computing the negabsmin operation.
+  //!   This is equivalent to -eve::abs ( eve::min )(...). but can be subject to optimizations.
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the negabsmin operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T,  eve::value Ts ...>
+  //!      eve::common_compatible_value<T, Ts ...> negabsmin( T x, Ts ... xs ) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   **Parameters**
   //!
-  //! **Parameters**
+  //!     * `x`,  `...xs`: [arguments](@ref eve::value).
   //!
-  //!`x`, `args`:   [values](@ref eve::value)
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The negated absolute value of the minimal element
+  //!    is returned.
   //!
-  //!the greatest absolute value is returned.
+  //!    **Note**
   //!
-  //!For instance for two elements:
+  //!     If any element of the inputs is a NaN,
+  //!     the corresponding output element is system-dependent.
   //!
-  //!  * If `x >  y`,  `-|x|` is returned.
-  //!  * If `x <  y`,  `-|y|` is returned.
-  //!  * Otherwise `-max(|x|, |y|)` is returned.
+  //!  @groupheader{Example}
   //!
-  //!For n parameters the result is computed as if this scheme was recursively used.
+  //!  @godbolt{doc/core//regular/negabsmin.cpp}
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
+  //!   * Masked Call
   //!
-  //! ---
+  //!     The call `eve::negabsmin[mask](x, ...)` provides a masked version of `eve::negabsmin` which is
+  //!     equivalent to `eve::if_else (mask, negabsmin(x, ...), x)`
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!      **Example**
   //!
-  //!  Higher-order function generating a masked version of eve::negabsmin
+  //!        @godbolt{doc/core/masked/negabsmin.cpp}
   //!
-  //!  **Parameters**
+  //!   * eve::pedantic,  eve::numeric
   //!
-  //!  `cond` : conditional expression
+  //!     The call `d(eve::negabsmin)(...)`, where d is one of these two decorators, is equivalent to
+  //!     `-eve::abs (d( eve::min )(...))`.
   //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `negabsmin[cond](x, ...)` is equivalent to `if_else(cond,negabsmin(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The behaviour is the same except that if  `|x|` or `|y|` is a nan, `pedantic(max)` is used.
-  //!
-  //!  * eve::numeric
-  //!
-  //!
-  //!      The behaviour is the same except that if   `|x|` or `|y|` is a nan, `numeric(max)` is used.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(negabsmin)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their negabsmin is \f$m\f$, the value returned is elementwise \f$\-mathrm{sign}(x_N)\f$ if \f$m\f$ is equal to \f$|x_N|\f$ else 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/negabsmin.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(negabsmin_, negabsmin);
 }

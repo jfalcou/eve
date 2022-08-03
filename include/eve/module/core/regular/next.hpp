@@ -20,73 +20,55 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_internal
   //! @{
-  //! @var next
+  //!   @var next
+  //!   @brief Computes the nth next representable element
   //!
-  //! @brief Callable object computing the next operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the next operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T, eve::integral_value N >
+  //!      eve::common_compatible_t<T, U> next(T x, N n = 1) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, integral_value U > auto operator()( T x, U n = 1 ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x`:  [floating argument](@ref eve::floating_value).
   //!
-  //! **Parameters**
+  //!     * `n` :  [integral value argument](@ref eve::integral_value).
   //!
-  //!`x`, `n`:   [values](@ref eve::value).
+  //!    **Return value**
   //!
-  //! **Return value**
+  //!    The value of the nth representable value greater than `x` is returned.
+  //!    If `n` is zero returns `x`.
   //!
-  //!computes [elementwise](@ref glossary_elementwise), the `n`th  representable value greater than `x`.
-  //!If `n` is zero returns `x`.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core//regular/next.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::next
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve::next[mask](x, ...)` provides a masked
+  //!     version of `next` which is
+  //!     equivalent to `if_else(mask, next(x, ...), x)`
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/next.cpp}
   //!
-  //!  A Callable object so that the expression `next[cond](x, ...)` is equivalent to `if_else(cond,next(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(next)(x)` distinguish `-0.0` and `+0.0` for floating point point inputs.
-  //!      So `pedantic(next)(-0.0)` is `+0.0`.
-  //!
-  //!  * eve::saturated
-  //!
-  //!
-  //!     The call `pedantic(next)(x)` ensures for integral enties that `next(x, n) >= x`.
-  //!     (equality is obtained only if `n == 0` or `x =  eve::valmax(as(x))`)
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/next.cpp}
-  //!
-  //!  @}
+  //! @}
   //================================================================================================
   namespace tag { struct next_; }
 
