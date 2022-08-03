@@ -39,16 +39,20 @@ namespace eve
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
   //================================================================================================
-  struct sve128_  : simd_api<simd_   , spy::fixed_sve_> {};
-  struct sve256_  : simd_api<simd_   , spy::fixed_sve_> {};
-  struct sve512_  : simd_api<simd_   , spy::fixed_sve_> {};
+  struct sve_     : simd_api<simd_   , spy::sve_> {};
+  struct sve_vls_ : simd_api<sve_    , spy::fixed_sve_> {};
+  struct sve128_  : simd_api<sve_vls_, spy::fixed_sve_> {};
+  struct sve256_  : simd_api<sve_vls_, spy::fixed_sve_> {};
+  struct sve512_  : simd_api<sve_vls_, spy::fixed_sve_> {};
 
   //================================================================================================
   // SVE extensions tag objects
   //================================================================================================
-  inline constexpr sve128_  sve128  = {};
-  inline constexpr sve256_  sve256  = {};
-  inline constexpr sve512_  sve512  = {};
+  inline constexpr sve_     sve       = {};
+  inline constexpr sve_vls_ sve_vls   = {};
+  inline constexpr sve128_  sve128    = {};
+  inline constexpr sve256_  sve256    = {};
+  inline constexpr sve512_  sve512    = {};
 
   //================================================================================================
   // ARM SVE ABI concept
