@@ -23,7 +23,6 @@ TTS_CASE("Implement basic make function for wide<int>")
   (void)x;
   TTS_PASS();
 };
-
 TTS_CASE("Implement get function for wide")
 {
   eve::wide<int> x {[](int i, int) { return i; }};
@@ -40,6 +39,7 @@ TTS_CASE("Check make half wide<int>. Make sure about zeroes in the unused for le
   for( int i = 0; i != size; ++i ) { TTS_EQUAL(i, x.get(i)); }
 };
 
+/*
 TTS_CASE_TPL("Make all wides", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -196,3 +196,4 @@ TTS_CASE_TPL("Make all logicals (splat)", eve::test::simd::all_types)
     }
   }
 };
+*/
