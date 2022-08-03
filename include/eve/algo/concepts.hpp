@@ -22,6 +22,7 @@
 //==================================================================================================
 #include <eve/module/core.hpp>
 #include <eve/algo/concepts/eve_iterator.hpp>
+#include <eve/algo/concepts/ranges_types.hpp>
 #include <eve/algo/concepts/nothing.hpp>
 #include <eve/algo/concepts/relaxed.hpp>
 #include <eve/algo/concepts/types_to_consider.hpp>
