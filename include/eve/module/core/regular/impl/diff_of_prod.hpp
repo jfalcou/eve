@@ -10,6 +10,11 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fms.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+
 
 namespace eve::detail
 {
@@ -33,6 +38,9 @@ namespace eve::detail
                                    ) noexcept
   requires(has_native_abi_v<T>)
   {
-    return a*b-c*d;
-  }
+      T cd = c * d;
+      T err = fnma(c, d, cd);
+      T dop = fms(a, b, cd);
+     return if_else(is_finite(err), dop + err, dop);
+   }
 }
