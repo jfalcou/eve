@@ -43,7 +43,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_not.cpp}
+  //!  @godbolt{doc/core/regular/bit_not.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

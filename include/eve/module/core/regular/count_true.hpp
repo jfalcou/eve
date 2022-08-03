@@ -50,7 +50,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/count_true.cpp}
+  //!  @godbolt{doc/core/regular/count_true.cpp}
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call

@@ -55,7 +55,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/logical_or.cpp}
+  //!  @godbolt{doc/core/regular/logical_or.cpp}
   //! @}
   //================================================================================================
   namespace tag { struct logical_or_; }

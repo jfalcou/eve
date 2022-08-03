@@ -45,7 +45,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/nb_values.cpp}
+  //!  @godbolt{doc/core/regular/nb_values.cpp}
   //================================================================================================
  EVE_MAKE_CALLABLE(nb_values_, nb_values);
 }

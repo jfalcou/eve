@@ -53,7 +53,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bitofsign.cpp}
+  //!  @godbolt{doc/core/regular/bitofsign.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bitofsign_, bitofsign);

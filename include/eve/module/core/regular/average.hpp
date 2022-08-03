@@ -62,7 +62,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/average.cpp}
+  //!  @godbolt{doc/core/regular/average.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

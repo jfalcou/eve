@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/countr_one.cpp}
+  //!  @godbolt{doc/core/regular/countr_one.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(countr_one_, countr_one);

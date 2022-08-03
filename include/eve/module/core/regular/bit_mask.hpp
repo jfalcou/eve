@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_mask.cpp}
+  //!  @godbolt{doc/core/regular/bit_mask.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

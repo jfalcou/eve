@@ -52,7 +52,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/absmax.cpp}
+  //!  @godbolt{doc/core/regular/absmax.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

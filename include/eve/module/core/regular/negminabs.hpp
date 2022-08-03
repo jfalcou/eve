@@ -49,7 +49,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/negminabs.cpp}
+  //!  @godbolt{doc/core/regular/negminabs.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

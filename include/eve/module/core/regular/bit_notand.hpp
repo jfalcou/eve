@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_notand.cpp}
+  //!  @godbolt{doc/core/regular/bit_notand.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

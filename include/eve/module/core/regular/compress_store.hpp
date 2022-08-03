@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/compress_store.cpp}
+  //!  @godbolt{doc/core/regular/compress_store.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(compress_store_, compress_store);

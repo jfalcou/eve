@@ -45,7 +45,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_width.cpp}
+  //!  @godbolt{doc/core/regular/bit_width.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(bit_width_, bit_width);

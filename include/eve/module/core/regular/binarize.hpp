@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/binarize.cpp}
+  //!  @godbolt{doc/core/regular/binarize.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(binarize_, binarize);

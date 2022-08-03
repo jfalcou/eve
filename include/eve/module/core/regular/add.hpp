@@ -48,7 +48,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/add.cpp}
+  //!  @godbolt{doc/core/regular/add.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

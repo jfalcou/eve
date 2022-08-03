@@ -46,7 +46,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_ceil.cpp}
+  //!  @godbolt{doc/core/regular/bit_ceil.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

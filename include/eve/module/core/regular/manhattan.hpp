@@ -43,7 +43,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/manhattan.cpp}
+  //!  @godbolt{doc/core/regular/manhattan.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

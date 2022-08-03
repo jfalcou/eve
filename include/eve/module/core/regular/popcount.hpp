@@ -12,45 +12,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_bitops
   //! @{
-  //! @var popcount
+  //!   @var popcount
+  //!   @brief Computes elementwise the number of bits set in the parameter.
   //!
-  //! @brief Callable object computing the number of bits set.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the number of bits set   |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::unsigned_value T >
+  //!      T popcount(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [unsigned value](@ref eve::value).
+  //!    The value of  number of bits set in the value `x`
+  //!    is returned.
   //!
-  //! **Return value**
+  //!  @groupheader{Example}
   //!
-  //!Returns the number of bit set in each element of the parameter.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/popcount.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core/regular/popcount.cpp}
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(popcount_, popcount);
 }

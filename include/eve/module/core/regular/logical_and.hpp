@@ -55,7 +55,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/logical_and.cpp}
+  //!  @godbolt{doc/core/regular/logical_and.cpp}
   //! @}
   //================================================================================================
   namespace tag { struct logical_and_; }

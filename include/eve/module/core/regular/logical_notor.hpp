@@ -48,7 +48,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/logical_notor.cpp}
+  //!  @godbolt{doc/core/regular/logical_notor.cpp}
   //! @}
   //================================================================================================
 

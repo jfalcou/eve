@@ -45,7 +45,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/countl_zero.cpp}
+  //!  @godbolt{doc/core/regular/countl_zero.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(countl_zero_, countl_zero);

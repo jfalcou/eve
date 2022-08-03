@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_ornot.cpp}
+  //!  @godbolt{doc/core/regular/bit_ornot.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

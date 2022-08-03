@@ -49,7 +49,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/broadcast_group.cpp}
+  //!  @godbolt{doc/core/regular/broadcast_group.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(broadcast_group_, broadcast_group);

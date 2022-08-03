@@ -48,7 +48,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/oneminus.cpp}
+  //!  @godbolt{doc/core/regular/oneminus.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

@@ -55,7 +55,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_select.cpp}
+  //!  @godbolt{doc/core/regular/bit_select.cpp}
   //!
   //!  @}
   //================================================================================================

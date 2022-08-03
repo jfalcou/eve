@@ -50,7 +50,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/exponent.cpp}
+  //!  @godbolt{doc/core/regular/exponent.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(exponent_, exponent);

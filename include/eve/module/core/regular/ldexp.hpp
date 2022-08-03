@@ -48,7 +48,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/ldexp.cpp}
+  //!  @godbolt{doc/core/regular/ldexp.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/ceil.cpp}
+  //!  @godbolt{doc/core/regular/ceil.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

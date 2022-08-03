@@ -66,7 +66,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/convert.cpp}
+  //!  @godbolt{doc/core/regular/convert.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

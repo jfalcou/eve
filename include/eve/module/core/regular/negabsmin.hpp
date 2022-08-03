@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/negabsmin.cpp}
+  //!  @godbolt{doc/core/regular/negabsmin.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

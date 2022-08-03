@@ -57,7 +57,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_shl.cpp}
+  //!  @godbolt{doc/core/regular/bit_shl.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

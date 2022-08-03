@@ -46,7 +46,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_xor.cpp}
+  //!  @godbolt{doc/core/regular/bit_xor.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

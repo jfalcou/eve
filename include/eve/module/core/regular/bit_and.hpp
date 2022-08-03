@@ -52,7 +52,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_and.cpp}
+  //!  @godbolt{doc/core/regular/bit_and.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/clamp.cpp}
+  //!  @godbolt{doc/core/regular/clamp.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

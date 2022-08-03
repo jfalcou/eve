@@ -46,7 +46,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/copysign.cpp}
+  //!  @godbolt{doc/core/regular/copysign.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

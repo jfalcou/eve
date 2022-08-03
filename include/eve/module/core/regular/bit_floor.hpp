@@ -47,7 +47,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_floor.cpp}
+  //!  @godbolt{doc/core/regular/bit_floor.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

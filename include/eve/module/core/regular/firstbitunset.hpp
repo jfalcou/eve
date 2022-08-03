@@ -46,7 +46,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/firstbitunset.cpp}
+  //!  @godbolt{doc/core/regular/firstbitunset.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

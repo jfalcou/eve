@@ -54,7 +54,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/fam.cpp}
+  //!  @godbolt{doc/core/regular/fam.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

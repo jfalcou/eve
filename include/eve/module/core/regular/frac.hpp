@@ -49,7 +49,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/frac.cpp}
+  //!  @godbolt{doc/core/regular/frac.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

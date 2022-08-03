@@ -45,7 +45,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/lo.cpp}
+  //!  @godbolt{doc/core/regular/lo.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(lohi_, lohi);

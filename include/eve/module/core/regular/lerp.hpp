@@ -44,7 +44,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/lerp.cpp}
+  //!  @godbolt{doc/core/regular/lerp.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

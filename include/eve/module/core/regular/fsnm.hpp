@@ -55,7 +55,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/fsnm.cpp}
+  //!  @godbolt{doc/core/regular/fsnm.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

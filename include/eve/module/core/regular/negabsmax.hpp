@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/negabsmax.cpp}
+  //!  @godbolt{doc/core/regular/negabsmax.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

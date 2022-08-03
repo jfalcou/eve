@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/fracscale.cpp}
+  //!  @godbolt{doc/core/regular/fracscale.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

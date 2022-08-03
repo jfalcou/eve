@@ -51,7 +51,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/binarize_not.cpp}
+  //!  @godbolt{doc/core/regular/binarize_not.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(binarize_not_, binarize_not);

@@ -49,7 +49,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/mul.cpp}
+  //!  @godbolt{doc/core/regular/mul.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

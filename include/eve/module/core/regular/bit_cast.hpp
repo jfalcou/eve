@@ -57,7 +57,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/bit_cast.cpp}
+  //!  @godbolt{doc/core/regular/bit_cast.cpp}
   //!
   //! @}
   //================================================================================================
