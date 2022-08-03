@@ -64,7 +64,3 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/negatenz.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/negatenz.hpp>
-#endif

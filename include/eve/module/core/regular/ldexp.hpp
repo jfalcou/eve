@@ -64,6 +64,8 @@ namespace eve
   //!
   //! @}
   //================================================================================================
+  namespace tag { struct ldexp_; }
+
   namespace detail
   {
     template<typename T, typename U>

@@ -40,4 +40,13 @@ namespace eve::detail
     }
     else return apply_over(is_positive, v);
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_positive_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return logical_mask_op(cond, is_negative, u);
+  }
 }

@@ -11,11 +11,11 @@ int main()
   pf += 3*eve::eps(eve::as<float>());
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                                 = " << pf << '\n'
-            << "<- qf                                 = " << qf << '\n'
-            << "-> is_equal)(pf, qf)                  = " << eve::is_equal(pf, qf) << '\n'
-            << "-> definitely(is_equal)(pf, qf)       = " << eve::definitely(eve::is_equal)(pf, qf) << '\n'
-            << "-> definitely(is_equal)(pf, qf, 2)    = " << eve::definitely(eve::is_equal)(pf, qf, 2) << '\n'
-            << "-> definitely(is_equal)(pf, qf, 2.0f) = " << eve::definitely(eve::is_equal)(pf, qf, 2.0f) << '\n';
+            << "<- pf                                     = " << pf << '\n'
+            << "<- qf                                     = " << qf << '\n'
+            << "-> is_not_equal)(pf, qf)                  = " << eve::is_not_equal(pf, qf) << '\n'
+            << "-> definitely(is_not_equal)(pf, qf)       = " << eve::definitely(eve::is_not_equal)(pf, qf) << '\n'
+            << "-> definitely(is_not_equal)(pf, qf, 2)    = " << eve::definitely(eve::is_not_equal)(pf, qf, 2) << '\n'
+            << "-> definitely(is_not_equal)(pf, qf, 2.0f) = " << eve::definitely(eve::is_not_equal)(pf, qf, 2.0f) << '\n';
   return 0;
 }

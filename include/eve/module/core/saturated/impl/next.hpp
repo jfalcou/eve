@@ -29,7 +29,7 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        auto z =  next(a);
+        auto z =  if_else(a == inf(as(a)), a, next(a));
         if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
         else                                       return z;
       }
@@ -57,7 +57,7 @@ namespace eve::detail
     {
       if constexpr(floating_value<T>)
       {
-        auto z =  next(a, n);
+        auto z =  if_else(a == inf(as(a)), a, next(a, n));
         if constexpr(eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
         else                                       return z;
       }

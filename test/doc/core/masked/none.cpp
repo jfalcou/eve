@@ -10,7 +10,7 @@ int main()
   wide_it qi = {-3, 0, -30, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- qi       = " << qi << '\n'
-            << "-> none[qi > -2](qi != 0) = " << eve::none[qi > -2](qi != 0) << '\n';
+            << "<- qi                             = " << qi << '\n'
+            << "-> none[ignore_first(1)](qi != 0) = " << eve::none[eve::ignore_first(1)](qi != 0) << '\n';
   return 0;
 }

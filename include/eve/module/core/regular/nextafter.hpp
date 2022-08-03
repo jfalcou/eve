@@ -53,7 +53,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core//regular/nextafter.cpp}
+  //!  @godbolt{doc/core/regular/nextafter.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

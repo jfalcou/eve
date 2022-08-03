@@ -51,15 +51,3 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/nb_values.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/nb_values.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/nb_values.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/nb_values.hpp>
-#endif

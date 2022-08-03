@@ -27,4 +27,12 @@ namespace eve::detail
     else
       return apply_over(is_pow2, a);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_pow2_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return logical_mask_op(cond, is_pow2, u);
+  }
 }

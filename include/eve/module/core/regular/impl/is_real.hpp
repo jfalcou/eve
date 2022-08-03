@@ -20,4 +20,12 @@ namespace eve::detail
   {
     return true_(eve::as(a));
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto is_real_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
+  {
+    return logical_mask_op(cond, is_real, u);
+  }
 }
