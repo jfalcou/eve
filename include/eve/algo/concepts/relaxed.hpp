@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/algo/concepts/detail.hpp>
 #include <eve/algo/detail/preprocess_range.hpp>
+#include <eve/algo/concepts/ranges_types.hpp>
 
 #include <concepts>
 
@@ -79,7 +80,6 @@ namespace eve::algo
   template <typename R>
   concept relaxed_range =
     detail::has_begin_end<R> &&
-    relaxed_sentinel_for<decltype(std::declval<R>().end()),
-                         decltype(std::declval<R>().begin())> &&
+    relaxed_sentinel_for<sentinel_t<R>, iterator_t<R>> &&
     std::invocable<preprocess_range_, decltype(eve::algo::traits{}), R>;
 }

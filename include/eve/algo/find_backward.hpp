@@ -76,6 +76,7 @@ template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
   };
 
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+    -> unaligned_iterator_t<Rng>
   {
     if( rng.begin() == rng.end() ) return unalign(rng.begin());
 
@@ -110,7 +111,7 @@ template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename P>
-//!     auto find_if_backward(Rng&& rng, P p) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_if_backward(Rng&& rng, P p) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!
@@ -134,7 +135,7 @@ inline constexpr auto find_if_backward = function_with_traits<find_if_backward_>
 template<typename TraitsSupport> struct find_backward_ : TraitsSupport
 {
   template<relaxed_range Rng>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const
+  EVE_FORCEINLINE auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const -> unaligned_iterator_t<Rng>
   {
     return find_if_backward[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
   }
@@ -143,7 +144,7 @@ template<typename TraitsSupport> struct find_backward_ : TraitsSupport
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!  @var find
+//!  @var find_backward
 //!
 //!  @brief a version of find_if_backward with a value to find instead of a predicate to test.
 //!
@@ -157,7 +158,7 @@ template<typename TraitsSupport> struct find_backward_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng>
-//!     auto find_backward(Rng&& rng, eve::value_type_t<Rng> v) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_backward(Rng&& rng, eve::value_type_t<Rng> v) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!   **Parameters**
@@ -183,6 +184,7 @@ inline constexpr auto find_backward = function_with_traits<find_backward_>[find_
 template<typename TraitsSupport> struct find_if_not_backward_ : TraitsSupport
 {
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+    -> unaligned_iterator_t<Rng>
   {
     return find_if_backward[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});
   }
@@ -191,9 +193,9 @@ template<typename TraitsSupport> struct find_if_not_backward_ : TraitsSupport
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!  @var find_if_not
+//!  @var find_if_not_backward
 //!
-//!  @brief a version of `eve::algo::find_if_not` where the preicate is negated
+//!  @brief a version of `eve::algo::find_if_backward` where the preicate is negated
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -205,7 +207,7 @@ template<typename TraitsSupport> struct find_if_not_backward_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename P>
-//!     auto find_if_not(Rng&& rng, P p) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_if_not(Rng&& rng, P p) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!

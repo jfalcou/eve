@@ -16,7 +16,7 @@ namespace eve::algo
 template<typename TraitsSupport> struct min_element_ : TraitsSupport
 {
   template<relaxed_range Rng, typename Less>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, Less less) const -> eve::unaligned_t<decltype(rng.begin())>
+  EVE_FORCEINLINE auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
   {
     std::optional v = min_value[TraitsSupport::get_traits()](EVE_FWD(rng), less);
     // We use user provided less to compare here (less(min, min) -> false but less(min, anything_else) - true).
@@ -25,7 +25,7 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
   }
 
   template<relaxed_range Rng>
-  EVE_FORCEINLINE auto operator()(Rng&& rng) const -> eve::unaligned_t<decltype(rng.begin())>
+  EVE_FORCEINLINE auto operator()(Rng&& rng) const -> unaligned_iterator_t<Rng>
   {
     return operator()(EVE_FWD(rng), eve::is_less);
   }
@@ -34,9 +34,9 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!   @var min_elemt
+//!   @var min_element
 //!
-//!   @brief SIMD version of std::min_element
+//!   @brief SIMD version of `std::min_element`
 //!
 //!   @note if you just need a value and not position, use `eve::algo::min_value`.
 //!
@@ -57,10 +57,10 @@ template<typename TraitsSupport> struct min_element_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!      template<relaxed_range Rng, typename Less>
-//!      auto min_element(Rng&& rng, Less less) -> eve::unaligned_t<decltype(rng.begin())>        // 1
+//!      auto min_element(Rng&& rng, Less less) -> unaligned_iterator_t<Rng>;   // 1
 //!
 //!      template<relaxed_range Rng>
-//!      auto min_element(Rng&& rng) -> unaligned_t<decltype(rng.begin())                    // 2
+//!      auto min_element(Rng&& rng) -> unaligned_iterator_t<Rng>;            // 2
 //!   }
 //!   @endcode
 //!

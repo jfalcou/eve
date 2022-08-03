@@ -1,0 +1,68 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Contributors & Maintainers
+  SPDX-License-Identifier: MIT
+*/
+//==================================================================================================
+#pragma once
+
+#include <iterator>
+
+namespace eve::algo
+{
+
+//================================================================================================
+//! @addtogroup algo_concepts
+//! @{
+//!    @typedef iterator for a relaxed range
+//!
+//!    @tparam R - relaxed range to process
+//!
+//! **Required header:** `#include <eve/algo/concepts.hpp>`
+//!
+//!   @code{.cpp}
+//!   template <relaxed_range R>
+//!   using iterator_t = decltype(std::declval<R>().begin());
+//!   @endcode
+//================================================================================================
+template <typename R>
+using iterator_t = decltype(std::declval<R>().begin());
+
+//================================================================================================
+//! @addtogroup algo_concepts
+//! @{
+//!    @typedef iterator for a relaxed range
+//!
+//!    @tparam R - relaxed range to process
+//!
+//! **Required header:** `#include <eve/algo/concepts.hpp>`
+//!
+//!   @code{.cpp}
+//!   template <relaxed_range R>
+//!   using sentinel_t = decltype(std::declval<R>().end());
+//!   @endcode
+//================================================================================================
+template <typename R>
+using sentinel_t = decltype(std::declval<R>().end());
+
+//================================================================================================
+//! @addtogroup algo_concepts
+//! @{
+//!    @typedef unalgined_iterator_t for a relaxed range
+//!
+//!    @tparam R - relaxed range to process
+//!
+//!    @brief an iterator that can represent every position in the range
+//!
+//! **Required header:** `#include <eve/algo/concepts.hpp>`
+//!
+//!   @code{.cpp}
+//!   template <typename R>
+//!   using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
+//!   @endcode
+//================================================================================================
+template <typename R>
+using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
+
+}
