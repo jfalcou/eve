@@ -15,7 +15,7 @@ namespace eve
   //! @addtogroup core_accuracy
   //! @{
   //!   @var diff_of_prod
-  //!   @brief Computes the differrence of products operation with better accuracy
+  //!   @brief Computes the difference of products operation with better accuracy
   //!   than the naive formula.
   //!
   //!   **Defined in Header**

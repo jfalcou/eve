@@ -22,10 +22,10 @@ namespace eve
   //!   @var mzero
   //!   @brief Computes the negative zero value
   //!
-  //!    For integral type there is n odifference between eve::zero and eve::mzero,
+  //!    For integral type there is no difference between eve::zero and eve::mzero,
   //!    but for floating ones the bit of sign differs.
   //!
-  //!    However, eve::mzero always satisfies the aquality predicate with eve::zero.
+  //!    However, eve::mzero always satisfies the equality predicate with eve::zero.
   //!
   //!   **Defined in Header**
   //!

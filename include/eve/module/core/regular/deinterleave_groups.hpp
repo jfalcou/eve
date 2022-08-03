@@ -16,7 +16,7 @@ namespace eve
   //! @addtogroup core_simd
   //! @{
   //!   @var deinterleave_groups
-  //!   @brief Keinterleaves values in n wides
+  //!   @brief deinterleaves values in n wides
   //!
   //!    This is a generalization of deinterleave_groups_shuffle for n wides.
   //!

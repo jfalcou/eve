@@ -14,7 +14,7 @@ namespace eve
   //! @addtogroup core_predicates
   //! @{
   //!   @var is_odd
-  //!   @brief Returns a logical true  if and only if the element value is even.
+  //!   @brief Returns a logical true  if and only if the element value is odd.
   //!
   //!   **Defined in Header**
   //!

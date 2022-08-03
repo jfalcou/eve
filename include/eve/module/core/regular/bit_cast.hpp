@@ -29,7 +29,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!   {   template<value From, scalar_value To>
-  //!       To bit_castuto operator()(From x, as<To> t) noexcept;
+  //!       To bit_cast operator()(From x, as<To> t) noexcept;
   //!   }
   //!   @endcode
   //!

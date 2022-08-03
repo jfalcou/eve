@@ -18,7 +18,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup core_constants
   //! @{
-  //!   @var $name$
+  //!   @var nbmantissabits
   //!   @brief Returns the number of mantissa bits of a floating point value.
   //!
   //!   **Defined in Header**
@@ -33,7 +33,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< eve::floating_value T >
-  //!      T $name$(as<T> x) noexcept;
+  //!      T nbmantissabits(as<T> x) noexcept;
   //!   }
   //!   @endcode
   //!
@@ -43,13 +43,13 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::limitexponent(as<T>())` is semantically equivalent to:
+  //!      The call `eve::nbmantissabits(as<T>())` is semantically equivalent to:
   //!         * as_integer_t<T>(23) if eve::element_type_t<T> is float
   //!         * as_integer_t<T>(52) if eve::element_type_t<T> is double
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core/constant/$name$.cpp}
+  //!  @godbolt{doc/core/constant/nbmantissabits.cpp}
   //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(nbmantissabits_, nbmantissabits);

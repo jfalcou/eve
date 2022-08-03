@@ -42,7 +42,7 @@ namespace eve
   //!
   //!      Computes  [elementwise](@ref glossary_elementwise) the integer nearest to `x`.
   //!
-  //!      If `x` is an exact half-integer the rouding is made to the nearest even integer.
+  //!      If `x` is an exact half-integer the rounding is made to the nearest even integer.
   //!
   //!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`, `FE_TOWARDZERO`.
   //!      This function object implements the `FE_TONEAREST` version.

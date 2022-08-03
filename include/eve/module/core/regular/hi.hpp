@@ -15,7 +15,7 @@ namespace eve
   //! @addtogroup core_internal
   //! @{
   //!   @var hi
-  //!   @brief Computes the most signiicant half of each lane.
+  //!   @brief Computes the most significant half of each lane.
   //!
   //!   **Defined in Header**
   //!

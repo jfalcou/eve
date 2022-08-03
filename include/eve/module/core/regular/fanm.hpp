@@ -45,7 +45,7 @@ namespace eve
   //!
   //!    The value of `x-y*z` as if calculated to infinite precision
   //!    and rounded once is returned,  but only if the hardware is in capacity
-  //!    to do it at reasonnable cost.
+  //!    to do it at reasonable cost.
   //!
   //!    **Note**
   //!
