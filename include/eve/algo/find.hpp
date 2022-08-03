@@ -72,6 +72,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
   };
 
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+    -> unaligned_iterator_t<Rng>
   {
     if( rng.begin() == rng.end() ) return unalign(rng.begin());
 
@@ -107,7 +108,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename P>
-//!     auto find_if(Rng&& rng, P p) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_if(Rng&& rng, P p) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!
@@ -132,6 +133,7 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 {
   template<relaxed_range Rng>
   EVE_FORCEINLINE auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const
+    -> unaligned_iterator_t<Rng>
   {
     return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
   }
@@ -156,7 +158,7 @@ template<typename TraitsSupport> struct find_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng>
-//!     auto find(Rng&& rng, eve::value_type_t<Rng> v) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find(Rng&& rng, eve::value_type_t<Rng> v) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!   **Parameters**
@@ -182,6 +184,7 @@ inline constexpr auto find = function_with_traits<find_>[find_if.get_traits()];
 template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 {
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+    -> unaligned_iterator_t<Rng>
   {
     return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});
   }
@@ -206,7 +209,7 @@ template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename P>
-//!     auto find_if_not(Rng&& rng, P p) -> eve::unalign_t<decltype(rng.begin())>;
+//!     auto find_if_not(Rng&& rng, P p) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!
