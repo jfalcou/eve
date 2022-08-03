@@ -31,16 +31,18 @@ namespace eve::detail
     invalid   = 0x00000000,
 
     // All known native float64
-    float64x1   = float_ | size64_ | 1,
-    float64x2   = float_ | size64_ | 2,
-    float64x4   = float_ | size64_ | 4,
-    float64x8   = float_ | size64_ | 8,
+    float64     = float_  | size64_,
+    float64x1   = float64 | 1,
+    float64x2   = float64 | 2,
+    float64x4   = float64 | 4,
+    float64x8   = float64 | 8,
 
     // All known native float32
-    float32x2   = float_ | size32_ | 2  ,
-    float32x4   = float_ | size32_ | 4  ,
-    float32x8   = float_ | size32_ | 8  ,
-    float32x16  = float_ | size32_ | 16 ,
+    float32     = float_  | size32_,
+    float32x2   = float32 | 2  ,
+    float32x4   = float32 | 4  ,
+    float32x8   = float32 | 8  ,
+    float32x16  = float32 | 16 ,
 
     // All known native ?int8
      int8    =  int_   | size8_,
@@ -109,7 +111,7 @@ namespace eve::detail
   template<typename... Cat>
   EVE_FORCEINLINE constexpr bool match(category a, Cat... tst) noexcept
   {
-    return ((a == tst) || ...);
+    return (((to_int(a) & to_int(tst)) == to_int(tst)) || ...);
   }
 
   template<typename W> EVE_FORCEINLINE constexpr category categorize() noexcept

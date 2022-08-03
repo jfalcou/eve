@@ -21,3 +21,7 @@
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/slice.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/detail/function/simd/arm/sve/slice.hpp>
+#endif
