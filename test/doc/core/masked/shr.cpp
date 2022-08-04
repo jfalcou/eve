@@ -2,26 +2,19 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
-using iT      = std::int32_t;
-using wide_it = eve::wide<iT, eve::fixed<4>>;
+using iT       = std::int32_t;
+using uiT      = std::uint32_t;
+using wide_it  = eve::wide<iT, eve::fixed<4>>;
+using wide_uit = eve::wide<uiT, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pi = {100, 200, -2, 3};
-  wide_it qi = {1, 2, 3, 2};
+  wide_uit pi = {100, 200, 2, 3};
+  wide_it qi  = {1, -2, 3, -1};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi               = " << pi << '\n'
-            << "<- qi               = " << qi << '\n'
-            << "-> eve::shr(pi, qi) = " << eve::shr(pi, qi) << '\n';
-
-  iT xi = 2, mxi = -2, yi = 3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xi                = " << xi << '\n'
-            << "<- mxi               = " << mxi << '\n'
-            << "<- yi                = " << yi << '\n'
-            << "-> eve::shr(xi, yi)  = " << eve::shr(xi, yi) << '\n'
-            << "-> eve::shr(mxi, yi) = " << eve::shr(mxi, yi) << '\n';
+            << "<- pi            = " << pi << '\n'
+            << "<- qi            = " << qi << '\n'
+            << "-> shr[pi!= 200](pi, qi)   = " << eve::shr[pi!= 200](pi, qi) << '\n';
   return 0;
 }

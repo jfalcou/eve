@@ -12,74 +12,62 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var sign
+//!   @var sign
+//!   @brief Computes the sign of the parameter.
 //!
-//! @brief Callable object computing the sign operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the sign operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T sign(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T > auto operator()( T x ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [value](@ref eve::value).
+//!      * Computes  [elementwise](@ref glossary_elementwise) the sign of `x`.
 //!
-//! **Return value**
+//!      * For [real](@ref eve::value) `x`,  the callis semantically equivalent to:
+//!        * If x is greater than 0, 1 is returned.
+//!        * If x is less than 0,  -1 is returned.
+//!        * If x is zero, x is returned.
 //!
-//! Computes  [elementwise](@ref glossary_elementwise) the sign of `x`.
+//!      *  Moreover for  [floating real value](@ref eve::floating_value)
+//!         if x is `Nan`, the result is `Nan`
 //!
-//! For [real value](@ref eve::value) `x` is semantically equivalent to:
-//!  * If x is greater than 0, 1 is returned.
-//!  * If x is less than 0,  -1 is returned.
-//!  * If x is zero, x is returned.
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    signolute value of `x` if it is representable in this type.
 //!
-//! Moreover for  [floating real value](@ref eve::floating_value)
-//! if x is `Nan`, the result is `Nan`
+//!  @groupheader{Example}
 //!
-//! ---
+//!  @godbolt{doc/core/regular/sign.cpp}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  Higher-order function generating a masked version of eve::sign
+//!   * Masked Call
 //!
-//!  **Parameters**
+//!     The call `eve;::sign[mask](x)` provides a masked version of `eve::sign` which is
+//!     equivalent to `if_else (mask, sign(x), x)`.
 //!
-//!  `cond` : conditional expression
+//!      **Example**
 //!
-//!  **Return value**
+//!        @godbolt{doc/core/masked/sign.cpp}
 //!
-//!  A Callable object so that the expression `sign[cond](x, ...)` is equivalent to
-//!  `if_else(cond,sign(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/sign.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sign_, sign);
 }

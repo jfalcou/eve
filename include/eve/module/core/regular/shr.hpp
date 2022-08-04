@@ -6,6 +6,7 @@
 */
 //==================================================================================================
 #pragma once
+
 #include <eve/assert.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/overload.hpp>
@@ -15,79 +16,67 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var shr
+//!   @var shr
+//!   @brief Computes the arithmetic right shift operation.
 //!
-//! @brief Callable object computing the arithmetic right shift operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the arithmetic right shift operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T , integral_value N >
+//!      T shr(T x, N n) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, integral_value U > auto operator()( T x, U n ) const noexcept
-//!  requires bit_compatible< T, U >;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  argument(@ref eve::value). to be shifted.
 //!
-//! **Parameters**
+//!     * `n`:    [shift](@ref eve::integral_value).
 //!
-//!`x`:   [value](@ref eve::value).
+//!    **Return value**
 //!
-//!`n`:   [integral value](@ref eve::value).
+//!      *  The [elementwise](@ref glossary_elementwise) arithmetic right shift of the first
+//!         parameter by the second one is returned.
 //!
-//! **Return value**
+//!      *   The call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
+//!          eve::simd_value).
 //!
-//! Computes the [elementwise](@ref glossary_elementwise) arithmetic right shift of the first
-//! parameter by the second one.
+//!      *   The types must share the same cardinal or be scalar and if `N` is the size in bits  of the
+//!          element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
+//!          interval: `[0, N[` or the result is undefined.
 //!
-//! the call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
-//! eve::simd_value).
+//!    **Note**
 //!
-//! The types must share the same cardinal or be scalar and if `N` is the size in bits  of the
-//! element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
-//! interval: `[0, N[` or the result is undefined.
+//!      Although the infix notation with `<<` is supported, the `<<` operator on
+//!      standard scalar types is the original one and so can not be overloaded on standard floating
+//!      parameters due to **C++** limitations.
 //!
-//!  @warning
-//!     Although the infix notation with `>>` is supported, the `>>` operator on
-//!     standard scalar types is the original one and so can not be overloaded on standard floating
-//!     parameters due to **C++** limitations.
+//!  @groupheader{Example}
 //!
-//! ---
+//!  @godbolt{doc/core/regular/shr.cpp}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  Higher-order function generating a masked version of eve::shr
+//!   * Masked Call
 //!
-//!  **Parameters**
+//!     The call `eve::shr[mask](x, ...)` provides a masked
+//!     version of `shr` which is
+//!     equivalent to `if_else(mask, shr(x, ...), x)`
 //!
-//!  `cond` : conditional expression
+//!      **Example**
 //!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `shr[cond](x, ...)` is equivalent to
-//!  `if_else(cond,shr(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/shr.cpp}
-//!
-//!  @}
+//!        @godbolt{doc/core/masked/shr.cpp}
+//! @}
 //================================================================================================
 namespace tag
 {
@@ -106,6 +95,6 @@ namespace detail
 }
 
 EVE_MAKE_CALLABLE(shr_, shr);
-
 }
+
 #include <eve/module/core/regular/impl/shr.hpp>

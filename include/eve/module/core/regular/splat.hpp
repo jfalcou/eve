@@ -21,7 +21,7 @@ struct splat_
 using splat_type = decorated<splat_()>;
 
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_simd
 //! @{
 //! @var splat
 //!

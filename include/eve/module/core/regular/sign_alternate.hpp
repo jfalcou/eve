@@ -12,59 +12,52 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var sign_alternate
+//!   @var sign_alternate
+//!   @brief Computes \f$(-1)^n\f$.
 //!
-//! @brief Callable object computing the sign_alternate operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Sign_Alternateatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the sign_alternate operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::signed_value T >
+//!      T sign_alternate(T n) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()(value auto x) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `n` :  [argument](@ref eve::value). Must be signed integral or flint.
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`n`:   [value](@ref eve::value). Must be signed integral or flint.
+//!      \f$(-1)^n\f$ is returned.
 //!
-//! **Return value**
 //!
-//! Computes  [elementwise](@ref glossary_elementwise) `(-1)^n` with the type of `n`.
+//!  @groupheader{Example}
 //!
-//! ---
+//!  @godbolt{doc/core/regular/sign_alternate.cpp}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  Higher-order function generating a masked version of eve::sign_alternate
+//!   * Masked Call
 //!
-//!  **Parameters**
+//!     The call `eve;::sign_alternate[mask](x)` provides a masked version of `eve::sign_alternate` which is
+//!     equivalent to `if_else (mask, sign_alternate(x), x)`.
 //!
-//!  `cond` : conditional expression
+//!      **Example**
 //!
-//!  **Return value**
+//!        @godbolt{doc/core/masked/sign_alternate.cpp}
 //!
-//!  A Callable object so that the expression `sign_alternate[cond](x, ...)` is equivalent to
-//!  `if_else(cond,sign_alternate(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/sign_alternate.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sign_alternate_, sign_alternate);
 }

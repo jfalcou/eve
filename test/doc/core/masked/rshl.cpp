@@ -13,8 +13,8 @@ int main()
   wide_it  qi = {1, -2, 3, -1};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi            = " << pi << '\n'
-            << "<- qi            = " << qi << '\n'
-            << "-> shl[pi!= 200](pi, qi)   = " << eve::rshl[pi!= 200](pi, qi) << '\n';
+            << "<- pi                       = " << pi << '\n'
+            << "<- qi                       = " << qi << '\n'
+            << "-> rshl[pi!= 200](pi, qi)   = " << eve::rshl[pi!= 200](pi, qi) << '\n';
   return 0;
 }

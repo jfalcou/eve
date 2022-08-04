@@ -12,85 +12,60 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var saturate
+//!   @var bit_cast
+//!   @brief Computes the saturation of a value in a type.
 //!
-//! @brief Callable object computing the saturation of a value in a type.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | computation of the saturation of a value in a type         |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!   {   template<value From, scalar_value To>
+//!       To bit_cast operator()(From x, as<To> t) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, real_scalar_value Target>
-//!  auto operator()( T const& x, as_<Target> const& t) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::value).
+//!     * `t` :  [Type wrapper](@ref eve::as) instance embedding the type of the result.
 //!
-//! ---
+//!  **Template parameters**
 //!
-//! **Parameters**
+//!     * To: scalar type to which each element of `x` is saturated
 //!
-//!`x`:   [value](@ref eve::value) to saturate.
+//!    **Return value**
 //!
-//!`t`:   [Type wrapper](@ref eve::as) instance embedding the type to saturate `x` to.
+//!      For an  `x` of [real value](@ref eve::value) `Target`, the expression:
+//!      @code
+//!        To  r = saturate(x, as_<Target>{});
+//!      @endcode
 //!
-//! **Return value**
+//!      is semantically equivalent to:
 //!
-//! For an  `x` of [real value](@ref eve::value) `Target`, the expression:
+//!      @code
+//!       To vmin=static_cast<T>(Valmin<To>());
+//!       To vmax=static_cast<T>(Valmax<To>());
+//!       To r = convert(clamp(x,vmi,vmax),as(x));
+//!      @endcode
 //!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-//! T  r = saturate(x, as_<Target>{});
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!   **Note**
+//!      Saturation operated by [eve::saturate](#eve::saturate) may lead to
+//!      Undefined Behaviors if it implies conversions that are themselves U.B.
 //!
-//! is semantically equivalent to:
+//!  @groupheader{Example}
 //!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-//! T vmin=static_cast<T>(Valmin<Target>());
-//! T vmax=static_cast<T>(Valmax<Target>());
-//! T r = convert(clamp(x,vmi,vmax),as(x));
+//!  @godbolt{doc/core/regular/saturate.cpp}
 //!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!@warning Note
-//!   Saturation operated by [eve::saturate](#eve::saturate) may lead to
-//!   Undefined Behaviors if it implies conversions that are themselves U.B.
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::saturate
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `saturate[cond](x, ...)` is equivalent to
-//!  `if_else(cond,saturate(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/saturate.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(saturate_, saturate);
 }

@@ -16,79 +16,67 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var shl
+//!   @var shl
+//!   @brief Computes the arithmetic left shift operation.
 //!
-//! @brief Callable object computing the arithmetic left shift operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the arithmetic left shift operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T , integral_value N >
+//!      T shl(T x, N n) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, integral_value U > auto operator()( T x, U n ) const noexcept
-//!   requires bit_compatible< T, U >;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  argument(@ref eve::value). to be shifted.
 //!
-//! **Parameters**
+//!     * `n`:    [shift](@ref eve::integral_value).
 //!
-//!`x`:   [value](@ref eve::value).
+//!    **Return value**
 //!
-//!`n`:   [integral value](@ref eve::value).
+//!      *  The [elementwise](@ref glossary_elementwise) arithmetic left shift of the first
+//!         parameter by the second one is returned.
 //!
-//! **Return value**
+//!      *   The call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
+//!          eve::simd_value).
 //!
-//! Computes the [elementwise](@ref glossary_elementwise) arithmetic left shift of the first
-//! parameter by the second one.
+//!      *   The types must share the same cardinal or be scalar and if `N` is the size in bits  of the
+//!          element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
+//!          interval: `[0, N[` or the result is undefined.
 //!
-//! the call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
-//! eve::simd_value).
+//!    **Note**
 //!
-//! The types must share the same cardinal or be scalar and if `N` is the size in bits  of the
-//! element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
-//! interval: `[0, N[` or the result is undefined.
-//!
-//!  @warning
 //!     Although the infix notation with `<<` is supported, the `<<` operator on
 //!     standard scalar types is the original one and so can not be overloaded on standard floating
 //!     parameters due to **C++** limitations.
 //!
-//! ---
+//!  @groupheader{Example}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!  @godbolt{doc/core/regular/shl.cpp}
 //!
-//!  Higher-order function generating a masked version of eve::shl
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  **Parameters**
+//!   * Masked Call
 //!
-//!  `cond` : conditional expression
+//!     The call `eve::shl[mask](x, ...)` provides a masked
+//!     version of `shl` which is
+//!     equivalent to `if_else(mask, shl(x, ...), x)`
 //!
-//!  **Return value**
+//!      **Example**
 //!
-//!  A Callable object so that the expression `shl[cond](x, ...)` is equivalent to
-//!  `if_else(cond,shl(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/shl.cpp}
-//!
-//!  @}
+//!        @godbolt{doc/core/masked/shl.cpp}
+//! @}
 //================================================================================================
 namespace tag
 {
