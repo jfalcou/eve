@@ -96,10 +96,10 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
 //! @{
 //!  @var find_last_if
 //!
-//!  @brief finds the last entry that matches the predicate.
+//!  @brief SIMD version of `std::ranges::find_last_if`
 //!
-//!  Similar effect can be achieved with `find_if(views::reverse)` but this one is faster/
-//!  Default unrolling 4, alignes accesses by default.
+//!  Configurable @callable performing a SIMD optimized version of the `std::ranges::find_last_if`
+//!  By default, the operation will be unrolled by a factor of 4, and align memory accesses.
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -124,6 +124,8 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
 //!
 //!   Iterator on the element found or past the end if nothing was found.
 //!
+//!   @see `find_if`
+//!
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/algo/find_last.cpp}
@@ -146,7 +148,7 @@ template<typename TraitsSupport> struct find_last_ : TraitsSupport
 //! @{
 //!  @var find_last
 //!
-//!  @brief a version of find_last_if with a value to find instead of a predicate to test.
+//!  @brief a version of `find_last_if` with a value to find instead of a predicate to test.
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -170,7 +172,7 @@ template<typename TraitsSupport> struct find_last_ : TraitsSupport
 //!
 //!   Iterator on the element found or past the end if not found
 //!
-//!   @see find_last_if
+//!   @see `find_if`
 //!
 //!   @groupheader{Example}
 //!
@@ -179,7 +181,7 @@ template<typename TraitsSupport> struct find_last_ : TraitsSupport
 //! @}
 //================================================================================================
 
-inline constexpr auto find_last = function_with_traits<find_last_>[find_if_not.get_traits()];
+inline constexpr auto find_last = function_with_traits<find_last_>[find_last_if.get_traits()];
 
 template<typename TraitsSupport> struct find_last_if_not_ : TraitsSupport
 {
@@ -195,7 +197,7 @@ template<typename TraitsSupport> struct find_last_if_not_ : TraitsSupport
 //! @{
 //!  @var find_last_if_not
 //!
-//!  @brief a version of `eve::algo::find_last_if` where the preicate is negated
+//!  @brief a version of `find_last_if` where the preicate is negated
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -220,7 +222,7 @@ template<typename TraitsSupport> struct find_last_if_not_ : TraitsSupport
 //!
 //!   Iterator on the element found or past the end if not found
 //!
-//!   @see find_if
+//!   @see `find_if`
 //!
 //!   @groupheader{Example}
 //!
