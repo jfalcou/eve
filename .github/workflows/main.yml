@@ -74,8 +74,6 @@ jobs:
         - { comp: gcc         , arch: x86     , opts: -mavx                 }
         - { comp: clang       , arch: x86     , opts: -mavx2                }
         - { comp: gcc         , arch: x86     , opts: -mavx2                }
-        - { comp: clang       , arch: x86_sde , opts: -march=skylake-avx512 }
-        - { comp: gcc         , arch: x86_sde , opts: -march=skylake-avx512 }
 
     steps:
       - name: Fetch current branch
@@ -100,6 +98,8 @@ jobs:
         cfg:
         - { comp: clang       , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
         - { comp: gcc         , arch: x86.ci , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: clang       , arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
+        - { comp: gcc         , arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
         - { comp: clang       , arch: x86    , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
         - { comp: gcc         , arch: x86.ci , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
 
