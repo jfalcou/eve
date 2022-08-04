@@ -18,12 +18,12 @@
 
 namespace algo_test
 {
-template<typename Algo, typename Check> struct find_backward_ptr_test
+template<typename Algo, typename Check> struct find_last_ptr_test
 {
   Algo  alg;
   Check check;
 
-  find_backward_ptr_test(Algo alg, Check check) : alg(alg), check(check) {}
+  find_last_ptr_test(Algo alg, Check check) : alg(alg), check(check) {}
 
   void init(auto *page_begin, auto *, auto *, auto *page_end) const
   {
@@ -63,7 +63,7 @@ template<typename T, typename Algo, typename Check>
 void
 find_generic_backward_test_page_ends(eve::as<T> tgt, Algo alg, Check check)
 {
-  algo_test::page_ends_test(tgt, find_backward_ptr_test {alg, check});
+  algo_test::page_ends_test(tgt, find_last_ptr_test {alg, check});
 }
 
 template<typename T, typename Algo, typename Check>

@@ -36,8 +36,8 @@ make_unit("unit.algo" algorithm/find_if_generic.cpp)
 make_unit("unit.algo" algorithm/find_if_reverse_generic.cpp)
 make_unit("unit.algo" algorithm/find_if_not_generic.cpp)
 
-make_unit("unit.algo" algorithm/find_if_backward_generic.cpp)
-make_unit("unit.algo" algorithm/find_if_not_backward_generic.cpp)
+make_unit("unit.algo" algorithm/find_last_if_generic.cpp)
+make_unit("unit.algo" algorithm/find_last_if_not_generic.cpp)
 
 make_unit("unit.algo" algorithm/equal_generic.cpp)
 make_unit("unit.algo" algorithm/mismatch_generic.cpp)

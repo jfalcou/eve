@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 
-#include "find_backward_generic_test.hpp"
+#include "find_last_generic_test.hpp"
 
 #include <eve/algo.hpp>
 
@@ -16,7 +16,7 @@ template<typename TraitsSupport> struct not_not_find_if_backward_ : TraitsSuppor
 {
   template<typename Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
   {
-    return eve::algo::find_if_not_backward[TraitsSupport::get_traits()](
+    return eve::algo::find_last_if_not[TraitsSupport::get_traits()](
         std::forward<Rng>(rng), [p](auto x) { return !p(x); });
   }
 };
