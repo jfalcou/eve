@@ -12,49 +12,43 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var rat
+  //!   @var rat
+  //!   @brief Computes a rational approximation.
   //!
-  //! @brief Callable object computing the rational approximation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the rational approximation              |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T>
+  //!      kumi::tuple<T, T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  auto operator()( floating_value auto x, floating_value auto tol) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
+  //!     * `tol`: [floating_value](@ref eve::value). By  default `tol`
+  //!       is equal to `T(1.0e-6)*``eve::abs``(x)`.
   //!
-  //! ---
+  //!   **Return value**
   //!
-  //! **Parameters**
+  //!     A pair of values  with the same type as `x` containing the
+  //!     [elementwise](@ref glossary_elementwise)
+  //!     numerator and denominator of the rational number approximating `x`.
   //!
-  //!`x`:   [floating_value](@ref eve::value).
-  //!`tol`: [floating_value](@ref eve::value). By  default `tol` is equal to `T(1.0e-6)*``eve::abs``(x)`.
+  //!  @groupheader{Example}
   //!
-  //! **Return values**
-  //!
-  //!Two values with the same type as `x` containing the [elementwise](@ref glossary_elementwise)
-  //! numerator and denominator of the rational number approximating `x`.
-  //!
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/rat.cpp}
-  //!
-  //!  @}
+  //!  @godbolt{doc/core/regular/rat.cpp}
+  //! @}
   //================================================================================================
 
   namespace tag { struct rat_; }

@@ -13,74 +13,63 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup core
+  //! @addtogroup core_arithmetic
   //! @{
-  //! @var rec
+  //!   @var rec
+  //!   @brief Computes the inverse of the parameter.
   //!
-  //! @brief Callable object computing the rec operation.
+  //!   **Defined in Header**
   //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
   //!
-  //! #### Members Functions
+  //!   @groupheader{Callable Signatures}
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the rec operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::value T >
+  //!      T rec(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
-  //! ---
+  //!   **Parameters**
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!     * `x` :  [argument](@ref eve::value).
   //!
-  //! **Parameters**
+  //!    **Return value**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!    value containing the [elementwise](@ref glossary_elementwise)
+  //!    inverse value of `x`.
   //!
-  //! **Return value**
+  //!  **Notes**
   //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the inverse of `x`.
+  //!     For [real integral value](@ref eve::value) `x` is semantically equivalent to:
+  //!       * If x==1 or x==-1, x is returned.
+  //!       * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.
+  //!       * Otherwise 0 is returned.
   //!
-  //!For [real integral value](@ref eve::value) `x` is semantically equivalent to:
-  //!  * If x==1 or x==-1, x is returned.
-  //!  * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.
-  //!  * Otherwise 0 is returned.
+  //!  @groupheader{Example}
   //!
-  //! ---
+  //!  @godbolt{doc/core/regular/rec.cpp}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  Higher-order function generating a masked version of eve::rec
+  //!   * Masked Call
   //!
-  //!  **Parameters**
+  //!     The call `eve;::rec[mask](x)` provides a masked version of `eve::rec` which is
+  //!     equivalent to `if_else (mask, rec(x), x)`.
   //!
-  //!  `cond` : conditional expression
+  //!      **Example**
   //!
-  //!  **Return value**
+  //!        @godbolt{doc/core/masked/rec.cpp}
   //!
-  //!  A Callable object so that the expression `rec[cond](x, ...)` is equivalent to `if_else(cond,rec(x, ...),x)`
+  //!   * eve::raw
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::raw
-  //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return.
-  //!      Otherwise it uses the non decorated call.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(rec)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/rec.cpp}
-  //!
-  //!  @}
+  //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly
+  //!     very poor accuracy in return. Otherwise it uses the non decorated call.
+  //! @}
   //================================================================================================
   EVE_MAKE_CALLABLE(rec_, rec);
 }
