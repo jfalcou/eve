@@ -17,76 +17,69 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var rshr
+//!   @var rshr
+//!   @brief Computes the arithmetic right/left shift operation according to shift sign.
 //!
-//! @brief Callable object computing the arithmetic left/right shift operation according to shift
-//! sign.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the arithmetic left/right shift operation according to shift sign   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T , integral_value N >
+//!      T rshr(T x, N n) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, integral_value U > auto operator()( T x, U n ) const noexcept requires
-//!  bit_compatible< T, U >;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  argument(@ref eve::value). to be shifted.
 //!
-//! **Parameters**
+//!     * `n`:    [shift](@ref eve::integral_value).
 //!
-//!`x`:   [value](@ref eve::value).
+//!    **Return value**
 //!
-//!`n`:   [integral value](@ref eve::value).
+//!      The value of the arithmetic right/left shift operation according to shift
+//!      sign is returned
 //!
-//! **Return value**
+//!   **Notes**
 //!
-//! Computes the [elementwise](@ref glossary_elementwise) arithmetic left/right shift of the first
-//! parameter by the second one.
+//!     *  the call `rshr(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))`
+//!        if `x`  is an  [simd value](@ref eve::simd_value).
 //!
-//! the call `rshr(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd
-//! value](@ref eve::simd_value).
+//!     *  The types must share the same cardinal or be scalar and if `N`
+//!     *  is the size in bits  of the element type of `T`, all
+//!     *  [elements](@ref glossary_elementwise) of n must belong to the
+//!        interval: `]-N, N[` or the result is undefined.
 //!
-//! The types must share the same cardinal or be scalar and if `N` is the size in bits  of the
-//! element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
-//! interval: `]-N, N[` or the result is undefined.
+//!     * The call `rshr(x, n)` is equivalent to `x << n` if `x`  is
+//!       an [simd value](@ref eve::simd_value).
 //!
-//! ---
+//!  @groupheader{Example}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!  @godbolt{doc/core/regular/rshr.cpp}
 //!
-//!  Higher-order function generating a masked version of eve::rshr
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  **Parameters**
+//!   * Masked Call
 //!
-//!  `cond` : conditional expression
+//!     The call `eve::rshr[mask](x, ...)` provides a masked
+//!     version of `rshr` which is
+//!     equivalent to `if_else(mask, rshr(x, ...), x)`
 //!
-//!  **Return value**
+//!      **Example**
 //!
-//!  A Callable object so that the expression `rshr[cond](x, ...)` is equivalent to
-//!  `if_else(cond,rshr(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/rshr.cpp}
-//!
-//!  @}
+//!        @godbolt{doc/core/masked/rshr.cpp}
+//! @}
 //================================================================================================
+
 namespace tag
 {
   struct rshr_;
@@ -99,7 +92,7 @@ namespace detail
   {
     EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
                "[eve::rshr] - Shifting by " << s << " is out of the range ]"
-                                            << -sizeof(element_type_t<T>) * 8 << ", "
+                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
                                             << sizeof(element_type_t<T>) * 8 << "[.");
   }
 }

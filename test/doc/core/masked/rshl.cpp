@@ -15,13 +15,6 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pi            = " << pi << '\n'
             << "<- qi            = " << qi << '\n'
-            << "-> shl(pi, qi)   = " << eve::rshl(pi, qi) << '\n';
-
-  uiT xi = 2, yi = 3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xi            = " << xi << '\n'
-            << "<- yi            = " << yi << '\n'
-            << "-> rshl(xi, yi)  = " << eve::rshl(xi, yi) << '\n';
+            << "-> shl[pi!= 200](pi, qi)   = " << eve::rshl[pi!= 200](pi, qi) << '\n';
   return 0;
 }

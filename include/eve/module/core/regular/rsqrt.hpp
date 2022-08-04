@@ -13,71 +13,57 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var rsqrt
+//!   @var rsqrt
+//!   @brief Computes the inverse of the square root of the parameter.
 //!
-//! @brief Callable object computing the inverse of the square root.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the  computation of the inverse of the square root   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T rsqrt(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()(floating_value auto x) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::floating_value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [floating real value](@ref eve::floating_value).
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    inverse of the square root of `x`.
 //!
-//! **Return value**
+//!  @groupheader{Example}
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) inverse of the square root  of the input.
+//!  @godbolt{doc/core/regular/rsqrt.cpp}
 //!
-//! ---
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!   * Masked Call
 //!
-//!  Higher-order function generating a masked version of eve::rsqrt
+//!     The call `eve;::rsqrt[mask](x)` provides a masked version of `eve::rsqrt` which is
+//!     equivalent to `if_else (mask, rsqrt(x), x)`.
 //!
-//!  **Parameters**
+//!      **Example**
 //!
-//!  `cond` : conditional expression
+//!        @godbolt{doc/core/masked/rsqrt.cpp}
 //!
-//!  **Return value**
+//!   * eve::raw
 //!
-//!  A Callable object so that the expression `rsqrt[cond](x, ...)` is equivalent to
-//!  `if_else(cond,rsqrt(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  * eve::raw
 //!     The call `raw(rsqrt)(x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return.
-//!      Otherwise it uses the non-decorated call.
+//!     very poor accuracy in return. Otherwise it uses the non-decorated call.
 //!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff(rsqrt)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/rsqrt.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(rsqrt_, rsqrt);
 }

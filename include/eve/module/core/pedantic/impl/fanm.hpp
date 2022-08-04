@@ -13,7 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/pedantic //fnma.hpp>
+#include <eve/module/core/pedantic/fnma.hpp>
 #include <eve/module/core/regular/all.hpp>
 
 #include <type_traits>

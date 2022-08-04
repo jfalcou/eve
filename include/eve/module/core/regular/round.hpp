@@ -12,86 +12,68 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var round
+//!   @var round
+//!   @brief Computes the integer nearest to the input.
 //!
-//! @brief Callable object computing the round operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the round operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T round(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T > auto operator()( T x ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [value](@ref eve::value).
+//!    The largest integer not greater than `x`.
 //!
-//! **Return value**
+//!  @groupheader{Example}
 //!
-//! Computes  [elementwise](@ref glossary_elementwise) the integer nearest to `x`.
+//!  @godbolt{doc/core/regular/round.cpp}
 //!
-//! If `x` is an exact half-integer the rouding is made to the nearest even integer.
+//!  @groupheader{Semantic Modifiers}
 //!
-//! The call to `round(a)` is equivalent to the call `nearest(a)`.
+//!   * Masked Call
 //!
-//! ---
+//!     The call `eve;::round[mask](x)` provides a masked version of `eve::round` which is
+//!     equivalent to `if_else (mask, round(x), x)`.
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!      **Example**
 //!
-//!  Higher-order function generating a masked version of eve::round
+//!        @godbolt{doc/core/masked/round.cpp}
 //!
-//!  **Parameters**
+//!   * eve::downward
 //!
-//!  `cond` : conditional expression
+//!     The expression `eve::downward(eve::round)(x)` is equivalent to `eve::floor(x)`.
 //!
-//!  **Return value**
+//!   * eve::upward
 //!
-//!  A Callable object so that the expression `round[cond](x, ...)` is equivalent to
-//!  `if_else(cond,round(x, ...),x)`
+//!     The expression `eve::upward(eve::round)(x)` is equivalent to `eve::ceil(x)`.
 //!
-//! ---
+//!   * eve::to_nearest
 //!
-//! #### Supported decorators
+//!     The expression `to_nearest(eve::round)(x)` is equivalent to `eve::nearest(x)`.
 //!
-//!  * eve::downward
+//!   * eve::toward_zero
 //!
-//!     The expression `downward(round)(x)` is equivalent to `floor(x)`.
+//!     The expression `eve::toward_zero(eve::round)(x)` is equivalent to `eve::trunc(x)`.
 //!
-//!  * eve::upward
-//!
-//!     The expression `upward(round)(x)` is equivalent to `ceil(x)`.
-//!
-//!  * eve::to_nearest
-//!
-//!     The expression `to_nearest(round)(x)` is equivalent to `nearest(x)`.
-//!
-//!  * eve::toward_zero
-//!
-//!     The expression `toward_zero(round)(x)` is equivalent to `trunc(x)`.
-//!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff(round)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/round.cpp}
-//!
-//!  @}
+//!      @godbolt{doc/core//roundings/round.cpp}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(round_, round);
 }

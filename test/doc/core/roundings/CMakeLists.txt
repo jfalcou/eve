@@ -7,3 +7,4 @@
 
 make_unit( "doc.core.roundings" div.cpp                )
 make_unit( "doc.core.roundings" rem.cpp                )
+make_unit( "doc.core.roundings" round.cpp              )

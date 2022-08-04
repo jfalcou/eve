@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
 #include <eve/assert.hpp>
 #include <eve/detail/overload.hpp>
 
@@ -15,72 +16,63 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var roundscale
+//!   @var roundscale
+//!   @brief Computes the  scaled input rounding.
 //!
-//! @brief Callable object computing the scaled rouding.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the  computation of the scaled rouding                     |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, int scale >
+//!      T roundscale(T x, int scale) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()(floating_value auto x, int scale) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!       `x`:      [floating value](@ref eve::floating_value).
 //!
-//! **Parameters**
+//!       `scale` : int or std::integral_constant of int type limited to the range [0, 15].
 //!
-//!`x`:      [floating real value](@ref eve::floating_value).
+//!    **Return value**
 //!
-//!`scale` : int or std::integral_constant of int type limited to the range [0, 15].
+//!       *  Returns the [elementwise](@ref glossary_elementwise) scaled input.
+//!          The number of fraction bits retained is specified by scale. By default the internal
+//!          rounding after scaling is done to nearest integer.
+//!          `ldexp(round(ldexp(a0,scale),-scale))`
 //!
-//! **Return value**
+//!  @groupheader{Example}
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) rounding of the scaled input.
-//! The number of fraction bits retained is specified by scale. By default the internal rounding
-//! after scaling is done to nearest integer. The call is equivalent to
-//! `ldexp(round(ldexp(a0,scale),-scale))`
+//!  @godbolt{doc/core/regular/roundscale.cpp}
 //!
-//! ---
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!   * Masked Call
 //!
-//!  Higher-order function generating a masked version of eve::roundscale
+//!     The call `eve;::roundscale[mask](x, scale)` provides a masked version of `eve::roundscale`
+//!     which is equivalent to `if_else (mask, roundscale(x, scale), x)`.
 //!
-//!  **Parameters**
+//!      **Example**
 //!
-//!  `cond` : conditional expression
+//!        @godbolt{doc/core/masked/roundscale.cpp}
 //!
-//!  **Return value**
+//!    * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
-//!  A Callable object so that the expression `roundscale[cond](x, ...)` is equivalent to
-//!  `if_else(cond,roundscale(x, ...),x)`
+//!      If d is one of these 4 decorators
+//!      The call `d(roundscale)(x)`, call is equivalent to
+//!      `eve::ldexp(d(eve::round)(eve::ldexp(a0,scale), -scale))`
 //!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
-//!
-//!     If d is one of these 4 decorators
-//!     The call `d(roundscale)(x)`, call is equivalent to
-//!     `eve::ldexp(d(``eve::round``)(``eve::ldexp``(a0,scale), -scale))`
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/roundscale.cpp}
-//!
-//!  @}
+//!      @godbolt{doc/core//roundings/roundscale.cpp}
+//! @}
 //================================================================================================
 namespace tag
 {
@@ -90,8 +82,7 @@ namespace tag
 namespace detail
 {
   template<typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
   {
     EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] -  parameter s out of range [0, 15]: " << s);
   }
@@ -107,7 +98,6 @@ namespace detail
 EVE_MAKE_CALLABLE(roundscale_, roundscale);
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/roundscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
