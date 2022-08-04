@@ -12,15 +12,15 @@
 
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(basic_shuffle_)
-  EVE_DECLARE_CALLABLE(basic_shuffle_, basic_shuffle)
+EVE_REGISTER_CALLABLE(basic_shuffle_)
+EVE_DECLARE_CALLABLE(basic_shuffle_, basic_shuffle)
 
-  namespace detail
-  {
-    EVE_ALIAS_CALLABLE(basic_shuffle_, basic_shuffle);
-  }
+namespace detail
+{
+  EVE_ALIAS_CALLABLE(basic_shuffle_, basic_shuffle);
+}
 
-  EVE_CALLABLE_API(basic_shuffle_, basic_shuffle)
+EVE_CALLABLE_API(basic_shuffle_, basic_shuffle)
 }
 
 #include <eve/module/core/detail/generic/basic_shuffle.hpp>

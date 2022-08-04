@@ -7,26 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
+
 #include <array>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(reverse_, reverse);
+EVE_MAKE_CALLABLE(reverse_, reverse);
 
-  namespace detail
+namespace detail
+{
+  template<int N, int... I>
+  inline constexpr bool is_reverse = []
   {
-    template <int N, int ...I> inline constexpr bool is_reverse = []
+    std::array idxs {I...};
+    for( int i = 0; i != static_cast<int>(idxs.size()); ++i )
     {
-      std::array idxs {I...};
-      for (int i = 0; i != static_cast<int>(idxs.size()); ++i) {
-        if (idxs[i] != (static_cast<int>(idxs.size()) - i - 1))
-          return false;
-      }
-      return static_cast<int>(idxs.size()) == N;
-    }();
-  }
+      if( idxs[i] != (static_cast<int>(idxs.size()) - i - 1) ) return false;
+    }
+    return static_cast<int>(idxs.size()) == N;
+  }();
+}
 }
 
 #include <eve/module/core/regular/impl/reverse.hpp>

@@ -12,10 +12,10 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/max.hpp>
 #include <eve/traits/common_compatible.hpp>
 
 namespace eve::detail

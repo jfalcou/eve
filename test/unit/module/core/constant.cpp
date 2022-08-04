@@ -10,8 +10,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-
-
 using eve::fixed;
 
 TTS_CASE("Constant generation for scalar")

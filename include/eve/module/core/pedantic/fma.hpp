@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/pedantic/impl/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/pedantic/impl/simd/x86/fma.hpp>

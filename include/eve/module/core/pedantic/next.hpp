@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/pedantic/impl/next.hpp>
+#include <eve/module/core/regular/next.hpp>

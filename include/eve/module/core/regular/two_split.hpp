@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(two_split_, two_split);
+EVE_MAKE_CALLABLE(two_split_, two_split);
 }
 
 #include <eve/module/core/regular/impl/two_split.hpp>

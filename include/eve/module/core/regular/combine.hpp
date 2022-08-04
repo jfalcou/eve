@@ -6,56 +6,58 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <eve/traits/cardinal.hpp>
 
 namespace eve
 {
-   //================================================================================================
-  //! @addtogroup core_simd
-  //! @{
-  //!   @var combine
-  //!   @brief Computes the TODO
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!     TODO
-  //!
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `x` :  [argument](@ref eve::value).
-  //!
-  //!    **Return value**
-  //!
-  //!    The value of TODO
-  //!    is returned.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/core/regular/combine.cpp}
-  //! @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(combine_, combine);
+//================================================================================================
+//! @addtogroup core_simd
+//! @{
+//!   @var combine
+//!   @brief Computes the TODO
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!     TODO
+//!
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of TODO
+//!    is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/combine.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(combine_, combine);
 }
 
 namespace eve::detail
 {
-  template<value T> EVE_FORCEINLINE auto combine_(EVE_SUPPORTS(cpu_),T const &a,T const &b) noexcept
-  {
-    return as_wide_t<T, typename cardinal_t<T>::combined_type>(a, b);
-  }
+template<value T>
+EVE_FORCEINLINE auto
+combine_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+{
+  return as_wide_t<T, typename cardinal_t<T>::combined_type>(a, b);
+}
 }

@@ -7,61 +7,61 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core_bitops
-  //! @{
-  //!   @var bit_xor
-  //!   @brief Computes the bitwise XOR of its [arguments](@ref eve::value).
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::value T, eve::value Ts... >
-  //!      T bit_xor(T x, Ts... xs) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `x`:       first [argument](@ref eve::value).
-  //!     * `xs...` :  other [arguments](@ref eve::value).
-  //!
-  //!    **Return value**
-  //!
-  //!      The value of the bitwise XOR of its arguments in the type of the first one
-  //!      is returned.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/core/regular/bit_xor.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The call `eve::bit_xor[mask](x, ...)` provides a masked
-  //!     version of `bit_xor` which is
-  //!     equivalent to `if_else(mask, bit_xor(x, ...), x)`
-  //!
-  //!      **Example**
-  //!
-  //!        @godbolt{doc/core/masked/bit_xor.cpp}
-  //! @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(bit_xor_, bit_xor);
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var bit_xor
+//!   @brief Computes the bitwise XOR of its [arguments](@ref eve::value).
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value Ts... >
+//!      T bit_xor(T x, Ts... xs) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`:       first [argument](@ref eve::value).
+//!     * `xs...` :  other [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!      The value of the bitwise XOR of its arguments in the type of the first one
+//!      is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/bit_xor.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::bit_xor[mask](x, ...)` provides a masked
+//!     version of `bit_xor` which is
+//!     equivalent to `if_else(mask, bit_xor(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/bit_xor.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(bit_xor_, bit_xor);
 }
 
 #include <eve/module/core/regular/impl/bit_xor.hpp>

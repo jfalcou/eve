@@ -12,50 +12,50 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core_horizontal
-  //! @{
-  //!   @var all
-  //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero.
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::value T >
-  //!      bool all(T x) noexcept;   //1
-  //!
-  //!      template< eve::top_bits M >
-  //!      bool all(M m) noexcept;   //2
-  //!   }
-  //!   @endcode
-  //!
-  //!   * 1. A bool value which is true if and only if all elements of `x` are not zero.
-  //!   * 2  A bool value which is true if and only if all top bits elements of `x` are not zero.
-  //!
-  //!     * `x` :  argument(@ref eve::logical_value).
-  //!
-  //!     * `m` :  argument(@ref eve::top_bits).
-  //!
-  //!    **Return value**
-  //!
-  //!    A bool value.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/core/regular/all.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The call `eve::all[mask](x)` provides a masked
-  //!     version of `all` which is
-  //!     equivalent to : all not masked elements are not zero.
-  //! @godbolt{doc/core/all.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(all_, all);
+//================================================================================================
+//! @addtogroup core_horizontal
+//! @{
+//!   @var all
+//!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero.
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      bool all(T x) noexcept;   //1
+//!
+//!      template< eve::top_bits M >
+//!      bool all(M m) noexcept;   //2
+//!   }
+//!   @endcode
+//!
+//!   * 1. A bool value which is true if and only if all elements of `x` are not zero.
+//!   * 2  A bool value which is true if and only if all top bits elements of `x` are not zero.
+//!
+//!     * `x` :  argument(@ref eve::logical_value).
+//!
+//!     * `m` :  argument(@ref eve::top_bits).
+//!
+//!    **Return value**
+//!
+//!    A bool value.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/all.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::all[mask](x)` provides a masked
+//!     version of `all` which is
+//!     equivalent to : all not masked elements are not zero.
+//! @godbolt{doc/core/all.cpp}
+//!
+//!  @}
+//================================================================================================
+EVE_MAKE_CALLABLE(all_, all);
 }
 
 #include <eve/module/core/regular/impl/all.hpp>
