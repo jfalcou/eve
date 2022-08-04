@@ -6,17 +6,17 @@
 **/
 //==================================================================================================
 
-#include "find_backward_generic_test.hpp"
+#include "find_last_generic_test.hpp"
 
 #include <eve/algo.hpp>
 
 #include <algorithm>
 
-TTS_CASE_TPL("Check find_if_backward", algo_test::selected_types)
+TTS_CASE_TPL("Check find_last_if", algo_test::selected_types)
 <typename T>(tts::type<T>)
 {
   algo_test::find_generic_backward_test(eve::as<T> {},
-                                        eve::algo::find_if_backward,
+                                        eve::algo::find_last_if,
                                         [](auto f, auto l, auto expected, auto actual)
                                         {
                                           TTS_EQUAL(actual - f, expected - f);

@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 
-#include "find_backward_generic_test.hpp"
+#include "find_last_generic_test.hpp"
 #include "unit/algo/algo_test.hpp"
 
 #include <eve/algo/find.hpp>

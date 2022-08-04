@@ -18,7 +18,7 @@ namespace eve::algo
 namespace detail
 {
   // needed to forceinline
-  struct find_backwrad_branchless_lambda
+  struct find_last_branchless_lambda
   {
     std::optional<std::ptrdiff_t> *match;
 
@@ -31,7 +31,7 @@ namespace detail
   };
 }
 
-template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
+template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
 {
   template<typename UnalignedFwdI, typename P> struct delegate
   {
@@ -67,7 +67,7 @@ template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
 
       // TODO: this might not be ideal, see: #764
       std::optional<std::ptrdiff_t> match;
-      std::size_t pos = find_branchless(tests, detail::find_backwrad_branchless_lambda {&match});
+      std::size_t pos = find_branchless(tests, detail::find_last_branchless_lambda {&match});
 
       set_found(arr[0] + pos * iterator_cardinal_v<I>, *match);
 
@@ -94,12 +94,12 @@ template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!  @var find_if_backward
+//!  @var find_last_if
 //!
-//!  @brief finds the last entry that matches the predicate.
+//!  @brief SIMD version of `std::ranges::find_last_if`
 //!
-//!  Similar effect can be achieved with `find_if(views::reverse)` but this one is faster/
-//!  Default unrolling 4, alignes accesses by default.
+//!  Configurable @callable performing a SIMD optimized version of the `std::ranges::find_last_if`
+//!  By default, the operation will be unrolled by a factor of 4, and align memory accesses.
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -111,7 +111,7 @@ template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng, typename P>
-//!     auto find_if_backward(Rng&& rng, P p) -> unaligned_iterator_t<Rng>;
+//!     auto find_last_if(Rng&& rng, P p) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!
@@ -124,29 +124,31 @@ template<typename TraitsSupport> struct find_if_backward_ : TraitsSupport
 //!
 //!   Iterator on the element found or past the end if nothing was found.
 //!
+//!   @see `find_if`
+//!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/algo/find_backward.cpp}
+//!   @godbolt{doc/algo/find_last.cpp}
 //!
 //! @}
 //================================================================================================
-inline constexpr auto find_if_backward = function_with_traits<find_if_backward_>[default_simple_algo_traits];
+inline constexpr auto find_last_if = function_with_traits<find_last_if_>[default_simple_algo_traits];
 
-template<typename TraitsSupport> struct find_backward_ : TraitsSupport
+template<typename TraitsSupport> struct find_last_ : TraitsSupport
 {
   template<relaxed_range Rng>
   EVE_FORCEINLINE auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const -> unaligned_iterator_t<Rng>
   {
-    return find_if_backward[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
+    return find_last_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
   }
 };
 
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!  @var find_backward
+//!  @var find_last
 //!
-//!  @brief a version of find_if_backward with a value to find instead of a predicate to test.
+//!  @brief a version of `find_last_if` with a value to find instead of a predicate to test.
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -158,7 +160,7 @@ template<typename TraitsSupport> struct find_backward_ : TraitsSupport
 //!   namespace eve::algo
 //!   {
 //!     template <eve::algo::relaxed_range Rng>
-//!     auto find_backward(Rng&& rng, eve::value_type_t<Rng> v) -> unaligned_iterator_t<Rng>;
+//!     auto find_last(Rng&& rng, eve::value_type_t<Rng> v) -> unaligned_iterator_t<Rng>;
 //!   }
 //!   @endcode
 //!   **Parameters**
@@ -170,32 +172,32 @@ template<typename TraitsSupport> struct find_backward_ : TraitsSupport
 //!
 //!   Iterator on the element found or past the end if not found
 //!
-//!   @see find_if_backward
+//!   @see `find_if`
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/algo/find_backward.cpp}
+//!   @godbolt{doc/algo/find_last.cpp}
 //!
 //! @}
 //================================================================================================
 
-inline constexpr auto find_backward = function_with_traits<find_backward_>[find_if_not.get_traits()];
+inline constexpr auto find_last = function_with_traits<find_last_>[find_last_if.get_traits()];
 
-template<typename TraitsSupport> struct find_if_not_backward_ : TraitsSupport
+template<typename TraitsSupport> struct find_last_if_not_ : TraitsSupport
 {
   template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
     -> unaligned_iterator_t<Rng>
   {
-    return find_if_backward[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});
+    return find_last_if[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});
   }
 };
 
 //================================================================================================
 //! @addtogroup algos
 //! @{
-//!  @var find_if_not_backward
+//!  @var find_last_if_not
 //!
-//!  @brief a version of `eve::algo::find_if_backward` where the preicate is negated
+//!  @brief a version of `find_last_if` where the preicate is negated
 //!
 //!   @code
 //!   #include <eve/algo.hpp>
@@ -220,14 +222,14 @@ template<typename TraitsSupport> struct find_if_not_backward_ : TraitsSupport
 //!
 //!   Iterator on the element found or past the end if not found
 //!
-//!   @see find_if
+//!   @see `find_if`
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/algo/find_backward.cpp}
+//!   @godbolt{doc/algo/find_last.cpp}
 //!
 //! @}
 //================================================================================================
-inline constexpr auto find_if_not_backward = function_with_traits<find_if_not_backward_>[find_if_not.get_traits()];
+inline constexpr auto find_last_if_not = function_with_traits<find_last_if_not_>[find_last_if.get_traits()];
 
 }
