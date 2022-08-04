@@ -258,8 +258,8 @@ namespace eve
       using r_t   = decltype(z1*z2);
       auto [a, b] = z1;
       auto [c, d] = z2;
-      auto rr     = diff_of_prod(a, c, b, d);
-      auto ri     = sum_of_prod(a, d, b, c);
+      auto rr     = pedantic(diff_of_prod)(a, c, b, d);
+      auto ri     = pedantic(sum_of_prod)(a, d, b, c);
       auto r = r_t(rr, ri);
       auto test = is_finite(r);
       if (eve::all(test)) return r;
@@ -301,7 +301,7 @@ namespace eve
       using Z   = decltype(z1*z2);
       auto [a, b] = z1;
       auto [c, d] = z2;
-      return Z {a*c - b*d, a*d + b*c};
+      return Z {raw(diff_of_prod)(a, c, b, d), raw(sum_of_prod)(a, d, b, c)};
     }
 
     //==============================================================================================
