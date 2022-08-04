@@ -3,8 +3,6 @@
 ##  Copyright : EVE Contributors & Maintainers
 ##  SPDX-License-Identifier: MIT
 ##==================================================================================================
-##==================================================================================================
-
 
 add_subdirectory(constant)
 add_subdirectory(fuzzy)
