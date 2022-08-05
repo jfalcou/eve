@@ -15,89 +15,58 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var sqrt
+//!   @var sqrt
+//!   @brief Computes the square root of the parameter.
 //!
-//! @brief Callable object computing the square root.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the  computation of the square root                        |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T sqrt(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()(floating_value auto x) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::floating_value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    square root of `x` or Nan if `x` is less than zero.
 //!
-//! **Return value**
+//!  @groupheader{Example}
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) square root  of the input.
+//!  @godbolt{doc/core/regular/sqrt.cpp}
 //!
-//! ---
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!   * Masked Call
 //!
-//!  Higher-order function generating a masked version of eve::sqrt
+//!     The call `eve;::sqrt[mask](x)` provides a masked version of `eve::sqrt` which is
+//!     equivalent to `if_else (mask, sqrt(x), x)`.
 //!
-//!  **Parameters**
+//!      **Example**
 //!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `sqrt[cond](x, ...)` is equivalent to
-//!  `if_else(cond,sqrt(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
+//!        @godbolt{doc/core/masked/sqrt.cpp}
 //!
 //!  * eve::raw
 //!     The call `raw(sqrt)(x)`, call a proper system intrinsic if one exists, but with possibly
 //!     very poor accuracy in return.
 //!      Otherwise it uses the non-decorated call.
 //!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff(sqrt)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/sqrt.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
-namespace tag
-{
-  struct sqrt_;
-}
-
-namespace detail
-{
-  template<typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::sqrt_), [[maybe_unused]] T const& v)
-  {
-    if constexpr( std::is_integral_v<T> && std::is_signed_v<T> )
-    {
-      EVE_ASSERT(v >= 0, "[eve::sqrt] - Invalid parameter: " << v);
-    }
-  }
-}
-
 EVE_MAKE_CALLABLE(sqrt_, sqrt);
 }
 

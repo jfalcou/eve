@@ -12,53 +12,48 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_accuracy
 //! @{
-//! @var two_add
+//!   @var two_add
+//!   @brief Computes the [elementwise](@ref glossary_elementwise)
+//!   pair of  sum and error,
 //!
-//! @brief Callable object computing the two_add operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the two_add operation                                      |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T, eve::floating_value U  >
+//!      kumi::tuple<T, T> two_add(T x, U y) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T,
-//!  U >;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::value).
 //!
-//! **Parameters**
+//!   **Return value**
 //!
-//!`x`, `y`:   [values](@ref eve::value).
+//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
 //!
-//! **Return value**
-//!
-//! computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
-//!
-//!* `a` is `x+y`
-//!* `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
+//!     * `a` is `x+y`
+//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
 //!
 //! where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//! ---
 //!
-//! #### Supported decorators
+//!  @groupheader{Example}
 //!
-//!  no decorators are supported
+//!  @godbolt{doc/core/regular/two_add.cpp}
 //!
-//! #### Example
-//!
-//! @godbolt{doc/core/two_add.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
-
 namespace tag
 {
   struct two_add_;

@@ -12,50 +12,45 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_internal
 //! @{
-//! @var ulpdist
+//!   @var ulpdist
+//!   @brief Computes the unit in the last place distance of its [arguments](@ref eve::value).
 //!
-//! @brief Callable object computing the ulpdistt operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the ulpdistt operation   |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value U >
+//!      eve::common_compatible_t<T, U> ulpdist(T x, U y) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T,
-//!  U >;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x`, `y` :  [arguments](@ref eve::value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`, `y`:   [values](@ref eve::value).
+//!      Computes [elementwise](@ref glossary_elementwise) the
+//!      'units in the last place' distance
+//!      betwween `x` and `y`. This is semantically equivalent to:`
 //!
-//! **Return value**
+//!      * if is_ordered(x,y), nb_values(x,y)/2.0 is returned
+//!      * otherwise a `Nan` is returned
 //!
-//! computes [elementwise](@ref glossary_elementwise) the 'units in the last place' distance
-//! betwween `x` and `y`. This is semantically equivalent to:`
+//!  @groupheader{Example}
 //!
-//!* if is_ordered(x,y), nb_values(x,y)/2.0 is returned
-//!* otherwise a `Nan` is returned
+//!  @godbolt{doc/core/regular/ulpdist.cpp}
 //!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/ulpdist.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
 
 namespace tag

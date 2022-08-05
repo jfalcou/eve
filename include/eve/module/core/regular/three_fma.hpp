@@ -12,55 +12,52 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_accuracy
 //! @{
-//! @var three_fma
+//!   @var two_add
+//!   @brief Computes the [elementwise](@ref glossary_elementwise)
+//!   triple  of  fma  and errors,
 //!
-//! @brief Callable object computing the three_fma operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the three_fma operation                                    |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T, eve::floating_value U , eve::floating_value V >
+//!      auto three_fma(T x, U y, V z) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T, value U, value V > auto operator()( T x, U y, V z ) const noexcept requires
-//!  compatible< T, U >;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!      `x`, `y`, `z`:   [floating values](@ref eve::floating_value).
 //!
-//! **Parameters**
+//!   **Return value**
 //!
-//!`x`, `y`, `z`:   [values](@ref eve::value).
+//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
 //!
-//! **Return value**
+//!     * `a` is `x*y+z`
+//!     * `b`, c`is are values such that (`a`\f$\oplus\f$`b`) \f$\oplus\f$`c`is exactly to
+//!              `x`\f$\otimes\f$`y\f$\oplus\f$`y`
 //!
-//! computes [elementwise](@ref glossary_elementwise) a triple of values `[a, b, c]` such that:
+//!     where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
+//!     infinite precision.
 //!
-//!* `a` is `x*y+z`
-//!* `b`, c`is are values such that (`a`\f$\oplus\f$`b`) \f$\oplus\f$`c`is exactly to
-//!`x`\f$\otimes\f$`y\f$\oplus\f$`y`
+//!     where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
-//! where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
-//! infinite precision.
 //!
-//! ---
+//!  @groupheader{Example}
 //!
-//! #### Supported decorators
+//!  @godbolt{doc/core/regular/three_fma.cpp}
 //!
-//!  no decorators are supported
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/three_fma.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
-
 namespace tag
 {
   struct three_fma_;

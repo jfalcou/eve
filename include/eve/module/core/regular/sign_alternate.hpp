@@ -23,7 +23,7 @@ namespace eve
 //!   #include <eve/module/core.hpp>
 //!   @endcode
 //!
-//!   @groupheader{Callable Sign_Alternateatures}
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve

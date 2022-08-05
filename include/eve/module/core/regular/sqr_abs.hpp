@@ -12,50 +12,42 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var sqr_abs
+//!   @var sqr_abs
+//!   @brief Computes the square of the absolute value of the parameter.
 //!
-//! @brief Callable object computing the sqr_abs operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the sqr_abs operation                                      |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T sqr_abs(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()( floating_value auto x ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    square of `eve::abs(x)`.
 //!
-//! **Return value**
+//!  @groupheader{Example}
 //!
-//! Computes  [elementwise](@ref glossary_elementwise) the square of the absolute value of `x`.
+//!  @godbolt{doc/core/regular/sqr_abs.cpp}
 //!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
-//!
-//!
-//!     The expression `diff(sqr_abs)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/sqr_abs.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
-
 namespace tag
 {
   struct sqr_abs_;

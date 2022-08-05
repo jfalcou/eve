@@ -12,66 +12,62 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_arithmetic
 //! @{
-//! @var sqr
+//!   @var sqr
+//!   @brief Computes the square of the parameter.
 //!
-//! @brief Callable object computing the sqr operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the sqr operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T sqr(T x) noexcept;
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template< value T > auto operator()( T x ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!     * `x` :  [argument](@ref eve::value).
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   [value](@ref eve::value).
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    square of `x` if it is representable in this type.
 //!
-//! **Return value**
+//!  **Notes**
 //!
-//! Computes  [elementwise](@ref glossary_elementwise) the square of `x`.
+//!      * For  [integral signed values](@ref eve::value)   if `eve::saturated(eve::abs)(x)`
+//!        is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
+//!        is undefined.
 //!
-//!@warning
-//!   For  [real integral signed values](@ref eve::value)   if `saturated(abs)(x)`
-//!   is greater than [`eve::Sqrtvalmax(as(x))`](eve::sqrtvalmax) the corresponding element result
-//!   is undefined .
+//!  @groupheader{Example}
 //!
-//! ---
+//!  @godbolt{doc/core/regular/sqr.cpp}
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!  @groupheader{Semantic Modifiers}
 //!
-//!  Higher-order function generating a masked version of eve::sqr
+//!   * Masked Call
 //!
-//!  **Parameters**
+//!     The call `eve;::sqr[mask](x)` provides a masked version of `eve::sqr` which is
+//!     equivalent to `if_else (mask, sqr(x), x)`.
 //!
-//!  `cond` : conditional expression
+//!      **Example**
 //!
-//!  **Return value**
+//!        @godbolt{doc/core/masked/sqr.cpp}
 //!
-//!  A Callable object so that the expression `sqr[cond](x, ...)` is equivalent to
-//!  `if_else(cond,sqr(x, ...),x)`
+//!   * eve::saturated
 //!
-//! ---
+//!     The call `eve::saturated(eve::sqr)(x)` computes a saturated version of eve::sqr.
 //!
-//! #### Supported decorators
-//!
-//!  * `saturated`
-//!
-//!
-//!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the
-//!     non-decorated case, this guarantees
+//!     Contrary to the  non-decorated case, it guarantees
 //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More
 //!      specifically, for any signed integer value `x`, the expression:
 //!
@@ -79,20 +75,16 @@ namespace eve
 //!
 //!      evaluates to:
 //!
-//!      [`eve::Valmax(as(x))`](@ref eve::valmax) as soon as `saturated(abs)(x)`
-//!      is greater than [`eve::Sqrtvalmax(as(x))`](@ref eve::sqrtvalmax).
+//!      [`eve::valmax(as(x))`](@ref eve::valmax) as soon as `eve::saturated(eve::abs)(x)`
+//!      is greater than `eve::sqrtvalmax(as(x))`.
 //!
-//!  * eve::diff, eve::diff_1st, eve::diff_nth
+//!      **Example**
 //!
+//!        @godbolt{doc/core/saturated/sqr.cpp}
 //!
-//!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/sqr.cpp}
-//!
-//!  @}
+//! @}
 //================================================================================================
+
 EVE_MAKE_CALLABLE(sqr_, sqr);
 }
 

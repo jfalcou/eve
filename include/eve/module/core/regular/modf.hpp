@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var modf
-//!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
+//!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  fractional and integral parts of the value,
 //!
 //!   **Defined in Header**
