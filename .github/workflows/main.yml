@@ -97,7 +97,7 @@ jobs:
         - { comp: clang, cpu: 3 , arch: x86     , opts: -DEVE_NO_SIMD         , status: 1 }
         - { comp: gcc  , cpu: 3 , arch: x86.ci  , opts: -DEVE_NO_SIMD         , status: 1 }
         - { comp: clang, cpu: 3 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
-        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
+#        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
         - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
         - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
         - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
