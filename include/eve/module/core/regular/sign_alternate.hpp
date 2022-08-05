@@ -50,8 +50,8 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::sign_alternate[mask](x)` provides a masked version of `eve::sign_alternate` which is
-//!     equivalent to `if_else (mask, sign_alternate(x), x)`.
+//!     The call `eve;::sign_alternate[mask](x)` provides a masked version of `eve::sign_alternate`
+//!     which is equivalent to `if_else (mask, sign_alternate(x), x)`.
 //!
 //!      **Example**
 //!

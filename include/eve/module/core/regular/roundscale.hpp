@@ -82,7 +82,8 @@ namespace tag
 namespace detail
 {
   template<typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
+  EVE_FORCEINLINE void
+  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
   {
     EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] -  parameter s out of range [0, 15]: " << s);
   }
