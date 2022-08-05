@@ -40,7 +40,7 @@ namespace eve
 //!    **Return value**
 //!
 //!    The value of the interpolation (or extrapolation)  between `x` and `y` is returned.
-//!    The call is semantically equivalent to `x+t*(y_x)`.
+//!    The call is semantically equivalent to `x+t*(y-x)`.
 //!
 //!  @groupheader{Example}
 //!

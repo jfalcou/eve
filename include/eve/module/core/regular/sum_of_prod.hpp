@@ -52,10 +52,16 @@ namespace eve
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
+//!   * eve::raw
+//!
+//!     The call `eve::raw(eve::diff_of_prod)(x, y, z, t)` computes a raw
+//!     version of eve::sum_of_prod,  i.e. the naïve formula
+//!
+//!
 //!   * eve::pedantic
 //!
 //!     The call `eve::pedantic(eve::sum_of_prod)(x, y, z, t)` computes a pedantic
-//!     version of eve::sum_of_prod.
+//!     version of eve::sum_of_prod ensuring better accuracy in any case.
 //!
 //!      **Example**
 //!

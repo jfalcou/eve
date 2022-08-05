@@ -10,13 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                = " << pf << '\n'
-            << "-> nearest(pf)       = " << eve::nearest(pf) << '\n'
-            ;
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> nearest(xf) = " << eve::nearest(xf) << '\n';
+            << "-> nearest[pf > -1](pf)       = " << eve::nearest[pf > -1](pf) << '\n';
   return 0;
 }

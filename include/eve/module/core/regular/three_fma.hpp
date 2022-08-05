@@ -14,7 +14,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var two_add
+//!   @var three_fma
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   triple  of  fma  and errors,
 //!
@@ -40,11 +40,11 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
+//!     Computes [elementwise](@ref glossary_elementwise) a triple of values `[a,b,c]` such that:
 //!
 //!     * `a` is `x*y+z`
-//!     * `b`, c`is are values such that (`a`\f$\oplus\f$`b`) \f$\oplus\f$`c`is exactly to
-//!              `x`\f$\otimes\f$`y\f$\oplus\f$`y`
+//!     * `b`, `c` are values such that (`a`\f$\oplus\f$`b`) \f$\oplus\f$`c`is exactly to
+//!              `x`\f$\otimes\f$`y`\f$\oplus\f$`z`
 //!
 //!     where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
 //!     infinite precision.

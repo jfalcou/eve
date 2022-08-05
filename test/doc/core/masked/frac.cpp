@@ -12,13 +12,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
-            << "-> frac(pf)       = " << eve::frac(pf) << '\n'
-            ;
-
-  float xf = -327.68f;
-
-  std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << "<- xf             = " << xf << '\n'
-            << "-> frac(xf)       = " << eve::frac(xf) << '\n';
+            << "-> frac[pf !=  2.3f](pf)       = " << eve::frac[pf !=  2.3f](pf) << '\n';
   return 0;
 }

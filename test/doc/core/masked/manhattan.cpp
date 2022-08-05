@@ -12,14 +12,6 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                     = " << pf << '\n'
             << "<- qf                     = " << qf << '\n'
-            << "-> eve::manhattan(pf, qf) = " << eve::manhattan(pf, qf) << '\n';
-
-  float        xf = -32768.0f;
-  float        yf = 2.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                     = " << xf << '\n'
-            << "<- yf                     = " << yf << '\n'
-            << "-> eve::manhattan(xf, yf) = " << eve::manhattan(xf, yf) << '\n';
+            << "-> eve::manhattan[pf > 0](pf, qf) = " << eve::manhattan[pf > 0](pf, qf) << '\n';
   return 0;
 }

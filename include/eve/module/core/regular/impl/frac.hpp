@@ -38,4 +38,13 @@ frac_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   }
   else return apply_over(frac, a);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value U>
+EVE_FORCEINLINE auto
+frac_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::frac, t);
+}
 }
