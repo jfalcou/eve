@@ -96,12 +96,12 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang       , arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: gcc         , arch: x86.ci , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: clang       , arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
-        - { comp: gcc         , arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
-        - { comp: clang       , arch: x86    , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
-        - { comp: gcc         , arch: x86.ci , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
+        - { comp: clang, cpu: 3, arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: gcc  , cpu: 3, arch: x86.ci , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: clang, cpu: 3, arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
+        - { comp: clang, cpu: 3, arch: x86    , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
+        - { comp: gcc  , cpu: 3, arch: x86.ci , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
+        - { comp: gcc  , cpu: 2, arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
 
     steps:
       - name: Fetch current branch
@@ -112,4 +112,4 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
-          cpu:            3
+          cpu:            ${{ matrix.cfg.cpu }}
