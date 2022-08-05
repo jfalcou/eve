@@ -54,6 +54,27 @@ template<bool biggest, bool right, typename Algo, typename Check> struct minmax_
     }
   }
 
+  void run(auto rng) const requires(right)
+  {
+    auto *f = eve::unalign(rng.begin());
+    auto *l = eve::unalign(rng.end());
+
+    if( f == l ) { check(f, l, f, alg(rng)); }
+    else { check(f, l, l - 1, alg(rng)); }
+
+    if (f != l) {
+      *f = looking_for;
+    }
+
+    for( auto *it = l; it != f; )
+    {
+      --it;
+      *it = looking_for;
+      check(f, l, it, alg(rng));
+      *it = filler;
+    }
+  }
+
   void adjust(auto *, auto *f, auto *l, auto *page_end) const
   {
     *f = looking_for;

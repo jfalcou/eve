@@ -94,6 +94,21 @@ namespace eve::algo
     }
   };
 
+  template <typename Op, typename T>
+  struct bind_second
+  {
+    Op op;
+    T v;
+
+    bind_second(Op op, T v) : op(op), v(v) {}
+
+    EVE_FORCEINLINE auto operator()(auto x) const
+    {
+      return op(x, v);
+    }
+  };
+
+
 
   struct do_nothing
   {
