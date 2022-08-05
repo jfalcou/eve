@@ -39,10 +39,6 @@ jobs:
         - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
         - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
         - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi, status: 0 }
-        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi, status: 0 }
-        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi, status: 0 }
-
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
@@ -63,17 +59,19 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang       , arch: x86     , opts: -msse2                }
-        - { comp: clang       , arch: x86_asan, opts: -msse2                }
-        - { comp: gcc         , arch: x86     , opts: -msse2                }
-        - { comp: clang       , arch: x86     , opts: -mssse3               }
-        - { comp: gcc         , arch: x86     , opts: -mssse3               }
-        - { comp: clang       , arch: x86     , opts: -msse4.2              }
-        - { comp: gcc         , arch: x86     , opts: -msse4.2              }
-        - { comp: clang       , arch: x86     , opts: -mavx                 }
-        - { comp: gcc         , arch: x86     , opts: -mavx                 }
-        - { comp: clang       , arch: x86     , opts: -mavx2                }
-        - { comp: gcc         , arch: x86     , opts: -mavx2                }
+        - { comp: clang , arch: x86     , opts: -msse2                                }
+        - { comp: clang , arch: x86_asan, opts: -msse2                                }
+        - { comp: gcc   , arch: x86     , opts: -msse2                                }
+        - { comp: clang , arch: x86     , opts: -mssse3                               }
+        - { comp: gcc   , arch: x86     , opts: -mssse3                               }
+        - { comp: clang , arch: x86     , opts: -msse4.2                              }
+        - { comp: gcc   , arch: x86     , opts: -msse4.2                              }
+        - { comp: clang , arch: x86     , opts: -mavx                                 }
+        - { comp: gcc   , arch: x86     , opts: -mavx                                 }
+        - { comp: clang , arch: x86     , opts: -mavx2                                }
+        - { comp: gcc   , arch: x86     , opts: -mavx2                                }
+        - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
       - name: Fetch current branch
@@ -96,12 +94,13 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, cpu: 3, arch: x86    , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: gcc  , cpu: 3, arch: x86.ci , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: clang, cpu: 3, arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
-        - { comp: clang, cpu: 3, arch: x86    , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
-        - { comp: gcc  , cpu: 3, arch: x86.ci , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" , status: 1 }
-        - { comp: gcc  , cpu: 2, arch: x86_sde , opts: -march=skylake-avx512, status: 1 }
+        - { comp: clang, cpu: 3 , arch: x86     , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: gcc  , cpu: 3 , arch: x86.ci  , opts: -DEVE_NO_SIMD         , status: 1 }
+        - { comp: clang, cpu: 3 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
+        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
+        - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
 
     steps:
       - name: Fetch current branch
