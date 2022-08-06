@@ -351,8 +351,8 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
         logical<type> mref  = [&](auto j, auto) { return (j >= fi && j < li); };
         type          ref   = [&](auto j, auto) { return (j >= fi && j < li) ? 1+j : 69.f; };
 
-        TTS_EQUAL( keep_between(fi,li).mask(as<type>()).bits(), mref.bits() );
-        TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref);
+        TTS_EQUAL( keep_between(fi,li).mask(as<type>()).bits(), mref.bits() ) << keep_between(fi,li);
+        TTS_EQUAL( (if_else(keep_between(fi,li),value, type(69))), ref) << keep_between(fi,li);
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
   if constexpr( !eve::has_aggregated_abi_v<type> )
@@ -386,7 +386,7 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
                                                   );
           eve::logical<w_t> mask_ref = [=](auto n, auto) { return n >= i && n < j; };
 
-          TTS_EQUAL(values, mask_ref);
+          TTS_EQUAL(values, mask_ref) << keep_between(i,j);
         }
       }
     }

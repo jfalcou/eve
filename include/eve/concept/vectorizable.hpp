@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/kumi.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/concept/logical.hpp>

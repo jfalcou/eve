@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <eve/as.hpp>
 #include <utility>
 
@@ -57,4 +57,3 @@ namespace eve
   template<typename T, typename U>
   using as_wide_as_t = typename as_wide_as<T,U>::type;
 }
-
