@@ -65,7 +65,7 @@ namespace eve
 //!   * eve::pedantic,  eve::numeric
 //!
 //!     The call `d(eve::negmaxabs)(...)`, where d is one of these two decorators has the
-//!     same behaviour,  but internaly `d(eve::max)` is used.
+//!     same behaviour,  but internally `d(eve::max)` is used.
 //!
 //! @}
 //================================================================================================

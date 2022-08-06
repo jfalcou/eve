@@ -65,7 +65,7 @@ namespace eve
 //!   * eve::pedantic,  eve::numeric
 //!
 //!     The call `d(eve::negminabs)(...)`, where d is one of these two decorators has the
-//!     same behaviour,  but internaly `d(eve::min)` is used.
+//!     same behaviour,  but internally `d(eve::min)` is used.
 //!
 //! @}
 //================================================================================================

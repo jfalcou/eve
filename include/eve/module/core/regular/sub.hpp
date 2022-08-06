@@ -65,7 +65,7 @@ namespace eve
 //!     a saturated version of `eve::sub`.
 //!
 //!     Take care that for signed integral
-//!     entries this kind of operation is highly order dependant. We do not recommand
+//!     entries this kind of operation is highly order dependant. We do not advise
 //!     to use it for more than 2 parameters.
 //!
 //!      **Example**

@@ -23,7 +23,7 @@ namespace eve
 //!   #include <eve/module/core.hpp>
 //!   @endcode
 //!
-//!   @groupheader{Callable Signnzatures}
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
@@ -41,7 +41,7 @@ namespace eve
 //!
 //!      * Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
 //!
-//!      * For [real](@ref eve::value) `x`,  the callis semantically equivalent to:
+//!      * For [real](@ref eve::value) `x`,  the call is semantically equivalent to:
 //!        * If x is [positive](@ref eve::positive), 1 is returned.
 //!        * If x is [negative](@ref eve::negative), -1 is returned.
 //!
@@ -49,7 +49,7 @@ namespace eve
 //!         if x is `Nan`, the result is `Nan`
 //!
 //!    value containing the [elementwise](@ref glossary_elementwise)
-//!    signnzolute value of `x` if it is representable in this type.
+//!    never zero sign of `x` 
 //!
 //!  @groupheader{Example}
 //!

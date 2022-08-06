@@ -41,7 +41,7 @@ namespace eve
 //!
 //!      Computes [elementwise](@ref glossary_elementwise) the
 //!      'units in the last place' distance
-//!      betwween `x` and `y`. This is semantically equivalent to:`
+//!      between `x` and `y`. This is semantically equivalent to:`
 //!
 //!      * if is_ordered(x,y), nb_values(x,y)/2.0 is returned
 //!      * otherwise a `Nan` is returned

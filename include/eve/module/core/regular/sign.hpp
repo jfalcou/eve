@@ -41,7 +41,7 @@ namespace eve
 //!
 //!      * Computes  [elementwise](@ref glossary_elementwise) the sign of `x`.
 //!
-//!      * For [real](@ref eve::value) `x`,  the callis semantically equivalent to:
+//!      * For [real](@ref eve::value) `x`,  the call is semantically equivalent to:
 //!        * If x is greater than 0, 1 is returned.
 //!        * If x is less than 0,  -1 is returned.
 //!        * If x is zero, x is returned.
@@ -50,7 +50,7 @@ namespace eve
 //!         if x is `Nan`, the result is `Nan`
 //!
 //!    value containing the [elementwise](@ref glossary_elementwise)
-//!    signolute value of `x` if it is representable in this type.
+//!    sign of `x` if it is representable in this type.
 //!
 //!  @groupheader{Example}
 //!
