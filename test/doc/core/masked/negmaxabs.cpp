@@ -12,20 +12,8 @@ int main()
                 eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                        = " << pf << '\n'
-            << "<- qf                        = " << qf << '\n'
-            << "-> negmaxabs(pf, qf)            = " << eve::negmaxabs(pf, qf) << '\n'
-            << "-> pedantic(negmaxabs)(pf, qf) = " << eve::pedantic(eve::negmaxabs)(pf, qf) << '\n'
-            << "-> numeric(negmaxabs)(pf, qf)  = " << eve::numeric(eve::negmaxabs)(pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> negmaxabs(xf, yf)            = " << eve::negmaxabs(xf, yf) << '\n'
-            << "-> pedantic(negmaxabs)(xf, yf) = " << eve::pedantic(eve::negmaxabs)(xf, yf) << '\n'
-            << "-> numeric(negmaxabs)(xf, yf)  = " << eve::numeric(eve::negmaxabs)(xf, yf) << '\n';
+            << "<- pf                              = " << pf << '\n'
+            << "<- qf                              = " << qf << '\n'
+            << "-> negmaxabs[pf <  -1.0f](pf, qf)  = " << eve::negmaxabs[pf <  -1.0f](pf, qf) << '\n';
    return 0;
 }

@@ -19,4 +19,5 @@ sqr_abs_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   return sqr(a);
 }
+
 }

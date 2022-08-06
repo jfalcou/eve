@@ -10,12 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
-            << "-> bitofsign(pf) = " << eve::bitofsign(pf) << '\n';
-
-  float        xf = -32768.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf            = " << xf << '\n'
-            << "-> bitofsign(xf) = " << eve::bitofsign(xf) << '\n';
+            << "-> bitofsign[pf!= 3.0f](pf) = " << eve::bitofsign[pf!= 3.0f](pf) << '\n';
   return 0;
 }

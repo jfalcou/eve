@@ -12,20 +12,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
-            << "-> sqr(pf)             = " << eve::sqr(pf) << '\n'
-            
-            << "<- pi                  = " << pi << '\n'
-            << "-> saturated(sqr)(pi)  = " << eve::saturated(eve::sqr)(pi) << '\n'
-            << "-> sqr(pi)             = " << eve::sqr(pi) << '\n';
-
-  float        xf = -32768.0f;
-  std::int16_t xi = -32768;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> sqr(xf)             = " << eve::sqr(xf) << '\n'
-            << "<- xi                  = " << xi << '\n'
-            << "-> saturated(sqr)(xi)  = " << eve::saturated(eve::sqr)(xi) << '\n'
-            << "-> sqr(xi)             = " << eve::sqr(xi) << '\n';
+            << "-> sqr[pf < 0](pf)             = " << eve::sqr[pf < 0](pf) << '\n';
   return 0;
 }

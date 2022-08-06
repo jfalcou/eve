@@ -11,13 +11,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
-            << "-> rec)(pf)      = " << eve::rec(pf) << '\n'
-            ;
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf      = " << xf << '\n'
-            << "-> rec(xf) = " << eve::rec(xf) << '\n';
+            << "-> rec[pf > 1](pf)      = " << eve::rec[pf > 1](pf) << '\n';
   return 0;
 }

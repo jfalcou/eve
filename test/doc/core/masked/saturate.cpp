@@ -14,18 +14,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                         = " << pf << '\n'
-            << "-> saturate(pf, int_64()_)    = " << eve::saturate(pf, int_64()) << '\n'
-            << "-> saturate(pf, int_16())     = " << eve::saturate(pf, int_16()) << '\n'
-            << "<- pi                         = " << pi << '\n'
-            << "-> saturate(pi, as(eve::as<double>())) = " << eve::saturate(pi, eve::as<double>()) << '\n';
-
-  double        xf = -64768.4f;
-  std::int64_t xi = -64768;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                         = " << xf << '\n'
-            << "-> saturate(xf, int_64())     = " << eve::saturate(xf, int_64()) << '\n'
-            << "<- xi                         = " << xi << '\n'
-            << "-> saturate(xi, as(eve::as<double>())) = " << eve::saturate(xi, eve::as<double>()) << '\n';
+            << "-> saturate[pf <  0](pf, int_64()_)    = " << eve::saturate(pf, int_64()) << '\n'
+            << "-> saturate[pf <  0](pf, int_16())     = " << eve::saturate(pf, int_16()) << '\n';
   return 0;
 }

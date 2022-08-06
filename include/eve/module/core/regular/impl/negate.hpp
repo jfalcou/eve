@@ -33,4 +33,12 @@ negate_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native
   if constexpr( signed_value<T> ) { return a * sign(b); }
   else { return if_else(is_nez(b), a, eve::zero); }
 }
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value T, real_value U>
+EVE_FORCEINLINE auto
+negate_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b) noexcept
+{
+  return mask_op(cond, eve::negate, a, b);
+}
 }

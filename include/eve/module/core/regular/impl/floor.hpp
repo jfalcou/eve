@@ -40,4 +40,13 @@ floor_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
   if constexpr( has_native_abi_v<T> ) { return D()(floor(xx)); }
   else { return apply_over(D()(floor), xx); }
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value T>
+EVE_FORCEINLINE auto
+floor_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
+{
+  return mask_op(cond, eve::floor, a);
+}
 }

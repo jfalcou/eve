@@ -12,20 +12,8 @@ int main()
                 eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                        = " << pf << '\n'
-            << "<- qf                        = " << qf << '\n'
-            << "-> negminabs(pf, qf)            = " << eve::negminabs(pf, qf) << '\n'
-            << "-> pedantic(negminabs)(pf, qf) = " << eve::pedantic(eve::negminabs)(pf, qf) << '\n'
-            << "-> numeric(negminabs)(pf, qf)  = " << eve::numeric(eve::negminabs)(pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> negminabs(xf, yf)            = " << eve::negminabs(xf, yf) << '\n'
-            << "-> pedantic(negminabs)(xf, yf) = " << eve::pedantic(eve::negminabs)(xf, yf) << '\n'
-            << "-> numeric(negminabs)(xf, yf)  = " << eve::numeric(eve::negminabs)(xf, yf) << '\n';
+            << "<- pf                              = " << pf << '\n'
+            << "<- qf                              = " << qf << '\n'
+            << "-> negminabs[pf <  -1.0f](pf, qf)  = " << eve::negminabs[pf <  -1.0f](pf, qf) << '\n';
    return 0;
 }

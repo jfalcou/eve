@@ -28,4 +28,13 @@ rsqrt_(EVE_SUPPORTS(cpu_), T a0) noexcept
   else if constexpr( has_aggregated_abi_v<T> ) { return aggregate(eve::rsqrt, a0); }
   else { return map(rsqrt, a0); }
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value U>
+EVE_FORCEINLINE auto
+rsqrt_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::rsqrt, t);
+}
 }

@@ -10,15 +10,8 @@ int main()
   w_t qi = {-1.0f, -2.0f, 3.0f, eve::inf(eve::as<float>())};
 
   std::cout << "---- simd" << std::setprecision(9) << '\n'
-            << " <- pi                = " << pi << '\n'
-            << " <- qi                = " << qi << '\n'
-            << " -> nextafter(pi, qi) = " << eve::nextafter(pi, qi) << '\n';
-
-  std::uint32_t xi = 3, yi = 7;
-
-  std::cout << "---- scalar" << '\n'
-            << " xi                   = " << xi << '\n'
-            << " yi                   = " << yi << '\n'
-            << " -> nextafter(xi, yi) = " << eve::nextafter(xi, yi) << '\n';
+            << " <- pi                         = " << pi << '\n'
+            << " <- qi                         = " << qi << '\n'
+            << " -> nextafter[pi < qi](pi, qi) = " << eve::nextafter[pi < qi](pi, qi) << '\n';
   return 0;
 }

@@ -39,4 +39,14 @@ ceil_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
   if constexpr( has_native_abi_v<T> ) { return D()(ceil(xx)); }
   else { return apply_over(D()(ceil), xx); }
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value T>
+EVE_FORCEINLINE auto
+ceil_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
+{
+  return mask_op(cond, eve::ceil, a);
+
+}
 }

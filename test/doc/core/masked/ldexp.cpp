@@ -14,16 +14,6 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
             << "<- qi            = " << qi << '\n'
-            << "-> ldexp(pf, qi) = " << eve::ldexp(pf, qi) << '\n';
-
-  float xf = 2, mxf = -2;
-  iT yi = 3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf             = " << xf << '\n'
-            << "<- mxf            = " << mxf << '\n'
-            << "<- yi             = " << yi << '\n'
-            << "-> ldexp(xf, yi)  = " << eve::ldexp(xf, yi) << '\n'
-            << "-> ldexp(mxf, yi) = " << eve::ldexp(mxf, yi) << '\n';
+            << "-> ldexp[pf < 0.0](pf, qi) = " << eve::ldexp[pf < 0.0](pf, qi) << '\n';
   return 0;
 }

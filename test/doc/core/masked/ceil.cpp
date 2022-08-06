@@ -10,13 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
-            << "-> ceil(pf)       = " << eve::ceil(pf) << '\n'
-            ;
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf       = " << xf << '\n'
-            << "-> ceil(xf) = " << eve::ceil(xf) << '\n';
+            << "-> ceil[pf > -1.5f](pf)       = " << eve::ceil[pf > -1.5f](pf) << '\n';
   return 0;
 }

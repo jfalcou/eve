@@ -10,16 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf              = " << pf << '\n'
-            << "-> sqrt(pf)        = " << eve::sqrt(pf) << '\n'
-            << "-> raw(sqrt)(pf)   = " << eve::raw(eve::sqrt)(pf) << '\n'
-            ;
-
-
-  float xf = 32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> sqrt(xf)        = " << eve::sqrt(xf) << '\n';
-
+            << "-> sqrt[pf > 0](pf)= " << eve::sqrt(pf) << '\n';
   return 0;
 }

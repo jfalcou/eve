@@ -34,5 +34,12 @@ negatenz_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatib
 {
   return arithmetic_call(negatenz, a, b);
 }
-
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value T, real_value U>
+EVE_FORCEINLINE auto
+negatenz_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b) noexcept
+{
+  return mask_op(cond, eve::negatenz, a, b);
+}
 }

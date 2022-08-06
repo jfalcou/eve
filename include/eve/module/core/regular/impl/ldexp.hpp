@@ -86,7 +86,7 @@ auto
 ldexp_(EVE_SUPPORTS(cpu_),
        C const& cond,
        T0       a0,
-       T1       a1) requires floating_value<common_compatible_t<T0, T1>>
+       T1       a1)
 {
   return mask_op(cond, ldexp, a0, a1);
 }

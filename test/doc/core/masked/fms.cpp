@@ -16,28 +16,9 @@ int main()
   wide_t qf = {4, -1, -1.0f, vm};
 
   std::cout << "---- simd" << '\n'
-            << " <- of                                =    " << of << '\n'
-            << " <- pf                                =    " << pf << '\n'
-            << " <- qf                                =    " << qf << '\n'
-            << " -> pedantic(fms)(of, pf, qf)         =    " << eve::pedantic(eve::fms)(of, pf, qf) << '\n'
-            << " -> numeric(fms)(of, pf, qf)          =    " << eve::numeric(eve::fms)(of, pf, qf) << '\n'
-            << " -> fms(of, pf, qf)                   =    " << eve::fms(of, pf, qf) << '\n'
-            << "\n if the last fms result ends by '0, inf}', it is because\n"
-            << " the system has no simd fms family intrinsics\n"
-            << " or is not configured to use them.\n\n"
-            
-            
-            ;
-
-  std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << " <- vm                                = " << vm << '\n'
-            << " -> pedantic(fms)(vm, 2.0f, vm)       = " << eve::pedantic(eve::fms)(vm, 2.0f, -vm) << '\n'
-            << " -> numeric(fms)(vm, 2.0f, vm)        = " << eve::numeric(eve::fms)(vm, 2.0f, -vm) << '\n'
-            << " -> fms(vm, 2.0f, vm)                 = " << eve::fms(vm, 2.0f, -vm) << '\n'
-            << " <- esm1                              = " << esm1 << '\n'
-            << " <- esp1                              = " << esp1 << '\n'
-            << " -> pedantic(fms)(esp1, esm1, -1.0f)  = " << eve::pedantic(eve::fms)(esp1, esm1, -1.0f) << '\n'
-            << " -> numeric(fms)(esp1, esm1, -1.0f)   = " << eve::numeric(eve::fms)(esp1, esm1, -1.0f) << '\n'
-            << " -> fms(esp1, esm1, -1.0f)            = " << eve::fms(esp1, esm1, -1.0f) << '\n';
+            << " <- of                       =    " << of << '\n'
+            << " <- pf                       =    " << pf << '\n'
+            << " <- qf                       =    " << qf << '\n'
+            << " -> fms[pf < qf](of, pf, qf) = " << eve::fms[pf < qf](of, pf, qf) << '\n';
   return 0;
 }
