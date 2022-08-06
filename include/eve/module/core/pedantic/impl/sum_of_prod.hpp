@@ -23,6 +23,19 @@ namespace eve::detail
                                    , const W& d
                                    ) noexcept
   {
+    return arithmetic_call(pedantic(sum_of_prod), a, b, c, d);
+  }
+
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto sum_of_prod_(EVE_SUPPORTS(cpu_)
+                                   , pedantic_type const &
+                                   , const T& a
+                                   , const T& b
+                                   , const T& c
+                                   , const T& d
+                                   ) noexcept
+  requires(has_native_abi_v<T>)
+  {
     T mcd = -c * d;
     T err = pedantic(fma)(c, d, mcd);
     T dop = pedantic(fms)(a, b, mcd);

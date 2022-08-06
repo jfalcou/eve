@@ -41,7 +41,7 @@ namespace eve
         else
         {
           auto rho = exp(diff_of_prod(lgaz1, rz2, iz2, pi(as(rz2))));
-          auto theta = sum_of_prod(pi(as(rz2)), rz2, iz2, lgaz1);
+          auto theta = pedantic(sum_of_prod)(pi(as(rz2)), rz2, iz2, lgaz1);
           auto r2 = rho*exp_i(theta);
           r = if_else(isposz1, r1, r2);
         }
@@ -61,8 +61,8 @@ namespace eve
         auto [rz2, iz2] = z2;
         auto lz1 = log_abs(z1);
         auto argz1 = pedantic(arg)(z1);
-        auto rho = exp(diff_of_prod(lz1, rz2, iz2, argz1));
-        auto theta = sum_of_prod(argz1, rz2, iz2, lz1);
+        auto rho = exp(pedantic(diff_of_prod)(lz1, rz2, iz2, argz1));
+        auto theta = pedantic(sum_of_prod)(argz1, rz2, iz2, lz1);
         r = rho*exp_i(theta);
         auto realz1 = is_real(z1);
         if(any(realz1))
