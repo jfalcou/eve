@@ -9,7 +9,7 @@
 
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <concepts>
 
 namespace eve

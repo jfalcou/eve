@@ -425,7 +425,7 @@ namespace eve
 namespace eve::detail {
 
 template <logical_simd_value Logical>
-EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask)
+EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
 {
   using abi = typename eve::top_bits<Logical>::abi_type;
 

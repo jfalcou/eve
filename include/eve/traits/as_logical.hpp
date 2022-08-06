@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve
@@ -39,4 +39,3 @@ namespace eve
   template<typename T>
   using as_logical_t = typename as_logical<T>::type;
 }
-

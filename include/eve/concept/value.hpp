@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/traits/is_logical.hpp>
