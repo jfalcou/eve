@@ -55,9 +55,9 @@ manhattan_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value ... Ts>
+template<conditional_expr C, real_value... Ts>
 EVE_FORCEINLINE auto
-manhattan_(EVE_SUPPORTS(cpu_), C const& cond, Ts ...  a) noexcept
+manhattan_(EVE_SUPPORTS(cpu_), C const& cond, Ts... a) noexcept
 {
   return mask_op(cond, eve::manhattan, a...);
 }

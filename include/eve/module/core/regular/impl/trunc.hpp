@@ -65,7 +65,6 @@ trunc_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
   else { return apply_over(D()(trunc), xx); }
 }
 
-
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, real_value T>
@@ -73,6 +72,5 @@ EVE_FORCEINLINE auto
 trunc_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
 {
   return mask_op(cond, eve::trunc, a);
-
 }
 }

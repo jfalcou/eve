@@ -59,21 +59,18 @@ lerp_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a, T const& b, T const& t) n
 // Masked case
 template<conditional_expr C, real_value T, floating_real_value U, floating_real_value V>
 EVE_FORCEINLINE auto
-lerp_(EVE_SUPPORTS(cpu_), C const& cond,
-      T const& a,
-      U const& b,
-      V const& t) noexcept
+lerp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& t) noexcept
 {
   return mask_op(cond, eve::lerp, a, b, t);
 }
 
-template<conditional_expr C, decorator D,
-         real_value T, floating_real_value U, floating_real_value V>
+template<conditional_expr    C,
+         decorator           D,
+         real_value          T,
+         floating_real_value U,
+         floating_real_value V>
 EVE_FORCEINLINE auto
-lerp_(EVE_SUPPORTS(cpu_), C const& cond, D const & d,
-      T const& a,
-      U const& b,
-      V const& t) noexcept
+lerp_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, T const& a, U const& b, V const& t) noexcept
 {
   return mask_op(cond, eve::lerp, a, b, t);
 }

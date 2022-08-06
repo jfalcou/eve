@@ -83,10 +83,7 @@ ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires(cardinal_v<
 
 template<conditional_expr C, floating_real_value T0, real_value T1>
 auto
-ldexp_(EVE_SUPPORTS(cpu_),
-       C const& cond,
-       T0       a0,
-       T1       a1)
+ldexp_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1)
 {
   return mask_op(cond, ldexp, a0, a1);
 }

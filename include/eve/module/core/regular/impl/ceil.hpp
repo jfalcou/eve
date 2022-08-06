@@ -47,6 +47,5 @@ EVE_FORCEINLINE auto
 ceil_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
 {
   return mask_op(cond, eve::ceil, a);
-
 }
 }

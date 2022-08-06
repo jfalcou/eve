@@ -59,6 +59,5 @@ EVE_FORCEINLINE auto
 nearest_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
 {
   return mask_op(cond, eve::nearest, a);
-
 }
 }
