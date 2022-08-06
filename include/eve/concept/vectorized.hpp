@@ -11,7 +11,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/is_logical.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 
 #include <concepts>
 

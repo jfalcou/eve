@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <type_traits>
 
 namespace eve
@@ -28,4 +28,3 @@ namespace eve
   template<typename T>
   static inline constexpr bool is_logical_v = is_logical<T>::value;
 }
-

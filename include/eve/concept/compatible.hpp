@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/traits/element_type.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 
 namespace eve
 {

@@ -11,9 +11,7 @@
 #include <eve/assert.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/iota.hpp>
 #include <eve/detail/bits.hpp>
-#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits.hpp>
 #include <type_traits>
 #include <ostream>
@@ -34,24 +32,6 @@
 //==================================================================================================
 namespace eve
 {
-  template <logical_simd_value Logical> struct top_bits;
-
-  namespace detail
-  {
-    template <logical_simd_value Logical>
-    Logical to_logical(eve::top_bits<Logical> mmask);
-
-    template<typename T, relative_conditional_expr C>
-    EVE_FORCEINLINE as_logical_t<T> to_non_wide_logical(C cond, eve::as<T> const&)
-    {
-      using type  = as_logical_t<T>;
-
-      auto value = top_bits<type>(cond);
-
-      return detail::to_logical(value);
-    }
-  }
-
   //================================================================================================
   //! @addtogroup conditional
   //! @{
@@ -282,32 +262,9 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
-
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        return detail::to_non_wide_logical(*this, as<T>());
-      }
-      else
-      {
-        using m_t = typename type::mask_type;
-        using i_t = as_integer_t<m_t>;
-        if constexpr(eve::use_complete_storage<type>)
-        {
-          return bit_cast(detail::linear_ramp(eve::as<i_t>()) < i_t(count_), as<type>());
-        }
-        else
-        {
-          // Use the most full type to be sure to fill outside values of small wide with false
-          using e_t   = eve::element_type_t<i_t>;
-          using abi_t = typename i_t::abi_type;
-          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
-          return bit_cast(detail::linear_ramp(eve::as<w_t>()) < w_t(count_), as<type>());
-        }
-      }
+      return detail::to_logical(*this, tgt);
     }
 
     //! Checks equality between two eve::keep_first instances
@@ -362,10 +319,9 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
-      constexpr auto card = cardinal_v<T>;
-      return keep_first{card-count_}.mask(tgt);
+      return detail::to_logical(*this, tgt);
     }
 
     //! Checks equality between two eve::ignore_last instances
@@ -419,33 +375,9 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        return detail::to_non_wide_logical(*this, as<T>());
-      }
-      else
-      {
-        using m_t = typename type::mask_type;
-        using i_t = as_integer_t<m_t>;
-        constexpr std::ptrdiff_t card = cardinal_v<T>;
-        if constexpr(eve::use_complete_storage<type>)
-        {
-          return bit_cast(detail::linear_ramp(eve::as<i_t>()) >= i_t(card-count_), as<type>());
-        }
-        else
-        {
-          // Use the most full type to be sure to fill outside values of small wide with false
-          using e_t   = eve::element_type_t<i_t>;
-          using abi_t = typename i_t::abi_type;
-          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
-          auto i = detail::linear_ramp(eve::as<w_t>());
-          return bit_cast((i >= w_t(card-count_)) && (i < card), as<type>());
-        }
-      }
+      return detail::to_logical(*this, tgt);
     }
 
     //! Checks equality between two eve::keep_last instances
@@ -499,11 +431,11 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
-      constexpr auto card = cardinal_v<T>;
-      return keep_last{card-count_}.mask(tgt);
+      return detail::to_logical(*this, tgt);
     }
+
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
@@ -559,36 +491,11 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
-      using abi_t = typename T::abi_type;
-      using type  = as_logical_t<T>;
-
-      if constexpr( !abi_t::is_wide_logical )
-      {
-        return detail::to_non_wide_logical(*this, as<T>());
-      }
-      else
-      {
-        using m_t = typename type::mask_type;
-        using i_t = as_integer_t<m_t>;
-        if constexpr(eve::use_complete_storage<type>)
-        {
-          auto const i = detail::linear_ramp(eve::as<i_t>());
-          return bit_cast((i >= begin_) && (i < end_), as<type>());
-        }
-        else
-        {
-          // Use the most full type to be sure to fill outside values of small wide with false
-          using e_t   = eve::element_type_t<i_t>;
-          using abi_t = typename i_t::abi_type;
-          using w_t   = eve::wide<e_t, eve::expected_cardinal_t<e_t, abi_t> >;
-
-          auto const i = detail::linear_ramp(eve::as<w_t>());
-          return bit_cast((i >= begin_) && (i < end_), as<type>());
-        }
-      }
+      return detail::to_logical(*this, tgt);
     }
+
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
@@ -643,13 +550,9 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> const& tgt) const
+    template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
-      EVE_ASSERT( (first_count_ + last_count_) <= cardinal_v<T>
-                , "[eve::ignore_extrema] Index mismatch for first/last"
-                );
-
-      return keep_between(first_count_, cardinal_v<T>-last_count_).mask(tgt);
+      return detail::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const

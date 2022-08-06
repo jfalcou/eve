@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 
 namespace eve
 {
@@ -32,4 +32,3 @@ namespace eve
   template<typename T>
   using as_arithmetic_t = typename as_arithmetic<T>::type;
 }
-

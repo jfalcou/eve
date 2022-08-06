@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/as.hpp>
-#include <eve/forward.hpp>
+#include <eve/detail/wide_forward.hpp>
 
 namespace eve
 {

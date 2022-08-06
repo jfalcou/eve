@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <eve/traits/element_type.hpp>
 
 namespace eve
