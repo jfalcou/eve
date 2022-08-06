@@ -72,11 +72,3 @@ EVE_MAKE_CALLABLE(none_, none);
 }
 
 #include <eve/module/core/regular/impl/none.hpp>
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/none.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/none.hpp>
-#endif
