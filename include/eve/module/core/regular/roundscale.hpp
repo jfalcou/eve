@@ -71,7 +71,7 @@ namespace eve
 //!      The call `d(roundscale)(x)`, call is equivalent to
 //!      `eve::ldexp(d(eve::round)(eve::ldexp(a0,scale), -scale))`
 //!
-//!      @godbolt{doc/core//roundings/roundscale.cpp}
+//!      @godbolt{doc/core/roundings/roundscale.cpp}
 //! @}
 //================================================================================================
 namespace tag

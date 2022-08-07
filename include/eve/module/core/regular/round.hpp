@@ -72,7 +72,7 @@ namespace eve
 //!
 //!     The expression `eve::toward_zero(eve::round)(x)` is equivalent to `eve::trunc(x)`.
 //!
-//!      @godbolt{doc/core//roundings/round.cpp}
+//!      @godbolt{doc/core/roundings/round.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(round_, round);

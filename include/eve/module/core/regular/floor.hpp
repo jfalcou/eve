@@ -69,7 +69,7 @@ namespace eve
 //!      * If `tol` is omitted, the tolerance is taken to 3 times
 //!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
-//!      @godbolt{doc/core//fuzzy/floor.cpp}
+//!      @godbolt{doc/core/fuzzy/floor.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(floor_, floor);

@@ -59,7 +59,6 @@ namespace eve
 //!
 //!   * eve::tolerant
 //!
-//!
 //!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated
 //!     value for `x`, where `x` must be a floating value.
 //!
@@ -70,7 +69,9 @@ namespace eve
 //!        * If `tol` is omitted the tolerance is taken to 3 times
 //!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
-//!      @godbolt{doc/core//fuzzy/trunc.cpp}
+//!      **Example**
+//!
+//!        @godbolt{doc/core/fuzzy/trunc.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(trunc_, trunc);

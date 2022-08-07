@@ -70,7 +70,7 @@ namespace eve
 //!     If d is one of these 4 decorators
 //!     The call `d(fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
 //!
-//!      @godbolt{doc/core//roundings/fracscale.cpp}
+//!      @godbolt{doc/core/roundings/fracscale.cpp}
 //! @}
 //================================================================================================
 namespace tag

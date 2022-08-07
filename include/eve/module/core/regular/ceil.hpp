@@ -69,7 +69,7 @@ namespace eve
 //!      * If `tol` is omitted, the tolerance is taken to 3 times the machine
 //!        \f$\epsilon\f$ in the `x` type (`3*eve::eps (eve::as (x))`).
 //!
-//!      @godbolt{doc/core//fuzzy/ceil.cpp}
+//!      @godbolt{doc/core/fuzzy/ceil.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(ceil_, ceil);
