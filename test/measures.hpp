@@ -23,7 +23,7 @@ namespace eve
   template<typename T>
   inline bool compare_equal(logical<T> const &l, logical<T> const &r)
   {
-    if constexpr(eve::simd_value<T>)  return l.bitmap() == r.bitmap();
+    if constexpr(eve::simd_value<T>)  return eve::all(l == r);
     else                              return l == r;
   }
 

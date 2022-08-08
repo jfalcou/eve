@@ -196,3 +196,13 @@ TTS_CASE_TPL("Make all logicals (splat)", eve::test::simd::all_types)
     }
   }
 };
+
+TTS_CASE("Wide<int> equals") {
+  eve::wide<int> x{3};
+  TTS_EQUAL(x, x);
+};
+
+TTS_CASE("logical<Wide<int>> equals") {
+  eve::wide<int> x{3};
+  TTS_EQUAL((x != 0), (x != 0));
+};

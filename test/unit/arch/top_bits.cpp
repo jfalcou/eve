@@ -33,9 +33,6 @@ template <typename T, typename Test> void test_over_top_bits(Test test)
 
 template <typename T, std::size_t N> bool expect_array(const std::array<T, N>&) { return true; }
 
-//==================================================================================================
-// Check the raw type of top_bits' storage
-//==================================================================================================
 TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -45,16 +42,17 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
   using ABI         = typename logical::abi_type;
 
        if constexpr (eve::has_aggregated_abi_v<logical>)    TTS_EXPECT(expect_array(tb_storage{}));
-  else if constexpr (!ABI::is_wide_logical)                 TTS_TYPE_IS(tb_storage, typename logical::storage_type);
+  else if constexpr (eve::current_api == eve::avx512)
+  {
+    constexpr std::ptrdiff_t min_size = sizeof(v_t) == 1 ? 16 : 8;
+    using min_logical = eve::logical<eve::wide<v_t, eve::fixed<min_size>>>;
+
+    if constexpr (T::size() < min_size) TTS_TYPE_IS(tb_storage, min_logical);
+    else                                TTS_TYPE_IS(tb_storage, logical);
+  }
   else if constexpr (std::same_as<ABI, eve::x86_128_>)      TTS_TYPE_IS(tb_storage, std::uint16_t);
   else if constexpr (std::same_as<ABI, eve::arm_sve_128_>)  TTS_TYPE_IS(tb_storage, std::uint16_t);
   else if constexpr (std::same_as<ABI, eve::x86_256_>)      TTS_TYPE_IS(tb_storage, std::uint32_t);
-  else if constexpr (std::same_as<ABI, eve::arm_sve_256_>)  TTS_TYPE_IS(tb_storage, std::uint32_t);
-  else if constexpr (std::same_as<ABI, eve::arm_sve_512_>)
-  {
-    if constexpr(logical::size() <= 32) TTS_TYPE_IS(tb_storage, std::uint32_t);
-    else                                TTS_TYPE_IS(tb_storage, std::uint64_t);
-  }
   else if constexpr (eve::arm_abi<ABI>)
   {
          if constexpr(T::size() == 1)                      TTS_TYPE_IS(tb_storage, std::uint8_t);
@@ -71,9 +69,6 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
   }
 };
 
-//==================================================================================================
-// Check the raw type of top_bits' storage
-//==================================================================================================
 TTS_CASE_TPL("Check top bits from logical", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -106,9 +101,6 @@ TTS_CASE_TPL("Check top bits to_logical", eve::test::simd::all_types)
   });
 };
 
-//==================================================================================================
-// Check the raw type of top_bits' storage
-//==================================================================================================
 TTS_CASE_TPL( "Check top_bits::set", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -131,32 +123,6 @@ TTS_CASE_TPL( "Check top_bits::set", eve::test::simd::all_types)
     TTS_EQUAL(expected, eve::detail::to_logical(actual));
   }
 };
-
-//==================================================================================================
-// Check the raw type of top_bits' storage
-//==================================================================================================
-TTS_CASE_TPL("Check top_bits endianess", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
-{
-  using logical = eve::logical<T>;
-
-  logical test(false);
-  test.set(0, true);
-
-  if constexpr( eve::top_bits<logical>::is_aggregated )
-  {
-    TTS_PASS("no test for aggregated");
-  }
-  else
-  {
-    eve::top_bits test_top(test);
-    TTS_EXPECT((test_top.storage & 1u));
-  }
-};
-
-//==================================================================================================
-// Check the behavior of top_bits over ignore masks
-//==================================================================================================
 TTS_CASE_TPL("Check top_bits from ignore_*", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -246,7 +212,7 @@ TTS_CASE_TPL("Check top_bits bitwise operators", eve::test::simd::all_types)
 
   if constexpr( !eve::top_bits<logical>::is_aggregated )
   {
-    TTS_EQUAL(0u, (~eve::top_bits<logical>{logical{true}}).storage);
+    TTS_EQUAL(0u, (~eve::top_bits<logical>{logical{true}}).as_int());
   }
 };
 

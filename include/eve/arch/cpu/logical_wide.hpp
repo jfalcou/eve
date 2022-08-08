@@ -99,13 +99,7 @@ namespace eve
 
     //! Constructs from ABI-specific storage
     EVE_FORCEINLINE logical(storage_type const &r) noexcept
-      : storage_base( [&]()
-                      { constexpr auto  c =   Cardinal::value == 1 && sizeof(Type) == 8
-                                          &&  std::is_same_v<abi_type, arm_64_>
-                                          && current_api != asimd;
-                        if constexpr(c) return value_type(r); else  return r;
-                      }()
-                    )
+      : storage_base( r )
     {}
 
     //! @brief Constructs a eve::logical from a pair of @iterator.
