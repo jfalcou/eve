@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -44,10 +44,10 @@ TTS_CASE_WITH( "Check behavior of pow_abs on wide"
 
   TTS_ULP_EQUAL(eve::pow_abs(a0, a1)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1), 32);
   TTS_ULP_EQUAL(eve::pow_abs(a2, a3)      , map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a2, a3), 2);
-  
-  
-  
-  
+
+
+
+
 };
 
 TTS_CASE_TPL( "Check return types of pow_abs"

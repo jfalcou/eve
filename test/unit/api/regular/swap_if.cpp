@@ -4,7 +4,7 @@
   Copyright 2021 Joel FALCOU
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0-1.0
 **/
 #include <eve/module/core.hpp>
 //==================================================================================================

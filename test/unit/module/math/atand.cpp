@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -40,6 +40,6 @@ TTS_CASE_WITH( "Check behavior of atand on wide"
 
   TTS_ULP_EQUAL(eve::atand(a0)      , map([](auto e) -> v_t { return eve::radindeg(std::atan(e)); }, a0), 2);
   TTS_ULP_EQUAL(eve::atand(a1)      , map([](auto e) -> v_t { return eve::radindeg(std::atan(e)); }, a1), 2);
-  
-  
+
+
 };

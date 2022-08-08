@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -82,5 +82,4 @@ TTS_CASE_WITH("Check behavior of negate(wide)",
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
       negate(a0, a1), map([](auto e, auto f) -> v_t { return e * eve::sign(f); }, a0, a1), 2);
-  if constexpr( eve::floating_value<T> ) {}
 };

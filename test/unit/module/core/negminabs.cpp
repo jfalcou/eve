@@ -1,7 +1,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -51,13 +51,10 @@ TTS_CASE_WITH("Check behavior of negminabs on all types full range",
   using eve::negminabs;
   using eve::detail::map;
 
-  TTS_ULP_EQUAL(negminabs((a0), (a1), (a2)), -eve::minabs(a0, a1, a2), 2);
-  TTS_ULP_EQUAL(
-      eve::pedantic(negminabs)((a0), (a1), (a2)), -eve::pedantic(eve::minabs)(a0, a1, a2), 2);
-  TTS_ULP_EQUAL(
-      eve::numeric(negminabs)((a0), (a1), (a2)), -eve::numeric(eve::minabs)(a0, a1, a2), 2);
-  TTS_ULP_EQUAL(
-      eve::saturated(negminabs)((a0), (a1), (a2)), -eve::saturated(eve::minabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(negminabs(a0, a1, a2), -eve::minabs(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::pedantic(negminabs)(a0, a1, a2), -eve::pedantic(eve::minabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(negminabs)(a0, a1, a2), -eve::numeric(eve::minabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::saturated(negminabs)(a0, a1, a2), -eve::saturated(eve::minabs)(a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(negminabs[t](a0, a1), eve::if_else(t, negminabs(a0, a1), a0));
 };

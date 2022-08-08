@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -49,13 +49,13 @@ TTS_CASE_WITH( "Check behavior of sech on wide"
   using v_t = eve::element_type_t<T>;
   using eve::sech;
   using eve::cosh;
-  
+
 
   auto rel  = std::is_same_v<v_t,float> ? 2e-5 : 1e-13;
 
   TTS_RELATIVE_EQUAL(sech(a0)      , map([](auto e) -> v_t { return 1/std::cosh(e); }, a0), rel);
   TTS_RELATIVE_EQUAL(sech(a1)      , map([](auto e) -> v_t { return 1/std::cosh(e); }, a1), rel);
 
-  
-  
+
+
 };

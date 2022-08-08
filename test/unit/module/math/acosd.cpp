@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -38,5 +38,5 @@ TTS_CASE_WITH( "Check behavior of acosd on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::acosd(a0)      , map([](auto e) -> v_t { return eve::radindeg(std::acos(e)); }, a0), 2);
-  
+
 };

@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -40,8 +40,6 @@ TTS_CASE_TPL("Check return types of eve::sqr", eve::test::simd::all_types)
   TTS_EXPR_IS(saturated(eve::sqr[eve::logical<T>()])(v_t()), T);
   TTS_EXPR_IS(saturated(eve::sqr[eve::logical<v_t>()])(v_t()), v_t);
   TTS_EXPR_IS(saturated(eve::sqr[bool()])(v_t()), v_t);
-
-  if constexpr( eve::floating_real_value<T> ) {}
 };
 
 //==================================================================================================
@@ -71,5 +69,4 @@ TTS_CASE_WITH("Check behavior of eve::sqr(eve::wide)",
                   a0));
     TTS_EQUAL(saturated(sqr[mask])(a0), eve::if_else(mask, saturated(sqr)(a0), a0));
   }
-  else if constexpr( eve::floating_real_value<T> ) {}
 };

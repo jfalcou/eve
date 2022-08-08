@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -43,11 +43,11 @@ TTS_CASE_WITH( "Check behavior of acsc on wide"
 
   auto sacsc = [](auto e) -> v_t { return std::asin(1/e); };
   TTS_ULP_EQUAL(eve::acsc(a0)           , map(sacsc, a0), 2);
-  
+
   TTS_ULP_EQUAL(eve::acsc(a1)           , map(sacsc, a1), 2);
-  
+
   TTS_ULP_EQUAL(eve::acsc(a2)           , map(sacsc, a2), 2);
-  
+
   TTS_ULP_EQUAL(eve::acsc(a3)           , map(sacsc, a3), 2);
-  
+
 };

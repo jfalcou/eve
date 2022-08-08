@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -50,7 +50,7 @@ TTS_CASE_WITH ( "Check behavior of cot on wide"
 {
   using eve::detail::map;
   using eve::cot;
-  
+
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1/std::tan(double(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(cot)(a0)      , map(ref, a0), 2);
@@ -64,7 +64,7 @@ TTS_CASE_WITH ( "Check behavior of cot on wide"
   TTS_ULP_EQUAL(cot(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(cot(a3)                       , map(ref, a3), 2);
   TTS_ULP_EQUAL(cot(a4)                       , map(ref, a4), 2);
-  
+
 
   TTS_IEEE_EQUAL(cot(T( 0 )), eve::inf(eve::as<T>()) );
   TTS_IEEE_EQUAL(cot(T(-0.)), eve::minf(eve::as<T>()));

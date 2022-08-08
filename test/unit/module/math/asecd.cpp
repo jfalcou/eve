@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -42,12 +42,12 @@ TTS_CASE_WITH( "Check behavior of asecd on wide"
 
   auto sasecd = [](auto e) -> v_t { return eve::radindeg(std::acos(1/e)); };
   TTS_ULP_EQUAL(eve::asecd(a0)           , map(sasecd, a0), 2);
-  
+
   TTS_ULP_EQUAL(eve::asecd(a1)           , map(sasecd, a1), 2);
-  
+
   TTS_ULP_EQUAL(eve::asecd(a2)           , map(sasecd, a2), 2);
-  
+
   TTS_ULP_EQUAL(eve::asecd(a3)           , map(sasecd, a3), 2);
-  
+
 
 };

@@ -1,7 +1,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -51,13 +51,10 @@ TTS_CASE_WITH("Check behavior of negmaxabs on all types full range",
   using eve::negmaxabs;
   using eve::detail::map;
 
-  TTS_ULP_EQUAL(negmaxabs((a0), (a1), (a2)), -eve::maxabs(a0, a1, a2), 2);
-  TTS_ULP_EQUAL(
-      eve::pedantic(negmaxabs)((a0), (a1), (a2)), -eve::pedantic(eve::maxabs)(a0, a1, a2), 2);
-  TTS_ULP_EQUAL(
-      eve::numeric(negmaxabs)((a0), (a1), (a2)), -eve::numeric(eve::maxabs)(a0, a1, a2), 2);
-  TTS_ULP_EQUAL(
-      eve::saturated(negmaxabs)((a0), (a1), (a2)), -eve::saturated(eve::maxabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(negmaxabs(a0, a1, a2), -eve::maxabs(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::pedantic(negmaxabs)(a0, a1, a2), -eve::pedantic(eve::maxabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(negmaxabs)(a0, a1, a2), -eve::numeric(eve::maxabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::saturated(negmaxabs)(a0, a1, a2), -eve::saturated(eve::maxabs)(a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(negmaxabs[t](a0, a1), eve::if_else(t, negmaxabs(a0, a1), a0));
 };

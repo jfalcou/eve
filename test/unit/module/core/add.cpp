@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -59,8 +59,6 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::saturated(eve::add)(v_t(), v_t(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::add)(v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::saturated(eve::add)(v_t(), v_t(), v_t()), v_t);
-
-  if constexpr( eve::floating_value<T> ) {}
 };
 
 //==================================================================================================
@@ -78,17 +76,10 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::saturated;
   using eve::detail::map;
 
-  TTS_EQUAL(add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2));
-  TTS_EQUAL(saturated(add)(a0, a2),
-            map([&](auto e, auto f) { return saturated(add)(e, f); }, a0, a2));
-  TTS_EQUAL(add(a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(saturated(add)(a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return saturated(add)(saturated(add)(e, f), g); },
-                a0,
-                a1,
-                a2));
-  if constexpr( eve::floating_value<T> ) {}
+  TTS_EQUAL( add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2));
+  TTS_EQUAL( saturated(add)(a0, a2), map([&](auto e, auto f) { return saturated(add)(e, f); }, a0, a2));
+  TTS_EQUAL( add(a0, a1, a2), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2));
+  TTS_EQUAL( saturated(add)(a0, a1, a2), map([&](auto e, auto f, auto g) { return saturated(add)(saturated(add)(e, f), g); }, a0, a1, a2));
 };
 
 //==================================================================================================

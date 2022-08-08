@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -34,7 +34,6 @@ TTS_CASE_WITH("Check behavior of roundscale(wide) and diff on  floating types",
 <typename T>(T const& a0)
 {
   using eve::detail::map;
-
   using eve::rec;
   using eve::sqr;
   TTS_ULP_EQUAL(eve::roundscale(a0, 4),

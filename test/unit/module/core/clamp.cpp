@@ -1,7 +1,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -57,10 +57,4 @@ TTS_CASE_WITH("Check behavior of clamp(wide) and diff  on all types",
 
   TTS_EQUAL(clamp(a0, a1, a2),
             map([&](auto e, auto f, auto g) -> v_t { return std::clamp(e, f, g); }, a0, a1, a2));
-
-  if constexpr( eve::floating_real_value<T> )
-  {
-    using eve::max;
-    using eve::min;
-  }
 };

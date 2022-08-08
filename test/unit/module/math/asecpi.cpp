@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -42,12 +42,12 @@ TTS_CASE_WITH( "Check behavior of asecpi on wide"
 
   auto sasecpi = [](auto e) -> v_t { return eve::radinpi(std::acos(1/e)); };
   TTS_ULP_EQUAL(eve::asecpi(a0)           , map(sasecpi, a0), 2);
-  
+
   TTS_ULP_EQUAL(eve::asecpi(a1)           , map(sasecpi, a1), 2);
-  
+
   TTS_ULP_EQUAL(eve::asecpi(a2)           , map(sasecpi, a2), 2);
-  
+
   TTS_ULP_EQUAL(eve::asecpi(a3)           , map(sasecpi, a3), 2);
-  
+
 
 };

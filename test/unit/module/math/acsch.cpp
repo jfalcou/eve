@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -41,6 +41,6 @@ TTS_CASE_WITH( "Check behavior of acsch on wide"
 
   TTS_ULP_EQUAL(eve::acsch(a0)      , map([](auto e) -> v_t { return std::asinh(1/e); }, a0), 2);
   TTS_ULP_EQUAL(eve::acsch(a1)      , map([](auto e) -> v_t { return std::asinh(1/e); }, a1), 2);
-  
-  
+
+
 };

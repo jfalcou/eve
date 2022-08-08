@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -28,8 +28,6 @@ TTS_CASE_TPL("Check return types of eve::signnz", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::signnz[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::signnz[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::signnz[bool()](v_t()), v_t);
-
-  if constexpr( eve::floating_real_value<T> ) {}
 };
 
 //==================================================================================================
