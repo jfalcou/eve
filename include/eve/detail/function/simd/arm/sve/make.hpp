@@ -98,7 +98,7 @@ make(eve::as<logical<wide<T, N>>>, V x) noexcept requires sve_abi<abi_t<T, N>> &
   {
     return [&]<std::size_t... i>(std::index_sequence<i...> const&)
     {
-      return make(as<logical<wide<T, f_t>>> {}, (i < N::value ? x : false)...);
+      return make(as<logical<wide<T, f_t>>> {}, (i < N::value ? (bool)x : false)...);
     }
     (std::make_index_sequence<f_t::value>());
   }
