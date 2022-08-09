@@ -28,7 +28,6 @@ namespace eve
 //!
 //!   @code
 //!   namespace eve
-//!   {
 //!   {   template< value T, value U > bit_select)( T m, U x, U y )
 //!       requires compatible< T,U> noexcept;
 //!   }
