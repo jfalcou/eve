@@ -37,16 +37,16 @@ namespace eve
 //!
 //!     * `x` :  [argument](@ref eve::value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!       Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
-//!       The result is  the opposite of `x` if this value is representable in the type of `x`.
-//!       More specifically, for signed integers the opposite value of [their lowest finite
-//!       value](@ref eve::valmin) is not representable and the result is undefined behaviour.
+//!     *  The result is  the opposite of `x` if this value is representable in the type of `x`.
 //!
-//!    @note
-//!       Although the operator notation with `-` is supported, the `-` operator on
-//!       standard scalar type is the original one and so can lead to automatic promotion.
+//!     *  More specifically, for signed integers the opposite value of [their lowest finite value](@ref eve::valmin)
+//!        is not representable and the result is undefined behaviour.
+//!
+//!  @note
+//!   * Although the operator notation with `-` is supported, the `-` operator on
+//!     standard scalar type is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
 //!
@@ -56,8 +56,8 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::minus[mask](x)` provides a masked version of `eve::minus` which is
-//!     equivalent to `if_else (mask, minus(x), x)`.
+//!     The call `eve::minus[mask](x)` provides a masked version of `eve::minus` which is
+//!     equivalent to `if_else (mask, eve::minus(x), x)`.
 //!
 //!      **Example**
 //!

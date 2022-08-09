@@ -44,7 +44,6 @@ namespace eve
 //!        returning each element as an unsigned integer of half the size of the input element.
 //!
 //!    @note
-//!
 //!      If you also need the lower part `hilo` is more efficient.
 //!
 //!  @groupheader{Example}

@@ -48,7 +48,6 @@ namespace eve
 //!     test result between `x` and `y`. The infix notation `x == y` can also be used.
 //!
 //!   @note
-//!
 //!      Although the infix notation with `==` is supported, the `==` operator on
 //!      standard scalar types is the original one and so returns bool result, not `eve::logical`.
 //!

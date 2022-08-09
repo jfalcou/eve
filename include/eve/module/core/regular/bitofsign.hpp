@@ -42,7 +42,6 @@ namespace eve
 //!    The value of the bit of sign is returned.
 //!
 //!    @note
-//!
 //!      * bitofsign does NOT return  a [logical value](@ref eve::value)
 //!
 //!      * In particular,  take care that for  [floating real values](@ref eve::value) bitofsign

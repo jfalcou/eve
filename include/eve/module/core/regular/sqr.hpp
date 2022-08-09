@@ -43,10 +43,9 @@ namespace eve
 //!    square of `x` if it is representable in this type.
 //!
 //!  @note
-//!
-//!      * For  [integral signed values](@ref eve::value)   if `eve::saturated(eve::abs)(x)`
-//!        is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
-//!        is undefined.
+//!      For  [integral signed values](@ref eve::value)   if `eve::saturated(eve::abs)(x)`
+//!      is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
+//!      is undefined.
 //!
 //!  @groupheader{Example}
 //!

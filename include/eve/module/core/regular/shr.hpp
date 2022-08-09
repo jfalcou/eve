@@ -57,7 +57,6 @@ namespace eve
 //!          interval: `[0, N[` or the result is undefined.
 //!
 //!    @note
-//!
 //!      Although the infix notation with `<<` is supported, the `<<` operator on
 //!      standard scalar types is the original one and so can not be overloaded on standard floating
 //!      parameters due to **C++** limitations.

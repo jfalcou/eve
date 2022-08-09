@@ -46,7 +46,6 @@ namespace eve
 //!      Infix notation can be used with `!x`.
 //!
 //!    @note
-//!
 //!      Although the infix notation with `!` is supported, the `!` operator on
 //!      standard scalar types is the original one and so will return bool instead of
 //!      eve::logical_value.

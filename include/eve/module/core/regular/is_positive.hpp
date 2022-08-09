@@ -45,7 +45,6 @@ namespace eve
 //!      if and only if the bit of sign (most significant bit) is not set.
 //!
 //!   @note
-//!
 //!     this function coincides with `is_gez` on [integral real values](@ref eve::value),
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false
 //!     and if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control

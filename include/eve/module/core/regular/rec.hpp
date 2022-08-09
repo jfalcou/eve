@@ -44,7 +44,6 @@ namespace eve
 //!    inverse value of `x`.
 //!
 //!  @note
-//!
 //!     For [real integral value](@ref eve::value) `x` is semantically equivalent to:
 //!       * If x==1 or x==-1, x is returned.
 //!       * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.

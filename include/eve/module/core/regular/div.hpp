@@ -44,7 +44,6 @@ namespace eve
 //!      is returned.
 //!
 //!    @note
-//!
 //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`
 //!        if `x` or  `y` is an  [simd value](@ref eve::simd_value).
 //!

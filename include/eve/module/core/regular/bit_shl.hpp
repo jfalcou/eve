@@ -46,7 +46,6 @@ namespace eve
 //!    is returned.
 //!
 //!   @note
-//!
 //!     * The call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is
 //!       an [simd value](@ref eve::simd_value).
 //!

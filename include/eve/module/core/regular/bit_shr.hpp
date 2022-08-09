@@ -48,7 +48,6 @@ namespace eve
 //!    is returned.
 //!
 //!   @note
-//!
 //!     * The call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is
 //!       an [simd value](@ref eve::simd_value).
 //!

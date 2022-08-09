@@ -46,7 +46,6 @@ namespace eve
 //!       eve::simd_value).
 //!
 //!    @note
-//!
 //!       * Although the infix notation with `%` is supported, the `%` operator on
 //!         standard integral scalar type is the original one and so can lead to automatic
 //!         promotion. Moreover due to C++ limitations `%` is not available for scalar floating

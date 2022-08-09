@@ -39,9 +39,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!       `x`:      [floating value](@ref eve::floating_value).
-//!
-//!       `scale` : int or std::integral_constant of int type limited to the range [0, 15].
+//!      * `x`:      [floating value](@ref eve::floating_value).
+//!      * `scale` : int or std::integral_constant of int type limited to the range [0, 15].
 //!
 //!    **Return value**
 //!

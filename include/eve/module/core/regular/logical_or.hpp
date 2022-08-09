@@ -49,7 +49,6 @@ namespace eve
 //!      if `x` or  `y` is an  [simd value](@ref eve::simd_value) and does not shortcut.
 //!
 //!    @note
-//!
 //!      Although the infix notation with `||` is supported, the `||` operator on
 //!      standard scalar types is the original one and so will return bool instead of
 //!      eve::logical_value.

@@ -47,7 +47,6 @@ namespace eve
 //!    to do it at reasonable cost.
 //!
 //!    @note
-//!
 //!       This `fam` implementation provides those properties for all
 //!       [integral real value](@ref eve::integral_value)
 //!       and when possible for [floating real value](@ref eve::floating_value).

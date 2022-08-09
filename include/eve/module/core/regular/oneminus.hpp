@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var oneminus
-//!   @brief \f$ x \rightarrow 1-x\f$.
+//!   @brief one minus the input: \f$ x \rightarrow 1-x\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -39,10 +39,9 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The value of 1-`x` is returned.
+//!    The value of `eve::one(as(x))-x` is returned.
 //!
 //!    @note
-//!
 //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
 //!      the result type, the corresponding result [element](@ref glossary_elementwise) is
 //!      undefined.

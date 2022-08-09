@@ -45,7 +45,6 @@ namespace eve
 //!    is returned.
 //!
 //!    @note
-//!
 //!     If any element of the inputs is a NaN,
 //!     the corresponding output element is system-dependent.
 //!

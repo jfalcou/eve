@@ -45,7 +45,6 @@ namespace eve
 //!      is returned.
 //!
 //!    @note
-//!
 //!      Although the infix notation with `|` is supported for two parameters, the `|` operator on
 //!      standard scalar types is the original one and so can lead to automatic promotion.
 //!      Moreover, and due to C++ limitations is not available for floating point scalar entries.

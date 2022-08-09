@@ -43,7 +43,6 @@ namespace eve
 //!    The value of the product of the arguments is returned.
 //!
 //!   @note
-//!
 //!     Take care that for floating entries, the multiplication is only 'almost' associative.
 //!     This call performs multiplications in reverse incoming order.
 //!

@@ -50,7 +50,6 @@ namespace eve
 //!      sign is returned
 //!
 //!   @note
-//!
 //!     *  the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))`
 //!        if `x`  is an  [simd value](@ref eve::simd_value).
 //!
