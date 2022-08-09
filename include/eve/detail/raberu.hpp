@@ -2,7 +2,7 @@
 /*
   RABERU - Fancy Parameters Library
   Copyright : RABERU Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #ifndef RABERU_HPP_INCLUDED

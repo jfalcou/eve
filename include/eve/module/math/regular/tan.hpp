@@ -2,7 +2,7 @@
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
@@ -50,7 +50,7 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle, 
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
   //!
   //!     provide a balance between speed and range limitation.
   //!

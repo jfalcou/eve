@@ -2,7 +2,7 @@
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
@@ -50,13 +50,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle, 
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
   //!
   //!     provide a balance between speed and range limitation.
-  //!  
+  //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!  
+  //!
   //!     The expression `diff(sin)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
@@ -65,10 +65,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct sin_; }
   template<> struct supports_conditional<tag::sin_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(sin_, sin);
 }
 

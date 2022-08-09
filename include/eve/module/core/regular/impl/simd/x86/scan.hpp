@@ -2,7 +2,7 @@
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #pragma once
@@ -15,7 +15,6 @@
 
 namespace eve::detail
 {
-
 template<typename T, typename N, std::ptrdiff_t Shift>
 EVE_FORCEINLINE wide<T, N> slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>);
 
@@ -94,5 +93,4 @@ scan_(EVE_SUPPORTS(avx2_), Wide v, Op op, Zero z_) requires(current_api == avx2)
   }
   else return scan_(EVE_RETARGET(cpu_), v, op, z_);
 }
-
 }

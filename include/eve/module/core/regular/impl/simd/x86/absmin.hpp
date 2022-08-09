@@ -5,7 +5,7 @@
   Copyright 2020 Jean-Thierry LAPRESTE
 
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
