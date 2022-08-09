@@ -33,7 +33,7 @@ namespace eve
 //!      eve::common_compatible_t<T, U> average(T x, U y) noexcept;
 //!
 //!      template< eve::floating_value Ts ... >
-//!      eve::common_compatible_t<Ts, ...> average(Ts ... xs) noexcept;
+//!      eve::common_compatible_t<Ts ...> average(Ts ... xs) noexcept;
 //!   }
 //!   @endcode
 //!
