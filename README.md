@@ -110,7 +110,7 @@ A new, more up-to-date EVE specific journal paper is in the work atm.
 ```
 Boost Software License
 
-Copyright : EVE Contributors & Maintainers
+Copyright : EVE Project Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,6 +1,6 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright : EVE Contributors & Maintainers
+##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##
 ## emcmake cmake .. -G Ninja  -DCMAKE_TOOLCHAIN_FILE='../cmake/toolchain/emcc.cmake'

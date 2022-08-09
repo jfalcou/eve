@@ -1,6 +1,6 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright : EVE Contributors & Maintainers
+##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 set(CMAKE_C_COMPILER    gcc  )
