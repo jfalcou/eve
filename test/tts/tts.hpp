@@ -2,7 +2,7 @@
 /**
   TTS - Tiny Test System
   Copyright : TTS Contributors & Maintainers
-  SPDX-License-Identifier: BSL-1.0-1.0
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #pragma once
