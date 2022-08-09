@@ -14,7 +14,7 @@ TTS_CASE_TPL("Random check for eve::tand", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  auto std_tand = [](auto e) -> e_t { return std::tan(1.7453292519943295769236907684886127134428718885417e-2l*(long double)e); };
+  auto std_tand = [](auto e) { return e_t(std::tan(1.7453292519943295769236907684886127134428718885417e-2l*(long double)e)); };
   {
     auto vmin = e_t(-45.);
     auto vmax = e_t(45.);
