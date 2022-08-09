@@ -1,13 +1,11 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
-  Copyright 2018 Joel FALCOU
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: BSL-1.0
-**/
-#include <eve/module/core.hpp>
+*/
 //==================================================================================================
+#include <eve/module/core.hpp>
 #include "test.hpp"
 #include <cstddef>
 

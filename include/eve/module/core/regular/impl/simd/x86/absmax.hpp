@@ -1,10 +1,7 @@
 //==================================================================================================
 /*
   EVE - Expressive Vector Engine
-  Copyright 2020 Joel FALCOU
-  Copyright 2020 Jean-Thierry LAPRESTE
-
-  Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+  Copyright : EVE Contributors & Maintainers
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================

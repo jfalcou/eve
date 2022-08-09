@@ -108,7 +108,7 @@ A new, more up-to-date EVE specific journal paper is in the work atm.
  ## License
 
 ```
-MIT License
+Boost Software License
 
 Copyright : EVE Contributors & Maintainers
 
