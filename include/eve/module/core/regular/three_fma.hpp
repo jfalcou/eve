@@ -47,10 +47,7 @@ namespace eve
 //!              `x`\f$\otimes\f$`y`\f$\oplus\f$`z`
 //!
 //!     where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
-//!     infinite precision.
-//!
-//!     where \f$\oplus\f$ adds its two parameters with infinite precision.
-//!
+//!     infinite precision..
 //!
 //!  @groupheader{Example}
 //!
