@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var maxabs
-//!   @brief Computes the  maximum  of the absolute value of its [arguments](@ref eve::value).
+//!   @brief Computes the  maximum  of the absolute value of its arguments.
 //!
 //!   **Defined in Header**
 //!

@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_ornot
-//!   @brief Computes the bitwise ORNOT of its [arguments](@ref eve::value).
+//!   @brief Computes the bitwise ORNOT of its arguments.
 //!
 //!   **Defined in Header**
 //!

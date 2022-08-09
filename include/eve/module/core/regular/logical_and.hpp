@@ -17,7 +17,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_and
-//!   @brief Computes the logical AND of its [arguments](@ref eve::value).
+//!   @brief Computes the logical AND of its arguments.
 //!
 //!   **Defined in Header**
 //!

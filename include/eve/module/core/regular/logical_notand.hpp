@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_notand
-//!   @brief Computes the logical NOTAND of its [arguments](@ref eve::value).
+//!   @brief Computes the logical NOTAND of its arguments.
 //!
 //!   **Defined in Header**
 //!

@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var manhattan
-//!   @brief Computes the manhattan norm (\f$l_1\f$)  of its [arguments](@ref eve::value).
+//!   @brief Computes the manhattan norm (\f$l_1\f$)  of its arguments.
 //!
 //!   **Defined in Header**
 //!

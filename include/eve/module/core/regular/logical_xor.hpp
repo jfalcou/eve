@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_xor
-//!   @brief Computes the logical XOR of its [arguments](@ref eve::value).
+//!   @brief Computes the logical XOR of its arguments.
 //!
 //!   **Defined in Header**
 //!

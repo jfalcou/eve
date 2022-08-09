@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var add
-//!   @brief Computes the sum of its [arguments](@ref eve::value).
+//!   @brief Computes the sum of its arguments.
 //!
 //!   **Defined in Header**
 //!

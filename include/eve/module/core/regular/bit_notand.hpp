@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_notand
-//!   @brief Computes the bitwise NOTAND of its [arguments](@ref eve::value).
+//!   @brief Computes the bitwise NOTAND of its arguments.
 //!
 //!   **Defined in Header**
 //!

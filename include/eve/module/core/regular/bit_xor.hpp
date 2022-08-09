@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_xor
-//!   @brief Computes the bitwise XOR of its [arguments](@ref eve::value).
+//!   @brief Computes the bitwise XOR of its arguments.
 //!
 //!   **Defined in Header**
 //!

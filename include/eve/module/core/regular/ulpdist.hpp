@@ -15,8 +15,7 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var ulpdist
-//!   @brief Computes the unit in the last place distance of its [arguments](@ref eve::value).
-//!
+//!   @brief Computes the unit in the last place distance of its arguments.
 //!   **Defined in Header**
 //!
 //!   @code

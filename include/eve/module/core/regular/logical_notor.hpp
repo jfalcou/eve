@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_notor
-//!   @brief Computes the logical NOTOR of its [arguments](@ref eve::value).
+//!   @brief Computes the logical NOTOR of its arguments.
 //!
 //!   **Defined in Header**
 //!

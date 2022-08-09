@@ -17,7 +17,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_or
-//!   @brief Computes the logical OR of its [arguments](@ref eve::value).
+//!   @brief Computes the logical OR of its arguments.
 //!
 //!   **Defined in Header**
 //!

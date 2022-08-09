@@ -18,7 +18,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_or
-//!   @brief Computes the logical NOT of its [argument](@ref eve::value).
+//!   @brief Computes the logical NOT of its argument.
 //!
 //!   **Defined in Header**
 //!

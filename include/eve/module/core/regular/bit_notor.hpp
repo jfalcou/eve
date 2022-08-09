@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_notor
-//!   @brief Computes the bitwise NOTOR of its [arguments](@ref eve::value).
+//!   @brief Computes the bitwise NOTOR of its arguments.
 //!
 //!   **Defined in Header**
 //!

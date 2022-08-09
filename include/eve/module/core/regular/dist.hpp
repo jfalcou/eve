@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var dist
-//!   @brief Computes the distance of its [arguments](@ref eve::value).
+//!   @brief Computes the distance of its arguments.
 //!
 //!   **Defined in Header**
 //!

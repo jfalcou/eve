@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_andnot
-//!   @brief Computes the bitwise ANDNOT of its [arguments](@ref eve::value).
+//!   @brief Computes the bitwise ANDNOT of its arguments.
 //!
 //!   **Defined in Header**
 //!

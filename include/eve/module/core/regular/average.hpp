@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var average
-//!   @brief Computes the  arithmetic mean  of its [arguments](@ref eve::value).
+//!   @brief Computes the  arithmetic mean  of its arguments.
 //!
 //!   **Defined in Header**
 //!

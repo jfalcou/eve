@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_andnot
-//!   @brief Computes the logical ANDNOT of its [arguments](@ref eve::value).
+//!   @brief Computes the logical ANDNOT of its arguments.
 //!
 //!   **Defined in Header**
 //!

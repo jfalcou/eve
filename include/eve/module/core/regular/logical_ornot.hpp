@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_ornot
-//!   @brief Computes the logical ORNOT of its [arguments](@ref eve::value).
+//!   @brief Computes the logical ORNOT of its arguments.
 //!
 //!   **Defined in Header**
 //!

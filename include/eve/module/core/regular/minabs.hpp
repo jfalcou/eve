@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var minabs
-//!   @brief Computes the  minimum  of the absolute value of its [arguments](@ref eve::value).
+//!   @brief Computes the  minimum  of the absolute value of its arguments.
 //!
 //!   **Defined in Header**
 //!

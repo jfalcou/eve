@@ -16,7 +16,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_or
-//!   @brief Computes the bitwise OR of its [arguments](@ref eve::value).
+//!   @brief Computes the bitwise OR of its arguments.
 //!
 //!   **Defined in Header**
 //!
