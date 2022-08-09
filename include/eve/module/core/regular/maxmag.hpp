@@ -75,11 +75,10 @@ namespace eve
 //!
 //!   * eve::pedantic, eve::numeric
 //!
-//!      The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators
-//!      is identical except that if  `|x| == |y|`, `d(max)` is used.
+//!     The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators
+//!     is identical except that if  `|x| == |y|`, `d(max)` is used.
 //!
-//!
-//!     **Example**
+//!      **Example**
 //!
 //!        @godbolt{doc/core/pedantic/maxmag.cpp}
 //! @}
