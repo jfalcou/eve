@@ -56,7 +56,7 @@ namespace eve
 //!          element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
 //!          interval: `[0, N[` or the result is undefined.
 //!
-//!    **Note**
+//!    @note
 //!
 //!     Although the infix notation with `<<` is supported, the `<<` operator on
 //!     standard scalar types is the original one and so can not be overloaded on standard floating

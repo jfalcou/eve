@@ -41,7 +41,7 @@ namespace eve
 //!
 //!    The value of the sum of the arguments is returned.
 //!
-//!   **Note**
+//!   @note
 //!
 //!     Take care that for floating entries, the addition is only 'almost' associative.
 //!     This call performs additions in reverse incoming order.

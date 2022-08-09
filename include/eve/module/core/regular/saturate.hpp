@@ -57,7 +57,7 @@ namespace eve
 //!       To r = convert(clamp(x,vmi,vmax),as(x));
 //!      @endcode
 //!
-//!   **Note**
+//!   @note
 //!      Saturation operated by [eve::saturate](#eve::saturate) may lead to
 //!      Undefined Behaviors if it implies conversions that are themselves U.B.
 //!

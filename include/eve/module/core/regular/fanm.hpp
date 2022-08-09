@@ -47,7 +47,7 @@ namespace eve
 //!    and rounded once is returned,  but only if the hardware is in capacity
 //!    to do it at reasonable cost.
 //!
-//!    **Note**
+//!    @note
 //!
 //!       This `fanm` implementation provides those properties for all
 //!       [integral real value](@ref eve::integral_value)

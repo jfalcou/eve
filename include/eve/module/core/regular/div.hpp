@@ -43,7 +43,7 @@ namespace eve
 //!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x/\prod_1^n x_i\f$
 //!      is returned.
 //!
-//!    **Notes**
+//!    @note
 //!
 //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`
 //!        if `x` or  `y` is an  [simd value](@ref eve::simd_value).

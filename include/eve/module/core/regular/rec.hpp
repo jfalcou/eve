@@ -43,7 +43,7 @@ namespace eve
 //!    value containing the [elementwise](@ref glossary_elementwise)
 //!    inverse value of `x`.
 //!
-//!  **Notes**
+//!  @note
 //!
 //!     For [real integral value](@ref eve::value) `x` is semantically equivalent to:
 //!       * If x==1 or x==-1, x is returned.

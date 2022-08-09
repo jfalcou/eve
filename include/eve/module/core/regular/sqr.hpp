@@ -42,7 +42,7 @@ namespace eve
 //!    value containing the [elementwise](@ref glossary_elementwise)
 //!    square of `x` if it is representable in this type.
 //!
-//!  **Notes**
+//!  @note
 //!
 //!      * For  [integral signed values](@ref eve::value)   if `eve::saturated(eve::abs)(x)`
 //!        is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result

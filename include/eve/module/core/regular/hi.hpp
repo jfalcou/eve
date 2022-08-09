@@ -43,7 +43,7 @@ namespace eve
 //!        significant half of the  value bits,
 //!        returning each element as an unsigned integer of half the size of the input element.
 //!
-//!    **Note**
+//!    @note
 //!
 //!      If you also need the lower part `lohi` is more efficient.
 //!

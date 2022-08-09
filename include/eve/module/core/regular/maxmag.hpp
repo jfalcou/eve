@@ -52,7 +52,7 @@ namespace eve
 //!
 //!      For n parameters the result is computed as if this scheme was recursively used.
 //!
-//!   **Notes**
+//!   @note
 //!
 //!     * If any element of the inputs is a `Nan`, the corresponding output element
 //!       is system-dependent.

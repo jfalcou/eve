@@ -44,7 +44,7 @@ namespace eve
 //!       More specifically, for signed integers the opposite value of [their lowest finite
 //!       value](@ref eve::valmin) is not representable and the result is undefined behaviour.
 //!
-//!    **Note**
+//!    @note
 //!       Although the operator notation with `-` is supported, the `-` operator on
 //!       standard scalar type is the original one and so can lead to automatic promotion.
 //!

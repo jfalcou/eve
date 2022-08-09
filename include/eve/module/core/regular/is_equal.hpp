@@ -47,7 +47,7 @@ namespace eve
 //!     Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality
 //!     test result between `x` and `y`. The infix notation `x == y` can also be used.
 //!
-//!   **Note**
+//!   @note
 //!
 //!      Although the infix notation with `==` is supported, the `==` operator on
 //!      standard scalar types is the original one and so returns bool result, not `eve::logical`.

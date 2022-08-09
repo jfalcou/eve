@@ -42,7 +42,7 @@ namespace eve
 //!    The negated negated value of the element of the minimal  absolute value
 //!    is returned.
 //!
-//!    **Note**
+//!    @note
 //!
 //!     If any element of the inputs is a NaN,
 //!     the corresponding output element is system-dependent.

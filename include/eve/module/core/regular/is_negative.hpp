@@ -43,7 +43,7 @@ namespace eve
 //!      [elementwise](@ref glossary_elementwise) returns true
 //!      if and only if the bit of sign (most significant bit) is set.
 //!
-//!   **Note**
+//!   @note
 //!
 //!     this function coincides with `is_ltz` on [integral real values](@ref eve::value),
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_negative(mzero<`T`>)` is true

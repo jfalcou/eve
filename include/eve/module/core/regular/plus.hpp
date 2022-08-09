@@ -41,7 +41,7 @@ namespace eve
 //!
 //!       Returns x
 //!
-//!    **Note**
+//!    @note
 //!       Although the operator notation with `+` is supported, the `+` operator on
 //!       standard scalar type is the original one and so can lead to automatic promotion.
 //!

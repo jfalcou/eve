@@ -41,7 +41,7 @@ namespace eve
 //!
 //!    The value of 1-`x` is returned.
 //!
-//!    **Note**
+//!    @note
 //!
 //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
 //!      the result type, the corresponding result [element](@ref glossary_elementwise) is

@@ -44,7 +44,7 @@ namespace eve
 //!      The value of the bitwise OR of its arguments in the type of the first one
 //!      is returned.
 //!
-//!    **Note**
+//!    @note
 //!
 //!      Although the infix notation with `|` is supported for two parameters, the `|` operator on
 //!      standard scalar types is the original one and so can lead to automatic promotion.

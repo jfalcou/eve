@@ -43,7 +43,7 @@ namespace eve
 //!
 //!    The value of the maximum of the absolute value of the arguments is returned.
 //!
-//!   **Notes**
+//!   @note
 //!
 //!     * If any element of the inputs is a `Nan`, the corresponding output element
 //!       is system-dependent.

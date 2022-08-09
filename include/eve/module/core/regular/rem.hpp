@@ -45,7 +45,7 @@ namespace eve
 //!       * The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an  [simd value](@ref
 //!       eve::simd_value).
 //!
-//!    **Note**
+//!    @note
 //!
 //!       * Although the infix notation with `%` is supported, the `%` operator on
 //!         standard integral scalar type is the original one and so can lead to automatic

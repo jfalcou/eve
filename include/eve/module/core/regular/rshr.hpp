@@ -49,7 +49,7 @@ namespace eve
 //!      The value of the arithmetic right/left shift operation according to shift
 //!      sign is returned
 //!
-//!   **Notes**
+//!   @note
 //!
 //!     *  the call `rshr(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))`
 //!        if `x`  is an  [simd value](@ref eve::simd_value).

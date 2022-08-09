@@ -45,7 +45,7 @@ namespace eve
 //!      The call `logical_not(x)` is semantically equivalent to `is_eqz(x)`.
 //!      Infix notation can be used with `!x`.
 //!
-//!    **Note**
+//!    @note
 //!
 //!      Although the infix notation with `!` is supported, the `!` operator on
 //!      standard scalar types is the original one and so will return bool instead of

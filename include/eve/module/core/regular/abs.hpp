@@ -43,7 +43,7 @@ namespace eve
 //!    value containing the [elementwise](@ref glossary_elementwise)
 //!    absolute value of `x` if it is representable in this type.
 //!
-//!  **Notes**
+//!  @note
 //!
 //!    * More specifically, for signed integers : the absolute value of eve::valmin
 //!      is not representable and the result is undefined.

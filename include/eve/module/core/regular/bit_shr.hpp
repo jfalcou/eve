@@ -47,7 +47,7 @@ namespace eve
 //!    The value of the logical right shift
 //!    is returned.
 //!
-//!   **Notes**
+//!   @note
 //!
 //!     * The call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is
 //!       an [simd value](@ref eve::simd_value).

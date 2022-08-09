@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    Returns [elementwise](@ref glossary_elementwise) `!(x >= 0)`.
 //!
-//!   **Note**
+//!   @note
 //!
 //!    This is not equivalent to `(x <  0)` for floating values.
 //!

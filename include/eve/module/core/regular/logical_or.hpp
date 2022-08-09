@@ -48,7 +48,7 @@ namespace eve
 //!      The call `logical_or(x, y)` is semantically equivalent to `x || y`
 //!      if `x` or  `y` is an  [simd value](@ref eve::simd_value) and does not shortcut.
 //!
-//!    **Note**
+//!    @note
 //!
 //!      Although the infix notation with `||` is supported, the `||` operator on
 //!      standard scalar types is the original one and so will return bool instead of

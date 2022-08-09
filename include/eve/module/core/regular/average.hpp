@@ -47,7 +47,7 @@ namespace eve
 //!
 //!    The value of the arithmetic mean  of the arguments is returned.
 //!
-//!   **Notes**
+//!   @note
 //!
 //!     * For two parameters half the sum of `x` and `y`. No overflow occurs.
 //!

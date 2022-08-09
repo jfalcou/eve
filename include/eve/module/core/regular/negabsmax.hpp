@@ -44,7 +44,7 @@ namespace eve
 //!    The negated absolute value of the maximal element
 //!    is returned.
 //!
-//!    **Note**
+//!    @note
 //!
 //!     If any element of the inputs is a NaN,
 //!     the corresponding output element is system-dependent.
