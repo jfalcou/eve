@@ -28,7 +28,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value Ts ... >
+//!      template< eve::value... Ts >
 //!      eve::common_compatible_t<Ts ...> add(Ts ... xs) noexcept;
 //!   }
 //!   @endcode
