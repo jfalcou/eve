@@ -39,11 +39,11 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!       Returns the  [elementwise](@ref glossary_elementwise) positive difference between `x` and
-//!       `y`:
-//!          * if `x>y`,   x-y is returned
-//!          * if `x<=y`,  +0 is returned
-//!          * otherwise a `Nan` is returned
+//!     Returns the  [elementwise](@ref glossary_elementwise) positive difference
+//!     between `x` and `y`:
+//!       * if `x>y`,   `x-y` is returned,
+//!       * if `x<=y`,  `+0` is returned,
+//!       * otherwise a `Nan` is returned.
 //!
 //!  @groupheader{Example}
 //!
