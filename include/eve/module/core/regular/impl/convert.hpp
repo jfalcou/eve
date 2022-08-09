@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
-#include <eve/function/interleave.hpp>
+#include <eve/module/core/regular/interleave.hpp>
 #include <eve/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <bit>

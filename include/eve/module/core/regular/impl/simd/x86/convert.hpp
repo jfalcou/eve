@@ -10,7 +10,7 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/function/interleave_shuffle.hpp>
+#include <eve/module/core/regular/interleave_shuffle.hpp>
 #include <type_traits>
 
 namespace eve::detail
