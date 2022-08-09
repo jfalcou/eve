@@ -58,8 +58,8 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::fracscale[mask](x, scale)` provides a masked version of `eve::fracscale`
-//!     which is equivalent to `if_else (mask, fracscale(x, scale), x)`.
+//!     The call `eve::fracscale[mask](x, scale)` provides a masked version of `eve::fracscale`
+//!     which is equivalent to `if_else (mask, eve::fracscale(x, scale), x)`.
 //!
 //!      **Example**
 //!
@@ -68,7 +68,7 @@ namespace eve
 //!   * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
 //!     If d is one of these 4 decorators
-//!     The call `d(fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
+//!     The call `d(eve:fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
 //!
 //!      @godbolt{doc/core/roundings/fracscale.cpp}
 //! @}
