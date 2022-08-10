@@ -39,13 +39,8 @@ namespace eve
 //!   **Return value**
 //!
 //!     The call `is_not_denormal(x)` is semantically  equivalent to:
-//!
-//!     @code
-//!       if constexpr(floating_value<T>)
-//!          return (eve::abs(x) >=  eve::smallestposval(as(x))) || is_eqz(x);
-//!       else constexpr(integral_value<T>)
-//!          return eve::true_(as(x));
-//!    @endcode
+//!     `(eve::abs(x) >=  eve::smallestposval(eve::as(x))) || eve::is_eqz(x)`,
+//!     in particular this is always true for integral types.
 //!
 //!  @groupheader{Example}
 //!

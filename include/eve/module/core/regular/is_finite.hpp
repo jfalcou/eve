@@ -38,11 +38,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     The call `is_finite(x)` is semantically  equivalent to:
-//!     @code
-//!     if   constexpr(floating_value<T>) return is_not_nan(x-x);
-//!     else constexpr(integral_value<T>) return true_(as(x));
-//!     @endcode
+//!     The call `is_finite(x)` is semantically  equivalent to `eve::is_not_nan(x-x)`, in particular
+//!     this is always true for integral types.
 //!
 //!  @groupheader{Example}
 //!

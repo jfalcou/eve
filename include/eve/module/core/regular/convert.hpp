@@ -41,23 +41,9 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      * conversion of `x` in the `Target` type is returned.
-//!      * The call `convert(x, as(t))` is semantically equivalent to:
+//!      * [Elementwise](@ref glossary_elementwise) conversion of `x` in the `Target` type is returned.
 //!
-//!        @code
-//!        Target r;
-//!
-//!        if constexpr( scalar_value<T> )
-//!        {
-//!          r = static_cast<Target>(x);
-//!        }
-//!        else if constexpr( simd_value<T> )
-//!        {
-//!           for(std::size_t i=;i<x.size();++i)
-//!           r[i] = static_cast<Target>(x[i]);
-//!        }
-//!        @endcode
-//!
+//!  @note
 //!      *  Conversion operated by [eve::convert](#eve::convert) follows the regular rules of
 //!         C++ type conversion, including the cases leading to Undefined Behaviors.
 //!

@@ -44,7 +44,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::as_value(as<T>())` returns a value of type T
+//!      The call `eve::as_value(as<T>())` returns a value of type T which is
+//!      the conversion of `x` to type Target or the the eve constant of type Target.
 //!
 //!  @groupheader{Example}
 //!

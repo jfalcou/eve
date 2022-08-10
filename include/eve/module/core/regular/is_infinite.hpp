@@ -39,11 +39,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     The call `is_infinite(x)` is semantically  equivalent to:
-//!     @code
-//!     if   constexpr(floating_value<T>) return is_equal(abs(x), inf(as(x));
-//!     else constexpr(integral_value<T>) return false_(as(x));
-//!     @endcode
+//!     The call `is_infinite(x)` is semantically  equivalent to
+//!     `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
+//!     in particular this is always true for integral types.
 //!
 //!  @groupheader{Example}
 //!
@@ -53,7 +51,8 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::is_infinite[mask](x)` provides a masked version of `eve::is_infinite` which
+//!     The call `eve;::is_infinite[mask](x)` provides a masked
+//!     version of `eve::is_infinite` which
 //!     is equivalent to `if_else (mask, is_infinite(x), eve::false( eve::as(x)))`.
 //!
 //!      **Example**

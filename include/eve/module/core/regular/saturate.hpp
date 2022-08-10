@@ -44,18 +44,10 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      For an  `x` of [real value](@ref eve::value) `Target`, the expression:
-//!      @code
-//!        To  r = saturate(x, as_<Target>{});
-//!      @endcode
-//!
-//!      is semantically equivalent to:
-//!
-//!      @code
-//!       To vmin=static_cast<T>(Valmin<To>());
-//!       To vmax=static_cast<T>(Valmax<To>());
-//!       To r = convert(clamp(x,vmi,vmax),as(x));
-//!      @endcode
+//!      For an  `x` of [real value](@ref eve::value) `Target`, the
+//!      call `saturate(x, as_<Target>{})` returns [elementwise](@ref glossary_elementwise)
+//!      a value of type Target which is
+//!      the conversion of `x` clamped between the smallest and largest values of Target
 //!
 //!   @note
 //!      Saturation operated by [eve::saturate](#eve::saturate) may lead to

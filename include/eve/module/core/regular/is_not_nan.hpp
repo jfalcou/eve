@@ -40,10 +40,7 @@ namespace eve
 //!   **Return value**
 //!
 //!       The call `eve::is_not_nan(x)`  is semantically  equivalent to:
-//!
-//!       @code
-//!         if   constexpr(floating_value<T>) return is_equal(x, x);
-//!         else constexpr(integral_value<T>) return true_(as(x));
+//!       `eve::is_equal(x, x)` in particular this is always true for integral types.
 //!
 //!  @groupheader{Example}
 //!
