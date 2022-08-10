@@ -14,71 +14,36 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
-//! @var reduce
+//!   @var reduce
+//!   @brief Computes the TODO
 //!
-//! @brief Callable object computing a generalized fold operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Member Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | the computation of a generalized fold operation   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      TODO
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<simd_value T> auto operator()( T v ) const noexcept;
-//!  template<simd_value T, Callable F> auto operator()( T v, F binary_op ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//! `v`:   [SIMD value](@ref eve::simd_value) to reduce.
+//!      * TODO
 //!
-//! `binary_op`:   Binary callable object that perform a binary, associative and commutative
-//! operation.
-//!                If unspecified, the sum of all element of `v`is performed.
+//!  @groupheader{Example}
 //!
-//! **Return value**
-//!
-//! Generalized fold of `v.get(0)`, `v.get(1)`, ... `v.get(v.size()-1)` over `binary_op`,
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::reduce
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `reduce[cond](x, ...)` is equivalent to
-//!  `if_else(cond,reduce(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!   * eve::splat
-//!
-//!
-//!     The expression `eve::splat(eve::reduce)(v,binary_op)` computes the reduction of `v`
-//!     using `binary_op` but returns a [SIMD value](@ref eve::simd_value) containing the result
-//!     in all lanes.
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/reduce.cpp}
-//!
-//!  @}
+//!  @godbolt{doc/core/regular/reduce.cpp}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(reduce_, reduce);
 }

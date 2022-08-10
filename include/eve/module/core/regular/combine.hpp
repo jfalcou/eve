@@ -30,19 +30,17 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     TODO
-//!
+//!      TODO
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
 //!
 //!    **Return value**
 //!
-//!    The value of TODO
-//!    is returned.
+//!      * TODO
 //!
 //!  @groupheader{Example}
 //!

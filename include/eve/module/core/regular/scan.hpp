@@ -14,53 +14,36 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
-//! @var scan
+//!   @var scan
+//!   @brief Computes the TODO
 //!
-//! @brief Callable object computing a generalized scan operation.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Member Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                          |
-//! |:-------------|:------------------------------------------------|
-//! | `operator()` | the computation of a generalized scan operation |
+//!   @code
+//!   namespace eve
+//!   {
+//!      TODO
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<simd_value T, Callable F, typename Zero>
-//!  auto operator()( T v, F binary_op, Zero zero ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//! `v`:   [simd value](@ref eve::simd_value) to scan.
+//!      * TODO
 //!
-//! `binary_op`:   Binary callable object that perform a binary, commutative and associative
-//! operation.
+//!  @groupheader{Example}
 //!
-//! `zero`  :   An identity element for `binary_op` (binary_op(zero, v) == v) for any v.
-//!             Acceptable:
-//!                T
-//!                anything convertible to T
-//!                eve::zero
-//!
-//! `eve::zero`
-//!
-//! **Return value**
-//!
-//! Generalized scan of `v.get(0)`, `v.get(1)`, ... `v.get(v.size()-1)` over `binary_op`,
-//! T(v.get(0), binary_op(v.get(0), v.get(1)), binary_op(binary_op(v.get(0), v.get(1)), v.get(2))
-//! ...)
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<simd_value T> auto operator()( T v ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Same as scan(v, eve::plus, eve::zero)
-//!
-//!  @}
+//!  @godbolt{doc/core/regular/scan.cpp}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(scan_, scan);
 }

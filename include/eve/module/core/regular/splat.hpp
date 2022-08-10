@@ -23,23 +23,38 @@ using splat_type = decorated<splat_()>;
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
-//! @var splat
+//!   @var splat
+//!   @brief Computes the TODO
 //!
-//! @brief  Higher-order @callable allowing reduction to generate wide results instead of scalars.
+//!   **Defined in Header**
 //!
-//! #### Members Functions
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator()(eve::callable auto const& f ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//! @param f
-//! An instance of eve::callable
+//!   @groupheader{Callable Signatures}
 //!
-//! @return
-//! A @callable performing the same kind of operation but returning its result as a
-//! [SIMD value](@ref eve::simd_value).
+//!   @code
+//!   namespace eve
+//!   {
+//!      TODO
+//!   }
+//!   @endcode
 //!
-//!  @}
+//!   **Parameters**
+//!
+//!      * `x`:  An instance of an [scalar value](@ref eve::scalar__value)
+//!
+//!    **Return value**
+//!
+//!      *A @callable performing the same kind of operation but returning its result as a
+//!       [SIMD value](@ref eve::simd_value).
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/splat.cpp}
+//! @}
 //================================================================================================
+
 [[maybe_unused]] inline constexpr splat_type const splat = {};
 }

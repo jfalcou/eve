@@ -13,80 +13,36 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
-//! @var gather
+//!   @var gather
+//!   @brief Computes the TODO
 //!
-//! @brief Callable object computing **TODO: FILL THIS BLANK**.
+//!   **Defined in Header**
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
-//! #### Members Functions
+//!   @groupheader{Callable Signatures}
 //!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | **TODO: FILL THIS BLANK**   |
-//! | `operator[]` | Construct a conditional version of current function object |
+//!   @code
+//!   namespace eve
+//!   {
+//!      TODO
+//!   }
+//!   @endcode
 //!
-//! ---
+//!   **Parameters**
 //!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<**TODO: FILL THIS BLANK**>
-//!  auto operator()( **TODO: FILL THIS BLANK**) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
 //!
-//! **Parameters**
+//!    **Return value**
 //!
-//!`x`:   **TODO: FILL THIS BLANK**
+//!      * TODO
 //!
-//! OTHER PARAMETERS
-//!:   **TODO: FILL THIS BLANK IF NEEDED BUT RESPECT THE : FORMATTING**
+//!  @groupheader{Example}
 //!
-//! **Return value**
-//!
-//! For **TODO: FILL THIS BLANK**:
-//!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-//! auto r = gather(**TODO: FILL THIS BLANK**);
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! is semantically equivalent to:
-//!
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-//! Target r;
-//!
-//! if constexpr( scalar_value<T> )
-//!{
-//!  **TODO: FILL THIS BLANK**
-//!}
-//! else if constexpr( simd_value<T> )
-//!{
-//!  **TODO: FILL THIS BLANK**
-//!}
-//!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//!  Higher-order function generating a masked version of eve::gather
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `gather[cond](x, ...)` is equivalent to
-//!  `if_else(cond,gather(x, ...),x)`
-//!
-//! ---
-//!
-//! #### Supported decorators
-//!
-//!  no decorators are supported
-//!
-//!  @}
+//!  @godbolt{doc/core/regular/gather.cpp}
+//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(gather_, gather);
 }

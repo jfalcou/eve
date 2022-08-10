@@ -35,18 +35,18 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
 //!
 //!    **Return value**
 //!
-//!    The value of TODO
-//!    is returned.
+//!      * TODO
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/compress_store.cpp}
 //! @}
 //================================================================================================
+
 EVE_MAKE_CALLABLE(compress_store_, compress_store);
 }
 

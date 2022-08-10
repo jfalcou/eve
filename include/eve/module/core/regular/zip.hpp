@@ -15,6 +15,47 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
+//!   @var zip
+//!   @brief lable object constructing a SoA value.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!     template<simd_value... Ws>
+//!     auto operator()(Ws... ws) const noexcept;               //1
+//!
+//!     template<product_type Target, simd_value... Ws>
+//!     auto operator()(as<Target> t, Ws... ws) const noexcept; //2
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!      * `t`  Type to construct. By default, it's equal to `kumi::tuple<eve::element_type_t<Ws>...>`
+//!      * `ws` Variadic list of eve::simd_value to zip.
+//!
+//!    **Return value**
+//!
+//!      *A @callable performing the same kind of operation but returning its result as a
+//!       [SIMD value](@ref eve::simd_value).
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/zip.cpp}
+//! @}
+//================================================================================================
+
+//================================================================================================
+//! @addtogroup core_simd
+//! @{
 //! @var zip
 //!
 //! @brief Callable object constructing a SoA value
