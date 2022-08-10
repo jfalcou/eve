@@ -46,8 +46,8 @@ namespace eve
 //!    **Return value**
 //!
 //!      The call `eve::limitexponent(as<T>())` is semantically equivalent to
-//!       * as_integer_t<T>(-126) if eve::element_type_t<T> is float
-//!       * as_integer_t<T>(-1022) if eve::element_type_t<T> is double
+//!       * `as_integer_t<T>(-126)` if `eve::element_type_t<T>` is float
+//!       * `as_integer_t<T>(-1022)` if `eve::element_type_t<T>` is double
 //!
 //!  @groupheader{Example}
 //!

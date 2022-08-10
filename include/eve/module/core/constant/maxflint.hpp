@@ -48,8 +48,8 @@ namespace eve
 //!    **Return value**
 //!
 //!      The call `eve::maxflint(as<T>())` is semantically equivalent to:
-//!        * T(16777216.0f) if eve::element_type_t<T> is float.
-//!        * T(9007199254740992.0) if eve::element_type_t<T> is double.
+//!        * `T(16777216.0f)` if `eve::element_type_t<T>` is float.
+//!        * `T(9007199254740992.0)` if `eve::element_type_t<T>` is double.
 //!
 //!  @groupheader{Example}
 //!

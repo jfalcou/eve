@@ -47,9 +47,9 @@ namespace eve
 //!    **Return value**
 //!
 //!      The call `eve::smallestposval(as<T>())` is semantically equivalent to:
-//!        * T(1) if eve::element_type_t<T> is integral
-//!        * T(1.1754944e-38f)if eve::element_type_t<T> is float
-//!        * T(2.225073858507201e-308) if eve::element_type_t<T> is double
+//!        * `T(1)` if `eve::element_type_t<T>` is integral
+//!        * `T(1.1754944e-38f)` if `eve::element_type_t<T>` is float
+//!        * `T(2.225073858507201e-308)` if `eve::element_type_t<T>` is double
 //!
 //!  @groupheader{Example}
 //!

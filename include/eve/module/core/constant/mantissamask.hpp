@@ -56,45 +56,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/mantissamask.cpp}
 //! @}
 //================================================================================================
-
-//================================================================================================
-//! @addtogroup core
-//! @{
-//! @var mantissamask
-//!
-//! @brief Callable object computing the mantissa bit mask.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Computes the mantissamask constant                               |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//! **Return value**
-//!
-//! the call `eve::mantissamask(as<T>())` returns [elementwise](@ref glossary_elementwise), the
-//! integral mask to extract the exponent bits of an ieee floating value. The element values are:
-//!        - 0x807FFFFFU if the [element type](@ref eve::element_type) is float
-//!        - 0x800FFFFFFFFFFFFFULL if the [element type](@ref eve::element_type) is double
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/mantissamask.cpp}
-//!
-//! @}
-//================================================================================================
 EVE_MAKE_CALLABLE(mantissamask_, mantissamask);
 
 namespace detail

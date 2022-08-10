@@ -45,8 +45,8 @@ namespace eve
 //!    **Return value**
 //!
 //!      The call `eve::nbmantissabits(as<T>())` is semantically equivalent to:
-//!         * as_integer_t<T>(23) if eve::element_type_t<T> is float
-//!         * as_integer_t<T>(52) if eve::element_type_t<T> is double
+//!         * `as_integer_t<T>(23)` if `eve::element_type_t<T>` is float
+//!         * `as_integer_t<T>(52)` if `eve::element_type_t<T>` is double
 //!
 //!  @groupheader{Example}
 //!
