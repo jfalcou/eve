@@ -35,7 +35,7 @@ using pedantic_type = decorated<pedantic_()>;
 //!
 //!  if pedantic(eve::fname) is to be called then
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  #include <eve/module/corenu.hpp>
+//!  #include <eve/module/core.hpp>
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!  must be included.
 //!

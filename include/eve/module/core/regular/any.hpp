@@ -13,7 +13,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_horizontal
+//! @addtogroup core_reduction
 //! @{
 //!   @var any
 //!   @brief Computes a bool value which is true if and only if any elements of `x` is not zero.
@@ -37,12 +37,13 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!   * 1. A bool value which is true if and only if any elements of `x` is not zero.
-//!   * 2  A bool value which is true if and only if any top bits elements of `x` is not zero.
+//!   * 1. A bool value which is true if and only if any element of `x` is not zero.
+//!   * 2  A bool value which is true if and only if any top bits element of `x` is not zero.
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  argument(@ref eve::logical_value).
+//!     * `x` :  [argument](@ref eve::logical_value).
+//!     * `m` :  [argument](@ref eve::top_bits).
 //!
 //!    **Return value**
 //!

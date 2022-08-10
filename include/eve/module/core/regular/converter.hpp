@@ -117,10 +117,10 @@ template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value, of type wide <float, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type float,
-//!     * if x is a supported callable a call to float32(x)(...)
-//!     is semantically equivalent to float32(x(...)).
+//!     * if `x` is an eve::simd_value, returns a value, of type `wide <float, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type float,
+//!     * if `x` is a supported callable a call to `float32(x)(...)`
+//!     is semantically equivalent to `float32(x(...))`.
 //!
 //!  @groupheader{Example}
 //!
@@ -162,9 +162,9 @@ inline constexpr converter_type<float> const float32 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value, of type wide <double, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type double,
-//!     * if x is a supported callable a call to float64(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value, of type` wide <double, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type double,
+//!     * if `x` is a supported callable a call to float64(x)(...)
 //!     is semantically equivalent to float64(x(...)).
 //!
 //!  @groupheader{Example}
@@ -207,10 +207,10 @@ inline constexpr converter_type<double> const float64 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value, of type
-//!     wide <std::uint8_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::uint8_t,
-//!     * if x is a supported callable a call to uint8(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value, of type
+//!    ` wide <std::uint8_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::uint8_t,
+//!     * if `x` is a supported callable a call to uint8(x)(...)
 //!     is semantically equivalent to uint8(x(...)).
 //!
 //!  @groupheader{Example}
@@ -253,10 +253,10 @@ inline constexpr converter_type<std::uint8_t> const uint8 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!     of type wide <std::uint16_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::uint16_t,
-//!     * if x is a supported callable a call to uint16(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!     of type` wide <std::uint16_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::uint16_t,
+//!     * if `x` is a supported callable a call to uint16(x)(...)
 //!     is semantically equivalent to uint16(x(...)).
 //!
 //!  @groupheader{Example}
@@ -299,10 +299,10 @@ inline constexpr converter_type<std::uint16_t> const uint16 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!     of type wide <std::uint32_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::uint32_t,
-//!     * if x is a supported callable a call to uint32(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!     of type` wide <std::uint32_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::uint32_t,
+//!     * if `x` is a supported callable a call to uint32(x)(...)
 //!     is semantically equivalent to uint32(x(...)).
 //!
 //!  @groupheader{Example}
@@ -345,10 +345,10 @@ inline constexpr converter_type<std::uint32_t> const uint32 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!     of type wide <std::uint64_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::uint64_t,
-//!     * if x is a supported callable a call to uint64(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!     of type` wide <std::uint64_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::uint64_t,
+//!     * if `x` is a supported callable a call to uint64(x)(...)
 //!     is semantically equivalent to uint64(x(...)).
 //!
 //!  @groupheader{Example}
@@ -391,10 +391,10 @@ inline constexpr converter_type<std::uint64_t> const uint64 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value, of type
-//!     wide <std::int8_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::int8_t,
-//!     * if x is a supported callable a call to int8(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value, of type
+//!    ` wide <std::int8_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::int8_t,
+//!     * if `x` is a supported callable a call to int8(x)(...)
 //!     is semantically equivalent to int8(x(...)).
 //!
 //!  @groupheader{Example}
@@ -437,10 +437,10 @@ inline constexpr converter_type<std::int8_t> const int8 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!     of type wide <std::int16_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::int16_t,
-//!     * if x is a supported callable a call to int16(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!     of type` wide <std::int16_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::int16_t,
+//!     * if `x` is a supported callable a call to int16(x)(...)
 //!     is semantically equivalent to int16(x(...)).
 //!
 //!  @groupheader{Example}
@@ -483,10 +483,10 @@ inline constexpr converter_type<std::int16_t> const int16 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!     of type wide <std::int32_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::int32_t,
-//!     * if x is a supported callable a call to int32(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!     of type` wide <std::int32_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::int32_t,
+//!     * if `x` is a supported callable a call to int32(x)(...)
 //!     is semantically equivalent to int32(x(...)).
 //!
 //!  @groupheader{Example}
@@ -529,10 +529,10 @@ inline constexpr converter_type<std::int32_t> const int32 = {};
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!     of type wide <std::int64_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::int64_t,
-//!     * if x is a supported callable a call to int64(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!     of type` wide <std::int64_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type std::int64_t,
+//!     * if `x` is a supported callable a call to int64(x)(...)
 //!     is semantically equivalent to int64(x(...)).
 //!
 //!  @groupheader{Example}
@@ -579,13 +579,13 @@ using int_converter = decorated<convert_by_<as_integer>()>;
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!       of type wide <std::i_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::i_t,
-//!     * if x is a supported callable a call to int_(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!       of type` wide <i_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type `i_t`,
+//!     * if `x` is a supported callable a call to int_(x)(...)
 //!       is semantically equivalent to int_(x(...)).
 //!
-//!     where i_t is eve::as_integral_t<eve::element_type_t<T>>
+//!     where `i_t` is eve::as_integral_t<eve::element_type_t<T>>
 //!
 //!  @groupheader{Example}
 //!
@@ -628,13 +628,13 @@ using uint_converter = decorated<convert_by_<as_uinteger>()>;
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!       of type wide <std::i_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::i_t,
-//!     * if x is a supported callable a call to uint_(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!       of type` wide <i_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type `i_t`,
+//!     * if `x` is a supported callable a call to uint_(x)(...)
 //!       is semantically equivalent to uint_(x(...)).
 //!
-//!     where i_t is eve::as_integral_t<eve::element_type_t<T, unsigned>>
+//!     where `i_t` is eve::as_integral_t<eve::element_type_t<T, unsigned>>
 //!
 //!  @groupheader{Example}
 //!
@@ -677,13 +677,13 @@ using floating_converter = decorated<convert_by_<as_floating_point>()>;
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value,
-//!       of type wide <std::i_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a  value of type std::i_t,
-//!     * if x is a supported callable a call to floating_(x)(...)
+//!     * if `x` is an eve::simd_value, returns a value,
+//!       of type` wide <i_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a  value of type `i_t`,
+//!     * if `x` is a supported callable a call to floating_(x)(...)
 //!       is semantically equivalent to floating_(x(...)).
 //!
-//!     where i_t is eve::as_floating_point_t<eve::element_type_t<T>>
+//!     where `i_t` is eve::as_floating_point_t<eve::element_type_t<T>>
 //!
 //!  @groupheader{Example}
 //!
@@ -725,12 +725,12 @@ using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
 //!
 //!   **Return value**
 //!
-//!     * if x is an eve::simd_value, returns a value of type wide <i_t, cardinal_t<T>>,
-//!     * if x is an eve::scalar_value, returns a value of type i_t
-//!     * if x is a supported callable a call to upgrade_(x)(...) is
-//!       semantically equivalent to upgrade__(x(...))
+//!     * if `x` is an eve::simd_value, returns a value of type` wide <u_t, cardinal_t<T>>`,
+//!     * if `x` is an eve::scalar_value, returns a value of type `u_t`
+//!     * if `x` is a supported callable a call to `upgrade_(x)(...)` is
+//!       semantically equivalent to `upgrade__(x(...))`
 //!
-//!     where u_t is eve::upgrade_t<eve::element_type_t<T>>
+//!     where `u_t` is `eve::upgrade_t<eve::element_type_t<T>>`
 //!
 //!  @groupheader{Example}
 //!

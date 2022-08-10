@@ -35,7 +35,7 @@ using cyl_type = decorated<cyl_()>;
 //!
 //!  if cyl(eve::fname) is to be called then
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  #include <eve/module/corenu.hpp>
+//!  #include <eve/module/core.hpp>
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!  must be included.
 //!

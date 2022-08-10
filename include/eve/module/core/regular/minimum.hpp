@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_horizontal
+//! @addtogroup core_reduction
 //! @{
 //!   @var minimum
 //!   @brief Computes the maximal value of an simd vector

@@ -11,7 +11,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup core_bitops
 //! @{
 //!   @var lohi
 //!   @brief Computes the the lohi pair of values.

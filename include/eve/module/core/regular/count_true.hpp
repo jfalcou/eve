@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_horizontal
+//! @addtogroup core_reduction
 //! @{
 //!   @var count_true
 //!   @brief Computes the number of non 0 elements

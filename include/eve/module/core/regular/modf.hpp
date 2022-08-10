@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup core_arithmetic
 //! @{
 //!   @var modf
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)

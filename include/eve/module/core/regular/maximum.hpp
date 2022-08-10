@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_horizontal
+//! @addtogroup core_reduction
 //! @{
 //!   @var maximum
 //!   @brief Computes the maximal value of an simd vector
@@ -35,7 +35,7 @@ namespace eve
 //!
 //!   **Parameter**
 //!
-//!     * `x` :  argument(@ref eve::value).
+//!     * `x` :  [argument](@ref eve::value).
 //!
 //!    **Return value**
 //!

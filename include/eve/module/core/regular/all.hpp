@@ -13,28 +13,37 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_horizontal
+//! @addtogroup core_reduction
 //! @{
 //!   @var all
 //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      bool all(T x) noexcept;   //1
+//!      bool all(eve::as_logical<T> x) noexcept;  //1
 //!
 //!      template< eve::top_bits M >
-//!      bool all(M m) noexcept;   //2
+//!      bool all(M m) noexcept;                   //2
 //!   }
 //!   @endcode
 //!
 //!   * 1. A bool value which is true if and only if all elements of `x` are not zero.
 //!   * 2  A bool value which is true if and only if all top bits elements of `x` are not zero.
 //!
-//!     * `x` :  argument(@ref eve::logical_value).
+//!   **Parameters**
 //!
-//!     * `m` :  argument(@ref eve::top_bits).
+//!     * `x` :  [argument](@ref eve::logical_value).
+//!     * `m` :  [argument](@ref eve::top_bits).
 //!
 //!    **Return value**
 //!
@@ -51,7 +60,10 @@ namespace eve
 //!     The call `eve::all[mask](x)` provides a masked
 //!     version of `all` which is
 //!     equivalent to : all not masked elements are not zero.
-//! @godbolt{doc/core/all.cpp}
+//!
+//!      **Example**
+//!
+//! @godbolt{doc/core/masked/all.cpp}
 //!
 //!  @}
 //================================================================================================

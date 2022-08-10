@@ -64,11 +64,11 @@
 //! By themselves tne regular version of these function acts the naive (and less accurate way)
 //! if the intrinsics are not at hand.
 //!
-//! @defgroup core_horizontal  Horizontal operations
+//! @defgroup core_reduction  Reductions
 //! @ingroup core
 //! Operations providing a scalar value from SIMD vectors
 //!
-//! @defgroup core_internal  Internal representation and IEEE
+//! @defgroup core_internal  IEEE operations
 //! @ingroup core
 //! Operations related to classical IEEE functions
 //!

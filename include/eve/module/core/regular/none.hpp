@@ -13,7 +13,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_horizontal
+//! @addtogroup core_reduction
 //! @{
 //!   @var none
 //!   @brief Computes a bool value which is true if and only if all elements of `x` are 0.
@@ -42,9 +42,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  argument(@ref eve::logical_value).
-//!
-//!     * `m` :  argument(@ref eve::top_bits).
+//!     * `x` :  [argument](@ref eve::logical_value).
+//!     * `m` :  [argument](@ref eve::top_bits).
 //!
 //!    **Return value**
 //!

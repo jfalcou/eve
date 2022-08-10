@@ -37,13 +37,11 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`:   [value](@ref eve::value) to convert.
-//!
 //!     * `t`:   [Type wrapper](@ref eve::as) instance embedding the type to convert `x` to.
 //!
 //!    **Return value**
 //!
-//!      * conversion of `x` is the `Target` type is returned.
-//!
+//!      * conversion of `x` in the `Target` type is returned.
 //!      * The call `convert(x, as(t))` is semantically equivalent to:
 //!
 //!        @code

@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_internal
+//! @addtogroup core_bitops
 //! @{
 //!   @var lo
 //!   @brief Computes the least significant half of each lane.

@@ -35,7 +35,7 @@ using sph_type = decorated<sph_()>;
 //!
 //!  if sph(eve::fname) is to be called then
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  #include <eve/module/corenu.hpp>
+//!  #include <eve/module/core.hpp>
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!  must be included.
 //!
