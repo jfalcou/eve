@@ -40,9 +40,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     A pair of values containing respectively the [elementwise](@ref glossary_elementwise)
-//!     fractional and integral parts of `x`,
-//!     each having the type and sign of `x`.
+//!     A pair of values containing respectively the [elementwise](@ref glossary_elementwise)
+//!     fractional and integral parts of `x`, each having the type and sign of `x`.
 //!
 //!     In particular:
 //!       * If `x` is infinite `{Nan, x}` is returned.

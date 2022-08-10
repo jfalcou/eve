@@ -39,12 +39,10 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!    The truth value of
-//!    is returned.
-//!
-//!  @groupheader{Example}
 //!
 //!    Returns [elementwise](@ref glossary_elementwise) `x > 0`.
+//!
+//!  @groupheader{Example}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

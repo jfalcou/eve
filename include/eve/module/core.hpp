@@ -72,7 +72,7 @@
 //! @ingroup core
 //! Operations related to classical IEEE functions
 //!
-//! @defgroup core_logical  logical operations
+//! @defgroup core_logical  Logical operations
 //! @ingroup core
 //! Logical operations
 //!
@@ -84,7 +84,7 @@
 //! @ingroup core
 //! Type conversions
 //!
-//! @defgroup core_simd Proper SIMD operations
+//! @defgroup core_simd SIMD Specific Operations
 //! @ingroup core
 //! Proper SIMD operations as shuffling, splitting and merging SIMD vectors
 //! @}

@@ -16,12 +16,6 @@ namespace eve
 //! @{
 //!   @var mantissa
 //!   @brief Computes the IEEE mantissa of the floating value.
-//!
-//!    The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
-//!    \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
-//!
-//!    The exception is when \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$).
-//!
 //!   **Defined in Header**
 //!
 //!   @code
@@ -46,6 +40,12 @@ namespace eve
 //!
 //!    The value of the IEEE mantissa.
 //!    is returned.
+//!
+//! @note
+//!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
+//!       \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
+//!
+//!    *  The exception is when \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$).
 //!
 //!  @groupheader{Example}
 //!

@@ -13,7 +13,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
-//!   @var is_denormal
+//!   @var is_not_denormal
 //!   @brief Returns a logical true if and only if the element value is not denormal.
 //!
 //!   **Defined in Header**

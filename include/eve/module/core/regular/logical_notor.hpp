@@ -42,9 +42,8 @@ namespace eve
 //!     Returns the logical NOTOR of the two parameters following the
 //!     [logical operations semantic](@ref glossary_logical).
 //!
-//!
-//!      The call `logical_notor(x, y)` is semantically equivalent to `!x || y`
-//!      if `x` or  `y` is an  [simd value](@ref eve::simd_value) and  does not shortcut.
+//!     The call `logical_notor(x, y)` is semantically equivalent to `!x || y`
+//!     if `x` or  `y` is an  [simd value](@ref eve::simd_value) and  does not shortcut.
 //!
 //!  @groupheader{Example}
 //!

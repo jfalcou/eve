@@ -14,7 +14,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core
+//! @addtogroup core_logical
 //! @{
 //!   @fn swap_if(Mask const& mask, Value& lhs, Value& rhs)
 //!   @brief Conditional swap

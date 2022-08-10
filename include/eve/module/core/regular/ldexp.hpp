@@ -18,7 +18,7 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var ldexp
-//!   @brief Computes ldexp(x, n): \f$\textstyle x 2^n\f$.
+//!   @brief Computes \f$\textstyle x 2^n\f$.
 //!
 //!   **Defined in Header**
 //!
