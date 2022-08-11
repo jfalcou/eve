@@ -17,7 +17,7 @@ namespace eve
 //!   @var negabsmax
 //!   @brief Computes the negated absolute value of the maximal element
 //!
-//!   This is equivalent to -eve::abs ( eve::max )(...). but can be subject to optimizations.
+//!   This is equivalent to -eve::abs ( eve::max(...) ). but can be subject to optimizations.
 //!
 //!   **Defined in Header**
 //!
@@ -30,7 +30,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value Ts ...>
+//!      template< eve::value T,  eve::value... Ts>
 //!      eve::common_compatible_value<T, Ts ...> negabsmax( T x, Ts ... xs ) noexcept;
 //!   }
 //!   @endcode

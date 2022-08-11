@@ -16,6 +16,7 @@ namespace eve
 //! @{
 //!   @var mantissa
 //!   @brief Computes the IEEE mantissa of the floating value.
+//!
 //!   **Defined in Header**
 //!
 //!   @code

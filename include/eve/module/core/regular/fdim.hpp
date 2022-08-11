@@ -53,7 +53,7 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::fdim[mask](x)` provides a masked version of `eve::fdim` which is
+//!     The call `eve::fdim[mask](x)` provides a masked version of `eve::fdim` which is
 //!     equivalent to `if_else (mask, fdim(x), x)`.
 //!
 //!      **Example**

@@ -17,7 +17,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_logical
 //! @{
-//!   @var logical_or
+//!   @var logical_not
 //!   @brief Computes the logical NOT of its argument.
 //!
 //!   **Defined in Header**
@@ -42,8 +42,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `logical_not(x)` is semantically equivalent to `is_eqz(x)`.
-//!      Infix notation can be used with `!x`.
+//!     The call `logical_not(x)` is semantically equivalent to `is_eqz(x)`.
+//!     Infix notation can be used with `!x`.
 //!
 //!    @note
 //!      Although the infix notation with `!` is supported, the `!` operator on
@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/logical_or.cpp}
+//!  @godbolt{doc/core/regular/logical_not.cpp}
 //! @}
 //================================================================================================
 namespace tag

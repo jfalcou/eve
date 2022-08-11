@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var inc
-//!   @brief return the input incremented by one: \f$ x \rightarrow x+1\f$.
+//!   @brief return the input incremented by one.
 //!
 //!   **Defined in Header**
 //!

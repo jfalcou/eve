@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var dec
-//!   @brief return the input decremented by 1: \f$ x \rightarrow x-1\f$.
+//!   @brief return the input decremented by 1.
 //!
 //!   **Defined in Header**
 //!

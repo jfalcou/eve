@@ -55,7 +55,7 @@ namespace eve
 //!   * eve::raw
 //!
 //!     The call `eve::raw(eve::diff_of_prod)(x, y, z, t)` computes a raw
-//!     version of eve::sum_of_prod,  i.e. the naïve formula
+//!     version of eve::sum_of_prod,  i.e. the naive formula
 //!
 //!
 //!   * eve::pedantic

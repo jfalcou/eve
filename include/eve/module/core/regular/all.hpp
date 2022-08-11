@@ -37,8 +37,8 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!   * 1. A bool value which is true if and only if all elements of `x` are not zero.
-//!   * 2  A bool value which is true if and only if all top bits elements of `x` are not zero.
+//!   1. A bool value which is true if and only if all elements of `x` are not zero.
+//!   2  A bool value which is true if and only if all top bits elements of `x` are not zero.
 //!
 //!   **Parameters**
 //!

@@ -45,8 +45,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      * 1 The value of `if_else(c, v, T(0))` is returned.
-//!      * 2 The value of `if_else(c, C(1), C(0))` is returned.
+//!     1. The value of `if_else(c, v, T(0))` is returned.
+//!     2. The value of `if_else(c, C(1), C(0))` is returned.
 //!
 //!  @groupheader{Example}
 //!

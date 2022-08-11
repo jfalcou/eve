@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var oneminus
-//!   @brief one minus the input: \f$ x \rightarrow 1-x\f$.
+//!   @brief Computes the value of one minus the input.
 //!
 //!   **Defined in Header**
 //!

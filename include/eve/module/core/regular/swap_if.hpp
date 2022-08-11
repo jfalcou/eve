@@ -29,7 +29,7 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/core/swap_if.cpp}
+//!   @godbolt{doc/core/regular/swap_if.cpp}
 //!
 //! @}
 //================================================================================================
