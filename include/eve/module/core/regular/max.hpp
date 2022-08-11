@@ -7,96 +7,82 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var max
-  //!
-  //! @brief Callable object computing the max operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the max operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `args`:   [values](@ref eve::value)
-  //!
-  //! **Return value**
-  //!
-  //!Computes the [elementwise](@ref glossary_elementwise) maximum of the parameters.
-  //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
-  //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::max
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `max[cond](x, ...)` is equivalent to `if_else(cond,max(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(max)(x,args,...)`  ensures the conformity to the standard behaviour, that is
-  //!      for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
-  //!      to be semanticaly equivalent to:
-  //!      `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls as if this scheme
-  //!      was recursively used.
-  //!
-  //!  * eve::numeric
-  //!
-  //!
-  //!     The call `numeric(max)(x,args,...)`  ensures that  if any element of the inputs is not a `Nan`, the corresponding
-  //!      output element will not be a `Nan`.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(max)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their maximum is \f$m\f$, the value returned is 1 if \f$m\f$ is equal to \f$x_N\f$ and otherwise 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/max.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(max_, max);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var max
+//!   @brief Computes the  maximum  of its arguments.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value... Ts >
+//!      eve::common_compatible_t<T, Ts...> max(T x, Ts ... xs) noexcept;
+//!
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`, `xs...` :  [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of the maximum  of the arguments is returned.
+//!
+//!   @note
+//!
+//!     * If any element of the inputs is a `Nan`, the corresponding output element
+//!       is system-dependent.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/max.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::max[mask](x, ...)` provides a masked
+//!     version of `max` which is
+//!     equivalent to `if_else(mask, max(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/max.cpp}
+//!
+//!   * eve::pedantic, eve::numeric
+//!
+//!     * The call `pedantic(max)(x,args,...)`  ensures the conformity
+//!       to the standard behaviour, that is
+//!       for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
+//!       to be semantically equivalent to:
+//!       `(x < y) ? y : x` and this behaviour is also ensured on n parameters calls
+//!       as if this scheme was recursively used.
+//!
+//!     *  The call `numeric(max)(x,args,...)`  ensures that  if any element of the
+//!        inputs is not a `Nan`, the corresponding
+//!        output element will not be a `Nan`.
+//!
+//!     **Example**
+//!
+//!        @godbolt{doc/core/pedantic/max.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(max_, max);
 }
 
 #include <eve/module/core/regular/impl/max.hpp>

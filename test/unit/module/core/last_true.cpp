@@ -6,20 +6,21 @@
 */
 //==================================================================================================
 
-#include <eve/module/core.hpp>
 #include "test.hpp"
+
+#include <eve/module/core.hpp>
 
 TTS_CASE_TPL("Check eve::last_true return type", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  TTS_EXPR_IS( (eve::last_true(eve::logical<T>())), std::optional<std::ptrdiff_t>);
+  TTS_EXPR_IS((eve::last_true(eve::logical<T>())), std::optional<std::ptrdiff_t>);
 };
 
 TTS_CASE("Check eve::last_true bool")
 {
-  TTS_EXPR_IS( (eve::last_true(bool{})) , std::optional<std::ptrdiff_t>);
-  TTS_EQUAL  ( (eve::last_true(true)),  0);
-  TTS_EQUAL  ( (eve::last_true(false)), std::nullopt );
+  TTS_EXPR_IS((eve::last_true(bool {})), std::optional<std::ptrdiff_t>);
+  TTS_EQUAL((eve::last_true(true)), 0);
+  TTS_EQUAL((eve::last_true(false)), std::nullopt);
 };
 
 TTS_CASE_TPL("Check eve::last_true behavior on logical", eve::test::simd::all_types)
@@ -51,7 +52,7 @@ TTS_CASE_TPL("Check eve::last_true", eve::test::simd::all_types)
   {
     l_t x(false);
 
-    for (int i = 0; i != T::size(); ++i)
+    for( int i = 0; i != T::size(); ++i )
     {
       x.set(i, true);
       TTS_EQUAL(eve::last_true(x), i);
@@ -63,17 +64,17 @@ TTS_CASE_TPL("Check eve::last_true", eve::test::simd::all_types)
   {
     l_t x(false);
 
-    for (int i = 0; i != T::size(); ++i)
+    for( int i = 0; i != T::size(); ++i )
     {
       x.set(i, true);
 
-      auto ifirst = eve::ignore_first(i);
+      auto ifirst        = eve::ignore_first(i);
       auto ifirst_bigger = eve::ignore_first(i + 1);
 
       TTS_EQUAL(eve::last_true[ifirst](x), i);
       TTS_EQUAL(eve::last_true[ifirst_bigger](x), std::nullopt);
 
-      if (i > 0)
+      if( i > 0 )
       {
         auto iextrema = ifirst && eve::ignore_last(T::size() - i - 1);
         TTS_EQUAL(eve::last_true[iextrema](x), i);
@@ -93,14 +94,13 @@ TTS_CASE_TPL("Check eve::last_true", eve::test::simd::all_types)
   {
     l_t x(true);
 
-    for (int i = 0; i != T::size(); ++i)
+    for( int i = 0; i != T::size(); ++i )
     {
       auto ilast = eve::ignore_last(T::size() - i - 1);
       TTS_EQUAL(eve::last_true[ilast](x), i);
 
       auto iextrema = eve::ignore_first(i) && ilast;
       TTS_EQUAL(eve::first_true[iextrema](x), i);
-
     }
     TTS_EQUAL(eve::first_true[eve::ignore_last(T::size())](x), std::nullopt);
   }
@@ -112,9 +112,9 @@ TTS_CASE_TPL("Check last_true(top_bits)", eve::test::simd::all_types)
   using logical = eve::logical<T>;
   TTS_EQUAL(T::size() - 1, eve::last_true(eve::top_bits(logical(true))));
 
-  for (int i = 0; i != T::size() - 1; ++i)
+  for( int i = 0; i != T::size() - 1; ++i )
   {
-    logical v([=](auto e, auto) { return e <= i; } );
+    logical       v([=](auto e, auto) { return e <= i; });
     std::optional res = eve::last_true(eve::top_bits(v));
     TTS_EXPECT(res);
 

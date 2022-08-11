@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-
 #include <eve/module/core/fuzzy/ceil.hpp>
 #include <eve/module/core/fuzzy/floor.hpp>
 #include <eve/module/core/fuzzy/is_equal.hpp>

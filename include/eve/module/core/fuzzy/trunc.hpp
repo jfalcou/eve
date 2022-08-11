@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/fuzzy/impl/trunc.hpp>
+#include <eve/module/core/regular/trunc.hpp>

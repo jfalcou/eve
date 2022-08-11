@@ -11,66 +11,64 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var inc
-  //!
-  //! @brief Callable object computing the inc unary operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the inc unary operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
-  //!The result is `x+1`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::inc
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `inc[cond](x, ...)` is equivalent to `if_else(cond,inc(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/inc.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(inc_, inc);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var inc
+//!   @brief return the input incremented by one.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T inc(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of `x+1` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/inc.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::inc[mask](x, ...)` provides a masked
+//!     version of `inc` which is
+//!     equivalent to `if_else(mask, inc(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/inc.cpp}
+//!
+//!   * eve::saturated
+//!
+//!       The call `saturated(inc)(x)` computes the saturated increment of `x`.
+//!       The only interest of this behaviour is that
+//!       for integral type T the call  `saturated(inc)(Valmax<T>())` returns `Valmax<T>()`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/saturated/inc.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(inc_, inc);
 }
 
 #include <eve/module/core/regular/impl/inc.hpp>

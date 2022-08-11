@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(remdiv_, remdiv);
+EVE_MAKE_CALLABLE(remdiv_, remdiv);
 }
 
 #include <eve/module/core/regular/impl/remdiv.hpp>

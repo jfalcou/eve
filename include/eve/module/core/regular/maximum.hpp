@@ -6,70 +6,60 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var maximum
-  //!
-  //! @brief Callable object computing maximal element.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | computes the maximal element of a real value               |
-  //! | `operator[]` | Construct a masked version of current function object      |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( real_value x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   a [real value](@ref eve::real_value)
-  //!
-  //! **Return value**
-  //!
-  //!returns a [scalar value](@ref eve::scalar_value) containing the maximal element
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::maximum
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `maximum[cond](x)` is equivalent to `maximum(if_else(cond, x, valmin(as(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/maximum.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(maximum_, maximum);
+//================================================================================================
+//! @addtogroup core_reduction
+//! @{
+//!   @var maximum
+//!   @brief Computes the maximal value of an simd vector
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      eve::element_type_t<T> maximum(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameter**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The scalar maximal value.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/maximum.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::maximum[mask](x)` provides a masked
+//!     version of `maximum` which is
+//!     equivalent to : ``maximum(if_else(mask, x, valmin(as(x))))`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/maximum.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(maximum_, maximum);
 }
 
 #include <eve/module/core/regular/impl/maximum.hpp>

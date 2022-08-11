@@ -10,78 +10,58 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var is_even
-  //!
-  //! @brief Callable object computing the is_even logical value.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_even logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(real_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!The call:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_even(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if constexpr(floating_real_value<T>)   r = is_flint(x) && is_flint(x/2);
-  //!else constexpr(integral_real_value<T>) r = is_equal(x, (x/2)*2);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_even
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_even[cond](x)` is equivalent to
-  //! `if_else(cond,is_even(x),false(as(is_even(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_even.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-
-  EVE_MAKE_CALLABLE(is_even_, is_even);
+//================================================================================================
+//! @addtogroup core_predicates
+//! @{
+//!   @var is_even
+//!   @brief Returns a logical true  if and only if the element value is even.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      eve::as_logical<T> is_even(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!   **Return value**
+//!
+//!     The call `is_even(x)` is semantically  equivalent to:
+//!      @code
+//!      if constexpr(floating_value<T>)   return eve::is_flint (x) && eve::is_flint (x/2);
+//!      else constexpr(integral_value<T>) return eve::is_equal (x, (x/2)*2);
+//!      @endcode
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/is_even.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::is_even[mask](x)` provides a masked version of `eve::is_even` which is
+//!     equivalent to `if_else (mask, is_even(x), eve::false( eve::as(x)))`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/is_even.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(is_even_, is_even);
 }
 
 #include <eve/module/core/regular/impl/is_even.hpp>

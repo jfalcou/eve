@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/fuzzy/impl/is_equal.hpp>
+#include <eve/module/core/regular/is_equal.hpp>

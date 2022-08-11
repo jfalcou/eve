@@ -11,88 +11,66 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var absmin
-  //!
-  //! @brief Callable object computing the absmin operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the absmin operation                                       |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `args`:   [values](@ref eve::value)
-  //!
-  //! **Return value**
-  //!
-  //!the [elementwise](@ref glossary_elementwise) absolute value of the minimum is returned.
-  //!
-  //! The call `absmin(x, args...)` is equivalent to `abs(min(x, args...))`
-  //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
-  //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::absmin
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `absmin[cond](x, ...)` is equivalent to `if_else(cond,absmin(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(absmin)(x, args...)` is equivalent to `abs(pedantic(min)(x, args...))`
-  //!
-  //!  * eve::numeric
-  //!
-  //!
-  //!     The call `numeric(absmin)(x, args...) is equivalent to `abs(numeric(min)(x, args...))`
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(absmin)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their absmin is \f$m\f$, the value returned is elementwise \f$\mathrm{sign}(x_N)\f$ if \f$m\f$ is equal to \f$|x_N|\f$ else 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/absmin.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(absmin_, absmin);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var absmin
+//!   @brief Computes the absolute value of the minimal element
+//!
+//!   This is equivalent to eve::abs ( eve::min(...) ). but can be subject to optimizations.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T,  eve::value... Ts>
+//!      eve::common_compatible_value<T, Ts ...> absmin( T x, Ts ... xs ) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`,  `...xs`: [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The absolute value of the minimal element
+//!    is returned.
+//!
+//!    @note
+//!     If any element of the inputs is a NaN,
+//!     the corresponding output element is system-dependent.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/absmin.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::absmin[mask](x, ...)` provides a masked version of `eve::absmin` which is
+//!     equivalent to `eve::if_else (mask, absmin(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/absmin.cpp}
+//!
+//!   * eve::pedantic,  eve::numeric
+//!
+//!     The call `d(eve::absmin)(...)`, where d is one of these two decorators, is equivalent to
+//!     `eve::abs (d( eve::min )(...))`.
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(absmin_, absmin);
 }
 
 #include <eve/module/core/regular/impl/absmin.hpp>

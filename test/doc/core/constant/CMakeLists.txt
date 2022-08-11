@@ -1,0 +1,42 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Contributors & Maintainers
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+##==================================================================================================
+
+
+make_unit( "doc.core.constant" allbits.cpp              )
+make_unit( "doc.core.constant" as_value.cpp             )   
+make_unit( "doc.core.constant" constant.cpp             )
+make_unit( "doc.core.constant" eps.cpp                  )
+make_unit( "doc.core.constant" exponentmask.cpp         )
+make_unit( "doc.core.constant" false_.cpp               )
+make_unit( "doc.core.constant" half.cpp                 )
+make_unit( "doc.core.constant" ieee_constant.cpp        )
+make_unit( "doc.core.constant" inf.cpp                  )
+make_unit( "doc.core.constant" limitexponent.cpp        )
+make_unit( "doc.core.constant" logeps.cpp               )
+make_unit( "doc.core.constant" mask.cpp                 )
+make_unit( "doc.core.constant" maxexponent.cpp          )
+make_unit( "doc.core.constant" maxexponentm1.cpp        )
+make_unit( "doc.core.constant" maxexponentp1.cpp        )
+make_unit( "doc.core.constant" maxflint.cpp             )
+make_unit( "doc.core.constant" mhalf.cpp                )
+make_unit( "doc.core.constant" mindenormal.cpp          )
+make_unit( "doc.core.constant" minexponent.cpp          )
+make_unit( "doc.core.constant" minf.cpp                 )
+make_unit( "doc.core.constant" mone.cpp                 )
+make_unit( "doc.core.constant" mzero.cpp                )
+make_unit( "doc.core.constant" nan.cpp                  )
+make_unit( "doc.core.constant" nbmantissabits.cpp       )
+make_unit( "doc.core.constant" one.cpp                  )
+make_unit( "doc.core.constant" oneosqrteps.cpp          )
+make_unit( "doc.core.constant" signmask.cpp             )
+make_unit( "doc.core.constant" sqrteps.cpp              )
+make_unit( "doc.core.constant" sqrtsmallestposval.cpp   )
+make_unit( "doc.core.constant" sqrtvalmax.cpp           )
+make_unit( "doc.core.constant" true_.cpp                )
+make_unit( "doc.core.constant" valmax.cpp               )
+make_unit( "doc.core.constant" valmin.cpp               )
+make_unit( "doc.core.constant" zero.cpp                 )

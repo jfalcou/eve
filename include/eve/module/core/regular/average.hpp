@@ -7,97 +7,86 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var average
-  //!
-  //! @brief Callable object computing the average of multiple values.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the mid-point operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                                    requires (compatiblevalues< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`:   [values](@ref eve::value).
-  //!
-  //!`x`, `args`, ...:   [floating values](@ref eve::floating_value).
-  //!
-  //! **Return value**
-  //!
-  //!For two parameters half the sum of `x` and `y`. No overflow occurs.
-  //!
-  //!For more than two parameters only floating entries are allowed and overflow is avoided.
-  //!
-  //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
-  //!
-  //!@warning
-  //!    If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the result
-  //!    is a rounded value at a distance guaranted
-  //!    to be less than or equal to 0.5 of the average floating value, but may differ
-  //!    by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
-  //!    simd intrinsics to perform the operation, the scalar results may differ by one unit from
-  //!    simd ones which are system dependent.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::average
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `average[cond](x, ...)` is equivalent to `if_else(cond,average(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_nth< N >(average)(x,args...)` computes the partial
-  //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!      greater that the actual number of parameters, otherwise it is the inverse of the number of parameters.
-  //!
-  //!      This is only available for floating point entries.
-  //!
-  //!  * eve::raw
-  //!
-  //!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid overflows for more than 2 parameters.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/average.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(average_, average);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var average
+//!   @brief Computes the  arithmetic mean  of its arguments.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value U >
+//!      eve::common_compatible_t<T, U> average(T x, U y) noexcept;
+//!
+//!      template< eve::floating_value Ts ... >
+//!      eve::common_compatible_t<Ts ...> average(Ts ... xs) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!
+//!     * `xs...` :  [floating value arguments](@ref eve::floating_value).
+//!
+//!    **Return value**
+//!
+//!    The value of the arithmetic mean  of the arguments is returned.
+//!
+//!   @note
+//!     * For two parameters half the sum of `x` and `y`. No overflow occurs.
+//!
+//!     * For more than two parameters only floating entries are allowed. No overflow occurs.
+//!
+//!     * If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the
+//!     result
+//!       is a rounded value at a distance guaranteed
+//!       to be less than or equal to 0.5 of the average floating value, but may differ
+//!       by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
+//!       simd intrinsics to perform the operation, the scalar results may differ by one unit from
+//!       simd ones which are system dependent.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/average.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::average[mask](x, ...)` provides a masked
+//!     version of `average` which is
+//!     equivalent to `if_else(mask, average(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/average.cpp}
+//!
+//!   * eve::raw
+//!
+//!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid
+//!     overflows for more than 2 parameters.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/raw/average.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(average_, average);
 }
 
 #include <eve/module/core/regular/impl/average.hpp>

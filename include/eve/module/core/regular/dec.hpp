@@ -11,75 +11,64 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var dec
-  //!
-  //! @brief Callable object computing the dec unary operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the dec unary operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) a value with the same type as `x`.
-  //!The result is `x-1`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::dec
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `dec[cond](x, ...)` is equivalent to `if_else(cond,dec(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * `saturated`
-  //!
-  //!
-  //!     The call `saturated(dec)(x)` computes the saturated opposite of `x`. The only interest of this behaviour is that
-  //!      for integral type T  `saturated(dec)(Valmin< T >())` returns `Valmin< T >()`.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(dec)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/dec.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(dec_, dec);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var dec
+//!   @brief return the input decremented by 1.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T dec(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of `x-1` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/dec.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::dec[mask](x, ...)` provides a masked
+//!     version of `dec` which is
+//!     equivalent to `if_else(mask, dec(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/dec.cpp}
+//!
+//!   * eve::saturated
+//!
+//!       The call `saturated(dec)(x)` computes the saturated decrement of `x`.
+//!       The only interest of this behaviour is that
+//!       for integral type T  the call `saturated(dec)(Valmin<T>())` returns `Valmin<T>()`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/saturated/dec.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(dec_, dec);
 }
 
 #include <eve/module/core/regular/impl/dec.hpp>

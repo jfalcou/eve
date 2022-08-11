@@ -11,52 +11,72 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var diff_of_prod
-  //!
-  //! @brief Callable object computing the diff_of_prod operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the diff_of_prod operation                                      |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y, V z, W t ) const noexcept requires compatible< T, U, V, W>;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`, `z`, `t`:   [values](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!computes [elementwise](@ref glossary_elementwise) accurately x*y-z*t:
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/diff_of_prod.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup core_accuracy
+//! @{
+//!   @var diff_of_prod
+//!   @brief Computes the difference of products operation with better accuracy
+//!   than the naive formula.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T
+//!              , eve::floating_value U
+//!              , eve::floating_value V
+//!              , eve::floating_value W>
+//!      T diff_of_prod(T x, U y, V z, W t ) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`, `y`, `z`, `t`:  [floating value arguments](@ref eve::floating_value).
+//!
+//!    **Return value**
+//!
+//!    The value of `x*y-z*t`,  with better precision if correct fma is available,
+//!    is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/diff_of_prod.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * eve::raw
+//!
+//!     The call `eve::raw(eve::diff_of_prod)(x, y, z, t)` computes a raw
+//!     version of eve::diff_of_prod,  i.e. the naive formula
+//!
+//!   * eve::pedantic
+//!
+//!     The call `eve::pedantic(eve::diff_of_prod)(x, y, z, t)` computes a pedantic
+//!     version of eve::diff_of_prod ensuring better accuracy in any case.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/pedantic/diff_of_prod.cpp}
+//!
+//! @}
+//================================================================================================
 
-  namespace tag { struct diff_of_prod_; }
-  template<> struct supports_conditional<tag::diff_of_prod_> : std::false_type {};
+namespace tag
+{
+  struct diff_of_prod_;
+}
+template<> struct supports_conditional<tag::diff_of_prod_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(diff_of_prod_, diff_of_prod);
+EVE_MAKE_CALLABLE(diff_of_prod_, diff_of_prod);
 }
 
 #include <eve/module/core/regular/impl/diff_of_prod.hpp>

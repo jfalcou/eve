@@ -7,12 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/saturated/convert.hpp>
-
 #include <eve/module/core/saturated/abs.hpp>
 #include <eve/module/core/saturated/absmax.hpp>
 #include <eve/module/core/saturated/absmin.hpp>
 #include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/saturated/convert.hpp>
 #include <eve/module/core/saturated/dec.hpp>
 #include <eve/module/core/saturated/dist.hpp>
 #include <eve/module/core/saturated/div.hpp>

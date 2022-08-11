@@ -1,0 +1,10 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Contributors & Maintainers
+##  SPDX-License-Identifier: MIT
+##==================================================================================================
+##==================================================================================================
+
+make_unit( "doc.core.roundings" div.cpp                )
+make_unit( "doc.core.roundings" rem.cpp                )
+make_unit( "doc.core.roundings" round.cpp              )
