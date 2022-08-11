@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type_20traits_0',['Type traits',['../group__traits.html',1,'']]]
+  ['math_20function_0',['math function',['../group__math.html',1,'']]],
+  ['memory_20management_1',['Memory Management',['../group__memory.html',1,'']]]
 ];

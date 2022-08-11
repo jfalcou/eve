@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('dev_cmake.html',''); initResizable(); 
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_internals_dev_cmake"></a></p>
 <p >From now on, we make the assumption your Docker instance is running and that you're logged into its interactive shell as per <a class="el" href="dev_environment.html">the protocol previously defined</a>. In this tutorial, we will go over the process to configure the tests and run them properly.</p>
-<h1><a class="anchor" id="autotoc_md1912"></a>
+<h1><a class="anchor" id="autotoc_md837"></a>
 CMake setup</h1>
 <p >First, you'd need to create a build directory and cd into it</p>
 <pre class="fragment">mkdir build_arch &amp;&amp; cd build_arch
@@ -148,16 +148,22 @@ CMake setup</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">X86_avx512   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake -DEVE_OPTIONS='-march=skylake-avx512'    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">X86_avx512_no_native   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.sde.cmake -DEVE_OPTIONS='-march=skylake-avx512'    </td></tr>
+<td class="markdownTableBodyNone">X86_avx512_no_native   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86_sde.cmake -DEVE_OPTIONS='-march=skylake-avx512'    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Aarch64(arm-v8)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">Arm (arm-v7)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">wasm   </td><td class="markdownTableBodyNone">emcmake cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE='../cmake/toolchain/emcc.cmake'   </td></tr>
+<td class="markdownTableBodyNone">wasm   </td><td class="markdownTableBodyNone">emcmake cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE='../cmake/toolchain/emcc.cmake'    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Arm (sve-128)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve128.cmake    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Arm (sve-256)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve256.cmake    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Arm (sve-512)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.sve512.cmake   </td></tr>
 </table>
 <p >Once run, your build folder should contain all the necessary artifact to compile and run <b>EVE</b> test suite.</p>
-<h1><a class="anchor" id="autotoc_md1913"></a>
+<h1><a class="anchor" id="autotoc_md838"></a>
 Compiling EVE Unit Tests</h1>
 <p ><b>EVE</b> provides a large number of test targets that are grouped by theme. Each of these themes and tests with a theme can be compiled with a proper target.</p>
 <p >In term of options, we encourage you to use the <code>-DEVE_NO_FORCEINLINE</code> macro that prevents costly optimization to be used during the compilation of tests.</p>
@@ -213,7 +219,7 @@ Compiling EVE Unit Tests</h1>
 </pre><p >Once compiled, the test executable are located in the <code>unit</code> folder and can be run via:</p>
 <pre class="fragment">./unit/unit.core.abs.exe
 </pre><p >The <code>unit.exe</code> target is very large and requires a comfortable amount of CPUs to be compiled in parallel.</p>
-<h1><a class="anchor" id="autotoc_md1914"></a>
+<h1><a class="anchor" id="autotoc_md839"></a>
 Compiling EVE Random Tests</h1>
 <p >Random tests run a given function over a samples of random values to test its relative precision. The following table list the main high-level random target.</p>
 <table class="markdownTable">

@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga9e601fcbe356949
 <p ><code>p</code>, <code>n</code>: <a class="el" href="concepteve_1_1value.html">real arguments</a>.</p>
 <p ><b>Return value</b></p>
 <p >Returns the least common multiple of |p| and |n|.</p>
-<dl class="section warning"><dt>Warning</dt><dd><code>p</code> and <code>n</code> can be of any <a class="el" href="concepteve_1_1value.html">real values</a> type, but when the types are not integral the least common multiple is defined only if <code>p</code> and <code>n</code> elements are [flint](<a class="el" href="group__core_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">eve::is_flint</a>). If any of the arguments is not flint the result is undefined.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><code>p</code> and <code>n</code> can be of any <a class="el" href="concepteve_1_1value.html">real values</a> type, but when the types are not integral the least common multiple is defined only if <code>p</code> and <code>n</code> elements are [flint](<a class="el" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">eve::is_flint</a>). If any of the arguments is not flint the result is undefined.</dd></dl>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -199,11 +199,11 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga9e601fcbe356949
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi8                        = &quot;</span> &lt;&lt; qi8 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lcm(pi8, qi8)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a>(pi8, qi8)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;// incorrect due to overflow\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; upgrade_(lcm)(pi8, qi8))    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">eve::upgrade_</a>(<a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a>)(pi8, qi8) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; upgrade_(lcm)(pi8, qi8))    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__conversions_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">eve::upgrade_</a>(<a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a>)(pi8, qi8) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_gaab615cc960ad89710ead478748d6b252_html_gaab615cc960ad89710ead478748d6b252"><div class="ttname"><a href="group__core_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">eve::upgrade_</a></div><div class="ttdeci">constexpr upgrade_converter const upgrade_</div><div class="ttdoc">convert a eve::real_value to a eve::real_value of the upgraded base type.</div><div class="ttdef"><b>Definition:</b> converter.hpp:448</div></div>
+<div class="ttc" id="agroup__core__conversions_gaab615cc960ad89710ead478748d6b252_html_gaab615cc960ad89710ead478748d6b252"><div class="ttname"><a href="group__core__conversions_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">eve::upgrade_</a></div><div class="ttdeci">constexpr upgrade_converter const upgrade_</div><div class="ttdoc">convert a eve::value to the upgraded base type.</div><div class="ttdef"><b>Definition:</b> converter.hpp:740</div></div>
 </div><!-- fragment --> </li>
 </ul>
 

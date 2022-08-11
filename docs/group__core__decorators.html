@@ -1,0 +1,196 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: Decorators</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2022.03.00</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__core__decorators.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Decorators<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a> &raquo; <a class="el" href="group__core.html">Core functions</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p >Core semantic modifiers </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga4b6f131db74556004934d2d61f185d92"><td class="memItemLeft" align="right" valign="top">constexpr compensated_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga4b6f131db74556004934d2d61f185d92.html#ga4b6f131db74556004934d2d61f185d92">eve::compensated</a> = {}</td></tr>
+<tr class="memdesc:ga4b6f131db74556004934d2d61f185d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing more more accuracy onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga4b6f131db74556004934d2d61f185d92.html#ga4b6f131db74556004934d2d61f185d92">More...</a><br /></td></tr>
+<tr class="separator:ga4b6f131db74556004934d2d61f185d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4029354e92cc2575f406c1335e4f2fef"><td class="memItemLeft" align="right" valign="top">constexpr cyl_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga4029354e92cc2575f406c1335e4f2fef.html#ga4029354e92cc2575f406c1335e4f2fef">eve::cyl</a> = {}</td></tr>
+<tr class="memdesc:ga4029354e92cc2575f406c1335e4f2fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing cylindrical semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga4029354e92cc2575f406c1335e4f2fef.html#ga4029354e92cc2575f406c1335e4f2fef">More...</a><br /></td></tr>
+<tr class="separator:ga4029354e92cc2575f406c1335e4f2fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab948026b7cf3543e2fa4b43f32c3311c"><td class="memItemLeft" align="right" valign="top">constexpr almost_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a> = {}</td></tr>
+<tr class="memdesc:gab948026b7cf3543e2fa4b43f32c3311c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a tolerant to little errors semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">More...</a><br /></td></tr>
+<tr class="separator:gab948026b7cf3543e2fa4b43f32c3311c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8677881ff2d27fba6adedaeb8f84151b"><td class="memItemLeft" align="right" valign="top">constexpr definitely_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a> = {}</td></tr>
+<tr class="memdesc:ga8677881ff2d27fba6adedaeb8f84151b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a tolerant to small errors semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">More...</a><br /></td></tr>
+<tr class="separator:ga8677881ff2d27fba6adedaeb8f84151b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cef78b42db5aeb88da7c503baed5b4a"><td class="memItemLeft" align="right" valign="top">constexpr tolerant_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a">eve::tolerant</a> = {}</td></tr>
+<tr class="memdesc:ga1cef78b42db5aeb88da7c503baed5b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a less strict semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a">More...</a><br /></td></tr>
+<tr class="separator:ga1cef78b42db5aeb88da7c503baed5b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5a6d5b7c8c61e7f5c9190e8b69bb4ab"><td class="memItemLeft" align="right" valign="top">constexpr p_kind_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab">eve::p_kind</a> = {}</td></tr>
+<tr class="memdesc:gae5a6d5b7c8c61e7f5c9190e8b69bb4ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing p_kind behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab">More...</a><br /></td></tr>
+<tr class="separator:gae5a6d5b7c8c61e7f5c9190e8b69bb4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e4172d6b835dc7d61072c41ea61a634"><td class="memItemLeft" align="right" valign="top">constexpr numeric_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a> = {}</td></tr>
+<tr class="memdesc:ga9e4172d6b835dc7d61072c41ea61a634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing non invalid return preference semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">More...</a><br /></td></tr>
+<tr class="separator:ga9e4172d6b835dc7d61072c41ea61a634"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8526757ac3b6797bc68ce2072c549cf3"><td class="memItemLeft" align="right" valign="top">constexpr pedantic_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a> = {}</td></tr>
+<tr class="memdesc:ga8526757ac3b6797bc68ce2072c549cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing more standard semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">More...</a><br /></td></tr>
+<tr class="separator:ga8526757ac3b6797bc68ce2072c549cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa19d9ce08b61f17096366e2e638e6cc3"><td class="memItemLeft" align="right" valign="top">constexpr raw_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a> = {}</td></tr>
+<tr class="memdesc:gaa19d9ce08b61f17096366e2e638e6cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing quick and dirty behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">More...</a><br /></td></tr>
+<tr class="separator:gaa19d9ce08b61f17096366e2e638e6cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga937d8a32ddb68361283b635de3ee5253"><td class="memItemLeft" align="right" valign="top">constexpr regular_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253">eve::regular</a> = {}</td></tr>
+<tr class="memdesc:ga937d8a32ddb68361283b635de3ee5253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> having identity semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253">More...</a><br /></td></tr>
+<tr class="separator:ga937d8a32ddb68361283b635de3ee5253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b3cda8b6305e7d7e0dbc9da29c6be80"><td class="memItemLeft" align="right" valign="top">constexpr upward_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">eve::upward</a> = {}</td></tr>
+<tr class="memdesc:ga3b3cda8b6305e7d7e0dbc9da29c6be80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing upward rounding semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">More...</a><br /></td></tr>
+<tr class="separator:ga3b3cda8b6305e7d7e0dbc9da29c6be80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9bc64a3f84f5fdc046854ead9bdf7f6"><td class="memItemLeft" align="right" valign="top">constexpr downward_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">eve::downward</a> = {}</td></tr>
+<tr class="memdesc:gaa9bc64a3f84f5fdc046854ead9bdf7f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing rounding downard semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">More...</a><br /></td></tr>
+<tr class="separator:gaa9bc64a3f84f5fdc046854ead9bdf7f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2364bc5fee398715edefffe3c260223"><td class="memItemLeft" align="right" valign="top">constexpr to_nearest_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">eve::to_nearest</a> = {}</td></tr>
+<tr class="memdesc:gac2364bc5fee398715edefffe3c260223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing rounding to nearest semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">More...</a><br /></td></tr>
+<tr class="separator:gac2364bc5fee398715edefffe3c260223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c470f9154d0e71ce66562f945b01028"><td class="memItemLeft" align="right" valign="top">constexpr toward_zero_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028">eve::toward_zero</a> = {}</td></tr>
+<tr class="memdesc:ga0c470f9154d0e71ce66562f945b01028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing rounding toward zero semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028">More...</a><br /></td></tr>
+<tr class="separator:ga0c470f9154d0e71ce66562f945b01028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65d424f34f684af47b6e2d2653be632e"><td class="memItemLeft" align="right" valign="top">constexpr saturated_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a> = {}</td></tr>
+<tr class="memdesc:ga65d424f34f684af47b6e2d2653be632e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing saturation semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">More...</a><br /></td></tr>
+<tr class="separator:ga65d424f34f684af47b6e2d2653be632e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf24ab26845a91e5998b2f3134669b5a"><td class="memItemLeft" align="right" valign="top">constexpr sph_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gaaf24ab26845a91e5998b2f3134669b5a.html#gaaf24ab26845a91e5998b2f3134669b5a">eve::sph</a> = {}</td></tr>
+<tr class="memdesc:gaaf24ab26845a91e5998b2f3134669b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing spherical semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gaaf24ab26845a91e5998b2f3134669b5a.html#gaaf24ab26845a91e5998b2f3134669b5a">More...</a><br /></td></tr>
+<tr class="separator:gaaf24ab26845a91e5998b2f3134669b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37ae7275dffa6350a54dad217041ab09"><td class="memItemLeft" align="right" valign="top">constexpr successor_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a> = {}</td></tr>
+<tr class="memdesc:ga37ae7275dffa6350a54dad217041ab09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing incrementation behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">More...</a><br /></td></tr>
+<tr class="separator:ga37ae7275dffa6350a54dad217041ab09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

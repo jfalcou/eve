@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['p_5fkind_0',['p_kind',['../group__polynomial_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab',1,'eve']]],
+  ['p_5fkind_0',['p_kind',['../group__core__decorators_gae5a6d5b7c8c61e7f5c9190e8b69bb4ab.html#gae5a6d5b7c8c61e7f5c9190e8b69bb4ab',1,'eve']]],
   ['pattern_1',['pattern',['../group__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd',1,'eve']]],
-  ['pedantic_2',['pedantic',['../group__core_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3',1,'eve']]],
+  ['pedantic_2',['pedantic',['../group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3',1,'eve']]],
   ['phi_3',['phi',['../group__math_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17',1,'eve']]],
   ['pi_4',['pi',['../group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f',1,'eve']]],
   ['pi2_5',['pi2',['../group__math_ga8f64c2795a98ccb6b784f790da5e14c8.html#ga8f64c2795a98ccb6b784f790da5e14c8',1,'eve']]],
@@ -15,14 +15,14 @@ var searchData=
   ['pio_5f3_12',['pio_3',['../group__math_ga349e81ff923ec42d3d92da0509c50b05.html#ga349e81ff923ec42d3d92da0509c50b05',1,'eve']]],
   ['pio_5f4_13',['pio_4',['../group__math_ga5b056b1123bc80ac58687b3d6abfbec6.html#ga5b056b1123bc80ac58687b3d6abfbec6',1,'eve']]],
   ['pio_5f6_14',['pio_6',['../group__math_gaeb34109c2cdf75afb9053c372d584f26.html#gaeb34109c2cdf75afb9053c372d584f26',1,'eve']]],
-  ['plus_15',['plus',['../group__core_gad742f5ce084044535470a38bca2d1cc5.html#gad742f5ce084044535470a38bca2d1cc5',1,'eve']]],
+  ['plus_15',['plus',['../group__core__arithmetic_gad742f5ce084044535470a38bca2d1cc5.html#gad742f5ce084044535470a38bca2d1cc5',1,'eve']]],
   ['polar_16',['polar',['../group__complex_gac311c86da504a8af90fab3cbbc1e3e2c.html#gac311c86da504a8af90fab3cbbc1e3e2c',1,'eve']]],
-  ['popcount_17',['popcount',['../group__core_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322',1,'eve']]],
+  ['popcount_17',['popcount',['../group__core__bitops_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322',1,'eve']]],
   ['pow_18',['pow',['../group__math_ga9e50f660c1ffa0aec9d549a822e5d2fb.html#ga9e50f660c1ffa0aec9d549a822e5d2fb',1,'eve']]],
   ['pow1p_19',['pow1p',['../group__math_gaf5caf2f837c183fa5924d05b64b24def.html#gaf5caf2f837c183fa5924d05b64b24def',1,'eve']]],
   ['pow_5fabs_20',['pow_abs',['../group__math_ga7dc798b64cf565837240f4d135722cbe.html#ga7dc798b64cf565837240f4d135722cbe',1,'eve']]],
   ['powm1_21',['powm1',['../group__math_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d',1,'eve']]],
-  ['prev_22',['prev',['../group__core_gad1c74accad79dc78f0147991c3e2b9ae.html#gad1c74accad79dc78f0147991c3e2b9ae',1,'eve']]],
+  ['prev_22',['prev',['../group__core__internal_gad1c74accad79dc78f0147991c3e2b9ae.html#gad1c74accad79dc78f0147991c3e2b9ae',1,'eve']]],
   ['prime_5fceil_23',['prime_ceil',['../group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665',1,'eve']]],
   ['prime_5ffloor_24',['prime_floor',['../group__combinatorial_ga88c5c11a1583d1787e367f08385a7dc8.html#ga88c5c11a1583d1787e367f08385a7dc8',1,'eve']]],
   ['proj_25',['proj',['../group__complex_ga3fda63f928f141d661e8752b5eb523a8.html#ga3fda63f928f141d661e8752b5eb523a8',1,'eve']]]

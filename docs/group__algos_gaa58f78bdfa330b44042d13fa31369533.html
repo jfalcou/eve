@@ -140,16 +140,15 @@ $(document).ready(function(){initNavTree('group__algos_gaa58f78bdfa330b44042d13f
 <p><code>#include &lt;eve/algo/find.hpp&gt;</code></p>
 
 <p>a version of find_if with a value to find instead of a predicate to test. </p>
-<p >a version of find_if_backward with a value to find instead of a predicate to test.</p>
 <p ><b>Alternative Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng&gt;</div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gaa58f78bdfa330b44042d13fa31369533.html#gaa58f78bdfa330b44042d13fa31369533">find</a>(Rng&amp;&amp; rng, <a class="code hl_typedef" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t&lt;Rng&gt;</a> v) -&gt; eve::unalign_t&lt;<span class="keyword">decltype</span>(rng.begin())&gt;;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gaa58f78bdfa330b44042d13fa31369533.html#gaa58f78bdfa330b44042d13fa31369533">find</a>(Rng&amp;&amp; rng, <a class="code hl_typedef" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t&lt;Rng&gt;</a> v) -&gt; unaligned_iterator_t&lt;Rng&gt;;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algos_gaa58f78bdfa330b44042d13fa31369533_html_gaa58f78bdfa330b44042d13fa31369533"><div class="ttname"><a href="group__algos_gaa58f78bdfa330b44042d13fa31369533.html#gaa58f78bdfa330b44042d13fa31369533">eve::algo::find</a></div><div class="ttdeci">constexpr auto find</div><div class="ttdoc">a version of find_if with a value to find instead of a predicate to test.</div><div class="ttdef"><b>Definition:</b> find.hpp:180</div></div>
+<div class="ttc" id="agroup__algos_gaa58f78bdfa330b44042d13fa31369533_html_gaa58f78bdfa330b44042d13fa31369533"><div class="ttname"><a href="group__algos_gaa58f78bdfa330b44042d13fa31369533.html#gaa58f78bdfa330b44042d13fa31369533">eve::algo::find</a></div><div class="ttdeci">constexpr auto find</div><div class="ttdoc">a version of find_if with a value to find instead of a predicate to test.</div><div class="ttdef"><b>Definition:</b> find.hpp:182</div></div>
 <div class="ttc" id="agroup__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2_html_gaf9ce08c683bb04a9a96e99ddd3edaee2"><div class="ttname"><a href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t</a></div><div class="ttdeci">typename decltype(detail::value_type_impl&lt; T &gt;())::type value_type_t</div><div class="ttdoc">A meta function for getting an associated value_type for a relaxed iterator/range.</div><div class="ttdef"><b>Definition:</b> value_type.hpp:71</div></div>
 </div><!-- fragment --><p> <b>Parameters</b></p>
 <ul>
@@ -174,7 +173,7 @@ $(document).ready(function(){initNavTree('group__algos_gaa58f78bdfa330b44042d13f
 <div class="line">            &lt;&lt; tts::as_string(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="group__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67.html#ga6a7bab42eae17a4a6e32e6dfd6ed4d67">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__core_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>);</div>
+<div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="group__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67.html#ga6a7bab42eae17a4a6e32e6dfd6ed4d67">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- eve::algo::find_if(v, eve::is_eqz) - v.begin()  = &quot;</span> &lt;&lt; pos - v.begin()   &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> posn  = <a class="code hl_variable" href="group__algos_ga554114bd0ddf5a75f31c8295073b71fd.html#ga554114bd0ddf5a75f31c8295073b71fd">eve::algo::find_if_not</a>(v, [](<span class="keyword">auto</span> x){<span class="keywordflow">return</span> x &lt; 0; });</div>
@@ -185,54 +184,9 @@ $(document).ready(function(){initNavTree('group__algos_gaa58f78bdfa330b44042d13f
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algos_ga554114bd0ddf5a75f31c8295073b71fd_html_ga554114bd0ddf5a75f31c8295073b71fd"><div class="ttname"><a href="group__algos_ga554114bd0ddf5a75f31c8295073b71fd.html#ga554114bd0ddf5a75f31c8295073b71fd">eve::algo::find_if_not</a></div><div class="ttdeci">constexpr auto find_if_not</div><div class="ttdoc">a version of eve::algo::find_if where the preicate is negated</div><div class="ttdef"><b>Definition:</b> find.hpp:230</div></div>
-<div class="ttc" id="agroup__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67_html_ga6a7bab42eae17a4a6e32e6dfd6ed4d67"><div class="ttname"><a href="group__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67.html#ga6a7bab42eae17a4a6e32e6dfd6ed4d67">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition:</b> find.hpp:129</div></div>
-<div class="ttc" id="agroup__core_ga6deb0e67d130c1f8417f3de5b54273d8_html_ga6deb0e67d130c1f8417f3de5b54273d8"><div class="ttname"><a href="group__core_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a></div><div class="ttdeci">constexpr callable_is_eqz_ is_eqz</div><div class="ttdoc">Callable object computing the equality to zero predicate.</div><div class="ttdef"><b>Definition:</b> is_eqz.hpp:77</div></div>
-</div><!-- fragment --><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng&gt;</div>
-<div class="line">  <span class="keyword">auto</span> find_backward(Rng&amp;&amp; rng, <a class="code hl_typedef" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t&lt;Rng&gt;</a> v) -&gt; eve::unalign_t&lt;<span class="keyword">decltype</span>(rng.begin())&gt;;</div>
-<div class="line">}</div>
-</div><!-- fragment --><p> <b>Parameters</b></p>
-<ul>
-<li><code>rng</code>: Relaxed input range to process</li>
-<li>'v': value to find</li>
-</ul>
-<p ><b>Return value</b></p>
-<p >Iterator on the element found or past the end if not found</p>
-<dl class="section see"><dt>See also</dt><dd>find_if_backward</dd></dl>
-<h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                        = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="group__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67.html#ga6a7bab42eae17a4a6e32e6dfd6ed4d67">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__core_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- eve::algo::find_if(v, eve::is_eqz) - v.begin()           = &quot;</span> &lt;&lt; pos - v.begin()   &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pos_b = <a class="code hl_variable" href="group__algos_ga1ee090838ccc58d961e4e987267f5443.html#ga1ee090838ccc58d961e4e987267f5443">eve::algo::find_if_backward</a>(v, <a class="code hl_variable" href="group__core_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a>);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- eve::algo::find_if_backward(v, eve::is_eqz) - v.begin()  = &quot;</span> &lt;&lt; pos_b - v.begin()   &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pos_bn  = eve::algo::find_if_not_backward(v, [](<span class="keyword">auto</span> x){<span class="keywordflow">return</span> x &lt; 0; });</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- eve::algo::find_if_not_backward(v, x &lt; 0) - v.begin()    = &quot;</span> &lt;&lt; pos_bn - v.begin()  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pos_bv = eve::algo::find_backward(v, 5);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- eve::algo::find(v, 5) - v.begin()                        = &quot;</span> &lt;&lt; pos_bv - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__algos_ga1ee090838ccc58d961e4e987267f5443_html_ga1ee090838ccc58d961e4e987267f5443"><div class="ttname"><a href="group__algos_ga1ee090838ccc58d961e4e987267f5443.html#ga1ee090838ccc58d961e4e987267f5443">eve::algo::find_if_backward</a></div><div class="ttdeci">constexpr auto find_if_backward</div><div class="ttdoc">finds the last entry that matches the predicate.</div><div class="ttdef"><b>Definition:</b> find_backward.hpp:132</div></div>
+<div class="ttc" id="agroup__algos_ga554114bd0ddf5a75f31c8295073b71fd_html_ga554114bd0ddf5a75f31c8295073b71fd"><div class="ttname"><a href="group__algos_ga554114bd0ddf5a75f31c8295073b71fd.html#ga554114bd0ddf5a75f31c8295073b71fd">eve::algo::find_if_not</a></div><div class="ttdeci">constexpr auto find_if_not</div><div class="ttdoc">a version of eve::algo::find_if where the preicate is negated</div><div class="ttdef"><b>Definition:</b> find.hpp:233</div></div>
+<div class="ttc" id="agroup__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67_html_ga6a7bab42eae17a4a6e32e6dfd6ed4d67"><div class="ttname"><a href="group__algos_ga6a7bab42eae17a4a6e32e6dfd6ed4d67.html#ga6a7bab42eae17a4a6e32e6dfd6ed4d67">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition:</b> find.hpp:130</div></div>
+<div class="ttc" id="agroup__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8_html_ga6deb0e67d130c1f8417f3de5b54273d8"><div class="ttname"><a href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8">eve::is_eqz</a></div><div class="ttdeci">constexpr callable_is_eqz_ is_eqz</div><div class="ttdoc">Returns a logical true if and only if the element value is zero.</div><div class="ttdef"><b>Definition:</b> is_eqz.hpp:62</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
