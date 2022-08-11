@@ -1,8 +1,8 @@
 //==================================================================================================
 /*
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
@@ -60,7 +60,7 @@ namespace eve
       else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0X4320000000000000ULL>();
       else return T(1);
     }
- 
+
   template<typename T, typename D>
   EVE_FORCEINLINE constexpr auto inv_2eps_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
   requires(is_one_of<D>(types<upward_type, downward_type> {}))

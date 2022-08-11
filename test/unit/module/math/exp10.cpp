@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -42,8 +42,8 @@ TTS_CASE_WITH( "Check behavior of exp10 on wide"
   TTS_ULP_EQUAL(eve::exp10(a0), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a0), 380);
   TTS_ULP_EQUAL(eve::exp10(a1), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);
 
-  
-  
+
+
 
   TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a0), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a0), 380);
   TTS_ULP_EQUAL(eve::pedantic(eve::exp10)(a1), map([l10](auto e) -> v_t { return std::exp(l10*e); }, a1), 2);

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -39,5 +39,5 @@ TTS_CASE_WITH( "Check behavior of atanh on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::atanh(a0)      , map([](auto e) -> v_t { return std::atanh(e); }, a0), 2);
-  
+
 };

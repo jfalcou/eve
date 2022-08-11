@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #define BOOST_MATH_OVERFLOW_ERROR_POLICY ignore_error

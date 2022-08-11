@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -47,8 +47,8 @@ TTS_CASE_WITH( "Check behavior of nthroot on wide"
 
   TTS_ULP_EQUAL(eve::nthroot(a0, U(2)*a2+U(1)), map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), eve::rec(2.0*f+1.0))*eve::sign(e); }, a0, a2), 100);
   TTS_ULP_EQUAL(eve::nthroot(a1, a3)          , map([](auto e, auto f) -> v_t { return std::pow(e, eve::rec(double(f))); }, a1, a3), 100);
-  
-  
+
+
 };
 
 

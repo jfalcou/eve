@@ -1,8 +1,8 @@
 //==================================================================================================
 /*
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
@@ -54,7 +54,7 @@ namespace eve
   //!
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!  
+  //!
   //!     The expression `diff(acscpi)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
@@ -63,10 +63,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct acscpi_; }
   template<> struct supports_conditional<tag::acscpi_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(acscpi_, acscpi);
 }
 

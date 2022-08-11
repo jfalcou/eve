@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -25,8 +25,6 @@ TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::int_(eve::nearest)(v_t()), eve::as_integer_t<v_t>);
   TTS_EXPR_IS(eve::uint_(eve::nearest)(T()), (eve::as_integer_t<T, unsigned>));
   TTS_EXPR_IS(eve::uint_(eve::nearest)(v_t()), (eve::as_integer_t<v_t, unsigned>));
-
-  if constexpr( eve::floating_real_value<T> ) {}
 };
 
 //==================================================================================================

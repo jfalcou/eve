@@ -1,7 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright : EVE Contributors & Maintainers
-##  SPDX-License-Identifier: MIT
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 include(GNUInstallDirs)
 set(MAIN_DEST     "${CMAKE_INSTALL_LIBDIR}/eve-${PROJECT_VERSION}")

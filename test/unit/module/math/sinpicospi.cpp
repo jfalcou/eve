@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -42,7 +42,7 @@ TTS_CASE_WITH( "Check behavior of cos on wide"
 {
   using eve::detail::map;
   using eve::sinpicospi;
-  
+
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return eve::cospi(e); };
   auto refs = [](auto e) -> v_t { return eve::sinpi(e); };

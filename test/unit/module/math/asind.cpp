@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -38,5 +38,5 @@ TTS_CASE_WITH( "Check behavior of asind on wide"
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::asind(a0)      , map([](auto e) -> v_t { return eve::radindeg(std::asin(e)); }, a0), 2);
-  
+
 };

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -49,9 +49,9 @@ TTS_CASE_WITH ( "Check behavior of cosh on wide"
   using v_t = eve::element_type_t<T>;
   using eve::cosh;
   using eve::sinh;
-  
+
   TTS_ULP_EQUAL(cosh(a0)      , map([](auto e) -> v_t { return std::cosh(e); }, a0), 2);
   TTS_ULP_EQUAL(cosh(a1)      , map([](auto e) -> v_t { return std::cosh(e); }, a1), 2);
-  
-  
+
+
 };
