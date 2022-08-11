@@ -12,26 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_invhyper
   //! @{
   //! @var invgd
   //!
-  //! @brief Callable object computing the inverse gudermanian invgd: \f$\int_0^\infty \sec x dx\f$.
+  //! @brief Callable object computing the inverse gudermanian.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of invgd                                  |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T invgd(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -39,7 +40,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) inverse gudermanian of the input.
+  //! Returns the [elementwise](@ref glossary_elementwise) inverse
+  //! [gudermanian](@ref eve::gd) of the input.
   //!
   //!In particular:
   //!
@@ -47,11 +49,7 @@ namespace eve
   //!   * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
   //!   * If the element is not in a  \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //!  Higher-order function generating a masked version of eve::invgd
   //!
@@ -61,20 +59,14 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `invgd[cond](x, ...)` is equivalent to `if_else(cond,invgd(x, ...),x)`
+  //!  A Callable object so that the expression `invgd[cond](x)` is equivalent to
+  //! `if_else(cond,invgd(x),x)`
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
+  //!  @godbolt{doc/math/invgd.cpp}
   //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(invgd)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/invgd.cpp}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!  @}
   //================================================================================================

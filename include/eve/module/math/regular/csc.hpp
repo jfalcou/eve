@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var csc
   //!
-  //! @brief Callable object computing csc.
+  //! @brief Callable object computing the cosecant of the input.
   //!
   //!   **Defined in Header**
   //!
@@ -40,7 +40,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
+  //! Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
+  //! (the inverse of the sine)
   //!
   //!In particular:
   //!

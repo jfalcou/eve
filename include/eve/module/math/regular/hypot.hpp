@@ -12,83 +12,71 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_exp
   //! @{
   //! @var hypot
   //!
-  //! @brief Callable object computing the hypot operation.
+  //! @brief Callable object computing the \f$l_2\f$ norm of its inputs.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
   //!
-  //! #### Members Functions
+  //!   **Defined in Header**
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the hypot operation                                        |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! ---
+  //!   @groupheader{Callable Signatures}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( floating_real_value auto x, floating_real_value auto... args ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< floating_value P, floating_value T, floating_value ... Ts>
+  //!      auto hypot( T x,Ts ... args ) const noexcept
+  //!   }
+  //!   @endcode
+  //!
   //!
   //! **Parameters**
   //!
-  //!`x`, `args`:   [floating real values](@ref eve::floating_real_value)
+  //!   `p`, `x`, `... args`:   [floating values](@ref eve::floating_value)
   //!
   //! **Return value**
   //!
-  //!The square root of the sum of the squared absolute values of the parameters.
+  //!   *  \f$\sqrt{\sum_1^n |x_i|^2}\f$ is returned
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the three parameters.
+  //!   *  The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!  @godbolt{doc/math/hypot.cpp}
   //!
-  //!  Higher-order function generating a masked version of eve::hypot
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  **Parameters**
+  //!   * Masked Call
   //!
-  //!  `cond` : conditional expression
+  //!     The call `eve;::hypot[mask](x, ...)` provides a masked version of `eve::hypot` which is
+  //!     equivalent to `if_else (mask, hypot(x, ...), x)`.
   //!
-  //!  **Return value**
+  //!      **Example**
   //!
-  //!  A Callable object so that the expression `hypot[cond](x, ...)` is equivalent to `if_else(cond,hypot(x, ...),x)`
+  //!        @godbolt{doc/math/masked/hypot.cpp}
   //!
-  //! ---
+  //!    * eve::pedantic
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of the squares of the parameters
+  //!      The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of
+  //!      the squares of the parameters
   //!      without undue overflow or underflow at intermediate stages of the computation
   //!      and can be more accurate than the non-decorated call.
   //!
-  //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
+  //!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite,
+  //!      regardless of possible `Nan` values.
   //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
+  //!      **Example**
   //!
-  //!
-  //!     The expression `diff_< N >(hypot)(x,args...)` computes the partial
-  //!      derivativ of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!      greater that the actual number of parameters, otherwise it is the
-  //!      `N`th parameter value divided by the `hypot` value.
-  //!
-  //!  !!! Warning
-  //!      This is only available for floating point entries.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/hypot.cpp}
-  //!
+  //!        @godbolt{doc/math/pedantic/hypot.cpp}
   //!  @}
   //================================================================================================
+
   EVE_MAKE_CALLABLE(hypot_, hypot);
 }
 

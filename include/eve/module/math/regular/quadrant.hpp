@@ -11,47 +11,39 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_trig
   //! @{
   //! @var quadrant
   //!
   //! @brief Callable object computing the quadrant value.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the quadrant value   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T quadrant(T n) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!`x`:   [real_value](@ref eve::real_value).
+  //!`n`:   [integer value](@ref eve::real_value). Must be of  integral type or a [flint](@ref eve::is_flint) value
   //!
   //! **Return value**
   //!
-  //!return a value of the same type as `x` containing the quadrant number where `x` (supposed an integer) lies.
+  //!    return a value of the same type as `n` containing the quadrant number where `n` (supposed an integer) lies.
   //!
-  //!@warning
-  //!   the input `x` must be an integral or a [flint](@ref eve::is_flint) value.
+  //!  @groupheader{Example}
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/quadrant.cpp}
-  //!
+  //!  @godbolt{doc/math/quadrant.cpp}
   //!  @}
   //================================================================================================
 

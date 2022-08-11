@@ -16,7 +16,7 @@ namespace eve
   //! @{
   //! @var secpi
   //!
-  //! @brief Callable object computing secpi.
+  //! @brief Callable object computing secant ofthe input in \f$\pi\f$ multiples.
   //!
   //!   **Defined in Header**
   //!
@@ -40,7 +40,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) secine of the input expressed in \f$\pi\f$ multiples.
+  //! Returns the [elementwise](@ref glossary_elementwise) secant of the input
+  //! expressed in \f$\pi\f$ multiples.
   //!
   //!The call `secpi(x)` is semantically equivalent to \f$\sec(\pi x)\f$.
   //!In particular:

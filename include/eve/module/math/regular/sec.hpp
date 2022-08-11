@@ -12,25 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_trig
   //! @{
   //! @var sec
   //!
-  //! @brief Callable object computing sec.
+  //! @brief Callable object computing the secant of the input.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of sec   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T sec(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -38,37 +40,31 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) secant of the input.
+  //! Returns the [elementwise](@ref glossary_elementwise) secant of
+  //! the input (inverse of the cosine).
   //!
-  //!In particular:
+  //! In particular:
   //!
   //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
   //!   * If the element is \f$\pm\infty\f$, Nan is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
+  //!  @godbolt{doc/math/sec.cpp}
   //!
-  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle, 
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
   //!
   //!     provide a balance between speed and range limitation.
-  //!  
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!  
-  //!     The expression `diff(sec)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/sec.cpp}
   //!
   //!  @}
   //================================================================================================
-     
+
   namespace tag { struct sec_; }
   template<> struct supports_conditional<tag::sec_> : std::false_type {};
-  
+
   EVE_MAKE_CALLABLE(sec_, sec);
 }
 

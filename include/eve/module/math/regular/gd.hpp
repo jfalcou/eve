@@ -12,26 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_hyper
   //! @{
   //! @var gd
   //!
   //! @brief Callable object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of gd                                     |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T gd(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -47,11 +48,7 @@ namespace eve
   //!   * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
   //!   * If the element is a `NaN`, `NaN` is returned.
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //!  Higher-order function generating a masked version of eve::gd
   //!
@@ -61,20 +58,14 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!  A Callable object so that the expression `gd[cond](x, ...)` is equivalent to `if_else(cond,gd(x, ...),x)`
+  //!  A Callable object so that the expression `gd[cond](x)`
+  //!  is equivalent to `if_else(cond,gd(x),x)`
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
+  //!  @godbolt{doc/math/gd.cpp}
   //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(gd)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/gd.cpp}
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!  @}
   //================================================================================================

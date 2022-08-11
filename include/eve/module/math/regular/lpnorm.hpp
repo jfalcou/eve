@@ -29,7 +29,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< floating_value P, floating_value T, floating_value Ts ...>
+  //!      template< floating_value P, floating_value T, floating_value ... Ts>
   //!      auto operator()( T x,Ts ... args ) const noexcept
   //!   }
   //!   @endcode

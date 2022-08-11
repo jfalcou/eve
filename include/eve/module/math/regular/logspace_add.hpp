@@ -29,7 +29,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_value T, eve::floating_value U, eve::floating_value Ts ... >
+  //!      template< eve::floating_value T, eve::floating_value U, eve::floating_value ... Ts >
   //!      auto logspace_add(T arg0, U arg1, Ts ... args) noexcept;
   //!   }
   //!   @endcode
