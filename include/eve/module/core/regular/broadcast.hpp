@@ -7,58 +7,53 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/concept/vectorized.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/pattern.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var broadcast
-  //!
-  //! **Required header:**
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  #include <eve/module/core.hpp>
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! <br/>Callable object performing a broadcast shuffling.
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the absolute value of its parameter               |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<std::size_t I>
-  //!  auto operator()(eve::simd_value auto const& x, eve::index_t<I> i ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //! `x`:  An instance of an [SIMD value](@ref eve::simd_value)
-  //!
-  //! `i`:  An eve::index indicating which lane of `x` to broadcast
-  //!
-  //! **Return value**
-  //!
-  //! If `x` is an instance of an [SIMD value](@ref eve::simd_value) `T`, the call is equivalent to `T{x.get(I)}`.
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! [**See it live on Compiler Explorer**](https://godbolt.org/z/n5Tx7bGKW)
-  //!
-  //! @include{lineno} doc/core/broadcast.cpp
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(broadcast_, broadcast);
+//================================================================================================
+//! @addtogroup core_simd
+//! @{
+//!   @var broadcast
+//!   @brief Computes the
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T broadcast(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!      * `x`:  An instance of an [SIMD value](@ref eve::simd_value)
+//!
+//!      * `i`:  An eve::index indicating which lane of `x` to broadcast
+//!
+//!    **Return value**
+//!
+//!      *  If `x` is an instance of an [SIMD value](@ref eve::simd_value) `T`, the call is
+//!      equivalent to `T{x.get(I)}`.
+//!      *  If `x` is an instance of a [scalar value](@ref eve::scalar_value) the call simply
+//!      returns `x`
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/broadcast.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(broadcast_, broadcast);
 }
 
 #include <eve/module/core/regular/impl/broadcast.hpp>

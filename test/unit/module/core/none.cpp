@@ -6,110 +6,110 @@
 */
 //==================================================================================================
 #include "test.hpp"
+
 #include <eve/module/core.hpp>
+
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::none return type", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  TTS_EXPR_IS( (eve::none(eve::logical<T>())) , bool);
-  TTS_EXPR_IS( (eve::none(bool{})) , bool);
-  TTS_EXPECT_NOT( (eve::none(true)) );
-  TTS_EXPECT    ( (eve::none(false)) );
+  TTS_EXPR_IS((eve::none(eve::logical<T>())), bool);
+  TTS_EXPR_IS((eve::none(bool {})), bool);
+  TTS_EXPECT_NOT((eve::none(true)));
+  TTS_EXPECT((eve::none(false)));
   TTS_EXPECT_NOT(eve::none(eve::true_(eve::as<T>())));
-  TTS_EXPECT    (eve::none(eve::false_(eve::as<T>())));
+  TTS_EXPECT(eve::none(eve::false_(eve::as<T>())));
 };
 
 TTS_CASE_TPL("Check eve::none[ignore]", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
+<typename T>(tts::type<T>) {// complete
+                            {eve::logical<T> mask(false);
+
+TTS_EXPECT(eve::none(mask));
+TTS_EXPECT(eve::none[eve::ignore_none](mask));
+TTS_EXPECT(eve::none[eve::ignore_all](mask));
+
+mask.set(0, true);
+
+TTS_EXPECT_NOT(eve::none(mask));
+TTS_EXPECT_NOT(eve::none[eve::ignore_none](mask));
+TTS_EXPECT(eve::none[eve::ignore_all](mask));
+}
+
+// some special cases
 {
-  // complete
+  eve::logical<T> mask(false);
+
+  TTS_EXPECT(eve::none[eve::ignore_first(1)](mask));
+  TTS_EXPECT(eve::none[eve::ignore_last(1)](mask));
+
+  mask.set(0, true);
+  TTS_EXPECT(eve::none[eve::ignore_first(1)](mask));
+  TTS_EXPECT(eve::none[eve::ignore_last(T::size())](mask));
+  TTS_EXPECT_NOT(eve::none[eve::ignore_last(T::size() - 1)](mask));
+}
+
+// every element
+{
+  eve::logical<T> mask(false);
+
+  for( int i = 0; i != T::size(); ++i )
   {
-    eve::logical<T> mask(false);
-
-    TTS_EXPECT(eve::none(mask));
-    TTS_EXPECT(eve::none[eve::ignore_none](mask));
-    TTS_EXPECT(eve::none[eve::ignore_all](mask));
-
-    mask.set(0, true);
-
+    mask.set(i, true);
     TTS_EXPECT_NOT(eve::none(mask));
-    TTS_EXPECT_NOT(eve::none[eve::ignore_none](mask));
-    TTS_EXPECT(eve::none[eve::ignore_all](mask));
+    mask.set(i, false);
   }
+}
 
-  // some special cases
+// ignore_first
+{
+  eve::logical<T> mask(false);
+
+  for( int i = 0; i != T::size(); ++i )
   {
-    eve::logical<T> mask(false);
-
-    TTS_EXPECT(eve::none[eve::ignore_first(1)](mask));
-    TTS_EXPECT(eve::none[eve::ignore_last(1)](mask));
-
-    mask.set(0, true);
-    TTS_EXPECT(eve::none[eve::ignore_first(1)](mask));
-    TTS_EXPECT(eve::none[eve::ignore_last(T::size())](mask));
-    TTS_EXPECT_NOT(eve::none[eve::ignore_last(T::size() - 1)](mask));
+    TTS_EXPECT(eve::none[eve::ignore_first(i)](mask));
+    mask.set(i, true);
+    TTS_EXPECT_NOT(eve::none[eve::ignore_first(i)](mask));
+    TTS_EXPECT(eve::none[eve::ignore_first(i + 1)](mask));
   }
+}
 
-  // every element
+// ignore_last
+{
+  eve::logical<T> mask(false);
+
+  for( int i = 0; i != T::size(); ++i )
   {
-    eve::logical<T> mask(false);
+    TTS_EXPECT(eve::none[eve::ignore_last(i)](mask));
+    mask.set(T::size() - i - 1, true);
+    TTS_EXPECT_NOT(eve::none[eve::ignore_last(i)](mask));
+    TTS_EXPECT(eve::none[eve::ignore_last(i + 1)](mask));
+  }
+}
 
-    for( int i = 0; i != T::size(); ++i)
+// ignore_extrema
+{
+  for( int i = 0; i < T::size() + 1; ++i )
+  {
+    for( int j = T::size() - i; j; --j )
     {
+      eve::logical<T> mask([&](int k, int) { return (k < i) || (T::size() - k) < j; });
+      TTS_EXPECT(eve::none[eve::ignore_extrema(i, j)](mask));
+
+      if( i + j == T::size() ) continue;
+
       mask.set(i, true);
-      TTS_EXPECT_NOT(eve::none(mask));
+
+      TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
+      TTS_EXPECT(eve::none[eve::ignore_extrema(i + 1, j)](mask));
       mask.set(i, false);
+
+      mask.set(T::size() - j - 1, true);
+      TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
+      TTS_EXPECT(eve::none[eve::ignore_extrema(i, j + 1)](mask));
     }
   }
-
-  // ignore_first
-  {
-    eve::logical<T> mask(false);
-
-    for(int i = 0; i != T::size(); ++i )
-    {
-      TTS_EXPECT(eve::none[eve::ignore_first(i)](mask));
-      mask.set(i, true);
-      TTS_EXPECT_NOT(eve::none[eve::ignore_first(i)](mask));
-      TTS_EXPECT(eve::none[eve::ignore_first(i + 1)](mask));
-    }
-  }
-
-  // ignore_last
-  {
-    eve::logical<T> mask(false);
-
-    for(int i = 0; i != T::size(); ++i )
-    {
-      TTS_EXPECT(eve::none[eve::ignore_last(i)](mask));
-      mask.set(T::size() - i - 1, true);
-      TTS_EXPECT_NOT(eve::none[eve::ignore_last(i)](mask));
-      TTS_EXPECT(eve::none[eve::ignore_last(i + 1)](mask));
-    }
-  }
-
-  // ignore_extrema
-  {
-    for (int i = 0; i < T::size() + 1; ++i)
-    {
-      for (int j = T::size() - i; j ; --j)
-      {
-        eve::logical<T> mask([&](int k, int) { return (k < i) || (T::size() - k) < j; });
-        TTS_EXPECT(eve::none[eve::ignore_extrema(i, j)](mask));
-
-        if (i + j == T::size()) continue;
-
-        mask.set(i, true);
-
-        TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
-        TTS_EXPECT(eve::none[eve::ignore_extrema(i + 1, j)](mask));
-        mask.set(i, false);
-
-        mask.set(T::size() - j - 1, true);
-        TTS_EXPECT_NOT(eve::none[eve::ignore_extrema(i, j)](mask));
-        TTS_EXPECT(eve::none[eve::ignore_extrema(i, j + 1)](mask));
-      }
-    }
-  }
-};
+}
+}
+;

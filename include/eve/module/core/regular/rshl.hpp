@@ -7,99 +7,96 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/module/core/regular/abs.hpp>
 #include <eve/assert.hpp>
+#include <eve/detail/assert_utils.hpp>
+#include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/abs.hpp>
+
 #include <type_traits>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var rshl
-  //!
-  //! @brief Callable object computing the arithmetic left/right shift operation according to shift sign.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the arithmetic left/right shift operation according to shift sign   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, integral_real_value U > auto operator()( T x, U n ) const noexcept requires bit_compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //!`n`:   [integral value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes the [elementwise](@ref glossary_elementwise) arithmetic left/right shift of the first parameter by the second one.
-  //!
-  //!the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))` if `x`  is an  [simd value](@ref eve::simd_value).
-  //!
-  //!The types must share the same cardinal or be scalar and if `N` is the size in bits  of the element type of `T`,
-  //!all  [elements](@ref glossary_elementwise) of n must belong to the
-  //!interval: `]-N, N[` or the result is undefined.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::rshl
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `rshl[cond](x, ...)` is equivalent to `if_else(cond,rshl(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/rshl.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  namespace tag { struct rshl_; }
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var rshl
+//!   @brief Computes the arithmetic left/right shift operation according to shift sign.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T , integral_value N >
+//!      T rshl(T x, N n) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  argument(@ref eve::value). to be shifted.
+//!
+//!     * `n`:    [shift](@ref eve::integral_value).
+//!
+//!    **Return value**
+//!
+//!      The value of the arithmetic left/right shift operation according to shift
+//!      sign is returned
+//!
+//!   @note
+//!     *  the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))`
+//!        if `x`  is an  [simd value](@ref eve::simd_value).
+//!
+//!     *  The types must share the same cardinal or be scalar and if `N`
+//!     *  is the size in bits  of the element type of `T`, all
+//!     *  [elements](@ref glossary_elementwise) of n must belong to the
+//!        interval: `]-N, N[` or the result is undefined.
+//!
+//!     * The call `rshl(x, n)` is equivalent to `x << n` if `x`  is
+//!       an [simd value](@ref eve::simd_value).
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/rshl.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::rshl[mask](x, ...)` provides a masked
+//!     version of `rshl` which is
+//!     equivalent to `if_else(mask, rshl(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/rshl.cpp}
+//! @}
+//================================================================================================
 
-  namespace detail
+namespace tag
+{
+  struct rshl_;
+}
+
+namespace detail
+{
+  template<typename T, typename S>
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&, [[maybe_unused]] S const& s)
   {
-    template<typename T, typename S>
-    EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&, [[ maybe_unused ]]S const& s)
-    {
-      EVE_ASSERT( assert_good_shift<T>(eve::abs(s)),
-                  "[eve::rshl] - Shifting by " << s
-                  << " is out of the range ]"
-                  << -int(sizeof(element_type_t<T>) * 8)
-                  << ", "
-                  << sizeof(element_type_t<T>) * 8
-                  << "[."
-                );
-    }
+    EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
+               "[eve::rshl] - Shifting by " << s << " is out of the range ]"
+                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
+                                            << sizeof(element_type_t<T>) * 8 << "[.");
   }
+}
 
-  EVE_MAKE_CALLABLE(rshl_, rshl);
+EVE_MAKE_CALLABLE(rshl_, rshl);
 }
 
 #include <eve/arch.hpp>

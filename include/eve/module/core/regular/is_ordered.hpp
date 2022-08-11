@@ -7,83 +7,60 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var is_ordered
-  //!
-  //! @brief Callable object computing the is_ordered logical value.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_ordered logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`:   [values](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!The call:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_ordered(x, y);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_real_value<T>) r = is_not_nan(x) && is_not_nan(y);
-  //!else constexpr(integral_real_value<T>) r = true_<T>();
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_ordered
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_ordered[cond](x, y)` is equivalent to
-  //! `if_else(cond,is_ordered(x, y),false(as(is_ordered(x, y))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_ordered.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-
-  EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
+//================================================================================================
+//! @addtogroup core_predicates
+//! @{
+//!   @var is_ordered
+//!   @brief Returns a logical true  if and only no parameter is NaN.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value U >
+//!      eve::as_logical<T> is_ordered(T x,U y) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`, `y` :  [argument](@ref eve::value).
+//!
+//!   **Return value**
+//!
+//!    The call `eve::is_ordered(x,y)`  is semantically  equivalent
+//!    to `eve::is_not_nan(x) && eve::is_not_nan(y)`:
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/is_ordered.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::is_ordered[mask](x,y)` provides a masked version of `eve::is_ordered` which
+//!     is equivalent to `if_else (mask, is_ordered(x), eve::false( eve::as(x,y)))`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/is_ordered.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
 }
 
 #include <eve/module/core/regular/impl/is_ordered.hpp>

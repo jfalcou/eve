@@ -11,86 +11,80 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var sqr
-  //!
-  //! @brief Callable object computing the sqr operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the sqr operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the square of `x`.
-  //!
-  //!@warning
-  //!   For  [real integral signed values](@ref eve::value)   if `saturated(abs)(x)`
-  //!   is greater than [`eve::Sqrtvalmax(as(x))`](eve::sqrtvalmax) the corresponding element result is undefined .
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::sqr
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `sqr[cond](x, ...)` is equivalent to `if_else(cond,sqr(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * `saturated`
-  //!
-  //!
-  //!     The expression `saturated(abs)(x)` computes a saturated square of `x`. Contrary to the non-decorated case, this guarantees
-  //!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More specifically, for any signed integer value
-  //!      `x`, the expression:
-  //!
-  //!      `saturated(sqr)(x)`
-  //!
-  //!      evaluates to:
-  //!
-  //!      [`eve::Valmax(as(x))`](@ref eve::valmax) as soon as `saturated(abs)(x)`
-  //!      is greater than [`eve::Sqrtvalmax(as(x))`](@ref eve::sqrtvalmax).
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(sqr)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/sqr.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(sqr_, sqr);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var sqr
+//!   @brief Computes the square of the parameter.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T sqr(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    square of `x` if it is representable in this type.
+//!
+//!  @note
+//!      For  [integral signed values](@ref eve::value)   if `eve::saturated(eve::abs)(x)`
+//!      is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
+//!      is undefined.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/sqr.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::sqr[mask](x)` provides a masked version of `eve::sqr` which is
+//!     equivalent to `if_else (mask, sqr(x), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/sqr.cpp}
+//!
+//!   * eve::saturated
+//!
+//!     The call `eve::saturated(eve::sqr)(x)` computes a saturated version of eve::sqr.
+//!
+//!     Contrary to the  non-decorated case, it guarantees
+//!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More
+//!      specifically, for any signed integer value `x`, the expression:
+//!
+//!      `saturated(sqr)(x)`
+//!
+//!      evaluates to:
+//!
+//!      [`eve::valmax(as(x))`](@ref eve::valmax) as soon as `eve::saturated(eve::abs)(x)`
+//!      is greater than `eve::sqrtvalmax(as(x))`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/saturated/sqr.cpp}
+//!
+//! @}
+//================================================================================================
+
+EVE_MAKE_CALLABLE(sqr_, sqr);
 }
 
 #include <eve/module/core/regular/impl/sqr.hpp>

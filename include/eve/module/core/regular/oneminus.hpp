@@ -11,78 +11,69 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var oneminus
-  //!
-  //! @brief Callable object computing the oneminus operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the oneminus operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) `1-x` with the type of `x`.
-  //!
-  //!@warning
-  //!    If an  [element](@ref glossary_elementwise) of the expected result is not representable in
-  //!    the result type, the corresponding result [element](@ref glossary_elementwise) is undefined.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::oneminus
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `oneminus[cond](x, ...)` is equivalent to `if_else(cond,oneminus(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * `saturated`
-  //!
-  //!  
-  //!     The call `saturated(oneminus)(x)` is semantically equivalent to `saturated(sub)(One(as(x)), x)`
-  //!      and is never undefined.
-  //!  
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!  
-  //!     The expression `diff(oneminus)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/oneminus.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(oneminus_, oneminus);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var oneminus
+//!   @brief Computes the value of one minus the input.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T oneminus(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of `eve::one(as(x))-x` is returned.
+//!
+//!    @note
+//!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
+//!      the result type, the corresponding result [element](@ref glossary_elementwise) is
+//!      undefined.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/oneminus.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::oneminus[mask](x, ...)` provides a masked
+//!     version of `oneminus` which is
+//!     equivalent to `if_else(mask, oneminus(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/oneminus.cpp}
+//!
+//!   * eve::saturated
+//!
+//!      The call `saturated(oneminus)(x)` is semantically equivalent to `eve::saturated(eve::sub)(
+//!      eve::one (as(x)), x)` and is never undefined.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/saturated/oneminus.cpp}
+//! @}
+//================================================================================================
+
+EVE_MAKE_CALLABLE(oneminus_, oneminus);
 }
 
 #include <eve/module/core/regular/impl/oneminus.hpp>

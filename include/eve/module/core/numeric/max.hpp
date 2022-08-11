@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/numeric/impl/max.hpp>
+#include <eve/module/core/regular/max.hpp>

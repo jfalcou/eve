@@ -11,7 +11,11 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(first_true_, first_true);
+//================================================================================================
+//! @addtogroup core_reduction
+// DOC TO DO
+//================================================================================================
+EVE_MAKE_CALLABLE(first_true_, first_true);
 }
 
 #include <eve/arch.hpp>

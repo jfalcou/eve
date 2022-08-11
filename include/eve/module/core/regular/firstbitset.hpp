@@ -11,66 +11,58 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var firstbitset
-  //!
-  //! @brief Callable object computing the firstbitset operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the firstbitset operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( unsigned_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [unsigned value](@ref eve::unsigned_value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes [elementwise](@ref glossary_elementwise) the bit pattern in which the only bit set (if it exists) is
-  //!the first bit set (beginning with the least significant bit) in the input.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::firstbitset
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `firstbitset[cond](x, ...)` is equivalent to `if_else(cond,firstbitset(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/firstbitset.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(firstbitset_, firstbitset);
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var firstbitset
+//!   @brief Computes [elementwise](@ref glossary_elementwise) the bit pattern
+//!   in which the only bit set (if it exists) is the first bit set in the input.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::unsigned_value T >
+//!      T firstbitset(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!       Computes [elementwise](@ref glossary_elementwise) the bit pattern in
+//!       which the only bit set (if it exists) is
+//!       the first bit set (beginning with the least significant bit) in the input.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/firstbitset.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::firstbitset[mask](x)` provides a masked
+//!     version of `firstbitset` which is
+//!     equivalent to `if_else(mask, firstbitset(x), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/firstbitset.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(firstbitset_, firstbitset);
 }
 
 #include <eve/module/core/regular/impl/firstbitset.hpp>

@@ -41,6 +41,4 @@ namespace eve::detail
     T dop = pedantic(fms)(a, b, mcd);
     return if_else(is_finite(err), dop + err, dop);
   }
-
-
 }

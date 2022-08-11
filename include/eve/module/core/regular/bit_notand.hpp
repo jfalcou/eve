@@ -7,79 +7,63 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var bit_notand
-  //!
-  //! @brief Callable object computing the bitwise NOTAND operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the bitwise NOTAND operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto a0, eve::value auto ... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //! a0, `xs`:  Instances of eve::value
-  //!
-  //! **Return value**
-  //!
-  //! The value returned is of same type as `a0` and follows the
-  //! [bitwise operations semantic](@ref glossary_bitwise).
-  //! * For two parameters it computes the  bitwise NOTAND of the two parameters
-  //! * For more than two parameters the call is  semantically equivalent to to `bit_notand(a0, bit_and(xs...))`
-  //!
-  //!@warning
-  //!  the call `bit_notand(x, y)` is semantically equivalent to `~x & y` if `x` or  `y`
-  //!  is an  [simd value](@ref eve::simd_value), but the pure scalar calls imply the original C++ operators
-  //!  an may not exist due to C++ limitations.<br> Moreover if an hardware intrinsic exists,  the infix syntax
-  //!  will not be able to use it.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::bit_notand
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `bit_notand[cond](x, ...)` is equivalent to `if_else(cond,bit_notand(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/bit_notand.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(bit_notand_, bit_notand);
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var bit_notand
+//!   @brief Computes the bitwise NOTAND of its arguments.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value Ts... >
+//!      T bit_notand(T x, Ts... xs) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`:       first [argument](@ref eve::value).
+//!     * `xs...` :  other [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!     * For two parameters it computes the  bitwise NOTAND of the two parameters
+//!     * For more than two parameters the call is  semantically equivalent to to `bit_notand(a0,
+//!     bit_and(xs...))`
+//!     *  The value returned is in the type of the first parameter
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/bit_notand.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::bit_notand[mask](x, ...)` provides a masked
+//!     version of `bit_notand` which is
+//!     equivalent to `if_else(mask, bit_notand(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/bit_notand.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(bit_notand_, bit_notand);
 }
 
 #include <eve/module/core/regular/impl/bit_notand.hpp>

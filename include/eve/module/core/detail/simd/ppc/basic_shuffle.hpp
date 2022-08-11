@@ -14,28 +14,26 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto basic_shuffle_( EVE_SUPPORTS(vmx_), wide<T, N> const& v, Pattern const&)
-    requires ppc_abi<abi_t<T, N>>
+template<typename T, typename N, shuffle_pattern Pattern>
+EVE_FORCEINLINE auto
+basic_shuffle_(EVE_SUPPORTS(vmx_),
+               wide<T, N> const& v,
+               Pattern const&) requires ppc_abi<abi_t<T, N>>
+{
+  constexpr auto sz = Pattern::size();
+  using that_t      = as_wide_t<wide<T, N>, fixed<sz>>;
+
+  constexpr Pattern q = {};
+
+  // We're swizzling so much we aggregate the output
+  if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, q); }
+  else
   {
-    constexpr auto sz = Pattern::size();
-    using that_t      = as_wide_t<wide<T, N>,fixed<sz>>;
+    using bytes_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;
+    that_t that =
+        vec_perm(v.storage(), v.storage(), as_bytes<wide<T, N>>(q, as<bytes_t>()).storage());
 
-    constexpr Pattern q = {};
-
-    // We're swizzling so much we aggregate the output
-    if constexpr( has_aggregated_abi_v<that_t> )
-    {
-      return aggregate_shuffler(v,q);
-    }
-    else
-    {
-      using bytes_t = typename that_t::template rebind<std::uint8_t,fixed<16>>;
-      that_t that = vec_perm( v.storage(), v.storage()
-                            , as_bytes<wide<T, N>>(q,as<bytes_t>()).storage()
-                            );
-
-      return process_zeros(that,q);
-    }
+    return process_zeros(that, q);
   }
+}
 }

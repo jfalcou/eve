@@ -6,80 +6,71 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+
 #include <eve/module/core.hpp>
+
 #include <type_traits>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL( "Check return types of trunc"
-              , eve::test::simd::all_types
-              )
+TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS( eve::trunc(T())  , T);
-  TTS_EXPR_IS( eve::trunc(v_t()), v_t);
-  TTS_EXPR_IS( eve::int_(eve::trunc)(T())  , eve::as_integer_t<T>);
-  TTS_EXPR_IS( eve::int_(eve::trunc)(v_t()), eve::as_integer_t<v_t>);
-  TTS_EXPR_IS( eve::uint_(eve::trunc)(T())  , (eve::as_integer_t<T, unsigned>));
-  TTS_EXPR_IS( eve::uint_(eve::trunc)(v_t()), (eve::as_integer_t<v_t, unsigned>));
+  TTS_EXPR_IS(eve::trunc(T()), T);
+  TTS_EXPR_IS(eve::trunc(v_t()), v_t);
+  TTS_EXPR_IS(eve::int_(eve::trunc)(T()), eve::as_integer_t<T>);
+  TTS_EXPR_IS(eve::int_(eve::trunc)(v_t()), eve::as_integer_t<v_t>);
+  TTS_EXPR_IS(eve::uint_(eve::trunc)(T()), (eve::as_integer_t<T, unsigned>));
+  TTS_EXPR_IS(eve::uint_(eve::trunc)(v_t()), (eve::as_integer_t<v_t, unsigned>));
 
-  if constexpr(eve::floating_real_value<T>)
+  if constexpr( eve::floating_real_value<T> )
   {
-    TTS_EXPR_IS( eve::tolerant(eve::trunc)(T())  , T);
-    TTS_EXPR_IS( eve::tolerant(eve::trunc)(v_t()), v_t);
-
-    
-    
+    TTS_EXPR_IS(eve::tolerant(eve::trunc)(T()), T);
+    TTS_EXPR_IS(eve::tolerant(eve::trunc)(v_t()), v_t);
   }
 };
 
 //==================================================================================================
 // tolerant tests
 //==================================================================================================
-TTS_CASE_TPL( "Check  with nans and infs"
-              , eve::test::simd::ieee_reals
-              )
+TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-eve::eps(eve::as<T>()))), T(1));
-  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-2*eve::eps(eve::as<T>()))), T(1));
-  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-3*eve::eps(eve::as<T>()))), T(1));
-  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-4*eve::eps(eve::as<T>()))), T(0));
+  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-2 * eve::eps(eve::as<T>()))), T(1));
+  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-3 * eve::eps(eve::as<T>()))), T(1));
+  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::inc(-4 * eve::eps(eve::as<T>()))), T(0));
   TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(eve::eps(eve::as<T>()))), T(-1));
-  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(2*eve::eps(eve::as<T>()))), T(-1));
-  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(3*eve::eps(eve::as<T>()))), T(-1));
-  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(4*eve::eps(eve::as<T>()))), T(0));
+  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(2 * eve::eps(eve::as<T>()))), T(-1));
+  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(3 * eve::eps(eve::as<T>()))), T(-1));
+  TTS_EQUAL(eve::tolerant(eve::trunc)(eve::dec(4 * eve::eps(eve::as<T>()))), T(0));
 };
 
 //==================================================================================================
 // trunc signed tests
 //==================================================================================================
-auto mini = []< typename T>(eve::as<T> const &){return eve::signed_value<T> ? -50 : 0; };
+auto mini = []<typename T>(eve::as<T> const&) { return eve::signed_value<T> ? -50 : 0; };
 
-TTS_CASE_WITH ( "Check behavior of trunc on wide"
-              , eve::test::simd::all_types
-              , tts::generate(tts::randoms(tts::constant(mini), +50))
-              )
-<typename T>(T const& a0 )
+TTS_CASE_WITH("Check behavior of trunc on wide",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(tts::constant(mini), +50)))
+<typename T>(T const& a0)
 {
-  using wi_t = eve::as_integer_t<T>;
+  using wi_t  = eve::as_integer_t<T>;
   using uwi_t = eve::as_integer_t<T, unsigned>;
-  using v_t = eve::element_type_t<T>;
-  using i_t = eve::as_integer_t<v_t>;
-  using ui_t = eve::as_integer_t<v_t, unsigned>;
-  if constexpr(eve::floating_real_value<T>)
+  using v_t   = eve::element_type_t<T>;
+  using i_t   = eve::as_integer_t<v_t>;
+  using ui_t  = eve::as_integer_t<v_t, unsigned>;
+  if constexpr( eve::floating_real_value<T> )
   {
-    TTS_EQUAL( eve::trunc(a0), T([&](auto i, auto) { return v_t(std::trunc(a0.get(i))); }));
-    
-    TTS_EQUAL( eve::int_(eve::trunc)(a0), wi_t([&](auto i, auto) { return i_t(a0.get(i)); }));
-    TTS_EQUAL( eve::uint_(eve::trunc)(eve::abs(a0)), uwi_t([&](auto i, auto) { return ui_t(std::abs(a0.get(i))); }));
-  }
-  else
-  {
-    TTS_EQUAL( eve::trunc(a0),a0);
-  }
+    TTS_EQUAL(eve::trunc(a0), T([&](auto i, auto) { return v_t(std::trunc(a0.get(i))); }));
 
+    TTS_EQUAL(eve::int_(eve::trunc)(a0), wi_t([&](auto i, auto) { return i_t(a0.get(i)); }));
+    TTS_EQUAL(eve::uint_(eve::trunc)(eve::abs(a0)),
+              uwi_t([&](auto i, auto) { return ui_t(std::abs(a0.get(i))); }));
+  }
+  else { TTS_EQUAL(eve::trunc(a0), a0); }
 };

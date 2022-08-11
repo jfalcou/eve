@@ -7,97 +7,82 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var minmag
-  //!
-  //! @brief Callable object computing the minmag operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the minmag operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                       requires (compatible_values< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`:   [values](@ref eve::value)
-  //!
-  //! **Return value**
-  //!
-  //!the [elementwise](@ref glossary_elementwise) element of least absolute value is returned.
-  //!
-  //!For instance for two elements:
-  //!
-  //!  * If `|x| >  |y|`,  `y` is returned.
-  //!  * If `|x| <  |y|`,  `x` is returned.
-  //!  * Otherwise `min(x, y)` is returned.
-  //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
-  //!
-  //!@warning
-  //!   If any element of the inputs is a `Nan`, the corresponding output element is system-dependent.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::minmag
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `minmag[cond](x, ...)` is equivalent to `if_else(cond,minmag(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The behaviour is the same except that if  `|x| == |y|`, `pedantic(min)` is used.
-  //!
-  //!  * eve::numeric
-  //!
-  //!
-  //!     The behaviour is the same except that if  `|x| == |y|`, `numeric(min)` is used.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff< N >(minmag)(x,args,...)` computes the partial
-  //!      derivative relative to the Nth parameter. If the parameters are \f$x_1, ..., x_n\f$ and
-  //!      their minmag is \f$m\f$, the value returned is elementwise 1 if \f$m\f$ is equal to \f$x_N\f$ else 0.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/minmag.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(minmag_, minmag);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var minmag
+//!   @brief Computes the  maximum  of the absolute value of its arguments.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value... Ts >
+//!      eve::common_compatible_t<T, Ts...> minmag(T x, Ts ... xs) noexcept;
+//!
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`, `xs...` :  [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!      The [elementwise](@ref glossary_elementwise) element of greatest absolute value is
+//!      returned.
+//!
+//!      For instance for two elements:
+//!
+//!        * If `|x| <   |y|`,  `x` is returned.
+//!        * If `|x| >   |y|`,  `y` is returned.
+//!        * Otherwise `max(x, y)` is returned.
+//!
+//!      For n parameters the result is computed as if this scheme was recursively used.
+//!
+//!   @note
+//!     * If any element of the inputs is a `Nan`, the corresponding output element
+//!       is system-dependent.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/minmag.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::minmag[mask](x, ...)` provides a masked
+//!     version of `minmag` which is
+//!     equivalent to `if_else(mask, minmag(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/minmag.cpp}
+//!
+//!   * eve::pedantic, eve::numeric
+//!
+//!     The behaviour of d(eve::minmag)(x, y) (where d is one of these two decorators
+//!     is identical except that if  `|x| == |y|`, `d(max)` is used.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/pedantic/minmag.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(minmag_, minmag);
 }
 
 #include <eve/module/core/regular/impl/minmag.hpp>

@@ -10,66 +10,45 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var lohi
-  //!
-  //! @brief Callable object computing the lohi pair of values.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the lohi pair of values   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(integral_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [integral_value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!    Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
-  //!    the input values, as a pair of unsigned integers
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::lohi
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `lohi[cond](x, ...)` is equivalent to `if_else(cond,lohi(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/lohi.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(lohi_, lohi);
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var lohi
+//!   @brief Computes the the lohi pair of values.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      auto lohi(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!      * Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
+//!        the input values, as a pair of unsigned integers
+//!
+//!      * The call lohi(x) is_semantically equivalent to [eve::lo(x), eve::hi(x)]
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/lo.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(lohi_, lohi);
 }
 
 #include <eve/module/core/regular/impl/lohi.hpp>

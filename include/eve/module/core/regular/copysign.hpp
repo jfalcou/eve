@@ -11,67 +11,58 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var copysign
-  //!
-  //! @brief Callable object performing the sign copying operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | sign copying operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T, floating_real_value U > auto operator()( T x, U y ) const noexcept
-  //!  requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `y`:    [floating real value](@ref eve::floating_real_value)
-  //!
-  //! **Return value**
-  //!
-  //!   Returns the [elementwise](@ref glossary_elementwise) composition of a value with the magnitude of `x`
-  //!   and the bit of sign of `y`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::copysign
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `copysign[cond](x, ...)` is equivalent to `if_else(cond,copysign(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/copysign.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(copysign_, copysign);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var copysign
+//!   @brief Computes the [elementwise](@ref glossary_elementwise) composition of a value
+//!   with the magnitude of the first parameter  and the bit of sign of the second one.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::value T >
+//!      T copysign(T x, U y) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`, `y` :  [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!      The value of the [elementwise](@ref glossary_elementwise) composition of a
+//!      value with the magnitude of `x` and the bit of sign of `y`
+//!      is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/copysign.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::copysign[mask](x, ...)` provides a masked
+//!     version of `copysign` which is
+//!     equivalent to `if_else(mask, copysign(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/copysign.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(copysign_, copysign);
 }
 
 #include <eve/module/core/regular/impl/copysign.hpp>

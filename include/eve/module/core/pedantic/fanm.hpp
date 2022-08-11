@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/pedantic/impl/fanm.hpp>
+#include <eve/module/core/regular/fanm.hpp>

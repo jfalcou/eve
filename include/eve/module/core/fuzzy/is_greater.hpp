@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/fuzzy/impl/is_greater.hpp>
+#include <eve/module/core/regular/is_greater.hpp>

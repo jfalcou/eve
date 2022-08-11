@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/negatenz.hpp>
 #include <eve/module/core/pedantic/impl/negatenz.hpp>
+#include <eve/module/core/regular/negatenz.hpp>

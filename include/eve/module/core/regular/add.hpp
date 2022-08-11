@@ -11,80 +11,72 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var add
-  //!
-  //! @brief Callable object performing the sum of multiple values.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the sum of its parameter                          |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(eve::value auto const&... xs) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //! `xs`:  Instances of eve::value
-  //!
-  //! **Return value**
-  //!
-  //! A value of the [common compatible type](@ref common_compatible) of all `xs` containing the
-  //! [elementwise](@ref glossary_elementwise) sum of all `xs`.
-  //!
-  //!@warning
-  //!   Although the infix notation with `+` is supported for two parameters, the `+` operator on
-  //!   standard scalar types is the original one and so can lead to automatic promotion.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::add
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `add[cond](x0,xs...)` is equivalent
-  //!  to `if_else(cond,add(x0,xs...),x0)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!   * eve::saturated
-  //!
-  //!
-  //!     The expression `eve::saturated(eve::add)(xs...)` computes the saturated sum of all `xs`.
-  //!
-  //!   * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `eve::diff_nth<N>(eve::add)(xs...)` computes the derivative of the sum
-  //!     of `xs...` over the Nth parameters.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/add.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(add_, add);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var add
+//!   @brief Computes the sum of its arguments.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value... Ts >
+//!      eve::common_compatible_t<Ts ...> add(Ts ... xs) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `xs ...` :  [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of the sum of the arguments is returned.
+//!
+//!   @note
+//!
+//!     Take care that for floating entries, the addition is only 'almost' associative.
+//!     This call performs additions in reverse incoming order.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/add.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::add[mask](x, ...)` provides a masked
+//!     version of `add` which is
+//!     equivalent to `if_else(mask, eve::add(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/add.cpp}
+//!
+//!   * eve::saturated
+//!
+//!     The call `eve::saturated(eve::add)(...)` computes
+//!     a saturated version of `eve::add`.
+//!
+//!     Take care that for signed integral
+//!     entries this kind of addition is not associative at all.
+//!     This call perform saturated additions in reverse incoming order.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/saturated/add.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(add_, add);
 }
 
 #include <eve/module/core/regular/impl/add.hpp>

@@ -7,82 +7,72 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var ceil
-  //!
-  //! @brief Callable object computing the ceil operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the ceil operation                                         |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the smallest integer not less than `x`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::ceil
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `ceil[cond](x, ...)` is equivalent to `if_else(cond,ceil(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::tolerant
-  //!
-  //!
-  //!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`, where `x` must be a floating value.
-  //!
-  //!      - If `tol` is a floating_value computes the floor with a tolerance `tol` using Hagerty's FL5 function.
-  //!      - If `tol` is an integral_value n compute the floor of the next nth representable value in the `x` type.
-  //!      - If `tol` is omitted the tolerance is taken to 3 times the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(ceil)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/ceil.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(ceil_, ceil);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var ceil
+//!   @brief Computes the smallest integer not less than the input.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T ceil(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The smallest integer not less than `x`.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/ceil.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::ceil[mask](x)` provides a masked version of `eve::ceil` which is
+//!     equivalent to `if_else (mask, ceil(x), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/ceil.cpp}
+//!
+//!   * eve::tolerant
+//!
+//!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`,
+//!     where `x` must be a floating value.
+//!
+//!      * If `tol` is a floating value, computes the floor with a tolerance `tol`
+//!        using Hagerty's FL5 function.
+//!      * If `tol` is an integral value n, computes the floor of the next nth
+//!        representable value in the `x` type.
+//!      * If `tol` is omitted, the tolerance is taken to 3 times the machine
+//!        \f$\epsilon\f$ in the `x` type (`3*eve::eps (eve::as (x))`).
+//!
+//!      @godbolt{doc/core/fuzzy/ceil.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(ceil_, ceil);
 }
 
 #include <eve/module/core/regular/impl/ceil.hpp>

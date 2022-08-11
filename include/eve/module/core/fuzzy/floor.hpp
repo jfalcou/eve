@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/fuzzy/impl/floor.hpp>
+#include <eve/module/core/regular/floor.hpp>

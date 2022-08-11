@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(last_true_, last_true);
+EVE_MAKE_CALLABLE(last_true_, last_true);
 }
 
 #include <eve/arch.hpp>

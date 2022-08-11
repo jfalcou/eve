@@ -11,80 +11,65 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var manhattan
-  //!
-  //! @brief Callable object computing the manhattan operation.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the manhattan operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value ...Ts> auto operator()( T x,Ts... args ) const noexcept
-  //!                                                    requires (compatiblevalues< T, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`, `args`:   [value](@ref eve::value)
-  //!
-  //! **Return value**
-  //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::manhattan
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `manhattan[cond](x, ...)` is equivalent to `if_else(cond,manhattan(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     The call `pedantic(manhattan)(x,args...`  computes the sum of the absolute values of its parameters
-  //!      returning \f$\infty\f$ as soon as one of its parameter is infinite, regardless of possible `Nan` values.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_< N >(manhattan)(x,args...)` computes the partial
-  //!      derivative of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!      greater that the actual number of parameters, otherwise it is the [sign](./sign.html) of the `N`th parameter value.
-  //!
-  //!  !!! Warning
-  //!      This is only available for floating point entries.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/manhattan.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(manhattan_, manhattan);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var manhattan
+//!   @brief Computes the manhattan norm (\f$l_1\f$)  of its arguments.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value... Ts >
+//!      eve::common_compatible_t<Ts ...> manhattan(Ts ... xs) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `xs ...` :  [arguments](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The value of the sum of the arguments is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/manhattan.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::manhattan[mask](x, ...)` provides a masked
+//!     version of `manhattan` which is
+//!     equivalent to `if_else(mask, eve::manhattan(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/manhattan.cpp}
+//!
+//!   * eve::pedantic
+//!
+//!     The call `eve::pedantic(eve::manhattan)(...)` computes
+//!     a pedantic version of `eve::manhattan`.
+//!     returning \f$\infty\f$ as soon as one of its parameter is infinite,
+//!     regardless of possible `Nan` values.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/pedantic/manhattan.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(manhattan_, manhattan);
 }
 
 #include <eve/module/core/regular/impl/manhattan.hpp>

@@ -20,7 +20,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(lookup_, lookup);
+EVE_MAKE_CALLABLE(lookup_, lookup);
 }
 
 #include <eve/module/core/regular/impl/lookup.hpp>

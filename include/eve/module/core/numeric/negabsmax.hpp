@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/negabsmax.hpp>
 #include <eve/module/core/numeric/impl/negabsmax.hpp>
+#include <eve/module/core/regular/negabsmax.hpp>

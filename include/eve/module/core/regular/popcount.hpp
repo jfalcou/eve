@@ -6,53 +6,48 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
 #include <eve/arch.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var popcount
-  //!
-  //! @brief Callable object computing the number of bits set.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the number of bits set   |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [unsigned value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the number of bit set in each element of the parameter.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/popcount.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(popcount_, popcount);
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var popcount
+//!   @brief Computes elementwise the number of bits set in the parameter.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::unsigned_value T >
+//!      T popcount(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
+//!
+//!    **Return value**
+//!
+//!    The value of  number of bits set in the value `x`
+//!    is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/popcount.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(popcount_, popcount);
 }
 
 #include <eve/module/core/regular/impl/popcount.hpp>

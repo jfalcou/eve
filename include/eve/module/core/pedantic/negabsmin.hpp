@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/negabsmin.hpp>
 #include <eve/module/core/pedantic/impl/negabsmin.hpp>
+#include <eve/module/core/regular/negabsmin.hpp>

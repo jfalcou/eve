@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/remdiv.hpp>
 #include <eve/module/core/pedantic/impl/remdiv.hpp>
+#include <eve/module/core/regular/remdiv.hpp>

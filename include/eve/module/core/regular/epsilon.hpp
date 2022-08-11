@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(epsilon_, epsilon);
+EVE_MAKE_CALLABLE(epsilon_, epsilon);
 }
 
 #include <eve/module/core/regular/impl/epsilon.hpp>

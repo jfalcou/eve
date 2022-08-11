@@ -24,11 +24,11 @@
 #include <eve/module/core/pedantic/ldexp.hpp>
 #include <eve/module/core/pedantic/lerp.hpp>
 #include <eve/module/core/pedantic/manhattan.hpp>
-#include <eve/module/core/pedantic/maxabs.hpp>
 #include <eve/module/core/pedantic/max.hpp>
+#include <eve/module/core/pedantic/maxabs.hpp>
 #include <eve/module/core/pedantic/maxmag.hpp>
-#include <eve/module/core/pedantic/minabs.hpp>
 #include <eve/module/core/pedantic/min.hpp>
+#include <eve/module/core/pedantic/minabs.hpp>
 #include <eve/module/core/pedantic/minmag.hpp>
 #include <eve/module/core/pedantic/modf.hpp>
 #include <eve/module/core/pedantic/negabsmax.hpp>
@@ -39,8 +39,8 @@
 #include <eve/module/core/pedantic/next.hpp>
 #include <eve/module/core/pedantic/nextafter.hpp>
 #include <eve/module/core/pedantic/prev.hpp>
-#include <eve/module/core/pedantic/remdiv.hpp>
 #include <eve/module/core/pedantic/rem.hpp>
+#include <eve/module/core/pedantic/remdiv.hpp>
 #include <eve/module/core/pedantic/rsqrt.hpp>
 #include <eve/module/core/pedantic/signnz.hpp>
 #include <eve/module/core/pedantic/sum_of_prod.hpp>

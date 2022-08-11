@@ -11,52 +11,47 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var lo
-  //!
-  //! @brief Callable object computing the lower part of the values.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the lower part of the values            |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!   auto operator()( integral_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [integral value](@ref eve::integral_value).
-  //!
-  //! **Return value**
-  //!
-  //!    Computes the [elementwise](@ref glossary_elementwise) lower half of the  value,
-  //!    returning each element as an unsigned integer of half the size of the input element.
-  //!
-  //!    If you also need the higher part `lohi` is more efficient.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/lo.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(lo_, lo);
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var lo
+//!   @brief Computes the least significant half of each lane.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      auto lo(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!      * Computes the [elementwise](@ref glossary_elementwise)
+//!        lower significant half of the  value bits,
+//!        returning each element as an unsigned integer of half the size of the input element.
+//!
+//!    @note
+//!      If you also need the lower part `hilo` is more efficient.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/lo.cpp}
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(lo_, lo);
 }
 
 #include <eve/module/core/regular/impl/lo.hpp>

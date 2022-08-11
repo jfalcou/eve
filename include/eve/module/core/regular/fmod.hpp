@@ -8,10 +8,16 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/rem.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(fmod_, fmod);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var fmod
+//!   @brief Alias of eve::pedantic(eve::rem).
+//! @}
+//================================================================================================
+auto fmod = eve::pedantic(eve::rem);
 }
-
-#include <eve/module/core/regular/impl/fmod.hpp>

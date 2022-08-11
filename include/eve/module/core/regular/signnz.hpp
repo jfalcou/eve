@@ -11,76 +11,64 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var signnz
-  //!
-  //! @brief Callable object computing the signnz function.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the signnz operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T > auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
-  //!
-  //!For [real value](@ref eve::real_value) `x` is semantically equivalent to:
-  //!  * If x is positive, 1 is returned.
-  //!  * If x is negative  -1 is returned.
-  //!  * If x is `Nan`, the result is `Nan`.
-  //!
-  //! For   [floating real value](@ref eve::floating_real_value) the positivity is only here based on the bit of sign.
-  //! In particular -0.0 is negative and +0.0 is positive.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::signn
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `signnz[cond](x, ...)` is equivalent to `if_else(cond,signnz(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(sign)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/signnz.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(signnz_, signnz);
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var signnz
+//!   @brief Computes the never zero sign of the parameter.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T signnz(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!      * Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
+//!
+//!      * For [real](@ref eve::value) `x`,  the call is semantically equivalent to:
+//!        * If x is [positive](@ref eve::positive), 1 is returned.
+//!        * If x is [negative](@ref eve::negative), -1 is returned.
+//!
+//!      *  Moreover for  [floating real value](@ref eve::floating_value)
+//!         if x is `Nan`, the result is `Nan`
+//!
+//!    value containing the [elementwise](@ref glossary_elementwise)
+//!    never zero sign of `x` 
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/signnz.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::signnz[mask](x)` provides a masked version of `eve::signnz` which is
+//!     equivalent to `if_else (mask, signnz(x), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/signnz.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(signnz_, signnz);
 }
 
 #include <eve/module/core/regular/impl/signnz.hpp>

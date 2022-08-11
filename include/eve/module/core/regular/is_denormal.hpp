@@ -10,78 +10,73 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var is_denormal
-  //!
-  //! @brief Callable object computing the is_denormal logical value.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the is_denormal logical value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(real_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [value](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!The call:
-  //!
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r = is_denormal(x);
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!is semantically  equivalent to:
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ c++
-  //!logical<T> r;
-  //!if   constexpr(floating_real_value<T>) r = (abs(x) < Smallestposval(as(x))) && is_nez(x);
-  //!else constexpr(integral_real_value<T>) r = false_(as(x));
-  //!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_denormal
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_denormal[cond](x)` is equivalent to
-  //! `if_else(cond,is_denormal(x),false(as(is_denormal(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_denormal.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup core_predicates
+//! @{
+//!   @var is_denormal
+//!   @brief Returns a logical true if and only if the element value is denormal.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      eve::as_logical<T> is_denormal(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!   **Return value**
+//!
+//!     The call `is_denormal(x)` is semantically  equivalent to:
+//!
+//!     @code
+//!       if constexpr(floating_value<T>)
+//!         return (eve::abs(x) < eve::smallestposval(as(x))) && is_nez(x);
+//!       else constexpr(integral_value<T>)
+//!         return eve::false_(as(x));
+//!    @endcode
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/is_denormal.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::is_denormal[mask](x)` provides a masked version
+//!     of `eve::is_denormal` which is
+//!     equivalent to `if_else (mask, is_denormal(x), eve::false( eve::as(x)))`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/is_denormal.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
 
-  EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
+namespace detail
+{
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, value U, value V>
+  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
+  {
+    return logical_mask_op(cond, is_denormal, u);
+  }
+}
 }
 
 #include <eve/module/core/regular/impl/is_denormal.hpp>

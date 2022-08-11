@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/lerp.hpp>
 #include <eve/module/core/numeric/impl/lerp.hpp>
+#include <eve/module/core/regular/lerp.hpp>

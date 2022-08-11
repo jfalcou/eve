@@ -13,18 +13,15 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(swap_adjacent_groups_, swap_adjacent_groups);
+EVE_MAKE_CALLABLE(swap_adjacent_groups_, swap_adjacent_groups);
 
-  template<std::ptrdiff_t G, std::ptrdiff_t N>
-  inline constexpr
-  auto swap_adjacent_groups_pattern = fix_pattern<N>( [](auto i, auto)
-                                                    {
-                                                      if(G!=N)
-                                                        return (i+G)%(G*2) + (G*2)*(i/(G*2));
-                                                      else
-                                                        return i;
-                                                    }
-                                                  );
+template<std::ptrdiff_t G, std::ptrdiff_t N>
+inline constexpr auto swap_adjacent_groups_pattern = fix_pattern<N>(
+    [](auto i, auto)
+    {
+      if( G != N ) return (i + G) % (G * 2) + (G * 2) * (i / (G * 2));
+      else return i;
+    });
 }
 
 #include <eve/module/core/regular/impl/swap_adjacent_groups.hpp>

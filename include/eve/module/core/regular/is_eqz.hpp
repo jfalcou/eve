@@ -11,81 +11,66 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup core
-  //! @{
-  //! @var is_eqz
-  //!
-  //! @brief Callable object computing the equality to zero predicate.
-  //!
-  //! **Required header:** `#include <eve/module/core.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the equality to zero predicate                             |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [values](@ref eve::value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the logical value containing the [elementwise](@ref glossary_elementwise) equality test result
-  //!between `x` and 0.
-  //!
-  //!The result type is `logical< T >`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::is_eqz
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `is_eqz[cond](x)` is equivalent to
-  //! `if_else(cond,is_eqz(x),false(as(is_eqz(x))))`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/core/is_eqz.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup core_predicates
+//! @{
+//!   @var is_eqz
+//!   @brief Returns a logical true  if and only if the element value is zero.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      eve::as_logical<T> is_eqz(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!   **Return value**
+//!
+//!    The truth value of x == 0
+//!    is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/is_eqz.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve;::is_eqz[mask](x)` provides a masked version of `eve::is_eqz` which is
+//!     equivalent to `if_else (mask, is_eqz(x), eve::false( eve::as(x)))`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/is_eqz.cpp}
+//!
+//! @}
+//================================================================================================
+EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
 
-  EVE_MAKE_CALLABLE(is_eqz_, is_eqz);
-
-  namespace detail
+namespace detail
+{
+  // -----------------------------------------------------------------------------------------------
+  // logical masked case
+  template<conditional_expr C, value U, value V>
+  EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
   {
-    // -----------------------------------------------------------------------------------------------
-    // logical masked case
-    template<conditional_expr C, real_value U, real_value V>
-    EVE_FORCEINLINE auto is_eqz_(EVE_SUPPORTS(cpu_), C const &cond, U const &u) noexcept
-    {
-      return logical_mask_op(cond, is_eqz, u);
-    }
+    return logical_mask_op(cond, is_eqz, u);
   }
+}
 }
 
 #include <eve/module/core/regular/impl/is_eqz.hpp>
