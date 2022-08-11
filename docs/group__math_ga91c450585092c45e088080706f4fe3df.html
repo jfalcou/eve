@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_ga91c450585092c45e08808070
 
 <p>Callable object computing the simultaneous computation of sin an cos of an argument in . </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1873"></a>
+<h4><a class="anchor" id="autotoc_md798"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -155,14 +155,14 @@ Members Functions</h4>
 <p ><b>Return value</b></p>
 <p >The computation returns a pair and is semantically equivalent to <code>{sinpi(x), cospi(x)}</code></p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1876"></a>
+<h4><a class="anchor" id="autotoc_md801"></a>
 Supported decorators</h4>
 <ul>
 <li><p class="startli"><a class="el" href="group__math_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::quarter_circle</a>, <a class="el" href="group__math_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9" title="Higher-order Callable Object imbuing a limited range standard semantic onto other Callable Objects.">eve::half_circle</a>, eve::full_circle,</p>
 <p class="startli">provide a balance between speed and range limitation.</p>
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md1877"></a>
+<h4><a class="anchor" id="autotoc_md802"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -171,7 +171,7 @@ Example</h4>
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(){</div>
-<div class="line">  wide_ft pf = {1.0f, 0.0f, <a class="code hl_variable" href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 0.5f};</div>
+<div class="line">  wide_ft pf = {1.0f, 0.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 0.5f};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> [s, c]    = <a class="code hl_variable" href="group__math_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">eve::sinpicospi</a>(pf);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -189,7 +189,7 @@ Example</h4>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sinpicospi(xf) = [&quot;</span> &lt;&lt; ss &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; sc &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
+<div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="agroup__math_ga91c450585092c45e088080706f4fe3df_html_ga91c450585092c45e088080706f4fe3df"><div class="ttname"><a href="group__math_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">eve::sinpicospi</a></div><div class="ttdeci">constexpr callable_sinpicospi_ sinpicospi</div><div class="ttdoc">Callable object computing the simultaneous computation of sin an cos of an argument in .</div><div class="ttdef"><b>Definition:</b> sinpicospi.hpp:61</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>

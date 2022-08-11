@@ -33,7 +33,7 @@ var group__conditional =
       [ "keep_first", "structeve_1_1keep__first.html#a3980975e38c2675ec2f812a4ff3eb7c4", null ],
       [ "count", "structeve_1_1keep__first.html#ad6dc3952364f1b0f1c987c56b3cb984d", null ],
       [ "else_", "structeve_1_1keep__first_adfc18e7185cded28f8af09cee992834a.html#adfc18e7185cded28f8af09cee992834a", null ],
-      [ "mask", "structeve_1_1keep__first.html#a9b44c41f3a2ea6615f71d2941c19773b", null ],
+      [ "mask", "structeve_1_1keep__first.html#ad61395f1b8bbd57f5433306522d319d0", null ],
       [ "operator==", "structeve_1_1keep__first.html#a5d8679fe7d0f789184dd908d2f098c9c", null ],
       [ "operator<<", "structeve_1_1keep__first.html#a703a82d13d74be336592d0876f41e165", null ]
     ] ],
@@ -41,35 +41,35 @@ var group__conditional =
       [ "ignore_last", "structeve_1_1ignore__last.html#a0226e07677869fe33508c2d80a87d819", null ],
       [ "count", "structeve_1_1ignore__last.html#a7808a4614c1aff80c8efba197d058ef3", null ],
       [ "else_", "structeve_1_1ignore__last_a7c4efa5e5f45c87fbeb7d847aff52320.html#a7c4efa5e5f45c87fbeb7d847aff52320", null ],
-      [ "mask", "structeve_1_1ignore__last.html#a894d1e566fa12f0f1dff4395c335954d", null ],
+      [ "mask", "structeve_1_1ignore__last.html#a3797eecaf2bd6f1cf71c529b6af68800", null ],
       [ "operator==", "structeve_1_1ignore__last.html#aab86f28ea5ad50e938519d062c9f480f", null ],
       [ "operator<<", "structeve_1_1ignore__last.html#afd41ef3443a91d775caa64f31333cc91", null ]
     ] ],
     [ "eve::keep_last", "structeve_1_1keep__last.html", [
       [ "count", "structeve_1_1keep__last.html#a8a388688f8c67a02df3e31db931bb1ef", null ],
       [ "else_", "structeve_1_1keep__last_a4b92f71c5570ec96efdc6d5d21353961.html#a4b92f71c5570ec96efdc6d5d21353961", null ],
-      [ "mask", "structeve_1_1keep__last.html#a38e3907b64cefad5a9b3513370c5d5ed", null ],
+      [ "mask", "structeve_1_1keep__last.html#a05218c5a2645312a4e8d04bd2c7395a1", null ],
       [ "operator==", "structeve_1_1keep__last.html#a64e620d72dadf1a643ef816c8ec69332", null ],
       [ "operator<<", "structeve_1_1keep__last.html#abc4edfe410368205c650520177a2c99e", null ]
     ] ],
     [ "eve::ignore_first", "structeve_1_1ignore__first.html", [
       [ "count", "structeve_1_1ignore__first.html#a929fdfe9d5d91d9fa5b6d1baebdd3391", null ],
       [ "else_", "structeve_1_1ignore__first_a1a451ef557edf9be9754f6b7dde9e0ea.html#a1a451ef557edf9be9754f6b7dde9e0ea", null ],
-      [ "mask", "structeve_1_1ignore__first.html#a76715273ff1eb5137531db0e2b61aa0a", null ],
+      [ "mask", "structeve_1_1ignore__first.html#a9542a4416c2fdd4465e331f8536574d0", null ],
       [ "operator==", "structeve_1_1ignore__first.html#ad7e3fb7e846eb8b2913808a62d0ba092", null ],
       [ "operator<<", "structeve_1_1ignore__first.html#ae48d45680fc71e5f9feec0dac0abbb30", null ]
     ] ],
     [ "eve::keep_between", "structeve_1_1keep__between.html", [
       [ "count", "structeve_1_1keep__between.html#a386e5aab0d3bae687c59f7afc4ad33bc", null ],
       [ "else_", "structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb", null ],
-      [ "mask", "structeve_1_1keep__between.html#abfde82b1eee57269b4769921720a4830", null ],
+      [ "mask", "structeve_1_1keep__between.html#acb2f05a69821cb3d669f0c6e23acdd03", null ],
       [ "operator==", "structeve_1_1keep__between.html#aacc6095fbf602b77019e59007a1c20f7", null ],
       [ "operator<<", "structeve_1_1keep__between.html#a574aa47b8cf2b432eb14fd0358c4f38f", null ]
     ] ],
     [ "eve::ignore_extrema", "structeve_1_1ignore__extrema.html", [
       [ "count", "structeve_1_1ignore__extrema.html#a39ddc7f483ebc59f642f2b42687753c4", null ],
       [ "else_", "structeve_1_1ignore__extrema_a8b1bf4ee47838a4ae4897f6bcd21b93c.html#a8b1bf4ee47838a4ae4897f6bcd21b93c", null ],
-      [ "mask", "structeve_1_1ignore__extrema.html#afcda2c2dd81f04e74b7dc83210eb839c", null ],
+      [ "mask", "structeve_1_1ignore__extrema.html#a4a2136bdee642bce65e9983043d1c488", null ],
       [ "operator==", "structeve_1_1ignore__extrema.html#ab553daa802541398e3dd66455c0b2706", null ],
       [ "operator<<", "structeve_1_1ignore__extrema.html#a44743fbbbe8ef415498cb627834415fa", null ]
     ] ],

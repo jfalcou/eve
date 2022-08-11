@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['math_20function_0',['math function',['../group__math.html',1,'']]],
-  ['memory_20management_1',['Memory Management',['../group__memory.html',1,'']]]
+  ['functions_0',['Functions',['../group__functions.html',1,'']]],
+  ['fused_20multiply_20add_20family_1',['Fused multiply add family',['../group__core__fma__family.html',1,'']]]
 ];

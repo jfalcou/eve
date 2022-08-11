@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('group__algos_gafa9b773a01fad373754a552
 <p >C++ standard only has <code>std::min_element</code> that returns iterator to the minimum element. We have that too (see: <code>eve::algo::min_element</code>) but it's slower then just getting the value. So we also provide <code>min_value</code> for when you don't care about the position. By default unrolls by 4 and aligned all memory accesses.</p>
 <dl class="section note"><dt>Note</dt><dd>for equivalent elements we return the first amoung equal. </dd>
 <dd>
-we assume that <code><a class="el" href="group__core_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Callable object computing the &quot;less than&quot; predicate.">eve::is_less</a></code> defined for your type is total order. (this comes up when switching min with max)</dd></dl>
+we assume that <code><a class="el" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Returns a logical true if and only if the element value of the first parameter is less than the secon...">eve::is_less</a></code> defined for your type is total order. (this comes up when switching <code>min</code> with <code>max</code>)</dd></dl>
 <p><b>Alternative Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -155,10 +155,10 @@ we assume that <code><a class="el" href="group__core_ga419057bf1a8ca5f46624a28a0
 <div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range Rng&gt;</div>
 <div class="line">  std::optional&lt;eve::value_type_t&lt;Rng&gt;&gt; <a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">min_value</a>(Rng&amp;&amp; rng);                    <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algos_gafa9b773a01fad373754a55250f503b58_html_gafa9b773a01fad373754a55250f503b58"><div class="ttname"><a href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a></div><div class="ttdeci">constexpr auto min_value</div><div class="ttdoc">SIMD algorithm that returns minimum value in the range.</div><div class="ttdef"><b>Definition:</b> min_value.hpp:97</div></div>
+<div class="ttc" id="agroup__algos_gafa9b773a01fad373754a55250f503b58_html_gafa9b773a01fad373754a55250f503b58"><div class="ttname"><a href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a></div><div class="ttdeci">constexpr auto min_value</div><div class="ttdoc">SIMD algorithm that returns minimum value in the range.</div><div class="ttdef"><b>Definition:</b> min_value.hpp:100</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Returns the minimum value, according to less. If the range is empty - returns nullopt.</li>
-<li>Same as 1 but the less is <a class="el" href="group__core_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Callable object computing the &quot;less than&quot; predicate.">eve::is_less</a></li>
+<li>Same as 1 but the less is <code><a class="el" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Returns a logical true if and only if the element value of the first parameter is less than the secon...">eve::is_less</a></code></li>
 </ol>
 <p ><b>Parameters</b></p>
 <ul>
@@ -185,16 +185,20 @@ we assume that <code><a class="el" href="group__core_ga419057bf1a8ca5f46624a28a0
 <div class="line">            &lt;&lt; *<a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a>(v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_element(v) - v.begin()                   = &quot;</span></div>
-<div class="line">            &lt;&lt; eve::algo::min_element(v) - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga0f95320d878307ac03e21b52d4c86720.html#ga0f95320d878307ac03e21b52d4c86720">eve::algo::min_element</a>(v) - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v, eve::is_greater)                = &quot;</span></div>
-<div class="line">            &lt;&lt; *<a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a>(v, <a class="code hl_variable" href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; *<a class="code hl_variable" href="group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58">eve::algo::min_value</a>(v, <a class="code hl_variable" href="group__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v, eve::is_greater) - v.begin()    = &quot;</span></div>
-<div class="line">            &lt;&lt; eve::algo::min_element(v, <a class="code hl_variable" href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>) - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga0f95320d878307ac03e21b52d4c86720.html#ga0f95320d878307ac03e21b52d4c86720">eve::algo::min_element</a>(v, <a class="code hl_variable" href="group__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>) - v.begin() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_gac8e72f365c26b0d3373799e5e3a5f384_html_gac8e72f365c26b0d3373799e5e3a5f384"><div class="ttname"><a href="group__core_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a></div><div class="ttdeci">constexpr callable_is_greater_ is_greater</div><div class="ttdoc">Callable object computing the &quot;greater than&quot; predicate.</div><div class="ttdef"><b>Definition:</b> is_greater.hpp:95</div></div>
-</div><!-- fragment --> 
+<div class="ttc" id="agroup__algos_ga0f95320d878307ac03e21b52d4c86720_html_ga0f95320d878307ac03e21b52d4c86720"><div class="ttname"><a href="group__algos_ga0f95320d878307ac03e21b52d4c86720.html#ga0f95320d878307ac03e21b52d4c86720">eve::algo::min_element</a></div><div class="ttdeci">constexpr auto min_element</div><div class="ttdoc">SIMD version of std::min_element</div><div class="ttdef"><b>Definition:</b> min_element.hpp:92</div></div>
+<div class="ttc" id="agroup__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384_html_gac8e72f365c26b0d3373799e5e3a5f384"><div class="ttname"><a href="group__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a></div><div class="ttdeci">constexpr callable_is_greater_ is_greater</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is greater than the se...</div><div class="ttdef"><b>Definition:</b> is_greater.hpp:80</div></div>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><code>max_value</code> </dd>
+<dd>
+<code>min_element</code> </dd></dl>
+
 </div>
 </div>
 </div><!-- contents -->

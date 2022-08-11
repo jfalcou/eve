@@ -1,7 +1,7 @@
 Licence {#licence}
 =======
 
-This library is licensed under the [Boost SOftware License 1.0 License](https://spdx.org/licenses/BSL-1.0.html):
+This library is licensed under the [Boost Software License 1.0 License](https://spdx.org/licenses/BSL-1.0.html):
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ none
 Boost Software License - Version 1.0 - August 17th, 2003

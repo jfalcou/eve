@@ -1,9 +1,9 @@
 var searchData=
 [
   ['omega_0',['omega',['../group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566',1,'eve']]],
-  ['one_1',['one',['../group__core_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5',1,'eve']]],
-  ['oneminus_2',['oneminus',['../group__core_gacf950f83c49a8875b30ecf506fbaa85c.html#gacf950f83c49a8875b30ecf506fbaa85c',1,'eve']]],
-  ['oneosqrteps_3',['oneosqrteps',['../group__core_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370',1,'eve']]],
+  ['one_1',['one',['../group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5',1,'eve']]],
+  ['oneminus_2',['oneminus',['../group__core__arithmetic_gacf950f83c49a8875b30ecf506fbaa85c.html#gacf950f83c49a8875b30ecf506fbaa85c',1,'eve']]],
+  ['oneosqrteps_3',['oneosqrteps',['../group__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370',1,'eve']]],
   ['operator_20bool_4',['operator bool',['../structeve_1_1aligned__ptr.html#a45d36841620158a67436c4c285b16551',1,'eve::aligned_ptr']]],
   ['operator_20pointer_5',['operator pointer',['../structeve_1_1aligned__ptr.html#a3eae8f3254e53333dbad75b49401adea',1,'eve::aligned_ptr']]],
   ['operator_21_6',['operator!',['../structeve_1_1wide.html#ad6866135977bdf52db203c4a82b74091',1,'eve::wide::operator!()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a1bdaef9f0529757040060f464139e90f',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::operator!()']]],

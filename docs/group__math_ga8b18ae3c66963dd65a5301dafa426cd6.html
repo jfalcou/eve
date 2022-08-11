@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('group__math_ga8b18ae3c66963dd65a5301da
 
 <p>Callable object computing asec. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/module/math.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md1509"></a>
+<h4><a class="anchor" id="autotoc_md434"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -162,13 +162,13 @@ Members Functions</h4>
 <li>If the element is a <code>Nan</code>, <code>NaN</code> is returned.</li>
 </ul>
 <hr  />
-<h4><a class="anchor" id="autotoc_md1512"></a>
+<h4><a class="anchor" id="autotoc_md437"></a>
 Supported decorators</h4>
 <ul>
-<li><a class="el" href="group__core_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
+<li><a class="el" href="group__core__decorator_ga5bbd9036e48f8aac4216a0869806e1df.html#ga5bbd9036e48f8aac4216a0869806e1df" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff</a>, <a class="el" href="group__core__decorator_ga77bcbd0260750a88b913fd304baed476.html#ga77bcbd0260750a88b913fd304baed476" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_1st</a>, <a class="el" href="group__core__decorator_gaaae38dadc2c9ec57e7431dd23a01350d.html#gaaae38dadc2c9ec57e7431dd23a01350d" title="Higher-order Callable Object imbuing derivative semantics onto other Callable Objects.">eve::diff_nth</a></li>
 </ul>
 <pre class="fragment"> The expression `diff(asec)(x)` computes the derivative of the function at `x`.
-</pre> <h4><a class="anchor" id="autotoc_md1513"></a>
+</pre> <h4><a class="anchor" id="autotoc_md438"></a>
 Example</h4>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -187,7 +187,7 @@ Example</h4>
 <div class="line">    ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
-<div class="line">  <span class="keywordtype">float</span> yf = <a class="code hl_variable" href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <span class="keywordtype">float</span> yf = <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
 <div class="line"> </div>
 <div class="line">  std::cout</div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span>  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -197,7 +197,7 @@ Example</h4>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; asec(yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga8b18ae3c66963dd65a5301dafa426cd6.html#ga8b18ae3c66963dd65a5301dafa426cd6">eve::asec</a>(yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Callable object computing the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:55</div></div>
+<div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="agroup__math_ga8b18ae3c66963dd65a5301dafa426cd6_html_ga8b18ae3c66963dd65a5301dafa426cd6"><div class="ttname"><a href="group__math_ga8b18ae3c66963dd65a5301dafa426cd6.html#ga8b18ae3c66963dd65a5301dafa426cd6">eve::asec</a></div><div class="ttdeci">constexpr callable_asec_ asec</div><div class="ttdoc">Callable object computing asec.</div><div class="ttdef"><b>Definition:</b> asec.hpp:70</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
