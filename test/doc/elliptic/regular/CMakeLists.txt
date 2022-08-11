@@ -1,7 +1,7 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright : EVE Contributors & Maintainers
-##  SPDX-License-Identifier: MIT
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 
 make_unit( "doc.elliptic.regular" ellint_1.cpp  )

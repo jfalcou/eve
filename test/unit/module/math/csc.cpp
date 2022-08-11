@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -47,7 +47,7 @@ TTS_CASE_WITH ( "Check behavior of csc on wide"
 {
   using eve::detail::map;
   using eve::csc;
-  
+
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return 1.0/std::sin(double(e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(csc)(a0)      , map(ref, a0), 2);
@@ -57,5 +57,5 @@ TTS_CASE_WITH ( "Check behavior of csc on wide"
   TTS_ULP_EQUAL(csc(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(csc(a3)                       , map(ref, a3), 2);
-  
+
 };

@@ -2,7 +2,7 @@
 /**
   SPY - C++ Informations Broker
   Copyright : SPY Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #ifndef SPY_SPY_HPP_INCLUDED

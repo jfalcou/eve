@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -40,7 +40,7 @@ TTS_CASE_WITH( "Check behavior of cosd on wide"
 {
   using eve::detail::map;
   using eve::cosd;
-  
+
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref = [](auto e) -> v_t { return boost::math::cos_pi(e/180.0l); };

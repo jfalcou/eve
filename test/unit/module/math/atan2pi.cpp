@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -48,8 +48,8 @@ TTS_CASE_WITH ( "Check behavior of atan2pi on wide"
 
   TTS_ULP_EQUAL(eve::atan2pi(a0, a1)      , map([](auto e, auto f) -> v_t { return eve::radinpi(std::atan2(e, f)); }, a0, a1), 2);
   TTS_ULP_EQUAL(eve::atan2pi(a2, a3)      , map([](auto e, auto f) -> v_t { return eve::radinpi(std::atan2(e, f)); }, a2, a3), 2);
-  
-  
-  
-  
+
+
+
+
 };

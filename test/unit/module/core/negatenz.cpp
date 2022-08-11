@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -78,7 +78,5 @@ TTS_CASE_WITH("Check behavior of negatenz(wide)",
   using eve::negatenz;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(
-      negatenz(a0, a1), map([](auto e, auto f) -> v_t { return e * eve::signnz(f); }, a0, a1), 2);
-  if constexpr( eve::floating_value<T> ) {}
+  TTS_ULP_EQUAL( negatenz(a0, a1), map([](auto e, auto f) -> v_t { return e*eve::signnz(f); }, a0, a1), 2);
 };

@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -36,8 +36,6 @@ TTS_CASE_TPL("Check return types of inc", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::saturated(eve::inc[eve::logical<v_t>()])(v_t()), v_t);
   TTS_EXPR_IS(eve::saturated(eve::inc[bool()])(T()), T);
   TTS_EXPR_IS(eve::saturated(eve::inc[bool()])(v_t()), v_t);
-
-  if constexpr( eve::floating_real_value<T> ) {}
 };
 
 //==================================================================================================
@@ -52,9 +50,8 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[cond](wide)",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::inc(a0), map([](auto e) -> v_t { return v_t(e + 1); }, a0));
-  TTS_EQUAL(eve::inc[a0 > 64](a0),
-            map([](auto e) -> v_t { return v_t((e > 64) ? e + 1 : e); }, a0));
+  TTS_EQUAL( eve::inc(a0), map([](auto e) ->v_t{ return v_t(e+1); }, a0));
+  TTS_EQUAL( eve::inc[a0 > 64](a0), map([](auto e) ->v_t{ return v_t((e > 64) ?e+1 : e); }, a0));
   bool z = (a0.get(0) > 64);
   TTS_EQUAL(eve::inc[z](a0), map([&](auto e) -> v_t { return v_t((z) ? e + 1 : e); }, a0));
 };

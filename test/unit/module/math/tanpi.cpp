@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -45,7 +45,7 @@ TTS_CASE_WITH ( "Check behavior of tanpi on wide"
 {
   using eve::detail::map;
   using eve::tanpi;
-  
+
   using eve::deginrad;
   using eve::pi;
   using v_t = eve::element_type_t<T>;
@@ -57,8 +57,8 @@ TTS_CASE_WITH ( "Check behavior of tanpi on wide"
   TTS_ULP_EQUAL(tanpi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(tanpi(a3)                       , map(ref, a3), 2);
-  
-  
-  
-  
+
+
+
+
 };

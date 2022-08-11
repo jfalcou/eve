@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -45,7 +45,7 @@ TTS_CASE_WITH ( "Check behavior of cospi on wide"
 {
   using eve::detail::map;
   using eve::cospi;
-  
+
   using eve::deginrad;
   using eve::pi;
   using v_t = eve::element_type_t<T>;
@@ -57,8 +57,8 @@ TTS_CASE_WITH ( "Check behavior of cospi on wide"
   TTS_ULP_EQUAL(cospi(a1)                       , map(ref, a1), 2);
   TTS_ULP_EQUAL(cospi(a2)                       , map(ref, a2), 2);
   TTS_ULP_EQUAL(cospi(a3)                       , map(ref, a3), 2);
-  
-  
-  
-  
+
+
+
+
 };

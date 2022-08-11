@@ -1,8 +1,8 @@
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
 #include "test.hpp"
@@ -40,6 +40,6 @@ TTS_CASE_WITH( "Check behavior of atan on wide"
 
   TTS_ULP_EQUAL(eve::atan(a0)      , map([](auto e) -> v_t { return std::atan(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::atan(a1)      , map([](auto e) -> v_t { return std::atan(e); }, a1), 2);
-  
-  
+
+
 };
