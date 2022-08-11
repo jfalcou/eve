@@ -12,40 +12,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var inv_egamma
-  //!
-  //! @brief Callable object computing the inverse of the [Euler-Mascheroni constant](@ref eve::egamma).
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the aforementioned constant                              |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //! **Return value**
-  //!
-  //! the inv_egamma constant in the chosen type.
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/inv_egamma.cpp}
-  //!
-  //! @}
-  //================================================================================================
+//! @addtogroup math_constants
+//! @{
+//!   @var inv_egamma
+//!   @brief Callable object computing the inverse of the [Euler-Mascheroni constant](@ref eve::egamma).
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T inv_egamma(as<T> x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!
+//!    **Return value**
+//!
+//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/inv_egamma.cpp}
+//! @}
+//================================================================================================
   EVE_MAKE_CALLABLE(inv_egamma_, inv_egamma);
 
   namespace detail

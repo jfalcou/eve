@@ -12,46 +12,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var maxlog
-  //!
-  //! @brief Callable object computing the greatest positive value for which eve::exp
-  //! returns a finite result
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the aforementioned constant                               |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  tempate < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //! **Return value**
-  //!
-  //! the call `eve::maxlog(as<T>())` is semantically equivalent to:
-  //!   - T(88.37630f) if eve::element_type_t<T> is float
-  //!   - T(709.436) if eve::element_type_t<T> is double
-  //!
-  //! this is the smallest value for which `eve::exp` overflows
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/maxlog.cpp}
-  //!
-  //! @}
-  //================================================================================================
+//! @addtogroup math_constants
+//! @{
+//!   @var maxlog
+//!   @brief Callable object computing the greatest positive value for which eve::exp
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T maxlog(as<T> x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!
+//!    **Return value**
+//!
+//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/maxlog.cpp}
+//! @}
+//================================================================================================
   EVE_MAKE_CALLABLE(maxlog_, maxlog);
 
   namespace detail

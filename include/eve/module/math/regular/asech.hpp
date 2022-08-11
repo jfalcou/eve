@@ -12,26 +12,29 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_invhyper
   //! @{
   //! @var asech
   //!
   //! @brief Callable object computing asech: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of asech   |
-  //! | `operator[]` | Construct a conditional version of current function object |
   //!
-  //! ---
+  //!   @groupheader{Callable Signatures}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T asech(T x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
   //!
   //! **Parameters**
   //!
@@ -48,11 +51,8 @@ namespace eve
   //!   * If the element is \f$1\f$, \f$+0\f$ returned.
   //!   * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
   //!
-  //! ---
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //!  Higher-order function generating a masked version of eve::asech
   //!
@@ -64,18 +64,14 @@ namespace eve
   //!
   //!  A Callable object so that the expression `asech[cond](x, ...)` is equivalent to `if_else(cond,asech(x, ...),x)`
   //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
   //!
-  //!     The expression `diff(asech)(x)` computes the derivative of the function at `x`.
+  //!  @groupheader{Example}
   //!
-  //! #### Example
+  //!  @godbolt{doc/math/asech.cpp}
   //!
-  //! @godbolt{doc/math/asech.cpp}
+  //!  @groupheader{Semantic Modifiers}
+  //!
   //!
   //!  @}
   //================================================================================================

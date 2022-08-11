@@ -12,40 +12,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var log_phi
-  //!
-  //! @brief Callable object computing the logarithm of the golden ratio : \f$\log((1+\sqrt5)/2)\f$.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the aforementioned constant                              |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //! **Return value**
-  //!
-  //! the log_phi constant in the chosen type.
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/log_phi.cpp}
-  //!
-  //! @}
-  //================================================================================================
+//! @addtogroup math_constants
+//! @{
+//!   @var log_phi
+//!   @brief Callable object computing the logarithm of the golden ratio : \f$\log((1+\sqrt5)/2)\f$.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T log_phi(as<T> x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!
+//!    **Return value**
+//!
+//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/log_phi.cpp}
+//! @}
+//================================================================================================
   EVE_MAKE_CALLABLE(log_phi_, log_phi);
 
   namespace detail

@@ -4,6 +4,8 @@
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 
+add_subdirectory(masked)
+
 make_unit( "doc.math" acos.cpp                              )
 make_unit( "doc.math" acosd.cpp                             )
 make_unit( "doc.math" acosh.cpp                             )

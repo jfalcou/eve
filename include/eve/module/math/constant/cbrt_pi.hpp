@@ -12,40 +12,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var cbrt_pi
-  //!
-  //! @brief Callable object computing the constant \f$\sqrt[3]\pi\f$.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the aforementioned constant                              |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //! **Return value**
-  //!
-  //! the cbrt_pi constant in the chosen type.
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/cbrt_pi.cpp}
-  //!
-  //! @}
-  //================================================================================================
+//! @addtogroup math_constants
+//! @{
+//!   @var cbrt_pi
+//!   @brief Callable object computing the constant \f$\sqrt[3]\pi\f$.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T cbrt_pi(as<T> x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!
+//!    **Return value**
+//!
+//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/cbrt_pi.cpp}
+//! @}
+//================================================================================================
   EVE_MAKE_CALLABLE(cbrt_pi_, cbrt_pi);
 
   namespace detail

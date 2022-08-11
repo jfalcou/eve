@@ -12,40 +12,40 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var rayleigh_skewness
-  //!
-  //! @brief Callable object computing the Rayleigh skewness value : \f$2\sqrt\pi(\pi-3)/(4-\pi^{3/2})\f$.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | Computes the aforementioned constant                              |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //! **Return value**
-  //!
-  //! the rayleigh_skewness constant in the chosen type.
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/rayleigh_skewness.cpp}
-  //!
-  //! @}
-  //================================================================================================
+//! @addtogroup math_constants
+//! @{
+//!   @var rayleigh_skewness
+//!   @brief Callable object computing the Rayleigh skewness value : \f$2\sqrt\pi(\pi-3)/(4-\pi^{3/2})\f$.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T rayleigh_skewness(as<T> x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!
+//!    **Return value**
+//!
+//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/rayleigh_skewness.cpp}
+//! @}
+//================================================================================================
   EVE_MAKE_CALLABLE(rayleigh_skewness_, rayleigh_skewness);
 
   namespace detail

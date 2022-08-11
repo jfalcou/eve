@@ -50,13 +50,13 @@ namespace eve
   //!
   //! #### Supported decorators
   //!
-  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle, 
   //!
   //!     provide a balance between speed and range limitation.
-  //!
+  //!  
   //!  * eve::diff, eve::diff_1st, eve::diff_nth
   //!
-  //!
+  //!  
   //!     The expression `diff(sec)(x)` computes the derivative of the function at `x`.
   //!
   //! #### Example
@@ -65,10 +65,10 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-
+     
   namespace tag { struct sec_; }
   template<> struct supports_conditional<tag::sec_> : std::false_type {};
-
+  
   EVE_MAKE_CALLABLE(sec_, sec);
 }
 

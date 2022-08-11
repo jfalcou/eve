@@ -12,26 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_exp
   //! @{
   //! @var pow_abs
   //!
   //! @brief Callable object computing the pow_abs function \f$|x|^y\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the pow_abs operation   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< value T, value U > auto operator()( T x, U y ) const noexcept requires compatible< T, U >;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T, eve::floating_value U >
+  //!      T pow_abs(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -62,40 +63,16 @@ namespace eve
   //!  *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
   //!  *  except where specified above, if any argument is NaN, NaN is returned.
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::pow_abs
+  //!     The call `eve;::pow_abs[mask](x, y)` provides a masked version of `eve::pow_abs` which is
+  //!     equivalent to `if_else (mask, pow_abs(x, y), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `pow_abs[cond](x, ...)` is equivalent to `if_else(cond,pow_abs(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::raw
-  //!     The expression `raw(pow_abs)(x,y)` merely returns `exp(y*log(|x|)` which is must faster way to compute the result
-  //!      than the regular implemention, but does not fullfill all the boundary requisites of IEC 60559 and has not always a good accuracy.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_1st(pow_abs)(x,y)` and `diff_2nd(pow_abs)(x,y)` computes the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ |x|^y\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/pow_abs.cpp}
-  //!
+  //!        @godbolt{doc/math/masked/pow_abs.cpp}
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(pow_abs_, pow_abs);

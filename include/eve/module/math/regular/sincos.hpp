@@ -12,25 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_trig
   //! @{
   //! @var sincos
   //!
   //! @brief Callable object computing the simultaneous  computation of sin an cos.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the simultaneous  computation of sin an cos   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      kumi::tuple<T, T> sincos(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -40,24 +42,22 @@ namespace eve
   //!
   //!The computation returns a pair and is semantically equivalent to `{sin(x), cos(x)}`
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
+  //!  @godbolt{doc/math/sincos.cpp}
   //!
-  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle, 
   //!
   //!     provide a balance between speed and range limitation.
   //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/sincos.cpp}
-  //!
   //!  @}
   //================================================================================================
-
+     
   namespace tag { struct sincos_; }
   template<> struct supports_conditional<tag::sincos_> : std::false_type {};
-
+  
   EVE_MAKE_CALLABLE(sincos_, sincos);
 }
 

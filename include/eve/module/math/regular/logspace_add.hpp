@@ -12,72 +12,42 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_log
   //! @{
   //! @var logspace_add
   //!
   //! @brief Callable object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n e^{x_i}\right)\f$
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the logspace_add operation                                 |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T, floating_value U, floating_value ...Ts> auto operator()( T arg0, U arg1, Ts... args ) const noexcept
-  //!                                                    requires (compatible_values< T, U, Ts > && ...);
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T, eve::floating_value U, eve::floating_value Ts ... >
+  //!      auto logspace_add(T arg0, U arg1, Ts ... args) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!`arg0`, `arg1`, `args`, ...
-  //!:   [values](@ref eve::value).
+  //!`arg0`, `arg1`, `args`, ...:   [floating values](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
   //! The call `logspace_add(arg0, arg1, args...)` is semantically equivalent to
-  //!`log(exp(arg0) + exp(arg1) + exp(args)...)`;.
+  //!`log(exp(arg0) + exp(arg1) + exp(args)...)`.
   //!
   //! The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::logspace_add
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `logspace_add[cond](x, ...)` is equivalent to `if_else(cond,logspace_add(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_3rd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_nth< N >(logspace_add)(arg0,arg1,args...)` computes the partial
-  //!     diff of the function relative to its Nth parameter. The returned value is 0 if N is
-  //!     greater that the actual number of parameters, otherwise if the parameters are
-  //!     \f$ x_1, ... x_n \f$ returns \f$ \displaystyle\frac{e^{x_N}}{e^{x_1} + ... + e^{x_n}} \f$
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/logspace_add.cpp}
-  //!
+  //!  @godbolt{doc/math/logspace_add.cpp}
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(logspace_add_, logspace_add);

@@ -12,25 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_invtrig
   //! @{
   //! @var asec
   //!
   //! @brief Callable object computing asec.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of asec   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T asec(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -41,26 +43,16 @@ namespace eve
   //!Returns the [elementwise](@ref glossary_elementwise) arc secant of the
   //!input in the range \f$[0 , \pi]\f$.
   //!
-  //!In particular:
+  //!IN PARTICULAR:
   //!
-  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+  //!   * IF the element is \f$1\f$, \f$+0\f$ is returned.
   //!   * If the element is \f$0\f$, \f$\pi\f$ is returned.
   //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
   //!   * If the element is a `Nan`, `NaN` is returned.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(asec)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/asec.cpp}
-  //!
+  //!  @godbolt{doc/math/asec.cpp}
   //!  @}
   //================================================================================================
 

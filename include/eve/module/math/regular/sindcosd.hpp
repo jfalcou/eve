@@ -12,25 +12,28 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_trig
   //! @{
   //! @var sindcosd
   //!
-  //! @brief Callable object computing the simultaneous  computation of sin an cos of an argument in degrees.
+  //! @brief Callable object computing the simultaneous  computation of sin an cos
+  //! of an argument in degrees.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the simultaneous  computation of sin an cos of an argument in degrees   |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      kumi::tuple<T, T> sindcosd(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -40,17 +43,15 @@ namespace eve
   //!
   //!The computation returns a pair and is semantically equivalent to `{sind(x), cosd(x)}`
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
+  //!  @godbolt{doc/math/sindcosd.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
   //!
   //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
   //!
   //!     provide a balance between speed and range limitation.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/sindcosd.cpp}
   //!
   //!  @}
   //================================================================================================

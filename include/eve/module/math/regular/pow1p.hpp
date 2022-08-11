@@ -12,26 +12,27 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_exp
   //! @{
   //! @var pow1p
   //!
   //! @brief Callable object computing pow1p: \f$(1+x)^y\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of pow1p                                  |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_real_value T, floating_real_value T> auto operator()( T x, U y ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T, eve::floating_value U >
+  //!      T pow1p(T x, U y) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
@@ -42,36 +43,16 @@ namespace eve
   //!Returns the [elementwise](@ref glossary_elementwise) power(1+x, y), with good accuracy,
   //!even when `x` is  small.
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::pow1p
+  //!     The call `eve;::pow1p[mask](x, y)` provides a masked version of `eve::pow1p` which is
+  //!     equivalent to `if_else (mask, pow1p(x, y), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `pow1p[cond](x, ...)` is equivalent to `if_else(cond,pow1p(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_2nd, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff_1st(pow1p)(x,y)` and `diff_2nd(pow1p)(x,y)` computes the partial
-  //!      derivatives of \f$f\f$, where \f$f\f$ is the function \f$(x,y) \rightarrow \ (1+x)^y\f$.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/pow1p.cpp}
-  //!
+  //!        @godbolt{doc/math/masked/pow1p.cpp}
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(pow1p_, pow1p);
