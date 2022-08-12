@@ -7,5 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/math/regular/lpnorm.hpp>
 #include <eve/module/math/pedantic/impl/lpnorm.hpp>
+#include <eve/module/math/regular/lpnorm.hpp>

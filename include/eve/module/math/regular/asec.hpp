@@ -11,55 +11,59 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math_invtrig
-  //! @{
-  //! @var asec
-  //!
-  //! @brief Callable object computing asec.
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/math.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::floating_value T >
-  //!      T asec(T x) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) arc secant of the
-  //!input in the range \f$[0 , \pi]\f$.
-  //!
-  //!IN PARTICULAR:
-  //!
-  //!   * IF the element is \f$1\f$, \f$+0\f$ is returned.
-  //!   * If the element is \f$0\f$, \f$\pi\f$ is returned.
-  //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
-  //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/math/asec.cpp}
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup math_invtrig
+//! @{
+//! @var asec
+//!
+//! @brief Callable object computing asec.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T asec(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) arc secant of the
+//! input in the range \f$[0 , \pi]\f$.
+//!
+//! IN PARTICULAR:
+//!
+//!   * IF the element is \f$1\f$, \f$+0\f$ is returned.
+//!   * If the element is \f$0\f$, \f$\pi\f$ is returned.
+//!   * If the element \f$|x| < 1\f$, `NaN` is returned.
+//!   * If the element is a `Nan`, `NaN` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/asec.cpp}
+//!  @}
+//================================================================================================
 
-  namespace tag { struct asec_; }
-  template<> struct supports_conditional<tag::asec_> : std::false_type {};
+namespace tag
+{
+  struct asec_;
+}
+template<> struct supports_conditional<tag::asec_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(asec_, asec);
+EVE_MAKE_CALLABLE(asec_, asec);
 }
 
 #include <eve/module/math/regular/impl/asec.hpp>

@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var inv_e
@@ -46,33 +46,33 @@ namespace eve
 //!  @godbolt{doc/math/inv_e.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(inv_e_, inv_e);
+EVE_MAKE_CALLABLE(inv_e_, inv_e);
 
-  namespace detail
+namespace detail
+{
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto inv_e_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
-    template<floating_real_value T>
-    EVE_FORCEINLINE auto inv_e_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
-    {
-      using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.78b564p-2);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.78b56362cef38p-2);
-    }
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.78b564p-2);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.78b56362cef38p-2);
+  }
 
-    template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto inv_e_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  template<floating_real_value T, typename D>
+  EVE_FORCEINLINE constexpr auto inv_e_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<D, upward_type> )
     {
-      using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<D, upward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.78b564p-2);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.78b56362cef38p-2);
-      }
-      else if constexpr(std::is_same_v<D, downward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.78b562p-2);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.78b56362cef37p-2);
-      }
+      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.78b564p-2);
+      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.78b56362cef38p-2);
+    }
+    else if constexpr( std::is_same_v<D, downward_type> )
+    {
+      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.78b562p-2);
+      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.78b56362cef37p-2);
     }
   }
+}
 }

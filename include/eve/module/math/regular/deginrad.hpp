@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(deginrad_, deginrad);
+EVE_MAKE_CALLABLE(deginrad_, deginrad);
 }
 
 #include <eve/module/math/regular/impl/deginrad.hpp>

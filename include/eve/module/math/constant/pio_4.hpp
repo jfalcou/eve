@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var pio_4
@@ -46,38 +46,34 @@ namespace eve
 //!  @godbolt{doc/math/pio_4.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(pio_4_, pio_4);
+EVE_MAKE_CALLABLE(pio_4_, pio_4);
 
-  namespace detail
+namespace detail
+{
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr auto pio_4_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
-    template<floating_value T>
-    EVE_FORCEINLINE constexpr auto pio_4_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
-    {
-      using t_t           = element_type_t<T>;
+    using t_t = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T,   0X3F490FDB>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T,  0X3FE921FB54442D18LL>();
-    }
+    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0X3F490FDB>();
+    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0X3FE921FB54442D18LL>();
+  }
 
   template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto pio_4_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  EVE_FORCEINLINE constexpr auto pio_4_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
-      using t_t           = element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)
-      {
-        if constexpr(std::is_same_v<D, upward_type>)
-          return eve::pio_4(as<T>());
-        else
-          return Constant<T, 0X3F490FDA>();
-      }
-      else
-      {
-        if constexpr(std::is_same_v<D, downward_type>)
-          return eve::pio_4(as<T>());
-        else
-          return Constant<T, 0X3FE921FB54442D19LL>();
-      }
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> )
+    {
+      if constexpr( std::is_same_v<D, upward_type> ) return eve::pio_4(as<T>());
+      else return Constant<T, 0X3F490FDA>();
+    }
+    else
+    {
+      if constexpr( std::is_same_v<D, downward_type> ) return eve::pio_4(as<T>());
+      else return Constant<T, 0X3FE921FB54442D19LL>();
+    }
   }
-  }
+}
 }

@@ -11,61 +11,65 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math_trig
-  //! @{
-  //! @var sec
-  //!
-  //! @brief Callable object computing the secant of the input.
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/math.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::floating_value T >
-  //!      T sec(T x) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //! Returns the [elementwise](@ref glossary_elementwise) secant of
-  //! the input (inverse of the cosine).
-  //!
-  //! In particular:
-  //!
-  //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-  //!   * If the element is \f$\pm\infty\f$, Nan is returned.
-  //!   * If the element is a `NaN`, `NaN` is returned.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/math/sec.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-  //!
-  //!     provide a balance between speed and range limitation.
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup math_trig
+//! @{
+//! @var sec
+//!
+//! @brief Callable object computing the secant of the input.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T sec(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) secant of
+//! the input (inverse of the cosine).
+//!
+//! In particular:
+//!
+//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!   * If the element is \f$\pm\infty\f$, Nan is returned.
+//!   * If the element is a `NaN`, `NaN` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/sec.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
+//!
+//!     provide a balance between speed and range limitation.
+//!
+//!  @}
+//================================================================================================
 
-  namespace tag { struct sec_; }
-  template<> struct supports_conditional<tag::sec_> : std::false_type {};
+namespace tag
+{
+  struct sec_;
+}
+template<> struct supports_conditional<tag::sec_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(sec_, sec);
+EVE_MAKE_CALLABLE(sec_, sec);
 }
 
 #include <eve/module/math/regular/impl/sec.hpp>

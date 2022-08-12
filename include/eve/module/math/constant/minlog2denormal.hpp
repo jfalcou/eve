@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var minlog2denormal
@@ -46,24 +46,25 @@ namespace eve
 //!  @godbolt{doc/math/minlog2denormal.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(minlog2denormal_, minlog2denormal);
+EVE_MAKE_CALLABLE(minlog2denormal_, minlog2denormal);
 
-  namespace detail
+namespace detail
+{
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr auto minlog2denormal_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
-    template<floating_value T>
-    EVE_FORCEINLINE constexpr auto minlog2denormal_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
-    {
-      using t_t           = element_type_t<T>;
+    using t_t = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>)  return T(-150);
-      else if constexpr(std::is_same_v<t_t, double>) return T(-1075);
-    }
-
-    template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto minlog2denormal_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type> {}))
-    {
-      return minlog2denormal(as<T>());
-    }
+    if constexpr( std::is_same_v<t_t, float> ) return T(-150);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(-1075);
   }
+
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto
+  minlog2denormal_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    return minlog2denormal(as<T>());
+  }
+}
 }

@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var pi
@@ -46,39 +46,34 @@ namespace eve
 //!  @godbolt{doc/math/pi.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(pi_, pi);
+EVE_MAKE_CALLABLE(pi_, pi);
 
-  namespace detail
+namespace detail
+{
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
-    template<floating_value T>
-    EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
+    using t_t = element_type_t<T>;
+
+    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x40490FDBU>();
+    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x400921FB54442D18ULL>();
+  }
+
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> )
     {
-      using t_t           = element_type_t<T>;
-
-
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0x40490FDBU>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x400921FB54442D18ULL>();
+      if constexpr( std::is_same_v<D, upward_type> ) return eve::pi(as<T>());
+      else return Constant<T, 0x40490FDAU>();
     }
-
-    template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+    else
     {
-      using t_t           = element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)
-      {
-        if constexpr(std::is_same_v<D, upward_type>)
-          return eve::pi(as<T>());
-        else
-          return Constant<T,  0x40490FDAU>();
-      }
-      else
-      {
-        if constexpr(std::is_same_v<D, downward_type>)
-          return eve::pi(as<T>());
-        else
-          return Constant<T, 0x400921FB54442D19ULL>();
-      }
+      if constexpr( std::is_same_v<D, downward_type> ) return eve::pi(as<T>());
+      else return Constant<T, 0x400921FB54442D19ULL>();
     }
   }
+}
 }

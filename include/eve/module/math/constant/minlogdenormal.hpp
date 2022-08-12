@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var minlogdenormal
@@ -46,17 +46,18 @@ namespace eve
 //!  @godbolt{doc/math/minlogdenormal.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(minlogdenormal_, minlogdenormal);
+EVE_MAKE_CALLABLE(minlogdenormal_, minlogdenormal);
 
-  namespace detail
+namespace detail
+{
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr auto minlogdenormal_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
-    template<floating_value T>
-    EVE_FORCEINLINE constexpr auto minlogdenormal_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
-    {
-      using t_t           = element_type_t<T>;
+    using t_t = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T, 0xc2cff1b5U>(); // -103.972084
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0xc0874910d52d3053ULL>();//-745.1332191019413358
-    }
+    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0xc2cff1b5U>(); // -103.972084
+    else if constexpr( std::is_same_v<t_t, double> )
+      return Constant<T, 0xc0874910d52d3053ULL>(); //-745.1332191019413358
   }
+}
 }

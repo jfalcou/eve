@@ -11,8 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(tand_, tand);
+EVE_MAKE_CALLABLE(tand_, tand);
 }
 
 #include <eve/module/math/regular/impl/tand.hpp>
-

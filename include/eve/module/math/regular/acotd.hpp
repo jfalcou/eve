@@ -11,56 +11,60 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math_invtrig
-  //! @{
-  //! @var acotd
-  //!
-  //! @brief Callable object computing acotd.
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/math.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::floating_value T >
-  //!      T acotd(T x) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
-  //!input in the range \f$]-90, 90]\f$.
-  //!
-  //!In particular:
-  //!
-  //!   * If the element is \f$\pm0\f$, \f$\pm90\f$ is returned.
-  //!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-  //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //!
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/math/acotd.cpp}
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup math_invtrig
+//! @{
+//! @var acotd
+//!
+//! @brief Callable object computing acotd.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T acotd(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//! input in the range \f$]-90, 90]\f$.
+//!
+//! In particular:
+//!
+//!   * If the element is \f$\pm0\f$, \f$\pm90\f$ is returned.
+//!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
+//!   * If the element is a `Nan`, `NaN` is returned.
+//!
+//!
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/acotd.cpp}
+//!  @}
+//================================================================================================
 
-  namespace tag { struct acotd_; }
-  template<> struct supports_conditional<tag::acotd_> : std::false_type {};
+namespace tag
+{
+  struct acotd_;
+}
+template<> struct supports_conditional<tag::acotd_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(acotd_, acotd);
+EVE_MAKE_CALLABLE(acotd_, acotd);
 }
 
 #include <eve/module/math/regular/impl/acotd.hpp>

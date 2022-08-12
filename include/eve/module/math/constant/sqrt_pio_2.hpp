@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var sqrt_pio_2
@@ -46,33 +46,33 @@ namespace eve
 //!  @godbolt{doc/math/sqrt_pio_2.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(sqrt_pio_2_, sqrt_pio_2);
+EVE_MAKE_CALLABLE(sqrt_pio_2_, sqrt_pio_2);
 
-  namespace detail
+namespace detail
+{
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto sqrt_pio_2_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
-    template<floating_real_value T>
-    EVE_FORCEINLINE auto sqrt_pio_2_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
-    {
-      using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.40d932p+0);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.40d931ff62706p+0);
-    }
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.40d932p+0);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.40d931ff62706p+0);
+  }
 
-    template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto sqrt_pio_2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  template<floating_real_value T, typename D>
+  EVE_FORCEINLINE constexpr auto sqrt_pio_2_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<D, upward_type> )
     {
-      using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<D, upward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.40d932p+0);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.40d931ff62706p+0);
-      }
-      else if constexpr(std::is_same_v<D, downward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.40d93p+0);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.40d931ff62705p+0);
-      }
+      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.40d932p+0);
+      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.40d931ff62706p+0);
+    }
+    else if constexpr( std::is_same_v<D, downward_type> )
+    {
+      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.40d93p+0);
+      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.40d931ff62705p+0);
     }
   }
+}
 }

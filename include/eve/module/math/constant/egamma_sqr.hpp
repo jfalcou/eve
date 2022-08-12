@@ -11,11 +11,12 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var egamma_sqr
-//!   @brief Callable object computing the square of the [Euler-Mascheroni constant](@ref eve::egamma).
+//!   @brief Callable object computing the square of the [Euler-Mascheroni constant](@ref
+//!   eve::egamma).
 //!
 //!   **Defined in Header**
 //!
@@ -46,33 +47,33 @@ namespace eve
 //!  @godbolt{doc/math/egamma_sqr.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(egamma_sqr_, egamma_sqr);
+EVE_MAKE_CALLABLE(egamma_sqr_, egamma_sqr);
 
-  namespace detail
+namespace detail
+{
+  template<floating_real_value T>
+  EVE_FORCEINLINE auto egamma_sqr_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
-    template<floating_real_value T>
-    EVE_FORCEINLINE auto egamma_sqr_(EVE_SUPPORTS(cpu_), eve::as<T> const & ) noexcept
-    {
-      using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<t_t, float>)       return T(0x1.552c98p-2);
-      else if constexpr(std::is_same_v<t_t, double>) return T(0x1.552c97fa03695p-2);
-    }
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.552c98p-2);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.552c97fa03695p-2);
+  }
 
-    template<floating_real_value T, typename D>
-    EVE_FORCEINLINE constexpr auto egamma_sqr_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  template<floating_real_value T, typename D>
+  EVE_FORCEINLINE constexpr auto egamma_sqr_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    using t_t = element_type_t<T>;
+    if constexpr( std::is_same_v<D, upward_type> )
     {
-      using t_t =  element_type_t<T>;
-      if constexpr(std::is_same_v<D, upward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.552c98p-2);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.552c97fa03696p-2);
-      }
-      else if constexpr(std::is_same_v<D, downward_type>)
-      {
-        if constexpr(std::is_same_v<t_t, float>)  return T(0x1.552c96p-2);
-        else if constexpr(std::is_same_v<t_t, double>) return T(0x1.552c97fa03695p-2);
-      }
+      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.552c98p-2);
+      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.552c97fa03696p-2);
+    }
+    else if constexpr( std::is_same_v<D, downward_type> )
+    {
+      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.552c96p-2);
+      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.552c97fa03695p-2);
     }
   }
+}
 }

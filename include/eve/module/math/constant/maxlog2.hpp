@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  //================================================================================================
+//================================================================================================
 //! @addtogroup math_constants
 //! @{
 //!   @var maxlog2
@@ -46,24 +46,24 @@ namespace eve
 //!  @godbolt{doc/math/maxlog2.cpp}
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(maxlog2_, maxlog2);
+EVE_MAKE_CALLABLE(maxlog2_, maxlog2);
 
-  namespace detail
+namespace detail
+{
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
-    template<floating_value T>
-    EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
-    {
-      using t_t           = element_type_t<T>;
+    using t_t = element_type_t<T>;
 
-      if constexpr(std::is_same_v<t_t, float>) return Constant<T,  0x42fe0000U>();
-      else if constexpr(std::is_same_v<t_t, double>) return Constant<T, 0x408ff80000000000ULL>();
-    }
-
-    template<typename T, typename D>
-    EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), D const &, as<T> const &) noexcept
-    requires(is_one_of<D>(types<upward_type, downward_type> {}))
-    {
-      return maxlog2(as<T>());
-    }
+    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x42fe0000U>();
+    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x408ff80000000000ULL>();
   }
+
+  template<typename T, typename D>
+  EVE_FORCEINLINE constexpr auto maxlog2_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  {
+    return maxlog2(as<T>());
+  }
+}
 }

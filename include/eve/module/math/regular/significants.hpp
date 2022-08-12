@@ -65,7 +65,7 @@ namespace eve
 //!        @godbolt{doc/core/masked/significants.cpp}
 //!
 //! @}
-  EVE_MAKE_CALLABLE(significants_, significants);
+EVE_MAKE_CALLABLE(significants_, significants);
 }
 
 #include <eve/module/math/regular/impl/significants.hpp>

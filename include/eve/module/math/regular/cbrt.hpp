@@ -11,54 +11,54 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math_exp
-  //! @{
-  //! @var cbrt
-  //!
-  //! @brief Callable object computing the cubic root.
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/math.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template< eve::floating_value T >
-  //!      T cbrt(T x) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //! **Parameters**
-  //!
-  //!    `x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!   Returns the [elementwise](@ref glossary_elementwise) cubic root value of the input.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/math/cbrt.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The call `eve::cbrt[mask](x)` provides a masked version of `eve::cbrt` which is
-  //!     equivalent to `if_else (mask, abs(x), x)`.
-  //!
-  //!      **Example**
-  //!
-  //!        @godbolt{doc/core/masked/cbrt.cpp}
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(cbrt_, cbrt);
+//================================================================================================
+//! @addtogroup math_exp
+//! @{
+//! @var cbrt
+//!
+//! @brief Callable object computing the cubic root.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T cbrt(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!    `x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//!   Returns the [elementwise](@ref glossary_elementwise) cubic root value of the input.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/cbrt.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::cbrt[mask](x)` provides a masked version of `eve::cbrt` which is
+//!     equivalent to `if_else (mask, abs(x), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/cbrt.cpp}
+//!  @}
+//================================================================================================
+EVE_MAKE_CALLABLE(cbrt_, cbrt);
 }
 
 #include <eve/module/math/regular/impl/cbrt.hpp>
