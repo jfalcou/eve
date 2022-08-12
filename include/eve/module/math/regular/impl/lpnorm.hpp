@@ -58,4 +58,13 @@ namespace eve::detail
       }
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value P, floating_value T0, floating_value T1, floating_value ...Ts>
+  auto lpnorm_(EVE_SUPPORTS(cpu_), C const &cond, const P & p, T0 a0, T1 a1, Ts... args)
+    requires(!decorator<P>)
+  {
+    return mask_op(  cond, eve::lpnorm, p, a0, a1, args...);
+  }
 }

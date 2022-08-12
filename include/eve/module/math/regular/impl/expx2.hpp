@@ -107,4 +107,11 @@ namespace eve::detail
     else
       return apply_over(expx2, a0, s);
   }
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto expx2_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::expx2, t);
+  }
 }

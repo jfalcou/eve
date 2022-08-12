@@ -130,4 +130,13 @@ namespace eve::detail
   {
     return exp2(regular_type(), x);
   }
+
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto exp2_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::exp2, t);
+  }
 }

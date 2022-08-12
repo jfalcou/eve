@@ -36,22 +36,26 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!    `x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) cubic root value of the input.
+  //!   Returns the [elementwise](@ref glossary_elementwise) cubic root value of the input.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/cbrt.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::cbrt[mask](x)` provides a masked version of `eve::cbrt` which is
-  //!     equivalent to `if_else (mask, cbrt(x), x)`.
+  //!     The call `eve::cbrt[mask](x)` provides a masked version of `eve::cbrt` which is
+  //!     equivalent to `if_else (mask, abs(x), x)`.
   //!
   //!      **Example**
   //!
-  //!        @godbolt{doc/math/masked/cbrt.cpp}
+  //!        @godbolt{doc/core/masked/cbrt.cpp}
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cbrt_, cbrt);

@@ -312,4 +312,12 @@ namespace eve::detail
       return val_lo + val_hi;
     }
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto log10_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::log10, t);
+  }
 }

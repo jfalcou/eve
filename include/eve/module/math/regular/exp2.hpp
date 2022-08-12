@@ -36,17 +36,21 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [real value](@ref eve::real_value).
+  //!    `x`:   [real value](@ref eve::real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
-  //!In particular, for floating inputs:
+  //!   Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
+  //!   In particular, for floating inputs:
   //!
-  //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
-  //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-  //!   * If the element is a `NaN`, `NaN` is returned
+  //!     * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!     * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!     * If the element is a `NaN`, `NaN` is returned
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/exp2.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

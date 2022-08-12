@@ -30,18 +30,18 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template< floating_value P, floating_value T, floating_value ... Ts>
-  //!      auto operator()( T x,Ts ... args ) const noexcept
+  //!      auto operator()(P p, T x,Ts ... args ) const noexcept
   //!   }
   //!   @endcode
   //!
   //!
   //! **Parameters**
   //!
-  //!`p`, `x`, `... args`:   [floating values](@ref eve::floating_value)
+  //!   `p`, `x`, `... args`:   [floating values](@ref eve::floating_value)
   //!
   //! **Return value**
   //!
-  //!The result type is the [common compatible type](@ref common_compatible) of the parameters.
+  //!   The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

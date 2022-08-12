@@ -37,12 +37,16 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating value](@ref eve::floating_value).
+  //!    `x`:   [floating value](@ref eve::floating_value).
   //!
   //! **Return value**
   //!
-  //! Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
-  //! multiplied by the sign of `s` trying to avoid overflow as possible.
+  //!     Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
+  //!     multiplied by the sign of `s` trying to avoid overflow as possible.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/expx2.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

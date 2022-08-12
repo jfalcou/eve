@@ -37,17 +37,21 @@ namespace eve
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!    `x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
-  //!In particular, for floating inputs:
+  //!    Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
+  //!    In particular, for floating inputs:
   //!
-  //!   * If the element is \f$\pm0\f$, \f$1\f$ is returned
-  //!   * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-  //!   * If the element is a `NaN`, `NaN` is returned
+  //!     * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!     * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!     * If the element is a `NaN`, `NaN` is returned
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/exp10.cpp}
   //!
   //!  @groupheader{Semantic Modifiers}
   //!

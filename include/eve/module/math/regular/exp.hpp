@@ -48,6 +48,10 @@ namespace eve
   //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
   //!   * If the element is a `NaN`, `NaN` is returned
   //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/exp.cpp}
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call

@@ -62,4 +62,11 @@ namespace eve::detail
     ((that = next(that,args)),...);
     return if_else(is_even(sizeof...(args)) && is_ltz(sgn),  eve::allbits, sgn*that);
   }
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, floating_value T0, floating_value T1, floating_value ...Ts>
+  auto geommean_(EVE_SUPPORTS(cpu_), C const &cond, T0 a0, T1 a1, Ts... args)
+  {
+    return mask_op(  cond, eve::geommean, a0, a1, args...);
+  }
 }

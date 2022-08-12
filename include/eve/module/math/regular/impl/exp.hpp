@@ -85,4 +85,12 @@ namespace eve::detail
     else
       return apply_over(exp, x);
   }
+
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, real_value U>
+  EVE_FORCEINLINE auto exp_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
+  {
+    return mask_op( cond, eve::exp, t);
+  }
 }

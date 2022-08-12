@@ -94,7 +94,7 @@
 //! @ingroup math
 //! These functions allows performing exponentials computations
 //!
-//! @}
+///! @}
 //==================================================================================================
 
 #include <eve/module/math/constant/math.hpp>
