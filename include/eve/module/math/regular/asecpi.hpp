@@ -43,7 +43,7 @@ namespace eve
 //! **Return value**
 //!
 //! Returns the [elementwise](@ref glossary_elementwise) arc secant of the
-//! input in \f$\pi\f$ mutiples in the range \f$[0, 1]\f$.
+//! input in \f$\pi\f$ multiples in the range \f$[0, 1]\f$.
 //!
 //! In particular:
 //!

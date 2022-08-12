@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) cotine of the input expressed in \f$\pi\f$
+//! Returns the [elementwise](@ref glossary_elementwise) cotangent of the input expressed in \f$\pi\f$
 //! multiples.
 //!
 //! The call `cotpi(x)` is semantically equivalent to \f$\cot(\pi x)\f$.
