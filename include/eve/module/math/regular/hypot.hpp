@@ -54,7 +54,7 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::hypot[mask](x, ...)` provides a masked version of `eve::hypot` which is
+  //!     The call `eve::hypot[mask](x, ...)` provides a masked version of `eve::hypot` which is
   //!     equivalent to `if_else (mask, hypot(x, ...), x)`.
   //!
   //!      **Example**

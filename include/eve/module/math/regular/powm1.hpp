@@ -43,11 +43,15 @@ namespace eve
   //!Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
   //!even when `y` is very small, or when `x` is close to 1.
   //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/powm1.cpp}
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::powm1[mask](x, y)` provides a masked version of `eve::powm1` which is
+  //!     The call `eve::powm1[mask](x, y)` provides a masked version of `eve::powm1` which is
   //!     equivalent to `if_else (mask, powm1(x, y), x)`.
   //!
   //!      **Example**

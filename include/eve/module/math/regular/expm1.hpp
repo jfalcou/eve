@@ -55,7 +55,7 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::expm1[mask](x)` provides a masked version of `eve::expm1` which is
+  //!     The call `eve::expm1[mask](x)` provides a masked version of `eve::expm1` which is
   //!     equivalent to `if_else (mask, expm1(x), x)`.
   //!
   //!      **Example**

@@ -54,7 +54,7 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::geommean[mask](x, ...)` provides a masked version of `eve::geommean` which is
+  //!     The call `eve::geommean[mask](x, ...)` provides a masked version of `eve::geommean` which is
   //!     equivalent to `if_else (mask, geommean(x, ...), x)`.
   //!
   //!      **Example**

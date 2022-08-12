@@ -41,8 +41,8 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!     Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
-  //!     multiplied by the sign of `s` trying to avoid overflow as possible.
+  //!   Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
+  //!   multiplied by the sign of `s` trying to avoid overflow as possible.
   //!
   //!  @groupheader{Example}
   //!
@@ -52,7 +52,7 @@ namespace eve
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::expx2[mask](x, ...)` provides a masked version of `eve::expx2` which is
+  //!     The call `eve::expx2[mask](x, ...)` provides a masked version of `eve::expx2` which is
   //!     equivalent to `if_else (mask, expx2(x, ...), x)`.
   //!
   //!      **Example**

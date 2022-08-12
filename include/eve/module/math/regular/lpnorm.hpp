@@ -43,11 +43,15 @@ namespace eve
   //!
   //!   The result type is the [common compatible type](@ref common_compatible) of the parameters.
   //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/lpnorm.cpp}
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::lpnorm[mask](x, ...)` provides a masked version of `eve::lpnorm` which is
+  //!     The call `eve::lpnorm[mask](x, ...)` provides a masked version of `eve::lpnorm` which is
   //!     equivalent to `if_else (mask, lpnorm(x, ...), x)`.
   //!
   //!      **Example**

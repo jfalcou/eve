@@ -63,11 +63,15 @@ namespace eve
   //!  *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
   //!  *  except where specified above, if any argument is NaN, NaN is returned.
   //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/pow_abs.cpp}
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::pow_abs[mask](x, y)` provides a masked version of `eve::pow_abs` which is
+  //!     The call `eve::pow_abs[mask](x, y)` provides a masked version of `eve::pow_abs` which is
   //!     equivalent to `if_else (mask, pow_abs(x, y), x)`.
   //!
   //!      **Example**

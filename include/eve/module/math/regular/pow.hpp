@@ -68,11 +68,15 @@ namespace eve
   //!  * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
   //!  *  except where specified above, if any argument is NaN, NaN is returned
   //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/pow.cpp}
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::pow[mask](x, y)` provides a masked version of `eve::pow` which is
+  //!     The call `eve::pow[mask](x, y)` provides a masked version of `eve::pow` which is
   //!     equivalent to `if_else (mask, pow(x, y), x)`.
   //!
   //!      **Example**

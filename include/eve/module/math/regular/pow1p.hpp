@@ -43,11 +43,15 @@ namespace eve
   //!Returns the [elementwise](@ref glossary_elementwise) power(1+x, y), with good accuracy,
   //!even when `x` is  small.
   //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/pow1p.cpp}
+  //!
   //!  @groupheader{Semantic Modifiers}
   //!
   //!   * Masked Call
   //!
-  //!     The call `eve;::pow1p[mask](x, y)` provides a masked version of `eve::pow1p` which is
+  //!     The call `eve::pow1p[mask](x, y)` provides a masked version of `eve::pow1p` which is
   //!     equivalent to `if_else (mask, pow1p(x, y), x)`.
   //!
   //!      **Example**
