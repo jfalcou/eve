@@ -70,9 +70,6 @@ namespace eve
   //!
   //!  @godbolt{doc/math/asech.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(asech_, asech);

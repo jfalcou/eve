@@ -52,7 +52,6 @@ namespace eve
   //!
   //!  @godbolt{doc/math/cosh.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(cosh_, cosh);

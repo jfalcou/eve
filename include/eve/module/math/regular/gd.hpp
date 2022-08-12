@@ -65,8 +65,6 @@ namespace eve
   //!
   //!  @godbolt{doc/math/gd.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(gd_, gd);

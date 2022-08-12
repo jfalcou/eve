@@ -66,8 +66,6 @@ namespace eve
   //!
   //!  @godbolt{doc/math/invgd.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(invgd_, invgd);

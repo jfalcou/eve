@@ -64,8 +64,6 @@ namespace eve
   //!
   //!  @godbolt{doc/math/sinhc.cpp}
   //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(sinhc_, sinhc);

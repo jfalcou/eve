@@ -57,10 +57,6 @@ namespace eve
   //!  @groupheader{Example}
   //!
   //!  @godbolt{doc/math/asecd.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!
   //!  @}
   //================================================================================================
 
