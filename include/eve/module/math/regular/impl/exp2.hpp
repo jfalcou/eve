@@ -131,7 +131,6 @@ namespace eve::detail
     return exp2(regular_type(), x);
   }
 
-
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, real_value U>

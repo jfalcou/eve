@@ -12,75 +12,51 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_trig
   //! @{
   //! @var arg
   //!
   //! @brief Callable object computing the phase angle (in radians).
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the phase angle (in radians)   |
-  //! | `operator[]` | Construct a conditional version of current function object |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template<floating_value T> auto operator()(T x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T arg(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating value](@ref eve::floating_value).
+  //!    `x`:   [floating real value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //!For each  [element](@ref glossary_elementwise) of the input the phase angle is returned:
+  //!   Returns the [elementwise](@ref glossary_elementwise)
+  //!   the phase angle (in radians) of the input.
   //!
-  //!  If the input type is a [floating real value](@ref eve::floating_real_value):
+  //!  @groupheader{Example}
   //!
-  //!    *  if the bit of sign of the entry [element](@ref glossary_elementwise) is not set, \f$0\f$ is returned.
-  //!    *  if the bit of sign of the entry [element](@ref glossary_elementwise) is set, \f$\pi\f$ is returned.
+  //!  @godbolt{doc/math/arg.cpp}
   //!
-  //! ---
+  //!  @groupheader{Semantic Modifiers}
   //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   * Masked Call
   //!
-  //!  Higher-order function generating a masked version of eve::arg
+  //!     The call `eve::arg[mask](x)` provides a masked version of `eve::arg` which is
+  //!     equivalent to `if_else (mask, abs(x), x)`.
   //!
-  //!  **Parameters**
+  //!      **Example**
   //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `arg[cond](x, ...)` is equivalent to `if_else(cond,arg(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  <span class="smallskip"></span>
-  //!  * eve::pedantic
-  //!
-  //!
-  //!     With this decorator the function returns a Nan element for each corresponding Nan entry element.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(arg)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/arg.cpp}
-  //!
+  //!        @godbolt{doc/math/masked/arg.cpp}
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(arg_, arg);

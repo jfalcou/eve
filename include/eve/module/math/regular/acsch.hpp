@@ -12,7 +12,7 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math_invhyper_invhyper
+  //! @addtogroup math_invhyper
   //! @{
   //! @var acsch
   //!

@@ -39,7 +39,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     for real inputs the call deduce to identity.
+//!     for real inputs the call reduces to identity.
 //!
 //!  @groupheader{Example}
 //!
@@ -58,61 +58,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-
-//================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var conj
-  //!
-  //! @brief Callable object computing the conjugate value.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the conjugate value   |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:  the [floating value](@ref eve::value) to conjugate
-  //!
-  //! **Return value**
-  //!
-  //!This function acts as identity on real entries
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::conj
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `conj[cond](x, ...)` is equivalent to `if_else(cond,conj(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/conj.cpp}
-  //!
-  //!  @}
-  //================================================================================================
   EVE_MAKE_CALLABLE(conj_, conj);
 }
 

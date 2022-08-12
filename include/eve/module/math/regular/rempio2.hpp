@@ -12,46 +12,41 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup math
+  //! @addtogroup math_trig
   //! @{
   //! @var rempio2
   //!
-  //! @brief Callable object computing the rempio2 value.
+  //! @brief Callable object computing the remainder of the division by \f$\pi/2\f$.
   //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
+  //!   **Defined in Header**
   //!
-  //! #### Members Functions
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
   //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of the rempio2 value                       |
+  //!   @groupheader{Callable Signatures}
   //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  template< floating_value T> auto operator()( T x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      kumi::tuple<eve::as_integer<T>, T, T> rempio2(T x) noexcept;
+  //!   }
+  //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
+  //!`x`:   [floating value](@ref eve::floating_real_value).
   //!
   //! **Return value**
   //!
-  //! A tuple consisting of an [flint](@ref eve::is_flint) value designing the quadrant and two
-  //! floating values of type `T` giving the remainder of `x` modulo \f$\pi/2\f$ and a corrective
-  //! to the rounding error on the first result.
+  //!    A tuple consisting of an [flint](@ref eve::is_flint) value designing the quadrant and two
+  //!    floating values of type `T` giving the remainder of `x` modulo \f$\pi/2\f$ and a corrective
+  //!    to the rounding error on the first result.
   //!
-  //! ---
+  //!  @groupheader{Example}
   //!
-  //! #### Supported decorators
-  //!
-  //!  no decorators are supported
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/rempio2.cpp}
-  //!
+  //!  @godbolt{doc/math/rempio2.cpp}
   //!  @}
   //================================================================================================
   namespace tag { struct rempio2_; }
