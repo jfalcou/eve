@@ -42,4 +42,12 @@ powm1_(EVE_SUPPORTS(cpu_), T const& x, T const& y) noexcept
   else return apply_over(powm1, x, y);
 }
 
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value T , real_value U>
+EVE_FORCEINLINE auto
+powm1_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
+{
+  return mask_op(cond, eve::powm1, t, u);
+}
 }

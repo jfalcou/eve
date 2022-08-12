@@ -243,4 +243,13 @@ pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   default: return result;
   }
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, real_value T , real_value U>
+EVE_FORCEINLINE auto
+pow_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
+{
+  return mask_op(cond, eve::pow, t, u);
+}
 }
