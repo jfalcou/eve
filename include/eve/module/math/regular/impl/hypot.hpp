@@ -30,4 +30,12 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   }
   else { return apply_over(hypot, r_t {a0}, r_t {args}...); }
 }
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, floating_value T0, floating_value... Ts>
+auto
+hypot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, Ts... args)
+{
+  return mask_op(cond, eve::hypot, a0, args...);
+}
 }
