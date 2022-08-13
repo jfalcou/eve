@@ -54,7 +54,7 @@ to_logical(T v) noexcept
 }
 
 template<relative_conditional_expr C, simd_value T>
-auto EVE_FORCEINLINE
+EVE_FORCEINLINE auto
 to_logical(C c, eve::as<T>) noexcept
 {
   using l_t = typename as_logical<T>::type;

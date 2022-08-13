@@ -82,23 +82,18 @@ namespace tag { struct TAG {}; }                                                
       }                                                                                            \
                                                                                                    \
       template<value Condition>                                                                    \
-      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
+      EVE_FORCEINLINE constexpr auto operator[](Condition c) const noexcept                        \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
-        return  [cond = if_(to_logical(c))](auto const&... args)                                   \
-                {                                                                                  \
-                  return callable_object::call(cond, args...);                                     \
-                };                                                                                 \
+        auto cond = if_(to_logical(c));                                                            \
+        return callable_object_bind_recurse<callable_object, decltype(cond)>{cond};                \
       }                                                                                            \
                                                                                                    \
       template<conditional_expr Condition>                                                         \
-      EVE_FORCEINLINE constexpr auto operator[](Condition const &c) const noexcept                 \
+      EVE_FORCEINLINE constexpr auto operator[](Condition c) const noexcept                 \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
-        return  [c](auto const&... args)                                                           \
-                {                                                                                  \
-                  return callable_object::call(c, args...);                                        \
-                };                                                                                 \
+        return callable_object_bind_recurse<callable_object, Condition>{c};                        \
       }                                                                                            \
     };                                                                                             \
   }                                                                                                \
@@ -204,10 +199,22 @@ namespace eve
     // callable_object forward declaration
     template<typename Tag, typename Dummy = void> struct callable_object;
 
+    // Internal lambda to do force inlining
+    template <typename Self, typename First>
+    struct callable_object_bind_recurse
+    {
+      First first;
+
+      EVE_FORCEINLINE decltype(auto) operator()(auto ... args) const noexcept
+      {
+        return Self::call(first, args...);
+      }
+    };
+
     //==============================================================================================
     // User-facing tag-dispatch helper
     template <typename Tag, typename... Args>
-    concept tag_dispatchable = requires(Tag tag, Args&&... args)
+    concept tag_dispatchable = requires(Tag tag, Args... args)
     {
       { tagged_dispatch(tag, EVE_FWD(args)...) };
     };
