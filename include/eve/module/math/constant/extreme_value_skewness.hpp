@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns   \f$12\sqrt6\zeta(3)/\pi^3\f$.
 //!
 //!  @groupheader{Example}
 //!

@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var rsqrt_pio_2
-//!   @brief Callable object computing the constant \f$(\pi/2)^{-1/2}\f$..
+//!   @brief Callable object computing the constant \f$(\pi/2)^{-1/2}\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the inverse of  \f$\sqrt{\pi/2}\f$.
 //!
 //!  @groupheader{Example}
 //!

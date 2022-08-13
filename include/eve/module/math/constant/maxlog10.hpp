@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var maxlog10
-//!   @brief Callable object computing the greatest positive value for which eve::exp10
+//!   @brief Callable object computing the greatest positive value for which eve::exp10 is finite.
 //!
 //!   **Defined in Header**
 //!
@@ -39,7 +39,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the greatest positive value
+//!      for which eve::exp10 is finite.
 //!
 //!  @groupheader{Example}
 //!

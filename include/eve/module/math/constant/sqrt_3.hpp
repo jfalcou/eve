@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var sqrt_3
-//!   @brief Callable object computing  constant \f$\sqrt3\f$.
+//!   @brief Callable object computing  constant \f$\sqrt{3}\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the square root of 3.
 //!
 //!  @groupheader{Example}
 //!

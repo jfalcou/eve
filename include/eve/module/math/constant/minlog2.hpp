@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var minlog2
-//!   @brief Callable object computing the least value for which eve::exp2
+//!   @brief Callable object computing the least value for which eve::exp2 is not zero.
 //!
 //!   **Defined in Header**
 //!
@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the least value for which eve::exp2 is not zero.
 //!
 //!  @groupheader{Example}
 //!

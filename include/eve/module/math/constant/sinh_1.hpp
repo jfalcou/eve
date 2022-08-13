@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var sinh_1
-//!   @brief Callable object computing the constant \f$\sinh1\f$.
+//!   @brief Callable object computing the constant \f$\sinh(1)\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the hyperbolic sine of 1.
 //!
 //!  @groupheader{Example}
 //!

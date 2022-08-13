@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup math_constants
 //! @{
 //!   @var invlog_10
-//!   @brief Callable object computing 1/log(10).
+//!   @brief Callable object computing \f$1/\log10\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the inverse of \f$\log10\f$.
 //!
 //!  @groupheader{Example}
 //!

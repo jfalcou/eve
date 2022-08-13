@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!      The call `eve::allbits(as<T>())` returns the Rayleigh kurtosis value.
 //!
 //!  @groupheader{Example}
 //!
