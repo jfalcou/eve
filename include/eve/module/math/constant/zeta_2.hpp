@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  \f$\zeta(2)\f$.
+//!      The call `eve::zeta_2(as<T>())` returns  \f$\zeta(2)\f$.
 //!
 //!  @groupheader{Example}
 //!

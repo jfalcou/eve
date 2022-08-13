@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the inverse of f$\pi\f$.
+//!      The call `eve::inv_pi(as<T>())` returns the inverse of f$\pi\f$.
 //!
 //!  @groupheader{Example}
 //!

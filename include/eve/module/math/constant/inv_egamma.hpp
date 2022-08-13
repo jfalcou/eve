@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the inverse of the [Euler-Mascheroni constant](@ref
+//!      The call `eve::inv_egamma(as<T>())` returns the inverse of the [Euler-Mascheroni constant](@ref
 //!       eve::egamma).
 //!
 //!  @groupheader{Example}

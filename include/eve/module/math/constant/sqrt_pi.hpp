@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the square root of \f$\pi\f$.
+//!      The call `eve::sqrt_pi(as<T>())` returns the square root of \f$\pi\f$.
 //!
 //!  @groupheader{Example}
 //!

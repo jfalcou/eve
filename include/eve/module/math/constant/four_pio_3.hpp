@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  \f$4\pi/3\f$.
+//!      The call `eve::four_pio_3(as<T>())` returns  \f$4\pi/3\f$.
 //!
 //!  @groupheader{Example}
 //!

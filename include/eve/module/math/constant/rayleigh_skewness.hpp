@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the Rayleigh skewness.
+//!      The call `eve::rayleigh_skewness(as<T>())` returns the Rayleigh skewness.
 //!
 //!  @groupheader{Example}
 //!

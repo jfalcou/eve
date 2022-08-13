@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns $2\pi\f$.
+//!      The call `eve::two_pi(as<T>())` returns $2\pi\f$.
 //!
 //!  @groupheader{Example}
 //!

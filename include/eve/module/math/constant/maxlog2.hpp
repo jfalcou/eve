@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the greatest positive value for which
+//!      The call `eve::maxlog2(as<T>())` returns the greatest positive value for which
 //!      eve::exp2 is finite.
 //!
 //!  @groupheader{Example}

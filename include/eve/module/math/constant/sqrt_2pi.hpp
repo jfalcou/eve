@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns athe square root of \f$2\pi\f$.
+//!      The call `eve::sqrt_2pi(as<T>())` returns athe square root of \f$2\pi\f$.
 //!
 //!  @groupheader{Example}
 //!

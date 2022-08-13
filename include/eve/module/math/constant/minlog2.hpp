@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the least value for which eve::exp2 is not zero.
+//!      The call `eve::minlog2(as<T>())` returns the least value for which eve::exp2 is not zero.
 //!
 //!  @groupheader{Example}
 //!

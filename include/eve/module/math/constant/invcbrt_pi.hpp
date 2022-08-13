@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  the inverse of the cubic root of f$\pi\f$.
+//!      The call `eve::invcbrt_pi(as<T>())` returns  the inverse of the cubic root of f$\pi\f$.
 //!
 //!  @groupheader{Example}
 //!

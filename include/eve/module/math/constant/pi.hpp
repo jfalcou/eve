@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the constant \f$\pi\f$.
+//!      The call `eve::pi(as<T>())` returns the constant \f$\pi\f$.
 //!
 //!  @groupheader{Example}
 //!

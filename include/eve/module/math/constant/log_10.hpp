@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns \f$\log 10\f$.
+//!      The call `eve::log_10(as<T>())` returns \f$\log 10\f$.
 //!
 //!  @groupheader{Example}
 //!

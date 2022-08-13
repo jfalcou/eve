@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the inverse of \f$\sqrt{\pi}\f$.
+//!      The call `eve::rsqrt_pi(as<T>())` returns the inverse of \f$\sqrt{\pi}\f$.
 //!
 //!  @groupheader{Example}
 //!

@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the square root of 3.
+//!      The call `eve::sqrt_3(as<T>())` returns the square root of 3.
 //!
 //!  @groupheader{Example}
 //!

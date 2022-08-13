@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the logarithm of the logarithm of 2.
+//!      The call `eve::loglog_2(as<T>())` returns the logarithm of the logarithm of 2.
 //!
 //!  @groupheader{Example}
 //!

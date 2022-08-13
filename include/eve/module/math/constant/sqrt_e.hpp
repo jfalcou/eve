@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  the square root of the
+//!      The call `eve::sqrt_e(as<T>())` returns  the square root of the
 //!      basis of the natural logarithms.
 //!
 //!  @groupheader{Example}

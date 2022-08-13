@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns two third.
+//!      The call `eve::two_o_3(as<T>())` returns two third.
 //!
 //!  @groupheader{Example}
 //!

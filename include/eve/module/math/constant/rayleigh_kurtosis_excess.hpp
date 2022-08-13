@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the Rayleigh kurtosis excess value?
+//!      The call `eve::rayleigh_kurtosis_excess(as<T>())` returns the Rayleigh kurtosis excess value?
 //!
 //!  @groupheader{Example}
 //!

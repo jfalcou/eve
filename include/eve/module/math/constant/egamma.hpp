@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  \f$\gamma =
+//!      The call `eve::egamma(as<T>())` returns  \f$\gamma =
 //!      \lim_{n\to\infty}\left( \sum_{k = 0}^n \frac1k - \log n\right )\f$.
 //!
 //!  @groupheader{Example}

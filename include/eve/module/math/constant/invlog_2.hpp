@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns the inverse of \f$\log2\f$.
+//!      The call `eve::invlog_2(as<T>())` returns the inverse of \f$\log2\f$.
 //!
 //!  @groupheader{Example}
 //!

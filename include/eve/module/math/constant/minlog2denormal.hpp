@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  the least value for which eve::exp2
+//!      The call `eve::minlog2denormal(as<T>())` returns  the least value for which eve::exp2
 //!      is not denormal.
 //!
 //!  @groupheader{Example}

@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  the catalan constant \f$\beta(2) = \sum_0^\infty
+//!      The call `eve::catalan(as<T>())` returns  the catalan constant \f$\beta(2) = \sum_0^\infty
 //!      \frac{(-1)^n}{(2n+1)^2}\f$.
 //!
 //!  @groupheader{Example}

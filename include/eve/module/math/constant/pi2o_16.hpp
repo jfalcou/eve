@@ -39,7 +39,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns  \f$\pi^2/16\f$.
+//!      The call `eve::pi2o_16(as<T>())` returns  \f$\pi^2/16\f$.
 //!
 //!  @groupheader{Example}
 //!
