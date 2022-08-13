@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acospi
 //!
-//! @brief Callable object computing acospi.
+//! @brief Callable object computing the arc cosine in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

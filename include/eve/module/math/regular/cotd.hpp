@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cotd
 //!
-//! @brief Callable object computing cotd.
+//! @brief Callable object computing cotangent from an input in degrees.
 //!
 //!   **Defined in Header**
 //!

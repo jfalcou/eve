@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var sin
 //!
-//! @brief Callable object computing sin.
+//! @brief Callable object computing the sine.
 //!
 //!   **Defined in Header**
 //!

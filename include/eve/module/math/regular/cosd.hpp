@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cosd
 //!
-//! @brief Callable object computing cosd.
+//! @brief Callable object computing cosine from an input in degrees.
 //!
 //!   **Defined in Header**
 //!

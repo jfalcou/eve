@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cscpi
 //!
-//! @brief Callable object computing cscpi.
+//! @brief Callable object computing the cosecant in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

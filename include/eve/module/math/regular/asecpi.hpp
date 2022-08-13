@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asecpi
 //!
-//! @brief Callable object computing asecpi.
+//! @brief Callable object computing the arc secant in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

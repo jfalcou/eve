@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cot
 //!
-//! @brief Callable object computing cot.
+//! @brief Callable object computing th cotangent.
 //!
 //!   **Defined in Header**
 //!

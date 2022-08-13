@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var atand
 //!
-//! @brief Callable object computing atand.
+//! @brief Callable object computing arc tangent in degrees.
 //!
 //!   **Defined in Header**
 //!

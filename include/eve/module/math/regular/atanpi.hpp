@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var atanpi
 //!
-//! @brief Callable object computing atand.
+//! @brief Callable object computing arc tangent in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cos
 //!
-//! @brief Callable object computing cos.
+//! @brief Callable object computing the cosine.
 //!
 //!   **Defined in Header**
 //!

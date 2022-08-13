@@ -16,8 +16,8 @@ namespace eve
 //! @{
 //! @var sinpicospi
 //!
-//! @brief Callable object computing the simultaneous  computation of sin an cos of an argument in
-//! \f$\pi\f$ multiple.
+//! @brief Callable object computing the simultaneous  computation of sin an cos from
+//! an argument in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

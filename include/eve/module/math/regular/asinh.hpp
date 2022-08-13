@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asinh
 //!
-//! @brief Callable object computing asinh: \f$\log(x+\sqrt{x^2+1})\f$.
+//! @brief Callable object computing \f$\log(x+\sqrt{x^2+1})\f$.
 //!
 //!   **Defined in Header**
 //!

@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acos
 //!
-//! @brief Callable object computing acos.
+//! @brief Callable object computing the arc cosine.
 //!
 //!   **Defined in Header**
 //!

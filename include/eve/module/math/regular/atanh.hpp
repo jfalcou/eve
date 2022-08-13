@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var atanh
 //!
-//! @brief Callable object computing atanh: \f$\frac{1}{2}\log((1+x)/(1-x))\f$.
+//! @brief Callable object computing \f$\frac{1}{2}\log((1+x)/(1-x))\f$.
 //!
 //!   **Defined in Header**
 //!

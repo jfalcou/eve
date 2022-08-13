@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cscd
 //!
-//! @brief Callable object computing the cosecant of the input in degree.
+//! @brief Callable object computing the cosecant from an input in degree.
 //!
 //!   **Defined in Header**
 //!

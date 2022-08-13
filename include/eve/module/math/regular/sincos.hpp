@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var sincos
 //!
-//! @brief Callable object computing the simultaneous  computation of sin an cos.
+//! @brief Callable object computing the simultaneous  computation of sine an cosine.
 //!
 //!   **Defined in Header**
 //!

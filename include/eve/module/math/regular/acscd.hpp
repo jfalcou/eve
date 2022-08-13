@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acscd
 //!
-//! @brief Callable object computing acscd.
+//! @brief Callable object computing  the arc cosecant rom an input in degrees.
 //!
 //!   **Defined in Header**
 //!

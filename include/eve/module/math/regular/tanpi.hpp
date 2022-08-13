@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var tanpi
 //!
-//! @brief Callable object computing tanpi.
+//! @brief Callable object computing the tangent from an input in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

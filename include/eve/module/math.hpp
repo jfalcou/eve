@@ -67,12 +67,8 @@
 //!     radian angle in\f$]-\pi/2,\pi/2[\f$,  Nan outside
 //!   * eve::full_circle provides accurates result for the corresonding
 //!     radian angle in\f$]-\pi,\pi[\f$,  Nan outside
-//!   * eve::medium provides accurates result for the corresonding
-//!     radian angle in a reasonnable interval,  with degrading accuracy outside
-//!   * eve::big provides accurates result in the full range
-//!   * regular call (not decorated) choose the best call.
-//!
-//! see [trigonometry rationale](@ref trigo_rationale) for more details
+//!   * regular call (not decorated) choose the best call and is
+//!     valid on the fullrange.
 //!
 //! @defgroup math_invtrig  Inverse trigonometric
 //! @ingroup math

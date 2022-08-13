@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asec
 //!
-//! @brief Callable object computing asec.
+//! @brief Callable object computing the arc secant.
 //!
 //!   **Defined in Header**
 //!

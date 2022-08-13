@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var coth
 //!
-//! @brief Callable object computing coth: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
+//! @brief Callable object computing \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
 //!
 //!   **Defined in Header**
 //!

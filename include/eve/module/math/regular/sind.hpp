@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var sind
 //!
-//! @brief Callable object computing sind.
+//! @brief Callable object computing the sine from an input in degrees.
 //!
 //!   **Defined in Header**
 //!

@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asech
 //!
-//! @brief Callable object computing asech: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
+//! @brief Callable object computing \f$\log(1/x+\sqrt{1/x^2-1})\f$.
 //!
 //!   **Defined in Header**
 //!

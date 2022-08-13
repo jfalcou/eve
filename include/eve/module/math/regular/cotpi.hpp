@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var cotpi
 //!
-//! @brief Callable object computing cotpi.
+//! @brief Callable object computing the arc cotangent from an input in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

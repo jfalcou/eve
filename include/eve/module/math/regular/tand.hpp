@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var tand
 //!
-//! @brief Callable object computing the tangent in degree.
+//! @brief Callable object computing the tangent from an input in degrees.
 //!
 //!   **Defined in Header**
 //!

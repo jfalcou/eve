@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acotd
 //!
-//! @brief Callable object computing acotd.
+//! @brief Callable object computing arc cotangent in degree.
 //!
 //!   **Defined in Header**
 //!

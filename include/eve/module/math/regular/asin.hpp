@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asin
 //!
-//! @brief Callable object computing asin.
+//! @brief Callable object computing the arc sine.
 //!
 //!   **Defined in Header**
 //!

@@ -16,7 +16,8 @@ namespace eve
 //! @{
 //! @var atan2pi
 //!
-//! @brief Callable object computing the atan2pi operation.
+//! @brief Callable object computing  the arc tangent in \f$\pi\f$ multiples using the
+//! signs of arguments to determine the correct quadrant.
 //!
 //!   **Defined in Header**
 //!

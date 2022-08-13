@@ -16,7 +16,8 @@ namespace eve
 //! @{
 //! @var sinhcosh
 //!
-//! @brief Callable object performing the simultaneous computations of sinh and cosh.
+//! @brief Callable object performing the simultaneous computations of
+//! the hyperbolic sine and cosine.
 //!
 //!   **Defined in Header**
 //!

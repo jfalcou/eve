@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var tan
 //!
-//! @brief Callable object computing tan.
+//! @brief Callable object computing the tangent.
 //!
 //!   **Defined in Header**
 //!

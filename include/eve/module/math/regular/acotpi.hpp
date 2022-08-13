@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acotpi
 //!
-//! @brief Callable object computing acotpi.
+//! @brief Callable object computing in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

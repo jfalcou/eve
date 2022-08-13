@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var sinhc
 //!
-//! @brief Callable object computing sinhc: \f$\frac{e^x-e^{-x}}{2x}\f$.
+//! @brief Callable object computing \f$\frac{e^x-e^{-x}}{2x}\f$.
 //!
 //!   **Defined in Header**
 //!

@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var csch
 //!
-//! @brief Callable object computing csch: \f$\frac2{e^x+e^{-x}}\f$.
+//! @brief Callable object computing  \f$\frac2{e^x+e^{-x}}\f$.
 //!
 //!   **Defined in Header**
 //!

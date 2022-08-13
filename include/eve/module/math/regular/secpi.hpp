@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var secpi
 //!
-//! @brief Callable object computing secant of the input in \f$\pi\f$ multiples.
+//! @brief Callable object computing secant from an input in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

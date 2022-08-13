@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asinpi
 //!
-//! @brief Callable object computing asinpi.
+//! @brief Callable object computing computing the arc sine in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

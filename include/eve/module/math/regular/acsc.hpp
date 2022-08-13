@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acsc
 //!
-//! @brief Callable object computing acsc.
+//! @brief Callable object computing the arc cosecant.
 //!
 //!   **Defined in Header**
 //!

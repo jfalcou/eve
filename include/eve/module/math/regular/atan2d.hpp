@@ -16,7 +16,8 @@ namespace eve
 //! @{
 //! @var atan2d
 //!
-//! @brief Callable object computing the atan2d operation.
+//! @brief Callable object computing the arc tangent in degrees using the
+//! signs of arguments to determine the correct quadrant.
 //!
 //!   **Defined in Header**
 //!

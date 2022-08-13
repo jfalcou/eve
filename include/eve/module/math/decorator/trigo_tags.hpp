@@ -12,6 +12,31 @@
 namespace eve
 {
 // range limitation decorators objects for direct trigonometric functions
+//================================================================================================
+//! @addtogroup math_trig
+//! @{
+//! @var full_circle
+//!
+//! @brief  Higher-order @callable imbuing a limited range semantic onto other @callable{s}.
+//!
+//!
+//! #### Members Functions
+//!
+//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+//!  auto operator()(eve::callable auto const& f ) const noexcept;
+//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//! @param f
+//! An instance of eve::callable
+//!
+//! @return
+//! A @callable performing the same kind of operation but gives the correct result
+//! in \f$[-\pi, +\pi]\f$ only and Nan outside. (respectively \f$[-180, +180]\f$ if
+//! the input in in degrees,  \f$[-1.0, +1.0]\f$ if the input in in \f$\pi\f$ multiples)
+//!
+//! full_circle is currently supported only by direct trigonometric object functions
+//! This decorator leads to the fastest algorithm at full precision.
+//!  @}
+//================================================================================================
 struct full_circle_
 {
   template<typename D> static constexpr auto combine(D const&) noexcept = delete;
@@ -37,8 +62,6 @@ struct full_circle_
 //! in \f$[-\pi/4, +\pi/4]\f$ only and Nan outside. (respectively \f$[-45, +45]\f$ if
 //! the input in in degrees,  \f$[-0.25, +0.25]\f$ if the input in in \f$\pi\f$ multiples)
 //!
-//! quarter_circle is currently supported only by direct trigonometric object functions
-//! This decorator leads to the fastest algorithm at full precision.
 //!  @}
 //================================================================================================
 struct quarter_circle_

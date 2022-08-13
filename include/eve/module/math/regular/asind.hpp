@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var asind
 //!
-//! @brief Callable object computing asind.
+//! @brief Callable object computing the arc sine in degrees.
 //!
 //!   **Defined in Header**
 //!

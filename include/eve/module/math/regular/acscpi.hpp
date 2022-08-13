@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var acscpi
 //!
-//! @brief Callable object computing acscpi.
+//! @brief Callable object computing he arc cosecant in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

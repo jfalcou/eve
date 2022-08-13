@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var secd
 //!
-//! @brief Callable object computing the secant of the input in degree.
+//! @brief Callable object computing the secant from an input in degree.
 //!
 //!   **Defined in Header**
 //!

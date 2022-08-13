@@ -16,7 +16,7 @@ namespace eve
 //! @{
 //! @var sinpic
 //!
-//! @brief Callable object computing sinpic.
+//! @brief Callable object computing the normalized cardinal sine.
 //!
 //!   **Defined in Header**
 //!
