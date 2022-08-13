@@ -48,19 +48,6 @@ namespace eve
 //!   * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
 //!   * If the element is a `NaN`, `NaN` is returned.
 //!
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!
-//!  Higher-order function generating a masked version of eve::gd
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `gd[cond](x)`
-//!  is equivalent to `if_else(cond,gd(x),x)`
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/gd.cpp}

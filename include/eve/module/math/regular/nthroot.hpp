@@ -43,26 +43,15 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!    *  Returns [elementwise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
-//!       For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
+//!      Returns [elementwise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
+//!      For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
 //!
-//!    *  The result type is of the compatibility type of the  parameters.
+//!      The result type is of the compatibility type of the  parameters.
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/nthroot.cpp}
 //!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::nthroot[mask](x, n)` provides a masked version of `eve::nthroot` which is
-//!     equivalent to `if_else (mask, nthroot(x, n), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/nthroot.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(nthroot_, nthroot);

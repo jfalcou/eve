@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) power(1+x, y), with good accuracy,
+//! Returns the [elementwise](@ref glossary_elementwise) \f$(1+x)^y\f$, with good accuracy,
 //! even when `x` is  small.
 //!
 //!  @groupheader{Example}

@@ -40,13 +40,13 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!      Returns the [elementwise](@ref glossary_elementwise) exponential input minus one, with good
-//!      accuracy, even for small values of `x`.
+//! Returns the [elementwise](@ref glossary_elementwise) exponential input minus one, with good
+//! accuracy, even for small values of `x`.
 //!
-//!         * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
-//!         * If the element is \f$-\infty\f$, \f$-1\f$ is returned
-//!         * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!         * If the element is a `NaN`, `NaN` is returned
+//!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
+//!   * If the element is \f$-\infty\f$, \f$-1\f$ is returned
+//!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!   * If the element is a `NaN`, `NaN` is returned
 //!
 //!  @groupheader{Example}
 //!

@@ -43,7 +43,7 @@ namespace eve
 //! Returns the [elementwise](@ref glossary_elementwise) arc secant of the
 //! input in the range \f$[0 , \pi]\f$.
 //!
-//! IN PARTICULAR:
+//! in particular:
 //!
 //!   * IF the element is \f$1\f$, \f$+0\f$ is returned.
 //!   * If the element is \f$0\f$, \f$\pi\f$ is returned.
