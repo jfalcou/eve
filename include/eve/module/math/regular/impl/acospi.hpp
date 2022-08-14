@@ -28,4 +28,20 @@ acospi_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   return acospi(regular_type {}, a);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U>
+EVE_FORCEINLINE auto
+acospi_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::acospi, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+acospi_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+{
+  return mask_op(cond, d(eve::acospi), t);
+}
 }
