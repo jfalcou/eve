@@ -54,7 +54,14 @@ namespace eve
 //!  @godbolt{doc/core/regular/binarize_not.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
+
+namespace tag
+{
+  struct binarize_not_;
+}
+template<> struct supports_conditional<tag::binarize_not_> : std::false_type
+{};
+
 }
 
 #include <eve/module/core/regular/impl/binarize_not.hpp>

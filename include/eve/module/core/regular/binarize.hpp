@@ -53,7 +53,15 @@ namespace eve
 //!  @godbolt{doc/core/regular/binarize.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(binarize_, binarize);
+
+namespace tag
+{
+  struct binarize_;
+}
+template<> struct supports_conditional<tag::binarize_> : std::false_type
+{};
+
+  EVE_MAKE_CALLABLE(binarize_, binarize);
 }
 
 #include <eve/module/core/regular/impl/binarize.hpp>
