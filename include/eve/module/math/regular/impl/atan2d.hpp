@@ -26,4 +26,20 @@ atan2d_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native
 {
   return radindeg(atan2(a, b));
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value T, value U>
+EVE_FORCEINLINE auto
+atan2d_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
+{
+  return mask_op(cond, eve::atan2d, t,u);
+}
+
+template<conditional_expr C, decorator D, value T, value U>
+EVE_FORCEINLINE auto
+atan2d_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T const& t, U const& u) noexcept
+{
+  return mask_op(cond, d(eve::atan2d), t, u);
+}
 }
