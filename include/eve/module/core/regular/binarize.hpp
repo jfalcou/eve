@@ -54,13 +54,6 @@ namespace eve
 //! @}
 //================================================================================================
 
-namespace tag
-{
-  struct binarize_;
-}
-template<> struct supports_conditional<tag::binarize_> : std::false_type
-{};
-
   EVE_MAKE_CALLABLE(binarize_, binarize);
 }
 
