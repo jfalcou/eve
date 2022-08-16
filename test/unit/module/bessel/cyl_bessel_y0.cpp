@@ -60,3 +60,16 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_y0 on wide",
 
   TTS_RELATIVE_EQUAL(eve__cyl_bessel_y0(a0), map(std__cyl_bessel_y0, a0), 0.001);
 };
+
+
+//==================================================================================================
+// Tests for masked cyl_bessel_y0
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cyl_bessel_y0)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cyl_bessel_y0[mask](a0),
+            eve::if_else(mask, eve::cyl_bessel_y0(a0), a0));
+};

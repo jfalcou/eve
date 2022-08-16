@@ -82,3 +82,16 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_j1 on wide",
   TTS_ULP_EQUAL(eve__cyl_bessel_j1(-a1), map(std__cyl_bessel_j1, -a1), 300.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_j1(-a2), map(std__cyl_bessel_j1, -a2), 300.0);
 };
+
+
+//==================================================================================================
+// Tests for masked cyl_bessel_j1
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cyl_bessel_j1)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cyl_bessel_j1[mask](a0),
+            eve::if_else(mask, eve::cyl_bessel_j1(a0), a0));
+};
