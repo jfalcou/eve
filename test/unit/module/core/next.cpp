@@ -161,3 +161,18 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
     TTS_EQUAL(saturated(next)(cases.valmax, 2), cases.valmax);
   }
 };
+
+
+//==================================================================================================
+// Tests for masked next
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::next)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::next[mask](a0),
+            eve::if_else(mask, eve::next(a0), a0));
+};

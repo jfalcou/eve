@@ -35,3 +35,18 @@ TTS_CASE_WITH("Check behavior of bit_floor(wide) on unsigned integral types",
   TTS_EQUAL(eve::bit_floor(a0), map([](auto e) { return v_t(std::bit_floor(e)); }, a0));
   TTS_EQUAL(eve::bit_floor[t](a0), eve::if_else(t, eve::bit_floor(a0), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked bit_floor
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_floor)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_floor[mask](a0),
+            eve::if_else(mask, eve::bit_floor(a0), a0));
+};

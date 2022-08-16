@@ -119,3 +119,18 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
   }
   else { TTS_EQUAL(eve::floor(a0), a0); }
 };
+
+
+//==================================================================================================
+// Tests for masked floor
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::floor)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::floor[mask](a0),
+            eve::if_else(mask, eve::floor(a0), a0));
+};

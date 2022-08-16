@@ -55,3 +55,21 @@ TTS_CASE_WITH("Check behavior of rshr on integral types",
   auto val = a1.get(0);
   TTS_EQUAL(rshr(a0, val), map([&](auto e) { return rshr(e, val); }, a0));
 };
+
+
+//==================================================================================================
+// Tests for masked rshr
+//==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::rshr)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//                             tts::as_signed_integer(tts::randoms(tts::constant(shift_min),
+//                                                                 tts::constant(shift_max))),
+//                             tts::logicals(0, 3)))
+//   <typename T, typename U, typename M>(T const& a0,
+//                                        U const& a1,
+//                                        M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::rshr[mask](a0, a1),
+//             eve::if_else(mask, eve::rshr(a0, a1), a0));
+// };

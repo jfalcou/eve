@@ -141,3 +141,18 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
     TTS_EQUAL(saturated(prev)(cases.valmin, 2), cases.valmin);
   }
 };
+
+
+//==================================================================================================
+// Tests for masked prev
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::prev)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::prev[mask](a0),
+            eve::if_else(mask, eve::prev(a0), a0));
+};

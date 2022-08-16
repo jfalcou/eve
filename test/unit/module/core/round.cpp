@@ -47,3 +47,18 @@ TTS_CASE_TPL("Check behavior of round(wide)", eve::test::simd::all_types)
   TTS_EQUAL(eve::to_nearest(eve::round)(T(1.3)), eve::nearest(T(1.3)));
   TTS_EQUAL(eve::round(T(1.3)), eve::nearest(T(1.3)));
 };
+
+
+//==================================================================================================
+// Tests for masked round
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::round)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::round[mask](a0),
+            eve::if_else(mask, eve::round(a0), a0));
+};

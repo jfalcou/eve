@@ -111,3 +111,18 @@ TTS_CASE_WITH("Check behavior of fracscale[cond](wide) on  floating types",
                 eve::if_else(t, a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0),
                 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked fracscale
+//==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::fracscale)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//               tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::fracscale[mask](a0, 4),
+//             eve::if_else(mask, eve::fracscale(a0, 4), a0));
+// };

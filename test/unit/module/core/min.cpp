@@ -113,3 +113,20 @@ TTS_CASE_WITH("Check predicate version of min",
   auto less_1st = [](auto a, auto b) { return get<0>(a) < get<0>(b); };
   TTS_EQUAL(eve::min(less_1st)(a, b), ref);
 };
+
+
+//==================================================================================================
+// Tests for masked min
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::min)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::min[mask](a0, a1),
+            eve::if_else(mask, eve::min(a0, a1), a0));
+};

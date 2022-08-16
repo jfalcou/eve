@@ -60,3 +60,18 @@ TTS_CASE_WITH("Check behavior of shl with scalar shift on integral types",
   auto val = a1.get(0);
   TTS_EQUAL(shl(a0, val), T([&](auto i, auto) { return shl(a0.get(i), val); }));
 };
+
+
+//==================================================================================================
+// Tests for masked shl
+//==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::shl)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//               tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::shl[mask](a0, 2),
+//             eve::if_else(mask, eve::shl(a0, 2), a0));
+// };

@@ -64,3 +64,18 @@ TTS_CASE_WITH("Check behavior of shift(wide, scalar)",
   TTS_EQUAL(bit_shr(a0, val), map([&](auto e) -> v_t { return v_t(u_t(e) >> val); }, a0));
   TTS_EQUAL(bit_shr[test](a0, val), eve::if_else(test, eve::bit_shr(a0, val), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked bit_shr
+//==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_shr)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//               tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::bit_shr[mask](a0),
+//             eve::if_else(mask, eve::bit_shr(a0), a0));
+// };
