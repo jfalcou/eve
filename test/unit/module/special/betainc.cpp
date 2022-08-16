@@ -42,3 +42,22 @@ TTS_CASE_TPL("Check behavior of betainc on wide", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::betainc(T(0.5), T(0.5), T(0.5)), T(0.5), 15);
   TTS_ULP_EQUAL(eve::betainc(T(0.2), T(0.3), T(2)), T(7.651219897728122e-01), 30);
 };
+
+
+//==================================================================================================
+// Tests for masked betainc
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::betainc)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         T const& a2,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::betainc[mask](a0, a1, a2),
+            eve::if_else(mask, eve::betainc(a0, a1, a2), a0));
+};

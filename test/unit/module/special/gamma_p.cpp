@@ -65,3 +65,20 @@ TTS_CASE_WITH("Check behavior of gamma_p on wide",
   TTS_ULP_EQUAL(gamma_p(T(10.0), T(4)), T(9.896639493240743e-01), 0.5);
   TTS_ULP_EQUAL(gamma_p(T(10.1), T(4)), T(9.903947030847022e-01), 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked gamma_p
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::gamma_p)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::gamma_p[mask](a0, a1),
+            eve::if_else(mask, eve::gamma_p(a0, a1), a0));
+};

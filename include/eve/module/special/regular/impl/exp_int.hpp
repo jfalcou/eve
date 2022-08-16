@@ -164,20 +164,4 @@ exp_int_(EVE_SUPPORTS(cpu_), T n, T x) noexcept
   }
   else return apply_over(exp_int, n, x);
 }
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C, typename ... Ts>
-EVE_FORCEINLINE auto
-exp_int_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
-{
-  return mask_op(cond, eve::exp_int, ts ...);
-}
-
-template<conditional_expr C, decorator D, typename  ... Ts>
-EVE_FORCEINLINE auto
-exp_int_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
-{
-  return mask_op(cond, d(eve::exp_int), ts ...);
-}
 }

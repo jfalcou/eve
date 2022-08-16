@@ -88,3 +88,20 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::lrising_factorial on wide",
 
   ulp = 110.0;
 };
+
+
+//==================================================================================================
+// Tests for masked lrising_factorial
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::lrising_factorial)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+  <typename T, typename M>(T const& a0,
+                           T const& a1,
+                           M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::lrising_factorial[mask](a0, a1),
+            eve::if_else(mask, eve::lrising_factorial(a0, a1), a0));
+};

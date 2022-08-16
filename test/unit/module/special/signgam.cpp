@@ -55,3 +55,18 @@ TTS_CASE_TPL("Check behavior of signgam on wide", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL(signgam(T(-4.1)), T(-1));
   TTS_IEEE_EQUAL(signgam(T(-5.1)), T(1));
 };
+
+
+//==================================================================================================
+// Tests for masked signgam
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::signgam)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::signgam[mask](a0),
+            eve::if_else(mask, eve::signgam(a0), a0));
+};

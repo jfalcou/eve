@@ -54,3 +54,18 @@ TTS_CASE_WITH("Check behavior of tgamma on wide",
   TTS_IEEE_EQUAL(tgamma(T(5)), T(24.0));
   TTS_ULP_EQUAL(tgamma(T(0.5)), T(1.772453850905516), 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked tgamma
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::tgamma)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::tgamma[mask](a0),
+            eve::if_else(mask, eve::tgamma(a0), a0));
+};

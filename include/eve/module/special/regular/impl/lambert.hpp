@@ -107,19 +107,4 @@ lambert_(EVE_SUPPORTS(cpu_), T x) noexcept
   else return apply_over2(lambert, x);
 }
 
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C, typename ... Ts>
-EVE_FORCEINLINE auto
-lambert_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
-{
-  return mask_op(cond, eve::lambert, ts ...);
-}
-
-template<conditional_expr C, decorator D, typename  ... Ts>
-EVE_FORCEINLINE auto
-lambert_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
-{
-  return mask_op(cond, d(eve::lambert), ts ...);
-}
 }
