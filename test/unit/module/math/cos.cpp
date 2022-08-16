@@ -63,3 +63,18 @@ TTS_CASE_WITH("Check behavior of cos on wide",
   TTS_ULP_EQUAL(cos(a3), map(ref, a3), 2);
   TTS_ULP_EQUAL(cos(a4), map(ref, a4), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked cos
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cos)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cos[mask](a0),
+            eve::if_else(mask, eve::cos(a0), a0));
+};

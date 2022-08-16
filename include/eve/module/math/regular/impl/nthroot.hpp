@@ -80,17 +80,17 @@ nthroot_(EVE_SUPPORTS(cpu_), T x, T n) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, value U>
+template<conditional_expr C, value U, integral_value N>
 EVE_FORCEINLINE auto
-nthroot_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+nthroot_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, N const& n) noexcept
 {
-  return mask_op(cond, eve::nthroot, t);
+  return mask_op(cond, eve::nthroot, t, n);
 }
 
-template<conditional_expr C, decorator D, value U>
+template<conditional_expr C, decorator D, value U, integral_value N>
 EVE_FORCEINLINE auto
-nthroot_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+nthroot_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t, N const& n) noexcept
 {
-  return mask_op(cond, d(eve::nthroot), t);
+  return mask_op(cond, d(eve::nthroot), t, n);
 }
 }

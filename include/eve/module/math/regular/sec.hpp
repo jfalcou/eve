@@ -62,12 +62,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct sec_;
-}
-template<> struct supports_conditional<tag::sec_> : std::false_type
-{};
 
 EVE_MAKE_CALLABLE(sec_, sec);
 }

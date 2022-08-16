@@ -62,3 +62,20 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
                 map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
 };
+
+
+//==================================================================================================
+// Tests for masked geommean
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::geommean)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::geommean[mask](a0, a1),
+            eve::if_else(mask, eve::geommean(a0, a1), a0));
+};

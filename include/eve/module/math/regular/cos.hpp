@@ -61,13 +61,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct cos_;
-}
-template<> struct supports_conditional<tag::cos_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(cos_, cos);
 }
 

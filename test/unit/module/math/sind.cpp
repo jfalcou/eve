@@ -62,3 +62,18 @@ TTS_CASE_TPL("Check return types of sind", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(
       eve::sind(-T(500.0)), T(-0.64278760968653932632264340990726343290755988420567), 4.0);
 };
+
+
+//==================================================================================================
+// Tests for masked sind
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sind)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sind[mask](a0),
+            eve::if_else(mask, eve::sind(a0), a0));
+};

@@ -52,3 +52,18 @@ TTS_CASE_WITH("Check behavior of sech on wide",
   TTS_RELATIVE_EQUAL(sech(a0), map([](auto e) -> v_t { return 1 / std::cosh(e); }, a0), rel);
   TTS_RELATIVE_EQUAL(sech(a1), map([](auto e) -> v_t { return 1 / std::cosh(e); }, a1), rel);
 };
+
+
+//==================================================================================================
+// Tests for masked sech
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sech)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sech[mask](a0),
+            eve::if_else(mask, eve::sech(a0), a0));
+};

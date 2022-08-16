@@ -37,3 +37,18 @@ TTS_CASE_WITH("Check behavior of log_abs on wide",
 
   TTS_ULP_EQUAL(eve::log_abs(a0), map([](auto e) -> v_t { return std::log(std::abs(e)); }, a0), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked log_abs
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::log_abs)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::log_abs[mask](a0),
+            eve::if_else(mask, eve::log_abs(a0), a0));
+};

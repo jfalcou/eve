@@ -38,3 +38,18 @@ TTS_CASE_WITH("Check behavior of atan on wide",
   TTS_ULP_EQUAL(eve::atan(a0), map([](auto e) -> v_t { return std::atan(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::atan(a1), map([](auto e) -> v_t { return std::atan(e); }, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked atan
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::atan)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::atan[mask](a0),
+            eve::if_else(mask, eve::atan(a0), a0));
+};

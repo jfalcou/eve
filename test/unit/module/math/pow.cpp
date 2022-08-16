@@ -103,3 +103,20 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
     }
   }
 };
+
+
+//==================================================================================================
+// Tests for masked pow
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::pow)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::pow[mask](a0, a1),
+            eve::if_else(mask, eve::pow(a0, a1), a0));
+};

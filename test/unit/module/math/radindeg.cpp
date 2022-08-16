@@ -37,3 +37,18 @@ TTS_CASE_WITH("Check behavior of radindeg on wide",
 {
   TTS_ULP_EQUAL(eve::radindeg(a0), a0 * T(57.295779513082320876798154814105170332405472466565), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked radindeg
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::radindeg)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::radindeg[mask](a0),
+            eve::if_else(mask, eve::radindeg(a0), a0));
+};
