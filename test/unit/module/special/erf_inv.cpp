@@ -77,9 +77,9 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::erf_inv)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::generate(tts::randoms(-1.0, 1.0),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::erf_inv[mask](a0),

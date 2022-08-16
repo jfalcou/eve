@@ -75,9 +75,9 @@ TTS_CASE_WITH("Check behavior of digamma on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::digamma)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::generate(tts::randoms(0.4, 4.0),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::digamma[mask](a0),
