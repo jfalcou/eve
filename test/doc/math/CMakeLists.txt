@@ -3,6 +3,8 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
+add_subdirectory(masked)
+add_subdirectory(pedantic)
 
 make_unit( "doc.math" acos.cpp                              )
 make_unit( "doc.math" acosd.cpp                             )
@@ -49,6 +51,7 @@ make_unit( "doc.math" csc.cpp                               )
 make_unit( "doc.math" cscd.cpp                              )
 make_unit( "doc.math" csch.cpp                              )
 make_unit( "doc.math" cscpi.cpp                             )
+make_unit( "doc.math" deginrad.cpp                          )
 make_unit( "doc.math" egamma.cpp                            )
 make_unit( "doc.math" egamma_sqr.cpp                        )
 make_unit( "doc.math" epso_2.cpp                            )

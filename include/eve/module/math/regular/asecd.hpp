@@ -11,63 +11,63 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var asecd
-  //!
-  //! @brief Callable object computing asecd.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of asecd   |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) arc secant of the
-  //!input in the range \f$[0, 180]\f$.
-  //!
-  //!In particular:
-  //!
-  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-  //!   * If the element is \f$0\f$, \f$180\f$ is returned.
-  //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
-  //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(asecd)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/asecd.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup math_invtrig
+//! @{
+//! @var asecd
+//!
+//! @brief Callable object computing the arc secant in degrees.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T asecd(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) arc secant of the
+//! input in the range \f$[0, 180]\f$.
+//!
+//! In particular:
+//!
+//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!   * If the element is \f$0\f$, \f$180\f$ is returned.
+//!   * If the element \f$|x| < 1\f$, `NaN` is returned.
+//!   * If the element is a `Nan`, `NaN` is returned.
+//!
+//!
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/asecd.cpp}
+//!  @}
+//================================================================================================
 
-  namespace tag { struct asecd_; }
-  template<> struct supports_conditional<tag::asecd_> : std::false_type {};
+namespace tag
+{
+  struct asecd_;
+}
+template<> struct supports_conditional<tag::asecd_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(asecd_, asecd);
+EVE_MAKE_CALLABLE(asecd_, asecd);
 }
 
 #include <eve/module/math/regular/impl/asecd.hpp>

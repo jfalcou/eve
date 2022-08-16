@@ -8,25 +8,22 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/core.hpp>
 
 namespace eve::detail
 {
-  template<real_value T>
-  EVE_FORCEINLINE constexpr T quadrant_(EVE_SUPPORTS(cpu_)
-                                       , T const &a) noexcept
+template<real_value T>
+EVE_FORCEINLINE constexpr T
+quadrant_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+{
+  if constexpr( has_native_abi_v<T> )
   {
-    if constexpr(has_native_abi_v<T>)
+    if constexpr( floating_value<T> )
     {
-      if constexpr(floating_value<T>)
-      {
-        T b = a*T(0.25);
-        return (b-floor(b))*T(4);
-      }
-      else if constexpr(integral_value<T>)
-        return (a & T(3));
+      T b = a * T(0.25);
+      return (b - floor(b)) * T(4);
     }
-    else
-      return apply_over(quadrant, a);
+    else if constexpr( integral_value<T> ) return (a & T(3));
   }
+  else return apply_over(quadrant, a);
+}
 }

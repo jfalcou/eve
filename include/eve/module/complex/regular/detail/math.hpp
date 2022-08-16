@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-#include <eve/module/complex/regular/conj.hpp>
+#include <eve/module/core/regular/conj.hpp>
 #include <eve/module/complex/regular/i.hpp>
 #include <eve/module/complex/regular/exp_i.hpp>
 #include <eve/module/complex/regular/exp_ipi.hpp>

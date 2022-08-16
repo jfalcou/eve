@@ -6,31 +6,29 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+
 #include <cmath>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL( "Check return types of invlog10_2"
-            , eve::test::simd::ieee_reals
-            )
+TTS_CASE_TPL("Check return types of invlog10_2", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
   using eve::as;
 
-  TTS_EXPR_IS( eve::invlog10_2(as<T>())  , T);
-  TTS_EXPR_IS( eve::invlog10_2(as<v_t>()), v_t);
+  TTS_EXPR_IS(eve::invlog10_2(as<T>()), T);
+  TTS_EXPR_IS(eve::invlog10_2(as<v_t>()), v_t);
 };
 
 //==================================================================================================
 // invlog10_2  tests
 //==================================================================================================
-TTS_CASE_TPL( "Check behavior of invlog10_2 on wide"
-        , eve::test::simd::ieee_reals
-        )
+TTS_CASE_TPL("Check behavior of invlog10_2 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -38,10 +36,12 @@ TTS_CASE_TPL( "Check behavior of invlog10_2 on wide"
   using eve::upward;
 
   using elt_t = eve::element_type_t<T>;
-  if constexpr(sizeof(long double) > sizeof(elt_t))
+  if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(downward(eve::invlog10_2)(as<elt_t>()) < 3.3219280948873623478703194294893901758648313930246l);
-    TTS_EXPECT(upward(eve::invlog10_2)(as<elt_t>())   > 3.3219280948873623478703194294893901758648313930246l);
+    TTS_EXPECT(downward(eve::invlog10_2)(as<elt_t>())
+               < 3.3219280948873623478703194294893901758648313930246l);
+    TTS_EXPECT(upward(eve::invlog10_2)(as<elt_t>())
+               > 3.3219280948873623478703194294893901758648313930246l);
   }
   TTS_EQUAL(eve::invlog10_2(as<T>()), T(3.3219280948873623478703194294893901758648313930246l));
   TTS_EXPECT(eve::all(downward(eve::invlog10_2)(as<T>()) <= eve::invlog10_2(as<T>())));

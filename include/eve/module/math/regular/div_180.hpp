@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(div_180_, div_180);
+EVE_MAKE_CALLABLE(div_180_, div_180);
 }
 
 #include <eve/module/math/regular/impl/div_180.hpp>

@@ -11,62 +11,60 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var acospi
-  //!
-  //! @brief Callable object computing acospi.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of acospi   |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) value in \f$pi\f$ multiples of the arc cosine of the
-  //!input in the range \f$[0, 1]\f$.
-  //!
-  //!In particular:
-  //!
-  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-  //!   * If the element \f$|x| > 1\f$, `NaN` is returned.
-  //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(acospi)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/acospi.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup math_invtrig
+//! @{
+//! @var acospi
+//!
+//! @brief Callable object computing the arc cosine in \f$\pi\f$ multiples.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T acospi(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) value in \f$pi\f$ multiples of the arc
+//! cosine of the input in the range \f$[0, 1]\f$.
+//!
+//! In particular:
+//!
+//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!   * If the element \f$|x| > 1\f$, `NaN` is returned.
+//!   * If the element is a `Nan`, `NaN` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/acospi.cpp}
+//!
+//!  @}
+//================================================================================================
 
-  namespace tag { struct acospi_; }
-  template<> struct supports_conditional<tag::acospi_> : std::false_type {};
+namespace tag
+{
+  struct acospi_;
+}
+template<> struct supports_conditional<tag::acospi_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(acospi_, acospi);
+EVE_MAKE_CALLABLE(acospi_, acospi);
 }
 
 #include <eve/module/math/regular/impl/acospi.hpp>
