@@ -49,19 +49,6 @@ namespace eve
 //!   * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
 //!   * If the element is a `Nan`, `NaN` is returned.
 //!
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!
-//!  Higher-order function generating a masked version of eve::sinhc
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `sinhc[cond](x, ...)` is equivalent to
-//!  `if_else(cond,sinhc(x, ...),x)`
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/sinhc.cpp}

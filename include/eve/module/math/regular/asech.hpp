@@ -42,30 +42,14 @@ namespace eve
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
-//! The inverse hyperbolic sine is semantically equivalent to   \f$\log(1/x+\sqrt{1/x^2-1})\f$.
+//!   Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
+//!   The inverse hyperbolic sine is semantically equivalent to   \f$\log(1/x+\sqrt{1/x^2-1})\f$.
 //!
-//! In particular:
+//!   In particular:
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!   * If the element is \f$1\f$, \f$+0\f$ returned.
-//!   * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
-//!
-//!
-//!  auto operator[]( conditional_expression auto cond ) const noexcept;
-//!
-//!  Higher-order function generating a masked version of eve::asech
-//!
-//!  **Parameters**
-//!
-//!  `cond` : conditional expression
-//!
-//!  **Return value**
-//!
-//!  A Callable object so that the expression `asech[cond](x, ...)` is equivalent to
-//!  `if_else(cond,asech(x, ...),x)`
-//!
-//!
+//!     * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!     * If the element is \f$1\f$, \f$+0\f$ returned.
+//!     * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
 //!
 //!  @groupheader{Example}
 //!
