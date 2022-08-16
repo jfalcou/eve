@@ -27,7 +27,7 @@
 //!
 //! @defgroup math_constants  Constants
 //! @ingroup math
-//! These functions allows access to salar and SIMD values of some mathematical constants.
+//! These functions allows access to scalar and SIMD values of some mathematical constants.
 //! In particular,  all libc++ constants are here, sometimes with a different name.
 //!
 //! All floating mathematical constants supports a regular call and two decorated calls:
@@ -36,12 +36,12 @@
 //!    mathematical value,
 //!  * eve::upward provides the least representable value that is greater than
 //!    the mathematical value,
-//!  * eve::downward provides the greatesst representable value that is lrss than the
+//!  * eve::downward provides the greatest representable value that is less than the
 //!    mathematical value,
 //!
 //!  About constants names:
 //!
-//!    * When a name contains an _ it means that preceeding the underscore is a
+//!    * When a name contains an _ it means that preceding the underscore is a
 //!     'function or multiplication  that must be applied to the following parts:
 //!
 //!        * log_2 stands for \f$\log(2)\f$ the natural logarithm of 2
@@ -61,14 +61,14 @@
 //! Moreover each function can be decorated with eve::quarter_circle,  eve:half_circle,
 //! eve::full_circle, eve::medium,  eve::big.
 //!
-//!   * eve::quarter_circle provides accurates result for the corresonding
+//!   * eve::quarter_circle provides accurate result for the corresponding
 //!     radian angle in\f$]-\pi/4,\pi/4[\f$,  Nan outside
-//!   * eve::half_circle provides accurates result for the corresonding
+//!   * eve::half_circle provides accurate result for the corresponding
 //!     radian angle in\f$]-\pi/2,\pi/2[\f$,  Nan outside
-//!   * eve::full_circle provides accurates result for the corresonding
+//!   * eve::full_circle provides accurate result for the corresponding
 //!     radian angle in\f$]-\pi,\pi[\f$,  Nan outside
 //!   * regular call (not decorated) choose the best call and is
-//!     valid on the fullrange.
+//!     valid on the full range.
 //!
 //! @defgroup math_invtrig  Inverse trigonometric
 //! @ingroup math
@@ -76,19 +76,19 @@
 //!
 //! @defgroup math_hyper  Hyperbolic
 //! @ingroup math
-//! These functions allows performing Hyperbolic computations
+//! These functions allows performing hyperbolic computations
 //!
 //! @defgroup math_invhyper  Inverse hyperbolic
 //! @ingroup math
-//! These functions allows performing Inverse hyperbolic computations
+//! These functions allows performing unverse hyperbolic computations
 //!
 //! @defgroup math_log  Logarithm
 //! @ingroup math
-//! These functions allows performing logarithms computations
+//! These functions allows performing logarithm computations
 //!
 //! @defgroup math_exp  Exponential
 //! @ingroup math
-//! These functions allows performing exponentials computations
+//! These functions allows performing exponential computations
 //!
 ///! @}
 //==================================================================================================

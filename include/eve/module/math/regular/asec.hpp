@@ -43,9 +43,9 @@ namespace eve
 //! Returns the [elementwise](@ref glossary_elementwise) arc secant of the
 //! input in the range \f$[0 , \pi]\f$.
 //!
-//! in particular:
+//! In particular:
 //!
-//!   * IF the element is \f$1\f$, \f$+0\f$ is returned.
+//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
 //!   * If the element is \f$0\f$, \f$\pi\f$ is returned.
 //!   * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!   * If the element is a `Nan`, `NaN` is returned.
