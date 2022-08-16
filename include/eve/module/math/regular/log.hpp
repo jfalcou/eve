@@ -12,73 +12,60 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var log
-  //!
-  //! @brief Callable object computing the natural logarithm: \f$\log x\f$.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of the natural logarithm                  |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()( floating_value auto x ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) the natural logarithm  of `x`: \f$\log x\f$..
-  //!
-  //!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-  //!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-  //!   * If the element is less than 0, `NaN` is returned.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::log
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `log[cond](x, ...)` is equivalent to `if_else(cond,log(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(log)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/log.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(log_, log);
+//================================================================================================
+//! @addtogroup math_log
+//! @{
+//! @var log
+//!
+//! @brief Callable object computing the natural logarithm: \f$\log x\f$.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T log(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) the natural logarithm  of `x`: \f$\log
+//! x\f$.
+//!
+//!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+//!   * If the element is less than 0, `NaN` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/log.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::log[mask](x)` provides a masked version of `eve::log` which is
+//!     equivalent to `if_else (mask, log(x), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/math/masked/log.cpp}
+//!  @}
+//================================================================================================
+EVE_MAKE_CALLABLE(log_, log);
 }
 
 #include <eve/module/math/regular/impl/log.hpp>

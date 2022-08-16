@@ -12,68 +12,55 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var expx2
-  //!
-  //! @brief Callable object computing \f$e^{\pm x^2}\f$.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | computes the exponential of the squared input              |
-  //! | `operator[]` | Construct a conditional version of current function object |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x, floating_value auto s) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating value](@ref eve::floating_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) exponential of the square of the input multiplied by the sign of `x`.
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator[]( conditional_expression auto cond ) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //!  Higher-order function generating a masked version of eve::exp
-  //!
-  //!  **Parameters**
-  //!
-  //!  `cond` : conditional expression
-  //!
-  //!  **Return value**
-  //!
-  //!  A Callable object so that the expression `expx2[cond](x, ...)` is equivalent to `if_else(cond,expx2(x, ...),x)`
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(expx2)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/exp.cpp}
-  //!
-  //!  @}
-  //================================================================================================
-  EVE_MAKE_CALLABLE(expx2_, expx2);
+//================================================================================================
+//! @addtogroup math_exp
+//! @{
+//! @var expx2
+//!
+//! @brief Callable object computing \f$e^{\pm x^2}\f$.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      T expx2(T x, U s) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!    `x`:   [floating value](@ref eve::floating_value).
+//!
+//! **Return value**
+//!
+//!   Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
+//!   multiplied by the sign of `s` trying to avoid overflow as possible.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/expx2.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::expx2[mask](x, ...)` provides a masked version of `eve::expx2` which is
+//!     equivalent to `if_else (mask, expx2(x, ...), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/math/masked/expx2.cpp}
+//!  @}
+//================================================================================================
+EVE_MAKE_CALLABLE(expx2_, expx2);
 }
 
 #include <eve/module/math/regular/impl/expx2.hpp>

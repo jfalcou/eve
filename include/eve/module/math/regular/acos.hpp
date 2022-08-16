@@ -11,65 +11,64 @@
 
 namespace eve
 {
-  //================================================================================================
-  //! @addtogroup math
-  //! @{
-  //! @var acos
-  //!
-  //! @brief Callable object computing acos.
-  //!
-  //! **Required header:** `#include <eve/module/math.hpp>`
-  //!
-  //! #### Members Functions
-  //!
-  //! | Member       | Effect                                                     |
-  //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of acos   |
-  //!
-  //! ---
-  //!
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(floating_value auto x) const noexcept;
-  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  //!
-  //! **Parameters**
-  //!
-  //!`x`:   [floating real value](@ref eve::floating_real_value).
-  //!
-  //! **Return value**
-  //!
-  //!Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
-  //!input in the range \f$[0 , \pi]\f$.
-  //!
-  //!In particular:
-  //!
-  //!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-  //!   * If the element \f$|x| > 1\f$, `NaN` is returned.
-  //!   * If the element is a `Nan`, `NaN` is returned.
-  //!
-  //! ---
-  //!
-  //! #### Supported decorators
-  //!
-  //!  * eve::raw
-  //!     The call `raw(acos)(x)`, call a faster implementation which can be slightly less accurate near 1.
-  //!
-  //!  * eve::diff, eve::diff_1st, eve::diff_nth
-  //!
-  //!
-  //!     The expression `diff(acos)(x)` computes the derivative of the function at `x`.
-  //!
-  //! #### Example
-  //!
-  //! @godbolt{doc/math/acos.cpp}
-  //!
-  //!  @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup math_invtrig
+//! @{
+//! @var acos
+//!
+//! @brief Callable object computing the arc cosine.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::floating_value T >
+//!      T acos(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!
+//! **Return value**
+//!
+//! Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//! input in the range \f$[0 , \pi]\f$.
+//!
+//! In particular:
+//!
+//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!   * If the element \f$|x| > 1\f$, `NaN` is returned.
+//!   * If the element is a `Nan`, `NaN` is returned.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/acos.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!  * eve::raw
+//!     The call `raw(acos)(x)`, call a faster implementation which can be slightly less accurate
+//!     near 1.
+//!  @}
+//================================================================================================
 
-  namespace tag { struct acos_; }
-  template<> struct supports_conditional<tag::acos_> : std::false_type {};
+namespace tag
+{
+  struct acos_;
+}
+template<> struct supports_conditional<tag::acos_> : std::false_type
+{};
 
-  EVE_MAKE_CALLABLE(acos_, acos);
+EVE_MAKE_CALLABLE(acos_, acos);
 }
 
 #include <eve/module/math/regular/impl/acos.hpp>

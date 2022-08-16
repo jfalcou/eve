@@ -39,6 +39,7 @@
 #include <eve/module/core/regular/clamp.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/compress_store.hpp>
+#include <eve/module/core/regular/conj.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/copysign.hpp>
@@ -50,7 +51,6 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
-#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/div.hpp>

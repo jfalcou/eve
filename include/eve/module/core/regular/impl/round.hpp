@@ -11,7 +11,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/regular/ceil.hpp>
-#include <eve/module/core/regular/derivative.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/trunc.hpp>
