@@ -46,7 +46,6 @@ EVE_FORCEINLINE wide<T, N>
                          wide<T, N> const                &v) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-
   if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
   {
     return nearest_(EVE_RETARGET(cpu_), cx, v);
@@ -61,14 +60,14 @@ EVE_FORCEINLINE wide<T, N>
     else if constexpr( c == category::float64x8 )
       return _mm512_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float32x8 )
-      return _mm256_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
+      return _mm256_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float64x4 )
       return _mm256_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float32x4 )
-      return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
+      return _mm_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float64x2 )
       return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
-    else return if_else(cx, v, src);
+    else
+      return if_else(cx, v, src);}
   }
-}
 }

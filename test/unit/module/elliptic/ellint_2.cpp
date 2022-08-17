@@ -53,11 +53,15 @@ TTS_CASE_WITH("Check behavior of ellint_2 on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::ellint_2)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+              tts::generate(tts::randoms(0, 1.0),
+                            tts::randoms(0, eve::pio_2),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::ellint_2[mask](a0),
             eve::if_else(mask, eve::ellint_2(a0), a0));
+  TTS_IEEE_EQUAL(eve::ellint_2[mask](a0, a1),
+            eve::if_else(mask, eve::ellint_2(a0, a1), a0));
 };
