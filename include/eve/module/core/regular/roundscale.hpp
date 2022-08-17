@@ -84,11 +84,28 @@ namespace detail
   EVE_FORCEINLINE void
   check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
   {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] -  parameter s out of range [0, 15]: " << s);
+    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] - parameter s out of range [0, 15]: " << s);
   }
   template<int S, typename T>
   EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, std::integral_constant<int, S> const&)
+  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&,
+        std::integral_constant<int, S> const&)
+  {
+    EVE_ASSERT(S >= 0 && S < 16,
+               "[eve::roundscale] -  integral constant out of range [0, 15]: " << S);
+  }
+
+  template<conditional_expr C, typename T>
+  EVE_FORCEINLINE void
+  check(EVE_MATCH_CALL(eve::tag::roundscale_), C const&, T const&,
+        [[maybe_unused]] int s)
+  {
+    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] - parameter s out of range [0, 15]: " << s);
+  }
+  template<conditional_expr C, int S, typename T>
+  EVE_FORCEINLINE void
+  check(EVE_MATCH_CALL(eve::tag::roundscale_), C const&, T const&,
+        std::integral_constant<int, S> const&)
   {
     EVE_ASSERT(S >= 0 && S < 16,
                "[eve::roundscale] -  integral constant out of range [0, 15]: " << S);

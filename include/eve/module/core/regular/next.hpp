@@ -124,6 +124,7 @@ namespace detail
     EVE_ASSERT(eve::all(is_gez(n)),
                "[[eve::saturated([eve::next)] : second parameter must be positive");
   }
+
 }
 
 EVE_MAKE_CALLABLE(next_, next);

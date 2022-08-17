@@ -63,13 +63,13 @@ TTS_CASE_WITH("Check behavior of rotl on wide",
 //==================================================================================================
 // Tests for masked rotl
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::rotl)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::rotl[mask](a0, 2),
-//             eve::if_else(mask, eve::rotl(a0, 2), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::rotl)(eve::wide)",
+              eve::test::simd::unsigned_integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::rotl[mask](a0, 2),
+            eve::if_else(mask, eve::rotl(a0, 2), a0));
+};
