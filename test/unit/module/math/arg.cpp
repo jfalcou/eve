@@ -58,3 +58,18 @@ TTS_CASE_WITH("Check behavior of eve::pedantic(eve::arg)(simd)",
             map([](auto e) -> v_t { return e >= 0 ? 0 : eve::pi(eve::as(v_t())); }, a0));
   TTS_IEEE_EQUAL(eve::pedantic(eve::arg)(cases.nan), cases.nan);
 };
+
+
+//==================================================================================================
+// Tests for masked arg
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::arg)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::arg[mask](a0),
+            eve::if_else(mask, eve::arg(a0), a0));
+};

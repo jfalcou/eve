@@ -62,3 +62,18 @@ TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals)
     TTS_ULP_EQUAL(eve::pedantic(eve::rsqrt)((2 * z)), (eve::rec(std::sqrt(2 * z))), 2.0);
   }
 };
+
+
+//==================================================================================================
+// Tests for masked rsqrt
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::rsqrt)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::rsqrt[mask](a0),
+            eve::if_else(mask, eve::rsqrt(a0), a0));
+};

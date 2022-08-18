@@ -47,3 +47,18 @@ TTS_CASE_WITH("Check behavior of acscpi on wide",
 
   TTS_ULP_EQUAL(eve::acscpi(a3), map(sacscpi, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked acscpi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::acscpi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::acscpi[mask](a0),
+            eve::if_else(mask, eve::acscpi(a0), a0));
+};

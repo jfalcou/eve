@@ -57,13 +57,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct acotd_;
-}
-template<> struct supports_conditional<tag::acotd_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(acotd_, acotd);
 }
 

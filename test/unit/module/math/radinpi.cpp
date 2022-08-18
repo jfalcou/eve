@@ -35,3 +35,18 @@ TTS_CASE_WITH("Check behavior of radinpi on wide",
 {
   TTS_ULP_EQUAL(eve::radinpi(a0), a0 * T(0.31830988618379067153776752674502872406891929148092), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked radinpi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::radinpi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::radinpi[mask](a0),
+            eve::if_else(mask, eve::radinpi(a0), a0));
+};

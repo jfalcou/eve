@@ -61,13 +61,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct asecpi_;
-}
-template<> struct supports_conditional<tag::asecpi_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(asecpi_, asecpi);
 }
 

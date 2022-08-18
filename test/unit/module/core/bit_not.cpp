@@ -56,3 +56,18 @@ TTS_CASE_WITH("Check behavior of bit_not(simd) on floating types",
                  map([](auto e) { return bit_cast(~bit_cast(e, as(i_t())), as(v_t())); }, a0));
   TTS_IEEE_EQUAL(eve::bit_not[t](a0), eve::if_else(t, eve::bit_not(a0), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked bit_not
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_not)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_not[mask](a0),
+            eve::if_else(mask, eve::bit_not(a0), a0));
+};

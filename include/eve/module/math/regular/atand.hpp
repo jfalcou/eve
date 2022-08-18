@@ -55,13 +55,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct atand_;
-}
-template<> struct supports_conditional<tag::atand_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(atand_, atand);
 }
 

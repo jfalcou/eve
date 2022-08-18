@@ -37,3 +37,18 @@ TTS_CASE_WITH("Check behavior of acoth on wide",
 
   TTS_ULP_EQUAL(eve::acoth(a0), map([](auto e) -> v_t { return std::atanh(1 / e); }, a0), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked acoth
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::acoth)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::acoth[mask](a0),
+            eve::if_else(mask, eve::acoth(a0), a0));
+};

@@ -51,3 +51,20 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
               eve::if_else(a0 > a1, eve::dec(a0), eve::if_else(a0 < a1, eve::inc(a0), a0)));
   }
 };
+
+
+//==================================================================================================
+// Tests for masked nextafter
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::nextafter)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::nextafter[mask](a0, a1),
+            eve::if_else(mask, eve::nextafter(a0, a1), a0));
+};

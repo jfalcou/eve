@@ -114,3 +114,20 @@ TTS_CASE_WITH("Check predicate version of max",
   auto less_1st = [](auto a, auto b) { return get<0>(a) < get<0>(b); };
   TTS_EQUAL(eve::max(less_1st)(a, b), ref);
 };
+
+
+//==================================================================================================
+// Tests for masked max
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::max)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::max[mask](a0, a1),
+            eve::if_else(mask, eve::max(a0, a1), a0));
+};

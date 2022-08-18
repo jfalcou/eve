@@ -37,3 +37,18 @@ TTS_CASE_WITH("Check behavior of acot on wide",
 
   TTS_ULP_EQUAL(eve::acot(a0), map([](auto e) -> v_t { return std::atan(1 / e); }, a0), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked acot
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::acot)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::acot[mask](a0),
+            eve::if_else(mask, eve::acot(a0), a0));
+};

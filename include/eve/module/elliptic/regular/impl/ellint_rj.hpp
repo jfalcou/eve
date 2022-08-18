@@ -225,4 +225,20 @@ ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, T y, T z, T p) noexcept req
   //       nan auto br0 = [x, y, z](){return raw(ellint_rj)(x, y, z);}; last_interval(br0, notdone,
   //       r); return r;
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+ellint_rj_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::ellint_rj, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+ellint_rj_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::ellint_rj), ts ...);
+}
 }

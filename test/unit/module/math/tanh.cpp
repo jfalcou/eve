@@ -49,3 +49,18 @@ TTS_CASE_WITH("Check behavior of tanh on wide",
   TTS_ULP_EQUAL(tanh(a0), map([](auto e) -> v_t { return std::tanh(double(e)); }, a0), 4);
   TTS_ULP_EQUAL(tanh(a1), map([](auto e) -> v_t { return std::tanh(double(e)); }, a1), 4);
 };
+
+
+//==================================================================================================
+// Tests for masked tanh
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::tanh)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::tanh[mask](a0),
+            eve::if_else(mask, eve::tanh(a0), a0));
+};

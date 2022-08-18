@@ -141,3 +141,18 @@ TTS_CASE_TPL("Check float64 & float32(eve::exp2) behavior", eve::test::simd::int
     }
   }
 };
+
+
+//==================================================================================================
+// Tests for masked exp2
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::exp2)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::exp2[mask](a0),
+            eve::if_else(mask, eve::exp2(a0), a0));
+};

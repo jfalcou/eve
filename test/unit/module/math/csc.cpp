@@ -57,3 +57,18 @@ TTS_CASE_WITH("Check behavior of csc on wide",
   TTS_ULP_EQUAL(csc(a2), map(ref, a2), 2);
   TTS_ULP_EQUAL(csc(a3), map(ref, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked csc
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::csc)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::csc[mask](a0),
+            eve::if_else(mask, eve::csc(a0), a0));
+};

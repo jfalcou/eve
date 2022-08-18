@@ -63,3 +63,18 @@ TTS_CASE_WITH("Check behavior of omega on wide",
     }
   }
 };
+
+
+//==================================================================================================
+// Tests for masked omega
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::omega)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0.0, 10.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::omega[mask](a0),
+            eve::if_else(mask, eve::omega(a0), a0));
+};

@@ -67,3 +67,18 @@ TTS_CASE_WITH("Check behavior of cot on wide",
   TTS_IEEE_EQUAL(cot(T(0)), eve::inf(eve::as<T>()));
   TTS_IEEE_EQUAL(cot(T(-0.)), eve::minf(eve::as<T>()));
 };
+
+
+//==================================================================================================
+// Tests for masked cot
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cot)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cot[mask](a0),
+            eve::if_else(mask, eve::cot(a0), a0));
+};

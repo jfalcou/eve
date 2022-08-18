@@ -80,4 +80,20 @@ ellint_d_(EVE_SUPPORTS(cpu_), T phi0, T k) noexcept requires has_native_abi_v<T>
   return copysign(r, phi0);
 }
 
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+ellint_d_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::ellint_d, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+ellint_d_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::ellint_d), ts ...);
+}
 }

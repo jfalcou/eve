@@ -151,3 +151,18 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(3, )", eve::test::simd::ieee_rea
 };
 
 #endif
+
+
+//==================================================================================================
+// Tests for masked lpnorm
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::lpnorm)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::lpnorm[mask](a0),
+            eve::if_else(mask, eve::lpnorm(a0), a0));
+};

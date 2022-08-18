@@ -81,4 +81,20 @@ cospi_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
     return if_else(is_odd(a0), eve::mone, one(eve::as(a0))); //(-1)^n
   else return apply_over(cospi, a0);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U>
+EVE_FORCEINLINE auto
+cospi_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::cospi, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+cospi_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+{
+  return mask_op(cond, d(eve::cospi), t);
+}
 }

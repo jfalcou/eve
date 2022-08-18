@@ -75,4 +75,20 @@ rising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
   else return apply_over(regular_type()(rising_factorial), a, x);
 }
 
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::rising_factorial, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::rising_factorial), ts ...);
+}
 }

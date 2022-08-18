@@ -62,3 +62,20 @@ TTS_CASE_WITH("Check behavior of logspace_sub on wide",
   TTS_ULP_EQUAL(eve::logspace_sub(la0, la1, la4), eve::log(a0 - a1 - a4), 20);
   TTS_ULP_EQUAL(eve::logspace_sub(la2, la3, la5), eve::log(a2 - a3 - a5), 20);
 };
+
+
+//==================================================================================================
+// Tests for masked logspace_sub
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::logspace_sub)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::logspace_sub[mask](a0, a1),
+            eve::if_else(mask, eve::logspace_sub(a0, a1), a0));
+};

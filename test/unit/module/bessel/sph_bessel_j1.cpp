@@ -61,3 +61,16 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve__sph_bessel_j1(a1), map(std__sph_bessel_j1, a1), 40.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(a2), map(std__sph_bessel_j1, a2), 40.0);
 };
+
+
+//==================================================================================================
+// Tests for masked sph_bessel_j1
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sph_bessel_j1)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sph_bessel_j1[mask](a0),
+            eve::if_else(mask, eve::sph_bessel_j1(a0), a0));
+};

@@ -36,10 +36,18 @@ abs_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
   return mask_op(cond, eve::abs, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+requires(std::convertible_to<U, decltype(abs(t))>)
+{
+  return mask_op(cond, d(eve::abs), t);
 }
 }

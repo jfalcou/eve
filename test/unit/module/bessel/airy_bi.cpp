@@ -78,3 +78,16 @@ TTS_CASE_WITH("Check behavior of airy_bi on wide",
   TTS_ABSOLUTE_EQUAL(eve__airy_bi(a0), map(std__airy_bi, a0), abstol);
   TTS_RELATIVE_EQUAL(eve__airy_bi(a1), map(std__airy_bi, a1), 0.001);
 };
+
+
+//==================================================================================================
+// Tests for masked airy_bi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::airy_bi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::airy_bi[mask](a0),
+            eve::if_else(mask, eve::airy_bi(a0), a0));
+};

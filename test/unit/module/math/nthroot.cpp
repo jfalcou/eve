@@ -70,3 +70,18 @@ TTS_CASE_TPL("Check return types of nthroot", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::nthroot(T(8), 3), T(2));
   TTS_EQUAL(eve::nthroot(T(8), 3u), T(2));
 };
+
+
+//==================================================================================================
+// Tests for masked nthroot
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::nthroot)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::nthroot[mask](a0, 3u),
+            eve::if_else(mask, eve::nthroot(a0, 3u), a0));
+};

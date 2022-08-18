@@ -81,3 +81,20 @@ TTS_CASE_WITH("Check behavior of bit_ornot on floating types",
   TTS_IEEE_EQUAL(bit_ornot[test](a0, a1, a2),
                  eve::if_else(test, eve::bit_ornot(a0, eve::bit_and(a1, a2)), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked bit_ornot
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_ornot)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_ornot[mask](a0, a1),
+            eve::if_else(mask, eve::bit_ornot(a0, a1), a0));
+};

@@ -47,3 +47,22 @@ TTS_CASE_WITH("Check behavior of ellint_rd on wide",
       map([](auto e, auto f, auto g) -> v_t { return boost::math::ellint_rd(e, f, g); }, x, y, z),
       11);
 };
+
+
+//==================================================================================================
+// Tests for masked ellint_rd
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::ellint_rd)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         T const& a2,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::ellint_rd[mask](a0, a1, a2),
+            eve::if_else(mask, eve::ellint_rd(a0, a1, a2), a0));
+};

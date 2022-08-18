@@ -88,3 +88,18 @@ TTS_CASE_TPL("Check corner-cases of exp10", eve::test::simd::ieee_reals)
         eve::pedantic(eve::exp10)(eve::prev(eve::minlog10denormal(eve::as<T>()))), T(0), 0);
   }
 };
+
+
+//==================================================================================================
+// Tests for masked exp10
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::exp10)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::exp10[mask](a0),
+            eve::if_else(mask, eve::exp10(a0), a0));
+};

@@ -34,3 +34,18 @@ TTS_CASE_WITH("Check behavior of deginrad on wide",
 {
   TTS_ULP_EQUAL(eve::deginrad(a0), a0 * T(0.017453292519943295769236907684886), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked deginrad
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::deginrad)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::deginrad[mask](a0),
+            eve::if_else(mask, eve::deginrad(a0), a0));
+};

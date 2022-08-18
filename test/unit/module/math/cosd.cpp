@@ -78,3 +78,18 @@ TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals)
   // //     TTS_ULP_EQUAL(eve::cosd(u), map([](auto e) -> v_t { return boost::math::cos_pi(((long
   // double)e)/180.0l); }, u), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked cosd
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cosd)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cosd[mask](a0),
+            eve::if_else(mask, eve::cosd(a0), a0));
+};

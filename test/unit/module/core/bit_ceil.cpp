@@ -71,3 +71,18 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on floating",
                 a0));
   TTS_EQUAL(eve::bit_ceil[t](a0), eve::if_else(t, eve::bit_ceil(a0), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked bit_ceil
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_ceil)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_ceil[mask](a0),
+            eve::if_else(mask, eve::bit_ceil(a0), a0));
+};

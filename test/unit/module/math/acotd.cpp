@@ -38,3 +38,18 @@ TTS_CASE_WITH("Check behavior of acotd on wide",
   TTS_ULP_EQUAL(
       eve::acotd(a0), map([](auto e) -> v_t { return eve::radindeg(std::atan(1 / e)); }, a0), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked acotd
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::acotd)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::acotd[mask](a0),
+            eve::if_else(mask, eve::acotd(a0), a0));
+};

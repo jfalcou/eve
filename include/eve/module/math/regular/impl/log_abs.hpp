@@ -27,4 +27,22 @@ log_abs_(EVE_SUPPORTS(cpu_), T x) noexcept
   return log(eve::abs(x));
   ;
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U>
+EVE_FORCEINLINE auto
+log_abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+requires(std::same_as<U, decltype(eve::abs(t))>)
+{
+  return mask_op(cond, eve::log_abs, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+log_abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+requires(std::same_as<U, decltype(d(log_abs)(t))>)
+{
+  return mask_op(cond, d(eve::log_abs), t);
+}
 }

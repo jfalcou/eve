@@ -58,3 +58,20 @@ TTS_CASE_WITH("Check behavior of clamp(wide) and diff  on all types",
   TTS_EQUAL(clamp(a0, a1, a2),
             map([&](auto e, auto f, auto g) -> v_t { return std::clamp(e, f, g); }, a0, a1, a2));
 };
+
+
+//==================================================================================================
+// Tests for masked clamp
+//==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::clamp)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//                             tts::randoms(eve::valmin, eve::valmax),
+//                             tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          T const& a1,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::clamp[mask](a0),
+//                  eve::if_else(mask, eve::clamp(a0, eve::dec(a1), a1), a0));
+// };

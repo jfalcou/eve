@@ -59,3 +59,18 @@ TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
   TTS_ULP_EQUAL(
       eve::sqrt[a0 < val](a0), map([&](auto e) { return (e < val) ? std::sqrt(e) : e; }, a0), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked sqrt
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sqrt)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sqrt[mask](a0),
+            eve::if_else(mask, eve::sqrt(a0), a0));
+};

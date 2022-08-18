@@ -86,7 +86,16 @@ namespace tag
 namespace detail
 {
   template<typename T, typename S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shr_), T const&, [[maybe_unused]] S const& s)
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shr_), T const&,
+                             [[maybe_unused]] S const& s)
+  {
+    EVE_ASSERT(assert_good_shift<T>(s),
+               "[eve::shr] Shifting by " << s << " is out of the range [0, "
+                                         << sizeof(element_type_t<T>) * 8 << "[.");
+  }
+  template<conditional_expr C, typename T, typename S>
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shr_), C const& , T const&,
+                             [[maybe_unused]] S const& s)
   {
     EVE_ASSERT(assert_good_shift<T>(s),
                "[eve::shr] Shifting by " << s << " is out of the range [0, "

@@ -55,3 +55,22 @@ TTS_CASE_WITH("Check behavior of lerp on ieee floating",
                 map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
                 8);
 };
+
+
+//==================================================================================================
+// Tests for masked lerp
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::lerp)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         T const& a2,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::lerp[mask](a0, a1, a2),
+            eve::if_else(mask, eve::lerp(a0, a1, a2), a0));
+};

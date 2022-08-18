@@ -24,4 +24,20 @@ radindeg_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   else return apply_over(radindeg, a);
 }
 
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U>
+EVE_FORCEINLINE auto
+radindeg_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::radindeg, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+radindeg_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+{
+  return mask_op(cond, d(eve::radindeg), t);
+}
 }

@@ -46,3 +46,18 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
   TTS_ULP_EQUAL(manhattan((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(manhattan)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked manhattan
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::manhattan[mask](a0),
+            eve::if_else(mask, eve::manhattan(a0), a0));
+};

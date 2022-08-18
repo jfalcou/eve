@@ -32,4 +32,20 @@ atan2_(EVE_SUPPORTS(cpu_), T const& a0, T const& a1) noexcept
   auto z = detail::atan_kernel(q, eve::rec(q));
   return if_else(is_positive(a1), z, (pi(eve::as(a0)) - z)) * signnz(a0);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value T, value U>
+EVE_FORCEINLINE auto
+atan2_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
+{
+  return mask_op(cond, eve::atan2, t,u);
+}
+
+template<conditional_expr C, decorator D, value T, value U>
+EVE_FORCEINLINE auto
+atan2_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T const& t, U const& u) noexcept
+{
+  return mask_op(cond, d(eve::atan2), t, u);
+}
 }

@@ -38,3 +38,18 @@ TTS_CASE_WITH("Check behavior of acosh on wide",
   TTS_ULP_EQUAL(eve::acosh(a0), map([](auto e) -> v_t { return std::acosh(e); }, a0), 2);
   TTS_ULP_EQUAL(eve::acosh(a1), map([](auto e) -> v_t { return std::acosh(e); }, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked acosh
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::acosh)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::acosh[mask](a0),
+            eve::if_else(mask, eve::acosh(a0), a0));
+};

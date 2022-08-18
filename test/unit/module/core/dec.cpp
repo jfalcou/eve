@@ -90,3 +90,18 @@ TTS_CASE_WITH("Check behavior of saturated(dec)(wide) on integral types",
     TTS_EQUAL(eve::saturated(eve::dec)(a), v_t(a == eve::valmin(eve::as(a)) ? a : a - 1));
   }
 };
+
+
+//==================================================================================================
+// Tests for masked dec
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::dec)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::dec[mask](a0),
+            eve::if_else(mask, eve::dec(a0), a0));
+};

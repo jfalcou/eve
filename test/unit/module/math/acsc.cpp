@@ -47,3 +47,18 @@ TTS_CASE_WITH("Check behavior of acsc on wide",
 
   TTS_ULP_EQUAL(eve::acsc(a3), map(sacsc, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked acsc
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::acsc)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::acsc[mask](a0),
+            eve::if_else(mask, eve::acsc(a0), a0));
+};

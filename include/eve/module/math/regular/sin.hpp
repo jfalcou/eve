@@ -61,13 +61,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct sin_;
-}
-template<> struct supports_conditional<tag::sin_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(sin_, sin);
 }
 

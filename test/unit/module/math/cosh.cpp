@@ -51,3 +51,18 @@ TTS_CASE_WITH("Check behavior of cosh on wide",
   TTS_ULP_EQUAL(cosh(a0), map([](auto e) -> v_t { return std::cosh(e); }, a0), 2);
   TTS_ULP_EQUAL(cosh(a1), map([](auto e) -> v_t { return std::cosh(e); }, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked cosh
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cosh)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cosh[mask](a0),
+            eve::if_else(mask, eve::cosh(a0), a0));
+};

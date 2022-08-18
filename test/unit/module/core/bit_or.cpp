@@ -79,3 +79,20 @@ TTS_CASE_WITH("Check behavior of bit_or on floating types",
   TTS_IEEE_EQUAL(bit_or[test](a0, a1), eve::if_else(test, eve::bit_or(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_or[test](a0, a1, a2), eve::if_else(test, eve::bit_or(a0, a1, a2), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked bit_or
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_or)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_or[mask](a0, a1),
+            eve::if_else(mask, eve::bit_or(a0, a1), a0));
+};

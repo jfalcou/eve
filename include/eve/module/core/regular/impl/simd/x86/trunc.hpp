@@ -54,11 +54,11 @@ trunc_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& v) noexcept requires 
     else if constexpr( c == category::float64x8 )
       return _mm512_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_ZERO);
     else if constexpr( c == category::float32x8 )
-      return _mm256_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_ZERO);
+      return _mm256_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_ZERO);
     else if constexpr( c == category::float64x4 )
       return _mm256_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_ZERO);
     else if constexpr( c == category::float32x4 )
-      return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_ZERO);
+      return _mm_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_ZERO);
     else if constexpr( c == category::float64x2 )
       return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_ZERO);
     else return if_else(cx, v, src);

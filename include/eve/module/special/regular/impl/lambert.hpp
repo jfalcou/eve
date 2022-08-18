@@ -106,4 +106,5 @@ lambert_(EVE_SUPPORTS(cpu_), T x) noexcept
   }
   else return apply_over2(lambert, x);
 }
+
 }

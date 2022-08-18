@@ -80,3 +80,20 @@ TTS_CASE_WITH("Check behavior of negatenz(wide)",
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL( negatenz(a0, a1), map([](auto e, auto f) -> v_t { return e*eve::signnz(f); }, a0, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked negatenz
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::negatenz)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::negatenz[mask](a0, a1),
+            eve::if_else(mask, eve::negatenz(a0, a1), a0));
+};

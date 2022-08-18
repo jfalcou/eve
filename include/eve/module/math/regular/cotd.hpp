@@ -62,13 +62,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct cotd_;
-}
-template<> struct supports_conditional<tag::cotd_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(cotd_, cotd);
 }
 

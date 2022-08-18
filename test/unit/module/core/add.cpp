@@ -104,3 +104,20 @@ TTS_CASE_WITH("Check behavior of add on signed types",
       saturated(add[a2 > T(64)])(a0, a1),
       map([](auto e, auto f, auto g) { return g > 64 ? saturated(add)(e, f) : e; }, a0, a1, a2));
 };
+
+
+//==================================================================================================
+// Tests for masked add
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::add[mask](a0, a1),
+            eve::if_else(mask, eve::add(a0, a1), a0));
+};

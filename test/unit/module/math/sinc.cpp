@@ -44,3 +44,18 @@ TTS_CASE_WITH("Check behavior of sinc on wide",
   TTS_ULP_EQUAL(sinc(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(sinc(a1), map(ref, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked sinc
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sinc)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sinc[mask](a0),
+            eve::if_else(mask, eve::sinc(a0), a0));
+};

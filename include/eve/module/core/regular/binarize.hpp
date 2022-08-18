@@ -53,7 +53,8 @@ namespace eve
 //!  @godbolt{doc/core/regular/binarize.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(binarize_, binarize);
+
+  EVE_MAKE_CALLABLE(binarize_, binarize);
 }
 
 #include <eve/module/core/regular/impl/binarize.hpp>

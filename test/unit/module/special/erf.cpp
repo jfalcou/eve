@@ -52,3 +52,18 @@ TTS_CASE_WITH("Check behavior of erf on wide",
   TTS_EXPECT(eve::all(eve::is_negative(erf(T(-0.0)))));
   TTS_EXPECT(eve::all(eve::is_positive(erf(T(0.0)))));
 };
+
+
+//==================================================================================================
+// Tests for masked erf
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::erf)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-10000.0, 10000.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::erf[mask](a0),
+            eve::if_else(mask, eve::erf(a0), a0));
+};

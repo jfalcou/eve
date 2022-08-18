@@ -61,3 +61,18 @@ TTS_CASE_WITH("Check behavior of secpi on wide",
   TTS_ULP_EQUAL(secpi(a2), map(ref, a2), 2);
   TTS_ULP_EQUAL(secpi(a3), map(ref, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked secpi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::secpi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::secpi[mask](a0),
+            eve::if_else(mask, eve::secpi(a0), a0));
+};

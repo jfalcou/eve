@@ -67,4 +67,20 @@ ellint_rc_(EVE_SUPPORTS(cpu_), T x, T y) noexcept requires has_native_abi_v<T>
   }
   return if_else(x == inf(as(x)), zero, r * prefix);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+ellint_rc_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::ellint_rc, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+ellint_rc_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::ellint_rc), ts ...);
+}
 }

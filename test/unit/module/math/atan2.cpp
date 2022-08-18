@@ -121,3 +121,20 @@ TTS_CASE_TPL("Check behavior of pedantic(atan2)", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(pedantic(eve::atan2)(T(1.), T(-0.)), eve::pio_2(eve::as<T>()), 0.5);
   TTS_ULP_EQUAL(pedantic(eve::atan2)(T(1.), T(0.)), eve::pio_2(eve::as<T>()), 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked atan2
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::atan2)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::atan2[mask](a0, a1),
+            eve::if_else(mask, eve::atan2(a0, a1), a0));
+};

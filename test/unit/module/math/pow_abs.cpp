@@ -121,3 +121,20 @@ TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
     TTS_ULP_EQUAL(c, r, 2);
   }
 };
+
+
+//==================================================================================================
+// Tests for masked pow_abs
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::pow_abs)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::pow_abs[mask](a0, a1),
+            eve::if_else(mask, eve::pow_abs(a0, a1), a0));
+};

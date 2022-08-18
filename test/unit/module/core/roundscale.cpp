@@ -89,3 +89,18 @@ TTS_CASE_WITH("Check behavior of roundscale[cond](wide) on  floating types",
   TTS_EQUAL(eve::toward_zero(roundscale[t])(a0, 4),
             eve::if_else(t, eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0));
 };
+
+
+//==================================================================================================
+// Tests for masked roundscale
+//==================================================================================================
+// TTS_CASE_WITH("Check behavior of eve::masked(eve::roundscale)(eve::wide)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
+//               tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0,
+//                          M const& mask)
+// {
+//   TTS_IEEE_EQUAL(eve::roundscale[mask](a0, 4),
+//             eve::if_else(mask, eve::roundscale(a0, 4), a0));
+// };

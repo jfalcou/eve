@@ -40,3 +40,18 @@ TTS_CASE_WITH("Check behavior of atanpi on wide",
   TTS_ULP_EQUAL(
       eve::atanpi(a1), map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked atanpi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::atanpi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::atanpi[mask](a0),
+            eve::if_else(mask, eve::atanpi(a0), a0));
+};
