@@ -42,3 +42,18 @@ TTS_CASE_WITH("Check behavior of invgd on wide",
   TTS_ULP_EQUAL(invgd(a0), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a0), 4);
   TTS_ULP_EQUAL(invgd(a1), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a1), 4);
 };
+
+
+//==================================================================================================
+// Tests for masked invgd
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::invgd)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::invgd[mask](a0),
+            eve::if_else(mask, eve::invgd(a0), a0));
+};

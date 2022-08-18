@@ -47,3 +47,18 @@ TTS_CASE_WITH("Check behavior of asec on wide",
 
   TTS_ULP_EQUAL(eve::asec(a3), map(sasec, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked asec
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::asec)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::asec[mask](a0),
+            eve::if_else(mask, eve::asec(a0), a0));
+};

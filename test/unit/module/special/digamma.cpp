@@ -68,3 +68,18 @@ TTS_CASE_WITH("Check behavior of digamma on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(0.4, 4.0)))
 <typename T>(T const& a0) { TTS_ULP_EQUAL(eve::digamma(a0), T(map(eve::digamma, a0)), 2); };
+
+
+//==================================================================================================
+// Tests for masked digamma
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::digamma)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0.4, 4.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::digamma[mask](a0),
+            eve::if_else(mask, eve::digamma(a0), a0));
+};

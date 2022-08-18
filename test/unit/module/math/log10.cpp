@@ -62,3 +62,18 @@ TTS_CASE_TPL("Check return types of log10", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL(eve::log10(T(1000)), T(3));
   TTS_IEEE_EQUAL(eve::log10(T(1000000)), T(6));
 };
+
+
+//==================================================================================================
+// Tests for masked log10
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::log10)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::log10[mask](a0),
+            eve::if_else(mask, eve::log10(a0), a0));
+};

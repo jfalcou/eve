@@ -110,3 +110,20 @@ TTS_CASE_WITH("Check behavior of sub on signed types",
 };
 
 /// TODO waiting for interface simplifications to add scalar tests
+
+
+//==================================================================================================
+// Tests for masked sub
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sub)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sub[mask](a0, a1),
+            eve::if_else(mask, eve::sub(a0, a1), a0));
+};

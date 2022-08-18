@@ -83,3 +83,20 @@ TTS_CASE_WITH("Check behavior of negate(wide)",
   TTS_ULP_EQUAL(
       negate(a0, a1), map([](auto e, auto f) -> v_t { return e * eve::sign(f); }, a0, a1), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked negate
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::negate)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::negate[mask](a0, a1),
+            eve::if_else(mask, eve::negate(a0, a1), a0));
+};

@@ -131,3 +131,18 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
                 2);
   ;
 };
+
+
+//==================================================================================================
+// Tests for masked hypot
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::hypot)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::hypot[mask](a0),
+            eve::if_else(mask, eve::hypot(a0), a0));
+};

@@ -63,3 +63,18 @@ TTS_CASE_TPL("Check corner cases of cotd", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(cotd(T(500.0)), T(-1.19175359259420995870530807186041933693070040770853), 2);
   TTS_ULP_EQUAL(cotd(-T(500.0)), T(1.19175359259420995870530807186041933693070040770853), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked cotd
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cotd)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cotd[mask](a0),
+            eve::if_else(mask, eve::cotd(a0), a0));
+};

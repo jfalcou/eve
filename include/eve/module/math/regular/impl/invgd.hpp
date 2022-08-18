@@ -24,4 +24,20 @@ invgd_(EVE_SUPPORTS(cpu_), T x) noexcept
   }
   else return apply_over(invgd, x);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U>
+EVE_FORCEINLINE auto
+invgd_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::invgd, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+invgd_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+{
+  return mask_op(cond, d(eve::invgd), t);
+}
 }

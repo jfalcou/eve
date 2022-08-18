@@ -18,4 +18,20 @@ sph_bessel_y0_(EVE_SUPPORTS(cpu_), T x) noexcept
 {
   return if_else(x == inf(as(x)), zero, -cos(x) / x);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+sph_bessel_y0_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::sph_bessel_y0, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+sph_bessel_y0_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::sph_bessel_y0), ts ...);
+}
 }

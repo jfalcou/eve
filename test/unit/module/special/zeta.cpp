@@ -58,3 +58,18 @@ TTS_CASE_WITH("Check behavior of zeta on wide",
 
   TTS_IEEE_EQUAL(eve::zeta(T(1)), eve::nan(eve::as<T>()));
 };
+
+
+//==================================================================================================
+// Tests for masked zeta
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::zeta)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-10.0, 10.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::zeta[mask](a0),
+            eve::if_else(mask, eve::zeta(a0), a0));
+};

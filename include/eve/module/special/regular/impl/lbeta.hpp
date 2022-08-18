@@ -25,4 +25,20 @@ lbeta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept requires(has_native_abi_v<T>)
   auto y = a0 + a1;
   return lgamma(a0) + lgamma(a1) - lgamma(y);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+lbeta_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::lbeta, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+lbeta_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::lbeta), ts ...);
+}
 }

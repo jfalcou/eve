@@ -61,3 +61,18 @@ TTS_CASE_WITH("Check behavior of tanpi on wide",
   TTS_ULP_EQUAL(tanpi(a2), map(ref, a2), 2);
   TTS_ULP_EQUAL(tanpi(a3), map(ref, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked tanpi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::tanpi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::tanpi[mask](a0),
+            eve::if_else(mask, eve::tanpi(a0), a0));
+};

@@ -251,4 +251,20 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
   }
   else return apply_over(eve::cyl_bessel_j1, x);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+cyl_bessel_j1_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::cyl_bessel_j1, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+cyl_bessel_j1_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::cyl_bessel_j1), ts ...);
+}
 }

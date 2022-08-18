@@ -57,3 +57,18 @@ TTS_CASE_WITH("Check behavior of cospi on wide",
   TTS_ULP_EQUAL(cospi(a2), map(ref, a2), 2);
   TTS_ULP_EQUAL(cospi(a3), map(ref, a3), 2);
 };
+
+
+//==================================================================================================
+// Tests for masked cospi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::cospi)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::cospi[mask](a0),
+            eve::if_else(mask, eve::cospi(a0), a0));
+};

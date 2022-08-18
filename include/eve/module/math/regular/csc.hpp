@@ -62,13 +62,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct csc_;
-}
-template<> struct supports_conditional<tag::csc_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(csc_, csc);
 }
 

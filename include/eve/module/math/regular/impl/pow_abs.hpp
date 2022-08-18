@@ -85,4 +85,20 @@ pow_abs_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
   }
   else return apply_over(pow_abs, x, y);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U, value V>
+EVE_FORCEINLINE auto
+pow_abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& v) noexcept
+{
+  return mask_op(cond, eve::pow_abs, t, v);
+}
+
+template<conditional_expr C, decorator D, value U, value V>
+EVE_FORCEINLINE auto
+pow_abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t, V const& v) noexcept
+{
+  return mask_op(cond, d(eve::pow_abs), t, v);
+}
 }

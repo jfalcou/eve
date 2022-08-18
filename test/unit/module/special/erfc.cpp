@@ -55,3 +55,18 @@ TTS_CASE_WITH("Check behavior of erfc on wide",
   TTS_ULP_EQUAL(erfc(T(-0.)), eve::one(eve::as<T>()), 1);
   TTS_EXPECT(eve::all(eve::is_positive(erfc(T(eve::inf(eve::as<T>()))))));
 };
+
+
+//==================================================================================================
+// Tests for masked erfc
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::erfc)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-10000.0, 10000.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::erfc[mask](a0),
+            eve::if_else(mask, eve::erfc(a0), a0));
+};

@@ -108,3 +108,18 @@ TTS_CASE_TPL("Check expx2 2 parameters", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL(eve::expx2(T(-0.), T(-1)), T(1));
   TTS_ULP_EQUAL(eve::expx2(T(-1), T(-1)), eve::exp(-T(1)), 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked expx2
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::expx2)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::expx2[mask](a0),
+            eve::if_else(mask, eve::expx2(a0), a0));
+};

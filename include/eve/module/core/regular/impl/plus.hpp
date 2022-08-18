@@ -33,13 +33,14 @@ plus_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_v
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, real_value ... U>
 EVE_FORCEINLINE auto
 plus_(EVE_SUPPORTS(cpu_),
       C const& cond,
-      U const& t,
-      V const& f) noexcept requires compatible_values<U, V>
+      U ... t
+     ) noexcept
 {
-  return mask_op(cond, eve::add, t, f);
+  return mask_op(cond, eve::add, t...);
 }
+
 }

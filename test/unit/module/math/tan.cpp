@@ -64,3 +64,18 @@ TTS_CASE_WITH("Check behavior of tan on wide",
   TTS_ULP_EQUAL(tan(a3), map(ref, a3), 4);
   TTS_ULP_EQUAL(tan(a4), map(ref, a4), 4);
 };
+
+
+//==================================================================================================
+// Tests for masked tan
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::tan)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::tan[mask](a0),
+            eve::if_else(mask, eve::tan(a0), a0));
+};

@@ -191,4 +191,20 @@ digamma_(EVE_SUPPORTS(cpu_), T x) noexcept
   }
   else return apply_over(digamma, x);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+digamma_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::digamma, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+digamma_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::digamma), ts ...);
+}
 }

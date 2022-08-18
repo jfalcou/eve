@@ -97,4 +97,20 @@ gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept requires has_native_abi_v<T>
   if( eve::any(notdone) ) last_interval(uginc, notdone, res, x, a, !test);
   return res;
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+gamma_p_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::gamma_p, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+gamma_p_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::gamma_p), ts ...);
+}
 }

@@ -73,3 +73,18 @@ TTS_CASE_WITH("Check behavior of trunc on wide",
   }
   else { TTS_EQUAL(eve::trunc(a0), a0); }
 };
+
+
+//==================================================================================================
+// Tests for masked trunc
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::trunc)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-10000.0, 10000.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::trunc[mask](a0),
+            eve::if_else(mask, eve::trunc(a0), a0));
+};

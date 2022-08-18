@@ -33,6 +33,17 @@ namespace detail
                "[eve::rotl] Rotating by " << s << " is out of the range ]" << -l << ", " << l
                                           << "[.");
   }
+
+  template<conditional_expr C, typename T, typename S>
+  EVE_FORCEINLINE void
+  check(EVE_MATCH_CALL(regular_type, eve::tag::rotl_), C const&, T const&,
+        [[maybe_unused]] S const& s)
+  {
+    constexpr int l [[maybe_unused]] = sizeof(element_type_t<T>) * 8;
+    EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
+               "[eve::rotl] Rotating by " << s << " is out of the range ]" << -l << ", " << l
+                                          << "[.");
+  }
 }
 
 EVE_MAKE_CALLABLE(rotl_, rotl);

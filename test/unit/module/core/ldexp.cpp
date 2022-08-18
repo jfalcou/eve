@@ -147,3 +147,18 @@ TTS_CASE_WITH("Check behavior of ldexp on wide",
   TTS_EQUAL(pedantic(ldexp)(1.0, 1), 2.0);
   TTS_EQUAL(pedantic(ldexp)(1.0, -1), 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked ldexp
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::ldexp)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::ldexp[mask](a0, 4),
+            eve::if_else(mask, eve::ldexp(a0, 4), a0));
+};

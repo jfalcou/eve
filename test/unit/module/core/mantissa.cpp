@@ -58,3 +58,18 @@ TTS_CASE_TPL("Check behavior of mantissa on wide", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::mantissa(T(1.5)), T(1.5));
   TTS_EQUAL(eve::mantissa(T(2.5)), T(1.25));
 };
+
+
+//==================================================================================================
+// Tests for masked mantissa
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::mantissa)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::mantissa[mask](a0),
+            eve::if_else(mask, eve::mantissa(a0), a0));
+};

@@ -65,4 +65,20 @@ betainc_(EVE_SUPPORTS(cpu_), T x, T a, T b) noexcept requires(has_native_abi_v<T
                  allbits,
                  if_else(is_eqz(xx), zero, if_else(x == one(as(x)), one, oneminus[test](res))));
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, typename ... Ts>
+EVE_FORCEINLINE auto
+betainc_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+{
+  return mask_op(cond, eve::betainc, ts ...);
+}
+
+template<conditional_expr C, decorator D, typename  ... Ts>
+EVE_FORCEINLINE auto
+betainc_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+{
+  return mask_op(cond, d(eve::betainc), ts ...);
+}
 }

@@ -44,3 +44,20 @@ TTS_CASE_WITH("Check behavior of copysign on wide and scalar",
   TTS_EQUAL(eve::copysign(a0, val1),
             map([&](auto e) { return eve::abs(e) * eve::sign(val1); }, a0));
 };
+
+
+//==================================================================================================
+// Tests for masked copysign
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::copysign)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::copysign[mask](a0, a1),
+            eve::if_else(mask, eve::copysign(a0, a1), a0));
+};

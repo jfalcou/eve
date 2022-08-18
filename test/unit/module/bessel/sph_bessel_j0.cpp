@@ -60,3 +60,16 @@ TTS_CASE_WITH("Check behavior of sph_bessel_j0 on wide",
   TTS_ULP_EQUAL(eve__sph_bessel_j0(a1), map(std__sph_bessel_j0, a1), 10.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j0(a2), map(std__sph_bessel_j0, a2), 10.0);
 };
+
+
+//==================================================================================================
+// Tests for masked sph_bessel_j0
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sph_bessel_j0)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sph_bessel_j0[mask](a0),
+            eve::if_else(mask, eve::sph_bessel_j0(a0), a0));
+};

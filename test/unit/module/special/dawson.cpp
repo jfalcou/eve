@@ -70,3 +70,18 @@ TTS_CASE_TPL("Check behavior of dawson on wide", eve::test::simd::ieee_reals)
                                      eve::dawson(eve::nan(eve::as<float>()))};
   TTS_ULP_EQUAL(eve::dawson(w), r, 2);
 };
+
+
+//==================================================================================================
+// Tests for masked dawson
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::dawson)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(0.0, 100.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::dawson[mask](a0),
+            eve::if_else(mask, eve::dawson(a0), a0));
+};

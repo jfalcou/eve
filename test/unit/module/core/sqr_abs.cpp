@@ -39,3 +39,18 @@ TTS_CASE_WITH("Check behavior of eve::sqr_abs(eve::wide)",
 
   TTS_EQUAL(sqr_abs(a0), map([](auto e) -> v_t { return e * e; }, a0));
 };
+
+
+//==================================================================================================
+// Tests for masked sqr_abs
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sqr_abs)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sqr_abs[mask](a0),
+            eve::if_else(mask, eve::sqr_abs(a0), a0));
+};

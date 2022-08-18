@@ -29,4 +29,7 @@ TTS_CASE_WITH ( "Check behavior of ceil on wide"
 {
   using z_t = eve::as_complex_t<T>;
   TTS_EQUAL( eve::ceil(z_t{a0,a1}),z_t(eve::ceil(a0), eve::ceil(a1)) );
+  auto zz = z_t{a0,a1};
+  TTS_EQUAL( eve::ceil[a0 > 0](zz), eve::if_else(a0 > 0, eve::ceil(z_t{a0,a1}), zz));
+
 };

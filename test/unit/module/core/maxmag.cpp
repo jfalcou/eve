@@ -96,3 +96,20 @@ TTS_CASE_TPL("Check values of maxmag", eve::test::simd::ieee_reals)
   TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::maxmag)(T(-0.), T(0)))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::maxmag)(T(0), T(-0.)))));
 };
+
+
+//==================================================================================================
+// Tests for masked maxmag
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::maxmag)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::maxmag[mask](a0, a1),
+            eve::if_else(mask, eve::maxmag(a0, a1), a0));
+};

@@ -77,4 +77,20 @@ nthroot_(EVE_SUPPORTS(cpu_), T x, T n) noexcept
   y         = if_else(is_negative(x) && is_even(an), allbits, y * sign(x));
   return if_else(is_ltz(n), rec(y), y);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U, integral_value N>
+EVE_FORCEINLINE auto
+nthroot_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, N const& n) noexcept
+{
+  return mask_op(cond, eve::nthroot, t, n);
+}
+
+template<conditional_expr C, decorator D, value U, integral_value N>
+EVE_FORCEINLINE auto
+nthroot_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t, N const& n) noexcept
+{
+  return mask_op(cond, d(eve::nthroot), t, n);
+}
 }

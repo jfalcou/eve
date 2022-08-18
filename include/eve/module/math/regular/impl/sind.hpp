@@ -53,4 +53,20 @@ sind_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
   }
   else return apply_over(sind, a0);
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked cases
+template<conditional_expr C, value U>
+EVE_FORCEINLINE auto
+sind_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+{
+  return mask_op(cond, eve::sind, t);
+}
+
+template<conditional_expr C, decorator D, value U>
+EVE_FORCEINLINE auto
+sind_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+{
+  return mask_op(cond, d(eve::sind), t);
+}
 }

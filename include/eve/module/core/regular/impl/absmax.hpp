@@ -41,8 +41,8 @@ absmax_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native
 //================================================================================================
 template<decorator D, conditional_expr C, real_value U, real_value V>
 EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept requires
-    compatible_values<U, V>
+absmax_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
+requires(std::convertible_to<U, decltype(absmax(t, f))>)
 {
   return mask_op(cond, D()(eve::absmax), t, f);
 }
@@ -52,7 +52,8 @@ EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_),
         C const& cond,
         U const& t,
-        V const& f) noexcept requires compatible_values<U, V>
+        V const& f) noexcept
+requires(std::convertible_to<U, decltype(absmax(t, f))>)
 {
   return mask_op(cond, eve::absmax, t, f);
 }
@@ -66,4 +67,15 @@ absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 {
   return eve::abs(eve::max(a0, a1, args...));
 }
+
+// -----------------------------------------------------------------------------------------------
+// Masked case
+template<conditional_expr C, value T0, value T1, value... Ts>
+EVE_FORCEINLINE auto
+absmax_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
+requires(std::convertible_to<T0, decltype(absmax(a0, a1, args...))>)
+{
+  return mask_op(cond, eve::absmax, a0, a1, args...);
+}
+
 }

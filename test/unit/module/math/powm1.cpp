@@ -89,3 +89,20 @@ TTS_CASE_TPL("Check  powm1", eve::test::simd::ieee_reals)
     TTS_ULP_EQUAL(c, dec(r), 2);
   }
 };
+
+
+//==================================================================================================
+// Tests for masked powm1
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::powm1)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::powm1[mask](a0, a1),
+            eve::if_else(mask, eve::powm1(a0, a1), a0));
+};

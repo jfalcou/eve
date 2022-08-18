@@ -61,13 +61,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct acos_;
-}
-template<> struct supports_conditional<tag::acos_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(acos_, acos);
 }
 

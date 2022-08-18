@@ -45,3 +45,18 @@ TTS_CASE_TPL("Check behavior of stirling on wide", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::round(stirling(T(2))), T(1), 0.5);
   TTS_ULP_EQUAL(eve::round(stirling(T(3))), T(2), 0.5);
 };
+
+
+//==================================================================================================
+// Tests for masked stirling
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::stirling)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(10.0, 100.0),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::stirling[mask](a0),
+            eve::if_else(mask, eve::stirling(a0), a0));
+};

@@ -44,3 +44,18 @@ TTS_CASE_WITH("Check behavior of sinpic on wide",
   TTS_ULP_EQUAL(sinpic(a0), map(ref, a0), 3);
   TTS_ULP_EQUAL(sinpic(a1), map(ref, a1), 3);
 };
+
+
+//==================================================================================================
+// Tests for masked sinpic
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::sinpic)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sinpic[mask](a0),
+            eve::if_else(mask, eve::sinpic(a0), a0));
+};

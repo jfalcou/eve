@@ -84,13 +84,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct atan2pi_;
-}
-template<> struct supports_conditional<tag::atan2pi_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(atan2pi_, atan2pi);
 }
 

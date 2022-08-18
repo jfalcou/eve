@@ -63,13 +63,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct cotpi_;
-}
-template<> struct supports_conditional<tag::cotpi_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(cotpi_, cotpi);
 }
 

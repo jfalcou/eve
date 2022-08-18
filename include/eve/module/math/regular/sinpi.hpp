@@ -63,13 +63,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-namespace tag
-{
-  struct sinpi_;
-}
-template<> struct supports_conditional<tag::sinpi_> : std::false_type
-{};
-
 EVE_MAKE_CALLABLE(sinpi_, sinpi);
 }
 

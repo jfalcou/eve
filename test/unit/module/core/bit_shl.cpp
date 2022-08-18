@@ -61,3 +61,17 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, scalar)",
   TTS_EQUAL(bit_shl(a0, val), map([&](auto e) -> v_t { return e << val; }, a0));
   TTS_EQUAL(bit_shl[test](a0, val), eve::if_else(test, eve::bit_shl(a0, val), a0));
 };
+
+//==================================================================================================
+// Tests for masked bit_shl
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_shl)(eve::wide)",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::bit_shl[mask](a0, 2),
+            eve::if_else(mask, eve::bit_shl(a0, 2), a0));
+};
