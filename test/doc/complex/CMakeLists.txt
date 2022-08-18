@@ -4,6 +4,10 @@
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 
+make_unit( "doc.complex" acos.cpp                  )
+make_unit( "doc.complex" acosh.cpp                 )
+make_unit( "doc.complex" asin.cpp                  )
+make_unit( "doc.complex" asinh.cpp                 )
 make_unit( "doc.complex" exp_i.cpp                 )
 make_unit( "doc.complex" exp_ipi.cpp               )
 make_unit( "doc.complex" i.cpp                     )
