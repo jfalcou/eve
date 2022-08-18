@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T acos(T x) noexcept;                                       //1
+//!      T acos(T x) noexcept;                                    //1
 //!
 //!      template< eve::floating_value T >
 //!      eve::complex<T> acos(eve::complex<T> z) noexcept;        //2
@@ -40,7 +40,6 @@ namespace eve
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_real_value).
-//!
 //!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
