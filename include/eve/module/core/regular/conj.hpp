@@ -29,17 +29,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T conj(T x) noexcept;
+//!      T conj(T z) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `z` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!   **Return value**
 //!
-//!     for real inputs the call reduces to identity.
+//!     Returns the conjugate. For real inputs the call reduces to identity.
 //!
 //!  @groupheader{Example}
 //!

@@ -3,6 +3,7 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
+add_subdirectory(pedantic)
 
 make_unit( "doc.complex" abs.cpp                   )
 make_unit( "doc.complex" acos.cpp                  )
