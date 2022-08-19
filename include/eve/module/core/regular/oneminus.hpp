@@ -35,11 +35,11 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!    **Return value**
 //!
-//!    The value of `eve::one(as(x))-x` is returned.
+//!    The value of `1-x` is returned.
 //!
 //!    @note
 //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
