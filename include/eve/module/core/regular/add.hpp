@@ -37,14 +37,18 @@ namespace eve
 //!
 //!     * `xs ...` :  [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The value of the sum of the arguments is returned.
+//!     The value of the sum of the arguments is returned.
 //!
 //!   @note
 //!
-//!     Take care that for floating entries, the addition is only 'almost' associative.
-//!     This call performs additions in reverse incoming order.
+//!     * Take care that for floating entries, the addition is only 'almost' associative.
+//!       This call performs additions in reverse incoming order.
+//!
+//!     * Although the infix notation with `+` is supported for
+//!       two parameters, the `+` operator on
+//!       standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
 //!

@@ -28,14 +28,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U, eve::floating_value V >
+//!      template< eve::value T, eve::value U, eve::floating_value V >
 //!      eve::common_compatible_t<T, U> lerp(T x, U y, V t) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `t`:  [floating arguments](@ref eve::floating_value).
+//!     * `x`, `y`:   [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
+//!     * `t`:  [real floating](@ref eve::floating_value).  argument
 //!
 //!    **Return value**
 //!

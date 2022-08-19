@@ -29,14 +29,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value T >
+//!      template< eve::real_value T, eve::real_value T >
 //!      T copysign(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [real](@ref eve::value) arguments.
+//!     * `x`, `y` :  [real](@ref eve::real_value) arguments.
 //!
 //!    **Return value**
 //!
