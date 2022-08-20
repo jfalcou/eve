@@ -74,7 +74,4 @@ TTS_CASE_WITH ( "Check behavior of pow on wide"
   TTS_ULP_EQUAL( eve::pow(ce_t(nan, 0), ce_t(0, 0)), ce_t(1, 0), 10);
   TTS_ULP_EQUAL( eve::pow(ce_t(nan, 1), ce_t(0, 0)), ce_t(1, 0), 10);
   TTS_ULP_EQUAL( eve::pow(ce_t(0, 0),  ce_t(0, 0)), ce_t(1, 0), 10);
-//  TTS_ULP_EQUAL( eve::pow(T(0),  ce_t(0, 0)), ce_t(1, 0), 10);
-   TTS_ULP_EQUAL( eve::pow( ce_t(0, 0), 0u), ce_t(1, 0), 10);
-   std::cout <<  eve::pow( ce_t(0, 0), T(0)) << std::endl;
 };
