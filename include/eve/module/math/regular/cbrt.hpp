@@ -36,28 +36,15 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
+//!     * `x` :  [real](@ref eve::value) argument.
 //!
 //! **Return value**
 //!
 //!   Returns a [elementwise](@ref glossary_elementwise) cubic root value of the input.
 //!
-//!   @warning
-//!      cbrt for complex inputs is NOT eve::pow(x, eve:third(as(x))). It only provides an extension
-//!      to the complex plane of the real cbrt. The branch cut is \f$[-\infty, \infty]-\{0}\f$
-//!      along he imaginary axis  and fold the left half-plane towards the negative real axis
-//!      and the right half-plane towards the positive real axis.
-//!      All this being non standard.
-//!
 //!  @groupheader{Example}
 //!
-//!   **real version**
-//!
 //!  @godbolt{doc/math/cbrt.cpp}
-//!
-//!   **complex version**
-//!
-//!  @godbolt{doc/complex/cbrt.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

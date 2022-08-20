@@ -548,24 +548,3 @@ namespace eve::detail
 #include <eve/module/complex/regular/detail/asin.hpp>
 #include <eve/module/complex/regular/detail/atanh.hpp>
 #include <eve/module/complex/regular/detail/pow.hpp>
-namespace eve::detail
-{
-  //===-------------------------------------------------------------------------------------------
-  //=== cbrt
-  //===-------------------------------------------------------------------------------------------
-
-  template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::cbrt_
-                                            , Z const& z ) noexcept
-  {
-    using T = decltype(real(z));
-    auto test = is_nez(imag(z));
-    auto cbrtabs = eve::cbrt(eve::abs(z));
-    auto scbrtabs = copysign(cbrtabs, real(z));
-    Z res(scbrtabs, 0);
-    if (none(test)) return res;
-    auto cis_3  = exp_i(arg(z)/3);
-    auto cis_3b = exp_i(arg(z)/3)*exp_ipi(copysign(T(2)/T(3),imag(z)));
-    return if_else(test, cbrtabs*cis_3*if_else(is_positive(real(z)), one, cis_3b), res);
-  }
-}
