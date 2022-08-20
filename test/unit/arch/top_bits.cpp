@@ -41,8 +41,9 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
   using tb_storage  = typename eve::top_bits<logical>::storage_type;
   using ABI         = typename logical::abi_type;
 
-       if constexpr (eve::has_aggregated_abi_v<logical>)    TTS_EXPECT(expect_array(tb_storage{}));
-  else if constexpr (eve::current_api == eve::avx512)
+       if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(tb_storage{}));
+  else if constexpr (eve::current_api >= eve::sve      ) TTS_TYPE_IS(tb_storage, eve::logical<eve::wide<v_t>>);
+  else if constexpr (eve::current_api >= eve::avx512   )
   {
     constexpr std::ptrdiff_t min_size = sizeof(v_t) == 1 ? 16 : 8;
     using min_logical = eve::logical<eve::wide<v_t, eve::fixed<min_size>>>;
@@ -123,6 +124,7 @@ TTS_CASE_TPL( "Check top_bits::set", eve::test::simd::all_types)
     TTS_EQUAL(expected, eve::detail::to_logical(actual));
   }
 };
+
 TTS_CASE_TPL("Check top_bits from ignore_*", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -210,9 +212,36 @@ TTS_CASE_TPL("Check top_bits bitwise operators", eve::test::simd::all_types)
 
   TTS_EQUAL(eve::top_bits<logical>{eve::ignore_none}, ~eve::top_bits<logical>{eve::ignore_all});
 
-  if constexpr( !eve::top_bits<logical>::is_aggregated )
+  if constexpr( eve::top_bits<logical>::static_bits_size <= 64 )
   {
-    TTS_EQUAL(0u, (~eve::top_bits<logical>{logical{true}}).as_int());
+    TTS_EQUAL(0u, (~eve::top_bits<logical> {logical {true}}).as_int());
+  }
+};
+
+TTS_CASE_TPL("Check as_int()", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using logical                   = eve::logical<T>;
+  using tb = eve::top_bits<logical>;
+
+  if constexpr( tb::static_bits_size <= 64 )
+  {
+    tb x {};
+
+    TTS_EQUAL(x.as_int(), 0u);
+
+    x = tb{logical {true}};
+
+    TTS_EQUAL(x.as_int(), eve::detail::set_lower_n_bits<std::uint64_t>(tb::static_bits_size));
+
+    x = {};
+    x.set(0, true);
+
+    TTS_EQUAL(x.as_int(), eve::detail::set_lower_n_bits<std::uint64_t>(tb::bits_per_element));
+  }
+  else
+  {
+    TTS_PASS("No as_int()");
   }
 };
 
@@ -259,4 +288,15 @@ TTS_CASE_TPL("Check top_bits slicing", eve::test::simd::all_types)
       }
     }
   }
+};
+
+TTS_CASE_TPL("Check top_bits are printable", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using logical = eve::logical<T>;
+  eve::top_bits     x {logical {true}};
+  std::stringstream s;
+  s << x;
+  (void)s;
+  TTS_PASS("We don't agree on the value between platfroms");
 };
