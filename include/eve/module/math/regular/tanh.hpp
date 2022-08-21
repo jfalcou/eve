@@ -68,11 +68,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!    **real version**
+//!    **Real version**
 //!
 //!  @godbolt{doc/math/tanh.cpp}
 //!
-//!   **complex version**
+//!   **Complex version**
 //!
 //!  @godbolt{doc/complex/tanh.cpp}
 //!  @}
