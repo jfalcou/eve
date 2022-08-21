@@ -76,25 +76,16 @@ namespace eve::detail
   template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
   slice(logical<wide<T,N>> const &a, Slice const &) noexcept
-      requires x86_abi<abi_t<T, N>>
+      requires x86_abi<abi_t<T, N>> && ( !abi_t<T, N>::is_wide_logical )
   {
-    if constexpr( !abi_t<T, N>::is_wide_logical )
-    {
-      using type  = logical<wide<T, typename N::split_type>>;
-      using mask  = typename type::storage_type;
-      using value = typename mask::type;
+    using type  = logical<wide<T, typename N::split_type>>;
+    using mask  = typename type::storage_type;
+    using value = typename mask::type;
 
-      auto v = a.storage().value;
+    auto v = a.storage().value;
 
-      if constexpr( !Slice::value ) return mask{static_cast<value>(v)};
-      else                          return mask{static_cast<value>(v >> type::size())};
-    }
-    else
-    {
-      using l_t = logical<wide<T, typename N::split_type>>;
-      using s_t = typename l_t::storage_type;
-      return l_t( bit_cast(a.mask().slice(Slice{}).storage(), as<s_t>()) );
-    }
+    if constexpr( !Slice::value ) return mask {static_cast<value>(v)};
+    else return mask {static_cast<value>(v >> type::size())};
   }
 
   //================================================================================================
@@ -110,7 +101,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE auto slice(logical<wide<T,N>> const &a) noexcept
-      requires x86_abi<abi_t<T, N>>
+      requires x86_abi<abi_t<T, N>> && (!abi_t<T, N>::is_wide_logical)
   {
     std::array<logical<wide<T, typename N::split_type>>,2> that{slice(a, lower_), slice(a, upper_)};
     return that;

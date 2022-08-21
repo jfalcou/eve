@@ -60,8 +60,8 @@ to_logical(C c, eve::as<T>) noexcept
   using l_t = typename as_logical<T>::type;
   using i_t = as_integer_t<typename as_logical_t<T>::mask_type>;
 
-  if constexpr( std::same_as<C, ignore_all_> ) return l_t {true};
-  else if constexpr( std::same_as<C, ignore_none_> ) return l_t {false};
+  if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
+  else if constexpr( std::same_as<C, ignore_none_> ) return l_t {true};
   else if constexpr( !eve::use_complete_storage<l_t> )
   {
     // Use the most full type to be sure to fill outside values of small wide with false

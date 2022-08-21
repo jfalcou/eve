@@ -294,7 +294,7 @@ namespace detail
 
     // if possible, return top_bits as an int.
     EVE_FORCEINLINE constexpr auto as_int() const
-      requires ( static_bits_size <= 64 )
+      requires (static_bits_size <= 64)
     {
       if constexpr ( is_aggregated )
       {
@@ -311,8 +311,7 @@ namespace detail
 
     EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
 
-    template<typename X>
-    EVE_FORCEINLINE bool operator==(top_bits<X> const& b) const
+    EVE_FORCEINLINE bool operator==(top_bits const& b) const
     {
       if constexpr ( !is_aggregated ) return storage == b.storage;
       else

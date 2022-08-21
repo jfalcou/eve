@@ -26,10 +26,10 @@ namespace eve
     static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 8);
 
     template<typename Type>
-    static constexpr std::size_t expected_cardinal = bytes / sizeof(Type);
+    static constexpr std::size_t fundamental_cardinal = bytes / sizeof(Type);
 
     template<typename Type>
-    static constexpr std::size_t fundamental_cardinal = 8 / sizeof(Type);
+    static constexpr std::size_t expected_cardinal = fundamental_cardinal<Type>;
   };
 
   struct arm_sve_128_ : sve_abi_<128> {};

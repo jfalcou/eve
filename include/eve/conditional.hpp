@@ -147,9 +147,9 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const& tgt) const
     {
-      return eve::as_logical_t<T>(false);
+      return detail::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
@@ -204,9 +204,9 @@ namespace eve
     EVE_FORCEINLINE constexpr auto else_([[maybe_unused]] V v) const  {  return *this;  }
 
     //! Compute the eve::logical_value associated to the current conditional
-    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&) const
+    template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const& tgt) const
     {
-      return eve::as_logical_t<T>(true);
+      return detail::to_logical(*this, tgt);
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const

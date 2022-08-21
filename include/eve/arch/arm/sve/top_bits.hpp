@@ -7,10 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/arm/sve/sve_true.hpp>
+#include <eve/detail/meta.hpp>
+
 namespace eve
 {
+
 template<logical_simd_value Logical>
-requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bits<Logical>
+requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<Logical>
 {
   using logical_type = Logical;
   using scalar_type  = typename as_arithmetic_t<logical_type>::value_type;
@@ -20,22 +24,9 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
   static constexpr bool           is_aggregated = false;
 
   using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
+  using storage_type = logical<wide<scalar_type>>;
 
-  private:
-  static constexpr std::ptrdiff_t storage_cardinal = []
-  {
-    std::ptrdiff_t min_size = sizeof(scalar_type) == 1 ? 16 : 8;
-    return std::max(min_size, static_size);
-  }();
-
-  public:
-  using storage_type = eve::logical<eve::wide<scalar_type, eve::fixed<storage_cardinal>>>;
-
-  private:
-  using raw_storage_type = typename storage_type::storage_type;
-
-  public:
-  static constexpr std::ptrdiff_t bits_per_element = 1;
+  static constexpr std::ptrdiff_t bits_per_element = sizeof(scalar_type);
   static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
   static constexpr bool           is_cheap         = true;
 
@@ -55,10 +46,9 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
   }
 
   // -- constructor(ignore)
-  template<relative_conditional_expr C> EVE_FORCEINLINE constexpr explicit top_bits(C c)
-  {
-    storage = detail::cond_to_int<static_size, bits_per_element, raw_storage_type>(c);
-  }
+  template<relative_conditional_expr C>
+  EVE_FORCEINLINE constexpr explicit top_bits(C c) : storage {c.mask(eve::as<logical_type> {})}
+  {}
 
   // -- constructor: logical + ignore
 
@@ -74,12 +64,11 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
   kumi::tuple<top_bits<half_logical>, top_bits<half_logical>> slice() const
       requires(Logical::size() > 1)
   {
-    auto [l, h] = logical_type{storage.storage()}.slice();
+    auto [l, h] = to_logical(*this).slice();
     return {top_bits<half_logical> {l}, top_bits<half_logical> {h}};
   }
 
   template<std::size_t Slice> EVE_FORCEINLINE top_bits<half_logical> slice(slice_t<Slice>) const
-    requires(Logical::size() > 1)
   {
     auto [l, h] = slice();
 
@@ -94,14 +83,27 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
 
   EVE_FORCEINLINE constexpr explicit operator bool()
   {
-    return storage.storage() != raw_storage_type {0};
+    return svptest_any(detail::sve_true<scalar_type>(), storage);
   }
 
-  EVE_FORCEINLINE constexpr auto as_int() const { return storage.storage().value; }
+  EVE_FORCEINLINE constexpr auto as_int() const requires(static_bits_size <= 64)
+  {
+    using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
+    uint_type raw;
+    std::memcpy(&raw, &storage, sizeof(uint_type));
+
+    uint_type r = raw;
+
+    if constexpr( bits_per_element >= 8 ) r |= (raw << 4) | (raw << 5) | (raw << 6) | (raw << 7);
+    if constexpr( bits_per_element >= 4 ) r |= (raw << 2) | (raw << 3);
+    if constexpr( bits_per_element >= 2 ) r |= (raw << 1);
+
+    return r;
+  }
 
   EVE_FORCEINLINE constexpr bool operator==(top_bits const& x) const
   {
-    return storage.storage() == x.storage.storage();
+    return !svptest_any(detail::sve_true<scalar_type>(), storage != x.storage);
   }
 
   EVE_FORCEINLINE top_bits& operator&=(top_bits x)
@@ -118,7 +120,7 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
 
   EVE_FORCEINLINE top_bits& operator^=(top_bits x)
   {
-    storage.storage() ^= x.storage.storage();
+    storage = storage != x.storage;
     return *this;
   }
 
@@ -129,12 +131,14 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
 
   // streaming ----------------------------------
 
-  EVE_FORCEINLINE friend std::ostream&
-  operator<<(std::ostream& o,
-             top_bits      x) requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>)
+  EVE_FORCEINLINE friend std::ostream& operator<<(std::ostream& o, const top_bits& x)
   {
-    return o << x.storage.storage();
+    if constexpr( static_bits_size <= 64 ) return o << x.as_int();
+    else
+    {
+      auto [l, h] = slice();
+      return o << '[' << l << ", " << h << ']';
+    }
   }
 };
-
 }
