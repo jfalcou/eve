@@ -25,10 +25,10 @@ to_bits(sve_ const&, logical<wide<T, N>> p) noexcept
 
   constexpr auto c = categorize<type>();
 
-  if constexpr( match(c, category::uint8) ) return svdup_u8_z(p, (e_t)-1);
-  else if constexpr( match(c, category::uint16) ) return svdup_u16_z(p, (e_t)-1);
-  else if constexpr( match(c, category::uint32) ) return svdup_u32_z(p, (e_t)-1);
-  else if constexpr( match(c, category::uint64) ) return svdup_u64_z(p, (e_t)-1);
+  if constexpr( match(c, category::uint8) ) return type{svdup_u8_z(p, (e_t)-1)};
+  else if constexpr( match(c, category::uint16) ) return type{svdup_u16_z(p, (e_t)-1)};
+  else if constexpr( match(c, category::uint32) ) return type{svdup_u32_z(p, (e_t)-1)};
+  else if constexpr( match(c, category::uint64) ) return type{svdup_u64_z(p, (e_t)-1)};
 }
 
 //================================================================================================
