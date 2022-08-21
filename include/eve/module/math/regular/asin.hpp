@@ -62,11 +62,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **real version**
+//!   **Real version**
 //!
 //!  @godbolt{doc/math/asin.cpp}
 //!
-//!   **complex version**
+//!   **Complex version**
 //!
 //!  @godbolt{doc/complex/asin.cpp}
 //!  @}

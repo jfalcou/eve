@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   Returns a [elementwise](@ref glossary_elementwise) cubic root value of the input.
+//!   Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
 //!
 //!  @groupheader{Example}
 //!

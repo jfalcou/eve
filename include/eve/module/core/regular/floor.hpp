@@ -38,14 +38,14 @@ namespace eve
 //!
 //!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The largest integer not greater than `x`.
+//!       The largest integer not greater than `x`.
 //!
-//!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!      `FE_TOWARDZERO`. This function object implements the `FE_DOWNWARD` version.
+//!       The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!       `FE_TOWARDZERO`. This function object implements the `FE_DOWNWARD` version.
 //!
-//!    For complex inputs the floor operation is applied to both real and imaginary parts.
+//!       For complex inputs the floor operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!

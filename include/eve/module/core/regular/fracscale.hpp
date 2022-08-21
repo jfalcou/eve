@@ -21,6 +21,8 @@ namespace eve
 //!   @var fracscale
 //!   @brief Computes the reduced part of the scaled input.
 //!
+//!   The call is equivalent to `a0-roundscale(a0,scale)`
+//!
 //!   **Defined in Header**
 //!
 //!   @code
@@ -47,7 +49,6 @@ namespace eve
 //!      Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
 //!      The number of fraction bits retained is specified by scale. By default the internal
 //!      rounding after scaling is done to nearest integer.
-//!      The call is equivalent to `a0-roundscale(a0,scale)`
 //!
 //!  @groupheader{Example}
 //!

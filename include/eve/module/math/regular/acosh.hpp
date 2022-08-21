@@ -75,11 +75,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **real version**
+//!   **Real version**
 //!
 //!  @godbolt{doc/math/acosh.cpp}
 //!
-//!   **complex version**
+//!   **Complex version**
 //!
 //!  @godbolt{doc/complex/acosh.cpp}
 //!

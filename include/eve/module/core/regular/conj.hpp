@@ -39,7 +39,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     Returns the conjugate. For real inputs the call reduces to identity.
+//!     Returns the conjugate of its argument. For real inputs the call reduces to identity.
 //!
 //!  @groupheader{Example}
 //!

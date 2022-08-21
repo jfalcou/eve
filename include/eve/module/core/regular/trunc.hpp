@@ -38,14 +38,14 @@ namespace eve
 //!
 //!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The integral part of `x` with the same sign as  `x`.
+//!     The integral part of `x` with the same sign as  `x`.
 //!
-//!    For complex inputs the trunc operation is applied to both real and imaginary parts.
+//!     For complex inputs the trunc operation is applied to both real and imaginary parts.
 //!
-//!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!      `FE_TOWARDZERO`. This function object implements the `FE_TOWARDZERO` version.
+//!     The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!     `FE_TOWARDZERO`. This function object implements the `FE_TOWARDZERO` version.
 //!
 //!  @groupheader{Example}
 //!

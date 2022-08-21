@@ -38,14 +38,14 @@ namespace eve
 //!
 //!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The smallest integer not less than `x`.
+//!     The smallest integer not less than `x`.
 //!
-//!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!      `FE_TOWARDZERO`. This function object implements the `FE_UPWARD` version.
+//!     The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!     `FE_TOWARDZERO`. This function object implements the `FE_UPWARD` version.
 //!
-//!    For complex inputs the ceil operation is applied to both real and imaginary parts.
+//!     For complex inputs the ceil operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!
