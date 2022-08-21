@@ -30,27 +30,40 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T coth(T x) noexcept;
+//!      T coth(T x) noexcept;                                    //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> coth(eve::complex<T> z) noexcept;        //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
-//!
+//!   *  `x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
+///!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) hyperbolic cotangent of the input.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic cotangent of the input.
 //!
-//! In particular:
+//!      In particular:
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
-//!   * If the element is a `NaN`, `NaN` is returned.
+//!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+//!      * If the element is a `NaN`, `NaN` is returned.
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
+//!      of the inverse of the hyperbolic tangent of the input.
 //!
 //!  @groupheader{Example}
+/!!
+//!   **real version**
 //!
 //!  @godbolt{doc/math/coth.cpp}
+//!
+//!   **complex version**
+//!
+//!  @godbolt{doc/complex/coth.cpp}
 //!
 //!  @}
 //================================================================================================

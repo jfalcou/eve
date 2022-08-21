@@ -31,12 +31,15 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T csch(T x) noexcept;
-//!   }
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> csch(eve::complex<T> z) noexcept;        //2
+///!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating real value](@ref eve::floating_real_value).
 //!
 //! **Return value**
 //!

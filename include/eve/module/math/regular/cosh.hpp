@@ -30,27 +30,57 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T cosh(T x) noexcept;
+//!      T cosh(T x) noexcept;                                    //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> cosh(eve::complex<T> z) noexcept;        //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
 //!
-//! In particular:
+//!      In particular:
 //!
-//!   * If the element is \f$\pm0\f$, 1 is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
-//!   * If the element is a `NaN`, `NaN` is returned.
+//!      * If the element is \f$\pm0\f$, 1 is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
+//!      * If the element is a `NaN`, `NaN` is returned.
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
+//!      of the hyperbolic cosine of the input.
+//!
+//!      * for every z: `eve::cosh(eve::conj(z)) == eve::conj(std::cosh(z))`
+//!      * for every z: `eve::cosh(-z)           == eve::cosh(z)`
+//!      *  If z is \f$0\f$, the result is \f$1\f$
+//!      *  If z is \f$i \infty\f$, the result is \f$NaN\f$
+//!      *  If z is \f$i NaN\f$, the result is \f$NaN\f$
+//!      *  If z is \f$x+i \infty\f$ (for any finite non-zero x), the result is \f$NaN+i NaN\f$
+//!      *  If z is \f$x+i NaN\f$ (for any finite non-zero x), the result is \f$NaN+i NaN\f$
+//!      *  If z is \f$\infty+i 0\f$, the result is \f$\infty+i 0\f$
+//!      *  If z is \f$\infty,y\f$ (for any finite non-zero y), the result is \f$\infty \mathrm{cis}\times(y)\f$
+//!      *  If z is \f$\infty+i \infty\f$, the result is \f$\pm \infty+i NaN\f$  (the sign of the real part is unspecified)
+//!      *  If z is \f$\infty+i NaN\f$, the result is \f$\infty+i NaN\f$
+//!      *  If z is \f$NaN\f$, the result is \f$NaN\f$
+//!      *  If z is \f$NaN+i y\f$ (for any finite non-zero y), the result is \f$NaN+i NaN\f$
+//!      *  If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$
+//!
+//!      where \f$\mathrm{cis}(y) =  \cos(y)+i\sin(y)\f$
 //!
 //!  @groupheader{Example}
 //!
+//!    **real version**
+//!
 //!  @godbolt{doc/math/cosh.cpp}
+//!
+//!   **complex version**
+//!
+//!  @godbolt{doc/complex/cosh.cpp}
 //!
 //!  @}
 //================================================================================================
