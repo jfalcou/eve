@@ -425,7 +425,7 @@ log_abs_gamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
         if( nb > 0 )
         {
           // treat negative large with reflection
-          r = large_negative(q);
+          r = helpers::large_negative(q);
           if( nb >= T::size() ) return if_else(inf_result, inf(as<T>()), r);
         }
         T r1 = other(a0);

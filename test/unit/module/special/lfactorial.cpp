@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::lfactorial on wide", eve::test
     TTS_EQUAL(eve::lfactorial(T(5)), eve::log(d_t(120)));
     TTS_EQUAL(eve::lfactorial(T(0)), eve::log(d_t(1)));
     TTS_EQUAL(eve::lfactorial(T(1)), eve::log(d_t(1)));
-    if constexpr( sizeof(v_t) > 1 ) TTS_EQUAL(eve::lfactorial(T(200)), eve::lgamma(d_t(201)));
+    if constexpr( sizeof(v_t) > 1 ) TTS_EQUAL(eve::lfactorial(T(200)), eve::log_abs_gamma(d_t(201)));
   }
   else
   {
@@ -57,6 +57,6 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::lfactorial on wide", eve::test
     TTS_EQUAL(eve::lfactorial(T(5)), eve::log(T(120)));
     TTS_EQUAL(eve::lfactorial(T(0)), eve::log(T(1)));
     TTS_EQUAL(eve::lfactorial(T(1)), eve::log(T(1)));
-    TTS_EQUAL(eve::lfactorial(T(200)), eve::lgamma(T(201)));
+    TTS_EQUAL(eve::lfactorial(T(200)), eve::log_abs_gamma(T(201)));
   }
 };

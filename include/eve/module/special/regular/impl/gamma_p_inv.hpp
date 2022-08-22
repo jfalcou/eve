@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/erfc_inv.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve::detail
 {
@@ -41,7 +41,7 @@ gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept requires has_native_abi_v<T>
   auto x0 = x;
   int  i  = 10;
   if( eve::none(notdone) ) return x;
-  auto dgamma_p = [](auto x, auto k) { return exp(dec(k) * log(x) - x - lgamma(k)); };
+  auto dgamma_p = [](auto x, auto k) { return exp(dec(k) * log(x) - x - log_abs_gamma(k)); };
   while( i )
   {
     auto dx = if_else(notdone, (gamma_p(x, k) - p) / dgamma_p(x, k), zero);

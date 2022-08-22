@@ -60,7 +60,7 @@ namespace eve
       rej.alpha = spq*fma(invb, value_type(5.1), value_type(2.83));
       rej.lpq = eve::log(eve::min(p, q)/eve::max(p, q));
       rej.m = (floor(inc(n)*eve::min(p, q)));
-      rej.h = (lgamma(inc(rej.m))+lgamma(inc(n-rej.m)));
+      rej.h = (log_abs_gamma(inc(rej.m))+log_abs_gamma(inc(n-rej.m)));
      }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
@@ -120,7 +120,7 @@ namespace eve
           }
 
           v *= rej.alpha/(rej.a/sqr(us)+rej.b);
-          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k))-rej.h)+(k-rej.m)*rej.lpq);
+          auto kdone = (v <= (log_abs_gamma(inc(k))+log_abs_gamma(inc(n-k))-rej.h)+(k-rej.m)*rej.lpq);
           k =  if_else(kdone, k, allbits);
           return if_else(flip, n-k, k);
         };
@@ -210,7 +210,7 @@ namespace eve
       rej.vr = fma(invb,value_type(-4.2), value_type(0.92));
       rej.alpha = spq*fma(invb, value_type(5.1), value_type(2.83));
       rej.m = floor(inc(n)*p);
-      rej.h = lgamma(inc(rej.m))+lgamma(inc(n-rej.m));
+      rej.h = log_abs_gamma(inc(rej.m))+log_abs_gamma(inc(n-rej.m));
      }
 
     template < typename G, typename R = value_type> auto operator()(G & gen, as<R> const & )
@@ -265,7 +265,7 @@ namespace eve
           }
 
           v *= rej.alpha/(rej.a/sqr(us)+rej.b);
-          auto kdone = (v <= (lgamma(inc(k))+lgamma(inc(n-k)))-rej.h);
+          auto kdone = (v <= (log_abs_gamma(inc(k))+log_abs_gamma(inc(n-k)))-rej.h);
           k =  if_else(kdone, k, allbits);
           return k;
         };

@@ -11,7 +11,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/digamma.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve::detail
 {
@@ -24,7 +24,7 @@ inner_lrising_factorial(T a, T x) noexcept
   auto ax      = eve::abs(x);
   auto notdone = is_nlez(a) && is_nlez(a + x);
   auto r       = nan(as(x));
-  auto lr0     = [](auto a, auto x) { return lgamma(x + a) - lgamma(a); };
+  auto lr0     = [](auto a, auto x) { return log_abs_gamma(x + a) - log_abs_gamma(a); };
 
   auto lr1 = [](auto a, auto x)
   {
@@ -58,7 +58,7 @@ inner_lrising_factorial(T a, T x) noexcept
   {
     return if_else(dist(x + a, a) < 10 * a * eps(as(a)),
                    eve::log1p(x * digamma(a)),
-                   lgamma(a + x) - lgamma(a));
+                   log_abs_gamma(a + x) - log_abs_gamma(a));
   };
 
   if( eve::any(notdone) )

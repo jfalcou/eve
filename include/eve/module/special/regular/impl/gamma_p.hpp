@@ -10,7 +10,7 @@
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve::detail
 {
@@ -54,7 +54,7 @@ gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept requires has_native_abi_v<T>
       del = x * del / ap;
       sum += del;
     }
-    auto b = sum * eve::exp(fms(a1, eve::log(x), eve::lgamma(inc(a1)) + x));
+    auto b = sum * eve::exp(fms(a1, eve::log(x), eve::log_abs_gamma(inc(a1)) + x));
     //  For very small a, the series may overshoot very slightly.
     b = eve::min(b, one(as(b)));
     //  if lower, b(k) = bk; else b(k) = 1-bk; end
@@ -89,7 +89,7 @@ gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept requires has_native_abi_v<T>
       g        = b1 * fac;
       n        = inc(n);
     }
-    return if_else(eve::is_infinite(x), one, oneminus(exp(-x + a * log(x) - lgamma(a)) * g));
+    return if_else(eve::is_infinite(x), one, oneminus(exp(-x + a * log(x) - log_abs_gamma(a)) * g));
   };
 
   test    = x < inc(a);

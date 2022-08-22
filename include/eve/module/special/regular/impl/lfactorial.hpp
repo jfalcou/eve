@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/special/regular/factorial.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve::detail
 {
@@ -24,7 +24,7 @@ lfactorial_(EVE_SUPPORTS(cpu_), T n) noexcept
   {
     auto r = eve::log(factorial(n));
     if( eve::all(n < 171) ) return r;
-    else { return if_else(n < 171, r, eve::lgamma(float64(inc(n)))); }
+    else { return if_else(n < 171, r, eve::log_abs_gamma(float64(inc(n)))); }
   }
   else return apply_over(lfactorial, n);
 }
@@ -41,7 +41,7 @@ lfactorial_(EVE_SUPPORTS(cpu_), T n) noexcept
     constexpr auto max = std::same_as<elt_t, double> ? 171 : 35;
     auto           r   = eve::log(factorial(n));
     if( eve::all(n < max) ) return r;
-    else return if_else(n < max, r, lgamma(inc(n)));
+    else return if_else(n < max, r, log_abs_gamma(inc(n)));
   }
   else return apply_over(lfactorial, n);
 }

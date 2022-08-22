@@ -83,7 +83,7 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_gamma_, Z const& a0) noexcept
   {
-    return log_abs(gamma(a0));
+    return log_abs(tgamma(a0));
   }
 
   template<typename Z>

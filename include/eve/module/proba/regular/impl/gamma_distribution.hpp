@@ -297,9 +297,9 @@ namespace eve
                                   , gamma_distribution<T,U,I> const & d) noexcept
     {
       if constexpr (floating_value<U> && floating_value<U>)
-        return d.k+eve::log(d.theta)+ lgamma(d.k)+oneminus(d.k)*digamma(d.k);
+        return d.k+eve::log(d.theta)+ log_abs_gamma(d.k)+oneminus(d.k)*digamma(d.k);
       else if constexpr (floating_value<T>)
-        return d.k+ lgamma(d.k)+oneminus(d.k)*digamma(d.k);
+        return d.k+ log_abs_gamma(d.k)+oneminus(d.k)*digamma(d.k);
       else if constexpr (floating_value<U>)
         return inc(eve::log(d.theta));
       else
@@ -379,13 +379,13 @@ namespace eve
       auto dp = rec(p*(1-p));
       auto k = one(as<I>());
       if constexpr(floating_real_value<T>) k = d.k;
-      auto dgamma_p = [](auto x, auto k){ return exp(dec(k) * log(x) - x - lgamma(k));};
+      auto dgamma_p = [](auto x, auto k){ return exp(dec(k) * log(x) - x - log_abs_gamma(k));};
       auto da = dgamma_p(z, k)* dp;
       R db;
       if constexpr(floating_real_value<U> && floating_real_value<T>)
-        db = eve::exp(k*eve::log(z)-z-eve::lgamma(k)+eve::log(d.theta))* dp;
+        db = eve::exp(k*eve::log(z)-z-eve::log_abs_gamma(k)+eve::log(d.theta))* dp;
       else if constexpr(floating_real_value<U>)
-        db = -eve::exp(k*eve::log(z)-z-eve::lgamma(k))* dp;
+        db = -eve::exp(k*eve::log(z)-z-eve::log_abs_gamma(k))* dp;
       else if constexpr(floating_real_value<T>)
         db  = -eve::exp(eve::log(z)-z+eve::log(d.theta))* dp;
       else

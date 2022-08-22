@@ -25,7 +25,6 @@
 #include <eve/module/special/regular/lambert.hpp>
 #include <eve/module/special/regular/lbeta.hpp>
 #include <eve/module/special/regular/lfactorial.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/module/special/regular/log_gamma.hpp>
 #include <eve/module/special/regular/lrising_factorial.hpp>

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve::detail
 {
@@ -23,7 +23,7 @@ EVE_FORCEINLINE T
 lbeta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept requires(has_native_abi_v<T>)
 {
   auto y = a0 + a1;
-  return lgamma(a0) + lgamma(a1) - lgamma(y);
+  return log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y);
 }
 
 // -----------------------------------------------------------------------------------------------

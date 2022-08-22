@@ -10,7 +10,7 @@
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve::detail
 {
