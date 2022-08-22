@@ -32,29 +32,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T , integral_value N >
+//!      template< eve::real_value T , integral_value N >
 //!      T shl(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  argument(@ref eve::value). to be shifted.
-//!
-//!     * `n`:    [shift](@ref eve::integral_value).
+//!     * `x` :  [argument](@ref eve::realvalue) to be shifted.
+//!     * `n`:   [shift](@ref eve::integral_value).
 //!
 //!    **Return value**
 //!
-//!      *  The [elementwise](@ref glossary_elementwise) arithmetic left shift of the first
-//!         parameter by the second one is returned.
+//!      The [elementwise](@ref glossary_elementwise) arithmetic left shift of the first
+//!      parameter by the second one is returned.
 //!
-//!      *   The call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
-//!          eve::simd_value).
+//!      The call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
+//!      eve::simd_value).
 //!
-//!      *   The types must share the same cardinal or be scalar and if `N` is the size in bits  of
-//!      the
-//!          element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
-//!          interval: `[0, N[` or the result is undefined.
+//!      The types must share the same cardinal or be scalar and if `N` is the size in bits  of
+//!      the element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
+//!      interval: `[0, N[` or the result is undefined.
 //!
 //!    @note
 //!     Although the infix notation with `<<` is supported, the `<<` operator on

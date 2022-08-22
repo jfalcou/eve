@@ -12,7 +12,6 @@
 #include <eve/module/math.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-#include <boost/math/complex/atanh.hpp>
 
 namespace eve
 {

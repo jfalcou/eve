@@ -1,5 +1,6 @@
 //! [mandelbrot-all]
 #include <chrono>
+#include <complex>
 #include <iostream>
 #include <numeric>
 #include <vector>

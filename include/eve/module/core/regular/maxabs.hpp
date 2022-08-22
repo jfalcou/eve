@@ -30,14 +30,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value... Ts >
-//!      eve::common_compatible_t<T, Ts...> maxabs(T x, Ts ... xs) noexcept;
+//!      auto maxabs(T x, Ts ... xs) noexcept;
 //!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...` :  [arguments](@ref eve::value).
+//!     * `x`, `xs...` : [real](@ref eve::value) or [complex](@ref eve::complex) arguments
 //!
 //!    **Return value**
 //!

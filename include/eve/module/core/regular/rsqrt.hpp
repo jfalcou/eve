@@ -29,14 +29,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
+//!      template< eve::value T >
 //!      T rsqrt(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::floating_value).
+//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!    **Return value**
 //!

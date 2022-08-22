@@ -35,19 +35,21 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!   **Return value**
 //!
-//!     *  Returns a value with the same type as `x`  containing the
-//!        [elementwise](@ref glossary_elementwise) fractional part of `x`
-//!        with the same sign as `x`.
+//!     Returns a value with the same type as `x`  containing the
+//!     [elementwise](@ref glossary_elementwise) fractional part of `x`
+//!     with the same sign as `x`.
 //!
-//!        In particular:
-//!          * If an [element](@ref glossary_elementwise) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is
-//!          returned.
-//!          * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a
-//!          `Nan` is returned.
+//!     In particular:
+//!       * If an [element](@ref glossary_elementwise) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is
+//!         returned.
+//!       * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a
+//!        `Nan` is returned.
+//!
+//!      For complex inputs the frac operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!

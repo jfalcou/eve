@@ -21,6 +21,8 @@ namespace eve
 //!   @var fracscale
 //!   @brief Computes the reduced part of the scaled input.
 //!
+//!   The call is equivalent to `a0-roundscale(a0,scale)`
+//!
 //!   **Defined in Header**
 //!
 //!   @code
@@ -32,22 +34,21 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, int scale >
+//!      template< eve::floating_value T, int scale >
 //!      T fracscale(T x, int scale) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!      * `x`:      [floating value](@ref eve::floating_value).
+//!      * `x`:      [realfloating value](@ref eve::floating_value).
 //!      * `scale` : int or std::integral_constant of int type limited to the range [0, 15].
 //!
 //!    **Return value**
 //!
-//!       *  Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
-//!          The number of fraction bits retained is specified by scale. By default the internal
-//!          rounding after scaling is done to nearest integer.
-//!          The call is equivalent to `a0-roundscale(a0,scale)`
+//!      Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
+//!      The number of fraction bits retained is specified by scale. By default the internal
+//!      rounding after scaling is done to nearest integer.
 //!
 //!  @groupheader{Example}
 //!

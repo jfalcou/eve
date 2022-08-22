@@ -41,6 +41,7 @@
 //! All EVE constants can be called in two ways:
 //!    * ct(eve::as<T>())   where T is the wished constant type
 //!    * ct(t)              where t is an instance of a type T
+//!
 //! Where ct denotes the constant name.
 //!
 //! @defgroup core_decorators  Decorators

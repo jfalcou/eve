@@ -7,6 +7,7 @@
 add_subdirectory(algo)
 add_subdirectory(bessel)
 add_subdirectory(combinatorial)
+add_subdirectory(complex)
 add_subdirectory(elliptic)
 add_subdirectory(math)
 add_subdirectory(polynomial)

@@ -28,7 +28,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T>
+//!      template< eve::real_value T>
 //!      kumi::tuple<T, T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
 //!   }
 //!   @endcode

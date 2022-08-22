@@ -35,11 +35,13 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!    **Return value**
 //!
-//!    The largest integer not greater than `x`.
+//!    The integer nearest to `x`.
+//!
+//!    For complex inputs the round operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!

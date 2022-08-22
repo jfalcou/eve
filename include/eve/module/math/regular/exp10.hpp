@@ -31,23 +31,30 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T exp10(T x) noexcept;
+//!      T exp10(T x) noexcept;                                    //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> exp10(eve::complex<T> z) noexcept;        //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    `x`:   [floating real value](@ref eve::floating_real_value).
+//!   * `x`:   [floating real](@ref eve::floating_real_value)
+//!   * `z`:   [complex ](@ref eve::complex) argument.
 //!
 //! **Return value**
 //!
-//!    Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
-//!    In particular, for floating inputs:
+//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
+//!      In particular, for floating inputs:
 //!
-//!     * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!     * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!     * If the element is a `NaN`, `NaN` is returned
+//!      * If the element is \f$\pm0\f$, \f$1\f$ is returned
+//!      * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!      * If the element is a `NaN`, `NaN` is returned
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of base 10 of the input as if computed
+//!      by `eve::exp (eve::log_10(as(z))*z)`.
 //!
 //!  @groupheader{Example}
 //!

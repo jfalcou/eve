@@ -30,30 +30,44 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T abs(T x) noexcept;
+//!      T abs(T x) noexcept;                  //1
+//!
+//!      template< eve::floating_value T >
+//!      T abs(eve::as_complex<T> z) noexcept; //2
+//!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real argument](@ref eve::value).
+//!     * `z` :  [complex argument ](@ref eve::complex).
 //!
 //!    **Return value**
 //!
-//!    value containing the [elementwise](@ref glossary_elementwise)
-//!    absolute value of `x` if it is representable in this type.
+//!    1.  value containing the [elementwise](@ref glossary_elementwise)
+//!        absolute value of `x` if it is representable in this type.
 //!
-//!  @note
-//!    * More specifically, for signed integers : the absolute value of eve::valmin
-//!      is not representable and the result is undefined.
+//!        More specifically, for signed integers : the absolute value of eve::valmin
+//!        is not representable and the result is undefined.
 //!
-//!    * abs is also a standard library function name and there possibly
-//!      exists a C macro version which may be called instead of the EVE version.
-//!      To avoid confusion, use the eve::abs notation.
+//!
+//!    2.  modulus of the complex argument,  i.e `eve::hypot(eve::real(z), eve::imag(z))`
+//!
+//!  @warning
+//!        abs is also a standard library function name and there possibly
+//!        exists a C macro version which may be called instead of the EVE version.
+//!        To avoid confusion, use the eve::abs notation.
 //!
 //!  @groupheader{Example}
 //!
+//!    **Real version**
+//!
 //!  @godbolt{doc/core/regular/abs.cpp}
+//!
+//!    **Complex version**
+//!
+//!  @godbolt{doc/complex/abs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,6 +90,17 @@ namespace eve
 //!      **Example**
 //!
 //!        @godbolt{doc/core/saturated/abs.cpp}
+//!
+//!   * eve::pedantic
+//!
+//!     The call `eve::pedantic(eve::abs)(z)` computes a pedantic version of the modulus.
+//!
+//!     More specifically, `pedantic(eve::hypot)` is used in place of `eve::hypot)`
+//!     for complex inputs
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/complex/pedantic/abs.cpp}
 //!
 //! @}
 //================================================================================================

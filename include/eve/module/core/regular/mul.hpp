@@ -36,7 +36,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `... xs` :  [arguments](eve::value).
+//!     * `... xs` : [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
 //!
 //!    **Return value**
 //!
@@ -64,7 +64,7 @@ namespace eve
 //!
 //!   * eve::saturated
 //!
-//!     The call `saturated(mul)(args...)` computes the saturated  multiplication `args...`.
+//!     The call `saturated(mul)(args...)` computes the saturated  multiplication `of the arguments.
 //!     The saturation is obtained in the [common compatible type](@ref common_compatible)
 //!     of the N parameters. The computation is done as if all arguments were
 //!     converted to this type and the saturated multiplication applied recursively on all
@@ -73,6 +73,11 @@ namespace eve
 //!      **Example**
 //!
 //!        @godbolt{doc/core/saturated/mul.cpp}
+//!
+//!   * eve::pedantic
+//!
+//!     The call `pedantic(mul)(zargs...)` computes the pedantic  multiplication of the arguments.
+//!     This may  only differ of the regular call for complex inputs.
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(mul_, mul);

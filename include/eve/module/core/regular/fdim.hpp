@@ -28,14 +28,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
+//!      template< eve::real_value T, eve::real_value U >
 //!      T fdim(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [arguments](@ref eve::value).
+//!     * `x`, `y` :  [real](@ref eve::real_value)  arguments.
 //!
 //!   **Return value**
 //!

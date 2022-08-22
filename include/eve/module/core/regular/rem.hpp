@@ -29,21 +29,21 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T,  eve::value U>
-//!      eve::common_compatible_t<T, U.> rem(Tx, U y) noexcept;
+//!      eve::common_compatible_t<T, U> rem(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `x`, `y`:   [real](@ref eve::value) or [complex](@ref eve::complex) argumentx.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!       * Return the remainder after division division of `x` by `y` and is
-//!         semantically equivalent to  `x- eve::trunc ( eve:div(x, y) )*y`.
+//!      Return the remainder after division division of `x` by `y` and is
+//!      semantically equivalent to  `x- eve::trunc ( eve:div(x, y) )*y`.
 //!
-//!       * The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an  [simd value](@ref
-//!       eve::simd_value).
+//!      The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an
+//!      [simd value](@ref eve::simd_value).
 //!
 //!    @note
 //!       * Although the infix notation with `%` is supported, the `%` operator on
