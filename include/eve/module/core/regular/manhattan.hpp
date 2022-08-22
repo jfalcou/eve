@@ -29,17 +29,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value... Ts >
-//!      eve::common_compatible_t<Ts ...> manhattan(Ts ... xs) noexcept;
+//!      auto manhattan(Ts ... xs) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` :  [arguments](@ref eve::value).
+//!     * `xs ...` :   [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
 //!
 //!    **Return value**
 //!
-//!    The value of the sum of the arguments is returned.
+//!    The value of the sum of the absolute value of the arguments is returned.
 //!
 //!  @groupheader{Example}
 //!

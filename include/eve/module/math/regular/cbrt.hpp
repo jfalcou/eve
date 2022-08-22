@@ -36,11 +36,11 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!    `x`:   [floating real value](@ref eve::floating_real_value).
+//!     * `x` :  [real](@ref eve::value) argument.
 //!
 //! **Return value**
 //!
-//!   Returns the [elementwise](@ref glossary_elementwise) cubic root value of the input.
+//!   Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
 //!
 //!  @groupheader{Example}
 //!

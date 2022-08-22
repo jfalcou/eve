@@ -39,9 +39,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `x`, `y`:  [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
 //!
-//!     * `xs...` :  [floating value arguments](@ref eve::floating_value).
+//!     * `xs...` :  [floating ](@ref eve::floating_value) or [complex](@ref eve::complex) arguments.
 //!
 //!    **Return value**
 //!
@@ -50,7 +50,7 @@ namespace eve
 //!   @note
 //!     * For two parameters half the sum of `x` and `y`. No overflow occurs.
 //!
-//!     * For more than two parameters only floating entries are allowed. No overflow occurs.
+//!     * For more than two parameters only floating or complex entries are allowed. No overflow occurs.
 //!
 //!     * If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the
 //!     result

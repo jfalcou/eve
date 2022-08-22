@@ -26,14 +26,14 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 average_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
 {
   return arithmetic_call(average, a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE T
 average_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native_abi_v<T>
 {
@@ -43,7 +43,7 @@ average_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_nativ
 
 // -----------------------------------------------------------------------------------------------
 // raw case
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 average_(EVE_SUPPORTS(cpu_),
          raw_type const&,
@@ -70,7 +70,7 @@ average_(EVE_SUPPORTS(cpu_),
 // N parameters
 //================================================================================================
 
-template<real_value T0, real_value... Ts>
+template<value T0, value... Ts>
 auto
 average_(EVE_SUPPORTS(cpu_),
          T0 a0,
@@ -85,7 +85,7 @@ average_(EVE_SUPPORTS(cpu_),
   return that;
 }
 
-template<floating_real_value T0, floating_real_value... Ts>
+template<value T0, value... Ts>
 auto
 average_(EVE_SUPPORTS(cpu_),
          raw_type const&,
@@ -97,7 +97,7 @@ average_(EVE_SUPPORTS(cpu_),
   return that / (sizeof...(args) + 1);
 }
 
-template<conditional_expr C, real_value T0, real_value... Ts>
+template<conditional_expr C, value T0, value... Ts>
 auto
 average_(EVE_SUPPORTS(cpu_),
          C const& cond,

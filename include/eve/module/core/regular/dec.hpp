@@ -35,11 +35,11 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!    **Return value**
 //!
-//!    The value of `x-1` is returned.
+//!    The value of `x - 1` is returned.
 //!
 //!  @groupheader{Example}
 //!

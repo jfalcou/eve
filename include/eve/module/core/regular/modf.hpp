@@ -36,7 +36,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :   [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!   **Return value**
 //!
@@ -46,6 +46,8 @@ namespace eve
 //!     In particular:
 //!       * If `x` is infinite `{Nan, x}` is returned.
 //!       * If `x` is a `Nan`  `{Nan, Nan}` is returned.
+//!
+//!     For complex inputs the operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!
