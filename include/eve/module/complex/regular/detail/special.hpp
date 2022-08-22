@@ -81,7 +81,13 @@ namespace eve::detail
   //  Unary functions : lgamma
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::lgamma_, Z const& a0) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_gamma_, Z const& a0) noexcept
+  {
+    return log_abs(gamma(a0));
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_gamma_, Z const& a0) noexcept
   {
     // 15 sig. digits for 0<=real(z)<=171
     // coeffs should sum to about g*g/2+23/24
