@@ -56,7 +56,7 @@ namespace eve
 //!      of the inverse of the hyperbolic tangent of the input.
 //!
 //!  @groupheader{Example}
-/!!
+//!
 //!   **Real version**
 //!
 //!  @godbolt{doc/math/coth.cpp}
