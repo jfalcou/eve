@@ -15,7 +15,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup special
 //! @{
-//!   @var lgamma
+//!   @var log_abs_gamma
 //!   @brief Computes the natural logarithm of the absolute value of the \f$\Gamma\f$ function.
 //!
 //!   **Defined in header**
@@ -29,25 +29,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T >
-//!      eve:common_compatible_value<T,U> lgamma(T x) noexcept;
+//!      template< eve::floating_value T >
+//!      T log_abs_gamma(T x) noexcept;                     //1
+//!
+//!      template< eve::floating_value T >
+//!      T log_abs_gamma(as_complex_t<T> T z) noexcept;     //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real argument](@ref eve::value).
+//!     * `z` :  [complex argument ](@ref eve::complex).
 //!
 //!   **Return value**
 //!
-//!   The value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
+//!   In the two cases, the value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/special/regular/lgamma.cpp}
+//!   @godbolt{doc/special/regular/log_abs_gamma.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(lgamma_, lgamma);
+EVE_MAKE_CALLABLE(log_abs_gamma_, log_abs_gamma);
 }
 
-#include <eve/module/special/regular/impl/lgamma.hpp>
+#include <eve/module/special/regular/impl/log_abs_gamma.hpp>

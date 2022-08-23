@@ -12,13 +12,13 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                = " << pf << '\n'
-            << "-> lgamma(pf)        = " << eve::lgamma(pf) << '\n'
+            << "-> log_gamma(pf)     = " << eve::log_gamma(pf) << '\n'
             ;
 
   float xf = 4.0f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> lgamma(xf) = " << eve::lgamma(xf) << '\n';
+            << "<- xf            = " << xf << '\n'
+            << "-> log_gamma(xf) = " << eve::log_gamma(xf) << '\n';
   return 0;
 }

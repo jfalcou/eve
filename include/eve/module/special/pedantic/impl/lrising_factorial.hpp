@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/detail/lrising_factorial.hpp>
 #include <eve/module/special/regular/digamma.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
 
 namespace eve::detail
@@ -40,7 +40,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T x) noexcept
 
     auto lraeqmx = [](auto a, auto)
     // a+x = 0
-    { return lgamma(inc(a)); };
+    { return log_abs_gamma(inc(a)); };
 
     auto lraneqmx = [](auto a, auto)
     // a < 0.0 && a+x < 0.0
@@ -57,7 +57,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T x) noexcept
       return if_else(is_nez(spiomamx * spioma), lnterm - r, allbits);
     };
 
-    auto lrlast = [](auto a, auto x) { return eve::lgamma(a + x) - eve::lgamma(a); };
+    auto lrlast = [](auto a, auto x) { return eve::log_abs_gamma(a + x) - eve::log_abs_gamma(a); };
 
     if( eve::any(notdone) )
     {

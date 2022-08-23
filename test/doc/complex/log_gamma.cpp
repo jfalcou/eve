@@ -12,7 +12,7 @@ int main()
 
   std::cout
     << "---- simd" << std::endl
-    << "<- z       = " << z << std::endl
-    << "-> lgamma(z) = " << eve::lgamma(z) << std::endl;
+    << "<- z            = " << z << std::endl
+    << "-> log_gamma(z) = " << eve::log_gamma(z) << std::endl;
   return 0;
 }
