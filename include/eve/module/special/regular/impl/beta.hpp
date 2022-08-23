@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/math.hpp>
-#include <eve/module/special/regular/lgamma.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/module/special/regular/signgam.hpp>
 
 namespace eve::detail
@@ -26,7 +26,7 @@ beta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept
 {
   auto y    = a0 + a1;
   auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
-  return sign * exp(lgamma(a0) + lgamma(a1) - lgamma(y));
+  return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));
 }
 
 // -----------------------------------------------------------------------------------------------

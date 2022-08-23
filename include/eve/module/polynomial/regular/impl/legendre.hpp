@@ -260,7 +260,7 @@ namespace detail
     r_t p0(theta);
     p0 = eve::legendre(l, m, cos(p0));
     p0 *=
-        sqrt(((2 * ll + 1) / (4 * pi(as(theta)))) * exp(lgamma(ll - mm + 1) - lgamma(ll + mm + 1)));
+        sqrt(((2 * ll + 1) / (4 * pi(as(theta)))) * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
     return if_else(is_odd(m), -p0, p0);
   }
 

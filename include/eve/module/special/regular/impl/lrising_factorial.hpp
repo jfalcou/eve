@@ -72,7 +72,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
   if constexpr( has_native_abi_v<T> )
   {
     auto notdone = is_nlez(x) && is_nlez(a + x);
-    return if_else(notdone, lgamma(x + a) - lgamma(a), allbits);
+    return if_else(notdone, log_abs_gamma(x + a) - log_abs_gamma(a), allbits);
   }
   else return apply_over(raw(lrising_factorial), a, x);
 }

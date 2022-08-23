@@ -98,7 +98,7 @@ bessel_j_small_z_series(T v, T x) noexcept
   auto test          = v < max_factorial;
   T    prefix        = if_else(test,
                      eve::pow(x * elt_t(0.5), v) / eve::tgamma(v + 1),
-                     eve::exp(v * eve::log(x * elt_t(0.5)) - eve::lgamma(v + 1)));
+                     eve::exp(v * eve::log(x * elt_t(0.5)) - eve::log_abs_gamma(v + 1)));
   if( eve::all(is_eqz(prefix)) ) return prefix;
   bessel_j_small_z_series_term<T> s(v, x);
   auto                            max_iter = 1000000;
@@ -137,7 +137,7 @@ bessel_i_small_z_series(T v, T x)
   auto test          = v < max_factorial;
   T    prefix        = if_else(test,
                      eve::pow(x * elt_t(0.5), v) / eve::tgamma(v + 1),
-                     eve::exp(v * eve::log(x * elt_t(0.5)) - eve::lgamma(v + 1)));
+                     eve::exp(v * eve::log(x * elt_t(0.5)) - eve::log_abs_gamma(v + 1)));
   if( eve::all(is_eqz(prefix)) ) return prefix;
   bessel_i_small_z_series_term<T> s(v, x);
   auto                            max_iter = 1000000;
