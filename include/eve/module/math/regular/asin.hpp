@@ -41,7 +41,7 @@ namespace eve
 //! **Parameters**
 //!
 //!   * `x`:   [floating real value](@ref eve::floating_real_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
+//!   * `z`:   [complex ](@ref eve::complex) value.
 //!
 //!  **Return value**
 //!
@@ -56,9 +56,9 @@ namespace eve
 //!
 //!   2. Returns the [elementwise](@ref glossary_elementwise) the complex principal value
 //!      of the arc sine of the input in the range of a strip unbounded along the imaginary axis
-//!      and in the interval \f$[−\pi/2, +\pi/2]\f$ along the real axis.
+//!      and in the interval \f$[-\pi/2, \pi/2]\f$ along the real axis.
 //!
-//!      special cases are handled as if the operation was implemented by \f$-i \asinh(i z)\f$
+//!      special cases are handled as if the operation was implemented by \f$-i \mathrm{asinh}(i z)\f$
 //!
 //!  @groupheader{Example}
 //!

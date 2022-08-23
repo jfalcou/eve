@@ -36,15 +36,21 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!    `x`:   [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!   **Return value**
 //!
 //!   The value of the Digamma function: \f$\frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
 //!
 //!   @groupheader{Example}
+//!    **Real version**
 //!
 //!   @godbolt{doc/special/regular/digamma.cpp}
+//!
+//!    **Complex version**
+//!
+//!   @godbolt{doc/complex/digamma.cpp}
+//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(digamma_, digamma);

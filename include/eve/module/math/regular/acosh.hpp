@@ -55,23 +55,23 @@ namespace eve
 //!      * If the element is \f$+\infty\f$, \f$+\infty\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!    2. Returns the complex arc hyperbolic cosine of z, in the range of a half-strip of
-//!       nonnegative values along the real axis and in the interval \f$[$B!](Bi-Fð; +ið]\f$ along-A
-//!       the imaginary axis.
+//!   2. Returns the complex arc hyperbolic cosine of z, in the range of a
+//!      strip unbounded along the imaginary axis and
+//!     in the interval \f$[0,\pi]\f$ along the real axis.
 //!
-//!       * for every z: eve::acosh(eve::conj(z)) == eve::conj(std::acosh(z))
-//!       * If z is \f$\pm0\f$, the result is \f$i pi/2\f$
-//!       * If z is \f$\pm0\f$, the result is \f$+0,\pi/2\f$
-//!       * If z is \f$x+i\infty\f$ (for any finite x), the result is \f$\infty+i\pi/2\f$
-//!       * If z is \f$x+i NaN\f$ (for any finite non zero x), the result is \f$NaN+i NaN\f$.
-//!       * If z is \f$i NaN\f$  the result is \f$NaN+i\pi/2\f$.
-//!       * If z is \f$-\infty,y\f$ (for any positive finite y), the result is \f$+\infty,\pi\f$
-//!       * If z is \f$+\infty,y\f$ (for any positive finite y), the result is \f$+\infty+i 0\f$
-//!       * If z is \f$-\infty+i \infty\f$, the result is \f$+\infty,3\pi/4\f$
-//!       * If z is \f$\pm\infty+i NaN\f$, the result is \f$+\infty+i NaN\f$
-//!       * If z is \f$NaN,y\f$ (for any finite y), the result is \f$NaN+i NaN\f$.
-//!       * If z is \f$NaN+i \infty\f$, the result is \f$+\infty+i NaN\f$
-//!       * If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$
+//!      * for every z: eve::acosh(eve::conj(z)) == eve::conj(std::acosh(z))
+//!      * If z is \f$\pm0\f$, the result is \f$i pi/2\f$
+//!      * If z is \f$\pm0\f$, the result is \f$+0,\pi/2\f$
+//!      * If z is \f$x+i\infty\f$ (for any finite x), the result is \f$\infty+i\pi/2\f$
+//!      * If z is \f$x+i NaN\f$ (for any finite non zero x), the result is \f$NaN+i NaN\f$.
+//!      * If z is \f$i NaN\f$  the result is \f$NaN+i\pi/2\f$.
+//!      * If z is \f$-\infty,y\f$ (for any positive finite y), the result is \f$+\infty,\pi\f$
+//!      * If z is \f$+\infty,y\f$ (for any positive finite y), the result is \f$+\infty+i 0\f$
+//!      * If z is \f$-\infty+i \infty\f$, the result is \f$+\infty,3\pi/4\f$
+//!      * If z is \f$\pm\infty+i NaN\f$, the result is \f$+\infty+i NaN\f$
+//!      * If z is \f$NaN,y\f$ (for any finite y), the result is \f$NaN+i NaN\f$.
+//!      * If z is \f$NaN+i \infty\f$, the result is \f$+\infty+i NaN\f$
+//!      * If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$
 //!
 //!  @groupheader{Example}
 //!

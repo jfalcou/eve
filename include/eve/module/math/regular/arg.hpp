@@ -30,13 +30,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T arg(T x) noexcept;
+//!      T arg(T x) noexcept;                  //1
+//!
+//!      template< eve::floating_value T >
+//!      T arg(eve::as_complex<T> z) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    `x`:   [floating real value](@ref eve::floating_real_value).
+//!    `x`:   [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //! **Return value**
 //!
@@ -45,7 +48,13 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
+//!    **Real version**
+//!
 //!  @godbolt{doc/math/arg.cpp}
+//!
+//!    **Complex version**
+//!
+//!  @godbolt{doc/complex/arg.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
