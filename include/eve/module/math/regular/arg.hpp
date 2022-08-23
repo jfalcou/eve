@@ -30,7 +30,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T arg(T x) noexcept;
+//!      T arg(T x) noexcept;                  //1
+//!
+//!      template< eve::floating_value T >
+//!      T arg(eve::as_complex<T> z) noexcept; //2
 //!   }
 //!   @endcode
 //!

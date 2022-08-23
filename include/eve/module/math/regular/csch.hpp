@@ -31,10 +31,7 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T csch(T x) noexcept;
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> csch(eve::complex<T> z) noexcept;        //2
-///!   }
+//!   }
 //!   @endcode
 //!
 //! **Parameters**

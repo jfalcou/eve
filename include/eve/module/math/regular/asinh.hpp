@@ -54,21 +54,21 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!    2. Returns the complex arc hyperbolic sine of z, with branch cuts outside the interval
-//!       \f$i\times[-\pi/2, \pi/2]\f$ along the imaginary axis.
+//!   2. Returns the complex arc hyperbolic sine of z, with branch cuts outside the interval
+//!      \f$i\times[-\pi/2, \pi/2]\f$ along the imaginary axis.
 //!
-//!       * for every z: eve::asinh(eve::conj(z)) == eve::conj(std::asinh(z))
-//!       * for every z: eve::asinh(-z) == -eve::asinh(z)
-//!       * If z is \f$+0\f$, the result is \f$+0\f$
-//!       * If z is \f$x+i \infty\f$ (for any positive finite x), the result is \f$+\infty+i \pi/2\f$
-//!       * If z is \f$x,NaN\f$ (for any finite x), the result is \f$NaN+ iNaN\f$
-//!       * If z is \f$+\infty+ iy\f$ (for any positive finite y), the result is \f$+\infty+i 0\f$
-//!       * If z is \f$+\infty+i \infty\f$, the result is \f$+\infty+ i\pi/4\f$
-//!       * If z is \f$+\infty+ iNaN\f$, the result is \f$+\infty+ iNaN\f$
-//!       * If z is \f$NaN+i 0\f$, the result is \f$NaN+i 0\f$
-//!       * If z is \f$NaN+ iy\f$ (for any finite nonzero y), the result is \f$NaN+ iNaN\f$
-//!       * If z is \f$NaN+i \infty\f$, the result is \f$\pm \infty+ iNaN\f$ (the sign of the real part is unspecified)
-//!       * If z is \f$NaN+ iNaN\f$, the result is \f$NaN+ iNaN\f$
+//!      * for every z: eve::asinh(eve::conj(z)) == eve::conj(std::asinh(z))
+//!      * for every z: eve::asinh(-z) == -eve::asinh(z)
+//!      * If z is \f$+0\f$, the result is \f$+0\f$
+//!      * If z is \f$x+i \infty\f$ (for any positive finite x), the result is \f$+\infty+i \pi/2\f$
+//!      * If z is \f$x,NaN\f$ (for any finite x), the result is \f$NaN+ iNaN\f$
+//!      * If z is \f$+\infty+ iy\f$ (for any positive finite y), the result is \f$+\infty+i 0\f$
+//!      * If z is \f$+\infty+i \infty\f$, the result is \f$+\infty+ i\pi/4\f$
+//!      * If z is \f$+\infty+ iNaN\f$, the result is \f$+\infty+ iNaN\f$
+//!      * If z is \f$NaN+i 0\f$, the result is \f$NaN+i 0\f$
+//!      * If z is \f$NaN+ iy\f$ (for any finite nonzero y), the result is \f$NaN+ iNaN\f$
+//!      * If z is \f$NaN+i \infty\f$, the result is \f$\pm \infty+ iNaN\f$ (the sign of the real part is unspecified)
+//!      * If z is \f$NaN+ iNaN\f$, the result is \f$NaN+ iNaN\f$
 //!
 //!  @groupheader{Example}
 //!
