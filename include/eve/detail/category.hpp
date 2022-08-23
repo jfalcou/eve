@@ -18,17 +18,17 @@ namespace eve::detail
   enum class category : std::uint32_t
   {
     // Building blocks
-    int_      = 0x01000000,
-    uint_     = 0x02000000,
-    float_    = 0x04000000,
-    unsigned_ = 0x02000000,
-    integer_  = int_ | uint_,
-    signed_   = int_ | float_,
-    size64_   = 0x00080000,
-    size32_   = 0x00040000,
-    size16_   = 0x00020000,
-    size8_    = 0x00010000,
-    invalid   = 0x00000000,
+    invalid   = 0x000000000,
+    signed_   = 0x010000000,
+    unsigned_ = 0x020000000,
+    integer_  = 0x001000000,
+    float_    = 0x002000000 | signed_,
+    int_      = integer_    | signed_,
+    uint_     = integer_    | unsigned_,
+    size8_    = 0x000100000,
+    size16_   = 0x000200000,
+    size32_   = 0x000400000,
+    size64_   = 0x000800000,
 
     // All known native float64
     float64     = float_  | size64_,
@@ -108,6 +108,11 @@ namespace eve::detail
     return (to_int(a) & to_int(b)) != 0;
   }
 
+  inline std::ostream& operator<<(std::ostream& os, category a) noexcept
+  {
+    return os << static_cast<std::uint32_t>(a);
+  }
+
   template<typename... Cat>
   EVE_FORCEINLINE constexpr bool match(category a, Cat... tst) noexcept
   {
@@ -129,7 +134,7 @@ namespace eve::detail
 
       // Base type size & Cardinal
       constexpr auto card = static_cast<category>(sizeof(storage_t) / sizeof(type));
-      constexpr auto sz   = static_cast<category>(sizeof(type) << 16);
+      constexpr auto sz   = static_cast<category>(sizeof(type) << 20);
 
       return value | sz | card;
     }
