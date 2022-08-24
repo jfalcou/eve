@@ -34,7 +34,7 @@ namespace eve
 //!      T log(T x) noexcept;                                    //1
 //!
 //!      template< eve::floating_value T >
-//!      eve::complex<T> exp(eve::complex<T> z) noexcept;        //2
+//!      eve::complex<T> log(eve::complex<T> z) noexcept;        //2
 //!   }
 //!   @endcode
 //!
@@ -53,25 +53,25 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!      * If the element is less than 0, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of the input
-//!      in the range of a strip in the interval \f$i\times[-i\pi, +i\pi] along the imaginary axis
+//!   2. Returns [elementwise](@ref glossary_elementwise) the natural logarithm of the input
+//!      in the range of a strip in the interval \f$i\times[-\pi, \pi]\f$ along the imaginary axis
 //!      and mathematically unbounded along the real axis. .
 //!
 //!      * The function is continuous onto the branch cut  along the negative real axis,
 //!        taking into account the sign of imaginary part
 //!      * for every z: `eve::log(eve::conj(z)) == eve::conj(eve::log(z))`
-//!      * If z is (-0), the result is (-\infty+i \pi )
-//!      * If z is (+0), the result is (-\infty)
-//!      * If z is (x+i \infty) (for any finite x), the result is (+\infty+i \pi/2)
-//!      * If z is (x+i NaN) (for any finite x), the result is (NaN+i NaN)
-//!      * If z is (-\infty+i y) (for any finite positive y), the result is (+\infty+i \pi )
-//!      * If z is (+\infty+i y) (for any finite positive y), the result is (+\infty)
-//!      * If z is (-\infty+i \infty), the result is (+\infty+i 3\pi/4)
-//!      * If z is (+\infty+i \infty), the result is (+\infty+i \pi/4)
-//!      * If z is (±\infty+i NaN), the result is (+\infty+i NaN)
-//!      * If z is (NaN+i y) (for any finite y), the result is (NaN+i NaN)
-//!      * If z is (NaN+i \infty), the result is (+\infty+i NaN)
-//!      * If z is (NaN+i NaN), the result is (NaN+i NaN)
+//!      * If z is \f$-0\f$, the result is \f$-\infty+i \pi \f$
+//!      * If z is \f$+0\f$, the result is \f$-\infty\f$
+//!      * If z is \f$x+i \infty\f$ (for any finite x), the result is \f$+\infty+i \pi/2\f$
+//!      * If z is \f$x+i NaN\f$ (for any finite x), the result is \f$NaN+i NaN\f$
+//!      * If z is \f$-\infty+i y\f$ (for any finite positive y), the result is \f$+\infty+i \pi \f$
+//!      * If z is \f$+\infty+i y\f$ (for any finite positive y), the result is \f$+\infty\f$
+//!      * If z is \f$-\infty+i \infty\f$, the result is \f$+\infty+i 3\pi/4\f$
+//!      * If z is \f$+\infty+i \infty\f$, the result is \f$+\infty+i \pi/4\f$
+//!      * If z is \f$\pm\infty+i NaN\f$, the result is \f$+\infty+i NaN\f$
+//!      * If z is \f$NaN+i y\f$ (for any finite y), the result is \f$NaN+i NaN\f$
+//!      * If z is \f$NaN+i \infty\f$, the result is \f$+\infty+i NaN\f$
+//!      * If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$
 //!
 //!  @groupheader{Example}
 //!
