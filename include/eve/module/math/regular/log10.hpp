@@ -31,27 +31,40 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T log10(T x) noexcept;
+//!      T log10(T x) noexcept;                                  //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> log10(eve::complex<T> z) noexcept;      //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
-//! In particular, for floating inputs:
+//!   1. Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
+//!      In particular, for floating inputs:
 //!
-//!   * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!   * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-//!   * If the element is less than 0, `NaN` is returned.
+//!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+//!      * If the element is less than 0, `NaN` is returned.
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the base 10 logarithm of the input
+//!      The behavior of this function is equivalent to `eve::log(z)/eve::log_10(eve::as(x))`.
 //!
 //!  @groupheader{Example}
 //!
+//!   **Real version**
+//!
 //!  @godbolt{doc/math/log10.cpp}
+//!
+//!   **Complex version**
+//!
+//!  @godbolt{doc/complex/log10.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -26,7 +26,7 @@ including WASM and **gasp** fixed size SVE.
   - compress_store is a very important function that has been reimplemented to simplify
     its implementation in term of support for iterators
   - better implementation for X86 architectures (SSE2 and BMI).
-  - provide ana alternative implementation based on switch ()
+  - provide an alternative implementation based on switch ()
 
 * Improvements on algorithms
 `@DenisYaroshevskiy` did a wonderful job on this front.
