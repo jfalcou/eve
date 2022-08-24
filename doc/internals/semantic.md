@@ -122,7 +122,7 @@ majority of @ref glossary_bitwise are _de facto_ @ref glossary_elementwise.
 @subsection glossary_logical Logical Functions
 
 **EVE** @ref glossary_logical are @ref glossary_arithmetic that can only be applied to
-[logical values](@ref eve::logical_value) `L1`,... `Ln`  as long as they are all
+[logical values](@ref eve::logical_value) `L1`, ..., `Ln`  as long as they are all
 **cardinal-compatible**. By construction, a large majority of @ref glossary_bitwise are
 _de facto_ @ref glossary_elementwise.
 

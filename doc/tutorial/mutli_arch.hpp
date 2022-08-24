@@ -111,7 +111,7 @@ The CMake code will be looking like:
 cmake_minimum_required(VERSION 3.18)
 project(eve-multi-arch LANGUAGES CXX)
 
-find_package(eve CONFIG REQIURED)
+find_package(eve CONFIG REQUIRED)
 
 add_library(setup INTERFACE)
 target_link_libraries(setup INTERFACE eve::eve)
