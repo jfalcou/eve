@@ -193,7 +193,7 @@ That's it, **EVE** is properly installed and ready to use.
 
 ## Use in CMake
 
-Once installed, **EVE** may be consumed though its config-file **CMake** package. Simply find and
+Once installed, **EVE** may be consumed through its config-file **CMake** package. Simply find and
 link against **EVE's** **CMake** target, as you would any other **CMake** library, and then
 configure and build your **CMake** project.
 

@@ -30,20 +30,23 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
+//!      template< eve::floating_value T >            //1
 //!      T log_abs(T x) noexcept;
+//!
+//!      template< eve::floating_value T >
+//!      T log_abs(eve::complex<T> z) noexcept;      //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [floating real value](@ref eve::floating_real_value).
-//!
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!    *  Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
-//!       the absolute value of `x`: \f$\log |x|\f$.
+//!   Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
+//!   the absolute value of the input.
 //!
 //!  @groupheader{Example}
 //!

@@ -18,7 +18,7 @@ One can then define a SIMD type by specifying:
     This interface is more geared toward power users that may requires a specific cardinal for
     their algorithm on any architecture. In this case, **EVE** will take care of ensuring the
     semantic of such code is correct over any architecture. This includes emulating smaller than
-    usual cardinal using regular registers or aggregating multiple register to support greater
+    usual cardinal using regular registers or aggregating multiple registers to support greater
     than usual cardinal.
 
 This enables for SIMD code to be written in a complete architecture-agnostic way from the get go.

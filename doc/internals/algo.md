@@ -41,7 +41,7 @@ a **EVE** compatible range.
 One case where it can be very awkward to use ranges instead of iterators is in multi-range algorithms
 , like `transform_to`. In this case, unless we have some reason no to, we allow for passing anything
 that zips to `range`, i.e. `range`, `iterator` or `iterator`,`range`. Exceptions are documented and
-have `static_assert`s that will tell you it's not supported*.
+have `static_assert`s that will tell you it's not supported.
 
 ### Relaxed concepts
 
@@ -56,7 +56,7 @@ which returns enhanced `traits` and `iterator` pair.
 # Customization
 
 ## Algorithms traits
-**EVE** allows to customize algorithms with traits. Traits are passed via `[]` and can ve combined.
+**EVE** allows to customize algorithms with traits. Traits are passed via `[]` and can be combined.
 
 The more common ones are:
 

@@ -34,7 +34,7 @@ namespace eve
 //!
 //!      template< eve::floating_value T >
 //!      eve::complex<T> acos(eve::complex<T> z) noexcept;        //2
-///!   }
+///   }
 //!   @endcode
 //!
 //! **Parameters**
@@ -54,7 +54,6 @@ namespace eve
 //!     * If the element is a `NaN`, `NaN` is returned
 //!
 //!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of the input.
-//!      Branch cuts exist outside the interval \f$[-1, +1]\f$ along the real axis.
 //!
 //!      * for every z: eve::exp(eve::conj(z)) == eve::conj(std::exp(z))
 //!      * If z is \f$\pm0\f$, the result is \f$1\f$
