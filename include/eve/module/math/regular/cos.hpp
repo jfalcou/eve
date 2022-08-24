@@ -30,27 +30,39 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T cos(T x) noexcept;
+//!      T cos(T x) noexcept;                              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> cos(as_complex_t<T> x) noexcept;  //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
+//!      In particular:
 //!
-//! In particular:
+//!      * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, Nan is returned.
+//!      * If the element is a `Nan`, `Nan` is returned.
 //!
-//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `Nan`, `Nan` is returned.
+//!   2. Returns [elementwise](@ref glossary_elementwise) the cosine of the input
+//!      The behavior of this function is equivalent to `eve::cosh(i*z)`.
 //!
 //!  @groupheader{Example}
 //!
+//!   **Real version**
+//!
 //!  @godbolt{doc/math/cos.cpp}
+//!
+//!   **Complex version**
+//!
+//!  @godbolt{doc/complex/cos.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
