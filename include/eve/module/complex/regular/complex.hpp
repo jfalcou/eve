@@ -14,3 +14,6 @@
 #include <eve/module/complex/regular/exp_i.hpp>
 #include <eve/module/complex/regular/exp_ipi.hpp>
 #include <eve/module/complex/regular/polar.hpp>
+#include <eve/module/complex/regular/deta.hpp>
+#include <eve/module/complex/regular/eta.hpp>
+#include <eve/module/complex/regular/lambda.hpp>

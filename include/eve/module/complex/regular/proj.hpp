@@ -51,8 +51,6 @@ namespace eve
   //!  @}
   //================================================================================================
   namespace tag { struct proj_; }
-  template<> struct supports_conditional<tag::proj_> : std::false_type {};
-
   EVE_MAKE_CALLABLE(proj_, proj);
 
   namespace detail

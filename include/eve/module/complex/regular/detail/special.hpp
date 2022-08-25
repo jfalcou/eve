@@ -141,7 +141,7 @@ namespace eve::detail
     return f;
   }
 
-    //===-------------------------------------------------------------------------------------------
+  //===-------------------------------------------------------------------------------------------
   //  Unary functions : digamma
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -196,5 +196,25 @@ namespace eve::detail
       f = if_else (reflection && is_real(a0) && is_flint(real(a0)), Z{nan(as(g)), inf(as(g))}, f);
     }
     return f;
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //  Unary functions : rising_factorial_
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z1, typename Z2 >
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::rising_factorial_
+                                             , Z1 const& a0, Z2 const& a1) noexcept
+  {
+    return if_else(is_eqz(a0) && is_eqz(a1), zero, gamma(a0+a1)/gamma(a0));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //  Unary functions : lrising_factorial_
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z1, typename Z2 >
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::rising_factorial_
+                                             , Z1 const& a0, Z2 const& a1) noexcept
+  {
+    return  log_gamma(a0+a1)-log_gamma(a0));
   }
  }
