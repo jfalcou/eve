@@ -30,29 +30,39 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T tanpi(T x) noexcept;
+//!      T tanpi(T x) noexcept;                                 //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> tanpi(eve::complex<T> z) noexcept;     //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
-//! multiples.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
+//!      multiples. In particular:
 //!
-//! The call `tanpi(x)` is semantically equivalent to \f$\tan(\pi x)\f$.
-//! In particular:
+//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, Nan is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!   2. Returns [elementwise](@ref glossary_elementwise) the tangent of the input
+//!      in \f$\pi\f$ multiples.
 //!
 //!  @groupheader{Example}
 //!
+//!   **Real version**
+//!
 //!  @godbolt{doc/math/tanpi.cpp}
+//!
+//!   **Complex version**
+//!
+//!  @godbolt{doc/complex/tanpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
