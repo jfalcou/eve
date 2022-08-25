@@ -30,29 +30,40 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T cotpi(T x) noexcept;
+//!      T cotpi(T x) noexcept;                                 //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> cotpi(eve::complex<T> z) noexcept;     //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) cotangent of the input expressed in \f$\pi\f$
-//! multiples.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) cotangent of the input expressed in \f$\pi\f$
+//!      multiples. In particular:
 //!
-//! The call `cotpi(x)` is semantically equivalent to \f$\cot(\pi x)\f$.
-//! In particular:
+//!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, Nan is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!   2. Returns [elementwise](@ref glossary_elementwise) the cotangent of the input
+//!      in \f$\pi\f$ multiples.
+//!      The behavior of this function is equivalent to `eve::rec(eve::tanpi(z))`.
 //!
 //!  @groupheader{Example}
 //!
+//!   **Real version**
+//!
 //!  @godbolt{doc/math/cotpi.cpp}
+//!
+//!   **Complex version**
+//!
+//!  @godbolt{doc/complex/cotpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
