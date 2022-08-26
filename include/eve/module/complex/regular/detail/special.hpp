@@ -212,9 +212,11 @@ namespace eve::detail
   //  Unary functions : lrising_factorial_
   //===-------------------------------------------------------------------------------------------
   template<typename Z1, typename Z2 >
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::rising_factorial_
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::lrising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    return  log_gamma(a0+a1)-log_gamma(a0));
+    return  log_gamma(a0+a1)-log_gamma(a0);
   }
  }
+
+#include <eve/module/complex/regular/detail/erf.hpp>

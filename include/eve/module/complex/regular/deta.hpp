@@ -73,7 +73,6 @@ namespace eve
                                                 , K const & kk, Z z) noexcept
     {
       using v_t = eve::as_real_t<Z>;
-
       using real_t = eve::element_type_t<v_t>;
       auto k = real_t(kk);
       auto [rz, iz] = z;

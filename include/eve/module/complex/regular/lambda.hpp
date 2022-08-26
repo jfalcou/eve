@@ -69,10 +69,10 @@ namespace eve
 
     template<typename Z>
     EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lambda_
-                                                , Z z) noexcept
+                                                , Z zz) noexcept
     {
-      auto z=exp2(z);
-      k = (z-1)/(z-2);
+      auto z=exp2(zz);
+      auto k = (z-1)/(z-2);
       return if_else(z == one(as(z)), inf(as(z)), k*dlambda(1u, z));
     }
   }
