@@ -16,11 +16,11 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup complex
+//! @addtogroup special
 //! @{
 //! @var deta
 //!
-//! @brief Callable object computing \f$ \sum_0^\infty \frac{(-1)^n}{(kn+1)^z}\f$
+//! @brief Callable object computing \f$ \displaystyle \sum_0^\infty \frac{(-1)^n}{(kn+1)^z}\f$
 //!
 //!   **Defined in Header**
 //!
@@ -33,24 +33,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< like<complex> T >
-//!      T deta(T z) noexcept;
+//!      template< eve::floating_value T >
+//!      T deta(T x) noexcept;                                    //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> deta(eve::complex<T> x) noexcept;        //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floatingl](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floating](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   Returns the Dirichlet sum \f$ \sum_0^\infty \frac{(-1)^n}{(kn+1)^z}\f$
+//!   Returns the Dirichlet sum \f$  \displaystyle \sum_0^\infty \frac{(-1)^n}{(kn+1)^x}\f$
 //!
 //!  @groupheader{Example}
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/deta.cpp}
+//!  @godbolt{doc/special/regular/deta.cpp}
 //!
 //!   **Complex version**
 //!

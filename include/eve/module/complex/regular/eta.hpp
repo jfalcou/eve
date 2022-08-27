@@ -16,7 +16,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup complex
+//! @addtogroup special
 //! @{
 //! @var eta
 //!
@@ -50,7 +50,7 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/eta.cpp}
+//!  @godbolt{doc/special/regular/eta.cpp}
 //!
 //!   **Complex version**
 //!
@@ -64,11 +64,11 @@ namespace eve
     EVE_FORCEINLINE auto eta_( EVE_SUPPORTS(cpu_)
                               , V const & v) noexcept
     {
-      return real(eta(as_complex_t<V>(v, 0)));
+      return real(deta(1u, as_complex_t<V>(v, 0)));
     }
 
     template<typename Z>
-    EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::eta_
+    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::eta_
                                                 , Z z) noexcept
     {
       return deta(1u, z);

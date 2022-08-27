@@ -9,6 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/regular/detail/special.hpp>
+#include <eve/module/complex/regular/eta.hpp>
 #include <eve/algo.hpp>
 #include <iostream>
 #include <array>
@@ -16,11 +17,15 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup complex
+//! @addtogroup special
 //! @{
 //! @var lambda
 //!
-//! @brief Callable object computing The Dirichlet \f$ \lambda(z) = \sum_0^\infty \frac{1}{(2n+1)^z}\f$
+//! @brief Callable object computing The Dirichlet \f$ \displaystyle \lambda(z) = \sum_0^\infty \frac{1}{(2n+1)^z}\f$
+//!
+//! This function can be extended to the whole complex plane as \f$\lambda(z) = \zeta(z)(1-2^{-x})\f$
+//! (where \f$\zeta\f$ is the Riemann zeta function). It coincides with the serie where the serie converges.
+//! However for `z = 1` the result is \f$\infty\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -40,17 +45,17 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floatingl](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floating](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   Returns the Dirichlet sum \f$ \sum_0^\infty \frac{1}{(2n+1)^z}\f$
+//!   Returns the Dirichlet sum \f$  \displaystyle \sum_0^\infty \frac{1}{(2n+1)^z}\f$
 //!
 //!  @groupheader{Example}
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/lambda.cpp}
+//!  @godbolt{doc/special/regular/lambda.cpp}
 //!
 //!   **Complex version**
 //!
@@ -60,20 +65,22 @@ namespace eve
   EVE_MAKE_CALLABLE(lambda_, lambda);
   namespace detail
   {
-    template<floating_real_value V>
-    EVE_FORCEINLINE auto lambda_( EVE_SUPPORTS(cpu_)
-                              , V const & v) noexcept
-    {
-      return real(lambda(as_complex_t<V>(v, 0)));
-    }
-
     template<typename Z>
-    EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lambda_
-                                                , Z zz) noexcept
+    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::lambda_
+                                               , Z zz) noexcept
     {
       auto z=exp2(zz);
       auto k = (z-1)/(z-2);
-      return if_else(z == one(as(z)), inf(as(z)), k*dlambda(1u, z));
+      return if_else(z == one(as(z)), inf(as(z)), k*deta(1u, zz));
+    }
+
+    template<floating_real_value V>
+    EVE_FORCEINLINE auto lambda_( EVE_SUPPORTS(cpu_)
+                                , V const & v) noexcept
+    {
+      auto z=exp2(v);
+      auto k = (z-1)/(z-2);
+      return if_else(z == one(as(z)), inf(as(z)), k*deta(1u, v));
     }
   }
 }

@@ -199,24 +199,39 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
-  //  Unary functions : rising_factorial_
+  //  Binary functions : rising_factorial, lrising_factorial, lbeta, beta
   //===-------------------------------------------------------------------------------------------
   template<typename Z1, typename Z2 >
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::rising_factorial_
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::rising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    return if_else(is_eqz(a0) && is_eqz(a1), zero, gamma(a0+a1)/gamma(a0));
+    return if_else(is_eqz(a0) && is_eqz(a1), zero, tgamma(a0+a1)/tgamma(a0));
   }
 
-  //===-------------------------------------------------------------------------------------------
-  //  Unary functions : lrising_factorial_
-  //===-------------------------------------------------------------------------------------------
   template<typename Z1, typename Z2 >
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::lrising_factorial_
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lrising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
     return  log_gamma(a0+a1)-log_gamma(a0);
   }
+
+  template<typename Z1, typename Z2 >
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lbeta_
+                                             , Z1 const& a0, Z2 const& a1) noexcept
+  {
+    auto y = a0 + a1;
+    return log_gamma(a0) + log_gamma(a1) - log_gamma(y);
+  }
+
+  template<typename Z1, typename Z2 >
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::beta_
+                                             , Z1 const& a0, Z2 const& a1) noexcept
+  {
+    auto y = a0 + a1;
+    return exp(log_gamma(a0) + log_gamma(a1) - log_gamma(y));
+  }
+
+
  }
 
 #include <eve/module/complex/regular/detail/erf.hpp>
