@@ -78,7 +78,7 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
-  //  Unary functions : lgamma
+  //  Unary functions : log_gamma
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
   EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_abs_gamma_, Z const& a0) noexcept
@@ -205,14 +205,14 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::rising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    return if_else(is_eqz(a0) && is_eqz(a1), zero, tgamma(a0+a1)/tgamma(a0));
+    return if_else(is_eqz(a1), one, tgamma(a0+a1)/tgamma(a0));
   }
 
   template<typename Z1, typename Z2 >
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lrising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    return  log_gamma(a0+a1)-log_gamma(a0);
+    return  log(tgamma(a0+a1)/tgamma(a0));
   }
 
   template<typename Z1, typename Z2 >
@@ -220,7 +220,7 @@ namespace eve::detail
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
     auto y = a0 + a1;
-    return log_gamma(a0) + log_gamma(a1) - log_gamma(y);
+    return log(tgamma(a0)*tgamma(a1)/tgamma(y));
   }
 
   template<typename Z1, typename Z2 >
@@ -228,7 +228,7 @@ namespace eve::detail
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
     auto y = a0 + a1;
-    return exp(log_gamma(a0) + log_gamma(a1) - log_gamma(y));
+    return tgamma(a0)*tgamma(a1)/tgamma(y);
   }
 
 
