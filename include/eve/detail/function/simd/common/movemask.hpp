@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/logical.hpp>
+#include <eve/detail/has_abi.hpp>
 
 #include <utility>
 
