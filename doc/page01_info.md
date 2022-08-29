@@ -145,7 +145,16 @@ using the `doxygen` target:
 cmake --build build --target doxygen
 @endcode
 
-The resulting HTML files will be available in the `doc` folder.
+The resulting HTML files will be available in the `docs` folder.
+
+You can also build **EVE** documentation in your build folder by using the  `doxygen-local` target:
+<br/>
+
+@code
+cmake --build build --target doxygen-local
+@endcode
+
+The resulting HTML files will be available in the `docs` folder inside your build folder.
 
 # Using the library
 

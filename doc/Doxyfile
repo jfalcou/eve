@@ -8,7 +8,7 @@ PROJECT_NUMBER         =
 PROJECT_BRIEF          = v2022.03.00
 PROJECT_LOGO           = logo.png
 
-OUTPUT_DIRECTORY       = ../docs
+OUTPUT_DIRECTORY       = $(EVE_DOXYGEN_OUPUT)
 CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 
