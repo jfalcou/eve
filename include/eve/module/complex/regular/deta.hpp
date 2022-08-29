@@ -47,7 +47,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   Returns the Dirichlet sum \f$  \displaystyle \sum_0^\infty \frac{(-1)^n}{(kn+1)^x}\f$
+//!   Returns the Dirichlet sum \f$  \displaystyle \sum_0^\infty \frac{(-1)^n}{(kn+1)^z}\f$
 //!
 //!  @groupheader{Example}
 //!

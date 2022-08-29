@@ -199,6 +199,17 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //  Unary functions : zeta
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::zeta_, Z const& z) noexcept
+  {
+    auto zz=exp2(z);
+    auto k = zz/(zz-2);
+    return if_else(z == one(as(z)), Z(inf(as(real(z))), 0), k*eta(z));
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //  Binary functions : rising_factorial, lrising_factorial, lbeta, beta
   //===-------------------------------------------------------------------------------------------
   template<typename Z1, typename Z2 >

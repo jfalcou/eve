@@ -20,7 +20,7 @@ namespace eve
 //! @{
 //! @var eta
 //!
-//! @brief Callable object computing The Dirichlet \f$ \eta(z) = \sum_0^\infty \frac{(-1)^n}{(n+1)^z}\f$
+//! @brief Callable object computing The Dirichlet \f$ \displaystyle \eta(z) = \sum_0^\infty \frac{(-1)^n}{(n+1)^z}\f$
 //!
 //!   **Defined in Header**
 //!
