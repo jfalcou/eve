@@ -50,7 +50,6 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct proj_; }
   EVE_MAKE_CALLABLE(proj_, proj);
 
   namespace detail
