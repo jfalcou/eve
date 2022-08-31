@@ -21,11 +21,11 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup complex
+//! @addtogroup special
 //! @{
 //! @var faddeeva
 //!
-//! @brief Callable object computing \f$e^{-z^2}\mathbf{erfc}(-iz)\f$ the scaled complex error func
+//! @brief Callable object computing \f$e^{-z^2}\mathrm{erfc}(-iz)\f$ the scaled complex error func
 //!
 //!   **Defined in Header**
 //!
@@ -49,7 +49,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   Returns \f$e^{-z^2}\mathbf{erfc}(-iz)\f$ the scaled complex error func
+//!   Returns \f$e^{-z^2}\mathrm{erfc}(-iz)\f$ the scaled complex error func
 //!
 //!  @groupheader{Example}
 //!
