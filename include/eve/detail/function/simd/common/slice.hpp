@@ -14,6 +14,7 @@
 #include <eve/traits/as_wide.hpp>
 #include <eve/as.hpp>
 
+#include <array>
 #include <cstddef>
 #include <type_traits>
 
