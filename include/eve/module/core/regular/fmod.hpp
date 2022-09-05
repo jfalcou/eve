@@ -19,5 +19,5 @@ namespace eve
 //!   @brief Alias of eve::pedantic(eve::rem).
 //! @}
 //================================================================================================
-auto fmod = eve::pedantic(eve::rem);
+constexpr auto fmod = eve::pedantic(eve::rem);
 }
