@@ -170,7 +170,7 @@ namespace eve
       Function f;
 
       template <typename... X>
-      constexpr EVE_FORCEINLINE auto operator()(X&&... x)
+      constexpr EVE_FORCEINLINE auto operator()(X&&... x) const
       {
         return f(decorated{}, EVE_FWD(x)...);
       }
