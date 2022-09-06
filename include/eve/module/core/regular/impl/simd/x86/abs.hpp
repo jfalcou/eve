@@ -24,12 +24,12 @@ abs_(EVE_SUPPORTS(sse2_), wide<T, N> const& v) noexcept requires x86_abi<abi_t<T
 {
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr( c && category::unsigned_ ) return v;
+  if constexpr( match(c, category::unsigned_) ) return v;
   else if constexpr( c == category::float32x16 ) return _mm512_abs_ps(v);
   else if constexpr( c == category::float64x8 ) return _mm512_abs_pd(v);
-  else if constexpr( c && category::float_ ) return bit_notand(mzero(as(v)), v);
+  else if constexpr( match(c, category::float_) ) return bit_notand(mzero(as(v)), v);
   else if constexpr( c == category::int64x8 ) return _mm512_abs_epi64(v);
-  else if constexpr( c && category::size64_ ) return map(eve::abs, v);
+  else if constexpr( match(c, category::size64_) ) return map(eve::abs, v);
   else if constexpr( c == category::int32x16 ) return _mm512_abs_epi32(v);
   else if constexpr( c == category::int32x8 )
   {
@@ -86,10 +86,10 @@ abs_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& v) noexcept requires x8
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr( c && category::unsigned_ ) return if_else(cx, eve::abs(v), src);
+    if constexpr( match(c, category::unsigned_) ) return if_else(cx, eve::abs(v), src);
     else if constexpr( c == category::float32x16 ) return _mm512_mask_abs_ps(src, m, v);
     else if constexpr( c == category::float64x8 ) return _mm512_mask_abs_pd(src, m, v);
-    else if constexpr( c && category::float_ ) return if_else(cx, eve::abs(v), src);
+    else if constexpr( match(c, category::float_) ) return if_else(cx, eve::abs(v), src);
     else if constexpr( c == category::int64x8 ) return _mm512_mask_abs_epi64(src, m, v);
     else if constexpr( c == category::int64x4 ) return _mm256_mask_abs_epi64(src, m, v);
     else if constexpr( c == category::int64x2 ) return _mm_mask_abs_epi64(src, m, v);
