@@ -103,11 +103,6 @@ namespace eve::detail
     return static_cast<category>(to_int(a) | to_int(b));
   }
 
-  inline std::ostream& operator<<(std::ostream& os, category a) noexcept
-  {
-    return os << static_cast<std::uint32_t>(a);
-  }
-
   template<typename... Cat>
   EVE_FORCEINLINE constexpr bool match(category a, Cat... tst) noexcept
   {
