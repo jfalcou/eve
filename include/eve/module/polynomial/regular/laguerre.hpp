@@ -71,8 +71,7 @@ namespace eve
 //!     The expression `successor(laguerre)(n, m, x, ln, lnmm1)` implements the three term
 //!     recurrence relation for the associated Laguerre polynomials,
 //!     \f$\displaystyle \mbox{L}_{n+1}^m =
-//!     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$ The expression
-//!     `successor(laguerre)(n, x, Ln, Lnm1)` implements the three terms recurrence
+//!     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$
 //!
 //!     These functions can be used to create a sequence of values evaluated at the same `x` (and
 //!     `m`) and for rising `n`.
