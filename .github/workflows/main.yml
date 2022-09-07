@@ -30,7 +30,7 @@ jobs:
           mode: '${{ matrix.cfg.mode }}'
 
   specials:
-    runs-on: self-hosted
+    runs-on: [self-hosted, generic-x86]
     strategy:
       fail-fast: false
       matrix:
@@ -54,7 +54,7 @@ jobs:
         uses: ./.github/actions/cleanup
 
   mainline:
-    runs-on: self-hosted
+    runs-on: [self-hosted, generic-x86]
     strategy:
       fail-fast: false
       matrix:
@@ -88,16 +88,35 @@ jobs:
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
 
+  avx512:
+    runs-on: [self-hosted, avx512]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86 , opts: -march=skylake-avx512 }
+        - { comp: gcc   , arch: x86 , opts: -march=skylake-avx512 }
+        - { comp: clang , arch: x86 , opts: -DEVE_NO_SIMD         }
+        - { comp: gcc   , arch: x86 , opts: -DEVE_NO_SIMD         }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v2
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja -v unit -j 5
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 4
+
   supplemental:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, cpu: 3 , arch: x86     , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: gcc  , cpu: 3 , arch: x86.ci  , opts: -DEVE_NO_SIMD         , status: 1 }
-        - { comp: clang, cpu: 3 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
-#        - { comp: gcc  , cpu: 2 , arch: x86_sde , opts: -march=skylake-avx512 , status: 1 }
         - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
         - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
         - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
