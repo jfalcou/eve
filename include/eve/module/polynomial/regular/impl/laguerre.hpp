@@ -107,7 +107,7 @@ laguerre_(EVE_SUPPORTS(cpu_), N nn, M mm, T x) noexcept
 
       auto n = convert(nn, as<elt_t>());
       auto c = one(as(n));
-      ;
+
       auto test = c < n;
       while( eve::any(test) )
       {
