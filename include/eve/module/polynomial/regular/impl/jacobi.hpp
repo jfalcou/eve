@@ -90,8 +90,8 @@ jacobi_(EVE_SUPPORTS(cpu_), T n, T alpha, T beta, T x) noexcept
       k2 += 2;
       test = k <= n;
     }
-    return yk;
+    return if_else(is_eqz(n), one(as(yk)), yk);
   }
-  else return apply_over(jacobi, alpha, beta, n, x);
+  else return apply_over(jacobi, n, alpha, beta, x);
 }
 }

@@ -72,6 +72,6 @@ template<conditional_expr    C,
 EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, T const& a, U const& b, V const& t) noexcept
 {
-  return mask_op(cond, eve::lerp, a, b, t);
+  return mask_op(cond, d(eve::lerp), a, b, t);
 }
 }
