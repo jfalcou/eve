@@ -79,7 +79,7 @@ laguerre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 }
 
 // Recurrence relation for Laguerre associated polynomials:
-template<real_value N, integral_value L, floating_value T>
+template<real_value N, real_value L, floating_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, L l, T x, T pl, T plm1) noexcept
 {
@@ -88,62 +88,37 @@ laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, L l, T x, T pl, T plm1
   return ((np1 + npl - x) * pl - npl * plm1) / np1;
 }
 
-// associated laguerre polynomials
-template<integral_scalar_value M, integral_scalar_value N, floating_value T>
-EVE_FORCEINLINE auto
-laguerre_(EVE_SUPPORTS(cpu_), N n, M m, T x) noexcept
-{
-  // Special cases:
-  if( m == 0 ) return laguerre(n, x);
-  auto p0 = one(as(x));
-  if( n == 0 ) return p0;
-  auto p1 = inc(m) - x;
-
-  unsigned c = 1;
-  while( c < n )
-  {
-    std::swap(p0, p1);
-    p1 = successor(laguerre)(c, m, x, p0, p1);
-    ++c;
-  }
-  return p1;
-}
-
-template<integral_simd_value M, integral_simd_value N, floating_scalar_value T>
+template<integral_value M, integral_value N, floating_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), N nn, M mm, T x) noexcept
 {
-  if( has_native_abi_v<T> )
+  auto iseqzm = is_eqz(mm);
+  if( eve::all(iseqzm) ) [[unlikely]] { return laguerre(nn, x); }
+  else [[likely]]
   {
-    auto iseqzm = is_eqz(mm);
-    if( eve::all(iseqzm) ) [[unlikely]] { return laguerre(nn, x); }
+    using elt_t = element_type_t<T>;
+    auto p0     = one(as(x));
+    auto iseqzn = is_eqz(nn);
+    if( eve::all(iseqzn) ) [[unlikely]] { return p0; }
     else [[likely]]
     {
-      using elt_t = element_type_t<T>;
-      auto p0     = one(as(x));
-      auto iseqzn = is_eqz(nn);
-      if( eve::all(iseqzn) ) [[unlikely]] { return p0; }
-      else [[likely]]
-      {
-        auto m  = convert(mm, as<elt_t>());
-        auto p1 = inc(m) - x;
+      auto m  = convert(mm, as<elt_t>());
+      auto p1 = inc(m) - x;
 
-        auto n = convert(nn, as<elt_t>());
-        auto c = one(as(n));
-        ;
-        auto test = c < n;
-        while( eve::any(test) )
-        {
-          auto p = p0;
-          p0     = p1;
-          p1     = if_else(test, successor(laguerre)(c, m, x, p0, p), p1);
-          c      = inc(c);
-          test   = c < n;
-        }
-        return if_else(iseqzn, one, if_else(iseqzm, laguerre(n, x), p1));
+      auto n = convert(nn, as<elt_t>());
+      auto c = one(as(n));
+
+      auto test = c < n;
+      while( eve::any(test) )
+      {
+        auto p = p0;
+        p0     = p1;
+        p1     = if_else(test, successor(laguerre)(c, m, x, p0, p), p1);
+        c      = inc(c);
+        test   = c < n;
       }
+      return if_else(iseqzn, one, if_else(iseqzm, laguerre(nn, x), p1));
     }
   }
-  else return apply_over(laguerre, nn, mm, x);
 }
 }
