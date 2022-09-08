@@ -70,8 +70,6 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: -mavx                                 }
         - { comp: clang , arch: x86     , opts: -mavx2                                }
         - { comp: gcc   , arch: x86     , opts: -mavx2                                }
-        - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
-        - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
       - name: Fetch current branch
@@ -94,11 +92,12 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: x86 , opts: -march=skylake-avx512 }
-        - { comp: gcc   , arch: x86 , opts: -march=skylake-avx512 }
-        - { comp: clang , arch: x86 , opts: -DEVE_NO_SIMD         }
-        - { comp: gcc   , arch: x86 , opts: -DEVE_NO_SIMD         }
-
+        - { comp: clang , arch: x86 , opts: -march=skylake-avx512                 }
+        - { comp: gcc   , arch: x86 , opts: -march=skylake-avx512                 }
+        - { comp: clang , arch: x86 , opts: -DEVE_NO_SIMD                         }
+        - { comp: gcc   , arch: x86 , opts: -DEVE_NO_SIMD                         }
+        - { comp: clang , arch: x86 , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: gcc   , arch: x86 , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v2
@@ -107,7 +106,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja -v unit -j 5
+        run:  cd build && ninja -v unit -j 4
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4
 
