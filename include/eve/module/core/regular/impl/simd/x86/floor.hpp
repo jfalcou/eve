@@ -50,10 +50,10 @@ floor_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& v) noexcept requires 
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr( c && category::integer_ ) return if_else(cx, v, src);
+    if constexpr( match(c, category::integer_) ) return if_else(cx, v, src);
     else if constexpr( c == category::float32x16 ) return _mm512_mask_floor_ps(src, m, v);
     else if constexpr( c == category::float64x8 ) return _mm512_mask_floor_pd(src, m, v);
-    else if constexpr( c && category::float_ ) return if_else(cx, eve::floor(v), src);
+    else if constexpr( match(c, category::float_) ) return if_else(cx, eve::floor(v), src);
   }
 }
 }

@@ -145,7 +145,7 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( N {} <= 2 && c_o == uint8x16 && a512 ) return _mm_cvtepi64_epi8(v);
   else if constexpr( N {} <= 2 && mo32x4 && a512 ) return _mm_cvtepi64_epi32(v);
   else if constexpr( N {} <= 2 && mo32x4 ) return convert_integers_shuffle(v, tgt);
-  else if constexpr( N {} <= 2 && (c_o && integer_) )
+  else if constexpr( N {} <= 2 && (match(c_o,integer_)) )
     return convert(convert(v, as<upgrade_t<U>> {}), tgt);
   else if constexpr( N {} <= 2 ) return convert_impl(EVE_RETARGET(cpu_), v, tgt);
   else if constexpr( c_i == int64x4 && c_o == float64x4 && a512 ) return _mm256_cvtepi64_pd(v);
@@ -231,7 +231,7 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == uint32x8 && c_o == float32x8 ) return convert_slice(v, tgt);
   else if constexpr( c_i == int32x16 && c_o == float32x16 ) return _mm512_cvtepi32_ps(v);
   else if constexpr( c_i == uint32x16 && c_o == float32x16 ) return _mm512_cvtepu32_ps(v);
-  else if constexpr( c_i == uint32x4 && (c_o && float_) )
+  else if constexpr( c_i == uint32x4 && match(c_o,float_) )
   {
     // From https://stackoverflow.com/a/40766669/737268
     auto y = convert(bit_cast(v >> 1, as<wide<std::int32_t, N>> {}), tgt);
@@ -280,16 +280,16 @@ EVE_FORCEINLINE wide<U, N>
   constexpr auto aavx2   = current_api >= avx2;
   constexpr auto a41     = current_api >= sse4_1;
   constexpr auto as3     = current_api >= ssse3;
-  constexpr auto mi16x8  = match(c_i, category::int16x8, category::uint16x8);
-  constexpr auto mi16x16 = match(c_i, category::int16x16, category::uint16x16);
-  constexpr auto mi16x32 = match(c_i, category::int16x32, category::uint16x32);
-  constexpr auto mo8x16  = match(c_o, category::int8x16, category::uint8x16);
-  constexpr auto mo32x4  = match(c_o, category::int32x4, category::uint32x4);
-  constexpr auto mo32x8  = match(c_o, category::int32x8, category::uint32x8);
-  constexpr auto mo32x16 = match(c_o, category::int32x16, category::uint32x16);
-  constexpr auto mo64x2  = match(c_o, category::int64x2, category::uint64x2);
-  constexpr auto mo64x4  = match(c_o, category::int64x4, category::uint64x4);
-  constexpr auto mo64x8  = match(c_o, category::int64x8, category::uint64x8);
+  constexpr auto mi16x8  = match(c_i, int16x8, uint16x8);
+  constexpr auto mi16x16 = match(c_i, int16x16, uint16x16);
+  constexpr auto mi16x32 = match(c_i, int16x32, uint16x32);
+  constexpr auto mo8x16  = match(c_o, int8x16, uint8x16);
+  constexpr auto mo32x4  = match(c_o, int32x4, uint32x4);
+  constexpr auto mo32x8  = match(c_o, int32x8, uint32x8);
+  constexpr auto mo32x16 = match(c_o, int32x16, uint32x16);
+  constexpr auto mo64x2  = match(c_o, int64x2, uint64x2);
+  constexpr auto mo64x4  = match(c_o, int64x4, uint64x4);
+  constexpr auto mo64x8  = match(c_o, int64x8, uint64x8);
 
   if constexpr( mi16x8 && mo8x16 && a512 ) return _mm_cvtepi16_epi8(v);
   else if constexpr( mi16x8 && mo8x16 && as3 ) return convert_integers_shuffle(v, tgt);
@@ -313,7 +313,7 @@ EVE_FORCEINLINE wide<U, N>
     return convert(convert(v, as<upgrade_t<T>> {}), tgt);
   else if constexpr( mi16x8 && sizeof(U) == 8 ) return convert_integers_chain(v, tgt);
   else if constexpr( mi16x8 && (sizeof(U) >= 4) && N::value == 8 ) return convert_slice(v, tgt);
-  else if constexpr( mi16x16 && (c_o && category::float_) )
+  else if constexpr( mi16x16 && match(c_o, float_) )
     return convert(convert(v, as<upgrade_t<T>> {}), tgt);
   else if constexpr( mi16x16 && mo8x16 && a512 ) return _mm256_cvtepi16_epi8(v);
   else if constexpr( c_i == int16x16 && mo32x16 ) return _mm512_cvtepi16_epi32(v);
@@ -329,7 +329,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 template<integral_scalar_value T, typename N, real_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const                &v, as<U> const                &tgt) noexcept
+                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const& v, as<U> const& tgt) noexcept
     requires(sizeof(T) == 1)
 {
   using enum category;
@@ -352,7 +352,7 @@ EVE_FORCEINLINE wide<U, N>
   using t_t =
       std::conditional_t<std::is_signed_v<T>, as_integer_t<U, signed>, as_integer_t<U, unsigned>>;
 
-  if constexpr( c_o && float_ ) return convert(convert(v, as<t_t> {}), tgt);
+  if constexpr( match(c_o, float_) ) return convert(convert(v, as<t_t> {}), tgt);
   else if constexpr( c_i == int8x16 && mo16x8 && a41 ) return _mm_cvtepi8_epi16(v);
   else if constexpr( c_i == int8x16 && mo16x16 && aavx2 ) return _mm256_cvtepi8_epi16(v);
   else if constexpr( c_i == uint8x16 && mo16x8 && a41 ) return _mm_cvtepu8_epi16(v);

@@ -20,8 +20,8 @@ minus_(EVE_SUPPORTS(neon128_), wide<T, N> const& v) noexcept requires arm_abi<ab
 {
   constexpr auto cat = categorize<wide<T, N>>();
 
-  if constexpr( cat && category::unsigned_ ) return zero(eve::as(v)) - v;
-  else if constexpr( cat && category::size64_ ) return zero(eve::as(v)) - v;
+  if constexpr( match(cat, category::unsigned_) ) return zero(eve::as(v)) - v;
+  else if constexpr( match(cat, category::size64_) ) return zero(eve::as(v)) - v;
   else if constexpr( cat == category::float32x4 ) return vnegq_f32(v);
   else if constexpr( cat == category::int32x4 ) return vnegq_s32(v);
   else if constexpr( cat == category::int16x8 ) return vnegq_s16(v);

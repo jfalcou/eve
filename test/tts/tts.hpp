@@ -996,6 +996,12 @@ namespace tts
     {
       return to_string(e);
     }
+    else if constexpr( std::is_enum_v<T> )
+    {
+      std::ostringstream os;
+      os << typename_<T> << "(" << static_cast<std::underlying_type_t<T>>(e) << ")";
+      return os.str();
+    }
     else if constexpr( sequence<T> )
     {
       std::string that = "{ ";

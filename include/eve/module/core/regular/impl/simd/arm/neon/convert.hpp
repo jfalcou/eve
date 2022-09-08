@@ -63,8 +63,8 @@ EVE_FORCEINLINE wide<U, N>
     else if constexpr( c_o == int32x2 ) return vcvt_s32_f32(v);
     else if constexpr( c_o == uint32x2 ) return vcvt_u32_f32(v);
     else if constexpr( sizeof(U) == 8 ) return map(convert, v, tgt);
-    else if constexpr( c_o && signed_ ) return convert(convert(v, t_i32), tgt);
-    else if constexpr( c_o && unsigned_ ) return convert(convert(v, t_u32), tgt);
+    else if constexpr( match(c_o, signed_   ) ) return convert(convert(v, t_i32), tgt);
+    else if constexpr( match(c_o, unsigned_ ) ) return convert(convert(v, t_u32), tgt);
   }
   else if constexpr( N {} == 4 )
   {

@@ -216,7 +216,7 @@ namespace eve::detail
     {
       const     auto bits = bit_cast(other, as<type> {});
       constexpr auto c    = categorize<type>();
-      constexpr bool i    = c && category::integer_;
+      constexpr bool i    = match(c, category::integer_);
 
             if constexpr( c == category::float64x8        ) self = _mm512_and_pd(self, bits);
       else  if constexpr( c == category::float64x4        ) self = _mm256_and_pd(self, bits);
@@ -258,7 +258,7 @@ namespace eve::detail
     {
       auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<type> {});
       constexpr auto c = categorize<type>();
-      constexpr bool i = c && category::integer_;
+      constexpr bool i = match(c, category::integer_);
 
             if constexpr  ( c == category::float64x8        ) self = _mm512_or_pd(self, bits);
       else  if constexpr  ( c == category::float64x4        ) self = _mm256_or_pd(self, bits);
@@ -300,7 +300,7 @@ namespace eve::detail
     {
       auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<type> {});
       constexpr auto c = categorize<type>();
-      constexpr bool i = c && category::integer_;
+      constexpr bool i = match(c, category::integer_);
 
             if constexpr  ( c == category::float64x8        ) self = _mm512_xor_pd(self, bits);
       else  if constexpr  ( c == category::float64x4        ) self = _mm256_xor_pd(self, bits);

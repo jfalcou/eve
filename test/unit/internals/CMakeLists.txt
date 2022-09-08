@@ -14,6 +14,7 @@ add_custom_target(unit.internals.exe )
 ##==================================================================================================
 make_unit( "unit.internals" aggregation.cpp                     )
 make_unit( "unit.internals" byte_16_runtime_shuffle.cpp         )
+make_unit( "unit.internals" category.cpp                        )
 make_unit( "unit.internals" compress/compress_mask_num.cpp      )
 make_unit( "unit.internals" dispatch.cpp                        )
 make_unit( "unit.internals" horn.cpp                            )

@@ -60,15 +60,15 @@ EVE_FORCEINLINE wide<T, N>
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr( c && category::float_ ) return if_else(cx, eve::average(v, w), src);
-    else if constexpr( c && category::int_ ) return if_else(cx, eve::average(v, w), src);
+    if constexpr( match(c, category::float_) ) return if_else(cx, eve::average(v, w), src);
+    else if constexpr( match(c, category::int_) ) return if_else(cx, eve::average(v, w), src);
     else if constexpr( c == category::uint16x32 ) return _mm512_mask_avg_epu16(src, m, v, w);
     else if constexpr( c == category::uint16x16 ) return _mm256_mask_avg_epu16(src, m, v, w);
     else if constexpr( c == category::uint16x8 ) return _mm_mask_avg_epu16(src, m, v, w);
     else if constexpr( c == category::uint8x64 ) return _mm512_mask_avg_epu8(src, m, v, w);
     else if constexpr( c == category::uint8x32 ) return _mm256_mask_avg_epu8(src, m, v, w);
     else if constexpr( c == category::uint8x16 ) return _mm_mask_avg_epu8(src, m, v, w);
-    else if constexpr( c && category::uint_ ) return if_else(cx, eve::average(v, w), src);
+    else if constexpr( match(c, category::uint_) ) return if_else(cx, eve::average(v, w), src);
   }
 }
 
