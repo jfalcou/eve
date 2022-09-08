@@ -24,7 +24,7 @@ EVE_FORCEINLINE logical<wide<T, N>>
   constexpr auto c = categorize<wide<T, N>>();
   constexpr auto m = _CMP_ORD_Q;
 
-  if constexpr( c && category::integer_ ) return true_(eve::as<l_t>());
+  if constexpr( match(c, category::integer_) ) return true_(eve::as<l_t>());
   else if constexpr( current_api >= eve::avx512 )
   {
     using s_t = typename l_t::storage_type;

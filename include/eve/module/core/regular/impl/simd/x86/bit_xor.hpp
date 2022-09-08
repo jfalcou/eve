@@ -38,21 +38,21 @@ EVE_FORCEINLINE wide<T, N>
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
     if constexpr( c == category::float32x16 ) return _mm512_mask_xor_ps(src, m, v0, v1);
     else if constexpr( c == category::float64x8 ) return _mm512_mask_xor_pd(src, m, v0, v1);
-    else if constexpr( c && category::float_ ) return if_else(cx, eve::bit_xor(v0, v1), src);
+    else if constexpr( match(c, category::float_) ) return if_else(cx, eve::bit_xor(v0, v1), src);
     else if constexpr( c == category::int64x8 ) return _mm512_mask_xor_epi64(src, m, v0, v1);
     else if constexpr( c == category::int64x4 ) return _mm256_mask_xor_epi64(src, m, v0, v1);
     else if constexpr( c == category::int64x2 ) return _mm_mask_xor_epi64(src, m, v0, v1);
     else if constexpr( c == category::int32x16 ) return _mm512_mask_xor_epi32(src, m, v0, v1);
     else if constexpr( c == category::int32x8 ) return _mm256_mask_xor_epi32(src, m, v0, v1);
     else if constexpr( c == category::int32x4 ) return _mm_mask_xor_epi32(src, m, v0, v1);
-    else if constexpr( c && category::int_ ) return if_else(cx, eve::bit_xor(v0, v1), src);
+    else if constexpr( match(c, category::int_) ) return if_else(cx, eve::bit_xor(v0, v1), src);
     else if constexpr( c == category::uint64x8 ) return _mm512_mask_xor_epi64(src, m, v0, v1);
     else if constexpr( c == category::uint64x4 ) return _mm256_mask_xor_epi64(src, m, v0, v1);
     else if constexpr( c == category::uint64x2 ) return _mm_mask_xor_epi64(src, m, v0, v1);
     else if constexpr( c == category::uint32x16 ) return _mm512_mask_xor_epi32(src, m, v0, v1);
     else if constexpr( c == category::uint32x8 ) return _mm256_mask_xor_epi32(src, m, v0, v1);
     else if constexpr( c == category::uint32x4 ) return _mm_mask_xor_epi32(src, m, v0, v1);
-    else if constexpr( c && category::uint_ ) return if_else(cx, eve::bit_xor(v0, v1), src);
+    else if constexpr( match(c, category::uint_) ) return if_else(cx, eve::bit_xor(v0, v1), src);
   }
 }
 }
