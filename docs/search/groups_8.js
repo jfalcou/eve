@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['math_20function_0',['math function',['../group__math.html',1,'']]],
-  ['memory_20management_1',['Memory Management',['../group__memory.html',1,'']]]
+  ['logarithm_0',['Logarithm',['../group__math__log.html',1,'']]],
+  ['logical_20operations_1',['Logical operations',['../group__core__logical.html',1,'']]]
 ];

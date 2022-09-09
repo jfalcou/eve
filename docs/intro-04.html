@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('intro-04.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p >In the previous tutorial, we laid out how <b>EVE</b> can use SIMD-aware tuples to handle more complex cases. In this tutorial, we'll go over how we can design semantically equivalent user-defined types.</p>
-<h1><a class="anchor" id="autotoc_md890"></a>
+<h1><a class="anchor" id="autotoc_md177"></a>
 Adapting UDT to SIMD processing</h1>
 <p >Using tuples as a random bag of values returned from functions is somewhat lackluster. Indeed, one would prefer names over field numbers, thus rising the level of abstraction.</p>
 <p >Following this trend, we can rewrite our scalar <code>to_polar</code> function to return a proper structure.</p>
@@ -136,13 +136,13 @@ Adapting UDT to SIMD processing</h1>
 <div class="line"> </div>
 <div class="line">  polar_coords to_polar(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">std::hypot</a>(x, y);</div>
-<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">std::atan2</a>(y, x);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">std::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">std::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> { rho, theta };</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the hypot operation.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:92</div></div>
-<div class="ttc" id="agroup__math_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr callable_atan2_ atan2</div><div class="ttdoc">Callable object computing the atan2 operation.</div><div class="ttdef"><b>Definition:</b> atan2.hpp:94</div></div>
+<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:70</div></div>
+<div class="ttc" id="agroup__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr callable_atan2_ atan2</div><div class="ttdoc">Callable object computing the arc tangent using the signs of arguments to determine the correct quadr...</div><div class="ttdef"><b>Definition:</b> atan2.hpp:85</div></div>
 </div><!-- fragment --><p >The next thing we want is to be able to write <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;polar_coords&gt;</code> and have everything we already put in place for handling tuple just works with user-defined type. <b>EVE</b> provides an opt-in system to do just that.</p>
 <p >To register <code>polar_coords</code> to be usable as a type inside <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>, two things are needed:</p><ul>
 <li>adapt the structure to be <a href="https://en.cppreference.com/w/cpp/language/structured_binding">compatible with C++ structured bindings</a>. This includes specializations for <code>std::tuple_size</code>, <code>std::tuple_element</code> and a <code>get</code> function.</li>
@@ -189,14 +189,14 @@ Adapting UDT to SIMD processing</h1>
 <div class="line">{</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a> to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
-<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;polar_coords&gt;</a>{ rho, theta };</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><p >Note how the semantic improved by being able to explicitly states we return a SIMD register made of instance of <code>polar_coords</code>.</p>
-<h1><a class="anchor" id="autotoc_md891"></a>
+<h1><a class="anchor" id="autotoc_md178"></a>
 Creating SIMD-aware UDT</h1>
 <p >All this boilerplate can be overwhelming so instead of adapting existing code, you may want to build a new user-defined type directly usable as a SIMD type. <b>EVE</b> provides an intrusive protocol to do just that via the use of the <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> helper.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/product_type.hpp&gt;</span></div>
@@ -228,7 +228,7 @@ Creating SIMD-aware UDT</h1>
 <li>We then define friend functions to assign names to numbered fields. As the structure thus defined will be usable in both scalar and SIMD context, we use the <a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a> concept to overload them. <code><a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a>&lt;polar_coords&gt;</code> used as a parameters concept means that the function accepts any type that behaves like a <code>polar_coords</code>, i.e <code>polar_coords</code> and <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;polar_coords&gt;</code>. Such function can also be defined as regular function, but this form is easier and safer.</li>
 </ul>
 <p >This is the bare minimum we can do with <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>. Additional operators can be added along with stream insertion. Check <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a> documentation for more informations.</p>
-<h1><a class="anchor" id="autotoc_md892"></a>
+<h1><a class="anchor" id="autotoc_md179"></a>
 Storage and Processing</h1>
 <p >The last step in this situation is now to process multiples <code>udt::polar_coords</code> using algorithms. The most efficient way to do so is to use eve::soa_vector as a container for SIMD-aware types, either adapted or created using <a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a>.</p>
 <p >eve::soa_vector provides a <code>std::vector</code>-like interface but perform automatic Structure of Array storage optimisation, ensures the best alignment possible for each sub-members and is directly usable as <b>EVE</b> algorithm input or output.</p>
@@ -243,8 +243,8 @@ Storage and Processing</h1>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
-<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;kumi::tuple&lt;float,float&gt;</a>&gt;{ rho, theta };</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -293,16 +293,16 @@ Storage and Processing</h1>
 <div class="line">                              {</div>
 <div class="line">                                <span class="keyword">auto</span> r = rho(in);</div>
 <div class="line">                                <span class="keyword">auto</span> t = theta(in);</div>
-<div class="line">                                <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;cartesian_coords&gt;</a>{ r * <a class="code hl_variable" href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a>(t), r * <a class="code hl_variable" href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a>(t) };</div>
+<div class="line">                                <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;cartesian_coords&gt;</a>{ r * <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a>(t), r * <a class="code hl_variable" href="group__math__trig_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a>(t) };</div>
 <div class="line">                              }</div>
 <div class="line">                            );</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> outs;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr callable_cos_ cos</div><div class="ttdoc">Callable object computing cos.</div><div class="ttdef"><b>Definition:</b> cos.hpp:72</div></div>
-<div class="ttc" id="agroup__math_gaf171d35de1087cbe903e3c5748cf19f3_html_gaf171d35de1087cbe903e3c5748cf19f3"><div class="ttname"><a href="group__math_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a></div><div class="ttdeci">constexpr callable_sin_ sin</div><div class="ttdoc">Callable object computing sin.</div><div class="ttdef"><b>Definition:</b> sin.hpp:72</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md893"></a>
+<div class="ttc" id="agroup__math__trig_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr callable_cos_ cos</div><div class="ttdoc">Callable object computing the cosine.</div><div class="ttdef"><b>Definition:</b> cos.hpp:76</div></div>
+<div class="ttc" id="agroup__math__trig_gaf171d35de1087cbe903e3c5748cf19f3_html_gaf171d35de1087cbe903e3c5748cf19f3"><div class="ttname"><a href="group__math__trig_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a></div><div class="ttdeci">constexpr callable_sin_ sin</div><div class="ttdoc">Callable object computing the sine.</div><div class="ttdef"><b>Definition:</b> sin.hpp:76</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md180"></a>
 Conclusion</h1>
 <p >In this tutorial, we managed to:</p><ul>
 <li>adapt existing UDT to be compatible with <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></li>

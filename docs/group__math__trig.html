@@ -1,0 +1,252 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: Trigonometric</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2022.03.00</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__math__trig.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Trigonometric<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a> &raquo; <a class="el" href="group__math.html">Mathematical functions</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p >These functions allows performing trigonometric computations</p>
+<p >All trigonometric functions exists in three flavors for parameters being radian, degrees or \(\pi\) multiples.</p>
+<ul>
+<li>for example <a class="el" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86" title="Callable object computing the cosine.">eve::cos</a>, <a class="el" href="group__math__trig_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000" title="Callable object computing cosine from an input in degrees.">eve::cosd</a>, eve::cospi.</li>
+<li><p class="startli">The main avantage of using <code>eve::cospi(x)</code> instead of <code><a class="el" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86" title="Callable object computing the cosine.">eve::cos</a>(eve::pi(as(x)* x))</code> (as well as the other pi ended functions) is that if <code>x</code> is exactly representable the multiplication by the floating \(\pi\) multiplier is not.</p>
+<p class="startli">For example <a class="el" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86" title="Callable object computing the cosine.">eve::cos</a>(eve::pio_2(as&lt;double&gt;()))) is 6.1232e-17 (as pio_2 is not exact), but eve::cospi(0.5) is 0 (as 0.5 is exact).</p>
+</li>
+</ul>
+<p >Moreover each function can be decorated with <a class="el" href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::quarter_circle</a>, eve:half_circle, <a class="el" href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::full_circle</a>, eve::medium, eve::big.</p>
+<ul>
+<li><a class="el" href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::quarter_circle</a> provides accurate result for the corresponding radian angle in \(]-\pi/4,\pi/4[\), Nan outside</li>
+<li><a class="el" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9" title="Higher-order Callable Object imbuing a limited range standard semantic onto other Callable Objects.">eve::half_circle</a> provides accurate result for the corresponding radian angle in \(]-\pi/2,\pi/2[\), Nan outside</li>
+<li><a class="el" href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::full_circle</a> provides accurate result for the corresponding radian angle in \(]-\pi,\pi[\), Nan outside</li>
+<li>regular call (not decorated) choose the best call and is valid on the full range. </li>
+</ul>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga582ee61bd6909c6b95af359339d32c2b"><td class="memItemLeft" align="right" valign="top">constexpr full_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b">eve::full_circle</a> = {}</td></tr>
+<tr class="memdesc:ga582ee61bd6909c6b95af359339d32c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b">More...</a><br /></td></tr>
+<tr class="separator:ga582ee61bd6909c6b95af359339d32c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5125fa88aef3909aad8d39e760305c82"><td class="memItemLeft" align="right" valign="top">constexpr quarter_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">eve::quarter_circle</a> = {}</td></tr>
+<tr class="memdesc:ga5125fa88aef3909aad8d39e760305c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">More...</a><br /></td></tr>
+<tr class="separator:ga5125fa88aef3909aad8d39e760305c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="memItemLeft" align="right" valign="top">constexpr half_circle_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">eve::half_circle</a> = {}</td></tr>
+<tr class="memdesc:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing a limited range standard semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">More...</a><br /></td></tr>
+<tr class="separator:gad7f9ab92c007e0ae6219cd7c5991ffa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0cac72b6f927ba13a67764846899b535"><td class="memItemLeft" align="right" valign="top">constexpr callable_arg_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">eve::arg</a> = {}</td></tr>
+<tr class="memdesc:ga0cac72b6f927ba13a67764846899b535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the phase angle (in radians).  <a href="group__math__trig_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">More...</a><br /></td></tr>
+<tr class="separator:ga0cac72b6f927ba13a67764846899b535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39e50b4c59911e463be1a11fc958fb86"><td class="memItemLeft" align="right" valign="top">constexpr callable_cos_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a> = {}</td></tr>
+<tr class="memdesc:ga39e50b4c59911e463be1a11fc958fb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cosine.  <a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">More...</a><br /></td></tr>
+<tr class="separator:ga39e50b4c59911e463be1a11fc958fb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga216a80d7f91be23dc0d74e26eb057000"><td class="memItemLeft" align="right" valign="top">constexpr callable_cosd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000">eve::cosd</a> = {}</td></tr>
+<tr class="memdesc:ga216a80d7f91be23dc0d74e26eb057000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cosine from an input in degrees.  <a href="group__math__trig_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000">More...</a><br /></td></tr>
+<tr class="separator:ga216a80d7f91be23dc0d74e26eb057000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0a09342c6bb010028e1686a0b1f599c"><td class="memItemLeft" align="right" valign="top">constexpr callable_cot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gad0a09342c6bb010028e1686a0b1f599c.html#gad0a09342c6bb010028e1686a0b1f599c">eve::cot</a> = {}</td></tr>
+<tr class="memdesc:gad0a09342c6bb010028e1686a0b1f599c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing th cotangent.  <a href="group__math__trig_gad0a09342c6bb010028e1686a0b1f599c.html#gad0a09342c6bb010028e1686a0b1f599c">More...</a><br /></td></tr>
+<tr class="separator:gad0a09342c6bb010028e1686a0b1f599c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c0c27c3a93a40a2fa91c42b02040e62"><td class="memItemLeft" align="right" valign="top">constexpr callable_cotd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga1c0c27c3a93a40a2fa91c42b02040e62.html#ga1c0c27c3a93a40a2fa91c42b02040e62">eve::cotd</a> = {}</td></tr>
+<tr class="memdesc:ga1c0c27c3a93a40a2fa91c42b02040e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing cotangent from an input in degrees.  <a href="group__math__trig_ga1c0c27c3a93a40a2fa91c42b02040e62.html#ga1c0c27c3a93a40a2fa91c42b02040e62">More...</a><br /></td></tr>
+<tr class="separator:ga1c0c27c3a93a40a2fa91c42b02040e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade4a273af7fb50439ae8974d4e5e8222"><td class="memItemLeft" align="right" valign="top">constexpr callable_cotpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222">eve::cotpi</a> = {}</td></tr>
+<tr class="memdesc:gade4a273af7fb50439ae8974d4e5e8222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the arc cotangent from an input in \(\pi\) multiples.  <a href="group__math__trig_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222">More...</a><br /></td></tr>
+<tr class="separator:gade4a273af7fb50439ae8974d4e5e8222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga664582204f1e5e323b88bf429706c77f"><td class="memItemLeft" align="right" valign="top">constexpr callable_csc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga664582204f1e5e323b88bf429706c77f.html#ga664582204f1e5e323b88bf429706c77f">eve::csc</a> = {}</td></tr>
+<tr class="memdesc:ga664582204f1e5e323b88bf429706c77f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cosecant of the input.  <a href="group__math__trig_ga664582204f1e5e323b88bf429706c77f.html#ga664582204f1e5e323b88bf429706c77f">More...</a><br /></td></tr>
+<tr class="separator:ga664582204f1e5e323b88bf429706c77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a52b982ffa12d6861352c791fe551a5"><td class="memItemLeft" align="right" valign="top">constexpr callable_cscd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga1a52b982ffa12d6861352c791fe551a5.html#ga1a52b982ffa12d6861352c791fe551a5">eve::cscd</a> = {}</td></tr>
+<tr class="memdesc:ga1a52b982ffa12d6861352c791fe551a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cosecant from an input in degree.  <a href="group__math__trig_ga1a52b982ffa12d6861352c791fe551a5.html#ga1a52b982ffa12d6861352c791fe551a5">More...</a><br /></td></tr>
+<tr class="separator:ga1a52b982ffa12d6861352c791fe551a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae413e8b133a104f344513b9500b7708b"><td class="memItemLeft" align="right" valign="top">constexpr callable_cscpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">eve::cscpi</a> = {}</td></tr>
+<tr class="memdesc:gae413e8b133a104f344513b9500b7708b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the cosecant in \(\pi\) multiples.  <a href="group__math__trig_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">More...</a><br /></td></tr>
+<tr class="separator:gae413e8b133a104f344513b9500b7708b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5affe61fab2afe7b8ac2b729a03e523"><td class="memItemLeft" align="right" valign="top">constexpr callable_deginrad_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gac5affe61fab2afe7b8ac2b729a03e523.html#gac5affe61fab2afe7b8ac2b729a03e523">eve::deginrad</a> = {}</td></tr>
+<tr class="memdesc:gac5affe61fab2afe7b8ac2b729a03e523"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object multiplying the input by \(\pi/180\).  <a href="group__math__trig_gac5affe61fab2afe7b8ac2b729a03e523.html#gac5affe61fab2afe7b8ac2b729a03e523">More...</a><br /></td></tr>
+<tr class="separator:gac5affe61fab2afe7b8ac2b729a03e523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3716c407dc2f76f32b48455c1f6189f"><td class="memItemLeft" align="right" valign="top">constexpr callable_quadrant_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f">eve::quadrant</a> = {}</td></tr>
+<tr class="memdesc:gaf3716c407dc2f76f32b48455c1f6189f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the quadrant value.  <a href="group__math__trig_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f">More...</a><br /></td></tr>
+<tr class="separator:gaf3716c407dc2f76f32b48455c1f6189f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b1c77c546053d766a5886f84e5c1dd4"><td class="memItemLeft" align="right" valign="top">constexpr callable_radindeg_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga7b1c77c546053d766a5886f84e5c1dd4.html#ga7b1c77c546053d766a5886f84e5c1dd4">eve::radindeg</a> = {}</td></tr>
+<tr class="memdesc:ga7b1c77c546053d766a5886f84e5c1dd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object multiplying the input by \(180/\pi\).  <a href="group__math__trig_ga7b1c77c546053d766a5886f84e5c1dd4.html#ga7b1c77c546053d766a5886f84e5c1dd4">More...</a><br /></td></tr>
+<tr class="separator:ga7b1c77c546053d766a5886f84e5c1dd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dc9acb0c739948399c79c68f1bd5eaa"><td class="memItemLeft" align="right" valign="top">constexpr callable_radinpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga5dc9acb0c739948399c79c68f1bd5eaa.html#ga5dc9acb0c739948399c79c68f1bd5eaa">eve::radinpi</a> = {}</td></tr>
+<tr class="memdesc:ga5dc9acb0c739948399c79c68f1bd5eaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object multiplying the input by \(1/\pi\).  <a href="group__math__trig_ga5dc9acb0c739948399c79c68f1bd5eaa.html#ga5dc9acb0c739948399c79c68f1bd5eaa">More...</a><br /></td></tr>
+<tr class="separator:ga5dc9acb0c739948399c79c68f1bd5eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8d411aa6820539627b8475e86395d45"><td class="memItemLeft" align="right" valign="top">constexpr callable_rempio2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45">eve::rempio2</a> = {}</td></tr>
+<tr class="memdesc:gab8d411aa6820539627b8475e86395d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the remainder of the division by \(\pi/2\).  <a href="group__math__trig_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45">More...</a><br /></td></tr>
+<tr class="separator:gab8d411aa6820539627b8475e86395d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9016964468b90f782aa01ba4be5e44ed"><td class="memItemLeft" align="right" valign="top">constexpr callable_sec_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed">eve::sec</a> = {}</td></tr>
+<tr class="memdesc:ga9016964468b90f782aa01ba4be5e44ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the secant of the input.  <a href="group__math__trig_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed">More...</a><br /></td></tr>
+<tr class="separator:ga9016964468b90f782aa01ba4be5e44ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d321e65637ca035df92af12c1dcc5eb"><td class="memItemLeft" align="right" valign="top">constexpr callable_secd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga9d321e65637ca035df92af12c1dcc5eb.html#ga9d321e65637ca035df92af12c1dcc5eb">eve::secd</a> = {}</td></tr>
+<tr class="memdesc:ga9d321e65637ca035df92af12c1dcc5eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the secant from an input in degree.  <a href="group__math__trig_ga9d321e65637ca035df92af12c1dcc5eb.html#ga9d321e65637ca035df92af12c1dcc5eb">More...</a><br /></td></tr>
+<tr class="separator:ga9d321e65637ca035df92af12c1dcc5eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84c8a10368a87019fd81eb234c3f09da"><td class="memItemLeft" align="right" valign="top">constexpr callable_secpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da">eve::secpi</a> = {}</td></tr>
+<tr class="memdesc:ga84c8a10368a87019fd81eb234c3f09da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing secant from an input in \(\pi\) multiples.  <a href="group__math__trig_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da">More...</a><br /></td></tr>
+<tr class="separator:ga84c8a10368a87019fd81eb234c3f09da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf171d35de1087cbe903e3c5748cf19f3"><td class="memItemLeft" align="right" valign="top">constexpr callable_sin_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">eve::sin</a> = {}</td></tr>
+<tr class="memdesc:gaf171d35de1087cbe903e3c5748cf19f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the sine.  <a href="group__math__trig_gaf171d35de1087cbe903e3c5748cf19f3.html#gaf171d35de1087cbe903e3c5748cf19f3">More...</a><br /></td></tr>
+<tr class="separator:gaf171d35de1087cbe903e3c5748cf19f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f71b1e51347872f0a3b2ca92ac9cf9a"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinc_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga9f71b1e51347872f0a3b2ca92ac9cf9a.html#ga9f71b1e51347872f0a3b2ca92ac9cf9a">eve::sinc</a> = {}</td></tr>
+<tr class="memdesc:ga9f71b1e51347872f0a3b2ca92ac9cf9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the sine cardinal.  <a href="group__math__trig_ga9f71b1e51347872f0a3b2ca92ac9cf9a.html#ga9f71b1e51347872f0a3b2ca92ac9cf9a">More...</a><br /></td></tr>
+<tr class="separator:ga9f71b1e51347872f0a3b2ca92ac9cf9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f7c4b010d79f473531a7d83902b4d02"><td class="memItemLeft" align="right" valign="top">constexpr callable_sincos_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga9f7c4b010d79f473531a7d83902b4d02.html#ga9f7c4b010d79f473531a7d83902b4d02">eve::sincos</a> = {}</td></tr>
+<tr class="memdesc:ga9f7c4b010d79f473531a7d83902b4d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the simultaneous computation of sine an cosine.  <a href="group__math__trig_ga9f7c4b010d79f473531a7d83902b4d02.html#ga9f7c4b010d79f473531a7d83902b4d02">More...</a><br /></td></tr>
+<tr class="separator:ga9f7c4b010d79f473531a7d83902b4d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c08108f1c56d9df1141637c01c0d194"><td class="memItemLeft" align="right" valign="top">constexpr callable_sind_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga7c08108f1c56d9df1141637c01c0d194.html#ga7c08108f1c56d9df1141637c01c0d194">eve::sind</a> = {}</td></tr>
+<tr class="memdesc:ga7c08108f1c56d9df1141637c01c0d194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the sine from an input in degrees.  <a href="group__math__trig_ga7c08108f1c56d9df1141637c01c0d194.html#ga7c08108f1c56d9df1141637c01c0d194">More...</a><br /></td></tr>
+<tr class="separator:ga7c08108f1c56d9df1141637c01c0d194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84bdaf88941577d9b23999ae965b631b"><td class="memItemLeft" align="right" valign="top">constexpr callable_sindcosd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">eve::sindcosd</a> = {}</td></tr>
+<tr class="memdesc:ga84bdaf88941577d9b23999ae965b631b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the simultaneous computation of sine an cosine from an argument in degrees.  <a href="group__math__trig_ga84bdaf88941577d9b23999ae965b631b.html#ga84bdaf88941577d9b23999ae965b631b">More...</a><br /></td></tr>
+<tr class="separator:ga84bdaf88941577d9b23999ae965b631b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga507c21955358dcd61c84f41e65d977c4"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga507c21955358dcd61c84f41e65d977c4.html#ga507c21955358dcd61c84f41e65d977c4">eve::sinpi</a> = {}</td></tr>
+<tr class="memdesc:ga507c21955358dcd61c84f41e65d977c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the sine rom an input in \(\pi\) multiples.  <a href="group__math__trig_ga507c21955358dcd61c84f41e65d977c4.html#ga507c21955358dcd61c84f41e65d977c4">More...</a><br /></td></tr>
+<tr class="separator:ga507c21955358dcd61c84f41e65d977c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6415d1434e29c79594e7ef0ce5e2b65"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinpic_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gac6415d1434e29c79594e7ef0ce5e2b65.html#gac6415d1434e29c79594e7ef0ce5e2b65">eve::sinpic</a> = {}</td></tr>
+<tr class="memdesc:gac6415d1434e29c79594e7ef0ce5e2b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the normalized cardinal sine.  <a href="group__math__trig_gac6415d1434e29c79594e7ef0ce5e2b65.html#gac6415d1434e29c79594e7ef0ce5e2b65">More...</a><br /></td></tr>
+<tr class="separator:gac6415d1434e29c79594e7ef0ce5e2b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91c450585092c45e088080706f4fe3df"><td class="memItemLeft" align="right" valign="top">constexpr callable_sinpicospi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">eve::sinpicospi</a> = {}</td></tr>
+<tr class="memdesc:ga91c450585092c45e088080706f4fe3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the simultaneous computation of sin an cos from an argument in \(\pi\) multiples.  <a href="group__math__trig_ga91c450585092c45e088080706f4fe3df.html#ga91c450585092c45e088080706f4fe3df">More...</a><br /></td></tr>
+<tr class="separator:ga91c450585092c45e088080706f4fe3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><td class="memItemLeft" align="right" valign="top">constexpr callable_tan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">eve::tan</a> = {}</td></tr>
+<tr class="memdesc:gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the tangent.  <a href="group__math__trig_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">More...</a><br /></td></tr>
+<tr class="separator:gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19188d4707f5219c4a8a3f964518a616"><td class="memItemLeft" align="right" valign="top">constexpr callable_tand_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga19188d4707f5219c4a8a3f964518a616.html#ga19188d4707f5219c4a8a3f964518a616">eve::tand</a> = {}</td></tr>
+<tr class="memdesc:ga19188d4707f5219c4a8a3f964518a616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the tangent from an input in degrees.  <a href="group__math__trig_ga19188d4707f5219c4a8a3f964518a616.html#ga19188d4707f5219c4a8a3f964518a616">More...</a><br /></td></tr>
+<tr class="separator:ga19188d4707f5219c4a8a3f964518a616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="memItemLeft" align="right" valign="top">constexpr callable_tanpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">eve::tanpi</a> = {}</td></tr>
+<tr class="memdesc:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the tangent from an input in \(\pi\) multiples.  <a href="group__math__trig_ga18a94fd518b423cd10fbc07e5ac67d26.html#ga18a94fd518b423cd10fbc07e5ac67d26">More...</a><br /></td></tr>
+<tr class="separator:ga18a94fd518b423cd10fbc07e5ac67d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

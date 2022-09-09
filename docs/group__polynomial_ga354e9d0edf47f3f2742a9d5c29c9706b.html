@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 <div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
 <div class="line">   eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>(N n, M m, T x) <span class="keyword">noexcept</span>;                          <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b_html_ga354e9d0edf47f3f2742a9d5c29c9706b"><div class="ttname"><a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a></div><div class="ttdeci">constexpr callable_laguerre_ laguerre</div><div class="ttdoc">Computes the value of the Laguerre and associated Laguerre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> laguerre.hpp:85</div></div>
+<div class="ttc" id="agroup__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b_html_ga354e9d0edf47f3f2742a9d5c29c9706b"><div class="ttname"><a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a></div><div class="ttdeci">constexpr callable_laguerre_ laguerre</div><div class="ttdoc">Computes the value of the Laguerre and associated Laguerre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> laguerre.hpp:84</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Evaluate the laguerre polynomial of order n</li>
@@ -167,7 +167,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 <li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >the value of the polynomial at <code>x</code> is returned.</p>
+<p >The value of the polynomial at <code>x</code> is returned.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -207,7 +207,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 <p class="startli">The expression <code>successor(laguerre)(n, x, ln, lnm1)</code> implements the three term recurrence relation for the Laguerre polynomials, \(\displaystyle \mbox{L}_{n+1} =
     \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\)</p>
 <p class="startli">The expression <code>successor(laguerre)(n, m, x, ln, lnmm1)</code> implements the three term recurrence relation for the associated Laguerre polynomials, \(\displaystyle \mbox{L}_{n+1}^m =
-    \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\) The expression <code>successor(laguerre)(n, x, Ln, Lnm1)</code> implements the three terms recurrence</p>
+    \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\)</p>
 <p class="startli">These functions can be used to create a sequence of values evaluated at the same <code>x</code> (and <code>m</code>) and for rising <code>n</code>.</p>
 <p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>

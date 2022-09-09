@@ -143,14 +143,15 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga89149aad8c2e
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U, eve::<span class="keywordtype">float</span>ing_value V &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U, eve::<span class="keywordtype">float</span>ing_value V &gt;</div>
 <div class="line">   eve::common_compatible_t&lt;T, U&gt; <a class="code hl_variable" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">lerp</a>(T x, U y, V t) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3_html_ga89149aad8c2e072381ca4006f6c84dd3"><div class="ttname"><a href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a></div><div class="ttdeci">constexpr callable_lerp_ lerp</div><div class="ttdoc">Computes the linear interpolation.</div><div class="ttdef"><b>Definition:</b> lerp.hpp:62</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3_html_ga89149aad8c2e072381ca4006f6c84dd3"><div class="ttname"><a href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a></div><div class="ttdeci">constexpr callable_lerp_ lerp</div><div class="ttdoc">Computes the linear interpolation.</div><div class="ttdef"><b>Definition:</b> lerp.hpp:63</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code>, <code>t</code>: <a class="el" href="concepteve_1_1floating__value.html">floating arguments</a>.</li>
+<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">real</a> or <a class="el" href="structeve_1_1complex.html">complex</a> arguments.</li>
+<li><code>t</code>: <a class="el" href="concepteve_1_1floating__value.html">real floating</a>. argument</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of the interpolation (or extrapolation) between <code>x</code> and <code>y</code> is returned. The call is semantically equivalent to <code>x+t*(y-x)</code>.</p>
@@ -179,7 +180,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga89149aad8c2e
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp(x, y, t) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>(x, y, t) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8_html_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8"><div class="ttname"><a href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a></div><div class="ttdeci">constexpr callable_add_ add</div><div class="ttdoc">Computes the sum of its arguments.</div><div class="ttdef"><b>Definition:</b> add.hpp:79</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8_html_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8"><div class="ttname"><a href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a></div><div class="ttdeci">constexpr callable_add_ add</div><div class="ttdoc">Computes the sum of its arguments.</div><div class="ttdef"><b>Definition:</b> add.hpp:83</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>

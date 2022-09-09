@@ -25,11 +25,12 @@ var searchData=
   ['fnma_22',['fnma',['../group__core__fma__family_ga074ab3f337c7af4c8d8cb430ac4e1cc5.html#ga074ab3f337c7af4c8d8cb430ac4e1cc5',1,'eve']]],
   ['fnms_23',['fnms',['../group__core__fma__family_ga7d02a108e868c1deaa0143f6377c7c3f.html#ga7d02a108e868c1deaa0143f6377c7c3f',1,'eve']]],
   ['for_5feach_24',['for_each',['../group__algorithms_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0',1,'eve::algo']]],
-  ['four_5fminus_5fpi_25',['four_minus_pi',['../group__math_ga32fb8dd8121052157d14ae18a413026f.html#ga32fb8dd8121052157d14ae18a413026f',1,'eve']]],
-  ['four_5fpio_5f3_26',['four_pio_3',['../group__math_ga348ec58b614ef783f4183689f21850b1.html#ga348ec58b614ef783f4183689f21850b1',1,'eve']]],
+  ['four_5fminus_5fpi_25',['four_minus_pi',['../group__math__constants_ga32fb8dd8121052157d14ae18a413026f.html#ga32fb8dd8121052157d14ae18a413026f',1,'eve']]],
+  ['four_5fpio_5f3_26',['four_pio_3',['../group__math__constants_ga348ec58b614ef783f4183689f21850b1.html#ga348ec58b614ef783f4183689f21850b1',1,'eve']]],
   ['frac_27',['frac',['../group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732',1,'eve']]],
   ['fracscale_28',['fracscale',['../group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf',1,'eve']]],
   ['frexp_29',['frexp',['../group__core__internal_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
   ['fsm_30',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
-  ['fsnm_31',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]]
+  ['fsnm_31',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
+  ['full_5fcircle_32',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]]
 ];

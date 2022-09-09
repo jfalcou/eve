@@ -146,11 +146,11 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga42fa34235343
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   kumi::tuple&lt;T, T&gt; <a class="code hl_variable" href="group__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc.html#ga42fa342353439f0b23e8fab241eecdfc">modf</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc_html_ga42fa342353439f0b23e8fab241eecdfc"><div class="ttname"><a href="group__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc.html#ga42fa342353439f0b23e8fab241eecdfc">eve::modf</a></div><div class="ttdeci">constexpr callable_modf_ modf</div><div class="ttdoc">Computes the elementwise pair of fractional and integral parts of the value,.</div><div class="ttdef"><b>Definition:</b> modf.hpp:74</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc_html_ga42fa342353439f0b23e8fab241eecdfc"><div class="ttname"><a href="group__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc.html#ga42fa342353439f0b23e8fab241eecdfc">eve::modf</a></div><div class="ttdeci">constexpr callable_modf_ modf</div><div class="ttdoc">Computes the elementwise pair of fractional and integral parts of the value,.</div><div class="ttdef"><b>Definition:</b> modf.hpp:76</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> or <a class="el" href="structeve_1_1complex.html">complex</a> argument.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >A pair of values containing respectively the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> fractional and integral parts of <code>x</code>, each having the type and sign of <code>x</code>.</p>
@@ -158,6 +158,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga42fa34235343
 <li>If <code>x</code> is infinite <code>{Nan, x}</code> is returned.</li>
 <li>If <code>x</code> is a <code>Nan</code> <code>{Nan, Nan}</code> is returned.</li>
 </ul>
+<p >For complex inputs the operation is applied to both real and imaginary parts.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

@@ -146,16 +146,17 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga3fe2cd9f4506
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7.html#ga3fe2cd9f450620121afe84a493f45aa7">nearest</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7_html_ga3fe2cd9f450620121afe84a493f45aa7"><div class="ttname"><a href="group__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7.html#ga3fe2cd9f450620121afe84a493f45aa7">eve::nearest</a></div><div class="ttdeci">constexpr callable_nearest_ nearest</div><div class="ttdoc">Computes the nearest integer to the input.</div><div class="ttdef"><b>Definition:</b> nearest.hpp:67</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7_html_ga3fe2cd9f450620121afe84a493f45aa7"><div class="ttname"><a href="group__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7.html#ga3fe2cd9f450620121afe84a493f45aa7">eve::nearest</a></div><div class="ttdeci">constexpr callable_nearest_ nearest</div><div class="ttdoc">Computes the nearest integer to the input.</div><div class="ttdef"><b>Definition:</b> nearest.hpp:69</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> or <a class="el" href="structeve_1_1complex.html">complex</a> argument.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >Computes <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the integer nearest to <code>x</code>.</p>
 <p >If <code>x</code> is an exact half-integer the rounding is made to the nearest even integer.</p>
 <p >The standard proposes 4 rounding modes namely: <code>FE_TONEAREST</code>, <code>FE_DOWNWARD</code>, <code>FE_UPWARD</code>, <code>FE_TOWARDZERO</code>. This function object implements the <code>FE_TONEAREST</code> version.</p>
+<p >For complex inputs the nearest operation is applied to both real and imaginary parts.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

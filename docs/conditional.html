@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('conditional.html',''); initResizable()
 <div class="contents">
 <div class="textblock"><p >When you call a function on one or more <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a>, you expect the computation to be performed on every elements of its parameters. Sometimes, you may want to make the application of a given function dependent on some condition.</p>
 <p >Let's explore the functionalities <b>EVE</b> provides for achieving those results.</p>
-<h1><a class="anchor" id="autotoc_md872"></a>
+<h1><a class="anchor" id="autotoc_md159"></a>
 Explicit Selection</h1>
 <p >Let's say the function we want to write computes the product of two values <code>a</code> and <code>b</code> if <code>a</code> is equal to <code>b</code> and their difference otherwise.</p>
 <p >The scalar code is looking like:</p>
@@ -165,7 +165,7 @@ Explicit Selection</h1>
 <div class="line">(0, 4, -7, 0)</div>
 <div class="line">(1, 4, -7, 16)</div>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Contrary to a <code>if ... else</code> statement, <a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">eve::if_else</a> will evaluates all its arguments before performing its selection even if potential short-cut can be applied later on.</dd></dl>
-<h1><a class="anchor" id="autotoc_md873"></a>
+<h1><a class="anchor" id="autotoc_md160"></a>
 Conditional Function Syntax</h1>
 <p >Let's define a <code>sqrt_positive</code> function that computes the square root of its argument if it's positive or returns it unchanged otherwise. One can write:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -185,7 +185,7 @@ Conditional Function Syntax</h1>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; sqrt_positive(v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:70</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:95</div></div>
 </div><!-- fragment --><p >This code is perfectly valid and will produce the correct result. However, it has some issues:</p><ul>
 <li>the code looks like the important part is the test</li>
 <li>the code can't be optimized in case the current architecture support masked operations (i.e. AVX512)</li>
@@ -222,10 +222,10 @@ Conditional Function Syntax</h1>
 <div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> f = <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[a &gt;= 0];</div>
 <div class="line">  <span class="keywordflow">return</span> f(a);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md874"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md161"></a>
 Conditional Expressions</h1>
 <p >If passing a simple logical expression is the most common use-case of the conditional syntax, one may requires more flexibility. To do so, <b>EVE</b> provides various objects to express more elaborated conditions.</p>
-<h2><a class="anchor" id="autotoc_md875"></a>
+<h2><a class="anchor" id="autotoc_md162"></a>
 Mask with alternative</h2>
 <p >One may want to use the conditional syntax to call a function but instead of returning the first argument if the condition is false, one may want to return an arbitrary value. This use case is handled by the <a class="el" href="structeve_1_1if__.html" title="Extensible wrapper for SIMD conditional.">eve::if_</a> helper by wrapping logical expression so that an alternative value can be specified.</p>
 <p >Let's modify <code>sqrt_positive</code> so that, if the argument is not positive, 0 is returned instead.</p>
@@ -257,7 +257,7 @@ Mask with alternative</h2>
 </div><!-- fragment --><p >The output is then:</p>
 <div class="fragment"><div class="line">(1, -2, 3.16228, -3.5)</div>
 <div class="line">(1, 0, 3.16228, 0)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md876"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md163"></a>
 Context-sensitive mask</h2>
 <p >Some algorithms require conditional function calls but use logical expression relative to the element index inside a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a> rather than its value. One may want for example to not compute an expression on the first and last element of such <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a>.</p>
 <p >A frequent example is trying to load data from memory while ignoring trailing garbage or out of bounds values:</p>
@@ -332,7 +332,7 @@ Context-sensitive mask</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p >The output is the same obviously:</p>
 <div class="fragment"><div class="line">(-6.3, 1, 2, -6.3)</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md877"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md164"></a>
 Conclusion</h1>
 <p >Conditional operations on <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a> is a good way to keep a high level code over some complex computations. <b>EVE</b> provides different levels of abstraction for such operations as well as various helpers to specify how the conditions can be computed based either on values or indexes. </p>
 </div></div><!-- contents -->
