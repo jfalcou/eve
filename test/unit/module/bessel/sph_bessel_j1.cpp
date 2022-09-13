@@ -27,6 +27,7 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
          )
    <typename T>(T const& a0, T const& a1, T const& a2)
 {
+
   using v_t               = eve::element_type_t<T>;
   auto eve__sph_bessel_j1 = [](auto x) { return eve::sph_bessel_j1(x); };
   auto std__sph_bessel_j1 = [](auto x) -> v_t
@@ -56,10 +57,9 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve__sph_bessel_j1(T(0.5)), T(std__sph_bessel_j1(v_t(0.5))), 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(T(1)), T(std__sph_bessel_j1(v_t(1))), 6.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j1(T(0)), eve::zero(eve::as<T>()), 0.0);
-
   TTS_ULP_EQUAL(eve__sph_bessel_j1(a0), map(std__sph_bessel_j1, a0), 90.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_j1(a1), map(std__sph_bessel_j1, a1), 40.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_j1(a2), map(std__sph_bessel_j1, a2), 40.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j1(a1), map(std__sph_bessel_j1, a1), 90.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j1(a2), map(std__sph_bessel_j1, a2), 90.0);
 };
 
 
@@ -68,7 +68,7 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sph_bessel_j1)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::generate(tts::randoms(0.1, 10.0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::sph_bessel_j1[mask](a0),
