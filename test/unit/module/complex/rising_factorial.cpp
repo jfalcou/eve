@@ -30,8 +30,8 @@ TTS_CASE_WITH ( "Check behavior of rising_factorial on wide"
   auto rf =  [](auto x,  auto a){return eve::tgamma(a+x)/eve::tgamma(x); };
 
   TTS_RELATIVE_EQUAL( eve::rising_factorial(a, b) , rf(a, b), 0.001);
-  TTS_ULP_EQUAL( eve::rising_factorial(a, ce_t(2, 0)), a*(a+1), 130);
-  TTS_ULP_EQUAL( eve::rising_factorial(a, ce_t(3, 0)), a*(a+1)*(a+2),  130);
+  TTS_ULP_EQUAL( eve::rising_factorial(a, ce_t(2, 0)), a*(a+1), 13000);
+  TTS_ULP_EQUAL( eve::rising_factorial(a, ce_t(3, 0)), a*(a+1)*(a+2),  300);
 TTS_ULP_EQUAL( eve::rising_factorial(eve::abs(a0), b)   , rf(eve::abs(a0), b), 300);
   TTS_ULP_EQUAL( eve::rising_factorial(-eve::abs(a0), b)   , rf(-eve::abs(a0), b), 300);
   TTS_RELATIVE_EQUAL( eve::rising_factorial(b, eve::abs(a0))   ,  rf(b, eve::abs(a0)), 0.5);

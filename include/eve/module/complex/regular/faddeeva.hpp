@@ -14,9 +14,8 @@
 #include <eve/module/complex/regular/detail/special.hpp>
 #include <eve/module/complex/regular/exp_i.hpp>
 #include <eve/algo.hpp>
-#include <iostream>
 #include <array>
-#include <iomanip>
+
 
 namespace eve
 {
@@ -106,7 +105,6 @@ namespace eve
                                                3.0000, 2.5000, 2.0000, 1.5000, 1.0000, 0.5000};
         auto CF = bN[0]/z;
         for (int k = 1; k <= 10; ++k)  CF = bN[k]*rec(z - CF);
-        std::cout << "icitte z " << z << std::endl;
         return iosqrtpi*rec(z - CF);
       };
 

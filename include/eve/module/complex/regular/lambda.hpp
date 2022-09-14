@@ -11,7 +11,6 @@
 #include <eve/module/complex/regular/detail/special.hpp>
 #include <eve/module/complex/regular/eta.hpp>
 #include <eve/algo.hpp>
-#include <iostream>
 #include <array>
 
 namespace eve
