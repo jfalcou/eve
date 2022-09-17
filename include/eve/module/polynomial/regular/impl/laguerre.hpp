@@ -21,7 +21,7 @@ laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, T x, T Ln, T Lnm1) noe
   return fms(np1 + n - x, Ln, n * Lnm1) / np1;
 }
 
-template<integral_scalar_value I, floating_value T>
+template<scalar_value I, floating_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
 {
@@ -42,7 +42,7 @@ laguerre_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   return p1;
 }
 
-template<integral_simd_value I, floating_scalar_value T>
+template<simd_value I, floating_scalar_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 {
@@ -50,7 +50,7 @@ laguerre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
   return laguerre(nn, f_t(x));
 }
 
-template<integral_simd_value I, floating_simd_value T>
+template<simd_value I, floating_simd_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 {
@@ -79,7 +79,7 @@ laguerre_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 }
 
 // Recurrence relation for Laguerre associated polynomials:
-template<real_value N, real_value L, floating_value T>
+template<value N, value L, floating_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, L l, T x, T pl, T plm1) noexcept
 {
@@ -110,7 +110,7 @@ laguerre_(EVE_SUPPORTS(cpu_), N n, M m, T x) noexcept
   return p1;
 }
 
-template<integral_simd_value M, integral_simd_value N, floating_scalar_value T>
+template<value M, value N, floating_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), N nn, M mm, T x) noexcept
 {
