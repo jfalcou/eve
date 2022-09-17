@@ -89,7 +89,6 @@ laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, L l, T x, T pl, T plm1
 }
 
 // associated laguerre polynomials
-template<integral_value M, integral_value N, floating_value T>
 template<integral_scalar_value M, integral_scalar_value N, floating_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), N n, M m, T x) noexcept
