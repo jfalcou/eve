@@ -9,7 +9,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/regular/detail/special.hpp>
-#include <eve/algo.hpp>
 #include <array>
 
 namespace eve
@@ -158,11 +157,9 @@ namespace eve
       };
 
       auto f = zero(as(z));
-      auto n = eve::algo::views::reverse(eve::algo::views::iota_with_step(one(as<real_t>()), k, cm.size()));
-      auto cur =  n.begin();
-      for(size_t i=0; i < cm.size(); ++i, ++cur)
+      auto j = inc(63*k);
+      for(size_t i=0; i < cm.size(); ++i, j -= k)
       {
-        auto j = read(cur);
         f += cm[i]*pow(j, -z);
       }
       if (none(reflect)) return f;
