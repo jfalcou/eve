@@ -88,7 +88,29 @@ laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, L l, T x, T pl, T plm1
   return ((np1 + npl - x) * pl - npl * plm1) / np1;
 }
 
+// associated laguerre polynomials
 template<integral_value M, integral_value N, floating_value T>
+template<integral_scalar_value M, integral_scalar_value N, floating_value T>
+EVE_FORCEINLINE auto
+laguerre_(EVE_SUPPORTS(cpu_), N n, M m, T x) noexcept
+{
+  // Special cases:
+  if( m == 0 ) return laguerre(n, x);
+  auto p0 = one(as(x));
+  if( n == 0 ) return p0;
+  auto p1 = inc(m) - x;
+
+  N c = 1;
+  while( c < n )
+  {
+    std::swap(p0, p1);
+    p1 = successor(laguerre)(c, m, x, p0, p1);
+    ++c;
+  }
+  return p1;
+}
+
+template<integral_simd_value M, integral_simd_value N, floating_scalar_value T>
 EVE_FORCEINLINE auto
 laguerre_(EVE_SUPPORTS(cpu_), N nn, M mm, T x) noexcept
 {
