@@ -13,7 +13,7 @@ int main()
             << "-> sph_bessel_j1(pf) = " << eve::sph_bessel_j1(pf) << '\n'
             ;
 
-  double xd = -1.0;
+  double xd = 1.0;
 
   std::cout << "---- scalar" << '\n'
             << "<- xd                = " << xd << '\n'
