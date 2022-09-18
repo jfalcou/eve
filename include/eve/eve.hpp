@@ -40,8 +40,5 @@
 //! @}
 //==================================================================================================
 
-#include <eve/as.hpp>
-#include <eve/wide.hpp>
-#include <eve/logical.hpp>
+#include <eve/module/core.hpp>
 #include <eve/version.hpp>
-#include <eve/traits/cardinal.hpp>
