@@ -13,12 +13,6 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
-EVE_FORCEINLINE T
-zeta_(EVE_SUPPORTS(cpu_), T x, U y) noexcept requires compatible_values<T, U>
-{
-  return arithmetic_call(zeta, x, y);
-}
 
 template<floating_real_value T>
 EVE_FORCEINLINE T

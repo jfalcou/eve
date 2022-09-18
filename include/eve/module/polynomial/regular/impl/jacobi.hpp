@@ -41,6 +41,7 @@ jacobi_(EVE_SUPPORTS(cpu_), I n, U alpha, V beta, T x) noexcept
     ++k;
     k2 += 2;
   }
+
   return yk;
 }
 
@@ -84,13 +85,13 @@ jacobi_(EVE_SUPPORTS(cpu_), T n, T alpha, T beta, T x) noexcept
       yk       = if_else(test,
                    fma(gamma1, y1, gamma0 * y0) / denom,
                    yk); // sum_of_prod(gamma1, y1, gamma0, y0)/denom, yk);
-      y0       = y1;
-      y1       = yk;
+      y0       = if_else(test, y1, y0);
+      y1       = if_else(test, yk, y1);
       k        = inc(k);
       k2 += 2;
       test = k <= n;
     }
-    return if_else(is_eqz(n), one(as(yk)), yk);
+    return if_else(is_eqz(n), one, yk);
   }
   else return apply_over(jacobi, n, alpha, beta, x);
 }

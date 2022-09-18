@@ -29,15 +29,23 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_real_value T, eve::floating_real_value U >
-//!      auto rising_factorial(T a, U x) noexcept;
+//!      auto rising_factorial(T x,U y) noexcept;                                        //1
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto rising_factorial(eve::as_complex_t<T> x, U y) noexcept;                    //2
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto rising_factorial(T x, eve::as_complex_t<U> y) noexcept;                    //2
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto rising_factorial(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `a` :  [real floating argument](@ref eve::floating_real_value).
-//!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     1. `a`, `x`:  [strictly positive real floating argument](@ref eve::floating_real_value).
+//!     2. `a`, `x`:  [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
 //!
 //!   **Return value**
 //!
@@ -45,7 +53,13 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/special/regular/rising_factorial.cpp}
+//!  @godbolt{doc/special/regular/rising_factorial.cpp}
+//!
+//!   **Complex version**
+//!
+//!  @godbolt{doc/complex/rising_factorial.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
 //!
 //!   @groupheader{Semantic Modifiers}
 //!

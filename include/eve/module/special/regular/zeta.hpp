@@ -28,18 +28,23 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_real_value T >
-//!      T zeta(T x) noexcept;
+//!      T zeta(T x) noexcept;                                 //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> zeta(eve::complex<T> z) noexcept;     //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `z`:  [complex ](@ref eve::complex) value.
 //!
 //!   **Return value**
 //!
 //!   The value of the Riemann function defined as
-//!   \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$  is returned.
+//!   \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$ or its analytic continuation
+//!   in the complex plane is returned.
 //!
 //!   @groupheader{Example}
 //!

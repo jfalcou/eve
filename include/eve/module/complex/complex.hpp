@@ -16,6 +16,7 @@
 #include <eve/module/complex/regular/detail/math.hpp>
 #include <eve/module/complex/regular/detail/special.hpp>
 #include <eve/module/complex/regular/detail/predicates.hpp>
+#include <eve/module/complex/regular/faddeeva.hpp>
 #include <eve/product_type.hpp>
 #include <ostream>
 

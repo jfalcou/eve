@@ -28,23 +28,34 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_real_value T, eve::floating_real_value U >
-//!      eve:common_compatible_value<T,U>  lbeta(T x, U y) noexcept;
+//!      auto lbeta(T x,U y) noexcept;                                        //1
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto lbeta(eve::as_complex_t<T> x, U y) noexcept;                    //2
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      autol beta(T x, eve::as_complex_t<U> y) noexcept;                    //2
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto lbeta(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [strictly positive real floating argument](@ref eve::floating_real_value).
-//!
-//!     * `y` :  [strictly positive real floating argument](@ref eve::floating_real_value).
+//!     1. `x`, `y`:  [strictly positive real floating argument](@ref eve::floating_real_value).
+//!     2. `x`, `y`:  [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
 //!
 //!   **Return value**
 //!
-//!   The value of the logarithm of the beta function is returned.
+//!   **Real version**
 //!
-//!   @groupheader{Example}
+//!  @godbolt{doc/special/regular/lbeta.cpp}
 //!
-//!   @godbolt{doc/special/regular/lbeta.cpp}
+//!   **Complex version**
+//!
+//!  @godbolt{doc/complex/lbeta.cpp}
+//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lbeta_, lbeta);
