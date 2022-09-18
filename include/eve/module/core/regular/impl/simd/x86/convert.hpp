@@ -302,8 +302,8 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == uint16x8 && mo32x4 && a41 ) return _mm_cvtepu16_epi32(v);
   else if constexpr( c_i == int16x8 && mo32x8 && aavx2 ) return _mm256_cvtepi16_epi32(v);
   else if constexpr( c_i == uint16x8 && mo32x8 && aavx2 ) return _mm256_cvtepu16_epi32(v);
-  else if constexpr( c_i == uint16x8 && mo32x4 ) return _mm_unpacklo_epi16(v, zero(as(v)));
   else if constexpr( c_i == int16x8 && mo32x4  ) return _mm_unpacklo_epi16(v, _mm_srai_epi16(v,15));
+  else if constexpr( c_i == uint16x8 && mo32x4 ) return _mm_unpacklo_epi16(v, zero(as(v)));
   else if constexpr( c_i == int16x8 && mo64x2 && a41 ) return _mm_cvtepi16_epi64(v);
   else if constexpr( c_i == uint16x8 && mo64x2 && a41 ) return _mm_cvtepu16_epi64(v);
   else if constexpr( c_i == int16x8 && mo64x4 && aavx2 ) return _mm256_cvtepi16_epi64(v);
@@ -370,16 +370,16 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == int8x16 && mo64x2 && a41 ) return _mm_cvtepi8_epi64(v);
   else if constexpr( c_i == int8x16 && mo64x4 && aavx2 ) return _mm256_cvtepi8_epi64(v);
   else if constexpr( c_i == int8x16 && mo64x8 ) return _mm512_cvtepi8_epi64(v);
-  else if constexpr( c_i == uint8x16 && mo64x2 && a41 ) return _mm_cvtepu8_epi64(v);
-  else if constexpr( c_i == uint8x16 && mo64x4 && aavx2 ) return _mm256_cvtepu8_epi64(v);
-  else if constexpr( c_i == uint8x16 && mo64x8 ) return _mm512_cvtepu8_epi64(v);
-  else if constexpr( c_i == uint8x16 && mo16x8 ) return _mm_unpacklo_epi8(v, zero(as(v)));
   else if constexpr( c_i == int8x16 && mo16x8 ) return _mm_srai_epi16(_mm_unpacklo_epi8(v, v),8);
   else if constexpr( c_i == int8x16 && mo32x4 )
   {
     auto w = _mm_unpacklo_epi8(v,v);
     return _mm_srai_epi32(_mm_unpacklo_epi16(w,w),24);
   }
+  else if constexpr( c_i == uint8x16 && mo64x2 && a41 ) return _mm_cvtepu8_epi64(v);
+  else if constexpr( c_i == uint8x16 && mo64x4 && aavx2 ) return _mm256_cvtepu8_epi64(v);
+  else if constexpr( c_i == uint8x16 && mo64x8 ) return _mm512_cvtepu8_epi64(v);
+  else if constexpr( c_i == uint8x16 && mo16x8 ) return _mm_unpacklo_epi8(v, zero(as(v)));
   else if constexpr( c_i == uint8x16 && mo32x4 ) return convert(convert(v, d_t {}), tgt);
   else if constexpr( mi8x16 && mo64x2 ) return convert(convert(v, d_t {}), tgt);
   else if constexpr( mi8x16 && mo64x4 ) return convert(convert(v, d_t {}), tgt);
