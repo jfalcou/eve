@@ -13,7 +13,6 @@
 #include <eve/module/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
 #include <eve/module/complex/regular/faddeeva.hpp>
-#include <iostream>
 
 namespace eve
 {
