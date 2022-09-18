@@ -42,7 +42,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
   return lrising_factorial(regular_type(), a, x);
 }
 
-// regular  nan if a+x or x is nnegative,  better computation than raw
+// regular  nan if a+x or x is negative,  better computation than raw
 template<floating_real_value T>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), regular_type const&, T a, T x) noexcept
