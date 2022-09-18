@@ -249,8 +249,10 @@ EVE_FORCEINLINE wide<U, N>
     return _mm_cvtepi32_epi64(v);
   else if constexpr( c_i == uint32x4 && match(c_o, int64x2, uint64x2) && asse4 )
     return _mm_cvtepu32_epi64(v);
-  else if constexpr( N {} == 8 && match(c_o, int64x8, uint64x8) && a512 )
+  else if constexpr( c_i == int32x8 && match(c_o, int64x8, uint64x8) && a512 )
     return _mm512_cvtepi32_epi64(v);
+  else if constexpr( c_i == uint32x8 && match(c_o, int64x8, uint64x8) && a512 )
+    return _mm512_cvtepu32_epi64(v);
   else if constexpr( N {} <= 2 && std::is_signed_v<T>   && sizeof(U) == 8)
     return _mm_unpacklo_epi32(v, _mm_srai_epi32(v,31));
   else if constexpr( N {} <= 2 && std::is_unsigned_v<T> && sizeof(U) == 8)
@@ -350,7 +352,6 @@ EVE_FORCEINLINE wide<U, N>
   constexpr auto mo64x4  = match(c_o, int64x4, uint64x4);
   constexpr auto mo64x8  = match(c_o, int64x8, uint64x8);
 
-  using u_t = as<upgrade_t<T>>;
   using d_t = as<downgrade_t<U>>;
   using t_t =
       std::conditional_t<std::is_signed_v<T>, as_integer_t<U, signed>, as_integer_t<U, unsigned>>;
