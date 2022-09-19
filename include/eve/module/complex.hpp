@@ -17,5 +17,6 @@
 //!
 //! @}
 //==================================================================================================
+#include <eve/wide.hpp>
 #include <eve/module/complex/regular/complex.hpp>
 #include <eve/module/complex/complex.hpp>
