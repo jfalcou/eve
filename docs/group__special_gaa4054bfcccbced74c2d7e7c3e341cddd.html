@@ -144,15 +144,24 @@ $(document).ready(function(){initNavTree('group__special_gaa4054bfcccbced74c2d7e
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T, eve::<span class="keywordtype">float</span>ing_real_value U &gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">rising_factorial</a>(T a, U x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">rising_factorial</a>(T x,U y) <span class="keyword">noexcept</span>;                                        <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">rising_factorial</a>(eve::as_complex_t&lt;T&gt; x, U y) <span class="keyword">noexcept</span>;                    <span class="comment">//2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">rising_factorial</a>(T x, eve::as_complex_t&lt;U&gt; y) <span class="keyword">noexcept</span>;                    <span class="comment">//2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">rising_factorial</a>(eve::as_complex_t&lt;T&gt; x, eve::as_complex_t&lt;U&gt; y) <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_gaa4054bfcccbced74c2d7e7c3e341cddd_html_gaa4054bfcccbced74c2d7e7c3e341cddd"><div class="ttname"><a href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a></div><div class="ttdeci">constexpr callable_rising_factorial_ rising_factorial</div><div class="ttdoc">Computes the Rising Factorial function i.e. .</div><div class="ttdef"><b>Definition:</b> rising_factorial.hpp:73</div></div>
+<div class="ttc" id="agroup__special_gaa4054bfcccbced74c2d7e7c3e341cddd_html_gaa4054bfcccbced74c2d7e7c3e341cddd"><div class="ttname"><a href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a></div><div class="ttdeci">constexpr callable_rising_factorial_ rising_factorial</div><div class="ttdoc">Computes the Rising Factorial function i.e. .</div><div class="ttdef"><b>Definition:</b> rising_factorial.hpp:87</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<ul>
-<li><code>a</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
-</ul>
+<ol type="1">
+<li><code>a</code>, <code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">strictly positive real floating argument</a>.</li>
+<li><code>a</code>, <code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">real floating</a> or <a class="el" href="structeve_1_1complex.html">complex </a> arguments.</li>
+</ol>
 <p ><b>Return value</b></p>
 <p >The value of the natural logarithm of the rising_factorial is returned.</p>
 <h2 class="groupheader">Example </h2>
@@ -182,7 +191,31 @@ $(document).ready(function(){initNavTree('group__special_gaa4054bfcccbced74c2d7e
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --><p ><b>Complex version</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft ref1 = { 0.0f, 1.0f, -1.0f, 0.5f};</div>
+<div class="line">  wide_ft imf1 = { 2.0f , -1.0,  -5.0, 0.0};</div>
+<div class="line">  <span class="keyword">auto</span> z1 = eve::as_complex_t&lt;wide_ft&gt;(ref1, imf1);</div>
+<div class="line">  wide_ft ref2 = { 4.0f, 0.0f, -1.0f, -0.5f};</div>
+<div class="line">  wide_ft imf2 = { -2.0f , 1.0,  3.0, 10.0};</div>
+<div class="line">  <span class="keyword">auto</span> z2 = eve::as_complex_t&lt;wide_ft&gt;(ref2, imf2);</div>
+<div class="line"> </div>
+<div class="line">  std::cout</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z1                       = &quot;</span> &lt;&lt; z1 &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z2                       = &quot;</span> &lt;&lt; z2 &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; rising_factorial(z1,z2)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd">eve::rising_factorial</a>(z1,z2) &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
+<h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli"><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></p>
 <p class="startli">The expression <code>raw(rising_factorial)(a,x)</code> uses the crude formula with all its limitations and innacuracies and return a Nan if <code>a</code> and <code>a+x</code> are not both positive.</p>

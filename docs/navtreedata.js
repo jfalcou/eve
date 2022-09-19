@@ -54,14 +54,18 @@ var NAVTREE =
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.03.0", "changelog.html#autotoc_md153", [
+      [ "Version 2022.09.0", "changelog.html#autotoc_md153", [
         [ "What's Changed", "changelog.html#autotoc_md154", null ],
         [ "New Contributors", "changelog.html#autotoc_md155", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md156", [
-        [ "What's Changed", "changelog.html#autotoc_md157", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md156", [
+        [ "What's Changed", "changelog.html#autotoc_md157", null ],
+        [ "New Contributors", "changelog.html#autotoc_md158", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md158", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md159", [
+        [ "What's Changed", "changelog.html#autotoc_md160", null ]
+      ] ],
+      [ "Version beta.2020.09", "changelog.html#autotoc_md161", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -94,10 +98,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__bessel_ga75fe8112cf1f1d8d3bc3c13e796f4fff.html#ga75fe8112cf1f1d8d3bc3c13e796f4fff",
-"group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce",
-"group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb",
-"structeve_1_1ignore__extrema.html#a44743fbbbe8ef415498cb627834415fa"
+"group__bessel_ga5e2dd2d1f2e62bbee606e3194db9352b.html#ga5e2dd2d1f2e62bbee606e3194db9352b",
+"group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8",
+"group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838",
+"structeve_1_1ignore__all__.html#a6b9f1768807e073cc40f885ba214d711"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

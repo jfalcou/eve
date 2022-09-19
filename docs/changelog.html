@@ -122,9 +122,82 @@ $(document).ready(function(){initNavTree('changelog.html',''); initResizable(); 
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_page10_changelog"></a></p>
 <h1><a class="anchor" id="autotoc_md153"></a>
+Version 2022.09.0</h1>
+<p >Codename: <a href="https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It)">Rosalind Serendipitous</a></p>
+<h2><a class="anchor" id="autotoc_md154"></a>
+What's Changed</h2>
+<p >A lot. The main non-code changes is our move from MIT License to the BOOST SOFTWARE License. Next to that, support for more algorithms and complex numbers has been added.</p>
+<p >Starting this fall, we will also try to provide more regular release.</p>
+<p ><b>This release is an API/ABI breaking changes release.</b></p>
+<ul>
+<li>ABI/API changes<ul>
+<li>Promote module like includes by removing eve/function/ (See #1378)</li>
+<li>EVE support for automatic differentiation has been moved to <a href="https://github.com/codereckons/fluxion">https://github.com/codereckons/fluxion</a> (See #1309, #1324)</li>
+<li>Reworked the basic concepts used to discriminate scalar and SIMD values (See #1144, #1306, #1307, #1314)</li>
+<li>diff_of_prod/sum_of_prod are now more precise and propose a raw variant (See #1369)</li>
+<li>Architecture tag and object names has been streamlined to be easier to use (See #1319)</li>
+<li>category API was cleaned up (See #1399)</li>
+</ul>
+</li>
+<li>New features<ul>
+<li>Added newest Boost.Constant support (See #1291)</li>
+<li>Added support for EVE complex numbers type and functions (See #1289, #1308, #1310, #1301)</li>
+<li>Implemented Jacobi polynomial (See #1284)</li>
+<li>Implemented better Tchebytchev polynomial (See #1292)</li>
+<li>First steps for SVE-fixed size support (See #1341, #1364, #1376, #1386)</li>
+<li>Added support for more masked functions (See #1384)</li>
+<li>Implemented last_true (See #1340)</li>
+<li>Implemented predicated min/max (See #1337)</li>
+<li>Implemented eve::algo::min_value and eve::algo::min_element (See #1345)</li>
+<li>Implemented eve::algo::max_value and eve::algo::max_element (See #1372)</li>
+<li>Implemented eve::algo::transform_reduce (See #1335)</li>
+<li>Implemented eve::algo::find_last (See #1347, #1368)</li>
+</ul>
+</li>
+<li>Performances fixes<ul>
+<li>Optimized is_ltz for g++ x86 (See #1302)</li>
+<li>Better cleanup for functions sliding data in from incomplete wide (See #1315)</li>
+<li>Improve conditional code-gen by replacing some lambda by FORCEINLINE callable (See #1383)</li>
+<li>Better integral conversions (See #1408)</li>
+<li>Calling zip with iota now use alignment (See #1322)</li>
+</ul>
+</li>
+<li>Build system<ul>
+<li>Fix compilation for g++ 12.1 (See #1296)</li>
+<li>Updated tests and infrastructure to use latest TTS to speedup compile times (See #1313)</li>
+<li>Add find_package support (#1318)</li>
+<li>Provide CMake machinery and example for multi-arch support (See #1321)</li>
+<li>Refactored EVE's exported CMake target and installation by @justend29 in (See #1336)</li>
+<li>Automated integration tests and correct their fetches by @justend29 in (See #1338)</li>
+</ul>
+</li>
+<li>Documentation<ul>
+<li>Add link to EVE bibtex (See #1282)</li>
+<li>Documentation style and layout changed to become more readable (See #1299)</li>
+<li>README: Fix links to website by @Simran-B (See #1303)</li>
+<li>Added more documentation for algorithms (See #1349)</li>
+<li>Add a local doxygen generation target to simplify documentation works (See #1392)</li>
+</ul>
+</li>
+<li>Other Fixes<ul>
+<li>Fixed ASAN checks (See #1305, #1288)</li>
+<li>Fix compile error when wide is included after some functions (See #1391)</li>
+<li>Missing constexpr leads to constants in the output (See #1396)</li>
+<li>Conversion from conditional to logical has been cleaned up (See #1374)</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md155"></a>
+New Contributors</h2>
+<p >Thanks to all our new contributor for this release!</p>
+<ul>
+<li>@Simran-B made their first contribution in (See #1303)</li>
+<li>@justend29 made their first contribution in (See #1338)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md156"></a>
 Version 2022.03.0</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Miranda_(The_Tempest)">Miranda Numinous</a></p>
-<h2><a class="anchor" id="autotoc_md154"></a>
+<h2><a class="anchor" id="autotoc_md157"></a>
 What's Changed</h2>
 <p ><b>This release is an API/ABI breaking changes release.</b></p>
 <p >A lot of improvements in QoL, QoI, and API have been made. Some more breaking ABI changes are planned, including a passive move toward an include file layout more amenable to future modularization.</p>
@@ -217,7 +290,7 @@ What's Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md155"></a>
+<h2><a class="anchor" id="autotoc_md158"></a>
 New Contributors</h2>
 <p >Thanks to all our new contributor for this release!</p>
 <ul>
@@ -227,10 +300,10 @@ New Contributors</h2>
 <li><code>@the-moisrex</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1025">https://github.com/jfalcou/eve/pull/1025</a></li>
 <li><code>@toughengineer</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1182">https://github.com/jfalcou/eve/pull/1182</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md156"></a>
+<h1><a class="anchor" id="autotoc_md159"></a>
 Version 2021.10.0</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Titania_(A_Midsummer_Night%27s_Dream)">Titania Unleashed</a></p>
-<h2><a class="anchor" id="autotoc_md157"></a>
+<h2><a class="anchor" id="autotoc_md160"></a>
 What's Changed</h2>
 <ul>
 <li>First tagged release for <b>EVE</b> which includes:<ul>
@@ -242,7 +315,7 @@ What's Changed</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md158"></a>
+<h1><a class="anchor" id="autotoc_md161"></a>
 Version beta.2020.09</h1>
 <p >Initial beta release </p>
 </div></div><!-- contents -->
