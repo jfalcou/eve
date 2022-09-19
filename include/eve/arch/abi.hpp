@@ -10,7 +10,6 @@
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/arch/abi_of.hpp>
-#include <eve/forward.hpp>
 
 #include <concepts>
 #include <type_traits>

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <eve/wide.hpp>
 #include <eve/conditional.hpp>
 
 int main()
