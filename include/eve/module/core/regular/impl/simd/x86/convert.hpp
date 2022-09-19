@@ -59,7 +59,7 @@ convert_impl(EVE_SUPPORTS(sse2_), logical<wide<T, N>> v, as<logical<U>> const& t
 //================================================================================================
 template<typename N, real_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<double, N> v, as<U> const                &tgt) noexcept
+                convert_impl(EVE_SUPPORTS(sse2_), wide<double, N> v, as<U> const &tgt) noexcept
 {
   using enum category;
   constexpr auto c_i  = categorize<wide<double, N>>();
@@ -90,7 +90,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 template<typename N, real_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<float, N> v, as<U> const                &tgt) noexcept
+                convert_impl(EVE_SUPPORTS(sse2_), wide<float, N> v, as<U> const &tgt) noexcept
 {
   using enum category;
   constexpr auto c_i  = categorize<wide<float, N>>();
@@ -123,7 +123,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 template<integral_scalar_value T, typename N, real_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const                &v, as<U> const                &tgt) noexcept
+                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
     requires(sizeof(T) == 8)
 {
   using enum category;
@@ -208,7 +208,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 template<integral_scalar_value T, typename N, real_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const                &v, as<U> const                &tgt) noexcept
+                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
     requires(sizeof(T) == 4)
 {
   using enum category;
@@ -249,10 +249,14 @@ EVE_FORCEINLINE wide<U, N>
     return _mm_cvtepi32_epi64(v);
   else if constexpr( c_i == uint32x4 && match(c_o, int64x2, uint64x2) && asse4 )
     return _mm_cvtepu32_epi64(v);
-  else if constexpr( N {} <= 2 && match(c_o, int64x8, uint64x8) == 8 )
-    return _mm_unpacklo_epi32(v, sign_extend(v));
-  else if constexpr( N {} == 8 && match(c_o, int64x8, uint64x8) == 8 && a512 )
+  else if constexpr( c_i == int32x8 && match(c_o, int64x8, uint64x8) && a512 )
     return _mm512_cvtepi32_epi64(v);
+  else if constexpr( c_i == uint32x8 && match(c_o, int64x8, uint64x8) && a512 )
+    return _mm512_cvtepu32_epi64(v);
+  else if constexpr( N {} <= 2 && std::is_signed_v<T>   && sizeof(U) == 8)
+    return _mm_unpacklo_epi32(v, _mm_srai_epi32(v,31));
+  else if constexpr( N {} <= 2 && std::is_unsigned_v<T> && sizeof(U) == 8)
+    return _mm_unpacklo_epi32(v, zero(as(v)));
   else if constexpr( N {} <= 4 && sizeof(U) == 2 && a512 ) return _mm_cvtepi32_epi16(v);
   else if constexpr( N {} <= 2 && sizeof(U) == 2 ) return _mm_shufflelo_epi16(v, 8);
   else if constexpr( N {} == 8 && sizeof(U) == 2 && a512 ) return _mm256_cvtepi32_epi16(v);
@@ -270,7 +274,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 template<integral_scalar_value T, typename N, real_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const                &v, as<U> const                &tgt) noexcept
+                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
     requires(sizeof(T) == 2)
 {
   using enum category;
@@ -298,7 +302,8 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == uint16x8 && mo32x4 && a41 ) return _mm_cvtepu16_epi32(v);
   else if constexpr( c_i == int16x8 && mo32x8 && aavx2 ) return _mm256_cvtepi16_epi32(v);
   else if constexpr( c_i == uint16x8 && mo32x8 && aavx2 ) return _mm256_cvtepu16_epi32(v);
-  else if constexpr( mi16x8 && mo32x4 ) return _mm_unpacklo_epi16(v, sign_extend(v));
+  else if constexpr( c_i == int16x8 && mo32x4  ) return _mm_unpacklo_epi16(v, _mm_srai_epi16(v,15));
+  else if constexpr( c_i == uint16x8 && mo32x4 ) return _mm_unpacklo_epi16(v, zero(as(v)));
   else if constexpr( c_i == int16x8 && mo64x2 && a41 ) return _mm_cvtepi16_epi64(v);
   else if constexpr( c_i == uint16x8 && mo64x2 && a41 ) return _mm_cvtepu16_epi64(v);
   else if constexpr( c_i == int16x8 && mo64x4 && aavx2 ) return _mm256_cvtepi16_epi64(v);
@@ -347,7 +352,6 @@ EVE_FORCEINLINE wide<U, N>
   constexpr auto mo64x4  = match(c_o, int64x4, uint64x4);
   constexpr auto mo64x8  = match(c_o, int64x8, uint64x8);
 
-  using u_t = as<upgrade_t<T>>;
   using d_t = as<downgrade_t<U>>;
   using t_t =
       std::conditional_t<std::is_signed_v<T>, as_integer_t<U, signed>, as_integer_t<U, unsigned>>;
@@ -366,11 +370,17 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == int8x16 && mo64x2 && a41 ) return _mm_cvtepi8_epi64(v);
   else if constexpr( c_i == int8x16 && mo64x4 && aavx2 ) return _mm256_cvtepi8_epi64(v);
   else if constexpr( c_i == int8x16 && mo64x8 ) return _mm512_cvtepi8_epi64(v);
+  else if constexpr( c_i == int8x16 && mo16x8 ) return _mm_srai_epi16(_mm_unpacklo_epi8(v, v),8);
+  else if constexpr( c_i == int8x16 && mo32x4 )
+  {
+    auto w = _mm_unpacklo_epi8(v,v);
+    return _mm_srai_epi32(_mm_unpacklo_epi16(w,w),24);
+  }
   else if constexpr( c_i == uint8x16 && mo64x2 && a41 ) return _mm_cvtepu8_epi64(v);
   else if constexpr( c_i == uint8x16 && mo64x4 && aavx2 ) return _mm256_cvtepu8_epi64(v);
   else if constexpr( c_i == uint8x16 && mo64x8 ) return _mm512_cvtepu8_epi64(v);
-  else if constexpr( mi8x16 && mo16x8 ) return _mm_unpacklo_epi8(v, sign_extend(v));
-  else if constexpr( mi8x16 && mo32x4 ) return convert(convert(v, u_t {}), tgt);
+  else if constexpr( c_i == uint8x16 && mo16x8 ) return _mm_unpacklo_epi8(v, zero(as(v)));
+  else if constexpr( c_i == uint8x16 && mo32x4 ) return convert(convert(v, d_t {}), tgt);
   else if constexpr( mi8x16 && mo64x2 ) return convert(convert(v, d_t {}), tgt);
   else if constexpr( mi8x16 && mo64x4 ) return convert(convert(v, d_t {}), tgt);
   else if constexpr( mi8x16 && (sizeof(U) * N {} >= 16) ) return convert_slice(v, tgt);

@@ -232,15 +232,6 @@ convert_integers_shuffle(wide<T, N> v, as<U> const&) noexcept
   return bit_cast(shuffle(bit_cast(v, as<wide<U, c_t>> {}), shuffler), as<wide<U, N>> {});
 }
 
-// Convert helper : sign extension
-template<typename T>
-EVE_FORCEINLINE auto
-sign_extend(T v) noexcept
-{
-  if constexpr( std::is_signed_v<element_type_t<T>> ) return (v < 0).mask();
-  else return zero(as(v));
-}
-
 template<typename T, typename N, typename U>
 EVE_FORCEINLINE auto
 convert_slice(wide<T, N> v, as<U> const& tgt)
