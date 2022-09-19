@@ -20,6 +20,6 @@ var searchData=
   ['none_5fof_17',['none_of',['../group__algos_ga0385dc0d44b416d165ee39b191d00924.html#ga0385dc0d44b416d165ee39b191d00924',1,'eve::algo']]],
   ['nothing_5ft_18',['nothing_t',['../structeve_1_1algo_1_1nothing__t.html',1,'eve::algo']]],
   ['nth_5fprime_19',['nth_prime',['../group__combinatorial_gab810f120aa46b31a1b6e437d337e460c.html#gab810f120aa46b31a1b6e437d337e460c',1,'eve']]],
-  ['nthroot_20',['nthroot',['../group__math_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a',1,'eve']]],
+  ['nthroot_20',['nthroot',['../group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a',1,'eve']]],
   ['numeric_21',['numeric',['../group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634',1,'eve']]]
 ];

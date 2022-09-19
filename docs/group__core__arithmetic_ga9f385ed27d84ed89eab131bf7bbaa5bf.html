@@ -138,25 +138,24 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9f385ed27d84
 </div><div class="memdoc">
 
 <p>Computes the reduced part of the scaled input. </p>
+<p >The call is equivalent to <code>a0-roundscale(a0,scale)</code></p>
 <p ><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T, <span class="keywordtype">int</span> scale &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, <span class="keywordtype">int</span> scale &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf">fracscale</a>(T x, <span class="keywordtype">int</span> scale) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf_html_ga9f385ed27d84ed89eab131bf7bbaa5bf"><div class="ttname"><a href="group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf">eve::fracscale</a></div><div class="ttdeci">constexpr callable_fracscale_ fracscale</div><div class="ttdoc">Computes the reduced part of the scaled input.</div><div class="ttdef"><b>Definition:</b> fracscale.hpp:96</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf_html_ga9f385ed27d84ed89eab131bf7bbaa5bf"><div class="ttname"><a href="group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf">eve::fracscale</a></div><div class="ttdeci">constexpr callable_fracscale_ fracscale</div><div class="ttdoc">Computes the reduced part of the scaled input.</div><div class="ttdef"><b>Definition:</b> fracscale.hpp:112</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">realfloating value</a>.</li>
 <li><code>scale</code> : int or std::integral_constant of int type limited to the range [0, 15].</li>
 </ul>
 <p ><b>Return value</b></p>
-<ul>
-<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> reduced part of the scaled input. The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integer. The call is equivalent to <code>a0-roundscale(a0,scale)</code></li>
-</ul>
+<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> reduced part of the scaled input. The number of fraction bits retained is specified by scale. By default the internal rounding after scaling is done to nearest integer.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

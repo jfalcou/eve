@@ -144,22 +144,29 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaf9bc648f57be
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a>(T x) <span class="keyword">noexcept</span>;                  <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a>(eve::as_complex&lt;T&gt; z) <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
+<div class="line"> </div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1_html_gaf9bc648f57be07a02903259faabd2df1"><div class="ttname"><a href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a></div><div class="ttdeci">constexpr callable_abs_ abs</div><div class="ttdoc">Computes the absolute value of the parameter.</div><div class="ttdef"><b>Definition:</b> abs.hpp:82</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1_html_gaf9bc648f57be07a02903259faabd2df1"><div class="ttname"><a href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a></div><div class="ttdeci">constexpr callable_abs_ abs</div><div class="ttdoc">Computes the absolute value of the parameter.</div><div class="ttdef"><b>Definition:</b> abs.hpp:107</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real argument</a>.</li>
+<li><code>z</code> : <a class="el" href="structeve_1_1complex.html">complex argument </a>.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> absolute value of <code>x</code> if it is representable in this type.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>More specifically, for signed integers : the absolute value of <a class="el" href="group__core__constants_gaf8c83b159938a524efeaa2a64966d33b.html#gaf8c83b159938a524efeaa2a64966d33b" title="Computes the the lowest representable value.">eve::valmin</a> is not representable and the result is undefined.</li>
-<li>abs is also a standard library function name and there possibly exists a C macro version which may be called instead of the EVE version. To avoid confusion, use the <a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="Computes the absolute value of the parameter.">eve::abs</a> notation.</li>
-</ul>
-</dd></dl>
+<ol type="1">
+<li><p class="startli">value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> absolute value of <code>x</code> if it is representable in this type.</p>
+<p class="startli">More specifically, for signed integers : the absolute value of <a class="el" href="group__core__constants_gaf8c83b159938a524efeaa2a64966d33b.html#gaf8c83b159938a524efeaa2a64966d33b" title="Computes the the lowest representable value.">eve::valmin</a> is not representable and the result is undefined.</p>
+</li>
+<li>modulus of the complex argument, i.e <code><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="Callable object computing the  norm of its inputs.">eve::hypot</a>(eve::real(z), eve::imag(z))</code></li>
+</ol>
+<dl class="section warning"><dt>Warning</dt><dd>abs is also a standard library function name and there possibly exists a C macro version which may be called instead of the EVE version. To avoid confusion, use the <a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="Computes the absolute value of the parameter.">eve::abs</a> notation.</dd></dl>
 <h2 class="groupheader">Example </h2>
+<p ><b>Real version</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -170,15 +177,15 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaf9bc648f57be
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, -32768};</div>
+<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, -32768};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                  = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            </div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(pf)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturated(abs)(pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(pi)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturated(abs)(pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(pi)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span>        xf = -32768.0f;</div>
 <div class="line">  std::int16_t xi = -32768;</div>
@@ -192,8 +199,27 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaf9bc648f57be
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
-<div class="ttc" id="agroup__math_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
+<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --><p ><b>Complex version</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft ref = { 0.0f, 1.0f, -1.0f, 0.5f};</div>
+<div class="line">  wide_ft imf = { 2.0f , -1.0,  -5.0, 0.0};</div>
+<div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
+<div class="line"> </div>
+<div class="line">  std::cout</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z       = &quot;</span> &lt;&lt; z &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; abs(z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(z) &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
@@ -207,11 +233,11 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaf9bc648f57be
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, -18};</div>
+<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, -18};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs[pi &gt; -2](pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>[<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &gt; -2](<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; abs[pi &gt; -2](pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &gt; -2](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
@@ -227,13 +253,40 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaf9bc648f57be
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, -32768};</div>
+<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, -32768};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturated(abs)(pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturated(abs)(pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+</div><!-- fragment --></li>
+<li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
+<p class="startli">The call <code>eve::pedantic(eve::abs)(z)</code> computes a pedantic version of the modulus.</p>
+<p class="startli">More specifically, <code>pedantic(eve::hypot)</code> is used in place of <code><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="Callable object computing the  norm of its inputs.">eve::hypot</a>)</code> for complex inputs</p>
+<p class="startli"><b>Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft ref = { 0.0f, 1.0f, -1.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))};</div>
+<div class="line">  wide_ft imf = { 2.0f , -1.0f,  -5.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))};</div>
+<div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
+<div class="line"> </div>
+<div class="line">  std::cout</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z                = &quot;</span> &lt;&lt; z &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; pedantic(abs)(z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>)(z) &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Computes the IEEE NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
+<div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
+<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --> </li>
 </ul>
 

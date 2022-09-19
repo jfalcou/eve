@@ -144,16 +144,23 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga332395d365c5
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3.html#ga332395d365c5e31c1fbd8bf6cd62aaa3">sqr_abs</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3.html#ga332395d365c5e31c1fbd8bf6cd62aaa3">sqr_abs</a>(T x) <span class="keyword">noexcept</span>;                   <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3.html#ga332395d365c5e31c1fbd8bf6cd62aaa3">sqr_abs</a>(eve::as_complex&lt;T&gt; z) <span class="keyword">noexcept</span>;  <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3_html_ga332395d365c5e31c1fbd8bf6cd62aaa3"><div class="ttname"><a href="group__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3.html#ga332395d365c5e31c1fbd8bf6cd62aaa3">eve::sqr_abs</a></div><div class="ttdeci">constexpr callable_sqr_abs_ sqr_abs</div><div class="ttdoc">Computes the square of the absolute value of the parameter.</div><div class="ttdef"><b>Definition:</b> sqr_abs.hpp:58</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3_html_ga332395d365c5e31c1fbd8bf6cd62aaa3"><div class="ttname"><a href="group__core__arithmetic_ga332395d365c5e31c1fbd8bf6cd62aaa3.html#ga332395d365c5e31c1fbd8bf6cd62aaa3">eve::sqr_abs</a></div><div class="ttdeci">constexpr callable_sqr_abs_ sqr_abs</div><div class="ttdoc">Computes the square of the absolute value of the parameter.</div><div class="ttdef"><b>Definition:</b> sqr_abs.hpp:59</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1real__value.html">real</a> argument.</li>
+<li><code>z</code> : <a class="el" href="structeve_1_1complex.html">complex</a> argument.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> square of <code>eve::abs(x)</code>.</p>
+<ol type="1">
+<li>value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> square of <code>eve::abs(x)</code>.</li>
+<li>square of the modulus of the complex argument, i.e <code><a class="el" href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf" title="Computes the square of the parameter.">eve::sqr</a>(eve::real(z)+ eve::sqr(eve::imag(z)))</code></li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

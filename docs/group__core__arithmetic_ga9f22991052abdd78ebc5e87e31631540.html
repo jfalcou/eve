@@ -146,15 +146,19 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9f22991052ab
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga9f22991052abdd78ebc5e87e31631540.html#ga9f22991052abdd78ebc5e87e31631540">floor</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga9f22991052abdd78ebc5e87e31631540_html_ga9f22991052abdd78ebc5e87e31631540"><div class="ttname"><a href="group__core__arithmetic_ga9f22991052abdd78ebc5e87e31631540.html#ga9f22991052abdd78ebc5e87e31631540">eve::floor</a></div><div class="ttdeci">constexpr callable_floor_ floor</div><div class="ttdoc">Computes the largest integer not greater than the input.</div><div class="ttdef"><b>Definition:</b> floor.hpp:75</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga9f22991052abdd78ebc5e87e31631540_html_ga9f22991052abdd78ebc5e87e31631540"><div class="ttname"><a href="group__core__arithmetic_ga9f22991052abdd78ebc5e87e31631540.html#ga9f22991052abdd78ebc5e87e31631540">eve::floor</a></div><div class="ttdeci">constexpr callable_floor_ floor</div><div class="ttdoc">Computes the largest integer not greater than the input.</div><div class="ttdef"><b>Definition:</b> floor.hpp:80</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> or <a class="el" href="structeve_1_1complex.html">complex</a> argument.</li>
 </ul>
-<p ><b>Return value</b></p>
-<p >The largest integer not greater than <code>x</code>.</p>
-<h2 class="groupheader">Example </h2>
+<p ><b>Return value</b> </p><pre class="fragment">The largest integer not greater than `x`.
+
+The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+`FE_TOWARDZERO`. This function object implements the `FE_DOWNWARD` version.
+
+For complex inputs the floor operation is applied to both real and imaginary parts.
+</pre> <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>

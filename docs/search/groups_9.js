@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['polynomial_20functions_0',['Polynomial functions',['../group__polynomial.html',1,'']]],
-  ['predicates_1',['Predicates',['../group__core__predicates.html',1,'']]],
-  ['probability_20distributions_2',['Probability distributions',['../group__proba.html',1,'']]]
+  ['mathematical_20functions_0',['Mathematical functions',['../group__math.html',1,'']]],
+  ['memory_20management_1',['Memory Management',['../group__memory.html',1,'']]]
 ];

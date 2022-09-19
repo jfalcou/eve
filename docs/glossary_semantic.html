@@ -122,9 +122,9 @@ $(document).ready(function(){initNavTree('glossary_semantic.html',''); initResiz
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_internals_semantic"></a></p>
 <p ><b>EVE</b> provides a lot of function that operates on similar premises. This page gather the general behaviors <b>EVE</b> types and functions can exhibit.</p>
-<h1><a class="anchor" id="autotoc_md840"></a>
+<h1><a class="anchor" id="autotoc_md127"></a>
 Property of EVE types</h1>
-<h2><a class="anchor" id="autotoc_md841"></a>
+<h2><a class="anchor" id="autotoc_md128"></a>
 Cardinal</h2>
 <p >For any <a class="el" href="concepteve_1_1value.html">value type</a>, the <b>cardinal</b> is the number of elements it contains. This information is retrieved via the <a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a> type trait.</p>
 <ul>
@@ -132,7 +132,7 @@ Cardinal</h2>
 <li>For any <a class="el" href="concepteve_1_1simd__value.html">SIMD type</a> <code>T</code>, <code><a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">eve::cardinal</a>&lt;T&gt;::type</code> evaluates to <code><a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;N&gt;</code>, where <code>N</code> is the number of lanes of the underlying SIMD register.</li>
 </ul>
 <p >Two types are said to be <b>cardinal compatible</b> if they have the same cardinal or at least one of them is a <a class="el" href="concepteve_1_1scalar__value.html">scalar type</a>.</p>
-<h2><a class="anchor" id="autotoc_md842"></a>
+<h2><a class="anchor" id="autotoc_md129"></a>
 Element type</h2>
 <p >For any <a class="el" href="concepteve_1_1value.html">value type</a>, its underlying <b>element type</b> is the type used to represent its internal values. This information is retrieved via the <a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a> type trait.</p>
 <ul>
@@ -140,7 +140,7 @@ Element type</h2>
 <li>For any <a class="el" href="concepteve_1_1simd__value.html">SIMD type</a> <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T,N&gt;</code>, <code><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T,N&gt;&gt;::type</code> evaluates to <code>T</code>.</li>
 <li>For any <a class="el" href="concepteve_1_1logical__value.html">logical type</a> <code>eve::logical&lt;T&gt;</code>, <code><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;eve::logical&lt;T&gt;&gt;::type</code> evaluates to <code>eve::logical&lt;T&gt;</code>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md843"></a>
+<h2><a class="anchor" id="autotoc_md130"></a>
 ABI traits</h2>
 <p ><a class="el" href="concepteve_1_1simd__value.html">SIMD type</a> internals depend on the actual architecture and instruction set available. This information is retrieved via the eve::abi_of type trait.</p>
 <ul>
@@ -149,9 +149,9 @@ ABI traits</h2>
 <li>When the type uses an emulated SIMD register, the resulting type is eve::emulated_.</li>
 <li>When the type elements are tuple-like, the resulting type is eve::bundle_.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md844"></a>
+<h1><a class="anchor" id="autotoc_md131"></a>
 Operations Classification</h1>
-<h2><a class="anchor" id="autotoc_md845"></a>
+<h2><a class="anchor" id="autotoc_md132"></a>
 Generalized Element Access</h2>
 <p ><b>EVE</b> functions' semantics rely on a generic way to access an element of a <a class="el" href="concepteve_1_1value.html">value</a>, be it <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> or <a class="el" href="concepteve_1_1simd__value.html">SIMD</a>.</p>
 <p >To do so, we define a synthetic function <code>get(v,i)</code> that retrieve the <code>i</code>th element of a value <code>v</code>.</p>
@@ -176,7 +176,7 @@ Reductions</h2>
 <p >For any <a class="el" href="concepteve_1_1simd__value.html">SIMD value</a> <code>x</code> of type <code>T</code>, a Callable Object <code>f</code> returning a <a class="el" href="concepteve_1_1scalar__value.html">scalar value</a> of type <code>R</code> is said to be a <b>Reduction</b> if the expression <code>R r = f(x)</code> is semantically equivalent to:</p>
 <div class="fragment"><div class="line">R r = f(get(x,0),  ..., get(x,cardinal_v&lt;T&gt;-1));</div>
 </div><!-- fragment --><p >Most reduction operations are not defined on <a class="el" href="concepteve_1_1scalar__value.html">scalar values</a> unless their definition is required by the internal implementation.</p>
-<h1><a class="anchor" id="autotoc_md846"></a>
+<h1><a class="anchor" id="autotoc_md133"></a>
 Function Semantic</h1>
 <h2><a class="anchor" id="glossary_arithmetic"></a>
 Arithmetic Functions</h2>
@@ -202,17 +202,17 @@ Bitwise Functions</h2>
 <p >In a less formal way, <b>EVE</b> <a class="el" href="glossary_semantic.html#glossary_bitwise">Bitwise Functions</a> can be applied to any pair of types, the first acting as the value type and the second as a type-less source of bits. By construction, a large majority of <a class="el" href="glossary_semantic.html#glossary_bitwise">Bitwise Functions</a> are <em>de facto</em> <a class="el" href="glossary_semantic.html#glossary_elementwise">Element-wise Operations</a>.</p>
 <h2><a class="anchor" id="glossary_logical"></a>
 Logical Functions</h2>
-<p ><b>EVE</b> <a class="el" href="glossary_semantic.html#glossary_logical">Logical Functions</a> are <a class="el" href="glossary_semantic.html#glossary_arithmetic">Arithmetic Functions</a> that can only be applied to <a class="el" href="concepteve_1_1logical__value.html">logical values</a> <code>L1</code>,... <code>Ln</code> as long as they are all <b>cardinal-compatible</b>. By construction, a large majority of <a class="el" href="glossary_semantic.html#glossary_bitwise">Bitwise Functions</a> are <em>de facto</em> <a class="el" href="glossary_semantic.html#glossary_elementwise">Element-wise Operations</a>.</p>
+<p ><b>EVE</b> <a class="el" href="glossary_semantic.html#glossary_logical">Logical Functions</a> are <a class="el" href="glossary_semantic.html#glossary_arithmetic">Arithmetic Functions</a> that can only be applied to <a class="el" href="concepteve_1_1logical__value.html">logical values</a> <code>L1</code>, ..., <code>Ln</code> as long as they are all <b>cardinal-compatible</b>. By construction, a large majority of <a class="el" href="glossary_semantic.html#glossary_bitwise">Bitwise Functions</a> are <em>de facto</em> <a class="el" href="glossary_semantic.html#glossary_elementwise">Element-wise Operations</a>.</p>
 <h2><a class="anchor" id="glossary_constant"></a>
 Constant Functions</h2>
-<h2><a class="anchor" id="autotoc_md847"></a>
+<h2><a class="anchor" id="autotoc_md134"></a>
 General Principles</h2>
 <p ><b>EVE</b> constant generator are <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> that takes a single argument of type <a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as</a>. This argument provides the information about the type used to generate the constant. E.g:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> z  = <a class="code hl_variable" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">eve::zero</a>(as&lt;int&gt;());         <span class="comment">//  equivalent to auto z  = static_cast&lt;int&gt;(0);</span></div>
 <div class="line"><span class="keyword">auto</span> vp = <a class="code hl_variable" href="group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5">eve::half</a>(as&lt;wide&lt;float&gt;&gt;()); <span class="comment">//  equivalent to auto vp = wide&lt;float&gt;(0.5);</span></div>
 <div class="ttc" id="agroup__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5_html_ga8d9cee3337e0a95b596cef102e04e1a5"><div class="ttname"><a href="group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5">eve::half</a></div><div class="ttdeci">constexpr callable_half_ half</div><div class="ttdoc">Computes the constant .</div><div class="ttdef"><b>Definition:</b> half.hpp:56</div></div>
 <div class="ttc" id="agroup__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85_html_gaa2beec5955f6701b64b3a2e2ef1a6b85"><div class="ttname"><a href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85">eve::zero</a></div><div class="ttdeci">constexpr callable_zero_ zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition:</b> zero.hpp:51</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md848"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md135"></a>
 Precision handling</h2>
 <p >Some constants are exactly representable in IEEE754 types. However, some mathematical constants can be under-represented on a given type while simultaneously be over-represented on other. For example, \(\pi\) in <code>float</code> is greater than its mathematical value. Meanwhile \(\pi\) in <code>double</code> is less than its mathematical value.</p>
 <p >The constant implementation is so that, for any constant generator <code>g</code>:</p>

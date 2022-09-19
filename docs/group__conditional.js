@@ -18,14 +18,14 @@ var group__conditional =
     [ "eve::ignore_all_", "structeve_1_1ignore__all__.html", [
       [ "count", "structeve_1_1ignore__all__.html#adfc42f06827e37f560d291f2d15dad7b", null ],
       [ "else_", "structeve_1_1ignore__all___ab9a3431b0ec4e4872b1db763fcf3213e.html#ab9a3431b0ec4e4872b1db763fcf3213e", null ],
-      [ "mask", "structeve_1_1ignore__all__.html#a9760ff0c1355b1e5b2aa2be02467c915", null ],
+      [ "mask", "structeve_1_1ignore__all__.html#adcff5af1df65386006d67c4ce9412a50", null ],
       [ "operator==", "structeve_1_1ignore__all__.html#a96e1fd8540348e3e19115e87ebd4963e", null ],
       [ "operator<<", "structeve_1_1ignore__all__.html#a6b9f1768807e073cc40f885ba214d711", null ]
     ] ],
     [ "eve::ignore_none_", "structeve_1_1ignore__none__.html", [
       [ "count", "structeve_1_1ignore__none__.html#a481d2e5a2c94d56a5a043d3e38df107f", null ],
       [ "else_", "structeve_1_1ignore__none___a63d3b649f9420bcb58faf39ecc2d3e12.html#a63d3b649f9420bcb58faf39ecc2d3e12", null ],
-      [ "mask", "structeve_1_1ignore__none__.html#a4c709aba504a216b61a8b913b41a67a6", null ],
+      [ "mask", "structeve_1_1ignore__none__.html#a718bc9661c0078283786c86bff3be09c", null ],
       [ "operator==", "structeve_1_1ignore__none__.html#a8f7d4de78943e1a0a0e27c1c9a7d1cf0", null ],
       [ "operator<<", "structeve_1_1ignore__none__.html#a69e4dc17fff421ddf07a287d25822433", null ]
     ] ],

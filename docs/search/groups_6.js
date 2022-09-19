@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ieee_20operations_0',['IEEE operations',['../group__core__internal.html',1,'']]]
+  ['hyperbolic_0',['Hyperbolic',['../group__math__hyper.html',1,'']]]
 ];

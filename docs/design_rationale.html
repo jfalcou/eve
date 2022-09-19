@@ -130,7 +130,7 @@ SIMD registers as Type x Cardinal</h1>
 <p class="startli">In this case, the best cardinal for the current architecture will be selected and will ensure optimal performance for the user.</p>
 </li>
 <li><p class="startli"><b>The base type and cardinal: <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt; float, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt; 8 &gt; &gt;</code></b></p>
-<p class="startli">This interface is more geared toward power users that may requires a specific cardinal for their algorithm on any architecture. In this case, <b>EVE</b> will take care of ensuring the semantic of such code is correct over any architecture. This includes emulating smaller than usual cardinal using regular registers or aggregating multiple register to support greater than usual cardinal.</p>
+<p class="startli">This interface is more geared toward power users that may requires a specific cardinal for their algorithm on any architecture. In this case, <b>EVE</b> will take care of ensuring the semantic of such code is correct over any architecture. This includes emulating smaller than usual cardinal using regular registers or aggregating multiple registers to support greater than usual cardinal.</p>
 </li>
 </ul>
 <p >This enables for SIMD code to be written in a complete architecture-agnostic way from the get go.</p>
