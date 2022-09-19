@@ -1,6 +1,75 @@
 Change Log {#changelog}
 ==========
 
+## Version 2022.09.0
+
+Codename: [Rosalind Serendipitous](https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It))
+
+### What's Changed
+
+A lot. The main non-code changes is our move from MIT License to the BOOST SOFTWARE License.
+Next to that, support for more algorithms and complex numbers has been added.
+
+Starting this fall, we will also try to provide more regular release.
+
+**This release is an API/ABI breaking changes release.**
+
+* ABI/API changes
+  - Promote module like includes by removing eve/function/ (See #1378)
+  - EVE support for automatic differentiation has been moved to https://github.com/codereckons/fluxion (See #1309, #1324)
+  - Reworked the basic concepts used to discriminate scalar and SIMD values (See #1144, #1306, #1307, #1314)
+  - diff_of_prod/sum_of_prod are now more precise and propose a raw variant (See #1369)
+  - Architecture tag and object names has been streamlined to be easier to use (See #1319)
+  - category API was cleaned up (See #1399)
+
+* New features
+  - Added newest Boost.Constant support (See #1291)
+  - Added support for EVE complex numbers type and functions (See #1289, #1308, #1310, #1301)
+  - Implemented Jacobi polynomial (See #1284)
+  - Implemented better Tchebytchev polynomial (See #1292)
+  - First steps for SVE-fixed size support (See #1341, #1364, #1376, #1386)
+  - Added support for more masked functions (See #1384)
+  - Implemented last_true (See #1340)
+  - Implemented predicated min/max (See #1337)
+  - Implemented eve::algo::min_value and eve::algo::min_element (See #1345)
+  - Implemented eve::algo::max_value and eve::algo::max_element (See #1372)
+  - Implemented eve::algo::transform_reduce (See #1335)
+  - Implemented eve::algo::find_last (See #1347, #1368)
+
+* Performances fixes
+  - Optimized is_ltz for g++ x86 (See #1302)
+  - Better cleanup for functions sliding data in from incomplete wide (See #1315)
+  - Improve conditional code-gen by replacing some lambda by FORCEINLINE callable (See #1383)
+  - Better integral conversions (See #1408)
+  - Calling zip with iota now use alignment (See #1322)
+
+* Build system
+  - Fix compilation for g++ 12.1 (See #1296)
+  - Updated tests and infrastructure to use latest TTS to speedup compile times (See #1313)
+  - Add find_package support (#1318)
+  - Provide CMake machinery and example for multi-arch support (See #1321)
+  - Refactored EVE's exported CMake target and installation by @justend29 in (See #1336)
+  - Automated integration tests and correct their fetches by @justend29 in (See #1338)
+
+* Documentation
+  - Add link to EVE bibtex (See #1282)
+  - Documentation style and layout changed to become more readable (See #1299)
+  - README: Fix links to website by @Simran-B (See #1303)
+  - Added more documentation for algorithms (See #1349)
+  - Add a local doxygen generation target to simplify documentation works (See #1392)
+
+* Other Fixes
+  - Fixed ASAN checks (See #1305,  #1288)
+  - Fix compile error when wide is included after some functions (See #1391)
+  - Missing constexpr leads to constants in the output (See #1396)
+  - Conversion from conditional to logical has been cleaned up (See #1374)
+
+### New Contributors
+Thanks to all our new contributor for this release!
+
+  - @Simran-B made their first contribution in (See #1303)
+  - @justend29 made their first contribution in (See #1338)
+
 ## Version 2022.03.0
 
 Codename: [Miranda Numinous](https://en.wikipedia.org/wiki/Miranda_(The_Tempest))

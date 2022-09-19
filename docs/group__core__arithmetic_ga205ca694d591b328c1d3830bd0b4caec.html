@@ -143,23 +143,21 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga205ca694d591
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T , <span class="keywordtype">int</span>egral_value N &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::real_value T , <span class="keywordtype">int</span>egral_value N &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">rshl</a>(T x, N n) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec_html_ga205ca694d591b328c1d3830bd0b4caec"><div class="ttname"><a href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a></div><div class="ttdeci">constexpr callable_rshl_ rshl</div><div class="ttdoc">Computes the arithmetic left/right shift operation according to shift sign.</div><div class="ttdef"><b>Definition:</b> rshl.hpp:99</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec_html_ga205ca694d591b328c1d3830bd0b4caec"><div class="ttname"><a href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a></div><div class="ttdeci">constexpr callable_rshl_ rshl</div><div class="ttdoc">Computes the arithmetic left/right shift operation according to shift sign.</div><div class="ttdef"><b>Definition:</b> rshl.hpp:108</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : argument(<a class="el" href="concepteve_1_1value.html">eve::value</a>). to be shifted.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1real__value.html">argument</a> to be shifted.</li>
 <li><code>n</code>: <a class="el" href="concepteve_1_1integral__value.html">shift</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of the arithmetic left/right shift operation according to shift sign is returned</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>the call <code>rshl(x, n)</code> is equivalent to <code>if_else(n&gt;0, shl(x, n), shr(x, n))</code> if <code>x</code> is an <a class="el" href="concepteve_1_1simd__value.html">simd value</a>.</li>
-<li>The types must share the same cardinal or be scalar and if <code>N</code></li>
-<li>is the size in bits of the element type of <code>T</code>, all</li>
-<li><a class="el" href="glossary_semantic.html#glossary_elementwise">elements</a> of n must belong to the interval: <code>]-N, N[</code> or the result is undefined.</li>
+<li>The types must share the same cardinal or be scalar and if <code>N</code> is the size in bits of the element type of <code>T</code>, all <a class="el" href="glossary_semantic.html#glossary_elementwise">elements</a> of n must belong to the interval: <code>]-N, N[</code> or the result is undefined.</li>
 <li>The call <code>rshl(x, n)</code> is equivalent to <code>x &lt;&lt; n</code> if <code>x</code> is an <a class="el" href="concepteve_1_1simd__value.html">simd value</a>.</li>
 </ul>
 </dd></dl>
@@ -175,13 +173,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga205ca694d591
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_uit <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
+<div class="line">  wide_uit <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
 <div class="line">  wide_it  qi = {1, -2, 3, -1};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi            = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; shl(pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a>(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; shl(pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  uiT xi = 2, yi = 3;</div>
 <div class="line"> </div>
@@ -191,7 +189,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga205ca694d591
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rshl(xi, yi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a>(xi, yi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
+<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
@@ -209,13 +207,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga205ca694d591
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_uit <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
+<div class="line">  wide_uit <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
 <div class="line">  wide_it  qi = {1, -2, 3, -1};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi                       = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rshl[pi!= 200](pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a>[<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>!= 200](<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rshl[pi!= 200](pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec">eve::rshl</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>!= 200](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </li>

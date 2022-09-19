@@ -146,15 +146,33 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">sqrt</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:70</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:95</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__value.html">real</a> argument.</li>
+<li><code>z</code> : <a class="el" href="structeve_1_1complex.html">complex</a> argument.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> square root of <code>x</code> or Nan if <code>x</code> is less than zero.</p>
+<ol type="1">
+<li>value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> square root of <code>x</code> or Nan if <code>x</code> is less than zero.</li>
+<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the square root of z, in the range of the right half-plane, including the imaginary axis ( \([0, +\infty]\) along the real axis and \([-\infty, +\infty]\) along the imaginary axis.)<ul>
+<li>The function is continuous onto the branch cut taking into account the sign of imaginary part</li>
+<li>eve::sqrt(eve::conj(z)) == eve::conj(eve::sqrt(z))</li>
+<li>If z is \(\pm0\), the result is \(+0\)</li>
+<li>If z is \(x+i \infty\), the result is \(\infty+i \infty\) even if x is \(NaN\)</li>
+<li>If z is \(x,NaN\), the result is \(NaN,NaN\) (unless x is \(\pm\infty\))</li>
+<li>If z is \(-\infty+i y\), the result is \(+0+i \infty\) for finite positive y</li>
+<li>If z is \(+\infty+i y\), the result is \(+\infty+i 0\) for finite positive y</li>
+<li>If z is \(-\infty+i NaN\), the result is \(NaN \pm i \infty\) (sign of imaginary part unspecified)</li>
+<li>If z is \(+\infty+i NaN\), the result is \(+\infty+i NaN\)</li>
+<li>If z is \(NaN+i y\), the result is \(NaN+i NaN\)</li>
+<li>If z is \(NaN+i NaN\), the result is \(NaN+i NaN\)</li>
+</ul>
+</li>
+</ol>
 <h2 class="groupheader">Example </h2>
+<p ><b>Real version</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -183,6 +201,25 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
 <div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --><p ><b>Complex version</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft ref = { 0.0f, 1.0f, -1.0f, 0.5f};</div>
+<div class="line">  wide_ft imf = { 2.0f , -1.0,  -5.0, 0.0};</div>
+<div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
+<div class="line"> </div>
+<div class="line">  std::cout</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z       = &quot;</span> &lt;&lt; z &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; sqrt(z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(z) &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>

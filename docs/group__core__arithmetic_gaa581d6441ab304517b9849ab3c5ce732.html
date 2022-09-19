@@ -146,21 +146,19 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa581d6441ab3
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">frac</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732_html_gaa581d6441ab304517b9849ab3c5ce732"><div class="ttname"><a href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a></div><div class="ttdeci">constexpr callable_frac_ frac</div><div class="ttdoc">Computes the fractional part of the input.</div><div class="ttdef"><b>Definition:</b> frac.hpp:68</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732_html_gaa581d6441ab304517b9849ab3c5ce732"><div class="ttname"><a href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a></div><div class="ttdeci">constexpr callable_frac_ frac</div><div class="ttdoc">Computes the fractional part of the input.</div><div class="ttdef"><b>Definition:</b> frac.hpp:70</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> or <a class="el" href="structeve_1_1complex.html">complex</a> argument.</li>
 </ul>
 <p ><b>Return value</b></p>
-<ul>
-<li><p class="startli">Returns a value with the same type as <code>x</code> containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> fractional part of <code>x</code> with the same sign as <code>x</code>.</p>
-<p class="startli">In particular:</p><ul>
+<p >Returns a value with the same type as <code>x</code> containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> fractional part of <code>x</code> with the same sign as <code>x</code>.</p>
+<p >In particular:</p><ul>
 <li>If an <a class="el" href="glossary_semantic.html#glossary_elementwise">element</a> of <code>x</code> is \(\pm0\), \(\pm0\) is returned.</li>
 <li>If an <a class="el" href="glossary_semantic.html#glossary_elementwise">element</a> of <code>x</code> is \(\pm\infty\) or <code>Nan</code>, a <code>Nan</code> is returned.</li>
 </ul>
-</li>
-</ul>
+<p >For complex inputs the frac operation is applied to both real and imaginary parts.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

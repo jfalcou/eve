@@ -143,22 +143,20 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae5098d24d083
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T , <span class="keywordtype">int</span>egral_value N &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::real_value T , <span class="keywordtype">int</span>egral_value N &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">shl</a>(T x, N n) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8_html_gae5098d24d083fd3e2f9d54135c8a84d8"><div class="ttname"><a href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a></div><div class="ttdeci">constexpr callable_shl_ shl</div><div class="ttdoc">Computes the arithmetic left shift operation.</div><div class="ttdef"><b>Definition:</b> shl.hpp:97</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8_html_gae5098d24d083fd3e2f9d54135c8a84d8"><div class="ttname"><a href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a></div><div class="ttdeci">constexpr callable_shl_ shl</div><div class="ttdoc">Computes the arithmetic left shift operation.</div><div class="ttdef"><b>Definition:</b> shl.hpp:104</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : argument(<a class="el" href="concepteve_1_1value.html">eve::value</a>). to be shifted.</li>
+<li><code>x</code> : argument to be shifted.</li>
 <li><code>n</code>: <a class="el" href="concepteve_1_1integral__value.html">shift</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
-<ul>
-<li>The <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> arithmetic left shift of the first parameter by the second one is returned.</li>
-<li>The call <code>shl(x, n)</code> is equivalent to <code>x &lt;&lt; n</code> if <code>x</code> is an [simd value](<a class="el" href="concepteve_1_1simd__value.html">eve::simd_value</a>).</li>
-<li>The types must share the same cardinal or be scalar and if <code>N</code> is the size in bits of the element type of <code>T</code>, all <a class="el" href="glossary_semantic.html#glossary_elementwise">elements</a> of n must belong to the interval: <code>[0, N[</code> or the result is undefined.</li>
-</ul>
+<p >The <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> arithmetic left shift of the first parameter by the second one is returned.</p>
+<p >The call <code>shl(x, n)</code> is equivalent to <code>x &lt;&lt; n</code> if <code>x</code> is an [simd value](<a class="el" href="concepteve_1_1simd__value.html">eve::simd_value</a>).</p>
+<p >The types must share the same cardinal or be scalar and if <code>N</code> is the size in bits of the element type of <code>T</code>, all <a class="el" href="glossary_semantic.html#glossary_elementwise">elements</a> of n must belong to the interval: <code>[0, N[</code> or the result is undefined.</p>
 <dl class="section note"><dt>Note</dt><dd>Although the infix notation with <code>&lt;&lt;</code> is supported, the <code>&lt;&lt;</code> operator on standard scalar types is the original one and so can not be overloaded on standard floating parameters due to <b>C++</b> limitations.</dd></dl>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -170,13 +168,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae5098d24d083
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, -2, 3};</div>
+<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, -2, 3};</div>
 <div class="line">  wide_it qi = {1, 2, 3, 2};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi               = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::shl(pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a>(<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::shl(pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  iT xi = 2, mxi = -2, yi = 3;</div>
 <div class="line"> </div>
@@ -188,7 +186,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae5098d24d083
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::shl(mxi, yi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a>(mxi, yi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
+<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
@@ -206,13 +204,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae5098d24d083
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_uit <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
+<div class="line">  wide_uit <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
 <div class="line">  wide_it  qi = {1, -2, 3, -1};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi                      = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; shl[pi!= 200](pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a>[<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>!= 200](<a class="code hl_variable" href="group__math_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; shl[pi!= 200](pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8">eve::shl</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>!= 200](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </li>

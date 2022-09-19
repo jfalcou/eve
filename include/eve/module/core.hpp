@@ -23,7 +23,7 @@
 //!
 //! @defgroup core_accuracy  Accuracy helpers
 //! @ingroup core
-//! These functions allows performing some basic arithmetis operations with greater acuracy
+//! These functions allows performing some basic arithmetics operations with greater accuracy
 //! even when and upgraded type is not available.
 //!
 //! @defgroup core_arithmetic  Arithmetic operations
@@ -99,3 +99,4 @@
 #include <eve/module/core/numeric/core.hpp>
 #include <eve/module/core/pedantic/core.hpp>
 #include <eve/module/core/saturated/core.hpp>
+#include <eve/wide.hpp>

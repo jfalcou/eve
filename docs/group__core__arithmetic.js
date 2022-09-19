@@ -8,6 +8,7 @@ var group__core__arithmetic =
     [ "eve::average", "group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e", null ],
     [ "eve::ceil", "group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750", null ],
     [ "eve::clamp", "group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a", null ],
+    [ "eve::conj", "group__core__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951", null ],
     [ "eve::copysign", "group__core__arithmetic_ga22a598ef861dbecf0613706ecb60c7fb.html#ga22a598ef861dbecf0613706ecb60c7fb", null ],
     [ "eve::dec", "group__core__arithmetic_ga0909b456d35f4111012b71e9bba92ede.html#ga0909b456d35f4111012b71e9bba92ede", null ],
     [ "eve::dist", "group__core__arithmetic_gaeff40f4fe2a2e24a0b2337002530c452.html#gaeff40f4fe2a2e24a0b2337002530c452", null ],

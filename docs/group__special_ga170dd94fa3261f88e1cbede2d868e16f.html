@@ -138,20 +138,25 @@ $(document).ready(function(){initNavTree('group__special_ga170dd94fa3261f88e1cbe
 </div><div class="memdoc">
 
 <p>Computes the error function: \( \displaystyle
-  \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\). </p>
+  \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\) or its analytic continuation in the complex plane. </p>
 <p ><b>Defined in header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">erf</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   T <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">erf</a>(T x) <span class="keyword">noexcept</span>;                                  <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">erf</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;      <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_ga170dd94fa3261f88e1cbede2d868e16f_html_ga170dd94fa3261f88e1cbede2d868e16f"><div class="ttname"><a href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">eve::erf</a></div><div class="ttdeci">constexpr callable_erf_ erf</div><div class="ttdoc">Computes the error function: .</div><div class="ttdef"><b>Definition:</b> erf.hpp:54</div></div>
+<div class="ttc" id="agroup__special_ga170dd94fa3261f88e1cbede2d868e16f_html_ga170dd94fa3261f88e1cbede2d868e16f"><div class="ttname"><a href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">eve::erf</a></div><div class="ttdeci">constexpr callable_erf_ erf</div><div class="ttdoc">Computes the error function:  or its analytic continuation in the complex plane.</div><div class="ttdef"><b>Definition:</b> erf.hpp:65</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:40</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
+<li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of the error function is returned. In particular:</p>
@@ -161,6 +166,7 @@ $(document).ready(function(){initNavTree('group__special_ga170dd94fa3261f88e1cbe
 <li>If the argument is Nan, nan returned.</li>
 </ul>
 <h2 class="groupheader">Example </h2>
+<p ><b>Real version</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -189,6 +195,31 @@ $(document).ready(function(){initNavTree('group__special_ga170dd94fa3261f88e1cbe
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --><p ><b>Complex version</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;double, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft ref = { 1.0f, 10.0f, -1.0f, 0.5f};</div>
+<div class="line">  wide_ft imf = { 0.2f , 0.2,  -5.0, 0.0};</div>
+<div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
+<div class="line">  <span class="keyword">auto</span> r = <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">eve::erf</a>(z);</div>
+<div class="line">  std::cout</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z       = &quot;</span> &lt;&lt; z &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; erf(z)  = &quot;</span> &lt;&lt; r &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> zs = eve::as_complex_t&lt;float&gt;(-1, -5);</div>
+<div class="line">  std::cout</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- zs       = &quot;</span> &lt;&lt; zs &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; erf(z)   = &quot;</span> &lt;&lt; r &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
 </div><!-- fragment --> 
 </div>
 </div>
