@@ -17,14 +17,14 @@ namespace eve::detail
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, value U, value V>
+template<conditional_expr C, value U, value... Vs>
 EVE_FORCEINLINE auto
 add_(EVE_SUPPORTS(cpu_),
      C const& cond,
-     U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     U    t,
+     Vs... fs) noexcept
 {
-  return mask_op(cond, eve::add, t, f);
+  return mask_op(cond, eve::add, t, fs...);
 }
 
 //================================================================================================
