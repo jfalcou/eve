@@ -20,14 +20,14 @@ namespace eve::detail
 //================================================================================================
 //== Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, value U, value... V>
 EVE_FORCEINLINE auto
 mul_(EVE_SUPPORTS(cpu_),
      C const& cond,
-     U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     U    t,
+     V... f) noexcept
 {
-  return mask_op(cond, eve::mul, t, f);
+  return mask_op(cond, eve::mul, t, f...);
 }
 
 //================================================================================================
