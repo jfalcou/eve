@@ -12,7 +12,7 @@
 namespace eve::detail
 {
 // Recurrence relation for hermite polynomials:
-template<real_value N, floating_value T>
+template<value N, floating_value T>
 EVE_FORCEINLINE T
 hermite_(EVE_SUPPORTS(cpu_), successor_type const&, N n, T x, T hn, T hnm1) noexcept
 {
@@ -20,7 +20,7 @@ hermite_(EVE_SUPPORTS(cpu_), successor_type const&, N n, T x, T hn, T hnm1) noex
   return z + z;
 }
 
-template<integral_scalar_value I, floating_real_scalar_value T>
+template<scalar_value I, floating_real_scalar_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
 {
@@ -37,7 +37,7 @@ hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   return p1;
 }
 
-template<integral_scalar_value I, floating_real_simd_value T>
+template<scalar_value I, floating_real_simd_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
 {
@@ -54,7 +54,7 @@ hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   return p1;
 }
 
-template<integral_simd_value I, floating_real_scalar_value T>
+template<simd_value I, floating_real_scalar_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 {
@@ -62,7 +62,7 @@ hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
   return hermite(nn, f_t(x));
 }
 
-template<integral_simd_value I, floating_real_simd_value T>
+template<simd_value I, floating_real_simd_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 {
