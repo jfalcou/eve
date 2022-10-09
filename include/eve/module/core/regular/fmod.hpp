@@ -22,4 +22,3 @@ EVE_MAKE_CALLABLE(fmod_, fmod);
 }
 
 #include <eve/module/core/regular/impl/fmod.hpp>
-//constexpr auto fmod = eve::pedantic(eve::rem);
