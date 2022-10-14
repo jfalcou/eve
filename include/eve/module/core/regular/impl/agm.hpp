@@ -36,8 +36,8 @@ template<value T, value U>
 EVE_FORCEINLINE auto
 agm_(EVE_SUPPORTS(cpu_), T aa, U bb) noexcept
 {
-  if constexpr( has_native_abi_v<T> )
-  {
+//   if constexpr( has_native_abi_v<T> )
+//   {
     using v_t = decltype(average(aa, bb));
     v_t a(aa);
     v_t b(bb);
@@ -63,8 +63,8 @@ agm_(EVE_SUPPORTS(cpu_), T aa, U bb) noexcept
       b       = bn;
     }
     return if_else(done, r, ldexp(b, ex));
-  }
-  else return apply_over(agm, aa, bb);
+//   }
+//   else return apply_over(agm, aa, bb);
 }
 
 template<conditional_expr C, value T, value U>
