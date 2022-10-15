@@ -31,41 +31,51 @@
 
 namespace eve::detail
 {
+  template<value T, value U>
+  EVE_FORCEINLINE  auto agm_(EVE_SUPPORTS(cpu_)
+                            , T const &a
+                            , U const &b) noexcept
+  requires compatible_values<T, U>
+  {
+    return arithmetic_call(agm, a, b);
+  }
 
-template<value T, value U>
-EVE_FORCEINLINE auto
-agm_(EVE_SUPPORTS(cpu_), T aa, U bb) noexcept
-{
-//   if constexpr( has_native_abi_v<T> )
-//   {
+  template<value T, value U>
+  EVE_FORCEINLINE auto agm_(EVE_SUPPORTS(cpu_)
+                             , T aa,  U bb) noexcept
+  {
     using v_t = decltype(average(aa, bb));
-    v_t a(aa);
-    v_t b(bb);
-    auto ex    = exponent(average(a, b));
-    auto r     = nan(as(average(a, b)));
-    auto null  = is_eqz(a) || is_eqz(b);
-    r          = if_else(null, zero, r);
-    auto infi  = is_infinite(a) || is_infinite(b);
-    r          = if_else(infi, a + b, r);
-    auto unord = is_unordered(a, b);
-    auto done  = is_lez(sign(a) * sign(b)) || unord || infi;
-    a          = if_else(done, zero, a);
-    b          = if_else(done, zero, b);
-    a          = ldexp(a, -ex);
-    b          = ldexp(b, -ex);
-    while (true)
+    if constexpr(has_native_abi_v<v_t>)
     {
+      v_t a(aa);
+      v_t b(bb);
+      auto ex = exponent(average(a, b));
+      auto r     = nan(as(average(a, b)));
+      auto null = is_eqz(a)||is_eqz(b);
+      r = if_else(null, zero, r);
+      auto infi = is_infinite(a) || is_infinite(b);
+      r = if_else(infi, a+b, r);
+      auto unord = is_unordered(a, b);
+      auto done = is_lez(sign(a)*sign(b)) || unord || infi;
+      a = if_else(done,  zero, a);
+      b = if_else(done,  zero, b);
+      a =  ldexp(a, -ex);
+      b =  ldexp(b, -ex);
       auto c  = average(a, -b);
-      if (eve::all(eve::abs(c) <= T(2)*eps(as(c)))) break;
-      auto an = average(a, b);
-      auto bn = sqrt(a * b);
-      a       = an;
-      b       = bn;
+      while (eve::any(eve::abs(c) > v_t(2)*eps(as(c))))
+      {
+        auto an=average(a, b);
+        auto bn=sqrt(a*b);
+        c=average(a, -b);
+        a=an;
+        b=bn;
+      }
+      return if_else(done, r, ldexp(b, ex));
     }
-    return if_else(done, r, ldexp(b, ex));
-//   }
-//   else return apply_over(agm, aa, bb);
-}
+    else
+      return apply_over(agm, aa, bb);
+  }
+
 
 template<conditional_expr C, value T, value U>
 auto
