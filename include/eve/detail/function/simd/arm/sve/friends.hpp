@@ -44,15 +44,49 @@ requires sve_abi<abi_t<T, N>> { return svcmpge(sve_true<T>(), v, w); }
 
 // ---------------------------------------------------------
 
-template<real_value T, typename N>
+template<typename T, typename U, typename N>
 EVE_FORCEINLINE auto
-self_logand(sve_ const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept -> logical<wide<T, N>>
-requires sve_abi<abi_t<T, N>> { return svmov_z(v, w); }
+self_logand(sve_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept -> logical<wide<T, N>>
+requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
+{
+  using abi_t = typename logical<wide<T,N>>::abi_type;
+  using abi_u = typename logical<wide<U,N>>::abi_type;
 
-template<real_value T, typename N>
+  callable_object<tag::convert_> const cvt{};
+
+  if constexpr(is_aggregated_v<abi_t> || is_aggregated_v<abi_u>)
+  {
+    // Clearly sub-optimal
+    return to_logical(v.mask() & cvt(w, as<logical<T>>{}).mask());
+  }
+  else
+  {
+    return svmov_z(v, cvt(w, as<logical<T>>()));
+  }
+}
+
+template<typename T, typename U, typename N>
 EVE_FORCEINLINE auto
-self_logor(sve_ const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept -> logical<wide<T, N>>
-requires sve_abi<abi_t<T, N>> { return svorr_z(sve_true<T>(), v, w); }
+self_logor(sve_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept -> logical<wide<T, N>>
+requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
+{
+  using abi_t = typename logical<wide<T,N>>::abi_type;
+  using abi_u = typename logical<wide<U,N>>::abi_type;
+
+  callable_object<tag::convert_> const cvt{};
+
+  if constexpr(is_aggregated_v<abi_t> || is_aggregated_v<abi_u>)
+  {
+    // Clearly sub-optimal
+    return to_logical(v.mask() | cvt(w, as<logical<T>>{}).mask());
+  }
+  else
+  {
+    using u_t =  logical<as_integer_t<T,unsigned>>;
+    using w_t =  as_wide_t<u_t,N>;
+    return svorr_z(sve_true<T>(),bit_cast(v,as<w_t>()), cvt(w, as<u_t>()));
+  }
+}
 
 template<real_value T, typename N>
 EVE_FORCEINLINE auto

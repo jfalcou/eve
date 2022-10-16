@@ -18,17 +18,15 @@ namespace eve::detail
 //================================================================================================
 template<typename T, typename N>
 EVE_FORCEINLINE auto
-to_bits(sve_ const&, logical<wide<T, N>> p) noexcept
+to_bits(sve_ const&, logical<wide<T, N>> p) noexcept requires sve_abi<abi_t<T, N>>
 {
   using type = typename logical<wide<T, N>>::bits_type;
   using e_t  = element_type_t<type>;
 
-  constexpr auto c = categorize<type>();
-
-  if constexpr( match(c, category::uint8) ) return type{svdup_u8_z(p, (e_t)-1)};
-  else if constexpr( match(c, category::uint16) ) return type{svdup_u16_z(p, (e_t)-1)};
-  else if constexpr( match(c, category::uint32) ) return type{svdup_u32_z(p, (e_t)-1)};
-  else if constexpr( match(c, category::uint64) ) return type{svdup_u64_z(p, (e_t)-1)};
+        if constexpr( sizeof(T) == 1 ) return type{svdup_u8_z (p, (e_t)-1)};
+  else  if constexpr( sizeof(T) == 2 ) return type{svdup_u16_z(p, (e_t)-1)};
+  else  if constexpr( sizeof(T) == 4 ) return type{svdup_u32_z(p, (e_t)-1)};
+  else  if constexpr( sizeof(T) == 8 ) return type{svdup_u64_z(p, (e_t)-1)};
 }
 
 //================================================================================================
