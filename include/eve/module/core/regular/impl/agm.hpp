@@ -31,14 +31,6 @@
 
 namespace eve::detail
 {
-//   template<value T, value U>
-//   EVE_FORCEINLINE  auto agm_(EVE_SUPPORTS(cpu_)
-//                             , T const &a
-//                             , U const &b) noexcept
-//   requires compatible_values<T, U>
-//   {
-//     return arithmetic_call(agm, a, b);
-//   }
 
   template<value T, value U>
   EVE_FORCEINLINE auto agm_(EVE_SUPPORTS(cpu_)
