@@ -11,6 +11,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/polynomial.hpp>
+#include <eve/module/polynomial/regular/reverse_horner.hpp> //??? why that it is already included by polynomial.hpp
 
 namespace eve::detail
 {
@@ -40,7 +41,7 @@ lambert_serie_utility(T r) noexcept
         2.33164314895e+00f,
         -1.80949529206e+00f,
     };
-    return fam(mone(as(r)), r, reverse_horner(r, P));
+    return fam(mone(as(r)), r, eve::reverse_horner(r, P));
   }
 }
 
