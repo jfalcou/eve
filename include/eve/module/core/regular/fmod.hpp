@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/rem.hpp>
 
 namespace eve
 {
@@ -19,5 +18,7 @@ namespace eve
 //!   @brief Alias of eve::pedantic(eve::rem).
 //! @}
 //================================================================================================
-constexpr auto fmod = eve::pedantic(eve::rem);
+EVE_MAKE_CALLABLE(fmod_, fmod);
 }
+
+#include <eve/module/core/regular/impl/fmod.hpp>
