@@ -79,7 +79,7 @@ namespace eve
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/saturated/sqr.cpp}
+//!        @godbolt{doc/core/regular/sqr.cpp}
 //!
 //! @}
 //================================================================================================

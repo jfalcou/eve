@@ -57,45 +57,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/sqrtvalmax.cpp}
 //! @}
 //================================================================================================
-
-//================================================================================================
-//! @addtogroup core
-//! @{
-//! @var sqrtvalmax
-//!
-//! @brief Callable object computing the greatest value less
-//! than the square root of the greatest value.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Computes the sqrtvalmax constant                           |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template < value T > T operator()( as<T> const & t) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//! **Return value**
-//!
-//! the call `eve::sqrtvalmax(as<T>())` is the greatest number of the type,  the square of which
-//! is less or equal to `eve::valmax(as<T>())`.
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/sqrtvalmax.cpp}
-//!
-//! @}
-//================================================================================================
-
 EVE_MAKE_CALLABLE(sqrtvalmax_, sqrtvalmax);
 
 namespace detail

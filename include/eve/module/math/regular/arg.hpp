@@ -56,16 +56,6 @@ namespace eve
 //!
 //!  @godbolt{doc/complex/arg.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::arg[mask](x)` provides a masked version of `eve::arg` which is
-//!     equivalent to `if_else (mask, abs(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/arg.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(arg_, arg);

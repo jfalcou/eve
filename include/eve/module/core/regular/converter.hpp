@@ -734,7 +734,7 @@ using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/upgrade_.cpp}
+//!  @godbolt{doc/core/regular/upgrade.cpp}
 //!  @}
 //================================================================================================
 inline constexpr upgrade_converter const upgrade_ = {};
