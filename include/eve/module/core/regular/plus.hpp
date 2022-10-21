@@ -49,19 +49,6 @@ namespace eve
 //!
 //!  @godbolt{doc/core/regular/plus.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::plus[mask](x)` provides a masked version of `eve::plus` which is
-//!     equivalent to `if_else (mask, plus(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/plus.cpp}
-//!
-//!        @godbolt{doc/core/saturated/plus.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(plus_, plus);
