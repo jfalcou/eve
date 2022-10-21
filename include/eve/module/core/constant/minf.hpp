@@ -56,42 +56,7 @@ namespace eve
 //!  @godbolt{doc/core/constant/minf.cpp}
 //! @}
 //================================================================================================
-//================================================================================================
-//! @addtogroup core
-//! @{
-//! @var minf
-//!
-//! @brief Callable object computing the negative infinity value.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Computes the minf constant                               |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//! **Return value**
-//!
-//! the call `eve::minf(as<T>())` is semantically equivalent to
-//! `T(-std::numeric_limits<t_t>::``infinity())`
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/minf.cpp}
-//!
-//! @}
-//================================================================================================
+
 EVE_MAKE_CALLABLE(minf_, minf);
 
 namespace detail

@@ -41,7 +41,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/gather.cpp}
+//!  TODO
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(gather_, gather);

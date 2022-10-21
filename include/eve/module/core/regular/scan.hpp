@@ -42,7 +42,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/scan.cpp}
+//!  TODO
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(scan_, scan);

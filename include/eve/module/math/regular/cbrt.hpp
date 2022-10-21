@@ -55,7 +55,7 @@ namespace eve
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/masked/cbrt.cpp}
+//!        @godbolt{doc/math/masked/cbrt.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(cbrt_, cbrt);

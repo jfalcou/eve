@@ -53,7 +53,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!   The value of \f$ \mathbf{C}_n^\lambda(x)f$ is returned.
+//!   The value of \f$ \mathbf{C}_n^\lambda(x)\f$ is returned.
 //!
 //!   @groupheader{Example}
 //!

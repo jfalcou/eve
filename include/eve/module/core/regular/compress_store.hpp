@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/compress_store.cpp}
+//!  TODO
 //! @}
 //================================================================================================
 

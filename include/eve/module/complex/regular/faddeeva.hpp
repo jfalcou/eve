@@ -52,13 +52,9 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
-//!  @godbolt{doc/math/faddeeva.cpp}
-//!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/faddeeva.cpp}
+//!  @godbolt{test/doc/complex/faddeeva.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(faddeeva_, faddeeva);

@@ -57,42 +57,6 @@ namespace eve
 //! @}
 //================================================================================================
 
-//================================================================================================
-//! @addtogroup core
-//! @{
-//! @var oneosqrteps
-//!
-//! @brief Callable object computing the inverse of the square root of the machine epsilon.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Computes the oneosqrteps constant                          |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//! **Return value**
-//!
-//! the call `eve::oneosqrteps(as<T>())` is semantically equivalent to
-//! `eve::rec(eve::sqrt(eve::eps(as<T>())))`
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/oneosqrteps.cpp}
-//!
-//! @}
-//================================================================================================
 EVE_MAKE_CALLABLE(oneosqrteps_, oneosqrteps);
 
 namespace detail
