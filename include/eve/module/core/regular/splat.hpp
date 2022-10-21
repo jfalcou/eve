@@ -52,7 +52,7 @@ using splat_type = decorated<splat_()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/splat.cpp}
+//!  TODO
 //! @}
 //================================================================================================
 

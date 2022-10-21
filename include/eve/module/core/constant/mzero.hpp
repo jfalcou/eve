@@ -58,41 +58,7 @@ namespace eve
 //! @}
 //================================================================================================
 
-//================================================================================================
-//! @addtogroup core
-//! @{
-//! @var mzero
-//!
-//! @brief Callable object computing the negative zero value.
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Computes the mzero constant                               |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template < floating_value T > T operator()( as<T> const & t) const noexcept;
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//!`t`:   [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//! **Return value**
-//!
-//! the call `eve::mzero(as<T>())` is semantically equivalent to `T(-0.0)`
-//!
-//! ---
-//!
-//! #### Example
-//!
-//! @godbolt{doc/core/mzero.cpp}
-//!
-//! @}
-//================================================================================================
+
 EVE_MAKE_CALLABLE(mzero_, mzero);
 
 namespace detail

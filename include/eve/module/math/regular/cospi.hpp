@@ -49,7 +49,7 @@ namespace eve
 //!       In particular:
 //!
 //!          * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!          * If the element is \f$\pm\1/2, \f$0\f$ is returned.
+//!          * If the element is \f$\pm\1/2\f$, \f$0\f$ is returned.
 //!          * If the element is \f$\pm\infty\f$, Nan is returned.
 //!          * If the element is a `Nan`, `Nan` is returned.
 //!

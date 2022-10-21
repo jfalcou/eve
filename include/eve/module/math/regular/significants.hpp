@@ -51,19 +51,6 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/significants.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::significants[mask](x, ...)` provides a masked
-//!     version of `significants` which is
-//!     equivalent to `if_else(mask, significants(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/significants.cpp}
-//!
 //! @}
 EVE_MAKE_CALLABLE(significants_, significants);
 }
