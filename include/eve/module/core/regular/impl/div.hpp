@@ -93,6 +93,23 @@ div_(EVE_SUPPORTS(cpu_),
   return div(r_t(a0), that);
 }
 
+// product type
+//================================================================================================
+template<value T0, kumi::product_type Ts>
+auto
+div_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+{
+  return div(a0, mul(args));
+}
+
+template<kumi::product_type Ts>
+auto
+div_(EVE_SUPPORTS(cpu_), Ts args)
+{
+  if constexpr( kumi::size_v<Ts> == 0) return 1;
+  else return div(get<0>(args), mul(kumi::pop_front(args)));
+}
+
 }
 
 #ifdef EVE_COMP_IS_MSVC

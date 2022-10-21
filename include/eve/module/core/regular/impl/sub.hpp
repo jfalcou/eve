@@ -49,4 +49,24 @@ sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
   ((that = sub(that, args)), ...);
   return that;
 }
+
+//================================================================================================
+// product type
+//================================================================================================
+template<value T0, kumi::product_type Ts>
+auto
+sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+{
+  return sub(a0, add(args));
+}
+
+template<kumi::product_type Ts>
+auto
+sub_(EVE_SUPPORTS(cpu_), Ts args)
+{
+  if constexpr( kumi::size_v<Ts> == 0) return 0;
+  else return sub(get<0>(args), add(kumi::pop_front(args)));
+}
+
+
 }

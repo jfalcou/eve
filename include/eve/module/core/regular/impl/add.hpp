@@ -49,6 +49,9 @@ add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
   return that;
 }
 
+//================================================================================================
+// product type
+//================================================================================================
 template<value T0, kumi::product_type Ts>
 auto
 add_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
@@ -62,7 +65,7 @@ add_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
   else
   {
     T0 that(a0);
-    return kumi::fold_left(eve::add, that, args);
+    return kumi::fold_left(eve::add, args, that);
   }
 }
 
