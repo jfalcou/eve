@@ -32,4 +32,16 @@ reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, Ts... args) noexcept
 {
   return reverse_horner_impl(regular_type(), x, args...);
 }
+
+//================================================================================================
+//== tuples
+//================================================================================================
+
+template<value T0, kumi::product_type Ts>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, Ts args) noexcept
+{
+  return horner_impl(regular_type(), x, reverse(args));
+}
+
 }

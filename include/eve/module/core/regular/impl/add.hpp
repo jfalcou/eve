@@ -11,6 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
@@ -47,4 +48,34 @@ add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
   ((that = add(that, args)), ...);
   return that;
 }
+
+template<value T0, kumi::product_type Ts>
+auto
+add_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+{
+  constexpr auto I = kumi::locate(args, kumi::predicate<eve::is_simd_value>());
+  if constexpr(I < kumi::size_v<Ts>)
+  {
+    common_compatible_t<T0, decltype(get<I>(args))> that(a0);
+    return kumi::fold_left(eve::add, args, that);
+  }
+  else
+  {
+    T0 that(a0);
+    return kumi::fold_left(eve::add, that, args);
+  }
+}
+
+template<kumi::product_type Ts>
+auto
+add_(EVE_SUPPORTS(cpu_), Ts args)
+{
+  if constexpr( kumi::size_v<Ts> == 0) return 0;
+  else if constexpr( kumi::size_v<Ts> == 1) return get<0>(args);
+  else
+  {
+    return add(get<0>(args), kumi::pop_front(args));
+  }
+}
+
 }
