@@ -54,18 +54,19 @@ var NAVTREE =
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.09.0", "changelog.html#autotoc_md132", [
-        [ "What's Changed", "changelog.html#autotoc_md133", null ],
-        [ "New Contributors", "changelog.html#autotoc_md134", null ]
+      [ "Version 2022.09.1", "changelog.html#autotoc_md132", null ],
+      [ "Version 2022.09.0", "changelog.html#autotoc_md133", [
+        [ "What's Changed", "changelog.html#autotoc_md134", null ],
+        [ "New Contributors", "changelog.html#autotoc_md135", null ]
       ] ],
-      [ "Version 2022.03.0", "changelog.html#autotoc_md135", [
-        [ "What's Changed", "changelog.html#autotoc_md136", null ],
-        [ "New Contributors", "changelog.html#autotoc_md137", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md136", [
+        [ "What's Changed", "changelog.html#autotoc_md137", null ],
+        [ "New Contributors", "changelog.html#autotoc_md138", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md138", [
-        [ "What's Changed", "changelog.html#autotoc_md139", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md139", [
+        [ "What's Changed", "changelog.html#autotoc_md140", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md140", null ]
+      [ "Version beta.2020.09", "changelog.html#autotoc_md141", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -98,11 +99,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__bessel_ga5e2dd2d1f2e62bbee606e3194db9352b.html#ga5e2dd2d1f2e62bbee606e3194db9352b",
-"group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8",
-"group__polynomial.html",
-"structeve_1_1if__.html#a1dd72a0565bcd14b0fa5320d511f39a9",
-"structzip__range.html"
+"group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34",
+"group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1",
+"group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a",
+"structeve_1_1if__.html",
+"structzip__iterator.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
