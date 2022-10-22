@@ -79,4 +79,17 @@ minmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   ((that = minmag(that, r_t(args))), ...);
   return that;
 }
+
+
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+minmag_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return eve::abs(kumi::apply( [&](auto... m) { return minmag(m...); }, tup));
+}
+
 }

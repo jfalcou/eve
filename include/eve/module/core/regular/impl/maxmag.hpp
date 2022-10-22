@@ -80,4 +80,16 @@ maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   ((that = maxmag(that, r_t(args))), ...);
   return that;
 }
+
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+maxmag_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return eve::abs(kumi::apply( [&](auto... m) { return maxmag(m...); }, tup));
+}
+
 }

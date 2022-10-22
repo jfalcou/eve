@@ -83,6 +83,17 @@ minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   return that;
 }
 
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+minabs_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return minabs(m...); }, tup));
+}
+
 // -----------------------------------------------------------------------------------------------
 // N parameters Masked case
 template<conditional_expr C, decorator D, value T0, value T1, value... Ts>

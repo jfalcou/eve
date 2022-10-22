@@ -67,6 +67,16 @@ absmin_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 {
   return eve::abs(eve::min(a0, a1, args...));
 }
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+absmin_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return min(m...); }, tup));
+}
 
 // -----------------------------------------------------------------------------------------------
 // Masked case

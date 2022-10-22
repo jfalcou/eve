@@ -78,6 +78,25 @@ auto max_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
 }
 
 //================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+max_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return max(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_tuple Ts>
+auto
+max_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(max)(m...); }, tup);
+}
+
+//================================================================================================
 // Predicate case
 //================================================================================================
 template<typename Callable>

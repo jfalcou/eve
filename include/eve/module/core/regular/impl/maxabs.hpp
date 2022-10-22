@@ -85,6 +85,16 @@ maxabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   ((that = maxabs(that, r_t(args))), ...);
   return that;
 }
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+maxabs_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return maxabs(m...); }, tup));
+}
 
 // -----------------------------------------------------------------------------------------------
 // N parameters Masked case
