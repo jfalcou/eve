@@ -156,7 +156,37 @@ $(document).ready(function(){initNavTree('group__core__constants_ga2a7b9727dd6e3
 <p ><b>Return value</b></p>
 <p >The call <code><a class="el" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb" title="Computes the constant of type T in which the only bit set is the least significant.">eve::bitincrement</a>(as&lt;T&gt;())</code> returns a value of type T in which the only bit set is the least significant</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t&gt;</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft wxf;</div>
+<div class="line">  wide_it wxi;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as&lt;wide_ft&gt;())  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wide_ft&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as&lt;wide_it&gt;())  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wide_it&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as(wxf))          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wxf))     &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as(wxi))          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wxi))     &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">float</span>        xf;</div>
+<div class="line">  std::int16_t xi;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as&lt;float&gt;())         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as&lt;std::int16_t&gt;())  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;std::int16_t&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as&lt;xf))              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xf)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bitincrement(as&lt;xi))              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">eve::bitincrement</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xi)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

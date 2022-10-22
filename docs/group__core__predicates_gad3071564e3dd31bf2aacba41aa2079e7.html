@@ -197,10 +197,9 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
-</ul>
-<p ><a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></p>
-<p >The expression <code>numeric(is_equal)(x,y)</code> considers that Nan values are equal.</p>
-<p ><b>Example</b></p>
+<li><p class="startli"><a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></p>
+<p class="startli">The expression <code>numeric(is_equal)(x,y)</code> considers that Nan values are equal.</p>
+<p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -222,14 +221,16 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Computes the IEEE NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:53</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-</div><!-- fragment --><ul>
+</div><!-- fragment --></li>
 <li><p class="startli"><code>almost</code></p>
 <p class="startli">The expression <code>almost(is_equal)(x, y, t)</code> where <code>x</code> and <code>y</code> must be floating point values, evals to true if and only if <code>x</code> is almost equal to <code>y</code>. This means that:</p><ul>
 <li>if <code>t</code> is a floating_value then the relative error of confusing is <code>x</code> and <code>y</code> is less than <code>t</code> \((|x-y| \le t \max(|x|, |y|))\).</li>
 <li>if <code>t</code> is a positive integral_value then there are not more than <code>t</code> values of the type of <code>x</code> representable in the interval \([x,y[\).</li>
 <li>if <code>t</code> is omitted then the tolerance <code>t</code> is taken to 3 times the machine \(\epsilon\) in the <code>x</code> type (<code>3*eps(as(x))</code>).</li>
 </ul>
-<p class="startli"><b>Example</b></p>
+</li>
+</ul>
+<p ><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -252,9 +253,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c_html_gab948026b7cf3543e2fa4b43f32c3311c"><div class="ttname"><a href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a></div><div class="ttdeci">constexpr almost_type const almost</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to little errors semantic onto other Callable Objects...</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:58</div></div>
-</div><!-- fragment --> </li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

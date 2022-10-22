@@ -185,7 +185,33 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gad0dd8ae2cec6
 <ul>
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code><a class="el" href="group__core__arithmetic_gad0dd8ae2cec6f99c1523ec4871efce3c.html#gad0dd8ae2cec6f99c1523ec4871efce3c" title="Computes the elementwise product of the first parameter by the sign of the second.">eve::negate</a>[mask](x, ...)</code> provides a masked version of <code>negate</code> which is equivalent to <code>if_else(mask, negate(x, ...), x)</code> <b>Example</b></p>
-<div class="fragment"></div><!-- fragment --> </li>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft pf = {0.0f, -0.0f, 0.0f, -0.0f, 2.0f, -2.0f,  2.0f, 2.0f};</div>
+<div class="line">  wide_ft qf = {4.0f, 4.0f, -4.0f,  -4.0, 4.0f, 4.0f, -0.0f,  +0.0f};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                       = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                       = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; raw(negate)(pf, qf)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>(<a class="code hl_variable" href="group__core__arithmetic_gad0dd8ae2cec6f99c1523ec4871efce3c.html#gad0dd8ae2cec6f99c1523ec4871efce3c">negate</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">float</span> xf = 4.0f;</div>
+<div class="line">  <span class="keywordtype">float</span> yf = -1.0f;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                  = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                  = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; raw(negate)(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>(<a class="code hl_variable" href="group__core__arithmetic_gad0dd8ae2cec6f99c1523ec4871efce3c.html#gad0dd8ae2cec6f99c1523ec4871efce3c">negate</a>)(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
+</div><!-- fragment --> </li>
 </ul>
 
 </div>

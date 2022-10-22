@@ -120,15 +120,15 @@ $(document).ready(function(){initNavTree('multiarch.html',''); initResizable(); 
   <div class="headertitle"><div class="title">Handling Multiple Architecture Targets </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md184"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md163"></a>
 The Issue</h1>
 <p >The <b>EVE</b> library uses compile-time code generation process to ensure a high-level of performance. However, there can be many reasons why your application or library might run on unknown systems. Thus, you may want to be able to write your SIMD kernel once and yet be able to adapt to your end-user's hardware.</p>
 <p >A first solution could be to just recompile a given kernel with different architecture settings and link everything. Then, at runtime, use eve::is_supported to choose the correct implementation between the available ones. However, in attempting to solve the problem in this way, you'll face issues as the core of <b>EVE</b> is based on templated callable object, you may end up violating the <a href="https://en.cppreference.com/w/cpp/language/definition">One Definition Rule</a> and end up with a binary containing the incorrect symbols and implementations.</p>
-<h1><a class="anchor" id="autotoc_md185"></a>
+<h1><a class="anchor" id="autotoc_md164"></a>
 From static to dynamic dispatch</h1>
 <p >A more successful approach is isolate the various version of a given kernel into separate dynamic libraries. In this case, no multiple definition can happen. This means using <b>dynamic libraries</b> to store your code and use <b>dynamic loading</b>.</p>
 <p >Dynamic loading in itself is a large topic mostly due to its OS specific components so <a href="https://en.wikipedia.org/wiki/Dynamic_loading">a good read on the subject is maybe in order</a>. Once you are acquainted with dynamic loading, let's start building our own SIMD dynamic system.</p>
-<h2><a class="anchor" id="autotoc_md186"></a>
+<h2><a class="anchor" id="autotoc_md165"></a>
 Writing the kernel</h2>
 <p >Let's write a small function that will consume a pointer to a data block containing <code>float</code> values and the size of the data block to process. Inside this kernel, we'll use some algorithms to vectorise this process.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/transform.hpp&gt;</span></div>
@@ -155,7 +155,7 @@ Writing the kernel</h2>
 <li>Inside <code>compute_kernel</code>, we display some information about the SIMD API we are using and proceed to the computation. As a quick way to handle the data, we pass a <code>std::span</code> to our algorithm.</li>
 </ul>
 <p >Nothing special is required except for the <code>extern "C"</code> attribute. If we want to get around this limitation and have a function taking arbitrary C++ types as parameters, there are different strategies. One such strategy is to use the mangled name to export a function returning an array or <a href="http://community.qnx.com/sf/docman/do/downloadDocument/projects.toolchain/docman.root.articles/doc1154">structure containing all the pre-computed functions pointers</a> from the <code>.so</code> library.</p>
-<h2><a class="anchor" id="autotoc_md187"></a>
+<h2><a class="anchor" id="autotoc_md166"></a>
 Writing the dynamic function hub</h2>
 <p >We now need to write an actual <code>compute</code> function that our users will call. This is the place where most of the OS-dependent code will be written. The example we give is made to work on Linux. For a more OS-independent way to handle dynamic loading, you can have a look at <a href="https://www.gnu.org/software/libtool/manual/html_node/Using-libltdl.html">libltdl</a> or use your preferred OS API.</p>
 <p >The code looks like this:</p>
@@ -201,7 +201,7 @@ Writing the dynamic function hub</h2>
 <li>Once everything is loaded and setup, we call the function pointer with the appropriate parameters.</li>
 </ul>
 <p >Obviously, in realistic settings you would actually care about runtime issues, check that every pointer are non-null, and use functions like <code>dlerror</code> to find out what would have caused an issue. This is left as an exercice for the reader.</p>
-<h2><a class="anchor" id="autotoc_md188"></a>
+<h2><a class="anchor" id="autotoc_md167"></a>
 Compiling and Using Dynamic Kernels</h2>
 <p >The next part is much more down-to-earth. We need to compile the kernel function inside multiple dynamic libraries with different set of options. Then, we need to compile the main binary. To simplify this process, <b>EVE</b> provides a CMake function named <code>eve_build_variants</code> that you can access directly when using <code>find_package</code> or that can be included manually in your CMake after installing the library via <code>include(eve-multiarch)</code>.</p>
 <p >Its synopsis is: </p><div class="fragment"><div class="line">eve_build_variants( NAME &lt;name&gt;</div>
@@ -249,7 +249,7 @@ Compiling and Using Dynamic Kernels</h2>
 <div class="line">After:</div>
 <div class="line">2 2.82843 3.4641 4 4.47214 4.89898 5.2915 5.65685 6.32456 8.94427 10.9545 12.6491 14.1421 15.4919 16.7332 17.8885 18.9737 20 63.2456 200</div>
 </div><!-- fragment --><p >The complete project is available as in the <code>examples/multi-arch</code> folder. As an exercise, try to modify the code to handle AVX512 and check everything still works.</p>
-<h1><a class="anchor" id="autotoc_md189"></a>
+<h1><a class="anchor" id="autotoc_md168"></a>
 Conclusion</h1>
 <p >Handling multiple architecture within a single application is not trivial. It requires some scaffolding, much of those being provided by <b>EVE</b> itself at both the CMake and C++ level. </p>
 </div></div><!-- contents -->

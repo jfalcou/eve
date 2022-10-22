@@ -161,44 +161,9 @@ $(document).ready(function(){initNavTree('group__core__simd_ga154931234dcad558cb
 <p ><b>Return value</b></p>
 <p >*A <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing the same kind of operation but returning its result as a <a class="el" href="concepteve_1_1simd__value.html">SIMD value</a>.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/product_type.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>data_block : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;data_block, float, std::int16_t,double&gt;</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, data_block <span class="keyword">const</span>&amp; d)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;{&quot;</span> &lt;&lt; get&lt;0&gt;(d) &lt;&lt; <span class="stringliteral">&quot; x &quot;</span> &lt;&lt; get&lt;1&gt;(d) &lt;&lt; <span class="stringliteral">&quot; - &quot;</span> &lt;&lt; get&lt;2&gt;(d) &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
-<div class="line">  }</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>card_t = eve::cardinal_t&lt;eve::wide&lt;double&gt;&gt;;</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wd = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> 1.25 * (<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>+1); };</div>
-<div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float       , card_t&gt;</a> wf = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> 1.f/(1+<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>); };</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, card_t&gt;</a> wi = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>+1; };</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- values&quot;</span>  &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;wf  = &quot;</span> &lt;&lt; wf &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;wi  = &quot;</span> &lt;&lt; wi &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;wd  = &quot;</span> &lt;&lt; wd &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- zip as tuple&quot;</span>  &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf,wi,wd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(wf,wi,wd)  &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- zip as UDT&quot;</span>  &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf,wi,wd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;data_block&gt;</a>(), wf,wi,wd)  &lt;&lt; std::endl;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
-<div class="ttc" id="agroup__core__simd_ga154931234dcad558cbbe12ba2c8c7d94_html_ga154931234dcad558cbbe12ba2c8c7d94"><div class="ttname"><a href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a></div><div class="ttdeci">constexpr callable_zip_ zip</div><div class="ttdoc">lable object constructing a SoA value.</div><div class="ttdef"><b>Definition:</b> zip.hpp:97</div></div>
-<div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:157</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md97"></a>
+<p >TODO</p>
+<p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
+<h4><a class="anchor" id="autotoc_md76"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -223,9 +188,10 @@ Members Functions</h4>
 <p><b>Return value</b></p>
 <p >Construct an instance of <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></code><code>&lt;Target&gt;</code> by aggregating each element of each values <code>ws</code>.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md100"></a>
+<h4><a class="anchor" id="autotoc_md79"></a>
 Example</h4>
-<div class="fragment"></div><!-- fragment --> 
+<p >TODO </p>
+
 </div>
 </div>
 </div><!-- contents -->
