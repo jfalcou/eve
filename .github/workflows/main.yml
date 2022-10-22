@@ -22,7 +22,7 @@ jobs:
         - {test: Multi-architecture , mode: 3 }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Check EVE works with ${{ matrix.cfg.test }}
         uses: ./.github/actions/integration
         with:
@@ -41,7 +41,7 @@ jobs:
         - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         uses: ./.github/actions/run_docker
         with:
@@ -75,7 +75,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -101,7 +101,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -123,7 +123,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         uses: ./.github/actions/run_docker
         with:
