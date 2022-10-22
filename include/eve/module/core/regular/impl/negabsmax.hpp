@@ -39,4 +39,14 @@ negabsmax_(EVE_SUPPORTS(cpu_), C const & c, Ts... args)
   return minus[c](absmax[c](args...));
 }
 
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+negabsmax_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return minus(abs(get<0>(tup)));
+  else return eve::abs(kumi::apply( [&](auto... m) { return negabsmax(m...); }, tup));
+}
 }
