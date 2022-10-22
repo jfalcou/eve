@@ -95,9 +95,9 @@ div_(EVE_SUPPORTS(cpu_),
 
 // product type
 //================================================================================================
-template<value T0, kumi::product_type Ts>
+template<value T0, value ... Ts>
 auto
-div_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+div_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
 {
   return div(a0, mul(args));
 }

@@ -46,12 +46,12 @@ mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // product type
 //================================================================================================
-template<value T0, kumi::product_type Ts>
+template<value T0, value ... Ts>
 auto
-mul_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+mul_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
 {
   constexpr auto I = kumi::locate(args, kumi::predicate<eve::is_simd_value>());
-  if constexpr(I < kumi::size_v<Ts>)
+  if constexpr(I < kumi::size_v<decltype(args)>)
   {
     common_compatible_t<T0, decltype(get<I>(args))> that(a0);
     return kumi::fold_left(eve::mul, args, that);

@@ -52,12 +52,12 @@ add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
 //================================================================================================
 // product type
 //================================================================================================
-template<value T0, kumi::product_type Ts>
+template<value T0, value ... Ts>
 auto
-add_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+add_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
 {
   constexpr auto I = kumi::locate(args, kumi::predicate<eve::is_simd_value>());
-  if constexpr(I < kumi::size_v<Ts>)
+  if constexpr(I < kumi::size_v<decltype(args)>)
   {
     common_compatible_t<T0, decltype(get<I>(args))> that(a0);
     return kumi::fold_left(eve::add, args, that);

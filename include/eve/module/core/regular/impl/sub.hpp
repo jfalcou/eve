@@ -53,9 +53,9 @@ sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
 //================================================================================================
 // product type
 //================================================================================================
-template<value T0, kumi::product_type Ts>
+template<value T0, value ... Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts args)
+sub_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
 {
   return sub(a0, add(args));
 }
