@@ -46,10 +46,10 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   //============================================================================
   //== ranges
   //============================================================================
-  std::vector<v_t>   tab0; // std does not want array of size 0
-  std::array<v_t, 1> tab1 = {1};
-  std::array<v_t, 2> tab2 = {1, 2};
-  std::array<v_t, 3> tab3 = {1, 2, 3};
+  std::vector<v_t> tab0;
+  std::vector<v_t> tab1{1};
+  std::vector<v_t> tab2{1, 2};
+  std::vector<v_t> tab3{1, 2, 3};
 
   TTS_EQUAL((newton)(a0, tab0, tab0), T(0));
   TTS_EQUAL((newton)(a0, tab1, tab0), T(1));
@@ -65,4 +65,28 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   TTS_EQUAL(numeric(newton)(a0, tab1, tab0), T(1));
   TTS_EQUAL(numeric(newton)(a0, tab2, tab1), (fma)(a0 - 1, 1, 2));
   TTS_EQUAL(numeric(newton)(a0, tab3, tab2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
+
+
+  //============================================================================
+  //== tuples
+  //============================================================================
+  auto tup0 = kumi::tuple{};
+  auto tup1 = kumi::tuple{1};
+  auto tup2 = kumi::tuple{1, 2};
+  auto tup3 = kumi::tuple{1, 2, 3};
+
+  TTS_EQUAL((newton)(a0, tup0, tup0), T(0));
+  TTS_EQUAL((newton)(a0, tup1, tup0), T(1));
+  TTS_EQUAL((newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
+  TTS_EQUAL((newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
+
+  TTS_EQUAL(pedantic(newton)(a0, tup0, tup0), T(0));
+  TTS_EQUAL(pedantic(newton)(a0, tup1, tup0), T(1));
+  TTS_EQUAL(pedantic(newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
+  TTS_EQUAL(pedantic(newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
+
+  TTS_EQUAL(numeric(newton)(a0, tup0, tup0), T(0));
+   TTS_EQUAL(numeric(newton)(a0, tup1, tup0), T(1));
+  TTS_EQUAL(numeric(newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
+  TTS_EQUAL(numeric(newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 };
