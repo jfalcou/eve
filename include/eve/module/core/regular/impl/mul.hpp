@@ -44,35 +44,23 @@ mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 }
 
 //================================================================================================
-// product type
+// tuples
 //================================================================================================
-template<value T0, value ... Ts>
+template<kumi::non_empty_tuple Ts>
 auto
-mul_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
+mul_(EVE_SUPPORTS(cpu_), Ts tup)
 {
-  constexpr auto I = kumi::locate(args, kumi::predicate<eve::is_simd_value>());
-  if constexpr(I < kumi::size_v<decltype(args)>)
-  {
-    common_compatible_t<T0, decltype(get<I>(args))> that(a0);
-    return kumi::fold_left(eve::mul, args, that);
-  }
-  else
-  {
-    T0 that(a0);
-    return kumi::fold_left(eve::mul, args, that);
-  }
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return mul(m...); }, tup);
 }
 
-template<kumi::product_type Ts>
+template<decorator D, kumi::non_empty_tuple Ts>
 auto
-mul_(EVE_SUPPORTS(cpu_), Ts args)
+mul_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {
-  if constexpr( kumi::size_v<Ts> == 0) return 1;
-  else if constexpr( kumi::size_v<Ts> == 1) return get<0>(args);
-  else
-  {
-    return mul(get<0>(args), kumi::pop_front(args));
-  }
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(mul)(m...); }, tup);
 }
+
 
 }

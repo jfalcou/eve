@@ -93,21 +93,23 @@ div_(EVE_SUPPORTS(cpu_),
   return div(r_t(a0), that);
 }
 
-// product type
 //================================================================================================
-template<value T0, value ... Ts>
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
 auto
-div_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
+div_(EVE_SUPPORTS(cpu_), Ts tup)
 {
-  return div(a0, mul(args));
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return div(m...); }, tup);
 }
 
-template<kumi::product_type Ts>
+template<decorator D, kumi::non_empty_tuple Ts>
 auto
-div_(EVE_SUPPORTS(cpu_), Ts args)
+div_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {
-  if constexpr( kumi::size_v<Ts> == 0) return 1;
-  else return div(get<0>(args), mul(kumi::pop_front(args)));
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(div)(m...); }, tup);
 }
 
 }

@@ -53,6 +53,17 @@ manhattan_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   return that;
 }
 
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+manhattan_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return manhattan(m...); }, tup));
+}
+
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, real_value... Ts>

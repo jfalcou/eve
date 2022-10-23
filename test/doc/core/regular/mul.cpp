@@ -31,10 +31,7 @@ int main()
   auto k = kumi::tuple{pf, pf, pf, 1};
   std::cout << "---- multi parameters" << '\n'
             << " -> mul(pi,pi,pi,1)               = " << eve::mul(pi, pi, pi, 1) << '\n'
-            << " -> mul(pf, k)                    = " << eve::mul(pf, k)             << '\n'
-            << " -> mul(1, k)                     = " << eve::mul(1, k)            << '\n'
             << " -> mul(k)                        = " << eve::mul(k)               << '\n'
-            << " -> mul(kumi::tuple{})            = " << eve::mul( kumi::tuple{})  << '\n'
             << " -> mul(kumi::tuple{pf, pf})      = " << eve::mul( kumi::tuple{pf, pf})  << '\n'
             << " -> mul(kumi::tuple{pf, 1.0f)     = " << eve::mul( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> mul(kumi::tuple{1.0f, pf)     = " << eve::mul( kumi::tuple{1.0f, pf})  << '\n'

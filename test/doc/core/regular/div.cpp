@@ -25,10 +25,7 @@ int main()
 
   auto k = kumi::tuple{pf, pf, pf, 1};
   std::cout << "---- multi parameters" << '\n'
-            << " -> div(pf, k)                    = " << eve::div(pf, k)             << '\n'
-            << " -> div(1, k)                     = " << eve::div(1, k)            << '\n'
             << " -> div(k)                        = " << eve::div(k)               << '\n'
-            << " -> div(kumi::tuple{})            = " << eve::div( kumi::tuple{})  << '\n'
             << " -> div(kumi::tuple{pf, pf})      = " << eve::div( kumi::tuple{pf, pf})  << '\n'
             << " -> div(kumi::tuple{pf, 1.0f)     = " << eve::div( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> div(kumi::tuple{1.0f, pf)     = " << eve::div( kumi::tuple{1.0f, pf})  << '\n';

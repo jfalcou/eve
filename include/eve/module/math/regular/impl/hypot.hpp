@@ -30,6 +30,18 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   }
   else { return apply_over(hypot, r_t {a0}, r_t {args}...); }
 }
+
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+hypot_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return hypot(m...); }, tup));
+}
+  
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, floating_value T0, floating_value... Ts>

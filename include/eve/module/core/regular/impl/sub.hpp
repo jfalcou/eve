@@ -51,22 +51,22 @@ sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
 }
 
 //================================================================================================
-// product type
+// tuples
 //================================================================================================
-template<value T0, value ... Ts>
+template<kumi::non_empty_tuple Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), T0 a0, kumi::tuple<Ts...> args)
+sub_(EVE_SUPPORTS(cpu_), Ts tup)
 {
-  return sub(a0, add(args));
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return sub(m...); }, tup);
 }
 
-template<kumi::product_type Ts>
+template<decorator D, kumi::non_empty_tuple Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), Ts args)
+sub_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {
-  if constexpr( kumi::size_v<Ts> == 0) return 0;
-  else return sub(get<0>(args), add(kumi::pop_front(args)));
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(sub)(m...); }, tup);
 }
-
 
 }
