@@ -64,6 +64,13 @@ manhattan_(EVE_SUPPORTS(cpu_), Ts tup)
   else return eve::abs(kumi::apply( [&](auto... m) { return manhattan(m...); }, tup));
 }
 
+template<kumi::non_empty_tuple Ts>
+auto
+manhattan_(EVE_SUPPORTS(cpu_), pedantic_type const& d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return pedantic(manhattan)(m...); }, tup));
+}
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, real_value... Ts>

@@ -69,6 +69,13 @@ min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   return that;
 }
 
+template<decorator D,  real_value... Ts>
+auto
+min_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
+{
+  return min(args...);
+}
+
 //================================================================================================
 // N parameters masked
 //================================================================================================

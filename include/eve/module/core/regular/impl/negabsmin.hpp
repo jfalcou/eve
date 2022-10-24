@@ -47,7 +47,15 @@ auto
 negabsmin_(EVE_SUPPORTS(cpu_), Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return minus(get<0>(tup));
-  else return eve::abs(kumi::apply( [&](auto... m) { return negabsmin(m...); }, tup));
+  else return kumi::apply( [&](auto... m) { return negabsmin(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_tuple Ts>
+auto
+negabsmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return -d(eve::abs)(get<0>(tup));
+  else return minus(kumi::apply( [&](auto... m) { return d(absmin)(m...); }, tup));
 }
 
 }

@@ -89,7 +89,15 @@ auto
 minmag_(EVE_SUPPORTS(cpu_), Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return eve::abs(kumi::apply( [&](auto... m) { return minmag(m...); }, tup));
+  else return kumi::apply( [&](auto... m) { return minmag(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_tuple Ts>
+auto
+minmag_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(minmag)(m...); }, tup);
 }
 
 }

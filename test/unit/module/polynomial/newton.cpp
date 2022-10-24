@@ -86,7 +86,7 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   TTS_EQUAL(pedantic(newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 
   TTS_EQUAL(numeric(newton)(a0, tup0, tup0), T(0));
-   TTS_EQUAL(numeric(newton)(a0, tup1, tup0), T(1));
+  TTS_EQUAL(numeric(newton)(a0, tup1, tup0), T(1));
   TTS_EQUAL(numeric(newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
   TTS_EQUAL(numeric(newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 };

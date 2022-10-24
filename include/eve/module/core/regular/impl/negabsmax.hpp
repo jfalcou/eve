@@ -47,6 +47,15 @@ auto
 negabsmax_(EVE_SUPPORTS(cpu_), Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return minus(abs(get<0>(tup)));
-  else return eve::abs(kumi::apply( [&](auto... m) { return negabsmax(m...); }, tup));
+  else return kumi::apply( [&](auto... m) { return negabsmax(m...); }, tup);
 }
+
+template<decorator D, kumi::non_empty_tuple Ts>
+auto
+negabsmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return -d(eve::abs)(get<0>(tup));
+  else return minus(kumi::apply( [&](auto... m) { return d(absmax)(m...); }, tup));
+}
+
 }

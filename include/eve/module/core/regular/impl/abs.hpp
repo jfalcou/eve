@@ -50,4 +50,10 @@ requires(std::convertible_to<U, decltype(abs(t))>)
 {
   return mask_op(cond, d(eve::abs), t);
 }
+
+template<decorator D, real_value T>
+EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_), D const &, T const& a) noexcept
+{
+  return eve::abs(a);
+}
 }

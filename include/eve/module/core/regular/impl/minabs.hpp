@@ -91,7 +91,15 @@ auto
 minabs_(EVE_SUPPORTS(cpu_), Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
-  else return eve::abs(kumi::apply( [&](auto... m) { return minabs(m...); }, tup));
+  else return kumi::apply( [&](auto... m) { return minabs(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_tuple Ts>
+auto
+minabs_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return d(eve::abs)(get<0>(tup));
+  else return kumi::apply( [&](auto... m) { return d(minabs)(m...); }, tup);
 }
 
 // -----------------------------------------------------------------------------------------------

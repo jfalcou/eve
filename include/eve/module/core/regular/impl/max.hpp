@@ -68,6 +68,13 @@ max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   return that;
 }
 
+template<decorator D,  real_value... Ts>
+auto
+max_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
+{
+  return max(args...);
+}
+
 //================================================================================================
 // N parameters masked
 //================================================================================================
