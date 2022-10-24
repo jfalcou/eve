@@ -70,7 +70,7 @@ auto
 logspace_sub_(EVE_SUPPORTS(cpu_), Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return eve::abs(kumi::apply( [&](auto... m) { return logspace_sub(m...); }, tup));
+  else return kumi::apply( [&](auto... m) { return logspace_sub(m...); }, tup);
 }
 
 //================================================================================================

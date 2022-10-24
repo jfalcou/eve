@@ -39,9 +39,17 @@ auto
 hypot_(EVE_SUPPORTS(cpu_), Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
-  else return eve::abs(kumi::apply( [&](auto... m) { return hypot(m...); }, tup));
+  else return kumi::apply( [&](auto... m) { return hypot(m...); }, tup);
 }
-  
+
+template<decorator D, kumi::non_empty_tuple Ts>
+auto
+hypot_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
+  else return kumi::apply( [&](auto... m) { return d(hypot)(m...); }, tup);
+}
+
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, floating_value T0, floating_value... Ts>
