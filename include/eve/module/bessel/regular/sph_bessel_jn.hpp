@@ -41,7 +41,7 @@ namespace eve
   //!
   //!     * `n`:   order of the function. Order must be positive,
   //!
-  //!     * `x` :  [real floating argument](@ref eve::floating_real__value).
+  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
   //!
   //!   **Return value**
   //!

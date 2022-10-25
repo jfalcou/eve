@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.03.00</div>
+   <div id="projectbrief">v2022.09.01</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -138,7 +138,6 @@ $(document).ready(function(){initNavTree('group__core__constants_ga2e46880609b55
 </div><div class="memdoc">
 
 <p>Computes a value in which the most significant bit is the only bit set. </p>
-<p >Callable object computing the sign mask value.</p>
 <p ><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -147,7 +146,7 @@ $(document).ready(function(){initNavTree('group__core__constants_ga2e46880609b55
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__constants_ga2e46880609b55c4620cce93efc936c7c.html#ga2e46880609b55c4620cce93efc936c7c">signmask</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_ga2e46880609b55c4620cce93efc936c7c_html_ga2e46880609b55c4620cce93efc936c7c"><div class="ttname"><a href="group__core__constants_ga2e46880609b55c4620cce93efc936c7c.html#ga2e46880609b55c4620cce93efc936c7c">eve::signmask</a></div><div class="ttdeci">constexpr callable_signmask_ signmask</div><div class="ttdoc">Computes a value in which the most significant bit is the only bit set.</div><div class="ttdef"><b>Definition:</b> signmask.hpp:94</div></div>
+<div class="ttc" id="agroup__core__constants_ga2e46880609b55c4620cce93efc936c7c_html_ga2e46880609b55c4620cce93efc936c7c"><div class="ttname"><a href="group__core__constants_ga2e46880609b55c4620cce93efc936c7c.html#ga2e46880609b55c4620cce93efc936c7c">eve::signmask</a></div><div class="ttdeci">constexpr callable_signmask_ signmask</div><div class="ttdoc">Computes a value in which the most significant bit is the only bit set.</div><div class="ttdef"><b>Definition:</b> signmask.hpp:58</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
@@ -157,7 +156,8 @@ $(document).ready(function(){initNavTree('group__core__constants_ga2e46880609b55
 <p ><b>Return value</b></p>
 <p >The call <code><a class="el" href="group__core__constants_ga2e46880609b55c4620cce93efc936c7c.html#ga2e46880609b55c4620cce93efc936c7c" title="Computes a value in which the most significant bit is the only bit set.">eve::signmask</a>(as&lt;T&gt;())</code> returns a value of type T for which each element has all its bits unset except the highest.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
@@ -186,23 +186,7 @@ $(document).ready(function(){initNavTree('group__core__constants_ga2e46880609b55
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">Computes the signmask constant   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span> &lt; value T &gt; T operator()( <a class="code hl_struct" href="structeve_1_1as.html">as &lt;T&gt;</a> <span class="keyword">const</span> &amp; t) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>t</code>: <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the constant.</p>
-<p ><b>Return value</b></p>
-<p >the call <code><a class="el" href="group__core__constants_ga2e46880609b55c4620cce93efc936c7c.html#ga2e46880609b55c4620cce93efc936c7c" title="Computes a value in which the most significant bit is the only bit set.">eve::signmask</a>(as&lt;T&gt;())</code> is a value of type T for which each element has all its bits unset except the highest.</p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md51"></a>
-Example</h4>
-<div class="fragment"></div><!-- fragment --> 
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
