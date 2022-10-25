@@ -139,4 +139,5 @@ namespace eve::detail
     return z_t{eve::average(real(z1), real(z2)), eve::average(imag(z1), imag(z2))};
   }
 
+
 }

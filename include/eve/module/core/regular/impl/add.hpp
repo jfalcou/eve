@@ -31,11 +31,11 @@ add_(EVE_SUPPORTS(cpu_),
 // N parameters
 //================================================================================================
 template<decorator D, value T0, value... Ts>
-auto
-add_(EVE_SUPPORTS(cpu_), D const&, T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
+ common_compatible_t<T0, Ts...>
+add_(EVE_SUPPORTS(cpu_), D const& d, T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
 {
   common_compatible_t<T0, Ts...> that(a0);
-  ((that = D()(add)(that, args)), ...);
+  ((that = d(add)(that, args)), ...);
   return that;
 }
 
