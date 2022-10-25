@@ -81,4 +81,26 @@ bit_ornot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) requires
   auto that = bit_and(a1, args...);
   return mask_op(cond, eve::bit_ornot, a0, that);
 }
+
+
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_tuple Ts>
+auto
+bit_ornot_(EVE_SUPPORTS(cpu_), Ts const & args)
+{
+  if constexpr(kumi::size_v<Ts> == 1) return get<0>(args);
+  else if constexpr(kumi::size_v<Ts> == 2) return bit_ornot(get<0>(args), get<1>(args));
+  else return bit_ornot(get<0>(args), kumi::apply(bit_and, kumi::pop_front(args)));
+}
+
+template<conditional_expr C, kumi::non_empty_tuple Ts>
+auto
+bit_ornot_(EVE_SUPPORTS(cpu_), C const& cond, Ts const & args)
+{
+  if constexpr(kumi::size_v<Ts> == 1) return get<0>(args);
+  else return kumi::apply( [&](auto... m) { return mask_op(cond, eve::bit_ornot, m...); }, args);
+}
+
 }
