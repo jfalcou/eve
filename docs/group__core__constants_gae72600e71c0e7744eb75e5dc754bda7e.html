@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.03.00</div>
+   <div id="projectbrief">v2022.09.01</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -138,7 +138,6 @@ $(document).ready(function(){initNavTree('group__core__constants_gae72600e71c0e7
 </div><div class="memdoc">
 
 <p>Computes the smallest denormal positive value. </p>
-<p >Callable object computing the least denormal positive value.</p>
 <p ><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -147,7 +146,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gae72600e71c0e7
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__constants_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e">mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_gae72600e71c0e7744eb75e5dc754bda7e_html_gae72600e71c0e7744eb75e5dc754bda7e"><div class="ttname"><a href="group__core__constants_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e">eve::mindenormal</a></div><div class="ttdeci">constexpr callable_mindenormal_ mindenormal</div><div class="ttdoc">Computes the smallest denormal positive value.</div><div class="ttdef"><b>Definition:</b> mindenormal.hpp:96</div></div>
+<div class="ttc" id="agroup__core__constants_gae72600e71c0e7744eb75e5dc754bda7e_html_gae72600e71c0e7744eb75e5dc754bda7e"><div class="ttname"><a href="group__core__constants_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e">eve::mindenormal</a></div><div class="ttdeci">constexpr callable_mindenormal_ mindenormal</div><div class="ttdoc">Computes the smallest denormal positive value.</div><div class="ttdef"><b>Definition:</b> mindenormal.hpp:59</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
@@ -183,26 +182,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gae72600e71c0e7
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">Computes the mindenormal constant   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span> &lt; <span class="keywordtype">float</span>ing_value T &gt; T operator()( <a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> <span class="keyword">const</span> &amp; t) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>t</code>: <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the constant.</p>
-<p ><b>Return value</b></p>
-<p >the call <code><a class="el" href="group__core__constants_gae72600e71c0e7744eb75e5dc754bda7e.html#gae72600e71c0e7744eb75e5dc754bda7e" title="Computes the smallest denormal positive value.">eve::mindenormal</a>(as&lt;T&gt;())</code> is semantically equivalent to:</p><ul>
-<li><code>T(1.4013e-45f)</code> if <code>eve::element_type_t&lt;T&gt;</code> is float</li>
-<li><code>T(4.94066e-324)</code> if <code>eve::element_type_t&lt;T&gt;</code> is double</li>
-</ul>
-<hr  />
-<h4><a class="anchor" id="autotoc_md39"></a>
-Example</h4>
-<div class="fragment"></div><!-- fragment --> 
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

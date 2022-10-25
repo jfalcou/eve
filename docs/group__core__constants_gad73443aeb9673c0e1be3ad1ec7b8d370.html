@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.03.00</div>
+   <div id="projectbrief">v2022.09.01</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -138,7 +138,6 @@ $(document).ready(function(){initNavTree('group__core__constants_gad73443aeb9673
 </div><div class="memdoc">
 
 <p>Computes the the inverse of the square root of the machine epsilon. </p>
-<p >Callable object computing the inverse of the square root of the machine epsilon.</p>
 <p ><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -147,7 +146,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gad73443aeb9673
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370">oneosqrteps</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370_html_gad73443aeb9673c0e1be3ad1ec7b8d370"><div class="ttname"><a href="group__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370">eve::oneosqrteps</a></div><div class="ttdeci">constexpr callable_oneosqrteps_ oneosqrteps</div><div class="ttdoc">Computes the the inverse of the square root of the machine epsilon.</div><div class="ttdef"><b>Definition:</b> oneosqrteps.hpp:96</div></div>
+<div class="ttc" id="agroup__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370_html_gad73443aeb9673c0e1be3ad1ec7b8d370"><div class="ttname"><a href="group__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370">eve::oneosqrteps</a></div><div class="ttdeci">constexpr callable_oneosqrteps_ oneosqrteps</div><div class="ttdoc">Computes the the inverse of the square root of the machine epsilon.</div><div class="ttdef"><b>Definition:</b> oneosqrteps.hpp:60</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
@@ -187,23 +186,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gad73443aeb9673
 <div class="ttc" id="agroup__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80_html_ga3b3cda8b6305e7d7e0dbc9da29c6be80"><div class="ttname"><a href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">eve::upward</a></div><div class="ttdeci">constexpr upward_type const upward</div><div class="ttdoc">Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:160</div></div>
 <div class="ttc" id="agroup__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6_html_gaa9bc64a3f84f5fdc046854ead9bdf7f6"><div class="ttname"><a href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">eve::downward</a></div><div class="ttdeci">constexpr downward_type const downward</div><div class="ttdoc">Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:161</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">Computes the oneosqrteps constant   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span> &lt; <span class="keywordtype">float</span>ing_value T &gt; T operator()( <a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> <span class="keyword">const</span> &amp; t) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>t</code>: <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the constant.</p>
-<p ><b>Return value</b></p>
-<p >the call <code><a class="el" href="group__core__constants_gad73443aeb9673c0e1be3ad1ec7b8d370.html#gad73443aeb9673c0e1be3ad1ec7b8d370" title="Computes the the inverse of the square root of the machine epsilon.">eve::oneosqrteps</a>(as&lt;T&gt;())</code> is semantically equivalent to <code><a class="el" href="group__core__arithmetic_ga9e1abef2b02773654dd566b466e9586a.html#ga9e1abef2b02773654dd566b466e9586a" title="Computes the inverse of the parameter.">eve::rec</a>(<a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">eve::sqrt</a>(eve::eps(as&lt;T&gt;())))</code></p>
-<hr  />
-<h4><a class="anchor" id="autotoc_md48"></a>
-Example</h4>
-<div class="fragment"></div><!-- fragment --> 
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

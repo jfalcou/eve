@@ -24,7 +24,8 @@ var searchData=
   ['rshl_21',['rshl',['../group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec',1,'eve']]],
   ['rshr_22',['rshr',['../group__core__arithmetic_ga9622c49784c564f93798074ac6e6fe1f.html#ga9622c49784c564f93798074ac6e6fe1f',1,'eve']]],
   ['rsqrt_23',['rsqrt',['../group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d',1,'eve']]],
-  ['rsqrt_5fe_24',['rsqrt_e',['../group__math__constants_ga13874af3d7b583b1748c12a44d3fe6bc.html#ga13874af3d7b583b1748c12a44d3fe6bc',1,'eve']]],
-  ['rsqrt_5fpi_25',['rsqrt_pi',['../group__math__constants_ga7e82b2f2abcd6f5ce7e42c7a190debbe.html#ga7e82b2f2abcd6f5ce7e42c7a190debbe',1,'eve']]],
-  ['rsqrt_5fpio_5f2_26',['rsqrt_pio_2',['../group__math__constants_ga0ca7ba97dfbbc2e1c42ef76052874795.html#ga0ca7ba97dfbbc2e1c42ef76052874795',1,'eve']]]
+  ['rsqrt_5f2pi_24',['rsqrt_2pi',['../group__math__constants_gae42e6f1fcefce97820d07f38262bec0c.html#gae42e6f1fcefce97820d07f38262bec0c',1,'eve']]],
+  ['rsqrt_5fe_25',['rsqrt_e',['../group__math__constants_ga13874af3d7b583b1748c12a44d3fe6bc.html#ga13874af3d7b583b1748c12a44d3fe6bc',1,'eve']]],
+  ['rsqrt_5fpi_26',['rsqrt_pi',['../group__math__constants_ga7e82b2f2abcd6f5ce7e42c7a190debbe.html#ga7e82b2f2abcd6f5ce7e42c7a190debbe',1,'eve']]],
+  ['rsqrt_5fpio_5f2_27',['rsqrt_pio_2',['../group__math__constants_ga0ca7ba97dfbbc2e1c42ef76052874795.html#ga0ca7ba97dfbbc2e1c42ef76052874795',1,'eve']]]
 ];

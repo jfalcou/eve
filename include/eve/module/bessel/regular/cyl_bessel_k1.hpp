@@ -38,7 +38,7 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  positive [real floating argument](@ref eve::floating_real__value).
+  //!     * `x` :  positive [real floating argument](@ref eve::floating_real_value).
   //!
   //!   **Return value**
   //!

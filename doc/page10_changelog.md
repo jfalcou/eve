@@ -1,6 +1,15 @@
 Change Log {#changelog}
 ==========
 
+## Version 2022.09.1
+
+Codename: [Rosalind Serendipitous](https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It))
+
+This is a patch release that fix some issue with the versioning of EVE installation and
+some documentation issue.
+
+**Full Changelog**: https://github.com/jfalcou/eve/compare/v2022.09.0...2022.09.1
+
 ## Version 2022.09.0
 
 Codename: [Rosalind Serendipitous](https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It))

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.03.00</div>
+   <div id="projectbrief">v2022.09.01</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -191,7 +191,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae716abe66da1
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Computes the IEEE NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
-<div class="ttc" id="agroup__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Computes the -infinity ieee value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:95</div></div>
+<div class="ttc" id="agroup__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr callable_minf_ minf</div><div class="ttdoc">Computes the -infinity ieee value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:60</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
@@ -228,7 +228,30 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae716abe66da1
 <li>The call <code>numeric(min)(x,args,...)</code> ensures that if any element of the inputs is not a <code>Nan</code>, the corresponding output element will not be a <code>Nan</code>.</li>
 </ul>
 <p class="startli"><b>Example</b></p>
-<div class="fragment"></div><!-- fragment --> </li>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,</div>
+<div class="line">                <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
+<div class="line">                -0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -2.0f};</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                     = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                     = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; pedantic(min)(pf, qf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__core__arithmetic_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; numeric(min)(pf, qf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a>(<a class="code hl_variable" href="group__core__arithmetic_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed">eve::min</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:53</div></div>
+</div><!-- fragment --> </li>
 </ul>
 
 </div>

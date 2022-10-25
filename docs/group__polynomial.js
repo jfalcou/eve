@@ -1,5 +1,6 @@
 var group__polynomial =
 [
+    [ "eve::gegenbauer", "group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5", null ],
     [ "eve::hermite", "group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25", null ],
     [ "eve::horner", "group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb", null ],
     [ "eve::jacobi", "group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d", null ],

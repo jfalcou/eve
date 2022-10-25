@@ -85,10 +85,10 @@ namespace eve
 //!
 //!        @godbolt{doc/core/masked/sqrt.cpp}
 //!
-//!  * eve::raw
+//!   * eve::raw
+//!
 //!     The call `raw(sqrt)(x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return.
-//!      Otherwise it uses the non-decorated call.
+//!     very poor accuracy in return. Otherwise it uses the non-decorated call.
 //!
 //! @}
 //================================================================================================

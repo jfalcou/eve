@@ -66,7 +66,7 @@ namespace eve
 //!
 //!        @godbolt{doc/core/masked/is_equal.cpp}
 //!
-//!  * eve::numeric
+//!   * eve::numeric
 //!
 //!     The expression `numeric(is_equal)(x,y)` considers that Nan values are equal.
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!
 //!        @godbolt{doc/core/pedantic/is_equal.cpp}
 //!
-//!  * `almost`
+//!   * `almost`
 //!
 //!     The expression `almost(is_equal)(x, y, t)` where `x` and `y` must be floating point values,
 //!     evals to
@@ -88,9 +88,9 @@ namespace eve
 //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$
 //!      in the `x` type (`3*eps(as(x))`).
 //!
-//!      **Example**
+//!   **Example**
 //!
-//!        @godbolt{doc/core/fuzzy/is_equal.cpp}
+//!   @godbolt{doc/core/fuzzy/is_equal.cpp}
 //! @}
 //================================================================================================
 EVE_IMPLEMENT_CALLABLE(is_equal_, is_equal);

@@ -3,6 +3,7 @@ var group__math__trig =
     [ "eve::arg", "group__math__trig_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535", null ],
     [ "eve::cos", "group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86", null ],
     [ "eve::cosd", "group__math__trig_ga216a80d7f91be23dc0d74e26eb057000.html#ga216a80d7f91be23dc0d74e26eb057000", null ],
+    [ "eve::cospi", "group__math__trig_ga03482f35c4921d89499b1034eee99be0.html#ga03482f35c4921d89499b1034eee99be0", null ],
     [ "eve::cot", "group__math__trig_gad0a09342c6bb010028e1686a0b1f599c.html#gad0a09342c6bb010028e1686a0b1f599c", null ],
     [ "eve::cotd", "group__math__trig_ga1c0c27c3a93a40a2fa91c42b02040e62.html#ga1c0c27c3a93a40a2fa91c42b02040e62", null ],
     [ "eve::cotpi", "group__math__trig_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222", null ],
