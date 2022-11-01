@@ -16,7 +16,10 @@
 namespace eve
 {
   template<typename Type, typename Size = expected_cardinal_t<Type>>
-  struct as_wide;
+  struct as_wide
+  {
+    using type = Type;
+  };
 
   template<typename Type, typename Size>
   requires( std::is_arithmetic_v<Type>  || kumi::product_type<Type> )

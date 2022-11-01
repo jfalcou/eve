@@ -34,13 +34,14 @@ namespace detail
 {
   template<typename T> constexpr bool scalar_tuple()
   {
-    if constexpr( kumi::product_type<T> )
+    if constexpr( !kumi::product_type<T> ) return false;
+    else
     {
-      return kumi::size_v<T> ? kumi::all_of(kumi::flatten_all(kumi::as_tuple_t<T> {}),
-                                            []<typename M>(M) { return plain_scalar_value<M>; })
-                             : false;
+      if constexpr(kumi::size_v<T> == 0) return false;
+      else  return  kumi::all_of( kumi::flatten_all(kumi::as_tuple_t<T> {})
+                                , []<typename M>(M) { return plain_scalar_value<M>; }
+                                );
     }
-    else { return false; }
   }
 }
 

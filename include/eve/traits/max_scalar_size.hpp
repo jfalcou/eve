@@ -11,6 +11,19 @@
 
 namespace eve
 {
+  namespace detail
+  {
+    template<typename T> constexpr auto minmax_scalar(bool mode) noexcept
+    {
+      if constexpr(kumi::product_type<T>)
+      {
+        if(mode) return kumi::max_flat(kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
+        else     return kumi::min_flat(kumi::as_tuple_t<T>{}, [](auto m) { return sizeof(m); });
+      }
+      else return sizeof(T);
+    }
+  }
+
   //================================================================================================
   //! @addtogroup traits
   //! @{
@@ -28,8 +41,8 @@ namespace eve
   //! @}
   //================================================================================================
   template <typename T>
-  constexpr std::size_t max_scalar_size_v = kumi::max_flat(T{}, [](auto m) { return sizeof(m); });
+  constexpr std::size_t max_scalar_size_v = detail::minmax_scalar<T>(true);
 
   template <typename T>
-  constexpr std::size_t min_scalar_size_v = kumi::min_flat(T{}, [](auto m) { return sizeof(m); });
+  constexpr std::size_t min_scalar_size_v = detail::minmax_scalar<T>(false);
 }
