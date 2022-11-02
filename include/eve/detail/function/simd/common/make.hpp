@@ -77,7 +77,7 @@ namespace eve::detail
 
     // Package all values then split in 2 sides
     auto values = kumi::make_tuple(v0,vs...);
-    auto [ls,hs] = values.split(kumi::index<Pack::size()/2>);
+    auto [ls,hs] = kumi::split(values, kumi::index<Pack::size()/2>);
 
     // Rebuild sub-type with both parts of the pack of values
     auto constexpr build = [](auto... e) { return sub_t{e...}; };
