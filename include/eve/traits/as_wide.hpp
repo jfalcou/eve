@@ -18,7 +18,10 @@ namespace eve
   template<typename Type, typename Size = expected_cardinal_t<Type>>
   struct as_wide
   {
-    using type = Type;
+    // This case should never be picked up but clang++ insists on trying to
+    // instantiate it in place it makes no sense. We return void so clang
+    // lets the code compile as it should.
+    using type = void;
   };
 
   template<typename Type, typename Size>
