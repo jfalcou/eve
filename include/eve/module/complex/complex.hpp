@@ -254,6 +254,20 @@ namespace eve
 
     template<like<complex> Z1, like<complex> Z2>
     friend auto
+    tagged_dispatch(eve::tag::add_, pedantic_type const &, Z1 const& z1, Z2  const& z2) noexcept
+    {
+      return z1+z2;
+    }
+
+    template<like<complex> Z1, like<complex> Z2>
+    friend auto
+    tagged_dispatch(eve::tag::sub_, pedantic_type const &, Z1 const& z1, Z2  const& z2) noexcept
+    {
+      return z1-z2;
+    }
+
+    template<like<complex> Z1, like<complex> Z2>
+    friend auto
     tagged_dispatch(eve::tag::mul_, pedantic_type const &, Z1 const& z1, Z2  const& z2) noexcept
     {
       using r_t   = decltype(z1*z2);
