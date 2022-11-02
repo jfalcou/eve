@@ -608,7 +608,7 @@ namespace tts
   }                                                                                                 \
   else                                                                                              \
   {                                                                                                 \
-    FAILURE ( "Expression: "  << TTS_STRING(EXPR) << " evaluates to true." );                       \
+    FAILURE ( "Expression: "  << TTS_STRING(EXPR) << " evaluates to false." );                      \
     return ::tts::logger{};                                                                         \
   }                                                                                                 \
 }()                                                                                                 \

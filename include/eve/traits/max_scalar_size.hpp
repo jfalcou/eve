@@ -28,8 +28,7 @@ namespace eve
   //! @}
   //================================================================================================
   template <typename T>
-  constexpr std::size_t max_scalar_size_v = kumi::max_flat(T{}, [](auto m) { return sizeof(m); });
-
-  template <typename T>
-  constexpr std::size_t min_scalar_size_v = kumi::min_flat(T{}, [](auto m) { return sizeof(m); });
+  constexpr std::size_t max_scalar_size_v = kumi::max_flat( kumi::as_tuple_t<T>{}
+                                                          , [](auto m) { return sizeof(m); }
+                                                          );
 }
