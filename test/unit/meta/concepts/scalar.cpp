@@ -99,7 +99,6 @@ TTS_CASE("Check for arithmetic_scalar_value on unsupported types" )
   TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<long double>             );
   TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<bool>                    );
   TTS_EXPECT_NOT(  eve::arithmetic_scalar_value<void*>                   );
-  TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<>>)          );
   TTS_EXPECT_NOT( (eve::arithmetic_scalar_value<kumi::tuple<int,bool>>)  );
 };
 
@@ -115,22 +114,23 @@ TTS_CASE("Check for arithmetic_scalar_value/plain_scalar_value overload relation
 {
   TTS_EQUAL(check_overload(4)                    , +1);
   TTS_EQUAL(check_overload(4.f)                  , +1);
+  TTS_EQUAL(check_overload(kumi::tuple<>{})      , +2);
   TTS_EQUAL(check_overload(kumi::tuple{4})       , +2);
   TTS_EQUAL(check_overload(kumi::tuple{3,5.f})   , +2);
 
   TTS_EQUAL(check_overload(nullptr)              , -1);
-  TTS_EQUAL(check_overload(kumi::tuple<>{})      , -1);
   TTS_EQUAL(check_overload(kumi::tuple{nullptr}) , -1);
 
   TTS_EQUAL(check_overload2(4)                    , +3);
   TTS_EQUAL(check_overload2(4.f)                  , +3);
+  TTS_EQUAL(check_overload2(kumi::tuple<>{})      , +3);
   TTS_EQUAL(check_overload2(kumi::tuple{4})       , +3);
   TTS_EQUAL(check_overload2(kumi::tuple{3,5.f})   , +3);
 
   TTS_EQUAL(check_overload2(nullptr)              , -3);
-  TTS_EQUAL(check_overload2(kumi::tuple<>{})      , -3);
   TTS_EQUAL(check_overload2(kumi::tuple{nullptr}) , -3);
 
+  TTS_EQUAL(check_overload3(kumi::tuple<>{})                    , +10);
   TTS_EQUAL(check_overload3(kumi::tuple{4})                     , +10);
   TTS_EQUAL(check_overload3(kumi::tuple{3,5.f})                 , +10);
   TTS_EQUAL(check_overload3(kumi::tuple{3,kumi::tuple{4.},5.f}) , +10);
@@ -138,6 +138,5 @@ TTS_CASE("Check for arithmetic_scalar_value/plain_scalar_value overload relation
   TTS_EQUAL(check_overload3(4)                    , -10);
   TTS_EQUAL(check_overload3(4.f)                  , -10);
   TTS_EQUAL(check_overload3(nullptr)              , -10);
-  TTS_EQUAL(check_overload3(kumi::tuple<>{})      , -10);
   TTS_EQUAL(check_overload3(kumi::tuple{nullptr}) , -10);
 };

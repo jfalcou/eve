@@ -1165,28 +1165,43 @@ namespace kumi
 }
 namespace kumi
 {
-  template<typename Pred, product_type Tuple>
-  [[nodiscard]] constexpr bool all_of( Tuple const& ts, Pred p) noexcept
+  template<typename Pred, typename T>
+  [[nodiscard]] constexpr bool all_of( T const& ts, Pred p) noexcept
   {
-    return kumi::apply( [&](auto const&... m) { return (p(m) && ... && true); }, ts );
+    if constexpr( !product_type<T> ) return p(ts);
+    else
+    {
+      if constexpr(size_v<T> == 0) return true;
+      else return kumi::apply( [&](auto const&... m) { return (p(m) && ... && true); }, ts );
+    }
   }
-  template<typename Pred, product_type Tuple>
-  [[nodiscard]] constexpr bool any_of( Tuple const& ts, Pred p) noexcept
+  template<typename Pred, typename T>
+  [[nodiscard]] constexpr bool any_of( T const& ts, Pred p) noexcept
   {
-    return kumi::apply( [&](auto const&... m) { return (p(m) || ... || false); }, ts );
+    if constexpr( !product_type<T> ) return p(ts);
+    else
+    {
+      if constexpr(size_v<T> == 0) return false;
+      else return kumi::apply( [&](auto const&... m) { return (p(m) || ... || false); }, ts );
+    }
   }
-  template<typename Pred, product_type Tuple>
+  template<typename Pred, typename Tuple>
   [[nodiscard]] constexpr bool none_of( Tuple const& ts, Pred p) noexcept
   {
     return !any_of(ts,p);
   }
-  template<typename Pred, product_type Tuple>
-  [[nodiscard]] constexpr std::size_t count_if( Tuple const& ts, Pred p) noexcept
+  template<typename Pred, typename T>
+  [[nodiscard]] constexpr std::size_t count_if( T const& ts, Pred p) noexcept
   {
-    return kumi::apply( [&](auto const&... m) { return ( (p(m)? 1 : 0)+ ... + 0); }, ts );
+    if constexpr( !product_type<T> ) return p(ts) ? 1 : 0;
+    else
+    {
+      if constexpr(size_v<T> == 0) return 0;
+      else return  kumi::apply( [&](auto const&... m) { return ( (p(m)? 1 : 0)+ ... + 0); }, ts );
+    }
   }
-  template<product_type Tuple>
-  [[nodiscard]] constexpr std::size_t count( Tuple const& ts ) noexcept
+  template<typename T>
+  [[nodiscard]] constexpr std::size_t count( T const& ts ) noexcept
   {
     return count_if(ts, [](auto const& m) { return static_cast<bool>(m); } );
   }
