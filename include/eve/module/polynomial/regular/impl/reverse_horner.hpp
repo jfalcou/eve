@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/polynomial/detail/reverse_horner_impl.hpp>
+#include <eve/detail/kumi.hpp>
 
 namespace eve::detail
 {
@@ -41,7 +42,14 @@ template<value T0, kumi::product_type Ts>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, Ts args) noexcept
 {
-  return horner_impl(regular_type(), x, reverse(args));
+  return horner(x, kumi::reverse(args));
+}
+
+template<decorator D, value T0, kumi::product_type Ts>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_), D const & d, T0 x, Ts args) noexcept
+{
+  return d(horner)(x, kumi::reverse(args));
 }
 
 }

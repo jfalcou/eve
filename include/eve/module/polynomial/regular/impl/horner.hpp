@@ -49,11 +49,4 @@ horner_(EVE_SUPPORTS(cpu_), T0 x, Ts tup) noexcept
   return kumi::apply( [&](auto... m) { return horner(x, m...); }, tup);
 }
 
-template<decorator D, value T0, kumi::product_type Ts>
-EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), D const & d, T0 x, Ts tup) noexcept
-{
-  return kumi::apply( [&](auto... m) { return d(horner)(x, m...); }, tup);
-}
-
 }

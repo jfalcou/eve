@@ -83,4 +83,12 @@ horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 x, callable_one_ const&, Ts
 {
   return horner_impl(pedantic_type(), x, one, args...);
 }
+
+template<value T0, kumi::product_type Ts>
+EVE_FORCEINLINE constexpr auto
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 x, Ts tup) noexcept
+{
+  return kumi::apply( [&](auto... m) { return pedantic(horner)(x, m...); }, tup);
+}
+
 }
