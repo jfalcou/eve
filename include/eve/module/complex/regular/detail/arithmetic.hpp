@@ -138,4 +138,59 @@ namespace eve::detail
     using z_t = decltype(z1+z2);
     return z_t{eve::average(real(z1), real(z2)), eve::average(imag(z1), imag(z2))};
   }
+
+  //==============================================================================================
+  //  Ternary functions
+  //==============================================================================================
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fam_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    //using z_t = decltype(z1*z2+z3);
+    return z1+z2*z3; //TO OPTIMIZE
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fma_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    //using z_t = decltype(z1*z2+z3);
+    return z1*z2+z3; //TO OPTIMIZE
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fms_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    //using z_t = decltype(z1*z2+z3);
+    return z1*z2-z3; //TO OPTIMIZE
+  }
+
+//   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fnam_
+//                                               , auto const& z1, auto const& z2, auto const& z3
+//                                               ) noexcept
+//   {
+//     //using z_t = decltype(z1*z2+z3);
+//     return -z1+z2*z3; //TO OPTIMIZE
+//   }
+
+//   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fnsm_
+//                                               , auto const& z1, auto const& z2, auto const& z3
+//                                               ) noexcept
+//   {
+//     //using z_t = decltype(z1*z2+z3);
+//     return -z1-z2*z3; //TO OPTIMIZE
+//   }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fsm_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    //using z_t = decltype(z1*z2+z3);
+    return -z1+z2*z3; //TO OPTIMIZE
+  }
+
+
+
 }
