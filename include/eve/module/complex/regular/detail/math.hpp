@@ -192,6 +192,25 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sincos
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sincos_
+                                             , Z const& z) noexcept
+  {
+    return kumi::tuple{sin(z), cos(z)}; //TO OPTIMIZE
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== sinhcosh
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinhcosh_
+                                             , Z const& z) noexcept
+  {
+    return kumi::tuple{sinh(z), cosh(z)}; //TO OPTIMIZE
+  }
+  //===-------------------------------------------------------------------------------------------
   //=== sinpi
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -219,6 +238,16 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sinpicospi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinpicospi_
+                                             , Z const& z) noexcept
+  {
+    return kumi::tuple{sinpi(z), cospi(z)}; //TO OPTIMIZE
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== tan
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -239,18 +268,6 @@ namespace eve::detail
                                              , Z const& z
                                              ) noexcept
   {
-//     auto [rz, iz] = a0+a0;
-//     iz*= pi(as(iz));
-//     auto [s, c] = sinpicospi(rz);
-//     auto [sh, ch] = sinhcosh(iz);
-//     auto tmp = c+ch;
-//     auto r = if_else(is_imag(a0), zero, s/tmp);
-//     auto i = if_else(is_real(a0), zero, sh/tmp);
-//     i = if_else(is_infinite(iz), sign(iz), r);
-//     r = if_else(is_infinite(iz), zero, i);
-//     return Z{r, i};
-
-
     auto tanpih = [](auto z){
       auto [rz, iz] = z+z;
       auto [s, c] = sinpicospi(iz);

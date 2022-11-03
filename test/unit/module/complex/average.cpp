@@ -23,4 +23,7 @@ TTS_CASE_WITH( "Check behavior of average on wide"
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   TTS_ULP_EQUAL( eve::average(a, b), (z_t{eve::average(a0, a2), eve::average(a1, a3)}), 0.5);
+  TTS_ULP_EQUAL( eve::average(a, a2), (z_t{eve::average(a0, a2), eve::average(a1, eve::zero(eve::as(a1)))}), 0.5);
+  TTS_ULP_EQUAL( eve::average(a0, b), (z_t{eve::average(a0, a2), eve::average(eve::zero(eve::as(a1)), a3)}), 0.5);
+  TTS_ULP_EQUAL( eve::average(a0, T(1.0)), eve::average(a0,eve::one(eve::as(a1))), 0.5);
 };
