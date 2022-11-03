@@ -71,7 +71,7 @@ absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 absmax_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -79,7 +79,7 @@ absmax_(EVE_SUPPORTS(cpu_), Ts tup)
   else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
 }
 
-template<decorator D, kumi::non_empty_tuple Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
 absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {

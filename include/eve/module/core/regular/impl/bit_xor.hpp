@@ -57,7 +57,7 @@ bit_xor_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) requires
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 bit_xor_(EVE_SUPPORTS(cpu_), Ts const & args)
 {
@@ -66,7 +66,7 @@ bit_xor_(EVE_SUPPORTS(cpu_), Ts const & args)
   else return kumi::apply(bit_xor, args);
 }
 
-template<conditional_expr C, kumi::non_empty_tuple Ts>
+template<conditional_expr C, kumi::non_empty_product_type Ts>
 auto
 bit_xor_(EVE_SUPPORTS(cpu_), C const& cond, Ts const & args)
 {

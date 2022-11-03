@@ -86,7 +86,7 @@ bit_ornot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) requires
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 bit_ornot_(EVE_SUPPORTS(cpu_), Ts const & args)
 {
@@ -95,7 +95,7 @@ bit_ornot_(EVE_SUPPORTS(cpu_), Ts const & args)
   else return bit_ornot(get<0>(args), kumi::apply(bit_and, kumi::pop_front(args)));
 }
 
-template<conditional_expr C, kumi::non_empty_tuple Ts>
+template<conditional_expr C, kumi::non_empty_product_type Ts>
 auto
 bit_ornot_(EVE_SUPPORTS(cpu_), C const& cond, Ts const & args)
 {

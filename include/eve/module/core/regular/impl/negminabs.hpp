@@ -32,7 +32,7 @@ negminabs_(EVE_SUPPORTS(cpu_), C const & c, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 negminabs_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -41,7 +41,7 @@ negminabs_(EVE_SUPPORTS(cpu_), Ts tup)
 }
 
 
-template<decorator D, kumi::non_empty_tuple Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
 negminabs_(EVE_SUPPORTS(cpu_), D const & d , Ts tup)
 {

@@ -87,7 +87,7 @@ auto min_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 min_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -95,7 +95,7 @@ min_(EVE_SUPPORTS(cpu_), Ts tup)
   else return kumi::apply( [&](auto... m) { return min(m...); }, tup);
 }
 
-template<decorator D, kumi::non_empty_tuple Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
 min_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {

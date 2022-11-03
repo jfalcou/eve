@@ -68,7 +68,7 @@ geommean_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 geommean_(EVE_SUPPORTS(cpu_), Ts tup)
 {

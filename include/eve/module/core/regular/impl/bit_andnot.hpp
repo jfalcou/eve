@@ -85,7 +85,7 @@ bit_andnot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) require
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 bit_andnot_(EVE_SUPPORTS(cpu_), Ts const & args)
 {
@@ -94,7 +94,7 @@ bit_andnot_(EVE_SUPPORTS(cpu_), Ts const & args)
   else return bit_andnot(get<0>(args), kumi::apply(bit_or, kumi::pop_front(args)));
 }
 
-template<conditional_expr C, kumi::non_empty_tuple Ts>
+template<conditional_expr C, kumi::non_empty_product_type Ts>
 auto
 bit_andnot_(EVE_SUPPORTS(cpu_), C const& cond, Ts const & args)
 {

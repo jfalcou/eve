@@ -73,7 +73,7 @@ lpnorm_(EVE_SUPPORTS(cpu_), C const& cond, const P& p, T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template< real_value P,kumi::non_empty_tuple Ts>
+template< real_value P,kumi::non_empty_product_type Ts>
 auto
 lpnorm_(EVE_SUPPORTS(cpu_), P p, Ts tup)
 {

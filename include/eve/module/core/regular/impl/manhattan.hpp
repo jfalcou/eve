@@ -56,7 +56,7 @@ manhattan_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 manhattan_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -64,7 +64,7 @@ manhattan_(EVE_SUPPORTS(cpu_), Ts tup)
   else return eve::abs(kumi::apply( [&](auto... m) { return manhattan(m...); }, tup));
 }
 
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 manhattan_(EVE_SUPPORTS(cpu_), pedantic_type const& d, Ts tup)
 {

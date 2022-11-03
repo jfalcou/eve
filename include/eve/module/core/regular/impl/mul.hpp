@@ -46,7 +46,7 @@ mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 mul_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -54,7 +54,7 @@ mul_(EVE_SUPPORTS(cpu_), Ts tup)
   else return kumi::apply( [&](auto... m) { return mul(m...); }, tup);
 }
 
-template<decorator D, kumi::non_empty_tuple Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
 mul_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {

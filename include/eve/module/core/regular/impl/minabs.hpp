@@ -86,7 +86,7 @@ minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 minabs_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -94,7 +94,7 @@ minabs_(EVE_SUPPORTS(cpu_), Ts tup)
   else return kumi::apply( [&](auto... m) { return minabs(m...); }, tup);
 }
 
-template<decorator D, kumi::non_empty_tuple Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
 minabs_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {

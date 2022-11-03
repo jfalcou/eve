@@ -34,7 +34,7 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 hypot_(EVE_SUPPORTS(cpu_), Ts tup)
 {
@@ -42,7 +42,7 @@ hypot_(EVE_SUPPORTS(cpu_), Ts tup)
   else return kumi::apply( [&](auto... m) { return hypot(m...); }, tup);
 }
 
-template<decorator D, kumi::non_empty_tuple Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
 hypot_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {

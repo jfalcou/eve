@@ -65,7 +65,7 @@ logspace_sub_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_tuple Ts>
+template<kumi::non_empty_product_type Ts>
 auto
 logspace_sub_(EVE_SUPPORTS(cpu_), Ts tup)
 {
