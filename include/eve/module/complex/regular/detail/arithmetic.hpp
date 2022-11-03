@@ -114,13 +114,13 @@ namespace eve::detail
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, pedantic_type const &, Z const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, eve::pedantic_type const &, Z const& z) noexcept
   {
     auto [zr, zi] = z;
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
   }
 
-  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, pedantic_type const &, auto const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, eve::pedantic_type const &, auto const& z) noexcept
   {
     auto [zr, zi] = z;
     return sum_of_prod(zr, zr, zi, zi);
@@ -167,22 +167,6 @@ namespace eve::detail
     return z1*z2-z3; //TO OPTIMIZE
   }
 
-//   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fnam_
-//                                               , auto const& z1, auto const& z2, auto const& z3
-//                                               ) noexcept
-//   {
-//     //using z_t = decltype(z1*z2+z3);
-//     return -z1+z2*z3; //TO OPTIMIZE
-//   }
-
-//   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fnsm_
-//                                               , auto const& z1, auto const& z2, auto const& z3
-//                                               ) noexcept
-//   {
-//     //using z_t = decltype(z1*z2+z3);
-//     return -z1-z2*z3; //TO OPTIMIZE
-//   }
-
   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fsm_
                                               , auto const& z1, auto const& z2, auto const& z3
                                               ) noexcept
@@ -190,7 +174,4 @@ namespace eve::detail
     //using z_t = decltype(z1*z2+z3);
     return -z1+z2*z3; //TO OPTIMIZE
   }
-
-
-
 }
