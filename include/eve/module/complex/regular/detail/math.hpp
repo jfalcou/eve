@@ -192,6 +192,55 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sincos
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sincos_
+                                             , Z const& z) noexcept
+  {
+    auto j = i(as(z));
+    auto [sh, ch] = sinhcosh(j*z);
+    return kumi::tuple{-j*sh, ch};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== sinhcosh
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinhcosh_
+                                             , Z const& z) noexcept
+  {
+    auto [rz, iz] = z;
+    auto [s, c]   = sincos(iz);
+    auto [sh, ch] = sinhcosh(rz);
+    auto rs = c*sh;
+    auto is = s*ch;
+    auto infrz = is_infinite(rz);
+    auto nanrz = is_nan(rz);
+    if (any(infrz || nanrz))
+    {
+      rs = if_else(infrz && is_not_finite(iz), rz, rs);
+      is = if_else(infrz && is_nan(iz), allbits, is);
+      rs = if_else(nanrz, allbits, rs);
+      is = if_else(nanrz, allbits, is);
+    }
+    is = if_else(is_real(z), zero, is);
+    rs = if_else(is_imag(z), zero, rs);
+    auto ss = Z{rs, is};
+
+    auto rc = c*ch;
+    auto ic = s*sh;
+    ic = if_else(is_imag(z) || is_real(z), zero, ic);
+    auto cc = Z(rc, ic);
+    if (any(is_not_finite(z)))
+    {
+      cc = if_else(infrz && is_not_finite(iz), Z(inf(as(rz)), nan(as(rz))), cc);
+      cc = if_else(nanrz && is_infinite(iz),   Z(nan(as(rz)), nan(as(rz))), cc);
+    }
+   return kumi::tuple{ss, cc};
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== sinpi
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -219,6 +268,48 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== sinpicospi
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sinpicospi_
+                                             , Z const& a0) noexcept
+  {
+     auto [rz, iz] = a0;
+    iz *= pi(as(iz));
+    auto [s, c]   = sinpicospi(rz);
+    auto [sh, ch] = sinhcosh(iz);
+    auto rc = c*ch;
+    auto ic = if_else(is_imag(a0) || is_real(a0),zero, -s*sh);
+    if (any(is_not_finite(a0)))
+    {
+      rc = if_else(is_infinite(iz) && is_not_finite(rz), inf(as(rc)), rc);
+      ic = if_else(is_infinite(iz) && is_not_finite(rz), allbits, ic);
+      rc = if_else(is_nan(iz) && is_infinite(rz), allbits, rc);
+      ic = if_else(is_nan(iz) && is_infinite(rz), allbits, ic);
+    }
+    Z cpi{rc, ic};
+
+    auto a00(eve::i*a0);
+    auto [arz, aiz] = a00;
+    arz*= pi(as(arz));
+    auto [as, ac]   = sinpicospi(aiz);
+    auto [ash, ach] = sinhcosh(arz);
+    auto rs = ac*ash;
+    auto is = as*ach;
+    if (any(is_not_finite(a00)))
+    {
+      rs = if_else(is_infinite(rz) && is_not_finite(iz), arz, rs);
+      is = if_else(is_infinite(rz) && is_nan(iz), iz, is);
+      rs = if_else(is_nan(rz), arz, rs);
+      is = if_else(is_nan(rz), arz, is);
+      is = if_else(is_real(a00), zero, is);
+      rs = if_else(is_imag(a00), zero, rs);
+    }
+    Z spi{is, -rs};
+    return kumi::tuple{spi, cpi};
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== tan
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -239,18 +330,6 @@ namespace eve::detail
                                              , Z const& z
                                              ) noexcept
   {
-//     auto [rz, iz] = a0+a0;
-//     iz*= pi(as(iz));
-//     auto [s, c] = sinpicospi(rz);
-//     auto [sh, ch] = sinhcosh(iz);
-//     auto tmp = c+ch;
-//     auto r = if_else(is_imag(a0), zero, s/tmp);
-//     auto i = if_else(is_real(a0), zero, sh/tmp);
-//     i = if_else(is_infinite(iz), sign(iz), r);
-//     r = if_else(is_infinite(iz), zero, i);
-//     return Z{r, i};
-
-
     auto tanpih = [](auto z){
       auto [rz, iz] = z+z;
       auto [s, c] = sinpicospi(iz);
