@@ -10,7 +10,7 @@
 #include <eve/module/complex.hpp>
 #include <complex>
 
-TTS_CASE_WITH( "Check behavior of fms on wide"
+TTS_CASE_WITH( "Check behavior of fsnm on wide"
              , eve::test::simd::ieee_reals
              ,tts::generate(tts::randoms(-10, 10)
                            , tts::randoms(-10, 10)
@@ -25,6 +25,6 @@ TTS_CASE_WITH( "Check behavior of fms on wide"
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   auto c = z_t(a4, a5);
-  TTS_ULP_EQUAL( eve::fms(a, b, c), a*b-c, 2.0);
+  TTS_ULP_EQUAL( eve::fsnm(a, b, c), -a-b*c, 2.0);
 
 };
