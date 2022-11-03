@@ -22,6 +22,8 @@ namespace eve
 {
   EVE_REGISTER_CALLABLE(is_equal_)
   EVE_REGISTER_CALLABLE(is_not_equal_)
+  EVE_REGISTER_CALLABLE(convert_)
+  EVE_DECLARE_CALLABLE(convert_, convert)
 }
 
 namespace eve::detail
@@ -116,7 +118,8 @@ namespace eve::detail
       }
       else
       {
-        return map([]<typename E>(E e,auto f){ return as_logical_t<E>(e && f); }, v, w);
+        callable_object<tag::convert_> const cvt{};
+        return self_logand(cpu_{}, v, cvt(w, as<logical<T>>()));
       }
     }
   }
@@ -172,7 +175,8 @@ namespace eve::detail
       }
       else
       {
-        return map([]<typename E>(E e,auto f){ return as_logical_t<E>(e || f); }, v, w);
+        callable_object<tag::convert_> const cvt{};
+        return self_logor(cpu_{}, v, cvt(w, as<logical<T>>()));
       }
     }
   }

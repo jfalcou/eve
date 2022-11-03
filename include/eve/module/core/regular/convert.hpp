@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/detail/function/friends.hpp>
 
 namespace eve
 {
@@ -64,7 +65,8 @@ namespace eve
 //!        @godbolt{doc/core/saturated/convert.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(convert_, convert);
+EVE_ALIAS_CALLABLE(convert_, convert);
+EVE_CALLABLE_API(convert_, convert)
 }
 
 #include <eve/module/core/regular/impl/convert.hpp>
