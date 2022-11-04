@@ -61,6 +61,9 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
   TTS_ULP_EQUAL(geommean(a0, a1, a2),
                 map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
+  TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}),
+                map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                30);
 };
 
 

@@ -25,5 +25,14 @@ int main()
             << "<- xf                     = " << xf << '\n'
             << "<- yf                     = " << yf << '\n'
             << "-> min(xf, yf) =          = " << eve::min(xf, yf) << '\n';
+  auto k = kumi::tuple{pf, qf, pf+qf, 1};
+  std::cout << "---- multi parameters" << '\n'
+            << " -> min(k)                                = " << eve::min(k) << '\n'
+            << " -> min(kumi::tuple{pf, pf, 1})           = " << eve::min( kumi::tuple{pf, qf, 1}) << '\n'
+            << " -> min(kumi::tuple{1, pf, pf})           = " << eve::min( kumi::tuple{1, pf, qf}) << '\n'
+            << " -> numeric(min(kumi::tuple{1.0f, pf, qf) = " << eve::numeric(eve::min)( kumi::tuple{1.0f, pf,qf}) << '\n'
+            << " -> min(kumi::tuple{pf, 1.0f)             = " << eve::min( kumi::tuple{pf, 1.0f}) << '\n'
+            << " -> min(kumi::tuple{1.0f, pf)             = " << eve::min( kumi::tuple{1.0f, pf}) << '\n'
+            << " -> numeric(min(kumi::tuple{1.0f, pf)     = " << eve::numeric(eve::min)( kumi::tuple{1.0f, pf}) << '\n';
   return 0;
 }

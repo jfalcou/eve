@@ -23,5 +23,16 @@ int main()
             << " <- yi          = " << yi << '\n'
             << " -> sub(xi, yi) = " << eve::sub(xi, yi) << '\n'
             << " -> xi - yi     = " << xi - yi << '\n'; // C++ promotion to int
+
+
+  auto k = kumi::tuple{pf, pf, pf, 1};
+  std::cout << "---- multi parameters" << '\n'
+            << " -> sub(pi,pi,pi,1)               = " << eve::sub(pi, pi, pi, 1) << '\n'
+            << " -> sub(k)                        = " << eve::sub(k)               << '\n'
+            << " -> sub(kumi::tuple{pf, pf})      = " << eve::sub( kumi::tuple{pf, pf})  << '\n'
+            << " -> sub(kumi::tuple{pf, 1.0f)     = " << eve::sub( kumi::tuple{pf, 1.0f})  << '\n'
+            << " -> sub(kumi::tuple{1.0f, pf)     = " << eve::sub( kumi::tuple{1.0f, pf})  << '\n'
+            << " -> saturated(sub)(pi,12,pi,pi)   = " << eve::saturated(eve::sub)(pi, 12, pi,pi) << '\n';
+
   return 0;
 }

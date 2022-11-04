@@ -14,6 +14,7 @@
 #include <iterator>
 
 #include <initializer_list>
+#include <iostream>
 
 namespace eve::detail
 {

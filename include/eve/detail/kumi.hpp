@@ -118,6 +118,12 @@ struct std::tuple_size<kumi::tuple<Ts...>> : std::integral_constant<std::size_t,
 #include <utility>
 namespace kumi::detail
 {
+  template<typename T> concept non_empty_tuple = requires( T const &t )
+  {
+    typename std::tuple_element<0,std::remove_cvref_t<T>>::type;
+    typename std::tuple_size<std::remove_cvref_t<T>>::type;
+  };
+  template<typename T> concept empty_tuple = (std::tuple_size<std::remove_cvref_t<T>>::value == 0);
   template<typename From, typename To> struct is_piecewise_constructible;
   template<typename From, typename To> struct is_piecewise_convertible;
   template<template<class...> class Box, typename... From, typename... To>
@@ -161,19 +167,16 @@ namespace kumi::detail
 #include <utility>
 namespace kumi
 {
-  template<typename T> concept non_empty_tuple = requires( T const &t )
-  {
-    typename std::tuple_element<0,std::remove_cvref_t<T>>::type;
-    typename std::tuple_size<std::remove_cvref_t<T>>::type;
-  };
-  template<typename T> concept empty_tuple = (std::tuple_size<std::remove_cvref_t<T>>::value == 0);
-  template<typename T> concept std_tuple_compatible = empty_tuple<T> || non_empty_tuple<T>;
+  template<typename T>
+  concept std_tuple_compatible = detail::empty_tuple<T> || detail::non_empty_tuple<T>;
   template<typename T>
   concept product_type = std_tuple_compatible<T> && is_product_type<std::remove_cvref_t<T>>::value;
   template<typename T, std::size_t N>
   concept sized_product_type = product_type<T> && (size<T>::value == N);
   template<typename T, std::size_t N>
   concept sized_product_type_or_more = product_type<T> && (size<T>::value >= N);
+  template<typename T>
+  concept non_empty_product_type = product_type<T> && (size<T>::value != 0);
   namespace detail
   {
     template<typename T, typename U> constexpr auto check_equality()

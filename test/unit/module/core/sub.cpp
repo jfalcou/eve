@@ -84,6 +84,15 @@ TTS_CASE_WITH("Check behavior of sub on wide",
             map([&](auto e, auto f, auto g) { return saturated(sub)(saturated(sub)(e, f), g); },
                 a0,a1,a2)
             );
+  TTS_EQUAL(sub(kumi::tuple{a0, a2}), map([](auto e, auto f) { return sub(e, f); }, a0, a2));
+  TTS_EQUAL(saturated(sub)(kumi::tuple{a0, a2}),
+            map([&](auto e, auto f) { return saturated(sub)(e, f); }, a0, a2));
+  TTS_EQUAL(sub(kumi::tuple{a0, a1, a2}),
+            map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
+  TTS_EQUAL(saturated(sub)(kumi::tuple{a0, a1, a2}),
+            map([&](auto e, auto f, auto g) { return saturated(sub)(saturated(sub)(e, f), g); },
+                a0,a1,a2)
+            );
 };
 
 //==================================================================================================

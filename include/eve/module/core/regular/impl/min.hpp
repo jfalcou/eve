@@ -69,6 +69,13 @@ min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   return that;
 }
 
+template<decorator D,  real_value... Ts>
+auto
+min_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
+{
+  return min(args...);
+}
+
 //================================================================================================
 // N parameters masked
 //================================================================================================
@@ -76,6 +83,24 @@ template<conditional_expr C, real_value T0, real_value T1, real_value... Ts>
 auto min_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
 {
   return mask_op(cond, eve::min, a0, a1, args...);
+}
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+min_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return min(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_product_type Ts>
+auto
+min_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(min)(m...); }, tup);
 }
 
 //================================================================================================

@@ -54,6 +54,9 @@ TTS_CASE_WITH("Check behavior of bit_notor on integral types",
   TTS_EQUAL(bit_notor[test](a0, a1), eve::if_else(test, eve::bit_notor(a0, a1), a0));
   TTS_EQUAL(bit_notor[test](a0, a1, a2),
             eve::if_else(test, eve::bit_notor(a0, eve::bit_or(a1, a2)), a0));
+  TTS_EQUAL(bit_notor(kumi::tuple{a0, a1}), map([](auto e, auto f) -> v_t { return ~e | f; }, a0, a1));
+  TTS_EQUAL(bit_notor[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_notor(a0, a1), a0));
+  TTS_EQUAL(bit_notor[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_notor(a0, eve::bit_or(a1, a2)), a0));
 };
 
 TTS_CASE_WITH("Check behavior of bit_notor on floating types",
@@ -80,6 +83,9 @@ TTS_CASE_WITH("Check behavior of bit_notor on floating types",
   TTS_IEEE_EQUAL(bit_notor[test](a0, a1), eve::if_else(test, eve::bit_notor(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_notor[test](a0, a1, a2),
                  eve::if_else(test, eve::bit_notor(a0, eve::bit_or(a1, a2)), a0));
+  TTS_IEEE_EQUAL(bit_notor(kumi::tuple{a0, a1}), eve::bit_notor(a0, a1));
+  TTS_IEEE_EQUAL(bit_notor[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_notor(a0, a1), a0));
+  TTS_IEEE_EQUAL(bit_notor[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_notor(a0, eve::bit_or(a1, a2)), a0));
 };
 
 

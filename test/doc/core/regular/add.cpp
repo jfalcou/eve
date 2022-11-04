@@ -25,8 +25,13 @@ int main()
             << " -> add(xi, yi) = " << eve::add(xi, yi) << '\n'
             << " -> xi + yi     = " << xi + yi << '\n'; // C++ promotion to int
 
+  auto k = kumi::tuple{pf, pf, pf, 1};
   std::cout << "---- multi parameters" << '\n'
-            << " -> add(pi,pi,pi,1)                     = " << eve::add(pi, pi, pi, 1) << '\n'
-            << " -> saturated(add)(pi,12,pi,pi)         = " << eve::saturated(eve::add)(pi, 12, pi,pi) << '\n';
+            << " -> add(pi,pi,pi,1)               = " << eve::add(pi, pi, pi, 1) << '\n'
+            << " -> add(k)                        = " << eve::add(k)               << '\n'
+            << " -> add(kumi::tuple{pf, pf})      = " << eve::add( kumi::tuple{pf, pf})  << '\n'
+            << " -> add(kumi::tuple{pf, 1.0f)     = " << eve::add( kumi::tuple{pf, 1.0f})  << '\n'
+            << " -> add(kumi::tuple{1.0f, pf)     = " << eve::add( kumi::tuple{1.0f, pf})  << '\n'
+            << " -> saturated(add)(pi,12,pi,pi)   = " << eve::saturated(eve::add)(pi, 12, pi,pi) << '\n';
   return 0;
 }

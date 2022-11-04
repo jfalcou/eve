@@ -65,6 +65,10 @@ TTS_CASE_WITH("Check behavior of maxabs on all types full range",
   TTS_ULP_EQUAL(eve::pedantic(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(maxabs(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::pedantic(maxabs)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(maxabs)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::saturated(maxabs)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(maxabs[t](a0, a1), eve::if_else(t, maxabs(a0, a1), a0));
 };

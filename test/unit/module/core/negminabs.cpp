@@ -55,6 +55,10 @@ TTS_CASE_WITH("Check behavior of negminabs on all types full range",
   TTS_ULP_EQUAL(eve::pedantic(negminabs)(a0, a1, a2), -eve::pedantic(eve::minabs)(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(negminabs)(a0, a1, a2), -eve::numeric(eve::minabs)(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(negminabs)(a0, a1, a2), -eve::saturated(eve::minabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(negminabs(kumi::tuple{(a0), (a1), (a2)}), -eve::minabs(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::pedantic(negminabs)(kumi::tuple{(a0), (a1), (a2)}),  -eve::pedantic(eve::minabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(negminabs)(kumi::tuple{(a0), (a1), (a2)}),   -eve::numeric (eve::minabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::saturated(negminabs)(kumi::tuple{(a0), (a1), (a2)}), -eve::saturated(eve::minabs)(a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(negminabs[t](a0, a1), eve::if_else(t, negminabs(a0, a1), a0));
 };

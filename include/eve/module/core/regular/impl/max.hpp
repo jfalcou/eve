@@ -68,6 +68,13 @@ max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   return that;
 }
 
+template<decorator D,  real_value... Ts>
+auto
+max_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
+{
+  return max(args...);
+}
+
 //================================================================================================
 // N parameters masked
 //================================================================================================
@@ -75,6 +82,25 @@ template<conditional_expr C, real_value T0, real_value T1, real_value... Ts>
 auto max_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
 {
   return mask_op(cond, eve::max, a0, a1, args...);
+}
+
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+max_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return max(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_product_type Ts>
+auto
+max_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(max)(m...); }, tup);
 }
 
 //================================================================================================

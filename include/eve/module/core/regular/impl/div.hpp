@@ -93,6 +93,25 @@ div_(EVE_SUPPORTS(cpu_),
   return div(r_t(a0), that);
 }
 
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+div_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return div(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_product_type Ts>
+auto
+div_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return d(div)(m...); }, tup);
+}
+
 }
 
 #ifdef EVE_COMP_IS_MSVC

@@ -38,12 +38,20 @@ TTS_CASE_TPL("Check return types of minmag", eve::test::simd::all_types)
 //==================================================================================================
 // minmag tests
 //==================================================================================================
+auto vmin = tts::constant(
+    []<typename T>(eve::as<T> const& tgt)
+    {
+      {
+        constexpr auto sign = std::is_signed_v<T> ? 1 : 0;
+        return eve::valmin(tgt) + sign;
+      }
+    });
 
 TTS_CASE_WITH("Check behavior of minmag on all types full range",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmin),
-                            tts::randoms(eve::valmin, eve::valmin),
-                            tts::randoms(eve::valmin, eve::valmin),
+              tts::generate(tts::randoms(vmin, eve::valmax),
+                            tts::randoms(vmin, eve::valmax),
+                            tts::randoms(vmin, eve::valmax),
                             tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
@@ -52,10 +60,17 @@ TTS_CASE_WITH("Check behavior of minmag on all types full range",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return minmag(minmag(a, b), c); };
+  std::cout << "a0 " << a0 << std::endl;
+  std::cout << "a1 " << a1 << std::endl;
+  std::cout << "a2 " << a2 << std::endl;
   TTS_ULP_EQUAL(minmag((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(minmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(minmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(minmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(minmag(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::pedantic(minmag)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(minmag)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::saturated(minmag)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(minmag[t](a0, a1), eve::if_else(t, minmag(a0, a1), a0));
 };
