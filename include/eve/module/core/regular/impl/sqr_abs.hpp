@@ -20,6 +20,13 @@ sqr_abs_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   return sqr(a);
 }
 
+template<floating_real_value T>
+EVE_FORCEINLINE constexpr auto
+sqr_abs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
+{
+  return sqr(a);
+}
+
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, value U>

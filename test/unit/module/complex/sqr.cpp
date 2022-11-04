@@ -40,6 +40,9 @@ TTS_CASE_WITH( "Check behavior of sqr on wide"
   using e_t = typename T::value_type;
   using z_t = eve::wide<eve::complex<e_t>, typename T::cardinal_type>;
 
+  z_t z{a0,a1};
   TTS_ULP_EQUAL( eve::sqr(a0), a0*a0, 2.0);
-  TTS_ULP_EQUAL( eve::sqr(z_t{a0,a1}), (z_t{a0,a1}*z_t{a0,a1}), 2.0);
+  TTS_ULP_EQUAL( eve::sqr(z_t{a0,a1}), z*z, 2.0);
+  TTS_ULP_EQUAL( eve::pedantic(eve::sqr)(a0), a0*a0, 2.0);
+  TTS_ULP_EQUAL( eve::pedantic(eve::sqr)(z), z*z, 6.0);
 };

@@ -114,13 +114,13 @@ namespace eve::detail
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, pedantic_type const &, Z const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_, eve::pedantic_type const &, Z const& z) noexcept
   {
     auto [zr, zi] = z;
     return Z{diff_of_prod(zr, zr, zi, zi), 2*zr*zi};
   }
 
-  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, pedantic_type const &, auto const& z) noexcept
+  EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::sqr_abs_, eve::pedantic_type const &, auto const& z) noexcept
   {
     auto [zr, zi] = z;
     return sum_of_prod(zr, zr, zi, zi);
@@ -137,5 +137,73 @@ namespace eve::detail
   {
     using z_t = decltype(z1+z2);
     return z_t{eve::average(real(z1), real(z2)), eve::average(imag(z1), imag(z2))};
+  }
+
+  //==============================================================================================
+  //  Ternary functions
+  //==============================================================================================
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fam_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    return fma(z2, z3, z1);
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fma_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    using z_t = decltype(z1*z2+z3);
+    auto [rz1, iz1] = z_t(z1);
+    auto [rz2, iz2] = z_t(z2);
+    auto [rz3, iz3] = z_t(z3);
+    return z_t{fma(rz1, rz2, fnma(iz1, iz2, rz3)), fma(iz1, rz2, fma(rz1, iz2, iz3))};
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fms_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    using z_t = decltype(z1*z2+z3);
+    auto [rz1, iz1] = z_t(z1);
+    auto [rz2, iz2] = z_t(z2);
+    auto [rz3, iz3] = z_t(z3);
+    return z_t{fma(rz1, rz2, fnms(iz1, iz2, rz3)), fma(iz1, rz2, fms(rz1, iz2, iz3))};
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fsm_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    return fms(z2, z3, z1);
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fnma_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    return -fms(z1, z2, z3);
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fnms_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    return -fma(z1, z2, z3);
+  }
+
+   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fanm_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    return fnma(z2, z3, z1);
+  }
+
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fsnm_
+                                              , auto const& z1, auto const& z2, auto const& z3
+                                              ) noexcept
+  {
+    return fnms(z2, z3, z1);
   }
 }
