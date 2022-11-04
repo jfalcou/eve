@@ -51,8 +51,10 @@ TTS_CASE_WITH("Check behavior of bit_andnot on integral types",
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL(bit_andnot(a0, a1), map([](auto e, auto f) -> v_t { return e & ~f; }, a0, a1));
   TTS_EQUAL(bit_andnot[test](a0, a1), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
-  TTS_EQUAL(bit_andnot[test](a0, a1, a2),
-            eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));
+  TTS_EQUAL(bit_andnot[test](a0, a1, a2), eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));
+  TTS_EQUAL(bit_andnot(kumi::tuple{a0, a1}), map([](auto e, auto f) -> v_t { return e & ~f; }, a0, a1));
+  TTS_EQUAL(bit_andnot[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
+  TTS_EQUAL(bit_andnot[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));
 };
 
 TTS_CASE_WITH("Check behavior of bit_andnot on floating types",
@@ -79,6 +81,9 @@ TTS_CASE_WITH("Check behavior of bit_andnot on floating types",
   TTS_IEEE_EQUAL(bit_andnot[test](a0, a1), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_andnot[test](a0, a1, a2),
                  eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));
+  TTS_EQUAL(bit_andnot(kumi::tuple{a0, a1}), eve::bit_andnot(a0, a1));
+  TTS_EQUAL(bit_andnot[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
+  TTS_EQUAL(bit_andnot[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_andnot(a0, eve::bit_or(a1, a2)), a0));
 };
 
 

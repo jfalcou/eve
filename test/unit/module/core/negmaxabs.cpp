@@ -55,6 +55,10 @@ TTS_CASE_WITH("Check behavior of negmaxabs on all types full range",
   TTS_ULP_EQUAL(eve::pedantic(negmaxabs)(a0, a1, a2), -eve::pedantic(eve::maxabs)(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(negmaxabs)(a0, a1, a2), -eve::numeric(eve::maxabs)(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::saturated(negmaxabs)(a0, a1, a2), -eve::saturated(eve::maxabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(negmaxabs(kumi::tuple{(a0), (a1), (a2)}), negmaxabs(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::pedantic(negmaxabs)(kumi::tuple{(a0), (a1), (a2)}), eve::pedantic(negmaxabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::numeric(negmaxabs)(kumi::tuple{(a0), (a1), (a2)}), eve::numeric(negmaxabs)(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::saturated(negmaxabs)(kumi::tuple{(a0), (a1), (a2)}), eve::saturated(negmaxabs)(a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(negmaxabs[t](a0, a1), eve::if_else(t, negmaxabs(a0, a1), a0));
 };

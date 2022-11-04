@@ -39,4 +39,23 @@ negabsmax_(EVE_SUPPORTS(cpu_), C const & c, Ts... args)
   return minus[c](absmax[c](args...));
 }
 
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+negabsmax_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return minus(abs(get<0>(tup)));
+  else return kumi::apply( [&](auto... m) { return negabsmax(m...); }, tup);
+}
+
+template<decorator D, kumi::non_empty_product_type Ts>
+auto
+negabsmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return -d(eve::abs)(get<0>(tup));
+  else return minus(kumi::apply( [&](auto... m) { return d(absmax)(m...); }, tup));
+}
+
 }

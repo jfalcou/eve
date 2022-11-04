@@ -97,7 +97,13 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
     TTS_ULP_EQUAL(pedantic(hypot)(a0, a1, a2),
                   map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
-  }
+    TTS_ULP_EQUAL(hypot(kumi::tuple{a0, a1, a2}),
+                  map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  2);
+    TTS_ULP_EQUAL(pedantic(hypot)(kumi::tuple{a0, a1, a2}),
+                  map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  2);
+   }
 };
 
 //==================================================================================================
@@ -140,7 +146,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::hypot)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::hypot[mask](a0),

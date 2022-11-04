@@ -95,4 +95,14 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 {
   return reverse_horner_impl(pedantic_type(), x, one, args...);
 }
+
+//================================================================================================
+//== tuples
+//================================================================================================
+template<value T0, kumi::product_type Ts>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const & , T0 x, Ts args) noexcept
+{
+  return pedantic(horner)(x, kumi::reverse(args));
+}
 }

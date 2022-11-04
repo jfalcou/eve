@@ -67,7 +67,7 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
 //==  div simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of div on wide",
-              eve::test::simd::ieee_reals // all_types
+              eve::test::simd::ieee_reals
               ,
               tts::generate(tts::randoms(0, 100), tts::randoms(1, 11), tts::randoms(1, 11)))
 <typename T>(T a0, T a1, T a2)
@@ -88,7 +88,18 @@ TTS_CASE_WITH("Check behavior of div on wide",
                     a1,
                     a2),
                 1);
-  if constexpr( eve::floating_value<T> ) {}
+  TTS_ULP_EQUAL(eve::div(kumi::tuple{a0, a2}), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(
+      saturated(div)(kumi::tuple{a0, a2}), map([&](auto e, auto f) { return saturated(div)(e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(div(kumi::tuple{a0, a1, a2}),
+                map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2),
+                1);
+  TTS_ULP_EQUAL(saturated(div)(kumi::tuple{a0, a1, a2}),
+                map([&](auto e, auto f, auto g) { return saturated(div)(e, saturated(mul)(f, g)); },
+                    a0,
+                    a1,
+                    a2),
+                1);
 };
 
 //==================================================================================================

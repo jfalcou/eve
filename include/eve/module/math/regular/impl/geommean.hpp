@@ -63,6 +63,19 @@ geommean_(EVE_SUPPORTS(cpu_),
   ((that = next(that, args)), ...);
   return if_else(is_even(sizeof...(args)) && is_ltz(sgn), eve::allbits, sgn * that);
 }
+
+
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+geommean_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return geommean(m...); }, tup);
+}
+
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, floating_value T0, floating_value T1, floating_value... Ts>

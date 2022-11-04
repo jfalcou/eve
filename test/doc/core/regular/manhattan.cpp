@@ -21,5 +21,13 @@ int main()
             << "<- xf                     = " << xf << '\n'
             << "<- yf                     = " << yf << '\n'
             << "-> eve::manhattan(xf, yf) = " << eve::manhattan(xf, yf) << '\n';
+
+  auto k = kumi::tuple{pf, qf, pf+qf, 1.0f};
+  std::cout << "---- multi parameters" << '\n'
+            << " -> manhattan(k)                                = " << eve::manhattan(k) << '\n'
+            << " -> manhattan(kumi::tuple{pf, pf, 1.0f})        = " << eve::manhattan( kumi::tuple{pf, qf, 1}) << '\n'
+            << " -> manhattan(kumi::tuple{1, pf, pf})           = " << eve::manhattan( kumi::tuple{1, pf, qf}) << '\n'
+            << " -> manhattan(kumi::tuple{pf, 1.0f)             = " << eve::manhattan( kumi::tuple{pf, 1.0f}) << '\n'
+            << " -> manhattan(kumi::tuple{1.0f, pf)             = " << eve::manhattan( kumi::tuple{1.0f, pf}) << '\n';
   return 0;
 }

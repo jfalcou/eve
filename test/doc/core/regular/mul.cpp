@@ -27,5 +27,14 @@ int main()
             << " yi             = " << yi << '\n'
             << " -> mul(xi, yi) = " << eve::mul(xi, yi) << '\n'
             << " -> xi * yi     = " << xi * yi << '\n'; // C++ promotion
+
+  auto k = kumi::tuple{pf, pf, pf, 1};
+  std::cout << "---- multi parameters" << '\n'
+            << " -> mul(pi,pi,pi,1)               = " << eve::mul(pi, pi, pi, 1) << '\n'
+            << " -> mul(k)                        = " << eve::mul(k)               << '\n'
+            << " -> mul(kumi::tuple{pf, pf})      = " << eve::mul( kumi::tuple{pf, pf})  << '\n'
+            << " -> mul(kumi::tuple{pf, 1.0f)     = " << eve::mul( kumi::tuple{pf, 1.0f})  << '\n'
+            << " -> mul(kumi::tuple{1.0f, pf)     = " << eve::mul( kumi::tuple{1.0f, pf})  << '\n'
+            << " -> saturated(mul)(pi,12,pi,pi)   = " << eve::saturated(eve::mul)(pi, 12, pi,pi) << '\n';
   return 0;
 }

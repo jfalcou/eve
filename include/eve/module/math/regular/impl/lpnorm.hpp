@@ -69,4 +69,15 @@ lpnorm_(EVE_SUPPORTS(cpu_), C const& cond, const P& p, T0 a0, T1 a1, Ts... args)
 {
   return mask_op(cond, eve::lpnorm, p, a0, a1, args...);
 }
+
+//================================================================================================
+// tuples
+//================================================================================================
+template< real_value P,kumi::non_empty_product_type Ts>
+auto
+lpnorm_(EVE_SUPPORTS(cpu_), P p, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return lpnorm(p, m...); }, tup));
+}
 }

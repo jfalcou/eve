@@ -38,7 +38,8 @@ TTS_CASE_TPL("Check return types of horner on wide", eve::test::simd::all_types
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of horner on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(0)))
+              tts::generate(tts::randoms(-1.0, 1.0))
+             )//generate(tts::ramp(0)))
 <typename T>(T const& a0)
 {
   using eve::compensated;
@@ -100,5 +101,31 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL((horner)(a0, tab1), eve::detail::poleval(a0, tab1));
     TTS_EQUAL((horner)(a0, tab2), eve::detail::poleval(a0, tab2));
     TTS_EQUAL((horner)(a0, tab3), eve::detail::poleval(a0, tab3));
+  };
+
+  {
+    //============================================================================
+    //== tuples
+    //============================================================================
+    auto tab0 = kumi::tuple{};
+    auto tab1 = kumi::tuple{1};
+    auto tab2 = kumi::tuple{1, 2};
+    auto tab3 = kumi::tuple{1, 2, 3};
+
+    TTS_EQUAL((horner)(a0, tab0), T(0));
+    TTS_EQUAL((horner)(a0, tab1), T(1));
+    TTS_EQUAL((horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL((horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(pedantic(horner)(a0, tab0), T(0));
+    TTS_EQUAL(pedantic(horner)(a0, tab1), T(1));
+    TTS_EQUAL(pedantic(horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(pedantic(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(numeric(horner)(a0, tab0), T(0));
+    TTS_EQUAL(numeric(horner)(a0, tab1), T(1));
+    TTS_EQUAL(numeric(horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(numeric(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
   };
 };

@@ -68,6 +68,27 @@ absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
   return eve::abs(eve::max(a0, a1, args...));
 }
 
+//================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+absmax_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+  else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
+}
+
+template<decorator D, kumi::non_empty_product_type Ts>
+auto
+absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return d(eve::abs)(get<0>(tup));
+  else return d(eve::abs)(kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+
+}
+
+
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, value T0, value T1, value... Ts>

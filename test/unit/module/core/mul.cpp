@@ -86,6 +86,16 @@ TTS_CASE_WITH("Check behavior of mul on wide",
                 a0,
                 a1,
                 a2));
+  TTS_EQUAL(mul(kumi::tuple{a0, a2}), map([](auto e, auto f) { return mul(e, f); }, a0, a2));
+  TTS_EQUAL(saturated(mul)(kumi::tuple{a0, a2}),
+            map([&](auto e, auto f) { return saturated(mul)(e, f); }, a0, a2));
+  TTS_EQUAL(mul(kumi::tuple{a0, a1, a2}),
+            map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2));
+  TTS_EQUAL(saturated(mul)(kumi::tuple{a0, a1, a2}),
+            map([&](auto e, auto f, auto g) { return saturated(mul)(saturated(mul)(e, f), g); },
+                a0,
+                a1,
+                a2));
 };
 
 //==================================================================================================

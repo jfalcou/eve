@@ -63,6 +63,17 @@ logspace_sub_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 }
 
 //================================================================================================
+// tuples
+//================================================================================================
+template<kumi::non_empty_product_type Ts>
+auto
+logspace_sub_(EVE_SUPPORTS(cpu_), Ts tup)
+{
+  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+  else return kumi::apply( [&](auto... m) { return logspace_sub(m...); }, tup);
+}
+
+//================================================================================================
 // Masked case
 //================================================================================================
 template<conditional_expr C, floating_real_value U, floating_real_value V>
