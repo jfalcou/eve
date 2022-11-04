@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 
 namespace eve::detail
 {
@@ -21,7 +22,7 @@ sqr_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 
 template<real_value T>
 EVE_FORCEINLINE constexpr T
-sqr_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const& a) noexcept
+sqr_(EVE_SUPPORTS(cpu_), eve::pedantic_type const &, T const& a) noexcept
 {
   return sqr(a);
 }

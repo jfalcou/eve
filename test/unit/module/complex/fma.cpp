@@ -25,6 +25,6 @@ TTS_CASE_WITH( "Check behavior of fma on wide"
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   auto c = z_t(a4, a5);
-  TTS_ULP_EQUAL( eve::fma(a, b, c), a*b+c, 2.0);
+  TTS_ULP_EQUAL( eve::fma(a, b, c), a*b+c, 20.0);
 
 };

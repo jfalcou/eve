@@ -26,6 +26,6 @@ TTS_CASE_WITH( "Check behavior of fsm on wide"
   auto b = z_t(a2, a3);
   auto c = z_t(a4, a5);
   TTS_ULP_EQUAL( eve::fsm(a, b, c), -a+b*c, 0.5);
-  TTS_ULP_EQUAL( eve::fsm(1, b, c), eve::dec(b*c), 0.5);
+  TTS_ULP_EQUAL( eve::fsm(1, b, c), eve::dec(b*c), 20.0);
 
 };
