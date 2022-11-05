@@ -620,7 +620,12 @@ namespace eve::detail
                     , eve::ulpdist(imag(z1), imag(z2))
                     );
   }
-
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::geommean_
+                                              , auto const& z1, auto const& z2
+                                              ) noexcept
+  {
+    return eve::sqrt ( z1*z2);
+  }
 }
 
 #include <eve/module/complex/regular/detail/acos.hpp>
