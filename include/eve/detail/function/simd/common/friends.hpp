@@ -83,33 +83,6 @@ namespace eve::detail
                                 , self_logand(eve::current_api,vh, wh)
                                 };
     }
-    else if constexpr ( !abi_t::is_wide_logical )
-    {
-      using storage_t = typename logical<wide<T, N>>::storage_type;
-      using m_t = std::conditional_t< is_aggregated_v<abi_t>
-                                    , typename logical<wide<U, N>>::storage_type
-                                    , storage_t
-                                    >;
-      using u_t = typename m_t::type;
-      storage_t that;
-
-      // We need to know wich side is not aggregated to safely bit_cast its contents
-      if constexpr( is_aggregated_v<abi_t> )
-      {
-        u_t them = bit_cast(v.storage(),as<u_t>()) & w.storage().value;
-        that = bit_cast(them,as<storage_t>());
-      }
-      else if constexpr( is_aggregated_v<abi_u> )
-      {
-        that.value = v.storage().value & bit_cast(w.storage(),as<u_t>());
-      }
-      else
-      {
-        that.value = v.storage().value & w.storage().value;
-      }
-
-      return logical<wide<T, N>>(that);
-    }
     else
     {
       if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u> && (sizeof(T) == sizeof(U)) )
@@ -140,36 +113,9 @@ namespace eve::detail
                                 , self_logor(eve::current_api,vh, wh)
                                 };
     }
-    else if constexpr ( !abi_t::is_wide_logical )
-    {
-      using storage_t = typename logical<wide<T, N>>::storage_type;
-      using m_t = std::conditional_t< is_aggregated_v<abi_t>
-                                    , typename logical<wide<U, N>>::storage_type
-                                    , storage_t
-                                    >;
-      using u_t = typename m_t::type;
-      storage_t that;
-
-      // We need to know wich side is not aggregated to safely bit_cast its contents
-      if constexpr( is_aggregated_v<abi_t> )
-      {
-        u_t them = bit_cast(v.storage(),as<u_t>()) | w.storage().value;
-        that = bit_cast(them,as<storage_t>());
-      }
-      else if constexpr( is_aggregated_v<abi_u> )
-      {
-        that.value = v.storage().value | bit_cast(w.storage(),as<u_t>());
-      }
-      else
-      {
-        that.value = v.storage().value | w.storage().value;
-      }
-
-      return logical<wide<T, N>>(that);
-    }
     else
     {
-      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u>  && (sizeof(T) == sizeof(U)))
+      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u> && (sizeof(T) == sizeof(U)) )
       {
         return bit_cast ( v.bits() | w.bits(), as(v) );
       }
