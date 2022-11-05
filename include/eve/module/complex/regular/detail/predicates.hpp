@@ -76,18 +76,6 @@ namespace eve::detail
   //==============================================================================================
   //  binary is_equal, is_not_equal
   //==============================================================================================
-  template<typename Z1,  typename Z2>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::is_equal_, Z1 const& z1, Z2 const& z2) noexcept
-  {
-    return (real(z1) == real(z2)) && (imag(z1) == imag(z2));
- }
-
-  template<typename Z1,  typename Z2>
-  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::is_not_equal_, Z1 const& z1, Z2 const& z2) noexcept
-  {
-    return (real(z1) != real(z2)) || (imag(z1) != imag(z2));
-  }
-
   EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::is_equal_, eve::numeric_type const &
                                               , auto const& z1, auto const& z2) noexcept
   {

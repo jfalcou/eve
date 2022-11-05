@@ -127,33 +127,10 @@ namespace eve
     EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
     {
       detail::callable_object<Tag> cst;
-      if constexpr(std::same_as<Tag,tag::true__>)
-      {
-        return true_(as(real(Z{})));
-      }
-      else if  constexpr(std::same_as<Tag,tag::false__>)
-      {
-        return false_(as(real(Z{})));
-      }
-        else
-      {
+      if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
+        return cst(as(real(Z{})));
+      else
         return Z{ cst(as<Type>{}), Type{0}};
-      }
-    }
-
-    //==============================================================================================
-    // Operator ==,  !=
-    //==============================================================================================
-    template<like<complex> Z1, like<complex> Z2>
-    EVE_FORCEINLINE friend auto operator == (Z1 const& z1, Z2 const& z2) noexcept
-    {
-      return (real(z1) == real(z2)) && (imag(z1) == imag(z2));
-    }
-
-    template<like<complex> Z1, like<complex> Z2>
-    EVE_FORCEINLINE friend auto operator != (Z1 const& z1, Z2 const& z2) noexcept
-    {
-      return (real(z1) != real(z2)) || (imag(z1) != imag(z2));
     }
 
     //==============================================================================================

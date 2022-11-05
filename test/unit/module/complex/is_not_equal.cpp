@@ -25,4 +25,7 @@ TTS_CASE_WITH( "Check behavior of is_not_equal on wide"
   TTS_EQUAL( eve::is_not_equal(a, b), eve::is_not_equal(a0, a2) || eve::is_not_equal(a1, a3));
   TTS_EQUAL( a != b , (eve::is_not_equal(a0, a2) || eve::is_not_equal(a1, a3)));
   TTS_EQUAL( a != a , eve::is_nan(a));
+  auto z = eve::nan(eve::as(a));
+  TTS_EQUAL(eve::is_not_equal(z, z) , eve::true_(eve::as(a)));
+  TTS_EQUAL( eve::numeric(eve::is_not_equal)(z, z) , eve::false_(eve::as(a)));
 };
