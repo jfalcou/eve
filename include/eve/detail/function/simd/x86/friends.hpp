@@ -21,32 +21,90 @@ namespace eve::detail
 template<typename T, typename U, typename N>
 EVE_FORCEINLINE auto
 self_logand(sse2_ const&, logical<wide<T, N>> v, logical<wide<U, N>> w) noexcept
-    requires(x86_abi<abi_t<T, N>>&& x86_abi<abi_t<U, N>>)
+requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
 {
   if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
   {
+    using abi_t     = typename logical<wide<T,N>>::abi_type;
+    using abi_u     = typename logical<wide<U,N>>::abi_type;
     using storage_t = typename logical<wide<T, N>>::storage_type;
-    using m_t       = typename storage_t::type;
-    m_t that        = v.storage().value & w.storage().value;
-    return logical<wide<T, N>>(storage_t {that});
+    using m_t       = std::conditional_t< is_aggregated_v<abi_t>
+                                        , typename logical<wide<U, N>>::storage_type
+                                        , storage_t
+                                        >;
+    using u_t       = typename m_t::type;
+
+    // We need to know which side is not aggregated to safely bit_cast its contents
+    auto cvt = [](auto a, auto b)
+    {
+      storage_t dst;
+      if constexpr( is_aggregated_v<abi_t> )
+      {
+        u_t them = bit_cast(a.storage(),as<u_t>()) & b.storage().value;
+        dst = bit_cast(them,as<storage_t>());
+      }
+      else if constexpr( is_aggregated_v<abi_u> )
+      {
+        dst.value = a.storage().value & bit_cast(b.storage(),as<u_t>());
+      }
+      else
+      {
+        dst.value = a.storage().value & b.storage().value;
+      }
+      return dst;
+    };
+
+    return logical<wide<T, N>>(cvt(v,w));
   }
-  else { return self_logand(cpu_ {}, v, w); }
+  else
+  {
+    return self_logand(cpu_ {}, v, w);
+  }
 }
 
 //================================================================================================
 template<typename T, typename U, typename N>
 EVE_FORCEINLINE auto
 self_logor(sse2_ const&, logical<wide<T, N>> v, logical<wide<U, N>> w) noexcept
-    requires(x86_abi<abi_t<T, N>>&& x86_abi<abi_t<U, N>>)
+requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
 {
   if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
   {
+    using abi_t     = typename logical<wide<T,N>>::abi_type;
+    using abi_u     = typename logical<wide<U,N>>::abi_type;
     using storage_t = typename logical<wide<T, N>>::storage_type;
-    using m_t       = typename storage_t::type;
-    m_t that        = v.storage().value | w.storage().value;
-    return logical<wide<T, N>>(storage_t {that});
+    using m_t       = std::conditional_t< is_aggregated_v<abi_t>
+                                        , typename logical<wide<U, N>>::storage_type
+                                        , storage_t
+                                        >;
+    using u_t       = typename m_t::type;
+
+    // We need to know which side is not aggregated to safely bit_cast its contents
+    auto cvt = [](auto a, auto b)
+    {
+      storage_t dst;
+      if constexpr( is_aggregated_v<abi_t> )
+      {
+        u_t them = bit_cast(a.storage(),as<u_t>()) | b.storage().value;
+        dst = bit_cast(them,as<storage_t>());
+      }
+      else if constexpr( is_aggregated_v<abi_u> )
+      {
+        dst.value = a.storage().value | bit_cast(b.storage(),as<u_t>());
+      }
+      else
+      {
+        dst.value = a.storage().value | b.storage().value;
+      }
+      return dst;
+    };
+
+    return logical<wide<T, N>>(cvt(v,w));
   }
-  else { return self_logor(cpu_ {}, v, w); }
+  else
+  {
+    return self_logor(cpu_ {}, v, w);
+  }
 }
 
 //================================================================================================
