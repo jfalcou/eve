@@ -98,6 +98,17 @@ namespace eve
       return detail::complex_binary_dispatch(tag, z1, z2);
     }
 
+    template<decorator D, typename Tag, typename Z1, typename Z2>
+    requires(like<Z1,complex> || like<Z2,complex>)
+    EVE_FORCEINLINE friend  auto  tagged_dispatch ( Tag const& tag
+                                                  , D const & d
+                                                  , Z1 const& z1, Z2 const& z2
+                                                  ) noexcept
+                            ->    decltype(detail::complex_binary_dispatch(tag, d, z1, z2))
+    {
+      return detail::complex_binary_dispatch(tag, d, z1, z2);
+    }
+
     template<typename Tag, typename Z1, typename Z2, typename Z3>
     requires(like<Z1,complex> || like<Z2,complex> || like<Z3,complex>)
     EVE_FORCEINLINE friend  auto  tagged_dispatch ( Tag const& tag
@@ -116,7 +127,10 @@ namespace eve
     EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
     {
       detail::callable_object<Tag> cst;
-      return Z{ cst(as<Type>{}), Type{0}};
+      if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
+        return cst(as(real(Z{})));
+      else
+        return Z{ cst(as<Type>{}), Type{0}};
     }
 
     //==============================================================================================

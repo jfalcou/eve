@@ -66,4 +66,25 @@ namespace eve::detail
     auto [rz, iz] = z;
     return is_unordered(rz, iz);
   }
+
+  EVE_FORCEINLINE auto complex_unary_dispatch( tag::is_not_nan_, auto const& z ) noexcept
+  {
+    auto [rz, iz] = z;
+    return is_ordered(rz, iz);
+  }
+
+  //==============================================================================================
+  //  binary is_equal, is_not_equal
+  //==============================================================================================
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::is_equal_, eve::numeric_type const &
+                                              , auto const& z1, auto const& z2) noexcept
+  {
+    return numeric(is_equal)(real(z1), real(z2)) && numeric(is_equal)(imag(z1), imag(z2));
+  }
+
+  EVE_FORCEINLINE auto complex_binary_dispatch(eve::tag::is_not_equal_, eve::numeric_type const &
+                                              , auto const& z1, auto const& z2) noexcept
+  {
+    return numeric(is_not_equal)(real(z1), real(z2)) || numeric(is_not_equal)(imag(z1), imag(z2));
+  }
 }
