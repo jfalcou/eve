@@ -15,9 +15,10 @@ template<value T0, value... Ts>
 auto
 hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
 {
-  using r_t = common_compatible_t<decltype(eve::abs(T0{})), decltype(eve::abs(Ts{}))...>;
-  if constexpr( has_native_abi_v<r_t> )
+  using c_t = common_compatible_t<T0, Ts...>;
+  if constexpr( has_native_abi_v<c_t> )
   {
+    using r_t = decltype(eve::abs(c_t{}));
     r_t  that(eve::sqr(eve::abs(a0)));
     auto addsqrabs = [](auto that, auto next) -> r_t
       {
