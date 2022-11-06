@@ -16,9 +16,9 @@ auto
 hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
 {
   using c_t = common_compatible_t<T0, Ts...>;
-  if constexpr( has_native_abi_v<c_t> )
+  using r_t = decltype(eve::abs(c_t{}));
+  if constexpr( has_native_abi_v<r_t> )
   {
-    using r_t = decltype(eve::abs(c_t{}));
     r_t  that(eve::sqr(eve::abs(a0)));
     auto addsqrabs = [](auto that, auto next) -> r_t
       {
@@ -29,13 +29,7 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
     ((that = addsqrabs(that, args)), ...);
     return eve::sqrt(that);
   }
-  else if constexpr(has_aggregated_abi_v<c_t>)
-  {
-    return eve::combine( hypot(lower(a0), lower(args)...)
-                       , hypot(upper(a0), upper(args)...)
-                       );
-  }
-//   else { return apply_over(hypot, a0, args...); }
+  else { return apply_over(hypot, r_t(a0), r_t(args)...); }
 }
 
 //================================================================================================
