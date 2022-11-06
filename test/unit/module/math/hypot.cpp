@@ -15,19 +15,6 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-
-// TTS_CASE_TPL("Check common_compatible_t", eve::test::simd::ieee_reals)
-// <typename T>(tts::type<T>)
-// {
-//   using wide_ft16 = eve::wide<double, eve::fixed<32>>;
-//   wide_ft16 pf16{3};
-//   using r_t = eve::common_compatible_t<wide_ft16, int>;
-//   std::cout << tts::typename_<r_t> << std::endl;
-//   r_t a{3};
-//   std::cout << tts::typename_<decltype(eve::abs(a))> << std::endl;
-// //   std::cout << eve::hypot(pf16, 4) << std::endl;
-// };
-
 TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
@@ -40,11 +27,8 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(hypot(T(), T()), T);
   TTS_EXPR_IS(hypot(T(), v_t()), T);
   TTS_EXPR_IS(hypot(v_t(), T()), T);
-  if constexpr(!eve::has_aggregated_abi_v<T>)
-  {
-    TTS_EXPR_IS(hypot(T(), int()), T);
-    TTS_EXPR_IS(hypot(int(), T()), T);
-  }
+  TTS_EXPR_IS(hypot(T(), int()), T);
+  TTS_EXPR_IS(hypot(int(), T()), T);
   TTS_EXPR_IS(hypot(v_t(), v_t()), v_t);
 
   // multi
@@ -55,16 +39,13 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(hypot(v_t(), v_t(), T()), T);
   TTS_EXPR_IS(hypot(v_t(), T(), v_t()), T);
 
-  if constexpr(!eve::has_aggregated_abi_v<T>)
-  {
-    TTS_EXPR_IS(hypot(T(), int(), T()), T);
-    TTS_EXPR_IS(hypot(int(), T(), T()), T);
-    TTS_EXPR_IS(hypot(T(), T(), int()), T);
-    TTS_EXPR_IS(hypot(int(), v_t(), T()), T);
-    TTS_EXPR_IS(hypot(int(), T(), v_t()), T);
-    TTS_EXPR_IS(hypot(v_t(), int(), T()), T);
-    TTS_EXPR_IS(hypot(v_t(), T(), int()), T);
-  }
+  TTS_EXPR_IS(hypot(T(), int(), T()), T);
+  TTS_EXPR_IS(hypot(int(), T(), T()), T);
+  TTS_EXPR_IS(hypot(T(), T(), int()), T);
+  TTS_EXPR_IS(hypot(int(), v_t(), T()), T);
+  TTS_EXPR_IS(hypot(int(), T(), v_t()), T);
+  TTS_EXPR_IS(hypot(v_t(), int(), T()), T);
+  TTS_EXPR_IS(hypot(v_t(), T(), int()), T);
   TTS_EXPR_IS(hypot(v_t(), v_t(), v_t()), v_t);
 
   // pedantic
@@ -91,7 +72,6 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(pedantic(hypot)(v_t(), int(), T()), T);
   TTS_EXPR_IS(pedantic(hypot)(v_t(), T(), int()), T);
   TTS_EXPR_IS(pedantic(hypot)(v_t(), v_t(), v_t()), v_t);
-
 };
 
 //==================================================================================================

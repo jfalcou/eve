@@ -29,7 +29,13 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
     ((that = addsqrabs(that, args)), ...);
     return eve::sqrt(that);
   }
-  else { return apply_over(hypot, eve::abs(a0), eve::abs(args)...); }
+  else if constexpr(has_aggregated_abi_v<c_t>)
+  {
+    return eve::combine( hypot(lower(a0), lower(args)...)
+                       , hypot(upper(a0), upper(args)...)
+                       );
+  }
+//   else { return apply_over(hypot, a0, args...); }
 }
 
 //================================================================================================
