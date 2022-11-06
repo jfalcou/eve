@@ -22,8 +22,8 @@ TTS_CASE_WITH( "Check behavior of hypot on wide"
   using z_t = eve::as_complex_t<T>;
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
-  TTS_ULP_EQUAL( eve::hypot(a, b),      eve::sqrt(eve::sqr_abs(a)+eve::sqr_abs(b)), 0.5);
-  TTS_ULP_EQUAL( eve::hypot(a, a2),     eve::sqrt(eve::sqr_abs(a)+eve::sqr_abs(a2)), 0.5);
-  TTS_ULP_EQUAL( eve::hypot(a0, b),     eve::sqrt(eve::sqr_abs(a0)+eve::sqr_abs(b)), 0.5);
-  TTS_ULP_EQUAL( eve::hypot(a, T(1.0)), eve::sqrt(eve::inc(eve::sqr_abs(a))), 0.5);
+  TTS_ULP_EQUAL( eve::hypot(a, b),      eve::sqrt(eve::sqr_abs(a)+eve::sqr_abs(b)), 1.5);
+  TTS_ULP_EQUAL( eve::hypot(a, a2),     eve::sqrt(eve::sqr_abs(a)+eve::sqr_abs(a2)), 1.5);
+  TTS_ULP_EQUAL( eve::hypot(a0, b),     eve::sqrt(eve::sqr_abs(a0)+eve::sqr_abs(b)), 1.5);
+  TTS_ULP_EQUAL( eve::hypot(a, T(1.0)), eve::sqrt(eve::inc(eve::sqr_abs(a))), 1.5);
 };
