@@ -19,14 +19,7 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
   using r_t = decltype(eve::abs(c_t{}));
   if constexpr( has_native_abi_v<r_t> )
   {
-    r_t  that(eve::sqr(eve::abs(a0)));
-    auto addsqrabs = [](auto that, auto next) -> r_t
-      {
-        auto anext = eve::abs(next);
-        that       = fma(anext, anext, that);
-        return that;
-      };
-    ((that = addsqrabs(that, args)), ...);
+    r_t that = add(sqr_abs(r_t(a0)), sqr_abs(r_t(args))...);
     return eve::sqrt(that);
   }
   else { return apply_over(hypot, r_t(a0), r_t(args)...); }
