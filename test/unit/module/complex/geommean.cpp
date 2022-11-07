@@ -8,8 +8,9 @@
 #include "test.hpp"
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
+#include <complex>
 
-TTS_CASE_WITH( "Check behavior of average on wide"
+TTS_CASE_WITH( "Check behavior of geommean on wide"
              , eve::test::simd::ieee_reals
              ,tts::generate(tts::randoms(-10, 10)
                            , tts::randoms(-10, 10)
@@ -18,34 +19,13 @@ TTS_CASE_WITH( "Check behavior of average on wide"
                            , tts::randoms(-10, 10)
                            , tts::randoms(-10, 10))
              )
-  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4 , T const& a5  )
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5 )
 {
   using z_t = eve::as_complex_t<T>;
+  using e_t = eve::element_type_t<T>;
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   auto c = z_t(a4, a5);
-  TTS_ULP_EQUAL( eve::div(a, b), a/b, 0.5);
-  TTS_ULP_EQUAL( eve::div(a, b, c), a/(b*c), 0.5);
-  TTS_ULP_EQUAL( eve::pedantic(eve::div)(a, b), a/b, 10);
-  {
-    z_t c(1, eve::inf(eve::as(a0)));
-    z_t rr(0, 0);
-    z_t  d = eve::pedantic(eve::div)(a, c);
-    TTS_ULP_EQUAL( d, rr, 0.5);
-    TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
-  }
-  {
-    z_t c(eve::inf(eve::as(a0)), 1);
-    z_t rp(0, 0);
-    z_t  d = eve::pedantic(eve::div)(a, c);
-    TTS_ULP_EQUAL( d, rp, 0.5);
-    TTS_ULP_EQUAL( eve::div(a, c), rp, 0.5);
-  }
-  {
-    z_t c(eve::inf(eve::as(a0)), eve::inf(eve::as(a0)));
-    z_t rr(0, 0);
-    z_t  d = eve::pedantic(eve::div)(a, c);
-    TTS_ULP_EQUAL( d, rr, 0.5);
-    TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
-  }
+  TTS_RELATIVE_EQUAL( eve::geommean(a, b), eve::sqrt(a*b), 0.005);
+  TTS_RELATIVE_EQUAL( eve::geommean(a, b, c), eve::pow(a*b*c, eve::third(eve::as<e_t>())), 0.005);
 };

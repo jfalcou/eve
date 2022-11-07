@@ -34,7 +34,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U, decorator D>
+template<value T, value U, decorator D>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept requires compatible_values<T, U>
 {
@@ -43,14 +43,14 @@ div_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept requires com
 
 //////////////////////////////////////////////////////////////////////
 //== toward_zero
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), toward_zero_type const&, T const& a, T const& b) noexcept
 {
   EVE_ASSERT(eve::all(is_nez(b)), "[eve] - div(0, 0) is undefined");
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( floating_real_value<T> ) { return trunc(div(a, b)); }
+    if constexpr( floating_value<T> ) { return trunc(div(a, b)); }
     else { return div(a, b); }
   }
   else return apply_over(toward_zero(div), a, b);
@@ -59,7 +59,7 @@ div_(EVE_SUPPORTS(cpu_), toward_zero_type const&, T const& a, T const& b) noexce
 //================================================================================================
 //== Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), C const& cond, U t, V f) noexcept requires compatible_values<U, V>
 {
@@ -67,7 +67,7 @@ div_(EVE_SUPPORTS(cpu_), C const& cond, U t, V f) noexcept requires compatible_v
   return if_else(cond, eve::div(t, g), t);
 }
 
-template<conditional_expr C, decorator D, real_value U, real_value V>
+template<conditional_expr C, decorator D, value U, value V>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept requires
     compatible_values<U, V>
@@ -79,7 +79,7 @@ div_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexce
 //================================================================================================
 //==  regular N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<value T0, value T1, value... Ts>
 auto
 div_(EVE_SUPPORTS(cpu_),
      T0 a0,

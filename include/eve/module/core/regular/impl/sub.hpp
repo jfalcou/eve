@@ -32,7 +32,7 @@ sub_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<decorator D, real_value T0, real_value... Ts>
+template<decorator D, value T0, value... Ts>
 auto
 sub_(EVE_SUPPORTS(cpu_), D const&, T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
 {
@@ -41,7 +41,7 @@ sub_(EVE_SUPPORTS(cpu_), D const&, T0 a0, Ts... args) requires(compatible_values
   return that;
 }
 
-template<real_value T0, real_value... Ts>
+template<value T0, value... Ts>
 auto
 sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
 {
