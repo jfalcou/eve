@@ -18,6 +18,7 @@
 TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
+  std::cout << tts::typename_<T> << std::endl;
   using v_t = eve::element_type_t<T>;
   using eve::hypot;
   using eve::pedantic;
@@ -47,7 +48,7 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(hypot(v_t(), T(), int()), T);
   TTS_EXPR_IS(hypot(v_t(), v_t(), v_t()), v_t);
 
-  // regular
+  // pedantic
   TTS_EXPR_IS(pedantic(hypot)(T(), T()), T);
   TTS_EXPR_IS(pedantic(hypot)(T(), v_t()), T);
   TTS_EXPR_IS(pedantic(hypot)(v_t(), T()), T);
@@ -140,7 +141,7 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
 
 
 //==================================================================================================
-// Tests for masked hypot
+//== Tests for masked hypot
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::hypot)(eve::wide)",
               eve::test::simd::ieee_reals,

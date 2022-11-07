@@ -119,6 +119,16 @@ namespace eve
       return detail::complex_ternary_dispatch(tag, z1, z2, z3);
     }
 
+    template<typename Tag, typename Z1,  typename ...Zs>
+    requires(like<Z1,complex> || (... || like<Zs,complex>))
+    EVE_FORCEINLINE friend  auto  tagged_dispatch ( Tag const& tag
+                                                  , Z1 const& z1, Zs const&... zs
+                                                  ) noexcept
+                            ->    decltype(detail::complex_nary_dispatch(tag, z1, zs...))
+    {
+      return detail::complex_nary_dispatch(tag, z1, zs...);
+    }
+
     //==============================================================================================
     // Constants support
     //==============================================================================================

@@ -621,6 +621,25 @@ namespace eve::detail
                     );
   }
 
+  template<typename Z1, typename ...Z2>
+  EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::geommean_
+                                            , Z1 const& z1, Z2 const&... z2
+                                            ) noexcept
+  {
+    using e_t = eve::element_type_t<decltype(eve::mul(real(z1), real(z2)...))>;
+    auto e = rec(e_t(sizeof...(Z2)+1));
+    return pow(mul(z1, z2...), e);
+  }
+
+  template<typename Z1, typename ...Z2>
+  EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::hypot_
+                                            , Z1 const& z1, Z2 const&... z2
+                                            ) noexcept
+  {
+    return hypot(real(z1), imag(z1), real(z2)..., imag(z2)...);
+  }
+
+
 }
 
 #include <eve/module/complex/regular/detail/acos.hpp>

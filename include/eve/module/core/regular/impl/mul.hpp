@@ -33,7 +33,7 @@ mul_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 //==  regular N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<value T0, value T1, value... Ts>
 common_compatible_t<T0, T1, Ts...>
 mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 {
