@@ -650,7 +650,7 @@ namespace eve::detail
 
   template<decorator D, typename Z1, typename ...Z2>
   EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::hypot_
-                                              D const & d
+                                            , D const & d
                                             , Z1 const& z1, Z2 const&... z2
                                             ) noexcept
   {
@@ -667,7 +667,7 @@ namespace eve::detail
 
   template<decorator D, real_value P, typename Z1, typename ...Z2>
   EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::lpnorm_
-                                              D const & d
+                                            , D const & d
                                             , P const & p, Z1 const& z1, Z2 const&... z2
                                             ) noexcept
   {
