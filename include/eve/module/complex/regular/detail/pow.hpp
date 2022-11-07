@@ -12,6 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
+#include <eve/module/complex/regular/real.hpp>
 
 namespace eve
 {
@@ -73,5 +74,40 @@ namespace eve
       r = if_else(is_eqz(z2),  r_t{1, 0}, r);
      return r;
     }
+
+    template < typename Z1,  typename Z2>
+    EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::pow_abs_
+                                                , Z1 const& z1, Z2 const& z2
+                                                ) noexcept
+    {
+      //     requires(floating_value<element_type_t<Z2>> || is_complex_v<Z2>)
+      if constexpr(is_complex_v<Z2>)
+        return pow(sqr_abs(z1), z2*half(eve::as(eve::real(z2))));
+      else
+      {
+//         std::cout << tts::typename_<Z1 >  << std::endl;
+//         std::cout << tts::typename_<decltype(sqr_abs(z1))> << std::endl;
+//         std::cout << tts::typename_<Z2 >  << std::endl;
+        return Z1{pow(sqr_abs(z1), z2*half(eve::as(eve::real(z1)))), 0};
+        //       return z1+z2;
+      }
+    }
+
+    template < typename Z1,  typename Z2>
+    EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::powm1_
+                                                , Z1 const& z1, Z2 const& z2
+                                                ) noexcept
+    {
+      return dec(pow(z1, z2));
+    }
+
+    template < typename Z1,  typename Z2>
+    EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::pow1p_
+                                                , Z1 const& z1, Z2 const& z2
+                                                ) noexcept
+    {
+      return pow(inc(z1), z2);
+    }
+
   }
 }
