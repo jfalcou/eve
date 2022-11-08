@@ -20,7 +20,7 @@ TTS_CASE_WITH ( "Check behavior of gd on scalar"
     for(auto f : a1)
     {
       auto z = eve::complex(e, f);
-      TTS_ULP_EQUAL( eve::gd(z), 2*eve::atan(eve::tanh(eve::half(eve::as(e))*z)), 100.0);
+      TTS_ULP_EQUAL( eve::gd(z), 2*eve::atan(eve::tanh(eve::half(eve::as(e))*z)), 700.0);
     }
 };
 
