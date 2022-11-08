@@ -58,7 +58,7 @@ TTS_CASE_WITH ( "Check behavior of pow1p on wide"
   TTS_ULP_EQUAL( eve::pow1p(a, 2u), eve::sqr(ap1), 300);
   TTS_ULP_EQUAL( eve::pow1p(a, 3u), eve::sqr(ap1)*ap1,  300);
   TTS_ULP_EQUAL( eve::pow1p(eve::abs(a0), b)   , z_t{init_with_std1}, 300);
-  TTS_ULP_EQUAL( eve::pow1p(-eve::abs(a0), b)   , z_t{init_with_std2}, 300);
+  TTS_RELATIVE_EQUAL( eve::pow1p(-eve::abs(a0), b)   , z_t{init_with_std2}, 0.5);
   TTS_RELATIVE_EQUAL( eve::pow1p(b, eve::abs(a0))   ,  z_t{init_with_std3}, 0.5);
   TTS_ULP_EQUAL( eve::pow1p(a, 3u)   , eve::pow1p(a, e_t(3)),  10);
   TTS_ULP_EQUAL( eve::pow1p(a, 2u)   , eve::pow1p(a, e_t(2)),  10);
