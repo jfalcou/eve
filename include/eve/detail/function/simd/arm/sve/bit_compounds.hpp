@@ -42,10 +42,9 @@ EVE_FORCEINLINE decltype(auto)
 self_shr(wide<T,N>& self, wide<U,N> shift) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-  auto const si = bit_cast(shift,as<i_t>());
-
-  i_t that = svlsr_x(sve_true<T>(), bit_cast(self,as<i_t>()), si);
+  using u_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
+  using s_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
+  s_t that = svasr_x(sve_true<T>(), bit_cast(self,as<s_t>()), bit_cast(shift,as<u_t>()));
   self = bit_cast(that,as<wide<T,N>>());
   return self;
 }
@@ -55,8 +54,9 @@ EVE_FORCEINLINE decltype(auto)
 self_shr(wide<T,N>& self, U shift) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-  i_t that = svlsr_x(sve_true<T>(), bit_cast(self,as<i_t>()), i_t(shift));
+  using u_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
+  using s_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
+  s_t that = svasr_x(sve_true<T>(), bit_cast(self,as<s_t>()), u_t(shift));
   self = bit_cast(that,as<wide<T,N>>());
   return self;
 }
