@@ -21,3 +21,7 @@
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/to_logical.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/detail/function/simd/arm/sve/to_logical.hpp>
+#endif
