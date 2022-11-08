@@ -24,9 +24,10 @@ lpnorm_(EVE_SUPPORTS(cpu_), const P& p, T0 a0, T1 a1, Ts... args) requires(!deco
     auto fp = floating_(p);
     return lpnorm(fp, a0, a1, args...);
   }
-  else 
+  else
   {
-    using r_t = common_compatible_t<decltype(eve::abs(T0{})), decltype(eve::abs(T1{})), decltype(eve::abs(Ts{}))...>;
+    using c_t = common_compatible_t<T0, T1, Ts...>;
+    using r_t = decltype(eve::abs(c_t{}));
     if constexpr( has_native_abi_v<r_t> )
     {
       if( eve::all(p == P(2)) ) return hypot(a0, a1, args...);
@@ -35,40 +36,15 @@ lpnorm_(EVE_SUPPORTS(cpu_), const P& p, T0 a0, T1 a1, Ts... args) requires(!deco
       else
       {
         auto rp = r_t(p);
-        r_t  that(pow(abs(a0), rp));
-        auto addppow = [rp](auto that, auto next) -> r_t
-        {
-          that += pow(abs(next), rp);
-          return that;
-        };
-        that = addppow(that, a1);
-        ((that = addppow(that, args)), ...);
+        r_t that = add(pow_abs(r_t(a0),rp), pow_abs(r_t(a1), rp), pow_abs(r_t(args), rp)...);
+        auto r = pow(that, rec(rp));
         auto isinfp = is_infinite(rp);
-        if( eve::any(isinfp) )
-        {
-          auto r = eve::maxabs(a0, a1, args...);
-          if( eve::all(isinfp) ) return r;
-          return if_else(isinfp, r, pow(that, rec(rp)));
-        }
-        return pow(that, rec(rp));
+        if (eve::none(isinfp)) return r;
+        else return if_else(is_infinite(rp), eve::maxabs(a0, a1, args...), r);
       }
     }
-    else { return apply_over(lpnorm, p, eve::abs(a0), eve::abs(a1), eve::abs(args)...); }
+    else { return apply_over(lpnorm, p, c_t(a0), c_t(a1), c_t(args)...); }
   }
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C,
-         real_value       P,
-         floating_value   T0,
-         floating_value   T1,
-         floating_value... Ts>
-auto
-lpnorm_(EVE_SUPPORTS(cpu_), C const& cond, const P& p, T0 a0, T1 a1, Ts... args) requires(
-    !decorator<P>)
-{
-  return mask_op(cond, eve::lpnorm, p, a0, a1, args...);
 }
 
 //================================================================================================

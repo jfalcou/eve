@@ -488,6 +488,30 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
+  //=== invgd
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::invgd_, Z const& z ) noexcept
+  {
+    auto [x, y] = z;
+    auto [shy, chy] = sinhcosh(y);
+    auto [sx, cx]   = sincos(x);
+    return Z{atanh(sx/chy), pedantic(atan2)(shy, cx)};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== gd
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::gd_, Z const& z ) noexcept
+  {
+    auto [x, y] = z;
+    auto [shx, chx] = sinhcosh(x);
+    auto [sy, cy]   = sincos(y);
+    return Z{pedantic(atan2)(shx, cy), atanh(sy/chx)};
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== log_abs
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
@@ -639,6 +663,31 @@ namespace eve::detail
     return hypot(real(z1), imag(z1), real(z2)..., imag(z2)...);
   }
 
+  template<decorator D, typename Z1, typename ...Z2>
+  EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::hypot_
+                                            , D const & d
+                                            , Z1 const& z1, Z2 const&... z2
+                                            ) noexcept
+  {
+    return d(hypot)(real(z1), imag(z1), real(z2)..., imag(z2)...);
+  }
+
+  template<real_value P, typename Z1, typename ...Z2>
+  EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::lpnorm_
+                                            , P const & p, Z1 const& z1, Z2 const&... z2
+                                            ) noexcept
+  {
+    return lpnorm(p, abs(z1), abs(z2)...);
+  }
+
+  template<decorator D, real_value P, typename Z1, typename ...Z2>
+  EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::lpnorm_
+                                            , D const & d
+                                            , P const & p, Z1 const& z1, Z2 const&... z2
+                                            ) noexcept
+  {
+    return d(lpnorm)(p, abs(z1), abs(z2)...);
+  }
 
 }
 
