@@ -1,4 +1,5 @@
 {
   "unit.meta.exe":  "^unit.meta\\..*\\.exe",
-  "unit.arch.exe":  "^unit.arch\\..*\\.exe"
+  "unit.arch.exe":  "^unit.arch\\..*\\.exe",
+  "unit.core.bit_cast.exe":  "^unit.core.bit_cast.exe"
 }
