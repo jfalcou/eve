@@ -15,13 +15,11 @@ TTS_CASE_WITH ( "Check behavior of plus on scalar"
               )
   <typename T>(T const& a0, T const& a1 )
 {
-  using eve::pedantic;
   for(auto e : a0)
     for(auto f : a1)
     {
       auto z = eve::complex(e, f);
       TTS_EQUAL( eve::plus(z), z );
-      TTS_EQUAL( pedantic(eve::plus)(z), z );
     }
 };
 
@@ -31,9 +29,7 @@ TTS_CASE_WITH ( "Check behavior of plus on wide"
               )
   <typename T>(T const& a0, T const& a1 )
 {
-  using eve::pedantic;
   using z_t = eve::as_complex_t<T>;
   auto z = z_t(a0, a1);
   TTS_EQUAL( eve::plus(z), z );
-  TTS_EQUAL( eve::pedantic(eve::plus)(z), z);
 };

@@ -85,11 +85,7 @@ namespace eve
         return pow(sqr_abs(z1), z2*half(eve::as(eve::real(z2))));
       else
       {
-//         std::cout << tts::typename_<Z1 >  << std::endl;
-//         std::cout << tts::typename_<decltype(sqr_abs(z1))> << std::endl;
-//         std::cout << tts::typename_<Z2 >  << std::endl;
         return Z1{pow(sqr_abs(z1), z2*half(eve::as(eve::real(z1)))), 0};
-        //       return z1+z2;
       }
     }
 

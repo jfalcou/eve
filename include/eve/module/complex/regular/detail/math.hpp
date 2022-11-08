@@ -493,7 +493,22 @@ namespace eve::detail
   template<typename Z>
   EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::invgd_, Z const& z ) noexcept
   {
-    return atanh(sin(z));
+    auto [x, y] = z;
+    auto [shy, chy] = sinhcosh(y);
+    auto [sx, cx]   = sincos(x);
+    return Z{atanh(sx/chy), pedantic(atan2)(shy, cx)};
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== gd
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::gd_, Z const& z ) noexcept
+  {
+    auto [x, y] = z;
+    auto [shx, chx] = sinhcosh(x);
+    auto [sy, cy]   = sincos(y);
+    return Z{pedantic(atan2)(shx, cy), atanh(sy/chx)};
   }
 
   //===-------------------------------------------------------------------------------------------

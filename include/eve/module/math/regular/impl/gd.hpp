@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-template<value T>
+template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 gd_(EVE_SUPPORTS(cpu_), T x) noexcept
 {

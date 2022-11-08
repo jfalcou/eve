@@ -24,11 +24,6 @@ namespace eve::detail
   template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::trunc_,   Z const& z) noexcept { return Z{trunc(real(z)), trunc(imag(z))};     }
   template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::frac_,    Z const& z) noexcept { return Z{frac(real(z)), frac(imag(z))};       }
   template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::minus_,   Z const& z) noexcept { return Z{minus(real(z)), minus(imag(z))};     }
-  template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::plus_,    Z const& z) noexcept { return z;                                     }
-
-  template<decorator D, typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::minus_, D const &, Z const& z) noexcept { return minus(z);        }
-  template<decorator D, typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::plus_,  D const &, Z const& z) noexcept { return z;               }
-
 
   //==============================================================================================
   //  trivial extension of some real binary functions

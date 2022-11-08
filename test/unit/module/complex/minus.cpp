@@ -22,7 +22,6 @@ TTS_CASE_WITH ( "Check behavior of minus on scalar"
       auto z = eve::complex(e, f);
       auto mz = eve::complex(-e, -f);
       TTS_EQUAL( eve::minus(z), mz );
-      TTS_EQUAL( pedantic(eve::minus)(z), mz );
     }
 };
 
@@ -37,5 +36,4 @@ TTS_CASE_WITH ( "Check behavior of minus on wide"
   auto z = z_t(a0, a1);
   auto mz = z_t(-a0, -a1);
   TTS_EQUAL( eve::minus(z), mz );
-  TTS_EQUAL( eve::pedantic(eve::minus)(z), mz);
 };
