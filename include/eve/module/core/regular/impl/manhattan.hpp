@@ -25,7 +25,7 @@ auto
 manhattan_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, Ts... args)
 {
   auto r = eve::add(eve::abs(a0), eve::abs(args)...);
-  auto inf_found = is_inf(a0) || (... || is_infinite(args));
+  auto inf_found = is_infinite(a0) || (... || is_infinite(args));
   return if_else(inf_found, inf(as(r)), r);
 }
 

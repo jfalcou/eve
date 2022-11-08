@@ -21,6 +21,7 @@ TTS_CASE_TPL("Check return types of lpnorm", eve::test::simd::ieee_reals)
   using v_t = eve::element_type_t<T>;
 
   TTS_EXPR_IS(eve::lpnorm(int(), T(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(int(), int(), T()), T);
   TTS_EXPR_IS(eve::lpnorm(int(), v_t(), v_t()), v_t);
   TTS_EXPR_IS(eve::lpnorm(int(), T(), v_t()), T);
   TTS_EXPR_IS(eve::lpnorm(int(), v_t(), T()), T);
@@ -151,18 +152,3 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(3, )", eve::test::simd::ieee_rea
 };
 
 #endif
-
-
-//==================================================================================================
-// Tests for masked lpnorm
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::lpnorm)(eve::wide)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
-                         M const& mask)
-{
-  TTS_IEEE_EQUAL(eve::lpnorm[mask](a0),
-            eve::if_else(mask, eve::lpnorm(a0), a0));
-};
