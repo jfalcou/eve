@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 template<integral_scalar_value T, typename N, integral_scalar_value U>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_shl(wide<T,N>& self, wide<U,N> shift) noexcept
 requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
 {
@@ -28,7 +28,7 @@ requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
 }
 
 template<integral_scalar_value T, typename N, integral_scalar_value U>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_shl(wide<T,N>& self, U shift) noexcept
 requires sve_abi<abi_t<T, N>>
 {
@@ -38,7 +38,7 @@ requires sve_abi<abi_t<T, N>>
 }
 
 template<integral_scalar_value T, typename N, integral_scalar_value U>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_shr(wide<T,N>& self, wide<U,N> shift) noexcept
 requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
 {
@@ -50,7 +50,7 @@ requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
 }
 
 template<integral_scalar_value T, typename N, integral_scalar_value U>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_shr(wide<T,N>& self, U shift) noexcept
 requires sve_abi<abi_t<T, N>>
 {
@@ -62,7 +62,7 @@ requires sve_abi<abi_t<T, N>>
 }
 
 template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_bitand(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
@@ -85,7 +85,7 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
 }
 
 template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_bitor(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
@@ -107,7 +107,7 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
   return self;
 }
 template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE decltype(auto)
+EVE_FORCEINLINE auto&
 self_bitxor(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
