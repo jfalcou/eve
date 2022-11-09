@@ -10,5 +10,6 @@
   "unit.internals.to_logical.exe": "^unit.internals.to_logical.exe",
   "unit.api.regular.arithmetic.exe":  "^unit.api.regular.arithmetic.exe",
   "unit.api.regular.bitwise.exe":  "^unit.api.regular.bitwise.exe",
-  "unit.api.regular.shift.exe":  "^unit.api.regular.shift.exe"
+  "unit.api.regular.shift.exe":  "^unit.api.regular.shift.exe",
+  "unit.api.regular.wide.exe":  "^unit.api.regular.wide.exe"
 }

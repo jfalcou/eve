@@ -7,22 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
 #include <eve/forward.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/concept/value.hpp>
 
-#include <eve/detail/function/simd/common/iota.hpp>
-
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/detail/function/simd/arm/sve/iota.hpp>
-#endif
-
 namespace eve::detail
 {
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto linear_ramp(as<T> const& tgt) noexcept
+  template<integral_value T>
+  EVE_FORCEINLINE constexpr auto linear_ramp(EVE_SUPPORTS(cpu_), as<T> const &) noexcept
   {
-    return linear_ramp(EVE_RETARGET(eve::current_api_type), tgt);
+    if constexpr( scalar_value<T> )
+    {
+      return T(0);
+    }
+    else
+    {
+      return T([](auto i, auto ) { return i; } );
+    }
   }
 }
