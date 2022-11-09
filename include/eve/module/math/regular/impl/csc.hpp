@@ -21,7 +21,7 @@ csc_(EVE_SUPPORTS(cpu_), D const&, T const& a0) noexcept
   else return apply_over(D()(csc), a0);
 }
 
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 csc_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {
