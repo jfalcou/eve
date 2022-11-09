@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_SUPPORTS(sve_),
          logical<wide<T, N>> const& c,
@@ -23,7 +23,7 @@ requires sve_abi<abi_t<T, N>>
   return svsel(c, vt, vf);
 }
 
-template<real_scalar_value T, typename N>
+template<scalar_value T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>
 if_else_(EVE_SUPPORTS(sve_),
          logical<wide<T, N>> const& c,
