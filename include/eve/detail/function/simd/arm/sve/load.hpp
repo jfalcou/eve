@@ -38,11 +38,7 @@ load_ ( EVE_SUPPORTS(sve_), ignore_none_ const&, safe_type const&
       ) noexcept
 requires(dereference_as<logical<T>, Pointer>::value && sve_abi<abi_t<T, N>>)
 {
-  auto block = [&]() -> wide<T, N>
-  {
-    return load(ignore_none, safe, eve::as<wide<T, N>>{}, ptr_cast<T const>(ptr));
-  }();
-
+  auto block = load(ignore_none, safe, eve::as<wide<T, N>>{}, ptr_cast<T const>(ptr));
   return to_logical(block);
 }
 }
