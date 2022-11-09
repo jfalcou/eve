@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/function/iota.hpp>
 
 namespace eve::detail
 {
@@ -31,7 +32,7 @@ namespace eve::detail
     }
     else
     {
-      logical<that_t> const maps = [&](auto i, auto) { return i < N::value; };
+      auto const maps = linear_ramp(as<wide<as_integer_t<T>,N>>{}) < N::value;
       return svsplice(maps,l,h);
     }
   }
