@@ -19,7 +19,7 @@ namespace eve::detail
   //================================================================================================
   // <<=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  template<integral_scalar_value T, typename N, integral_scalar_value U>
   EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, wide<U,N> s) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
@@ -28,7 +28,7 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  template<integral_scalar_value T, typename N, integral_scalar_value U>
   requires ppc_abi<abi_t<T, N>>
   EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, U s) noexcept
   {
@@ -40,7 +40,7 @@ namespace eve::detail
   //================================================================================================
   // >>=
   //================================================================================================
-  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  template<integral_scalar_value T, typename N, integral_scalar_value U>
   requires ppc_abi<abi_t<T, N>>
   EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, wide<U,N> s) noexcept
   {
@@ -52,7 +52,7 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+  template<integral_scalar_value T, typename N, integral_scalar_value U>
   requires ppc_abi<abi_t<T, N>>
   EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, U s) noexcept
   {

@@ -7,5 +7,8 @@
   "unit.internals.dispatch.exe": "^unit.internals.dispatch.exe",
   "unit.internals.meta.exe": "^unit.internals.meta.exe",
   "unit.internals.optimize_pattern.exe": "^unit.internals.optimize_pattern.exe",
-  "unit.internals.to_logical.exe": "^unit.internals.to_logical.exe"
+  "unit.internals.to_logical.exe": "^unit.internals.to_logical.exe",
+  "unit.api.regular.arithmetic.exe":  "^unit.api.regular.arithmetic.exe",
+  "unit.api.regular.bitwise.exe":  "^unit.api.regular.bitwise.exe",
+  "unit.api.regular.shift.exe":  "^unit.api.regular.shift.exe"
 }
