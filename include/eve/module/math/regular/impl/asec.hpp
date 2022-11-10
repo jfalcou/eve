@@ -21,11 +21,12 @@ asec_(EVE_SUPPORTS(cpu_), D const&, T const& a) noexcept
   else { return apply_over(D()(eve::asec), a); }
 }
 
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr auto
 asec_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
-  return asec(regular_type {}, a);
+  if constexpr( has_native_abi_v<T> ) { return acos(rec(a)); }
+  else { return apply_over(eve::asec, a); }
 }
 
 // -----------------------------------------------------------------------------------------------
