@@ -33,7 +33,7 @@ TTS_CASE_WITH ( "Check behavior of lrising_factorial on wide"
    auto lrf =  [](auto a,  auto b){return eve::log(eve::tgamma(a+b)/eve::tgamma(a)); };
    TTS_ULP_EQUAL( eve::lrising_factorial(a, b) , lrf(a, b), 0.5);
    TTS_RELATIVE_EQUAL( eve::lrising_factorial(a, 0.0) , eve::zero(eve::as(a)), 0.0005);
-   TTS_ULP_EQUAL( eve::lrising_factorial(a, 1.0), eve::log(a), 100);
-   TTS_ULP_EQUAL( eve::lrising_factorial(a, 2.0), eve::log(eve::fma(a, a, a)), 100);
+   TTS_ULP_EQUAL( eve::lrising_factorial(a, 1.0), eve::log(a), 200);
+   TTS_ULP_EQUAL( eve::lrising_factorial(a, 2.0), eve::log(eve::fma(a, a, a)), 200);
 
 };
