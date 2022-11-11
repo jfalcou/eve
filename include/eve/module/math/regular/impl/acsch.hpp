@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr auto
 acsch_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 {

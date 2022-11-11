@@ -20,7 +20,7 @@ sec_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
   else { return apply_over(D()(sec), a0); }
 }
 
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr auto
 sec_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
