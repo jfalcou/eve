@@ -206,4 +206,17 @@ namespace eve::detail
   {
     return fnms(z2, z3, z1);
   }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== modf
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::modf_
+                                             , Z const& z) noexcept
+  {
+    auto t = trunc(z);
+    return kumi::tuple{z - t, t};
+  }
+
+
 }

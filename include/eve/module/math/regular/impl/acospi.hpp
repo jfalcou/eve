@@ -15,18 +15,19 @@ namespace eve::detail
 {
 template<floating_real_value T, decorator D>
 EVE_FORCEINLINE constexpr auto
-acospi_(EVE_SUPPORTS(cpu_), D const& decorator, T const& a) noexcept
+acospi_(EVE_SUPPORTS(cpu_), D const& d, T const& a) noexcept
     requires(is_one_of<D>(types<regular_type, raw_type> {}))
 {
-  if constexpr( has_native_abi_v<T> ) { return radinpi(decorator(acos)(a)); }
-  else { return apply_over(decorator(acospi), a); }
+  if constexpr( has_native_abi_v<T> ) { return radinpi(d(acos)(a)); }
+  else { return apply_over(d(acospi), a); }
 }
 
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr auto
 acospi_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
-  return acospi(regular_type {}, a);
+  if constexpr( has_native_abi_v<T> ) { return radinpi(acos(a)); }
+  else { return apply_over(acospi, a); }
 }
 
 // -----------------------------------------------------------------------------------------------

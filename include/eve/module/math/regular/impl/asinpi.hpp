@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr auto
 asinpi_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
