@@ -17,7 +17,7 @@ namespace eve
 //! @{
 //! @var expx2
 //!
-//! @brief Callable object computing \f$e^{x^2}\f$.
+//! @brief Callable object computing \f$e^{-x^2}\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< value T>
-//!      T expx2(T x) noexcept;
+//!      T expmx2(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -41,26 +41,25 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
-//!   trying to avoid overflow as possible.
+//!   Returns the [elementwise](@ref glossary_elementwise) exponential of minus the square of `x`
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/expx2.cpp}
+//!  @godbolt{doc/math/expmx2.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve::expx2[mask](x, ...)` provides a masked version of `eve::expx2` which is
-//!     equivalent to `if_else (mask, expx2(x, ...), x)`.
+//!     The call `eve::expmx2[mask](x, ...)` provides a masked version of `eve::expmx2` which is
+//!     equivalent to `if_else (mask, expmx2(x, ...), x)`.
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/math/masked/expx2.cpp}
+//!        @godbolt{doc/math/masked/expmx2.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(expx2_, expx2);
+EVE_MAKE_CALLABLE(expmx2_, expmx2);
 }
 
-#include <eve/module/math/regular/impl/expx2.hpp>
+#include <eve/module/math/regular/impl/expmx2.hpp>
