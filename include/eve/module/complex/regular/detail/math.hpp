@@ -529,10 +529,10 @@ namespace eve::detail
   }
 
   //===-------------------------------------------------------------------------------------------
-  //=== invgd
+  //=== agd
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::invgd_, Z const& z ) noexcept
+  EVE_FORCEINLINE  auto complex_unary_dispatch( eve::tag::agd_, Z const& z ) noexcept
   {
     auto [x, y] = z;
     auto [shy, chy] = sinhcosh(y);

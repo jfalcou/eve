@@ -16,28 +16,28 @@ namespace eve::detail
 
 template<floating_real_value T>
 EVE_FORCEINLINE constexpr auto
-invgd_(EVE_SUPPORTS(cpu_), T x) noexcept
+agd_(EVE_SUPPORTS(cpu_), T x) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
     return if_else(abs(x) <= pio_2(as(x)), atanh(sin(x)), allbits);
   }
-  else return apply_over(invgd, x);
+  else return apply_over(agd, x);
 }
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
 template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
-invgd_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+agd_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
-  return mask_op(cond, eve::invgd, t);
+  return mask_op(cond, eve::agd, t);
 }
 
 template<conditional_expr C, decorator D, value U>
 EVE_FORCEINLINE auto
-invgd_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+agd_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
 {
-  return mask_op(cond, d(eve::invgd), t);
+  return mask_op(cond, d(eve::agd), t);
 }
 }

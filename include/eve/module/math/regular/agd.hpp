@@ -14,7 +14,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
-//! @var invgd
+//! @var agd
 //!
 //! @brief Callable object computing the inverse gudermanian.
 //!
@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T invgd(T x) noexcept;
+//!      T agd(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -51,11 +51,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/invgd.cpp}
+//!  @godbolt{doc/math/agd.cpp}
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(invgd_, invgd);
+EVE_MAKE_CALLABLE(agd_, agd);
 }
 
-#include <eve/module/math/regular/impl/invgd.hpp>
+#include <eve/module/math/regular/impl/agd.hpp>
