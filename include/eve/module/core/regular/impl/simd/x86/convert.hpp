@@ -23,13 +23,19 @@ EVE_FORCEINLINE logical<wide<U, N>>
 convert_impl(EVE_SUPPORTS(sse2_), logical<wide<T, N>> v, as<logical<U>> const& tgt) noexcept
 {
   using enum category;
-  using out_t         = logical<wide<U, N>>;
-  constexpr auto c_in = categorize<wide<T, N>>();
+  using out_t                     = logical<wide<U, N>>;
+  constexpr auto c_in             = categorize<wide<T, N>>();
 
+  if constexpr( !use_is_wide_logical<abi_t<T, N>>::value )
+  {
+    //  For non-wide logical, we only have to convert kmask
+    using s_t = typename out_t::storage_type;
+    return out_t(s_t {static_cast<typename s_t::type>(v.storage().value)});
+  }
   //==============================================================================================
   // Common cases for 32/64->8, 64->16
   // The sizeof(U)/sizeof(T) > 2 case is handled by the generic implementation
-  if constexpr( sizeof(T) / sizeof(U) > 2 )
+  else if constexpr( sizeof(T) / sizeof(U) > 2 )
   {
     return convert(convert(v, as<logical<downgrade_t<as_integer_t<T, signed>>>> {}), tgt);
   }
