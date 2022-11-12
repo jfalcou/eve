@@ -12,12 +12,12 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
-            << "-> expx2(pf)        = " << eve::expx2(pf) << '\n';
+            << "-> expx2(pf, -1.0f) = " << eve::expmx2(pf) << '\n';
 
   float xf = 1.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf        = " << xf << '\n'
-            << "-> expx2(xf) = " << eve::expx2(xf) << '\n';
+            << "-> expx2(xf) = " << eve::expmx2(xf) << '\n';
   return 0;
 }
