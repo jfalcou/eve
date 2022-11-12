@@ -33,7 +33,7 @@ namespace eve
 //!      T cospi(T x) noexcept;                              //1
 //!
 //!      template< eve::floating_value T >
-//!      as_complex_t<T> cospi(as_complex_t<T> x) noexcept;  //2
+//!      as_complex_t<T> cospi(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!
@@ -46,12 +46,13 @@ namespace eve
 //!
 //!   1.  Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
 //!       The call `cospi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
+//!
 //!       In particular:
 //!
-//!          * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!          * If the element is \f$\pm\1/2\f$, \f$0\f$ is returned.
-//!          * If the element is \f$\pm\infty\f$, Nan is returned.
-//!          * If the element is a `Nan`, `Nan` is returned.
+//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!        * If the element is \f$\pm1/2\f$, \f$0\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, Nan is returned.
+//!        * If the element is a `Nan`, `Nan` is returned.
 //!
 //!   2. Returns [elementwise](@ref glossary_elementwise) the cosine of the input
 //!      in \f$\pi\f$ multiples.

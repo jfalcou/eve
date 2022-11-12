@@ -30,13 +30,22 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U >
-//!      T powm1(T x, U y) noexcept;
+//!      auto powm1(T x, U y) noexcept;                                       //1
+//!
+//!      template< eve::floating_value T, eve::floating_value U >           //2
+//!      auto powm1(eve::as_complex_t<T> x, U y) noexcept;
+//!
+//!      template< eve::floating_value T, eve::floating_value U >           //2
+//!      auto powm1(T x, eve::as_complex_t<U> y) noexcept;
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto powm1(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`, `y`:   [floating real value](@ref eve::floating_real_value).
+//!`x`, `y`:   [floating real or complex values](@ref eve::floating_real_value).
 //!
 //! **Return value**
 //!

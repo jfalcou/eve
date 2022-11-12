@@ -31,24 +31,31 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T atanpi(T x) noexcept;
+//!      T atanpi(T x) noexcept;                                  //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> acospi(eve::complex<T> z) noexcept;      //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
-//! input in the range \f$[-\frac12, \frac12]\f$.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//!      input in the range \f$[-\frac12, \frac12]\f$.
 //!
-//! In particular:
+//!      In particular:
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
+//!      of the arc tangent of the input in \f$\pi\f$ multiples.
 //!
 //!  @groupheader{Example}
 //!

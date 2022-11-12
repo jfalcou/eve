@@ -31,15 +31,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< floating_value P, floating_value T, floating_value ... Ts>
-//!      auto geommean( T x,Ts ... args ) const noexcept
+//!      template<fvalue T, value ... Ts>
+//!      auto geommean( T x, Ts ... args ) const noexcept
 //!   }
 //!   @endcode
 //!
 //!
 //! **Parameters**
 //!
-//!   `p`, `x`, `... args`:   [floating values](@ref eve::floating_value)
+//!   ``x`, `... args`:   [floating real or complex values](@ref eve::floating_value)
 //!
 //! **Return value**
 //!
