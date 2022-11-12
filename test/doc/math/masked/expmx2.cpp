@@ -10,7 +10,7 @@ int main()
                eve::inf(eve::as<float>()), 4.0f, eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" <<  '\n'
-            << "<- pf                = " << pf << '\n'
-            << "-> expx2[pf > 1.0](pf)       = " << eve::expx2[pf > 1.0](pf) << '\n';
+            << "<- pf                   = " << pf << '\n'
+            << "-> expmx2[pf > 1.0](pf) = " << eve::expmx2[pf > 1.0](pf) << '\n';
   return 0;
 }

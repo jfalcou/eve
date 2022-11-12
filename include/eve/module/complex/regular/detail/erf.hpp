@@ -37,7 +37,7 @@ namespace eve
       auto c_small = [](auto z){
         constexpr size_t nn = 32;
         auto[x, y] = z;
-        auto k1 = two_o_pi(as(x)) * expx2(x, mone(as(x)));
+        auto k1 = two_o_pi(as(x)) * expmx2(x);
         auto k2 = exp_i(-2*x*y);
         auto s1 = erf(x);
         auto isnezx = is_nez(x);

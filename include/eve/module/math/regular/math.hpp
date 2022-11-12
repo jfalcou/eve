@@ -53,6 +53,7 @@
 #include <eve/module/math/regular/exp10.hpp>
 #include <eve/module/math/regular/exp2.hpp>
 #include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/regular/expmx2.hpp>
 #include <eve/module/math/regular/expx2.hpp>
 #include <eve/module/math/regular/gd.hpp>
 #include <eve/module/math/regular/geommean.hpp>
