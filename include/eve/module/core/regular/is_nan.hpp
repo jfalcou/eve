@@ -35,15 +35,18 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real or complex argumentargument](@ref eve::value).
 //!
 //!   **Return value**
 //!
-//!       The call `eve::is_nan(x)`  is semantically  equivalent to:
+//!       For eal entries the call `eve::is_nan(x)`  is semantically  equivalent to:
 //!
 //!       @code
 //!         if   constexpr(floating_value<T>) return is_not_equal(x, x);
 //!         else constexpr(integral_value<T>) return false_(as(x));
+//!
+//!       For complex entries  `is_infinite(z)` is semantically  equivalent to
+//!       `eve::is_nan(real(z)) || eve::is_nan(imag(z))`,
 //!
 //!  @groupheader{Example}
 //!

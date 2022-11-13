@@ -35,7 +35,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real or complex argument](@ref eve::value).
 //!
 //!    **Return value**
 //!
@@ -43,8 +43,8 @@ namespace eve
 //!    is returned.
 //!
 //! @note
-//!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
-//!       \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
+//!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point or complex entry \f$x\f$
+//!       are related by \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
 //!
 //!    *  The exception is when \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$).
 //!
