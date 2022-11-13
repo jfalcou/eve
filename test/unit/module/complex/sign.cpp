@@ -32,6 +32,6 @@ TTS_CASE_WITH ( "Check behavior of sign on wide"
 {
   using eve::pedantic;
   using z_t = eve::as_complex_t<T>;
-  auto z = eve::complex(a0, a1);
+  auto z = z_t(a0, a1);
   TTS_EQUAL( eve::sign(z), z/eve::abs(z) );
 };

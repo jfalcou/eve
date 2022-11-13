@@ -126,6 +126,12 @@ namespace eve::detail
     return sum_of_prod(zr, zr, zi, zi);
   }
 
+  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::sign_
+                                              , auto const& z
+                                              ) noexcept
+  {
+    return if_else(is_eqz(z), zero, z/abs(z)); ;
+  }
 
   //==============================================================================================
   //  Binary functions
@@ -137,6 +143,21 @@ namespace eve::detail
   {
     using z_t = decltype(z1+z2);
     return z_t{eve::average(real(z1), real(z2)), eve::average(imag(z1), imag(z2))};
+  }
+
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::negate_
+                                              , auto const& z1, auto const& z2
+                                              ) noexcept
+  {
+    return z1*sign(z2);
+  }
+
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::negatenz_
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return if_else(eve::is_eqz(z2), to_complex(z1), z1*sign(z2));
   }
 
   //==============================================================================================
