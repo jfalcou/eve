@@ -29,9 +29,9 @@ namespace eve::detail
   //===-------------------------------------------------------------------------------------------
   EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::cbrt_, auto const& z) noexcept
   {
-    auto m = abs(z);
-    auto a = arg(z);
-    return polar(cbrt(m), a*third(as(a)));
+    auto m = eve::abs(z);
+    auto a = eve::arg(z);
+    return polar(eve::cbrt(m), a*eve::third(eve::as(a)));
   }
 
   //===-------------------------------------------------------------------------------------------
