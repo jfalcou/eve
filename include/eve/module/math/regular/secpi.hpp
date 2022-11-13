@@ -30,25 +30,36 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T secpi(T x) noexcept;
+//!      T secpi(T x) noexcept;                              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> secpi(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
+//!
+//!   }
+//!   @endcode
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) secant of the input
-//! expressed in \f$\pi\f$ multiples.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) secant of the input
+//!      expressed in \f$\pi\f$ multiples.
 //!
-//! The call `secpi(x)` is semantically equivalent to \f$\sec(\pi x)\f$.
-//! In particular:
+//!      The call `secpi(x)` is semantically equivalent to \f$\sec(\pi x)\f$.
+//!      In particular:
 //!
-//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!      * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, Nan is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the secant of the input
+//!      i.e. \f$\1/cos(z)\f$ expressed in \f$\pi\f$ multiples.
+//!
 //!
 //!  @groupheader{Example}
 //!

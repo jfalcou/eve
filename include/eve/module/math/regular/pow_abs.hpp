@@ -30,22 +30,29 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U >
-//!      T pow_abs(T x, U y) noexcept;
+//!      auto pow_absm1(T x, U y) noexcept;                                 //1
+//!
+//!      template< eve::floating_value T, eve::floating_value U >           //2
+//!      auto pow_absm1(eve::as_complex_t<T> x, U y) noexcept;
+//!
+//!      template< eve::floating_value T, eve::floating_value U >           //2
+//!      auto pow_absm1(T x, eve::as_complex_t<U> y) noexcept;
+//!
+//!      template< eve::floating_value T, eve::floating_value U >
+//!      auto pow_absm1(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [value](@ref eve::value).
-//!
-//!`y`:   [real value](@ref eve::real_value).
+//!    `x`, `y`:   [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
 //!
 //! **Return value**
 //!
 //! Returns [elementwise](@ref glossary_elementwise) \f$|x|^y\f$.
 //!
 //! The result type is the [common compatible type](@ref common_compatible) of the two parameters.
-//! In particular we have (IEC 60559):
+//! In particular we have (IEC 60559) for floating entries:
 //!
 //!  *  pow_abs(\f$\pm0\f$, y), where y is a negative odd integer, returns \f$+\infty\f$.
 //!  *  pow_abs(\f$\pm0\f$, y), where y is negative, finite, and is an even integer or a

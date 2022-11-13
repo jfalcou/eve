@@ -30,19 +30,23 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< value T>
-//!      T expx2(T x) noexcept;
-//!   }
+//!      template< floating_value T>
+//!      T expx2(T x) noexcept;                              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> expx2(as_complex_t<T> z) noexcept;  //2
+///!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    `x`:   [floating real or complex value](@ref eve::value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
 //!   Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
-//!   trying to avoid overflow as possible.
+//!   trying to avoid overflow as possible in the real case.
 //!
 //!  @groupheader{Example}
 //!

@@ -38,7 +38,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [floating argument](@ref eve::floating_value).
+//!     * `x`:  [real or complex argument](@ref eve::floating_value).
 //!
 //!     * `n` :  [integral value argument](@ref eve::integral_value).
 //!

@@ -35,15 +35,18 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real or complex argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
-//!     The call `is_not_finite(x)` is semantically  equivalent to:
+//!     For real entries the call `is_not_finite(x)` is semantically  equivalent to:
 //!     @code
 //!     if   constexpr(floating_value<T>) return is_nan(x-x);
 //!     else constexpr(integral_value<T>) return false_(as(x));
 //!     @endcode
+//!
+//!     For complex entries  `is_infinite(z)` is semantically  equivalent to
+//!     `eve::is_not_finite(real(z)) || eve::is_not_finite(imag(z))`,
 //!
 //!  @groupheader{Example}
 //!

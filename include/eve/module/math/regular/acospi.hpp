@@ -31,24 +31,32 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T acospi(T x) noexcept;
+//!      T acospi(T x) noexcept;                                   //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> acospi(eve::complex<T> z) noexcept;      //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) value in \f$pi\f$ multiples of the arc
-//! cosine of the input in the range \f$[0, 1]\f$.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!      input in \f$\pi\f$ multiples, in the range \f$[0 , 1]\f$.
 //!
-//! In particular:
+//!      In particular:
 //!
-//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!   * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!      * If the element \f$|x| > 1\f$, `NaN` is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!
+//!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
+//!      of the arc cosine of the input in \f$\pi\f$ multiples.
+//!      Branch cuts exist outside the interval \f$[-1, +1]\f$ along the real axis.
 //!
 //!  @groupheader{Example}
 //!

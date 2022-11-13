@@ -33,7 +33,7 @@ namespace eve
 //!      T cos(T x) noexcept;                              //1
 //!
 //!      template< eve::floating_value T >
-//!      as_complex_t<T> cos(as_complex_t<T> x) noexcept;  //2
+//!      as_complex_t<T> cos(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!

@@ -30,13 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, T> sincos(T x) noexcept;
+//!      kumi::tuple<T, T> sincos(T x) noexcept;              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> sincos(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!

@@ -15,7 +15,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
-//! @var expx2
+//! @var expmx2
 //!
 //! @brief Callable object computing \f$e^{-x^2}\f$.
 //!
@@ -31,7 +31,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< value T>
-//!      T expmx2(T x) noexcept;
+//!      T expmx2(T x) noexcept;                              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> expmx2(as_complex_t<T> z) noexcept;  //2
+//!   }
+//!   @endcode
+//!
+//! **Parameters**
+//!
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
+//!
+//! **Return value**
 //!   }
 //!   @endcode
 //!

@@ -38,11 +38,13 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   `p`, `x`, `... args`:   [floating values](@ref eve::floating_value)
+//!   *  `p`            :   [floating values](@ref eve::floating_value)
+//!   *  `x`, `... args`:   [floating real or complex values](@ref eve::floating_value)
 //!
 //! **Return value**
 //!
-//!   The result type is the [common compatible type](@ref common_compatible) of the parameters.
+//!   The result type is the [common compatible type](@ref common_compatible) of the absolute
+//!   values of the  parameters.
 //!
 //!  @groupheader{Example}
 //!

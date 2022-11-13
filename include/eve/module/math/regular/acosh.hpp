@@ -57,7 +57,7 @@ namespace eve
 //!
 //!   2. Returns the complex arc hyperbolic cosine of z, in the range of a
 //!      strip unbounded along the imaginary axis and
-//!     in the interval \f$[0,\pi]\f$ along the real axis.
+//!      in the interval \f$[0,\pi]\f$ along the real axis.
 //!
 //!      * for every z: eve::acosh(eve::conj(z)) == eve::conj(std::acosh(z))
 //!      * If z is \f$\pm0\f$, the result is \f$i pi/2\f$
