@@ -77,6 +77,8 @@
 //!   * regular call (not decorated) choose the best call and is
 //!     valid on the full range.
 //!
+//!  @warning Note that these decorator only work for floating real values.
+//!
 //! @defgroup math_invtrig  Inverse trigonometric
 //! @ingroup math
 //! These functions allows performing trigonometric computations
