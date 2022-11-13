@@ -30,25 +30,28 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sinpi(T x) noexcept;
+//!      T sinpi(T x) noexcept;                              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> cospi(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) sine of the input expressed in \f$\pi\f$
-//! multiples.
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) sine of the input.
+//!       The call `sinpi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
 //!
-//! The call `sinpi(x)` is semantically equivalent to \f$\sin(\pi x)\f$.
-//! In particular:
+//!       In particular:
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!       * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!       * If the element is \f$\pm\infty\f$, Nan is returned.
+//!       * If the element is a `Nan`, `NaN` is returned.
 //!
 //!  @groupheader{Example}
 //!

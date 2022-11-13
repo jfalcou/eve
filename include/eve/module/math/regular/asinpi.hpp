@@ -30,26 +30,31 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T asinpi(T x) noexcept;
+//!      T asinpi(T x) noexcept;                                   //1
+//!
+//!      template< eve::floating_value T >
+//!      eve::complex<T> asinpi(eve::complex<T> z) noexcept;       //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) arc sine of the
-//! input in the range \f$[-\frac12, \frac12]\f$.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) arc sine of the
+//!      input in the range \f$[-\frac12, \frac12]\f$.
 //!
-//! In particular:
+//!      In particular:
 //!
-//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!   * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!      * If the element \f$|x| > 1\f$, `NaN` is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!  @groupheader{Example}
+//!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
+//!      of the arc sine of the input in \f$\pi\f$ multiples.
 //!
 //!  @godbolt{doc/math/asinpi.cpp}
 //!  @}

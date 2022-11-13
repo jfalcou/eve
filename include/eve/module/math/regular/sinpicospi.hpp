@@ -31,13 +31,20 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, T> sinpicospi(T x) noexcept;
+//!      kumi::tuple<T, T> sinpicospi(T x) noexcept;              //1
+//!
+//!      template< eve::floating_value T >
+//!      as_complex_t<T> sinpicospi(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!   *  `z`:   [complex ](@ref eve::complex) value.
+//!
+//!   }
+//!   @endcode
 //!
 //! **Return value**
 //!

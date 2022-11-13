@@ -35,13 +35,16 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [real or complex argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
-//!     The call `is_infinite(x)` is semantically  equivalent to
+//!     For real entries the call `is_infinite(x)` is semantically  equivalent to
 //!     `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
-//!     in particular this is always true for integral types.
+//!     in particular this is always false for integral types.
+//!
+//!     For complex entries  `is_infinite(z)` is semantically  equivalent to
+//!     `eve::is_infinite(real(z)) || eve::is_infinite(imag(z))`,
 //!
 //!  @groupheader{Example}
 //!

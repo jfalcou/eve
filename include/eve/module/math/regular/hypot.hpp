@@ -30,7 +30,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< floating_value P, floating_value T, floating_value ... Ts>
+//!      template< value T, value ... Ts>
 //!      auto hypot( T x,Ts ... args ) const noexcept
 //!   }
 //!   @endcode
@@ -38,12 +38,13 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   `p`, `x`, `... args`:   [floating values](@ref eve::floating_value)
+//!   `x`, `... args`:   [floating real or complex values](@ref eve::floating_value)
 //!
 //! **Return value**
 //!
 //!   \f$\sqrt{\sum_1^n |x_i|^2}\f$ is returned.
-//!   The result type is the [common compatible type](@ref common_compatible) of the parameters.
+//!   The result type is the [common compatible type](@ref common_compatible) of the
+//!   absolute values of the parameters.
 //!
 //!  @groupheader{Example}
 //!
@@ -54,7 +55,7 @@ namespace eve
 //!    * eve::pedantic
 //!
 //!      The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of
-//!      the squares of the parameters
+//!      the absolute squares of the parameters
 //!      without undue overflow or underflow at intermediate stages of the computation
 //!      and can be more accurate than the non-decorated call.
 //!
