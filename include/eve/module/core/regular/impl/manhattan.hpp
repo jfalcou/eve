@@ -49,7 +49,7 @@ manhattan_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<kumi::non_empty_product_type Ts>
 auto
-manhattan_(EVE_SUPPORTS(cpu_), pedantic_type const& d, Ts tup)
+manhattan_(EVE_SUPPORTS(cpu_), pedantic_type const&, Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
   else return eve::abs(kumi::apply( [&](auto... m) { return pedantic(manhattan)(m...); }, tup));
