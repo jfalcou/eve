@@ -29,7 +29,7 @@ TTS_CASE_WITH( "Check behavior of sinc on scalar"
   {
     for(auto f : a1)
     {
-      TTS_RELATIVE_EQUAL(eve::sinc(eve::complex<e_t>(e, f)),  cv(std::sin(c_t(e, f))/c_t(e, f)), 1.0e-4);
+      TTS_RELATIVE_EQUAL(eve::sinc(eve::complex<e_t>(e, f)),  cv(std::sin(c_t(e, f))/c_t(e, f)), 2.0e-4);
     }
   }
 };
@@ -55,5 +55,5 @@ TTS_CASE_WITH( "Check behavior of sinc on wide"
     }
     return b;
   };
-  TTS_RELATIVE_EQUAL(eve::sinc(z_t{a0,a1}), init_with_std(a0, a1), 1.0e-4);
+  TTS_RELATIVE_EQUAL(eve::sinc(z_t{a0,a1}), init_with_std(a0, a1), 1.0e-3);
 };
