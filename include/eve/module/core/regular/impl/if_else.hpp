@@ -113,31 +113,29 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& u, Constant const& v) noexc
   else if constexpr( current_api >= avx512 ) return if_else(cond, u, v(tgt {}));
   else
   {
-    using cvt = as<as_logical_t<element_type_t<U>>>;
-
-    if constexpr(
+     if constexpr(
         std::same_as<
             Constant,
             callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
     {
-      return bit_and(u, bit_mask(convert(cond, cvt {})));
+      return bit_and(u, bit_mask(to_logical(cond)));
     }
     else if constexpr(
         std::same_as<
             Constant,
             callable_allbits_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
     {
-      return bit_ornot(u, bit_mask(convert(cond, cvt {})));
+      return bit_ornot(u, bit_mask(to_logical(cond)));
     }
     else if constexpr( integral_value<U> )
     {
       if constexpr( std::same_as<Constant, callable_one_> )
       {
-        return -bit_ornot(U(-u), bit_mask(convert(cond, cvt {})));
+        return -bit_ornot(U(-u), bit_mask(to_logical(cond)));
       }
       else if constexpr( std::same_as<Constant, callable_mone_> )
       {
-        return bit_ornot(u, bit_mask(convert(cond, cvt {})));
+        return bit_ornot(u, bit_mask(to_logical(cond)));
       }
       else { return if_else(cond, u, v(tgt {})); }
     }
@@ -170,7 +168,7 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, Constant const& v, U const& u) noexc
             callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
     // valmin is zero in this case
     {
-      return bit_andnot(u, bit_mask(convert(cond, cvt {})));
+      return bit_andnot(u, bit_mask(to_logical(cond)));
     }
     else if constexpr(
         std::same_as<
@@ -178,17 +176,17 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, Constant const& v, U const& u) noexc
             callable_allbits_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
     // valmax is allbits in this case
     {
-      return bit_or(u, bit_mask(convert(cond, cvt {})));
+      return bit_or(u, bit_mask(to_logical(cond)));
     }
     else if constexpr( integral_value<U> )
     {
       if constexpr( std::same_as<Constant, callable_one_> )
       {
-        return -bit_or(-u, bit_mask(convert(cond, cvt {})));
+        return -bit_or(-u, bit_mask(to_logical(cond)));
       }
       else if constexpr( std::same_as<Constant, callable_mone_> )
       {
-        return bit_or(u, bit_mask(convert(cond, cvt {})));
+        return bit_or(u, bit_mask(to_logical(cond)));
       }
       else { return if_else(cond, v(tgt {}), u); }
     }

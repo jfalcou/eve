@@ -93,7 +93,7 @@ convert_(EVE_SUPPORTS(cpu_),
     if constexpr( sizeof(Out) == sizeof(In) ) return bit_cast(v, as<out_t> {});
     else if constexpr( std::is_unsigned_v<In> || std::is_floating_point_v<In> )
     {
-      using i_t = as<logical<wide<as_integer_t<In, signed>, cardinal_t<logical<In>>>>>;
+      using i_t = as<logical<wide<as_integer_t<In, signed>, N>>>;
       return convert(bit_cast(v, i_t {}), tgt);
     }
     else if constexpr( std::is_unsigned_v<Out> || std::is_floating_point_v<Out> )
