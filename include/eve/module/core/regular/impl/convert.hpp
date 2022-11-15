@@ -11,14 +11,12 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/has_abi.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
-#include <eve/module/core/regular/shuffle.hpp>
 #include <eve/module/core/regular/interleave.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
 #include <eve/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
 
@@ -28,12 +26,21 @@ namespace eve::detail
 {
 //================================================================================================
 //  scalar<->scalar convert
-template<scalar_value In, scalar_value Out>
-requires(!product_type<In> && !product_type<Out>) EVE_FORCEINLINE
-    auto convert_(EVE_SUPPORTS(cpu_), In v0, as<Out> const&) noexcept
+template<plain_scalar_value In, plain_scalar_value Out>
+EVE_FORCEINLINE auto
+convert_(EVE_SUPPORTS(cpu_), In v0, as<Out> const&) noexcept
 {
   if constexpr( std::same_as<In, Out> ) return v0;
   else return static_cast<Out>(v0);
+}
+
+//  scalar logical <-> scalar logical convert
+template<logical_scalar_value In, logical_scalar_value Out>
+EVE_FORCEINLINE auto
+convert_(EVE_SUPPORTS(cpu_), In v0, as<Out> const&) noexcept
+{
+  if constexpr( std::same_as<In, Out> ) return v0;
+  else return Out(v0.value());
 }
 
 //================================================================================================
@@ -48,9 +55,8 @@ struct convert_lambda
 };
 
 template<product_type T, product_type U>
-requires(kumi::result::flatten_all_t<T>::size()
-         == kumi::result::flatten_all_t<U>::size()) EVE_FORCEINLINE
-    auto convert_(EVE_SUPPORTS(cpu_), T const& v0, eve::as<U>)
+requires(kumi::result::flatten_all_t<T>::size() == kumi::result::flatten_all_t<U>::size())
+EVE_FORCEINLINE auto convert_(EVE_SUPPORTS(cpu_), T const& v0, eve::as<U>)
 {
   if constexpr( std::same_as<element_type_t<T>, U> ) { return v0; }
   else
@@ -69,18 +75,21 @@ requires(kumi::result::flatten_all_t<T>::size()
 
 //================================================================================================
 // logical<->logical convert
-template<value In, scalar_value Out>
+template<simd_value In, plain_scalar_value Out>
 EVE_FORCEINLINE auto
 convert_(EVE_SUPPORTS(cpu_),
          logical<In> const                      & v,
          [[maybe_unused]] as<logical<Out>> const& tgt) noexcept
 {
-  constexpr auto is_wide_logical = In::abi_type::is_wide_logical;
-  using out_t                    = as_wide_t<logical<Out>, cardinal_t<logical<In>>>;
+  using out_t = as_wide_t<logical<Out>, cardinal_t<logical<In>>>;
 
   if constexpr( std::same_as<element_type_t<In>, Out> ) return v;
-  else if constexpr( scalar_value<In> ) return static_cast<logical<Out>>(v.bits());
-  else if constexpr( is_wide_logical )
+  else if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
+  {
+    // If input or output are aggregated, we slice and combine without lose of performance
+    return out_t {eve::convert(v.slice(lower_), tgt), eve::convert(v.slice(upper_), tgt)};
+  }
+  else
   {
     using in_t = element_type_t<In>;
 
@@ -96,17 +105,6 @@ convert_(EVE_SUPPORTS(cpu_),
       return bit_cast(convert(v, i_t {}), as<out_t> {});
     }
     else return convert_impl(EVE_RETARGET(current_api_type), v, tgt);
-  }
-  else if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
-  {
-    // If input or output are aggregated, we slice and combine without lose of performance
-    return out_t {eve::convert(v.slice(lower_), tgt), eve::convert(v.slice(upper_), tgt)};
-  }
-  else
-  {
-    //  For non-wide logical, we only have to convert kmask
-    using s_t = typename out_t::storage_type;
-    return out_t(s_t {static_cast<typename s_t::type>(v.storage().value)});
   }
 }
 
@@ -155,27 +153,24 @@ convert_impl(EVE_SUPPORTS(cpu_), In const& v0, as<Out> const& tgt) noexcept
   else { return map(convert, v0, tgt); }
 }
 
-template<simd_value In, scalar_value Out>
-requires(!product_type<In> && !product_type<Out>) EVE_FORCEINLINE
-    auto convert_(EVE_SUPPORTS(cpu_), In const& v0, as<Out> const& tgt) noexcept
+template<plain_scalar_value In, typename N, plain_scalar_value Out>
+EVE_FORCEINLINE auto
+convert_(EVE_SUPPORTS(cpu_), wide<In, N> const& v0, as<Out> const& tgt) noexcept
 {
-  using in_t  = element_type_t<In>;
-  using out_t = element_type_t<Out>;
-
   // Converting T to T is identity
-  if constexpr( std::same_as<in_t, Out> ) { return v0; }
+  if constexpr( std::same_as<In, Out> ) { return v0; }
   else
   {
     // Converting between integral of different signs is just a bit_cast away
-    if constexpr( std::signed_integral<in_t> && std::unsigned_integral<out_t> )
+    if constexpr( std::signed_integral<In> && std::unsigned_integral<Out> )
     {
-      auto s_res = convert(v0, eve::as<std::make_signed_t<out_t>> {});
-      return bit_cast(s_res, eve::as<wide<Out, cardinal_t<In>>> {});
+      auto s_res = convert(v0, eve::as<std::make_signed_t<Out>> {});
+      return bit_cast(s_res, eve::as<wide<Out, N>> {});
     }
-    else if constexpr( std::unsigned_integral<in_t> && std::signed_integral<out_t> )
+    else if constexpr( std::unsigned_integral<In> && std::signed_integral<Out> )
     {
-      auto u_res = convert(v0, eve::as<std::make_unsigned_t<out_t>> {});
-      return bit_cast(u_res, eve::as<wide<Out, cardinal_t<In>>> {});
+      auto u_res = convert(v0, eve::as<std::make_unsigned_t<Out>> {});
+      return bit_cast(u_res, eve::as<wide<Out, N>> {});
     }
     else
     {
@@ -185,7 +180,9 @@ requires(!product_type<In> && !product_type<Out>) EVE_FORCEINLINE
   }
 }
 
-// Convert helpers : large<->small integers via chain
+//================================================================================================
+// Convert helpers
+// large<->small integers via chain
 template<integral_simd_value In, integral_scalar_value Out>
 EVE_FORCEINLINE auto
 convert_integers_chain(In const& v0, as<Out> const& tgt) noexcept
