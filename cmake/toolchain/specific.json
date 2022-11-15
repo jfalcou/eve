@@ -12,6 +12,7 @@
   "unit.api.regular.shift.exe":  "^unit.api.regular.shift.exe",
   "unit.api.regular.wide.exe":  "^unit.api.regular.wide.exe",
   "unit.core.bit_cast.exe":  "^unit.core.bit_cast.exe",
+  "unit.core.convert.exe":  "^unit.core.convert.*.exe",
   "unit.core.max.exe":  "^unit.core.max.exe",
   "unit.core.min.exe":  "^unit.core.min.exe",
   "unit.core.if_else.exe":  "^unit.core.min.exe"
