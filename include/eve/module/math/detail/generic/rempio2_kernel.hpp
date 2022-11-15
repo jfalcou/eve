@@ -317,7 +317,7 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     res0       = ((res2 >> 32) | (res0 << 32));
     res0 += res1;
 
-    auto n    = ((res0 + (1ULL << 61)) >> 62);
+    auto n    = ((res0 + (one(as(res0)) << 61)) >> 62);
     res0      = res0 - (n << 62); // -= n << 62;
     auto tmp  = bit_cast(res0, as<i_t>());
     auto xx1  = float64(tmp);

@@ -93,8 +93,9 @@ TTS_CASE_WITH(
   TTS_EQUAL(if_else(true, m1, m2), map([](auto f) { return f; }, m1));
   TTS_EQUAL(if_else(false, a1, a2), map([](auto g) { return g; }, a2));
 
-  using d_t = eve::detail::downgrade_t<M>;
-  auto dm0  = eve::convert(m0, as<eve::element_type_t<d_t>>());
+  using d_t = eve::logical<eve::detail::downgrade_t<eve::element_type_t<T>>>;
+  auto dm0  = eve::convert(m0, as<d_t>());
+
   TTS_EQUAL(if_else(dm0, m1, m2),
             map([](auto e, auto f, auto g) { return e ? f : g; }, dm0, m1, m2));
   TTS_EQUAL(if_else(dm0, a1, a2),
@@ -110,8 +111,8 @@ TTS_CASE_WITH(
     TTS_IEEE_EQUAL(if_else(dm0, a1, allbits),
                    map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, dm0, a1));
 
-  using u_t = eve::detail::upgrade_t<M>;
-  auto um0  = eve::convert(m0, as<eve::element_type_t<u_t>>());
+  using u_t = eve::logical<eve::detail::upgrade_t<eve::element_type_t<T>>>;
+  auto um0  = eve::convert(m0, as<u_t>());
   TTS_EQUAL(if_else(um0, m1, m2),
             map([](auto e, auto f, auto g) { return e ? f : g; }, um0, m1, m2));
   TTS_EQUAL(if_else(um0, a1, a2),
