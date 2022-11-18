@@ -56,8 +56,9 @@ requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 
   if constexpr(is_aggregated_v<abi_t> || is_aggregated_v<abi_u>)
   {
-    // Clearly sub-optimal
-    return to_logical(v.mask() & cvt(w, as<logical<T>>{}).mask());
+    auto[lv,hv] = v.slice();
+    auto[lw,hw] = w.slice();
+    return logical<wide<T, N>>{ lv || lw, hv || hw};
   }
   else
   {
@@ -77,8 +78,9 @@ requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 
   if constexpr(is_aggregated_v<abi_t> || is_aggregated_v<abi_u>)
   {
-    // Clearly sub-optimal
-    return to_logical(v.mask() | cvt(w, as<logical<T>>{}).mask());
+    auto[lv,hv] = v.slice();
+    auto[lw,hw] = w.slice();
+    return logical<wide<T, N>>{ lv || lw, hv || hw};
   }
   else
   {
