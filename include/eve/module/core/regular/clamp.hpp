@@ -79,7 +79,7 @@ namespace detail
                              [[maybe_unused]] L const& lo,
                              [[maybe_unused]] H const& hi)
   {
-    EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
+    EVE_ASSERT(eve::all(eve::is_less(lo, hi)), "[eve::clamp] Unordered clamp boundaries");
   }
   template<conditional_expr C, typename X, typename L, typename H>
   EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::clamp_),
@@ -88,7 +88,7 @@ namespace detail
                              [[maybe_unused]] L const& lo,
                              [[maybe_unused]] H const& hi)
   {
-    EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] Unordered clamp boundaries");
+    EVE_ASSERT(eve::all(eve::is_less(lo, hi)), "[eve::clamp] Unordered clamp boundaries");
   }
 }
 EVE_MAKE_CALLABLE(clamp_, clamp);
