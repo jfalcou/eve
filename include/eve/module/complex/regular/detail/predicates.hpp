@@ -14,6 +14,16 @@ namespace eve::detail
   //================================================================================================
   // Unary predicates
   //================================================================================================
+  EVE_FORCEINLINE auto complex_unary_dispatch(tag::is_denormal_, auto const& z) noexcept
+  {
+    return is_denormal(real(z)) || is_denormal(imag(z));
+  }
+
+  EVE_FORCEINLINE auto complex_unary_dispatch(tag::is_not_denormal_, auto const& z) noexcept
+  {
+    return is_not_denormal(real(z)) && is_not_denormal(imag(z));
+  }
+
   EVE_FORCEINLINE auto complex_unary_dispatch(tag::is_imag_, auto const& z) noexcept
   {
     return is_eqz(real(z));
