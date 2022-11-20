@@ -25,25 +25,35 @@ requires sve_abi<abi_t<float, N>>
 
   auto const mask = sve_true<float>();
 
-  auto sve_split = [&](auto w)
+  auto from_f32 = [&](auto w)
   {
-    // SVE convert to larger types one every two lanes so we need to move data around
-    // As the data end up in the lower level of the register, we use it directly without
-    // needing an extra svext.
-    auto const ll = svtbl(w,wide<std::uint32_t,N>{[](auto i,auto  ) { return i/2; }});
-    auto const hh = svtbl(w,wide<std::uint32_t,N>{[](auto i,auto c) { return i/2 + c/2; }});
-
-    using t_t   = wide<U,typename N::split_type>;
-    if constexpr( std::same_as<U,double> )
-      return wide<U, N>(t_t{svcvt_f64_z(mask, ll)}, t_t{svcvt_f64_z(mask, hh)});
-    else if constexpr( std::same_as<U,std::int64_t> )
-      return wide<U, N>(t_t{svcvt_s64_z(mask, ll)}, t_t{svcvt_s64_z(mask, hh)});
-    else if constexpr( std::same_as<U,std::uint64_t> )
-      return wide<U, N>(t_t{svcvt_u64_z(mask, ll)}, t_t{svcvt_u64_z(mask, hh)});
+    if constexpr( std::same_as<U, double> ) return svcvt_f64_z(mask, w);
+    else if constexpr( std::same_as<U, std::int64_t> ) return svcvt_s64_z(mask, w);
+    else if constexpr( std::same_as<U, std::uint64_t> ) return svcvt_u64_z(mask, w);
   };
 
-  if constexpr( sizeof(U) == 8 )  return sve_split(v);
-  else if constexpr( match(c_o, int32 ) ) return svcvt_s32_z(mask, v);
+  auto sve_split = [&](auto w)
+  {
+    if constexpr(N::value == 1)
+    {
+      return wide<U, N>{from_f32(w)};
+    }
+    else
+    {
+      // SVE convert to larger types one every two lanes so we need to move data around
+      // As the data end up in the lower level of the register, we use it directly without
+      // needing an extra svext.
+      using idx_t = wide<std::uint32_t, N>;
+      auto const ll = svtbl(w, idx_t {[](auto i, auto) { return i / 2; }});
+      auto const hh = svtbl(w, idx_t {[](auto i, auto c) { return i / 2 + c / 2; }});
+
+      using t_t = wide<U, typename N::split_type>;
+      return wide<U, N>(t_t {from_f32(ll)}, t_t {from_f32( hh)});
+    }
+  };
+
+  if constexpr( sizeof(U) == 8 ) return sve_split(v);
+  else if constexpr( match(c_o, int32) ) return svcvt_s32_z(mask, v);
   else if constexpr( match(c_o, uint32) ) return svcvt_u32_z(mask, v);
   else return convert_impl(EVE_RETARGET(cpu_), v, tgt);
 }
@@ -53,7 +63,7 @@ EVE_FORCEINLINE auto
 convert_impl(EVE_SUPPORTS(sve_), wide<T, N> const& v, as<U> const& tgt) noexcept -> wide<U, N>
 requires sve_abi<abi_t<T, N>>
 {
-  //TODO: OPTIMIZE
+  // TODO: OPTIMIZE
   return convert_impl(EVE_RETARGET(cpu_), v, tgt);
 }
 
@@ -62,6 +72,6 @@ EVE_FORCEINLINE auto
 convert_impl(EVE_SUPPORTS(sve_), logical<wide<T, N>> const& v, as<logical<U>> const&) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  return to_logical(convert(v.bits(), as<U>{}));
+  return to_logical(convert(v.bits(), as<U> {}));
 }
 }
