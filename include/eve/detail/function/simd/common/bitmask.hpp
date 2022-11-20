@@ -74,7 +74,6 @@ namespace eve::detail
       else
       {
         std::size_t res{0};
-        //using t_t = make_integer_t<std::max(Wide::size()/8,std::ptrdiff_t{1}),unsigned>;
         detail::apply<Wide::size()>( [&](auto... I) { ((res|=(std::size_t{p.get(I)} << I)),...); });
         return std::bitset<Wide::size()>{res};
       }
