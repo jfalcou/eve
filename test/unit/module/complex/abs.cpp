@@ -9,9 +9,10 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 
-TTS_CASE_WITH ( "Check behavior of abs on scalar"
+TTS_CASE_WITH ( "Check behavior of sign on scalar"
               , tts::bunch<eve::test::scalar::ieee_reals>
-              , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
+              , tts::generate(tts::randoms(-1000.0, +1000.0)
+                             , tts::randoms(-1000.0, +1000.0))
               )
 <typename T>(T const& a0, T const& a1 )
 {
@@ -19,12 +20,12 @@ TTS_CASE_WITH ( "Check behavior of abs on scalar"
   for(auto e : a0)
     for(auto f : a1)
     {
-      TTS_EQUAL( eve::abs(eve::complex(e, f)), eve::hypot(e,f) );
-      TTS_EQUAL( pedantic(eve::abs)(eve::complex(e, f)), pedantic(eve::hypot)(e,f) );
+      auto z = eve::complex(e, f);
+      TTS_EQUAL( eve::sign(z), z/eve::abs(z) );
     }
 };
 
-TTS_CASE_WITH ( "Check behavior of abs on wide"
+TTS_CASE_WITH ( "Check behavior of sign on wide"
               , eve::test::simd::ieee_reals
               , tts::generate(tts::randoms(-1000.0, +1000.0), tts::randoms(-1000.0, +1000.0))
               )
@@ -32,6 +33,6 @@ TTS_CASE_WITH ( "Check behavior of abs on wide"
 {
   using eve::pedantic;
   using z_t = eve::as_complex_t<T>;
-  TTS_EQUAL( eve::abs(z_t{a0,a1}), eve::hypot(a0,a1) );
-  TTS_EQUAL( eve::pedantic(eve::abs)(z_t{a0,a1}), eve::pedantic(eve::hypot)(a0,a1) );
+  auto z = z_t(a0, a1);
+  TTS_EQUAL( eve::sign(z), z/eve::abs(z) );
 };
