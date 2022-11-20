@@ -41,17 +41,16 @@ reverse_horner_impl(D const& d, T0 xx, R const& r) noexcept
 {
   using r_t  = common_compatible_t<T0, typename R::value_type>;
   auto x     = r_t(xx);
-  auto cur   = std::end(r);
-  auto first = std::begin(r);
+  auto cur   = std::rbegin(r);
+  auto first = std::rend(r);
   if( first == cur ) return r_t(0);
   else if( std::distance(cur, first) == 1 ) return r_t(*cur);
   else
   {
-    first--;
     auto dfma = d(fma);
     auto that = r_t(0);
     auto step = [&](auto that, auto arg) { return dfma(x, that, arg); };
-    for( --cur; cur != first; --cur ) that = step(that, *cur);
+    for(; cur != first; ++cur ) that = step(that, *cur);
     return that;
   }
 }
