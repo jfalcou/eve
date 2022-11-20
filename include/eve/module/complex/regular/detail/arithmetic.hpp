@@ -163,6 +163,14 @@ namespace eve::detail
   //==============================================================================================
   //  Ternary functions
   //==============================================================================================
+  template<value Z1, value Z2>
+  requires(is_complex_v<Z1> != is_complex_v<Z2>)
+  EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::if_else_
+                                              , auto const& cond, Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return if_else(cond, to_complex(z1), to_complex(z2));
+  }
 
   EVE_FORCEINLINE auto complex_ternary_dispatch( eve::tag::fam_
                                               , auto const& z1, auto const& z2, auto const& z3
