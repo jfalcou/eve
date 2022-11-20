@@ -66,7 +66,7 @@ requires(std::convertible_to<U, decltype(maxabs(t, f))>)
 // N parameters
 //================================================================================================
 template<decorator D, real_value T0, real_value T1, real_value... Ts>
-auto
+common_compatible_t<T0, T1, Ts...>
 maxabs_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args)
 {
   auto dma  = D()(maxabs);
