@@ -52,7 +52,7 @@ namespace eve
   //!
   //! **Required header:** `#include <eve/wide.hpp>`
   //!
-  //! eve::wide is an architecture-agnostic representation of a IMD register and provides
+  //! eve::wide is an architecture-agnostic representation of a SIMD register and provides
   //! standardized API to access informations, compute values and manipulate such register.
   //!
   //! @tparam Type      Type of value to store in the register
