@@ -49,9 +49,7 @@ EVE_FORCEINLINE auto
 self_logand(sve_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept -> logical<wide<T, N>>
 requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 {
-  using abi_t = typename logical<wide<T,N>>::abi_type;
-
-  if constexpr(!is_aggregated_v<abi_t>)
+  if constexpr(!is_aggregated_v<abi_t<T, N>>)
   {
     callable_object<tag::convert_> const cvt{};
     return svmov_z(v, cvt(w, as<logical<T>>{}));
@@ -69,9 +67,7 @@ EVE_FORCEINLINE auto
 self_logor(sve_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept -> logical<wide<T, N>>
 requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 {
-  using abi_t = typename logical<wide<T,N>>::abi_type;
-
-  if constexpr(!is_aggregated_v<abi_t>)
+  if constexpr(!is_aggregated_v<abi_t<T, N>>)
   {
     callable_object<tag::convert_> const cvt{};
     return svorr_z(sve_true<T>(), v, cvt(w, as<logical<T>>{}));
