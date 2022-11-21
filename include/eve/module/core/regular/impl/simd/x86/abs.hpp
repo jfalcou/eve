@@ -71,7 +71,7 @@ abs_(EVE_SUPPORTS(sse2_), wide<T, N> const& v) noexcept requires x86_abi<abi_t<T
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 abs_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
 {

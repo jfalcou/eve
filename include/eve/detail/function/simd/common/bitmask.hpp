@@ -74,7 +74,7 @@ namespace eve::detail
       else
       {
         std::size_t res{0};
-        detail::apply<Wide::size()>( [&](auto... I) { ((res|=(p.get(I) << I)),...); });
+        detail::apply<Wide::size()>( [&](auto... I) { ((res|=(std::size_t{p.get(I)} << I)),...); });
         return std::bitset<Wide::size()>{res};
       }
     }

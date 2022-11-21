@@ -80,3 +80,7 @@ EVE_MAKE_CALLABLE(if_else_, if_else);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/if_else.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/if_else.hpp>
+#endif
