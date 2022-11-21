@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/complex/regular/detail/special.hpp>
+#include <eve/module/complex/detail/special.hpp>
 #include <eve/module/complex/regular/exp_i.hpp>
 #include <eve/algo.hpp>
 #include <array>

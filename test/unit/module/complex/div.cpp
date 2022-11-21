@@ -24,28 +24,28 @@ TTS_CASE_WITH( "Check behavior of average on wide"
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   auto c = z_t(a4, a5);
-  TTS_ULP_EQUAL( eve::div(a, b), a/b, 0.5);
-  TTS_ULP_EQUAL( eve::div(a, b, c), a/(b*c), 0.5);
-  TTS_ULP_EQUAL( eve::pedantic(eve::div)(a, b), a/b, 10);
-  {
-    z_t c(1, eve::inf(eve::as(a0)));
-    z_t rr(0, 0);
-    z_t  d = eve::pedantic(eve::div)(a, c);
-    TTS_ULP_EQUAL( d, rr, 0.5);
-    TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
-  }
-  {
-    z_t c(eve::inf(eve::as(a0)), 1);
-    z_t rp(0, 0);
-    z_t  d = eve::pedantic(eve::div)(a, c);
-    TTS_ULP_EQUAL( d, rp, 0.5);
-    TTS_ULP_EQUAL( eve::div(a, c), rp, 0.5);
-  }
-  {
-    z_t c(eve::inf(eve::as(a0)), eve::inf(eve::as(a0)));
-    z_t rr(0, 0);
-    z_t  d = eve::pedantic(eve::div)(a, c);
-    TTS_ULP_EQUAL( d, rr, 0.5);
-    TTS_ULP_EQUAL( eve::div(a, c), rr, 0.5);
-  }
+  TTS_ULP_EQUAL( eve::div(a, b), a/b, 1.0);
+   TTS_ULP_EQUAL( eve::div(a, b, c), a/(b*c), 4.0);
+   TTS_ULP_EQUAL( eve::pedantic(eve::div)(a, b), a/b, 10);
+   {
+     z_t c(1, eve::inf(eve::as(a0)));
+     z_t rr(0, 0);
+     z_t  d = eve::pedantic(eve::div)(a, c);
+     TTS_ULP_EQUAL( d, rr, 0.5);
+     TTS_ULP_EQUAL( eve::div(a, c), a/c, 0.5);
+   }
+   {
+     z_t c(eve::inf(eve::as(a0)), 1);
+     z_t rp(0, 0);
+     z_t  d = eve::pedantic(eve::div)(a, c);
+     TTS_ULP_EQUAL( d, rp, 0.5);
+     TTS_ULP_EQUAL( eve::div(a, c), a/c, 0.5);
+   }
+   {
+     z_t c(eve::inf(eve::as(a0)), eve::inf(eve::as(a0)));
+     z_t rr(0, 0);
+     z_t  d = eve::pedantic(eve::div)(a, c);
+     TTS_ULP_EQUAL( d, rr, 0.5);
+     TTS_ULP_EQUAL( eve::div(a, c), a/c, 0.5);
+   }
 };

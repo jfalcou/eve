@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/complex/regular/detail/special.hpp>
+#include <eve/module/complex/detail/special.hpp>
 #include <array>
 
 namespace eve
