@@ -50,19 +50,17 @@ self_logand(sve_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept ->
 requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 {
   using abi_t = typename logical<wide<T,N>>::abi_type;
-  using abi_u = typename logical<wide<U,N>>::abi_type;
 
-  callable_object<tag::convert_> const cvt{};
-
-  if constexpr(is_aggregated_v<abi_t> || is_aggregated_v<abi_u>)
+  if constexpr(!is_aggregated_v<abi_t>)
   {
-    auto[lv,hv] = v.slice();
-    auto[lw,hw] = w.slice();
-    return logical<wide<T, N>>{ lv || lw, hv || hw};
+    callable_object<tag::convert_> const cvt{};
+    return svmov_z(v, cvt(w, as<logical<T>>{}));
   }
   else
   {
-    return svmov_z(v, cvt(w, as<logical<T>>()));
+    auto[lv,hv] = v.slice();
+    auto[lw,hw] = w.slice();
+    return logical<wide<T, N>>{ lv && lw, hv && hw};
   }
 }
 
@@ -72,21 +70,17 @@ self_logor(sve_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept -> 
 requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 {
   using abi_t = typename logical<wide<T,N>>::abi_type;
-  using abi_u = typename logical<wide<U,N>>::abi_type;
 
-  callable_object<tag::convert_> const cvt{};
-
-  if constexpr(is_aggregated_v<abi_t> || is_aggregated_v<abi_u>)
+  if constexpr(!is_aggregated_v<abi_t>)
+  {
+    callable_object<tag::convert_> const cvt{};
+    return svorr_z(sve_true<T>(), v, cvt(w, as<logical<T>>{}));
+  }
+  else
   {
     auto[lv,hv] = v.slice();
     auto[lw,hw] = w.slice();
     return logical<wide<T, N>>{ lv || lw, hv || hw};
-  }
-  else
-  {
-    using u_t =  logical<as_integer_t<T,unsigned>>;
-    using w_t =  as_wide_t<u_t,N>;
-    return svorr_z(sve_true<T>(),bit_cast(v,as<w_t>()), cvt(w, as<u_t>()));
   }
 }
 
