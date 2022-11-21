@@ -37,6 +37,11 @@ TTS_CASE_WITH( "Check behavior of average on wide"
   TTS_ULP_EQUAL( eve::add(a, T(0))                , a, 0.5);
   TTS_ULP_EQUAL( eve::add(a, e_t(0))              , a, 0.5);
   TTS_ULP_EQUAL( eve::add(eve::i(eve::as<e_t>{}), T(1)), z_t(1, 1), 0.5);
+  TTS_ULP_EQUAL( eve::add(a, 1.0), eve::inc(a), 0.5);
+  TTS_ULP_EQUAL( eve::add(a, 1.0), a+1.0,  0.5);
+  c_t ca(0, 1);
+  TTS_ULP_EQUAL( eve::add(ca, 1.0), ca+1.0,  0.5);
+
   {
     z_t c(1, eve::inf(eve::as(a0)));
     z_t a(2.0, 3.0);

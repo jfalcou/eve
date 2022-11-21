@@ -171,7 +171,7 @@ namespace eve
 
     template<typename Z1, typename Z2>
     EVE_FORCEINLINE friend auto operator+(Z1 const& x, Z2 const& y) noexcept
-    requires(eve::like<Z1,complex> || eve::like<Z2,complex>)
+    requires(eve::like<Z1,complex> != eve::like<Z2,complex>)
     {
       return eve::add(x, y);
     }
@@ -210,7 +210,7 @@ namespace eve
 
     template<typename Z1, typename Z2>
     EVE_FORCEINLINE friend auto operator-(Z1 const& x, Z2 const& y) noexcept
-    requires(eve::like<Z1,complex> || eve::like<Z2,complex>)
+    requires(eve::like<Z1,complex> != eve::like<Z2,complex>)
     {
       return eve::sub(x, y);
     }
@@ -247,7 +247,7 @@ namespace eve
 
     template<typename Z1, typename Z2>
     EVE_FORCEINLINE friend auto operator*(Z1 const& x, Z2 const& y) noexcept
-    requires(eve::like<Z1,complex> || eve::like<Z2,complex>)
+    requires(eve::like<Z1,complex> != eve::like<Z2,complex>)
     {
       return eve::mul(x, y);
     }
@@ -298,7 +298,7 @@ namespace eve
 
     template<typename Z1, typename Z2>
     EVE_FORCEINLINE friend auto operator/(Z1 const& x, Z2 const& y) noexcept
-    requires(eve::like<Z1,complex> || eve::like<Z2,complex>)
+    requires(eve::like<Z1,complex> != eve::like<Z2,complex>)
     {
       return eve::div(x, y);
     }
