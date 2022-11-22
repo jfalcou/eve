@@ -1,13 +1,7 @@
 {
   "unit.meta.exe":  "^unit.meta\\..*\\.exe",
   "unit.arch.exe":  "^unit.arch\\..*\\.exe",
-
-  "unit.internals.aggregation.exe": "^unit.internals.aggregation.exe",
-  "unit.internals.category.exe": "^unit.internals.category.exe",
-  "unit.internals.dispatch.exe": "^unit.internals.dispatch.exe",
-  "unit.internals.meta.exe": "^unit.internals.meta.exe",
-  "unit.internals.optimize_pattern.exe": "^unit.internals.optimize_pattern.exe",
-  "unit.internals.to_logical.exe": "^unit.internals.to_logical.exe",
+  "unit.internals.exe": "^unit.internals\\..*\\.exe",
 
   "unit.memory.aligned_allocator.exe": "^unit.memory.aligned_allocator.exe",
   "unit.memory.aligned_ptr.exe": "^unit.memory.aligned_ptr.exe",

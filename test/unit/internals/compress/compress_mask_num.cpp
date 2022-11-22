@@ -7,11 +7,16 @@
 //==================================================================================================
 #include "test.hpp"
 
+#if defined(SPY_SIMD_IS_ARM_FIXED_SVE)
+TTS_CASE("compress_store helpers")
+{
+  TTS_PASS("Nothing to do here");
+};
+#else
 #include <eve/detail/compress/compress_mask_num.hpp>
 
 #include <bit>
 #include <random>
-
 TTS_CASE_TPL("compress_store_swizzle_mask_num 4 elements",eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
@@ -157,3 +162,4 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 16 elements",eve::test::scalar::al
     TTS_EQUAL(expected_count2, count2);
   }
 };
+#endif
