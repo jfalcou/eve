@@ -23,7 +23,7 @@ namespace eve
     static constexpr bool        is_wide_logical  = false;
 
     template<typename Type>
-    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 8);
+    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= Size/8);
 
     template<typename Type>
     static constexpr std::size_t fundamental_cardinal = bytes / sizeof(Type);

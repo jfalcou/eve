@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include "eve/traits/element_type.hpp"
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/iota.hpp>
 #include <eve/detail/is_native.hpp>
@@ -58,7 +59,15 @@ EVE_FORCEINLINE auto
 to_logical(C c, eve::as<T>) noexcept
 {
   using l_t = typename as_logical<T>::type;
-  using i_t = as_integer_t<typename as_logical_t<T>::mask_type>;
+
+  // When dealing with large vector of small integer, the size can't be
+  // represented. We then use an unsigned version of the index type.
+  // We don't just use unsigned indexes all the time cause on most cases,
+  // signed comparisons are faster and this will lead to pessimisation.
+  using i_t = std::conditional_t< (T::size()>=128 && sizeof(element_type_t<T>) == 1)
+                                , as_integer_t<typename as_logical_t<T>::mask_type,unsigned>
+                                , as_integer_t<typename as_logical_t<T>::mask_type>
+                                >;
 
   if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
   else if constexpr( std::same_as<C, ignore_none_> ) return l_t {true};
