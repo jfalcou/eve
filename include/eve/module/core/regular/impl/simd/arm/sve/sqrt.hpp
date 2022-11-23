@@ -31,8 +31,7 @@ requires sve_abi<typename V::abi_type>
 {
   if constexpr(C::is_complete)
   {
-    if constexpr(C::is_inverted)  return alternative(cond, v, as<V> {});
-    else                          return sqrt(v);
+    return sqrt_(EVE_RETARGET(cpu_), cond, v);
   }
   else
   {
