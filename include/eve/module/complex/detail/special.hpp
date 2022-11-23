@@ -245,5 +245,5 @@ namespace eve::detail
 
  }
 
-#include <eve/module/complex/regular/detail/erf.hpp>
-#include <eve/module/complex/regular/detail/erfcx.hpp>
+#include <eve/module/complex/detail/special/erf.hpp>
+#include <eve/module/complex/detail/special/erfcx.hpp>

@@ -15,11 +15,12 @@ TTS_CASE_WITH ( "Check behavior of agd on scalar"
               )
 <typename T>(T const& a0, T const& a1 )
 {
+  using e_t = typename T::value_type;;
   for(auto e : a0)
     for(auto f : a1)
     {
       auto z = eve::complex(e, f);
-      TTS_ULP_EQUAL( eve::agd(z), 2*eve::atanh(eve::tan(eve::half(eve::as(e))*z)), 100.0);
+      TTS_ULP_EQUAL( eve::agd(z), e_t(2)*eve::atanh(eve::tan(eve::half(eve::as(e))*z)), 100.0);
     }
 };
 
@@ -29,7 +30,8 @@ TTS_CASE_WITH ( "Check behavior of agd on wide"
               )
 <typename T>(T const& a0, T const& a1 )
 {
-  using z_t = eve::as_complex_t<T>;
+  using e_t = typename T::value_type;;
+   using z_t = eve::as_complex_t<T>;
   auto z = z_t{a0,a1};
-  TTS_ULP_EQUAL( eve::agd(z), 2*eve::atanh(eve::tan(eve::half(eve::as(a0))*z)), 100.0);
+  TTS_ULP_EQUAL( eve::agd(z), e_t(2)*eve::atanh(eve::tan(eve::half(eve::as(a0))*z)), 100.0);
 };

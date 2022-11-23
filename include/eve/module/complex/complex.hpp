@@ -11,11 +11,11 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/complex/regular/complex.hpp>
-#include <eve/module/complex/regular/detail/arithmetic.hpp>
-#include <eve/module/complex/regular/detail/math.hpp>
-#include <eve/module/complex/regular/detail/special.hpp>
-#include <eve/module/complex/regular/detail/predicates.hpp>
+#include <eve/module/complex/complex.hpp>
+#include <eve/module/complex/detail/arithmetic.hpp>
+#include <eve/module/complex/detail/math.hpp>
+#include <eve/module/complex/detail/special.hpp>
+#include <eve/module/complex/detail/predicates.hpp>
 #include <eve/module/complex/regular/faddeeva.hpp>
 #include <eve/product_type.hpp>
 #include <ostream>

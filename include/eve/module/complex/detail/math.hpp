@@ -763,7 +763,7 @@ namespace eve::detail
 
 }
 
-#include <eve/module/complex/regular/detail/acos.hpp>
-#include <eve/module/complex/regular/detail/asin.hpp>
-#include <eve/module/complex/regular/detail/atanh.hpp>
-#include <eve/module/complex/regular/detail/pow.hpp>
+#include <eve/module/complex/detail/math/acos.hpp>
+#include <eve/module/complex/detail/math/asin.hpp>
+#include <eve/module/complex/detail/math/atanh.hpp>
+#include <eve/module/complex/detail/math/pow.hpp>
