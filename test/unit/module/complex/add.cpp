@@ -84,13 +84,17 @@ TTS_CASE_WITH( "Check behavior of average on wide"
                            , tts::randoms(-10, 10)
                            , tts::randoms(-10, 10)
                            , tts::randoms(-10, 10))
-              )
+             )
   <typename T>(T const& a0, T const& a1, T const& a2 , T const& a3, T const& a4 , T const& a5 )
 {
   using z_t = eve::as_complex_t<T>;
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
   auto c = z_t(a4, a5);
+  TTS_ULP_EQUAL( eve::add(a, b), a+b, 0.5);
+  TTS_ULP_EQUAL( eve::add(a, b, c), a+b+c, 0.5);
+  TTS_ULP_EQUAL( eve::pedantic(eve::add)(a, b), a+b, 0.5);
+   using z_t = eve::as_complex_t<T>;
   {
     z_t c(1, eve::inf(eve::as(a0)));
     z_t a(2.0, 3.0);
@@ -116,5 +120,5 @@ TTS_CASE_WITH( "Check behavior of average on wide"
     z_t  d = eve::pedantic(eve::add)(a, c);
     TTS_ULP_EQUAL( d, rr, 0.5);
     TTS_ULP_EQUAL( eve::add(a, c), rr, 0.5);
- }
+  }
 };
