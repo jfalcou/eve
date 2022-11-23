@@ -59,6 +59,11 @@ EVE_FORCEINLINE auto
 to_logical(C c, eve::as<T>) noexcept
 {
   using l_t = typename as_logical<T>::type;
+
+  // When dealing with large vector of small integer, the size can't be
+  // represented. We then use an unsigned version of the index type.
+  // We don't just use unsigned indexes all the time cause on most cases,
+  // signed comparisons are faster and this will lead to pessimisation.
   using i_t = std::conditional_t< (T::size()>=128 && sizeof(element_type_t<T>) == 1)
                                 , as_integer_t<typename as_logical_t<T>::mask_type,unsigned>
                                 , as_integer_t<typename as_logical_t<T>::mask_type>
