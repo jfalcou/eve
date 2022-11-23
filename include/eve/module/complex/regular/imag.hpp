@@ -52,7 +52,7 @@ namespace eve
 
   namespace detail
   {
-    template<floating_real_value V>
+    template<real_value V>
     EVE_FORCEINLINE V imag_( EVE_SUPPORTS(cpu_), V const &) noexcept
     {
       return V(0);

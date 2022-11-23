@@ -16,6 +16,211 @@
 namespace eve::detail
 {
   //==============================================================================================
+  //  operators
+  //==============================================================================================
+  /// add
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::add_
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return z1+z2;
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_), T a, callable_i_ const& ) noexcept
+  {
+    using v_t = eve::as_floating_point_t<T>;
+      using c_t = eve::as_complex_t<v_t>;
+    return c_t{v_t(a), v_t(1)};
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto add_(EVE_SUPPORTS(cpu_), callable_i_ const& i, T a ) noexcept
+  {
+    return add(a, i);
+  }
+
+  /// pedantic add
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::add_
+                                              , pedantic_type const &
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return add(z1, z2);
+  }
+
+  /// sub
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::sub_
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+   return z1-z2;
+  }
+
+  /// pedantic sub
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::sub_
+                                              , pedantic_type const &
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return sub(z1, z2);
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto sub_(EVE_SUPPORTS(cpu_), T a, callable_i_ const& ) noexcept
+  {
+    using v_t = eve::as_floating_point_t<T>;
+    using c_t = eve::as_complex_t<v_t>;
+    return c_t{v_t(a), v_t(-1)};
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto sub_(EVE_SUPPORTS(cpu_), callable_i_ const&, T a ) noexcept
+  {
+    using v_t = eve::as_floating_point_t<T>;
+    using c_t = eve::as_complex_t<v_t>;
+    return c_t{-v_t(a), v_t(1)};
+  }
+
+  /// mul
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::mul_
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return z1*z2;
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto mul_(EVE_SUPPORTS(cpu_), T a, callable_i_ const& ) noexcept
+  {
+    using v_t = eve::as_floating_point_t<T>;
+    using c_t = eve::as_complex_t<v_t>;
+    return c_t{v_t(0), v_t(a)};
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto mul_(EVE_SUPPORTS(cpu_), callable_i_ const&, T a ) noexcept
+  {
+    return mul(a, i);
+  }
+
+  /// pedantic mul
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::mul_
+                                              , pedantic_type const &
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    using v_t = decltype(real(z1)*real(z2));
+    using e_t = eve::element_type_t<v_t>;
+    using r_t = eve::as_complex_t<v_t>;
+    r_t r;
+    auto [a, b] = z1;
+    auto [c, d] = z2;
+    if constexpr( !eve::like<Z1, complex<e_t>> ||  !eve::like<Z2, complex<e_t>> )
+    {
+      r = z1*z2;
+    }
+    else
+    {
+      auto rr     = pedantic(diff_of_prod)(a, c, b, d);
+      auto ri     = pedantic(sum_of_prod)(a, d, b, c);
+      r = r_t(rr, ri);
+    }
+    auto test = is_finite(r);
+    if (eve::all(test)) return r;
+    auto cur  = logical_andnot(is_real(z1), test);
+    if (eve::any(cur))
+    {
+      r = if_else(cur, a*z2, r);
+      test = logical_or(test, cur);
+      if (eve::all(test)) return r;
+    }
+    cur = eve::logical_andnot(is_imag(z1), test);
+    if (eve::any(cur))
+    {
+      r = if_else(cur, b*z2*eve::i, r);
+      test = logical_or(test, cur);
+      if (eve::all(test)) return r;
+    }
+    cur = eve::logical_andnot(is_real(z2), test);
+    if (eve::any(cur))
+    {
+      r = if_else(cur, c*z1, r);
+      test = logical_or(test, cur);
+      if (eve::all(test)) return r;
+    }
+    cur = eve::logical_andnot(is_imag(z2), test);
+    if (eve::any(cur))
+    {
+      r = if_else(cur, d*z1*eve::i, r);
+      test = logical_or(test, cur);
+      if (eve::all(test)) return r;
+    }
+    return r;
+  }
+
+  /// div
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::div_
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    return z1/z2;
+  }
+
+
+  template < typename T>
+  EVE_FORCEINLINE  auto div_(EVE_SUPPORTS(cpu_), T a, callable_i_ const& ) noexcept
+  {
+    using v_t = eve::as_floating_point_t<T>;
+    using c_t = eve::as_complex_t<v_t>;
+    return c_t{-v_t(0), -v_t(a)};
+  }
+
+  template < typename T>
+  EVE_FORCEINLINE  auto div_(EVE_SUPPORTS(cpu_), callable_i_ const&, T a ) noexcept
+  {
+    using v_t = eve::as_floating_point_t<T>;
+    using c_t = eve::as_complex_t<v_t>;
+    return c_t{v_t(0), rec(v_t(a))};
+  }
+
+  /// pedantic div
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::div_
+                                              , pedantic_type const &
+                                              , Z1 const& z1, Z2 const& z2
+                                              ) noexcept
+  {
+    using v_t = decltype(real(z1)/real(z2));
+    using e_t = eve::element_type_t<v_t>;
+    using r_t = eve::as_complex_t<v_t>;
+    if constexpr( !eve::like<Z2, complex<e_t>> )
+    {
+      auto iz2 = pedantic(rec)(z2);
+      return pedantic(mul)(z1, iz2);
+    }
+    else
+    {
+      auto rr =  eve::abs(real(z1));
+      auto ii =  eve::abs(imag(z1));
+      auto e  = -if_else((rr < ii), exponent(ii), exponent(rr));
+      auto zz2(eve::ldexp(z2, e));
+      auto denom =  sqr_abs(zz2);
+      r_t r = pedantic(mul)(z1, conj(zz2));
+      r /= denom;
+      r = if_else(is_not_infinite(denom), r, zero);
+      return ldexp(r, e);
+    }
+  }
+
+  //==============================================================================================
   //  trivial extension of some real unary functions
   //==============================================================================================
   template<typename Z> EVE_FORCEINLINE auto complex_unary_dispatch(eve::tag::ceil_,    Z const& z) noexcept { return Z{ceil(real(z)), ceil(imag(z))};       }
@@ -246,6 +451,4 @@ namespace eve::detail
     auto t = trunc(z);
     return kumi::tuple{z - t, t};
   }
-
-
 }
