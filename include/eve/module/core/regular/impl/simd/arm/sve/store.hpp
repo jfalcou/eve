@@ -21,8 +21,10 @@ store_(EVE_SUPPORTS(sve_), wide<T, N> v, Ptr p)
 requires(sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {
   auto ptr = unalign(p);
-  if constexpr( N() != expected_cardinal_v<T> ) memcpy(ptr, (T const*)(&v), N::value * sizeof(T));
-  else svst1(sve_true<T>(), ptr, v);
+  if constexpr( N() != expected_cardinal_v<T> )
+    store[keep_first(N::value)](bit_cast(v,as<wide<T>>{}),p);
+  else
+    svst1(sve_true<T>(), ptr, v);
 }
 
 // Conditional store
