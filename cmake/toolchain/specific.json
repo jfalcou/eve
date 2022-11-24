@@ -22,9 +22,16 @@
   "unit.api.regular.swizzle.zero.exe":  "^unit.api.regular.swizzle.zero.exe",
   "unit.api.regular.wide.exe":  "^unit.api.regular.wide.exe",
 
+  "unit.core.add.exe":  "^unit.core.add.exe",
+  "unit.core.all.exe":  "^unit.core.all.exe",
+  "unit.core.any.exe":  "^unit.core.any.exe",
+  "unit.core.bit_andnot.exe":  "^unit.core.bit_andnot.exe",
   "unit.core.bit_cast.exe":  "^unit.core.bit_cast.exe",
   "unit.core.convert.exe":  "^unit.core.convert.*.exe",
+  "unit.core.count_true.exe":  "^unit.core.count_true.exe",
+  "unit.core.if_else.exe":  "^unit.core.min.exe",
   "unit.core.max.exe":  "^unit.core.max.exe",
   "unit.core.min.exe":  "^unit.core.min.exe",
-  "unit.core.if_else.exe":  "^unit.core.min.exe"
+  "unit.core.none.exe":  "^unit.core.none.exe",
+  "unit.core.sqrt.exe":  "^unit.core.sqrt.exe"
 }
