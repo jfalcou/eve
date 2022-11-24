@@ -109,3 +109,7 @@ EVE_MAKE_CALLABLE(sqrt_, sqrt);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/sqrt.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/sqrt.hpp>
+#endif

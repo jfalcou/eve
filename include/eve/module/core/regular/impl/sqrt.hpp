@@ -17,14 +17,14 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr T
 sqrt_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a) noexcept
 {
   return eve::sqrt(a);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr T
 sqrt_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {
@@ -35,7 +35,7 @@ sqrt_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 sqrt_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

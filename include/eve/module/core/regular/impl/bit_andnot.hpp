@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 bit_andnot_(EVE_SUPPORTS(cpu_),
             T const& a,
@@ -30,7 +30,7 @@ bit_andnot_(EVE_SUPPORTS(cpu_),
   return bit_call(bit_andnot, a, b);
 }
 
-template<real_scalar_value T>
+template<scalar_value T>
 EVE_FORCEINLINE auto
 bit_andnot_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
@@ -42,8 +42,8 @@ bit_andnot_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
   else return T(a & ~b);
 }
 
-template<real_simd_value T>
-EVE_FORCEINLINE auto
+template<simd_value T>
+EVE_FORCEINLINE T
 bit_andnot_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
   return apply_over(bit_andnot, a, b); // fallback never taken if proper intrinsics are at hand
@@ -51,7 +51,7 @@ bit_andnot_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 bit_andnot_(EVE_SUPPORTS(cpu_),
             C const& cond,
@@ -64,7 +64,7 @@ bit_andnot_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<value T0, value T1, value... Ts>
 auto
 bit_andnot_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) requires
     bit_compatible_values<T0, T1> &&(bit_compatible_values<T1, Ts>&&...)
@@ -73,7 +73,7 @@ bit_andnot_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) requires
   return bit_andnot(a0, that);
 }
 
-template<conditional_expr C, real_value T0, real_value T1, real_value... Ts>
+template<conditional_expr C, value T0, value T1, value... Ts>
 auto
 bit_andnot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) requires
     bit_compatible_values<T0, T1> &&(bit_compatible_values<T1, Ts>&&...)
