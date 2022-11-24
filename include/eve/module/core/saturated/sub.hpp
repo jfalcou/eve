@@ -13,3 +13,8 @@
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/saturated/impl/simd/x86/sub.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/saturated/impl/simd/arm/sve/sub.hpp>
+#endif
+
