@@ -55,7 +55,8 @@ template<scalar_value T, integral_scalar_value I, typename N>
 EVE_FORCEINLINE auto
 lookup_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& a, wide<I, N> const& ind) noexcept
 {
-  return bit_cast(lookup(a.bits(), ind), as(a));
+  if constexpr( abi_t<T, N>::is_wide_logical ) return bit_cast(lookup(a.bits(), ind), as(a));
+  return to_logical(lookup(a.mask(), ind));
 }
 
 template<scalar_value T, integral_scalar_value I, typename N>
