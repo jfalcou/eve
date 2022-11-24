@@ -17,15 +17,11 @@ EVE_FORCEINLINE bool
 any_(EVE_SUPPORTS(sve_), C const& cond, logical<wide<T,N>> const& v) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  if constexpr( C::is_complete && !C::is_inverted ) return false;
+  if constexpr( C::is_complete )
+  {
+    if constexpr( C::is_inverted )  return svptest_any(sve_true<T>(), v);
+    else                            return false;
+  }
   else return svptest_any(cond.mask(as<wide<T,N>>{}),v);
-}
-
-template<scalar_value T, typename N>
-EVE_FORCEINLINE bool
-any_(EVE_SUPPORTS(sve_), logical<wide<T,N>> v) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  return svptest_any(detail::sve_true<T>(),v);
 }
 }

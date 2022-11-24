@@ -21,7 +21,11 @@ requires sve_abi<abi_t<T, N>>
 {
   using i_t = typename wide<T, N>::template rebind<as_integer_t<T>,N>;
   constexpr auto tgt = as<i_t>();
-  return bit_cast ( i_t(svbic_x( sve_true<T>(), bit_cast(v0,tgt), bit_cast(v1,tgt)))
+  return bit_cast ( i_t ( svbic_x ( sve_true<T>()
+                                  , bit_cast(v0,tgt)
+                                  , bit_cast(v1,tgt)
+                                  )
+                        )
                   , as<wide<T,N>>{}
                   );
 }
