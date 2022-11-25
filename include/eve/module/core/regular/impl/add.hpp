@@ -42,7 +42,7 @@ auto
 add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) noexcept
 -> common_value_t<T0, Ts...>
 {
-  auto that((a0 + ... + args));
+  auto that(a0 + ... + args);
   return that;
 }
 
