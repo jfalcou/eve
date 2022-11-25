@@ -59,7 +59,7 @@ namespace eve::detail
   template<typename... Ts>
   struct common_value_impl<std::void_t<decltype(detail::find_common_value<Ts...>())>, Ts...>
   {
-    using type = decltype(detail::find_common_value<Ts...>());
+    using type = std::remove_cvref_t<decltype(detail::find_common_value<Ts...>())>;
   };
 }
 
