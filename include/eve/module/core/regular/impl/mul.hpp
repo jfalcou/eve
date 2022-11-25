@@ -7,13 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/detail/function/operators.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/detail/multi_mul.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -33,13 +28,21 @@ mul_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 //==  regular N parameters
 //================================================================================================
-template<value T0, value T1, value... Ts>
-common_compatible_t<T0, T1, Ts...>
-mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+template<decorator D, value T0, value... Ts>
+auto
+mul_(EVE_SUPPORTS(cpu_), D const& d, T0 a0, Ts... args) noexcept
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
-  r_t that(mul(r_t(a0), r_t(a1)));
-  ((that = mul(that, r_t(args))), ...);
+  common_value_t<T0, Ts...> that(a0);
+  ((that = d(mul)(that, args)), ...);
+  return that;
+}
+
+template<value T0, value... Ts>
+auto
+mul_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) noexcept
+-> common_value_t<T0, Ts...>
+{
+  auto that((a0 * ... * args));
   return that;
 }
 
@@ -48,7 +51,7 @@ mul_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-mul_(EVE_SUPPORTS(cpu_), Ts tup)
+mul_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return mul(m...); }, tup);
@@ -56,11 +59,10 @@ mul_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-mul_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+mul_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return d(mul)(m...); }, tup);
 }
-
 
 }

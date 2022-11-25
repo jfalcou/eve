@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/traits/common_compatible.hpp>
-#include <type_traits>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -32,20 +29,20 @@ add_(EVE_SUPPORTS(cpu_),
 // N parameters
 //================================================================================================
 template<decorator D, value T0, value... Ts>
- common_compatible_t<T0, Ts...>
-add_(EVE_SUPPORTS(cpu_), D const& d, T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
+auto
+add_(EVE_SUPPORTS(cpu_), D const& d, T0 a0, Ts... args) noexcept
 {
-  common_compatible_t<T0, Ts...> that(a0);
+  common_value_t<T0, Ts...> that(a0);
   ((that = d(add)(that, args)), ...);
   return that;
 }
 
 template<value T0, value... Ts>
 auto
-add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
+add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) noexcept
+-> common_value_t<T0, Ts...>
 {
-  common_compatible_t<T0, Ts...> that(a0);
-  ((that = add(that, args)), ...);
+  auto that((a0 + ... + args));
   return that;
 }
 
@@ -54,7 +51,7 @@ add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-add_(EVE_SUPPORTS(cpu_), Ts tup)
+add_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return add(m...); }, tup);
@@ -62,11 +59,10 @@ add_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-add_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+add_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return d(add)(m...); }, tup);
 }
-
 
 }

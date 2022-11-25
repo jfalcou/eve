@@ -7,11 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
-#include <eve/detail/function/operators.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -34,20 +31,21 @@ sub_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<decorator D, value T0, value... Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), D const&, T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
+sub_(EVE_SUPPORTS(cpu_), D const&, T0 a0, Ts... args) noexcept
 {
-  common_compatible_t<T0, Ts...> that(a0);
+  common_value_t<T0, Ts...> that(a0);
   ((that = D()(sub)(that, args)), ...);
   return that;
 }
 
 template<value T0, value... Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&...)
+sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)  noexcept
+-> common_value_t<T0, Ts...>
 {
-  common_compatible_t<T0, Ts...> that(a0);
-  ((that = sub(that, args)), ...);
+  auto that((a0 - ... - args));
   return that;
+
 }
 
 //================================================================================================
@@ -55,7 +53,7 @@ sub_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) requires(compatible_values<T0, Ts>&&
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), Ts tup)
+sub_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return sub(m...); }, tup);
@@ -63,7 +61,7 @@ sub_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-sub_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+sub_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return d(sub)(m...); }, tup);
