@@ -65,13 +65,8 @@ EVE_FORCEINLINE logical<wide<T, N>>
                       Pointer ptr) noexcept
 requires(dereference_as<logical<T>, Pointer>::value && sve_abi<abi_t<T, N>>)
 {
-  auto const alt = [&]()
-  {
-    if constexpr( C::has_alternative ) return cond.rebase(cond.alternative.mask());
-    else return cond;
-  };
-
-  auto block = load(alt(), safe, eve::as<wide<T, N>> {}, ptr_cast<T const>(ptr));
+  auto const c1     = map_alternative(cond, [](auto alt) { return alt.mask(); });
+  auto const block  = load(c1, safe, eve::as<wide<T, N>> {}, ptr_cast<T const>(ptr));
   return to_logical(block);
 }
 
@@ -85,13 +80,8 @@ EVE_FORCEINLINE logical<wide<T, N>>
                       Iterator e) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  auto const alt = [&]()
-  {
-    if constexpr( C::has_alternative ) return cond.rebase(cond.alternative.mask());
-    else return cond;
-  };
-
-  auto block = load(alt(), safe, eve::as<wide<T, N>> {}, b, e);
+  auto const c1     = map_alternative(cond, [](auto alt) { return alt.mask(); });
+  auto const block  = load(c1, safe, eve::as<wide<T, N>> {}, b, e);
   return to_logical(block);
 }
 }
