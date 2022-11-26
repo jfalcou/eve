@@ -25,9 +25,10 @@ namespace eve::detail
 {
 template<real_value T, real_value U>
 EVE_FORCEINLINE auto
-remdiv_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+remdiv_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> kumi::tuple<common_value_t<T, U>, common_value_t<T, U>>
 {
-  using r_t = common_compatible_t<T, U>;
+  using r_t = common_value_t<T, U>;
   if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
   {
     auto d = trunc(div(a, b));

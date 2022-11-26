@@ -40,7 +40,7 @@ EVE_FORCEINLINE auto
 minus_(EVE_SUPPORTS(cpu_),
        C const& cond,
        U const& t,
-       V const& f) noexcept requires compatible_values<U, V>
+       V const& f) noexcept -> common_value_t<U, V>
 {
   auto substract = [](auto x, auto y) { return x - y; };
   return mask_op(cond, substract, t, f);

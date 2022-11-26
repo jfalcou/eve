@@ -24,7 +24,7 @@ fma_(EVE_SUPPORTS(cpu_),
      V const& c) noexcept
 -> common_value_t<T, U, V>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return arithmetic_call(fma, r_t(a), r_t(b), r_t(c));
 }
 
@@ -43,7 +43,7 @@ EVE_FORCEINLINE auto
 fma_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 -> common_value_t<T, U, V>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return mask_op(cond, eve::fma, r_t(a), r_t(b), r_t(c));
 }
 
