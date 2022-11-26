@@ -17,31 +17,33 @@ namespace eve
 {
   namespace detail
   {
-    template <typename T>
+    template<range T> constexpr auto value_type_impl()
+    {
+      using ref = std::add_lvalue_reference_t<T>;
+      return value_type_impl<decltype(begin(std::declval<ref>()))>();
+    }
+
+    template<std::input_or_output_iterator T> constexpr auto value_type_impl()
+    {
+      return std::type_identity<typename std::iterator_traits<T>::value_type>{};
+    }
+
+    // Maybe this should be deleted
+    template<kumi::product_type T> constexpr auto value_type_impl()
+    {
+      auto mapper = []<typename U>(U)
+      {
+        return typename decltype(value_type_impl<U>())::type{};
+      };
+
+      return std::type_identity<kumi::result::map_t<decltype(mapper), T>>{};
+    }
+
+    template<typename T>
+    requires requires { typename T::value_type; }
     constexpr auto value_type_impl()
     {
-      if constexpr (range<T>)
-      {
-        using ref = std::add_lvalue_reference_t<T>;
-        return value_type_impl<decltype(std::begin(std::declval<ref>()))>();
-      }
-      else if constexpr (std::input_or_output_iterator<T>)
-      {
-        return std::type_identity<typename std::iterator_traits<T>::value_type>{};
-      }
-      else if constexpr ( requires { typename T::value_type; } )
-      {
-        return std::type_identity<typename T::value_type>{};
-      }
-      // Maybe this should be deleted
-      else if constexpr ( kumi::product_type<T> )
-      {
-        auto mapper = []<typename U>(U) {
-          return typename decltype( value_type_impl<U>() )::type{};
-        };
-
-        return std::type_identity<kumi::result::map_t<decltype(mapper), T>>{};
-      }
+      return std::type_identity<typename T::value_type>{};
     }
   }
 
@@ -54,19 +56,21 @@ namespace eve
   //!
   //!  @brief A meta function for getting an associated value_type for a relaxed iterator/range.
   //!
-  //!         If T has begin/end - value_type_t for return type of begin
-  //!         If T is std::iterator -> returns iterator_traits<T>::value_type
-  //!         If T has nested `value_type` -> returns it
-  //!         If T is a product type and all elements have value_type_t defined for them -
-  //!            kumi::tuple for the individual product types.
-  //!         Otherwise it's undefined.
+  //! value_type_t<T> is computed as follows:
+  //!   - If T has begin/end - value_type_t for return type of begin
+  //!   - If T is std::iterator -> returns iterator_traits<T>::value_type
+  //!   - If T has nested `value_type` -> returns it
+  //!   - If T is a product type and all elements have value_type_t defined for them -
+  //!   -    kumi::tuple for the individual product types.
+  //!   - Otherwise it's undefined.
   //!
-  //!   **Required header:** `#include <eve/traits/value_type.hpp>`,
-  //!                        `#include <eve/traits.hpp>`
+  //! @tparam T Type to process
+  //!
+  //!  **Required header:** `#include <eve/traits.hpp>`
   //! @}
   //================================================================================================
 
-  template <typename T>
-    requires (!value<T>)
+  template<typename T>
+  requires (!value<T>)
   using value_type_t = typename decltype(detail::value_type_impl<T>())::type;
 }
