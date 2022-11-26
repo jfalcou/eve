@@ -42,7 +42,7 @@ auto
 copysign_(EVE_SUPPORTS(cpu_),
           C const& cond,
           T        x,
-          U        y) requires floating_value<common_compatible_t<T, U>>
+          U        y) //requires eve::convertible_to<T, common_value_t<T, U >>
 {
   return mask_op(cond, eve::copysign, x, y);
 }

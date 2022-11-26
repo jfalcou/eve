@@ -9,6 +9,8 @@
 
 #include <eve/detail/function/conditional.hpp>
 #include <eve/traits/common_value.hpp>
+#include <eve/concept/value.hpp>
+#include <type_traits>
 
 namespace eve::detail
 {
