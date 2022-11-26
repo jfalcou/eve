@@ -11,7 +11,9 @@ build_script:
 - cmake -G "Visual Studio 17 2022" -A x64 ..
 - cmake --build . --target unit.arch.exe --verbose --config Release
 - cmake --build . --target unit.meta.exe --verbose --config Release
+- cmake --build . --target unit.internals.exe --verbose --config Release
 
 test_script:
 - ctest -C Release -VV -R ^unit.arch.*.exe
 - ctest -C Release -VV -R ^unit.meta.*.exe
+- ctest -C Release -VV -R ^unit.internals.*.exe
