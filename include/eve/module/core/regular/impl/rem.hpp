@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/common_value.hpp>
+#include <eve/traits/underlying_type.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
@@ -28,19 +30,20 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<real_value T, real_value U>
 EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+rem_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_value_t<T, U>
+requires(std::is_floating_point_v<eve::underlying_type_t<common_value_t<T, U>>>)
 {
   return arithmetic_call(rem, a, b);
 }
 
 template<decorator D, real_value T, real_value U>
 EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept requires(
-    compatible_values<
-        T,
-        U> && (is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downward_type, to_nearest_type> {})))
+rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept
+-> common_value_t<T, U>
+requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downward_type, to_nearest_type> {}))
 {
   return arithmetic_call(D()(rem), a, b);
 }
@@ -87,7 +90,8 @@ EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_),
      C const& cond,
      U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     V const& f) noexcept
+-> common_value_t<V, U>
 {
   auto g = if_else(cond, f, one);
   return mask_op(cond, eve::rem, t, g);
@@ -95,10 +99,9 @@ rem_(EVE_SUPPORTS(cpu_),
 
 template<conditional_expr C, decorator D, real_value U, real_value V>
 EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept requires(
-    compatible_values<
-        V,
-        U> && (is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downward_type, to_nearest_type> {})))
+rem_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
+-> common_value_t<V, U>
+requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downward_type, to_nearest_type> {}))
 {
   auto g = if_else(cond, f, one);
   return mask_op(cond, D()(rem), t, g);

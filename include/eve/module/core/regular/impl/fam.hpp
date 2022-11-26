@@ -23,9 +23,10 @@ EVE_FORCEINLINE auto
 fam_(EVE_SUPPORTS(cpu_),
      T const& a,
      U const& b,
-     V const& c) noexcept requires properly_convertible<U, V, T>
+     V const& c) noexcept
+-> common_value_t<U, V, T>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return arithmetic_call(fam, r_t(a), r_t(b), r_t(c));
 }
 
@@ -38,9 +39,12 @@ fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 
 template<real_simd_value T>
 EVE_FORCEINLINE T
-fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires has_native_abi_v<T>
+fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 {
-  return fma(b, c, a);
+  if constexpr(has_native_abi_v<T>)
+    return fma(b, c, a);
+  else
+    return apply_over(fma, b, c, a);
 }
 
 //================================================================================================
@@ -48,10 +52,10 @@ fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires h
 //================================================================================================
 template<conditional_expr C, real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
-fam_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept requires
-    properly_convertible<U, V, T>
+fam_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
+-> common_value_t<U, V, T>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return mask_op(cond, eve::fam, r_t(a), r_t(b), r_t(c));
 }
 
