@@ -10,7 +10,7 @@
 add_library(eve_test INTERFACE)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-  target_compile_options( eve_test INTERFACE /W3 /EHsc /std:c++20)
+  target_compile_options( eve_test INTERFACE /bigobj /W3 /EHsc /std:c++20 /wd4267 /wd4244 /wd4146)
 else()
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra)
 endif()
