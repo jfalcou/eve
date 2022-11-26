@@ -33,8 +33,6 @@ namespace eve
   //! For user-defined type, one can either specialize @ref eve::underlying_type or provide an
   //! internal typedef named `underlying_type` that will be picked up instead.
   //!
-  //! When called with multiple types, the underlying type of the @ef eve::common_value is returned.
-  //!
   //! **Required header:** `#include <eve/traits/underlying_type.hpp>`
   //!
   //! @tparam T Type to inspect
@@ -48,7 +46,7 @@ namespace eve
   //!
   //! @}
   //================================================================================================
-  template<typename... Ts>
+  template<typename Ts>
   struct underlying_type;
 
   template<typename T>
@@ -80,10 +78,6 @@ namespace eve
   struct underlying_type<wide<T,N>> : underlying_type<T>
   {};
 
-  template<typename T0, typename T1, typename... Ts>
-  struct underlying_type<T0,T1,Ts...> : underlying_type<common_value_t<T0,T1,Ts...>>
-  {};
-
-  template<typename... Ts>
-  using underlying_type_t = typename underlying_type<Ts...>::type;
+  template<typename Ts>
+  using underlying_type_t = typename underlying_type<Ts>::type;
 }

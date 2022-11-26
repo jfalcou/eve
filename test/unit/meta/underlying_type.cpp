@@ -35,15 +35,3 @@ TTS_CASE( "Check for underlying_type: SIMD types")
   TTS_TYPE_IS( eve::underlying_type_t<logical<wide<int>>>                     , logical<int>  );
   TTS_TYPE_IS( eve::underlying_type_t<eve::as_logical_t<wide<complex<float>>>>, logical<float>);
 };
-
-TTS_CASE( "Check for underlying_type: multiple types")
-{
-  using eve::wide;
-  using eve::complex;
-
-  TTS_TYPE_IS((eve::underlying_type_t<double,double,double,double>), double );
-  TTS_TYPE_IS((eve::underlying_type_t<int,double,wide<float>,char>), float  );
-  TTS_TYPE_IS((eve::underlying_type_t<eve::complex<double>,wide<complex<double>>,int>), double);
-  TTS_TYPE_IS((eve::underlying_type_t<eve::complex<double>,int,wide<complex<double>>>), double);
-  TTS_TYPE_IS((eve::underlying_type_t<int,eve::complex<double>,wide<complex<double>>>), double);
-};
