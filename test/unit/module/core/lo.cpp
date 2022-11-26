@@ -34,7 +34,7 @@ TTS_CASE_WITH("Check behavior of lo(wide) on unsigned integral ",
 {
   using v_t       = eve::element_type_t<T>;
   using d_t       = eve::detail::downgrade_t<v_t>;
-  constexpr int s = sizeof(v_t) * 4;
+  static constexpr int s = sizeof(v_t) * 4;
   if constexpr( s == 4 )
   {
     TTS_EQUAL(eve::lo(a0),

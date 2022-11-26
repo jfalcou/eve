@@ -43,8 +43,8 @@ endif()
 ## Test and Benchmarks target
 ## =================================================================================================
 if( EVE_BUILD_TEST )
-  include(CTest)
   include(config/dependencies)
+  include(target/add_parent_target)
   include(config/compiler)
   include(config/types)
   include(config/pch)
