@@ -120,13 +120,13 @@ find_optimized_shuffle_pattern()
   {
     return bound {broadcast_group, st->first, st->second, sz};
   }
-  else if constexpr( constexpr auto s = is_slide_left<I0, I...>; s != 0 )
+  else if constexpr(is_slide_left<I0, I...> != 0 )
   {
-    return bound {slide_left, index<s>};
+    return bound {slide_left, index<is_slide_left<I0, I...>>};
   }
-  else if constexpr( constexpr auto s = is_slide_right<I0, I...>; s != 0 )
+  else if constexpr(is_slide_right<I0, I...> != 0 )
   {
-    return bound {slide_right, index<s>};
+    return bound {slide_right, index<is_slide_right<I0, I...>>};
   }
   else if constexpr( is_reverse<InCardinal, I0, I...> ) return bound {reverse};
   else if constexpr( is_deinterleave_groups_shuffle<I0, I...> != sz )
