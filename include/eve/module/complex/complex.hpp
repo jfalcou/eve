@@ -41,8 +41,11 @@ namespace eve
     using eve_disable_ordering  = void;
     using parent                = struct_support<complex<Type>, Type, Type>;
 
-    /// Underlying type
+    /// Base value type
     using value_type = Type;
+
+    /// Base value type
+    using underlying_type = underlying_type_t<Type>;
 
     /// Default constructor
     explicit  complex(Type r = 0)     noexcept : parent{r,0} {}

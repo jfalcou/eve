@@ -51,8 +51,4 @@ namespace eve
 
   template<typename T>
   inline constexpr bool is_complex_v = is_complex<T>::value;
-
-  template<typename T>
-  struct as_logical<complex<T>> : as_logical_t<T>
-  {};
 }
