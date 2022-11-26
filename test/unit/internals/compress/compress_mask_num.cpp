@@ -41,7 +41,7 @@ TTS_CASE_TPL("compress_store_swizzle_mask_num 4 elements",eve::test::scalar::all
               auto [actual_num, actual_count] = eve::detail::compress_store_swizzle_mask_num(ignore, mask);
               TTS_EQUAL(expected_num, actual_num);
 
-              int expected_count = eve::count_true(mask_with_ignore);
+              std::ptrdiff_t expected_count = eve::count_true(mask_with_ignore);
               TTS_EQUAL(expected_count, actual_count);
             }
           }
