@@ -44,7 +44,6 @@ endif()
 ## =================================================================================================
 if( EVE_BUILD_TEST )
   include(config/dependencies)
-  include(CTest)
   include(target/add_parent_target)
   include(config/compiler)
   include(config/types)

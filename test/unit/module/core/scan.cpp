@@ -10,7 +10,7 @@
 
 #include <eve/module/core.hpp>
 
-#include <algorithm>
+#include <numeric>
 #include <array>
 
 template<typename T, typename Op>

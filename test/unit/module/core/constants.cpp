@@ -8,6 +8,9 @@
 #include "test.hpp"
 
 #include <eve/module/core.hpp>
+#include <eve/module/math/regular/exp2.hpp>
+
+#include <limits>
 
 TTS_CASE_TPL("Check basic constants behavior", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
@@ -23,7 +26,7 @@ TTS_CASE_TPL("Check basic constants behavior", eve::test::simd::ieee_reals)
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_IEEE_EQUAL(eve::allbits(as<T>()), T(0.0 / 0.0));
+    TTS_IEEE_EQUAL(eve::allbits(as<T>()), T(std::numeric_limits<double>::quiet_NaN()));
     TTS_EQUAL(eve::mzero(as<T>()), T(-0));
     TTS_EQUAL(eve::half(as<T>()), T(0.5));
     TTS_EQUAL(eve::mhalf(as<T>()), T(-0.5));
@@ -40,7 +43,7 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::ieee_reals)
   using ilt_t = eve::as_integer_t<elt_t>;
   using i_t   = eve::as_integer_t<T, signed>;
   TTS_EQUAL(eve::bitincrement(as<T>()), T(eve::bit_cast(eve::one(as<ilt_t>()), as<elt_t>())));
-  TTS_IEEE_EQUAL(eve::nan(as<T>()), T(0.0 / 0.0));
+  TTS_IEEE_EQUAL(eve::nan(as<T>()), T(std::numeric_limits<double>::quiet_NaN()));
   TTS_EQUAL(eve::signmask(as<T>()),
             T(eve::bit_cast(eve::one(as<ilt_t>()) << (sizeof(ilt_t) * 8 - 1), as<elt_t>())));
   TTS_EQUAL(eve::mindenormal(as<T>()), eve::bitincrement(as<T>()));
