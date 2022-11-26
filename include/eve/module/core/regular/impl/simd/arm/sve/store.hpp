@@ -20,11 +20,11 @@ EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(sve_), wide<T, N> v, Ptr p)
 requires(sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
 {
+  auto const tgt = as<wide<T>>{};
   auto ptr = unalign(p);
-  if constexpr( N() != expected_cardinal_v<T> )
-    store[keep_first(N::value)](bit_cast(v,as<wide<T>>{}),p);
-  else
-    svst1(sve_true<T>(), ptr, v);
+
+  if constexpr( N() != expected_cardinal_v<T> ) store[keep_first(N::value)](bit_cast(v,tgt), p);
+  else                                          svst1(sve_true<T>(), ptr, v);
 }
 
 // Conditional store
@@ -36,14 +36,11 @@ EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> const& v, Ptr ptr) noexcept
 requires sve_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  if constexpr( C::is_complete || C::has_alternative ) store_(EVE_RETARGET(cpu_), cond, v, ptr);
-  else if constexpr( N() != expected_cardinal_v<T> )
+  if constexpr( C::is_complete || C::has_alternative || N() != expected_cardinal_v<T> )
   {
     store_(EVE_RETARGET(cpu_), cond, v, ptr);
   }
-  else
-  {
-    svst1(cond.mask(as<wide<T, N>>{}), unalign(ptr), v);
-  }
+  else svst1(cond.mask(as<wide<T, N>> {}), unalign(ptr), v);
 }
+
 }
