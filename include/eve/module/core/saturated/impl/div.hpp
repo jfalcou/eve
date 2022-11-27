@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -99,7 +99,7 @@ div_(EVE_SUPPORTS(cpu_),
      C const& cond,
      saturated_type const&,
      U const& t,
-     V const& f) noexcept 
+     V const& f) noexcept
 requires(std::convertible_to<U, decltype(div(t, f))>)
 {
   return mask_op(cond, saturated(div), t, f);

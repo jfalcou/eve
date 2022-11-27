@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -29,7 +29,8 @@ EVE_FORCEINLINE auto
 is_less_(EVE_SUPPORTS(cpu_),
          definitely_type const&,
          T const& a,
-         U const& b) noexcept requires compatible_values<T, U>
+         U const& b) noexcept
+-> common_logical_t<T, U>
 {
   return arithmetic_call(definitely(is_less), a, b, 3 * eps(as(a)));
 }
@@ -39,7 +40,8 @@ EVE_FORCEINLINE auto
 is_less_(EVE_SUPPORTS(cpu_),
          definitely_type const&,
          logical<T> const& a,
-         logical<U> const& b) noexcept requires compatible_values<T, U>
+         logical<U> const& b) noexcept
+-> common_logical_t<T, U>
 {
   return arithmetic_call(is_less, a, b);
 }
@@ -50,7 +52,8 @@ is_less_(EVE_SUPPORTS(cpu_),
          definitely_type const&,
          T const& a,
          U const& b,
-         V const& tol) noexcept requires compatible_values<T, U>
+         V const& tol) noexcept
+-> common_logical_t<T, U, V>
 {
   if constexpr( integral_value<V> )
   {
@@ -69,6 +72,7 @@ is_less_(EVE_SUPPORTS(cpu_),
          T const                 & a,
          T const                 & b,
          [[maybe_unused]] V const& tol) noexcept
+-> common_logical_t<T, V>
 {
   if constexpr( integral_value<V> )
   {
