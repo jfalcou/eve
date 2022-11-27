@@ -22,8 +22,8 @@ namespace eve::detail
 {
 template<real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
-fnms_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& c) noexcept requires
-    compatible_values<T, U> && compatible_values<T, V>
+fnms_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& c) noexcept
+-> common_value_t<T, U, V>
 {
   return arithmetic_call(numeric(fnms), a, b, c);
 }
