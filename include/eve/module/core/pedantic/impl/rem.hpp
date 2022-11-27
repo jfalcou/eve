@@ -26,7 +26,8 @@ EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_),
      pedantic_type const&,
      T const& a,
-     U const& b) noexcept requires compatible_values<T, U>
+     U const& b) noexcept
+-> decltype(rem(a, b))
 {
   return arithmetic_call(pedantic(rem), a, b);
 }
@@ -58,7 +59,8 @@ rem_(EVE_SUPPORTS(cpu_),
      C const& cond,
      pedantic_type const&,
      U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     V const& f) noexcept
+requires(std::convertible_to<U, decltype(rem(t, f))>)
 {
   auto g = if_else(cond, f, one);
   return mask_op(cond, pedantic(rem), t, g);

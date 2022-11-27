@@ -30,7 +30,6 @@ trunc_(EVE_SUPPORTS(cpu_),
        tolerant_type const&,
        T const& a0,
        U const& n) noexcept
--> common_value_t<T, U>
 {
   return arithmetic_call(tolerant(trunc), a0, n);
 }

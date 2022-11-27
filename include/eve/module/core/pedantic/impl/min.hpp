@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -28,7 +27,8 @@ EVE_FORCEINLINE auto
 min_(EVE_SUPPORTS(cpu_),
      pedantic_type const&,
      T const& v0,
-     U const& v1) noexcept requires compatible_values<T, U>
+     U const& v1) noexcept
+-> decltype(min(v0, v1))
 {
   return arithmetic_call(pedantic(min), v0, v1);
 }
@@ -70,9 +70,10 @@ min_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& v0, T const& v1) noexcep
 template<real_value T0, real_value T1, real_value... Ts>
 auto
 min_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args)
+-> decltype(min(a0, a1, args...))
 {
   auto m    = pedantic(min);
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = decltype(min(a0, a1, args...));
   r_t that(m(r_t(a0), r_t(a1)));
   ((that = m(that, r_t(args))), ...);
   return that;

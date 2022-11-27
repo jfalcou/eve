@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -26,7 +25,8 @@ fnma_(EVE_SUPPORTS(cpu_),
       pedantic_type const&,
       T const& a,
       U const& b,
-      V const& c) noexcept requires compatible_values<T, U> && compatible_values<T, V>
+      V const& c) noexcept
+-> decltype(fsm(a, b, c))
 {
   return arithmetic_call(pedantic(fnma), a, b, c);
 }

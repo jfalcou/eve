@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -32,7 +31,8 @@ EVE_FORCEINLINE constexpr auto
 nextafter_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
            T const& a,
-           U const& b) noexcept requires compatible_values<T, U>
+           U const& b) noexcept
+-> decltype(nextafter(a, b))
 {
   return arithmetic_call(pedantic(nextafter), a, b);
 }

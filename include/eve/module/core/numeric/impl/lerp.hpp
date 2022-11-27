@@ -24,7 +24,7 @@ namespace eve::detail
 template<floating_real_value T, floating_real_value U, floating_real_value V>
 EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& t) noexcept
-decltype(lerp(a, b, t)
+-> decltype(lerp(a, b, t))
 {
   return arithmetic_call(numeric(lerp), a, b, t);
 }

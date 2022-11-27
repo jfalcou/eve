@@ -28,10 +28,8 @@ TTS_CASE_TPL("Check return types of rem", eve::test::simd::all_types)
   // conditionnal
   TTS_EXPR_IS(rem[eve::logical<T>()](T(), T()), T);
   TTS_EXPR_IS(rem[eve::logical<T>()](T(), v_t()), T);
-  TTS_EXPR_IS(rem[eve::logical<T>()](v_t(), T()), T);
   TTS_EXPR_IS(rem[eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(rem[eve::logical<v_t>()](T(), v_t()), T);
-  TTS_EXPR_IS(rem[eve::logical<v_t>()](v_t(), T()), T);
 
   // pedantic
   TTS_EXPR_IS(pedantic(rem)(T(), T()), T);
@@ -42,10 +40,8 @@ TTS_CASE_TPL("Check return types of rem", eve::test::simd::all_types)
   // pedantic conditionnal
   TTS_EXPR_IS(pedantic(rem[eve::logical<T>()])(T(), T()), T);
   TTS_EXPR_IS(pedantic(rem[eve::logical<T>()])(T(), v_t()), T);
-  TTS_EXPR_IS(pedantic(rem[eve::logical<T>()])(v_t(), T()), T);
   TTS_EXPR_IS(pedantic(rem[eve::logical<v_t>()])(T(), T()), T);
   TTS_EXPR_IS(pedantic(rem[eve::logical<v_t>()])(T(), v_t()), T);
-  TTS_EXPR_IS(pedantic(rem[eve::logical<v_t>()])(v_t(), T()), T);
 };
 
 //==================================================================================================

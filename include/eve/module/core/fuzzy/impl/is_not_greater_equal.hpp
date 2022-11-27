@@ -53,7 +53,7 @@ is_not_greater_equal_(EVE_SUPPORTS(cpu_),
                       T const& a,
                       U const& b,
                       V const& tol) noexcept
--> common_logical_t<T, U, V>
+-> common_logical_t<T, U>
 {
   if constexpr( integral_value<V> )
   {
@@ -72,7 +72,6 @@ is_not_greater_equal_(EVE_SUPPORTS(cpu_),
                       T const                 & a,
                       T const                 & b,
                       [[maybe_unused]] V const& tol) noexcept
--> common_logical_t<T, V>
 {
   if constexpr( integral_value<V> )
   {
