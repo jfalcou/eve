@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/to_logical.hpp>
@@ -28,15 +27,19 @@ logical_xor_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 
 template<scalar_value T, scalar_value U>
 EVE_FORCEINLINE as_logical_t<T>
-                logical_xor_(EVE_SUPPORTS(cpu_), logical<T> const                &a, logical<U> const                &b) noexcept
+                logical_xor_(EVE_SUPPORTS(cpu_)
+                            , logical<T> const &a
+                            , logical<U> const &b) noexcept
 {
   return as_logical_t<T> {a.value() != b.value()};
 }
 
 template<simd_value T, simd_value U>
 EVE_FORCEINLINE as_logical_t<T>
-logical_xor_(EVE_SUPPORTS(cpu_), logical<T> const& a, logical<U> const& b) noexcept requires
-    has_native_abi_v<T> && has_native_abi_v<U> &&(cardinal_v<T> == cardinal_v<U>)
+logical_xor_(EVE_SUPPORTS(cpu_)
+            , logical<T> const& a
+            , logical<U> const& b) noexcept
+requires  has_native_abi_v<T> && has_native_abi_v<U> &&(cardinal_v<T> == cardinal_v<U>)
 {
   using abi_t = typename T::abi_type;
   if constexpr( std::is_same_v<U, T> )
@@ -55,9 +58,10 @@ logical_xor_(EVE_SUPPORTS(cpu_), logical<T> const& a, logical<U> const& b) noexc
 
 template<simd_value T, scalar_value U>
 EVE_FORCEINLINE as_logical_t<T>
-                logical_xor_(EVE_SUPPORTS(cpu_),
-                             logical<T> const                &a,
-                             logical<U> const                &b) noexcept requires has_native_abi_v<T> && has_native_abi_v<U>
+logical_xor_(EVE_SUPPORTS(cpu_),
+             logical<T> const                &a,
+             logical<U> const                &b) noexcept
+requires has_native_abi_v<T> && has_native_abi_v<U>
 {
   using elt_t = element_type_t<T>;
   using abi_t = typename T::abi_type;
@@ -74,7 +78,8 @@ template<scalar_value T, simd_value U>
 EVE_FORCEINLINE auto
 logical_xor_(EVE_SUPPORTS(cpu_),
              logical<T> const& a,
-             logical<U> const& b) noexcept requires has_native_abi_v<T> && has_native_abi_v<U>
+             logical<U> const& b) noexcept
+requires has_native_abi_v<T> && has_native_abi_v<U>
 {
   using elt_t = element_type_t<U>;
   using r_t   = as_wide_t<logical<T>, cardinal_t<U>>;

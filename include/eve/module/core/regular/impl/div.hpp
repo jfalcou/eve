@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/assert.hpp>
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/traits/common_value.hpp>
 #include <type_traits>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -38,6 +38,7 @@ namespace eve::detail
 template<value T, value U, decorator D>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(D()(div), a, b);
 }
@@ -63,6 +64,7 @@ div_(EVE_SUPPORTS(cpu_), toward_zero_type const&, T const& a, T const& b) noexce
 template<conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), C const& cond, U t, V f) noexcept
+requires(std::convertible_to<U, decltype(div(t, f))>)
 {
   auto g = if_else(cond, f, one);
   return if_else(cond, eve::div(t, g), t);
@@ -71,6 +73,7 @@ div_(EVE_SUPPORTS(cpu_), C const& cond, U t, V f) noexcept
 template<conditional_expr C, decorator D, value U, value V>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
+requires(std::convertible_to<U, decltype(div(t, f))>)
 {
   auto g = if_else(cond, f, one);
   return if_else(cond, D()(div)(t, g), t);
@@ -85,6 +88,7 @@ div_(EVE_SUPPORTS(cpu_),
      T0 a0,
      T1 a1,
      Ts... args) noexcept
+-> common_value_t<T0, T1, Ts...>
 {
   using r_t = common_value_t<T0, T1, Ts...>;
   r_t that(a1);

@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -23,17 +24,18 @@ namespace eve::detail
 // regular case
 template<real_value T, real_value U>
 EVE_FORCEINLINE auto
-fdim_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+fdim_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(fdim, a, b);
 }
 
 template<real_value T>
 EVE_FORCEINLINE auto
-fdim_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native_abi_v<T>
+fdim_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+requires has_native_abi_v<T>
 {
-  auto r = if_else(a >= b, sub(a, b), eve::zero);
-  return r;
+  return if_else(a >= b, sub(a, b), eve::zero);
 }
 
 template<conditional_expr C, real_value T, real_value U>
@@ -41,7 +43,8 @@ EVE_FORCEINLINE auto
 fdim_(EVE_SUPPORTS(cpu_),
       C const& cond,
       T const& a,
-      U const& b) noexcept requires compatible_values<T, U>
+      U const& b) noexcept
+requires(std::convertible_to<T, decltype(fdim(a, b))>)
 {
   return mask_op(cond, eve::fdim, a, b);
 }

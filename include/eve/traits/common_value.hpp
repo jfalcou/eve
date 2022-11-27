@@ -36,4 +36,8 @@ namespace eve
 {
   template<typename... Ts>
   using common_value_t = typename eve::detail::common_value_impl<void, Ts...>::type;
+
+  template<typename... Ts>
+  using common_logical_t = as_logical_t<common_value_t<Ts...>>;
+
 }

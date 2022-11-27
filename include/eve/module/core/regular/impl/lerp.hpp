@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -21,35 +21,36 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U, floating_real_value V>
+template<value T, value U, value V>
 EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_),
       T const& a,
       U const& b,
-      V const& t) noexcept requires compatible_values<T, U> && compatible_values<T, V>
+      V const& t) noexcept
+-> common_value_t<U, V, T>
 {
   return arithmetic_call(lerp, a, b, t);
 }
 
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE T
 lerp_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& t) noexcept
 {
   return fma(t, b, fnma(t, a, a));
 }
 
-template<floating_real_value T, floating_real_value U, floating_real_value V>
+template<value T, value U, value V>
 EVE_FORCEINLINE auto
-lerp_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a, U const& b, V const& t) noexcept requires
-    compatible_values<T, U> && compatible_values<T, V>
+lerp_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a, U const& b, V const& t) noexcept
+-> common_value_t<U, V, T>
 {
   return arithmetic_call(raw(lerp), a, b, t);
 }
 
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE T
-lerp_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a, T const& b, T const& t) noexcept requires
-    has_native_abi_v<T>
+lerp_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a, T const& b, T const& t) noexcept
+requires has_native_abi_v<T>
 {
   return fma(t, b, fnma(t, a, a));
   ;
@@ -57,7 +58,7 @@ lerp_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a, T const& b, T const& t) n
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T, floating_real_value U, floating_real_value V>
+template<conditional_expr C, real_value T, value U, value V>
 EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& t) noexcept
 {
@@ -66,12 +67,16 @@ lerp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& t) noe
 
 template<conditional_expr    C,
          decorator           D,
-         real_value          T,
-         floating_real_value U,
-         floating_real_value V>
+         value T,
+         value U,
+         value V>
 EVE_FORCEINLINE auto
-lerp_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, T const& a, U const& b, V const& t) noexcept
+lerp_(EVE_SUPPORTS(cpu_)
+     , C const& cond, D const& d
+     , T const& a, U const& b, V const& t) noexcept
+requires(std::convertible_to<T, decltype(lerp(a, b, t))>)
 {
   return mask_op(cond, d(eve::lerp), a, b, t);
 }
+
 }

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -21,7 +21,8 @@ namespace eve::detail
 // regular case
 template<real_value T, real_value U>
 EVE_FORCEINLINE auto
-is_less_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+is_less_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_logical_t<T, U>
 {
   return arithmetic_call(is_less, a, b);
 }
@@ -46,7 +47,7 @@ namespace eve
 template<value T, value U>
 EVE_FORCEINLINE auto
 operator<(T const& v0, U const& v1) noexcept
-    -> decltype(eve::is_less(v0, v1)) requires(compatible_values<T, U>)
+    -> decltype(eve::is_less(v0, v1))
 {
   return eve::is_less(v0, v1);
 }

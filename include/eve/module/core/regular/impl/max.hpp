@@ -50,7 +50,7 @@ EVE_FORCEINLINE auto
 max_(EVE_SUPPORTS(cpu_),
      C const& cond,
      U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     V const& f) noexcept
 {
   return mask_op(cond, eve::max, t, f);
 }

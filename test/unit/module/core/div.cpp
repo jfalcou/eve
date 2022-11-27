@@ -32,16 +32,12 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
   // conditionnal
   TTS_EXPR_IS(eve::div[eve::logical<T>()](T(), T()), T);
   TTS_EXPR_IS(eve::div[eve::logical<T>()](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::logical<T>()](v_t(), T()), T);
   TTS_EXPR_IS(eve::div[eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(eve::div[eve::logical<v_t>()](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::logical<v_t>()](v_t(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::div[eve::logical<T>()])(T(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::div[eve::logical<T>()])(T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::div[eve::logical<T>()])(v_t(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::div[eve::logical<v_t>()])(T(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::div[eve::logical<v_t>()])(T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::div[eve::logical<v_t>()])(v_t(), T()), T);
 
   //  //multi
   TTS_EXPR_IS(eve::div(T(), T(), T()), T);
