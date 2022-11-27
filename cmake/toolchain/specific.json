@@ -3,7 +3,6 @@
   "unit.arch.exe":      "^unit.arch\\..*\\.exe",
   "unit.internals.exe": "^unit.internals\\..*\\.exe",
   "unit.core.exe":      "^unit.core\\..*\\.exe",
-
   "unit.memory.aligned_allocator.exe": "^unit.memory.aligned_allocator.exe",
   "unit.memory.aligned_ptr.exe": "^unit.memory.aligned_ptr.exe",
   "unit.memory.compress_store.exe": "^unit.memory.compress_store.\\..*\\.exe",
@@ -21,7 +20,6 @@
   "unit.memory.store.unaligned.exe": "^unit.memory.store.unaligned.exe",
   "unit.memory.unalign.exe": "^unit.memory.unalign.exe",
   "unit.memory.write.exe": "^unit.memory.write.exe",
-
   "unit.api.regular.arithmetic.exe":          "^unit.api.regular.arithmetic.exe",
   "unit.api.regular.bitwise.exe":             "^unit.api.regular.bitwise.exe",
   "unit.api.regular.comparisons.exe":         "^unit.api.regular.comparisons.exe",
