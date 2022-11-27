@@ -138,12 +138,14 @@ jobs:
           cmake --build . --target unit.arch.exe      --config ${{ matrix.cfg.mode }} --parallel 2
           cmake --build . --target unit.meta.exe      --config ${{ matrix.cfg.mode }} --parallel 2
           cmake --build . --target unit.internals.exe --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.api.exe       --config ${{ matrix.cfg.mode }} --parallel 2
       - name: Running Tests
         run: |
           cd build
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.arch.*.exe
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.api.*.exe
 
   ##################################################################################################
   ## Targets with incomplete tests set

@@ -33,9 +33,9 @@ TTS_CASE_TPL( "Check return types of bitwise operators on wide", eve::test::simd
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of bitwise operators on eve::wide"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(-50, 50)
-                              , tts::randoms(-50, 50)
-                              )
+        , tts::generate ( tts::randoms(0, 100)
+                        , tts::randoms(0, 100)
+                        )
         )
 <typename T>(T a0, T a1)
 {
@@ -50,7 +50,7 @@ TTS_CASE_WITH( "Check behavior of bitwise operators on eve::wide"
 //==================================================================================================
 TTS_CASE_WITH( "Check behavior of bitwise operators on wide and scalar"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(-50, 50) )
+        , tts::generate ( tts::randoms(0, 100) )
         )
 <typename T>(T a0)
 {
