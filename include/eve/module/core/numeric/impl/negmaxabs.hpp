@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -23,7 +23,8 @@ EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_),
            numeric_type const&,
            T const& a,
-           U const& b) noexcept requires compatible_values<T, U>
+           U const& b) noexcept
+-> decltype(negmaxabs(a, b))
 {
   return arithmetic_call(numeric(negmaxabs), a, b);
 }
@@ -32,7 +33,7 @@ template<real_value T>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcept
 {
-  return -numeric(maxabs)(a, b);
+  return minus(numeric(maxabs)(a, b));
 }
 
 //================================================================================================
@@ -41,8 +42,9 @@ negmaxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noex
 template<real_value T0, real_value T1, real_value... Ts>
 auto
 negmaxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+-> decltype(negmaxabs(a0, a1, arrgs...))
 {
-  return -numeric(eve::maxabs)(a0, a1, args...);
+  return minus(numeric(eve::maxabs)(a0, a1, args...));
 }
 
 }
