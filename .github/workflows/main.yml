@@ -142,14 +142,14 @@ jobs:
         run: cd build && ctest --output-on-failure -j 4
 
   supplemental:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, generic-x86]
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
-        - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
-        - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc  , cpu: 8 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc  , cpu: 8 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
+        - { comp: gcc  , cpu: 8 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
 
     steps:
       - name: Fetch current branch
@@ -161,3 +161,6 @@ jobs:
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:        '${{ matrix.cfg.status }}'
           cpu:            ${{ matrix.cfg.cpu }}
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
