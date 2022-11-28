@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -25,7 +24,7 @@
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
-EVE_FORCEINLINE constexpr auto
+EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_),
        tolerant_type const&,
        T const& a0,
@@ -35,9 +34,8 @@ trunc_(EVE_SUPPORTS(cpu_),
 }
 
 template<real_value T, integral_real_value U>
-EVE_FORCEINLINE constexpr auto
+EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, [[maybe_unused]] U const& n) noexcept
--> common_value_t<T, U>
 {
   if constexpr( integral_real_value<T> ) return a0;
   else if constexpr( has_native_abi_v<T> ) { return copysign(trunc(next(eve::abs(a0), n)), a0); }
