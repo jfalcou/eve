@@ -34,10 +34,14 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::sub[eve::logical<T>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](v_t(), v_t()), v_t);
   TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<T>()])(T(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<T>()])(T(), v_t()), T);
   TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(T(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(T(), v_t()), T);
+  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(v_t(), T()), T);
+  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(v_t(), v_t()), v_t);
 
   // multi
   TTS_EXPR_IS(eve::sub(T(), T(), T()), T);

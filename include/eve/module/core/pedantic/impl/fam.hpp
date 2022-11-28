@@ -22,7 +22,7 @@ namespace eve::detail
 template<real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
 fam_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, U const& b, V const& c) noexcept
--> decltype(fsm(a, b, c))
+-> decltype(fam(a, b, c))
 {
   return arithmetic_call(pedantic(fam), a, b, c);
 }

@@ -74,7 +74,7 @@ EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_)
      , C const& cond, D const& d
      , T const& a, U const& b, V const& t) noexcept
-requires(std::convertible_to<T, decltype(lerp(a, b, t))>)
+-> decltype(lerp(a, b, t))
 {
   return mask_op(cond, d(eve::lerp), a, b, t);
 }

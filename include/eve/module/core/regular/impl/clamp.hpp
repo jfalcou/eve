@@ -42,7 +42,7 @@ requires has_native_abi_v<T>
 template<conditional_expr C, real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
 clamp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
-requires(std::convertible_to<T, decltype(clamp(a, b, c))>)
+-> decltype(clamp(a, b, c))
 {
   return mask_op(cond, eve::clamp, a, b, c);
 }

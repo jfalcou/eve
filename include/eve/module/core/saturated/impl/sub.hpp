@@ -112,7 +112,7 @@ sub_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
      U const& t,
      V const& f) noexcept
-requires(std::convertible_to<U, decltype(sub(t, f))>)
+-> decltype(sub(t, f))
 {
   return mask_op(cond, saturated(sub), t, f);
 }

@@ -44,7 +44,7 @@ fdim_(EVE_SUPPORTS(cpu_),
       C const& cond,
       T const& a,
       U const& b) noexcept
-requires(std::convertible_to<T, decltype(fdim(a, b))>)
+->decltype(fdim(a, b))
 {
   return mask_op(cond, eve::fdim, a, b);
 }

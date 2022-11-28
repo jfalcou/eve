@@ -39,7 +39,7 @@ absmin_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 template<decorator D, conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
-requires(std::convertible_to<U, decltype(absmin(t, f))>)
+-> decltype(absmin(t, f))
 {
   return mask_op(cond, D()(eve::absmin), t, f);
 }
@@ -50,7 +50,7 @@ absmin_(EVE_SUPPORTS(cpu_),
         C const& cond,
         U const& t,
         V const& f) noexcept
-requires(std::convertible_to<U, decltype(absmin(t, f))>)
+-> decltype(absmin(t, f))
 {
   return mask_op(cond, eve::absmin, t, f);
 }
@@ -89,7 +89,7 @@ absmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 template<conditional_expr C, value T0, value T1, value... Ts>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
-requires(std::convertible_to<T0, decltype(absmin(a0, a1, args...))>)
+->decltype(absmin(a0, a1, args...))
 {
   return mask_op(cond, eve::absmin, a0, a1, args...);
 }

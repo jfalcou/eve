@@ -60,7 +60,7 @@ rem_(EVE_SUPPORTS(cpu_),
      pedantic_type const&,
      U const& t,
      V const& f) noexcept
-requires(std::convertible_to<U, decltype(rem(t, f))>)
+-> decltype(rem(t, f))
 {
   auto g = if_else(cond, f, one);
   return mask_op(cond, pedantic(rem), t, g);

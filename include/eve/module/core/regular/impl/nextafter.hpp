@@ -47,7 +47,7 @@ template<conditional_expr C, real_value T, real_value U>
 EVE_FORCEINLINE auto
 nextafter_(EVE_SUPPORTS(cpu_), C const& cond
           , T const& x, U const& y) noexcept
-requires(std::convertible_to<T, decltype(nextafter(x, y))>)
+-> decltype(nextafter(x, y))
 {
   return mask_op(cond, eve::nextafter, x, y);
 }

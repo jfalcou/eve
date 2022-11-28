@@ -47,7 +47,7 @@ requires has_native_abi_v<T>
 template<decorator D, conditional_expr C, real_value U, real_value V>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, U const& t, V const& f) noexcept
-requires(std::convertible_to<U, decltype(d(maxabs)(t, f))>)
+-> decltype(d(maxabs)(t, f))
 {
   return mask_op(cond, D()(eve::maxabs), t, f);
 }
@@ -58,7 +58,7 @@ maxabs_(EVE_SUPPORTS(cpu_),
         C const& cond,
         U const& t,
         V const& f) noexcept
-requires(std::convertible_to<U, decltype(maxabs(t, f))>)
+-> decltype(maxabs(t, f))
 {
   return mask_op(cond, eve::maxabs, t, f);
 }
@@ -112,7 +112,7 @@ maxabs_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 template<conditional_expr C, decorator D, value T0, value T1, value... Ts>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 a0, T1 a1, Ts... args) noexcept
-requires(std::convertible_to<T0, decltype(maxabs(a0, a1, args...))>)
+->decltype(maxabs(a0, a1, args...))
 {
   return mask_op(cond, d(eve::maxabs), a0, a1, args...);
 }
@@ -120,7 +120,7 @@ requires(std::convertible_to<T0, decltype(maxabs(a0, a1, args...))>)
 template<conditional_expr C, value T0, value T1, value... Ts>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
-requires(std::convertible_to<T0, decltype(maxabs(a0, a1, args...))>)
+-> decltype(maxabs(a0, a1, args...))
 {
   return mask_op(cond, eve::maxabs, a0, a1, args...);
 }
