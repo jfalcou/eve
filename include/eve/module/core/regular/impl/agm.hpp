@@ -27,16 +27,17 @@
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
-#include <eve/traits/common_compatible.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 
   template<value T, value U>
   EVE_FORCEINLINE auto agm_(EVE_SUPPORTS(cpu_)
-                             , T aa,  U bb) noexcept
+                           , T aa,  U bb) noexcept
+  requires (std::is_floating_point_v<eve::underlying_type_t<common_value_t<T, U>>>)
   {
-    using v_t = decltype(average(aa, bb));
+    using v_t = common_value_t<T, U>;
     if constexpr(has_native_abi_v<v_t>)
     {
       v_t a(aa);
@@ -69,14 +70,14 @@ namespace eve::detail
   }
 
 
-template<conditional_expr C, value T, value U>
-auto
-agm_(EVE_SUPPORTS(cpu_),
-     C const& cond,
-     T        a0,
-     U        a1) requires floating_value<common_compatible_t<T, U>>
-{
-  return mask_op(cond, eve::agm, a0, a1);
-}
-
+  template<conditional_expr C, value T, value U>
+  auto
+  agm_(EVE_SUPPORTS(cpu_),
+       C const& cond,
+       T        a0,
+       U        a1) noexcept
+  -> common_value_t<T, U>
+  {
+    return mask_op(cond, eve::agm, a0, a1);
+  }
 }

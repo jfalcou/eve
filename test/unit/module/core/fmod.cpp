@@ -31,6 +31,7 @@ TTS_CASE_TPL("Check return types of fmod", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(fmod[eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(fmod[eve::logical<v_t>()](T(), v_t()), T);
   TTS_EXPR_IS(fmod[eve::logical<v_t>()](v_t(), T()), T);
+  TTS_EXPR_IS(fmod[eve::logical<v_t>()](v_t(), v_t()), v_t);
 };
 
 //==================================================================================================

@@ -28,7 +28,7 @@ EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_),
        tolerant_type const&,
        T const& a0,
-       U const& n) noexcept requires compatible_values<T, U>
+       U const& n) noexcept
 {
   return arithmetic_call(tolerant(trunc), a0, n);
 }

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -15,23 +15,22 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
-maxmag_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+maxmag_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(maxmag, a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 maxmag_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
@@ -48,7 +47,7 @@ maxmag_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value... V>
+template<conditional_expr C, value U, value... V>
 EVE_FORCEINLINE auto
 maxmag_(EVE_SUPPORTS(cpu_),
         C const& cond,
@@ -61,21 +60,23 @@ maxmag_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<decorator D, real_value T0, real_value T1, real_value... Ts>
+template<decorator D, value T0, value T1, value... Ts>
 auto
-maxmag_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args)
+maxmag_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args) noexcept
+-> common_value_t<T0, T1, Ts...>
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = common_value_t<T0, T1, Ts...>;
   r_t that(D()(maxmag)(r_t(a0), r_t(a1)));
   ((that = D()(maxmag)(that, r_t(args))), ...);
   return that;
 }
 
-template<real_value T0, real_value T1, real_value... Ts>
-common_compatible_t<T0, T1, Ts...>
-maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+template<value T0, value T1, value... Ts>
+auto
+maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
+-> common_value_t<T0, T1, Ts...>
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = common_value_t<T0, T1, Ts...>;
   r_t that(maxmag(r_t(a0), r_t(a1)));
   ((that = maxmag(that, r_t(args))), ...);
   return that;
@@ -86,7 +87,7 @@ maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-maxmag_(EVE_SUPPORTS(cpu_), Ts tup)
+maxmag_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return maxmag(m...); }, tup);
@@ -94,7 +95,7 @@ maxmag_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-maxmag_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+maxmag_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return d(maxmag)(m...); }, tup);

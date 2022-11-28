@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -20,17 +19,18 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_),
         pedantic_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(minabs(a, b))
 {
   return arithmetic_call(pedantic(minabs), a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
 {
@@ -40,11 +40,12 @@ minabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexce
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<value T0, value T1, value... Ts>
 auto
-minabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args)
+minabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(minabs(a0, a1, args...))
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = decltype(minabs(a0, a1, args...));
   r_t that(pedantic(minabs)(r_t(a0), r_t(a1)));
   ((that = pedantic(minabs)(that, r_t(args))), ...);
   return that;

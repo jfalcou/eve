@@ -7,53 +7,50 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/traits/common_compatible.hpp>
-
-#include <type_traits>
+#include <eve/detail/function/conditional.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+absmax_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> decltype(eve::abs(eve::max(a, b)))
 {
   return arithmetic_call(absmax, a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native_abi_v<T>
+absmax_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+-> decltype(eve::abs(a))
 {
-  return eve::abs(eve::max(a, b));
+  if constexpr(has_native_abi_v<T>)
+    return eve::abs(eve::max(a, b));
+  else
+    return apply_over(absmax, a, b);
 }
 
 //================================================================================================
 // Masked case
 //================================================================================================
-template<decorator D, conditional_expr C, real_value U, real_value V>
+template<decorator D, conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
-requires(std::convertible_to<U, decltype(absmax(t, f))>)
+-> decltype(absmax(t, f))
 {
   return mask_op(cond, D()(eve::absmax), t, f);
 }
 
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_),
         C const& cond,
         U const& t,
         V const& f) noexcept
-requires(std::convertible_to<U, decltype(absmax(t, f))>)
+-> decltype(absmax(t, f))
 {
   return mask_op(cond, eve::absmax, t, f);
 }
@@ -62,8 +59,9 @@ requires(std::convertible_to<U, decltype(absmax(t, f))>)
 // N parameters
 //================================================================================================
 template<real_value T0, real_value T1, real_value... Ts>
-common_compatible_t<T0, T1, Ts...>
-absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+auto
+absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(eve::abs(eve::max(a0, a1, args...)))
 {
   return eve::abs(eve::max(a0, a1, args...));
 }
@@ -73,7 +71,7 @@ absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-absmax_(EVE_SUPPORTS(cpu_), Ts tup)
+absmax_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
   else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
@@ -85,7 +83,6 @@ absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {
   if constexpr( kumi::size_v<Ts> == 1) return d(eve::abs)(get<0>(tup));
   else return d(eve::abs)(kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
-
 }
 
 
@@ -94,7 +91,7 @@ absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 template<conditional_expr C, value T0, value T1, value... Ts>
 EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
-requires(std::convertible_to<T0, decltype(absmax(a0, a1, args...))>)
+-> decltype(absmax(a0, a1, args...))
 {
   return mask_op(cond, eve::absmax, a0, a1, args...);
 }

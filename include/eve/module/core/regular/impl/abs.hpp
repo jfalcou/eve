@@ -46,7 +46,7 @@ abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 template<conditional_expr C, decorator D, value U>
 EVE_FORCEINLINE auto
 abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
-requires(std::convertible_to<U, decltype(abs(t))>)
+-> decltype(abs(t))
 {
   return mask_op(cond, d(eve::abs), t);
 }

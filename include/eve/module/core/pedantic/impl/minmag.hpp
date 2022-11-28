@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -30,7 +29,8 @@ EVE_FORCEINLINE auto
 minmag_(EVE_SUPPORTS(cpu_),
         pedantic_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(minmag(a, b))
 {
   return arithmetic_call(pedantic(minmag), a, b);
 }

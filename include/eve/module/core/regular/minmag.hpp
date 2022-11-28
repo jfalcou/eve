@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value... Ts >
-//!      eve::common_compatible_t<T, Ts...> minmag(T x, Ts ... xs) noexcept;
+//!      eve::common_value_t<T, Ts...> minmag(T x, Ts ... xs) noexcept;
 //!
 //!   }
 //!   @endcode

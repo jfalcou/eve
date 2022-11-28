@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -21,9 +21,10 @@ EVE_FORCEINLINE auto
 fnma_(EVE_SUPPORTS(cpu_),
       T const& a,
       U const& b,
-      V const& c) noexcept requires properly_convertible<U, V, T>
+      V const& c) noexcept
+-> common_value_t<U, V, T>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return arithmetic_call(fnma, r_t(a), r_t(b), r_t(c));
 }
 
@@ -46,10 +47,10 @@ fnma_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires 
 //================================================================================================
 template<conditional_expr C, real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
-fnma_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept requires
-    properly_convertible<U, V, T>
+fnma_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
+-> common_value_t<U, V, T>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return mask_op(cond, eve::fnma, r_t(a), r_t(b), r_t(c));
 }
 }

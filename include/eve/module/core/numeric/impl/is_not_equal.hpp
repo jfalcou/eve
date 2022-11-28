@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -29,7 +29,8 @@ EVE_FORCEINLINE auto
 is_not_equal_(EVE_SUPPORTS(cpu_),
               numeric_type const&,
               T const& a,
-              U const& b) noexcept requires compatible_values<T, U>
+              U const& b) noexcept
+-> common_logical_t<T, U>
 {
   return arithmetic_call(numeric(is_not_equal), a, b);
 }
@@ -39,7 +40,8 @@ EVE_FORCEINLINE auto
 is_not_equal_(EVE_SUPPORTS(cpu_),
               numeric_type const&,
               logical<T> const& a,
-              logical<U> const& b) noexcept requires compatible_values<T, U>
+              logical<U> const& b) noexcept
+-> common_logical_t<T, U>
 {
   return arithmetic_call(is_not_equal, a, b);
 }

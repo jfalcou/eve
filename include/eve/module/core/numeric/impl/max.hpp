@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -29,8 +29,8 @@ EVE_FORCEINLINE auto
 max_(EVE_SUPPORTS(cpu_),
      numeric_type const&,
      T const& v0,
-     U const& v1) noexcept requires compatible_values<T, U>
-{
+     U const& v1) noexcept
+-> decltype(max(v0, v1)){
   return arithmetic_call(numeric(max), v0, v1);
 }
 
@@ -71,9 +71,10 @@ max_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& v0, T const& v1) noexcept
 template<real_value T0, real_value T1, real_value... Ts>
 auto
 max_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+  -> decltype(max(a0, a1, args...))
 {
   auto m    = numeric(max);
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = decltype(max(a0, a1, args...));
   r_t that(m(r_t(a0), r_t(a1)));
   ((that = m(that, r_t(args))), ...);
   return that;

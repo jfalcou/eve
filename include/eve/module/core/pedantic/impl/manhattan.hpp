@@ -23,7 +23,8 @@ EVE_FORCEINLINE auto
 manhattan_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
            T const& a,
-           U const& b) noexcept requires compatible_values<T, U>
+           U const& b) noexcept
+-> decltype(manhattan(a, b))
 {
   return arithmetic_call(pedantic(manhattan), a, b);
 }
@@ -32,7 +33,7 @@ EVE_FORCEINLINE auto
 manhattan_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
            T const& a,
-           T const& b) noexcept requires has_native_abi_v<T>
+           T const& b) noexcept
 {
   const auto infty = inf(eve::as(a));
   auto       aa    = eve::abs(a);
@@ -58,7 +59,8 @@ manhattan_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
            T const& a,
            U const& b,
-           V const& c) noexcept requires compatible_values<T, U> && compatible_values<T, V>
+           V const& c) noexcept
+-> decltype(manhattan(a, b, c))
 {
   return arithmetic_call(pedantic(manhattan), a, b, c);
 }
