@@ -39,3 +39,7 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/compress/simd/x86/compress.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/detail/compress/simd/arm/sve/compress.hpp>
+#endif
