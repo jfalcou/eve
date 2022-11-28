@@ -32,7 +32,7 @@ TTS_CASE_TPL( "Check behavior of broadcast swizzle", eve::test::scalar::all_type
   constexpr auto ssz = std::bit_width( std::size_t(eve::wide<s_t>::size()) );
 
   eve::detail::for_<0,1,ssz>
-  ( [&]<typename Group>(Group g)
+  ( [&]<typename Group>(Group)
   {
 
     eve::detail::for_<0,1,(1<<Group::value)>

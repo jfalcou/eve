@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of broadcast_groups swizzle"
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
 
   eve::detail::for_<0,1,ssz>
-  ( [&]<typename Group>(Group g)
+  ( [&]<typename Group>(Group)
   {
     eve::detail::for_<0,1,(1ULL<<Group::value)>
     ( [&]<typename Index>(Index)
