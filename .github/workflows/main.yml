@@ -88,6 +88,35 @@ jobs:
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
 
+
+  msvc:
+    runs-on: [windows-2022]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { mode: Debug }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Running CMake for MSVC ${{ matrix.cfg.mode }}
+        run: |
+          mkdir build && cd build
+          cmake -G "Visual Studio 17 2022" -A x64 .. -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE"
+      - name: Compiling Unit Tests
+        run:  |
+          cd build
+          cmake --build . --target unit.arch.exe      --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.meta.exe      --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.internals.exe --config ${{ matrix.cfg.mode }}
+      - name: Running Tests
+        run: |
+          cd build
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.arch.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
+          ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
+
   avx512:
     runs-on: [self-hosted, avx512]
     strategy:
