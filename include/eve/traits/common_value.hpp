@@ -18,9 +18,12 @@ namespace eve::detail
           )
   T0 find_common_value();
 
+  template<typename... Ts>
+  using find_type = decltype(( std::declval<Ts>() + ... ));
+
   template<typename T0, typename... Ts>
   requires(simd_value<T0> || ... || simd_value<Ts>)
-  auto find_common_value() -> decltype(( std::declval<T0>() + ... + std::declval<Ts>() ));
+  auto find_common_value() -> find_type<T0, Ts... >;
 
   template<typename, typename... Ts>
   struct common_value_impl;
