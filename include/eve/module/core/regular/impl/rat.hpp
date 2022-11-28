@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/constant/one.hpp>
@@ -30,9 +31,11 @@ template<floating_real_value T, floating_real_value S>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_),
      T const& x,
-     S const& tol) noexcept requires compatible_values<T, S> &&(!std::is_same_v<T, S>)
+     S const& tol) noexcept
+-> kumi::tuple<common_value_t<T, S>, common_value_t<T, S>>
+ requires (!std::is_same_v<T, S>)
 {
-  using r_t = common_compatible_t<T, S>;
+  using r_t = common_value_t<T, S>;
   return rat(r_t(x), r_t(tol));
 }
 

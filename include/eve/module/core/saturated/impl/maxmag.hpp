@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -26,7 +25,8 @@ EVE_FORCEINLINE auto
 maxmag_(EVE_SUPPORTS(cpu_),
         saturated_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(maxmag(a, b))
 {
   return arithmetic_call(saturated(maxmag), a, b);
 }

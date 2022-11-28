@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -27,7 +27,8 @@ EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_),
         numeric_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(absmax(a, b))
 {
   return arithmetic_call(numeric(absmax), a, b);
 }
@@ -42,9 +43,10 @@ absmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcep
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<real_value T0, value T1, value... Ts>
 auto
 absmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+  -> decltype(absmax(a0, a1, args...))
 {
   return eve::abs(numeric(eve::max)(a0, a1, args...));
 }

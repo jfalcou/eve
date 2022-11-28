@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -24,7 +24,7 @@ namespace eve::detail
 template<real_value T, real_value U>
 EVE_FORCEINLINE auto
 is_lessgreater_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
-//  requires compatible_values<T, U>
+-> common_logical_t<T, U>
 {
   return arithmetic_call(is_lessgreater, a, b);
 }
@@ -32,7 +32,6 @@ is_lessgreater_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 template<real_value T>
 EVE_FORCEINLINE auto
 is_lessgreater_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-//  requires has_native_abi_v<T>
 {
   return (is_not_equal(a, b) && is_ordered(a, b));
 }

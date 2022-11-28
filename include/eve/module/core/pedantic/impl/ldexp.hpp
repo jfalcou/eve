@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -123,7 +124,7 @@ ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
 template<conditional_expr C, floating_real_value T0, real_value T1>
 auto
 ldexp_(EVE_SUPPORTS(cpu_), C const& cond, pedantic_type const&, T0 a0, T1 a1) requires
-    floating_value<common_compatible_t<T0, T1>>
+    floating_value<common_value_t<T0, T1>>
 {
   return mask_op(cond, pedantic(eve::ldexp), a0, a1);
 }

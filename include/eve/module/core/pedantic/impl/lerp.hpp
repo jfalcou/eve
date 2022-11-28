@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -27,7 +26,8 @@ lerp_(EVE_SUPPORTS(cpu_),
       pedantic_type const&,
       T const& a,
       U const& b,
-      V const& t) noexcept requires compatible_values<T, U> && compatible_values<T, V>
+      V const& t) noexcept
+-> decltype(lerp(a, b, t))
 {
   return arithmetic_call(pedantic(lerp), a, b, t);
 }

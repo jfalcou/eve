@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -23,7 +23,8 @@ template<real_value T, real_value U>
 EVE_FORCEINLINE auto
 is_not_greater_equal_(EVE_SUPPORTS(cpu_),
                       T const& a,
-                      U const& b) noexcept requires compatible_values<T, U>
+                      U const& b) noexcept
+-> common_logical_t<T, U>
 {
   return arithmetic_call(is_not_greater_equal, a, b);
 }

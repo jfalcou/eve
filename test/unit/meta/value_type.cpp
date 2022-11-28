@@ -30,7 +30,7 @@ TTS_CASE( "Check for value_type, iterator")
 TTS_CASE( "Check for value_type, range")
 {
   {
-    int x[5];
+    [[maybe_unused]] int x[5];
     TTS_TYPE_IS(eve::value_type_t<decltype(x)>, int);
   }
   TTS_TYPE_IS(eve::value_type_t<std::vector<int>>, int);

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -24,7 +24,7 @@ fnms_(EVE_SUPPORTS(cpu_),
       U const& b,
       V const& c) noexcept requires properly_convertible<U, V, T>
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return arithmetic_call(fnms, r_t(a), r_t(b), r_t(c));
 }
 
@@ -47,10 +47,9 @@ fnms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires 
 //================================================================================================
 template<conditional_expr C, real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
-fnms_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept requires
-    properly_convertible<U, V, T>
+fnms_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 {
-  using r_t = common_compatible_t<T, U, V>;
+  using r_t = common_value_t<T, U, V>;
   return mask_op(cond, eve::fnms, r_t(a), r_t(b), r_t(c));
 }
 }

@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
@@ -22,7 +21,8 @@ EVE_FORCEINLINE auto
 negminabs_(EVE_SUPPORTS(cpu_),
            saturated_type const&,
            T const& a,
-           U const& b) noexcept requires compatible_values<T, U>
+           U const& b) noexcept
+-> decltype(negminabs(a, b))
 {
   return arithmetic_call(saturated(negminabs), a, b);
 }
@@ -34,7 +34,7 @@ negminabs_(EVE_SUPPORTS(cpu_),
            T const& a,
            T const& b) noexcept requires has_native_abi_v<T>
 {
-  return -saturated(minabs(a, b));
+  return saturated(minus)(saturated(minabs(a, b)));
 }
 
 //================================================================================================
@@ -43,8 +43,9 @@ negminabs_(EVE_SUPPORTS(cpu_),
 template<real_value T0, real_value T1, real_value... Ts>
 auto
 negminabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args)
+-> decltype(negminabs(a0, a1, args...))
 {
-  return -saturated(eve::minabs)(a0, a1, args...);
+  return saturated(minus)(saturated(eve::minabs)(a0, a1, args...));
 }
 
 }

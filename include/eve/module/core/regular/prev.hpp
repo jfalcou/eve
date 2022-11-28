@@ -38,7 +38,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::integral_value N >
-//!      eve::common_compatible_t<T, U> prev(T x, N n = 1) noexcept;
+//!      eve::common_value_t<T, U> prev(T x, N n = 1) noexcept;
 //!   }
 //!   @endcode
 //!

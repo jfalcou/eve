@@ -29,7 +29,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U >
-//!      eve::common_compatible_t<T, U> agm(T x, U y) noexcept;
+//!      eve::common_value_t<T, U> agm(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!

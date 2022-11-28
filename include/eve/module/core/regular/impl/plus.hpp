@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
@@ -17,7 +17,7 @@
 namespace eve::detail
 {
 template<value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE T
 plus_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   return a;
@@ -25,9 +25,9 @@ plus_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 
 template<value T, value U>
 EVE_FORCEINLINE auto
-plus_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
-{
-  return a + b;
+plus_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_value_t<T, U>{
+  return add(a, b);
 }
 
 //================================================================================================

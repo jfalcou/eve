@@ -32,7 +32,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T,  eve::value... Ts>
-//!      eve::common_compatible_value<T, Ts ...> absmax( T x, Ts ... xs ) noexcept;
+//!      eve::common_value_t<T, Ts ...> absmax( T x, Ts ... xs ) noexcept;
 //!   }
 //!   @endcode
 //!

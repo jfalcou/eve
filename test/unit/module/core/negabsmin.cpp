@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check return types of negabsmin", eve::test::simd::all_types)
 //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of negabsmin on all types full range",
-              eve::test::simd::all_types,
+              eve::test::simd::signed_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of negabsmin on all types full range",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  auto m = [](auto a, auto b, auto c) -> v_t { return -eve::abs(eve::min(a, b, c)); };
+  auto m = [](auto a, auto b, auto c) -> v_t { return eve::saturated(eve::minus)(eve::saturated(eve::abs)(eve::min(a, b, c))); };
   TTS_ULP_EQUAL(negabsmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);

@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      eve::common_compatible_t<T, U> negate(T x, U y) noexcept;
+//!      eve::common_value_t<T, U> negate(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!

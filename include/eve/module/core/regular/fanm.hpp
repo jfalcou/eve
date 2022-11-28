@@ -33,7 +33,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      eve::compatible_value_t fanm(T x, U y,  V z) noexcept;
+//!      eve::common_value_t fanm(T x, U y,  V z) noexcept;
 //!   }
 //!   @endcode
 //!

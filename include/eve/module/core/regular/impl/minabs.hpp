@@ -7,32 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
-#include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/min.hpp>
-#include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
-minabs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+minabs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> decltype(add(abs(a), abs(b)))
 {
   return arithmetic_call(minabs, a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
-minabs_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native_abi_v<T>
+minabs_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+requires has_native_abi_v<T>
 {
   return eve::min(eve::abs(a), eve::abs(b));
 }
@@ -40,21 +39,21 @@ minabs_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native
 //================================================================================================
 // Masked case
 //================================================================================================
-template<decorator D, conditional_expr C, real_value U, real_value V>
+template<decorator D, conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
-minabs_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept requires
-    compatible_values<U, V>
+minabs_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
+-> decltype(minabs(t, f))
 {
   return mask_op(cond, D()(eve::minabs), t, f);
 }
 
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_),
         C const& cond,
         U const& t,
         V const& f) noexcept
-requires(std::convertible_to<U, decltype(minabs(t, f))>)
+-> decltype(minabs(t, f))
 {
   return mask_op(cond, eve::minabs, t, f);
 }
@@ -62,24 +61,26 @@ requires(std::convertible_to<U, decltype(minabs(t, f))>)
 //================================================================================================
 // N parameters
 //================================================================================================
-template<decorator D, real_value T0, real_value T1, real_value... Ts>
+template<decorator D, value T0, value T1, value... Ts>
 auto
-minabs_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args)
+minabs_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args) noexcept
+->  decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...))
 {
-  auto dma  = D()(minabs);
-  using r_t = common_compatible_t<T0, T1, Ts...>;
-  r_t that(dma(r_t(a0), r_t(a1)));
-  ((that = dma(that, r_t(args))), ...);
+  auto dma  = D()(min);
+  using r_t = decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...));
+  r_t that(dma(eve::abs(a0), eve::abs((a1))));
+  ((that = dma(that, eve::abs(args))), ...);
   return that;
 }
 
-template<real_value T0, real_value T1, real_value... Ts>
-common_compatible_t<T0, T1, Ts...>
-minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+template<value T0, value T1, value... Ts>
+auto
+minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
+->  decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...))
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
-  r_t that(minabs(r_t(a0), r_t(a1)));
-  ((that = minabs(that, r_t(args))), ...);
+  using r_t = decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...));
+  r_t that(min(eve::abs(a0), eve::abs((a1))));
+  ((that = min(that, eve::abs(args))), ...);
   return that;
 }
 
@@ -88,7 +89,7 @@ minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-minabs_(EVE_SUPPORTS(cpu_), Ts tup)
+minabs_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
   else return kumi::apply( [&](auto... m) { return minabs(m...); }, tup);
@@ -96,7 +97,7 @@ minabs_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-minabs_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+minabs_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return d(eve::abs)(get<0>(tup));
   else return kumi::apply( [&](auto... m) { return d(minabs)(m...); }, tup);
@@ -107,7 +108,7 @@ minabs_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 template<conditional_expr C, decorator D, value T0, value T1, value... Ts>
 EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 a0, T1 a1, Ts... args) noexcept
-requires(std::convertible_to<T0, decltype(minabs(a0, a1, args...))>)
+-> decltype(minabs(a0, a1, args...))
 {
   return mask_op(cond, d(eve::minabs), a0, a1, args...);
 }
@@ -115,7 +116,7 @@ requires(std::convertible_to<T0, decltype(minabs(a0, a1, args...))>)
 template<conditional_expr C, value T0, value T1, value... Ts>
 EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
-requires(std::convertible_to<T0, decltype(minabs(a0, a1, args...))>)
+-> decltype(minabs(a0, a1, args...))
 {
   return mask_op(cond, eve::minabs, a0, a1, args...);
 }

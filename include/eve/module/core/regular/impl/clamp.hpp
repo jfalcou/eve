@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -23,14 +23,16 @@ EVE_FORCEINLINE auto
 clamp_(EVE_SUPPORTS(cpu_),
        T const& a,
        U const& b,
-       V const& c) noexcept requires compatible_values<T, U> && compatible_values<T, V>
-{
+       V const& c) noexcept
+-> common_value_t<T, U, V>{
   return arithmetic_call(clamp, a, b, c);
 }
 
 template<real_value T>
 EVE_FORCEINLINE auto
-clamp_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires has_native_abi_v<T>
+clamp_(EVE_SUPPORTS(cpu_)
+      , T const& a, T const& b, T const& c) noexcept
+requires has_native_abi_v<T>
 {
   return eve::min(eve::max(a, b), c);
 }
@@ -39,8 +41,8 @@ clamp_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires
 // Masked case
 template<conditional_expr C, real_value T, real_value U, real_value V>
 EVE_FORCEINLINE auto
-clamp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept requires
-    compatible_values<T, U> && compatible_values<T, V>
+clamp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
+-> decltype(clamp(a, b, c))
 {
   return mask_op(cond, eve::clamp, a, b, c);
 }

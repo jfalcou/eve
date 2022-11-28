@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
@@ -27,9 +28,10 @@ EVE_FORCEINLINE auto
 remdiv_(EVE_SUPPORTS(cpu_),
         pedantic_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(remdiv(a, b))
 {
-  using r_t = common_compatible_t<T, U>;
+  using r_t = common_value_t<T, U>;
   if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
   {
     auto d = pedantic(div)(a, b);

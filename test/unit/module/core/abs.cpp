@@ -31,6 +31,7 @@ TTS_CASE_TPL("Check return types of eve::abs", eve::test::simd::all_types)
 
   TTS_EXPR_IS(eve::abs(T()), T);
   TTS_EXPR_IS(eve::abs[eve::logical<T>()](T()), T);
+  TTS_EXPR_IS(eve::abs[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::abs[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::abs[bool()](T()), T);
 

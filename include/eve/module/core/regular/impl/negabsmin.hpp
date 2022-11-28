@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -18,7 +18,6 @@
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/minus.hpp>
-#include <eve/traits/common_compatible.hpp>
 
 #include <type_traits>
 
@@ -27,14 +26,15 @@ namespace eve::detail
 
 template<typename  ...Ts>
 EVE_FORCEINLINE auto
-negabsmin_(EVE_SUPPORTS(cpu_), Ts... args)
+negabsmin_(EVE_SUPPORTS(cpu_), Ts... args) noexcept
+-> decltype(absmax(args...))
 {
   return minus(absmin(args...));
 }
 
 template<conditional_expr C, typename  ...Ts>
 EVE_FORCEINLINE auto
-negabsmin_(EVE_SUPPORTS(cpu_), C const & c, Ts... args)
+negabsmin_(EVE_SUPPORTS(cpu_), C const & c, Ts... args) noexcept
 {
   return minus[c](absmin[c](args...));
 }
@@ -44,7 +44,7 @@ negabsmin_(EVE_SUPPORTS(cpu_), C const & c, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-negabsmin_(EVE_SUPPORTS(cpu_), Ts tup)
+negabsmin_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return minus(get<0>(tup));
   else return kumi::apply( [&](auto... m) { return negabsmin(m...); }, tup);
@@ -52,7 +52,7 @@ negabsmin_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-negabsmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+negabsmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return -d(eve::abs)(get<0>(tup));
   else return minus(kumi::apply( [&](auto... m) { return d(absmin)(m...); }, tup));

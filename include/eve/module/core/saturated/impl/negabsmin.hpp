@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
@@ -22,7 +21,8 @@ EVE_FORCEINLINE auto
 negabsmin_(EVE_SUPPORTS(cpu_),
            saturated_type const&,
            T const& a,
-           U const& b) noexcept requires compatible_values<T, U>
+           U const& b) noexcept
+-> decltype(negabsmin(a, b))
 {
   return arithmetic_call(saturated(negabsmin), a, b);
 }
@@ -34,7 +34,7 @@ negabsmin_(EVE_SUPPORTS(cpu_),
            T const& a,
            T const& b) noexcept requires has_native_abi_v<T>
 {
-  return -saturated(eve::abs)(eve::min(a, b));
+  return saturated(minus)(saturated(eve::abs)(eve::min(a, b)));
 }
 
 //================================================================================================
@@ -42,9 +42,10 @@ negabsmin_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<real_value T0, real_value T1, real_value... Ts>
 auto
-negabsmin_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args)
+negabsmin_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(mul(a0, a1, args...))
 {
-  return -saturated(eve::abs)(eve::min(a0, a1, args...));
+  return saturated(minus)(saturated(eve::abs)(eve::min(a0, a1, args...)));
 }
 
 }

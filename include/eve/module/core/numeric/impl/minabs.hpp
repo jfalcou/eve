@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -28,7 +28,8 @@ EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_),
         numeric_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(minabs(a, b))
 {
   return arithmetic_call(numeric(minabs), a, b);
 }
@@ -46,8 +47,9 @@ minabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcep
 template<real_value T0, real_value T1, real_value... Ts>
 auto
 minabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+  -> decltype(minabs(a0, a1, args...))
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = common_value_t<T0, T1, Ts...>;
   r_t that(numeric(minabs)(r_t(a0), r_t(a1)));
   ((that = numeric(minabs)(that, r_t(args))), ...);
   return that;

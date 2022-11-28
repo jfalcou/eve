@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/conditional.hpp>
@@ -44,7 +43,8 @@ EVE_FORCEINLINE auto
 sub_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
      T const& a,
-     U const& b) noexcept requires compatible_values<T, U>
+     U const& b) noexcept
+-> decltype(sub(a, b))
 {
   return arithmetic_call(saturated(sub), a, b);
 }
@@ -111,7 +111,8 @@ sub_(EVE_SUPPORTS(cpu_),
      C const& cond,
      saturated_type const&,
      U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     V const& f) noexcept
+-> decltype(sub(t, f))
 {
   return mask_op(cond, saturated(sub), t, f);
 }

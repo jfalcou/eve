@@ -32,7 +32,7 @@ sqr_abs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 sqr_abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-requires(std::convertible_to<U, decltype(abs(t))>)
+-> decltype(abs(t))
 {
   return mask_op(cond, eve::sqr_abs, t);
 }

@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
@@ -22,7 +21,8 @@ EVE_FORCEINLINE auto
 minabs_(EVE_SUPPORTS(cpu_),
         saturated_type const&,
         T const& a,
-        U const& b) noexcept requires compatible_values<T, U>
+        U const& b) noexcept
+-> decltype(minabs(a, b))
 {
   return arithmetic_call(saturated(minabs), a, b);
 }
@@ -42,7 +42,8 @@ minabs_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<real_value T0, real_value T1, real_value... Ts>
 auto
-minabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args)
+minabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(minabs(a0, a1, args...))
 {
   auto sa = saturated(eve::abs);
   return eve::min(sa(a0), sa(a1), sa(args)...);

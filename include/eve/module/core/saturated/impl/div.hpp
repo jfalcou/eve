@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
@@ -41,14 +41,16 @@ EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
      T const& a,
-     U const& b) noexcept requires compatible_values<T, U>
+     U const& b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(saturated(div), a, b);
 }
 
 template<real_value T>
 EVE_FORCEINLINE T
-div_(EVE_SUPPORTS(cpu_), saturated_type const&, T a, T b) noexcept requires has_native_abi_v<T>
+div_(EVE_SUPPORTS(cpu_), saturated_type const&, T a, T b) noexcept
+requires has_native_abi_v<T>
 {
   if constexpr( integral_value<T> )
   {
@@ -97,7 +99,8 @@ div_(EVE_SUPPORTS(cpu_),
      C const& cond,
      saturated_type const&,
      U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     V const& f) noexcept
+-> decltype(div(t, f))
 {
   return mask_op(cond, saturated(div), t, f);
 }

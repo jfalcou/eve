@@ -29,7 +29,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U, eve::floating_value V >
-//!      eve::common_compatible_t<T, U> lerp(T x, U y, V t) noexcept;
+//!      eve::common_value_t<T, U> lerp(T x, U y, V t) noexcept;
 //!   }
 //!   @endcode
 //!

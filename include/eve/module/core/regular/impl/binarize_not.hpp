@@ -22,23 +22,27 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond) noexcept
 {
-  if constexpr( has_native_abi_v<T> ) { return bit_andnot(one(eve::as<T>()), cond.bits()); }
-  else return apply_over(binarize_not, cond);
+  if constexpr( has_native_abi_v<T> )
+    return bit_andnot(one(eve::as<T>()), cond.bits());
+  else
+    return apply_over(binarize_not, cond);
 }
 
-template<real_value T, real_scalar_value U>
+template<value T, scalar_value U>
 EVE_FORCEINLINE auto
 binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond, U const& val) noexcept
 {
-  if constexpr( has_native_abi_v<T> ) { return if_else(cond, zero(as(val)), val); }
-  else return apply_over(binarize_not, cond, val);
+  if constexpr( has_native_abi_v<T> )
+    return if_else(cond, zero(as(val)), val);
+  else
+    return apply_over(binarize_not, cond, val);
 }
 
-template<real_value T, real_scalar_value U>
+template<value T, scalar_value U>
 EVE_FORCEINLINE auto
 binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond, eve::as<U> const&) noexcept
 {
@@ -46,19 +50,21 @@ binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond, eve::as<U> const&) noe
   return if_else(cond, zero, one(as<R>()));
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond, callable_allbits_ const&) noexcept
 {
   return bit_not(cond.mask());
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond, callable_mone_ const&) noexcept
 {
-  if constexpr( integral_value<T> ) return bit_not(cond.mask());
-  else return eve::binarize_not(cond, mone(eve::as<element_type_t<T>>()));
+  if constexpr( integral_value<T> )
+    return bit_not(cond.mask());
+  else
+    return eve::binarize_not(cond, mone(eve::as<element_type_t<T>>()));
 }
 
 }

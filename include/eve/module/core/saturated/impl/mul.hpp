@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/operators.hpp>
 #include <eve/detail/implementation.hpp>
@@ -37,7 +36,8 @@ EVE_FORCEINLINE auto
 mul_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
      T const& a,
-     U const& b) noexcept requires compatible_values<T, U>
+     U const& b) noexcept
+-> decltype(mul(a, b))
 {
   return arithmetic_call(saturated(mul), a, b);
 }
@@ -112,7 +112,7 @@ EVE_FORCEINLINE auto
 mul_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
      T const& a,
-     T const& b) noexcept requires has_native_abi_v<T>
+     T const& b) noexcept
 {
   using elt_t = element_type_t<T>;
   if constexpr( floating_value<T> ) { return a * b; }
@@ -137,10 +137,11 @@ mul_(EVE_SUPPORTS(cpu_),
 // N parameters
 //================================================================================================
 template<real_value T0, real_value T1, real_value... Ts>
-common_compatible_t<T0, T1, Ts...>
-mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args)
+auto
+mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(mul(a0, a1, args...))
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = decltype(mul(a0, a1, args...));
   r_t that(saturated(mul)(r_t(a0), r_t(a1)));
   ((that = saturated(mul)(that, r_t(args))), ...);
   return that;
@@ -155,7 +156,8 @@ mul_(EVE_SUPPORTS(cpu_),
      C const& cond,
      saturated_type const&,
      U const& t,
-     V const& f) noexcept requires compatible_values<U, V>
+     V const& f) noexcept
+->decltype(mul(t, f))
 {
   return mask_op(cond, saturated(mul), t, f);
 }

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -23,8 +23,8 @@ namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U, floating_real_value V>
 EVE_FORCEINLINE auto
-lerp_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& t) noexcept requires
-    compatible_values<T, U> && compatible_values<T, V>
+lerp_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& t) noexcept
+-> decltype(lerp(a, b, t))
 {
   return arithmetic_call(numeric(lerp), a, b, t);
 }
