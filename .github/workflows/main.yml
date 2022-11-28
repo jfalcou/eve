@@ -107,9 +107,9 @@ jobs:
       - name: Compiling Unit Tests
         run:  |
           cd build
-          cmake --build . --target unit.arch.exe      --config ${{ matrix.cfg.mode }}
-          cmake --build . --target unit.meta.exe      --config ${{ matrix.cfg.mode }}
-          cmake --build . --target unit.internals.exe --config ${{ matrix.cfg.mode }}
+          cmake --build . --target unit.arch.exe      --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.meta.exe      --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.internals.exe --config ${{ matrix.cfg.mode }} --parallel 2
       - name: Running Tests
         run: |
           cd build
