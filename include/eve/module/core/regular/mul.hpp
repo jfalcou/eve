@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value... Ts >
-//!      eve::common_compatible_t<Ts ...> mul(Ts ... x) noexcept;
+//!      eve::common_value_t<Ts ...> mul(Ts ... x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -65,7 +65,7 @@ namespace eve
 //!   * eve::saturated
 //!
 //!     The call `saturated(mul)(args...)` computes the saturated  multiplication `of the arguments.
-//!     The saturation is obtained in the [common compatible type](@ref common_compatible)
+//!     The saturation is obtained in the [common value](@ref common_value)
 //!     of the N parameters. The computation is done as if all arguments were
 //!     converted to this type and the saturated multiplication applied recursively on all
 //!     parameters. No overflow occurs.

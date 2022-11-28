@@ -25,7 +25,8 @@ EVE_FORCEINLINE auto
 dist_(EVE_SUPPORTS(cpu_),
       saturated_type const&,
       T const& a,
-      U const& b) noexcept requires compatible_values<T, U>
+      U const& b) noexcept
+-> decltype(dist(a, b))
 {
   return arithmetic_call(saturated(dist), a, b);
 }

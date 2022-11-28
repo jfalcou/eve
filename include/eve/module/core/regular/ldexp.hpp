@@ -32,7 +32,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::integral_value N >
-//!      eve::common_compatible_t<T, N> ldexp(T x, N n) noexcept;
+//!      eve::common_value_t<T, N> ldexp(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!

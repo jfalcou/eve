@@ -46,7 +46,8 @@ minus_(EVE_SUPPORTS(cpu_),
        C const& cond,
        saturated_type const&,
        U const& t,
-       V const& f) noexcept requires compatible_values<U, V>
+       V const& f) noexcept
+requires(std::convertible_to<U, decltype(sub(t, f))>)
 {
   auto substract = [](auto x, auto y) { return saturated(sub)(x, y); };
   return mask_op(cond, substract(t, f), t);

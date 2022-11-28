@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value... Ts>
-//!      eve::common_compatible_t<Ts ...> sub(Ts ... xs) noexcept;
+//!      eve::common_value_t<Ts ...> sub(Ts ... xs) noexcept;
 //!   }
 //!   @endcode
 //!
