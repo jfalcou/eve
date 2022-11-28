@@ -34,7 +34,7 @@ negabsmax_(EVE_SUPPORTS(cpu_),
            T const& a,
            T const& b) noexcept requires has_native_abi_v<T>
 {
-  return minus(saturated(eve::abs)(eve::max(a, b)));
+  return saturated(minus)(saturated(eve::abs)(eve::max(a, b)));
 }
 
 //================================================================================================
@@ -45,7 +45,7 @@ auto
 negabsmax_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(negabsmax(a0, a1, args...))
 {
-  return minus(saturated(eve::abs)(eve::max(a0, a1, args...)));
+  return saturated(minus)(saturated(eve::abs)(eve::max(a0, a1, args...)));
 }
 
 }
