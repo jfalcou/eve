@@ -73,7 +73,6 @@ div_(EVE_SUPPORTS(cpu_), C const& cond, U t, V f) noexcept
 template<conditional_expr C, decorator D, value U, value V>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
--> decltype(div(t, if_else(cond, f, one)))
 {
   auto g = if_else(cond, f, one);
   return if_else(cond, D()(div)(t, g), t);
