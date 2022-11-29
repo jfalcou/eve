@@ -16,7 +16,8 @@ namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
-pow_abs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+pow_abs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+//-> decltype(pow(eve::abs(a), b))
 {
   return arithmetic_call(pow_abs, a, b);
 }
@@ -26,7 +27,8 @@ EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_),
          raw_type const&,
          T const& a,
-         U const& b) noexcept requires compatible_values<T, U>
+         U const& b) noexcept
+//-> decltype(pow(eve::abs(a), b))
 {
   return arithmetic_call(raw(pow_abs), a, b);
 }
@@ -91,6 +93,7 @@ pow_abs_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
 template<conditional_expr C, value U, value V>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& v) noexcept
+-> decltype( if_else(cond, pow_abs(t, v), t) )
 {
   return mask_op(cond, eve::pow_abs, t, v);
 }
@@ -98,6 +101,7 @@ pow_abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& v) noexcept
 template<conditional_expr C, decorator D, value U, value V>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t, V const& v) noexcept
+-> decltype( if_else(cond, pow_abs(t, v), t) )
 {
   return mask_op(cond, d(eve::pow_abs), t, v);
 }

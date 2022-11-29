@@ -10,12 +10,14 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/atan2.hpp>
 #include <eve/module/math/regular/radindeg.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
 atan2d_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> decltype(atan2(a, b))
 {
   return arithmetic_call(atan2d, a, b);
 }

@@ -35,8 +35,6 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!  requires compatible< T,U>;
-//!
 //! **Parameters**
 //!
 //!`x`, `y`:   [floating real values](@ref eve::value)
@@ -63,7 +61,7 @@ namespace eve
 //!   not **IEEE** conformant, but  allows to simplify (and
 //!   speed) the implementation. In all other cases, the result is standard conformant.
 //!
-//!   The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+//!   The result type is the [common value type](@ref common_value) of the two parameters.
 //!
 //!  @groupheader{Example}
 //!

@@ -28,6 +28,7 @@
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/traits/common_value.hpp>
+#include <eve/traits/underlying_type.hpp>
 
 namespace eve::detail
 {
