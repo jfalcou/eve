@@ -13,21 +13,22 @@
 #include <eve/module/elliptic/regular/ellint_rd.hpp>
 #include <eve/module/elliptic/regular/ellint_rf.hpp>
 #include <eve/module/math.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U, floating_real_value V, floating_real_value W>
 EVE_FORCEINLINE auto
-ellint_rj_(EVE_SUPPORTS(cpu_), T x, U y, V z, W p) noexcept requires
-    compatible_values<T, U> && compatible_values<V, U> && compatible_values<V, W>
+ellint_rj_(EVE_SUPPORTS(cpu_), T x, U y, V z, W p) noexcept
+-> common_value_t<T, U, V, W>
 {
   return arithmetic_call(ellint_rj, x, y, z, p);
 }
 
 template<floating_real_value T, floating_real_value U, floating_real_value V, floating_real_value W>
 EVE_FORCEINLINE auto
-ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, U y, V z, W p) noexcept requires
-    compatible_values<T, U> && compatible_values<V, U> && compatible_values<V, W>
+ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, U y, V z, W p) noexcept
+-> common_value_t<T, U, V, W>
 {
   return arithmetic_call(raw(ellint_rj), x, y, z, p);
 }
@@ -228,17 +229,19 @@ ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, T y, T z, T p) noexcept req
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+template<conditional_expr C, typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-ellint_rj_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+ellint_rj_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+-> decltype( if_else(cond, ellint_rj(t0, ts...), t0) )
 {
-  return mask_op(cond, eve::ellint_rj, ts ...);
+  return mask_op(cond, eve::ellint_rj, t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-ellint_rj_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+ellint_rj_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+-> decltype( if_else(cond, ellint_rj(t0, ts...), t0) )
 {
-  return mask_op(cond, d(eve::ellint_rj), ts ...);
+  return mask_op(cond, d(eve::ellint_rj), t0, ts ...);
 }
 }

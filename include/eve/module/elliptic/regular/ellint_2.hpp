@@ -40,7 +40,7 @@ namespace eve
 //!      T ellint_2(T k) noexcept;                                                //1
 //!
 //!      template< eve::floating_real_value T,  eve::floating_real_value U >
-//!      eve::common_compatible_value<T, U> ellint_2(T phi, U k) noexcept;        //2
+//!      eve::common_value_t<T, U> ellint_2(T phi, U k) noexcept;        //2
 //!   }
 //!   @endcode
 //!
