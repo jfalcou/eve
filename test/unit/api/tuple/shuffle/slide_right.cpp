@@ -11,6 +11,20 @@
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 
+template<auto N>
+using constant = std::integral_constant<decltype(N),N>;
+
+template<typename Shift, typename T>
+void shift_test(Shift, T x, T y)
+{
+  T ref = [&](auto i, auto )
+          {
+            return (i < Shift::value) ? x.get(T::size() + i - Shift::value) : y.get(i-Shift::value);
+          };
+
+  TTS_EQUAL( eve::slide_right(x, y,eve::index<Shift::value>), ref );
+}
+
 TTS_CASE_TPL( "Check behavior of slide_right shuffle", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
@@ -30,14 +44,6 @@ TTS_CASE_TPL( "Check behavior of slide_right shuffle", eve::test::scalar::all_ty
                                           };
                             };
 
-  eve::detail::for_<0,1,w_t::size()>
-  ( [&]<typename Shift>(Shift)
-  {
-    eve::wide<s_t> ref =  [&](auto i, auto )
-                          {
-                            return (i < Shift::value) ? x.get(w_t::size() + i - Shift::value) : y.get(i-Shift::value);
-                          };
-
-    TTS_EQUAL( eve::slide_right(x, y,eve::index<Shift::value>)       , ref );
-  });
+  constexpr auto n = w_t::size();
+  eve::detail::for_<0,1,n>( [&](auto idx){ shift_test(idx, x, y); });
 };
