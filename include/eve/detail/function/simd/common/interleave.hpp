@@ -20,18 +20,17 @@ namespace eve::detail
   EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(cpu_),T v0, Ts... vs) noexcept
   {
     auto const values = kumi::make_tuple(v0,vs...);
-    constexpr auto nb   = 1 + sizeof...(Ts);
 
     using ABI = abi_t<element_type_t<T>, eve::fixed<T::size()>>;
     constexpr bool is_bit_logical = logical_simd_value<T> && !ABI::is_wide_logical;
 
          if constexpr (T::size() == 1) return values;
-    else if constexpr ( nb == 4 && (sizeof(eve::element_type_t<T>) < 8) && !is_bit_logical )
+    else if constexpr (sizeof...(Ts) == 3 && (sizeof(eve::element_type_t<T>) < 8) && !is_bit_logical)
     {
       auto a = v0;
-      auto b = get<1>(values);
-      auto c = get<2>(values);
-      auto d = get<3>(values);
+      auto b = kumi::get<1>(values);
+      auto c = kumi::get<2>(values);
+      auto d = kumi::get<3>(values);
 
       auto [ab0, ab1] = interleave(a, b);
       auto [cd0, cd1] = interleave(c, d);
@@ -51,12 +50,11 @@ namespace eve::detail
     }
     else
     {
-      constexpr auto card = T::size();
-
       return [&]<std::size_t... J>(std::index_sequence<J...>)
       {
         return kumi::make_tuple
-        ( [&]<std::size_t O, std::size_t... I>
+        (
+          [&]<std::size_t O, std::size_t... I>
           (std::index_sequence<I...>, std::integral_constant<std::size_t,O>)
           {
             /*
@@ -70,10 +68,11 @@ namespace eve::detail
                 - g++ and clang are able to turn this mess into an intrinsic based code if able
                 - special cases are optimized in their respective arch file
             */
-            return T{ kumi::get<((I+card*O)%nb)>(values).get((I+card*O)/nb)... };
-          }( std::make_index_sequence<card>{}, std::integral_constant<std::size_t,J>{})...
+            constexpr auto nb = 1 + sizeof...(Ts);
+            return T{ kumi::get<((I+T::size()*O)%nb)>(values).get((I+T::size()*O)/nb)... };
+          }( std::make_index_sequence<T::size()>{}, std::integral_constant<std::size_t,J>{})...
         );
-      }( std::make_index_sequence<nb>{});
+      }( std::make_index_sequence<1 + sizeof...(Ts)>{});
     }
   }
 
