@@ -11,13 +11,14 @@
 #include <eve/module/math/detail/generic/pow_kernel.hpp>
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/pow.hpp>
 
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
-//-> decltype(pow(eve::abs(a), b))
+-> decltype(eve::pow(eve::abs(a), b))
 {
   return arithmetic_call(pow_abs, a, b);
 }
@@ -28,7 +29,7 @@ pow_abs_(EVE_SUPPORTS(cpu_),
          raw_type const&,
          T const& a,
          U const& b) noexcept
-//-> decltype(pow(eve::abs(a), b))
+-> decltype(eve::pow(eve::abs(a), b))
 {
   return arithmetic_call(raw(pow_abs), a, b);
 }
