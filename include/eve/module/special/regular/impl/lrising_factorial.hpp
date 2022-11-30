@@ -11,6 +11,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/detail/lrising_factorial.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -29,7 +30,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), D const& d, I n, T x) noexcept
   else if constexpr( integral_scalar_value<I> ) { return d(lrising_factorial)(T(n), x); }
   else
   {
-    using r_t = common_compatible_t<I, T>;
+    using r_t = common_value_t<I, T>;
     return d(lrising_factorial)(r_t(n), r_t(x));
   }
 }
@@ -76,20 +77,22 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
   }
   else return apply_over(raw(lrising_factorial), a, x);
 }
-
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+
+template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-lrising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+lrising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, lrising_factorial(t0, ts...), t0))
 {
-  return mask_op(cond, eve::lrising_factorial, ts ...);
+  return mask_op(cond, d(eve::lrising_factorial), t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-lrising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+lrising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
 {
-  return mask_op(cond, d(eve::lrising_factorial), ts ...);
+  return lrising_factorial[cond](eve::regular_type(), t0, ts...);
 }
+
 }
