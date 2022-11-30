@@ -8,12 +8,14 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<value T, value U>
 EVE_FORCEINLINE auto
-gcd_(EVE_SUPPORTS(cpu_), T a, U b) noexcept requires compatible_values<T, U>
+gcd_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+->common_value_t<T, U>
 {
   return arithmetic_call(gcd, a, b);
 }
