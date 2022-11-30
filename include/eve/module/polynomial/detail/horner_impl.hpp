@@ -9,6 +9,7 @@
 
 #include <eve/concept/range.hpp>
 #include <eve/module/core.hpp>
+#include <eve/traits/common_value.hpp>
 
 #include <concepts>
 #include <iterator>
@@ -24,6 +25,7 @@ namespace eve::detail
 template<decorator D, value T0, value... Cs>
 EVE_FORCEINLINE constexpr auto
 horner_impl(D const& d, T0 const& xx, Cs... cs) noexcept
+-> common_value_t<T0, Cs...>
 {
   using r_t          = common_compatible_t<T0, Cs...>;
   constexpr size_t N = sizeof...(Cs);

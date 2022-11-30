@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/polynomial/detail/reverse_horner_impl.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -22,7 +23,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 T0        xx,
                 IT const& first,
                 IT const& last) noexcept
-    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+-> decltype( detail::reverse_horner_impl(pedantic_type(), xx, first, last))
 {
   return detail::reverse_horner_impl(pedantic_type(), xx, first, last);
 }
@@ -39,7 +40,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 callable_one_ const&,
                 IT const& first,
                 IT const& last) noexcept
-    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+-> decltype(detail::reverse_horner_impl(pedantic_type(), xx, one, first, last))
 {
   return detail::reverse_horner_impl(pedantic_type(), xx, one, first, last);
 }
@@ -50,7 +51,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> decltype(detail::reverse_horner_impl(pedantic_type(), xx, r))
 {
   return detail::reverse_horner_impl(pedantic_type(), xx, r);
 }
@@ -65,7 +66,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 T0 xx,
                 callable_one_ const&,
                 R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> decltype( detail::reverse_horner_impl(pedantic_type(), xx, one, r))
 {
   return detail::reverse_horner_impl(pedantic_type(), xx, one, r);
 }

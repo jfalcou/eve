@@ -17,7 +17,7 @@ namespace eve::detail
 template<value T0, std::input_iterator IT>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, IT const& first, IT const& last) noexcept
-    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+-> decltype(detail::horner_impl(numeric_type(), xx, first, last))
 {
   return detail::horner_impl(numeric_type(), xx, first, last);
 }
@@ -34,7 +34,7 @@ horner_(EVE_SUPPORTS(cpu_),
         callable_one_ const&,
         IT const& first,
         IT const& last) noexcept
-    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+-> decltype(detail::horner_impl(numeric_type(), xx, one, first, last))
 {
   return detail::horner_impl(numeric_type(), xx, one, first, last);
 }
@@ -45,7 +45,7 @@ horner_(EVE_SUPPORTS(cpu_),
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> decltype(detail::horner_impl(numeric_type(), xx, r))
 {
   return detail::horner_impl(numeric_type(), xx, r);
 }
@@ -56,7 +56,7 @@ horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, callable_one_ const&, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> decltype(detail::horner_impl(numeric_type(), xx, one, r))
 {
   return detail::horner_impl(numeric_type(), xx, one, r);
 }
