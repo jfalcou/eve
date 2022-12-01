@@ -14,14 +14,15 @@
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
-/*EVE_FORCEINLINE*/ auto
-pow1p_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+auto
+pow1p_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> decltype(pow(a, b))
 {
   return arithmetic_call(pow1p, a, b);
 }
 
 template<floating_real_value T>
-/*EVE_FORCEINLINE*/ auto
+auto
 pow1p_(EVE_SUPPORTS(cpu_), T const& x, T const& y) noexcept
 {
   if constexpr( has_native_abi_v<T> )
@@ -37,6 +38,7 @@ pow1p_(EVE_SUPPORTS(cpu_), T const& x, T const& y) noexcept
 template<conditional_expr C, real_value T , real_value U>
 EVE_FORCEINLINE auto
 pow1p_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
+-> decltype( if_else(cond, pow1p(t, u), t) )
 {
   return mask_op(cond, eve::pow1p, t, u);
 }

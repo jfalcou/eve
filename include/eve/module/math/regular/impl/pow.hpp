@@ -11,6 +11,7 @@
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -19,7 +20,8 @@ namespace eve::detail
 /////////////////////////////////////////////////////////////////////////////
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
-pow_(EVE_SUPPORTS(cpu_), T a, U b) noexcept requires compatible_values<T, U>
+pow_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(pow, a, b);
 }
@@ -41,6 +43,7 @@ pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept requires has_native_abi_v<T>
 template<real_value T, real_value U>
 EVE_FORCEINLINE auto
 pow_(EVE_SUPPORTS(cpu_), raw_type const&, T a, U b) noexcept
+-> common_value_t<T, U>
 {
   if constexpr( has_native_abi_v<T> )
   {
@@ -249,6 +252,7 @@ pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
 template<conditional_expr C, real_value T , real_value U>
 EVE_FORCEINLINE auto
 pow_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
+-> decltype( if_else(cond, pow(t, u), t) )
 {
   return mask_op(cond, eve::pow, t, u);
 }

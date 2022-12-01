@@ -13,18 +13,18 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<value T>
 EVE_FORCEINLINE constexpr auto
 sqr_abs_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
-  return sqr(a);
+  return sqr(eve::abs(a));
 }
 
 template<floating_real_value T>
 EVE_FORCEINLINE constexpr auto
 sqr_abs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 {
-  return sqr(a);
+  return sqr(eve::abs(a));
 }
 
 // -----------------------------------------------------------------------------------------------

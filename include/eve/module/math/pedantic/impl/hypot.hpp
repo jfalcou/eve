@@ -14,8 +14,9 @@ namespace eve::detail
 template<real_value T0, real_value... Ts>
 auto
 hypot_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, Ts... args)
+  -> decltype(hypot(a0, args...))
 {
-  using r_t = common_compatible_t<T0, Ts...>;
+  using r_t = decltype(hypot(a0, args...));
   if constexpr( has_native_abi_v<r_t> )
   {
     auto e = -maxmag(exponent(r_t(a0)), exponent(r_t(args))...);

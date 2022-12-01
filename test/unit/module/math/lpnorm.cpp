@@ -33,6 +33,20 @@ TTS_CASE_TPL("Check return types of lpnorm", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::lpnorm(int(), v_t(), T(), v_t()), T);
 
   TTS_EXPR_IS(eve::lpnorm(int(), v_t(), v_t(), v_t()), v_t);
+
+  TTS_EXPR_IS(eve::lpnorm(short(), T(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), int(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::lpnorm(short(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), T(), T(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), T(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), v_t(), T(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), T(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), v_t(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::lpnorm(short(), v_t(), T(), v_t()), T);
+
+  TTS_EXPR_IS(eve::lpnorm(short(), v_t(), v_t(), v_t()), v_t);
 };
 
   //==================================================================================================

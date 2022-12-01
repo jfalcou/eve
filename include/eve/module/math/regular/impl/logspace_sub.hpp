@@ -13,6 +13,7 @@
 #include <eve/module/math/regular/expm1.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/log1p.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -20,7 +21,8 @@ namespace eve::detail
 // regular case
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
-logspace_sub_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires compatible_values<T, U>
+logspace_sub_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(logspace_sub, a, b);
 }
@@ -44,10 +46,11 @@ logspace_sub_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 // Multi case
 //================================================================================================
 template<floating_real_value T0, floating_real_value T1, real_value... Ts>
-common_compatible_t<T0, T1, Ts...>
-logspace_sub_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+auto
+logspace_sub_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
+-> common_value_t<T0, T1, Ts...>
 {
-  using r_t = common_compatible_t<T0, T1, Ts...>;
+  using r_t = common_value_t<T0, T1, Ts...>;
   if constexpr( has_native_abi_v<r_t> )
   {
     r_t  that(logspace_sub(a0, a1));
@@ -67,7 +70,7 @@ logspace_sub_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-logspace_sub_(EVE_SUPPORTS(cpu_), Ts tup)
+logspace_sub_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return logspace_sub(m...); }, tup);
@@ -81,7 +84,8 @@ EVE_FORCEINLINE auto
 logspace_sub_(EVE_SUPPORTS(cpu_),
               C const& cond,
               U const& t,
-              V const& f) noexcept requires compatible_values<U, V>
+              V const& f) noexcept
+-> decltype( if_else(cond, logspace_add(t, f), t) )
 {
   return mask_op(cond, eve::logspace_sub, t, f);
 }

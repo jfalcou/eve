@@ -14,8 +14,8 @@ namespace eve::detail
 {
 template<real_value P, floating_value T0, floating_value T1, floating_value... Ts>
 auto
-lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts... args)
-    -> common_compatible_t<T0, T1, Ts...>
+lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(lpnorm(p, a0, a1, args...))
 {
   if constexpr( integral_value<P> )
   {
@@ -24,7 +24,7 @@ lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts..
   }
   else
   {
-    using r_t = common_compatible_t<T0, T1, Ts...>;
+    using r_t = decltype(lpnorm(p, a0, a1, args...));
 
     if constexpr( has_native_abi_v<r_t> )
     {

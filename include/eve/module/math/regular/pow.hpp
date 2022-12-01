@@ -51,7 +51,7 @@ namespace eve
 //!
 //!   Returns [elementwise](@ref glossary_elementwise) \f$x^y\f$.
 //!
-//!   1. The result type is the [common compatible type](@ref common_compatible) of the two parameters.
+//!   1. The result type is the [common value type](@ref common_value) of the two parameters.
 //!      In particular we have (IEC 60559):
 //!
 //!      * pow(+0, y), where y is a negative odd integer, returns \f$+\infty\f$

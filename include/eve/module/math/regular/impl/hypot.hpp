@@ -8,14 +8,16 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<value T0, value... Ts>
 auto
-hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
+hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) noexcept
+-> common_value_t<T0, Ts...>
 {
-  using c_t = common_compatible_t<T0, Ts...>;
+  using c_t = common_value_t<T0, Ts...>;
   using r_t = decltype(eve::abs(c_t{}));
   if constexpr( has_native_abi_v<r_t> )
   {
@@ -30,7 +32,7 @@ hypot_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-hypot_(EVE_SUPPORTS(cpu_), Ts tup)
+hypot_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
   else return kumi::apply( [&](auto... m) { return hypot(m...); }, tup);
@@ -38,7 +40,7 @@ hypot_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-hypot_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+hypot_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return abs(get<0>(tup));
   else return kumi::apply( [&](auto... m) { return d(hypot)(m...); }, tup);
@@ -48,7 +50,8 @@ hypot_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 // Masked case
 template<conditional_expr C, floating_value T0, floating_value... Ts>
 auto
-hypot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, Ts... args)
+hypot_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, Ts... args) noexcept
+-> decltype( if_else(cond, hypot(a0, args...), a0) )
 {
   return mask_op(cond, eve::hypot, a0, args...);
 }

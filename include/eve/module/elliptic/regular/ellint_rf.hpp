@@ -34,7 +34,7 @@ namespace eve
   //!      template< eve::floating_real_value T
   //!              , eve::floating_real_value U
   //!              , eve::floating_real_value V >
-  //!      eve::common_compatible_value<T, U, V> ellint_rf(T x, U y, V z) noexcept;
+  //!      eve::common_value_t<T, U, V> ellint_rf(T x, U y, V z) noexcept;
   //!   }
   //!   @endcode
   //!
