@@ -12,13 +12,14 @@
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/pow.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
--> decltype(eve::pow(eve::abs(a), b))
+-> eve::common_value_t<decltype(eve::abs(a)), U>
 {
   return arithmetic_call(pow_abs, a, b);
 }
