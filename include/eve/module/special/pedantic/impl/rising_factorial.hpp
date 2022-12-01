@@ -23,7 +23,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, I a, T x) noexcept
     return pedantic(rising_factorial)(convert(a, as(element_type_t<T>())), x);
   else
   {
-    using r_t = common_compatible_t<T, I>;
+    using r_t = common_value_t<T, I>;
     return pedantic(rising_factorial)(r_t(a), r_t(x));
   }
 }
