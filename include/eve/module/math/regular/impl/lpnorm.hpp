@@ -24,7 +24,6 @@ lpnorm_(EVE_SUPPORTS(cpu_), const P& p, T0 a0, T1 a1, Ts... args) requires(!deco
   using c_t = common_value_t<T0, T1, Ts...>;
   if constexpr( integral_value<P> )
   {
-//    auto fp = floating_(p);
     using e_t =  underlying_type_t<c_t>;
     auto fp =  convert(p, eve::as<e_t>());
     return lpnorm(fp, a0, a1, args...);
