@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
@@ -17,12 +16,14 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<value T, value U>
 EVE_FORCEINLINE auto
 logical_andnot_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+-> common_value_t<T, U>
 {
   return apply_over(logical_andnot, a, b);
 }

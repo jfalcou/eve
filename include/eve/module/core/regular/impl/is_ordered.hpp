@@ -7,13 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -42,6 +42,7 @@ is_ordered_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 template<conditional_expr C, real_value U, real_value V>
 EVE_FORCEINLINE auto
 is_ordered_(EVE_SUPPORTS(cpu_), C const& cond, U const& u, V const& v) noexcept
+-> decltype(is_ordered(u, v))
 {
   return logical_mask_op(cond, is_ordered, u, v);
 }
