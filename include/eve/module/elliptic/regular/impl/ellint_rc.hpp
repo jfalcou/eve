@@ -10,12 +10,14 @@
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
-ellint_rc_(EVE_SUPPORTS(cpu_), T x, U y) noexcept requires compatible_values<T, U>
+ellint_rc_(EVE_SUPPORTS(cpu_), T x, U y) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(ellint_rc, x, y);
 }
@@ -70,17 +72,19 @@ ellint_rc_(EVE_SUPPORTS(cpu_), T x, T y) noexcept requires has_native_abi_v<T>
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+template<conditional_expr C, typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-ellint_rc_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+ellint_rc_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+-> decltype( if_else(cond, ellint_rc(t0, ts...), t0) )
 {
-  return mask_op(cond, eve::ellint_rc, ts ...);
+  return mask_op(cond, eve::ellint_rc, t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-ellint_rc_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+ellint_rc_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+-> decltype( if_else(cond, ellint_rc(t0, ts...), t0) )
 {
-  return mask_op(cond, d(eve::ellint_rc), ts ...);
+  return mask_op(cond, d(eve::ellint_rc), t0, ts ...);
 }
 }

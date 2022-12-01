@@ -14,7 +14,8 @@ namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
 EVE_FORCEINLINE auto
-geommean_(EVE_SUPPORTS(cpu_), T a, U b) noexcept requires compatible_values<T, U>
+geommean_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(geommean, a, b);
 }
@@ -34,7 +35,8 @@ EVE_FORCEINLINE auto
 geommean_(EVE_SUPPORTS(cpu_),
           C const& cond,
           U const& t,
-          V const& f) noexcept requires compatible_values<U, V>
+          V const& f) noexcept 
+-> decltype( if_else(cond, geommean(t, f), t) )
 {
   return mask_op(cond, eve::geommean, t, f);
 }
@@ -48,9 +50,10 @@ auto
 geommean_(EVE_SUPPORTS(cpu_),
           T0 a0,
           T1 a1,
-          Ts... args) requires floating_value<common_compatible_t<T0, T1, Ts...>>
+          Ts... args)
+  -> common_value_t<T0, T1, Ts...>
 {
-  using r_t   = common_compatible_t<T0, T1, Ts...>;
+  using r_t   = common_value_t<T0, T1, Ts...>;
   using elt_t = element_type_t<r_t>;
   elt_t invn  = rec(elt_t(sizeof...(args) + 2u));
   r_t   that(pow_abs(r_t(a0), invn) * pow_abs(r_t(a1), invn));

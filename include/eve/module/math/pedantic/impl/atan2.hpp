@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/detail/generic/atan_kernel.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -18,7 +19,8 @@ EVE_FORCEINLINE auto
 atan2_(EVE_SUPPORTS(cpu_),
        pedantic_type const&,
        T const& a,
-       U const& b) noexcept requires compatible_values<T, U>
+       U const& b) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(pedantic(atan2), a, b);
 }

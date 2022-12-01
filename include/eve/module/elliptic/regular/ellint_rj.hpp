@@ -34,7 +34,7 @@ namespace eve
 //!              , eve::floating_real_value U
 //!              , eve::floating_real_value V
 //!              , eve::floating_real_value W>
-//!      eve::common_compatible_value<T, U, V, W> ellint_rj(T x, U y, V z, W p) noexcept;
+//!      eve::common_value_t<T, U, V, W> ellint_rj(T x, U y, V z, W p) noexcept;
 //!   }
 //!   @endcode
 //!

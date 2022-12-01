@@ -11,6 +11,8 @@
 #include <eve/module/math/regular/hypot.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/math/regular/pow.hpp>
+#include <eve/traits/common_value.hpp>
+#include <eve/traits/underlying_type.hpp>
 
 namespace eve::detail
 {
@@ -19,14 +21,15 @@ template<real_value P, value T0, value T1, value... Ts>
 auto
 lpnorm_(EVE_SUPPORTS(cpu_), const P& p, T0 a0, T1 a1, Ts... args) requires(!decorator<P>)
 {
+  using c_t = common_value_t<T0, T1, Ts...>;
   if constexpr( integral_value<P> )
   {
-    auto fp = floating_(p);
+    using e_t =  underlying_type_t<c_t>;
+    auto fp =  convert(p, eve::as<e_t>());
     return lpnorm(fp, a0, a1, args...);
   }
   else
   {
-    using c_t = common_compatible_t<T0, T1, Ts...>;
     using r_t = decltype(eve::abs(c_t{}));
     if constexpr( has_native_abi_v<r_t> )
     {

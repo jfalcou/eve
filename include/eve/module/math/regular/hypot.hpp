@@ -43,7 +43,7 @@ namespace eve
 //! **Return value**
 //!
 //!   \f$\sqrt{\sum_1^n |x_i|^2}\f$ is returned.
-//!   The result type is the [common compatible type](@ref common_compatible) of the
+//!   The result type is the [common value type](@ref common_value) of the
 //!   absolute values of the parameters.
 //!
 //!  @groupheader{Example}

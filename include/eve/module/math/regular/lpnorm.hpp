@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   The result type is the [common compatible type](@ref common_compatible) of the absolute
+//!   The result type is the [common value type](@ref common_value) of the absolute
 //!   values of the  parameters.
 //!
 //!  @groupheader{Example}
