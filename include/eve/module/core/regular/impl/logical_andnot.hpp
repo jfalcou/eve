@@ -23,7 +23,6 @@ namespace eve::detail
 template<value T, value U>
 EVE_FORCEINLINE auto
 logical_andnot_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
--> common_value_t<T, U>
 {
   return apply_over(logical_andnot, a, b);
 }
