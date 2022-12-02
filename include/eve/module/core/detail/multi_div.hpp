@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<decorator D, real_value T0, real_value T1, real_value... Ts>
+  template<decorator D, value T0, value T1, value... Ts>
   auto
   div_(EVE_SUPPORTS(cpu_), D const& d, T0 a0, T1 a1, Ts... args) noexcept
   -> common_value_t<T0, T1, Ts...>
