@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 abs_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
@@ -39,6 +39,7 @@ abs_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+-> decltype(if_else(cond, abs(t), t))
 {
   return mask_op(cond, eve::abs, t);
 }
@@ -46,13 +47,14 @@ abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 template<conditional_expr C, decorator D, value U>
 EVE_FORCEINLINE auto
 abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
--> decltype(abs(t))
+-> decltype(if_else(cond, abs(t), t))
 {
   return mask_op(cond, d(eve::abs), t);
 }
 
-template<decorator D, real_value T>
-EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_), D const &, T const& a) noexcept
+template<decorator D, value T>
+EVE_FORCEINLINE constexpr auto abs_(EVE_SUPPORTS(cpu_), D const & , T const& a) noexcept
+-> decltype(eve::abs(a))
 {
   return eve::abs(a);
 }

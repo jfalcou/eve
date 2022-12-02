@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<value T, value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> decltype(eve::abs(eve::max(a, b)))
@@ -22,7 +22,7 @@ absmin_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(absmin, a, b);
 }
 
-template<value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 -> decltype(eve::abs(a))
@@ -36,7 +36,7 @@ absmin_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 //================================================================================================
 // Masked case
 //================================================================================================
-template<decorator D, conditional_expr C, value U, value V>
+template<decorator D, conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
 -> decltype(absmin(t, f))
@@ -44,7 +44,7 @@ absmin_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noe
   return mask_op(cond, D()(eve::absmin), t, f);
 }
 
-template<conditional_expr C, value U, value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_),
         C const& cond,
@@ -58,7 +58,7 @@ absmin_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<value T0, value T1, value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 absmin_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(eve::abs(eve::min(a0, a1, args...)))
@@ -86,7 +86,7 @@ absmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 }
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, value T0, value T1, value... Ts>
+template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
 ->decltype(absmin(a0, a1, args...))
