@@ -26,7 +26,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 is_not_equal_(EVE_SUPPORTS(cpu_),
               definitely_type const&,
@@ -37,7 +37,7 @@ is_not_equal_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(definitely(is_not_equal), a, b, 3 * eps(as(a)));
 }
 
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 is_not_equal_(EVE_SUPPORTS(cpu_),
               definitely_type const&,
@@ -48,7 +48,7 @@ is_not_equal_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(is_not_equal, a, b);
 }
 
-template<floating_real_value T, floating_real_value U, real_value V>
+template<floating_ordered_value T, floating_ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 is_not_equal_(EVE_SUPPORTS(cpu_),
               definitely_type const&,
@@ -67,7 +67,7 @@ is_not_equal_(EVE_SUPPORTS(cpu_),
   else return arithmetic_call(definitely(is_not_equal), a, b, tol);
 }
 
-template<floating_real_value T, value V>
+template<floating_ordered_value T, value V>
 EVE_FORCEINLINE auto
 is_not_equal_(EVE_SUPPORTS(cpu_),
               definitely_type const&,
