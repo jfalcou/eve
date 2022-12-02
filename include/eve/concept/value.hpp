@@ -133,5 +133,14 @@ namespace eve
   //================================================================================================
   template<typename T> concept ordered_value = value<T> && std::totally_ordered<element_type_t<T>>;
 
-  
+   //================================================================================================
+  //! @concept floating_ordered_value
+  //! TODO describe
+  //!
+  //! @groupheader{Examples}
+  //! - `double`
+  //! - `eve::wide<float, eve::fixed<2>>`
+  //================================================================================================
+  template<typename T> concept floating_ordered_value = ordered_value<T> && std::floating_point<element_type_t<T>>;
+
 }
