@@ -121,4 +121,17 @@ namespace eve
   //! - `eve::logical<double>`
   //================================================================================================
   template<typename T> concept logical_value         = value<T> && is_logical_v<T>;
+
+
+  //================================================================================================
+  //! @concept ordered_value
+  //! TODO describe
+  //!
+  //! @groupheader{Examples}
+  //! - `double`
+  //! - `eve::wide<int, eve::fixed<2>>`
+  //================================================================================================
+  template<typename T> concept ordered_value = value<T> && std::totally_ordered<element_type_t<T>>;
+
+  
 }
