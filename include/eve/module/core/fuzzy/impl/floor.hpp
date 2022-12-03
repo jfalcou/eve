@@ -31,7 +31,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE constexpr auto
 floor_(EVE_SUPPORTS(cpu_),
        tolerant_type const&,
@@ -51,7 +51,7 @@ floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, [[maybe_unused]] U
   else return apply_over(tolerant(floor), a0, n);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, T const& ct) noexcept
 {

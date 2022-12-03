@@ -39,41 +39,69 @@ rat_(EVE_SUPPORTS(cpu_),
   return rat(r_t(x), r_t(tol));
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
 {
-  if( has_native_abi_v<T> )
+  if constexpr(scalar_value<T>)
   {
-    auto is_inf = is_infinite(x);
-    auto y      = if_else(is_inf, zero, x);
-    auto n      = round(y);
-    auto d      = one(as(y));
-    auto frac   = y - n;
-    auto lastn  = one(as(y));
-    auto lastd  = zero(as(y));
-
-    while( true )
+    if( is_infinite(x) || is_eqz(x) ) return kumi::tuple<T, T> {sign(x), 0};
+    auto n     = round(x);
+    auto d     = one(as(x));
+    auto frac  = x - n;
+    auto lastn = one(as(x));
+    auto lastd = zero(as(x));
+    
+    while( abs(x - n / d) >= tol )
     {
-      auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
-      if( none(notdone) ) break;
-      auto flip   = if_else(notdone, rec(frac), frac);
-      auto step   = if_else(notdone, round(flip), zero);
+      auto flip   = rec(frac);
+      auto step   = round(flip);
       frac        = flip - step;
       auto savedn = n;
       auto savedd = d;
-      n           = if_else(notdone, fma(n, step, lastn), n);
-      d           = if_else(notdone, fma(d, step, lastd), d);
+      n           = fma(n, step, lastn);
+      d           = fma(d, step, lastd);
       lastn       = savedn;
       lastd       = savedd;
     }
     n *= sign(d);
     d = saturated(abs)(d);
-    n = if_else(is_inf, sign(x), n);
-    d = if_else(is_inf, zero, d);
     return kumi::tuple<T, T> {n, d};
   }
-  else { return apply_over2(rat, x, tol); }
+  else
+  {
+    if( has_native_abi_v<T> )
+    {
+      auto is_inf = is_infinite(x);
+      auto y      = if_else(is_inf, zero, x);
+      auto n      = round(y);
+      auto d      = one(as(y));
+      auto frac   = y - n;
+      auto lastn  = one(as(y));
+      auto lastd  = zero(as(y));
+      
+      while( true )
+      {
+        auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
+        if( none(notdone) ) break;
+        auto flip   = if_else(notdone, rec(frac), frac);
+        auto step   = if_else(notdone, round(flip), zero);
+        frac        = flip - step;
+        auto savedn = n;
+        auto savedd = d;
+        n           = if_else(notdone, fma(n, step, lastn), n);
+        d           = if_else(notdone, fma(d, step, lastd), d);
+        lastn       = savedn;
+        lastd       = savedd;
+      }
+      n *= sign(d);
+      d = saturated(abs)(d);
+      n = if_else(is_inf, sign(x), n);
+      d = if_else(is_inf, zero, d);
+      return kumi::tuple<T, T> {n, d};
+    }
+    else { return apply_over2(rat, x, tol); }
+  }
 }
 
 template<floating_real_scalar_value T>

@@ -19,13 +19,13 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr kumi::tuple<T, T>
 modf_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( floating_real_value<T> )
+    if constexpr( floating_ordered_value<T> )
     {
       if constexpr( scalar_value<T> )
       {

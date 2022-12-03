@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 frexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a0) noexcept
 {

@@ -24,7 +24,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 div_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T a, T b) noexcept requires has_native_abi_v<T>
 {
@@ -32,7 +32,7 @@ div_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T a, T b) noexcept requires has
   {
     EVE_ASSERT(eve::all((b != 0)), "[eve] - nearest(div)(a, 0) is undefined");
   }
-  if constexpr( floating_real_value<T> ) { return nearest(div(a, b)); }
+  if constexpr( floating_value<T> ) { return nearest(div(a, b)); }
   else if constexpr( integral_real_value<T> )
   {
     using v_t = element_type_t<T>;

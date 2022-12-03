@@ -32,14 +32,14 @@ rem_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(rem), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
     auto bb = if_else(is_nez(b), b, one);
-    if constexpr( floating_real_value<T> )
+    if constexpr( floating_value<T> )
     {
       return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
                      allbits,
@@ -53,7 +53,7 @@ rem_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
   else return apply_over(pedantic(rem), a, b);
 }
 
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_),
      C const& cond,
