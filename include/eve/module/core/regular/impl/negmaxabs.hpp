@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/module/core/regular/maxabs.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 #include <type_traits>
 
@@ -18,15 +19,17 @@ namespace eve::detail
 template<typename  ...Ts>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_), Ts... args)
+-> decltype(minus(maxabs(args...)))
 {
   return minus(maxabs(args...));
 }
 
-template<conditional_expr C, typename  ...Ts>
+template<conditional_expr C, typename T0, typename  ...Ts>
 EVE_FORCEINLINE auto
-negmaxabs_(EVE_SUPPORTS(cpu_), C const & c, Ts... args)
+negmaxabs_(EVE_SUPPORTS(cpu_), C const & c, T0 t0, Ts... args)
+-> decltype(if_else(c, negmaxabs(t0, args...), t0))
 {
-  return minus[c](maxabs[c](args...));
+  return minus[c](maxabs[c](t0, args...));
 }
 
 //================================================================================================

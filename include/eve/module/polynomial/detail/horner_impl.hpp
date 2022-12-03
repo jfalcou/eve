@@ -27,7 +27,7 @@ EVE_FORCEINLINE constexpr auto
 horner_impl(D const& d, T0 const& xx, Cs... cs) noexcept
 -> common_value_t<T0, Cs...>
 {
-  using r_t          = common_compatible_t<T0, Cs...>;
+  using r_t          = common_value_t<T0, Cs...>;
   constexpr size_t N = sizeof...(Cs);
   if constexpr( N == 0 ) return r_t(0);
   else if constexpr( N == 1 ) return (r_t(cs), ...);
@@ -49,9 +49,9 @@ horner_impl(D const& d, T0 const& xx, Cs... cs) noexcept
 template<decorator D, value T0, range R>
 EVE_FORCEINLINE constexpr auto
 horner_impl(D const& d, T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> common_value_t<T0, typename R::value_type>
 {
-  using r_t = common_compatible_t<T0, typename R::value_type>;
+  using r_t = common_value_t<T0, typename R::value_type>;
   auto x    = r_t(xx);
   auto cur  = std::begin(r);
   auto last = std::end(r);
@@ -71,9 +71,9 @@ horner_impl(D const& d, T0 xx, R const& r) noexcept
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 horner_impl(compensated_type const&, T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> common_value_t<T0, typename R::value_type>
 {
-  using r_t = common_compatible_t<T0, typename R::value_type>;
+  using r_t = common_value_t<T0, typename R::value_type>;
   auto x    = r_t(xx);
   auto cur  = std::begin(r);
   auto last = std::end(r);

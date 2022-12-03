@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/is_logical.hpp>
-#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {

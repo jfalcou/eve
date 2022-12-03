@@ -17,17 +17,17 @@ namespace eve::detail
 template<typename  ...Ts>
 EVE_FORCEINLINE auto
 negminabs_(EVE_SUPPORTS(cpu_), Ts... args) noexcept
--> decltype(minabs(args...))
+-> decltype(minus(minabs(args...)))
 {
   return minus(minabs(args...));
 }
 
-template<conditional_expr C, typename  ...Ts>
+template<conditional_expr C, typename T0, typename  ...Ts>
 EVE_FORCEINLINE auto
-negminabs_(EVE_SUPPORTS(cpu_), C const & c, Ts... args) noexcept
--> decltype(minabs(args...))
+negminabs_(EVE_SUPPORTS(cpu_), C const & c, T0 t0, Ts... args) noexcept
+-> decltype(if_else(c, negminabs(t0, args...), t0))
 {
-  return minus[c](minabs[c](args...));
+  return minus[c](minabs[c](t0, args...));
 }
 
 //================================================================================================

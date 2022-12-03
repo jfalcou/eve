@@ -9,12 +9,11 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 
-template<unsigned_value N, floating_value T, value U>
+template<unsigned_value N, floating_value T, floating_value U>
 EVE_FORCEINLINE auto
 fibonacci_(EVE_SUPPORTS(cpu_), N n, T a, U b) noexcept
 {
