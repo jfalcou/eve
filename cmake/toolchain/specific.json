@@ -15,7 +15,6 @@
   "unit.memory.soa_ptr.exe": "^unit.memory.soa_ptr.exe",
   "unit.memory.stack_buffer.exe": "^unit.memory.stack_buffer.exe",
   "unit.memory.store.aligned.exe": "^unit.memory.store.aligned.exe",
-  "unit.memory.store.conditional.exe": "^unit.memory.store.conditional.exe",
   "unit.memory.store.tuple.exe": "^unit.memory.store.tuple.exe",
   "unit.memory.store.unaligned.exe": "^unit.memory.store.unaligned.exe",
   "unit.memory.unalign.exe": "^unit.memory.unalign.exe",
