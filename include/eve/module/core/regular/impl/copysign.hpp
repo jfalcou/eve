@@ -23,7 +23,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 copysign_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
 -> common_value_t<T, U>
@@ -31,7 +31,7 @@ copysign_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   return arithmetic_call(copysign, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 copysign_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
 requires has_native_abi_v<T>
@@ -39,7 +39,7 @@ requires has_native_abi_v<T>
   return bit_or(bitofsign(b), bit_notand(signmask(eve::as(a)), a));
 }
 
-template<conditional_expr C, floating_real_value T, floating_real_value U>
+template<conditional_expr C, floating_ordered_value T, floating_ordered_value U>
 auto
 copysign_(EVE_SUPPORTS(cpu_),
           C const& cond,
