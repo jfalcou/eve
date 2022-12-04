@@ -19,7 +19,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 is_less_equal_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_logical_t<T, U>

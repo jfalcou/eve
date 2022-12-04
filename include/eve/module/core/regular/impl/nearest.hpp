@@ -54,7 +54,7 @@ nearest_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
 }
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T>
+template<conditional_expr C, ordered_value T>
 EVE_FORCEINLINE auto
 nearest_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
 {

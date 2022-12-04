@@ -30,7 +30,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -39,7 +39,7 @@ requires(std::is_floating_point_v<eve::underlying_type_t<common_value_t<T, U>>>)
   return arithmetic_call(rem, a, b);
 }
 
-template<decorator D, real_value T, real_value U>
+template<decorator D, ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -61,7 +61,7 @@ rem_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
   }
 }
 
-template<real_value T, decorator D>
+template<ordered_value T, decorator D>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, T const& b) noexcept
     requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, to_nearest_type> {}))
@@ -85,7 +85,7 @@ rem_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T const& a, T const& b) noexcep
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_),
      C const& cond,
@@ -97,7 +97,7 @@ rem_(EVE_SUPPORTS(cpu_),
   return mask_op(cond, eve::rem, t, g);
 }
 
-template<conditional_expr C, decorator D, real_value U, real_value V>
+template<conditional_expr C, decorator D, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
 -> common_value_t<V, U>

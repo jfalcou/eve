@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 binarize_(EVE_SUPPORTS(cpu_), logical<T> const& cond) noexcept
 {

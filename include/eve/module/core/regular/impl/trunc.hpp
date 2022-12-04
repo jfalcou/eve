@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 trunc_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {
@@ -39,7 +39,7 @@ trunc_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Raw case
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 trunc_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a0) noexcept
 {
@@ -67,7 +67,7 @@ trunc_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T>
+template<conditional_expr C, ordered_value T>
 EVE_FORCEINLINE auto
 trunc_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
 {
