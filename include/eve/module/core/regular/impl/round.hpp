@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value T, decorator D>
+template<ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr T
 round_(EVE_SUPPORTS(cpu_), D const&, T const& a) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type, toward_zero_type, to_nearest_type> {}))
@@ -28,7 +28,7 @@ round_(EVE_SUPPORTS(cpu_), D const&, T const& a) noexcept
   else if constexpr( std::is_same_v<D, eve::to_nearest_type> ) return eve::nearest(a);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 round_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
@@ -37,14 +37,14 @@ round_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 round_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
   return mask_op(cond, eve::round, t);
 }
 
-template<conditional_expr C, decorator D, real_value U>
+template<conditional_expr C, decorator D, ordered_value U>
 EVE_FORCEINLINE auto
 round_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, U const& t) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type, toward_zero_type, to_nearest_type> {}))

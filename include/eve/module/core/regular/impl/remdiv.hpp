@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 remdiv_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> kumi::tuple<common_value_t<T, U>, common_value_t<T, U>>

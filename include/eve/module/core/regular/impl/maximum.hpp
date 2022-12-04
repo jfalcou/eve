@@ -68,14 +68,14 @@ maximum_(EVE_SUPPORTS(cpu_), logical<T> const& v) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 maximum_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
   return maximum(if_else(cond, t, eve::valmin));
 }
 
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 maximum_(EVE_SUPPORTS(cpu_), C const& cond, splat_type const&, U const& t) noexcept
 {

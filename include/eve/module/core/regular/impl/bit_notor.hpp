@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 bit_notor_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires bit_compatible_values<T, U>
 {
@@ -47,7 +47,7 @@ bit_notor_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 bit_notor_(EVE_SUPPORTS(cpu_),
            C const& cond,
@@ -60,7 +60,7 @@ bit_notor_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 bit_notor_(EVE_SUPPORTS(cpu_),
            T0 a0,
@@ -71,7 +71,7 @@ bit_notor_(EVE_SUPPORTS(cpu_),
   return eve::bit_notor(a0, that);
 }
 
-template<conditional_expr C, real_value T0, real_value T1, real_value... Ts>
+template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 bit_notor_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) requires
     bit_compatible_values<T0, T1> &&(bit_compatible_values<T1, Ts>&&...)

@@ -17,14 +17,14 @@
 
 namespace eve::detail
 {
-template<int S, real_value T>
+template<int S, ordered_value T>
 EVE_FORCEINLINE constexpr T
 roundscale_(EVE_SUPPORTS(cpu_), T const& a0, std::integral_constant<int, S>) noexcept
 {
   return roundscale(a0, S);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 roundscale_(EVE_SUPPORTS(cpu_), T const& a0, int scale) noexcept
 {
@@ -32,7 +32,7 @@ roundscale_(EVE_SUPPORTS(cpu_), T const& a0, int scale) noexcept
   else { return apply_over(roundscale, a0, scale); }
 }
 
-template<int S, decorator D, real_value T>
+template<int S, decorator D, ordered_value T>
 EVE_FORCEINLINE constexpr T
 roundscale_(EVE_SUPPORTS(cpu_), D const&, T const& a0, std::integral_constant<int, S>) noexcept
     requires(is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
@@ -40,7 +40,7 @@ roundscale_(EVE_SUPPORTS(cpu_), D const&, T const& a0, std::integral_constant<in
   return D()(roundscale)(a0, S);
 }
 
-template<decorator D, real_value T>
+template<decorator D, ordered_value T>
 EVE_FORCEINLINE constexpr T
 roundscale_(EVE_SUPPORTS(cpu_), D const&, T const& a0, int scale) noexcept
     requires(is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))
@@ -51,7 +51,7 @@ roundscale_(EVE_SUPPORTS(cpu_), D const&, T const& a0, int scale) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 roundscale_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, int scale) noexcept
 {
@@ -61,7 +61,7 @@ roundscale_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, int scale) noexcept
 //================================================================================================
 // Rounded masked case
 //================================================================================================
-template<conditional_expr C, decorator D, real_value T>
+template<conditional_expr C, decorator D, ordered_value T>
 EVE_FORCEINLINE T
 roundscale_(EVE_SUPPORTS(cpu_), C const& cond, D const&, T a, int scale) noexcept(
     is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {}))

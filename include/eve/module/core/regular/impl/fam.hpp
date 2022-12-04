@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U, real_value V>
+template<ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fam_(EVE_SUPPORTS(cpu_),
      T const& a,
@@ -50,7 +50,7 @@ fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value T, real_value U, real_value V>
+template<conditional_expr C, ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fam_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 -> common_value_t<U, V, T>

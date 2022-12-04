@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 div_(EVE_SUPPORTS(cpu_), downward_type const&, T a, T b) noexcept requires has_native_abi_v<T>
 {

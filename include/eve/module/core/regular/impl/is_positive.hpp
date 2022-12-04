@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 is_positive_(EVE_SUPPORTS(cpu_), T const& v) noexcept
 {
@@ -43,7 +43,7 @@ is_positive_(EVE_SUPPORTS(cpu_), T const& v) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // logical masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 is_positive_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
 {

@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 div_(EVE_SUPPORTS(cpu_),
      upward_type const&,

@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 ceil_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {

@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U, real_value V>
+template<ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 clamp_(EVE_SUPPORTS(cpu_),
        T const& a,
@@ -28,7 +28,7 @@ clamp_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(clamp, a, b, c);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 clamp_(EVE_SUPPORTS(cpu_)
       , T const& a, T const& b, T const& c) noexcept
@@ -39,7 +39,7 @@ requires has_native_abi_v<T>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T, real_value U, real_value V>
+template<conditional_expr C, ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 clamp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 -> decltype(clamp(a, b, c))

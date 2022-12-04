@@ -58,7 +58,7 @@ requires has_native_abi_v<T>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T, value U, value V>
+template<conditional_expr C, ordered_value T, value U, value V>
 EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& t) noexcept
 {
