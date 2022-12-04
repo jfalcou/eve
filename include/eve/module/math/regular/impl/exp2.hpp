@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr T
 exp2_(EVE_SUPPORTS(cpu_), D const&, T x) noexcept
     requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
@@ -78,7 +78,7 @@ exp2_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 ////////////////////////////////////////////////////////////////////////////////////
 // integral types
 
-template<integral_real_value T, typename D>
+template<integral_value T, typename D>
 EVE_FORCEINLINE constexpr auto
 exp2_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
     requires(is_one_of<D>(types<converter_type<float>,
@@ -133,7 +133,7 @@ exp2_(EVE_SUPPORTS(cpu_), T x) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 exp2_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
