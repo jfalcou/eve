@@ -32,7 +32,7 @@ namespace eve
 //!      template< eve::floating_real_value S
 //!              , eve::floating_real_value T
 //!              , eve::floating_real_value U>
-//!      eve:common_compatible_value<S, T, U>  $name$(S s, T x, U y) noexcept;
+//!      eve:common_value_t<S, T, U>  $name$(S s, T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!

@@ -40,7 +40,7 @@ namespace eve
 //!             , eve::floating_real_value T
 //!             , eve::floating_real_value A
 //!             , eve::floating_real_value B>
-//!      eve::as_wide_as<common_compatible_value<T, A, B>, N>
+//!      eve::as_wide_as<common_value_t<T, A, B>, N>
 //!      jacobi(N n, T x, A alpha,  B beta) noexcept;
 //!   }
 //!   @endcode

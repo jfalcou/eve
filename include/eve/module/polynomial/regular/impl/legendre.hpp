@@ -36,7 +36,7 @@ namespace detail
 
   // Recurrence relation for legendre polynomials of all kinds
   template<real_value L, floating_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE auto
   legendre_(EVE_SUPPORTS(cpu_), successor_type const&, L l, T x, T pl, T plm1) noexcept
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)),
@@ -82,7 +82,7 @@ namespace detail
 
   template<decorator Kind, real_simd_value L, floating_scalar_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const& k, L l, T x) noexcept
-      requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {}))
+  requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {}))
   {
     using f_t = as_wide_t<T, cardinal_t<L>>;
     return k(legendre)(l, f_t(x));
@@ -90,8 +90,8 @@ namespace detail
 
   template<decorator Kind, real_simd_value L, floating_simd_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const& k, L l, T x) noexcept
-      requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {})
-               && (cardinal_v<L> == cardinal_v<T>))
+  requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {})
+           && (cardinal_v<L> == cardinal_v<T>))
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, x): l is negative or not integral");
     if( has_native_abi_v<T> )
@@ -137,12 +137,11 @@ namespace detail
 
   // Recurrence relation for associated p legendre polynomials
   template<real_value L, real_value M, floating_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE auto
   legendre_(EVE_SUPPORTS(cpu_), successor_type const&, L l, M m, T x, T pl, T plm1) noexcept
   {
     auto lp1 = inc(l);
     return fms((lp1 + l) * x, pl, (l + m) * plm1) / (lp1 - m);
-    //   return     ((lp1 + l) * x* pl- (l+m) * plm1)/ (lp1-m);
   }
 
   template<real_value M, real_value L, floating_value T>
@@ -256,7 +255,7 @@ namespace detail
     EVE_ASSERT(eve::all(m <= l), "sph(legendre)(l, m, theta): some m are greater than l");
     auto ll   = convert(l, as<element_type_t<T>>());
     auto mm   = convert(m, as<element_type_t<T>>());
-    using r_t = eve::common_compatible_t<T, decltype(ll), decltype(mm)>;
+    using r_t = eve::common_value_t<T, decltype(ll), decltype(mm)>;
     r_t p0(theta);
     p0 = eve::legendre(l, m, cos(p0));
     p0 *=

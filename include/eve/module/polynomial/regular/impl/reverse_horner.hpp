@@ -9,6 +9,7 @@
 
 #include <eve/module/polynomial/detail/reverse_horner_impl.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
@@ -18,7 +19,7 @@ namespace eve::detail
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> common_value_t<T0, typename R::value_type>
 {
   return detail::reverse_horner_impl(regular_type(), xx, r);
 }
@@ -30,6 +31,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) noexcept
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, Ts... args) noexcept
+-> decltype(reverse_horner_impl(regular_type(), x, args...))
 {
   return reverse_horner_impl(regular_type(), x, args...);
 }

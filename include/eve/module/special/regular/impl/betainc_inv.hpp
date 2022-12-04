@@ -13,19 +13,22 @@
 #include <eve/module/special/regular/betainc.hpp>
 #include <eve/module/special/regular/lbeta.hpp>
 #include <eve/module/special/regular/signgam.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<floating_value T, floating_value U, floating_value V>
 EVE_FORCEINLINE auto
-betainc_inv_(EVE_SUPPORTS(cpu_), T x, U a, V b) noexcept requires compatible_values<T, U>
+betainc_inv_(EVE_SUPPORTS(cpu_), T x, U a, V b) noexcept
+-> common_value_t<T, U, V>
 {
   return arithmetic_call(betainc_inv, x, a, b);
 }
 
 template<floating_real_value T>
 EVE_FORCEINLINE T
-betainc_inv_(EVE_SUPPORTS(cpu_), T p, T a, T b) noexcept requires(has_native_abi_v<T>)
+betainc_inv_(EVE_SUPPORTS(cpu_), T p, T a, T b) noexcept
+requires(has_native_abi_v<T>)
 {
   auto large = [](auto p, auto a, auto b)
   {
@@ -85,17 +88,19 @@ betainc_inv_(EVE_SUPPORTS(cpu_), T p, T a, T b) noexcept requires(has_native_abi
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+template<conditional_expr C, typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-betainc_inv_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+betainc_inv_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, betainc_inv(t0, ts...), t0))
 {
-  return mask_op(cond, eve::betainc_inv, ts ...);
+  return mask_op(cond, eve::betainc_inv, t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-betainc_inv_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+betainc_inv_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, betainc_inv(t0, ts...), t0))
 {
-  return mask_op(cond, d(eve::betainc_inv), ts ...);
+  return mask_op(cond, d(eve::betainc_inv), t0, ts ...);
 }
 }

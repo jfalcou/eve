@@ -33,7 +33,6 @@ exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
 template<integral_scalar_value I, floating_real_simd_value T>
 EVE_FORCEINLINE auto
 exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-//  requires compatible_values<T, I>
 {
   using elt_t = element_type_t<T>;
 
@@ -44,7 +43,6 @@ exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
 template<integral_simd_value I, floating_real_simd_value T>
 EVE_FORCEINLINE auto
 exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-//  requires compatible_values<T, I>
 {
   using elt_t = element_type_t<T>;
   return exp_int(convert(in, as<elt_t>()), x);
@@ -53,7 +51,6 @@ exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
 template<integral_simd_value I, floating_real_scalar_value T>
 EVE_FORCEINLINE auto
 exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-//  requires compatible_values<T, I>
 {
   using elt_t = element_type_t<T>;
   using w_t   = wide<elt_t, cardinal_t<I>>;

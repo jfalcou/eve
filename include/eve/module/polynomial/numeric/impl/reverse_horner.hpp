@@ -21,7 +21,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 T0        xx,
                 IT const& first,
                 IT const& last) noexcept
-    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, first, last))
 {
   return detail::reverse_horner_impl(numeric_type(), xx, first, last);
 }
@@ -38,7 +38,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 callable_one_ const&,
                 IT const& first,
                 IT const& last) noexcept
-    requires((compatible_values<T0, typename std::iterator_traits<IT>::value_type>))
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, one, first, last))
 {
   return detail::reverse_horner_impl(numeric_type(), xx, one, first, last);
 }
@@ -49,7 +49,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, r))
 {
   return detail::reverse_horner_impl(numeric_type(), xx, r);
 }
@@ -64,7 +64,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 T0 xx,
                 callable_one_ const&,
                 R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, one, r))
 {
   return detail::reverse_horner_impl(numeric_type(), xx, one, r);
 }
@@ -75,7 +75,8 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, Ts... args) noexcept
-{
+-> decltype( reverse_horner_impl(numeric_type(), x, args...))
+  {
   return reverse_horner_impl(numeric_type(), x, args...);
 }
 
@@ -90,6 +91,7 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
                 T0 x,
                 callable_one_ const&,
                 Ts... args) noexcept
+-> decltype(reverse_horner_impl(numeric_type(), x, one, args...))
 {
   return reverse_horner_impl(numeric_type(), x, one, args...);
 }

@@ -25,8 +25,9 @@ TTS_CASE_TPL("Check return types of reverse_horner on wide", eve::test::simd::ie
   TTS_EXPR_IS(eve::reverse_horner(T(), T(), T()), T);
   TTS_EXPR_IS(eve::reverse_horner(T(), T(), T()), T);
   TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), v_t()), T);
-  TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), int()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), int(), v_t()), T);
   TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), i_t()), T);
+  TTS_EXPR_IS(eve::reverse_horner(T(), v_t(), v_t()), T);
   TTS_EXPR_IS(eve::reverse_horner(v_t(), v_t(), v_t()), v_t);
 };
 
