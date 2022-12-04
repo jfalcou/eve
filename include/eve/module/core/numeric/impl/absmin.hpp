@@ -24,7 +24,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_),
         numeric_type const&,
@@ -35,7 +35,7 @@ absmin_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(numeric(absmin), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 absmin_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcept
 {
@@ -45,7 +45,7 @@ absmin_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcep
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 absmin_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
 {
