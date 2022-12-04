@@ -33,7 +33,7 @@ trunc_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(tolerant(trunc), a0, n);
 }
 
-template<real_value T, integral_value U>
+template<ordered_value T, integral_value U>
 EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, [[maybe_unused]] U const& n) noexcept
 {
@@ -64,7 +64,7 @@ trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 trunc_(EVE_SUPPORTS(cpu_), C const& cond, tolerant_type const&, U const& t) noexcept
 {
