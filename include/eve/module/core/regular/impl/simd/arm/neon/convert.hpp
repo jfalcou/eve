@@ -18,7 +18,7 @@ namespace eve::detail
 //================================================================================================
 // convert: float64 -> U
 //================================================================================================
-template<typename N, real_scalar_value U>
+template<typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(neon128_),
                              wide<double, N> const                &v,
@@ -43,7 +43,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 // convert: float32 -> U
 //================================================================================================
-template<typename N, real_scalar_value U>
+template<typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(neon128_),
                              wide<float, N> const                &v,
@@ -84,7 +84,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 // convert: (u)int64 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, real_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(neon128_),
                              wide<T, N> const                &v,
@@ -114,7 +114,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 // convert: (u)int32 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, real_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(neon128_),
                              wide<T, N> const                &v,
@@ -142,7 +142,7 @@ EVE_FORCEINLINE wide<U, N>
 
 //================================================================================================
 // convert: (u)int16 -> U
-template<integral_scalar_value T, typename N, real_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(neon128_),
                              wide<T, N> const                &v,
@@ -180,7 +180,7 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 // convert: (u)int8 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, real_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(neon128_),
                              wide<T, N> const                &v,

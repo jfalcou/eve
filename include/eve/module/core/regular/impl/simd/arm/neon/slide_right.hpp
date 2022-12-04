@@ -51,7 +51,7 @@ EVE_FORCEINLINE wide<T, N>
   }
 }
 
-template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(neon128_),
                                  wide<T, N>     x,
@@ -62,7 +62,7 @@ template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
   return slide_right_arm_extract(x, y, s);
 }
 
-template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_right_(EVE_SUPPORTS(neon128_), wide<T, N> v, index_t<Shift> s) noexcept
     requires(0 < Shift && Shift < N::value)
