@@ -45,7 +45,7 @@ powm1_(EVE_SUPPORTS(cpu_), T const& x, T const& y) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T , real_value U>
+template<conditional_expr C, value T , value U>
 EVE_FORCEINLINE auto
 powm1_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
 -> decltype( if_else(cond, powm1(t, u), t) )

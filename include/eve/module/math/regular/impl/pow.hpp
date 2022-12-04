@@ -18,7 +18,8 @@ namespace eve::detail
 /////////////////////////////////////////////////////////////////////////////
 // floating parameters
 /////////////////////////////////////////////////////////////////////////////
-template<floating_real_value T, floating_real_value U>
+
+template<floating_value T, floating_value U>
 EVE_FORCEINLINE auto
 pow_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
 -> common_value_t<T, U>
@@ -26,7 +27,7 @@ pow_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   return arithmetic_call(pow, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept requires has_native_abi_v<T>
 {
@@ -40,7 +41,7 @@ pow_(EVE_SUPPORTS(cpu_), T a, T b) noexcept requires has_native_abi_v<T>
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // raw
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 pow_(EVE_SUPPORTS(cpu_), raw_type const&, T a, U b) noexcept
 -> common_value_t<T, U>
@@ -64,59 +65,61 @@ pow_(EVE_SUPPORTS(cpu_), raw_type const&, T a, U b) noexcept
   else return apply_over(raw(pow), a, b);
 }
 
-template<value T, integral_real_scalar_value U>
+//////////////////////////////////////////////////////////////////////////////////////////
+// integral second parameter
+template<value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
 {
-  if constexpr( std::is_unsigned_v<U> )
+  if constexpr(scalar_value<U>)
   {
-    T base = a0;
-    U expo = a1;
-
-    T result(1);
-    while( expo )
+    if constexpr( std::is_unsigned_v<U> )
     {
-      if( is_odd(expo) ) result *= base;
-      expo >>= 1;
-      base = sqr(base);
+      T base = a0;
+      U expo = a1;
+
+      T result(1);
+      while( expo )
+      {
+        if( is_odd(expo) ) result *= base;
+        expo >>= 1;
+        base = sqr(base);
+      }
+      return result;
     }
-    return result;
+    else
+    {
+      using u_t = as_integer_t<U, unsigned>;
+      T tmp     = pow(a0, u_t(eve::abs(a1)));
+      return if_else(is_ltz(a1), rec(tmp), tmp);
+    }
   }
-  else
+  else // simd case
   {
-    using u_t = as_integer_t<U, unsigned>;
-    T tmp     = pow(a0, u_t(eve::abs(a1)));
-    return if_else(is_ltz(a1), rec(tmp), tmp);
+    if constexpr( unsigned_value<U> )
+    {
+      T base = a0;
+      U expo = a1;
+
+      T result(1);
+      while( eve::any(to_logical(expo)) )
+      {
+        result *= if_else(is_odd(expo), base, T(1));
+        expo = (expo >> 1);
+        base = sqr(base);
+      }
+      return result;
+    }
+    else
+    {
+      using u_t = as_integer_t<U, unsigned>;
+      T tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+      return if_else(is_ltz(a1), rec(tmp), tmp);
+    }
   }
 }
 
-template<simd_value T, integral_real_simd_value U>
-EVE_FORCEINLINE constexpr auto
-pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
-{
-  if constexpr( unsigned_value<U> )
-  {
-    T base = a0;
-    U expo = a1;
-
-    T result(1);
-    while( eve::any(to_logical(expo)) )
-    {
-      result *= if_else(is_odd(expo), base, T(1));
-      expo = (expo >> 1);
-      base = sqr(base);
-    }
-    return result;
-  }
-  else
-  {
-    using u_t = as_integer_t<U, unsigned>;
-    T tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-    return if_else(is_ltz(a1), rec(tmp), tmp);
-  }
-}
-
-template<floating_real_scalar_value T, integral_real_simd_value U>
+template<floating_scalar_value T, integral_simd_value U>
 EVE_FORCEINLINE constexpr auto
 pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
 {
@@ -124,9 +127,10 @@ pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   return pow(r_t(a0), a1);
 }
 
-template<integral_real_value T, integral_real_scalar_value U>
-EVE_FORCEINLINE constexpr auto
+template<integral_value T, integral_value U>
+constexpr auto
 pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
+requires scalar_value<U>
 {
   if( a1 >= U(sizeof(T) * 8 - 1 - (std::is_signed_v<T>)) || a1 < 0 ) return T(0);
   constexpr uint8_t highest_bit_set[] = {
@@ -172,84 +176,9 @@ pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   }
 }
 
-template<floating_real_scalar_value T, integral_real_scalar_value U>
-EVE_FORCEINLINE constexpr auto
-pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
-{
-  if constexpr( std::is_unsigned_v<U> )
-  {
-    T base = a0;
-    U expo = a1;
-
-    T result(1);
-    while( expo )
-    {
-      if( is_odd(expo) ) result *= base;
-      expo >>= 1;
-      base = sqr(base);
-    }
-    return result;
-  }
-  else
-  {
-    using u_t = as_integer_t<U, unsigned>;
-    T tmp     = pow(a0, u_t(eve::abs(a1)));
-    return if_else(a1 < 0, rec(tmp), tmp);
-  }
-}
-
-template<integral_real_scalar_value T, integral_real_scalar_value U>
-EVE_FORCEINLINE constexpr T
-pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
-{
-  if( a0 == 1 ) return 1;
-  if( (a1 >= U((sizeof(T) * 8 - 1 - std::is_signed_v<T>))) || a1 < 0 ) return 0;
-  constexpr uint8_t highest_bit_set[] = {
-      0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5,
-      5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
-      6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // anything past 63 is a
-                                                                      // guaranteed overflow with
-                                                                      // base >
-                                                                      // 1
-
-  T result = 1;
-  switch( highest_bit_set[a1] )
-  {
-  case 6:
-    if( a1 & 1 ) result *= a0;
-    a1 >>= 1;
-    a0 *= a0;
-    [[fallthrough]];
-  case 5:
-    if( a1 & 1 ) result *= a0;
-    a1 >>= 1;
-    a0 *= a0;
-    [[fallthrough]];
-  case 4:
-    if( a1 & 1 ) result *= a0;
-    a1 >>= 1;
-    a0 *= a0;
-    [[fallthrough]];
-  case 3:
-    if( a1 & 1 ) result *= a0;
-    a1 >>= 1;
-    a0 *= a0;
-    [[fallthrough]];
-  case 2:
-    if( a1 & 1 ) result *= a0;
-    a1 >>= 1;
-    a0 *= a0;
-    [[fallthrough]];
-  case 1:
-    if( a1 & 1 ) result *= a0;
-    [[fallthrough]];
-  default: return result;
-  }
-}
-
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T , real_value U>
+template<conditional_expr C, value T , value U>
 EVE_FORCEINLINE auto
 pow_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
 -> decltype( if_else(cond, pow(t, u), t) )
