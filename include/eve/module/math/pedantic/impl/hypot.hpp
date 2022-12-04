@@ -11,7 +11,7 @@
 
 namespace eve::detail
 {
-template<real_value T0, real_value... Ts>
+template<value T0, value... Ts>
 auto
 hypot_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, Ts... args)
   -> decltype(hypot(a0, args...))
