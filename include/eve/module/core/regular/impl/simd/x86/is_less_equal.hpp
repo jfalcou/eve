@@ -21,7 +21,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 is_less_equal_(EVE_SUPPORTS(avx512_),
                                C const                         &cx,

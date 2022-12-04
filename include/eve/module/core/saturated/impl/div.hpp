@@ -36,7 +36,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
@@ -47,7 +47,7 @@ div_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(saturated(div), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 div_(EVE_SUPPORTS(cpu_), saturated_type const&, T a, T b) noexcept
 requires has_native_abi_v<T>
@@ -57,7 +57,7 @@ requires has_native_abi_v<T>
     EVE_ASSERT(eve::all((a != 0) || (b != 0)), "[eve] - saturated(div)(0, 0) is undefined");
   }
 
-  if constexpr( floating_real_value<T> ) { return div(a, b); }
+  if constexpr( floating_value<T> ) { return div(a, b); }
   else if constexpr( signed_integral_value<T> )
   {
     constexpr int shft = sizeof(element_type_t<T>) * 8 - 1;
@@ -93,14 +93,14 @@ requires has_native_abi_v<T>
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, saturated_type const&, real_value U, real_value V>
+template<conditional_expr C, saturated_type const&, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 div_(EVE_SUPPORTS(cpu_),
      C const& cond,
      saturated_type const&,
      U const& t,
      V const& f) noexcept
--> decltype(div(t, f))
+-> decltype(if_else(cond, div(t, f), t))
 {
   return mask_op(cond, saturated(div), t, f);
 }

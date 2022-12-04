@@ -32,7 +32,7 @@ ldexp_(EVE_SUPPORTS(avx512_), wide<T, N> a0, wide<T, N> a1) noexcept requires x8
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 ldexp_(EVE_SUPPORTS(avx512_),
                        C const                         &cx,

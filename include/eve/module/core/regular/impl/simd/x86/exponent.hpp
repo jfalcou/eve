@@ -41,7 +41,7 @@ exponent_(EVE_SUPPORTS(avx512_), wide<T, N> a0) noexcept requires x86_abi<abi_t<
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 exponent_(EVE_SUPPORTS(sse2_),
           C const         & cx,

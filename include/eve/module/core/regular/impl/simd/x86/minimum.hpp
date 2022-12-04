@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 requires(sizeof(T) <= 2) EVE_FORCEINLINE
     auto minimum_(EVE_SUPPORTS(sse4_1_), wide<T, N> v) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -68,7 +68,7 @@ requires(sizeof(T) <= 2) EVE_FORCEINLINE
   }
 }
 
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 requires(sizeof(T) <= 2) EVE_FORCEINLINE
     auto minimum_(EVE_SUPPORTS(sse4_1_),
                   splat_type const&,
