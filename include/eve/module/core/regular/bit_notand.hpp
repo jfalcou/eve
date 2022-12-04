@@ -79,3 +79,7 @@ EVE_MAKE_CALLABLE(bit_notand_, bit_notand);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/bit_notand.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/bit_notand.hpp>
+#endif

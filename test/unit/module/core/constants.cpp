@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::ieee_reals)
 
   if constexpr( std::is_same_v<elt_t, float> )
   {
-    TTS_EQUAL(eve::eps(as<T>()), eve::exp2(T(-23.0f)));
+    TTS_EQUAL(eve::eps(as<T>()), T(1.1920929e-7));
     TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7f800000U));
     TTS_EQUAL(eve::maxexponentp1(as<T>()), i_t(128));
     TTS_EQUAL(eve::logeps(as<T>()), T(-15.942384719848632812f));
@@ -57,11 +57,11 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::ieee_reals)
     TTS_EQUAL(eve::maxexponent(as<T>()), i_t(127));
     TTS_EQUAL(eve::maxexponentm1(as<T>()), i_t(126));
     TTS_EQUAL(eve::nbmantissabits(as<T>()), i_t(23));
-    TTS_EQUAL(eve::twotonmb(as<T>()), eve::exp2(T(23.0f)));
+    TTS_EQUAL(eve::twotonmb(as<T>()), T(8388608));
   }
   else if constexpr( std::is_same_v<elt_t, double> )
   {
-    TTS_EQUAL(eve::eps(as<T>()), eve::exp2(T(-52.0)));
+    TTS_EQUAL(eve::eps(as<T>()), T(2.2204460492503130e-16));
     TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7ff0000000000000ULL));
     TTS_EQUAL(eve::maxexponentp1(as<T>()), i_t(1024));
     TTS_EQUAL(eve::logeps(as<T>()), T(-36.043653389117153552));
@@ -70,6 +70,6 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::ieee_reals)
     TTS_EQUAL(eve::maxexponent(as<T>()), i_t(1023));
     TTS_EQUAL(eve::maxexponentm1(as<T>()), i_t(1022));
     TTS_EQUAL(eve::nbmantissabits(as<T>()), i_t(52));
-    TTS_EQUAL(eve::twotonmb(as<T>()), eve::exp2(T(52.0)));
+    TTS_EQUAL(eve::twotonmb(as<T>()), T(4503599627370496));
   }
 };
