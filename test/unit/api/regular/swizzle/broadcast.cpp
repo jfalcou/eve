@@ -14,6 +14,20 @@
 template<int I, int N>
 inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; } );
 
+template<std::size_t... V, typename S>
+auto bcast_test(S d, std::index_sequence<V...>)
+{
+  auto check = [&]<typename I>(S simd, I idx)
+  {
+    constexpr auto i = I::value;
+    typename S::template rescale<typename S::cardinal_type> ref(simd.get(i));
+    TTS_EQUAL(eve::shuffle(simd,broadcast<i,S::size()>) , ref);
+    TTS_EQUAL((eve::broadcast(simd, idx))     , ref);
+  };
+
+  (check(d,eve::index<V>), ...);
+};
+
 //==================================================================================================
 // Broadcast test
 //==================================================================================================
@@ -25,20 +39,6 @@ TTS_CASE_WITH( "Check behavior of broadcast swizzle"
         )
 <typename T, typename L> (T data, L logicals)
 {
-  auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
-            {
-              [&]<std::size_t... V>(std::index_sequence<V...>)
-              {
-                ([&]()
-                {
-                  typename S::template rescale<typename S::cardinal_type> ref(simd.get(V));
-                  TTS_EQUAL(eve::shuffle(simd,broadcast<V,S::size()>) , ref);
-                  TTS_EQUAL((eve::broadcast(simd, eve::index<V>))     , ref);
-                }(), ...);
-
-              }( std::make_index_sequence<S::size()>{} );
-            };
-
-  f(data    , std::integral_constant<std::size_t,T::size()>{});
-  f(logicals, std::integral_constant<std::size_t,L::size()>{});
+  bcast_test( data    , std::make_index_sequence<T::size()>{} );
+  bcast_test( logicals, std::make_index_sequence<L::size()>{} );
 };
