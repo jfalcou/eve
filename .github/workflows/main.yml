@@ -39,6 +39,9 @@ jobs:
         - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
         - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
         - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
+        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi, status: 0 }
+        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi, status: 0 }
+        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi, status: 0 }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
@@ -140,24 +143,3 @@ jobs:
         run:  cd build && ninja -v unit -j 5
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4
-
-  supplemental:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: gcc  , cpu: 3 , arch: sve128  , opts: -Wno-psabi            , status: 0 }
-        - { comp: gcc  , cpu: 3 , arch: sve256  , opts: -Wno-psabi            , status: 0 }
-        - { comp: gcc  , cpu: 3 , arch: sve512  , opts: -Wno-psabi            , status: 0 }
-
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v3
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:        '${{ matrix.cfg.status }}'
-          cpu:            ${{ matrix.cfg.cpu }}

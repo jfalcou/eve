@@ -96,3 +96,7 @@ EVE_MAKE_CALLABLE(mul_, mul);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/mul.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/mul.hpp>
+#endif

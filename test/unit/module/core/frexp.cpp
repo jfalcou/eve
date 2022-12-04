@@ -119,8 +119,11 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::pedantic(eve::frexp) variants 
 
   if constexpr( eve::platform::supports_denormals )
   {
+    using v_t = eve::element_type_t<T>;
     auto [x, n] = eve::pedantic(eve::frexp)(cases.mindenormal);
     TTS_EQUAL(x, eve::half(eve::as<T>()));
-    TTS_EQUAL(n, (eve::minlog2denormal(eve::as<T>()) + 2));
+
+    if constexpr( std::is_same_v<v_t, float> ) TTS_EQUAL(n, T(-150) + 2);
+    else if constexpr( std::is_same_v<v_t, double> ) TTS_EQUAL(n, T(-1075) + 2);
   }
 };

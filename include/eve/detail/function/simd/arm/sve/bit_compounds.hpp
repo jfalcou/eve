@@ -43,10 +43,17 @@ self_shr(wide<T,N>& self, wide<U,N> shift) noexcept
 requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
 {
   using u_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-  using s_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
-  s_t that = svasr_x(sve_true<T>(), bit_cast(self,as<s_t>()), bit_cast(shift,as<u_t>()));
-  self = bit_cast(that,as<wide<T,N>>());
-  return self;
+
+  if constexpr( std::is_signed_v<T> )
+  {
+    self = svasr_x(sve_true<T>(), self, bit_cast(shift,as<u_t>()));
+    return self;
+  }
+  else
+  {
+    self = svlsr_x(sve_true<T>(), self, bit_cast(shift,as<u_t>()));
+    return self;
+  }
 }
 
 template<integral_scalar_value T, typename N, integral_scalar_value U>
@@ -55,10 +62,17 @@ self_shr(wide<T,N>& self, U shift) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   using u_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-  using s_t = typename wide<T,N>::template rebind <as_integer_t<T, signed>,N>;
-  s_t that = svasr_x(sve_true<T>(), bit_cast(self,as<s_t>()), u_t(shift));
-  self = bit_cast(that,as<wide<T,N>>());
-  return self;
+
+  if constexpr( std::is_signed_v<T> )
+  {
+    self = svasr_x(sve_true<T>(), self, u_t(shift));
+    return self;
+  }
+  else
+  {
+    self = svlsr_x(sve_true<T>(), self, u_t(shift));
+    return self;
+  }
 }
 
 template<scalar_value T, value U, typename N>

@@ -67,7 +67,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   {
     TTS_ULP_EQUAL(average(a0, a1, a2),
                   map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
-                  16);
+                  48);
   }
 };
 
