@@ -31,7 +31,7 @@ namespace eve::detail
 //================================================================================================
 // saturated case
 //================================================================================================
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 mul_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
@@ -136,7 +136,7 @@ mul_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(mul(a0, a1, args...))
@@ -150,7 +150,7 @@ mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexce
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 mul_(EVE_SUPPORTS(cpu_),
      C const& cond,

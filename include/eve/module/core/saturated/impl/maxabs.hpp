@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_),
         saturated_type const&,
@@ -27,7 +27,7 @@ maxabs_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(saturated(maxabs), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_),
         saturated_type const&,

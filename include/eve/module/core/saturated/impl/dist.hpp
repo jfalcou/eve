@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 dist_(EVE_SUPPORTS(cpu_),
       saturated_type const&,
@@ -31,7 +31,7 @@ dist_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(saturated(dist), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 dist_(EVE_SUPPORTS(cpu_),
       saturated_type const&,

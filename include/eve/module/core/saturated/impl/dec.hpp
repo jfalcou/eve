@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 dec_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
 {
@@ -32,7 +32,7 @@ dec_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 dec_(EVE_SUPPORTS(cpu_), C const& cond, saturated_type const&, U const& t) noexcept
 {
