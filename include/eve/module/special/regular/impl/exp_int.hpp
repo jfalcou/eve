@@ -21,42 +21,35 @@ exp_int_(EVE_SUPPORTS(cpu_), T x) noexcept
   return exp_int(T(1), x);
 }
 
-template<scalar_value I, floating_real_scalar_value T>
-EVE_FORCEINLINE T
-exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
+template<ordered_value I, floating_ordered_value T>
+auto exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
 {
-  if( in == 0 ) return exp(-x) / x;
-  if( in < 0 ) return nan(as<T>());
-  return exp_int(T(in), x);
+  if constexpr(scalar_value<I> && scalar_value<T>)
+  {
+    if( in == 0 ) return exp(-x) / x;
+    if( in < 0 ) return nan(as<T>());
+    return exp_int(T(in), x);
+  }
+  else if constexpr(integral_scalar_value<I> && simd_value<T>)
+  {
+    using elt_t = element_type_t<T>;
+    auto n = T(convert(in, as<elt_t>()));
+    return exp_int(n, x);
+  }
+  else if constexpr(integral_simd_value<I> && simd_value<T>)
+  {
+    using elt_t = element_type_t<T>;
+    return exp_int(convert(in, as<elt_t>()), x);
+  }
+  else if constexpr(integral_simd_value<I> && scalar_value<T>)
+  {
+    using elt_t = element_type_t<T>;
+    using w_t   = wide<elt_t, cardinal_t<I>>;
+    using i_t   = as_integer_t<elt_t>;
+    return exp_int(convert(in, as<i_t>()), w_t(x));
+  }
 }
 
-template<integral_scalar_value I, floating_real_simd_value T>
-EVE_FORCEINLINE auto
-exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-{
-  using elt_t = element_type_t<T>;
-
-  auto n = T(convert(in, as<elt_t>()));
-  return exp_int(n, x);
-}
-
-template<integral_simd_value I, floating_real_simd_value T>
-EVE_FORCEINLINE auto
-exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-{
-  using elt_t = element_type_t<T>;
-  return exp_int(convert(in, as<elt_t>()), x);
-}
-
-template<integral_simd_value I, floating_real_scalar_value T>
-EVE_FORCEINLINE auto
-exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
-{
-  using elt_t = element_type_t<T>;
-  using w_t   = wide<elt_t, cardinal_t<I>>;
-  using i_t   = as_integer_t<elt_t>;
-  return exp_int(convert(in, as<i_t>()), w_t(x));
-}
 
 template<floating_ordered_value T>
 EVE_FORCEINLINE T

@@ -29,14 +29,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T, eve::floating_real_value U >
+//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
 //!      eve:common_value_t<T,U>  gamma_p_inv(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [real floating arguments](@ref eve::floating_real_value).
+//!     * `x`, `y`:  [real floating arguments](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!
