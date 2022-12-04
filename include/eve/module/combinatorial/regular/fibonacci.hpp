@@ -38,8 +38,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N, eve::floating_real_value T, eve::floating_real_value U>
-//!      requires eve::compatible<T, U>
-//!      eve::common_compatible_t<T, U> fibonacci(N n, T x, U y) noexcept
+//!      eve::common_value_t<T, U> fibonacci(N n, T x, U y) noexcept
 //!   }
 //!   @endcode
 //!

@@ -10,12 +10,14 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/module/special/regular/signgam.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<floating_real_value T, floating_real_value U>
-EVE_FORCEINLINE common_compatible_t<T, U>
-                beta_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
+EVE_FORCEINLINE auto
+beta_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
+-> common_value_t<T, U>
 {
   return arithmetic_call(beta, a0, a1);
 }
@@ -31,17 +33,17 @@ beta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+template<conditional_expr C,  typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-beta_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
-{
-  return mask_op(cond, eve::beta, ts ...);
+beta_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, beta(t0, ts...), t0)){
+  return mask_op(cond, eve::beta, t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, decorator D,  typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-beta_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
-{
-  return mask_op(cond, d(eve::beta), ts ...);
+beta_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, beta(t0, ts...), t0)){
+  return mask_op(cond, d(eve::beta), t0, ts ...);
 }
 }

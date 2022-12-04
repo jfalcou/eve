@@ -13,9 +13,9 @@
 namespace eve::detail
 {
 
-template<unsigned_value N, floating_value T, value U>
+template<unsigned_value N, floating_value T, floating_value U>
 EVE_FORCEINLINE auto
-fibonacci_(EVE_SUPPORTS(cpu_), N n, T a, U b) noexcept requires compatible_values<U, T>
+fibonacci_(EVE_SUPPORTS(cpu_), N n, T a, U b) noexcept
 {
   return indexed_call(fibonacci, n, a, b);
 }

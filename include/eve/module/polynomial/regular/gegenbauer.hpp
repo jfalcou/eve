@@ -37,7 +37,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value T eve::floating_real_value T, eve::floating_real_value U >
-//!     eve::as_wide_as<eve::common_compatible_value<T, U>, N>
+//!     eve::as_wide_as<eve::common_value_t<T, U>, N>
 //!     auto  gegenbauer(N n, T lambda, U x) noexcept;
 //!   }
 //!   @endcode

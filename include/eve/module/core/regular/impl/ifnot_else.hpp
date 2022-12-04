@@ -18,7 +18,8 @@ EVE_FORCEINLINE constexpr auto
 ifnot_else_(EVE_SUPPORTS(cpu_),
             T const& cond,
             U const& t,
-            V const& f) noexcept requires compatible_values<U, V>
+            V const& f) noexcept
+-> decltype(if_else(cond, f, t))
 {
   return if_else(cond, f, t);
 }

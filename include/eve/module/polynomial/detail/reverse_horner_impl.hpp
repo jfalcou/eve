@@ -12,6 +12,7 @@
 #include <eve/module/polynomial/numeric/horner.hpp>
 #include <eve/module/polynomial/pedantic/horner.hpp>
 #include <eve/module/polynomial/regular/horner.hpp>
+#include <eve/traits/common_value.hpp>
 
 #include <concepts>
 #include <iterator>
@@ -21,14 +22,24 @@
 namespace eve::detail
 {
 
-template<decorator D, value T0, value... Cs>
+template<decorator D, floating_value T0, value C0, value... Cs>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_impl(D const& d, T0 xx, Cs... cs) noexcept
+reverse_horner_impl(D const& d, T0 xx, C0 c0, Cs... cs) noexcept
+-> decltype(horner(xx, c0, cs...))
 {
-  using r_t                        = common_compatible_t<T0, Cs...>;
-  auto                           x = r_t(xx);
-  std::array<r_t, sizeof...(cs)> c {r_t(cs)...};
-  return d(reverse_horner)(x, c);
+  if constexpr((scalar_value<C0> && ... && scalar_value<Cs>))
+  {
+    using e_t =  element_type_t<T0>;
+    std::array<e_t, sizeof...(cs)+1> c {e_t(c0), e_t(cs)...};
+     return d(reverse_horner)(xx, c);
+  }
+  else
+  {
+    using r_t                         = common_value_t<T0, C0, Cs...>;
+    auto                           x = r_t(xx);
+    std::array<r_t, sizeof...(cs)+1> c {r_t{c0}, r_t{cs}...};
+    return d(reverse_horner)(x, c);
+  }
 }
 
 //================================================================================================
@@ -37,9 +48,9 @@ reverse_horner_impl(D const& d, T0 xx, Cs... cs) noexcept
 template<decorator D, value T0, range R>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_impl(D const& d, T0 xx, R const& r) noexcept
-    requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
+-> common_value_t<T0, typename R::value_type>
 {
-  using r_t  = common_compatible_t<T0, typename R::value_type>;
+  using r_t  = common_value_t<T0, typename R::value_type>;
   auto x     = r_t(xx);
   auto cur   = std::rbegin(r);
   auto first = std::rend(r);

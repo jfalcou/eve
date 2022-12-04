@@ -13,12 +13,14 @@
 #include <eve/module/special/regular/erfc_inv.hpp>
 #include <eve/module/special/regular/gamma_p.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<real_value T, real_value U>
-common_compatible_t<T, U>
+auto
 gamma_p_inv_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
+->common_value_t<T, U>
 {
   return arithmetic_call(gamma_p_inv, a, b);
 }
@@ -79,17 +81,19 @@ gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept requires has_native_abi_v<T>
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+template<conditional_expr C, typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-gamma_p_inv_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+gamma_p_inv_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, gamma_p_inv(t0, ts...), t0))
 {
-  return mask_op(cond, eve::gamma_p_inv, ts ...);
+  return mask_op(cond, eve::gamma_p_inv, t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-gamma_p_inv_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+gamma_p_inv_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, gamma_p_inv(t0, ts...), t0))
 {
-  return mask_op(cond, d(eve::gamma_p_inv), ts ...);
+  return mask_op(cond, d(eve::gamma_p_inv), t0, ts ...);
 }
 }

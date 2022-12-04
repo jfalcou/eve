@@ -13,12 +13,13 @@
 #include <eve/module/special/regular/lrising_factorial.hpp>
 #include <eve/module/special/regular/signgam.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 template<real_value I, floating_real_value T, decorator D>
 EVE_FORCEINLINE auto
-                rising_factorial_(EVE_SUPPORTS(cpu_), D const                &d, I n, T x) noexcept
+rising_factorial_(EVE_SUPPORTS(cpu_), D const & d, I n, T x) noexcept
 {
   if constexpr( integral_simd_value<I> )
   {
@@ -30,7 +31,7 @@ EVE_FORCEINLINE auto
   else if constexpr( integral_scalar_value<I> ) { return d(rising_factorial)(T(n), x); }
   else
   {
-    using r_t = common_compatible_t<I, T>;
+    using r_t = common_value_t<I, T>;
     return d(rising_factorial)(r_t(n), r_t(x));
   }
 }
@@ -39,10 +40,8 @@ EVE_FORCEINLINE auto
 template<floating_real_value T>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_)
-                  // , regular_type const &
-                  ,
-                  T a,
-                  T x) noexcept
+                 , T a
+                 , T x) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
@@ -61,7 +60,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
     return regular(rising_factorial)(convert(a, as(element_type_t<T>())), x);
   else
   {
-    using r_t = common_compatible_t<T, I>;
+    using r_t = common_value_t<T, I>;
     return rising_factorial(r_t(a), r_t(x));
   }
 }
@@ -78,17 +77,18 @@ rising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, typename ... Ts>
+template<conditional_expr C, typename T0, typename ... Ts>
 EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
+rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+-> decltype(if_else(cond, rising_factorial(t0, ts...), t0))
 {
-  return mask_op(cond, eve::rising_factorial, ts ...);
+  return mask_op(cond, eve::rising_factorial, t0, ts ...);
 }
 
-template<conditional_expr C, decorator D, typename  ... Ts>
+template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
 EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
+rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
 {
-  return mask_op(cond, d(eve::rising_factorial), ts ...);
+  return mask_op(cond, d(eve::rising_factorial), t0, ts ...);
 }
 }

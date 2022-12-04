@@ -48,6 +48,7 @@ jacobi_(EVE_SUPPORTS(cpu_), I n, U alpha, V beta, T x) noexcept
 template<simd_value I, floating_value T, floating_value U, floating_value V>
 EVE_FORCEINLINE auto
 jacobi_(EVE_SUPPORTS(cpu_), I nn, U aalpha, V abeta, T xx) noexcept
+-> as_wide_t<common_value_t<T, U, V>, cardinal_t<I>>
 {
   using f_t   = common_compatible_t<T, U, V>;
   using r_t   = as_wide_t<f_t, cardinal_t<I>>;

@@ -23,8 +23,7 @@ newton_(EVE_SUPPORTS(cpu_),
         IT0 const& firstc,
         IT0 const& lastc,
         IT1 const& firstn) noexcept
-    requires(compatible_values<T0, typename std::iterator_traits<IT0>::value_type>&&
-                 compatible_values<T0, typename std::iterator_traits<IT1>::value_type>)
+-> decltype( detail::newton_impl(numeric_type(), xx, firstc, lastc, firstn))
 {
   return detail::newton_impl(numeric_type(), xx, firstc, lastc, firstn);
 }
@@ -34,11 +33,8 @@ newton_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<value T0, range R1, range R2>
 EVE_FORCEINLINE constexpr auto
-newton_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R1 const& rc, R2 const& rn) noexcept requires(
-    compatible_values<
-        T0,
-        typename R1::
-            value_type> && !simd_value<R1> && compatible_values<T0, typename R2::value_type> && !simd_value<R2>)
+newton_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R1 const& rc, R2 const& rn) noexcept
+-> decltype(detail::newton_impl(numeric_type(), xx, rc, rn))
 {
   return detail::newton_impl(numeric_type(), xx, rc, rn);
 }
