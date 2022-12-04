@@ -35,7 +35,7 @@ EVE_FORCEINLINE auto
 geommean_(EVE_SUPPORTS(cpu_),
           C const& cond,
           U const& t,
-          V const& f) noexcept 
+          V const& f) noexcept
 -> decltype( if_else(cond, geommean(t, f), t) )
 {
   return mask_op(cond, eve::geommean, t, f);
@@ -64,9 +64,10 @@ geommean_(EVE_SUPPORTS(cpu_),
     return avg * pow_abs(r_t(x), invn);
   };
   ((that = next(that, args)), ...);
-  return if_else(is_even(sizeof...(args)) && is_ltz(sgn), eve::allbits, sgn * that);
-}
 
+  constexpr std::uint64_t sz = sizeof...(args);
+  return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * that);
+}
 
 //================================================================================================
 // tuples
