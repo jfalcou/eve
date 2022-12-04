@@ -20,8 +20,10 @@ EVE_FORCEINLINE auto
 minimum_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> v) noexcept -> T
 requires sve_abi<abi_t<T, N>>
 {
-  // Fix mask to not touch garbage lanes
-  return svminv(remove_garbage(cond.mask(as(v))), v);
+  // Fix mask to not touch garbage lanes if it is not an ignore_*
+  auto m = cond.mask(as(v));
+  if constexpr(!relative_conditional_expr<C>) m = remove_garbage(cond.mask(as(v)));
+  return svminv(m, v);
 }
 
 template<conditional_expr C, typename T, typename N>
