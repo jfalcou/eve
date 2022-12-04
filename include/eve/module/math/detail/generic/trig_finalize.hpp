@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cos_eval(T const& z) noexcept
 {
@@ -38,7 +38,7 @@ cos_eval(T const& z) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 sin_eval(const T& z, const T& x) noexcept
 {
@@ -62,7 +62,7 @@ sin_eval(const T& z, const T& x) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 tancot_eval(const T& z) noexcept
 {
@@ -87,7 +87,7 @@ tancot_eval(const T& z) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
 {
@@ -117,7 +117,7 @@ cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 sincos_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
 {
@@ -151,7 +151,7 @@ sincos_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 sin_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
 {

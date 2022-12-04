@@ -17,7 +17,7 @@
 namespace eve::detail
 {
 // up to 255*pi/4 ~200
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T, T>
                 rempio2_half_circle(T const                &xx) noexcept
 {
@@ -48,7 +48,7 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
 
 // double use   x < 281474976710656 (2.81476710656e+14)
 /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rempio2_medium(T const& xx) noexcept
 {
@@ -100,7 +100,7 @@ rempio2_medium(T const& xx) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T, T>
                 rempio2_full_circle(T const                &x) noexcept
 {
@@ -132,7 +132,7 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T, T>
                 rempio2_big(T xx) noexcept
 {
