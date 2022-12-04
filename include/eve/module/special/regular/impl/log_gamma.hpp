@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 constexpr T
 log_gamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
