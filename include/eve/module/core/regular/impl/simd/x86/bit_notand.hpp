@@ -19,7 +19,7 @@ namespace eve ::detail
 {
 // -----------------------------------------------------------------------------------------------
 // 128 bits implementation
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 bit_notand_(EVE_SUPPORTS(sse2_),
                             wide<T, N> const                &v0,
@@ -32,7 +32,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // 256 bits implementation
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 bit_notand_(EVE_SUPPORTS(avx_),
                             wide<T, N> const                &v0,
@@ -51,7 +51,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // 512 bits implementation
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 bit_notand_(EVE_SUPPORTS(avx512_),
                             wide<T, N> const                &v0,
@@ -66,7 +66,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 bit_notand_(EVE_SUPPORTS(sse2_),
                             C const                         &cx,

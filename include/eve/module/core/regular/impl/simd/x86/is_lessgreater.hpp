@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 is_lessgreater_(EVE_SUPPORTS(sse2_),
                                 wide<T, N> const                &a,
@@ -42,7 +42,7 @@ EVE_FORCEINLINE logical<wide<T, N>>
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 is_lessgreater_(EVE_SUPPORTS(avx512_),
                                 C const                         &cx,

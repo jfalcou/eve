@@ -22,7 +22,7 @@ namespace eve::detail
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 is_greater_equal_(EVE_SUPPORTS(avx512_),
                   C const         & cx,

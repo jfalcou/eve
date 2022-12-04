@@ -42,7 +42,7 @@ average_(EVE_SUPPORTS(sse2_), wide<T, N> a, wide<T, N> b) noexcept requires x86_
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 average_(EVE_SUPPORTS(sse2_),
                          C const                         &cx,
