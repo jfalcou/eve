@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N, std::ptrdiff_t G>
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
     EVE_FORCEINLINE wide<T, N>
                     swap_adjacent_groups_(EVE_SUPPORTS(vmx_), wide<T, N> v, fixed<G>) noexcept
     requires(G <= N::value)
