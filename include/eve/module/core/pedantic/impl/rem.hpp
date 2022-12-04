@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_),
      pedantic_type const&,
