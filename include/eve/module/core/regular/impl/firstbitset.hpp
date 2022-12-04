@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 
-template<integral_real_value T>
+template<integral_value T>
 EVE_FORCEINLINE constexpr T
 firstbitset_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {

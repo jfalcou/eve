@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 prev_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
 {
@@ -40,7 +40,7 @@ prev_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
 //////////////////////////////////////////////////////////////
 // two parameters
 //////////////////////////////////////////////////////////////
-template<real_value T, integral_real_value U>
+template<ordered_value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 prev_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, U const& n) noexcept
 {

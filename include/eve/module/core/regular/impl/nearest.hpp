@@ -44,7 +44,7 @@ nearest_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 ////////////////////////////////////////////////////////////////////////////////////
 // return integral types
 
-template<integral_real_value T, typename D>
+template<integral_value T, typename D>
 EVE_FORCEINLINE constexpr auto
 nearest_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
     requires(is_one_of<D>(types<int_converter, uint_converter> {}))

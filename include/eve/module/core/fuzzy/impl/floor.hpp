@@ -42,11 +42,11 @@ floor_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(tolerant(floor), a0, n);
 }
 
-template<real_value T, integral_real_value U>
+template<real_value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, [[maybe_unused]] U const& n) noexcept
 {
-  if constexpr( integral_real_value<T> ) return a0;
+  if constexpr( integral_value<T> ) return a0;
   else if constexpr( has_native_abi_v<T> ) { return floor(next(a0, n)); }
   else return apply_over(tolerant(floor), a0, n);
 }
@@ -55,7 +55,7 @@ template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, T const& ct) noexcept
 {
-  if constexpr( integral_real_value<T> ) return a0;
+  if constexpr( integral_value<T> ) return a0;
   else if constexpr( has_native_abi_v<T> )
   {
     // Hagerty's FL5 function

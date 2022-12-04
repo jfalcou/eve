@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-template<integral_real_scalar_value T, typename N, typename I>
+template<integral_scalar_value T, typename N, typename I>
 EVE_FORCEINLINE wide<T, N>
                 neon_shifter(wide<T, N> v0, wide<I, N> v1) noexcept requires arm_abi<abi_t<T, N>>
 {

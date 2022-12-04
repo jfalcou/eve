@@ -65,7 +65,7 @@ prev_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 //////////////////////////////////////////////////////////////
 // two parameters
 //////////////////////////////////////////////////////////////
-template<real_value T, integral_real_value U>
+template<real_value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 prev_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, U const& n) noexcept
 {
