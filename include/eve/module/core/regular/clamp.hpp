@@ -31,7 +31,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::real_value T, eve::real_value U,  eve::value V>
+//!      template< eve::ordered_value T, eve::ordered_value U,  eve::value V>
 //!      auto clamp(T x, U lo, V hi) noexcept;
 //!   }
 //!   @endcode
