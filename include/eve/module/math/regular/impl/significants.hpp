@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, integral_value U>
+template<floating_ordered_value T, integral_value U>
 EVE_FORCEINLINE T
 significants_(EVE_SUPPORTS(cpu_), T const& a, U const& n) noexcept
 {

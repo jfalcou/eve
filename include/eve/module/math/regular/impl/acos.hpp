@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 acos_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a0) noexcept
 {
@@ -27,7 +27,7 @@ acos_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a0) noexcept
   else { return apply_over(raw(acos), a0); }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 acos_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {

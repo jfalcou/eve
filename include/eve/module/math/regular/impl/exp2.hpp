@@ -68,7 +68,7 @@ exp2_(EVE_SUPPORTS(cpu_), D const&, T x) noexcept
   else { return apply_over(D()(exp2), x); }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 exp2_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 {
@@ -124,7 +124,7 @@ exp2_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
   else { return apply_over(D()(exp2), xx); }
 }
 
-template<integral_real_value T>
+template<integral_value T>
 EVE_FORCEINLINE constexpr auto
 exp2_(EVE_SUPPORTS(cpu_), T x) noexcept
 {

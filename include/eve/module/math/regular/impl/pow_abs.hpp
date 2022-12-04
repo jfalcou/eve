@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> eve::common_value_t<decltype(eve::abs(a)), U>
@@ -24,7 +24,7 @@ pow_abs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(pow_abs, a, b);
 }
 
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_),
          raw_type const&,
@@ -35,7 +35,7 @@ pow_abs_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(raw(pow_abs), a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 pow_abs_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T b) noexcept
 {
@@ -43,7 +43,7 @@ pow_abs_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T b) noexcept
   else return apply_over(raw(pow_abs), a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 auto
 pow_abs_(EVE_SUPPORTS(cpu_), T x, T y) noexcept
 {
