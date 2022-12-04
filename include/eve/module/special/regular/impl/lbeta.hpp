@@ -20,7 +20,7 @@ lbeta_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   return arithmetic_call(lbeta, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 lbeta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept requires(has_native_abi_v<T>)
 {

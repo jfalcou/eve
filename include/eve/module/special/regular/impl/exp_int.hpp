@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 exp_int_(EVE_SUPPORTS(cpu_), T x) noexcept
 {
@@ -58,7 +58,7 @@ exp_int_(EVE_SUPPORTS(cpu_), I in, T x) noexcept
   return exp_int(convert(in, as<i_t>()), w_t(x));
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 exp_int_(EVE_SUPPORTS(cpu_), T n, T x) noexcept
 {
