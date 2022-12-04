@@ -42,7 +42,7 @@ floor_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(tolerant(floor), a0, n);
 }
 
-template<real_value T, integral_value U>
+template<ordered_value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, [[maybe_unused]] U const& n) noexcept
 {
@@ -68,7 +68,7 @@ floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, T const& ct) noexc
   else return apply_over(tolerant(floor), a0, ct);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 {
@@ -77,7 +77,7 @@ floor_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 floor_(EVE_SUPPORTS(cpu_), C const& cond, tolerant_type const&, U const& t) noexcept
 {

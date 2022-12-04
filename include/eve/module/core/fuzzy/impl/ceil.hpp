@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE constexpr T
 ceil_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, U tol) noexcept
 {
@@ -27,7 +27,7 @@ ceil_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, U tol) noexcept
   else return apply_over(tolerant(ceil), a0);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 ceil_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 {
@@ -36,7 +36,7 @@ ceil_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 ceil_(EVE_SUPPORTS(cpu_), C const& cond, tolerant_type const&, U const& t) noexcept
 {
