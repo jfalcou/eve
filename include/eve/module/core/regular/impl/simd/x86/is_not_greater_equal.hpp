@@ -44,7 +44,7 @@ is_not_greater_equal_(EVE_SUPPORTS(sse2_),
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, flaoting_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 is_not_greater_equal_(EVE_SUPPORTS(avx512_),
                       C const         & cx,

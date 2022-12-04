@@ -27,7 +27,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value S>
+template<floating_ordered_value T, floating_ordered_value S>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_),
      T const& x,
@@ -51,7 +51,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
     auto frac  = x - n;
     auto lastn = one(as(x));
     auto lastd = zero(as(x));
-    
+
     while( abs(x - n / d) >= tol )
     {
       auto flip   = rec(frac);
@@ -79,7 +79,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
       auto frac   = y - n;
       auto lastn  = one(as(y));
       auto lastd  = zero(as(y));
-      
+
       while( true )
       {
         auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
@@ -104,35 +104,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
   }
 }
 
-template<floating_real_scalar_value T>
-EVE_FORCEINLINE constexpr auto
-rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
-{
-  if( is_infinite(x) || is_eqz(x) ) return kumi::tuple<T, T> {sign(x), 0};
-  auto n     = round(x);
-  auto d     = one(as(x));
-  auto frac  = x - n;
-  auto lastn = one(as(x));
-  auto lastd = zero(as(x));
-
-  while( abs(x - n / d) >= tol )
-  {
-    auto flip   = rec(frac);
-    auto step   = round(flip);
-    frac        = flip - step;
-    auto savedn = n;
-    auto savedd = d;
-    n           = fma(n, step, lastn);
-    d           = fma(d, step, lastd);
-    lastn       = savedn;
-    lastd       = savedd;
-  }
-  n *= sign(d);
-  d = saturated(abs)(d);
-  return kumi::tuple<T, T> {n, d};
-}
-
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 {
