@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 tanh_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {

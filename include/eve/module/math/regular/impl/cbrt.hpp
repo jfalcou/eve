@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cbrt_(EVE_SUPPORTS(cpu_), T x) noexcept
 {
@@ -65,7 +65,7 @@ cbrt_(EVE_SUPPORTS(cpu_), T x) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_real_value U>
+template<conditional_expr C, floating_ordered_value U>
 EVE_FORCEINLINE auto
 cbrt_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

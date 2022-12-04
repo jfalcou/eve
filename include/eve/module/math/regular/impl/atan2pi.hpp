@@ -13,14 +13,14 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 atan2pi_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 {
   return arithmetic_call(atan2pi, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 atan2pi_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_native_abi_v<T>
 {

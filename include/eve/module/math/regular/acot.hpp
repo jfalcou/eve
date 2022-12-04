@@ -39,7 +39,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_real_value).
+//!`x`:   [floating real value](@ref eve::floating_ordered_value).
 //!
 //! **Return value**
 //!

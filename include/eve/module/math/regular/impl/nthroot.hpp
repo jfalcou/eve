@@ -14,7 +14,7 @@ namespace eve::detail
 {
 //////////////////////////////////////////////////////////////////
 // raw
-template<floating_real_value T, integral_scalar_value I>
+template<floating_ordered_value T, integral_scalar_value I>
 EVE_FORCEINLINE auto
 nthroot_(EVE_SUPPORTS(cpu_), raw_type const&, T x, I n) noexcept
 {
@@ -30,7 +30,7 @@ nthroot_(EVE_SUPPORTS(cpu_), raw_type const&, T x, I n) noexcept
   return raw(nthroot)(x, convert(n, as<elt_t>()));
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 nthroot_(EVE_SUPPORTS(cpu_), raw_type const&, T x, T n) noexcept
 {
@@ -49,7 +49,7 @@ nthroot_(EVE_SUPPORTS(cpu_), raw_type const&, T x, T n) noexcept
 
 //////////////////////////////////////////////////////////////////
 // regular
-template<floating_real_value T, integral_scalar_value I>
+template<floating_ordered_value T, integral_scalar_value I>
 EVE_FORCEINLINE auto
 nthroot_(EVE_SUPPORTS(cpu_), T x, I n) noexcept
 {
@@ -64,7 +64,7 @@ nthroot_(EVE_SUPPORTS(cpu_), T x, I n) noexcept requires(cardinal_v<T> == cardin
   return nthroot(x, convert(n, as<elt_t>()));
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 nthroot_(EVE_SUPPORTS(cpu_), T x, T n) noexcept
 {

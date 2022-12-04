@@ -36,7 +36,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [floating real value](@ref eve::floating_real_value).
+//!   * `x`:   [floating real value](@ref eve::floating_ordered_value).
 //!
 //!   * `n`:   [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref
 //!   eve::is_flint).
