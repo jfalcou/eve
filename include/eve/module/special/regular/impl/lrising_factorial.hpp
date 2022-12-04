@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 // general case
-template<real_value I, floating_ordered_value T, decorator D>
+template<ordered_value I, floating_ordered_value T, decorator D>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), D const& d, I n, T x) noexcept
 {
@@ -36,7 +36,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), D const& d, I n, T x) noexcept
 }
 
 // regular wrapping : no decorator
-template<real_value I, floating_ordered_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
 {

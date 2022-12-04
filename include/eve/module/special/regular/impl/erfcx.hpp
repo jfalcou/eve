@@ -134,7 +134,7 @@ erfcx_(EVE_SUPPORTS(cpu_), T x) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 erfcx_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

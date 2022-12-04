@@ -29,7 +29,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N, eve::floating_real_value T >
+//!      template< eve::unsigned_value N, eve::floating_ordered_value T >
 //!      T exp_int(N n, T x) noexcept;
 //!   }
 //!   @endcode
@@ -38,7 +38,7 @@ namespace eve
 //!
 //!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!
