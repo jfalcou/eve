@@ -62,7 +62,6 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::nearest)(eve::wide)",
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
-  std::cout << mask << std::endl; 
   TTS_IEEE_EQUAL(eve::nearest[mask](a0),
             eve::if_else(mask, eve::nearest(a0), a0));
 };

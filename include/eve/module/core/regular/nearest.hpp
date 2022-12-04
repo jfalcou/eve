@@ -48,7 +48,7 @@ namespace eve
 //!      `FE_TOWARDZERO`. This function object implements the `FE_TONEAREST` version.
 //!
 //!    For complex inputs the nearest operation is applied to both real and imaginary parts.
-//!  
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/nearest.cpp}
@@ -81,4 +81,8 @@ EVE_MAKE_CALLABLE(nearest_, nearest);
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/nearest.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/nearest.hpp>
 #endif
