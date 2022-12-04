@@ -26,7 +26,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
     requires(std::same_as<element_type_t<T>, element_type_t<U>>)
@@ -34,54 +34,48 @@ ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return ldexp(a, int_(trunc(b)));
 }
 
-template<floating_real_scalar_value T, integral_scalar_value U>
+template<floating_ordered_value T, integral_value U>
 EVE_FORCEINLINE auto
 ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 {
-  auto ik = int(b) + maxexponent(eve::as<T>());
-  ik <<= nbmantissabits(eve::as<T>());
-  return a * bit_cast(ik, as<T>());
-}
-
-template<floating_real_scalar_value T, integral_simd_value U>
-EVE_FORCEINLINE auto
-ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
-{
-  using i_t = as_integer_t<T>;
-  using w_t = wide<T, cardinal_t<U>>;
-  auto bb   = convert(b, as<i_t>());
-  auto ik   = bb + i_t(maxexponent(eve::as<T>()));
-  ik <<= nbmantissabits(eve::as<T>());
-  return a * bit_cast(ik, as<w_t>());
-}
-
-template<floating_real_simd_value T, integral_scalar_value U>
-EVE_FORCEINLINE auto
-ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
-{
-  using elt_t = element_type_t<T>;
-  using i_t   = as_integer_t<elt_t>;
-  i_t  bb     = convert(trunc(b), as<i_t>());
-  auto ik     = bb + maxexponent(eve::as<T>());
-  ik <<= nbmantissabits(eve::as<T>());
-  return a * bit_cast(ik, as<T>());
-}
-
-template<floating_real_simd_value T, integral_simd_value U>
-EVE_FORCEINLINE auto
-ldexp_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires(cardinal_v<T> == cardinal_v<U>)
-{
-  if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
+  if constexpr(scalar_value<T> && scalar_value<U>)
   {
-    using elt_t = element_type_t<T>;
-    auto ik     = b + maxexponent(eve::as<elt_t>());
-    ik <<= nbmantissabits(eve::as<elt_t>());
+    auto ik = int(b) + maxexponent(eve::as<T>());
+    ik <<= nbmantissabits(eve::as<T>());
     return a * bit_cast(ik, as<T>());
   }
-  else { return apply_over(ldexp, a, b); }
+  else if constexpr(scalar_value<T> && simd_value<U>)
+  {
+    using i_t = as_integer_t<T>;
+    using w_t = wide<T, cardinal_t<U>>;
+    auto bb   = convert(b, as<i_t>());
+    auto ik   = bb + i_t(maxexponent(eve::as<T>()));
+    ik <<= nbmantissabits(eve::as<T>());
+    return a * bit_cast(ik, as<w_t>());
+  }
+  else if  constexpr(simd_value<T> && scalar_value<U>)
+  {
+    using elt_t = element_type_t<T>;
+    using i_t   = as_integer_t<elt_t>;
+    i_t  bb     = convert(trunc(b), as<i_t>());
+    auto ik     = bb + maxexponent(eve::as<T>());
+    ik <<= nbmantissabits(eve::as<T>());
+    return a * bit_cast(ik, as<T>());
+  }
+  else
+  {
+    if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
+    {
+      using elt_t = element_type_t<T>;
+      auto ik     = b + maxexponent(eve::as<elt_t>());
+      ik <<= nbmantissabits(eve::as<elt_t>());
+      return a * bit_cast(ik, as<T>());
+    }
+    else { return apply_over(ldexp, a, b); }
+  }
 }
 
-template<conditional_expr C, floating_real_value T0, real_value T1>
+template<conditional_expr C, floating_ordered_value T0, ordered_value T1>
 auto
 ldexp_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1)
 {

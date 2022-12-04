@@ -33,7 +33,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 ifrexp_(EVE_SUPPORTS(cpu_), raw_type const&, T a0) noexcept
 
@@ -50,7 +50,7 @@ ifrexp_(EVE_SUPPORTS(cpu_), raw_type const&, T a0) noexcept
   else return apply_over2(raw(ifrexp), a0);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 ifrexp_(EVE_SUPPORTS(cpu_), T a0) noexcept
 

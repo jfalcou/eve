@@ -35,7 +35,7 @@ div_(EVE_SUPPORTS(cpu_),
     EVE_ASSERT(eve::all((b != 0)), "[eve] - upward(div)(a, 0) is undefined");
   }
   using elt_t = element_type_t<T>;
-  if constexpr( floating_real_value<T> ) { return ceil(div(a, b)); }
+  if constexpr( floating_ordered_value<T> ) { return ceil(div(a, b)); }
   else if constexpr( integral_real_value<T> )
   {
     if constexpr( signed_value<T> )
