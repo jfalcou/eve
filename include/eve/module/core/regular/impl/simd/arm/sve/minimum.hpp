@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/expected_cardinal.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/conditional.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/remove_garbage.hpp>
 
 // remove_garbage
 namespace eve::detail
@@ -21,10 +21,7 @@ minimum_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> v) noexcept -> T
 requires sve_abi<abi_t<T, N>>
 {
   // Fix mask to not touch garbage lanes
-  auto m = cond.mask(as(v));
-  if constexpr( expected_cardinal_v<T> != N::value ) m = m && keep_first(N::value).mask(as(v));
-
-  return svminv(m, v);
+  return svminv(remove_garbage(cond.mask(as(v))), v);
 }
 
 template<conditional_expr C, typename T, typename N>
