@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
@@ -32,7 +32,7 @@ negmaxabs_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(negmaxabs), a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
 {
@@ -42,7 +42,7 @@ negmaxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noe
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<value T0, value T1, value... Ts>
 auto
 negmaxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args)
 -> decltype(negmaxabs_(a0, a1, args...))

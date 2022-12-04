@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 negabsmin_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
@@ -32,7 +32,7 @@ negabsmin_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(negabsmin), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 negabsmin_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
 {
@@ -42,7 +42,7 @@ negabsmin_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noe
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 negabsmin_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args)
 -> decltype(negabsmin(a0, a1, args...))
