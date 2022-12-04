@@ -93,3 +93,7 @@ EVE_MAKE_CALLABLE(ceil_, ceil);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/ceil.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/ceil.hpp>
+#endif
