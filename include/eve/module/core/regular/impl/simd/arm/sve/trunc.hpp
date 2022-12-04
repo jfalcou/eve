@@ -26,16 +26,8 @@ EVE_FORCEINLINE auto
 trunc_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> const& v) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
-  if constexpr( C::is_complete )
-  {
-    if constexpr( C::is_inverted )  return svrintz_x(sve_true<T>(), v);
-    else                            return alternative(cond, v,as(v));
-  }
-  else
-  {
-    auto src = alternative(cond, v, as(v));
-    auto m   = expand_mask(cond, as(v));
-    return svrintz_m(src, m, v);
-  }
+
+  if constexpr( C::is_complete && !C::is_inverted)  return alternative(cond, v,as(v));
+  else return svrintz_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
 }
 }
