@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 minmag_(EVE_SUPPORTS(cpu_),
         saturated_type const&,
@@ -32,7 +32,7 @@ minmag_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(saturated(minmag), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 minmag_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
 {

@@ -24,7 +24,7 @@
 namespace eve::detail
 {
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 abs_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
 {

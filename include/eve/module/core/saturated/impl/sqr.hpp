@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 sqr_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a0) noexcept
 {
@@ -41,7 +41,7 @@ sqr_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 sqr_(EVE_SUPPORTS(cpu_), C const& cond, saturated_type const&, U const& t) noexcept
 {
