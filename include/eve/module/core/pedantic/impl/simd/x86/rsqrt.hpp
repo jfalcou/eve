@@ -14,7 +14,7 @@ namespace eve::detail
 {
 //------------------------------------------------------------------------------------------------
 // Pedantic 128 bits rsqrt
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 rsqrt_(EVE_SUPPORTS(sse2_),
        pedantic_type const&,

@@ -48,7 +48,7 @@ requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downwa
   return arithmetic_call(D()(rem), a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
@@ -69,7 +69,7 @@ rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, T const& b) noexcept
   if constexpr( has_native_abi_v<T> ) return fnma(b, D()(eve::div)(a, b), a);
   else return apply_over(D()(rem), a, b);
 }
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rem_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T const& a, T const& b) noexcept
 {

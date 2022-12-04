@@ -9,7 +9,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   EVE_FORCEINLINE constexpr auto conj_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
   {
