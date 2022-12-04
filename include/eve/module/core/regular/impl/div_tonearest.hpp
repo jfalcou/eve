@@ -33,7 +33,7 @@ div_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T a, T b) noexcept requires has
     EVE_ASSERT(eve::all((b != 0)), "[eve] - nearest(div)(a, 0) is undefined");
   }
   if constexpr( floating_value<T> ) { return nearest(div(a, b)); }
-  else if constexpr( integral_real_value<T> )
+  else if constexpr( integral_value<T> )
   {
     using v_t = element_type_t<T>;
     if constexpr( sizeof(v_t) == 8 )

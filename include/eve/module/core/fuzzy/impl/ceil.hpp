@@ -22,7 +22,7 @@ template<value T, real_value U>
 EVE_FORCEINLINE constexpr T
 ceil_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, U tol) noexcept
 {
-  if constexpr( integral_real_value<T> ) return a0;
+  if constexpr( integral_value<T> ) return a0;
   else if constexpr( has_native_abi_v<T> ) { return -tolerant(floor)(-a0, tol); }
   else return apply_over(tolerant(ceil), a0);
 }
