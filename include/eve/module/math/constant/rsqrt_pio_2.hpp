@@ -50,7 +50,7 @@ EVE_MAKE_CALLABLE(rsqrt_pio_2_, rsqrt_pio_2);
 
 namespace detail
 {
-  template<floating_real_value T>
+  template<flating_ordered_value T>
   EVE_FORCEINLINE auto rsqrt_pio_2_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
     using t_t = element_type_t<T>;
@@ -58,7 +58,7 @@ namespace detail
     else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.9884533d43651p-1);
   }
 
-  template<floating_real_value T, typename D>
+  template<flating_ordered_value T, typename D>
   EVE_FORCEINLINE constexpr auto rsqrt_pio_2_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
       requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
