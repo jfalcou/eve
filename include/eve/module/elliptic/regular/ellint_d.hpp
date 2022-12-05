@@ -36,10 +36,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T >
+//!      template< eve::floating_ordered_value T >
 //!      T ellint_d(T k) noexcept;                                                //1
 //!
-//!      template< eve::floating_real_value T, eve::floating_real_value U >
+//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
 //!      eve::common_value_t<T, U> ellint_d(T phi, U k) noexcept;        //2
 //!   }
 //!   @endcode
@@ -50,9 +50,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `phi`: [floating real Jacobi amplitude](@ref eve::floating_real_value).
+//!     * `phi`: [floating real Jacobi amplitude](@ref eve::floating_ordered_value).
 //!
-//!     * `k`:  [floating real elliptic modulus](@ref eve::floating_real_value).
+//!     * `k`:  [floating real elliptic modulus](@ref eve::floating_ordered_value).
 //!             `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is NaN. In the complete case,
 //!             this means \f$|k| \le 1\f$.
 //!
