@@ -34,10 +34,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value N, eve::floating_real_value T >
+//!     template< eve::integral_value N, eve::floating_ordered_value T >
 //!      eve::as_wide_as<T, N> laguerre(N n, T x) noexcept;                               //1
 //!
-//!     template< eve::integral_value N, eve::integral_value M, eve::floating_real_value T >
+//!     template< eve::integral_value N, eve::integral_value M, eve::floating_ordered_value T >
 //!      eve::as_wide_as<T, N> laguerre(N n, M m, T x) noexcept;                          //2
 //!   }
 //!   @endcode
@@ -49,7 +49,7 @@ namespace eve
 //!
 //!     * `n`, `m` :  [integral positive arguments](@ref eve::integral_value).
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!    **Return value**
 //!

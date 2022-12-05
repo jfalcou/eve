@@ -32,10 +32,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_real_value T, eve::floating_real_value C ...>
+//!     template< eve::floating_ordered_value T, eve::floating_ordered_value C ...>
 //!     T horner(T x, C ... coefs) noexcept;                                   //1
 //!
-//!     template< eve::floating_real_value T, eve::Range R>
+//!     template< eve::floating_ordered_value T, eve::Range R>
 //!     T horner(T x, R r) noexcept;                                           //2
 //!
 //!   }
@@ -46,9 +46,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
-//!     * `coefs...` :  [real floating arguments](@ref eve::floating_real_value).
+//!     * `coefs...` :  [real floating arguments](@ref eve::floating_ordered_value).
 //!        The coefficients by decreasing power order
 //!
 //!     * `r` :  [range](@ref eve::range) containing The coefficients by decreasing power order.

@@ -34,14 +34,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_real_value T, eve::Range C, eve::Range N>
+//!     template< eve::floating_ordered_value T, eve::Range C, eve::Range N>
 //!     T newton(T x, C c, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!     * `r` :  [range](@ref eve::range) containing The coefficients by decreasing power order.
 //!
