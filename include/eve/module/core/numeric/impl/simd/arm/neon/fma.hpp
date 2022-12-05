@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 fma_(EVE_SUPPORTS(neon128_),
                      numeric_type const&,
