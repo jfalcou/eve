@@ -49,58 +49,59 @@ add_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(saturated(add), a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 add_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
 {
-  if constexpr( floating_value<T> ) { return a + b; }
-  else if constexpr( signed_integral_value<T> )
+  if constexpr(scalar_value<T>)
   {
-    auto test = is_ltz(b);
-    auto pos  = min(sub(valmax(as(a)), b), a);
-    auto neg  = max(sub(valmin(as(a)), b), a);
-    return add(b, if_else(test, neg, pos));
-  }
-  else // if constexpr( std::is_unsigned_v<T> )
-  {
-    if constexpr( sizeof(T) >= 4 )
-    {
-      // large unsigned integral case
-      T r = a + b;
-      return r | -(r < a);
-    }
-    else
-    {
-      // small unsigned integral case - use C promotion then clamp
-      auto        r  = a + b;
-      decltype(r) mx = std::numeric_limits<T>::max();
-      return static_cast<T>(std::min(mx, r));
-    }
-  }
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-add_(EVE_SUPPORTS(cpu_),
-     saturated_type const&,
-     T const& a,
-     T const& b) noexcept requires has_native_abi_v<T>
-{
-  if constexpr( floating_value<T> ) { return a + b; }
-  else if constexpr( integral_value<T> )
-  {
-    if constexpr( signed_integral_value<T> )
+    if constexpr( floating_value<T> ) { return a + b; }
+    else if constexpr( signed_integral_value<T> )
     {
       auto test = is_ltz(b);
       auto pos  = min(sub(valmax(as(a)), b), a);
       auto neg  = max(sub(valmin(as(a)), b), a);
       return add(b, if_else(test, neg, pos));
     }
-    else if constexpr( unsigned_value<T> )
+    else // if constexpr( std::is_unsigned_v<T> )
     {
-      T r = a + b;
-      return bit_or(r, bit_mask(is_less(r, a)));
+      if constexpr( sizeof(T) >= 4 )
+      {
+        // large unsigned integral case
+        T r = a + b;
+        return r | -(r < a);
+      }
+      else
+      {
+        // small unsigned integral case - use C promotion then clamp
+        auto        r  = a + b;
+        decltype(r) mx = std::numeric_limits<T>::max();
+        return static_cast<T>(std::min(mx, r));
+      }
     }
+  }
+  else //simd case
+  {
+    if constexpr(has_native_abi_v<T>)
+    {
+      if constexpr( floating_value<T> ) { return a + b; }
+      else if constexpr( integral_value<T> )
+      {
+        if constexpr( signed_integral_value<T> )
+        {
+          auto test = is_ltz(b);
+          auto pos  = min(sub(valmax(as(a)), b), a);
+          auto neg  = max(sub(valmin(as(a)), b), a);
+          return add(b, if_else(test, neg, pos));
+        }
+        else if constexpr( unsigned_value<T> )
+        {
+          T r = a + b;
+          return bit_or(r, bit_mask(is_less(r, a)));
+        }
+      }
+    }
+    else return apply_over(add, a, b);
   }
 }
 
@@ -114,7 +115,7 @@ add_(EVE_SUPPORTS(cpu_),
      saturated_type const&,
      U const& t,
      V const& f) noexcept
--> decltype(add(t, f))
+-> decltype(if_else(cond, saturated(add)(t, f), t))
 {
   return mask_op(cond, saturated(add), t, f);
 }
