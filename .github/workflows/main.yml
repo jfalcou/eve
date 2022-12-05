@@ -138,7 +138,7 @@ jobs:
           cmake --build . --target unit.arch.exe      --config ${{ matrix.cfg.mode }} --parallel 2
           cmake --build . --target unit.meta.exe      --config ${{ matrix.cfg.mode }} --parallel 2
           cmake --build . --target unit.internals.exe --config ${{ matrix.cfg.mode }} --parallel 2
-          cmake --build . --target unit.api.exe       --config ${{ matrix.cfg.mode }} --parallel 2
+          cmake --build . --target unit.api.exe       --config ${{ matrix.cfg.mode }}
       - name: Running Tests
         run: |
           cd build

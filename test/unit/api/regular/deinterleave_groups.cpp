@@ -114,19 +114,21 @@ using less_test_types =  eve::test::wides < tts::types< std::int8_t, std::uint16
 TTS_CASE_TPL( "Check behavior of deinterleave on arithmetic data", less_test_types)
 <typename T>(tts::type<T>)
 {
-  constexpr std::ptrdiff_t max_fields_count = 5;
+  static constexpr std::ptrdiff_t max_fields_count = 5;
 
-  eve::detail::for_<1, 1, max_fields_count + 1>([](auto fields)
+  eve::detail::for_<1, 1, max_fields_count + 1>
+  ( [&]<int Fields>(std::integral_constant<int, Fields>)
   {
-    // maybe unsused for gcc bug
+    // maybe unused for gcc bug
     static constexpr std::size_t max_group_size = (T::size() >= 64) ? 4 : T::size();
-    constexpr auto nn = std::countr_zero(max_group_size) + 1;
+    static constexpr auto nn = std::countr_zero(max_group_size) + 1;
+    static constexpr std::ptrdiff_t fields = Fields;
     eve::detail::for_<0, 1, nn>
     (
-      [&](auto group_size_log)
+      [&]<int Shift>(std::integral_constant<int, Shift>)
       {
-        constexpr auto gs = 1 << group_size_log();
-        deinterleave_groups_test<gs, fields(), T>();
+        static constexpr auto gs = 1 << Shift;
+        deinterleave_groups_test<gs, fields, T>();
       }
     );
   });
