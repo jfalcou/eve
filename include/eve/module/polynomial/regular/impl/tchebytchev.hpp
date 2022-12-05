@@ -81,7 +81,7 @@ tchebytchev_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   else return apply_over(tchebytchev, n, x);
 }
 
-template<simd_value I, floating_real_value T>
+template<simd_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 tchebytchev_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
 {
@@ -103,7 +103,7 @@ tchebytchev_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   else return apply_over(tchebytchev, n, x);
 }
 
-template<integral_value I, floating_real_value T>
+template<integral_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 tchebytchev_(EVE_SUPPORTS(cpu_), kind_1_type const&, I n, T x) noexcept
 {
@@ -113,7 +113,7 @@ tchebytchev_(EVE_SUPPORTS(cpu_), kind_1_type const&, I n, T x) noexcept
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //==  second kind
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-template<integral_value I, floating_real_value T>
+template<integral_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 tchebytchev_(EVE_SUPPORTS(cpu_), kind_2_type const&, I n, T x) noexcept
 {

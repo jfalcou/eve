@@ -77,7 +77,7 @@ TTS_CASE_WITH("Check behavior of fsm on all types full range",
   using eve::fsm;
   using eve::detail::map;
 
-  TTS_IEEE_EQUAL(fsm(a0, a1, a2), fms(a1, a2, a0));
+  TTS_ULP_EQUAL(fsm(a0, a1, a2), fms(a1, a2, a0), 0.5);
   TTS_IEEE_EQUAL(eve::pedantic(fsm)(a0, a1, a2), eve::pedantic(fms)(a1, a2, a0));
   TTS_IEEE_EQUAL(eve::numeric(fsm)(a0, a1, a2), eve::pedantic(fms)(a1, a2, a0));
 };

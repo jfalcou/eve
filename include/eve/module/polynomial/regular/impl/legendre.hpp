@@ -27,7 +27,7 @@ inline constexpr condon_shortey_type const condon_shortey = {};
 namespace detail
 {
   // basic legendre (legendre_p)
-  template<real_value L, floating_value T>
+  template<ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), L l, T x) noexcept
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, x): l is negative or not integral");
@@ -35,7 +35,7 @@ namespace detail
   }
 
   // Recurrence relation for legendre polynomials of all kinds
-  template<real_value L, floating_value T>
+  template<ordered_value L, floating_value T>
   EVE_FORCEINLINE auto
   legendre_(EVE_SUPPORTS(cpu_), successor_type const&, L l, T x, T pl, T plm1) noexcept
   {
@@ -46,8 +46,9 @@ namespace detail
   }
 
   // decorated p_kind, q_kind,  scalar index:
-  template<decorator Kind, real_scalar_value L, floating_value T>
+  template<decorator Kind, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const&, L l, T x) noexcept
+  requires(scalar_value<T>)
   {
     if constexpr( std::same_as<Kind, p_kind_type> )
       EVE_ASSERT(is_flint(l) && eve::all((l >= 0)),
@@ -80,18 +81,18 @@ namespace detail
     return if_else(out_of_range, allbits, p1);
   }
 
-  template<decorator Kind, real_simd_value L, floating_scalar_value T>
+  template<decorator Kind, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const& k, L l, T x) noexcept
-  requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {}))
+  requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {}) && simd_value<L> && scalar_value<T>)
   {
     using f_t = as_wide_t<T, cardinal_t<L>>;
     return k(legendre)(l, f_t(x));
   }
 
-  template<decorator Kind, real_simd_value L, floating_simd_value T>
+  template<decorator Kind, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const& k, L l, T x) noexcept
   requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {})
-           && (cardinal_v<L> == cardinal_v<T>))
+           && simd_value<L> && (cardinal_v<L> == cardinal_v<T>))
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, x): l is negative or not integral");
     if( has_native_abi_v<T> )
@@ -136,7 +137,7 @@ namespace detail
   // associated legendre p polynomials
 
   // Recurrence relation for associated p legendre polynomials
-  template<real_value L, real_value M, floating_value T>
+  template<ordered_value L, ordered_value M, floating_value T>
   EVE_FORCEINLINE auto
   legendre_(EVE_SUPPORTS(cpu_), successor_type const&, L l, M m, T x, T pl, T plm1) noexcept
   {
@@ -144,14 +145,15 @@ namespace detail
     return fms((lp1 + l) * x, pl, (l + m) * plm1) / (lp1 - m);
   }
 
-  template<real_value M, real_value L, floating_value T>
+  template<ordered_value M, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto aux_legendre(L l, M m, T xs) noexcept
   {
     return legendre(l, m, xs);
   }
 
-  template<real_scalar_value L, real_scalar_value M, floating_value T>
+  template<ordered_value L, ordered_value M, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), L l, M m, T x) noexcept
+  requires(scalar_value<L> && scalar_value<M>)
   {
     EVE_ASSERT(l >= 0 && is_flint(l), "legendre(l, m, x): l is negative or not integral");
     EVE_ASSERT(m >= 0 && is_flint(l), "legendre(l, m, x): m is negative or not integral");
@@ -175,8 +177,9 @@ namespace detail
     return p1;
   }
 
-  template<real_simd_value M, real_simd_value L, floating_value T>
+  template<ordered_value M, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), L l, M m, T x) noexcept
+  requires(simd_value<M> && simd_value<L>)
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, m, x): l is negative or not integral");
     EVE_ASSERT(eve::all(m >= 0 && is_flint(l)), "legendre(l, m, x): m is negative or not integral");
@@ -237,7 +240,7 @@ namespace detail
     else return apply_over(legendre, l, m, x);
   }
 
-  template<real_value M, real_value L, floating_value T>
+  template<ordered_value M, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto
   legendre_(EVE_SUPPORTS(cpu_), condon_shortey_type const&, L l, M m, T x) noexcept
   {
@@ -245,7 +248,7 @@ namespace detail
     return if_else(is_odd(m), -p0, p0);
   }
 
-  template<real_value M, real_value L, floating_value T>
+  template<ordered_value M, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), sph_type const&, L l, M m, T theta) noexcept
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)),

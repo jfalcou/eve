@@ -37,9 +37,9 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value N
-//!             , eve::floating_real_value T
-//!             , eve::floating_real_value A
-//!             , eve::floating_real_value B>
+//!             , eve::floating_ordered_value T
+//!             , eve::floating_ordered_value A
+//!             , eve::floating_ordered_value B>
 //!      eve::as_wide_as<common_value_t<T, A, B>, N>
 //!      jacobi(N n, T x, A alpha,  B beta) noexcept;
 //!   }
@@ -49,7 +49,7 @@ namespace eve
 //!
 //!     * `n` :  [integral positive argument](@ref eve::integral_value).
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!     * `alpha`, `beta`:   [floating arguments](@ref eve::floating_value).
 //!
