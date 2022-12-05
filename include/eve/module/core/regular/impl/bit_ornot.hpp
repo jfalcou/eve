@@ -28,23 +28,23 @@ bit_ornot_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires bit_com
   return bit_call(bit_ornot, a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 bit_ornot_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  if constexpr( floating_value<T> )
+  if constexpr(scalar_value<T>)
   {
-    using b_t = as_integer_t<T, unsigned>;
-    return bit_cast(b_t(bit_cast(a, as<b_t>()) | ~bit_cast(b, as<b_t>())), as(a));
+    if constexpr( floating_value<T> )
+    {
+      using b_t = as_integer_t<T, unsigned>;
+      return bit_cast(b_t(bit_cast(a, as<b_t>()) | ~bit_cast(b, as<b_t>())), as(a));
+    }
+    else return T(a | ~b);
   }
-  else return T(a | ~b);
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-bit_ornot_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  return bit_or(a, bit_not(b)); // fallback never taken if proper intrinsics are at hand
+  else //simd case
+  {
+    return bit_or(a, bit_not(b)); // fallback never taken if proper intrinsics are at hand
+  }
 }
 
 // -----------------------------------------------------------------------------------------------

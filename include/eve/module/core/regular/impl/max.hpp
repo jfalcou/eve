@@ -28,18 +28,14 @@ max_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(max, a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 max_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  return b < a ? a : b;
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-max_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  return apply_over(max, a, b);
+  if constexpr(scalar_value<T>)
+    return b < a ? a : b;
+  else
+    return apply_over(max, a, b);
 }
 
 //================================================================================================

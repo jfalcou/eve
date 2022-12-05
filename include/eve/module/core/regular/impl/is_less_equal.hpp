@@ -27,18 +27,14 @@ is_less_equal_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(is_less_equal, a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 is_less_equal_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  return as_logical_t<T>(a <= b);
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-is_less_equal_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  return apply_over(is_less_equal, a, b);
+  if constexpr(scalar_value<T>)
+    return as_logical_t<T>(a <= b);
+  else
+    apply_over(is_less_equal, a, b);
 }
 }
 
@@ -55,9 +51,9 @@ operator<=(T const& v0, U const& v1) noexcept
 // This is needed to prevent clang using an internal operator of comparison over simd vector
 // types with different value types, as some architectures are not
 // aware of the accurate element type in the storage
-template<real_simd_value T, real_simd_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 operator<=(T const& a, U const& b) noexcept
-requires different_value_type<T, U>
+requires (simd_value<T> && simd_value<U> && different_value_type<T, U>)
 = delete;
 }

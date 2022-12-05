@@ -18,7 +18,7 @@ namespace eve::detail
 {
 template<relative_conditional_expr C,
          scalar_value              T,
-         real_scalar_value         U,
+         arithmetic_scalar_value         U,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
 requires(!has_store_equivalent<wide<T, N>, Ptr>)
@@ -48,7 +48,7 @@ noexcept
 
 template<relative_conditional_expr C,
          scalar_value              T,
-         real_scalar_value         U,
+         arithmetic_scalar_value         U,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
 requires(!has_store_equivalent<wide<T, N>, Ptr>)
@@ -76,8 +76,8 @@ noexcept
 
 template<relative_conditional_expr C,
          decorator                 Decorator,
-         real_scalar_value         T,
-         real_scalar_value         U,
+         arithmetic_scalar_value         T,
+         arithmetic_scalar_value         U,
          typename N,
          simd_compatible_ptr<logical<wide<T, N>>> Ptr>
 EVE_FORCEINLINE logical<T>                 *
