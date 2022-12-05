@@ -48,7 +48,6 @@ sum_(EVE_SUPPORTS(sve_), wide<T, N> v) noexcept -> T
 requires sve_abi<abi_t<T, N>>
 {
   if constexpr( N::value == 1 ) return v.get(0);
-  else if constexpr( N::value == expected_cardinal_v<T> ) return sum[ignore_none](v);
-  else return sum[keep_first(N::value)](v);
+  else return sum[ignore_none](v);
 }
 }
