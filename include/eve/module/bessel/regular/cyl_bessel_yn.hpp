@@ -32,16 +32,16 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::real_value N, eve::floating_real_value T >
+  //!      template< eve::ordered_value N, eve::floating_ordered_value T >
   //!      T cyl_bessel_yn(N n, T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   [real value](@ref eve::real_value) order of the function.
+  //!     * `n`:   [ordered value](@ref eve::ordered_value) order of the function.
   //!
-  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
   //!
   //!   **Return value**
   //!

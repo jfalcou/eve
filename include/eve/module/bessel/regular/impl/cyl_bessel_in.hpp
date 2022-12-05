@@ -15,14 +15,14 @@ namespace eve::detail
 {
 //////////////////////////////////////////////////////////////////
 // floating scalar,  floating simd -> floating simd,  floating simd
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 cyl_bessel_in_(EVE_SUPPORTS(cpu_), T nu, T x) noexcept requires has_native_abi_v<T>
 {
   return kernel_bessel_i(nu, x);
 }
 
-template<value I, floating_real_value T>
+template<value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 cyl_bessel_in_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
 {

@@ -27,14 +27,14 @@
 namespace eve::detail
 {
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_large(I n, T x) noexcept
 {
   return asymptotic_bessel_y_large_x_2(T(n), x);
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_int_forward(I n, T x, T y0, T y1) noexcept
 {
@@ -68,7 +68,7 @@ kernel_bessel_y_int_forward(I n, T x, T y0, T y1) noexcept
   return value / factor;
 }
 
-template<integral_real_value I, floating_real_value T>
+template<integral_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_int_forward(I nn, T x, T y0, T y1) noexcept
 {
@@ -77,7 +77,7 @@ kernel_bessel_y_int_forward(I nn, T x, T y0, T y1) noexcept
   else return kernel_bessel_y_int_forward(T(nn), x, y0, y1);
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_medium(I n, T x) noexcept
 {
@@ -85,7 +85,7 @@ kernel_bessel_y_medium(I n, T x) noexcept
   return y;
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 auto
 kernel_bessel_yn_small_x(T n, T x)
 {
@@ -140,7 +140,7 @@ kernel_bessel_yn_small_x(T n, T x)
 
 /////////////////////////////////////////////////////////////////////////
 // bessel_y of integer order
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_int_pos(I n, T x) noexcept
 {
@@ -210,7 +210,7 @@ kernel_bessel_y_int_pos(I n, T x) noexcept
   }
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_int(I n, T x) noexcept
 {
@@ -221,7 +221,7 @@ kernel_bessel_y_int(I n, T x) noexcept
   return if_else(isoddn && nlt0, -y, y);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_y_flt(T n, T x) noexcept
 {

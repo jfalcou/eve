@@ -31,7 +31,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::integral_real_value N, eve::floating_real_value T >
+  //!      template< eve::integral_value N, eve::floating_ordered_value T >
   //!      T sph_bessel_yn(N n, T x) noexcept;
   //!   }
   //!   @endcode
@@ -40,7 +40,7 @@ namespace eve
   //!
   //!     * `n`:   order of the function. Order must be positive.
   //!
-  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
   //!
   //!   **Return value**
   //!
