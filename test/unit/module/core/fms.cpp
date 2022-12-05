@@ -91,7 +91,7 @@ TTS_CASE_WITH("Check behavior of fms on all types full range",
   {
     TTS_ULP_EQUAL(fms((a0), (a1), (a2)),
                   map([&](auto e, auto f, auto g) -> v_t { return e * f - g; }, a0, a1, a2),
-                  2);
+                  5);
   }
   TTS_ULP_EQUAL(
       eve::pedantic(fms)((a0), (a1), (a2)),
