@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of eve::logical_xor(simd)",
   auto da0   = eve::convert(a0, eve::as<d_t>());
   using dl_t = eve::as_logical_t<d_t>;
   TTS_EQUAL(eve::logical_xor(l1, da0 > 1),
-            map([](auto e, auto f) -> l_t { return int(f > 1) != e; }, l1, da0));
+            map([](auto e, auto f) -> l_t { return (f > 1) != e; }, l1, da0));
   TTS_EQUAL(eve::logical_xor(da0 > 1, l1),
-            map([](auto e, auto f) -> dl_t { return dl_t(int(e > 1) != f); }, da0, l1));
+            map([](auto e, auto f) -> dl_t { return dl_t((e > 1) != f); }, da0, l1));
 };

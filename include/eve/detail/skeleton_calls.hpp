@@ -52,7 +52,7 @@ namespace eve::detail
 
    // -----------------------------------------------------------------------------------------------
   // binary bit operators scheme
-  template<typename Obj, real_value T, real_value U>
+  template<typename Obj, ordered_value T, ordered_value U>
   EVE_FORCEINLINE auto bit_call(Obj op
                                , T const &a
                                , U const &b) noexcept

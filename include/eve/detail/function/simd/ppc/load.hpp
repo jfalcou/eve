@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
+  template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as<wide<T, N>> const& tgt, Ptr ptr
@@ -57,7 +57,7 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, real_scalar_value U, typename N, typename Lanes>
+  template<arithmetic_scalar_value T, arithmetic_scalar_value U, typename N, typename Lanes>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as<wide<T, N>> const& tgt

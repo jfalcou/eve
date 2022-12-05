@@ -91,6 +91,13 @@ namespace detail
 
   template<decorator Kind, ordered_value L, floating_value T>
   EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const& k, L l, T x) noexcept
+  requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {}) && scalar_value<L> && simd_value<T>)
+  {
+    return k(legendre)(T(l), x);
+  }
+
+  template<decorator Kind, ordered_value L, floating_value T>
+  EVE_FORCEINLINE auto legendre_(EVE_SUPPORTS(cpu_), Kind const& k, L l, T x) noexcept
   requires(is_one_of<Kind>(types<p_kind_type, q_kind_type> {})
            && simd_value<L> && (cardinal_v<L> == cardinal_v<T>))
   {
