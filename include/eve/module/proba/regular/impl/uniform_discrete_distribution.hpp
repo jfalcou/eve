@@ -69,7 +69,7 @@ namespace eve
   };
 
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct uniform_discrete_distribution<callable_zero_, callable_one_, T>// : uniform_discrete_distribution_base < T, T, T>
   {
     using is_distribution_t = void;
@@ -90,13 +90,13 @@ namespace eve
 
   };
 
-  template<floating_real_value T, floating_real_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
-  template<floating_real_value T, floating_real_value U, floating_real_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
-  template<floating_real_value T, floating_real_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as<V>) -> uniform_discrete_distribution<T,U,V>;
+  template<floating_ordered_value T, floating_ordered_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
+  template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
+  template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V>  uniform_discrete_distribution(T,U,as<V>) -> uniform_discrete_distribution<T,U,V>;
 
   template<integral_value T, integral_value U>  uniform_discrete_distribution(T,U) -> uniform_discrete_distribution<T,U>;
-  template<integral_value T, integral_value U, floating_real_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
-  template<integral_value T, integral_value U, floating_real_value V>  uniform_discrete_distribution(T,U,as<V>) -> uniform_discrete_distribution<T,U,V>;
+  template<integral_value T, integral_value U, floating_ordered_value V>  uniform_discrete_distribution(T,U,V) -> uniform_discrete_distribution<T,U, V>;
+  template<integral_value T, integral_value U, floating_ordered_value V>  uniform_discrete_distribution(T,U,as<V>) -> uniform_discrete_distribution<T,U,V>;
 
   template<typename T>  uniform_discrete_distribution(T const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, T>;
   template<typename T>  uniform_discrete_distribution(as<T> const&) -> uniform_discrete_distribution<callable_zero_, callable_one_, as<T>>;

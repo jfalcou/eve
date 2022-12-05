@@ -18,7 +18,7 @@ namespace eve
   template < typename T, typename Internal = T>
   struct poisson_distribution{};
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct poisson_distribution<T, T>
   {
     using is_distribution_t = void;
@@ -72,7 +72,7 @@ namespace eve
   template<typename T>  poisson_distribution(T) -> poisson_distribution<T>;
 
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct poisson_distribution < callable_one_, T>
   {
     using is_distribution_t = void;
@@ -102,7 +102,7 @@ namespace eve
 
   template<typename T>  poisson_distribution(as<T> const&) -> poisson_distribution<callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto poisson_distribution_1 = poisson_distribution<callable_one_, T>(as<T>{});
 
   namespace detail
@@ -116,7 +116,7 @@ namespace eve
                               , U const &x ) noexcept
     {
       U l = one(as<U>());
-      if constexpr(floating_real_value<T>) l = U(d.lambda);
+      if constexpr(floating_ordered_value<T>) l = U(d.lambda);
       auto tmp = gamma_p(floor(x+1), l);
       return if_else(is_flint(x) && is_gez(x), tmp, zero);
     }

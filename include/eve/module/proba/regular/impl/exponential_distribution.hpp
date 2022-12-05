@@ -19,7 +19,7 @@ namespace eve
   template < typename T, typename Internal = T>
   struct exponential_distribution{};
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct exponential_distribution<T>
   {
     using is_distribution_t = void;
@@ -29,7 +29,7 @@ namespace eve
     exponential_distribution(T lambda_) : lambda(lambda_) {
       EVE_ASSERT(all(is_gtz(lambda) && is_finite(lambda)), "lambda must be strictly positive and finite");
     }
-    template < floating_real_value TT>
+    template < floating_ordered_value TT>
     requires  std::constructible_from<T, TT>
     exponential_distribution(TT lambda_)
       : lambda(T(lambda_))
@@ -51,7 +51,7 @@ namespace eve
 
   template<typename T>  exponential_distribution(T) -> exponential_distribution<T>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct exponential_distribution < callable_one_, T>
   {
     using is_distribution_t = void;
@@ -69,7 +69,7 @@ namespace eve
 
   template<typename T>  exponential_distribution(as<T> const&) -> exponential_distribution<callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto exponential_distribution_1 = exponential_distribution<callable_one_, T>(as<T>{});
 
 
@@ -228,8 +228,8 @@ namespace eve
         return one(as<I>());
     }
 
-    template<typename T, floating_real_value R, floating_real_value V
-             , floating_real_value A, typename I = T>
+    template<typename T, floating_ordered_value R, floating_ordered_value V
+             , floating_ordered_value A, typename I = T>
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
                                      , exponential_distribution<T,I> const & d
                                      , R const & x
@@ -238,10 +238,10 @@ namespace eve
     {
       using v_t = typename exponential_distribution<T,I>::value_type;
       R z = if_else(is_ltz(x), zero, x);
-      if constexpr(floating_real_value<T>) z*= d.lambda;
+      if constexpr(floating_ordered_value<T>) z*= d.lambda;
       auto normz = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5));
       auto halfwidth = normz*eve::sqrt(pcov);
-      if constexpr(floating_real_value<T>) halfwidth *= d.lambda;
+      if constexpr(floating_ordered_value<T>) halfwidth *= d.lambda;
       auto exp_halfwidth =  eve::exp(halfwidth);
       return kumi::make_tuple(-expm1(-z), -expm1(-z/exp_halfwidth), -expm1(-z*exp_halfwidth));
     }
