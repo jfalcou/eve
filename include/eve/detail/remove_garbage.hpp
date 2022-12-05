@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include "eve/traits/is_logical.hpp"
 #include <eve/traits.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
@@ -22,12 +23,15 @@ namespace eve::detail
 
     if constexpr(c_t::value < ec_t::value)
     {
-      auto const exact_mask = []<std::size_t... I>(std::index_sequence<I...>)
+      auto const exact_mask = keep_first(c_t::value).mask(as<as_wide_t<v_t,ec_t>>{});
+      if constexpr(is_logical_v<W>)
       {
-        return as_logical_t<as_wide_t<v_t,ec_t>>((I<c_t::value)...).mask();
-      }(std::make_index_sequence<ec_t::value>{});
-
-      v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) & exact_mask, as(v));
+        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) && exact_mask, as(v));
+      }
+      else
+      {
+        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) & exact_mask.mask(), as(v));
+      }
     }
 
     return v;

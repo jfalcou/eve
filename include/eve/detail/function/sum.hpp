@@ -32,3 +32,7 @@ namespace eve
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/detail/function/simd/arm/neon/sum.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/detail/function/simd/arm/sve/sum.hpp>
+#endif
