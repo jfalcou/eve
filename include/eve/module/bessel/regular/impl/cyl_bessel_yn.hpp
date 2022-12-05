@@ -86,6 +86,8 @@ cyl_bessel_yn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
     }
     else return apply_over(cyl_bessel_yn, nu, x);
   }
+  else
+    return kernel_bessel_y_int(T(nu), x);
 }
 
 }
