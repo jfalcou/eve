@@ -32,7 +32,7 @@ kernel_bessel_j_int_large(I n, T x) noexcept
   return asymptotic_bessel_j_large_x_2(T(n), x);
 }
 
-template<ordered_value I, floating_ordered_value T>
+template<floating_ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_forward(I n, T x, T j0, T j1) noexcept
 {
