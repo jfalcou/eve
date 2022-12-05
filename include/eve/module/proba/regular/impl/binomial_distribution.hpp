@@ -18,7 +18,7 @@ namespace eve
   template < typename T, typename U, typename Internal = T>
   struct binomial_distribution{};
 
-  template < floating_real_value T, floating_real_value U>
+  template < floating_ordered_value T, floating_ordered_value U>
   requires  compatible_values<T, U>
   struct binomial_distribution<T, U>
   {
@@ -143,7 +143,7 @@ namespace eve
     rejdata rej;
   };
 
-  template < floating_real_value U>
+  template < floating_ordered_value U>
   struct binomial_distribution<callable_one_, U>
   {
     using is_distribution_t = void;
@@ -169,7 +169,7 @@ namespace eve
     p_type p, q;
   };
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct binomial_distribution<T, callable_half_>
   {
     using is_distribution_t = void;
@@ -289,7 +289,7 @@ namespace eve
 
   template<typename T, typename U>  binomial_distribution(T,U) -> binomial_distribution<T,U>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct binomial_distribution<callable_one_, callable_half_, T>
   {
     using is_distribution_t = void;
@@ -308,7 +308,7 @@ namespace eve
 
   template<typename T>  binomial_distribution(as<T> const&) -> binomial_distribution<callable_one_, callable_half_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto bernouilli = binomial_distribution<callable_one_, callable_half_, T>(as<T>{});
 
   namespace detail
