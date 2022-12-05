@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<floating_real_simd_value T>
+template<floating_simd_value T>
 EVE_FORCEINLINE auto
 rem_pio2_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {
