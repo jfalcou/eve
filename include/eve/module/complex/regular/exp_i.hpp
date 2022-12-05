@@ -50,7 +50,7 @@ namespace eve
 
   namespace detail
   {
-    template<floating_real_value V>
+    template<floating_ordered_value V>
     EVE_FORCEINLINE auto exp_i_( EVE_SUPPORTS(cpu_)
                                , V const & v) noexcept
     {
