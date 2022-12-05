@@ -38,9 +38,10 @@ namespace eve::detail
  *   @param  Kpnu  The output derivative of the irregular
  *                   modified Bessel function.
  */
-template<floating_real_simd_value T>
+template<floating_ordered_value T>
 auto
 kernel_bessel_ik(T nu, T x) noexcept
+requires(simd_value<T>)
 {
   auto iseqzx = is_eqz(x);
   auto isltzx = is_ltz(x);
@@ -244,9 +245,10 @@ kernel_bessel_ik(T nu, T x) noexcept
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-template<floating_real_scalar_value T>
+template<floating_ordered_value T>
 auto
 kernel_bessel_ik(T nu, T x) noexcept
+requires(scalar_value<T>)
 {
   if( x == inf(as(x)) ) return kumi::make_tuple(T(0), nan(as(x)), T(0), nan(as(x)));
   else if( is_ltz(x) ) return kumi::make_tuple(nan(as(x)), nan(as(x)), nan(as(x)), nan(as(x)));

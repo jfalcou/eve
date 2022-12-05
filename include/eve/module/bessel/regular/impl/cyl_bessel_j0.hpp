@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {

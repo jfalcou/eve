@@ -25,14 +25,14 @@
 namespace eve::detail
 {
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_large(I n, T x) noexcept
 {
   return asymptotic_bessel_j_large_x_2(T(n), x);
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_forward(I n, T x, T j0, T j1) noexcept
 {
@@ -60,7 +60,7 @@ kernel_bessel_j_int_forward(I n, T x, T j0, T j1) noexcept
   return value / scale;
 }
 
-template<integral_real_value I, floating_real_value T>
+template<integral_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_forward(I nn, T x, T j0, T j1) noexcept
 {
@@ -69,14 +69,14 @@ kernel_bessel_j_int_forward(I nn, T x, T j0, T j1) noexcept
   else return kernel_bessel_j_int_forward(T(nn), x, j0, j1);
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_small(I n, T x) noexcept
 {
   return bessel_j_small_z_series(T(n), x);
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_medium(I n, T x) noexcept
 {
@@ -86,7 +86,7 @@ kernel_bessel_j_int_medium(I n, T x) noexcept
 
 /////////////////////////////////////////////////////////////////////////
 // bessel_j of integer order
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int_pos(I n, T x) noexcept
 {
@@ -150,7 +150,7 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
     return r;
   }
 }
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_int(I n, T x) noexcept
 {
@@ -163,7 +163,7 @@ kernel_bessel_j_int(I n, T x) noexcept
 
 /////////////////////////////////////////////////////////////////////////
 // bessel_j of non integer order
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_j_flt(T n, T x) noexcept
 {

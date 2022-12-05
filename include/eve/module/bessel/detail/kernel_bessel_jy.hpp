@@ -14,9 +14,10 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 bessel_jy(T n, T x) noexcept
+requires(scalar_value<T>)
 {
   T nu(n);
   T jnu, jpnu, nnu, npnu;
@@ -213,9 +214,10 @@ bessel_jy(T n, T x) noexcept
   return kumi::make_tuple(jnu, jpnu, nnu, npnu);
 }
 
-template<floating_real_simd_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 bessel_jy(T nu, T x) noexcept
+requires(simd_value<T>)
 {
   auto reflect(is_ltz(nu));
   nu          = eve::abs(nu); // v is non-negative from here
