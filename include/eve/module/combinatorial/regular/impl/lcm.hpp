@@ -15,7 +15,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<integral_real_value T, integral_real_value U>
+template<integral_value T, integral_value U>
 EVE_FORCEINLINE auto
 lcm_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 ->common_value_t<T, U>
@@ -23,7 +23,7 @@ lcm_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(lcm, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 T
 lcm_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
 {

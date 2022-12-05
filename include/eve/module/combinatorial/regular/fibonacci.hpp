@@ -37,7 +37,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N, eve::floating_real_value T, eve::floating_real_value U>
+//!      template< eve::unsigned_value N, eve::floating_ordered_value T, eve::floating_ordered_value U>
 //!      eve::common_value_t<T, U> fibonacci(N n, T x, U y) noexcept
 //!   }
 //!   @endcode
@@ -46,7 +46,7 @@ namespace eve
 //!
 //!   `n`: [index](@ref eve::unsigned_value) of the value to be returned
 //!
-//!   `x`, `y`: [floating point arguments](@ref eve::floating_real_value) : \f$f_0\f$ and \f$f_1\f$.
+//!   `x`, `y`: [floating point arguments](@ref eve::floating_ordered_value) : \f$f_0\f$ and \f$f_1\f$.
 //!
 //!    **Return value**
 //!
