@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto sum_ ( EVE_SUPPORTS(cpu_)
                             , splat_type const&, wide<T,N> const &v
                             ) noexcept
@@ -34,13 +34,13 @@ namespace eve::detail
     else return butterfly_reduction(v, eve::add);
   }
 
-  template<real_scalar_value T>
+  template<scalar_value T>
   EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), T const &v) noexcept
   {
     return v;
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), wide<T,N> const &v) noexcept
   {
           if constexpr( N::value == 1 )         return v.get(0);
@@ -63,13 +63,13 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, real_value U>
+  template<conditional_expr C, value U>
   EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), C const &cond, U const &t) noexcept
   {
     return sum(if_else(cond, t, eve::zero));
   }
 
-  template<conditional_expr C, real_value U>
+  template<conditional_expr C, value U>
   EVE_FORCEINLINE auto sum_(EVE_SUPPORTS(cpu_), C const &cond
                                , splat_type const&, U const &t) noexcept
   {

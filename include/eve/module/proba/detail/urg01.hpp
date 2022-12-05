@@ -15,7 +15,6 @@ namespace eve::detail
 {
   template<floating_ordered_value T, typename Engine>
   EVE_FORCEINLINE auto urg01(Engine& eng, as<T> const &) noexcept
-  requires (scalar_value<T>)
   {
     if constexpr(scalar_value<T>)
     {

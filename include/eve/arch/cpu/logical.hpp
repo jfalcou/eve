@@ -96,7 +96,7 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
 
-    template<real_scalar_value U>
+    template<arithmetic_scalar_value U>
     friend EVE_FORCEINLINE logical operator&&(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() && w.value()};
@@ -112,7 +112,7 @@ namespace eve
       return logical{v && w.value()};
     }
 
-    template<real_scalar_value U>
+    template<arithmetic_scalar_value U>
     friend EVE_FORCEINLINE logical operator||(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() || w.value()};
@@ -154,12 +154,12 @@ namespace eve
       return v.value() == w.value();
     }
 
-    friend EVE_FORCEINLINE logical operator==(logical const& v, real_scalar_value auto w) noexcept
+    friend EVE_FORCEINLINE logical operator==(logical const& v, arithmetic_scalar_value auto w) noexcept
     {
       return v.value() == !!w;
     }
 
-    friend EVE_FORCEINLINE logical operator==(real_scalar_value auto  v, logical const& w) noexcept
+    friend EVE_FORCEINLINE logical operator==(arithmetic_scalar_value auto  v, logical const& w) noexcept
     {
       return w.value() == !!v;
     }
@@ -170,12 +170,12 @@ namespace eve
       return v.value() != w.value();
     }
 
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, real_scalar_value auto w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(logical const& v, arithmetic_scalar_value auto w) noexcept
     {
       return v.value() == !w;
     }
 
-    friend EVE_FORCEINLINE logical operator!=(real_scalar_value auto v, logical const& w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(arithmetic_scalar_value auto v, logical const& w) noexcept
     {
       return w.value() == !v;
     }
