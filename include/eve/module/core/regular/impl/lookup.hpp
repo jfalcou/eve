@@ -16,9 +16,10 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, integral_value I>
+template<ordered_value T, integral_value I>
 EVE_FORCEINLINE constexpr T
-lookup_(EVE_SUPPORTS(cpu_), T const& a, I const& i)
+lookup_(EVE_SUPPORTS(cpu_), T const& a, I const& i) noexcept
+requires(scalar_value<T>)
 {
   return (i == static_cast<I>(-1)) ? 0 : a;
 }

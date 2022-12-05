@@ -29,16 +29,10 @@ fanm_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(fanm, r_t(a), r_t(b), r_t(c));
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fanm_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
-{
-  return fnma(b, c, a);
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE T
-fanm_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires has_native_abi_v<T>
+requires has_native_abi_v<T>
 {
   return fnma(b, c, a);
 }

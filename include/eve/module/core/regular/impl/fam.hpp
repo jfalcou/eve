@@ -30,21 +30,11 @@ fam_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(fam, r_t(a), r_t(b), r_t(c));
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 {
   return fma(b, c, a);
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE T
-fam_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
-{
-  if constexpr(has_native_abi_v<T>)
-    return fma(b, c, a);
-  else
-    return apply_over(fma, b, c, a);
 }
 
 //================================================================================================

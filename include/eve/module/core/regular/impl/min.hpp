@@ -29,18 +29,14 @@ min_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(min, a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 min_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  return b < a ? b : a;
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-min_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  return apply_over(min, a, b);
+  if constexpr(scalar_value<T>)
+    return b < a ? b : a;
+  else
+     return apply_over(min, a, b);
 }
 
 //================================================================================================

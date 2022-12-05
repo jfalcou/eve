@@ -101,7 +101,7 @@ add_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
         }
       }
     }
-    else return apply_over(add, a, b);
+    else return apply_over(saturated(add), a, b);
   }
 }
 

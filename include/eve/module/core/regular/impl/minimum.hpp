@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 minimum_(EVE_SUPPORTS(cpu_), splat_type const&, wide<T, N> const& v) noexcept
 {
@@ -38,14 +38,14 @@ minimum_(EVE_SUPPORTS(cpu_), splat_type const&, logical<T> const& v) noexcept
   return logical<T>(eve::all(v));
 }
 
-template<real_scalar_value T>
+template<arithmetic_scalar_value T>
 EVE_FORCEINLINE auto
 minimum_(EVE_SUPPORTS(cpu_), T const& v) noexcept
 {
   return v;
 }
 
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 minimum_(EVE_SUPPORTS(cpu_), wide<T, N> const& v) noexcept
 {

@@ -14,6 +14,7 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 namespace eve::detail
 {
@@ -28,18 +29,15 @@ fnms_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(fnms, r_t(a), r_t(b), r_t(c));
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fnms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
+requires has_native_abi_v<T>
 {
-  return -(a * b + c);
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE T
-fnms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires has_native_abi_v<T>
-{
-  return -fma(a, b, c);
+  if constexpr(scalar_value<T>)
+    return minus(a * b + c);
+  else
+    return minus(fma(a, b, c));
 }
 
 //================================================================================================
