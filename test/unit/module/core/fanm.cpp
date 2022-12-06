@@ -34,7 +34,6 @@ TTS_CASE_TPL("Check return types of fanm", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fanm(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fanm(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fanm(wi_t(), int(), int()), wi_t);
-    TTS_EXPR_IS(eve::fanm(char(), wi_t(), int()), wi_t);
   }
 };
 

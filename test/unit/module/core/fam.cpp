@@ -34,7 +34,6 @@ TTS_CASE_TPL("Check return types of fam", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fam(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fam(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fam(wi_t(), int(), int()), wi_t);
-    TTS_EXPR_IS(eve::fam(char(), wi_t(), int()), wi_t);
   }
 };
 
