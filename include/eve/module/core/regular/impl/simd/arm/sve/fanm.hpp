@@ -28,6 +28,6 @@ requires sve_abi<abi_t<T, N>>
 {
   auto const alt = alternative(cond, v0, as(v0));
   if constexpr( C::is_complete && !C::is_inverted ) return alt;
-  return svmls_m(cond.mask(as(v0)), alt, v1, v2);
+  else return svmls_m(sve_ignore_hidden_mask(cond,as<T>{}), alt, v1, v2);
 }
 }

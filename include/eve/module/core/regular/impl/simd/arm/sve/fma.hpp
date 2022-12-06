@@ -26,8 +26,8 @@ EVE_FORCEINLINE auto
 fma_(EVE_SUPPORTS(sve_), C cond, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
-  auto const alt = alternative(cond, v0, as(v0));
-  if constexpr( C::is_complete && !C::is_inverted ) return alt;
-  return svmad_m(cond.mask(as(v0)), alt, v1, v2);
+ auto const alt = alternative(cond, v0, as(v0));
+ if constexpr( C::is_complete && !C::is_inverted ) return alt;
+ else return svmad_m(sve_ignore_hidden_mask(cond,as<T>{}), alt, v1, v2);
 }
 }
