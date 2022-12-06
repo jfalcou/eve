@@ -34,7 +34,6 @@ TTS_CASE_TPL("Check return types of fnma", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fnma(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fnma(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fnma(wi_t(), int(), int()), wi_t);
-    TTS_EXPR_IS(eve::fnma(char(), wi_t(), int()), wi_t);
   }
 };
 

@@ -34,7 +34,6 @@ TTS_CASE_TPL("Check return types of fsnm", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fsnm(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fsnm(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fsnm(wi_t(), int(), int()), wi_t);
-    TTS_EXPR_IS(eve::fsnm(char(), wi_t(), int()), wi_t);
   }
 };
 
