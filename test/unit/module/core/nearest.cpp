@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
   using v_t   = eve::element_type_t<T>;
   using i_t   = eve::as_integer_t<v_t>;
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_ordered_value<T> )
   {
     TTS_EQUAL(eve::nearest(a0), T([&](auto i, auto) { return v_t(std::nearbyint(a0.get(i))); }));
     TTS_EQUAL(eve::int_(eve::nearest)(a0),

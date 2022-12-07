@@ -98,7 +98,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::abs variants on wide", eve::te
 {
   auto cases = tts::limits(tgt);
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_ordered_value<T> )
   {
     TTS_IEEE_EQUAL(eve::abs(cases.nan), cases.nan);
     TTS_IEEE_EQUAL(eve::abs(cases.minf), cases.inf);

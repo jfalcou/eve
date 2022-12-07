@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::average(v_t(), v_t()), v_t);
 
   // multi
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_ordered_value<T> )
   {
     TTS_EXPR_IS(eve::average(T(), T(), T()), T);
     TTS_EXPR_IS(eve::average(T(), v_t(), T()), T);

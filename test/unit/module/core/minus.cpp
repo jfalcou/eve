@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check return types of eve::minus", eve::test::simd::signed_types)
   TTS_EXPR_IS(eve::saturated(eve::minus[eve::logical<v_t>()])(v_t()), v_t);
   TTS_EXPR_IS(eve::saturated(eve::minus[bool()])(v_t()), v_t);
 
-  if constexpr( eve::floating_real_value<T> ) {}
+  if constexpr( eve::floating_ordered_value<T> ) {}
 };
 
 //==================================================================================================
@@ -84,7 +84,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::minus variants on wide",
 {
   auto cases = tts::limits(tgt);
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_ordered_value<T> )
   {
     TTS_IEEE_EQUAL(eve::minus(cases.nan), cases.nan);
     TTS_IEEE_EQUAL(eve::minus(cases.minf), cases.inf);

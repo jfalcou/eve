@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of floor", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::uint_(eve::floor)(T()), (eve::as_integer_t<T, unsigned>));
   TTS_EXPR_IS(eve::uint_(eve::floor)(v_t()), (eve::as_integer_t<v_t, unsigned>));
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_ordered_value<T> )
   {
     TTS_EXPR_IS(eve::tolerant(eve::floor)(T()), T);
     TTS_EXPR_IS(eve::tolerant(eve::floor)(v_t()), v_t);
@@ -108,7 +108,7 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
   using v_t   = eve::element_type_t<T>;
   using i_t   = eve::as_integer_t<v_t>;
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_ordered_value<T> )
   {
     TTS_EQUAL(eve::floor(a0), map([&](auto e) -> v_t { return v_t(std::floor(e)); }, a0));
 

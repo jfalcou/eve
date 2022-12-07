@@ -37,7 +37,7 @@ TTS_CASE_TPL("Check return types of dec", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::saturated(eve::dec[bool()])(T()), T);
   TTS_EXPR_IS(eve::saturated(eve::dec[bool()])(v_t()), v_t);
 
-  if constexpr( eve::floating_real_value<T> ) {}
+  if constexpr( eve::floating_ordered_value<T> ) {}
 };
 
 //==================================================================================================

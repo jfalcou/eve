@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  if constexpr( eve::floating_real_value<v_t> )
+  if constexpr( eve::floating_ordered_value<v_t> )
   {
     auto n = [](auto e, auto f) -> v_t { return std::nextafter(e, f); };
     TTS_EQUAL(eve::nextafter(a0, a1), map(n, a0, a1));

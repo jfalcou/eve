@@ -21,7 +21,7 @@ TTS_CASE_TPL("Check return types of eve::plus", eve::test::simd::signed_types)
 
   TTS_EXPR_IS(eve::plus(T()), T);
   TTS_EXPR_IS(eve::plus(v_t()), v_t);
-  if constexpr( eve::floating_real_value<T> ) {}
+  if constexpr( eve::floating_ordered_value<T> ) {}
 };
 
 
