@@ -87,3 +87,7 @@ EVE_MAKE_CALLABLE(fsm_, fsm);
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/fsm.hpp>
+#endif

@@ -87,3 +87,7 @@ EVE_MAKE_CALLABLE(fam_, fam);
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fam.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/fam.hpp>
+#endif
