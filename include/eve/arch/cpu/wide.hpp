@@ -552,7 +552,7 @@ namespace eve
 
     //! @brief Perform the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(arithmetic_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator+(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
     {
       return v + wide(s);
@@ -560,7 +560,7 @@ namespace eve
 
     //! @brief Perform the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(wide const& v, arithmetic_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator+(wide const& v, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
     {
       return v + wide(s);
@@ -586,7 +586,7 @@ namespace eve
 
     //! @brief Perform the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(arithmetic_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator-(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
     {
       return wide(s) - v;
@@ -594,7 +594,7 @@ namespace eve
 
     //! @brief Perform the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(wide const& v, arithmetic_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator-(wide const& v, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
     {
       return v - wide(s);
@@ -620,7 +620,7 @@ namespace eve
 
     //! @brief Perform the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
-    friend EVE_FORCEINLINE auto operator*(arithmetic_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator*(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
     {
       return v * s;
@@ -628,7 +628,7 @@ namespace eve
 
     //! @brief Perform the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
-    friend EVE_FORCEINLINE auto operator*(wide const& v, arithmetic_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator*(wide const& v, plain_scalar_value auto s) noexcept
       requires(!kumi::product_type<Type>)
     {
       auto that = v;
@@ -655,7 +655,7 @@ namespace eve
 
     //! @brief Perform the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(arithmetic_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator/(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
     {
       return wide(s) / v;
@@ -663,7 +663,7 @@ namespace eve
 
     //! @brief Perform the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(wide const& v, arithmetic_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator/(wide const& v, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
     {
       return v / wide(s);
