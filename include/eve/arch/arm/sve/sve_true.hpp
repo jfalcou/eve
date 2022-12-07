@@ -24,13 +24,4 @@ sve_true()
   else if constexpr( sizeof(T) == 4 ) return svptrue_b32();
   else if constexpr( sizeof(T) == 8 ) return svptrue_b64();
 }
-
-// Generate optimized mask that takes ignore_none into account
-template<conditional_expr C, typename T>
-EVE_FORCEINLINE auto
-sve_ignore_hidden_mask(C cond, as<T> tgt) noexcept
-{
-  if constexpr(C::is_complete && C::is_inverted) return sve_true<T>();
-  else return cond.mask(tgt);
-}
 } // namespace eve::detail
