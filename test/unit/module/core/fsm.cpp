@@ -33,6 +33,7 @@ TTS_CASE_TPL("Check return types of fsm", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fsm(T(), v_t(), int()), T);
     TTS_EXPR_IS(eve::fsm(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fsm(int(), T(), int()), T);
+    TTS_EXPR_IS(eve::fsm(wi_t(), std::int8_t(), int()), wi_t);
     TTS_EXPR_IS(eve::fsm(wi_t(), int(), int()), wi_t);
   }
 };

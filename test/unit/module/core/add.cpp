@@ -52,6 +52,8 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::add(v_t(), v_t(), T()), T);
   TTS_EXPR_IS(eve::add(v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::add(v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::add(int(), std::int8_t(), T()), T);
+  TTS_EXPR_IS(eve::add(int(), T(), int()), T);
 
   TTS_EXPR_IS(eve::saturated(eve::add)(T(), T(), T()), T);
   TTS_EXPR_IS(eve::saturated(eve::add)(T(), v_t(), T()), T);
