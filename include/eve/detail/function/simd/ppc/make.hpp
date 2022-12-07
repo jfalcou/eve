@@ -17,7 +17,7 @@ namespace eve::detail
   //================================================================================================
   // arithmetic cases
   //================================================================================================
-  template<real_scalar_value T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -26,7 +26,7 @@ namespace eve::detail
     return that;
   }
 
-  template<real_scalar_value T, typename S, typename V>
+  template<arithmetic_scalar_value T, typename S, typename V>
   EVE_FORCEINLINE auto make(eve::as<wide<T, S>> const &, V v) noexcept
     requires ppc_abi<abi_t<T, S>>
   {
@@ -42,7 +42,7 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<real_scalar_value T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -51,7 +51,7 @@ namespace eve::detail
     return that;
   }
 
-  template<real_scalar_value T, typename S, typename V>
+  template<arithmetic_scalar_value T, typename S, typename V>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T, S>>> const &, V v) noexcept
   requires ppc_abi<abi_t<T, S>>
   {

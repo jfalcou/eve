@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, value U, typename N>
+template<arithmetic_scalar_value T, value U, typename N>
 EVE_FORCEINLINE auto&
 self_add(wide<T, N>& self, U const& other) noexcept
 requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
@@ -22,7 +22,7 @@ requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
   return self;
 }
 
-template<real_scalar_value T, value U, typename N>
+template<arithmetic_scalar_value T, value U, typename N>
 EVE_FORCEINLINE auto&
 self_sub(wide<T, N>& self, U const& other) noexcept
 requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
@@ -31,7 +31,7 @@ requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
   return self;
 }
 
-template<real_scalar_value T, value U, typename N>
+template<arithmetic_scalar_value T, value U, typename N>
 EVE_FORCEINLINE auto&
 self_mul(wide<T, N>& self, U const& other) noexcept
 requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
@@ -40,7 +40,7 @@ requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
   return self;
 }
 
-template<real_scalar_value T, value U, typename N>
+template<arithmetic_scalar_value T, value U, typename N>
 EVE_FORCEINLINE auto&
 self_div(wide<T, N>& self, U const& other) noexcept
 requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>

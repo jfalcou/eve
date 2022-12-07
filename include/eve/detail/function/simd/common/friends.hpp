@@ -29,7 +29,7 @@ namespace eve
 namespace eve::detail
 {
   //================================================================================================
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_negate(wide<T,N> const& v) noexcept
   {
     if constexpr(floating_value<T>)
@@ -45,7 +45,7 @@ namespace eve::detail
   }
 
   //================================================================================================
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_bitnot(wide<T,N> const& v) noexcept
   {
     if constexpr(is_native_v<abi_t<T, N>>)

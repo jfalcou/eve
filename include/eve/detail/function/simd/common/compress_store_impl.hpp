@@ -57,7 +57,7 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+  template<arithmetic_scalar_value T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
   EVE_FORCEINLINE
   unaligned_t<Ptr> compress_store_impl_(EVE_SUPPORTS(cpu_),
                                         wide<T, N> v,
