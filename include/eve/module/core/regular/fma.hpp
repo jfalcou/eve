@@ -95,3 +95,7 @@ EVE_MAKE_CALLABLE(fma_, fma);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/fma.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/fma.hpp>
+#endif
