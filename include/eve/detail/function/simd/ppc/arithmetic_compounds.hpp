@@ -25,7 +25,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = vec_add(self.storage(), type{other}.storage());
     }
@@ -46,7 +46,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = vec_sub(self.storage(), type{other}.storage());
     }
@@ -67,7 +67,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = self.storage() *  type{other}.storage();
     }
@@ -88,7 +88,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = self.storage() / type{other}.storage();
     }

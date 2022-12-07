@@ -26,7 +26,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = self_add(self, type {other});
     }
@@ -71,7 +71,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = self_sub(self, type {other});
     }
@@ -117,7 +117,7 @@ namespace eve::detail
     using type = wide<T, N>;
     constexpr auto c = categorize<type>();
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
             if constexpr( c == category::int32x2    ) self = vmul_n_s32 (self, other);
       else  if constexpr( c == category::int32x4    ) self = vmulq_n_s32(self, other);
@@ -180,7 +180,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       self = self_div(self, type {other});
     }
