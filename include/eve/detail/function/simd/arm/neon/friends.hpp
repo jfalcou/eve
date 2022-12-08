@@ -16,7 +16,7 @@ namespace eve::detail
   //================================================================================================
   // operator~ implementation
   //================================================================================================
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T,N> self_bitnot(wide<T,N> const& v) noexcept
       requires arm_abi<abi_t<T, N>>
   {
