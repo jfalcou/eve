@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of eve::next(eve::wide)",
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  if constexpr( eve::floating_real_value<v_t> )
+  if constexpr( eve::floating_value<v_t> )
   {
     auto n = [](auto e) -> v_t { return std::nextafter(e, eve::valmax(eve::as(e))); };
     TTS_EQUAL(eve::next(a0), map(n, a0));
@@ -69,7 +69,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next variants on wide",
 
   auto cases = tts::limits(tgt);
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_value<T> )
   {
     TTS_IEEE_EQUAL(next(cases.nan), cases.nan);
     TTS_IEEE_EQUAL(next(cases.minf), cases.valmin);
@@ -121,7 +121,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
 
   auto cases = tts::limits(tgt);
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_value<T> )
   {
     TTS_IEEE_EQUAL(next(cases.nan, 2), cases.nan);
     TTS_IEEE_EQUAL(next(cases.minf, 2), next(cases.valmin));

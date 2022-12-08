@@ -83,36 +83,6 @@ namespace eve
   template<typename T> concept floating_value        = value<T> && std::floating_point<element_type_t<T>>;
 
   //================================================================================================
-  //! @concept real_value
-  //! TODO describe
-  //!
-  //! @groupheader{Examples}
-  //! - `double`
-  //! - `eve::wide<int, eve::fixed<2>>`
-  //================================================================================================
-  template<typename T> concept real_value            = real_simd_value<T> || real_scalar_value<T>;
-
-  //================================================================================================
-  //! @concept floating_real_value
-  //! TODO describe
-  //!
-  //! @groupheader{Examples}
-  //! - `double`
-  //! - `eve::wide<float, eve::fixed<2>>`
-  //================================================================================================
-  template<typename T> concept floating_real_value   = real_value<T> && std::floating_point<element_type_t<T>>;
-
-  //================================================================================================
-  //! @concept integral_real_value
-  //! TODO describe
-  //!
-  //! @groupheader{Examples}
-  //! - `char`
-  //! - `eve::wide<long int, eve::fixed<2>>`
-  //================================================================================================
-  template<typename T> concept integral_real_value   = real_value<T> && std::integral<element_type_t<T>>;
-
-  //================================================================================================
   //! @concept logical_value
   //! TODO describe
   //!

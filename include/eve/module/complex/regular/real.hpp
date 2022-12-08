@@ -53,7 +53,7 @@ namespace eve
 
   namespace detail
   {
-    template<real_value V>
+    template<value V>
     EVE_FORCEINLINE V real_( EVE_SUPPORTS(cpu_), V const& v) noexcept
     {
       return v;
