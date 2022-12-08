@@ -29,8 +29,8 @@ namespace eve::detail
       {
         if constexpr( std::is_integral_v<T> )
         {
-          using type = typename wide<T, N>::storage_type *;
-          return vec_vsx_ld(0, type(ptr));
+          using type = typename wide<T, N>::storage_type const*;
+          return vec_vsx_ld(0, type((T const*)(ptr)));
         }
         else
         {
