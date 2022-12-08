@@ -28,7 +28,7 @@ lookup_(EVE_SUPPORTS(vmx_), wide<T, N> a, wide<I, N> idx) noexcept requires ppc_
   {
     using i_t = wide<as_integer_t<T>, N>;
     t8_t i1 = lookup(bit_cast(idx << shift<T>, as<t8_t>()), t8_t {repeater<T, I, false>});
-    i1      = bit_cast(bit_cast(i1, as<i_t()) + i_t{offset<T, false>, as<t8_t>()});
+    i1      = bit_cast(bit_cast(i1, as<i_t>()) + i_t{offset<T, false>, as<t8_t>()});
 
     return bit_cast(lookup(bit_cast(a, as<t8_t>()), i1), as(a));
   }
