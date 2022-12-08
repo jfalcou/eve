@@ -79,15 +79,16 @@ EVE_FORCEINLINE wide<T, N>
         {
           if constexpr( current_api >= asimd )
           {
+            using i_t = wide<as_integer_t<T>, N>;
             bytes_t i1 = vqtbl1q_u8(bit_cast(idx << shift<T>, tgt_t()), bytes_t {repeater<T, I>});
-            i1 = bit_cast(bit_cast(i1, as<wide<as_integer_t<T>, N>>()) + offset<T>, tgt_t());
+            i1 = bit_cast(bit_cast(i1, as<i_t()) + i_t{offset<T>}, tgt_t());
             return bit_cast(vqtbl1q_u8(b, i1), as(a));
           }
           else
           {
+            using i_t = wide<as_integer_t<T>, N>;
             auto    bi = lookup(bit_cast(idx << shift<T>, tgt_t()), bytes_t {repeater<T, I>});
-            bytes_t i1 =
-                bit_cast(bit_cast(bi, as<wide<as_integer_t<T>, N>>()) + offset<T>, tgt_t());
+            bytes_t i1 = bit_cast(bit_cast(bi, as<i_t>()) + i_t{offset<T>}, tgt_t());
             return bit_cast(lookup(b, i1), as(a));
           }
         }
