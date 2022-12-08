@@ -40,8 +40,9 @@ EVE_FORCEINLINE wide<T, N>
       }
       else if constexpr( std::same_as<abi_t<I, N>, arm_64_> )
       {
+        using i_t = wide<as_integer_t<T>, N>;
         bytes_t i1 = lookup(bit_cast(idx << shift<T>, tgt_t()), bytes_t {repeater<T, I>});
-        i1         = bit_cast(bit_cast(i1, as<wide<as_integer_t<T>, N>>()) + offset<T>, tgt_t());
+        i1         = bit_cast(bit_cast(i1, as<i_t()) + i_t{offset<T>}, tgt_t());
         return bit_cast(bytes_t {lookup(b, i1)}, as(a));
       }
       else { return lookup(a, convert(idx, as<as_integer_t<T>>())); }
