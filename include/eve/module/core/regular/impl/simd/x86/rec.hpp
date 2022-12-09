@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rec_(EVE_SUPPORTS(sse2_), raw_type, wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -44,7 +44,7 @@ rec_(EVE_SUPPORTS(sse2_), raw_type, wide<T, N> const& v) noexcept requires x86_a
   }
 }
 
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rec_(EVE_SUPPORTS(sse2_), wide<T, N> const& a0) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -60,7 +60,7 @@ rec_(EVE_SUPPORTS(sse2_), wide<T, N> const& a0) noexcept requires x86_abi<abi_t<
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rec_(EVE_SUPPORTS(sse2_),
                      C const                &cx,
@@ -87,7 +87,7 @@ EVE_FORCEINLINE wide<T, N>
   }
 }
 
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rec_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& a0) noexcept requires x86_abi<abi_t<T, N>>
 {

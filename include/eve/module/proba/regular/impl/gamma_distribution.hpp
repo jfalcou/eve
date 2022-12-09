@@ -19,7 +19,7 @@ namespace eve
  template < typename T, typename U, typename Internal = T>
   struct gamma_distribution{};
 
-  template < floating_real_value T, floating_real_value U>
+  template < floating_ordered_value T, floating_ordered_value U>
   requires  compatible_values<T, U>
   struct gamma_distribution<T, U>
   {
@@ -59,7 +59,7 @@ namespace eve
     value_type invgk;
   };
 
-  template < floating_real_value U>
+  template < floating_ordered_value U>
   struct gamma_distribution<callable_one_, U>
   {
     using is_distribution_t = void;
@@ -94,7 +94,7 @@ namespace eve
     theta_type theta;
   };
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct gamma_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
@@ -131,7 +131,7 @@ namespace eve
 
   template<typename T, typename U>  gamma_distribution(T,U) -> gamma_distribution<T,U>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct gamma_distribution<callable_one_, callable_one_, T>
   {
     using is_distribution_t = void;
@@ -161,7 +161,7 @@ namespace eve
 
   template<typename T>  gamma_distribution(as<T> const&) -> gamma_distribution<callable_one_, callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto gamma_distribution_11 = gamma_distribution<callable_one_, callable_one_, T>(as<T>{});
 
   namespace detail
@@ -365,8 +365,8 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// confidence
-    template<typename T, typename U, floating_real_value R
-             , floating_real_value V, floating_real_value A,  typename I = T>
+    template<typename T, typename U, floating_ordered_value R
+             , floating_ordered_value V, floating_ordered_value A,  typename I = T>
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
                                      , gamma_distribution<T,U,I> const & d
                                      , R const & p
@@ -378,15 +378,15 @@ namespace eve
       auto l = eve::log(p/(1-p));
       auto dp = rec(p*(1-p));
       auto k = one(as<I>());
-      if constexpr(floating_real_value<T>) k = d.k;
+      if constexpr(floating_ordered_value<T>) k = d.k;
       auto dgamma_p = [](auto x, auto k){ return exp(dec(k) * log(x) - x - log_abs_gamma(k));};
       auto da = dgamma_p(z, k)* dp;
       R db;
-      if constexpr(floating_real_value<U> && floating_real_value<T>)
+      if constexpr(floating_ordered_value<U> && floating_ordered_value<T>)
         db = eve::exp(k*eve::log(z)-z-eve::log_abs_gamma(k)+eve::log(d.theta))* dp;
-      else if constexpr(floating_real_value<U>)
+      else if constexpr(floating_ordered_value<U>)
         db = -eve::exp(k*eve::log(z)-z-eve::log_abs_gamma(k))* dp;
-      else if constexpr(floating_real_value<T>)
+      else if constexpr(floating_ordered_value<T>)
         db  = -eve::exp(eve::log(z)-z+eve::log(d.theta))* dp;
       else
         db = -eve::exp(eve::log(z)-z)*dp;

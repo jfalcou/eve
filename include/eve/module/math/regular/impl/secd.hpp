@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr auto
 secd_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
 {
@@ -34,7 +34,7 @@ secd_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
   else return apply_over(D()(secd), a0);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 secd_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {

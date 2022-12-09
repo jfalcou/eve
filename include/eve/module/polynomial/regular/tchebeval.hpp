@@ -32,14 +32,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_real_value T, eve::floating_real_value Cs ...>
+//!     template< eve::floating_ordered_value T, eve::floating_ordered_value Cs ...>
 //!     T tchebeval(T x, Cs ... cs) noexcept;                                     // 1
 //!
-//!     template< eve::floating_real_value T, eve::range R>
+//!     template< eve::floating_ordered_value T, eve::range R>
 //!     T tchebeval(T x, R r) noexcept;                                           // 2
 //!
-//!     template< eve::floating_real_value T, eve::floating_real_value U
-//!             , eve::floating_real_value V, eve::range R>
+//!     template< eve::floating_ordered_value T, eve::floating_ordered_value U
+//!             , eve::floating_ordered_value V, eve::range R>
 //!     T tchebeval(T x, U a, V b,  R r) noexcept;                                // 3
 //!   }
 //!   @endcode
@@ -50,9 +50,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` : [real floating argument](@ref eve::floating_real_value).
+//!     * `x` : [real floating argument](@ref eve::floating_ordered_value).
 //!
-//!     * `a`, `b` : [real floating arguments](@ref eve::floating_real_value).
+//!     * `a`, `b` : [real floating arguments](@ref eve::floating_ordered_value).
 //!       If present,  they are the bounds of   the interval for which the Tchebytchev polynomial
 //!       must be evaluated ( -1 and 1 by default). A change of variable
 //!       \f$ x -> \frac{2x-a-b}{b-a}\f$ is internally performed.

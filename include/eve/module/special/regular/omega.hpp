@@ -29,14 +29,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T >
+//!      template< eve::floating_ordered_value T >
 //!      T omega(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!

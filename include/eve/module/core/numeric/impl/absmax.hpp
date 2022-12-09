@@ -22,7 +22,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_),
         numeric_type const&,
@@ -33,7 +33,7 @@ absmax_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(numeric(absmax), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 absmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcept
 {
@@ -43,7 +43,7 @@ absmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcep
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, value T1, value... Ts>
+template<ordered_value T0, value T1, value... Ts>
 auto
 absmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
   -> decltype(absmax(a0, a1, args...))

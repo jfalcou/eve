@@ -19,35 +19,36 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 bit_notor_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept requires bit_compatible_values<T, U>
 {
   return bit_call(bit_notor, a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 bit_notor_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  if constexpr( floating_value<T> )
+  if constexpr(scalar_value<T>)
   {
-    using b_t = as_integer_t<T, unsigned>;
-    return bit_cast(b_t(~bit_cast(a, as<b_t>()) | bit_cast(b, as<b_t>())), as(a));
+    if constexpr( floating_value<T> )
+    {
+      using b_t = as_integer_t<T, unsigned>;
+      return bit_cast(b_t(~bit_cast(a, as<b_t>()) | bit_cast(b, as<b_t>())), as(a));
+    }
+    else return T(~a | b);
   }
-  else return T(~a | b);
+  else //simd case
+  {
+    return bit_or(bit_not(a), b);
+  }
 }
 
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-bit_notor_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  return bit_or(bit_not(a), b);
-}
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 bit_notor_(EVE_SUPPORTS(cpu_),
            C const& cond,
@@ -60,7 +61,7 @@ bit_notor_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 bit_notor_(EVE_SUPPORTS(cpu_),
            T0 a0,
@@ -71,7 +72,7 @@ bit_notor_(EVE_SUPPORTS(cpu_),
   return eve::bit_notor(a0, that);
 }
 
-template<conditional_expr C, real_value T0, real_value T1, real_value... Ts>
+template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 bit_notor_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) requires
     bit_compatible_values<T0, T1> &&(bit_compatible_values<T1, Ts>&&...)

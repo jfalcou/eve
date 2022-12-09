@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 // general case
-template<real_value I, floating_real_value T, decorator D>
+template<ordered_value I, floating_ordered_value T, decorator D>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), D const& d, I n, T x) noexcept
 {
@@ -36,7 +36,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), D const& d, I n, T x) noexcept
 }
 
 // regular wrapping : no decorator
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
 {
@@ -44,7 +44,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
 }
 
 // regular  nan if a+x or x is negative,  better computation than raw
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), regular_type const&, T a, T x) noexcept
 {
@@ -66,7 +66,7 @@ lrising_factorial_(EVE_SUPPORTS(cpu_), regular_type const&, T a, T x) noexcept
 }
 
 // raw direct computation not matter why. nan if a+x or x is non positive
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
 {

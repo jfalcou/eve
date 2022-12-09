@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 next_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
@@ -31,7 +31,7 @@ next_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 //////////////////////////////////////////////////////////////
 // two parameters
 //////////////////////////////////////////////////////////////
-template<real_value T, integral_value U>
+template<ordered_value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 next_(EVE_SUPPORTS(cpu_), T const& a, U const& n) noexcept
 {
@@ -49,14 +49,14 @@ next_(EVE_SUPPORTS(cpu_), T const& a, U const& n) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 next_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
   return mask_op(cond, next, t);
 }
 
-template<conditional_expr C, real_value U, integral_value V>
+template<conditional_expr C, ordered_value U, integral_value V>
 EVE_FORCEINLINE auto
 next_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, V const& n) noexcept
 {

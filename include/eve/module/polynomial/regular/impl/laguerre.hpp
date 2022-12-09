@@ -13,7 +13,7 @@ namespace eve::detail
 {
 
 // Recurrence relation for Laguerre polynomials:
-template<real_value N, floating_value T>
+template<ordered_value N, floating_value T>
 EVE_FORCEINLINE T
 laguerre_(EVE_SUPPORTS(cpu_), successor_type const&, N n, T x, T Ln, T Lnm1) noexcept
 {

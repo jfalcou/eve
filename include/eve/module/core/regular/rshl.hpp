@@ -33,14 +33,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::real_value T , integral_value N >
+//!      template< eve::ordered_value T , integral_value N >
 //!      T rshl(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::real_value) to be shifted.
+//!     * `x` :  [argument](@ref eve::ordered_value) to be shifted.
 //!     * `n`:   [shift](@ref eve::integral_value).
 //!
 //!    **Return value**

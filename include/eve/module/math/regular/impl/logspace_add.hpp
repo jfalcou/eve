@@ -16,7 +16,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 logspace_add_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -24,7 +24,7 @@ logspace_add_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(logspace_add, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 logspace_add_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
@@ -41,7 +41,7 @@ logspace_add_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 //===============================================================================================
 // Multi case
 //================================================================================================
-template<floating_real_value T0, floating_real_value T1, real_value... Ts>
+template<floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
 auto
 logspace_add_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
 -> common_value_t<T0, T1, Ts...>
@@ -75,7 +75,7 @@ logspace_add_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, floating_real_value U, floating_real_value V>
+template<conditional_expr C, floating_ordered_value U, floating_ordered_value V>
 EVE_FORCEINLINE auto
 logspace_add_(EVE_SUPPORTS(cpu_),
               C const& cond,

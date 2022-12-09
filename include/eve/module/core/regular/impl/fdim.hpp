@@ -22,7 +22,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 fdim_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -30,7 +30,7 @@ fdim_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(fdim, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 fdim_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 requires has_native_abi_v<T>
@@ -38,7 +38,7 @@ requires has_native_abi_v<T>
   return if_else(a >= b, sub(a, b), eve::zero);
 }
 
-template<conditional_expr C, real_value T, real_value U>
+template<conditional_expr C, ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 fdim_(EVE_SUPPORTS(cpu_),
       C const& cond,

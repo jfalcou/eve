@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 div_(EVE_SUPPORTS(cpu_), downward_type const&, T a, T b) noexcept requires has_native_abi_v<T>
 {
@@ -32,8 +32,8 @@ div_(EVE_SUPPORTS(cpu_), downward_type const&, T a, T b) noexcept requires has_n
     EVE_ASSERT(eve::all((b != 0)), "[eve] - downward(div)(a, 0) is undefined");
   }
   using elt_t = element_type_t<T>;
-  if constexpr( floating_real_value<T> ) { return floor(div(a, b)); }
-  else if constexpr( integral_real_value<T> )
+  if constexpr( floating_ordered_value<T> ) { return floor(div(a, b)); }
+  else if constexpr( integral_value<T> )
   {
     if constexpr( signed_value<T> )
     {

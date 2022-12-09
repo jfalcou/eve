@@ -32,14 +32,14 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_real_value T >
+  //!      template< eve::floating_ordered_value T >
   //!      T cyl_bessel_k0(T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
   //!
   //!   **Return value**
   //!

@@ -29,7 +29,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T >
+//!      template< eve::floating_ordered_value T >
 //!      T digamma(T x) noexcept;
 //!   }
 //!   @endcode

@@ -34,7 +34,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 trunc_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
 {

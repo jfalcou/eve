@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE constexpr auto
 is_ordered_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_logical_t<T, U>
@@ -25,7 +25,7 @@ is_ordered_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(is_ordered, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr as_logical_t<T>
 is_ordered_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
@@ -39,7 +39,7 @@ is_ordered_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // logical masked case
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 is_ordered_(EVE_SUPPORTS(cpu_), C const& cond, U const& u, V const& v) noexcept
 -> decltype(is_ordered(u, v))

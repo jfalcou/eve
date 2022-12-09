@@ -16,13 +16,13 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr kumi::tuple<T, T>
 modf_(EVE_SUPPORTS(cpu_), T a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( floating_real_value<T> )
+    if constexpr( floating_value<T> )
     {
       auto t = trunc(a);
       return {a - t, t};

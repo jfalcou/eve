@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 mantissa_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
@@ -51,7 +51,7 @@ mantissa_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 mantissa_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

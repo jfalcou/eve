@@ -33,7 +33,7 @@ plus_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value ... U>
+template<conditional_expr C, ordered_value ... U>
 EVE_FORCEINLINE auto
 plus_(EVE_SUPPORTS(cpu_),
       C const& cond,

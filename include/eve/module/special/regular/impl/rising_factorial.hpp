@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value I, floating_real_value T, decorator D>
+template<ordered_value I, floating_ordered_value T, decorator D>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_), D const & d, I n, T x) noexcept
 {
@@ -37,7 +37,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_), D const & d, I n, T x) noexcept
 }
 
 // regular  nan if a+x or x is nnegative,  better computation than raw
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_)
                  , T a
@@ -52,7 +52,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_)
 }
 
 // regular wrapping : no decorator
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
 {
@@ -66,7 +66,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
 }
 
 // raw
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
 {

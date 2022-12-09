@@ -44,7 +44,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floating](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floating](@ref eve::floating_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
@@ -73,7 +73,7 @@ namespace eve
       return if_else(z == one(as(z)), inf(as(z)), k*deta(1u, zz));
     }
 
-    template<floating_real_value V>
+    template<floating_ordered_value V>
     EVE_FORCEINLINE auto lambda_( EVE_SUPPORTS(cpu_)
                                 , V const & v) noexcept
     {

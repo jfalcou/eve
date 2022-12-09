@@ -97,7 +97,7 @@ EVE_FORCEINLINE wide<T, N>
 
 //================================================================================================
 // Full logical if_else
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 if_else_(EVE_SUPPORTS(sse2_),
          logical<wide<T, N>> const& v0,

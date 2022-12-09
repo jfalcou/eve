@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 remdiv_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> kumi::tuple<common_value_t<T, U>, common_value_t<T, U>>
@@ -32,7 +32,7 @@ remdiv_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
   {
     auto d = trunc(div(a, b));
-    if constexpr( floating_real_value<T> )
+    if constexpr( floating_ordered_value<T> )
     {
       auto r = if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
                        allbits,

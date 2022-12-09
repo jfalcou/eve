@@ -61,8 +61,8 @@ namespace eve
     //! Construct from a `bool`
     EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
 
-    //! Construct from a scalar_value
-    template<scalar_value U>
+    //! Construct from a plain_scalar_value
+    template<plain_scalar_value U>
     EVE_FORCEINLINE explicit constexpr logical(U const &v) noexcept
                   : value_((v != 0) ? true_mask : false_mask)
     {}
@@ -96,7 +96,7 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
 
-    template<real_scalar_value U>
+    template<arithmetic_scalar_value U>
     friend EVE_FORCEINLINE logical operator&&(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() && w.value()};
@@ -112,7 +112,7 @@ namespace eve
       return logical{v && w.value()};
     }
 
-    template<real_scalar_value U>
+    template<arithmetic_scalar_value U>
     friend EVE_FORCEINLINE logical operator||(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() || w.value()};
@@ -154,14 +154,14 @@ namespace eve
       return v.value() == w.value();
     }
 
-    friend EVE_FORCEINLINE logical operator==(logical const& v, real_scalar_value auto w) noexcept
+    friend EVE_FORCEINLINE logical operator==(logical const& v, bool w) noexcept
     {
-      return v.value() == !!w;
+      return v.value() == w;
     }
 
-    friend EVE_FORCEINLINE logical operator==(real_scalar_value auto  v, logical const& w) noexcept
+    friend EVE_FORCEINLINE logical operator==(bool v, logical const& w) noexcept
     {
-      return w.value() == !!v;
+      return w.value() == v;
     }
 
     template<scalar_value U>
@@ -170,14 +170,14 @@ namespace eve
       return v.value() != w.value();
     }
 
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, real_scalar_value auto w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(logical const& v, bool w) noexcept
     {
-      return v.value() == !w;
+      return v.value() != w;
     }
 
-    friend EVE_FORCEINLINE logical operator!=(real_scalar_value auto v, logical const& w) noexcept
+    friend EVE_FORCEINLINE logical operator!=(bool v, logical const& w) noexcept
     {
-      return w.value() == !v;
+      return w.value() != v;
     }
 
     friend EVE_FORCEINLINE void swap(logical &lhs, logical &rhs) noexcept

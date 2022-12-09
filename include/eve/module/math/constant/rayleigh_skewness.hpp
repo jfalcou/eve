@@ -51,7 +51,7 @@ EVE_MAKE_CALLABLE(rayleigh_skewness_, rayleigh_skewness);
 
 namespace detail
 {
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   EVE_FORCEINLINE auto rayleigh_skewness_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
     using t_t = element_type_t<T>;
@@ -59,7 +59,7 @@ namespace detail
     else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.4320efa6fa904p-1);
   }
 
-  template<floating_real_value T, typename D>
+  template<floating_ordered_value T, typename D>
   EVE_FORCEINLINE constexpr auto
   rayleigh_skewness_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
       requires(is_one_of<D>(types<upward_type, downward_type> {}))

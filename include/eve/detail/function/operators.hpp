@@ -87,7 +87,7 @@ namespace eve::detail
   //================================================================================================
   // infix bitwise operators
   //================================================================================================
-  template<real_value T, real_value U>
+  template<value T, value U>
   EVE_FORCEINLINE auto bit_and_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {
@@ -111,7 +111,7 @@ namespace eve::detail
     }
   }
 
-  template<real_value T, real_value U>
+  template<value T, value U>
   EVE_FORCEINLINE auto bit_or_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {
@@ -135,7 +135,7 @@ namespace eve::detail
     }
   }
 
-  template<real_value T, real_value U>
+  template<value T, value U>
   EVE_FORCEINLINE auto bit_xor_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept
   requires bit_compatible_values<T, U>
   {

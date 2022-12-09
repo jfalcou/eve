@@ -33,7 +33,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::real_value T , integral_value N >
+//!      template< eve::ordered_value T , integral_value N >
 //!      T rshr(T x, N n) noexcept;
 //!   }
 //!   @endcode

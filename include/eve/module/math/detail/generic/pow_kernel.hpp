@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 kernel_pow1(const T& x, const T& z) noexcept
 {
@@ -48,7 +48,7 @@ kernel_pow1(const T& x, const T& z) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 kernel_pow2(const T& x) noexcept
 {
@@ -167,7 +167,7 @@ continuation(const I& i) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_select(const T& xx) noexcept
 {

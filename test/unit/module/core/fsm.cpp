@@ -33,8 +33,8 @@ TTS_CASE_TPL("Check return types of fsm", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fsm(T(), v_t(), int()), T);
     TTS_EXPR_IS(eve::fsm(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fsm(int(), T(), int()), T);
+    TTS_EXPR_IS(eve::fsm(wi_t(), std::int8_t(), int()), wi_t);
     TTS_EXPR_IS(eve::fsm(wi_t(), int(), int()), wi_t);
-    TTS_EXPR_IS(eve::fsm(char(), wi_t(), int()), wi_t);
   }
 };
 
@@ -77,7 +77,7 @@ TTS_CASE_WITH("Check behavior of fsm on all types full range",
   using eve::fsm;
   using eve::detail::map;
 
-  TTS_IEEE_EQUAL(fsm(a0, a1, a2), fms(a1, a2, a0));
+  TTS_ULP_EQUAL(fsm(a0, a1, a2), fms(a1, a2, a0), 0.5);
   TTS_IEEE_EQUAL(eve::pedantic(fsm)(a0, a1, a2), eve::pedantic(fms)(a1, a2, a0));
   TTS_IEEE_EQUAL(eve::numeric(fsm)(a0, a1, a2), eve::pedantic(fms)(a1, a2, a0));
 };

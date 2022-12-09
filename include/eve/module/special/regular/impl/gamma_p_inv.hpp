@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 auto
 gamma_p_inv_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
 ->common_value_t<T, U>
@@ -25,7 +25,7 @@ gamma_p_inv_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   return arithmetic_call(gamma_p_inv, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 T
 gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept requires has_native_abi_v<T>
 {

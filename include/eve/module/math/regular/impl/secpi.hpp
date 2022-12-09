@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 secpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
 {
@@ -36,7 +36,7 @@ secpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
   else { return apply_over(quarter_circle(secpi), a0); }
 }
 
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr auto
 secpi_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
 {
@@ -56,7 +56,7 @@ secpi_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
   else { return apply_over(D()(secpi), a0); }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 secpi_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {

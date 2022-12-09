@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 lambert_serie_utility(T r) noexcept
 {
@@ -45,7 +45,7 @@ lambert_serie_utility(T r) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 lambert_(EVE_SUPPORTS(cpu_), T x) noexcept
 {

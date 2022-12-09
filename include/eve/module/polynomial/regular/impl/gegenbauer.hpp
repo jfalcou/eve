@@ -8,11 +8,12 @@
 #pragma once
 
 #include <eve/module/math.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve::detail
 {
 
-template<scalar_value I, floating_real_value T, floating_real_value U>
+template<scalar_value I, floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept requires compatible_values<T, U>
 {
@@ -41,18 +42,20 @@ gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept requires compatibl
   return yk;
 }
 
-template<simd_value I, floating_real_scalar_value T>
+template<simd_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
+requires(scalar_value<T>)
 {
   auto n =  T(nn);
   using f_t = as_wide_t<T, cardinal_t<I>>;
   return gegenbauer(n, f_t(x));
 }
 
-template<simd_value I, floating_real_simd_value T>
+template<simd_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T lambda, T x) noexcept
+requires(simd_value<T>)
 {
   if( has_native_abi_v<T> )
   {
@@ -81,7 +84,7 @@ gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T lambda, T x) noexcept
   else return apply_over(gegenbauer, nn, lambda, x);
 }
 
-template<simd_value I, floating_real_value T, floating_real_value U>
+template<simd_value I, floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 gegenbauer_(EVE_SUPPORTS(cpu_),
             I nn,
@@ -90,7 +93,7 @@ gegenbauer_(EVE_SUPPORTS(cpu_),
 {
   using e_t = eve::element_type_t<T>;
     auto n = convert(nn, eve::as<e_t>());
-  using v_t = common_compatible_t<T, U>;
+  using v_t = common_value_t<T, U>;
   if constexpr( scalar_value<v_t> && simd_value<I> )
   {
     using w_t = as_wide_t<v_t, cardinal_t<I>>;

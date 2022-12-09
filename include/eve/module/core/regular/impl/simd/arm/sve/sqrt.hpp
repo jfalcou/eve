@@ -32,7 +32,7 @@ requires sve_abi<typename V::abi_type>
   }
 }
 
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 sqrt_(EVE_SUPPORTS(sve_), wide<T, N> const& v) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>

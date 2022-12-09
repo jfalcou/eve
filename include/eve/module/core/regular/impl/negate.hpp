@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 negate_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -27,7 +27,7 @@ negate_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(negate, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 negate_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
@@ -42,7 +42,7 @@ negate_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 }
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T, real_value U>
+template<conditional_expr C, ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 negate_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b) noexcept
 -> common_value_t<T, U>

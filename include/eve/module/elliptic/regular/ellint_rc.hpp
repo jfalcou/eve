@@ -30,14 +30,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T,  eve::floating_real_value U >
+//!      template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
 //!      eve::common_value_t<T, U> ellint_rc(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [floating real arguments](@ref eve::floating_real_value). `x` and `y` must be
+//!     * `x`, `y`: [floating real arguments](@ref eve::floating_ordered_value). `x` and `y` must be
 //!                 strictly positive and `y` non zero or the result is NaN.
 //!
 //!   **Return value**

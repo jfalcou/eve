@@ -13,14 +13,14 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 sqr_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   return a * a;
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 sqr_(EVE_SUPPORTS(cpu_), eve::pedantic_type const &, T const& a) noexcept
 {

@@ -15,7 +15,7 @@
 namespace eve::detail
 {
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, I a, T x) noexcept
 {
@@ -28,7 +28,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, I a, T x) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T x) noexcept
 {

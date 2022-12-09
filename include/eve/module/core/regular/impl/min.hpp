@@ -21,7 +21,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // Regular
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 min_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -29,24 +29,20 @@ min_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(min, a, b);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 min_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  return b < a ? b : a;
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-min_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  return apply_over(min, a, b);
+  if constexpr(scalar_value<T>)
+    return b < a ? b : a;
+  else
+     return apply_over(min, a, b);
 }
 
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 min_(EVE_SUPPORTS(cpu_),
      C const& cond,
@@ -59,7 +55,7 @@ min_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
 -> common_value_t<T0, T1, Ts...>
@@ -70,7 +66,7 @@ min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
   return that;
 }
 
-template<decorator D,  real_value... Ts>
+template<decorator D,  ordered_value... Ts>
 auto
 min_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
 {
@@ -80,7 +76,7 @@ min_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
 //================================================================================================
 // N parameters masked
 //================================================================================================
-template<conditional_expr C, real_value T0, real_value T1, real_value... Ts>
+template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto min_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args) noexcept
 {
   return mask_op(cond, eve::min, a0, a1, args...);

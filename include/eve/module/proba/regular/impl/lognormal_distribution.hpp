@@ -19,7 +19,7 @@ namespace eve
  template < typename T, typename U, typename Internal = T>
   struct lognormal_distribution{};
 
-  template < floating_real_value T, floating_real_value U>
+  template < floating_ordered_value T, floating_ordered_value U>
   requires  compatible_values<T, U>
   struct lognormal_distribution<T, U>
   {
@@ -52,7 +52,7 @@ namespace eve
     s_type s;
   };
 
-  template < floating_real_value U>
+  template < floating_ordered_value U>
   struct lognormal_distribution<callable_zero_, U>
   {
     using is_distribution_t = void;
@@ -89,7 +89,7 @@ namespace eve
     s_type s;
   };
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct lognormal_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
@@ -127,7 +127,7 @@ namespace eve
 
   template<typename T, typename U>  lognormal_distribution(T,U) -> lognormal_distribution<T,U>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct lognormal_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
@@ -154,7 +154,7 @@ namespace eve
 
   template<typename T>  lognormal_distribution(as<T> const&) -> lognormal_distribution<callable_zero_, callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto lognormal_distribution_01 = lognormal_distribution<callable_zero_, callable_one_, T>(as<T>{});
 
   namespace detail
@@ -353,8 +353,8 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// confidence
-    template<typename T, typename U, floating_real_value R
-             , floating_real_value V, floating_real_value A,  typename I = T>
+    template<typename T, typename U, floating_ordered_value R
+             , floating_ordered_value V, floating_ordered_value A,  typename I = T>
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
                                      , lognormal_distribution<T,U,I> const & d
                                      , R const & x

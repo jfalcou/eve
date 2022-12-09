@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rsqrt_(EVE_SUPPORTS(vmx_), wide<T, N> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
 {
@@ -44,7 +44,7 @@ rsqrt_(EVE_SUPPORTS(vmx_), wide<T, N> const& v0) noexcept requires ppc_abi<abi_t
   else { return map(rsqrt, v0); }
 }
 
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rsqrt_(EVE_SUPPORTS(vmx_),
                        raw_type const&,

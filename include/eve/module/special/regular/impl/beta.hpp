@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 beta_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
 -> common_value_t<T, U>
@@ -22,7 +22,7 @@ beta_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
   return arithmetic_call(beta, a0, a1);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 beta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept
 {

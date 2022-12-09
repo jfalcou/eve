@@ -18,7 +18,7 @@
 namespace eve::detail
 {
 // pedantic computes also for negative values and even negative integer values
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 lrising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T x) noexcept
 {

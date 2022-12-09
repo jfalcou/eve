@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr T
 exp10_(EVE_SUPPORTS(cpu_), D const&, T x) noexcept
     requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
@@ -77,7 +77,7 @@ exp10_(EVE_SUPPORTS(cpu_), D const&, T x) noexcept
   else return apply_over(D()(exp10), x);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 exp10_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 {
@@ -86,7 +86,7 @@ exp10_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 exp10_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

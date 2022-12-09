@@ -19,20 +19,20 @@
 
 namespace eve::detail
 {
-template<real_value T, decorator D>
+template<value T, decorator D>
 EVE_FORCEINLINE constexpr T
 rec_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
 {
   return rec(a0);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 rec_(EVE_SUPPORTS(cpu_), T a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( floating_real_value<T> ) { return T {1} / a; }
+    if constexpr( floating_value<T> ) { return T {1} / a; }
     else if( integral_value<T> )
     {
       if constexpr( scalar_value<T> )
@@ -68,7 +68,7 @@ rec_(EVE_SUPPORTS(cpu_), T a) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 rec_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

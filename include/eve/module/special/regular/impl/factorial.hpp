@@ -208,7 +208,7 @@ factorial_(EVE_SUPPORTS(cpu_), T n) noexcept
   return factorial(uint_(n));
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 factorial_(EVE_SUPPORTS(cpu_), T n) noexcept
 {

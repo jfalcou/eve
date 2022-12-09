@@ -173,7 +173,7 @@ namespace tts
   {
     return []()
     {
-      if constexpr(eve::floating_real_value<T>)
+      if constexpr(eve::floating_value<T>)
       {
         struct values
         {

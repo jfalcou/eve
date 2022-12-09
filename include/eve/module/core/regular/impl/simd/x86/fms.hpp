@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 fms_(EVE_SUPPORTS(avx2_),
                      wide<T, N> const                &a,
@@ -43,7 +43,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 fms_(EVE_SUPPORTS(avx512_),
                      C const                         &cx,

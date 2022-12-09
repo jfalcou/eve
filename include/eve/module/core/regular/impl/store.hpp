@@ -60,7 +60,7 @@ store_(EVE_SUPPORTS(cpu_), C const& c, wide<T, S> const& value, soa_ptr<Ptrs...>
 
 // -----------------------------------------------------------------------------------------------
 // simd Regular case
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(cpu_),
        wide<T, N> value,
@@ -69,7 +69,7 @@ store_(EVE_SUPPORTS(cpu_),
   apply<N::value>([&](auto... I) { ((*ptr++ = value.get(I)), ...); });
 }
 
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(cpu_),
        wide<T, N> value,
@@ -85,7 +85,7 @@ store_(EVE_SUPPORTS(cpu_),
 
 // -----------------------------------------------------------------------------------------------
 // simd Aligned case
-template<real_scalar_value T, typename S, typename Lanes>
+template<arithmetic_scalar_value T, typename S, typename Lanes>
     EVE_FORCEINLINE void
     store_(EVE_SUPPORTS(cpu_), wide<T, S> const& value, aligned_ptr<T, Lanes> ptr) noexcept
     requires(S::value <= Lanes::value)
@@ -94,7 +94,7 @@ template<real_scalar_value T, typename S, typename Lanes>
   store(value, ptr.get());
 }
 
-template<real_scalar_value T, typename S, typename Lanes>
+template<arithmetic_scalar_value T, typename S, typename Lanes>
     EVE_FORCEINLINE void
     store_(EVE_SUPPORTS(cpu_), wide<T, S> const& value, aligned_ptr<T, Lanes> ptr) noexcept
     requires(S::value <= Lanes::value)
@@ -151,14 +151,14 @@ store_(EVE_SUPPORTS(cpu_), C const& cond, T const& value, Ptr ptr) noexcept
   }
 }
 
-template<real_scalar_value T, typename S>
+template<arithmetic_scalar_value T, typename S>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(cpu_), logical<wide<T, S>> const& value, logical<T> *ptr) noexcept
 {
   store(value.mask(), (typename logical<T>::mask_type *)ptr);
 }
 
-template<real_scalar_value T, typename S, typename Lanes>
+template<arithmetic_scalar_value T, typename S, typename Lanes>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(cpu_),
        logical<wide<T, S>> const    & value,
