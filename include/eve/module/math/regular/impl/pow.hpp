@@ -78,7 +78,7 @@ pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
       T base = a0;
       U expo = a1;
 
-      T result(1);
+      auto result = one(as(a0));
       while( expo )
       {
         if( is_odd(expo) ) result *= base;
