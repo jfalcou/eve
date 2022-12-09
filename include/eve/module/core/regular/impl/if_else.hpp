@@ -96,6 +96,17 @@ if_else_(EVE_SUPPORTS(cpu_),
   }
 }
 
+// Supports bool as condition
+template<typename U, typename V>
+EVE_FORCEINLINE auto
+if_else_(EVE_SUPPORTS(cpu_),
+        bool cond,
+        U const& t,
+        V const& f) requires(compatible_values<U, V> || value<U> || value<V>)
+{
+  return if_else(logical<std::uint8_t>(cond),t,f);
+}
+
 //------------------------------------------------------------------------------------------------
 // Optimizes if_else(c,t,constant)
 template<value T, value U, generator<U> Constant>
