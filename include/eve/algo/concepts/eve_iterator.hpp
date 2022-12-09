@@ -37,7 +37,7 @@ namespace eve::algo
    template <typename I>
   concept iterator =
     requires(I) {
-      { std::remove_cvref_t<I>::iterator_cardinal() } -> detail::is_fixed_v;
+      { std::remove_cvref_t<I>::iterator_cardinal() } -> wide_cardinal;
       typename std::remove_cvref_t<I>::value_type;
     } &&
     std::totally_ordered_with<I, partially_aligned_t<I>> &&

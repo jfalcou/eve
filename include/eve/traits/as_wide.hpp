@@ -53,12 +53,18 @@ namespace eve
   using as_wide_t = typename as_wide<Type, Size>::type;
 
   template<typename T, typename U>
-  struct  as_wide_as
-        : std::conditional< !simd_value<T> && simd_value<U>
-                          , as_wide_t<T,cardinal_t<U>>
-                          , T
-                          >
-  {};
+  struct  as_wide_as;
+
+
+  template<scalar_value T, simd_value U>
+  struct as_wide_as<T, U> {
+    using type = as_wide_t<T,cardinal_t<U>>;
+  };
+
+  template<value T, typename U>
+  struct as_wide_as<T, U> {
+    using type = T;
+  };
 
   template<typename T, typename U>
   using as_wide_as_t = typename as_wide_as<T,U>::type;
