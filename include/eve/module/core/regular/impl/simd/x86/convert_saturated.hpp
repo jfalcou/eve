@@ -19,7 +19,7 @@ namespace eve::detail
 //////////////////////////////////////////////////////////////////////////////////////
 //====================================================================================
 // 128 bits <-> 128 bits
-template<real_scalar_value In, typename N, real_scalar_value Out>
+template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N>
                 convert_(EVE_SUPPORTS(sse2_),
                          saturated_type const                &sat_,
@@ -81,7 +81,7 @@ EVE_FORCEINLINE wide<Out, N>
 
 //================================================================================================
 // 256 bits <-> 256 bits
-template<real_scalar_value In, typename N, real_scalar_value Out>
+template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
 EVE_FORCEINLINE wide<Out, N>
                 convert_(EVE_SUPPORTS(avx2_),
                          saturated_type const                &sat_,

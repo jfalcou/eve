@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_),
         numeric_type const&,
@@ -34,7 +34,7 @@ maxabs_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(numeric(maxabs), a, b);
 }
 
-template<real_value T>
+template<value T>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcept
 {

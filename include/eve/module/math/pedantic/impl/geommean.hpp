@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 geommean_(EVE_SUPPORTS(cpu_),
           pedantic_type const&,
@@ -23,7 +23,7 @@ geommean_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(geommean), a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 geommean_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T b) noexcept requires has_native_abi_v<T>
 {
@@ -35,7 +35,7 @@ geommean_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T b) noexcept requires 
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, floating_real_value U, floating_real_value V>
+template<conditional_expr C, floating_ordered_value U, floating_ordered_value V>
 EVE_FORCEINLINE auto
 geommean_(EVE_SUPPORTS(cpu_),
           C const& cond,

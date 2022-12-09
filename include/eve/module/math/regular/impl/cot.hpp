@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cot_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
 {
@@ -35,7 +35,7 @@ cot_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
   else return apply_over(quarter_circle(cot), a0);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cot_(EVE_SUPPORTS(cpu_), half_circle_type const&, T a0) noexcept
 {
@@ -80,7 +80,7 @@ cot_(EVE_SUPPORTS(cpu_), half_circle_type const&, T a0) noexcept
   else return apply_over(half_circle(cot), a0);
 }
 
-template<decorator D, floating_real_value T>
+template<decorator D, floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 cot_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
     requires(is_one_of<D>(types<full_circle_type, medium_type, big_type> {}))
@@ -100,7 +100,7 @@ cot_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
   else return apply_over(D()(cot), a0);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cot_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {

@@ -108,7 +108,7 @@ requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_lognot(logical<wide<T, N>> v) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -121,7 +121,7 @@ self_lognot(logical<wide<T, N>> v) noexcept requires x86_abi<abi_t<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_eq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -206,7 +206,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
   }
 }
 
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -223,7 +223,7 @@ self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_neq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -273,7 +273,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
   }
 }
 
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -285,7 +285,7 @@ self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_less(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -365,7 +365,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_greater(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -448,7 +448,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_geq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -499,7 +499,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 self_leq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {

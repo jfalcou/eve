@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 negatenz_(EVE_SUPPORTS(cpu_),
           pedantic_type const&,
@@ -30,7 +30,7 @@ negatenz_(EVE_SUPPORTS(cpu_),
   else { return a; }
 }
 
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 negatenz_(EVE_SUPPORTS(cpu_),
           pedantic_type const&,

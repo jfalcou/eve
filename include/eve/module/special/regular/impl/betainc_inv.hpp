@@ -25,7 +25,7 @@ betainc_inv_(EVE_SUPPORTS(cpu_), T x, U a, V b) noexcept
   return arithmetic_call(betainc_inv, x, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 betainc_inv_(EVE_SUPPORTS(cpu_), T p, T a, T b) noexcept
 requires(has_native_abi_v<T>)

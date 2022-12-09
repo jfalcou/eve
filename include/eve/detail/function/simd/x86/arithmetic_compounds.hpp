@@ -24,7 +24,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       return self_add(self, type {other});
     }
@@ -87,7 +87,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       return self_sub(self, type {other});
     }
@@ -150,7 +150,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       return self_mul(self, type {other});
     }
@@ -234,7 +234,7 @@ namespace eve::detail
   {
     using type = wide<T, N>;
 
-    if constexpr( scalar_value<U> )
+    if constexpr( plain_scalar_value<U> )
     {
       return self_div(self, type {other});
     }

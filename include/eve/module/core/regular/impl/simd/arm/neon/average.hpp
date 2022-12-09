@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 average_(EVE_SUPPORTS(neon128_),
                          wide<T, N> const                &v0,

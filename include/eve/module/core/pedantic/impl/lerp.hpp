@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U, floating_real_value V>
+template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V>
 EVE_FORCEINLINE auto
 lerp_(EVE_SUPPORTS(cpu_),
       pedantic_type const&,
@@ -32,7 +32,7 @@ lerp_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(lerp), a, b, t);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 lerp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& t) noexcept
 {

@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, scalar_value U>
+template<arithmetic_scalar_value T, typename N, scalar_value U>
 EVE_FORCEINLINE auto
 logical_xor_(EVE_SUPPORTS(avx512_), logical<wide<T,N>> const& a, logical<wide<U,N>> const& b) noexcept
 requires ( x86_abi<abi_t<T,N>> || x86_abi<abi_t<U,N>>)

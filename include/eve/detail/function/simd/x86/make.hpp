@@ -24,7 +24,7 @@ namespace eve::detail
   //================================================================================================
   // enumerated make - 128bits
   //================================================================================================
-  template<real_scalar_value T, typename S, typename... Vs>
+  template<arithmetic_scalar_value T, typename S, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T,S>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, S>, x86_128_>
   {
@@ -80,7 +80,7 @@ namespace eve::detail
   //================================================================================================
   // enumerated make - 256bits
   //================================================================================================
-  template<real_scalar_value T, typename S, typename... Vs>
+  template<arithmetic_scalar_value T, typename S, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T, S>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, S>, x86_256_>
   {
@@ -101,7 +101,7 @@ namespace eve::detail
   //================================================================================================
   // enumerated make - 512bits
   //================================================================================================
-  template<real_scalar_value T, typename S, typename... Vs>
+  template<arithmetic_scalar_value T, typename S, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T,S>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, S>, x86_512_>
   {
@@ -162,7 +162,7 @@ namespace eve::detail
   //================================================================================================
   // splat make
   //================================================================================================
-  template<real_scalar_value T, typename S, typename V>
+  template<arithmetic_scalar_value T, typename S, typename V>
   EVE_FORCEINLINE auto make(eve::as<wide<T,S>> const&, V v) noexcept
       requires x86_abi<abi_t<T, S>>
   {
@@ -207,7 +207,7 @@ namespace eve::detail
   //================================================================================================
   // logical cases
   //================================================================================================
-  template<real_scalar_value T, typename S, typename... Vs>
+  template<arithmetic_scalar_value T, typename S, typename... Vs>
   EVE_FORCEINLINE auto make(as<logical<wide<T,S>>> const &, Vs... vs) noexcept
       requires x86_abi<abi_t<T, S>>
   {
@@ -225,7 +225,7 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, typename S,typename V>
+  template<arithmetic_scalar_value T, typename S,typename V>
   EVE_FORCEINLINE auto make(as<logical<wide<T,S>>> const &, V v) noexcept
       requires x86_abi<abi_t<T, S>>
   {

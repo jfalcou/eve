@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N, std::ptrdiff_t Shift>
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     EVE_FORCEINLINE wide<T, N>
                     slide_left_(EVE_SUPPORTS(vmx_), wide<T, N> v, index_t<Shift>) noexcept
     requires(Shift <= N::value)

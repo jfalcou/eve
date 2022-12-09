@@ -28,7 +28,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T, eve::floating_real_value U >
+//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
 //!      auto rising_factorial(T x,U y) noexcept;                                        //1
 //!
 //!      template< eve::floating_value T, eve::floating_value U >
@@ -44,7 +44,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     1. `a`, `x`:  [strictly positive real floating argument](@ref eve::floating_real_value).
+//!     1. `a`, `x`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
 //!     2. `a`, `x`:  [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
 //!
 //!   **Return value**

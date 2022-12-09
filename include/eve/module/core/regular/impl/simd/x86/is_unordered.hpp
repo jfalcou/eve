@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 is_unordered_(EVE_SUPPORTS(sse2_),
                               wide<T, N> const                &a,
@@ -46,7 +46,7 @@ EVE_FORCEINLINE logical<wide<T, N>>
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 is_unordered_(EVE_SUPPORTS(avx512_), C const& cx, wide<T, N> const& v, wide<T, N> const& w) noexcept
     -> decltype(is_not_less_equal(v, w)) requires x86_abi<abi_t<T, N>>

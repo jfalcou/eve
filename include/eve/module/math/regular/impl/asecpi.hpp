@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr auto
 asecpi_(EVE_SUPPORTS(cpu_), D const& d, T const& a) noexcept
     requires(is_one_of<D>(types<regular_type, raw_type> {}))

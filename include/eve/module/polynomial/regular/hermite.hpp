@@ -35,7 +35,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value N, eve::floating_real_value T >
+//!     template< eve::integral_value N, eve::floating_ordered_value T >
 //!      eve::as_wide_as<T, N> hermite(N n, T x) noexcept;
 //!   }
 //!   @endcode
@@ -44,7 +44,7 @@ namespace eve
 //!
 //!     * `n` :  [integral positive argument](@ref eve::integral_value).
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!

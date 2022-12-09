@@ -45,7 +45,7 @@ namespace eve::detail
     }
   };
 
-  template<real_scalar_value T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
       requires arm_abi<abi_t<T, N>>
   {
@@ -55,7 +55,7 @@ namespace eve::detail
   //================================================================================================
   // Logical cases
   //================================================================================================
-  template<real_scalar_value T, typename Size> struct neon_maker<logical<T>, Size>
+  template<arithmetic_scalar_value T, typename Size> struct neon_maker<logical<T>, Size>
   {
     using abi_type = abi_t<T,Size>;
 
@@ -86,7 +86,7 @@ namespace eve::detail
     }
   };
 
-  template<real_scalar_value T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T,N>>> const &, Vs... vs) noexcept
       requires arm_abi<abi_t<T, N>>
   {

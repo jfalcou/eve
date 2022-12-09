@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T, T>
                 three_fma_(EVE_SUPPORTS(cpu_), const T                &a, const T                &b, const T                &c) noexcept
 {

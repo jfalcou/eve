@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U, real_value V>
+template<ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fsnm_(EVE_SUPPORTS(cpu_),
       pedantic_type const&,
@@ -31,7 +31,7 @@ fsnm_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(fsnm), a, b, c);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fsnm_(EVE_SUPPORTS(cpu_),
       pedantic_type const&,

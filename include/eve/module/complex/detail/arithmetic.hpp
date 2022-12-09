@@ -243,7 +243,7 @@ namespace eve::detail
   //==============================================================================================
   //  trivial extension of some real ternary functions
   //==============================================================================================
-  template<typename Z1,  typename Z2, real_value T>
+  template<typename Z1,  typename Z2, ordered_value T>
   EVE_FORCEINLINE auto complex_ternary_dispatch(eve::tag::lerp_, Z1 const& z1, Z2 const& z2, T const& t) noexcept
   {
     using z_t = decltype(z1+z2);

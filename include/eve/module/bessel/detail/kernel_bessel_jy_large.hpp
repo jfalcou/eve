@@ -30,7 +30,7 @@ namespace eve::detail
 // large values routines
 ///////////////////////////////////////////////////////////////////////////////
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 asymptotic_bessel_amplitude(T v, T x) noexcept
 {
@@ -49,7 +49,7 @@ asymptotic_bessel_amplitude(T v, T x) noexcept
   return sqrt(s * 2 / (pi(as(x)) * x));
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 asymptotic_bessel_phase_mx(T v, T x) noexcept
 {
@@ -95,7 +95,7 @@ asymptotic_bessel_y_large_x_2(T v, T x) noexcept
   return ampl * fma(sp, fma(cx, ci, sx * si), cp * fms(sx, ci, cx * si));
 }
 
-template<class T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 asymptotic_bessel_j_large_x_2(T v, T x) noexcept
 {
@@ -116,7 +116,7 @@ asymptotic_bessel_j_large_x_2(T v, T x) noexcept
   return ampl * fms(cp, fma(cx, ci, sx * si), sp * fms(sx, ci, cx * si));
 }
 
-template<real_value N, floating_real_value T>
+template<ordered_value N, floating_ordered_value T>
 EVE_FORCEINLINE auto
 asymptotic_bessel_large_x_limit(N v, T x) noexcept
 {

@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 fnms_(EVE_SUPPORTS(avx2_),
                       pedantic_type const&,

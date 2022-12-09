@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr kumi::tuple<T, T>
 sinpicospi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
 {
@@ -25,7 +25,7 @@ sinpicospi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
   else return apply_over2(quarter_circle(sinpicospi), a0);
 }
 
-template<decorator D, floating_real_value T>
+template<decorator D, floating_ordered_value T>
 EVE_FORCEINLINE constexpr kumi::tuple<T, T>
 sinpicospi_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
 {

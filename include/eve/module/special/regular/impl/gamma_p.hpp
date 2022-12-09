@@ -24,7 +24,7 @@ gamma_p_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   return arithmetic_call(gamma_p, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 T
 gamma_p_(EVE_SUPPORTS(cpu_), T x, T a) noexcept requires has_native_abi_v<T>
 {

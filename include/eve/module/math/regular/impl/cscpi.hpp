@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cscpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T const& a0) noexcept
 {
@@ -27,7 +27,7 @@ cscpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T const& a0) noexcept
   else return apply_over(quarter_circle(cscpi), a0);
 }
 
-template<decorator D, floating_real_value T>
+template<decorator D, floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cscpi_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
 {
@@ -49,7 +49,7 @@ cscpi_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
   else return apply_over(D()(cscpi), a0);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cscpi_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 {

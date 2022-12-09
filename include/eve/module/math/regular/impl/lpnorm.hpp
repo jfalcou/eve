@@ -17,7 +17,7 @@
 namespace eve::detail
 {
 
-template<real_value P, value T0, value T1, value... Ts>
+template<ordered_value P, value T0, value T1, value... Ts>
 auto
 lpnorm_(EVE_SUPPORTS(cpu_), const P& p, T0 a0, T1 a1, Ts... args) requires(!decorator<P>)
 {
@@ -53,7 +53,7 @@ lpnorm_(EVE_SUPPORTS(cpu_), const P& p, T0 a0, T1 a1, Ts... args) requires(!deco
 //================================================================================================
 // tuples
 //================================================================================================
-template< real_value P,kumi::non_empty_product_type Ts>
+template< ordered_value P,kumi::non_empty_product_type Ts>
 auto
 lpnorm_(EVE_SUPPORTS(cpu_), P p, Ts tup)
 {

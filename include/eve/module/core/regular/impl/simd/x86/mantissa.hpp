@@ -31,7 +31,7 @@ mantissa_(EVE_SUPPORTS(avx512_), wide<T, N> a0) noexcept requires x86_abi<abi_t<
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 mantissa_(EVE_SUPPORTS(avx512_),
                           C const                         &cx,

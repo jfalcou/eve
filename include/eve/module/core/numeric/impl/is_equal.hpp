@@ -21,7 +21,7 @@ namespace eve::detail
 {
 ///////////////////////////////////////////////////////////////////////////
 // numeric decorator -> nans are considered equal
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 is_equal_(EVE_SUPPORTS(cpu_),
           numeric_type const&,
@@ -32,7 +32,7 @@ is_equal_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(numeric(is_equal), a, b);
 }
 
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 is_equal_(EVE_SUPPORTS(cpu_),
           numeric_type const&,
@@ -43,7 +43,7 @@ is_equal_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(is_equal, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 is_equal_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcept
 {
@@ -52,7 +52,7 @@ is_equal_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexc
   else return tmp;
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 is_equal_(EVE_SUPPORTS(cpu_),
           numeric_type const&,

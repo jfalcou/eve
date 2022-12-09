@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept
     requires ( !abi_t<T, N>::is_wide_logical ) && x86_abi<abi_t<T, N>>
   {

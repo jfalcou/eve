@@ -14,14 +14,14 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 atan2d_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, U const& b) noexcept
 {
   return arithmetic_call(pedantic(atan2d), a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 atan2d_(EVE_SUPPORTS(cpu_),
         pedantic_type const&,

@@ -28,7 +28,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U, real_value V>
+template<ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& c) noexcept
 -> common_value_t<T, U, V>
@@ -36,7 +36,7 @@ fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& c
   return arithmetic_call(numeric(fma), a, b, c);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& c) noexcept requires
     has_native_abi_v<T>

@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U, real_value V>
+template<ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fms_(EVE_SUPPORTS(cpu_),
      T const& a,
@@ -29,24 +29,20 @@ fms_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(fms, r_t(a), r_t(b), r_t(c));
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 {
-  return a * b - c;
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE T
-fms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires has_native_abi_v<T>
-{
-  return fma(a, b, T(-c));
+  if constexpr(scalar_value<T>)
+    return a * b - c;
+  else
+    return fma(a, b, -c);
 }
 
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value T, real_value U, real_value V>
+template<conditional_expr C, ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fms_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 -> common_value_t<T, U, V>

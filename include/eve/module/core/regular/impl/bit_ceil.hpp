@@ -26,7 +26,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 bit_ceil_(EVE_SUPPORTS(cpu_), T const& v) noexcept
 {
@@ -35,7 +35,7 @@ bit_ceil_(EVE_SUPPORTS(cpu_), T const& v) noexcept
     auto vle1 = v <= one(eve::as(v));
     if constexpr( scalar_value<T> )
       if( vle1 ) return one(eve::as(v));
-    if constexpr( floating_real_value<T> )
+    if constexpr( floating_value<T> )
     {
       auto [m, e] = ifrexp(v);
       e           = dec(e);
@@ -57,7 +57,7 @@ bit_ceil_(EVE_SUPPORTS(cpu_), T const& v) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 bit_ceil_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

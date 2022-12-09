@@ -24,14 +24,14 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rec_(EVE_SUPPORTS(vmx_), raw_type const&, wide<T, N> v0) noexcept requires ppc_abi<abi_t<T, N>>
 {
   return vec_re(v0.storage());
 }
 
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rec_(EVE_SUPPORTS(vmx_), wide<T, N> v0) noexcept requires ppc_abi<abi_t<T, N>>
 {

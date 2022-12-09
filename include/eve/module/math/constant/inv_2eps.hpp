@@ -50,7 +50,7 @@ EVE_MAKE_CALLABLE(inv_2eps_, inv_2eps);
 
 namespace detail
 {
-  template<real_value T>
+  template<floating_ordered_value T>
   EVE_FORCEINLINE constexpr auto inv_2eps_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
     using t_t = element_type_t<T>;

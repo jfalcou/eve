@@ -34,94 +34,80 @@ namespace eve::detail
 {
 //////////////////////////////////////////////////////////
 // floating b
-template<floating_value T, value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
 {
   return pedantic(ldexp)(a, int_(trunc(b)));
 }
 
-//////////////////////////////////////////////////////////
-// scalar a and scalar b
-template<floating_real_scalar_value T, integral_scalar_value U>
+
+template<floating_ordered_value T, integral_value U>
 EVE_FORCEINLINE auto
 ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
 {
-  using i_t = as_integer_t<T>;
-  if constexpr( eve::platform::supports_denormals )
+  if constexpr(scalar_value<T> && scalar_value<U>)
   {
-    auto denormal = b < static_cast<U>(minexponent(eve::as<T>()));
-    if( denormal )
+    using i_t = as_integer_t<T>;
+    if constexpr( eve::platform::supports_denormals )
     {
-      b         = sub[denormal](b, decltype(b)(minexponent(eve::as<T>())));
-      auto f    = if_else(denormal, smallestposval(eve::as<T>()), eve::one);
-      auto test = (b == decltype(b)(maxexponentp1(eve::as<T>())));
-      f         = inc[test](f);
-      b         = dec[test](b);
-      b += maxexponent(eve::as<T>());
-      b <<= nbmantissabits(eve::as<T>());
-      return a * bit_cast(i_t(b), as(T())) * f;
-    }
-    else return ldexp(a, b);
-  }
-  else return ldexp(a, b);
-}
-
-//////////////////////////////////////////////////////////
-// scalar a and simd b
-template<floating_real_scalar_value T, integral_simd_value U>
-EVE_FORCEINLINE auto
-ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
-{
-  using i_t = as_integer_t<T>;
-  using w_t = wide<T, cardinal_t<U>>;
-  return pedantic(ldexp)(w_t(a), convert(b, as<i_t>()));
-}
-
-//////////////////////////////////////////////////////////
-// simd a and scalar b
-template<floating_real_simd_value T, integral_scalar_value U>
-EVE_FORCEINLINE auto
-ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
-{
-  using elt_t = element_type_t<T>;
-  using i_t   = as_integer_t<elt_t>;
-  using wi_t  = wide<i_t, cardinal_t<T>>;
-  return pedantic(ldexp)(a, wi_t(b));
-}
-
-//////////////////////////////////////////////////////////
-// simd a and simd b
-template<floating_real_simd_value T, integral_simd_value U>
-EVE_FORCEINLINE auto
-ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
-    requires(cardinal_v<T> == cardinal_v<U>)
-{
-  if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
-  {
-    using elt_t   = element_type_t<T>;
-    auto denormal = is_less(b, minexponent(eve::as<elt_t>()));
-    if( eve::any(denormal) )
-    {
-      auto f = one(eve::as<T>());
-      if constexpr( eve::platform::supports_denormals )
+      auto denormal = b < static_cast<U>(minexponent(eve::as<T>()));
+      if( denormal )
       {
-        b = sub[denormal](b, decltype(b)(minexponent(eve::as<elt_t>())));
-        f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
+        b         = sub[denormal](b, decltype(b)(minexponent(eve::as<T>())));
+        auto f    = if_else(denormal, smallestposval(eve::as<T>()), eve::one);
+        auto test = (b == decltype(b)(maxexponentp1(eve::as<T>())));
+        f         = inc[test](f);
+        b         = dec[test](b);
+        b += maxexponent(eve::as<T>());
+        b <<= nbmantissabits(eve::as<T>());
+        return a * bit_cast(i_t(b), as(T())) * f;
       }
-      auto test = (b == decltype(b)(maxexponentp1(eve::as<elt_t>())));
-      f         = inc[test](f);
-      b         = dec[test](b);
-      b += maxexponent(eve::as<elt_t>());
-      b <<= nbmantissabits(eve::as<elt_t>());
-      return a * bit_cast(b, as(T())) * f;
+      else return ldexp(a, b);
     }
     else return ldexp(a, b);
   }
-  else return apply_over(pedantic(ldexp), a, b);
+  else if constexpr(scalar_value<T> && simd_value<U>)
+  {
+    using i_t = as_integer_t<T>;
+    using w_t = wide<T, cardinal_t<U>>;
+    return pedantic(ldexp)(w_t(a), convert(b, as<i_t>()));
+  }
+  else if constexpr(simd_value<T> && scalar_value<U>)
+  {
+    using elt_t = element_type_t<T>;
+    using i_t   = as_integer_t<elt_t>;
+    using wi_t  = wide<i_t, cardinal_t<T>>;
+    return pedantic(ldexp)(a, wi_t(b));
+  }
+  else
+  {
+    if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
+    {
+      using elt_t   = element_type_t<T>;
+      auto denormal = is_less(b, minexponent(eve::as<elt_t>()));
+      if( eve::any(denormal) )
+      {
+        auto f = one(eve::as<T>());
+        if constexpr( eve::platform::supports_denormals )
+        {
+          b = sub[denormal](b, decltype(b)(minexponent(eve::as<elt_t>())));
+          f = if_else(denormal, smallestposval(eve::as<elt_t>()), eve::one);
+        }
+        auto test = (b == decltype(b)(maxexponentp1(eve::as<elt_t>())));
+        f         = inc[test](f);
+        b         = dec[test](b);
+        b += maxexponent(eve::as<elt_t>());
+        b <<= nbmantissabits(eve::as<elt_t>());
+        return a * bit_cast(b, as(T())) * f;
+      }
+      else return ldexp(a, b);
+    }
+    else return apply_over(pedantic(ldexp), a, b);
+  }
 }
 
-template<conditional_expr C, floating_real_value T0, real_value T1>
+template<conditional_expr C, floating_ordered_value T0, ordered_value T1>
 auto
 ldexp_(EVE_SUPPORTS(cpu_), C const& cond, pedantic_type const&, T0 a0, T1 a1) requires
     floating_value<common_value_t<T0, T1>>

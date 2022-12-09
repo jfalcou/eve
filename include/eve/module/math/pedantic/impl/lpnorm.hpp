@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<real_value P, floating_value T0, floating_value T1, floating_value... Ts>
+template<ordered_value P, floating_value T0, floating_value T1, floating_value... Ts>
 auto
 lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(lpnorm(p, a0, a1, args...))

@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
+template<integral_scalar_value T, typename N, integral_scalar_value I>
 EVE_FORCEINLINE wide<T, N>
                 rshr_(EVE_SUPPORTS(neon128_),
                       wide<T, N> const                &v0,
@@ -23,7 +23,7 @@ EVE_FORCEINLINE wide<T, N>
   return neon_shifter(v0, -v1);
 }
 
-template<integral_real_scalar_value T, typename N, integral_real_scalar_value I>
+template<integral_scalar_value T, typename N, integral_scalar_value I>
 EVE_FORCEINLINE wide<T, N>
                 rshr_(EVE_SUPPORTS(neon128_),
                       wide<T, N> const                &v0,

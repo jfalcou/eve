@@ -16,14 +16,14 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 roundscale_(EVE_SUPPORTS(avx512_), wide<T, N> a0, int s) noexcept requires x86_abi<abi_t<T, N>>
 {
   return to_nearest(roundscale)(a0, s);
 }
 
-template<int S, floating_real_scalar_value T, typename N>
+template<int S, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_),
                             wide<T, N>                     a0,
@@ -34,7 +34,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // Rouding case
-template<decorator D, floating_real_scalar_value T, typename N>
+template<decorator D, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_), D const&, wide<T, N> a0, int s) noexcept
     requires(is_one_of<D>(types<toward_zero_type, downward_type, to_nearest_type, upward_type> {})
@@ -43,7 +43,7 @@ EVE_FORCEINLINE wide<T, N>
   return D()(roundscale[true_(as(a0))])(a0, s);
 }
 
-template<int S, decorator D, floating_real_scalar_value T, typename N>
+template<int S, decorator D, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_),
                             D const&,
@@ -57,7 +57,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<int S, conditional_expr C, floating_real_scalar_value T, typename N>
+template<int S, conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_),
                             C const                                      &cx,
@@ -97,7 +97,7 @@ template<int R, typename WT> struct rm_imm_choice
   }
 };
 
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_),
                             C const                         &cx,
@@ -107,7 +107,7 @@ EVE_FORCEINLINE wide<T, N>
   return to_nearest(roundscale[cx])(a0, s);
 }
 
-template<decorator D, conditional_expr C, floating_real_scalar_value T, typename N>
+template<decorator D, conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_),
                             C const                &cx,
@@ -173,7 +173,7 @@ EVE_FORCEINLINE wide<T, N>
   }
 }
 
-template<int S, decorator D, conditional_expr C, floating_real_scalar_value T, typename N>
+template<int S, decorator D, conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 roundscale_(EVE_SUPPORTS(avx512_),
                             C const                &cx,

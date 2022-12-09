@@ -27,18 +27,13 @@ bit_select_(EVE_SUPPORTS(cpu_),
   return bit_call(bit_select, a, b, c);
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 bit_select_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 {
-  return bit_or(bit_and(b, a), bit_andnot(c, a));
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE auto
-bit_select_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
-{
-  // fallback never taken if proper intrinsics are at hand
-  return (b & a) | bit_andnot(c, a);
+  if constexpr(scalar_value<T>)
+    return bit_or(bit_and(b, a), bit_andnot(c, a));
+  else  // fallback never taken if proper intrinsics are at hand
+    return (b & a) | bit_andnot(c, a);
 }
 }

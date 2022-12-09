@@ -744,7 +744,7 @@ namespace eve::detail
     return d(hypot)(real(z1), imag(z1), real(z2)..., imag(z2)...);
   }
 
-  template<real_value P, typename Z1, typename ...Z2>
+  template<ordered_value P, typename Z1, typename ...Z2>
   EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::lpnorm_
                                             , P const & p, Z1 const& z1, Z2 const&... z2
                                             ) noexcept
@@ -752,7 +752,7 @@ namespace eve::detail
     return lpnorm(p, abs(z1), abs(z2)...);
   }
 
-  template<decorator D, real_value P, typename Z1, typename ...Z2>
+  template<decorator D, ordered_value P, typename Z1, typename ...Z2>
   EVE_FORCEINLINE auto complex_nary_dispatch( eve::tag::lpnorm_
                                             , D const & d
                                             , P const & p, Z1 const& z1, Z2 const&... z2

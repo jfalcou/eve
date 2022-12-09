@@ -34,7 +34,7 @@ max_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(numeric(max), v0, v1);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 max_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& v0, T const& v1) noexcept
 {
@@ -68,7 +68,7 @@ max_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& v0, T const& v1) noexcept
 //================================================================================================
 // N parameters
 //================================================================================================
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 max_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
   -> decltype(max(a0, a1, args...))

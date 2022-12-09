@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U, floating_real_value V, floating_real_value W>
+template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V, floating_ordered_value W>
 EVE_FORCEINLINE auto
 ellint_rj_(EVE_SUPPORTS(cpu_), T x, U y, V z, W p) noexcept
 -> common_value_t<T, U, V, W>
@@ -25,7 +25,7 @@ ellint_rj_(EVE_SUPPORTS(cpu_), T x, U y, V z, W p) noexcept
   return arithmetic_call(ellint_rj, x, y, z, p);
 }
 
-template<floating_real_value T, floating_real_value U, floating_real_value V, floating_real_value W>
+template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V, floating_ordered_value W>
 EVE_FORCEINLINE auto
 ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, U y, V z, W p) noexcept
 -> common_value_t<T, U, V, W>
@@ -33,7 +33,7 @@ ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, U y, V z, W p) noexcept
   return arithmetic_call(raw(ellint_rj), x, y, z, p);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 ellint_rj_(EVE_SUPPORTS(cpu_), T x, T y, T z, T p) noexcept requires has_native_abi_v<T>
 {
@@ -94,7 +94,7 @@ ellint_rj_(EVE_SUPPORTS(cpu_), T x, T y, T z, T p) noexcept requires has_native_
   return r;
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 ellint_rj_(EVE_SUPPORTS(cpu_), raw_type const&, T x, T y, T z, T p) noexcept requires
     has_native_abi_v<T>

@@ -35,7 +35,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!`n`:   [integer value](@ref eve::real_value). Must be of  integral type or a [flint](@ref
+//!`n`:   [ordered integral value](@ref eve::ordered_value). Must be of  integral type or a [flint](@ref
 //!eve::is_flint) value
 //!
 //! **Return value**

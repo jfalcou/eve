@@ -27,7 +27,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T >
+//!      template< eve::floating_ordered_value T >
 //!      T zeta(T x) noexcept;                                 //1
 //!
 //!      template< eve::floating_value T >
@@ -37,7 +37,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!     * `z`:  [complex ](@ref eve::complex) value.
 //!
 //!   **Return value**

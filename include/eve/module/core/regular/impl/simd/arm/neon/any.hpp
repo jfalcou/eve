@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N, relative_conditional_expr C>
+template<arithmetic_scalar_value T, typename N, relative_conditional_expr C>
 EVE_FORCEINLINE bool
 any_(EVE_SUPPORTS(neon128_),
      C const           & cond,
@@ -36,7 +36,7 @@ any_(EVE_SUPPORTS(neon128_),
   }
 }
 
-template<real_scalar_value T, typename N, relative_conditional_expr C>
+template<arithmetic_scalar_value T, typename N, relative_conditional_expr C>
 EVE_FORCEINLINE bool
 any_(EVE_SUPPORTS(neon128_),
      C const           & cond,

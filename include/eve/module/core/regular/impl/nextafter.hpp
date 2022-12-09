@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE constexpr auto
 nextafter_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -31,7 +31,7 @@ nextafter_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(nextafter, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 nextafter_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 requires has_native_abi_v<T>
@@ -43,7 +43,7 @@ requires has_native_abi_v<T>
 }
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T, real_value U>
+template<conditional_expr C, ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 nextafter_(EVE_SUPPORTS(cpu_), C const& cond
           , T const& x, U const& y) noexcept

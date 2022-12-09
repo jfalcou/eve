@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 nearest_(EVE_SUPPORTS(sse4_1_), wide<T, N> a0) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -39,7 +39,7 @@ nearest_(EVE_SUPPORTS(sse4_1_), wide<T, N> a0) noexcept requires x86_abi<abi_t<T
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 nearest_(EVE_SUPPORTS(sse2_),
                          C const                         &cx,

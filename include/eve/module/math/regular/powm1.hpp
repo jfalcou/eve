@@ -45,7 +45,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!`x`, `y`:   [floating real or complex values](@ref eve::floating_real_value).
+//!`x`, `y`:   [floating real or complex values](@ref eve::floating_ordered_value).
 //!
 //! **Return value**
 //!

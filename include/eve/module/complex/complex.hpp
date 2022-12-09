@@ -173,7 +173,7 @@ namespace eve
       return self;
     }
 
-    template<like<complex> Z, real_value R>
+    template<like<complex> Z, ordered_value R>
     EVE_FORCEINLINE friend auto operator+(Z const& x, R const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t += y; })
     {
@@ -181,7 +181,7 @@ namespace eve
       return that += y;
     }
 
-    template<real_value R, like<complex> Z>
+    template<ordered_value R, like<complex> Z>
     EVE_FORCEINLINE friend auto operator+(R const& x, Z const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t += x; })
     {
@@ -218,7 +218,7 @@ namespace eve
       return self;
     }
 
-    template<like<complex> Z, real_value R>
+    template<like<complex> Z, ordered_value R>
     EVE_FORCEINLINE friend auto operator-(Z const& x, R const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t -= y; })
     {
@@ -226,7 +226,7 @@ namespace eve
       return that -= y;
     }
 
-    template<real_value R, like<complex> Z>
+    template<ordered_value R, like<complex> Z>
     EVE_FORCEINLINE friend auto operator-(R const& x, Z const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t -= y; })
     {
@@ -264,7 +264,7 @@ namespace eve
       return self;
     }
 
-    template<like<complex> Z, real_value R>
+    template<like<complex> Z, ordered_value R>
     EVE_FORCEINLINE friend auto operator*(Z const& x, R const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t *= y; })
     {
@@ -272,7 +272,7 @@ namespace eve
       return that *= y;
     }
 
-    template<real_value R, like<complex> Z>
+    template<ordered_value R, like<complex> Z>
     EVE_FORCEINLINE friend auto operator*(R const& x, Z const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t *= y; })
     {
@@ -381,7 +381,7 @@ namespace eve
       return self;
     }
 
-    template<like<complex> Z, real_value R>
+    template<like<complex> Z, ordered_value R>
     EVE_FORCEINLINE friend auto operator/(Z const& x, R const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t /= y; })
     {
@@ -389,7 +389,7 @@ namespace eve
       return that /= y;
     }
 
-    template<real_value R, like<complex> Z>
+    template<ordered_value R, like<complex> Z>
     EVE_FORCEINLINE friend auto operator/(R const& x, Z const& y) noexcept
     requires(requires(as_wide_as_t<Z,R> t) { t /= y; })
     {
@@ -415,16 +415,16 @@ namespace eve
     }
   };
 
-  template<typename Z>
+  template<ordered_value Z>
   EVE_FORCEINLINE   auto to_complex( Z const & v) noexcept
-  requires (real_value<Z>)
+  -> decltype(as_complex_t<Z>(v, 0))
   {
     return as_complex_t<Z>(v, 0);
   }
 
-  template<typename Z>
-  EVE_FORCEINLINE   auto to_complex(Z const & v) noexcept
-  requires (eve::is_complex_v<Z>)
+  template<value Z>
+  EVE_FORCEINLINE auto to_complex(Z const & v) noexcept
+  //  requires(is_complex<Z>)
   {
     return v;
   }

@@ -25,7 +25,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 maxmag_(EVE_SUPPORTS(cpu_),
         numeric_type const&,
@@ -36,7 +36,7 @@ maxmag_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(numeric(maxmag), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 maxmag_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcept
 {

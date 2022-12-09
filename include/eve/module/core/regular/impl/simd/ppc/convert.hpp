@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<typename N, real_scalar_value U>
+template<typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(vsx_),
                              wide<double, N> v,
@@ -28,7 +28,7 @@ EVE_FORCEINLINE wide<U, N>
   else return map(convert, v, tgt);
 }
 
-template<typename N, real_scalar_value U>
+template<typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(vmx_),
                              wide<float, N> v,
@@ -42,7 +42,7 @@ EVE_FORCEINLINE wide<U, N>
   else return map(convert, v, tgt);
 }
 
-template<integral_scalar_value T, typename N, real_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
                 convert_impl(EVE_SUPPORTS(vmx_),
                              wide<T, N>   v,

@@ -14,10 +14,11 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 namespace eve::detail
 {
-template<real_value T, real_value U, real_value V>
+template<ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fnms_(EVE_SUPPORTS(cpu_),
       T const& a,
@@ -28,24 +29,21 @@ fnms_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(fnms, r_t(a), r_t(b), r_t(c));
 }
 
-template<real_scalar_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 fnms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
+requires has_native_abi_v<T>
 {
-  return -(a * b + c);
-}
-
-template<real_simd_value T>
-EVE_FORCEINLINE T
-fnms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept requires has_native_abi_v<T>
-{
-  return -fma(a, b, c);
+  if constexpr(scalar_value<T>)
+    return minus(a * b + c);
+  else
+    return minus(fma(a, b, c));
 }
 
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, real_value T, real_value U, real_value V>
+template<conditional_expr C, ordered_value T, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 fnms_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 {

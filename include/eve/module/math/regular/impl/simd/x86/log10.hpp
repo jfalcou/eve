@@ -14,8 +14,8 @@
 namespace eve::detail
 {
 // this implementation is better only if we are in avx_ without avx2_
-template<floating_real_simd_value T>
-EVE_FORCEINLINE auto
+template<floating_simd_value T>
+auto
 log10_(EVE_SUPPORTS(cpu_), plain_type const&, const T& a0) noexcept
 {
   T Invlog_10hi = Ieee_constant<T, 0x3ede6000U, 0x3fdbcb7b15200000ULL>();
@@ -157,7 +157,7 @@ log10_(EVE_SUPPORTS(cpu_), plain_type const&, const T& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // 256 bits implementation for avx
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 log10_(EVE_SUPPORTS(avx_),
        wide<T, N> const& v) noexcept requires std::same_as<abi_t<T, N>, x86_256_>

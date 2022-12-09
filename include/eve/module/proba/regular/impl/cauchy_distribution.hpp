@@ -18,7 +18,7 @@ namespace eve
   template<typename T, typename U, typename Internal = T>
   struct cauchy_distribution{};
 
-  template < floating_real_value T, floating_real_value U>
+  template < floating_ordered_value T, floating_ordered_value U>
   requires  compatible_values<T, U>
   struct cauchy_distribution<T, U>
   {
@@ -34,7 +34,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < floating_real_value TT,  floating_real_value UU>
+    template < floating_ordered_value TT,  floating_ordered_value UU>
     requires  std::constructible_from<T, TT> && std::constructible_from<U, UU>
     cauchy_distribution(TT m_,  UU s_)
       : m(T(m_)), s(U(s_))
@@ -53,7 +53,7 @@ namespace eve
     s_type s;
   };
 
-  template<floating_real_value U>
+  template<floating_ordered_value U>
   struct cauchy_distribution<callable_zero_, U>
   {
     using is_distribution_t = void;
@@ -67,7 +67,7 @@ namespace eve
       EVE_ASSERT(all(is_gtz(s) && is_finite(s)), "s must be strictly positive and finite");
     }
 
-    template < floating_real_value UU>
+    template < floating_ordered_value UU>
       requires  std::constructible_from<U, UU>
     cauchy_distribution(callable_zero_ const & , UU s_)
       : s(U(s_))
@@ -84,7 +84,7 @@ namespace eve
     s_type s;
   };
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct cauchy_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
@@ -98,7 +98,7 @@ namespace eve
       EVE_ASSERT(all(is_finite(m)), "m must be finite");
     }
 
-    template < floating_real_value TT>
+    template < floating_ordered_value TT>
       requires  std::constructible_from<T, TT>
     cauchy_distribution(TT m_, callable_one_ const &)
       : m(T(m_))
@@ -117,7 +117,7 @@ namespace eve
 
   template<typename T, typename U>  cauchy_distribution(T,U) -> cauchy_distribution<T,U>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct cauchy_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
@@ -134,7 +134,7 @@ namespace eve
 
   template<typename T>  cauchy_distribution(as<T> const&) -> cauchy_distribution<callable_zero_, callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto cauchy_distribution_01 = cauchy_distribution<callable_zero_, callable_one_, T>(as<T>{});
 
   namespace detail

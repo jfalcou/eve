@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
+  template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as<wide<T, N>> const& tgt, Ptr ptr
@@ -29,7 +29,7 @@ namespace eve::detail
       {
         if constexpr( std::is_integral_v<T> )
         {
-          using type = typename wide<T, N>::storage_type *;
+          using type = typename wide<T, N>::storage_type*;
           return vec_vsx_ld(0, type(ptr));
         }
         else
@@ -57,7 +57,7 @@ namespace eve::detail
     }
   }
 
-  template<real_scalar_value T, real_scalar_value U, typename N, typename Lanes>
+  template<typename T, typename U, typename N, typename Lanes>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as<wide<T, N>> const& tgt

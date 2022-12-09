@@ -23,49 +23,59 @@
 namespace eve::detail
 {
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
 {
-  auto prev    = k0; // cyl_bessel_j0(x);
-  auto current = k1; // cyl_bessel_j1(x);
-  T    scale(1), value(0);
-  for( int k = 1; k < eve::maximum(nn); k++ )
+  if constexpr(integral_value<I>)
   {
-    auto t0   = k < nn;
-    T    fact = 2 * k / x;
-    // rescale if we would overflow or underflow:
-    auto test = ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)) && t0;
-    if( eve::any(test) )
+    if constexpr( simd_value<I> )
+      return kernel_bessel_k_int_forward(convert(nn, as<element_type_t<T>>()), x, k0, k1);
+    else
+      return kernel_bessel_k_int_forward(T(nn), x, k0, k1);
+  }
+  else
+  {
+    auto prev    = k0; // cyl_bessel_j0(x);
+    auto current = k1; // cyl_bessel_j1(x);
+    T    scale(1), value(0);
+    for( int k = 1; k < eve::maximum(nn); k++ )
     {
-      scale   = if_else(test, scale / current, scale);
-      prev    = if_else(test, prev / current, prev);
-      current = if_else(test, one, current);
-    }
-    value   = if_else(t0, fma(fact, current, prev), value);
-    prev    = if_else(t0, current, prev);
-    current = if_else(t0, value, current);
-  };
-  return value / scale;
+      auto t0   = k < nn;
+      T    fact = 2 * k / x;
+      // rescale if we would overflow or underflow:
+      auto test = ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)) && t0;
+      if( eve::any(test) )
+      {
+        scale   = if_else(test, scale / current, scale);
+        prev    = if_else(test, prev / current, prev);
+        current = if_else(test, one, current);
+      }
+      value   = if_else(t0, fma(fact, current, prev), value);
+      prev    = if_else(t0, current, prev);
+      current = if_else(t0, value, current);
+    };
+    return value / scale;
+  }
 }
 
-template<integral_real_value I, floating_real_value T>
-EVE_FORCEINLINE auto
-kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
-{
-  if constexpr( simd_value<I> )
-    return kernel_bessel_k_int_forward(convert(nn, as<element_type_t<T>>()), x, k0, k1);
-  else return kernel_bessel_k_int_forward(T(nn), x, k0, k1);
-}
+// template<integral_value I, floating_ordered_value T>
+// EVE_FORCEINLINE auto
+// kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
+// {
+//   if constexpr( simd_value<I> )
+//     return kernel_bessel_k_int_forward(convert(nn, as<element_type_t<T>>()), x, k0, k1);
+//   else return kernel_bessel_k_int_forward(T(nn), x, k0, k1);
+// }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_k_int_small(I n, T x) noexcept
 {
   return bessel_k_small_z_series(T(n), x);
 }
 
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_k_int_medium(I n, T x) noexcept
 {
@@ -75,7 +85,7 @@ kernel_bessel_k_int_medium(I n, T x) noexcept
 
 /////////////////////////////////////////////////////////////////////////
 // bessel_k of integer order
-template<real_value I, floating_real_value T>
+template<ordered_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_k_int(I n, T x) noexcept
 {
@@ -113,7 +123,7 @@ kernel_bessel_k_int(I n, T x) noexcept
   }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 kernel_bessel_k_flt(T n, T x) noexcept
 {

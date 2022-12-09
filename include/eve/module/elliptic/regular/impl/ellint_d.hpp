@@ -15,7 +15,7 @@
 namespace eve::detail
 {
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 ellint_d_(EVE_SUPPORTS(cpu_), T k) noexcept
 {
@@ -32,14 +32,14 @@ ellint_d_(EVE_SUPPORTS(cpu_), T k) noexcept
   else return apply_over(ellint_d, k);
 }
 
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 ellint_d_(EVE_SUPPORTS(cpu_), T phi, U x) noexcept
 {
   return arithmetic_call(ellint_d, phi, x);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 ellint_d_(EVE_SUPPORTS(cpu_), T phi0, T k) noexcept requires has_native_abi_v<T>
 {

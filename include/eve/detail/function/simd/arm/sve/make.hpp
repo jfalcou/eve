@@ -20,7 +20,7 @@ namespace eve::detail
 //============================s====================================================================
 // Enumerated make
 //================================================================================================
-template<real_scalar_value T, typename N, typename... Vs>
+template<arithmetic_scalar_value T, typename N, typename... Vs>
 EVE_FORCEINLINE auto
 make(eve::as<wide<T, N>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 {
@@ -44,7 +44,7 @@ make(eve::as<wide<T, N>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 //================================================================================================
 // splat make
 //================================================================================================
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 make(eve::as<wide<T, N>>, T x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
 {
@@ -77,7 +77,7 @@ make(eve::as<wide<T, N>>, T x) noexcept requires sve_abi<abi_t<T, N>> &&(N::valu
 //================================================================================================
 // logical cases
 //================================================================================================
-template<real_scalar_value T, typename N, typename... Vs>
+template<arithmetic_scalar_value T, typename N, typename... Vs>
 EVE_FORCEINLINE auto
 make(as<logical<wide<T, N>>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 {
@@ -88,7 +88,7 @@ make(as<logical<wide<T, N>>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
   return svcmpne(sve_true<T>(), bits, (e_t)0);
 }
 
-template<real_scalar_value T, typename N, typename V>
+template<arithmetic_scalar_value T, typename N, typename V>
 EVE_FORCEINLINE auto
 make(eve::as<logical<wide<T, N>>>, V x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
 {

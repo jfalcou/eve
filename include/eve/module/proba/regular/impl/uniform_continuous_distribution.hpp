@@ -67,7 +67,7 @@ namespace eve
   template<typename T, typename U, typename V>  uniform_continuous_distribution(T,U,V) -> uniform_continuous_distribution<T,U, V>;
   template<typename T, typename U, typename V>  uniform_continuous_distribution(T,U,as<V>) -> uniform_continuous_distribution<T,U,V>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct uniform_continuous_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
@@ -90,7 +90,7 @@ namespace eve
 
   template<typename T>  uniform_continuous_distribution(as<T> const&) -> uniform_continuous_distribution<callable_zero_, callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto uniform_continuous_distribution_01 = uniform_continuous_distribution<callable_zero_, callable_one_, T>();
 
   namespace detail

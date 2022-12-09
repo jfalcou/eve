@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-  template< real_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
+  template< arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as<wide<T, N>> const&, Ptr p
@@ -63,7 +63,7 @@ namespace eve::detail
   }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-  template<real_scalar_value T, typename N, typename U, typename Lanes>
+  template<arithmetic_scalar_value T, typename N, typename U, typename Lanes>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
                                   , ignore_none_ const&, safe_type const&
                                   , eve::as<wide<T, N>> const& tgt, aligned_ptr<U, Lanes> p

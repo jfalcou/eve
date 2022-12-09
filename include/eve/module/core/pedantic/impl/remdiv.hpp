@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 remdiv_(EVE_SUPPORTS(cpu_),
         pedantic_type const&,
@@ -35,7 +35,7 @@ remdiv_(EVE_SUPPORTS(cpu_),
   if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
   {
     auto d = pedantic(div)(a, b);
-    if constexpr( floating_real_value<T> )
+    if constexpr( floating_value<T> )
     {
       auto r = if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
                        allbits,

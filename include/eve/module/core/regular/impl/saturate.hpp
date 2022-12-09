@@ -27,9 +27,10 @@
 
 namespace eve::detail
 {
-template<real_scalar_value Target, real_scalar_value U>
+template<arithmetic_scalar_value Target, ordered_value U>
 EVE_FORCEINLINE constexpr auto
 saturate_(EVE_SUPPORTS(cpu_), U const& a0, as<Target> const&) noexcept
+requires (scalar_value<U>)
 {
   if constexpr( std::same_as<U, Target> ) { return a0; }
   else if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point
@@ -97,9 +98,10 @@ saturate_(EVE_SUPPORTS(cpu_), U const& a0, as<Target> const&) noexcept
   }
 }
 
-template<real_scalar_value Target, real_simd_value U>
+template<arithmetic_scalar_value Target, ordered_value U>
 EVE_FORCEINLINE auto
 saturate_(EVE_SUPPORTS(cpu_), U const& v, as<Target> const& at)
+  requires (simd_value<U>)
 {
   using elt_u = element_type_t<U>;
 

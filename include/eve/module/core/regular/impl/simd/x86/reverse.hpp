@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 reverse_(EVE_SUPPORTS(sse2_), wide<T, N> v) noexcept requires x86_abi<abi_t<T, N>>
 {

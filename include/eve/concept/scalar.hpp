@@ -32,14 +32,15 @@ concept plain_scalar_value = detail::one_of<T,
 
 namespace detail
 {
-  template<typename T> constexpr bool scalar_tuple()
+  template<typename T>
+  constexpr bool scalar_tuple()
   {
-    if constexpr( !kumi::product_type<T> ) return false;
+    if constexpr(!kumi::product_type<T>) return false;
     else
     {
-     return  kumi::all_of ( kumi::flatten_all(kumi::as_tuple_t<T> {})
-                          , []<typename M>(M) { return plain_scalar_value<M>; }
-                          );
+      constexpr auto f = []<typename M>(M) { return std::bool_constant<plain_scalar_value<M>>{}; };
+      using flt_t = kumi::result::flatten_all_t<kumi::as_tuple_t<T>, decltype(f)>;
+      return  kumi::all_of( flt_t{}, [](bool b) { return b; } );
     }
   }
 }

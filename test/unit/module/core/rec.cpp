@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of eve::rec", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::rec[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::rec[bool()](v_t()), v_t);
 
-  if constexpr( eve::floating_real_value<T> ) {}
+  if constexpr( eve::floating_value<T> ) {}
 };
 
 //==================================================================================================

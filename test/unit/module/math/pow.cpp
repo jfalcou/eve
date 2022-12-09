@@ -78,7 +78,7 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
   TTS_EQUAL(eve::pow(T(2), 3), T(8));
   TTS_EQUAL(eve::pow(T(2), 3u), T(8));
 
-  if constexpr( !eve::real_scalar_value<T> )
+  if constexpr( !eve::scalar_value<T> )
   {
     using v_t = eve::element_type_t<T>;
     if constexpr( std::is_floating_point_v<v_t> )

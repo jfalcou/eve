@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 template<relative_conditional_expr C,
-         real_scalar_value         T,
+         arithmetic_scalar_value   T,
          typename N,
          simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE wide<T, N>

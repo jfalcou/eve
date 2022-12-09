@@ -29,7 +29,7 @@ lfactorial_(EVE_SUPPORTS(cpu_), T n) noexcept
   else return apply_over(lfactorial, n);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 lfactorial_(EVE_SUPPORTS(cpu_), T n) noexcept
 {

@@ -51,7 +51,7 @@ namespace eve
   namespace detail
   {
 
-    template<floating_real_value V> EVE_FORCEINLINE
+    template<floating_ordered_value V> EVE_FORCEINLINE
     auto exp_ipi_(EVE_SUPPORTS(cpu_), V const & v) noexcept
     {
       using c_t = eve::as_complex_t<V>;

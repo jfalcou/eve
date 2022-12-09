@@ -88,7 +88,7 @@ rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
   }
 }
 
-template<conditional_expr C, unsigned_value T0, integral_real_value T1>
+template<conditional_expr C, unsigned_value T0, integral_value T1>
 auto
 rotl_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1)
 {

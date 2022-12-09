@@ -36,7 +36,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value T eve::floating_real_value T, eve::floating_real_value U >
+//!     template< eve::integral_value T eve::floating_ordered_value T, eve::floating_ordered_value U >
 //!     eve::as_wide_as<eve::common_value_t<T, U>, N>
 //!     auto  gegenbauer(N n, T lambda, U x) noexcept;
 //!   }
@@ -46,10 +46,10 @@ namespace eve
 //!
 //!     * `n` :  [integral argument](@ref eve::integral_value).
 //!
-//!     * `lambda` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `lambda` :  [real floating argument](@ref eve::floating_ordered_value).
 //!                   Must be greater than \f$-\frac12\f$.
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_real_value) .
+//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value) .
 //!
 //!   **Return value**
 //!

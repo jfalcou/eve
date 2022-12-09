@@ -20,9 +20,10 @@ hermite_(EVE_SUPPORTS(cpu_), successor_type const&, N n, T x, T hn, T hnm1) noex
   return z + z;
 }
 
-template<scalar_value I, floating_real_scalar_value T>
+template<scalar_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
+requires(scalar_value<T>)
 {
   auto p0 = one(as(x));
   if( is_eqz(n) ) return p0;
@@ -37,9 +38,10 @@ hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   return p1;
 }
 
-template<scalar_value I, floating_real_simd_value T>
+template<scalar_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
+requires(simd_value<T>)
 {
   T p0 = one(as(x));
   if( is_eqz(n) ) return p0;
@@ -54,17 +56,19 @@ hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
   return p1;
 }
 
-template<simd_value I, floating_real_scalar_value T>
+template<simd_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
+requires(scalar_value<T>)
 {
   using f_t = as_wide_t<T, cardinal_t<I>>;
   return hermite(nn, f_t(x));
 }
 
-template<simd_value I, floating_real_simd_value T>
+template<simd_value I, floating_ordered_value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
+requires(simd_value<T>)
 {
   using elt_t = element_type_t<T>;
   auto p0     = one(as(x));

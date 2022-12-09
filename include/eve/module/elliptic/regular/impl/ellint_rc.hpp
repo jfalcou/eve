@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 ellint_rc_(EVE_SUPPORTS(cpu_), T x, U y) noexcept
 -> common_value_t<T, U>
@@ -22,7 +22,7 @@ ellint_rc_(EVE_SUPPORTS(cpu_), T x, U y) noexcept
   return arithmetic_call(ellint_rc, x, y);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE T
 ellint_rc_(EVE_SUPPORTS(cpu_), T x, T y) noexcept requires has_native_abi_v<T>
 {

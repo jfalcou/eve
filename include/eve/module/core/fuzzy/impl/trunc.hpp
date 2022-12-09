@@ -23,7 +23,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_),
        tolerant_type const&,
@@ -33,20 +33,20 @@ trunc_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(tolerant(trunc), a0, n);
 }
 
-template<real_value T, integral_real_value U>
+template<ordered_value T, integral_value U>
 EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, [[maybe_unused]] U const& n) noexcept
 {
-  if constexpr( integral_real_value<T> ) return a0;
+  if constexpr( integral_value<T> ) return a0;
   else if constexpr( has_native_abi_v<T> ) { return copysign(trunc(next(eve::abs(a0), n)), a0); }
   else return apply_over(tolerant(trunc), a0, n);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, T const& ct) noexcept
 {
-  if constexpr( integral_real_value<T> ) return a0;
+  if constexpr( integral_value<T> ) return a0;
   else if constexpr( has_native_abi_v<T> )
   {
     return copysign(tolerant(floor)(eve::abs(a0), ct), a0);
@@ -54,7 +54,7 @@ trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0, T const& ct) noexc
   else return apply_over(tolerant(trunc), a0, ct);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 {
@@ -64,7 +64,7 @@ trunc_(EVE_SUPPORTS(cpu_), tolerant_type const&, T const& a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 trunc_(EVE_SUPPORTS(cpu_), C const& cond, tolerant_type const&, U const& t) noexcept
 {

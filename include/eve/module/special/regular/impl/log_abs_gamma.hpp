@@ -14,7 +14,7 @@ namespace eve::detail
 {
   namespace helpers
   {
-    template<floating_real_value T>
+    template<floating_ordered_value T>
     inline T
     large_negative(T q)
     {
@@ -28,7 +28,7 @@ namespace eve::detail
       return T(1.1447298858494001741434273513530587116472948129153) - log(z) - w;
     }
 
-    template<floating_real_value T>
+    template<floating_ordered_value T>
     EVE_FORCEINLINE T
     log_abs_gammaB(T x) noexcept
     {
@@ -44,7 +44,7 @@ namespace eve::detail
         0x3a1ebb94U  //    6.055172732649237E-004
         >(x);
     }
-    template<floating_real_value T>
+    template<floating_ordered_value T>
     EVE_FORCEINLINE T
     log_abs_gammaC(T x) noexcept
     {
@@ -60,7 +60,7 @@ namespace eve::detail
         0x3e0c3c4fU  //    1.369488127325832E-001
         >(x);
     }
-    template<floating_real_value T>
+    template<floating_ordered_value T>
     EVE_FORCEINLINE T
     log_abs_gamma2(T p) noexcept
     {
@@ -71,7 +71,7 @@ namespace eve::detail
         >(p);
     }
 
-    template<floating_real_value T>
+    template<floating_ordered_value T>
     EVE_FORCEINLINE T
     log_abs_gamma1(T x) noexcept
     {
@@ -94,7 +94,7 @@ namespace eve::detail
         >(x);
     }
 
-    template<floating_real_value T>
+    template<floating_ordered_value T>
     EVE_FORCEINLINE T
     log_abs_gammaA(const T& p) noexcept
     {
@@ -108,7 +108,7 @@ namespace eve::detail
     }
   }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 constexpr T
 log_abs_gamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {

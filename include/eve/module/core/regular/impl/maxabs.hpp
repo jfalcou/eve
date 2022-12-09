@@ -25,7 +25,7 @@
 
 namespace eve::detail
 {
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> decltype(add(abs(a), abs(b)))
@@ -33,7 +33,7 @@ maxabs_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(maxabs, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 requires has_native_abi_v<T>
@@ -44,7 +44,7 @@ requires has_native_abi_v<T>
 //================================================================================================
 // Masked case
 //================================================================================================
-template<decorator D, conditional_expr C, real_value U, real_value V>
+template<decorator D, conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, U const& t, V const& f) noexcept
 -> decltype(d(maxabs)(t, f))
@@ -52,7 +52,7 @@ maxabs_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, U const& t, V const& f) n
   return mask_op(cond, D()(eve::maxabs), t, f);
 }
 
-template<conditional_expr C, real_value U, real_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_),
         C const& cond,
@@ -66,7 +66,7 @@ maxabs_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 // N parameters
 //================================================================================================
-template<decorator D, real_value T0, real_value T1, real_value... Ts>
+template<decorator D, ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 maxabs_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args) noexcept
 ->  decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...))
@@ -78,7 +78,7 @@ maxabs_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args) noexcept
   return that;
 }
 
-template<real_value T0, real_value T1, real_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 maxabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
 ->  decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...))

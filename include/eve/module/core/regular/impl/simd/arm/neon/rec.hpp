@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rec_(EVE_SUPPORTS(neon128_), raw_type const&, wide<T, N> v) noexcept requires arm_abi<abi_t<T, N>>
 {
@@ -30,7 +30,7 @@ rec_(EVE_SUPPORTS(neon128_), raw_type const&, wide<T, N> v) noexcept requires ar
   else return T {1} / v;
 }
 
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rec_(EVE_SUPPORTS(neon128_), wide<T, N> v0) noexcept requires arm_abi<abi_t<T, N>>
 {

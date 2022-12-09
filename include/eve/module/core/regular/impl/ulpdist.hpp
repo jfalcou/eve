@@ -28,7 +28,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 ulpdist_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> common_value_t<T, U>
@@ -36,7 +36,7 @@ ulpdist_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(ulpdist, a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 ulpdist_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 requires has_native_abi_v<T>

@@ -19,7 +19,7 @@ namespace eve::detail
 {
 //------------------------------------------------------------------------------------------------
 // Raw version
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 sqrt_(EVE_SUPPORTS(neon128_),
                       raw_type const&,
@@ -39,7 +39,7 @@ EVE_FORCEINLINE wide<T, N>
 
 //------------------------------------------------------------------------------------------------
 // Basic version
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 sqrt_(EVE_SUPPORTS(neon128_), wide<T, N> const& v0) noexcept requires arm_abi<abi_t<T, N>>
 {

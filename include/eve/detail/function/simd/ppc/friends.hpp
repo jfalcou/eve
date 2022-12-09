@@ -14,42 +14,42 @@
 
 namespace eve::detail
 {
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T,N> self_bitnot(wide<T,N> const& v) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return vec_nor(v.storage(), v.storage());
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_eq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return logical<wide<T,N>>(vec_cmpeq(v.storage(), w.storage()));
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_neq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return logical<wide<T,N>>(vec_cmpne(v.storage(), w.storage()));
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_less(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return logical<wide<T,N>>(vec_cmplt(v.storage(), w.storage()));
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_greater(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return logical<wide<T,N>>(vec_cmpgt(v.storage(), w.storage()));
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_geq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -59,7 +59,7 @@ namespace eve::detail
       return !(v < w);
   }
 
-  template<real_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_leq(wide<T, N> const &v, wide<T, N> const &w) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

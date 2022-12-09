@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T, floating_real_value U, floating_real_value V, floating_real_value W >
+  template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V, floating_ordered_value W >
   EVE_FORCEINLINE auto diff_of_prod_(EVE_SUPPORTS(cpu_)
                                    , const T& a
                                    , const U& b
@@ -28,7 +28,7 @@ namespace eve::detail
     return arithmetic_call(diff_of_prod, a, b, c, d);
   }
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   EVE_FORCEINLINE auto diff_of_prod_(EVE_SUPPORTS(cpu_)
                                    , const T& a
                                    , const T& b
@@ -43,7 +43,7 @@ namespace eve::detail
      return if_else(is_finite(err), dop + err, dop);
    }
 
-  template<floating_real_value T, floating_real_value U, floating_real_value V, floating_real_value W >
+  template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V, floating_ordered_value W >
   EVE_FORCEINLINE auto diff_of_prod_(EVE_SUPPORTS(cpu_)
                                    , raw_type const &
                                    , const T& a
@@ -55,7 +55,7 @@ namespace eve::detail
     return arithmetic_call(raw(diff_of_prod), a, b, c, d);
   }
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   EVE_FORCEINLINE auto dif_of_prod_(EVE_SUPPORTS(cpu_)
                                    , raw_type const &
                                    , const T& a

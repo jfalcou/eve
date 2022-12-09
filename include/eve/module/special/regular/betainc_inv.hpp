@@ -28,18 +28,18 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template < eve::floating_real_value S
-//!               , eve::floating_real_value T
-//!               , eve::floating_real_value U>
+//!      template < eve::floating_ordered_value S
+//!               , eve::floating_ordered_value T
+//!               , eve::floating_ordered_value U>
 //!      eve:common_value_t<S, T, U>  betainc_inv(S s, T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `s` :  [real floating argument](@ref eve::floating_real_value).
+//!     * `s` :  [real floating argument](@ref eve::floating_ordered_value).
 //!
-//!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_real_value).
+//!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!

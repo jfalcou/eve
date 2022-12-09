@@ -36,7 +36,7 @@ namespace ascii
       constexpr std::uint8_t alphabet_length = 'z' - 'a';
       constexpr std::uint8_t a_A_offset      = 'a' - 'A';
 
-      return eve::sub[(c - 'a') <= alphabet_length](c, a_A_offset);
+      return eve::sub[(c - std::uint8_t('a')) <= alphabet_length](c, a_A_offset);
     }
 
   } inline constexpr to_upper;
@@ -72,7 +72,7 @@ TTS_CASE("to_upper")
   for (std::uint8_t x = 0; x != 128; ++x)
   {
     std::uint8_t expected = x;
-    if ('a' <= x && x <= 'z') expected = x - ('a' - 'A');
+    if (std::uint8_t('a') <= x && x <= std::uint8_t('z')) expected = x - std::uint8_t('a' - 'A');
     std::uint8_t actual = ascii::to_upper(eve::wide<std::uint8_t>(x)).get(0);
     TTS_EQUAL(expected, actual);
   }

@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE auto
 rem180(T x) noexcept
 {

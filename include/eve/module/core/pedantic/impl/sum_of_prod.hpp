@@ -13,8 +13,8 @@
 
 namespace eve::detail
 {
-  template<floating_real_value T
-           , floating_real_value U, floating_real_value V, floating_real_value W >
+  template<floating_ordered_value T
+           , floating_ordered_value U, floating_ordered_value V, floating_ordered_value W >
   EVE_FORCEINLINE auto sum_of_prod_(EVE_SUPPORTS(cpu_)
                                    , pedantic_type const &
                                    , const T& a
@@ -26,7 +26,7 @@ namespace eve::detail
     return arithmetic_call(pedantic(sum_of_prod), a, b, c, d);
   }
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   EVE_FORCEINLINE auto sum_of_prod_(EVE_SUPPORTS(cpu_)
                                    , pedantic_type const &
                                    , const T& a

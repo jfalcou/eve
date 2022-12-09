@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr T
 exp10_(EVE_SUPPORTS(cpu_), pedantic_type const&, T x) noexcept
 {

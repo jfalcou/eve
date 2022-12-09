@@ -19,7 +19,7 @@ namespace eve
  template < typename T, typename U, typename Internal = T>
   struct ev_distribution{};
 
-  template < floating_real_value T, floating_real_value U>
+  template < floating_ordered_value T, floating_ordered_value U>
   requires  compatible_values<T, U>
   struct ev_distribution<T, U>
   {
@@ -51,7 +51,7 @@ namespace eve
     s_type s;
   };
 
-  template < floating_real_value U>
+  template < floating_ordered_value U>
   struct ev_distribution<callable_zero_, U>
   {
     using is_distribution_t = void;
@@ -87,7 +87,7 @@ namespace eve
     s_type s;
   };
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct ev_distribution<T, callable_one_>
   {
     using is_distribution_t = void;
@@ -124,7 +124,7 @@ namespace eve
 
   template<typename T, typename U>  ev_distribution(T,U) -> ev_distribution<T,U>;
 
-  template < floating_real_value T>
+  template < floating_ordered_value T>
   struct ev_distribution<callable_zero_, callable_one_, T>
   {
     using is_distribution_t = void;
@@ -150,7 +150,7 @@ namespace eve
 
   template<typename T>  ev_distribution(as<T> const&) -> ev_distribution<callable_zero_, callable_one_, T>;
 
-  template<floating_real_value T>
+  template<floating_ordered_value T>
   inline constexpr auto ev_distribution_01 = ev_distribution<callable_zero_, callable_one_, T>(as<T>{});
 
   namespace detail
@@ -341,8 +341,8 @@ namespace eve
 
     //////////////////////////////////////////////////////
     /// confidence
-    template<typename T, typename U, floating_real_value R
-             , floating_real_value V, floating_real_value A,  typename I = T>
+    template<typename T, typename U, floating_ordered_value R
+             , floating_ordered_value V, floating_ordered_value A,  typename I = T>
     EVE_FORCEINLINE  auto confidence_(EVE_SUPPORTS(cpu_)
                                      , ev_distribution<T,U,I> const & d
                                      , R const & x
@@ -353,15 +353,15 @@ namespace eve
       R z = x;
       auto normz = -invcdf(normal_distribution_01<I>, alpha*v_t(0.5));
       auto halfwidth = normz;
-      if constexpr(floating_real_value<T> && floating_real_value<U>)
+      if constexpr(floating_ordered_value<T> && floating_ordered_value<U>)
         z = (z-d.m)/d.s;
-      else if constexpr(floating_real_value<T>)
+      else if constexpr(floating_ordered_value<T>)
         z -= d.m;
-      else if constexpr(floating_real_value<U>)
+      else if constexpr(floating_ordered_value<U>)
         z /= d.s;
       auto zvar = fma(fma(cov[3], z, 2*cov[1]), z, cov[0]);
       halfwidth *= eve::sqrt(zvar);
-      if constexpr(floating_real_value<U>)
+      if constexpr(floating_ordered_value<U>)
         halfwidth /= d.s;
       auto d01 =  ev_distribution_01<I>;
       return kumi::make_tuple(cdf(d01, z), cdf(d01, z-halfwidth), cdf(d01, z+halfwidth));

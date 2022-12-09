@@ -15,7 +15,7 @@ namespace eve::detail
 {
 //================================================================================================
 // Full logical if_else
-template<real_scalar_value U, typename N>
+template<arithmetic_scalar_value U, typename N>
 EVE_FORCEINLINE auto
 if_else_(EVE_SUPPORTS(neon128_),
          logical<wide<U, N>> const& v0,

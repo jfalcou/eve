@@ -18,7 +18,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T>
                 two_prod_(EVE_SUPPORTS(cpu_), const T                &a, const T                &b) noexcept
 {

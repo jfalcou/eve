@@ -130,40 +130,4 @@ namespace eve
   //! - `double`
   //================================================================================================
   template<typename T> concept floating_scalar_value          = scalar_value<T> && std::floating_point<T>;
-
-  //================================================================================================
-  //! @concept real_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
-  //! The concept `real_scalar_value<T>` is satisfied if and only if T is scalar_value and real_value
-  //!
-  //! @groupheader{Examples}
-  //! - `float`
-  //! - `int`
-  //================================================================================================
-  template<typename T> concept real_scalar_value              = scalar_value<T> && std::is_arithmetic_v<T>;
-
-  //================================================================================================
-  //! @concept floating_real_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
-  //! The concept `floating_real_scalar_value<T>` is satisfied if and only if T is scalar_value and floating_real_value
-  //!
-  //! @groupheader{Examples}
-  //! - `float`
-  //! - `double`
-  //================================================================================================
-  template<typename T> concept floating_real_scalar_value     = real_scalar_value<T> && std::floating_point<element_type_t<T>>;
-
-  //================================================================================================
-  //! @concept integral_real_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
-  //! The concept `integral_real_scalar_value<T>` is satisfied if and only if T is scalar_value and integral_real_value
-  //!
-  //! @groupheader{Examples}
-  //! - `int`
-  //! - `unsigned int`
-  //================================================================================================
-  template<typename T> concept integral_real_scalar_value     = real_scalar_value<T> && std::integral<element_type_t<T>>;
 }

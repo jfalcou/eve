@@ -85,7 +85,7 @@ rsqrt_x86_pedantic(Pack const& x) noexcept
 
 //------------------------------------------------------------------------------------------------
 // Regular 128 bits rsqrt
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 rsqrt_(EVE_SUPPORTS(sse2_),
        wide<T, N> const& a0) noexcept requires std::same_as<abi_t<T, N>, x86_128_>
@@ -96,7 +96,7 @@ rsqrt_(EVE_SUPPORTS(sse2_),
 
 //------------------------------------------------------------------------------------------------
 // Regular 256 bits rsqrt
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 rsqrt_(EVE_SUPPORTS(avx_),
        wide<T, N> const& a0) noexcept requires std::same_as<abi_t<T, N>, x86_256_>
@@ -107,7 +107,7 @@ rsqrt_(EVE_SUPPORTS(avx_),
 
 //------------------------------------------------------------------------------------------------
 // 128 bits raw rsqrt
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rsqrt_(EVE_SUPPORTS(sse2_),
                        raw_type,
@@ -123,7 +123,7 @@ EVE_FORCEINLINE wide<T, N>
 
 //------------------------------------------------------------------------------------------------
 // 256 bits raw rsqrt
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rsqrt_(EVE_SUPPORTS(avx_),
                        raw_type,
@@ -139,7 +139,7 @@ EVE_FORCEINLINE wide<T, N>
 
 //------------------------------------------------------------------------------------------------
 // avx512 bits raw rsqrt
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 rsqrt_(EVE_SUPPORTS(avx512_), raw_type, wide<T, N> a0) noexcept
 {
@@ -155,7 +155,7 @@ EVE_FORCEINLINE wide<T, N>
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
 rsqrt_(EVE_SUPPORTS(avx512_), C const& cx, raw_type const&, wide<T, N> const& v) noexcept
 {

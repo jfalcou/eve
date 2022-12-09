@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(neon128_), wide<T, N> value, T *ptr) noexcept requires arm_abi<abi_t<T, N>>
 {
@@ -53,7 +53,7 @@ store_(EVE_SUPPORTS(neon128_), wide<T, N> value, T *ptr) noexcept requires arm_a
 }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-template<real_scalar_value T, typename N, typename Lanes>
+template<arithmetic_scalar_value T, typename N, typename Lanes>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(neon128_),
        wide<T, N>            value,
@@ -92,7 +92,7 @@ store_(EVE_SUPPORTS(neon128_),
   }
 }
 #else
-template<real_scalar_value T, typename S, typename Lanes>
+template<arithmetic_scalar_value T, typename S, typename Lanes>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(neon128_),
        wide<T, S>            value,

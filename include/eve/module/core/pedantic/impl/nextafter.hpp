@@ -26,7 +26,7 @@ namespace eve::detail
 {
 //////////////////////////////////////////////////////////////
 // decorated calls
-template<real_value T, real_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE constexpr auto
 nextafter_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
@@ -37,7 +37,7 @@ nextafter_(EVE_SUPPORTS(cpu_),
   return arithmetic_call(pedantic(nextafter), a, b);
 }
 
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 nextafter_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,

@@ -39,7 +39,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floatingl](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floatingl](@ref eve::floating_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
@@ -56,7 +56,7 @@ namespace eve
   namespace detail
   {
 
-    template<floating_real_value V>
+    template<floating_ordered_value V>
     EVE_FORCEINLINE auto faddeeva_( EVE_SUPPORTS(cpu_)
                                   , V const & v) noexcept
     {

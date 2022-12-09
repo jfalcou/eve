@@ -17,7 +17,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 is_flint_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 {

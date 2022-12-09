@@ -22,7 +22,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 signnz_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 {
@@ -50,7 +50,7 @@ signnz_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 signnz_(EVE_SUPPORTS(cpu_), C const& cond, pedantic_type const&, U const& t) noexcept
 {

@@ -29,7 +29,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
+//!      template< eve::ordered_value T >
 //!      T exp2(T x) noexcept;                                     //1
 //!
 //!      template< eve::floating_value T >
@@ -39,7 +39,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [real value](@ref eve::real_value).
+//!   * `x`:   [ordered value](@ref eve::ordered_value).
 //!   * `z`:   [complex ](@ref eve::complex) argument.
 //!
 //! **Return value**

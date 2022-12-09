@@ -41,7 +41,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floating](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floating](@ref eve::floating_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
@@ -61,7 +61,7 @@ namespace eve
   EVE_MAKE_CALLABLE(deta_, deta);
   namespace detail
   {
-    template<unsigned_scalar_value N, floating_real_value V>
+    template<unsigned_scalar_value N, floating_ordered_value V>
     EVE_FORCEINLINE auto deta_( EVE_SUPPORTS(cpu_)
                               , N const & n
                               , V const & v) noexcept

@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 rsqrt_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
 {
@@ -25,7 +25,7 @@ rsqrt_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 rsqrt_(EVE_SUPPORTS(cpu_), C const& cond, pedantic_type const&, U const& t) noexcept
 {

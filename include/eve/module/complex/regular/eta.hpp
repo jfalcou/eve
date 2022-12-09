@@ -39,7 +39,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floatingl](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floatingl](@ref eve::floating_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
@@ -59,7 +59,7 @@ namespace eve
   EVE_MAKE_CALLABLE(eta_, eta);
   namespace detail
   {
-    template<floating_real_value V>
+    template<floating_ordered_value V>
     EVE_FORCEINLINE auto eta_( EVE_SUPPORTS(cpu_)
                               , V const & v) noexcept
     {

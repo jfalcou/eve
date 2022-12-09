@@ -30,20 +30,20 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_real_value T
-//!              , eve::floating_real_value U
-//!              , eve::floating_real_value V
-//!              , eve::floating_real_value W>
+//!      template< eve::floating_ordered_value T
+//!              , eve::floating_ordered_value U
+//!              , eve::floating_ordered_value V
+//!              , eve::floating_ordered_value W>
 //!      eve::common_value_t<T, U, V, W> ellint_rj(T x, U y, V z, W p) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_real_value). `x`, `y` and  `z`
+//!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_ordered_value). `x`, `y` and  `z`
 //!                     must be non negative and at most one of them equal to 0. In any other case,
 //!                     the result is NaN.
-//!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_real_value). In any other case,
+//!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_ordered_value). In any other case,
 //!             the result is NaN.
 //!
 //!   **Return value**

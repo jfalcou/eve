@@ -17,11 +17,11 @@
 
 namespace eve::detail
 {
-template<floating_real_scalar_value T, typename N>
+template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>
-                is_not_less_equal_(EVE_SUPPORTS(sse2_),
-                                   wide<T, N> const                &a,
-                                   wide<T, N> const                &b) noexcept requires x86_abi<abi_t<T, N>>
+is_not_less_equal_(EVE_SUPPORTS(sse2_),
+                   wide<T, N> const                &a,
+                   wide<T, N> const                &b) noexcept requires x86_abi<abi_t<T, N>>
 {
   using l_t        = logical<wide<T, N>>;
   constexpr auto c = categorize<wide<T, N>>();
@@ -47,13 +47,13 @@ EVE_FORCEINLINE logical<wide<T, N>>
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, real_scalar_value T, typename N>
+template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 is_not_less_equal_(EVE_SUPPORTS(avx512_),
                    C const         & cx,
                    wide<T, N> const& v,
                    wide<T, N> const& w) noexcept
-    -> decltype(is_not_less_equal(v, w)) requires x86_abi<abi_t<T, N>>
+-> decltype(is_not_less_equal(v, w)) requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 

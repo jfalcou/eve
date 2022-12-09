@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::uint_(eve::trunc)(T()), (eve::as_integer_t<T, unsigned>));
   TTS_EXPR_IS(eve::uint_(eve::trunc)(v_t()), (eve::as_integer_t<v_t, unsigned>));
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_value<T> )
   {
     TTS_EXPR_IS(eve::tolerant(eve::trunc)(T()), T);
     TTS_EXPR_IS(eve::tolerant(eve::trunc)(v_t()), v_t);
@@ -64,7 +64,7 @@ TTS_CASE_WITH("Check behavior of trunc on wide",
   using v_t   = eve::element_type_t<T>;
   using i_t   = eve::as_integer_t<v_t>;
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_value<T> )
   {
     TTS_EQUAL(eve::trunc(a0), T([&](auto i, auto) { return v_t(std::trunc(a0.get(i))); }));
     TTS_EQUAL(eve::int_(eve::trunc)(a0), wi_t([&](auto i, auto) { return i_t(a0.get(i)); }));

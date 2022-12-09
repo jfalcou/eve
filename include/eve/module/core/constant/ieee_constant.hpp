@@ -35,7 +35,7 @@ namespace eve
 //! ---
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template <floating_real_value T BitsPatternfloat, BitsPatterndouble > T operator()() const
+//!  template <floating_ordered_value T BitsPatternfloat, BitsPatterndouble > T operator()() const
 //!  noexcept;
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!

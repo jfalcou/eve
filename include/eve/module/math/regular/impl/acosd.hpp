@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, decorator D>
+template<floating_ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr auto
 acosd_(EVE_SUPPORTS(cpu_), D const& decorator, T const& a) noexcept
 {
@@ -21,7 +21,7 @@ acosd_(EVE_SUPPORTS(cpu_), D const& decorator, T const& a) noexcept
   else { return apply_over(decorator(acosd), a); }
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 acosd_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {

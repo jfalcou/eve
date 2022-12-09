@@ -28,14 +28,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::real_value T,  eve::real_value U >
+//!      template< eve::ordered_value T,  eve::ordered_value U >
 //!      T gcd(T p, U n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   `p`, `n`: [Real values](@ref eve::value).
+//!   `p`, `n`: [ordered values](@ref eve::value).
 //!
 //!    **Return value**
 //!
@@ -43,7 +43,7 @@ namespace eve
 //!    and |n|.
 //!
 //!    @warning
-//!    `p` and `n` can be of any [real values](@ref eve::value) type, but when the types are not
+//!    `p` and `n` can be of any [ordered values](@ref eve::value) type, but when the types are not
 //!    integral the greatest common divisor is defined only if `p` and `n` elements are [flint](@ref
 //!    eve::is_flint). If any of the arguments is not flint the result is undefined.
 //!

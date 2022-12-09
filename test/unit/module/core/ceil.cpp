@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of ceil", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::uint_(eve::ceil)(T()), (eve::as_integer_t<T, unsigned>));
   TTS_EXPR_IS(eve::uint_(eve::ceil)(v_t()), (eve::as_integer_t<v_t, unsigned>));
 
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_value<T> )
   {
     TTS_EXPR_IS(eve::tolerant(eve::ceil)(T()), T);
     TTS_EXPR_IS(eve::tolerant(eve::ceil)(v_t()), v_t);
@@ -88,7 +88,7 @@ TTS_CASE_WITH("Check behavior of ceil(wide))",
   using v_t   = eve::element_type_t<T>;
   using i_t   = eve::as_integer_t<v_t>;
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
-  if constexpr( eve::floating_real_value<T> )
+  if constexpr( eve::floating_value<T> )
   {
     TTS_EQUAL(eve::ceil(a0), map([&](auto e) -> v_t { return v_t(std::ceil(e)); }, a0));
 
@@ -108,7 +108,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::ceil)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::ceil[mask](a0),

@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<floating_real_value T, floating_real_value U>
+template<floating_ordered_value T, floating_ordered_value U>
 auto
 powm1_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> decltype(pow(a, b))
@@ -21,7 +21,7 @@ powm1_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   return arithmetic_call(powm1, a, b);
 }
 
-template<floating_real_value T>
+template<floating_ordered_value T>
 auto
 powm1_(EVE_SUPPORTS(cpu_), T const& x, T const& y) noexcept
 {
@@ -45,7 +45,7 @@ powm1_(EVE_SUPPORTS(cpu_), T const& x, T const& y) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, real_value T , real_value U>
+template<conditional_expr C, value T , value U>
 EVE_FORCEINLINE auto
 powm1_(EVE_SUPPORTS(cpu_), C const& cond, T const& t, U const& u) noexcept
 -> decltype( if_else(cond, powm1(t, u), t) )

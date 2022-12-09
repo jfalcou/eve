@@ -15,7 +15,7 @@
 namespace eve::detail
 {
 // Regular store
-template<real_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
+template<arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE void
 store_(EVE_SUPPORTS(sve_), wide<T, N> v, Ptr p)
 requires(sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)

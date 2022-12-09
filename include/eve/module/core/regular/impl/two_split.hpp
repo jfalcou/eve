@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-template<real_value T>
+template<ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T>
                 two_split_(EVE_SUPPORTS(cpu_), const T                &a) noexcept
 {

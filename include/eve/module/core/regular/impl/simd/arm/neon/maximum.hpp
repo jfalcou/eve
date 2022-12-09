@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE T
 maximum_(EVE_SUPPORTS(neon128_), wide<T, N> v) noexcept requires arm_abi<abi_t<T, N>>
 {
@@ -46,7 +46,7 @@ maximum_(EVE_SUPPORTS(neon128_), wide<T, N> v) noexcept requires arm_abi<abi_t<T
   else { return splat(maximum)(v).get(0); }
 }
 
-template<real_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
                 maximum_(EVE_SUPPORTS(neon128_),
                          splat_type const&,
