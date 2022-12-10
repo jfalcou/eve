@@ -101,10 +101,10 @@ pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
       T base = a0;
       U expo = a1;
 
-      T result(1);
+      auto result = one(as(a0));
       while( eve::any(to_logical(expo)) )
       {
-        result *= if_else(is_odd(expo), base, T(1));
+        result *= if_else(is_odd(expo), base, one(as(a0)));
         expo = (expo >> 1);
         base = sqr(base);
       }
