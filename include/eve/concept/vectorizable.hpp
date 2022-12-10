@@ -71,7 +71,7 @@ namespace eve
   //! @concept signed_integral_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
-  //! The concept `unsigned_integral_scalar_value<T>` is satisfied if and only if T is signed,
+  //! The concept `signed_integral_scalar_value<T>` is satisfied if and only if T is signed,
   //! integral and scalar_value
   //!
   //! @groupheader{Examples}
