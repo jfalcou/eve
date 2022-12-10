@@ -146,13 +146,16 @@ namespace eve
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
-    template<typename S0, typename S1, typename... Ss>
+    template<scalar_value S0, scalar_value S1, scalar_value... Ss>
     EVE_FORCEINLINE wide(S0 v0, S1 v1, Ss... vs) noexcept
         requires( (Cardinal::value == 2 + sizeof...(vs))
-                  && std::constructible_from<Type,S0>
-                  && (std::constructible_from<Type,S1> && ... && std::constructible_from<Type,Ss>)
+                  && std::is_convertible_v<S0,Type>
+                  && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
-        : storage_base(detail::make(eve::as<wide>{},Type(v0),Type(v1),Type(vs)...))
+        : storage_base(detail::make(eve::as<wide> {},
+                                    static_cast<Type>(v0),
+                                    static_cast<Type>(v1),
+                                    static_cast<Type>(vs)...))
     {}
 
     //! Constructs a eve::wide from a sequence of values
