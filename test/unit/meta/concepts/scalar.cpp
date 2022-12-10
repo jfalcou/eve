@@ -33,9 +33,6 @@ TTS_CASE("Check for plain_scalar_value on cstdint/def types" )
   TTS_EXPECT( eve::plain_scalar_value<std::uint16_t> );
   TTS_EXPECT( eve::plain_scalar_value<std::uint32_t> );
   TTS_EXPECT( eve::plain_scalar_value<std::uint64_t> );
-
-  TTS_EXPECT( eve::plain_scalar_value<std::size_t>    );
-  TTS_EXPECT( eve::plain_scalar_value<std::ptrdiff_t> );
 };
 
 TTS_CASE("Check for plain_scalar_value on unsupported types" )
@@ -82,8 +79,6 @@ TTS_CASE("Check for arithmetic_scalar_value on plain_scalar_value" )
   TTS_EXPECT( eve::arithmetic_scalar_value<std::uint16_t>  );
   TTS_EXPECT( eve::arithmetic_scalar_value<std::uint32_t>  );
   TTS_EXPECT( eve::arithmetic_scalar_value<std::uint64_t>  );
-  TTS_EXPECT( eve::arithmetic_scalar_value<std::size_t>    );
-  TTS_EXPECT( eve::arithmetic_scalar_value<std::ptrdiff_t> );
 };
 
 TTS_CASE("Check for arithmetic_scalar_value on product_type" )

@@ -51,6 +51,27 @@ namespace eve
     using combined_type = fixed<2>;
   };
 
+  namespace detail {
+
+  template <typename>
+  struct is_wide_cardinal  : std::false_type {};
+
+  template <std::ptrdiff_t N>
+  struct is_wide_cardinal<eve::fixed<N>> : std::true_type {};
+
+  }  // namespace detail
+
+  //================================================================================================
+  //! @brief concept to determine if this is cardinal type of a wide
+  //!
+  //! @tparam T
+  //!
+  //! only true if T is instance of `eve::fixed`.
+  //!
+  //! This concept is needed to define some other concepts, unlikely to be useful on it's own.
+  //================================================================================================
+  template <typename T>
+  concept wide_cardinal = detail::is_wide_cardinal<T>::value;
 
   //================================================================================================
   //! @brief Cardinal type for scalar values

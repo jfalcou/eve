@@ -116,7 +116,7 @@ namespace eve::algo
       auto ptr = l.begin();
       for(size_type i = 0; i < size(); ++i)
       {
-        eve::write(*ptr++, begin()+i);
+        eve::write(*ptr++, begin() + (std::ptrdiff_t)i);
       }
     }
 

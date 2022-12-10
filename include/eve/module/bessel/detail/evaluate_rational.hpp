@@ -24,7 +24,7 @@ evaluate_rational(const T num, const U den, V z) noexcept
     z      = rec(z);
     auto r = horner(z, num) / horner(z, den);
     if( size(den) == size(num) ) return r;
-    else return r * pow(z, size(num) - size(den));
+    else return r * pow(z, (std::uint64_t) size(num) - size(den));
   };
   auto test = z <= V(1);
   if( eve::all(test) ) return eval_small(z);
@@ -42,7 +42,7 @@ reverse_evaluate_rational(const T num, const U den, V z) noexcept
     z      = rec(z);
     auto r = reverse_horner(z, num) / reverse_horner(z, den);
     if( size(den) == size(num) ) return r;
-    else return r * pow(z, size(num) - size(den));
+    else return r * pow(z, (std::uint64_t) size(num) - size(den));
   };
   auto test = z <= V(1);
   if( eve::all(test) ) return eval_small(z);

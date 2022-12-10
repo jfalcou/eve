@@ -7,13 +7,13 @@
 ## Modules
 add_subdirectory(core)
 add_subdirectory(complex)
-add_subdirectory(polynomial)
 add_subdirectory(proba)
 
-#if(EVE_USE_BOOST)
+if(EVE_USE_BOOST)
 add_subdirectory(bessel)
-add_subdirectory(elliptic)
 add_subdirectory(combinatorial)
+add_subdirectory(elliptic)
 add_subdirectory(math)
+add_subdirectory(polynomial)
 add_subdirectory(special)
-#endif()
+endif()

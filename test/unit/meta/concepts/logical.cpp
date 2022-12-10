@@ -39,8 +39,6 @@ TTS_CASE("Check for logical_scalar/simd_value on cstdint/def types" )
   TTS_EXPECT( eve::logical_scalar_value<eve::logical<std::uint16_t>>  );
   TTS_EXPECT( eve::logical_scalar_value<eve::logical<std::uint32_t>>  );
   TTS_EXPECT( eve::logical_scalar_value<eve::logical<std::uint64_t>>  );
-  TTS_EXPECT( eve::logical_scalar_value<eve::logical<std::size_t>>    );
-  TTS_EXPECT( eve::logical_scalar_value<eve::logical<std::ptrdiff_t> >);
 
   TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::int8_t>>>   );
   TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::int16_t>>>  );
@@ -50,8 +48,6 @@ TTS_CASE("Check for logical_scalar/simd_value on cstdint/def types" )
   TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::uint16_t>>> );
   TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::uint32_t>>> );
   TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::uint64_t>>> );
-  TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::size_t>>>   );
-  TTS_EXPECT( eve::logical_simd_value<eve::logical<eve::wide<std::ptrdiff_t>>>);
 };
 
 TTS_CASE("Check for logical_scalar/simd_value on unsupported types" )

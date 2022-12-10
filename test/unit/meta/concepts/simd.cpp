@@ -33,9 +33,6 @@ TTS_CASE("Check for plain_simd_value on cstdint/def types" )
   TTS_EXPECT( eve::plain_simd_value<eve::wide<std::uint16_t>> );
   TTS_EXPECT( eve::plain_simd_value<eve::wide<std::uint32_t>> );
   TTS_EXPECT( eve::plain_simd_value<eve::wide<std::uint64_t>> );
-
-  TTS_EXPECT( eve::plain_simd_value<eve::wide<std::size_t>>    );
-  TTS_EXPECT( eve::plain_simd_value<eve::wide<std::ptrdiff_t>> );
 };
 
 TTS_CASE("Check for plain_simd_value on unsupported types" )
@@ -88,9 +85,6 @@ TTS_CASE("Check for arithmetic_simd_value on plain_simd_value" )
   TTS_EXPECT( eve::arithmetic_simd_value<eve::wide<std::uint16_t>> );
   TTS_EXPECT( eve::arithmetic_simd_value<eve::wide<std::uint32_t>> );
   TTS_EXPECT( eve::arithmetic_simd_value<eve::wide<std::uint64_t>> );
-
-  TTS_EXPECT( eve::arithmetic_simd_value<eve::wide<std::size_t>>    );
-  TTS_EXPECT( eve::arithmetic_simd_value<eve::wide<std::ptrdiff_t>> );
 };
 
 TTS_CASE("Check for arithmetic_simd_value on product_type" )

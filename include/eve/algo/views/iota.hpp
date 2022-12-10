@@ -97,7 +97,7 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE friend T tagged_dispatch(eve::tag::read_, iota_with_step_iterator self)
     {
-      return self.base + eve::convert(self.i * self.step, eve::as<T>{});
+      return self.base + (T)self.i * self.step;
     }
 
     template <typename U>
