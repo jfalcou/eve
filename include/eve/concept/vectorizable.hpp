@@ -33,63 +33,65 @@ namespace eve
   //! @brief Specify that a type represents an integral scalar value
   //!
   //! The concept `integral_scalar_value<T>` is satisfied if and only if T satisfies
-  //! `eve::scalar_value<T>` and `std::integral<T>`.
+  //! `eve::arithmetic_scalar_value<T>` and `std::integral<T>`.
   //!
   //! @groupheader{Examples}
   //! - `std::int32_t`
   //================================================================================================
   template<typename T>
-  concept integral_scalar_value  = scalar_value<T> && std::integral<T>;
+  concept integral_scalar_value  = arithmetic_scalar_value<T> && std::integral<T>;
 
   //================================================================================================
   //! @concept signed_scalar_value
   //! @brief Specify that a type represents a signed scalar value
   //!
-  //! The concept `signed_scalar_value<T>` is satisfied if and only if T  satisfies
-  //! `eve::scalar_value<T>` and `std::integral<T>`.
+  //! The concept `signed_scalar_value<T>` is satisfied if and only if T satisfies
+  //! `eve::arithmetic_scalar_value<T>` and `std::integral<T>`.
   //!
   //! @groupheader{Examples}
   //! - `std::int32_t`
   //! - `float`
   //================================================================================================
   template<typename T>
-  concept signed_scalar_value  = scalar_value<T> && std::is_signed_v<T>;
+  concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<T>;
 
   //================================================================================================
   //! @concept unsigned_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
-  //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T is unsigned and scalar_value
+  //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T satisfies
+  //! `eve::arithmetic_scalar_value<T>` and `std::unsigned_integral<T>`.
   //!
   //! @groupheader{Examples}
   //! - `std::uint32_t`
   //================================================================================================
   template<typename T>
-  concept unsigned_scalar_value = scalar_value<T> && std::unsigned_integral<T>;
+  concept unsigned_scalar_value = arithmetic_scalar_value<T> && std::unsigned_integral<T>;
 
   //================================================================================================
   //! @concept signed_integral_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
-  //! The concept `signed_integral_scalar_value<T>` is satisfied if and only if T is signed,
-  //! integral and scalar_value
+  //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T satisfies
+  //! `eve::arithmetic_scalar_value<T>` and `std::signed_integral<T>`.
   //!
   //! @groupheader{Examples}
   //! - `std::int32_t`
   //================================================================================================
   template<typename T>
-  concept signed_integral_scalar_value   = scalar_value<T> && std::signed_integral<T>;
+  concept signed_integral_scalar_value = arithmetic_scalar_value<T> && std::signed_integral<T>;
 
   //================================================================================================
   //! @concept floating_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
-  //! The concept `floating_scalar_value<T>` is satisfied if and only if T is floating_point and scalar_value
+  //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T satisfies
+  //! `eve::arithmetic_scalar_value<T>` and `std::floating_point<T>`.
   //!
   //! @groupheader{Examples}
   //! - `float`
   //! - `double`
   //================================================================================================
   template<typename T>
-  concept floating_scalar_value = scalar_value<T> && std::floating_point<T>;
+  concept floating_scalar_value = arithmetic_scalar_value<T> && std::floating_point<T>;
 }
