@@ -26,15 +26,6 @@ namespace eve::algo::detail
     { std::declval<T>() <=> std::declval<U>() };
   };
 
-  template <typename>
-  struct is_fixed  : std::false_type {};
-
-  template <std::ptrdiff_t N>
-  struct is_fixed<eve::fixed<N>> : std::true_type {};
-
-  template <typename T>
-  concept is_fixed_v = is_fixed<T>::value;
-
   template <typename I>
   concept iterator_operations =
     std::copyable<std::remove_cvref_t<I>> &&

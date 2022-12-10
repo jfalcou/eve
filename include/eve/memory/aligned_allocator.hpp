@@ -16,6 +16,8 @@
 #include <malloc.h>
 #endif
 
+#include <iostream>
+
 namespace eve
 {
   //================================================================================================
@@ -72,11 +74,13 @@ namespace eve
 
     void * allocate_aligned(std::size_t n, std::size_t a)
     {
+      if (a < 8U) a = 8U;
       auto sz = align(n, over{a});
 
       #if defined(SPY_COMPILER_IS_MSVC)
       return  _aligned_malloc(sz,a);
       #else
+
       return std::aligned_alloc(a, sz);
       #endif
     }
