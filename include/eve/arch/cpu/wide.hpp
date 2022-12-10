@@ -139,23 +139,20 @@ namespace eve
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
-    template<std::convertible_to<Type> S>
-    requires requires(S v) { static_cast<Type>(v); }
+    template<typename S>
+    requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide> {}, static_cast<Type>(v)))
+        : storage_base(detail::make(eve::as<wide>{}, Type(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
-    template<scalar_value S0, scalar_value S1, scalar_value... Ss>
+    template<typename S0, typename S1, typename... Ss>
     EVE_FORCEINLINE wide(S0 v0, S1 v1, Ss... vs) noexcept
         requires( (Cardinal::value == 2 + sizeof...(vs))
-                  && std::is_convertible_v<S0,Type>
-                  && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
+                  && std::constructible_from<Type,S0>
+                  && (std::constructible_from<Type,S1> && ... && std::constructible_from<Type,Ss>)
                 )
-        : storage_base(detail::make(eve::as<wide> {},
-                                    static_cast<Type>(v0),
-                                    static_cast<Type>(v1),
-                                    static_cast<Type>(vs)...))
+        : storage_base(detail::make(eve::as<wide>{},Type(v0),Type(v1),Type(vs)...))
     {}
 
     //! Constructs a eve::wide from a sequence of values
