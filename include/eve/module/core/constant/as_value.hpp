@@ -9,6 +9,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/concept/invocable.hpp>
 #include <eve/detail/implementation.hpp>
 
 #include <concepts>
@@ -59,8 +60,8 @@ namespace detail
   template<typename From, value T>
   EVE_FORCEINLINE constexpr auto as_value_(EVE_SUPPORTS(cpu_), From from, as<T> const& t) noexcept
   {
-    if constexpr( !value<From> ) return from(t);
-    else if constexpr( std::integral<T> || std::floating_point<T> ) return (T)from;
+    if constexpr( instance_of<From,callable_object> ) return from(t);
+    else if constexpr( scalar_value<T> ) return static_cast<T>(from);
     else return T {from};
   }
 }

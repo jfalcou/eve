@@ -19,7 +19,7 @@ namespace eve::detail
   //================================================================================================
   // +=
   //================================================================================================
-  template<scalar_value T, value U, typename N>
+  template<plain_scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_add( wide<T, N>& self, U const& other )
   requires( scalar_value<U> || std::same_as<wide<T, N>, U> ) && ppc_abi<abi_t<T, N>>
   {
@@ -40,7 +40,7 @@ namespace eve::detail
   //================================================================================================
   // -=
   //================================================================================================
-  template<scalar_value T, value U, typename N>
+  template<plain_scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_sub( wide<T,N>& self, U const& other )
   requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
   {
@@ -61,7 +61,7 @@ namespace eve::detail
   //================================================================================================
   // *=
   //================================================================================================
-  template<scalar_value T, value U, typename N>
+  template<plain_scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_mul( wide<T,N>& self, U const& other )
   requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
   {
@@ -82,7 +82,7 @@ namespace eve::detail
   //================================================================================================
   // /=
   //================================================================================================
-  template<scalar_value T, value U, typename N>
+  template<plain_scalar_value T, value U, typename N>
   EVE_FORCEINLINE decltype(auto) self_div( wide<T, N>& self, U const& other )
   requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
   {

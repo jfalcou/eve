@@ -145,7 +145,7 @@ TTS_EQUAL(actual, expected);
   L expected = l;
   expected.set(0, false);
   TTS_EQUAL(actual, expected);
-  actual = eve::if_else[eve::ignore_first(1)](l, false);
+  actual = eve::if_else[eve::ignore_first(1)](l, L{false});
   TTS_EQUAL(actual, expected);
 }
 };
