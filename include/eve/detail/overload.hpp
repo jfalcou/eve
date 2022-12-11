@@ -89,8 +89,16 @@ namespace tag { struct TAG {}; }                                                
         return callable_object_bind_recurse<callable_object, decltype(cond)>{cond};                \
       }                                                                                            \
                                                                                                    \
+      template<std::same_as<bool> T>                                                               \
+      EVE_FORCEINLINE constexpr auto operator[](T c) const noexcept                                \
+      requires( eve::supports_conditional<tag_type>::value )                                       \
+      {                                                                                            \
+        using type = std::conditional_t<std::same_as<bool,T>,std::uint8_t,T>;                      \
+        return (*this)[if_(logical<type>(c))];                                                     \
+      }                                                                                            \
+                                                                                                   \
       template<conditional_expr Condition>                                                         \
-      EVE_FORCEINLINE constexpr auto operator[](Condition c) const noexcept                 \
+      EVE_FORCEINLINE constexpr auto operator[](Condition c) const noexcept                        \
       requires( eve::supports_conditional<tag_type>::value )                                       \
       {                                                                                            \
         return callable_object_bind_recurse<callable_object, Condition>{c};                        \

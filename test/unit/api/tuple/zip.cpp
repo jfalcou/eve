@@ -8,7 +8,6 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 
-
 template<typename T>
 using tuple_t = kumi::tuple<std::int8_t,T,double>;
 
@@ -26,13 +25,14 @@ TTS_CASE_TPL( "Check eve::zip", eve::test::simd::all_types)
   using w1_t = std::tuple_element_t<1, s_t>;
   using w2_t = std::tuple_element_t<2, s_t>;
 
-  w0_t w8{'z'};
+  std::int8_t z = 'z';
+  w0_t w8{z};
   w1_t wt{e_t{45}};
   w2_t wd{13.37};
 
-  TTS_EQUAL(w_t(tuple_t<e_t>{ 'z', e_t{45}, 13.37 }), eve::zip(eve::as<tuple_t<e_t>>(), w8,wt,wd));
-  TTS_EQUAL(w_t(tuple_t<e_t>{ 'z', e_t{45}, 13.37 }), eve::zip(w8,wt,wd));
+  TTS_EQUAL(w_t(tuple_t<e_t>{ z, e_t{45}, 13.37 }), eve::zip(eve::as<tuple_t<e_t>>(), w8,wt,wd));
+  TTS_EQUAL(w_t(tuple_t<e_t>{ z, e_t{45}, 13.37 }), eve::zip(w8,wt,wd));
 
-  TTS_EQUAL((tuple_t<e_t>{ 'z', e_t{45}, 13.37 }), eve::zip(eve::as<tuple_t<e_t>>(), 'z', e_t{45}, 13.37));
-  TTS_EQUAL((tuple_t<e_t>{ 'z', e_t{45}, 13.37 }), eve::zip('z', e_t{45}, 13.37));
+  TTS_EQUAL((tuple_t<e_t>{ z, e_t{45}, 13.37 }), eve::zip(eve::as<tuple_t<e_t>>(), z, e_t{45}, 13.37));
+  TTS_EQUAL((tuple_t<e_t>{ z, e_t{45}, 13.37 }), eve::zip(z, e_t{45}, 13.37));
 };

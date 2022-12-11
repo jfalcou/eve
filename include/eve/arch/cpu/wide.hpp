@@ -139,10 +139,10 @@ namespace eve
     {}
 
     //! Constructs a eve::wide by splatting a scalar value in all lanes
-    template<scalar_value S>
-    requires requires(S v) { static_cast<Type>(v); }
+    template<typename S>
+    requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide> {}, static_cast<Type>(v)))
+        : storage_base(detail::make(eve::as<wide>{}, Type(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size

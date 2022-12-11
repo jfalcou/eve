@@ -51,7 +51,7 @@ template<scalar_value T>
 EVE_FORCEINLINE auto
 to_logical(T v) noexcept
 {
-  return logical<std::conditional_t<std::is_same_v<T, bool>, std::uint8_t, T>>(v);
+  return logical<T>(v);
 }
 
 template<relative_conditional_expr C, simd_value T>

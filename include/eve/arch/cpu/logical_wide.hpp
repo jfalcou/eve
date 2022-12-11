@@ -128,6 +128,10 @@ namespace eve
     EVE_FORCEINLINE explicit logical(S v) noexcept
                   : storage_base(detail::make(eve::as<logical>{}, v)) {}
 
+    //! Construct from a `bool`
+    EVE_FORCEINLINE explicit logical(bool v) noexcept
+                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
     EVE_FORCEINLINE logical(T0 const &v0, T1 const &v1, Ts const &... vs) noexcept
@@ -319,7 +323,7 @@ namespace eve
     //! @{
     //==============================================================================================
     //! Set the value of a given lane
-    EVE_FORCEINLINE void set(std::size_t i, scalar_value auto v) noexcept
+    EVE_FORCEINLINE void set(std::size_t i, std::convertible_to<bool> auto v) noexcept
     {
       detail::insert(*this, i, v);
     }
