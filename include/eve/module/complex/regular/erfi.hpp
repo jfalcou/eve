@@ -49,7 +49,7 @@ namespace eve
 //!  @godbolt{doc/complex/erfi.cpp}
 //!  @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(eta_, eta);
+  EVE_MAKE_CALLABLE(erfi_, erfi);
   namespace detail
   {
     template<floating_real_value V>
