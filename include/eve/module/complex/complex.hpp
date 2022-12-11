@@ -35,7 +35,7 @@ namespace eve
   //!
   //! @tparam Type  Underlying floating point type
   //================================================================================================
-  template<floating_scalar_value Type>
+  template<scalar_value Type>
   struct complex : struct_support<complex<Type>, Type, Type>
   {
     using eve_disable_ordering  = void;
