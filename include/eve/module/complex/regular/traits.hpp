@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  template<scalar_value Type> struct complex;
+  template<floating_scalar_value Type> struct complex;
 
   template<typename T> struct as_complex;
 
