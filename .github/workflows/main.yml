@@ -77,14 +77,14 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
-     - name: Fetch current branch
+      - name: Fetch current branch
         uses: actions/checkout@v3
       - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         uses: ./.github/actions/run_docker
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         '${{ matrix.cfg.status }}'
+          status:         1
           cpu:            8
       - name: Always execute
         if: ${{ always() }}
