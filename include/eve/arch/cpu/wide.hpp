@@ -162,7 +162,7 @@ namespace eve
     template<typename S0, typename... Ss>
     explicit EVE_FORCEINLINE wide(S0 const& v0, Ss const&...vs) noexcept
         requires kumi::sized_product_type<Type, sizeof...(Ss) + 1>
-        : storage_base(kumi::map([]<typename W>(auto const& n, W const&) { return W {n}; },
+    : storage_base(kumi::map([]<typename W>(auto const& n, W const&) { return W{n}; },
                                  kumi::make_tuple(v0, vs...),
                                  *this))
     {}
