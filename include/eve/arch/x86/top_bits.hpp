@@ -19,7 +19,8 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
   static constexpr std::ptrdiff_t static_size   = logical_type::size();
   static constexpr bool           is_aggregated = false;
 
-  using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
+  static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
+  using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
 
   private:
   static constexpr std::ptrdiff_t storage_cardinal = []

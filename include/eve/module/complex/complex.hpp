@@ -48,7 +48,8 @@ namespace eve
     using underlying_type = underlying_type_t<Type>;
 
     /// Default constructor
-    explicit  complex(Type r = 0)     noexcept : parent{r,0} {}
+              complex()               noexcept : parent{0,0} {}
+    explicit  complex(Type r        ) noexcept : parent{r,0} {}
               complex(Type r, Type i) noexcept : parent{r,i} {}
 
     /// Stream insertion operator

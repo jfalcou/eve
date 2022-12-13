@@ -15,7 +15,7 @@ namespace eve
 
   template<typename T> struct as_complex;
 
-  template<floating_scalar_value T> struct as_complex<T>
+  template<scalar_value T> struct as_complex<T>
   {
     using type = eve::complex<T>;
   };
