@@ -7,6 +7,7 @@
 //==================================================================================================
 #ifndef KUMI_TUPLE_HPP_INCLUDED
 #define KUMI_TUPLE_HPP_INCLUDED
+#include <concepts>
 #include <cstddef>
 #include <utility>
 namespace kumi::detail

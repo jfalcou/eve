@@ -69,12 +69,13 @@ namespace eve::detail
   template <std::unsigned_integral T>
   EVE_FORCEINLINE auto sum8(wide<T, eve::fixed<8>> v)
   {
-    if constexpr ( sizeof(T) == 1 )
+         if constexpr ( current_api >= asimd && sizeof(T) == 1 ) return vaddlv_u8(v);
+    else if constexpr ( current_api >= asimd && sizeof(T) == 2 ) return vaddvq_u16(v);
+    else if constexpr ( sizeof(T) == 1 )
     {
       using u16_4 = typename wide<T, fixed<8>>::template rebind<std::uint16_t, fixed<4>>;
       return sum4(u16_4(vpaddl_u8(v)));
     }
-    else if constexpr ( current_api >= asimd && sizeof(T) == 2 ) return vaddvq_u16(v);
     else if constexpr ( sizeof(T) == 2 )
     {
       using u32_4 = typename wide<T, fixed<8>>::template rebind<std::uint32_t, fixed<4>>;
