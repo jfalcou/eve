@@ -94,8 +94,10 @@ namespace detail
     static constexpr bool is_aggregated = has_aggregated_abi_v<logical_type> ||
                                           (has_emulated_abi_v<logical_type> && static_size > 64);
 
+    static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
+
     //! logical or half size
-    using half_logical = logical<wide<scalar_type, eve::fixed<static_size / 2>>>;
+    using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
 
    private:
     EVE_FORCEINLINE static auto storage_type_impl()
