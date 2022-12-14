@@ -15,6 +15,9 @@
 #include <eve/module/complex/detail/special.hpp>
 #include <eve/module/complex/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
+#include <eve/module/complex/regular/faddeeva.hpp>
+#include <eve/module/complex/regular/exp_i.hpp>
+#include <eve/product_type.hpp>
 #include <ostream>
 
 namespace eve

@@ -146,7 +146,7 @@ namespace eve
       auto indneg  = is_ltz(imag(z));
       z = if_else(indneg, conj(z), z);
       auto r       = nan(as<Z>()); // nan case treated here
-      r = if_else(is_infinite(z), zero, r);
+      r = if_else(is_infinite(real(z)), zero, r);
       auto notdone = is_finite(z);
       auto indin  =  sqr_abs(z) <=  real_t(64);
       auto indband =  indin && (imag(z) < real_t(5.0e-3));

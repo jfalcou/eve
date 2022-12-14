@@ -12,6 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/complex/regular/traits.hpp>
+#include <eve/module/complex/regular/exp_i.hpp>
 
 namespace eve
 {
@@ -55,7 +56,7 @@ namespace eve
         }
         auto s6 = k1* s5;
         f =  if_else(isnezy, f + s6, f);
-        return f;
+        return if_else(is_eqz(z), zero, f);
       };
 
       auto c_large = [](auto z){

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/complex/regular/detail/special.hpp>
+#include <eve/module/complex/detail/special.hpp>
 #include <array>
 
 namespace eve
@@ -52,20 +52,20 @@ namespace eve
   EVE_MAKE_CALLABLE(erfi_, erfi);
   namespace detail
   {
-    template<floating_real_value V>
+    template<floating_ordered_value V>
     EVE_FORCEINLINE auto erfi_( EVE_SUPPORTS(cpu_)
                               , V const & v) noexcept
     {
-      auto over = sqr(x) > 720;
-      V r = inf(as(x))*sign(x);
-      return if_else(over,  r, real(erfi(to_complex(v)));
+      auto over = sqr(v) > 720;
+      V r = inf(as(v))*sign(v);
+      return if_else(over,  r, real(erfi(to_complex(v))));
     }
 
     template<typename Z>
-    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::eta_
+    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::erfi_
                                                 , Z z) noexcept
     {
-      return -i(as(z)*erf(i(as(z)*z);
+      return -i(as(z))*erf(i(as(z))*z);
     }
   }
 }
