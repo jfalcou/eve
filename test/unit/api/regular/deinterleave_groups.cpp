@@ -120,9 +120,10 @@ TTS_CASE_TPL( "Check behavior of deinterleave on arithmetic data", less_test_typ
   ( [&]<int Fields>(std::integral_constant<int, Fields>)
   {
     // maybe unused for gcc bug
-    static constexpr std::size_t max_group_size = (T::size() >= 64) ? 4 : T::size();
-    static constexpr auto nn = std::countr_zero(max_group_size) + 1;
-    static constexpr std::ptrdiff_t fields = Fields;
+    [[maybe_unused]] static constexpr std::size_t max_group_size = (T::size() >= 64) ? 4 : T::size();
+    [[maybe_unused]] static constexpr auto nn = std::countr_zero(max_group_size) + 1;
+    [[maybe_unused]] static constexpr std::ptrdiff_t fields = Fields;
+
     eve::detail::for_<0, 1, nn>
     (
       [&]<int Shift>(std::integral_constant<int, Shift>)
