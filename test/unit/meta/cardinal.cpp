@@ -12,10 +12,7 @@
 
 TTS_CASE( "Check for scalar cardinals")
 {
-  TTS_TYPE_IS( eve::cardinal_t<float> , eve::scalar_cardinal );
-  TTS_EQUAL  ( eve::cardinal_v<float>   , 1 );
-
-  TTS_TYPE_IS( eve::cardinal_t<eve::logical<float>> , eve::scalar_cardinal );
+  TTS_EQUAL  ( eve::cardinal_v<float> , 1 );
   TTS_EQUAL  ( eve::cardinal_v<eve::logical<float>> , 1 );
 };
 
