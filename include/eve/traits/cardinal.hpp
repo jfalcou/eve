@@ -13,7 +13,6 @@
 namespace eve
 {
   template<std::ptrdiff_t Cardinal> struct fixed;
-  struct  scalar_cardinal;
 
   //================================================================================================
   //! @addtogroup traits
@@ -51,10 +50,8 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename Type>
-  struct cardinal : scalar_cardinal
-  {
-    using type = scalar_cardinal;
-  };
+  struct cardinal : fixed<1>
+  {};
 
   template<typename Type, typename Size>
   struct cardinal<wide<Type, Size>> : Size
