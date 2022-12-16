@@ -36,3 +36,7 @@ EVE_CALLABLE_API(basic_shuffle_, basic_shuffle)
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/detail/simd/arm/neon/basic_shuffle.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/detail/simd/arm/sve/basic_shuffle.hpp>
+#endif
