@@ -40,3 +40,7 @@ namespace detail
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/reverse.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/reverse.hpp>
+#endif
