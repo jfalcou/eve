@@ -109,7 +109,8 @@ namespace eve::detail
 
     [[maybe_unused]] auto shft = [](auto a, auto b )
     {
-      using i16_t = wide<std::uint16_t, fixed<N::value/2>>;
+      static constexpr auto half_size = (N::value/2 > 0) ? N::value/2 : 1;
+      using i16_t = wide<std::uint16_t, fixed<half_size>>;
 
       i16_t const masklow(0xff);
       i16_t const maskhi (0xff00);
