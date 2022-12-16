@@ -73,15 +73,6 @@ namespace eve
   template <typename T>
   concept wide_cardinal = detail::is_wide_cardinal<T>::value;
 
-  //================================================================================================
-  //! @brief Cardinal type for scalar values
-  //================================================================================================
-  struct scalar_cardinal : std::integral_constant<std::ptrdiff_t, 1ULL>
-  {
-    using type          = scalar_cardinal;
-    using combined_type = fixed<2>;
-  };
-
   template<std::ptrdiff_t Cardinal>
   inline constexpr fixed<Cardinal> const lane = {};
 
