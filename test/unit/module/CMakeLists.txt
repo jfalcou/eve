@@ -7,7 +7,6 @@
 ## Modules
 add_subdirectory(core)
 add_subdirectory(complex)
-add_subdirectory(proba)
 
 if(EVE_USE_BOOST)
 add_subdirectory(bessel)
