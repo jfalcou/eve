@@ -17,11 +17,11 @@ int main()
     << "<- z       = " << z << std::endl
     << "-> erf(z)  = " << r << std::endl;
 
-  auto zs = eve::as_complex_t<float>(-1, -5);
-  auto rs = eve::erf(zs);
-  std::cout
-    << "---- scalar" << std::endl
-    << "<- zs        = " << zs << std::endl
-    << "-> erf(zs)   = " << rs << std::endl;
+//   auto zs = eve::as_complex_t<float>(-1, -5);
+//   auto rs = eve::erf(zs);
+//   std::cout
+//     << "---- scalar" << std::endl
+//     << "<- zs        = " << zs << std::endl
+//     << "-> erf(zs)   = " << rs << std::endl;
   return 0;
 }

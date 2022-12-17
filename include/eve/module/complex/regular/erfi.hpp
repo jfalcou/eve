@@ -52,20 +52,27 @@ namespace eve
   EVE_MAKE_CALLABLE(erfi_, erfi);
   namespace detail
   {
+    template<typename Z>
+    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::erfi_
+                                               , Z z) noexcept
+    {
+      auto realz = is_real(z);
+      if (eve::all(realz))
+        return Z{erfi(real(z)), 0};
+      else  if (eve::none(realz))
+        return -(eve::callable_i_{}*erf(callable_i_{}*z));
+      else
+        return if_else(realz, Z{erfi(real(z)), 0}, -(eve::callable_i_{}*erf(i(as(z))*z)));
+    }
+
     template<floating_ordered_value V>
     EVE_FORCEINLINE auto erfi_( EVE_SUPPORTS(cpu_)
-                              , V const & v) noexcept
+                             , V const & v) noexcept
     {
       auto over = sqr(v) > 720;
       V r = inf(as(v))*sign(v);
-      return if_else(over,  r, real(erfi(to_complex(v))));
-    }
-
-    template<typename Z>
-    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::erfi_
-                                                , Z z) noexcept
-    {
-      return -i(as(z))*erf(i(as(z))*z);
+//      std::cout <<
+      return if_else(over,  r, -imag(erf(as_complex_t<V>(0, -v))));
     }
   }
 }
