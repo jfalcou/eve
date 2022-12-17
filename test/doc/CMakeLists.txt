@@ -11,8 +11,6 @@ add_subdirectory(complex)
 add_subdirectory(elliptic)
 add_subdirectory(math)
 add_subdirectory(polynomial)
-add_subdirectory(proba)
 add_subdirectory(special)
-
 add_subdirectory(core)
 add_subdirectory(traits)
