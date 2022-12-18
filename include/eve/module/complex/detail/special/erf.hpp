@@ -21,7 +21,7 @@ namespace eve
   namespace detail
   {
     template<typename Z>
-    EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::erf_, Z const& z) noexcept
+    EVE_FORCEINLINE Z complex_unary_dispatch( eve::tag::erf_, Z const& z) noexcept
     {
       auto x =  real(z);
       auto y =  imag(z);
@@ -421,7 +421,7 @@ namespace eve
         case 97: case 98:
         case 99: case 100: { // use Taylor expansion for small x (|x| <= 0.0309...)
           //  (2/sqrt(pi)) * (x - 2/3 x^3  + 4/15 x^5  - 8/105 x^7 + 16/945 x^9)
-          real_t x2(sqr(x));
+          auto x2(sqr(x));
           r = x * (1.1283791670955125739
                    - x2 * (0.75225277806367504925
                            - x2 * (0.30090111122547001970
@@ -450,21 +450,21 @@ namespace eve
           return w_im_y100(100/(1+xx), xx)*signxx;
         };
 
-        auto taylor_erfi = [w_im](auto x, auto y){
-          auto x2 = sqr(x), y2 = sqr(y);
-          auto expy2 = expx2(y);
-          auto re = expy2*x * (real_t(1.1283791670955125739)
-                               - x2 * real_t((0.37612638903183752464)
-                                             + real_t(0.75225277806367504925)*y2)
-                               + x2*x2 * (real_t(0.11283791670955125739)
-                                          + y2 * (real_t(0.45135166683820502956)
-                                                  + real_t(0.15045055561273500986)*y2)));
-          auto im =  expy2 * (w_im(y)
-                              - x2*y * (real_t(1.1283791670955125739)
-                                        - x2 * (real_t(0.56418958354775628695)
-                                                + real_t(0.37612638903183752464)*y2)));
-          return Z{re, im};
-        };
+//         auto taylor_erfi = [w_im](auto x, auto y){
+//           auto x2 = sqr(x), y2 = sqr(y);
+//           auto expy2 = expx2(y);
+//           auto re = expy2*x * (real_t(1.1283791670955125739)
+//                                - x2 * real_t((0.37612638903183752464)
+//                                              + real_t(0.75225277806367504925)*y2)
+//                                + x2*x2 * (real_t(0.11283791670955125739)
+//                                           + y2 * (real_t(0.45135166683820502956)
+//                                                   + real_t(0.15045055561273500986)*y2)));
+//           auto im =  expy2 * (w_im(y)
+//                               - x2*y * (real_t(1.1283791670955125739)
+//                                         - x2 * (real_t(0.56418958354775628695)
+//                                                 + real_t(0.37612638903183752464)*y2)));
+//           return Z{re, im};
+//         };
 
         auto taylor = [mRe_z2, mIm_z2, z](){
           auto mz2 = Z(mRe_z2, mIm_z2); // -z^2
@@ -504,11 +504,11 @@ namespace eve
             std::cout << "icitte 3" << std::endl;
             return taylor();
           }
-          else if (eve::abs(mIm_z2) < 5e-3 && ax < 5e-3)
-          {
-            std::cout << "icitte 4" << std::endl;
-            return taylor_erfi(x, y);
-          }
+//           else if (eve::abs(mIm_z2) < 5e-3 && ax < 5e-3)
+//           {
+//             std::cout << "icitte 4" << std::endl;
+//             return taylor_erfi(x, y);
+//           }
         }
         std::cout << "icitte 5 "<< std::endl;
         /* don't use complex exp function, since that will produce spurious NaN
@@ -519,11 +519,10 @@ namespace eve
       else //simd
       {
         std::cout << "icitte simd" << std::endl;
-        return map(erf, z);
+//        return map(erf, z);
         auto signx =  signnz(x);
-        //       auto w_im_y100 =  [](auto y100, auto xx){ return y100+xx; };
 
-        auto w_im = [signx/*, w_im_y100*/](real_t x){
+        auto w_im = [signx, w_im_y100](real_t x){
           const real_t ispi = real_t(0.56418958354775628694807945156); // 1 / sqrt(pi)
           auto greater5e7 = [ispi, signx](auto xx){
             return ispi / (xx*signx);
@@ -532,17 +531,15 @@ namespace eve
             auto xx2 = xx*xx;
             return signx*ispi*((xx2) * (xx2-real_t(4.5)) + 2) / (xx * ((xx2) * (xx2-5) + real_t(3.75)));
           };
-          auto remain = [/*w_im_y100, signx*/](auto xx){
+          auto remain = [w_im_y100, signx](auto xx){
 
             if constexpr(scalar_value<real_t>)
             {
-              //      std::cout << w_im_y100(100/(1+xx), xx)*signx << std::endl;
-              return xx;
+             return  w_im_y100(100/(1+xx), xx)*signx;
             }
             else
             {
-              //   std::cout << map(w_im_y100, 100/(1+xx), xx)*signx << std::endl;
-              return xx; //map(w_im_y100, 100/(1+xx), xx)*signx;
+              return map(w_im_y100, 100/(1+xx), xx)*signx;
             }
           };
 
@@ -565,22 +562,6 @@ namespace eve
           return r;
         };
 
-        auto taylor_erfi = [w_im](auto x, auto y){
-          auto x2 = sqr(x), y2 = sqr(y);
-          auto expy2 = expx2(y);
-          auto re = expy2*x * (real_t(1.1283791670955125739)
-                               - x2 * real_t((0.37612638903183752464)
-                                             + real_t(0.75225277806367504925)*y2)
-                               + x2*x2 * (real_t(0.11283791670955125739)
-                                          + y2 * (real_t(0.45135166683820502956)
-                                                  + real_t(0.15045055561273500986)*y2)));
-          auto im =  expy2 * (w_im(y)
-                              - x2*y * (real_t(1.1283791670955125739)
-                                        - x2 * (real_t(0.56418958354775628695)
-                                                + real_t(0.37612638903183752464)*y2)));
-          return Z{re, im};
-        };
-
         auto taylor = [mRe_z2, mIm_z2, z](){
           auto mz2 = Z(mRe_z2, mIm_z2); // -z^2
           return z * (real_t(1.1283791670955125739)
@@ -591,42 +572,61 @@ namespace eve
         };
 
         auto signy = signnz(y);
+        auto no_underflow = mRe_z2 >= -750;
+        auto nfin = is_not_finite(y); //|| is_nan(z);
         auto r = Z{signx, 0};           // treat underflow
-        auto notdone = mRe_z2 >= -750;  // no underflow
-
+        auto notdone = (no_underflow && !nfin) || is_eqz(y);  // no underflow
+        r = if_else(nfin, Z{nan(as(y)), nan(as(y))}, r);
+        r = if_else(is_eqz(x)&&nfin, Z{0, y}, r);
+        auto ax = eve::abs(x);
+        auto xsmall = ax < 8e-2;
+        auto ysmall = eve::abs(y) < 1e-2;
+//        auto xverysmall =  (eve::abs(mIm_z2) < 5e-3 && ax < 5e-3);
         auto nully = [](auto x,  auto y){
+          std::cout << "nully" << std::endl;
           return Z{erf(x), y};
         };
         auto nullx = [signy, w_im](auto x,  auto y){
+          std::cout << "nullx" << std::endl;
           return Z{x, if_else(sqr(y) > real_t(720), inf(as(y))*signy, expx2(y) * w_im(y))};
         };
-        auto remain = [mRe_z2, mIm_z2, signx, taylor, taylor_erfi](auto x, auto y){
-          auto ax = eve::abs(x);
-          auto smallx = ax < 8e-2;
-          auto smally = eve::abs(y) < 1e-2;
-          Z r = oneminus(exp(mRe_z2)*(exp_i(mIm_z2)*faddeeva(Z{-y, x}*signx)))*signx;
-          r = if_else(eve::abs(mIm_z2) < 5e-3 && ax < 5e-3, taylor_erfi(x, y), r);
-          r =  if_else(smally, taylor(), r);
-          r =  if_else(smallx, r, taylor());
-          return r;
+
+        auto smallxy = [taylor](){
+          std::cout << "smallx" << std::endl;
+          return taylor();
+        };
+
+        auto remain =  [mRe_z2, mIm_z2, signx](auto x, auto y){
+          std::cout << "remain" << std::endl;
+          auto [s, c] = sincos(mIm_z2);
+          auto zz = oneminus(exp(mRe_z2)*(Z(c, s)*faddeeva(Z{-y, x}*signx)))*signx;
+          return zz;
         };
 
         if( eve::any(notdone) )
         {
+          std::cout << "notdone 1 " << notdone << std::endl;
           notdone = next_interval(nully, notdone, is_eqz(y), r, x, y);
           if( eve::any(notdone) )
           {
+            std::cout << "notdone 2 " << notdone << std::endl;
             notdone = next_interval(nullx, notdone, is_eqz(x), r, x, y);
             if( eve::any(notdone) )
             {
-              notdone = last_interval(remain, notdone, r, x, y);
+              std::cout << "notdone 3 " << notdone << std::endl;
+              notdone = next_interval(smallxy, notdone, xsmall && ysmall, r);
+              if( eve::any(notdone) )
+              {
+                std::cout << "notdone 5 " << notdone << std::endl;
+                notdone = last_interval(remain, notdone, r, x, y);
+              }
             }
           }
         }
+        std::cout << "notdone end " << notdone << std::endl;
         return r;
       }
       std::cout << "icitte inf" << std::endl;
-      return z;
     }
 
   }

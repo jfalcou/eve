@@ -11,124 +11,124 @@
 #include <complex>
 
 
-// TTS_CASE_TPL( "Check corner cases of erf", eve::test::scalar::ieee_reals)
-// <typename T>(tts::type<T>)
-// {
-//   if constexpr(sizeof(eve::element_type_t<T>) == 8)
+TTS_CASE_TPL( "Check corner cases of erf", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
+{
+//   if constexpr(sizeof(eve::element_type_t<T>) == 4)
 //   {
-//     using c_t = eve::complex<T>;
-//     using eve::as;
-//     const int N = 18;
-//     auto zer = eve::zero(as<T>());
-//     auto inf = eve::inf(as<T>());
-//     auto nan = eve::nan(as<T>());
-//     auto one = eve::one(as<T>());
-//     std::array<c_t, N> inputs =
-//       {
-//         c_t(zer,zer), //0
-//         c_t(zer,inf), //1
-//         c_t(zer,nan), //2
-//         c_t(one,inf), //3
-//         c_t(one,nan), //4
-//         c_t(inf,zer), //5
-//         c_t(inf,one), //6
-//         c_t(inf,inf), //7
-//         c_t(inf,nan), //8
-//         c_t(nan,zer), //9
-//         c_t(nan,one), //10
-//         c_t(nan,nan), //11
-//         c_t(0.5, 0 ), //12
-//         c_t(0,  0.5), //13
-//         c_t(4e-2, 1),  //14
-//         c_t(4e-2, 1e-3), //15
-//         c_t(-4e-2, 1),  //16
-//         c_t(-4e-2, 1e-3)//17
-//       };
+    using c_t = eve::complex<T>;
+    using eve::as;
+    const int N = 18;
+    auto zer = eve::zero(as<T>());
+    auto inf = eve::inf(as<T>());
+    auto nan = eve::nan(as<T>());
+    auto one = eve::one(as<T>());
+    std::array<c_t, N> inputs =
+      {
+        c_t(zer,zer), //0
+        c_t(zer,inf), //1
+        c_t(zer,nan), //2
+        c_t(one,inf), //3
+        c_t(one,nan), //4
+        c_t(inf,zer), //5
+        c_t(inf,one), //6
+        c_t(inf,inf), //7
+        c_t(inf,nan), //8
+        c_t(nan,zer), //9
+        c_t(nan,one), //10
+        c_t(nan,nan), //11
+        c_t(0.5, 0 ), //12
+        c_t(0,  0.5), //13
+        c_t(4e-2, 1),  //14
+        c_t(4e-2, 1e-3), //15
+        c_t(-4e-2, 1),  //16
+        c_t(-4e-2, 1e-3)//17
+      };
 
-//     std::array<c_t, N> results =
-//       {
-//         c_t(zer,zer),  //0
-//         c_t(zer, inf), //1
-//         c_t(zer,nan),  //2
-//         c_t(nan, nan), //3
-//         c_t(nan,nan),  //4
-//         c_t(1,zer),    //5
-//         c_t(1,zer),    //6
-//         c_t(nan, nan), //7
-//         c_t(nan,nan),  //8
-//         c_t(nan,zer),  //9
-//         c_t(nan,nan),  //10
-//         c_t(nan,nan),  //11
-//         c_t(5.204998778130465187e-01, 0), //12
-//         c_t(0, 6.14952094696510909e-01), //13
-//         c_t(1.224939980392529826e-01, 1.645524692691958002e+00), //14
-//         c_t(4.511115120815541862e-02, 1.126575578306994625e-03), //15
-//         c_t(-1.224939980392529826e-01, 1.645524692691958002e+00), //16
-//         c_t(-4.511115120815541862e-02, 1.126575578306994625e-03) //17
-//       };
-//     using eve::conj;
-//     using eve::erf;
-//     for(int i=0; i < N; ++i)
-//     {
-//       TTS_ULP_EQUAL(erf(inputs[i]), results[i], 50); //<< "i " << i << " -> " << inputs[i] <<  " -> " <<erf(inputs[i])<<"\n";
-// //    TTS_IEEE_EQUAL(erf(conj(inputs[i])), conj(erf(inputs[i])));
-//     }
+    std::array<c_t, N> results =
+      {
+        c_t(zer,zer),  //0
+        c_t(zer, inf), //1
+        c_t(zer,nan),  //2
+        c_t(nan, nan), //3
+        c_t(nan,nan),  //4
+        c_t(1,zer),    //5
+        c_t(1,zer),    //6
+        c_t(nan, nan), //7
+        c_t(nan,nan),  //8
+        c_t(nan,zer),  //9
+        c_t(nan,nan),  //10
+        c_t(nan,nan),  //11
+        c_t(5.204998778130465187e-01, 0), //12
+        c_t(0, 6.14952094696510909e-01), //13
+        c_t(1.224939980392529826e-01, 1.645524692691958002e+00), //14
+        c_t(4.511115120815541862e-02, 1.126575578306994625e-03), //15
+        c_t(-1.224939980392529826e-01, 1.645524692691958002e+00), //16
+        c_t(-4.511115120815541862e-02, 1.126575578306994625e-03) //17
+      };
+    using eve::conj;
+    using eve::erf;
+    for(int i=0; i < N; ++i)
+    {
+      TTS_ULP_EQUAL(erf(inputs[i]), results[i], 50); //<< "i " << i << " -> " << inputs[i] <<  " -> " <<erf(inputs[i])<<"\n";
+      TTS_IEEE_EQUAL(erf(conj(inputs[i])), conj(erf(inputs[i])));
+    }
 //   }
 //   TTS_EQUAL(0, 0);
-// };
+};
 
 TTS_CASE_TPL( "Check corner cases of erf", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  if constexpr(sizeof(eve::element_type_t<T>) == 8)
-  {
+//   if constexpr(sizeof(eve::element_type_t<T>) == 4)
+//   {
     using c_t = eve::complex<T>;
     using eve::as;
     auto inf = eve::inf(as<T>());
     auto nan = eve::nan(as<T>());
     constexpr int NTST = 41;
-     c_t z[NTST] = {
-       c_t(1,2), //0
+    c_t z[NTST] = {
+      c_t(1,2), //0
       c_t(-1,2), //1
       c_t(1,-2), //2
-       c_t(-1,-2), //3
+      c_t(-1,-2), //3
       c_t(9,-28), //4
       c_t(21,-33), //5
       c_t(1e3,1e3), //6
       c_t(-3001,-1000), //7
-      c_t(1e160,-1e159), //8
+      c_t(1e20, -1e19),//8
       c_t(5.1e-3, 1e-8), //9
       c_t(-4.9e-3, 4.95e-3), //10
       c_t(4.9e-3, 0.5), //11
       c_t(4.9e-4, -0.5e1), //12
-       c_t(-4.9e-5, -0.5e2),//13
-      c_t(5.1e-3, 0.5),
-      c_t(5.1e-4, -0.5e1),
-      c_t(-5.1e-5, -0.5e2),
-      c_t(1e-6,2e-6),
-      c_t(0,2e-6),
-      c_t(0,2),
-      c_t(0,20),
-      c_t(0,200),
-      c_t(inf,0),
-      c_t(-inf,0),
-      c_t(0,inf),
-      c_t(0,-inf),
-      c_t(inf,inf),
-      c_t(inf,-inf),
-      c_t(nan,nan),
-      c_t(nan,0),
-      c_t(0,nan),
-      c_t(nan,inf),
-      c_t(inf,nan),
-      c_t(1e-3,nan),
-      c_t(7e-2,7e-2),
-      c_t(7e-2,-7e-4),
-      c_t(-9e-2,7e-4),
-      c_t(-9e-2,9e-2),
-      c_t(-7e-4,9e-2),
-      c_t(7e-2,0.9e-2),
-      c_t(7e-2,1.1e-2)
+      c_t(-4.9e-5, -0.5e2),//13
+      c_t(5.1e-3, 0.5),//14
+      c_t(5.1e-4, -0.5e1),//15
+      c_t(-5.1e-5, -0.5e2),//16
+      c_t(1e-6,2e-6),//17
+      c_t(0,2e-6),//18
+      c_t(0,2),//19
+      c_t(0,20),//20
+      c_t(0,200),//21
+      c_t(inf,0),//22
+      c_t(-inf,0),//23
+      c_t(0,inf),//24
+      c_t(0,-inf),//25
+      c_t(inf,inf),//26
+      c_t(inf,-inf),//27
+      c_t(nan,nan),//28
+      c_t(nan,0),//29
+      c_t(0,nan),//30
+      c_t(nan,inf),//31
+      c_t(inf,nan),//32
+      c_t(1e-3,nan),//33
+      c_t(7e-2,7e-2),//34
+      c_t(7e-2,-7e-4),//35
+      c_t(-9e-2,7e-4),//36
+      c_t(-9e-2,9e-2),//37
+      c_t(-7e-4,9e-2),  //38
+      c_t(7e-2,0.9e-2), //39
+      c_t(7e-2,1.1e-2) //40
     };
     c_t w[NTST] = { // erf(z[i]), evaluated with Maple
       c_t(-0.5366435657785650339917955593141927494421,
@@ -202,11 +202,20 @@ TTS_CASE_TPL( "Check corner cases of erf", eve::test::scalar::ieee_reals)
     };
     using eve::erf;
     using eve::conj;
+    using TT = eve::wide < c_t, eve::fixed<4>>;
     for(int i=0; i < NTST; ++i)
     {
-      TTS_ULP_EQUAL(erf(z[i]), w[i], 1000) << "i " << i << " -> " << z[i] <<  " -> " <<erf(z[i]) <<  " -> " <<w[i] <<"\n";
-      TTS_ULP_EQUAL(erf(-z[i]), -w[i], 1000);
+//      std::cout << "i =  " << i << std::endl;
+//      TTS_ULP_EQUAL(erf(z[i]), w[i], 1000) << "i " << i << " -> " << z[i] <<  " -> " <<erf(z[i]) <<  " -> " <<w[i] <<"\n";
+      TTS_RELATIVE_EQUAL(erf(z[i]), w[i], 1.0e-4) << "i " << i << '\n';
+//      TTS_ULP_EQUAL(erf(-z[i]), -w[i], 1000) << "i " << i << '\n';
+
+
+//       TTS_ULP_EQUAL(erf(TT(z[i])), TT(w[i]), 1000)<< "i " << i << " -> " << z[i] <<  " -> " <<erf(z[i]) <<  " -> " <<w[i] <<"\n";
+      if (i == 14) std::cout << i << "    " << erf(TT(z[i])) <<  " --- " << erf(z[i]) << std::endl;
+       TTS_RELATIVE_EQUAL(erf(TT(z[i])), TT(w[i]), 1.0e-4) << "i " << i << '\n';
+///      TTS_ULP_EQUAL(erf(-z[i]), -w[i], 1000);
     }
-  }
-  TTS_EQUAL(0, 0);
+//   }
+//   TTS_EQUAL(0, 0);
 };
