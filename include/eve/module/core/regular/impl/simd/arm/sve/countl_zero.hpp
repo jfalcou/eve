@@ -32,7 +32,7 @@ requires sve_abi<abi_t<T, N>>
   }
   else
   {
-    return svclz_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
+    return svclz_m(alternative(cond, v, as(v)), expand_mask(cond, as(v)), v);
   }
 }
 }
