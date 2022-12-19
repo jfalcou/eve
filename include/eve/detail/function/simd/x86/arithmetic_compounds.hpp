@@ -180,7 +180,8 @@ namespace eve::detail
         }
         else
         {
-          using htype  = wide<std::int64_t, fixed<N::value / 2>>;
+          static constexpr auto half_size = (N::value/2 > 0) ? N::value/2 : 1;
+          using htype  = wide<std::int64_t, fixed<half_size>>;
           htype mhi    = _mm_setr_epi32(-1, 0, -1, 0);
           htype mlo    = mhi;
           auto  lself  = _mm_srli_si128(self, 4);
@@ -202,7 +203,8 @@ namespace eve::detail
       else  if constexpr( c == category::uint16x8   ) self = _mm_mullo_epi16(self, other);
       else  if constexpr( c == category::int8x16 || c == category::uint8x16 )
       {
-        using htype  = wide<std::int16_t, fixed<N::value / 2>>;
+        static constexpr auto half_size = (N::value/2 > 0) ? N::value/2 : 1;
+        using htype  = wide<std::int16_t, fixed<half_size>>;
         htype mhi    = _mm_set1_epi16(0x00FF);
         htype mlo    = mhi;
         auto  lself  = _mm_srli_epi16(self, 8);
