@@ -51,4 +51,13 @@ namespace eve
 
   template<typename T>
   inline constexpr bool is_complex_v = is_complex<T>::value;
+
+  template<typename Wrapper, typename T>
+  struct  supports_like<Wrapper,eve::complex<T>>
+        : std::bool_constant<   std::same_as<eve::complex<T>, element_type_t<Wrapper>>
+                            ||  std::same_as<T, element_type_t<Wrapper>>
+                            ||  plain_scalar_value<Wrapper>
+                            >
+  {
+  };
 }
