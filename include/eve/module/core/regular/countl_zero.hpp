@@ -60,3 +60,7 @@ EVE_MAKE_CALLABLE(countl_zero_, countl_zero);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/countl_zero.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/countl_zero.hpp>
+#endif
