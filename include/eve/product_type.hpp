@@ -160,73 +160,166 @@ namespace eve
     template<like<Self> Z1, like<Self> Z2>
     EVE_FORCEINLINE friend auto operator+(Z1 x, Z2 y) requires requires { x += x; }
     {
-      if constexpr(scalar_value<Z1> && simd_value<Z2>)  return y += x;
-      else                                              return x += y;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that += y;
+      }
+      else
+      {
+        return y + x;
+      }
     }
 
     template<like<Self> Z1, like<Self> Z2>
     EVE_FORCEINLINE friend auto operator-(Z1 x, Z2 y) requires requires { x -= x; }
     {
-      if constexpr(scalar_value<Z1> && simd_value<Z2>)
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_t<Z1> that{x};
+        as_wide_as_t<Z1,Z2> that{x};
         return that -= y;
       }
-      else                                              return x -= y;
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that -= y;
+      }
     }
 
     template<like<Self> Z1, like<Self> Z2>
     EVE_FORCEINLINE friend auto operator*(Z1 x, Z2 y) requires requires { x *= x; }
     {
-      if constexpr(scalar_value<Z1> && simd_value<Z2>)  return y *= x;
-      else                                              return x *= y;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that *= y;
+      }
+      else
+      {
+        return y * x;
+      }
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator/(Z1 x, Z2 y) requires requires { x /= x; }
+    EVE_FORCEINLINE friend auto operator/(Z1 x, Z2 y)
+    requires requires { x /= x; }
     {
-      if constexpr(scalar_value<Z1> && simd_value<Z2>)
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_t<Z1> that{x};
+        as_wide_as_t<Z1,Z2> that{x};
         return that /= y;
       }
-      else                                              return x /= y;
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that /= y;
+      }
     }
 
-    EVE_FORCEINLINE friend auto operator%(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x %= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator%(Z1 x, Z2 y)
+    requires requires { x %= x; }
     {
-      x %= y;
-      return x;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that %= y;
+      }
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that %= y;
+      }
     }
 
-    EVE_FORCEINLINE friend auto operator^(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x ^= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator^(Z1 x, Z2 y)
+    requires requires { x ^= x; }
     {
-      x ^= y;
-      return x;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that ^= y;
+      }
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that ^= y;
+      }
     }
 
-    EVE_FORCEINLINE friend auto operator&(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x &= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator&(Z1 x, Z2 y)
+    requires requires { x &= x; }
     {
-      x &= y;
-      return x;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that &= y;
+      }
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that &= y;
+      }
     }
 
-    EVE_FORCEINLINE friend auto operator|(eve::like<Self> auto x, eve::like<Self> auto y) requires requires { x |= y; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator|(Z1 x, Z2 y)
+    requires requires { x |= x; }
     {
-      x |= y;
-      return x;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that |= y;
+      }
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that |= y;
+      }
     }
 
-    EVE_FORCEINLINE friend auto operator<<(eve::like<Self> auto x, integral_value auto s) requires requires { x <<= s; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator<<(Z1 x, Z2 y)
+    requires requires { x <<= x; }
     {
-      x <<= s;
-      return x;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that <<= y;
+      }
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that <<= y;
+      }
     }
 
-    EVE_FORCEINLINE friend auto operator>>(eve::like<Self> auto x, integral_value auto s) requires requires { x >>= s; }
+    template<like<Self> Z1, like<Self> Z2>
+    EVE_FORCEINLINE friend auto operator>>(Z1 x, Z2 y)
+    requires requires { x >>= x; }
     {
-      x >>= s;
-      return x;
+      // Check which one is actually the product_type
+      if constexpr(product_type<element_type_t<Z1>>)
+      {
+        as_wide_as_t<Z1,Z2> that{x};
+        return that >>= y;
+      }
+      else
+      {
+        as_wide_as_t<Z2,Z1> that{x};
+        return that >>= y;
+      }
     }
 
     friend auto operator< (eve::like<Self> auto x, eve::like<Self> auto y) requires (!supports_ordering_v<Self>) = delete;
