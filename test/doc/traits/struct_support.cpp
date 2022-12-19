@@ -1,4 +1,4 @@
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <eve/wide.hpp>
 #include <iostream>
 

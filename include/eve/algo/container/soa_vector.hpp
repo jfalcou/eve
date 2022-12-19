@@ -14,7 +14,7 @@
 #include <eve/algo/views/convert.hpp>
 #include <eve/algo/container/detail/soa_storage.hpp>
 #include <eve/memory/aligned_allocator.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <eve/traits.hpp>
 #include <eve/assert.hpp>
 

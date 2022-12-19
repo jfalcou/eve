@@ -26,7 +26,7 @@ namespace adapt
 
 //! [simd-udt-adapt]
 // Opt-in for eve::product_type
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 template<>
 struct eve::is_product_type<adapt::polar_coords> : std::true_type
@@ -75,7 +75,7 @@ namespace adapt
 //! [simd-udt-to_polar]
 
 //! [simd-udt-create]
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 namespace udt
 {

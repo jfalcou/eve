@@ -32,7 +32,7 @@ std::tuple<eve::wide<float>,eve::wide<float>> to_polar(eve::wide<float> x, eve::
 
 //! [simd-kumi-tuple]
 #include <eve/module/math.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 namespace simd
 {

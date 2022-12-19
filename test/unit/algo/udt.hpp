@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 namespace udt
 {

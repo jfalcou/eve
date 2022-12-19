@@ -23,7 +23,7 @@
 //!   **EVE** provides various elements to simplify the management of user-defined structures
 //!   as vectorized types.
 //!
-//!   **Convenience header:** @code{.cpp} #include <eve/product_type.hpp> @endcode
+//!   **Convenience header:** @code{.cpp} #include <eve/traits/product_type.hpp> @endcode
 //! @}
 //==================================================================================================
 
@@ -45,7 +45,7 @@ namespace eve
   //!
   //! @tparam Type  Type to register as supporting ordering operators
   //!
-  //! **Required header:** `#include <eve/product_type.hpp>`
+  //! **Required header:** `#include <eve/traits/product_type.hpp>`
   //!
   //! By default, instances of `eve::wide<T>` where `T` is an User-Defined Product Type supports
   //! ordering. However, one can specialize `eve::supports_ordering` for a given type to evaluates
@@ -76,7 +76,7 @@ namespace eve
   //================================================================================================
   //! @brief Opt-in traits for eve::like concept compliance
   //!
-  //! **Required header:** `#include <eve/product_type.hpp>`
+  //! **Required header:** `#include <eve/traits/product_type.hpp>`
   //!
   //! `eve::supports_like` is meant ot be specialized to indicates that `Wrapper` models
   //! `eve::like<Wrapper,T>`.
@@ -95,7 +95,7 @@ namespace eve
   //================================================================================================
   //! @brief Specifies semantic compatibility between wrapper/wrapped types
   //!
-  //! **Required header:** `#include <eve/product_type.hpp>`
+  //! **Required header:** `#include <eve/traits/product_type.hpp>`
   //!
   //! `eve::like<Wrapper, T>` is a concept that indicates that a wrapper type provides most of the
   //! functionality of another type `T`. By definition `T` always models `eve::like<T>`.
@@ -113,7 +113,7 @@ namespace eve
   //================================================================================================
   //! @brief CRTP base-class to declare operators for user-defined product type
   //!
-  //! **Required header:** `#include <eve/product_type.hpp>`
+  //! **Required header:** `#include <eve/traits/product_type.hpp>`
   //!
   //! `eve::struct_support` is a CRTP based helper class to define product type like user-defined
   //! type. If `Self`this type that inherits from `eve::struct_supports<Self,Fields...>`, it will

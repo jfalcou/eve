@@ -14,7 +14,7 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/module/core.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <cstddef>
 #include <type_traits>
 #include <memory>

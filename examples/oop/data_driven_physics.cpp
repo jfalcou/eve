@@ -17,7 +17,7 @@
 #include <eve/algo/container/soa_vector.hpp>
 #include <eve/algo/transform.hpp>
 #include <eve/algo/remove.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <eve/eve.hpp>
 
 #include <chrono>
