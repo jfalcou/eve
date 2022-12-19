@@ -11,6 +11,14 @@
 
 namespace eve::detail
 {
+
+template<signed_scalar_value T, typename N>
+EVE_FORCEINLINE auto self_negate(wide<T,N> const& v) noexcept  -> wide<T, N>
+requires sve_abi<abi_t<T, N>>
+{
+  return svneg_x(sve_true<T>(), v);
+}
+
 template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_eq(wide<T, N> v, wide<T, N> w) noexcept -> as_logical_t<wide<T, N>>
