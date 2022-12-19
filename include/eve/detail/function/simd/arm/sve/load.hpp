@@ -22,7 +22,7 @@ template<relative_conditional_expr C,
 EVE_FORCEINLINE wide<T, N>
 load_(EVE_SUPPORTS(sve_),
   C const& cond, safe_type const& s, eve::as<wide<T, N>> const& tgt, Ptr p)
-  requires (!has_bundle_abi_v<wide<T, N>>)
+  requires (sve_abi<abi_t<T, N>>)
 {
   auto ptr = unalign(p);
 
@@ -32,21 +32,11 @@ load_(EVE_SUPPORTS(sve_),
     return eve::replace_ignored(res, cond, cond.alternative);
   }
   else if constexpr ( C::is_complete && !C::is_inverted ) return {};
-  else if constexpr ( has_aggregated_abi_v<wide<T, N>> )
-  {
-    using half = wide<T, typename N::split_type>;
-
-    // condition does not matter - just presense matters
-    auto lo = load(cond, s, as<half>{}, ptr);
-    auto hi = load(cond, s, as<half>{}, ptr + half::size());
-
-    return {lo, hi};
-  }
   else if constexpr(C::is_complete && C::is_inverted && N() == expected_cardinal_v<T> )
   {
     return svld1(sve_true<T>(), ptr);
   }
-  else return svldff1(sve_true<T>(), ptr);
+  else return svld1(cond.mask(tgt), ptr);
 }
 
 //================================================================================================
