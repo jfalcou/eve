@@ -288,38 +288,20 @@ namespace eve
       }
     }
 
-    template<like<Self> Z1, like<Self> Z2>
+    template<like<Self> Z1, integral_value Z2>
     EVE_FORCEINLINE friend auto operator<<(Z1 x, Z2 y)
-    requires requires { x <<= x; }
+    requires requires { x <<= y; }
     {
-      // Check which one is actually the product_type
-      if constexpr(product_type<element_type_t<Z1>>)
-      {
-        as_wide_as_t<Z1,Z2> that{x};
-        return that <<= y;
-      }
-      else
-      {
-        as_wide_as_t<Z2,Z1> that{x};
-        return that <<= y;
-      }
+      x <<= y;
+      return x;
     }
 
-    template<like<Self> Z1, like<Self> Z2>
+    template<like<Self> Z1, integral_value Z2>
     EVE_FORCEINLINE friend auto operator>>(Z1 x, Z2 y)
-    requires requires { x >>= x; }
+    requires requires { x >>= y; }
     {
-      // Check which one is actually the product_type
-      if constexpr(product_type<element_type_t<Z1>>)
-      {
-        as_wide_as_t<Z1,Z2> that{x};
-        return that >>= y;
-      }
-      else
-      {
-        as_wide_as_t<Z2,Z1> that{x};
-        return that >>= y;
-      }
+      x >>= y;
+      return x;
     }
 
     friend auto operator< (eve::like<Self> auto x, eve::like<Self> auto y) requires (!supports_ordering_v<Self>) = delete;
