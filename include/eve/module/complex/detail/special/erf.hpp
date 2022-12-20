@@ -165,6 +165,11 @@ namespace eve
 
         auto taylor = [mRe_z2, mIm_z2, z](){
           auto mz2 = Z(mRe_z2, mIm_z2); // -z^2
+// this has a pb perhaps will be solved with new complex structure
+//          using r_t =  element_type_t<real_t>;
+//          constexpr std::array<r_t, 5> a{1.1283791670955125739, 0.37612638903183752464, 0.11283791670955125739
+//               , 0.026866170645131251760, 0.0052239776254421878422};
+//           return reverse_horner(mz2, a)*z;
           return z * (real_t(1.1283791670955125739)
                       + mz2 * (real_t(0.37612638903183752464)
                                + mz2 * (real_t(0.11283791670955125739)
@@ -242,11 +247,10 @@ namespace eve
 
         auto taylor = [mRe_z2, mIm_z2, z](){
           auto mz2 = Z(mRe_z2, mIm_z2); // -z^2
-          return z * (real_t(1.1283791670955125739)
-                      + mz2 * (real_t(0.37612638903183752464)
-                               + mz2 * (real_t(0.11283791670955125739)
-                                        + mz2 * (real_t(0.026866170645131251760)
-                                                 + mz2 * real_t(0.0052239776254421878422)))));
+          using r_t =  element_type_t<real_t>;
+          constexpr std::array<r_t, 5> a{1.1283791670955125739, 0.37612638903183752464, 0.11283791670955125739
+              , 0.026866170645131251760, 0.0052239776254421878422};
+          return reverse_horner(mz2, a)*z;
         };
 
         auto signy = signnz(y);
