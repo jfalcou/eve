@@ -225,6 +225,6 @@ TTS_CASE_WITH( "Check behavior of erf on wide"
   c_t b;
   for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
   {
-    TTS_ULP_EQUAL(ez.get(i), eve::erf(z.get(i)), 100.0);
+    TTS_ULP_EQUAL(ez.get(i), eve::erf(z.get(i)), 1000.0);
   }
 };
