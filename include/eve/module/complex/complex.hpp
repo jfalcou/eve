@@ -244,16 +244,6 @@ namespace eve
     {
       return as_wide_as_t<Z, N>(ldexp(real(z1), n), ldexp(imag(z1), n));
     }
-
-    template<like<complex> Z1, like<complex> Z2>
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::if_else_,
-                                                auto const& cond,
-                                                Z1 const  & z1,
-                                                Z2 const  & z2) noexcept
-    {
-      return if_else(cond, to_complex(z1), to_complex(z2));
-    }
-
   };
 
   template<ordered_value Z>
@@ -267,6 +257,16 @@ namespace eve
   EVE_FORCEINLINE auto to_complex(Z const & v) noexcept
   {
     return v;
+  }
+
+  template<value Z1, value Z2>
+  EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,
+                                              auto const& cond,
+                                              Z1 const  & z1,
+                                              Z2 const  & z2) noexcept
+  requires(is_complex_v<Z1> != is_complex_v<Z2>)
+  {
+    return if_else(cond, to_complex(z1), to_complex(z2));
   }
 
   //================================================================================================
