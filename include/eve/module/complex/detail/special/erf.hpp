@@ -66,7 +66,7 @@ namespace eve
         auto y=2*sqr(z);
         auto ry = rec(y);
         for (int n = nmax; n >= 1; n-= 2)  s=oneminus(n*(s*ry));
-        auto f=oneminus(s*exp(-sqr(z))/(sqrt_pi(as(real(z)))*z));
+        auto f = oneminus( pedantic(div)(s*exp(-sqr(z)),(sqrt_pi(as(real(z)))*z)));
         f = if_else(isltzrz, -f, f);
 
         auto isimagz = is_imag(z);

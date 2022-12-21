@@ -9,6 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/regular/traits.hpp>
+#include <eve/module/core.hpp>
 #include <eve/traits/as_floating_point.hpp>
 
 namespace eve
@@ -127,6 +128,49 @@ namespace eve
         using f_t = as_floating_point_t<Z>;
         return as_complex_t<f_t>(0,f_t{1}/rhs);
       }
+    }
+  }
+
+  namespace detail
+  {
+    template<value T0> auto add_(EVE_SUPPORTS(cpu_), T0 a0, callable_i_) noexcept
+    {
+      return a0 + eve::i;
+    }
+
+    template<value T0> auto sub_(EVE_SUPPORTS(cpu_), T0 a0, callable_i_) noexcept
+    {
+      return a0 - eve::i;
+    }
+
+    template<value T0> auto mul_(EVE_SUPPORTS(cpu_), T0 a0, callable_i_) noexcept
+    {
+      return a0 * eve::i;
+    }
+
+    template<value T0> auto div_(EVE_SUPPORTS(cpu_), T0 a0, callable_i_) noexcept
+    {
+      return a0 / eve::i;
+    }
+
+    template<value T0> auto add_(EVE_SUPPORTS(cpu_), callable_i_, T0 a0) noexcept
+    {
+      return eve::i + a0;
+    }
+
+    template<value T0> auto sub_(EVE_SUPPORTS(cpu_), callable_i_, T0 a0) noexcept
+    {
+      return eve::i - a0;
+    }
+
+    template<value T0> auto mul_(EVE_SUPPORTS(cpu_), callable_i_, T0 a0) noexcept
+    {
+      return eve::i * a0;
+    }
+
+    template<value T0> auto div_(EVE_SUPPORTS(cpu_), callable_i_, T0 a0) noexcept
+    {
+      return eve::i / a0;
     }
   }
 

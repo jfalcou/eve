@@ -260,8 +260,8 @@ TTS_CASE_TPL( "Check complex::operator/", eve::test::scalar::ieee_reals)
   TTS_EQUAL((eve::i / z_s2  ) , (c_t{-0.25, 0.25}));
 
   // complex / wide real / wide real / complex
-  TTS_EQUAL((z_s1   / rv    ) , (wc_t{[&](auto i, auto){ return z_s1 / rv.get(i);}}));
-  TTS_EQUAL((rv     / z_s1  ) , (wc_t{[&](auto i, auto){ return rv.get(i) / z_s1;}}));
+  TTS_ULP_EQUAL((z_s1   / rv    ) , (wc_t{[&](auto i, auto){ return z_s1 / rv.get(i);}}), 0.5);
+  TTS_ULP_EQUAL((rv     / z_s1  ) , (wc_t{[&](auto i, auto){ return rv.get(i) / z_s1;}}), 0.5);
 
   // complex / wide complex / wide complex / complex
   TTS_RELATIVE_EQUAL((z_s1 / z_v1) , (wc_t{[&](auto i, auto){ return z_s1 / z_v1.get(i);}}), 1e-4);

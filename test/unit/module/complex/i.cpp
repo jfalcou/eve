@@ -33,7 +33,7 @@ TTS_CASE_TPL( "Check eve::i constant", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL( (z_t{inf, 0}*eve::i(eve::as<z_t>{})), (z_t{nan,inf}));
   TTS_IEEE_EQUAL( (z_t{inf, 0}*eve::i), (z_t{0,inf}));
   TTS_IEEE_EQUAL( (inf*eve::i), (z_t{0,inf}));
-  TTS_IEEE_EQUAL(  T(1)*(z_t{0,inf}), (z_t{0,inf}));
+  TTS_IEEE_EQUAL( eve::i*(z_t{0,inf}), (z_t{-inf,0}));
   TTS_EQUAL( (eve::i*eve::i(eve::as<z_t>{})), (z_t{-1, 0}));
   TTS_EQUAL( (eve::i(eve::as<z_t>{})*eve::i(eve::as<z_t>{})), (z_t{-1, 0}));
 };

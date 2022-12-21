@@ -710,15 +710,6 @@ namespace eve::detail
   //==============================================================================================
   //  Binary functions : ldexp ulpdist
   //==============================================================================================
-  template<typename Z, integral_value N>
-  EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::ldexp_
-                                              , Z const& z1
-                                              , N n
-                                              ) noexcept
-  {
-    return as_wide_as_t<Z,N>(ldexp(real(z1), n), ldexp(imag(z1), n));
-  }
-
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::ulpdist_
                                               , auto const& z1, auto const& z2
                                               ) noexcept
