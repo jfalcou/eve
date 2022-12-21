@@ -7,6 +7,8 @@
 add_custom_target(unit.complex.exe              )
 add_dependencies(unit.exe unit.complex.exe      )
 
+make_unit("unit.complex"  traits.cpp            )
+
 if(EVE_USE_BOOST)
 make_unit("unit.complex"  asin.cpp              )
 make_unit("unit.complex"  atanh.cpp             )
