@@ -19,7 +19,7 @@
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

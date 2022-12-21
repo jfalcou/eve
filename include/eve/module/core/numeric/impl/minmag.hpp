@@ -19,7 +19,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 #include <type_traits>
 
