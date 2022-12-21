@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/algo/container/soa_vector.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/complex.hpp>
 
 TTS_CASE("soa_vector should not be hindered by ADL-found operators from its value type")

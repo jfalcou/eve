@@ -5,6 +5,7 @@
 ##==================================================================================================
 
 ## Modules
+add_subdirectory(algo)
 add_subdirectory(core)
 add_subdirectory(complex)
 

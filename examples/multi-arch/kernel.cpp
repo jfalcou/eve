@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 //! [kernel]
-#include <eve/algo/transform.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
 #include <iostream>

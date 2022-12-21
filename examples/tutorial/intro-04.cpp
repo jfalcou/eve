@@ -98,9 +98,7 @@ namespace udt
 
 //! [simd-soa_vector_out]
 #include <vector>
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/transform.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/math.hpp>
 
 namespace udt
@@ -127,8 +125,7 @@ namespace udt
 
 //! [simd-soa_vector_in]
 #include <vector>
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/transform.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/math.hpp>
 
 namespace udt

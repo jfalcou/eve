@@ -23,16 +23,10 @@
 //
 
 #include <eve/eve.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/traits/product_type.hpp>
-
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/reduce.hpp>
-#include <eve/algo/inclusive_scan.hpp>
-
-#include <eve/views/convert.hpp>
-#include <eve/views/zip.hpp>
 
 #include <optional>
 #include <vector>

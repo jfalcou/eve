@@ -11,9 +11,7 @@
 // but we will write a loop instead of using a zip with iota because it's usefult to understand.
 //
 
-#include <eve/algo/concepts.hpp>
-#include <eve/algo/preprocess_range.hpp>
-
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 
 #include <concepts>
@@ -108,10 +106,10 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 
 #include "test.hpp"
 
-#include <eve/algo/container/soa_vector.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 
-#include "unit/algo/algo_test.hpp"
+#include "unit/module/algo/algo_test.hpp"
 
 TTS_CASE("collect_indexes, elements equal to 2")
 {

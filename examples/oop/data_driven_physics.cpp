@@ -13,12 +13,9 @@
 // At altitude 0, lays a floor on which each balls will bounce with some restitution coefficient
 // The following code run a discrete simulation of this experiment using SoA vector and algorihms
 
-#include <eve/algo/any_of.hpp>
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/transform.hpp>
-#include <eve/algo/remove.hpp>
-#include <eve/traits/product_type.hpp>
 #include <eve/eve.hpp>
+#include <eve/module/algo.hpp>
+#include <eve/traits.hpp>
 
 #include <chrono>
 #include "display.hpp"

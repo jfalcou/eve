@@ -47,8 +47,7 @@ namespace simd
 
 //! [simd-transform_zip]
 #include <vector>
-#include <eve/algo/transform.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 
 namespace simd
 {
