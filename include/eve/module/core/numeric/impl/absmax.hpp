@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

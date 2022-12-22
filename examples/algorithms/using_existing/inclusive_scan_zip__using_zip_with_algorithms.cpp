@@ -19,8 +19,7 @@
 //   examples/algorithms/using_existing/memcmp__two_range_algorithms_interface_specifics.cpp also
 //   showcases zip.
 
-#include <eve/algo/inclusive_scan.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 
 #include <vector>
 

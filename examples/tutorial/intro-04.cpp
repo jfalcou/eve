@@ -26,7 +26,7 @@ namespace adapt
 
 //! [simd-udt-adapt]
 // Opt-in for eve::product_type
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 template<>
 struct eve::is_product_type<adapt::polar_coords> : std::true_type
@@ -75,7 +75,7 @@ namespace adapt
 //! [simd-udt-to_polar]
 
 //! [simd-udt-create]
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 namespace udt
 {
@@ -98,9 +98,7 @@ namespace udt
 
 //! [simd-soa_vector_out]
 #include <vector>
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/transform.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/math.hpp>
 
 namespace udt
@@ -127,8 +125,7 @@ namespace udt
 
 //! [simd-soa_vector_in]
 #include <vector>
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/transform.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/math.hpp>
 
 namespace udt

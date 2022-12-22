@@ -15,7 +15,7 @@
 #include <eve/module/core/pedantic/min.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

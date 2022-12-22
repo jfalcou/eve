@@ -12,9 +12,7 @@
 // and `eve::algo::mismatch`.
 //
 
-#include <eve/algo/as_range.hpp>
-#include <eve/algo/mismatch.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 
 int memcmp_( void const* lhs, void const* rhs, std::size_t count )
 //

@@ -72,8 +72,7 @@ namespace scalar
 //! [simd-transform]
 #include <vector>
 #include <eve/module/math.hpp>
-#include <eve/algo/transform.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 
 namespace simd
 {
@@ -95,8 +94,7 @@ namespace simd
 //! [simd-transform-traits]
 #include <vector>
 #include <eve/module/math.hpp>
-#include <eve/algo/transform.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 
 namespace simd::unrolled
 {

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 namespace eve::detail
 {

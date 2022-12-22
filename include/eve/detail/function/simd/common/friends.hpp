@@ -14,7 +14,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <eve/forward.hpp>
 
 // Register tag here so we can use them in tagged_dispatch situation

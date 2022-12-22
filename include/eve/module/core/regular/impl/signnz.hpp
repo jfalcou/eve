@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
 #include <eve/module/core/regular/sign.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

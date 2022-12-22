@@ -9,7 +9,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/detail/special.hpp>
-#include <eve/algo.hpp>
 #include <array>
 
 namespace eve

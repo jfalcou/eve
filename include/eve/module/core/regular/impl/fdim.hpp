@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/sub.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

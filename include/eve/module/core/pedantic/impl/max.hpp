@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

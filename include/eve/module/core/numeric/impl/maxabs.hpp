@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 #include <type_traits>
 

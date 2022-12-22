@@ -152,10 +152,10 @@ std::uint8_t* convert_bgra_to_rgb(std::span<std::uint8_t const> in, std::uint8_t
 
 // --------------------------------------------
 
-#include <eve/algo/as_range.hpp>
+#include <eve/module/algo.hpp>
 
 #include "test.hpp"
-#include "unit/algo/algo_test.hpp"
+#include "unit/module/algo/algo_test.hpp"
 #include <numeric>
 
 TTS_CASE("pattern test")

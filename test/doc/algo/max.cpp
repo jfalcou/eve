@@ -1,5 +1,5 @@
 #include <eve/module/core.hpp>
-#include <eve/algo.hpp>
+#include <eve/module/algo.hpp>
 #include <tts/tts.hpp>  // as_string
 #include <vector>
 

@@ -1,5 +1,5 @@
 #include <eve/module/math.hpp>
-#include <eve/algo.hpp>
+#include <eve/module/algo.hpp>
 #include <iostream>
 #include <vector>
 #include "print.hpp"

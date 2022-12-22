@@ -1,5 +1,5 @@
-#include <eve/algo/copy.hpp>
-#include <eve/algo/as_range.hpp>
+#include <eve/module/algo.hpp>
+#include <eve/module/algo.hpp>
 #include <tts/tts.hpp>
 #include <iostream>
 #include <vector>

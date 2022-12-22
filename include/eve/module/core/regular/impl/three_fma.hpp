@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

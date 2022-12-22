@@ -26,7 +26,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
 #include <eve/memory/soa_ptr.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 #include <concepts>
 #include <ostream>

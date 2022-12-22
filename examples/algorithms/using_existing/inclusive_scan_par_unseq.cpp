@@ -27,9 +27,7 @@
 // NOTE: supporting SOA here is possible but it makes the solution
 //       much more complicated.
 
-#include <eve/algo/inclusive_scan.hpp>
-#include <eve/algo/transform.hpp>
-
+#include <eve/module/algo.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 #include <future>
