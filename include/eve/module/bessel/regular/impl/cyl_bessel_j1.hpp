@@ -10,7 +10,6 @@
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/detail/generic/poleval.hpp>
 #include <eve/module/math.hpp>
 
 #include <array>
@@ -74,7 +73,7 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
                                    1.937383947804541E-003f,
                                    -3.405537384615824E-002f};
 
-        return (z - 1.46819706421238932572E1f) * x * poleval(z, JP);
+        return (z - 1.46819706421238932572E1f) * x * horner(z, JP);
       };
 
       auto br_8 = [](auto x)
@@ -98,9 +97,9 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
                                         3.503787691653334E-001f,
                                         -1.637986776941202E-001f,
                                         3.749989509080821E-001f};
-        auto                 p       = w * poleval(q, MO1);
+        auto                 p       = w * horner(q, MO1);
         w                            = sqr(q);
-        auto xn                      = q * poleval(w, PH1) - thpio4f;
+        auto xn                      = q * horner(w, PH1) - thpio4f;
         return p * cos(xn + x);
       };
 
@@ -145,8 +144,8 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
             -7.27494245221818276015E13,
             3.68295732863852883286E15,
         };
-        std::array<elt_t, 8> RQ = {
-            /* 1.00000000000000000000E0,*/
+        std::array<elt_t, 9> RQ = {
+            1.00000000000000000000E0,
             6.20836478118054335476E2,
             2.56987256757748830383E5,
             8.35146791431949253037E7,
@@ -157,7 +156,7 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
             5.32278620332680085395E18,
         };
         auto  z  = sqr(x);
-        auto  w  = poleval(z, RP) / poleval1(z, RQ);
+        auto  w  = horner(z, RP) / horner(z, RQ);
         elt_t Z1 = 1.46819706421238932572E1;
         elt_t Z2 = 4.92184563216946036703E1;
         return w * x * (z - Z1) * (z - Z2);
@@ -194,8 +193,8 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
             2.11688757100572135698E2,
             2.52070205858023719784E1,
         };
-        std::array<elt_t, 7> QQ = {
-            /* 1.00000000000000000000E0,*/
+        std::array<elt_t, 8> QQ = {
+            1.00000000000000000000E0,
             7.42373277035675149943E1,
             1.05644886038262816351E3,
             4.98641058337653607651E3,
@@ -207,8 +206,8 @@ cyl_bessel_j1_(EVE_SUPPORTS(cpu_), T x) noexcept
 
         auto           w      = 5.0 * rec(x);
         auto           z      = sqr(w);
-        auto           p      = poleval(z, PP) / poleval(z, PQ);
-        auto           q      = poleval(z, QP) / poleval1(z, QQ);
+        auto           p      = horner(z, PP) / horner(z, PQ);
+        auto           q      = horner(z, QP) / horner(z, QQ);
         constexpr auto thpio4 = 2.35619449019234492885; /* 3*pi/4 */
         auto           xn     = x - thpio4;
         auto [sxn, cxn]       = sincos(xn);
