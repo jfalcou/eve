@@ -41,7 +41,16 @@ TTS_CASE_WITH("Check behavior of eve::sign(eve::wide)",
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using eve::detail::map;
+  using eve::all;
+  using eve::is_positive;
+  using eve::is_negative;
   using v_t = eve::element_type_t<T>;
+
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EXPECT( all(is_positive(eve::sign(eve::zero (eve::as(a0))))) );
+    TTS_EXPECT( all(is_negative(eve::sign(eve::mzero(eve::as(a0))))) );
+  }
 
   TTS_EQUAL(eve::sign(a0), map([](auto e) -> v_t { return e > 0 ? 1 : (e ? -1 : 0); }, a0));
   TTS_EQUAL(eve::sign[mask](a0), eve::if_else(mask, eve::sign(a0), a0));

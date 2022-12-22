@@ -43,14 +43,6 @@ TTS_CASE_TPL("Check return types of negate", eve::test::simd::all_types)
                 eve::inf(eve::as<T>()));
       TTS_EQUAL(eve::negate(eve::minf(eve::as<T>()), eve::minf(eve::as<T>())),
                 eve::inf(eve::as<T>()));
-
-      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), eve::nan(eve::as<T>())),
-                     eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(0)), eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negate(T(0), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(0)), eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negate(T(1), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
-      TTS_IEEE_EQUAL(eve::negate(eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
     }
 
     TTS_EQUAL(eve::negate(T(-1), T(-1)), T(1));
@@ -83,7 +75,6 @@ TTS_CASE_WITH("Check behavior of negate(wide)",
   TTS_ULP_EQUAL(
       negate(a0, a1), map([](auto e, auto f) -> v_t { return e * eve::sign(f); }, a0, a1), 2);
 };
-
 
 //==================================================================================================
 // Tests for masked negate

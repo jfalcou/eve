@@ -53,11 +53,11 @@ namespace eve
 //!   * Masked Call
 //!
 //!     The call `eve::negate[mask](x, ...)` provides a masked
-//!     version of `negate` which is
-//!     equivalent to `if_else(mask, negate(x, ...), x)`
-//!      **Example**
+//!     version of `negate` which is equivalent to `if_else(mask, negate(x, ...), x)`
 //!
-//!        @godbolt{doc/core/raw/negate.cpp}
+//!   **Example**
+//!
+//!    @godbolt{doc/core/raw/negate.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(negate_, negate);
