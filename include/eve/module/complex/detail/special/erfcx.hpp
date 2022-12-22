@@ -21,7 +21,13 @@ namespace eve
     template<typename Z>
     EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::erfcx_, Z const& z) noexcept
     {
-      return faddeeva(i(as(z))*z);
+      auto realz = is_real(z);
+      if (eve::all(realz))
+        return Z{erfcx(real(z)), 0};
+      else  if (eve::none(realz))
+        return faddeeva(callable_i_{}*z);
+      else
+        return if_else(realz, Z{erfcx(real(z)), 0}, faddeeva(callable_i_{}*z));
     }
   }
 }

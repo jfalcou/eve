@@ -145,18 +145,21 @@ namespace eve
 
       auto indneg  = is_ltz(imag(z));
       z = if_else(indneg, conj(z), z);
-      auto r       = nan(as<Z>()); // nan case treated here
-      r = if_else(is_infinite(z), zero, r);
+      auto r = Z{nan(as(real(z))), nan(as(real(z)))}; // nan case treated here
+      r = if_else(is_infinite(real(z)), zero, r);
       auto notdone = is_finite(z);
-      auto indin  =  sqr_abs(z) <=  real_t(64);
-      auto indband =  indin && (imag(z) < real_t(5.0e-3));
-      notdone      = next_interval(smallim, notdone, indband, r, z);
-      if( eve::any(notdone) )
+      if (eve::any(notdone))
       {
-        notdone = next_interval(fexp, notdone, indin, r, z);
+        auto indin  =  sqr_abs(z) <=  real_t(64);
+        auto indband =  indin && (imag(z) < real_t(5.0e-3));
+        notdone      = next_interval(smallim, notdone, indband, r, z);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(contfr, notdone, notdone, r, z);
+          notdone = next_interval(fexp, notdone, indin, r, z);
+          if( eve::any(notdone) )
+          {
+            notdone = next_interval(contfr, notdone, notdone, r, z);
+          }
         }
       }
       return if_else(indneg, conj(r), r); ;
