@@ -97,10 +97,6 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(compensated(horner)(a0, tab2), (fma)(a0, 1, 2));
     TTS_EQUAL(compensated(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
 
-    TTS_EQUAL((horner)(a0, tab0), eve::detail::poleval(a0, tab0));
-    TTS_EQUAL((horner)(a0, tab1), eve::detail::poleval(a0, tab1));
-    TTS_EQUAL((horner)(a0, tab2), eve::detail::poleval(a0, tab2));
-    TTS_EQUAL((horner)(a0, tab3), eve::detail::poleval(a0, tab3));
   };
 
   {
