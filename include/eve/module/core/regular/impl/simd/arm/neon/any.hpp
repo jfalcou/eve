@@ -43,6 +43,7 @@ any_(EVE_SUPPORTS(neon128_),
      logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_128_>
 {
   using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
+  using u64_2 = typename wide<T, N>::template rebind<std::uint64_t, eve::fixed<2>>;
 
   if constexpr( C::is_complete && !C::is_inverted ) return false;
   // we still have to convert down here, so we can do it before ignore.
@@ -55,9 +56,9 @@ any_(EVE_SUPPORTS(neon128_),
   else if constexpr( !C::is_complete ) return any_(EVE_RETARGET(cpu_), cond, v0);
   else if constexpr( eve::current_api >= eve::asimd )
   {
-    // There is no vmaxvq_u64, so we use vmaxvq_u32
-    auto dwords = eve::bit_cast(v0, eve::as<u32_4> {});
-    return vmaxvq_u32(dwords);
+    // Adapted from https://github.com/dotnet/runtime/pull/75864
+    auto mask = bit_cast(v0.bits(), as<u32_4>{});
+    return bit_cast(u32_4(vpmaxq_u32(mask,mask)), as<u64_2>()).get(0) != 0;
   }
   else // chars, no asimd
   {

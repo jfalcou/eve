@@ -30,7 +30,6 @@ all_(EVE_SUPPORTS(neon128_),
   else
   {
     if constexpr( sizeof(T) * N() <= 4u ) return all_(EVE_RETARGET(cpu_), cond, v0);
-
     auto dwords = eve::bit_cast(v0.bits(), eve::as<u32_2> {});
     dwords      = vpmin_u32(dwords, dwords);
 
@@ -48,6 +47,7 @@ all_(EVE_SUPPORTS(neon128_),
      logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_128_>
 {
   using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
+  using u64_2 = typename wide<T, N>::template rebind<std::uint64_t, eve::fixed<2>>;
 
   if constexpr( C::is_complete && !C::is_inverted ) return true;
   // we still have to convert down here, so we can do it before ignore.
@@ -64,14 +64,13 @@ all_(EVE_SUPPORTS(neon128_),
     else if constexpr( sizeof(T) == 2 ) return vminvq_u16(v0.bits());
     else
     {
-      // There is no vminvq_u64, so we use vminvq_u32 for everything bigger.
-      auto dwords = eve::bit_cast(v0, eve::as<u32_4> {});
-      return vminvq_u32(dwords);
+      // Adapted from https://github.com/dotnet/runtime/pull/75864
+      auto mask = bit_cast(v0.bits(), as<u32_4>{});
+      return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == -1;
     }
   }
   else // chars, no asimd
   {
-    using u32_4 = typename wide<T, N>::template rebind<std::uint32_t, eve::fixed<4>>;
     auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
     // not the same logic as for uint_32 plain so duplicated.
