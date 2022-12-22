@@ -37,20 +37,15 @@ namespace eve
 //!
 //!     * `x` :  [argument](@ref eve::value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      * Computes  [elementwise](@ref glossary_elementwise) the sign of `x`.
+//!   The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
+//!     - `+1` , if `x` is greater than 0
+//!     - `-1` , if `x` is less than 0
+//!     -  `0` , if `x` is equal to 0
+//!     - `-0.`, if `x` is equal -0
 //!
-//!      * For [real](@ref eve::value) `x`,  the call is semantically equivalent to:
-//!        * If x is greater than 0, 1 is returned.
-//!        * If x is less than 0,  -1 is returned.
-//!        * If x is zero, x is returned.
-//!
-//!      *  Moreover for  [floating real value](@ref eve::floating_value)
-//!         if x is `Nan`, the result is `Nan`
-//!
-//!    value containing the [elementwise](@ref glossary_elementwise)
-//!    sign of `x` if it is representable in this type.
+//!   If called on `Nan`, the result is the actual sign of `Nan`.
 //!
 //!  @groupheader{Example}
 //!
