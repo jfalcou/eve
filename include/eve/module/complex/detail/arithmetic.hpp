@@ -286,6 +286,14 @@ namespace eve::detail
     return Z {diff_of_prod(zr, zr, zi, zi), 2 * zr * zi};
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  complex_unary_dispatch(eve::tag::sqr_, eve::numeric_type const&, Z const& z) noexcept
+  {
+    auto [zr, zi] = z;
+    return Z {(zr-zi)*(zi+zr), 2 * zr * zi};
+  }
+
   EVE_FORCEINLINE auto
   complex_unary_dispatch(eve::tag::sqr_abs_, eve::pedantic_type const&, auto const& z) noexcept
   {

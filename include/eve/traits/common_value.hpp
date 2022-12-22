@@ -12,18 +12,18 @@
 
 namespace eve::detail
 {
-  template<typename T0, typename... Ts>
-  requires(   (scalar_value<T0> && ... && scalar_value<Ts>)
-          &&  (std::same_as<T0,Ts> && ...)
-          )
-  T0 find_common_value();
-
   template<typename... Ts>
   using find_type = decltype(( std::declval<Ts>() + ... ));
 
+  template<typename... Ts>
+  requires(!plain_scalar_value<Ts> || ... )
+  auto find_common_value() -> find_type<Ts... >;
+
   template<typename T0, typename... Ts>
-  requires(simd_value<T0> || ... || simd_value<Ts>)
-  auto find_common_value() -> find_type<T0, Ts... >;
+  requires(   (plain_scalar_value<T0> && ... && plain_scalar_value<Ts>)
+          &&  (std::same_as<T0,Ts> && ...)
+          )
+  T0 find_common_value();
 
   template<typename, typename... Ts>
   struct common_value_impl;
