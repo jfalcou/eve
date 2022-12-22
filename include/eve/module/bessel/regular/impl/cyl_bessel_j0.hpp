@@ -146,8 +146,8 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
             -2.49248344360967716204E14,
             9.70862251047306323952E15,
         };
-        std::array<double, 8> RQ = {
-            // 1.00000000000000000000E0,
+        std::array<double, 9> RQ = {
+            1.00000000000000000000E0,
             4.99563147152651017219E2,
             1.73785401676374683123E5,
             4.84409658339962045305E7,
@@ -158,7 +158,7 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
             1.71086294081043136091E18,
         };
         auto p = (z - DR1) * (z - DR2);
-        p *= poleval(z, RP) / poleval1(z, RQ);
+        p *= horner(z, RP) / horner(z, RQ);
         return p;
       };
 
@@ -190,8 +190,8 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
             -5.14105326766599330220E1,
             -6.05014350600728481186E0,
         };
-        std::array<double, 7> QQ = {
-            //      1.00000000000000000000E0,
+        std::array<double, 8> QQ = {
+            1.00000000000000000000E0,
             6.43178256118178023184E1,
             8.56430025976980587198E2,
             3.88240183605401609683E3,
@@ -202,8 +202,8 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
         };
         auto w                  = 5.0 * rec(x);
         auto q                  = sqr(w);
-        auto p                  = poleval(q, PP) / poleval(q, PQ);
-        q                       = poleval(q, QP) / poleval1(q, QQ);
+        auto p                  = horner(q, PP) / horner(q, PQ);
+        q                       = horner(q, QP) / horner(q, QQ);
         auto xn                 = x - pio_4(as(x));
         auto [s, c]             = sincos(xn);
         p                       = fms(p, c, w * q * s);
