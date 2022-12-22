@@ -11,7 +11,7 @@
 #include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
 #include <eve/module/core/regular/combine.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 namespace eve::detail
 {

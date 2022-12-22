@@ -28,10 +28,11 @@
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <eve/traits/common_type.hpp>
+#include <eve/traits/common_value.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/traits/iterator_cardinal.hpp>
-#include <eve/traits/max_scalar_size.hpp>
+#include <eve/traits/product_type.hpp>
 #include <eve/traits/underlying_type.hpp>
 #include <eve/traits/value_type.hpp>
 #include <eve/traits/wide_value_type.hpp>

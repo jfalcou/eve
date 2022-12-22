@@ -13,7 +13,7 @@
 // NOTE: if we replace `eve::algo::equal` with `eve::algo::mismatch` with a modification
 //       we can get lexicograpgical case-insesetive compare.
 
-#include <eve/algo/equal.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 
 #include <cstdint>

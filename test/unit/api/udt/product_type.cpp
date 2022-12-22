@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 template <typename T>
 struct wrapper

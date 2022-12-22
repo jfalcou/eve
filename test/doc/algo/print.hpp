@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/algo/concepts/relaxed.hpp>
+#include <eve/module/algo.hpp>
 #include <iostream>
 
 namespace doc_utils

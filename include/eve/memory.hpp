@@ -22,9 +22,9 @@
 //================================================================================================
 
 #include <eve/memory/align.hpp>
-#include <eve/memory/aligned_alloc.hpp>
 #include <eve/memory/aligned_allocator.hpp>
-#include <eve/memory/aligned_dealloc.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/is_aligned.hpp>
-#include <eve/memory/power_of_2.hpp>
+#include <eve/memory/pointer.hpp>
+#include <eve/memory/soa_ptr.hpp>
+#include <eve/memory/stack_buffer.hpp>

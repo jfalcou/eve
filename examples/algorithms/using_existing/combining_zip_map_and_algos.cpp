@@ -11,10 +11,7 @@
 // with algorithms.
 //
 
-#include <eve/algo/inclusive_scan.hpp>
-#include <eve/views/map.hpp>
-#include <eve/views/zip.hpp>
-
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 
 #include <vector>

@@ -6,8 +6,7 @@
 **/
 //==================================================================================================
 #include <eve/module/core.hpp>
-#include <eve/algo.hpp>
-#include <eve/algo/transform.hpp>
+#include <eve/module/algo.hpp>
 #include <vector>
 
 //

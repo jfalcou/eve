@@ -26,11 +26,7 @@
 //           Consider just doing immediatly what you want, instead of collecting indexes.
 //
 
-#include <eve/algo/concepts.hpp>
-#include <eve/algo/for_each.hpp>
-#include <eve/views/iota.hpp>
-#include <eve/views/zip.hpp>
-
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 
 #include <concepts>
@@ -115,10 +111,10 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 
 #include "test.hpp"
 
-#include <eve/algo/container/soa_vector.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 
-#include "unit/algo/algo_test.hpp"
+#include "unit/module/algo/algo_test.hpp"
 
 TTS_CASE("collect_indexes, elements equal to 2")
 {

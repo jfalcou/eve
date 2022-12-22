@@ -15,7 +15,7 @@
 #include <eve/module/core/pedantic/absmin.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/saturated/abs.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 #include <type_traits>
 

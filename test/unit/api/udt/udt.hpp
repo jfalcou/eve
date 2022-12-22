@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <type_traits>
 
 namespace udt

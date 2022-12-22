@@ -16,9 +16,7 @@
 // --------------------------
 // Find a negative number
 
-#include <eve/algo/as_range.hpp>
-#include <eve/algo/find.hpp>
-
+#include <eve/module/algo.hpp>
 int const* find_negative_number(int const* f, int const* l)
 {
   return eve::algo::find_if(eve::algo::as_range(f, l), [](auto x) { return x < 0; });
@@ -27,13 +25,10 @@ int const* find_negative_number(int const* f, int const* l)
 // -------------------------
 // coordinates conversion
 
-#include <eve/algo/container/soa_vector.hpp>
-#include <eve/algo/transform.hpp>
-#include <eve/views/zip.hpp>
-
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 
 #include <vector>
 
@@ -104,7 +99,7 @@ void polar_to_cartesian_vectors(
 // -------------------------
 // remove numbers outside of treshold
 
-#include <eve/algo/remove.hpp>
+#include <eve/module/algo.hpp>
 #include <eve/module/core.hpp>
 
 void erase_remove_numbers_outisde_of_treshold(
@@ -119,8 +114,7 @@ void erase_remove_numbers_outisde_of_treshold(
 // -------------------------
 // reverse parallel arrays
 
-#include <eve/algo/reverse.hpp>
-#include <eve/views/zip.hpp>
+#include <eve/module/algo.hpp>
 
 void reverse_parallel_arrays(std::vector<int>& a, std::vector<std::uint8_t>& b)
 {

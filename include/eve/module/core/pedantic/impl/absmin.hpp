@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/saturated/abs.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 #include <type_traits>
 

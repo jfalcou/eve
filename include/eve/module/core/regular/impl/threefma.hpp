@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/two_split.hpp>
-#include <eve/platform.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve::detail
 {

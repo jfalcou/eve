@@ -1,6 +1,6 @@
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <iostream>
 
 struct data_block : eve::struct_support<data_block, float, std::int16_t,double>

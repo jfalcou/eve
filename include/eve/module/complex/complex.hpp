@@ -14,7 +14,7 @@
 #include <eve/module/complex/detail/math.hpp>
 #include <eve/module/complex/detail/special.hpp>
 #include <eve/module/complex/detail/predicates.hpp>
-#include <eve/product_type.hpp>
+#include <eve/traits/product_type.hpp>
 #include <ostream>
 
 namespace eve
