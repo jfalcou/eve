@@ -8,6 +8,7 @@
 #include "test.hpp"
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
+#include <eve/traits/common_value.hpp>
 
 
 TTS_CASE_TPL( "Check corner cases of erf", eve::test::scalar::ieee_reals)
@@ -220,7 +221,6 @@ TTS_CASE_WITH( "Check behavior of erf on wide"
   using e_t = eve::element_type_t<T>;
   using c_t = eve::complex<e_t>;
   auto z = z_t(a0, a1);
-  std::cout << z << std::endl;
   auto ez = eve::erf(z);
   c_t b;
   for(int i = 0; i !=  eve::cardinal_v<T>; ++i)

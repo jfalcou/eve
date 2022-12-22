@@ -247,4 +247,3 @@ namespace eve::detail
 
 #include <eve/module/complex/detail/special/erf.hpp>
 #include <eve/module/complex/detail/special/erfcx.hpp>
-//#include <eve/module/complex/regular/erfi.hpp>

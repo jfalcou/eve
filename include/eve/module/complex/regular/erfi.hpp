@@ -9,7 +9,6 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/complex/detail/special.hpp>
-#include <array>
 
 namespace eve
 {
@@ -71,7 +70,6 @@ namespace eve
     {
       auto over = sqr(v) > 720;
       V r = inf(as(v))*sign(v);
-//      std::cout <<
       return if_else(over,  r, -imag(erf(as_complex_t<V>(0, -v))));
     }
   }
