@@ -17,7 +17,6 @@
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>
-#include <sstream>
 
 namespace eve
 {
@@ -32,22 +31,6 @@ namespace eve
   {
     if constexpr(eve::simd_value<T>)  return eve::all(l == r);
     else                              return l == r;
-  }
-
-  template<typename T>
-  inline std::string to_string(logical<T> const &l)
-  {
-    std::ostringstream str;
-    str << l;
-    return str.str();
-  }
-
-  template<typename T>
-  inline std::string to_string(top_bits<T> const &l)
-  {
-    std::ostringstream str;
-    str << l;
-    return str.str();
   }
 }
 
@@ -393,6 +376,8 @@ namespace tts
 //==================================================================================================
 // EVE TTS Entrypoint
 //==================================================================================================
+#include <iostream>
+
 int main(int argc, char const **argv)
 {
   ::tts::initialize(argc,argv);
