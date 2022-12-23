@@ -23,11 +23,34 @@ jobs:
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
-      - name: Check EVE works with ${{ matrix.cfg.test }}
+      - name: Check EVE Installation Procedure
         uses: ./.github/actions/integration
         with:
           branch: '${{ github.head_ref }}'
           mode: '${{ matrix.cfg.mode }}'
+
+  random:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86      , opts: -msse2    }
+        - { comp: clang, arch: x86      , opts: -mavx2    }
+        - { comp: clang, arch: aarch64  , opts: -Wno-psabi}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Check EVE via Random Sampling with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_docker
+        with:
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:         2
+          cpu:            4
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
 
   specials:
     runs-on: [self-hosted, generic-x86]
@@ -35,13 +58,10 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang_libcpp, arch: x86     , opts: -msse2    , status: 1 }
-        - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: arm     , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi, status: 1 }
-        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi, status: 0 }
-        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi, status: 0 }
-        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi, status: 0 }
+        - { comp: clang_libcpp, arch: x86     , opts: -msse2    }
+        - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi}
+        - { comp: gcc         , arch: arm     , opts: -Wno-psabi}
+        - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
@@ -50,7 +70,30 @@ jobs:
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         '${{ matrix.cfg.status }}'
+          status:         1
+          cpu:            8
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
+
+  partial-support:
+    runs-on: [self-hosted, generic-x86]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi}
+        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi}
+        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_docker
+        with:
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:         0
           cpu:            8
       - name: Always execute
         if: ${{ always() }}
