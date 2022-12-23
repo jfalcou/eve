@@ -22,7 +22,7 @@ namespace eve
   //================================================================================================
   // Runtime detection of CPU support
   //================================================================================================
-  inline bool is_supported(spy::arm_simd_info<spy::detail::simd_version::neon_ > const &) noexcept
+  inline bool is_supported(neon128_ const &) noexcept
   {
     #if defined( SPY_SIMD_IS_ARM )
     auto hwcaps = getauxval(AT_HWCAP);
@@ -32,7 +32,7 @@ namespace eve
     #endif
   }
 
-  inline bool is_supported(spy::arm_simd_info<spy::detail::simd_version::asimd_ > const &) noexcept
+  inline bool is_supported(asimd_ const &) noexcept
   {
     #if defined( SPY_SIMD_IS_ARM_ASIMD )
     auto hwcaps = getauxval(AT_HWCAP);
@@ -41,4 +41,5 @@ namespace eve
       return false;
     #endif
   }
+
 }

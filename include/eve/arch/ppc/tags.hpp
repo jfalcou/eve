@@ -36,10 +36,10 @@ namespace eve
   //================================================================================================
   // Dispatching tag for V*X SIMD implementation
   //================================================================================================
-  using vmx_  = simd_api<simd_    , spy::vmx_ >;
-  using vsx_  = simd_api<vmx_ , spy::vsx_>;
+  struct vmx_    : simd_api<simd_, spy::vmx_> { using is_ppc = void; };
+  struct vsx_    : simd_api<vmx_ , spy::vsx_> { using is_ppc = void; };
 
-  //================================================================================================
+//================================================================================================
   //  V*X extension tag objects
   //================================================================================================
   inline constexpr vmx_ vmx = {};
@@ -50,4 +50,5 @@ namespace eve
   // PPC ABI concept
   //================================================================================================
   template<typename T> concept ppc_abi = detail::is_one_of<T>(detail::types<ppc_> {});
+  template<typename T> concept ppc_tag = requires(T) { typename T::is_ppc; };
 }

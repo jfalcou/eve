@@ -20,6 +20,7 @@ namespace eve
   // SPY SIMD API wrapper
   template<typename Base, auto API> struct simd_api : Base
   {
+    static constexpr auto version = API;
     using api_type = std::decay_t<decltype(API)>;
 
     constexpr api_type const& value() const noexcept { return API; }

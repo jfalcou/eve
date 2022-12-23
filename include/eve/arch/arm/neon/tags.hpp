@@ -38,8 +38,8 @@ namespace eve
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
   //================================================================================================
-  struct neon128_ : simd_api<simd_   , spy::neon_>      {};
-  struct asimd_   : simd_api<neon128_, spy::asimd_>     {};
+  struct neon128_ : simd_api<simd_   , spy::neon_>  { using is_arm = void; };
+  struct asimd_   : simd_api<neon128_, spy::asimd_> { using is_arm = void; };
 
   //================================================================================================
   // NEON extensions tag objects
@@ -51,4 +51,5 @@ namespace eve
   // ARM ABI concept
   //================================================================================================
   template<typename T> concept arm_abi = detail::is_one_of<T> ( detail::types<arm_64_,arm_128_> {});
+  template<typename T> concept arm_tag = requires(T) { typename T::is_arm; };
 }
