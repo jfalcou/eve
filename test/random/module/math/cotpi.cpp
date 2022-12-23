@@ -9,7 +9,7 @@
 #include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/module/math.hpp>
 #include "producers.hpp"
-#include "generator.hpp"
+
 #include <cmath>
 
 TTS_CASE_TPL("Random check for eve::cotpi", eve::test::simd::ieee_reals)

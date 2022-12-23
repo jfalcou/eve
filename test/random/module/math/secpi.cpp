@@ -9,7 +9,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include "producers.hpp"
-#include "generator.hpp"
+
 #include <cmath>
 
 TTS_CASE_TPL("Random check for eve::secpi", eve::test::simd::ieee_reals)
