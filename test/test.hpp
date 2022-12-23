@@ -13,9 +13,10 @@
 //==================================================================================================
 // EVE Specific testing overloads
 //==================================================================================================
-#include <eve/forward.hpp>
-#include <eve/arch/top_bits.hpp>
-#include <eve/module/core/regular/all.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/module/core.hpp>
+#include <eve/traits.hpp>
+#include <eve/wide.hpp>
 #include <sstream>
 
 namespace eve
@@ -199,20 +200,6 @@ namespace eve::test::simd
 //==================================================================================================
 // EVE Data generators
 //==================================================================================================
-#include <eve/arch/fundamental_cardinal.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/core/constant/mindenormal.hpp>
-#include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/constant/mzero.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/load.hpp>
-
 namespace eve::detail
 {
   template<typename T, typename V> auto as_value(callable_object<V> const& v)
@@ -253,7 +240,7 @@ namespace tts
   //================================================================================================
   template<eve::simd_value W> auto poison(W data)
   {
-    using v_t = typename W::value_type;
+    using v_t = eve::element_type_t<W>;
 
     // Add garbage at the end of sub-native registers
     // For emulated type, there is no such gap so we don't do anything

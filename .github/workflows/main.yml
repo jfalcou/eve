@@ -37,7 +37,7 @@ jobs:
         cfg:
         - { comp: clang, arch: x86      , opts: -msse2    }
         - { comp: clang, arch: x86      , opts: -mavx2    }
-        - { comp: clang, arch: aarch64  , opts: -Wno-psabi}
+        - { comp: gcc  , arch: aarch64  , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
