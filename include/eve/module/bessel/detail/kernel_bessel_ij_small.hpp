@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/detail/kumi.hpp>
-#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_jy.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_j0.hpp>
 #include <eve/module/bessel/regular/cyl_bessel_j1.hpp>
