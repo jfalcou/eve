@@ -163,3 +163,24 @@ jobs:
         run:  cd build && ninja -v unit.memory.exe -j 5
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4 -R ^unit.memory.*.exe
+
+  macosx:
+    runs-on: [macos-12]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86 , opts: -msse4 }
+        - { comp: clang , arch: x86 , opts: -mavx }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && VERBOSE=1 make unit -j 4
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 4
