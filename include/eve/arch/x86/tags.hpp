@@ -46,14 +46,14 @@ namespace eve
   //================================================================================================
   // Dispatching tag for SSE* SIMD implementation
   //================================================================================================
-  struct sse2_    : simd_api<simd_   , spy::sse2_>    {};
-  struct sse3_    : simd_api<sse2_   , spy::sse3_>    {};
-  struct ssse3_   : simd_api<sse3_   , spy::ssse3_>   {};
-  struct sse4_1_  : simd_api<ssse3_  , spy::sse41_>   {};
-  struct sse4_2_  : simd_api<sse4_1_ , spy::sse42_>   {};
-  struct avx_     : simd_api<sse4_2_ , spy::avx_>     {};
-  struct avx2_    : simd_api<avx_    , spy::avx2_>    {};
-  struct avx512_  : simd_api<avx2_   , spy::avx512_>  {};
+  struct sse2_    : simd_api<simd_   , spy::sse2_>    { using is_x86 = void; };
+  struct sse3_    : simd_api<sse2_   , spy::sse3_>    { using is_x86 = void; };
+  struct ssse3_   : simd_api<sse3_   , spy::ssse3_>   { using is_x86 = void; };
+  struct sse4_1_  : simd_api<ssse3_  , spy::sse41_>   { using is_x86 = void; };
+  struct sse4_2_  : simd_api<sse4_1_ , spy::sse42_>   { using is_x86 = void; };
+  struct avx_     : simd_api<sse4_2_ , spy::avx_>     { using is_x86 = void; };
+  struct avx2_    : simd_api<avx_    , spy::avx2_>    { using is_x86 = void; };
+  struct avx512_  : simd_api<avx2_   , spy::avx512_>  { using is_x86 = void; };
 
   //================================================================================================
   // SSE* extension tag objects - Forwarded from SPY
@@ -78,4 +78,7 @@ namespace eve
   //================================================================================================
   template<typename T>
   concept x86_abi = detail::is_one_of<T>(detail::types<x86_128_, x86_256_, x86_512_> {});
+
+  template<typename T>
+  concept x86_tag = requires(T) { typename T::is_x86; };
 }

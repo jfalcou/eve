@@ -181,6 +181,6 @@ jobs:
           mkdir build && cd build
           cmake .. -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && VERBOSE=1 make unit -j 4
+        run:  cd build && VERBOSE=1 make unit -j 3
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 4
+        run: cd build && ctest --output-on-failure -j 3

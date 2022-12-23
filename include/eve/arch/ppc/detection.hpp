@@ -14,15 +14,15 @@ namespace eve
   //================================================================================================
   // Runtime detection of CPU support
   //================================================================================================
-  template<auto Version> inline bool is_supported(spy::ppc_simd_info<Version> const &) noexcept
+  template<ppc_tag API> bool is_supported(API const& ) noexcept
   {
     #if defined( SPY_SIMD_IS_PPC )
-    if constexpr( Version >= spy::vsx_.version )
+    if constexpr( API::version >= spy::vsx_ )
     {
       static const bool detected = (__builtin_cpu_supports( "vsx" ) != 0);
       return detected;
     }
-    else if constexpr( Version >= spy::vmx_.version )
+    else if constexpr( API::version >= spy::vmx_ )
     {
       static const bool detected = (__builtin_cpu_supports( "altivec" ) != 0);
       return detected;

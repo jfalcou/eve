@@ -39,11 +39,11 @@ namespace eve
   //================================================================================================
   // Dispatching tag for ARM SIMD implementation
   //================================================================================================
-  struct sve_     : simd_api<simd_   , spy::sve_> {};
-  struct sve_vls_ : simd_api<sve_    , spy::fixed_sve_> {};
-  struct sve128_  : simd_api<sve_vls_, spy::fixed_sve_> {};
-  struct sve256_  : simd_api<sve_vls_, spy::fixed_sve_> {};
-  struct sve512_  : simd_api<sve_vls_, spy::fixed_sve_> {};
+  struct sve_     : simd_api<simd_   , spy::sve_>       {  using is_sve = void;  };
+  struct sve_vls_ : simd_api<sve_    , spy::fixed_sve_> {  using is_sve = void;  };
+  struct sve128_  : simd_api<sve_vls_, spy::fixed_sve_> {  using is_sve = void;  };
+  struct sve256_  : simd_api<sve_vls_, spy::fixed_sve_> {  using is_sve = void;  };
+  struct sve512_  : simd_api<sve_vls_, spy::fixed_sve_> {  using is_sve = void;  };
 
   //================================================================================================
   // SVE extensions tag objects
@@ -62,4 +62,5 @@ namespace eve
                                                                               , arm_sve_512_
                                                                               > {}
                                                               );
+  template<typename T> concept sve_tag = requires(T) { typename T::is_sve; };
 }

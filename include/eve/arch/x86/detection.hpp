@@ -16,19 +16,20 @@ namespace eve
   //================================================================================================
   // Runtime detection of CPU support
   //================================================================================================
-  template<auto Version> inline bool is_supported(spy::x86_simd_info<Version> const &) noexcept
+  template<x86_tag API>
+  bool is_supported(API const& ) noexcept
   {
     using namespace detail;
 
-          if constexpr( Version == sse2.value().version   ) return cpuid_states.supports_sse2();
-    else  if constexpr( Version == sse3.value().version   ) return cpuid_states.supports_sse3();
-    else  if constexpr( Version == ssse3.value().version  ) return cpuid_states.supports_ssse3();
-    else  if constexpr( Version == sse4_1.value().version ) return cpuid_states.supports_sse4_1();
-    else  if constexpr( Version == sse4_2.value().version ) return cpuid_states.supports_sse4_2();
-    else  if constexpr( Version == avx.value().version    ) return cpuid_states.supports_avx();
-    else  if constexpr( Version == avx2.value().version   ) return cpuid_states.supports_avx2();
-    else  if constexpr( Version == avx512.value().version ) return cpuid_states.supports_avx512F();
-    else                                                    return false;
+          if constexpr( API::version == sse2.value()   ) return cpuid_states.supports_sse2();
+    else  if constexpr( API::version == sse3.value()   ) return cpuid_states.supports_sse3();
+    else  if constexpr( API::version == ssse3.value()  ) return cpuid_states.supports_ssse3();
+    else  if constexpr( API::version == sse4_1.value() ) return cpuid_states.supports_sse4_1();
+    else  if constexpr( API::version == sse4_2.value() ) return cpuid_states.supports_sse4_2();
+    else  if constexpr( API::version == avx.value()    ) return cpuid_states.supports_avx();
+    else  if constexpr( API::version == avx2.value()   ) return cpuid_states.supports_avx2();
+    else  if constexpr( API::version == avx512.value() ) return cpuid_states.supports_avx512F();
+    else                                                        return false;
   }
 
   inline bool is_supported(fma3_ const &) noexcept  { return detail::cpuid_states.supports_fma3();}
