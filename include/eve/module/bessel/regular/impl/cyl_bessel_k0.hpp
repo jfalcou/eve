@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -28,12 +27,17 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
       T y(1.137250900268554688);
       if constexpr( std::same_as<elt_t, float> )
       {
-        constexpr std::array<elt_t, 3> P = {
-            -1.372508979104259711e-01f, 2.622545986273687617e-01f, 5.047103728247919836e-03f};
-        constexpr std::array<elt_t, 3> Q = {
-            1.000000000000000000e+00f, -8.928694018000029415e-02f, 2.985980684180969241e-03f};
+        using A3 = kumi::result::generate_t<3, elt_t>;
+        A3 P = {
+            -1.372508979104259711e-01f,
+            2.622545986273687617e-01f,
+            5.047103728247919836e-03f};
+        A3 Q = {
+          1.000000000000000000e+00f,
+          -8.928694018000029415e-02f,
+          2.985980684180969241e-03f};
         T a                               = sqr(x / 2);
-        a                                 = inc((evaluate_rational(P, Q, a) + y) * a);
+        a                                 = inc((reverse_horner(a, P)/reverse_horner(a, Q) + y) * a);
         constexpr std::array<elt_t, 5> P2 = {1.159315158e-01f,
                                              2.789828686e-01f,
                                              2.524902861e-02f,
@@ -45,27 +49,30 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
       else
       {
         T                              y(1.137250900268554688);
-        constexpr std::array<elt_t, 5> P = {-1.372509002685546267e-01,
-                                            2.574916117833312855e-01,
-                                            1.395474602146869316e-02,
-                                            5.445476986653926759e-04,
-                                            7.125159422136622118e-06};
-        constexpr std::array<elt_t, 4> Q = {1.000000000000000000e+00,
-                                            -5.458333438017788530e-02,
-                                            1.291052816975251298e-03,
-                                            -1.367653946978586591e-05};
+        using A5 = kumi::result::generate_t<5, elt_t>;
+        A5 P = {-1.372509002685546267e-01,
+                2.574916117833312855e-01,
+                1.395474602146869316e-02,
+                5.445476986653926759e-04,
+                7.125159422136622118e-06};
+        using A4 = kumi::result::generate_t<4, elt_t>;
+        A4 Q = {1.000000000000000000e+00,
+                -5.458333438017788530e-02,
+                1.291052816975251298e-03,
+                -1.367653946978586591e-05};
 
         T a = sqr(x / 2);
         a   = inc((reverse_horner(a, P) / reverse_horner(a, Q) + y) * a);
 
-        constexpr std::array<elt_t, 8> P2 = {1.159315156584124484e-01,
-                                             2.789828789146031732e-01,
-                                             2.524892993216121934e-02,
-                                             8.460350907213637784e-04,
-                                             1.491471924309617534e-05,
-                                             1.627106892422088488e-07,
-                                             1.208266102392756055e-09,
-                                             6.611686391749704310e-12};
+        using A8 = kumi::result::generate_t<8, elt_t>;
+        A8 P2 = {1.159315156584124484e-01,
+                 2.789828789146031732e-01,
+                 2.524892993216121934e-02,
+                 8.460350907213637784e-04,
+                 1.491471924309617534e-05,
+                 1.627106892422088488e-07,
+                 1.208266102392756055e-09,
+                 6.611686391749704310e-12};
         return reverse_horner(sqr(x), P2) - eve::log(x) * a;
       }
     };
@@ -74,46 +81,56 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
     {
       if constexpr( std::same_as<elt_t, float> )
       {
-        constexpr std::array<elt_t, 4> P = {
-            2.533141220e-01f, 5.221502603e-01f, 6.380180669e-02f, -5.934976547e-02f};
-        constexpr std::array<elt_t, 4> Q = {
-            1.000000000e+00f, 2.679722431e+00f, 1.561635813e+00f, 1.573660661e-01f};
+        using A4 = kumi::result::generate_t<4, elt_t>;
+        A4 P = {
+            2.533141220e-01f
+            , 5.221502603e-01f
+            , 6.380180669e-02f
+            , -5.934976547e-02f
+        };
+        A4 Q = {
+            1.000000000e+00f
+            , 2.679722431e+00f
+            , 1.561635813e+00f
+            , 1.573660661e-01f
+        };
         auto r = rec(x);
         if( eve::all(x < maxlog(as(x))) )
-          return (inc(evaluate_rational(P, Q, r)) * exp(-x) * rsqrt(x));
+          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * exp(-x) * rsqrt(x));
         else
         {
           T ex = exp(-x / 2);
-          return (inc(evaluate_rational(P, Q, r)) * ex * rsqrt(x)) * ex;
+          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * ex * rsqrt(x)) * ex;
         }
       }
       else
       {
-        constexpr std::array<elt_t, 9> P = {2.533141373155002416e-01,
-                                            3.628342133984595192e+00,
-                                            1.868441889406606057e+01,
-                                            4.306243981063412784e+01,
-                                            4.424116209627428189e+01,
-                                            1.562095339356220468e+01,
-                                            -1.810138978229410898e+00,
-                                            -1.414237994269995877e+00,
-                                            -9.369168119754924625e-02};
-        constexpr std::array<elt_t, 9> Q = {1.000000000000000000e+00,
-                                            1.494194694879908328e+01,
-                                            8.265296455388554217e+01,
-                                            2.162779506621866970e+02,
-                                            2.845145155184222157e+02,
-                                            1.851714491916334995e+02,
-                                            5.486540717439723515e+01,
-                                            6.118075837628957015e+00,
-                                            1.586261269326235053e-01};
+        using A9 = kumi::result::generate_t<9, elt_t>;
+        A9 P = {2.533141373155002416e-01,
+                3.628342133984595192e+00,
+                1.868441889406606057e+01,
+                4.306243981063412784e+01,
+                4.424116209627428189e+01,
+                1.562095339356220468e+01,
+                -1.810138978229410898e+00,
+                -1.414237994269995877e+00,
+                -9.369168119754924625e-02};
+        A9  Q = {1.000000000000000000e+00,
+                 1.494194694879908328e+01,
+                 8.265296455388554217e+01,
+                 2.162779506621866970e+02,
+                 2.845145155184222157e+02,
+                 1.851714491916334995e+02,
+                 5.486540717439723515e+01,
+                 6.118075837628957015e+00,
+                 1.586261269326235053e-01};
         auto                           r = rec(x);
         if( eve::all(x < maxlog(as(x))) )
-          return (inc(evaluate_rational(P, Q, r)) * exp(-x) * rsqrt(x));
+          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * exp(-x) * rsqrt(x));
         else
         {
           T ex = exp(-x / 2);
-          return (inc(evaluate_rational(P, Q, r)) * ex * rsqrt(x)) * ex;
+          return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * ex * rsqrt(x)) * ex;
         }
       }
     };
