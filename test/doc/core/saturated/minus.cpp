@@ -1,6 +1,6 @@
-#minuslude <eve/module/core.hpp>
-#minuslude <eve/wide.hpp>
-#minuslude <iostream>
+#include <eve/module/core.hpp>
+#include <eve/wide.hpp>
+#include <iostream>
 
 using wide_ft = eve::wide<std::int8_t, eve::fixed<4>>;
 
