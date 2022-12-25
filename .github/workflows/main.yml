@@ -127,7 +127,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja -v unit -j 8
+        run:  cd build && ninja unit -j 8
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 8
       - name: Always execute
@@ -183,7 +183,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja -v unit -j 5
+        run:  cd build && ninja unit -j 5
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4
 
@@ -203,7 +203,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja -v unit.memory.exe -j 5
+        run:  cd build && ninja unit.memory.exe -j 5
       - name: Running Unit Tests
         run: cd build && ctest --output-on-failure -j 4 -R ^unit.memory.*.exe
 

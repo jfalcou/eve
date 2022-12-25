@@ -2,7 +2,7 @@
 compile_target()
 {
   echo "::group::Compiling $1" ;
-  ninja -v $1 -j $2;
+  ninja  $1 -j $2;
   compile=$?;
   echo "::endgroup::" ;
 
@@ -64,7 +64,7 @@ fi
 if [ "$3" -eq "2" ]
 then
   echo "::group:: Compiling Random Tests"
-  ninja -v random.exe -j $4
+  ninja random.exe -j $4
   echo "::endgroup::"
 
   echo "::group:: Running Random Tests"
@@ -73,7 +73,7 @@ then
 elif [ "$3" -eq "1" ]
 then
   echo "::group:: Compiling Unit Tests"
-  ninja -v unit -j $4
+  ninja unit -j $4
   echo "::endgroup::"
 
   echo "::group:: Running Unit Tests"
