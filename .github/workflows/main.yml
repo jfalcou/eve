@@ -59,6 +59,7 @@ jobs:
       matrix:
         cfg:
         - { comp: clang_libcpp, arch: x86     , opts: -msse2    }
+        - { comp: clang       , arch: x86_asan, opts: -msse2    }
         - { comp: gcc         , arch: aarch64 , opts: -Wno-psabi}
         - { comp: gcc         , arch: arm     , opts: -Wno-psabi}
         - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi}
@@ -77,14 +78,14 @@ jobs:
         uses: ./.github/actions/cleanup
 
   partial-support:
-    runs-on: [self-hosted, generic-x86]
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc         , arch: sve128  , opts: -Wno-psabi}
-        - { comp: gcc         , arch: sve256  , opts: -Wno-psabi}
-        - { comp: gcc         , arch: sve512  , opts: -Wno-psabi}
+        - { comp: gcc, arch: sve128  , opts: -Wno-psabi}
+        - { comp: gcc, arch: sve256  , opts: -Wno-psabi}
+        - { comp: gcc, arch: sve512  , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
@@ -94,7 +95,7 @@ jobs:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
           status:         0
-          cpu:            8
+          cpu:            3
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
@@ -106,17 +107,16 @@ jobs:
       matrix:
         cfg:
         - { comp: clang , arch: x86     , opts: -msse2                                }
-        - { comp: clang , arch: x86_asan, opts: -msse2                                }
-        - { comp: gcc   , arch: x86     , opts: -msse2                                }
         - { comp: clang , arch: x86     , opts: -mssse3                               }
-        - { comp: gcc   , arch: x86     , opts: -mssse3                               }
         - { comp: clang , arch: x86     , opts: -msse4.2                              }
-        - { comp: gcc   , arch: x86     , opts: -msse4.2                              }
         - { comp: clang , arch: x86     , opts: -mavx                                 }
-        - { comp: gcc   , arch: x86     , opts: -mavx                                 }
         - { comp: clang , arch: x86     , opts: -mavx2                                }
-        - { comp: gcc   , arch: x86     , opts: -mavx2                                }
         - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: gcc   , arch: x86     , opts: -msse2                                }
+        - { comp: gcc   , arch: x86     , opts: -mssse3                               }
+        - { comp: gcc   , arch: x86     , opts: -msse4.2                              }
+        - { comp: gcc   , arch: x86     , opts: -mavx                                 }
+        - { comp: gcc   , arch: x86     , opts: -mavx2                                }
         - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
@@ -193,7 +193,7 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: x86_asan , opts: -march=skylake-avx512 }
+        - { comp: clang , arch: x86_asan, opts: -march=skylake-avx512 }
 
     steps:
       - name: Fetch current branch
