@@ -19,6 +19,7 @@
 //! **Convenience header:** @code{.cpp} #include <eve/traits.hpp> @endcode
 //! @}
 //==================================================================================================
+
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/as_arithmetic.hpp>
 #include <eve/traits/as_floating_point.hpp>
@@ -32,6 +33,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/traits/iterator_cardinal.hpp>
+#include <eve/traits/max_scalar_size.hpp>
 #include <eve/traits/product_type.hpp>
 #include <eve/traits/underlying_type.hpp>
 #include <eve/traits/value_type.hpp>

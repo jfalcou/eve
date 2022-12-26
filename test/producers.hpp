@@ -7,11 +7,10 @@
 //==================================================================================================
 #pragma once
 #include "test.hpp"
-#include "measures.hpp"
 #include <tts/ranges.hpp>
 #include <eve/memory/align.hpp>
-#include <eve/module/core.hpp>
-
+#include <eve/concept/value.hpp>
+#include <eve/traits.hpp>
 
 #define EVE_ULP_RANGE_CHECK(Type, Producer, Ref, New)                                               \
   [&]()                                                                                             \
