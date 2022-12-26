@@ -163,7 +163,7 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that += y;
       }
       else
@@ -178,12 +178,12 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that -= y;
       }
       else
       {
-        as_wide_as_t<Z2,Z1> that{x};
+        as_wide_as_t<Z2,Z1> that(x);
         return that -= y;
       }
     }
@@ -194,7 +194,7 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that *= y;
       }
       else
@@ -210,12 +210,12 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that /= y;
       }
       else
       {
-        as_wide_as_t<Z2,Z1> that{x};
+        as_wide_as_t<Z2,Z1> that(x);
         return that /= y;
       }
     }
@@ -227,12 +227,12 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that %= y;
       }
       else
       {
-        as_wide_as_t<Z2,Z1> that{x};
+        as_wide_as_t<Z2,Z1> that(x);
         return that %= y;
       }
     }
@@ -244,12 +244,12 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that ^= y;
       }
       else
       {
-        as_wide_as_t<Z2,Z1> that{x};
+        as_wide_as_t<Z2,Z1> that(x);
         return that ^= y;
       }
     }
@@ -261,12 +261,12 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that &= y;
       }
       else
       {
-        as_wide_as_t<Z2,Z1> that{x};
+        as_wide_as_t<Z2,Z1> that(x);
         return that &= y;
       }
     }
@@ -278,12 +278,12 @@ namespace eve
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
       {
-        as_wide_as_t<Z1,Z2> that{x};
+        as_wide_as_t<Z1,Z2> that(x);
         return that |= y;
       }
       else
       {
-        as_wide_as_t<Z2,Z1> that{x};
+        as_wide_as_t<Z2,Z1> that(x);
         return that |= y;
       }
     }

@@ -2,7 +2,7 @@
 compile_target()
 {
   echo "::group::Compiling $1" ;
-  ninja -v $1 -j $2;
+  ninja  $1 -j $2;
   compile=$?;
   echo "::endgroup::" ;
 
@@ -51,13 +51,29 @@ set -e
 echo "::group:: Running: 'cmake .. -G Ninja -DCMAKE_CXX_FLAGS="$1" $2'"
 mkdir build
 cd build
-cmake .. -G Ninja -DEVE_OPTIONS="$1" $2
-echo "::endgroup::"
 
-if [ "$3" -eq "1" ]
+if [ "$3" -eq "2" ]
+then
+  cmake .. -G Ninja -DEVE_OPTIONS="$1" $2 -DEVE_BUILD_RANDOM=ON
+  echo "::endgroup::"
+else
+  cmake .. -G Ninja -DEVE_OPTIONS="$1" $2
+  echo "::endgroup::"
+fi
+
+if [ "$3" -eq "2" ]
+then
+  echo "::group:: Compiling Random Tests"
+  ninja random.exe -j $4
+  echo "::endgroup::"
+
+  echo "::group:: Running Random Tests"
+  ctest --output-on-failure -j $4 -R ^random.*.exe
+  echo "::endgroup::"
+elif [ "$3" -eq "1" ]
 then
   echo "::group:: Compiling Unit Tests"
-  ninja -v unit -j $4
+  ninja unit -j $4
   echo "::endgroup::"
 
   echo "::group:: Running Unit Tests"

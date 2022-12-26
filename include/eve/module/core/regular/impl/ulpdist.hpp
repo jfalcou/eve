@@ -50,8 +50,6 @@ requires has_native_abi_v<T>
   }
   else if constexpr( simd_value<T> )
   {
-    auto aa = eve::detail::bitinteger(a);
-    auto bb = eve::detail::bitinteger(b);
     return if_else(numeric(is_equal)(a, b),
                    eve::zero,
                    if_else(is_unordered(a, b)
