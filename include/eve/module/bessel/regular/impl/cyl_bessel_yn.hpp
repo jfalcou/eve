@@ -12,8 +12,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-#include <array>
-
 namespace eve::detail
 {
 // nu is floating

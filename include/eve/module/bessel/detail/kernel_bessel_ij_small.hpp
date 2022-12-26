@@ -15,8 +15,6 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 
-#include <array>
-
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions
 // of the first kind and second kind for integer orders and small x values.
