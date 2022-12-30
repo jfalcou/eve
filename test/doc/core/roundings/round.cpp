@@ -4,7 +4,7 @@
 
 int main()
 {
-  using w_t = eve::wide<std::float, eve::fixed<8>>;
+  using w_t = eve::wide<float, eve::fixed<8>>;
   w_t pf = {3.2, 2.5, 3.5, 3.6, 0.3, -2.4, -3.5, -3-2};
 
   std::cout << "---- simd" << '\n'
