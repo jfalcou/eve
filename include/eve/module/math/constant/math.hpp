@@ -38,8 +38,6 @@
 #include <eve/module/math/constant/log_10.hpp>
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/constant/log_phi.hpp>
-#include <eve/module/math/constant/loglog_2.hpp>
-#include <eve/module/math/constant/math.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 #include <eve/module/math/constant/maxlog10.hpp>
 #include <eve/module/math/constant/maxlog2.hpp>
