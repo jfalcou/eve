@@ -25,8 +25,9 @@ if_else_max(Wide x, Wide y)
 }
 
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-max_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) requires x86_abi<abi_t<T, N>>
+EVE_FORCEINLINE auto
+max_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) noexcept -> wide<T, N>
+requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
@@ -51,16 +52,14 @@ max_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) requires x86_abi<abi_t<T
   else if constexpr( current_api >= avx512 && c == category::uint64x4 )
     return _mm256_max_epu64(v0, v1);
   else if constexpr( match(c, category::int64x4, category::uint64x4) )
-  {
     return detail::if_else_max(v0, v1);
-  }
   // 256 - 32 bit ints
   else if constexpr( current_api >= avx2 && c == category::int32x8 )
     return _mm256_max_epi32(v0, v1);
   else if constexpr( current_api >= avx2 && c == category::uint32x8 )
     return _mm256_max_epu32(v0, v1);
   else if constexpr( match(c, category::int32x8, category::uint32x8) )
-    return detail::if_else_max(v0, v1);
+    return aggregate(max, v0, v1);
   // 256 - 16 bit ints
   else if constexpr( current_api >= avx2 && c == category::int16x16 )
     return _mm256_max_epi16(v0, v1);
@@ -108,10 +107,8 @@ max_(EVE_SUPPORTS(sse2_), wide<T, N> v0, wide<T, N> v1) requires x86_abi<abi_t<T
 // Masked case
 template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
-                max_(EVE_SUPPORTS(sse2_),
-                     C const                         &cx,
-                     wide<T, N> const                &v,
-                     wide<T, N> const                &w) noexcept requires x86_abi<abi_t<T, N>>
+max_(EVE_SUPPORTS(sse2_), C const& cx, wide<T, N> const& v, wide<T, N> const& w) noexcept
+requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
