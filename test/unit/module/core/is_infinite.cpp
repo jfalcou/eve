@@ -52,19 +52,18 @@ TTS_CASE_WITH("Check behavior of eve::is_infinite(simd) IEEE",
 //==================================================================================================
 // Test cases values
 //==================================================================================================
-TTS_CASE_WITH("Check corner-cases behavior of eve::is_infinite on wide",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::limits()))
-<typename T>(T const& cases)
+TTS_CASE_TPL("Check corner-cases behavior of eve::is_infinite on wide",eve::test::simd::ieee_reals)
+<typename T>(tts::type<T> tgt)
 {
-  using type = typename T::type;
   using eve::as;
-  TTS_EQUAL(eve::is_infinite(cases.nan), eve::false_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(-cases.nan), eve::false_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(cases.minf), eve::true_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(cases.inf), eve::true_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(cases.zero), eve::false_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(cases.mzero), eve::false_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(cases.valmin), eve::false_(as<type>()));
-  TTS_EQUAL(eve::is_infinite(cases.valmax), eve::false_(as<type>()));
+
+  auto cases = tts::limits(tgt);
+  TTS_EQUAL(eve::is_infinite(cases.nan), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(-cases.nan), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(cases.minf), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(cases.inf), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(cases.zero), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(cases.mzero), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(cases.valmin), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_infinite(cases.valmax), eve::false_(as<T>()));
 };
