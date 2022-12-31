@@ -13,16 +13,6 @@
 
 namespace eve::detail
 {
-//================================================================================================
-//== reverse Horner with ranges
-//================================================================================================
-// template<value T0, range R>
-// EVE_FORCEINLINE constexpr auto
-// reverse_horner_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) noexcept
-// -> common_value_t<T0, typename R::value_type>
-// {
-//   return detail::reverse_horner_impl(regular_type(), xx, r);
-// }
 
 //================================================================================================
 //== variadic
