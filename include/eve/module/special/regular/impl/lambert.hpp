@@ -39,7 +39,7 @@ lambert_serie_utility(T r) noexcept
   {
     return fam(mone(as(r))
               , r
-              , eve::reverse_horner(r, 2.33164314895e+00f, -1.80949529206e+00f));
+              , eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
   }
 }
 
