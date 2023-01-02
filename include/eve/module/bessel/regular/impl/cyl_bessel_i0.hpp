@@ -26,7 +26,7 @@ cyl_bessel_i0_(EVE_SUPPORTS(cpu_), T x) noexcept
       if constexpr( std::same_as<elt_t, float> )
       {
       using A9 = kumi::result::generate_t<9, elt_t>;
-      static const A9 P = {1.00000003928615375e+00f,
+      constexpr A9 P = {1.00000003928615375e+00f,
                            2.49999576572179639e-01f,
                            2.77785268558399407e-02f,
                            1.73560257755821695e-03f,
@@ -41,7 +41,7 @@ cyl_bessel_i0_(EVE_SUPPORTS(cpu_), T x) noexcept
       else
       {
         using A15 = kumi::result::generate_t<15, elt_t>;
-        static const A15 P = {1.00000000000000000e+00,
+        constexpr A15 P = {1.00000000000000000e+00,
                               2.49999999999999909e-01,
                               2.77777777777782257e-02,
                               1.73611111111023792e-03,
@@ -66,7 +66,7 @@ cyl_bessel_i0_(EVE_SUPPORTS(cpu_), T x) noexcept
         if constexpr( std::same_as<elt_t, float> )
         {
           using A5 = kumi::result::generate_t<5, elt_t>;
-          static const A5 P = {3.98942651588301770e-01f,
+          constexpr A5 P = {3.98942651588301770e-01f,
                              4.98327234176892844e-02f,
                              2.91866904423115499e-02f,
                              1.35614940793742178e-02f,
@@ -76,7 +76,7 @@ cyl_bessel_i0_(EVE_SUPPORTS(cpu_), T x) noexcept
         else
         {
           using A22 = kumi::result::generate_t<22, elt_t>;
-          static const A22 P = {
+          constexpr A22 P = {
             3.98942280401425088e-01,  4.98677850604961985e-02,  2.80506233928312623e-02,
             2.92211225166047873e-02,  4.44207299493659561e-02,  1.30970574605856719e-01,
             -3.35052280231727022e+00, 2.33025711583514727e+02,  -1.13366350697172355e+04,
@@ -94,7 +94,7 @@ cyl_bessel_i0_(EVE_SUPPORTS(cpu_), T x) noexcept
         if constexpr( std::same_as<elt_t, float> )
         {
           using A3 = kumi::result::generate_t<3, elt_t>;
-          static const A3 P = {
+          constexpr A3 P = {
             3.98942391532752700e-01f
             , 4.98455950638200020e-02f
             , 2.94835666900682535e-02f}
@@ -105,7 +105,7 @@ cyl_bessel_i0_(EVE_SUPPORTS(cpu_), T x) noexcept
         else
         {
           using A5 = kumi::result::generate_t<5, elt_t>;
-          static const A5 P  = {3.98942280401432905e-01,
+          constexpr A5 P  = {3.98942280401432905e-01,
                                 4.98677850491434560e-02,
                                 2.80506308916506102e-02,
                                 2.92179096853915176e-02,

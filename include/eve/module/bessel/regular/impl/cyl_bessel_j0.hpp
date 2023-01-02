@@ -24,25 +24,25 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
     auto br_large = [](auto x) // TODO a speedier float version
     {
       using A6 = kumi::result::generate_t<6, elt_t>;
-      static const A6 PC     = {2.2779090197304684302e+04,
+      constexpr A6 PC     = {2.2779090197304684302e+04,
                    4.1345386639580765797e+04,
                    2.1170523380864944322e+04,
                    3.4806486443249270347e+03,
                    1.5376201909008354296e+02,
                    8.8961548424210455236e-01};
-      static const A6 QC     = {2.2779090197304684318e+04,
+      constexpr A6 QC     = {2.2779090197304684318e+04,
                    4.1370412495510416640e+04,
                    2.1215350561880115730e+04,
                    3.5028735138235608207e+03,
                    1.5711159858080893649e+02,
                    1.0};
-      static const A6 PS     = {-8.9226600200800094098e+01,
+      constexpr A6 PS     = {-8.9226600200800094098e+01,
                    -1.8591953644342993800e+02,
                    -1.1183429920482737611e+02,
                    -2.2300261666214198472e+01,
                    -1.2441026745835638459e+00,
                    -8.8033303048680751817e-03};
-      static const A6 QS     = {5.7105024128512061905e+03,
+      constexpr A6 QS     = {5.7105024128512061905e+03,
                    1.1951131543434613647e+04,
                    7.2642780169211018836e+03,
                    1.4887231232283756582e+03,
@@ -138,14 +138,14 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
           double DR2 = 3.04712623436620863991E1;
 
           using A4 = kumi::result::generate_t<4, elt_t>;
-          static const A4 RP = {
+          constexpr A4 RP = {
             -4.79443220978201773821E9,
             1.95617491946556577543E12,
             -2.49248344360967716204E14,
             9.70862251047306323952E15,
           };
           using A9 = kumi::result::generate_t<9, elt_t>;
-          static const A9 RQ = {
+          constexpr A9 RQ = {
             1.00000000000000000000E0,
             4.99563147152651017219E2,
             1.73785401676374683123E5,
@@ -164,7 +164,7 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
       auto br_8 = [](auto x)
         {
           using A7 = kumi::result::generate_t<7, elt_t>;
-          static const A7 PP = {
+          constexpr A7 PP = {
             7.96936729297347051624E-4,
             8.28352392107440799803E-2,
             1.23953371646414299388E0,
@@ -172,7 +172,7 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
             8.74716500199817011941E0,
             5.30324038235394892183E0,
             9.99999999999999997821E-1};
-          static const A7 PQ = {
+          constexpr A7 PQ = {
             9.24408810558863637013E-4,
             8.56288474354474431428E-2,
             1.25352743901058953537E0,
@@ -182,7 +182,7 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
             1.00000000000000000218E0,
           };
           using A8 = kumi::result::generate_t<8, elt_t>;
-          static const A8 QP = {
+          constexpr A8 QP = {
             -1.13663838898469149931E-2,
             -1.28252718670509318512E0,
             -1.95539544257735972385E1,
@@ -192,7 +192,7 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
             -5.14105326766599330220E1,
             -6.05014350600728481186E0,
           };
-          static const A8 QQ = {
+          constexpr A8 QQ = {
             1.00000000000000000000E0,
             6.43178256118178023184E1,
             8.56430025976980587198E2,

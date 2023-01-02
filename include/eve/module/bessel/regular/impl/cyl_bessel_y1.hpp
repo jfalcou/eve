@@ -41,14 +41,14 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
   auto br_4 = [evaluate](auto x)
   {
     using A7 = kumi::result::generate_t<7, elt_t>;
-    static const A7 P1 = {4.0535726612579544093e+13,
+    constexpr A7 P1 = {4.0535726612579544093e+13,
              5.4708611716525426053e+12,
              -3.7595974497819597599e+11,
              7.2144548214502560419e+09,
              -5.9157479997408395984e+07,
              2.2157953222280260820e+05,
              -3.1714424660046133456e+02};
-    static const A7 Q1 = {3.0737873921079286084e+14,
+    constexpr A7 Q1 = {3.0737873921079286084e+14,
              4.1272286200406461981e+12,
              2.7800352738690585613e+10,
              1.2250435122182963220e+08,
@@ -64,7 +64,7 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
     constexpr v_t x2 = 5.4296810407941351328e+00, x21 = 1.3900e+03,
                   x22               = -6.4592058648672279948e-06;
     using A9 = kumi::result::generate_t<9, elt_t>;
-    static const A9 P2 = {1.1514276357909013326e+19,
+    constexpr A9 P2 = {1.1514276357909013326e+19,
              -5.6808094574724204577e+18,
              -2.3638408497043134724e+16,
              4.0686275289804744814e+15,
@@ -73,7 +73,7 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
              -1.1957961912070617006e+09,
              1.9153806858264202986e+06,
              -1.2337180442012953128e+03};
-    static const A9 Q2 = {5.3321844313316185697e+20,
+    constexpr A9 Q2 = {5.3321844313316185697e+20,
              5.6968198822857178911e+18,
              3.0837179548112881950e+16,
              1.1187010065856971027e+14,
@@ -88,7 +88,7 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
   auto br_large = [Pi](auto x)
   {
     using A7 = kumi::result::generate_t<7, elt_t>;
-    static const A7 PC = {
+    constexpr A7 PC = {
       -4.4357578167941278571e+06,
       -9.9422465050776411957e+06,
       -6.6033732483649391093e+06,
@@ -97,7 +97,7 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
       -1.6116166443246101165e+03,
       0.0
     };
-    static const A7 QC     = {
+    constexpr A7 QC     = {
       -4.4357578167941278568e+06,
       -9.9341243899345856590e+06,
       -6.5853394797230870728e+06,
@@ -106,7 +106,7 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
       -1.4550094401904961825e+03,
       1.0
     };
-    static const A7 PS     = {
+    constexpr A7 PS     = {
       3.3220913409857223519e+04,
       8.5145160675335701966e+04,
       6.6178836581270835179e+04,
@@ -115,7 +115,7 @@ cyl_bessel_y1_(EVE_SUPPORTS(cpu_), T x) noexcept
       3.5265133846636032186e+01,
       0.0
     };
-    static const A7 QS     = {
+    constexpr A7 QS     = {
       7.0871281941028743574e+05,
       1.8194580422439972989e+06,
       1.4194606696037208929e+06,

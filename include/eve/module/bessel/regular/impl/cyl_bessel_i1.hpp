@@ -25,7 +25,7 @@ cyl_bessel_i1_(EVE_SUPPORTS(cpu_), T x) noexcept
       if constexpr( std::same_as<elt_t, float> )
       {
         using A8= kumi::result::generate_t<8, elt_t>;
-        static const A8 P    = {8.333333221e-02f,
+        constexpr A8 P    = {8.333333221e-02f,
                                 6.944453712e-03f,
                                 3.472097211e-04f,
                                 1.158047174e-05f,
@@ -42,7 +42,7 @@ cyl_bessel_i1_(EVE_SUPPORTS(cpu_), T x) noexcept
       else
       {
         using A13= kumi::result::generate_t<13, elt_t>;
-        static const A13 P    = {8.333333333333333803e-02,
+        constexpr A13 P    = {8.333333333333333803e-02,
                                  6.944444444444341983e-03,
                                  3.472222222225921045e-04,
                                  1.157407407354987232e-05,
@@ -79,7 +79,7 @@ cyl_bessel_i1_(EVE_SUPPORTS(cpu_), T x) noexcept
         else
         {
           using A22= kumi::result::generate_t<22, elt_t>;
-          static const A22 P = {
+          constexpr A22 P = {
             3.989422804014406054e-01,  -1.496033551613111533e-01, -4.675104253598537322e-02,
             -4.090895951581637791e-02, -5.719036414430205390e-02, -1.528189554374492735e-01,
             3.458284470977172076e+00,  -2.426181371595021021e+02, 1.178785865993440669e+04,
@@ -97,7 +97,7 @@ cyl_bessel_i1_(EVE_SUPPORTS(cpu_), T x) noexcept
         if constexpr( std::same_as<elt_t, double> )
         {
           using A5= kumi::result::generate_t<5, elt_t>;
-          static const A5 P  = {3.989422804014314820e-01,
+          constexpr A5 P  = {3.989422804014314820e-01,
                                 -1.496033551467584157e-01,
                                 -4.675105322571775911e-02,
                                 -4.090421597376992892e-02,

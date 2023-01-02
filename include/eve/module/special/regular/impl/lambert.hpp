@@ -23,12 +23,12 @@ lambert_serie_utility(T r) noexcept
   using A3 = kumi::result::generate_t<3, elt_t>;
   if constexpr( sizeof(elt_t) == 8 )
   {
-    A3 P = {
+    constexpr A3 P = {
         0.000000000000000000000e+00,
         2.331643981597117584689e+00,
         1.931973535237478945863e+00,
     };
-    A3 Q = {
+    constexpr A3 Q = {
         1.000000000000000000000e+00,
         1.605803223118019582808e+00,
         4.174677763382451962312e-01,

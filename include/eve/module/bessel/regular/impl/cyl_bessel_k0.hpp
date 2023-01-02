@@ -26,18 +26,18 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
       if constexpr( std::same_as<elt_t, float> )
       {
         using A3 = kumi::result::generate_t<3, elt_t>;
-        static const A3 P = {
+        constexpr A3 P = {
             -1.372508979104259711e-01f,
             2.622545986273687617e-01f,
             5.047103728247919836e-03f};
-        static const A3 Q = {
+        constexpr A3 Q = {
           1.000000000000000000e+00f,
           -8.928694018000029415e-02f,
           2.985980684180969241e-03f};
         T a                               = sqr(x / 2);
         a                                 = inc((reverse_horner(a, P)/reverse_horner(a, Q) + y) * a);
         using A5 = kumi::result::generate_t<5, elt_t>;
-        static const A5 P2 = {1.159315158e-01f,
+        constexpr A5 P2 = {1.159315158e-01f,
                                              2.789828686e-01f,
                                              2.524902861e-02f,
                                              8.457241514e-04f,
@@ -49,13 +49,13 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
       {
         T                              y(1.137250900268554688);
         using A5 = kumi::result::generate_t<5, elt_t>;
-        static const A5 P = {-1.372509002685546267e-01,
+        constexpr A5 P = {-1.372509002685546267e-01,
                 2.574916117833312855e-01,
                 1.395474602146869316e-02,
                 5.445476986653926759e-04,
                 7.125159422136622118e-06};
         using A4 = kumi::result::generate_t<4, elt_t>;
-        static const A4 Q = {1.000000000000000000e+00,
+        constexpr A4 Q = {1.000000000000000000e+00,
                 -5.458333438017788530e-02,
                 1.291052816975251298e-03,
                 -1.367653946978586591e-05};
@@ -64,7 +64,7 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
         a   = inc((reverse_horner(a, P) / reverse_horner(a, Q) + y) * a);
 
         using A8 = kumi::result::generate_t<8, elt_t>;
-        static const A8 P2 = {1.159315156584124484e-01,
+        constexpr A8 P2 = {1.159315156584124484e-01,
                  2.789828789146031732e-01,
                  2.524892993216121934e-02,
                  8.460350907213637784e-04,
@@ -81,13 +81,13 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
       if constexpr( std::same_as<elt_t, float> )
       {
         using A4 = kumi::result::generate_t<4, elt_t>;
-        static const A4 P = {
+        constexpr A4 P = {
              2.533141220e-01f
             , 5.221502603e-01f
             , 6.380180669e-02f
             , -5.934976547e-02f
         };
-        static const A4 Q = {
+        constexpr A4 Q = {
             1.000000000e+00f
             , 2.679722431e+00f
             , 1.561635813e+00f
@@ -105,7 +105,7 @@ cyl_bessel_k0_(EVE_SUPPORTS(cpu_), T x) noexcept
       else
       {
         using A9 = kumi::result::generate_t<9, elt_t>;
-        static const A9 P = {2.533141373155002416e-01,
+        constexpr A9 P = {2.533141373155002416e-01,
                 3.628342133984595192e+00,
                 1.868441889406606057e+01,
                 4.306243981063412784e+01,
