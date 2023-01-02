@@ -68,7 +68,7 @@ cyl_bessel_i1_(EVE_SUPPORTS(cpu_), T x) noexcept
         if constexpr( std::same_as<elt_t, float> )
         {
           using A5 = kumi::result::generate_t<5, elt_t>;
-          static const  A5 P  = {3.98942115977513013e-01f,
+          constexpr A5 P  = {3.98942115977513013e-01f,
                                  -1.49581264836620262e-01f,
                                  -4.76475741878486795e-02f,
                                  -2.65157315524784407e-02f,

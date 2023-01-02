@@ -39,7 +39,7 @@ cyl_bessel_k1_(EVE_SUPPORTS(cpu_), T x) noexcept
         T                              a = sqr(x / 2);
         a = ((reverse_horner(a, P)/reverse_horner(a, Q) + y) * sqr(a) + a / 2 + 1) * x / 2;
         using A4 = kumi::result::generate_t<4, elt_t>;
-        constexpr  A4 P2 = {
+        constexpr A4 P2 = {
             -3.079657469e-01f
             , -8.537108913e-02f
             , -4.640275408e-03f
