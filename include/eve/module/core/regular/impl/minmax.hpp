@@ -18,7 +18,7 @@
 namespace eve::detail
 {
 template<typename W>
-constexpr bool has_native_minmax() noexcept
+constexpr bool prefer_min_max() noexcept
 {
   if constexpr( scalar_value<W> ) return true;
   else
@@ -26,6 +26,7 @@ constexpr bool has_native_minmax() noexcept
     using enum category;
     constexpr bool is_ints64 = match(categorize<W>(), int64x4, uint64x4, int64x2, uint64x2);
 
+    // AVX is fine for non-64 bits as its min/max on other types has been fixed
     if constexpr( x86_tag<current_api_type> )       return current_api == avx512 || !is_ints64;
     else if constexpr( arm_tag<current_api_type> )  return !is_ints64;
     else return true;
@@ -38,7 +39,7 @@ EVE_FORCEINLINE auto
 minmax_(EVE_SUPPORTS(cpu_), T0 v0, T1 v1, Ts... vs) noexcept
     -> decltype(kumi::tuple {eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)})
 {
-  if constexpr( has_native_minmax<common_value_t<T0,T1,Ts...>>() )
+  if constexpr( prefer_min_max<common_value_t<T0,T1,Ts...>>() )
   {
     return kumi::tuple {eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)};
   }
