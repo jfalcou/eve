@@ -40,6 +40,31 @@ jobs:
           mode: '${{ matrix.cfg.mode }}'
 
   ##################################################################################################
+  ## Check no PCH mode
+  ##################################################################################################
+  no_pch:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: -msse2    }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Check EVE with no PCH
+        uses: ./.github/actions/run_docker
+        with:
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DEVE_USE_PCH=0 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:         1
+          cpu:            4
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
+
+
+  ##################################################################################################
   ## Randomized precision tests
   ##################################################################################################
   random:

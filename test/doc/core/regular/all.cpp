@@ -11,17 +11,17 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf       = " << pf << '\n'
-            << "-> all(pf)  = " << eve::all(pf) << '\n'
+            << "-> all(pf)  = " << eve::all(pf <= 0) << '\n'
             << "<- qi       = " << qi << '\n'
-            << "-> all(qi)  = " << eve::all(qi) << '\n';
+            << "-> all(qi)  = " << eve::all(qi <= 0) << '\n';
 
   float        xf = -0.0f;
   float        yf = -3.0f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf      = " << xf << '\n'
-            << "-> all(xf) = " << eve::all(xf) << '\n'
+            << "-> all(xf) = " << eve::all(xf == 0) << '\n'
             << "<- yf      = " << yf << '\n'
-            << "-> all(yf) = " << eve::all(yf) << '\n';
+            << "-> all(yf) = " << eve::all(yf == 0) << '\n';
   return 0;
 }

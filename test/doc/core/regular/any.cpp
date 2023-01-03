@@ -1,4 +1,4 @@
-#include <eve/wide.hpp>
+#include <eve/module/core.hpp>
 #include <iostream>
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;

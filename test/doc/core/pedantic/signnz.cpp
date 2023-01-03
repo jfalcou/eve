@@ -12,6 +12,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
-            << "-> pedantic(signnz)(pf)       = " << eve::pedanticeve::signnz)(pf) << '\n'
+            << "-> pedantic(signnz)(pf)       = " << eve::pedantic(eve::signnz)(pf) << '\n';
   return 0;
 }
