@@ -13,8 +13,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-#include <array>
-
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions
 // of the first kind and integer orders.

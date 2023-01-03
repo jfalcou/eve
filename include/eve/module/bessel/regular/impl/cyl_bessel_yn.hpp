@@ -8,12 +8,9 @@
 #pragma once
 
 #include <eve/detail/hz_device.hpp>
-#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_y.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-
-#include <array>
 
 namespace eve::detail
 {

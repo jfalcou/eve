@@ -5,8 +5,6 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 
-#include <array>
-
 // Written originally by Edward Smith-Rowland.
 //
 // References:

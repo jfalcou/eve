@@ -4,30 +4,25 @@
 #include <list>
 #include <vector>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<int   , eve::fixed<8>>;
+using w_t = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
 
-  wide_ft xd = {-0.3, 0.5, 0.0, 2.0};
-  wide_ft b  = {-2, 10.5, -4, 0.1};
+  w_t xd = {-0.3, 0.5, 0.0, 2.0};
 
-  wide_ft x(0.5);
-  std::vector<float> v {-4, 3, -2, 1};
-  std::list<float>   l {-4, 3, -2, 1};
-  std::vector<wide_ft> wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };
+  w_t x(0.5);
+  kumi::tuple<float, float, float, float> t{-4, 3, -2, 1};
+  kumi::tuple<w_t, w_t, w_t> wv { w_t{0.f, 1.f, 2.f, 3.f}, w_t{4.f, 5.f, 6.f, 7.f}, w_t{8.f, 9.f, 10.f, 11.f} };
 
   std::cout << "---- simd" << '\n'
             << "<- xd                                       = " << xd << '\n'
             << "<- x                                        = " << x  << '\n'
-            << "<- l and v contain  {-4, 3, -2, 1} "<< '\n'
-            << "<- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }"<< '\n'
+            << "<- t  contains  {-4, 3, -2, 1} "<< '\n'
+            << "<- wv contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }"<< '\n'
             << "-> reverse_horner(xd, 1, -2, 3, -4)                 = " << eve::reverse_horner(xd, 1, -2, 3, -4) << '\n'
-            << "-> reverse_horner(0.5 1, b, 3, -4)                  = " << eve::reverse_horner(0.5, 1, b, 3, -4) << '\n'
             << "-> reverse_horner(x, 1, -2, 3, -4)                  = " << eve::reverse_horner(xd, 1, -2, 3, -4)  << '\n'
-            << "-> reverse_horner(xd, l)                            = " << eve::reverse_horner(xd, l)  << '\n'
-            << "-> reverse_horner(xd, v)                            = " << eve::reverse_horner(xd, v)  << '\n'
+            << "-> reverse_horner(xd, t)                            = " << eve::reverse_horner(xd, t)  << '\n'
             << "-> reverse_horner(xd, wv)                           = " << eve::reverse_horner(xd, wv) << '\n'
             ;
 

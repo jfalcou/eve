@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/bessel/detail/evaluate_rational.hpp>
 #include <eve/module/bessel/detail/kernel_bessel_j.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
