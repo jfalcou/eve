@@ -6,7 +6,6 @@ using wide_ft = eve::logical<eve::wide<float, eve::fixed<4>>>;
 
 int main()
 {
-  eve::logical<float>  xf = true;
   wide_ft pf = {true,false,true,false};
 
   std::cout << "---- simd" << '\n'
