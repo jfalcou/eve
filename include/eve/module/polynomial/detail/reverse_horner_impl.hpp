@@ -30,39 +30,18 @@ reverse_horner_impl(D const& d, T0 xx, C0 c0, Cs... cs) noexcept
   if constexpr((scalar_value<C0> && ... && scalar_value<Cs>))
   {
     using e_t =  element_type_t<T0>;
-    std::array<e_t, sizeof...(cs)+1> c {e_t(c0), e_t(cs)...};
-     return d(reverse_horner)(xx, c);
+    using t_t = kumi::result::generate_t<sizeof...(cs)+1, e_t>;
+    t_t c{e_t(c0), e_t(cs)...};
+    return d(reverse_horner)(xx, c);
   }
   else
   {
-    using r_t                         = common_value_t<T0, C0, Cs...>;
-    auto                           x = r_t(xx);
-    std::array<r_t, sizeof...(cs)+1> c {r_t{c0}, r_t{cs}...};
+    using r_t = common_value_t<T0, C0, Cs...>;
+    auto x = r_t(xx);
+    using t_t = kumi::result::generate_t<sizeof...(cs)+1, r_t>;
+    t_t c {r_t{c0}, r_t{cs}...};
     return d(reverse_horner)(x, c);
   }
 }
 
-//================================================================================================
-//== Reverse_Horner with ranges
-//================================================================================================
-template<decorator D, value T0, range R>
-EVE_FORCEINLINE constexpr auto
-reverse_horner_impl(D const& d, T0 xx, R const& r) noexcept
--> common_value_t<T0, typename R::value_type>
-{
-  using r_t  = common_value_t<T0, typename R::value_type>;
-  auto x     = r_t(xx);
-  auto cur   = std::rbegin(r);
-  auto first = std::rend(r);
-  if( first == cur ) return r_t(0);
-  else if( std::distance(cur, first) == 1 ) return r_t(*cur);
-  else
-  {
-    auto dfma = d(fma);
-    auto that = r_t(0);
-    auto step = [&](auto that, auto arg) { return dfma(x, that, arg); };
-    for(; cur != first; ++cur ) that = step(that, *cur);
-    return that;
-  }
-}
 }

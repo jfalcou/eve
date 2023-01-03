@@ -11,7 +11,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/polynomial.hpp>
-#include <eve/module/polynomial/regular/reverse_horner.hpp> //??? why that it is already included by polynomial.hpp
 
 namespace eve::detail
 {
@@ -21,14 +20,15 @@ EVE_FORCEINLINE constexpr auto
 lambert_serie_utility(T r) noexcept
 {
   using elt_t = element_type_t<T>;
+  using A3 = kumi::result::generate_t<3, elt_t>;
   if constexpr( sizeof(elt_t) == 8 )
   {
-    constexpr std::array<elt_t, 3> P = {
+    constexpr A3 P = {
         0.000000000000000000000e+00,
         2.331643981597117584689e+00,
         1.931973535237478945863e+00,
     };
-    constexpr std::array<elt_t, 3> Q = {
+    constexpr A3 Q = {
         1.000000000000000000000e+00,
         1.605803223118019582808e+00,
         4.174677763382451962312e-01,
@@ -37,11 +37,9 @@ lambert_serie_utility(T r) noexcept
   }
   else
   {
-    constexpr std::array<elt_t, 2> P = {
-        2.33164314895e+00f,
-        -1.80949529206e+00f,
-    };
-    return fam(mone(as(r)), r, eve::reverse_horner(r, P));
+    return fam(mone(as(r))
+              , r
+              , eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
   }
 }
 
