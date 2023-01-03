@@ -144,6 +144,7 @@
 #include <eve/module/core/regular/minabs.hpp>
 #include <eve/module/core/regular/minimum.hpp>
 #include <eve/module/core/regular/minmag.hpp>
+#include <eve/module/core/regular/minmax.hpp>
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/modf.hpp>
 #include <eve/module/core/regular/mul.hpp>
