@@ -17,9 +17,7 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of legendre on wide", eve::test::simd::ieee_reals
-
-)
+TTS_CASE_TPL("Check return types of legendre on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;

@@ -12,6 +12,7 @@
 #include <eve/concept/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/bits.hpp>
+#include <eve/forward.hpp>
 #include <eve/traits.hpp>
 #include <type_traits>
 #include <ostream>

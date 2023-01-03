@@ -3,6 +3,5 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
-##==================================================================================================
 
-make_unit( "doc.core.raw" average.cpp                )
+make_unit( "doc.core.raw" average.cpp )

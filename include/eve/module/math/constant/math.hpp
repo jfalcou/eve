@@ -21,6 +21,7 @@
 #include <eve/module/math/constant/four_pio_3.hpp>
 #include <eve/module/math/constant/glaisher.hpp>
 #include <eve/module/math/constant/inv_2eps.hpp>
+#include <eve/module/math/constant/inv_2pi.hpp>
 #include <eve/module/math/constant/inv_e.hpp>
 #include <eve/module/math/constant/inv_egamma.hpp>
 #include <eve/module/math/constant/inv_pi.hpp>
@@ -55,6 +56,7 @@
 #include <eve/module/math/constant/pi3.hpp>
 #include <eve/module/math/constant/pi_minus_3.hpp>
 #include <eve/module/math/constant/pi_pow_e.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_3.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/constant/pio_6.hpp>
