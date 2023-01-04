@@ -106,26 +106,40 @@ namespace eve::test
   template<typename L> struct wides;
   template<typename... Ts> struct wides<::tts::types<Ts...>>
   {
-    // Precomputed # of repetitions based on ABI and sizeof(T)
-    static constexpr std::array<std::size_t,9> cardinals()
+    template<typename T>
+    static constexpr auto generate_types()
     {
-      // This is a precomputed map of the maximum number of cardinal to generate depending
-      // on the current ABI bits size. This prevents us to use std::bit_width and other complex
-      // computations.
-      switch(eve::current_abi_type::bits)
+      // Compute cardinals till we have only 64 bits
+      constexpr auto rep  = []()
       {
-        case 64 : return {0,5,4,0,3,0,0,0,2};
-        case 128: return {0,6,5,0,4,0,0,0,3};
-        case 256: return {0,7,6,0,5,0,0,0,4};
-        case 512: return {0,8,7,0,6,0,0,0,5};
-        default : return {};
-      };
-    };
+        switch(eve::current_abi_type::bits)
+        {
+          case 64 : return 0;
+          case 128: return 2;
+          case 256: return 2;
+          case 512: return 3;
+          default : return 0;
+        };
+      }();
 
-    using type = tts::concatenate_t < to_wide_t < Ts
-                                                , std::make_index_sequence<cardinals()[sizeof(Ts)]>
-                                                >...
-                                    >;
+      // starts from expected lanes
+      constexpr auto card = eve::expected_cardinal_v<T>;
+      constexpr auto base = eve::current_abi_type::bits == 128 ? 2*card : card;
+
+      // Compute list of testable cardinals
+      auto lists = []<std::size_t... N>(std::index_sequence<N...>)
+      {
+        return std::index_sequence<base,(base/(1ULL<<(N+1)))...>{};
+      }(std::make_index_sequence<rep>{});
+
+      return []<std::size_t... N>(std::index_sequence<N...>)
+      {
+        if constexpr(sizeof(T)!=8)  return tts::types<as_wide_t<T,fixed<N>>...,as_wide_t<T,fixed<1>>>{};
+        else                        return tts::types<as_wide_t<T,fixed<N>>...>{};
+      }(lists);
+    }
+
+    using type = tts::concatenate_t < decltype(generate_types<Ts>())... >;
   };
 
   // Prevent calling remove_cvref_t
