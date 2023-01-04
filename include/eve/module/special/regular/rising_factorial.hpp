@@ -57,7 +57,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/rising_factorial.cpp}
+//!  @godbolt{doc/complex/regular/rising_factorial.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

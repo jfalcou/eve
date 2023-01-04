@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/epso_2.cpp}
+//!  @godbolt{doc/math/regular/epso_2.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(epso_2_, epso_2);

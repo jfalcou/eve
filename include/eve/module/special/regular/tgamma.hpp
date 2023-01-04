@@ -54,7 +54,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!   @godbolt{doc/complex/tgamma.cpp}
+//!   @godbolt{doc/complex/regular/tgamma.cpp}
 //!
 //! @}
 //================================================================================================

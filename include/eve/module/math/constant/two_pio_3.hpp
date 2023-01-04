@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/two_pio_3.cpp}
+//!  @godbolt{doc/math/regular/two_pio_3.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(two_pio_3_, two_pio_3);

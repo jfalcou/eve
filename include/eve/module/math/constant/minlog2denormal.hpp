@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/minlog2denormal.cpp}
+//!  @godbolt{doc/math/regular/minlog2denormal.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(minlog2denormal_, minlog2denormal);

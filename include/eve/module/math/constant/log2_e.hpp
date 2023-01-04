@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/log2_e.cpp}
+//!  @godbolt{doc/math/regular/log2_e.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(log2_e_, log2_e);

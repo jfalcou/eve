@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/catalan.cpp}
+//!  @godbolt{doc/math/regular/catalan.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(catalan_, catalan);

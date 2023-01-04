@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/log_phi.cpp}
+//!  @godbolt{doc/math/regular/log_phi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(log_phi_, log_phi);

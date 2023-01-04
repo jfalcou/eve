@@ -64,11 +64,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/asin.cpp}
+//!  @godbolt{doc/math/regular/asin.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/asin.cpp}
+//!  @godbolt{doc/complex/regular/asin.cpp}
 //!  @}
 //================================================================================================
 

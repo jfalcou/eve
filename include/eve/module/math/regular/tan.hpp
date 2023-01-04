@@ -59,13 +59,13 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/tan.cpp}
+//!  @godbolt{doc/math/regular/tan.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/tan.cpp}
+//!  @godbolt{doc/complex/regular/tan.cpp}
 //!
-//!  @godbolt{doc/math/tan.cpp}
+//!  @godbolt{doc/math/regular/tan.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

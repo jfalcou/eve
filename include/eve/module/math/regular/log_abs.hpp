@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/log_abs.cpp}
+//!  @godbolt{doc/math/regular/log_abs.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(log_abs_, log_abs);

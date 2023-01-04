@@ -58,11 +58,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/sin.cpp}
+//!  @godbolt{doc/math/regular/sin.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/sin.cpp}
+//!  @godbolt{doc/complex/regular/sin.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

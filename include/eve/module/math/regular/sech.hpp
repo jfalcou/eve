@@ -57,7 +57,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sech.cpp}
+//!  @godbolt{doc/math/regular/sech.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sech_, sech);

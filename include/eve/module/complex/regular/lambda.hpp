@@ -57,7 +57,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/lambda.cpp}
+//!  @godbolt{doc/complex/regular/lambda.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(lambda_, lambda);

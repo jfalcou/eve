@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/zeta_3.cpp}
+//!  @godbolt{doc/math/regular/zeta_3.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(zeta_3_, zeta_3);

@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/logspace_sub.cpp}
+//!  @godbolt{doc/math/regular/logspace_sub.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(logspace_sub_, logspace_sub);

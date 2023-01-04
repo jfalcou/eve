@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/gd.cpp}
+//!  @godbolt{doc/math/regular/gd.cpp}
 //!
 //!  @}
 //================================================================================================

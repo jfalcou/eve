@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sincos.cpp}
+//!  @godbolt{doc/math/regular/sincos.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

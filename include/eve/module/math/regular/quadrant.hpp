@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/quadrant.cpp}
+//!  @godbolt{doc/math/regular/quadrant.cpp}
 //!  @}
 //================================================================================================
 

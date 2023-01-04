@@ -57,7 +57,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/acoth.cpp}
+//!  @godbolt{doc/math/regular/acoth.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(acoth_, acoth);

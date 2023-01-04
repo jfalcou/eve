@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/invsqrt_2.cpp}
+//!  @godbolt{doc/math/regular/invsqrt_2.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(invsqrt_2_, invsqrt_2);

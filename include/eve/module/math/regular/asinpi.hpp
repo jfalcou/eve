@@ -56,7 +56,7 @@ namespace eve
 //!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
 //!      of the arc sine of the input in \f$\pi\f$ multiples.
 //!
-//!  @godbolt{doc/math/asinpi.cpp}
+//!  @godbolt{doc/math/regular/asinpi.cpp}
 //!  @}
 //================================================================================================
 

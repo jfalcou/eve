@@ -63,11 +63,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/atan.cpp}
+//!  @godbolt{doc/math/regular/atan.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/atan.cpp}
+//!  @godbolt{doc/complex/regular/atan.cpp}
 //!  @}
 //================================================================================================
 

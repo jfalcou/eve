@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/khinchin.cpp}
+//!  @godbolt{doc/math/regular/khinchin.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(khinchin_, khinchin);
