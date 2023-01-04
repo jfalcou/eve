@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/inv_2pi.cpp}
+//!  @godbolt{doc/math/regular/inv_2pi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(inv_2pi_, inv_2pi);

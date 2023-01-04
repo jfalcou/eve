@@ -75,11 +75,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/atanh.cpp}
+//!  @godbolt{doc/math/regular/atanh.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/atanh.cpp}
+//!  @godbolt{doc/complex/regular/atanh.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(atanh_, atanh);

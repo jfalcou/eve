@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sinpi.cpp}
+//!  @godbolt{doc/math/regular/sinpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

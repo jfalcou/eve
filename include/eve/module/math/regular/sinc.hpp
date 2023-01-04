@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sinc.cpp}
+//!  @godbolt{doc/math/regular/sinc.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

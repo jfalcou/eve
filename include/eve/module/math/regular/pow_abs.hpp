@@ -74,7 +74,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/pow_abs.cpp}
+//!  @godbolt{doc/math/regular/pow_abs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

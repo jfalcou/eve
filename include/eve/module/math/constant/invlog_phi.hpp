@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/invlog_phi.cpp}
+//!  @godbolt{doc/math/regular/invlog_phi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(invlog_phi_, invlog_phi);

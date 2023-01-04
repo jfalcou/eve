@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/cscpi.cpp}
+//!  @godbolt{doc/math/regular/cscpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

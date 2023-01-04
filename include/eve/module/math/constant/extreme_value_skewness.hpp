@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/extreme_value_skewness.cpp}
+//!  @godbolt{doc/math/regular/extreme_value_skewness.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(extreme_value_skewness_, extreme_value_skewness);

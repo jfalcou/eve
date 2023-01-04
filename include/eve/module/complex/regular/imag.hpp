@@ -41,7 +41,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/complex/imag.cpp}
+  //! @godbolt{doc/complex/regular/imag.cpp}
   //!
   //!  @}
   //================================================================================================

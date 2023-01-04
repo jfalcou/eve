@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/rayleigh_kurtosis.cpp}
+//!  @godbolt{doc/math/regular/rayleigh_kurtosis.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(rayleigh_kurtosis_, rayleigh_kurtosis);

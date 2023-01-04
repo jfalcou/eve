@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/radinpi.cpp}
+//!  @godbolt{doc/math/regular/radinpi.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(radinpi_, radinpi);

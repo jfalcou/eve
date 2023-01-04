@@ -71,7 +71,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/sqrt.cpp}
+//!  @godbolt{doc/complex/regular/sqrt.cpp}
 //!
 //!
 //!  @groupheader{Semantic Modifiers}

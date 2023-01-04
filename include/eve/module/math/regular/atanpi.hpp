@@ -59,7 +59,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/atanpi.cpp}
+//!  @godbolt{doc/math/regular/atanpi.cpp}
 //!  @}
 //================================================================================================
 

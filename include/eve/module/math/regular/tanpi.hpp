@@ -58,11 +58,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/tanpi.cpp}
+//!  @godbolt{doc/math/regular/tanpi.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/tanpi.cpp}
+//!  @godbolt{doc/complex/regular/tanpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

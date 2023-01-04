@@ -76,11 +76,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/exp.cpp}
+//!  @godbolt{doc/math/regular/exp.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/exp.cpp}
+//!  @godbolt{doc/complex/regular/exp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

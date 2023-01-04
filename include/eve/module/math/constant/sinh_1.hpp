@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sinh_1.cpp}
+//!  @godbolt{doc/math/regular/sinh_1.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sinh_1_, sinh_1);

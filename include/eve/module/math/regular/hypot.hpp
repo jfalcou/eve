@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/hypot.cpp}
+//!  @godbolt{doc/math/regular/hypot.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

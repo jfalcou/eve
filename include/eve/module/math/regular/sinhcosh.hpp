@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sinhcosh.cpp}
+//!  @godbolt{doc/math/regular/sinhcosh.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sinhcosh_, sinhcosh);

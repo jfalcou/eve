@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/radindeg.cpp}
+//!  @godbolt{doc/math/regular/radindeg.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(radindeg_, radindeg);

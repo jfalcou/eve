@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/geommean.cpp}
+//!  @godbolt{doc/math/regular/geommean.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

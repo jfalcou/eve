@@ -76,11 +76,11 @@ namespace eve
 //!
 //!    **Real version**
 //!
-//!  @godbolt{doc/math/cosh.cpp}
+//!  @godbolt{doc/math/regular/cosh.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/cosh.cpp}
+//!  @godbolt{doc/complex/regular/cosh.cpp}
 //!
 //!  @}
 //================================================================================================

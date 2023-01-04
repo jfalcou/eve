@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sqrt_2pi.cpp}
+//!  @godbolt{doc/math/regular/sqrt_2pi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sqrt_2pi_, sqrt_2pi);

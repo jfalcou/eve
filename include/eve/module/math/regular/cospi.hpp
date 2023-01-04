@@ -61,11 +61,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/cospi.cpp}
+//!  @godbolt{doc/math/regular/cospi.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/cospi.cpp}
+//!  @godbolt{doc/complex/regular/cospi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

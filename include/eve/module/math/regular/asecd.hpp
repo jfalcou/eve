@@ -56,7 +56,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/asecd.cpp}
+//!  @godbolt{doc/math/regular/asecd.cpp}
 //!  @}
 //================================================================================================
 

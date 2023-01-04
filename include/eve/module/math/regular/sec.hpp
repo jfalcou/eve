@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sec.cpp}
+//!  @godbolt{doc/math/regular/sec.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

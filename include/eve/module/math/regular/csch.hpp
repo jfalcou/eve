@@ -56,7 +56,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/csch.cpp}
+//!  @godbolt{doc/math/regular/csch.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(csch_, csch);

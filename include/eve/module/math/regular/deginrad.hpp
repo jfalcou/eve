@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/deginrad.cpp}
+//!  @godbolt{doc/math/regular/deginrad.cpp}
 //!  @}
 //================================================================================================
 

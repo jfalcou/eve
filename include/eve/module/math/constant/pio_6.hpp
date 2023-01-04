@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/pio_6.cpp}
+//!  @godbolt{doc/math/regular/pio_6.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(pio_6_, pio_6);

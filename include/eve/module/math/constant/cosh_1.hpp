@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/cosh_1.cpp}
+//!  @godbolt{doc/math/regular/cosh_1.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(cosh_1_, cosh_1);

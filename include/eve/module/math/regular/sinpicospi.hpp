@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sinpicospi.cpp}
+//!  @godbolt{doc/math/regular/sinpicospi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

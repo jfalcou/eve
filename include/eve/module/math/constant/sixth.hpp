@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sixth.cpp}
+//!  @godbolt{doc/math/regular/sixth.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sixth_, sixth);

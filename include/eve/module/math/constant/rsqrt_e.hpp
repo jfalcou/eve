@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/rsqrt_e.cpp}
+//!  @godbolt{doc/math/regular/rsqrt_e.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(rsqrt_e_, rsqrt_e);

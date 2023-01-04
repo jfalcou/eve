@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/inv_egamma.cpp}
+//!  @godbolt{doc/math/regular/inv_egamma.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(inv_egamma_, inv_egamma);

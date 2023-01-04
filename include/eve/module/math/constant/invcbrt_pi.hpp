@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/invcbrt_pi.cpp}
+//!  @godbolt{doc/math/regular/invcbrt_pi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(invcbrt_pi_, invcbrt_pi);

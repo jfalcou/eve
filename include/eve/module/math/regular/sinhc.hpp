@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sinhc.cpp}
+//!  @godbolt{doc/math/regular/sinhc.cpp}
 //!
 //!  @}
 //================================================================================================

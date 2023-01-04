@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/tand.cpp}
+//!  @godbolt{doc/math/regular/tand.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

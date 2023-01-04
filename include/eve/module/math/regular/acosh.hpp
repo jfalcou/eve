@@ -77,11 +77,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/acosh.cpp}
+//!  @godbolt{doc/math/regular/acosh.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/acosh.cpp}
+//!  @godbolt{doc/complex/regular/acosh.cpp}
 //!
 //!  @}
 //================================================================================================

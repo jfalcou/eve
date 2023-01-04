@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/lpnorm.cpp}
+//!  @godbolt{doc/math/regular/lpnorm.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -53,7 +53,7 @@ namespace eve
 //!
 //!    **Complex version**
 //!
-//!  @godbolt{doc/complex/log_gamma.cpp}
+//!  @godbolt{doc/complex/regular/log_gamma.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(log_gamma_, log_gamma);

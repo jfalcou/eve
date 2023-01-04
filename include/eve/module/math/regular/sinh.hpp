@@ -73,11 +73,11 @@ namespace eve
 //!
 //!    **Real version**
 //!
-//!  @godbolt{doc/math/sinh.cpp}
+//!  @godbolt{doc/math/regular/sinh.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/sinh.cpp}
+//!  @godbolt{doc/complex/regular/sinh.cpp}
 //!
 //!  @}
 //================================================================================================

@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/atan2.cpp}
+//!  @godbolt{doc/math/regular/atan2.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

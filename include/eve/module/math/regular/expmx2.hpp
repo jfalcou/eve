@@ -57,7 +57,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/expmx2.cpp}
+//!  @godbolt{doc/math/regular/expmx2.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

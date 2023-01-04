@@ -57,7 +57,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/acot.cpp}
+//!  @godbolt{doc/math/regular/acot.cpp}
 //!  @}
 //================================================================================================
 

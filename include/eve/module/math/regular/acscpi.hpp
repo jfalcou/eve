@@ -59,7 +59,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/acscpi.cpp}
+//!  @godbolt{doc/math/regular/acscpi.cpp}
 //!  @}
 //================================================================================================
 

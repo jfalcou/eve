@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/minlog.cpp}
+//!  @godbolt{doc/math/regular/minlog.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(minlog_, minlog);

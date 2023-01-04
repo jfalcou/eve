@@ -76,11 +76,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/acos.cpp}
+//!  @godbolt{doc/math/regular/acos.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/acos.cpp}
+//!  @godbolt{doc/complex/regular/acos.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
