@@ -21,7 +21,7 @@ expmx2_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    return rec(expx2(a0));
+    return rec(eve::expx2(a0));
   }
   else return apply_over(expmx2, a0);
 }
@@ -30,7 +30,7 @@ expmx2_(EVE_SUPPORTS(cpu_), T a0) noexcept
 // Masked case
 template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
-exmpx2_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+expmx2_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {
   return mask_op(cond, eve::expmx2, t);
 }
