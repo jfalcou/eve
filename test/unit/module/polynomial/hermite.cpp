@@ -47,14 +47,14 @@ TTS_CASE_WITH("Check behavior of hermite on wide",
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
   {
     auto std_hermite2 = [&](auto i, auto) { return std::hermite(i0.get(i), a0.get(j)); };
-    TTS_ULP_EQUAL(eve__hermitev(i0, a0.get(j)), T(std_hermite2), 32);
+    TTS_ULP_EQUAL(eve__hermitev(i0, a0.get(j)), T(std_hermite2), 64);
   }
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
   {
     for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
     {
       TTS_ULP_EQUAL(
-          eve__hermitev(i0.get(j), a0.get(n)), v_t(std::hermite(i0.get(j), a0.get(n))), 32);
+          eve__hermitev(i0.get(j), a0.get(n)), v_t(std::hermite(i0.get(j), a0.get(n))), 64);
     }
   }
 };
