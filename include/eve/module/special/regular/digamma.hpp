@@ -49,7 +49,7 @@ namespace eve
 //!
 //!    **Complex version**
 //!
-//!   @godbolt{doc/complex/digamma.cpp}
+//!   @godbolt{doc/complex/regular/digamma.cpp}
 //!
 //! @}
 //================================================================================================

@@ -54,7 +54,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/powm1.cpp}
+//!  @godbolt{doc/math/regular/powm1.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

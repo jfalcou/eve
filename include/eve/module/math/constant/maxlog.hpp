@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/maxlog.cpp}
+//!  @godbolt{doc/math/regular/maxlog.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(maxlog_, maxlog);

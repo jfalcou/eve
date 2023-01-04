@@ -52,7 +52,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/eta.cpp}
+//!  @godbolt{doc/complex/regular/eta.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(eta_, eta);

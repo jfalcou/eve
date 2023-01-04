@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/rempio2.cpp}
+//!  @godbolt{doc/math/regular/rempio2.cpp}
 //!  @}
 //================================================================================================
 namespace tag

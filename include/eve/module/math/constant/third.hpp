@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/third.cpp}
+//!  @godbolt{doc/math/regular/third.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(third_, third);

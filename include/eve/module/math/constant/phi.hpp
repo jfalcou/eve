@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/phi.cpp}
+//!  @godbolt{doc/math/regular/phi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(phi_, phi);

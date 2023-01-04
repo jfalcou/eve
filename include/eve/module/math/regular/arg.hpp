@@ -50,11 +50,11 @@ namespace eve
 //!
 //!    **Real version**
 //!
-//!  @godbolt{doc/math/arg.cpp}
+//!  @godbolt{doc/math/regular/arg.cpp}
 //!
 //!    **Complex version**
 //!
-//!  @godbolt{doc/complex/arg.cpp}
+//!  @godbolt{doc/complex/regular/arg.cpp}
 //!
 //!  @}
 //================================================================================================

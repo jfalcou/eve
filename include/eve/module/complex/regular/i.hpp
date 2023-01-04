@@ -45,7 +45,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/complex/i.cpp}
+  //! @godbolt{doc/complex/regular/i.cpp}
   //!
   //! @}
   //================================================================================================

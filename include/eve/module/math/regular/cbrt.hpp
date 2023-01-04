@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/cbrt.cpp}
+//!  @godbolt{doc/math/regular/cbrt.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

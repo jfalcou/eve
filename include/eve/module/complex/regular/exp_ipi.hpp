@@ -42,7 +42,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/complex/exp_ipi.cpp}
+  //! @godbolt{doc/complex/regular/exp_ipi.cpp}
   //!
   //!  @}
   //================================================================================================

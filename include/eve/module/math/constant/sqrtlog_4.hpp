@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/sqrtlog_4.cpp}
+//!  @godbolt{doc/math/regular/sqrtlog_4.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sqrtlog_4_, sqrtlog_4);

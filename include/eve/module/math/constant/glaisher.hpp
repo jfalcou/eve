@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/glaisher.cpp}
+//!  @godbolt{doc/math/regular/glaisher.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(glaisher_, glaisher);

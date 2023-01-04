@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/complex/erfi.cpp}
+//!  @godbolt{doc/complex/regular/erfi.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(erfi_, erfi);

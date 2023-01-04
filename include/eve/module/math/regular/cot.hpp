@@ -58,11 +58,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/cot.cpp}
+//!  @godbolt{doc/math/regular/cot.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/cot.cpp}
+//!  @godbolt{doc/complex/regular/cot.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

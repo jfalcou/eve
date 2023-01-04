@@ -59,11 +59,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/coth.cpp}
+//!  @godbolt{doc/math/regular/coth.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/coth.cpp}
+//!  @godbolt{doc/complex/regular/coth.cpp}
 //!
 //!  @}
 //================================================================================================

@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/invlog_10.cpp}
+//!  @godbolt{doc/math/regular/invlog_10.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(invlog_10_, invlog_10);

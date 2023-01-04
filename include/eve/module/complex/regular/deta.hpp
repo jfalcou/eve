@@ -55,7 +55,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/deta.cpp}
+//!  @godbolt{doc/complex/regular/deta.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(deta_, deta);

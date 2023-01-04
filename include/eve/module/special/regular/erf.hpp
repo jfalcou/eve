@@ -59,7 +59,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!   @godbolt{doc/complex/erf.cpp}
+//!   @godbolt{doc/complex/regular/erf.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(erf_, erf);

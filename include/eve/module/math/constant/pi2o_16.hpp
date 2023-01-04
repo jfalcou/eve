@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/pi2o_16.cpp}
+//!  @godbolt{doc/math/regular/pi2o_16.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(pi2o_16_, pi2o_16);

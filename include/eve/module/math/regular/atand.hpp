@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/atand.cpp}
+//!  @godbolt{doc/math/regular/atand.cpp}
 //!  @}
 //================================================================================================
 

@@ -60,11 +60,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/log10.cpp}
+//!  @godbolt{doc/math/regular/log10.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/log10.cpp}
+//!  @godbolt{doc/complex/regular/log10.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/euler.cpp}
+//!  @godbolt{doc/math/regular/euler.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(euler_, euler);

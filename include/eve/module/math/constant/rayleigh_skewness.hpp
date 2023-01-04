@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/rayleigh_skewness.cpp}
+//!  @godbolt{doc/math/regular/rayleigh_skewness.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(rayleigh_skewness_, rayleigh_skewness);

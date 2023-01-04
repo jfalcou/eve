@@ -62,11 +62,11 @@ namespace eve
 //!
 //!   **Real version**
 //!
-//!  @godbolt{doc/math/log1p.cpp}
+//!  @godbolt{doc/math/regular/log1p.cpp}
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/log1p.cpp}
+//!  @godbolt{doc/complex/regular/log1p.cpp}
 //!
 //!   * Masked Call
 //!

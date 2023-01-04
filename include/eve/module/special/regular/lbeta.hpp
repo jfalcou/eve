@@ -54,7 +54,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{doc/complex/lbeta.cpp}
+//!  @godbolt{doc/complex/regular/lbeta.cpp}
 //!
 //! @}
 //================================================================================================

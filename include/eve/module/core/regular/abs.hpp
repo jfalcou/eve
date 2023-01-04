@@ -67,7 +67,7 @@ namespace eve
 //!
 //!    **Complex version**
 //!
-//!  @godbolt{doc/complex/abs.cpp}
+//!  @godbolt{doc/complex/regular/abs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
