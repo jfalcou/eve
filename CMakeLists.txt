@@ -43,13 +43,13 @@ endif()
 ## Test and Benchmarks target
 ## =================================================================================================
 if( EVE_BUILD_TEST )
-  include(config/dependencies)
   include(CTest)
-  include(target/add_parent_target)
+  include(config/dependencies)
   include(config/compiler)
   include(config/types)
   include(config/pch)
 
+  include(target/add_parent_target)
   include(target/targets)
   add_subdirectory("${PROJECT_SOURCE_DIR}/test/")
   add_subdirectory("${PROJECT_SOURCE_DIR}/examples/")

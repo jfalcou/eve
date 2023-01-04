@@ -8,9 +8,10 @@
 ## Setup a test with many option
 ##==================================================================================================
 function(generate_test root rootpath dep file)
-  string(REPLACE ".cpp" ".exe" base ${file})
-  string(REPLACE "/"    "." base ${base})
-  string(REPLACE "\\"   "." base ${base})
+  string(REPLACE ".cpp"    ".exe" base ${file})
+  string(REPLACE "/"       "."    base ${base})
+  string(REPLACE "\\"      "."    base ${base})
+  string(REPLACE "module." ""     base ${base})
 
   if( NOT root STREQUAL "")
     set(test "${root}.${base}")
@@ -88,5 +89,15 @@ endfunction()
 function(make_unit root)
   foreach(file ${ARGN})
     generate_test(${root} "" "" ${file})
+  endforeach()
+endfunction()
+
+##==================================================================================================
+## Generate tests from a GLOB
+##==================================================================================================
+function(glob_unit root relative  pattern)
+  file(GLOB files CONFIGURE_DEPENDS RELATIVE ${relative} ${pattern})
+  foreach(file ${files})
+    generate_test("${root}" "" "" ${file})
   endforeach()
 endfunction()
