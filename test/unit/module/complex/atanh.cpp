@@ -9,7 +9,6 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 #include <complex>
-#include <boost/math/complex/atanh.hpp>
 
 template < typename T >
 auto cv(std::complex < T > sc)
@@ -36,7 +35,7 @@ TTS_CASE_WITH( "Check behavior of atanh on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(boost::math::atanh(c_t(e, f))), ulp);
+      TTS_ULP_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(std::atanh(c_t(e, f))), ulp);
     }
   }
 };
@@ -53,7 +52,7 @@ TTS_CASE_WITH( "Check behavior of atanh on wide"
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_ch = [](auto x, auto y){return cv(boost::math::atanh(c_t(x, y))); };
+  auto std_ch = [](auto x, auto y){return cv(std::atanh(c_t(x, y))); };
   auto init_with_std = [std_ch](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
@@ -97,12 +96,12 @@ TTS_CASE_TPL( "Check return types of eve::abs", tts::bunch<eve::test::scalar::ie
   for(int i=0; i < N; ++i)
   {
     if((i != 2 && i != 1)){
-      // this curious test corresponds to the fact that neither std::atanh nor boost::math::atanh are correct for inputs (0, inf) or (0, -inf)
+      // this curious test corresponds to the fact that neither std::atanh nor std::atanh are correct for inputs (0, inf) or (0, -inf)
       // peculiarly they contredict the C99 specification that atanh is odd
       // atanh should behave "the same as C99 function catanh, defined in subclause 7.3.6.3 and G.5.2.3."
       // the if clause has to be removed if/when libc++ will be corrected
-      TTS_ULP_EQUAL(eve::atanh(inputs[i]), cv(boost::math::atanh(sc(inputs[i]))), ulp);
-      TTS_ULP_EQUAL(eve::atanh(-inputs[i]), cv(boost::math::atanh(sc(-inputs[i]))), ulp);
+      TTS_ULP_EQUAL(eve::atanh(inputs[i]), cv(std::atanh(sc(inputs[i]))), ulp);
+      TTS_ULP_EQUAL(eve::atanh(-inputs[i]), cv(std::atanh(sc(-inputs[i]))), ulp);
     }
   }
 };

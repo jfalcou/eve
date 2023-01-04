@@ -9,7 +9,6 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 #include <complex>
-#include <boost/math/complex/asin.hpp>
 
 template < typename T >
 auto cv(std::complex < T > sc)
@@ -38,7 +37,7 @@ TTS_CASE_WITH ( "Check behavior of asin on scalar"
   {
     for(auto f : a1)
     {
-      TTS_RELATIVE_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(boost::math::asin(c_t(e, f))), ulp);
+      TTS_RELATIVE_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(std::asin(c_t(e, f))), ulp);
     }
   }
 };
@@ -55,7 +54,7 @@ TTS_CASE_WITH( "Check behavior of asin on wide"
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_asin = [](auto x, auto y){return boost::math::asin(c_t(x, y)); };
+  auto std_asin = [](auto x, auto y){return std::asin(c_t(x, y)); };
   auto init_with_std = [std_asin](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)
@@ -113,7 +112,7 @@ TTS_CASE_TPL( "Check return types of eve::asin", tts::bunch<eve::test::scalar::i
   using c_t = eve::complex<e_t>;
   using s_t = std::complex<e_t>;
   using eve::as;
-  auto s_asin = [](auto x){return cv(boost::math::asin(x)); };
+  auto s_asin = [](auto x){return cv(std::asin(x)); };
 
   TTS_ULP_EQUAL(eve::asin(c_t(eve::zero(as<e_t>()),  eve::zero(as<e_t>()))),   s_asin(s_t(eve::zero(as<e_t>()),  eve::zero(as<e_t>())))  ,2.0);
   TTS_ULP_EQUAL(eve::asin(c_t(eve::mzero(as<e_t>()),  eve::zero(as<e_t>()))),  s_asin(s_t(eve::mzero(as<e_t>()),  eve::zero(as<e_t>()))) ,2.0);
