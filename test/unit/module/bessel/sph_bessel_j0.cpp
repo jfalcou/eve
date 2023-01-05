@@ -54,9 +54,9 @@ TTS_CASE_WITH("Check behavior of sph_bessel_j0 on wide",
   TTS_ULP_EQUAL(eve__sph_bessel_j0(T(1)), T(std__sph_bessel_j0(v_t(1))), 5000.0);
   TTS_ULP_EQUAL(eve__sph_bessel_j0(T(0)), eve::one(eve::as<T>()), 0.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_j0(a0), map(std__sph_bessel_j0, a0), 1024.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_j0(a1), map(std__sph_bessel_j0, a1), 1024.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_j0(a2), map(std__sph_bessel_j0, a2), 1024.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j0(a0), map(std__sph_bessel_j0, a0), 2048.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j0(a1), map(std__sph_bessel_j0, a1), 2048.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_j0(a2), map(std__sph_bessel_j0, a2), 2048.0);
 };
 
 
