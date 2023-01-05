@@ -8,7 +8,12 @@
 #include "test.hpp"
 
 #include <eve/module/bessel.hpp>
-#include <cmath>
+#if defined(__cpp_lib_math_special_functions)
+#define NAMESPACE std
+#else
+#include <boost/math/special_functions/bessel.hpp>
+#define NAMESPACE boost::math
+#endif
 
 TTS_CASE_TPL("Check return types of cyl_bessel_y1", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
@@ -26,7 +31,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_y1 on wide",
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_y1 = [](auto x) { return eve::cyl_bessel_y1(x); };
-  auto std__cyl_bessel_y1 = [](auto x) -> v_t { return std::cyl_neumann(v_t(1), x); };
+  auto std__cyl_bessel_y1 = [](auto x) -> v_t { return NAMESPACE::cyl_neumann(v_t(1), x); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_y1(eve::minf(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
