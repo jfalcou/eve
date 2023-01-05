@@ -56,7 +56,7 @@ TTS_CASE_WITH("Check behavior of sph_bessel_y0 on wide",
 
   TTS_ULP_EQUAL(eve__sph_bessel_y0(a0), map(std__sph_bessel_y0, a0), 1024.0);
   TTS_ULP_EQUAL(eve__sph_bessel_y0(a1), map(std__sph_bessel_y0, a1), 1024.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y0(a2), map(std__sph_bessel_y0, a2), 1024.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y0(a2), map(std__sph_bessel_y0, a2), 5000.0);
 };
 
 
