@@ -7,8 +7,14 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/module/polynomial.hpp>
+
+#if defined(__cpp_lib_math_special_functions)
 #include <cmath>
+#else
+#include <boost/math/special_functions/hermite.hpp>
+#endif
+#include <eve/module/polynomial.hpp>
+
 
 //==================================================================================================
 //== Types tests
