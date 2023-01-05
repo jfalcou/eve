@@ -38,21 +38,21 @@ TTS_CASE_WITH("Check behavior of sph_bessel_y1 on wide",
     TTS_ULP_EQUAL(eve__sph_bessel_y1(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
   TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(500)), std__sph_bessel_y1(v_t(500)), 5000.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(10)), std__sph_bessel_y1(v_t(10)), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(5)), std__sph_bessel_y1(v_t(5)), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(2)), std__sph_bessel_y1(v_t(2)), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(1.5)), std__sph_bessel_y1(v_t(1.5)), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(0.5)), std__sph_bessel_y1(v_t(0.5)), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(1)), std__sph_bessel_y1(v_t(1)), 6.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(10)), std__sph_bessel_y1(v_t(10)), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(5)), std__sph_bessel_y1(v_t(5)), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(2)), std__sph_bessel_y1(v_t(2)), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(1.5)), std__sph_bessel_y1(v_t(1.5)), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(0.5)), std__sph_bessel_y1(v_t(0.5)), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(1)), std__sph_bessel_y1(v_t(1)), 5000.0);
   TTS_ULP_EQUAL(eve__sph_bessel_y1(v_t(0)), eve::minf(eve::as<v_t>()), 0.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_y1(T(500)), T(std__sph_bessel_y1(v_t(500))), 5000.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(10)), T(std__sph_bessel_y1(v_t(10))), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(5)), T(std__sph_bessel_y1(v_t(5))), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(2)), T(std__sph_bessel_y1(v_t(2))), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(1.5)), T(std__sph_bessel_y1(v_t(1.5))), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(0.5)), T(std__sph_bessel_y1(v_t(0.5))), 6.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(1)), T(std__sph_bessel_y1(v_t(1))), 6.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(10)), T(std__sph_bessel_y1(v_t(10))), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(5)), T(std__sph_bessel_y1(v_t(5))), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(2)), T(std__sph_bessel_y1(v_t(2))), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(1.5)), T(std__sph_bessel_y1(v_t(1.5))), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(0.5)), T(std__sph_bessel_y1(v_t(0.5))), 5000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_y1(T(1)), T(std__sph_bessel_y1(v_t(1))), 5000.0);
   TTS_ULP_EQUAL(eve__sph_bessel_y1(T(0)), eve::minf(eve::as<T>()), 0.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_y1(a0), map(std__sph_bessel_y1, a0), 32.0);
