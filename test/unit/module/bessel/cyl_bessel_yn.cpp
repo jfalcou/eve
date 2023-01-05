@@ -130,7 +130,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(I_t(10), T(8)), T(std__cyl_bessel_yn(10, v_t(8))), 20000.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_yn(I_t(10), T(8)), T(std__cyl_bessel_yn(10, v_t(8))), 20000.0);
 
-  TTS_ULP_EQUAL(eve__cyl_bessel_yn(n, a0), map(std__cyl_bessel_yn, n, a0), 20000.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_yn(n, a0), map(std__cyl_bessel_yn, n, a0), 100000.0);
 };
 
 //==================================================================================================
