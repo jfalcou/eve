@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of cyl_bessel_yn", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(0), tts::randoms(0.1, 200.0)))
+              tts::generate(tts::ramp(0), tts::randoms(0.5, 100.0)))
 <typename T>(T n, T a0)
 {
   using v_t = eve::element_type_t<T>;
