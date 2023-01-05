@@ -49,7 +49,6 @@ TTS_CASE_WITH("Check behavior of laguerre on wide",
 #else
     auto std_laguerre = [&](auto i, auto) { return boost::math::laguerre(n, a0.get(i)); };
 #endif
-    auto std_laguerre = [&](auto i, auto) { return std::laguerre(n, a0.get(i)); };
     TTS_ULP_EQUAL(eve__laguerrev(n, a0), T(std_laguerre), 2100);
   }
   auto std_laguerrev = [&](auto i, auto) { return std::laguerre(i0.get(i), a0.get(i)); };
