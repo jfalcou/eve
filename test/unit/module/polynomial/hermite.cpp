@@ -45,14 +45,22 @@ TTS_CASE_WITH("Check behavior of hermite on wide",
   auto eve__hermitev = [](auto n, auto x) { return eve::hermite(n, x); };
   for( unsigned int n = 0; n < 5; ++n )
   {
+#if defined(__cpp_lib_math_special_functions)
     auto std_hermite = [&](auto i, auto) { return std::hermite(n, a0.get(i)); };
+#else
+    auto std_hermite = [&](auto i, auto) { return boost::math::hermite(n, a0.get(i)); };
+#endif
     TTS_ULP_EQUAL(eve__hermitev(n, a0), T(std_hermite), 16);
   }
   auto std_hermitev = [&](auto i, auto) { return std::hermite(i0.get(i), a0.get(i)); };
   TTS_ULP_EQUAL(eve__hermitev(i0, a0), T(std_hermitev), 16);
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
   {
-    auto std_hermite2 = [&](auto i, auto) { return std::hermite(i0.get(i), a0.get(j)); };
+#if defined(__cpp_lib_math_special_functions)
+    auto std_hermite2 = [&](auto i, auto) { return std::hermite(i0.get(i), a0.get(i)); };
+#else
+    auto std_hermite2 = [&](auto i, auto) { return boost::math::hermite(i0.get(i), a0.get(i)); };
+#endif
     TTS_ULP_EQUAL(eve__hermitev(i0, a0.get(j)), T(std_hermite2), 64);
   }
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
