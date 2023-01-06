@@ -10,9 +10,10 @@
 #include <eve/module/polynomial.hpp>
 
 #if defined(__cpp_lib_math_special_functions)
-#include <cmath>
+#define NAMESPACE std
 #else
 #include <boost/math/special_functions/laguerre.hpp>
+#define NAMESPACE boost::math
 #endif
 
 //==================================================================================================
@@ -44,11 +45,7 @@ TTS_CASE_WITH("Check behavior of laguerre on wide",
   auto eve__laguerrev = [](auto n, auto x) { return eve::laguerre(n, x); };
   for( unsigned int n = 0; n < 5; ++n )
   {
-#if defined(__cpp_lib_math_special_functions)
-    auto std_laguerre = [&](auto i, auto) { return std::laguerre(n, a0.get(i)); };
-#else
-    auto std_laguerre = [&](auto i, auto) { return boost::math::laguerre(n, a0.get(i)); };
-#endif
+    auto std_laguerre = [&](auto i, auto) { return NAMESPACE::laguerre(n, a0.get(i)); };
     TTS_ULP_EQUAL(eve__laguerrev(n, a0), T(std_laguerre), 2100);
   }
   auto std_laguerrev = [&](auto i, auto) { return std::laguerre(i0.get(i), a0.get(i)); };
@@ -56,7 +53,7 @@ TTS_CASE_WITH("Check behavior of laguerre on wide",
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
   {
     auto std_laguerre2 = [&](auto i, auto)
-    { return std::laguerre(i0.get(i), a0.get(j)); };
+    { return NAMESPACE::laguerre(i0.get(i), a0.get(j)); };
     TTS_RELATIVE_EQUAL(eve__laguerrev(i0, a0.get(j)), T(std_laguerre2), 0.01);
   }
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
