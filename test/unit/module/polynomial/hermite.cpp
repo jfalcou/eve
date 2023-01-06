@@ -9,8 +9,10 @@
 
 #include <eve/module/polynomial.hpp>
 #if defined(__cpp_lib_math_special_functions)
+#include <cmath>
 #define NAMESPACE std
 #else
+#include <boost/math/special_functions/next.hpp>
 #include <boost/math/special_functions/laguerre.hpp>
 #define NAMESPACE boost::math
 #endif
@@ -48,11 +50,11 @@ TTS_CASE_WITH("Check behavior of hermite on wide",
     auto std_hermite = [&](auto i, auto) { return NAMESPACE::hermite(n, a0.get(i)); };
     TTS_ULP_EQUAL(eve__hermitev(n, a0), T(std_hermite), 16);
   }
-  auto std_hermitev = [&](auto i, auto) { return NAMESPACE::hermite(i0.get(i), a0.get(i)); };
+  auto std_hermitev = [&](auto i, auto) { return NAMESPACE::hermite(int(i0.get(i)), a0.get(i)); };
   TTS_ULP_EQUAL(eve__hermitev(i0, a0), T(std_hermitev), 16);
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
   {
-    auto std_hermite2 = [&](auto i, auto) { return NAMESPACE::hermite(i0.get(i), a0.get(j)); };
+    auto std_hermite2 = [&](auto i, auto) { return NAMESPACE::hermite(int(i0.get(i)), a0.get(j)); };
     TTS_ULP_EQUAL(eve__hermitev(i0, a0.get(j)), T(std_hermite2), 64);
   }
   for( unsigned int j = 0; j < eve::cardinal_v<T>; ++j )
@@ -60,7 +62,7 @@ TTS_CASE_WITH("Check behavior of hermite on wide",
     for( unsigned int n = 0; n < eve::cardinal_v<T>; ++n )
     {
       TTS_ULP_EQUAL(
-          eve__hermitev(i0.get(j), a0.get(n)), v_t(NAMESPACE::hermite(i0.get(j), a0.get(n))), 64);
+        eve__hermitev(i0.get(j), a0.get(n)), v_t(NAMESPACE::hermite(int(i0.get(j)), a0.get(n))), 64);
     }
   }
 };
