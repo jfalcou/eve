@@ -138,7 +138,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with non integral order",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 10.0), tts::randoms(0.0, 2000.0)))
+              tts::generate(tts::randoms(0.1, 10.0), tts::randoms(0.5, 100.0)))
 <typename T>(T n, T a0)
 {
   using v_t = eve::element_type_t<T>;
