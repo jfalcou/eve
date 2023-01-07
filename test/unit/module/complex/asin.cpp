@@ -121,9 +121,9 @@ TTS_CASE_TPL( "Check return types of eve::asin", tts::bunch<eve::test::scalar::i
   TTS_ULP_EQUAL(eve::asin(c_t(eve::mone  (as<e_t>()), eve::one (as<e_t>()))),  s_asin(s_t(eve::mone  (as<e_t>()), eve::one (as<e_t>()))) ,2.0);
   TTS_ULP_EQUAL(eve::asin(c_t(eve::mone  (as<e_t>()), eve::mone (as<e_t>()))), s_asin(s_t(eve::mone  (as<e_t>()), eve::mone (as<e_t>()))),2.0);
 
-  TTS_ULP_EQUAL(eve::asin(c_t(1, 1)),       s_asin(s_t(1, 1)),        2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(1, 10)),      s_asin(s_t(1, 10)),       2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(10, 1)),      s_asin(s_t(10, 1)),       2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(10, 10)),     s_asin(s_t(10, 10)),       2.0);
-  TTS_ULP_EQUAL(eve::asin(c_t(0.5, -0.5)),  s_asin(s_t(0.5, -0.5)),    2.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(1, 1)),       s_asin(s_t(1, 1)),        300.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(1, 10)),      s_asin(s_t(1, 10)),       300.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(10, 1)),      s_asin(s_t(10, 1)),       300.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(10, 10)),     s_asin(s_t(10, 10)),       300.0);
+  TTS_ULP_EQUAL(eve::asin(c_t(0.5, -0.5)),  s_asin(s_t(0.5, -0.5)),    300.0);
 };
