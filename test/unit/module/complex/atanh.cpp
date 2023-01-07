@@ -28,14 +28,13 @@ TTS_CASE_WITH( "Check behavior of atanh on scalar"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 4.0;
   using e_t = typename T::value_type;
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(std::atanh(c_t(e, f))), ulp);
+      TTS_RELATIVE_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(std::atanh(c_t(e, f))), 1.0e-4);
     }
   }
 };

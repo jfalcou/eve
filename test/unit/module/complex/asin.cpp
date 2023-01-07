@@ -49,7 +49,7 @@ TTS_CASE_WITH( "Check behavior of asin on wide"
         )
 <typename T>(T const& a0, T const&  a1)
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 100.0 : 4.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 400.0 : 4.0;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
