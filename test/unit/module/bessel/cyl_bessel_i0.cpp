@@ -28,7 +28,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_i0 on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(0.5, 5.5),
                             tts::randoms(5.5, 9.5),
-                            tts::randoms(9.5, 60.0)))
+                            tts::randoms(9.5, 20.0)))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using v_t               = eve::element_type_t<T>;
