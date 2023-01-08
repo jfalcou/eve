@@ -13,6 +13,9 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_not_less.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/assert.hpp>
 
 namespace eve::detail
 {
@@ -24,11 +27,11 @@ EVE_FORCEINLINE kumi::tuple<T, T>
 {
   if constexpr( has_native_abi_v<T> )
   {
-    EVE_ASSERT(eve::all(is_not_less(eve::abs(a), eve::abs(b)), "|a| >=  |b| not satisfied for all elements")
+    EVE_ASSERT(eve::all(is_not_less(eve::abs(a), eve::abs(b))), "|a| >=  |b| not satisfied for all elements");
     T s = a + b;
     T err =  b - (s - a);
     if constexpr( eve::platform::supports_infinites )
-      err = if_else(is_finite(s) ? err,  zero);
+      err = if_else(is_finite(s), err, zero);
     return {s, err};
   }
   else return apply_over2(quick_two_add, a, b);

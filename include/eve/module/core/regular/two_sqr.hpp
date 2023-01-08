@@ -14,9 +14,9 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var quick_two_add
+//!   @var two_sqr
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   pair of  sum and error,
+//!   pair of  sqruct and error,
 //!
 //!   **Defined in Header**
 //!
@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U  >
-//!      kumi::tuple<T, T> quick_two_add(T x, U y) noexcept;
+//!      auto two_sqr(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -42,27 +42,26 @@ namespace eve
 //!
 //!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
 //!
-//!     * `a` is `x+y`
-//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
+//!     * `a` is `x*x`
+//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\otimes\f$`x`
 //!
-//! where \f$\oplus\f$ adds its two parameters with infinite precision.
-//!
-//! @warning    Assumes |x| >= |y|
+//!    where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
+//!    infinite precision.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/quick_two_add.cpp}
+//!  @godbolt{doc/core/regular/two_sqr.cpp}
 //!
 //! @}
 //================================================================================================
 namespace tag
 {
-  struct quick_two_add_;
+  struct two_sqr_;
 }
-template<> struct supports_conditional<tag::quick_two_add_> : std::false_type
+template<> struct supports_conditional<tag::two_sqr_> : std::false_type
 {};
 
-EVE_MAKE_CALLABLE(quick_two_add_, quick_two_add);
+EVE_MAKE_CALLABLE(two_sqr_, two_sqr);
 }
 
-#include <eve/module/core/regular/impl/quick_two_add.hpp>
+#include <eve/module/core/regular/impl/two_sqr.hpp>
