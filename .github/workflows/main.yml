@@ -18,7 +18,6 @@ concurrency:
 
 jobs:
 
-
 ##################################################################################################
 ## Check install process of EVE
 ##################################################################################################
@@ -180,12 +179,16 @@ jobs:
   ##################################################################################################
 
   ##################################################################################################
-  ## Phase 1 - Pre-Skylake SIMD ISA - clang
+  ## Phase 1 - Pre-Skylake SIMD ISA
   ##################################################################################################
-  x86-clang:
+  x86:
     runs-on: [self-hosted, generic-x86]
     strategy:
       fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang }
+        - { comp: gcc   }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
@@ -193,48 +196,62 @@ jobs:
         run: |
           mkdir build && cd build
           mkdir sse2 && mkdir sse4 && mkdir avx && mkdir avx2
-          pwd
+          mkdir emulation && mkdir bmi2
       - name: Building Tests Suites for SSE2
         run: |
           cd build/sse2
-          cmake ../.. -G Ninja -DEVE_OPTIONS="-msse2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/clang.x86.cmake
+          cmake ../.. -G Ninja -DEVE_OPTIONS="-msse2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/${{ matrix.cfg.comp }}.x86.cmake
       - name: Building Tests Suites for SSE4
         run: |
           cd build/sse4
-          cmake ../.. -G Ninja -DEVE_OPTIONS="-msse4.2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/clang.x86.cmake
+          cmake ../.. -G Ninja -DEVE_OPTIONS="-msse4.2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/${{ matrix.cfg.comp }}.x86.cmake
       - name: Building Tests Suites for AVX
         run: |
           cd build/avx
-          cmake ../.. -G Ninja -DEVE_OPTIONS="-mavx" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/clang.x86.cmake
+          cmake ../.. -G Ninja -DEVE_OPTIONS="-mavx" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/${{ matrix.cfg.comp }}.x86.cmake
       - name: Building Tests Suites for AVX2
         run: |
           cd build/avx2
-          cmake ../.. -G Ninja -DEVE_OPTIONS="-mavx2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/clang.x86.cmake
-      - name: Compiling Tests Suites for SSE2
+          cmake ../.. -G Ninja -DEVE_OPTIONS="-mavx2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/${{ matrix.cfg.comp }}.x86.cmake
+      - name: Building Tests Suites for AVX2 + BMI2
         run: |
-          cd build/sse2 && ninja unit -j 16
-      - name: Compiling Tests Suites for SSE4
+          cd build/bmi2
+          cmake ../.. -G Ninja -DEVE_OPTIONS="-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/${{ matrix.cfg.comp }}.x86.cmake
+      - name: Building Tests Suites for Pure Emulation
         run: |
-          cd build/sse4 && ninja unit -j 16
-      - name: Compiling Tests Suites for AVX
-        run: |
-          cd build/avx && ninja unit -j 16
-      - name: Compiling Tests Suites for AVX2
-        run: |
-          cd build/avx2 && ninja unit -j 16
+          cd build/emulation
+          cmake ../.. -G Ninja -DEVE_OPTIONS="-DEVE_NO_SIMD" -DCMAKE_TOOLCHAIN_FILE=../../cmake/toolchain/${{ matrix.cfg.comp }}.x86.cmake
       - name: Running Tests Suites for SSE2
         run: |
-          cd build/sse2 && ctest --output-on-failure -j 16
+          cd build/sse2
+          ninja unit -j 16
+          ctest --output-on-failure -j 16
       - name: Running Tests Suites for SSE4
         run: |
-          cd build/sse4 && ctest --output-on-failure -j 16
+          cd build/sse4
+          ninja unit -j 16
+          ctest --output-on-failure -j 16
       - name: Running Tests Suites for AVX
         run: |
-          cd build/avx && ctest --output-on-failure -j 16
+          cd build/avx
+          ninja unit -j 16
+          ctest --output-on-failure -j 16
       - name: Running Tests Suites for AVX2
         run: |
-          cd build/avx2 && ctest --output-on-failure -j 16
-      - name: Always execute
+          cd build/avx2
+          ninja unit -j 16
+          ctest --output-on-failure -j 16
+      - name: Running Tests Suites for AVX2 + BMI2
+        run: |
+          cd build/bmi2
+          ninja unit -j 16
+          ctest --output-on-failure -j 16
+      - name: Running Tests Suites for Pure Emulation
+        run: |
+          cd build/emulation
+          ninja unit -j 16
+          ctest --output-on-failure -j 16
+      - name: Clean-up
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
 
@@ -261,36 +278,6 @@ jobs:
   #         cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
   #         status:         1
   #         cpu:            10
-  #     - name: Always execute
-  #       if: ${{ always() }}
-  #       uses: ./.github/actions/cleanup
-
-  ##################################################################################################
-  ## Phase 3 - Pre-Skylake SIMD ISA - g++
-  ##################################################################################################
-  # x86-gcc:
-  #   needs: other-arch
-  #   runs-on: [self-hosted, generic-x86]
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       cfg:
-  #       - { comp: gcc , arch: x86, opts: -msse2    }
-  #       - { comp: gcc , arch: x86, opts: -msse4.2  }
-  #       - { comp: gcc , arch: x86, opts: -mavx     }
-  #       - { comp: gcc , arch: x86, opts: -mavx2    }
-
-  #   steps:
-  #     - name: Fetch current branch
-  #       uses: actions/checkout@v3
-  #     - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-  #       run: |
-  #         mkdir build && cd build
-  #         cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-  #     - name: Compiling Unit Tests
-  #       run:  cd build && ninja unit -j 8
-  #     - name: Running Unit Tests
-  #       run: cd build && ctest --output-on-failure -j 8
   #     - name: Always execute
   #       if: ${{ always() }}
   #       uses: ./.github/actions/cleanup
