@@ -51,7 +51,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_i1 on wide",
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(1)), std__cyl_bessel_i1(v_t(1)), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(v_t(0)), eve::zero(eve::as<v_t>()), 0.0);
 
-  TTS_ULP_EQUAL(eve__cyl_bessel_i1(T(500)), T(std__cyl_bessel_i1(v_t(20))), 6.0);
+  TTS_ULP_EQUAL(eve__cyl_bessel_i1(T(20)), T(std__cyl_bessel_i1(v_t(20))), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(T(10)), T(std__cyl_bessel_i1(v_t(10))), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(T(5)), T(std__cyl_bessel_i1(v_t(5))), 6.0);
   TTS_ULP_EQUAL(eve__cyl_bessel_i1(T(2)), T(std__cyl_bessel_i1(v_t(2))), 6.0);
