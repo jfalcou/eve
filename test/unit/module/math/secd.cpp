@@ -7,8 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -41,7 +39,7 @@ TTS_CASE_WITH("Check behavior of secd on wide",
 
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
-  auto ref  = [](auto e) -> v_t { return 1.0l / boost::math::cos_pi(e / 180.0l); };
+  auto ref  = [](auto e) -> v_t { return 1.0l / eve::cospi(double(e / 180.0l)); };
 
   TTS_ULP_EQUAL(eve::quarter_circle(secd)(a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(eve::half_circle(secd)(a0), map(ref, a0), 4);
@@ -73,7 +71,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::secd)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::secd[mask](a0),

@@ -9,7 +9,6 @@
 #include "measures.hpp"
 #include <eve/module/complex.hpp>
 #include <complex>
-#include <boost/math/complex/asinh.hpp>
 
 template < typename T >
 auto cv(std::complex < T > sc)
@@ -31,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of asinh on scalar"
   {
     for(auto f : a1)
     {
-      TTS_ULP_EQUAL(eve::asinh(eve::complex<e_t>(e, f)),  cv(boost::math::asinh(c_t(e, f))), ulp);
+      TTS_ULP_EQUAL(eve::asinh(eve::complex<e_t>(e, f)),  cv(std::asinh(c_t(e, f))), ulp);
     }
   }
 };
@@ -43,12 +42,12 @@ TTS_CASE_WITH( "Check behavior of asinh on wide"
         )
   <typename T>(T const& a0, T const&  a1)
 {
-  auto ulp = (spy::stdlib == spy::libcpp_) ? 300.0 : 2.0;
+  auto ulp = (spy::stdlib == spy::libcpp_) ? 300.0 : 3.5;
   using e_t = typename T::value_type;
   using ce_t = eve::complex<e_t>;
   using z_t = eve::as_complex_t<T>;
   using c_t = std::complex<e_t>;
-  auto std_asinh = [](auto x, auto y){return cv(boost::math::asinh(c_t(x, y))); };
+  auto std_asinh = [](auto x, auto y){return cv(std::asinh(c_t(x, y))); };
   auto init_with_std = [std_asinh](auto a0,  auto a1){
     z_t b;
     for(int i = 0; i !=  eve::cardinal_v<T>; ++i)

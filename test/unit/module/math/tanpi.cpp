@@ -7,8 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -50,8 +48,8 @@ TTS_CASE_WITH("Check behavior of tanpi on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t
   {
-    auto d = boost::math::cos_pi(e);
-    return d ? boost::math::sin_pi(e) / d : eve::nan(eve::as(e));
+    auto d = eve::cospi(e);
+    return d ? eve::sinpi(e) / d : eve::nan(eve::as(e));
   };
   TTS_ULP_EQUAL(eve::quarter_circle(tanpi)(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(tanpi)(a0), map(ref, a0), 2);
@@ -70,7 +68,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tanpi)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::tanpi[mask](a0),

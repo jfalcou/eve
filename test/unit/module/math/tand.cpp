@@ -7,8 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -62,7 +60,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tand)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::tand[mask](a0),

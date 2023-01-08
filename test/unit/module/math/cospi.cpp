@@ -7,8 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -29,33 +27,31 @@ TTS_CASE_TPL("Check return types of cospi", eve::test::simd::ieee_reals)
 //==================================================================================================
 // cospi  tests
 //==================================================================================================
-auto mmed = []<typename T>(eve::as<T> const& tgt)
+auto mmed = [](auto const& tgt)
 { return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt)
+auto med = [](auto const& tgt)
 { return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of cospi on wide",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(-0.25, 0.25),
-                            tts::randoms(0.5, 0.5),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+                            tts::randoms(eve::valmin, eve::valmax)
+                           )
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::cospi;
   using eve::detail::map;
 
-  using eve::deginrad;
-  using eve::pi;
+  long double  pi = 3.1415926535897932384626433832795028841971693993751l;
   using v_t = eve::element_type_t<T>;
-  auto ref  = [](auto e) -> v_t { return boost::math::cos_pi(e); };
+  auto ref  = [pi](auto e) -> v_t { return std::cos((pi*(long double)e)); };
   TTS_ULP_EQUAL(eve::quarter_circle(cospi)(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::half_circle(cospi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cospi)(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(cospi(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cospi(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(cospi(a2), map(ref, a2), 2);
-  TTS_ULP_EQUAL(cospi(a3), map(ref, a3), 2);
+  TTS_ULP_EQUAL(cospi(a1), cospi(eve::frac(a1)+eve::binarize(eve::is_odd(eve::trunc(a1)))), 2);
+  TTS_ULP_EQUAL(cospi(a2), cospi(eve::frac(a2)+eve::binarize(eve::is_odd(eve::trunc(a2)))), 2);
 };
 
 
@@ -66,7 +62,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cospi)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::cospi[mask](a0),

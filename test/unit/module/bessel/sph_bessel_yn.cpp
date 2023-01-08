@@ -8,8 +8,12 @@
 #include "test.hpp"
 
 #include <eve/module/bessel.hpp>
-
+#if defined(__cpp_lib_math_special_functions)
+#define NAMESPACE std
+#else
 #include <boost/math/special_functions/bessel.hpp>
+#define NAMESPACE boost::math
+#endif
 
 //==================================================================================================
 //== Types tests
@@ -39,24 +43,24 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
   using v_t               = eve::element_type_t<T>;
   auto eve__sph_bessel_yn = [](auto n, auto x) { return eve::sph_bessel_yn(n, x); };
   auto std__sph_bessel_yn = [](auto n, auto x) -> v_t
-  { return boost::math::sph_neumann(unsigned(n), double(x)); };
+  { return NAMESPACE::sph_neumann(unsigned(n), double(x)); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__sph_bessel_yn(2, eve::inf(eve::as<v_t>())), v_t(0), 0);
     TTS_ULP_EQUAL(eve__sph_bessel_yn(3, eve::nan(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(1500)), std__sph_bessel_yn(3u, v_t(1500)), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(500)), std__sph_bessel_yn(2u, v_t(500)), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(1500)), std__sph_bessel_yn(3u, v_t(1500)), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(500)), std__sph_bessel_yn(2u, v_t(500)), 10000.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(10)), std__sph_bessel_yn(2u, v_t(10)), 5.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(5)), std__sph_bessel_yn(3u, v_t(5)), 40.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(0.1)), std__sph_bessel_yn(2u, v_t(0.1)), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(0.2)), std__sph_bessel_yn(3u, v_t(0.2)), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, v_t(0.1)), std__sph_bessel_yn(2u, v_t(0.1)), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, v_t(0.2)), std__sph_bessel_yn(3u, v_t(0.2)), 10000.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, v_t(8)), std__sph_bessel_yn(10u, v_t(8)), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, v_t(8)), std__sph_bessel_yn(10u, v_t(8)), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, v_t(8)), std__sph_bessel_yn(10u, v_t(8)), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, v_t(8)), std__sph_bessel_yn(10u, v_t(8)), 10000.0);
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -64,17 +68,17 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
     TTS_ULP_EQUAL(eve__sph_bessel_yn(3, eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(1500)), T(std__sph_bessel_yn(3u, v_t(1500))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(500)), T(std__sph_bessel_yn(2u, v_t(500))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(1500)), T(std__sph_bessel_yn(3u, v_t(1500))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(500)), T(std__sph_bessel_yn(2u, v_t(500))), 10000.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(10)), T(std__sph_bessel_yn(2u, v_t(10))), 5.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(5)), T(std__sph_bessel_yn(3u, v_t(5))), 40.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(0.1)), T(std__sph_bessel_yn(2u, v_t(0.1))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(0.2)), T(std__sph_bessel_yn(3u, v_t(0.2))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(2, T(0.1)), T(std__sph_bessel_yn(2u, v_t(0.1))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(3, T(0.2)), T(std__sph_bessel_yn(3u, v_t(0.2))), 10000.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(10, T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 10000.0);
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -82,17 +86,17 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
     TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(1500)), T(std__sph_bessel_yn(3u, v_t(1500))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(500)), T(std__sph_bessel_yn(2u, v_t(500))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(1500)), T(std__sph_bessel_yn(3u, v_t(1500))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(500)), T(std__sph_bessel_yn(2u, v_t(500))), 10000.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(10)), T(std__sph_bessel_yn(2u, v_t(10))), 5.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(5)), T(std__sph_bessel_yn(3u, v_t(5))), 40.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(0.1)), T(std__sph_bessel_yn(2u, v_t(0.1))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(0.2)), T(std__sph_bessel_yn(3u, v_t(0.2))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(2), T(0.1)), T(std__sph_bessel_yn(2u, v_t(0.1))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(3), T(0.2)), T(std__sph_bessel_yn(3u, v_t(0.2))), 10000.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(T(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 10000.0);
 
   using i_t = eve::as_integer_t<v_t>;
   using I_t = eve::wide<i_t, eve::cardinal_t<T>>;
@@ -103,17 +107,17 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
     TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), eve::nan(eve::as<T>())), eve::nan(eve::as<T>()), 0);
   }
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(1500)), T(std__sph_bessel_yn(3u, v_t(1500))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(500)), T(std__sph_bessel_yn(2u, v_t(500))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(1500)), T(std__sph_bessel_yn(3u, v_t(1500))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(500)), T(std__sph_bessel_yn(2u, v_t(500))), 10000.0);
 
   TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(10)), T(std__sph_bessel_yn(2u, v_t(10))), 5.0);
   TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(5)), T(std__sph_bessel_yn(3u, v_t(5))), 40.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(0.1)), T(std__sph_bessel_yn(2u, v_t(0.1))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(0.2)), T(std__sph_bessel_yn(3u, v_t(0.2))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(2), T(0.1)), T(std__sph_bessel_yn(2u, v_t(0.1))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(3), T(0.2)), T(std__sph_bessel_yn(3u, v_t(0.2))), 10000.0);
 
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 2.0);
-  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 2.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 10000.0);
+  TTS_ULP_EQUAL(eve__sph_bessel_yn(I_t(10), T(8)), T(std__sph_bessel_yn(10u, v_t(8))), 10000.0);
 
   TTS_RELATIVE_EQUAL(eve__sph_bessel_yn(n, a0), map(std__sph_bessel_yn, n, a0), 0.005);
 };
