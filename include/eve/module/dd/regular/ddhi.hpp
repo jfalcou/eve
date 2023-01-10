@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/dd/regular/traits.hpp>
 
 namespace eve
 {
@@ -49,13 +50,15 @@ namespace eve
   namespace tag { struct ddhi_; }
   template<> struct supports_conditional<tag::ddhi_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(ddhi_, ddhi);
-
-  namespace detail
+  struct ddhi_
   {
-    EVE_FORCEINLINE auto dd_unary_dispatch(eve::tag::ddhi_, auto && v) noexcept
+    template<typename V>
+    decltype(auto) operator()(V&& v) const noexcept
+    requires (eve::is_dd<eve::element_type_t<std::decay_t<V>>>::value )
     {
+      std::cout << "ddhi " << get<1>(EVE_FWD(v)) << " @@@ ";
       return get<0>(EVE_FWD(v));
     }
-  }
+  };
+  constexpr inline auto ddhi =  ddhi_{};
 }

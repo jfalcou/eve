@@ -7,13 +7,18 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/product_type.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/traits/product_type.hpp>
+#include <eve/module/dd/detail/predicates.hpp>
+#include <eve/module/dd/detail/arithmetic.hpp>
 #include <ostream>
-#include <eve/module/complex/regular/ddlo.hpp>
-#include <eve/module/complex/regular/ddhi.hpp>
+#include <eve/module/dd/regular/ddlo.hpp>
+#include <eve/module/dd/regular/ddhi.hpp>
+#include <eve/module/dd/regular/traits.hpp>
+#include <iostream>
+#include <tts/tts.hpp>
 
 namespace eve
 {
@@ -31,9 +36,15 @@ namespace eve
   //! @tparam Type  Underlying floating point type
   //================================================================================================
   template<floating_scalar_value Type>
+  struct dd;
+
+  template<typename Type>
+  struct supports_ordering<dd<Type>> : std::true_type
+  {};
+
+  template<floating_scalar_value Type>
   struct dd : struct_support<dd<Type>, Type, Type>
   {
-    using eve_disable_ordering = void;
     using parent = struct_support<dd<Type>, Type, Type>;
 
     /// Base value type
@@ -45,56 +56,307 @@ namespace eve
     /// Default constructor
               dd()               noexcept : parent{0,0} {}
     explicit  dd(Type r        ) noexcept : parent{r,0} {}
-              dd(Type r, Type i) noexcept : parent{r,i} {}
+              dd(Type r, Type i) noexcept : parent{r,0}
+    {
+      std::cout << "icitte1 " << std::endl;
+      *this += i;
+    }
 
+    template < ordered_value T>
+    dd(T t)
+    requires(!std::same_as<T, underlying_type> && scalar_value<T>)
+    {
+      using u_t =  underlying_type;
+      u_t h(t);
+      auto self = two_add(h, u_t(t-T(h)));
+      get<0>(*this) = get<0>(self);
+      get<1>(*this) = get<1>(self);
+    }
     /// Stream insertion operator
     friend std::ostream& operator<<(std::ostream& os, like<dd> auto const& r)
     {
-      os << hi(r);
-      auto l = lo(r);
-      if(is_positive(i)) os << '+' << l; else os << '-' << -l;
+      auto h = ddhi(r);
+      auto l = ddlo(r);
+      os << '(' << h << ')';
+      if(is_positive(l)) os << "+(" << l << ')'; else os << "-(" << -l << ')';
+      return os;
     }
 
     //==============================================================================================
     // Operators
     //==============================================================================================
-    // -----  Operator +
+    // -----  Operator +=
     EVE_FORCEINLINE friend auto operator+(like<dd> auto const& z) noexcept { return z; }
 
     template<like<dd> Z1, like<dd> Z2>
     EVE_FORCEINLINE friend auto& operator+=(Z1& self, Z2 const& o) noexcept
     {
-      if constexpr(is_dd_v<Z2>) {
-        auto [s1, s2] = two_add(ddlo(self), ddlo(o));
-        x[0] = qd::two_sum(x[0], b.x[0], s2);
-        if ( QD_ISFINITE( x[0] ) )
+//        std::cout << "icitte2 " << std::endl;
+//        std::cout << tts::typename_<eve::element_type_t<Z2>> << std::endl;
+      if constexpr(is_dd_v<eve::element_type_t<Z2>>)
+      {
+//        std::cout << "icitte3 " << std::endl;
+        auto & [x0, x1] = self;
+        auto   [z0, s2] = two_add(x0, ddhi(o));
+        x0 = z0;
+        auto finitex0 = is_finite(x0);
+        if (eve::none(finitex0)) x1 = zero(as(x1));
+        else
         {
-          double t2, t1 = qd::two_sum( x[1], b.x[1], t2 );
-          x[1] = qd::two_sum(s2, t1, t1);
-          t1 += t2;
-          qd::three_sum(x[0], x[1], t1);
+          auto [t1, t2] = two_add( x1, ddlo(o));
+          auto [t3, t4] = two_add(s2, t1);
+          x1 = t3;
+          t4 += t2;
+          three_add(x0, x1, t4);
+          x1 = if_else(finitex0, x1, zero);
+        }
+        return self;
+      }
+      else if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
+      {
+//        std::cout << "icitte4 " << std::endl;
+        auto & [x0, x1] = self;
+        auto   [z0, s2] = two_add(x0, as_real_t<Z1>(o));
+        x0 = z0;
+        auto finitex0 = is_finite(x0);
+        if (eve::none(finitex0)) x1 = zero(as(x1));
+        else
+        {
+          auto finitex0 = is_finite(x0);
+          auto  [z1, s3] = two_add(x1, s2);
+          x1 = z1;
+          three_add(x0, x1, s3);
+          x1 = if_else(finitex0, x1, zero);
+        }
+//        std::cout << "icitte4 " << self << std::endl;
+        return self;
+      }
+      else // Z1 is always scalar here
+      {
+        using u_t = underlying_type_t<Z1>;
+        u_t h(o);
+        Z1 oo(h, o-Z2(h));
+        return  self += oo;
+      }
+    }
+
+    // -----  Operator -=
+    template<like<dd> Z>
+    EVE_FORCEINLINE friend auto operator-(Z const& z) noexcept
+    {
+      return Z{-get<0>(z), -get<1>(z)};
+    }
+
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto& operator-=(Z1& self, Z2 const& o) noexcept
+    {
+      return self += -o;
+    }
+
+    // -----  Operator *=
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto& operator*=(Z1& self, Z2 const& o) noexcept
+    {
+      if constexpr(is_dd_v<Z2>)
+      {
+        auto & [x0, x1] = self;
+        auto [ohi, olo] = o;
+        auto [p0, p1] = two_prod(x0, ohi);
+        auto finitex0 = is_finite(x0);
+        if (eve::none(finitex0)){
+          x0 = p0;
+          x1 = zero(as(x1));
+          return self;
         }
         else
         {
-          x[1] = 0.0;
+          auto [p2, p4] = two_prod(x0, olo);
+          auto [p3, p5] = two_prod(x1, ohi);
+          auto p6 = x1*olo;
+          three_add(p1, p2, p3);
+          p2 += p4 + p5 + p6;
+          three_add(p0, p1, p2);
+          x0 = p0;
+          x1 = p1;
+          return self;
         }
+      }
+      else if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
+      {
+        auto & [x0, x1] = self;
+        auto [p0, p1] = two_prod(x0, o);
+        x0 = p0;
+        auto finitex0 = is_finite(x0);
+        x1*= o;
+        three_add(x0, x1, p1);
+        x1 = if_else(finitex0, x1, zero);
+        return self;
+      }
+      else // Z1 is always scalar here
+      {
+        using u_t = underlying_type_t<Z1>;
+        u_t h(o);
+        Z1 oo(h, o-Z2(h));
+        return  self *= oo;
+      }
+    }
+
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto& operator/=(Z1& self, Z2 const& o) noexcept
+    {
+      if constexpr(is_dd_v<Z2>)
+      {
+        auto & [x0, x1] = self;
+        auto [ohi, olo] = o;
+        auto q1 = x0 / ohi;  /* approximate quotient */
+        Z1 r = self - o*q1;
+        auto [rhi, rlo] = r;
+        auto q2 = rhi/ohi;
+        r -= o*q2;
+        auto q3 = rhi/ohi;
+        auto [q4, q5] = quick_two_add(q1, q2);
+        r = Z1(q4, q5) + q3;
+        return self = Z1(r);
+      }
+      else if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
+      {
+        auto & [x0, x1] = self;
+        auto q1 = x0 / o;  /* approximate quotient */
+        Z1 r = self - o*q1;
+        auto [rhi, rlo] = r;
+        auto q2 = rhi/o;
+        r -= o*q2;
+        auto q3 = rhi/o;
+        auto [q4, q5] = quick_two_add(q1, q2);
+        r = Z1(q4, q5) + q3;
+        return self = Z1(r);
+        //        return self /= Z1(o);
+      }
+      else // Z1 is always scalar here
+      {
+        using u_t = underlying_type_t<Z1>;
+        u_t h(o);
+        Z1 oo(h, o-Z2(h));
+        return  self /= oo;
+      }
+    }
+
+    // -----  Operator <
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto operator < (Z1 const& a, Z2 const& b) noexcept
+    {
+      if constexpr(is_dd_v<Z1> && is_dd_v<Z2>)
+      {
+        auto  [ahi, alo] = a;
+        auto  [bhi, blo] = b;
+        return (ahi < bhi) || ( (ahi == bhi) && (alo < blo) );
       }
       else
       {
-        if constexpr(same_as<float, underlying_type_t<Z2>>) 
+        using r_t = decltype(a+b);
+        return r_t(a) < r_t(b);
       }
-        return self;
-
-    real(self) += real(o);
-      if constexpr(is_dd_v<Z2>) imag(self) += imag(o);
-      return self;
     }
 
-    EVE_FORCEINLINE friend auto& operator+=(like<dd> auto& self, callable_i_ const&) noexcept
+    //==============================================================================================
+    // Functions support
+    //==============================================================================================
+    template<typename Tag, like<dd> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z const& z) noexcept
+        -> decltype(detail::dd_unary_dispatch(tag, z))
     {
-      imag(self)++;
-      return self;
+      return detail::dd_unary_dispatch(tag, z);
     }
+
+    template<typename Tag, decorator D, like<dd> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
+        -> decltype(detail::dd_unary_dispatch(tag, d, z))
+    {
+      return detail::dd_unary_dispatch(tag, d, z);
+    }
+
+    //==============================================================================================
+    // Utilities
+    //==============================================================================================
+    template <typename U>
+    EVE_FORCEINLINE static void three_add( U &a
+                                         , U &b
+                                         , U &c) noexcept
+    {
+      if constexpr( has_native_abi_v<U> )
+      {
+        auto [t1, t2] = two_add(a, b);
+        auto z = two_add(c, t1);
+        a = get<0>(z);
+        z = two_add(t2, get<1>(z));
+        b = get<0>(z);
+        c = get<1>(z);
+
+      }
+      else return apply_over2(three_add, a, b);
+    }
+
+ //    EVE_FORCEINLINE static auto  qd_mul( dd const &a
+//                                        , dd const &b) noexcept
+//     {
+//       auto [ahi,  alo] = a;
+//       auto [bhi,  blo] = b;
+//       auto [p0, p1] = two_prod(ahi, bhi);
+//       auto finitep0 = is_finite(p0);
+//       auto [p2, p4] = two_prod(ahi, blo);
+//       auto [p3, p5] = two_prod(alo, bhi);
+//       auto [p6, p7] = two_prod(alo, blo);
+//       three_add(p1, p2, p3);
+//       three_add(p4, p5, p6);
+//       tie(p2, p4) = two_add(p2, p4);
+//       three_add(p3, p4, p5);
+//       tie(p3, p7) = two_add(p3, p7);
+//       p4 += p6+p7;
+//       renorm(p0, p1, p2, p3, p4);
+//       return kumi::make_tuple(p0, p1, p2, p3);
+//     }
+
+
+    // quad-double = double-double * double-double
+  //
+ //  void qd_mul(dd_real const& a, dd_real const& b, double* p)
+//   {
+//     double p4, p5, p6, p7;
+
+//     //  powers of e - 0, 1, 1, 1, 2, 2, 2, 3
+//     p[0] = qd::two_prod(a._hi(), b._hi(), p[1]);
+//     if (QD_ISFINITE(p[0]))
+//     {
+//       p[2] = qd::two_prod(a._hi(), b._lo(), p4);
+//       p[3] = qd::two_prod(a._lo(), b._hi(), p5);
+//       p6 = qd::two_prod(a._lo(), b._lo(), p7);
+
+//       //  powers of e - 0, 1, 2, 3, 2, 2, 2, 3
+//       qd::three_sum(p[1], p[2], p[3]);
+
+//       //  powers of e - 0, 1, 2, 3, 2, 3, 4, 3
+//       qd::three_sum(p4, p5, p6);
+
+//       //  powers of e - 0, 1, 2, 3, 3, 3, 4, 3
+//       p[2] = qd::two_sum(p[2], p4, p4);
+
+//       //  powers of e - 0, 1, 2, 3, 4, 5, 4, 3
+//       qd::three_sum(p[3], p4, p5);
+
+//       //  powers of e - 0, 1, 2, 3, 4, 5, 4, 4
+//       p[3] = qd::two_sum(p[3], p7, p7);
+
+//       p4 += (p6 + p7);
+
+//       qd::renorm(p[0], p[1], p[2], p[3], p4);
+//     }
+//     else
+//     {
+//       p[1] = p[2] = p[3] = 0.0;
+//     }
+//   }
+
+
 
 //     //==============================================================================================
 //     // predicates

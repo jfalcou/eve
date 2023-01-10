@@ -1,8 +1,8 @@
 //==================================================================================================
 /*
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
@@ -11,45 +11,53 @@
 
 namespace eve
 {
-  template<floating_scalar_value Type> struct complex;
+  template<floating_scalar_value Type> struct dd;
 
-  template<typename T> struct as_complex;
+  template<typename T> struct as_dd;
 
-  template<floating_scalar_value T> struct as_complex<T>
+  template<scalar_value T> struct as_dd<T>
   {
-    using type = eve::complex<T>;
+    using type = eve::dd<T>;
   };
 
-  template<floating_scalar_value T> struct as_complex<complex<T>>
+  template<floating_scalar_value T> struct as_dd<dd<T>>
   {
-    using type = eve::complex<T>;
+    using type = eve::dd<T>;
   };
 
-  template<floating_simd_value T> struct as_complex<T>
+  template<floating_simd_value T> struct as_dd<T>
   {
-    using type = eve::wide<eve::complex<element_type_t<T>>, cardinal_t<T>>;
+    using type = eve::wide<eve::dd<element_type_t<T>>, cardinal_t<T>>;
   };
+
+  template<floating_scalar_value T, typename N>
+  struct as_dd<wide<dd<T>,N>>  { using type = wide<dd<T>,N>; };
 
   template<typename T>
-  using as_complex_t = typename as_complex<T>::type;
+  using as_dd_t = typename as_dd<T>::type;
 
   template<typename T>              struct as_real;
-  template<value T>                 struct as_real<T>           { using type = T; };
-  template<floating_scalar_value T> struct as_real<complex<T>>  { using type = T; };
+//  template<value T>                 struct as_real<T>           { using type = T; };
+  template<floating_scalar_value T> struct as_real<dd<T>>  { using type = T; };
   template<floating_scalar_value T, typename N>
-  struct as_real<wide<complex<T>,N>>  { using type = wide<T,N>; };
+  struct as_real<wide<dd<T>,N>>  { using type = wide<T,N>; };
 
   template<typename T>
   using as_real_t = typename as_real<T>::type;
 
-  template<typename T> struct is_complex                    : std::false_type {};
-  template<typename T> struct is_complex<complex<T>>        : std::true_type {};
-  template<typename T> struct is_complex<wide<complex<T>>>  : std::true_type {};
+  template<typename T> struct is_dd                    : std::false_type {};
+  template<typename T> struct is_dd<dd<T>>        : std::true_type {};
+  template<typename T, typename N> struct is_dd<wide<dd<T>, N>>  : std::true_type {};
 
   template<typename T>
-  inline constexpr bool is_complex_v = is_complex<T>::value;
+  inline constexpr bool is_dd_v = is_dd<T>::value;
 
-  template<typename T>
-  struct as_logical<complex<T>> : as_logical_t<T>
-  {};
+  template<typename Wrapper, typename T>
+  struct  supports_like<Wrapper,eve::dd<T>>
+        : std::bool_constant<   std::same_as<eve::dd<T>, element_type_t<Wrapper>>
+                            ||  std::same_as<T, element_type_t<Wrapper>>
+                            ||  plain_scalar_value<Wrapper>
+                            >
+  {
+  };
 }

@@ -51,6 +51,13 @@ glob_unit("doc" ${doc_root} "core/roundings/*.cpp" )
 glob_unit("doc" ${doc_root} "core/saturated/*.cpp" )
 
 ##==================================================================================================
+## GLOB and process dd doc tests
+##==================================================================================================
+add_custom_target(doc.dd.exe        )
+add_dependencies(doc.exe doc.dd.exe )
+glob_unit("doc" ${doc_root} "dd/regular/*.cpp")
+
+##==================================================================================================
 ## GLOB and process elliptic doc tests
 ##==================================================================================================
 add_custom_target(doc.elliptic.exe        )

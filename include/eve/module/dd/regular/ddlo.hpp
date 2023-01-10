@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/dd/regular/traits.hpp>
+#include <iostream>
 
 namespace eve
 {
@@ -49,13 +51,15 @@ namespace eve
   namespace tag { struct ddlo_; }
   template<> struct supports_conditional<tag::ddlo_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(ddlo_, ddlo);
-
-  namespace detail
+  struct ddlo_
   {
-    EVE_FORCEINLINE auto dd_unary_dispatch(eve::tag::ddlo_, auto && v) noexcept
+    template<typename V>
+    decltype(auto) operator()(V&& v) const noexcept
+    requires (eve::is_dd<eve::element_type_t<std::decay_t<V>>>::value )
     {
+      std::cout << "ddlo " << get<1>(EVE_FWD(v)) << " &&& ";
       return get<1>(EVE_FWD(v));
     }
-  }
+  };
+  constexpr inline auto ddlo =  ddlo_{};
 }

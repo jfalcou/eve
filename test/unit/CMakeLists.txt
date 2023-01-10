@@ -90,6 +90,10 @@ add_custom_target(unit.complex.exe         )
 add_dependencies(unit.exe unit.complex.exe )
 glob_unit("unit" ${unit_root} "module/complex/*.cpp" )
 
+add_custom_target(unit.dd.exe         )
+add_dependencies(unit.exe unit.dd.exe )
+glob_unit("unit" ${unit_root} "module/dd/*.cpp" )
+
 add_custom_target(unit.elliptic.exe         )
 add_dependencies(unit.exe unit.elliptic.exe )
 glob_unit("unit" ${unit_root} "module/elliptic/*.cpp" )
