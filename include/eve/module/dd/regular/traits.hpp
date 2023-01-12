@@ -37,7 +37,6 @@ namespace eve
   using as_dd_t = typename as_dd<T>::type;
 
   template<typename T>              struct as_real;
-//  template<value T>                 struct as_real<T>           { using type = T; };
   template<floating_scalar_value T> struct as_real<dd<T>>  { using type = T; };
   template<floating_scalar_value T, typename N>
   struct as_real<wide<dd<T>,N>>  { using type = wide<T,N>; };

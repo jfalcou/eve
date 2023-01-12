@@ -22,9 +22,9 @@ int main()
     << "<- z      = " << z << std::endl
     << "-> sqr(z) = " << eve::sqr(z) << std::endl;
   auto sz = eve::sqr(z);
-  auto dsz = eve::sqr (eve::float64(eve::ddlo(z))+eve::float64(eve::ddhi(z)));
-  std::cout << (eve::float64(eve::ddlo(sz))+eve::float64(eve::ddhi(sz))) << std::endl;
+  auto dsz = eve::sqr (eve::float64(eve::low(z))+eve::float64(eve::high(z)));
+  std::cout << (eve::float64(eve::low(sz))+eve::float64(eve::high(sz))) << std::endl;
   std::cout << dsz << std::endl;
-  std::cout << eve::abs(dsz-(eve::float64(eve::ddlo(sz))+eve::float64(eve::ddhi(sz)))) << std::endl;
+  std::cout << eve::abs(dsz-(eve::float64(eve::low(sz))+eve::float64(eve::high(sz)))) << std::endl;
   return 0;
 }

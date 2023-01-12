@@ -1,8 +1,8 @@
 //==================================================================================================
 /*
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
@@ -12,51 +12,51 @@
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup complex
+  //! @addtogroup dd
   //! @{
-  //! @var real
+  //! @var high
   //!
-  //! @brief Callable object computing real part of values.
+  //! @brief Callable object computing high part of highs.
   //!
-  //! **Required header:** `#include <eve/module/complex.hpp>`
+  //! **Required header:** `#include <eve/module/dd.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of real part                              |
+  //! | `operator()` | the  computation of high part                              |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
+  //!  auto operator()(high auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [high](@ref eve::high).
   //!
-  //! **Return value**
-  //! 0 if `x` is real or the real part of `x` if x is an instance of eve::complex.
+  //! **Return high**
+  //! 0 if `x` is high or the high part of `x` if x is an instance of eve::dd.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/complex/real.cpp}
+  //! @godbolt{doc/dd/regular/high.cpp}
   //!
   //!  @}
   //================================================================================================
 
-  namespace tag { struct real_; }
-  template<> struct supports_conditional<tag::real_> : std::false_type {};
+  namespace tag { struct high_; }
+  template<> struct supports_conditional<tag::high_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(real_, real);
+  EVE_MAKE_CALLABLE(high_, high);
 
   namespace detail
   {
-    template<floating_real_value V>
-    EVE_FORCEINLINE V real_( EVE_SUPPORTS(cpu_), V const &) noexcept
+    template<value V>
+    EVE_FORCEINLINE V high_( EVE_SUPPORTS(cpu_), V const& v) noexcept
     {
-      return V(0);
+      return v;
     }
   }
 }

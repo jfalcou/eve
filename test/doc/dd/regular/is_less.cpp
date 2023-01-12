@@ -23,8 +23,8 @@ int main()
 //     << std::setprecision(16) << z1 -z2 << std::endl
    ;
 
-  std::cout << eve::ddlo(z1) << " == " << eve::ddlo(z2) << std::endl;
-  std::cout << eve::ddhi(z1) << " == " << eve::ddhi(z2) << std::endl;
+  std::cout << eve::low(z1) << " == " << eve::low(z2) << std::endl;
+  std::cout << eve::high(z1) << " == " << eve::high(z2) << std::endl;
   std::cout << (z1 == z2) << std::endl;
   std::cout
     << "---- simd" << std::setprecision(8) << std::endl
@@ -37,8 +37,8 @@ int main()
   dd_t z4(2, 1);
   std:: cout << "z3 "<< z3 << std::endl;
   std:: cout << "z4 "<< z4 << std::endl;
-  std::cout << eve::ddlo(z3) << " == " << eve::ddlo(z4) << std::endl;
-  std::cout << eve::ddhi(z3) << " == " << eve::ddhi(z4) << std::endl;
+  std::cout << eve::low(z3) << " == " << eve::low(z4) << std::endl;
+  std::cout << eve::high(z3) << " == " << eve::high(z4) << std::endl;
   std::cout << (z3 == z4) << std::endl;
   return 0;
 }

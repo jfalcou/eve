@@ -1,65 +1,61 @@
 //==================================================================================================
 /*
   EVE - Expressive Vector Engine
-  Copyright : EVE Contributors & Maintainers
-  SPDX-License-Identifier: MIT
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/complex/regular/traits.hpp>
 
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup complex
+  //! @addtogroup dd
   //! @{
-  //! @var exp_ipi
+  //! @var low
   //!
-  //! @brief Callable object computing exp_ipi(x).
+  //! @brief Callable object computing lowinary part of highs.
   //!
-  //! **Required header:** `#include <eve/module/complex.hpp>`
+  //! **Required header:** `#include <eve/module/dd.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the computation of exp_ipi(x)                              |
+  //! | `operator()` | the  computation of lowinary part                         |
   //!
   //! ---
   //!
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-  //!  auto operator()(value auto x) const noexcept;
+  //!  auto operator()(high auto x) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
   //!
-  //!`x`:   [value](@ref eve::value).
+  //!`x`:   [high](@ref eve::high).
   //!
-  //! **Return value**
-  //! `complex < decltype(x)> equal to exp(i*pi*x) (i*i = -1).
+  //! **Return high**
+  //! 0 if `x` is high or the lowinary part of `x` if x is an instance of eve::dd.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/complex/exp_ipi.cpp}
+  //! @godbolt{doc/dd/regular/low.cpp}
   //!
   //!  @}
   //================================================================================================
+  namespace tag { struct low_; }
+  template<> struct supports_conditional<tag::low_> : std::false_type {};
 
-  namespace tag { struct exp_ipi_; }
-  template<> struct supports_conditional<tag::exp_ipi_> : std::false_type {};
-
-  EVE_MAKE_CALLABLE(exp_ipi_, exp_ipi);
+  EVE_MAKE_CALLABLE(low_, low);
 
   namespace detail
   {
-    template<floating_value V> EVE_FORCEINLINE
-    auto exp_ipi_(EVE_SUPPORTS(cpu_), V const & v) noexcept
+    template<value V>
+    EVE_FORCEINLINE V low_( EVE_SUPPORTS(cpu_), V const &) noexcept
     {
-      using c_t = eve::as_complex_t<V>;
-      auto [s, c] = sinpicospi(v);
-      return c_t{c, s};
+      return V(0);
     }
   }
 }
