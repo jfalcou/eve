@@ -29,4 +29,7 @@ TTS_CASE_TPL( "Check dd::rec ", eve::test::scalar::ieee_reals)
     TTS_ULP_EQUAL(pi,eve::to_double(ddpis), 108);
     std::cout << ddpis << std::endl;
   }
+  auto dpi = eve::pi(eve::as<dd_t>());
+  std:: cout<< "cts pi " << sizeof(T) << std::setprecision(sizeof(T)*5) << dpi << std::endl;
+
 };

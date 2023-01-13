@@ -11,6 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/dd/dd.hpp>
+#include <eve/module/dd/detail/constants.hpp>
 #include <eve/module/dd/detail/arithmetic.hpp>
 #include <eve/module/dd/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
@@ -203,15 +204,15 @@ namespace eve
     //==============================================================================================
     // Constants support
     //==============================================================================================
-    template<typename Tag, like<dd> Z>
-    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
-    {
-      detail::callable_object<Tag> cst;
-      if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
-        return cst(as(high(Z{})));
-      else
-        return Z{ cst(as<Type>{}), Type{0}};
-    }
+//     template<typename Tag, like<dd> Z>
+//     EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
+//     {
+//       detail::callable_object<Tag> cst;
+//       if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
+//         return cst(as(high(Z{})));
+//       else
+//         return Z{ cst(as<Type>{}), Type{0}};
+//     }
 
     //==============================================================================================
     // Specific function support
