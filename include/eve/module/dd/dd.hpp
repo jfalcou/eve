@@ -12,7 +12,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/dd/dd.hpp>
 #include <eve/module/dd/detail/arithmetic.hpp>
-// #include <eve/module/dd/detail/predicates.hpp>
+#include <eve/module/dd/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
 #include <ostream>
 #include <iomanip>
@@ -88,7 +88,7 @@ namespace eve
     }
 
 
-    // -----  Operator -
+    // -----  Operator -=
     template<like<dd> Z> EVE_FORCEINLINE friend auto operator-(Z const& z) noexcept
     {
       return Z{-high(z), -low(z)};
@@ -129,7 +129,7 @@ namespace eve
       }
       else // o is scalar here
       {
-        return self *= dd(o);
+        return self *= Z1(o);
       }
     }
 
@@ -141,12 +141,12 @@ namespace eve
       {
         auto r = eve::rec(high(o));
         Z1 x(r);
-        x += r*(Z1(1)-o*r);
+        x += r*oneminus(o*r); //newton inverse of o
         return self *= x;
       }
       else // o is scalar here
       {
-        return self /= dd(o);
+        return self /= Z1(o);
       }
     }
 
@@ -167,12 +167,12 @@ namespace eve
 //       return detail::dd_unary_dispatch(tag, d, z);
 //     }
 
-//     template<typename Tag, like<dd> Z1, like<dd> Z2>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Z2 const& z2) noexcept
-//         -> decltype(detail::dd_binary_dispatch(tag, z1, z2))
-//     {
-//       return detail::dd_binary_dispatch(tag, z1, z2);
-//     }
+    template<typename Tag, like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Z2 const& z2) noexcept
+        -> decltype(detail::dd_binary_dispatch(tag, z1, z2))
+    {
+      return detail::dd_binary_dispatch(tag, z1, z2);
+    }
 
 //     template<decorator D, typename Tag, like<dd> Z1, like<dd> Z2>
 //     EVE_FORCEINLINE
@@ -203,16 +203,15 @@ namespace eve
     //==============================================================================================
     // Constants support
     //==============================================================================================
-//     template<typename Tag, like<dd> Z>
-//     requires( !detail::one_of<Tag, tag::i_> )
-//     EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
-//     {
-//       detail::callable_object<Tag> cst;
-//       if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
-//         return cst(as(high(Z{})));
-//       else
-//         return Z{ cst(as<Type>{}), Type{0}};
-//     }
+    template<typename Tag, like<dd> Z>
+    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
+    {
+      detail::callable_object<Tag> cst;
+      if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
+        return cst(as(high(Z{})));
+      else
+        return Z{ cst(as<Type>{}), Type{0}};
+    }
 
     //==============================================================================================
     // Specific function support
@@ -279,8 +278,8 @@ namespace eve
                                          , U &b
                                          , U &c) noexcept
     {
-      if constexpr( has_native_abi_v<U> )
-      {
+//       if constexpr( has_native_abi_v<U> )
+//       {
         auto [t1, t2] = two_add(a, b);
         auto z = two_add(c, t1);
         a = get<0>(z);
@@ -288,8 +287,8 @@ namespace eve
         b = get<0>(z);
         c = get<1>(z);
 
-      }
-      else return apply_over2(three_add, a, b);
+//       }
+//       else return apply_over2(three_add, a, b);
     }
 
     // Reads in a dd from a string. */
@@ -389,6 +388,11 @@ namespace eve
     return as_dd_t<T>(l, h);
   }
 
+  template <ordered_value T>
+  EVE_FORCEINLINE auto  make_dd (kumi::tuple<T, T> const & t) noexcept
+  {
+    return make_dd(get<0>(t), get<1>(t));
+  }
   //================================================================================================
   //! @}
   //================================================================================================

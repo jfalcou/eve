@@ -26,246 +26,111 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // operators as functions
+  //  trivial extension of some unary functions
   //================================================================================================
-  template<typename Z1, typename Z2>
+  template<typename Z>
   EVE_FORCEINLINE auto
-  dd_binary_dispatch(eve::tag::add_, Z1 const& z1, Z2 const& z2) noexcept
+  dd_unary_dispatch(eve::tag::ceil_, Z const& z) noexcept
   {
-    return z1 + z2;
+    auto rhi = ceil(high(z));
+    auto already = rhi == high(z);
+    auto rlo = if_else(already,  ceil(low(z)), zero);
+    auto [hi, lo] = quick_two_add(rhi, rlo);
+    return Z(hi, lo);
+  }
+ template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::floor_, Z const& z) noexcept
+  {
+    auto rhi = floor(high(z));
+    auto already = rhi == high(z);
+    auto rlo = if_else(already,  floor(low(z)), zero);
+    auto [hi, lo] = quick_two_add(rhi, rlo);
+    return Z(hi, lo);
+  }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::nearest_, Z const& z) noexcept
+  {
+    auto f = floor(z);
+    auto c = ceil(z);
+    auto zmf = z-f;
+    auto cmz = c-z;
+    return if_else(zmf == cmz, if_else((f/2 == trunc(f/2)), f, c), if_else(zmf <  cmz, f, c));
+    auto rhi = nearest(high(z));
+    auto already = rhi == high(z);
+    auto rlo = if_else(already,  nearest(low(z)), zero);
+    auto [hi, lo] = quick_two_add(rhi, rlo);
+    return Z(hi, lo);
+  }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::trunc_, Z const& z) noexcept
+  {
+    return if_else(is_positive(high(z)), floor(z), ceil(z));
+  }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::frac_, Z const& z) noexcept
+  {
+    return z-trunc(z);
   }
 
-  template<typename Z1, typename Z2>
-  EVE_FORCEINLINE auto
-  dd_binary_dispatch(eve::tag::sub_, Z1 const& z1, Z2 const& z2) noexcept
-  {
-    return z1 - z2;
-  }
-
-  template<typename Z1, typename Z2>
-  EVE_FORCEINLINE auto
-  dd_binary_dispatch(eve::tag::mul_, Z1 const& z1, Z2 const& z2) noexcept
-  {
-    return z1 * z2;
-  }
-
-  template<typename Z1, typename Z2>
-  EVE_FORCEINLINE auto
-  dd_binary_dispatch(eve::tag::div_, Z1 const& z1, Z2 const& z2) noexcept
-  {
-    return z1 / z2;
-  }
-
-
-//   //================================================================================================
-//   //  trivial extension of some high unary functions
-//   //================================================================================================
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::ceil_, Z const& z) noexcept
-//   {
-//     return Z {ceil(high(z)), ceil(low(z))};
-//   }
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::floor_, Z const& z) noexcept
-//   {
-//     return Z {floor(high(z)), floor(low(z))};
-//   }
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::nearest_, Z const& z) noexcept
-//   {
-//     return Z {nearest(high(z)), nearest(low(z))};
-//   }
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::trunc_, Z const& z) noexcept
-//   {
-//     return Z {trunc(high(z)), trunc(low(z))};
-//   }
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::frac_, Z const& z) noexcept
-//   {
-//     return Z {frac(high(z)), frac(low(z))};
-//   }
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::minus_, Z const& z) noexcept
-//   {
-//     return Z {minus(high(z)), minus(low(z))};
-//   }
-
-//   //================================================================================================
-//   //  trivial extension of some high binary functions
-//   //================================================================================================
-//   template<typename Z1, typename Z2>
-//   EVE_FORCEINLINE auto
-//   dd_binary_dispatch(eve::tag::maxabs_, Z1 const& z1, Z2 const& z2) noexcept
-//   {
-//     return max(abs(z1), abs(z2));
-//   }
-//   template<typename Z1, typename Z2>
-//   EVE_FORCEINLINE auto
-//   dd_binary_dispatch(eve::tag::minabs_, Z1 const& z1, Z2 const& z2) noexcept
-//   {
-//     return min(abs(z1), abs(z2));
-//   }
-//   template<typename Z1, typename Z2>
-//   EVE_FORCEINLINE auto
-//   dd_binary_dispatch(eve::tag::dist_, Z1 const& z1, Z2 const& z2) noexcept
-//   {
-//     return abs(z1 - z2);
-//   }
-
-//   //================================================================================================
-//   //  trivial extension of some high ternary functions
-//   //================================================================================================
-//   template<typename Z1, typename Z2, ordered_value T>
-//   EVE_FORCEINLINE auto
-//   dd_ternary_dispatch(eve::tag::lerp_, Z1 const& z1, Z2 const& z2, T const& t) noexcept
-//   {
-//     using z_t = decltype(z1 + z2);
-//     return z_t {lerp(high(z1), high(z2), t), lerp(low(z1), low(z2), t)};
-//   }
 
 //   //================================================================================================
 //   //  Unary functions
 //   //================================================================================================
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::abs_, pedantic_type const&, auto const& z) noexcept
-//   {
-//     return eve::pedantic(eve::hypot)(high(z), low(z));
-//   }
 
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::abs_, auto const& z) noexcept
-//   {
-//     return eve::hypot(high(z), low(z));
-//   }
 
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::arg_, auto const& z) noexcept
-//   {
-//     return eve::atan2(low(z), high(z));
-//   }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::sqr_, Z const& a) noexcept
+  {
+    auto [ahi, alo] = a;
+    auto[p1, p2] = two_sqr(ahi);
+    p2 += 2 * ahi * alo;
+    p2 += sqr(alo);
+    auto [ s1, s2] = quick_two_add(p1, p2);
+    return Z{s1, s2};
+  }
 
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::arg_, pedantic_type const&, auto const& z) noexcept
-//   {
-//     return eve::pedantic(eve::atan2)(low(z), high(z));
-//   }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::sign_, Z const& z) noexcept
+  {
+    return Z(sign(high(z)));
+  }
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::conj_, Z const& z) noexcept
-//   {
-//     return Z {high(z), -low(z)};
-//   }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::signnz_, Z const& z) noexcept
+  {
+    return Z(signnz(high(z)));
+  }
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::dec_, Z const& z) noexcept
-//   {
-//     return Z {dec(high(z)), low(z)};
-//   }
+  template<typename Z>
+  EVE_FORCEINLINE auto dd_unary_dispatch(eve::tag::modf_, Z const& z) noexcept
+  {
+    auto t = trunc(z);
+    return kumi::tuple {z - t, t};
+  }
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::inc_, Z const& z) noexcept
-//   {
-//     return Z {inc(high(z)), low(z)};
-//   }
+  //================================================================================================
+  //  Binary functions
+  //================================================================================================
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::oneminus_, Z const& z) noexcept
-//   {
-//     return Z {oneminus(high(z)), -low(z)};
-//   }
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::proj_, Z const& z) noexcept
-//   {
-//     using real_t = as<as_real_t<Z>>;
-//     return if_else(is_infinite(z), Z(inf(real_t {}), copysign(zero(real_t {}), low(z))), z);
-//   }
+  EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::negate_, auto const& z1, auto const& z2) noexcept
+  {
+    return z1 * sign(high(z2));
+  }
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
-//   {
-//     auto [zr, zi] = z;
-//     return Z {fms(zr, zr, zi * zi), 2 * zr * zi};
-//   }
-
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
-//   {
-//     auto [zr, zi] = z;
-//     return fma(zr, zr, zi * zi);
-//   }
-
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::sqr_, eve::pedantic_type const&, Z const& z) noexcept
-//   {
-//     auto [zr, zi] = z;
-//     return Z {diff_of_prod(zr, zr, zi, zi), 2 * zr * zi};
-//   }
-
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::sqr_, eve::numeric_type const&, Z const& z) noexcept
-//   {
-//     auto [zr, zi] = z;
-//     return Z {(zr-zi)*(zi+zr), 2 * zr * zi};
-//   }
-
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::sqr_abs_, eve::pedantic_type const&, auto const& z) noexcept
-//   {
-//     auto [zr, zi] = z;
-//     return sum_of_prod(zr, zr, zi, zi);
-//   }
-
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::sign_, auto const& z) noexcept
-//   {
-//     return if_else(is_eqz(z), zero, z / abs(z));
-//     ;
-//   }
-
-//   template<typename Z>
-//   EVE_FORCEINLINE auto dd_unary_dispatch(eve::tag::modf_, Z const& z) noexcept
-//   {
-//     auto t = trunc(z);
-//     return kumi::tuple {z - t, t};
-//   }
-
-//   //================================================================================================
-//   //  Binary functions
-//   //================================================================================================
-//   EVE_FORCEINLINE auto
-//   dd_binary_dispatch(eve::tag::average_, auto const& z1, auto const& z2) noexcept
-//   {
-//     using z_t = decltype(z1 + z2);
-//     return z_t {eve::average(high(z1), high(z2)), eve::average(low(z1), low(z2))};
-//   }
-
-//   EVE_FORCEINLINE auto
-//   dd_binary_dispatch(eve::tag::negate_, auto const& z1, auto const& z2) noexcept
-//   {
-//     return z1 * sign(z2);
-//   }
-
-//   template<typename Z1, typename Z2>
-//   EVE_FORCEINLINE auto
-//   dd_binary_dispatch(eve::tag::negatenz_, Z1 const& z1, Z2 const& z2) noexcept
-//   {
-//     return if_else(eve::is_eqz(z2), to_dd(z1), z1 * sign(z2));
-//   }
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::negatenz_, Z1 const& z1, Z2 const& z2) noexcept
+  {
+    return z1 * signnz(high(z2));
+  }
 
 //   //================================================================================================
 //   //  Ternary functions

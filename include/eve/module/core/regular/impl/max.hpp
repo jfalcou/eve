@@ -30,12 +30,12 @@ max_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 
 template<ordered_value T>
 EVE_FORCEINLINE T
-max_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+max_(EVE_SUPPORTS(cpu_), T const& a0, T const& a1) noexcept
 {
   if constexpr(scalar_value<T>)
-    return b < a ? a : b;
+    return a0 < a1 ? a1 : a0;
   else
-    return apply_over(max, a, b);
+    return if_else(a0 < a1, a1, a0);
 }
 
 //================================================================================================
@@ -56,7 +56,7 @@ max_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
-max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
+max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
 -> common_value_t<T0, T1, Ts...>
 {
   using r_t = common_value_t<T0, T1, Ts...>;
@@ -67,7 +67,7 @@ max_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args)
 
 template<decorator D,  ordered_value... Ts>
 auto
-max_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
+max_(EVE_SUPPORTS(cpu_), D const &, Ts... args) noexcept
 {
   return max(args...);
 }
@@ -76,7 +76,7 @@ max_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
 // N parameters masked
 //================================================================================================
 template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
-auto max_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
+auto max_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args) noexcept
 {
   return mask_op(cond, eve::max, a0, a1, args...);
 }
@@ -86,7 +86,7 @@ auto max_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args)
 //================================================================================================
 template<kumi::non_empty_product_type Ts>
 auto
-max_(EVE_SUPPORTS(cpu_), Ts tup)
+max_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return max(m...); }, tup);
@@ -94,7 +94,7 @@ max_(EVE_SUPPORTS(cpu_), Ts tup)
 
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-max_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+max_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
 {
   if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
   else return kumi::apply( [&](auto... m) { return d(max)(m...); }, tup);
@@ -105,7 +105,7 @@ max_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 //================================================================================================
 template<typename Callable>
 EVE_FORCEINLINE auto
-max_(EVE_SUPPORTS(cpu_), Callable f)
+max_(EVE_SUPPORTS(cpu_), Callable f) noexcept
 {
   if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::max;
   else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::min;

@@ -16,49 +16,47 @@ namespace eve::detail
   //================================================================================================
   EVE_FORCEINLINE auto dd_unary_dispatch(tag::is_denormal_, auto const& z) noexcept
   {
-    return is_denormal(high(z)) || is_denormal(low(z));
+    return is_denormal(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch(tag::is_not_denormal_, auto const& z) noexcept
   {
-    return is_not_denormal(high(z)) && is_not_denormal(low(z));
+    return is_not_denormal(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_finite_, auto const& z ) noexcept
   {
-    return is_finite(low(z)) && is_finite(high(z));
+    return is_finite(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_eqz_, auto const& z ) noexcept
   {
-    return is_eqz(low(z)) && is_eqz(high(z));
+    return is_eqz(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_nez_, auto const& z ) noexcept
   {
-    return is_nez(low(z)) || is_nez(high(z));
+    return is_nez(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_not_finite_, auto const& z ) noexcept
   {
-    return is_not_finite(low(z)) || is_not_finite(high(z));
+    return is_not_finite(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_infinite_, auto const& z ) noexcept
   {
-    return is_infinite(low(z)) || is_infinite(high(z));
+    return is_infinite(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_nan_, auto const& z ) noexcept
   {
-    auto [rz, iz] = z;
-    return is_unordered(rz, iz);
+    return is_nan(high(z));
   }
 
   EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_not_nan_, auto const& z ) noexcept
   {
-    auto [rz, iz] = z;
-    return is_ordered(rz, iz);
+     return is_not_nan(high(z));
   }
 
   //==============================================================================================
