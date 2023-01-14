@@ -76,12 +76,6 @@ namespace eve::detail
     return z-trunc(z);
   }
 
-
-//   //================================================================================================
-//   //  Unary functions
-//   //================================================================================================
-
-
   template<typename Z>
   EVE_FORCEINLINE auto
   dd_unary_dispatch(eve::tag::sqr_, Z const& a) noexcept
@@ -118,6 +112,30 @@ namespace eve::detail
   //================================================================================================
   //  Binary functions
   //================================================================================================
+
+  EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::add_, auto const& z1, auto const& z2) noexcept
+  {
+    return z1 + z2;
+  }
+
+  EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::mul_, auto const& z1, auto const& z2) noexcept
+  {
+    return z1 * z2;
+  }
+
+  EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::sub_, auto const& z1, auto const& z2) noexcept
+  {
+    return z1 - z2;
+  }
+
+   EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::div_, auto const& z1, auto const& z2) noexcept
+  {
+    return z1 / z2;
+  }
 
   EVE_FORCEINLINE auto
   dd_binary_dispatch(eve::tag::negate_, auto const& z1, auto const& z2) noexcept

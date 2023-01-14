@@ -15,7 +15,7 @@ TTS_CASE_TPL( "Check dd::rec ", eve::test::scalar::ieee_reals)
 {
   using dd_t   = eve::dd<T>;
   // using w_t    = eve::wide<T>;
-  // using wdd_t  = eve::wide<dd_t>;
+  using wdd_t  = eve::wide<dd_t>;
   if constexpr(sizeof(T) == 4)
   {
     auto pi = eve::pi(eve::as<double>());
@@ -31,5 +31,6 @@ TTS_CASE_TPL( "Check dd::rec ", eve::test::scalar::ieee_reals)
   }
   auto dpi = eve::pi(eve::as<dd_t>());
   std:: cout<< "cts pi " << sizeof(T) << std::setprecision(sizeof(T)*5) << dpi << std::endl;
-
+  auto wdpi = eve::pi(eve::as<wdd_t>());
+  std:: cout<< "cts wdpi " << wdpi << std::endl;
 };

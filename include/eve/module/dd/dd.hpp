@@ -204,15 +204,15 @@ namespace eve
     //==============================================================================================
     // Constants support
     //==============================================================================================
-//     template<typename Tag, like<dd> Z>
-//     EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
-//     {
-//       detail::callable_object<Tag> cst;
-//       if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
-//         return cst(as(high(Z{})));
-//       else
-//         return Z{ cst(as<Type>{}), Type{0}};
-//     }
+    template<typename Tag, like<dd> Z>
+    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const& tag, as<Z> const&) noexcept
+    {
+      detail::callable_object<Tag> cst;
+      if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
+        return cst(as(high(Z{})));
+      else
+        return detail::dd_cts_dispatch(tag, as(Z()));//Z{ cst(as<Type>{}), Type{0}};
+    }
 
     //==============================================================================================
     // Specific function support
