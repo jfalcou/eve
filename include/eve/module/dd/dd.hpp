@@ -17,6 +17,7 @@
 #include <eve/traits/product_type.hpp>
 #include <ostream>
 #include <iomanip>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 namespace eve
 {
@@ -40,6 +41,15 @@ namespace eve
   {
     auto [h, l] = z;
     return float64(h)+float64(l);
+  }
+
+  template<ordered_value Z>
+  EVE_FORCEINLINE  auto to_float128( Z const& z) noexcept
+  requires(is_dd_v<Z>)
+  {
+    auto [h, l] = z;
+    return  boost::multiprecision::cpp_bin_float_quad(h)+
+            boost::multiprecision::cpp_bin_float_quad(l);
   }
 
   template<floating_scalar_value Type>
@@ -88,69 +98,6 @@ namespace eve
       return os;
     }
 
-
-    // -----  Operator -=
-    template<like<dd> Z> EVE_FORCEINLINE friend auto operator-(Z const& z) noexcept
-    {
-      return Z{-high(z), -low(z)};
-    }
-
-    template<like<dd> Z1, like<dd> Z2>
-    EVE_FORCEINLINE friend auto& operator-=(Z1& self, Z2 const& o) noexcept
-    {
-      return self +=  -o;
-    }
-
-    // -----  Operator *=
-    template<like<dd> Z1, like<dd> Z2>
-    EVE_FORCEINLINE friend auto& operator*=(Z1& self, Z2 const& o) noexcept
-    {
-      if constexpr(is_dd_v<Z2>)
-      {
-        auto & [x0, x1] = self;
-        auto [ohi, olo] = o;
-        auto [p0, p1] = two_prod(x0, ohi);
-        auto finitex0 = is_finite(x0);
-        if (eve::none(finitex0)){
-          x0 = p0;
-          x1 = zero(as(x1));
-        }
-        else
-        {
-          auto [p2, p4] = two_prod(x0, olo);
-          auto [p3, p5] = two_prod(x1, ohi);
-          auto p6 = x1*olo;
-          three_add(p1, p2, p3);
-          p2 += p4 + p5 + p6;
-          three_add(p0, p1, p2);
-          x0 = p0;
-          x1 = p1;
-        }
-        return self;
-      }
-      else // o is scalar here
-      {
-        return self *= Z1(o);
-      }
-    }
-
-    // -----  Operator /=
-    template<like<dd> Z1, like<dd> Z2>
-    EVE_FORCEINLINE friend auto& operator/=(Z1& self, Z2 const& o) noexcept
-    {
-      if constexpr(is_dd_v<Z2>)
-      {
-        auto r = eve::rec(high(o));
-        Z1 x(r);
-        x += r*oneminus(o*r); //newton inverse of o
-        return self *= x;
-      }
-      else // o is scalar here
-      {
-        return self /= Z1(o);
-      }
-    }
-
     //==============================================================================================
     // Functions support
     //==============================================================================================
@@ -173,6 +120,13 @@ namespace eve
         -> decltype(detail::dd_binary_dispatch(tag, z1, z2))
     {
       return detail::dd_binary_dispatch(tag, z1, z2);
+    }
+
+    template<typename Tag, like<dd> Z1, integral_value N>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, N const& n) noexcept
+        -> decltype(detail::dd_n_binary_dispatch(tag, z1, n))
+    {
+      return detail::dd_n_binary_dispatch(tag, z1, n);
     }
 
 //     template<decorator D, typename Tag, like<dd> Z1, like<dd> Z2>
@@ -215,16 +169,6 @@ namespace eve
     }
 
     //==============================================================================================
-    // Specific function support
-    //==============================================================================================
-    template<like<dd> Z, integral_value N>
-    EVE_FORCEINLINE friend auto tagged_dispatch(tag::ldexp_, Z const& z1, N n) noexcept
-    {
-      return as_wide_as_t<Z, N>(ldexp(high(z1), n), ldexp(low(z1), n));
-    }
-
-
-    //==============================================================================================
     //  high/low Access
     //==============================================================================================
     EVE_FORCEINLINE friend decltype(auto) tagged_dispatch(eve::tag::high_, like<dd> auto&& z)
@@ -246,7 +190,7 @@ namespace eve
     template<like<dd> Z1, like<dd> Z2>
     EVE_FORCEINLINE friend auto& operator+=(Z1& self, Z2 const& o) noexcept
     {
-      if constexpr(is_dd_v<eve::element_type_t<Z2>>)
+      if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
       {
         auto & [x0, x1] = self;
         auto   [z0, s2] = two_add(x0, high(o));
@@ -269,6 +213,86 @@ namespace eve
         return self += dd(o);
       }
     }
+
+
+
+    // -----  Operator -=
+    template<like<dd> Z> EVE_FORCEINLINE friend auto operator-(Z const& z) noexcept
+    {
+      return Z{-high(z), -low(z)};
+    }
+
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto& operator-=(Z1& self, Z2 const& o) noexcept
+    {
+      return self +=  -o;
+    }
+
+    // -----  Operator *=
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto& operator*=(Z1& self, Z2 const& o) noexcept
+    {
+      if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
+      {
+        auto & [x0, x1] = self;
+        auto ohi = high(o);
+        auto [p0, p1] = two_prod(x0, ohi);
+        auto finitex0 = is_finite(x0);
+        if (eve::none(finitex0)){
+          x0 = p0;
+          x1 = zero(as(x1));
+        }
+        else
+        {
+          auto olo = low(o);
+          auto [p2, p4] = two_prod(x0, olo);
+          auto [p3, p5] = two_prod(x1, ohi);
+          auto p6 = x1*olo;
+          three_add(p1, p2, p3);
+          p2 += p4 + p5 + p6;
+          three_add(p0, p1, p2);
+          x0 = p0;
+          x1 = p1;
+        }
+        return self;
+      }
+      else // o is scalar here
+      {
+        return self *= Z1(o);
+      }
+    }
+
+    // -----  Operator /=
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto& operator/=(Z1& self, Z2 const& o) noexcept
+    {
+      if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>> )
+      {
+        // this is the classical long division
+        //         auto ohi = high(o);
+        //         std::cout << "ohi "<< ohi << std::endl;
+        //         auto r =  self;
+        //         auto zhi = high(self);
+        //         auto q1 = zhi/ohi;  /* approximate quotient */
+        //         r -= o*q1;
+        //         auto q2 = high(r)/ohi;
+        //         r -= o*q2;
+        //         auto q3 = high(r)/ohi;
+        //         kumi::tie(q1, q2) = quick_two_add(q1, q2);
+        //         return self = Z1(q1, q2) + q3;
+
+        // this is perhaps better
+        Z1 r(eve::rec(o));
+        Z1 x(r);
+        x += r*oneminus(o*r); //newton inverse of o
+        return self *= x;
+      }
+      else // o is scalar here
+      {
+        return self /= Z1(o);
+      }
+    }
+
   private :
 
     //==============================================================================================

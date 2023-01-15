@@ -72,7 +72,7 @@ namespace eve::detail
 
   // special cases
   template<ordered_value T>
-  EVE_FORCEINLINE constexpr auto epsilon_(EVE_SUPPORTS(cpu_), as<dd<T>> const&) noexcept
+  EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as<dd<T>> const&) noexcept
   {
     using t_t = element_type_t<T>;
     using e_t = dd<t_t>;

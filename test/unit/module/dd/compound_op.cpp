@@ -83,7 +83,10 @@ TTS_CASE_TPL( "Check dd::operator/= ", eve::test::scalar::ieee_reals)
     TTS_ULP_EQUAL(pi, eve::to_double(ddpi), 4);
     ddpi /=  dd_t(e);
     TTS_ULP_EQUAL(pi/e, eve::to_double(ddpi), 4);
+    double z = eve::to_double(ddpi);
     ddpi /=  1.2345f;
+
     TTS_ULP_EQUAL((pi/e)/1.2345f, eve::to_double(ddpi), 4);
+    std::cout << z/1.2345f - eve::to_double(ddpi) << std::endl;
   }
 };
