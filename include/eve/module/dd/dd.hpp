@@ -402,11 +402,7 @@ namespace eve
                                               Z2 const  & z2) noexcept
   requires(is_dd_v<Z1> != is_dd_v<Z2>)
   {
-    std::cout << "cond " << cond << z1 << " --- " << z2 << std::endl;
-    std::cout << tts::typename_<Z1> << std::endl;
-    std::cout << tts::typename_<Z2> << std::endl;
     return if_else(cond, to_dd(z1), to_dd(z2));
-//    return z1+z2;
   }
 
 

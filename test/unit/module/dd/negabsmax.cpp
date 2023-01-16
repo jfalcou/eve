@@ -27,28 +27,25 @@ TTS_CASE_WITH( "Check behavior of negabsmax on scalar"
       {
         auto z1 = dd_t(e, f);
         auto z2 = dd_t(f, e);
-        auto z = eve::negabsmax(z1, z2);
-        std::cout << z << std::endl;
-        TTS_EQUAL (0, 0);
-//        TTS_EQUAL ( eve::to_double(eve::negabsmax(z1, z2)), eve::negabsmax(eve::to_double(z1), to_double(z2)));
+        TTS_EQUAL ( eve::to_double(eve::negabsmax(z1, z2)), eve::negabsmax(eve::to_double(z1), to_double(z2)));
       }
     }
   }
 };
 
-// TTS_CASE_WITH( "Check behavior of negabsmax on wide"
-//         , eve::test::simd::ieee_reals
-//         , tts::generate ( tts::randoms(-10, 10)
-//                               , tts::randoms(-10, 10)
-//                               )
-//         )
-//   <typename T>(T const& a0, T const& a1 )
-// {
-//   using e_t = typename T::value_type;
-//   if constexpr(sizeof(e_t) == 4)
-//   {
-//     auto z1 = make_dd(a0,a1);
-//     auto z2 = make_dd(a1,a0);
-//     TTS_EQUAL ( eve::to_double(eve::negabsmax(z1, z2)), eve::negabsmax(eve::to_double(z1), to_double(z2)));
-//   }
-// };
+TTS_CASE_WITH( "Check behavior of negabsmax on wide"
+        , eve::test::simd::ieee_reals
+        , tts::generate ( tts::randoms(-10, 10)
+                              , tts::randoms(-10, 10)
+                              )
+        )
+  <typename T>(T const& a0, T const& a1 )
+{
+  using e_t = typename T::value_type;
+  if constexpr(sizeof(e_t) == 4)
+  {
+    auto z1 = make_dd(a0,a1);
+    auto z2 = make_dd(a1,a0);
+    TTS_EQUAL ( eve::to_double(eve::negabsmax(z1, z2)), eve::negabsmax(eve::to_double(z1), to_double(z2)));
+  }
+};
