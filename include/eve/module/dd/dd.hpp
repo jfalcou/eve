@@ -384,16 +384,11 @@ namespace eve
 
   template<ordered_value Z>
   EVE_FORCEINLINE   auto to_dd( Z const & v) noexcept
-  -> decltype(as_dd_t<Z>(v, 0))
-  {
-    return as_dd_t<Z>(v, 0);
+ {
+    if constexpr(is_dd_v<Z>) return v;
+    else    return as_dd_t<Z>(v, 0);
   }
 
-  template<value Z>
-  EVE_FORCEINLINE auto to_dd(Z const & v) noexcept
-  {
-    return v;
-  }
 
   template<value Z1, value Z2>
   EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,

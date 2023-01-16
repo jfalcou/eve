@@ -219,7 +219,7 @@ namespace eve::detail
     using r_t = as_wide_as_t<Z1, N>;
     auto pz1 = r_t(high(z1), prev(low(z1), n));
     auto npz1 =  r_t(high(pz1), next(low(z1)));
-    Z1 e = next(npz1, n);
+    r_t e = next(npz1, n);
     return if_else(e < z1, npz1, pz1);
   }
 

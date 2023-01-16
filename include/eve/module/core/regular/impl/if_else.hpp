@@ -44,17 +44,17 @@ template<scalar_value T, value U, value V>
 EVE_FORCEINLINE auto
 if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& t, V const& f) requires compatible_values<U, V>
 {
-  if constexpr( simd_value<U> && simd_value<V> ) return cond ? t : f;
-  else if constexpr( simd_value<U> ) return cond ? t : U(f);
-  else if constexpr( simd_value<V> ) return cond ? V(t) : f;
-  else return cond ? t : f;
+  if constexpr( simd_value<U> && simd_value<V> ) return is_nez(cond) ? t : f;
+  else if constexpr( simd_value<U> ) return  is_nez(cond) ? t : U(f);
+  else if constexpr( simd_value<V> ) return  is_nez(cond) ? V(t) : f;
+  else return  is_nez(cond) ? t : f;
 }
 
 template<simd_value T, value U, value V>
 EVE_FORCEINLINE auto
 if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& t, V const& f) requires compatible_values<U, V>
 {
-  if constexpr( !is_logical_v<T> ) { return if_else(to_logical(cond), t, f); }
+  if constexpr( !is_logical_v<T> ) { return if_else(is_nez(cond), t, f); }
   else
   {
     using e_t = element_type_t<common_compatible_t<U, V>>;
