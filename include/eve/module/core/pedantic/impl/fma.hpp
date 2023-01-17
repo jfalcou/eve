@@ -46,9 +46,16 @@ fma_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& 
   }
   else if constexpr( std::is_same_v<elt_t, double> )
   {
-    auto [p, rp] = two_prod(a, b);
-    auto [s, rs] = two_add(p, c);
-    return s + (rp + rs);
+    if constexpr(scalar_value<T>)
+    {
+      return std::fma(a, b, c);
+    }
+    else
+    {
+      auto [p, rp] = two_prod(a, b);
+      auto [s, rs] = two_add(p, c);
+      return s + (rp + rs);
+    }
   }
   else if constexpr( std::is_integral_v<elt_t> )
   {
