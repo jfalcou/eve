@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 
-template<typename  ...Ts>
+template<value  ...Ts>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_), Ts... args)
 -> decltype(minus(maxabs(args...)))
@@ -24,7 +24,7 @@ negmaxabs_(EVE_SUPPORTS(cpu_), Ts... args)
   return minus(maxabs(args...));
 }
 
-template<conditional_expr C, typename T0, typename  ...Ts>
+template<conditional_expr C, value T0, value  ...Ts>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_), C const & c, T0 t0, Ts... args)
 -> decltype(if_else(c, negmaxabs(t0, args...), t0))

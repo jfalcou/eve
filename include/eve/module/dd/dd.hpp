@@ -384,9 +384,9 @@ namespace eve
 
   template<ordered_value Z>
   EVE_FORCEINLINE   auto to_dd( Z const & v) noexcept
- {
+  {
     if constexpr(is_dd_v<Z>) return v;
-    else    return as_dd_t<Z>(v, 0);
+    else    return as_dd_t<Z>(v, Z(0));
   }
 
 

@@ -8,9 +8,17 @@
 #pragma once
 
 #include <eve/module/dd.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
+namespace bm =  boost::multiprecision;
 
 namespace tts
 {
+  template<typename T>
+  auto uptype(T const & z)
+  {
+    if constexpr(sizeof(T) == 4) return eve::to_double(z);
+    else return eve::to_float128(z);
+  }
   template<typename T>
   double ulp_distance_impl(T const &l, T const &r)
   {
