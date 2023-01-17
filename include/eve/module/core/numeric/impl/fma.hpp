@@ -23,7 +23,7 @@
 #include <eve/module/core/regular/minmag.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
-
+#include <cmath>
 #include <type_traits>
 
 namespace eve::detail
@@ -48,14 +48,21 @@ fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& c
   }
   else if constexpr( std::is_same_v<elt_t, double> )
   {
-    auto amax    = maxmag(a, b);
-    auto amin    = minmag(a, b);
-    auto e0      = -(exponent(amax) >> 1);
-    amax         = pedantic(ldexp)(amax, e0);
-    auto c0      = pedantic(ldexp)(c, e0);
-    auto [p, rp] = two_prod(amax, amin);
-    auto [s, rs] = two_add(p, c0);
-    return pedantic(ldexp)(s + (rp + rs), -e0);
+    if constexpr(scalar_value<T>)
+    {
+      return std::fma(a, b, c);
+    }
+    else
+    {
+      auto amax    = maxmag(a, b);
+      auto amin    = minmag(a, b);
+      auto e0      = -(exponent(amax) >> 1);
+      amax         = pedantic(ldexp)(amax, e0);
+      auto c0      = pedantic(ldexp)(c, e0);
+      auto [p, rp] = two_prod(amax, amin);
+      auto [s, rs] = two_add(p, c0);
+      return pedantic(ldexp)(s + (rp + rs), -e0);
+    }
   }
   else if constexpr( std::is_integral_v<elt_t> )
   {
