@@ -19,8 +19,6 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/maxmag.hpp>
 #include <eve/module/core/regular/minmag.hpp>
-#include <eve/module/core/regular/two_add.hpp>
-#include <eve/module/core/regular/two_prod.hpp>
 
 #include <type_traits>
 

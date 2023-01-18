@@ -15,14 +15,11 @@
 #include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/pedantic/ldexp.hpp>
-#include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/maxmag.hpp>
 #include <eve/module/core/regular/minmag.hpp>
-#include <eve/module/core/regular/two_add.hpp>
-#include <eve/module/core/regular/two_prod.hpp>
 #include <cmath>
 #include <type_traits>
 

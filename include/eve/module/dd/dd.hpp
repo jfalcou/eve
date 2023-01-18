@@ -8,9 +8,11 @@
 #pragma once
 
 #include <eve/concept/vectorizable.hpp>
+#include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/dd/dd.hpp>
+#include <eve/module/dd/detail/utilities.hpp>
 #include <eve/module/dd/detail/constants.hpp>
 #include <eve/module/dd/detail/arithmetic.hpp>
 #include <eve/module/dd/detail/predicates.hpp>
