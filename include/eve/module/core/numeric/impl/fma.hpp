@@ -54,14 +54,16 @@ fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& c
     }
     else
     {
-      auto amax    = maxmag(a, b);
-      auto amin    = minmag(a, b);
-      auto e0      = -(exponent(amax) >> 1);
-      amax         = pedantic(ldexp)(amax, e0);
-      auto c0      = pedantic(ldexp)(c, e0);
-      auto [p, rp] = two_prod(amax, amin);
-      auto [s, rs] = two_add(p, c0);
-      return pedantic(ldexp)(s + (rp + rs), -e0);
+      auto stdfma = [](auto sa, auto sb, auto sc){return std::fma(sa, sb, sc); };
+      return map(stdfma, a, b, c);
+//       auto amax    = maxmag(a, b);
+//       auto amin    = minmag(a, b);
+//       auto e0      = -(exponent(amax) >> 1);
+//       amax         = pedantic(ldexp)(amax, e0);
+//       auto c0      = pedantic(ldexp)(c, e0);
+//       auto [p, rp] = two_prod(amax, amin);
+//       auto [s, rs] = two_add(p, c0);
+//       return pedantic(ldexp)(s + (rp + rs), -e0);
     }
   }
   else if constexpr( std::is_integral_v<elt_t> )

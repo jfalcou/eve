@@ -15,6 +15,7 @@
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/two_split.hpp>
 #include <eve/arch/platform.hpp>
+#include <cmath>
 
 namespace eve::detail
 {
@@ -24,15 +25,16 @@ EVE_FORCEINLINE kumi::tuple<T, T>
 {
   if constexpr( has_native_abi_v<T> )
   {
-    auto [a1, a2] = two_split(a);
-    auto [b1, b2] = two_split(b);
-    T r0          = a * b;
-    T r1          = a2 * b2 - (((r0 - a1 * b1) - a2 * b1) - a1 * b2);
-    if constexpr( eve::platform::supports_invalids ) r1 = if_else(is_not_finite(r0), eve::zero, r1);
-    return {r0, r1};
-//     auto r0 = a * b;
-//     auto r1 = numeric(fms)(a, b, r0);
+
+//     auto [a1, a2] = two_split(a);
+//     auto [b1, b2] = two_split(b);
+//     T r0          = a * b;
+//     T r1          = a2 * b2 - (((r0 - a1 * b1) - a2 * b1) - a1 * b2);
+//     if constexpr( eve::platform::supports_invalids ) r1 = if_else(is_not_finite(r0), eve::zero, r1);
 //     return {r0, r1};
+    auto r0 = a * b;
+    auto r1 = numeric(fms)(a, b, r0);
+    return {r0, r1};
   }
   else return apply_over2(two_prod, a, b);
 }

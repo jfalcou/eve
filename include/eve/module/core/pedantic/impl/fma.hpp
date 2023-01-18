@@ -52,9 +52,11 @@ fma_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& 
     }
     else
     {
-      auto [p, rp] = two_prod(a, b);
-      auto [s, rs] = two_add(p, c);
-      return s + (rp + rs);
+      auto stdfma = [](auto sa, auto sb, auto sc){return std::fma(sa, sb, sc); };
+      return map(stdfma, a, b, c);
+//       auto [p, rp] = two_prod(a, b);
+//       auto [s, rs] = two_add(p, c);
+//       return s + (rp + rs);
     }
   }
   else if constexpr( std::is_integral_v<elt_t> )
