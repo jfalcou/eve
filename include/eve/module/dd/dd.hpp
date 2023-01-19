@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/vectorizable.hpp>
-#include <eve/detail/skeleton_calls.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/dd/dd.hpp>
@@ -59,10 +58,10 @@ namespace eve
   {
     using parent                = struct_support<dd<Type>, Type, Type>;
 
-    /// Base high type
+    /// Base  type
     using real_type = Type;
 
-    /// Base high type
+    /// Base underlyng type
     using underlying_type = underlying_type_t<Type>;
 
     /// Default constructor
@@ -79,7 +78,7 @@ namespace eve
       *this = read(s);
     }
 
-    template <ordered_value T> // construction by a scalar of different type
+    template <ordered_value T> // construction from a scalar of different type
     dd(T t)
     requires(!std::same_as<T, underlying_type> && scalar_value<T>)
     {
@@ -149,13 +148,13 @@ namespace eve
 //       return detail::dd_ternary_dispatch(tag, z1, z2, z3);
 //     }
 
-//     template<typename Tag, like<dd> Z1, like<dd>... Zs>
-//     EVE_FORCEINLINE
-//     friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Zs const&...zs) noexcept
-//         -> decltype(detail::dd_nary_dispatch(tag, z1, zs...))
-//     {
-//       return detail::dd_nary_dispatch(tag, z1, zs...);
-//     }
+    template<typename Tag, like<dd> Z1, like<dd>... Zs>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Zs const&...zs) noexcept
+        -> decltype(detail::dd_nary_dispatch(tag, z1, zs...))
+    {
+      return detail::dd_nary_dispatch(tag, z1, zs...);
+    }
 
     //==============================================================================================
     // Constants support
@@ -205,7 +204,7 @@ namespace eve
           auto [t3, t4] = two_add(s2, t1);
           x1 = t3;
           t4 += t2;
-          three_add(x0, x1, t4);
+          kumi::tie(x0, x1, t4) = three_add(x0, x1, t4);
           x1 = if_else(finitex0, x1, zero);
         }
         return self;
@@ -250,9 +249,9 @@ namespace eve
           auto [p2, p4] = two_prod(x0, olo);
           auto [p3, p5] = two_prod(x1, ohi);
           auto p6 = x1*olo;
-          three_add(p1, p2, p3);
+          kumi::tie(p1, p2, p3) = three_add(p1, p2, p3);
           p2 += p4 + p5 + p6;
-          three_add(p0, p1, p2);
+          kumi::tie(p0, p1, p2) = three_add(p0, p1, p2);
           x0 = p0;
           x1 = p1;
         }
@@ -296,27 +295,6 @@ namespace eve
     }
 
   private :
-
-    //==============================================================================================
-    // Utilities
-    //==============================================================================================
-    template <typename U>
-    EVE_FORCEINLINE static void three_add( U &a
-                                         , U &b
-                                         , U &c) noexcept
-    {
-//       if constexpr( has_native_abi_v<U> )
-//       {
-        auto [t1, t2] = two_add(a, b);
-        auto z = two_add(c, t1);
-        a = get<0>(z);
-        z = two_add(t2, get<1>(z));
-        b = get<0>(z);
-        c = get<1>(z);
-
-//       }
-//       else return apply_over2(three_add, a, b);
-    }
 
     // Reads in a dd from a string. */
     static dd read(const char *s) //TO DO rewrite it !
@@ -401,7 +379,6 @@ namespace eve
   {
     return if_else(cond, to_dd(z1), to_dd(z2));
   }
-
 
   template <ordered_value T>
   EVE_FORCEINLINE auto  make_dd (T a,  T b) noexcept

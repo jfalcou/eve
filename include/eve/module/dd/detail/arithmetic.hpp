@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/dd/regular/traits.hpp>
+#include <eve/module/dd/detail/utilities.hpp>
 
 
 namespace eve::detail
@@ -226,8 +227,23 @@ namespace eve::detail
   template<typename Z, integral_value N>
   EVE_FORCEINLINE auto dd_n_binary_dispatch(tag::ldexp_, Z const& z1, N n) noexcept
   {
+    std::cout << "ldexp" << std::endl;
     return as_wide_as_t<Z, N>(ldexp(high(z1), n), ldexp(low(z1), n));
   }
 
 
+  //================================================================================================
+  //  ternary functions
+  //================================================================================================
+  template<typename Z1, typename Z2, typename Z3>
+  EVE_FORCEINLINE auto
+  dd_nary_dispatch(eve::tag::fma_, Z1 a, Z2  b, Z3 c) noexcept
+  -> decltype(a*b+c)
+  {
+    using r_t = std::remove_reference_t<decltype(a*b+c)>;
+    auto p = qd_mul(r_t(a), r_t(b));
+    auto [q0, q1, q2, q3] = qd_add(p, r_t(c));
+    auto [a0, a1] = two_add(q0, q1 + q2 + q3);
+    return {a0, a1};
+  }
 }

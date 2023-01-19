@@ -72,12 +72,13 @@ namespace eve::detail
 
   // special cases
   template<ordered_value T>
-  EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as<dd<T>> const&) noexcept
+  EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::eps_, as<T> const&) noexcept
+  requires(is_dd_v<T>)
   {
-    using t_t = element_type_t<T>;
-    using e_t = dd<t_t>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(e_t(Constant<T, 0x28800000>()));
-    else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(Constant<T, 0x3970000000000000ll>()));
+    std::cout << "icitte eps" << std::endl;
+    using t_t = underlying_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return (T(Constant<t_t, 0x28800000>()));
+    else if constexpr( std::is_same_v<t_t, double> ) return (T(Constant<t_t, 0x3970000000000000ll>()));
   }
 
 // const double dd_real::_min_normalized = 2.0041683600089728e-292;  // = 2^(-1022 + 53)
