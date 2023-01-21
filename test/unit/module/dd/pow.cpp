@@ -7,10 +7,9 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "measures.hpp"
 #include <eve/module/dd.hpp>
 
-TTS_CASE_WITH( "Check behavior of abs on scalar"
+TTS_CASE_WITH( "Check behavior of pow on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate ( tts::randoms(-10, 10)
                              , tts::randoms(-10, 10)
@@ -18,18 +17,19 @@ TTS_CASE_WITH( "Check behavior of abs on scalar"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
+  using dd_t = eve::dd<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      TTS_EQUAL ( tts::uptype(eve::abs(eve::dd<e_t>(e, f))), bm::abs(tts::uptype(eve::dd<e_t>(e, f))));
+      auto z1 = dd_t(e, f);
+      TTS_EQUAL ( eve::pow(z1, 4), eve::sqr(eve::sqr(z1)));
     }
   }
 };
 
-TTS_CASE_WITH( "Check behavior of abs on wide"
+TTS_CASE_WITH( "Check behavior of pow on wide"
              , eve::test::simd::ieee_reals
              , tts::generate ( tts::randoms(-10, 10)
                              , tts::randoms(-10, 10)
@@ -37,7 +37,10 @@ TTS_CASE_WITH( "Check behavior of abs on wide"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto z = make_dd(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::abs, z));
-  TTS_EQUAL ( eve::abs(z), az);
+  using e_t = typename T::value_type;
+  if constexpr(sizeof(e_t) == 4)
+  {
+    auto z1 = make_dd(a0,a1);
+    TTS_EQUAL (  eve::pow(z1, 4), eve::sqr(eve::sqr(z1)));
+  }
 };

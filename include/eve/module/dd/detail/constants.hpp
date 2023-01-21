@@ -10,7 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/dd/regular/traits.hpp>
-#include <tts/tts.hpp>
 
 namespace eve::detail
 {
@@ -75,15 +74,38 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::eps_, as<T> const&) noexcept
   requires(is_dd_v<T>)
   {
-    std::cout << "icitte eps" << std::endl;
     using t_t = underlying_type_t<T>;
     if constexpr( std::is_same_v<t_t, float> ) return (T(Constant<t_t, 0x28800000>()));
     else if constexpr( std::is_same_v<t_t, double> ) return (T(Constant<t_t, 0x3970000000000000ll>()));
   }
 
-// const double dd_real::_min_normalized = 2.0041683600089728e-292;  // = 2^(-1022 + 53)
-// const dd_real dd_real::_max =
-//     dd_real(1.79769313486231570815e+308, 9.97920154767359795037e+291);
+  template<ordered_value T>
+  EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::smallestposval_, as<T> const&) noexcept
+  requires(is_dd_v<T>)
+  {
+    using t_t = underlying_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return (T(Constant<t_t, 0xc800000>()));// = 2^(-126 + 24)
+    else if constexpr( std::is_same_v<t_t, double> ) return (T(Constant<t_t, 0x360000000000000ll>()));// = 2^(-1022 + 53)
+  }
+
+  template<ordered_value T>
+  EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::valmax_, as<T> const&) noexcept
+  requires(is_dd_v<T>)
+  {
+    using t_t = underlying_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(3.4028235e+38f, 1.0141204e+31f);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(1.79769313486231570815e+308, 9.97920154767359795037e+291);
+  }
+
+  template<ordered_value T>
+  EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::valmin_, as<T> const&) noexcept
+  requires(is_dd_v<T>)
+  {
+    using t_t = underlying_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(-3.4028235e+38f, -1.0141204e+31f);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(-1.79769313486231570815e+308, -9.97920154767359795037e+291);
+  }
+
 // const dd_real dd_real::_safe_max =
 //     dd_real(1.7976931080746007281e+308, 9.97920154767359795037e+291);
 // const int dd_real::_ndigits = 31;

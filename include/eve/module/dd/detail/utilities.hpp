@@ -18,6 +18,7 @@
 
 namespace eve
 {
+
   namespace tag
   {
     struct quick_two_add_;
@@ -346,4 +347,39 @@ namespace eve
       return renorm(s0, s1, s2, s3, t0);
     }
   }
+
+
+  template <ordered_value T>
+  EVE_FORCEINLINE auto  make_dd (T a,  T b) noexcept
+  {
+    auto [l, h] = two_add(a, b);
+    return as_dd_t<T>(l, h);
+  }
+
+  template <ordered_value T>
+  EVE_FORCEINLINE auto  make_dd (kumi::tuple<T, T> const & t) noexcept
+  {
+    return make_dd(get<0>(t), get<1>(t));
+  }
+
+  template <ordered_value T, ordered_value O>
+  EVE_FORCEINLINE auto  make_dd (O const & o, as<T> const &) noexcept
+  requires(is_dd_v<T>)
+  {
+    if constexpr(std::same_as<O, T>)
+      return o;
+    else if constexpr(std::same_as<underlying_type_t<T>, underlying_type_t<O>>)
+    {
+      using e_t = decltype(low(T()));
+      return T(e_t(high(o)), e_t(low(o)));
+    }
+    else // o is scalar with different type
+    {
+      using u_t =  underlying_type_t<T>;
+      u_t h(o);
+      auto r = two_add(h, u_t(o-O(h)));
+      return T(get<0>(r), get<1>(r));
+    }
+  }
+
 }

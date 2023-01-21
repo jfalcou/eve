@@ -7,6 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "measures.hpp"
 #include <eve/module/dd.hpp>
 
 TTS_CASE_WITH( "Check behavior of absmax on scalar"
@@ -17,17 +18,23 @@ TTS_CASE_WITH( "Check behavior of absmax on scalar"
              )
   <typename T>(T const& a0, T const& a1 )
 {
+  namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   using dd_t = eve::dd<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-     if constexpr(sizeof(e_t) == 4)
+      auto z1 = dd_t(e, f);
+      auto z2 = dd_t(f, e);
+      if constexpr(sizeof(e_t) == 4)
       {
-        auto z1 = dd_t(e, f);
-        auto z2 = dd_t(f, e);
         TTS_EQUAL ( eve::to_double(eve::absmax(z1, z2)), eve::absmax(eve::to_double(z1), to_double(z2)));
+      }
+      else
+      {
+        auto am =  bm::abs(tts::uptype(z1) > tts::uptype(z2) ? tts::uptype(z1) : tts::uptype(z2));
+        TTS_EQUAL ( tts::uptype(eve::absmax(z1, z2)), am);
       }
     }
   }
@@ -41,11 +48,8 @@ TTS_CASE_WITH( "Check behavior of absmax on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
-  if constexpr(sizeof(e_t) == 4)
-  {
-    auto z1 = make_dd(a0,a1);
-    auto z2 = make_dd(a1,a0);
-    TTS_EQUAL ( eve::to_double(eve::absmax(z1, z2)), eve::absmax(eve::to_double(z1), to_double(z2)));
-  }
+  auto z1 = make_dd(a0,a1);
+  auto z2 = make_dd(a1,a0);
+  auto amz = decltype(z1)(eve::detail::map(eve::absmax, z1, z2));
+  TTS_EQUAL ( eve::absmax(z1, z2), amz);
 };

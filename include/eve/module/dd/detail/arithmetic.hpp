@@ -94,8 +94,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   dd_unary_dispatch(eve::tag::next_, Z1 const& z1) noexcept
   {
-    auto nz1  = Z1(high(z1), next(low(z1)));
-    auto pnz1 = Z1(high(nz1), prev(low(nz1)));
+    auto nz1  = make_dd(high(z1), next(low(z1)));
+    auto pnz1 = make_dd(high(nz1), prev(low(nz1)));
 
     return if_else(pnz1> z1, pnz1, nz1);
   }
@@ -104,8 +104,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   dd_unary_dispatch(eve::tag::prev_, Z1 const& z1) noexcept
   {
-    auto pz1 = Z1(high(z1), prev(low(z1)));
-    auto nnz1=  Z1(high(pz1), next(low(pz1)));
+    auto pz1 = make_dd(high(z1), prev(low(z1)));
+    auto nnz1= make_dd(high(pz1), next(low(pz1)));
     return if_else(nnz1 < z1, nnz1, pz1);
   }
 
@@ -201,17 +201,24 @@ namespace eve::detail
   //================================================================================================
   //  Binary functions with integral second parameter
   //================================================================================================
+  template<typename Z1, integral_value N> //TODO this doesnot work see prev.cpp
+  EVE_FORCEINLINE auto
+  dd_n_binary_dispatch(eve::tag::prev_, Z1 const& z1, N const& n) noexcept;
+
   template<typename Z1, integral_value N> //TODO this doesnot work see next.cpp
   EVE_FORCEINLINE auto
   dd_n_binary_dispatch(eve::tag::next_, Z1 const& z1, N const& n) noexcept
   {
     using r_t = as_wide_as_t<Z1, N>;
     auto nz1 = r_t(high(z1), next(low(z1), n));
-    auto pnz1 = r_t(high(nz1), prev(low(z1)));
-    Z1 e = prev(pnz1, n);
+    auto pnz1 = r_t(high(nz1), prev(low(z1), n));
+    auto e =pnz1; //prev(pnz1, n);
     return if_else(e > z1, pnz1, nz1);
   }
 
+  template<typename Z1, integral_value N> //TODO this doesnot work see prev.cpp
+  EVE_FORCEINLINE auto
+  dd_n_binary_dispatch(eve::tag::next_, Z1 const& z1, N const& n) noexcept;
 
   template<typename Z1, integral_value N> //TODO this doesnot work see prev.cpp
   EVE_FORCEINLINE auto
@@ -220,14 +227,13 @@ namespace eve::detail
     using r_t = as_wide_as_t<Z1, N>;
     auto pz1 = r_t(high(z1), prev(low(z1), n));
     auto npz1 =  r_t(high(pz1), next(low(z1)));
-    r_t e = next(npz1, n);
+    auto e = next(npz1, n);
     return if_else(e < z1, npz1, pz1);
   }
 
   template<typename Z, integral_value N>
   EVE_FORCEINLINE auto dd_n_binary_dispatch(tag::ldexp_, Z const& z1, N n) noexcept
   {
-    std::cout << "ldexp" << std::endl;
     return as_wide_as_t<Z, N>(ldexp(high(z1), n), ldexp(low(z1), n));
   }
 
@@ -235,15 +241,15 @@ namespace eve::detail
   //================================================================================================
   //  ternary functions
   //================================================================================================
-  template<typename Z1, typename Z2, typename Z3>
+  template<decorator D, typename Z1, typename Z2, typename Z3>
   EVE_FORCEINLINE auto
-  dd_nary_dispatch(eve::tag::fma_, Z1 a, Z2  b, Z3 c) noexcept
+  dd_nary_dispatch(eve::tag::fma_, D const &, Z1 a, Z2  b, Z3 c) noexcept
   -> decltype(a*b+c)
   {
-    using r_t = std::remove_reference_t<decltype(a*b+c)>;
+    using r_t = decltype(a*b+c);
     auto p = qd_mul(r_t(a), r_t(b));
     auto [q0, q1, q2, q3] = qd_add(p, r_t(c));
     auto [a0, a1] = two_add(q0, q1 + q2 + q3);
-    return {a0, a1};
+    return r_t(a0, a1);
   }
 }

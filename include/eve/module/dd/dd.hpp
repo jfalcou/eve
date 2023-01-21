@@ -14,6 +14,7 @@
 #include <eve/module/dd/detail/utilities.hpp>
 #include <eve/module/dd/detail/constants.hpp>
 #include <eve/module/dd/detail/arithmetic.hpp>
+#include <eve/module/dd/detail/math.hpp>
 #include <eve/module/dd/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
 #include <ostream>
@@ -80,7 +81,7 @@ namespace eve
 
     template <ordered_value T> // construction from a scalar of different type
     dd(T t)
-    requires(!std::same_as<T, underlying_type> && scalar_value<T>)
+    requires(!std::same_as<T, underlying_type> && plain_scalar_value<T>)
     {
       using u_t =  underlying_type;
       u_t h(t);
@@ -150,10 +151,20 @@ namespace eve
 
     template<typename Tag, like<dd> Z1, like<dd>... Zs>
     EVE_FORCEINLINE
-    friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Zs const&...zs) noexcept
+    friend auto tagged_dispatch(Tag const& tag
+                               , Z1 const& z1, Zs const&...zs) noexcept
         -> decltype(detail::dd_nary_dispatch(tag, z1, zs...))
     {
       return detail::dd_nary_dispatch(tag, z1, zs...);
+    }
+
+    template<decorator D, typename Tag, like<dd> Z1, like<dd>... Zs>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(Tag const& tag, D const& d
+                               , Z1 const& z1, Zs const&...zs) noexcept
+        -> decltype(detail::dd_nary_dispatch(tag, d, z1, zs...))
+    {
+      return detail::dd_nary_dispatch(tag, d, z1, zs...);
     }
 
     //==============================================================================================
@@ -211,7 +222,7 @@ namespace eve
       }
       else //o is scalar here
       {
-        return self += dd(o);
+        return self += make_dd(o, as<Z1>());
       }
     }
 
@@ -259,7 +270,7 @@ namespace eve
       }
       else // o is scalar here
       {
-        return self *= Z1(o);
+        return self *= make_dd(o, as<Z1>());
       }
     }
 
@@ -269,20 +280,6 @@ namespace eve
     {
       if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>> )
       {
-        // this is the classical long division
-        //         auto ohi = high(o);
-        //         std::cout << "ohi "<< ohi << std::endl;
-        //         auto r =  self;
-        //         auto zhi = high(self);
-        //         auto q1 = zhi/ohi;  /* approximate quotient */
-        //         r -= o*q1;
-        //         auto q2 = high(r)/ohi;
-        //         r -= o*q2;
-        //         auto q3 = high(r)/ohi;
-        //         kumi::tie(q1, q2) = quick_two_add(q1, q2);
-        //         return self = Z1(q1, q2) + q3;
-
-        // this is perhaps better
         Z1 r(eve::rec(o));
         Z1 x(r);
         x += r*oneminus(o*r); //newton inverse of o
@@ -290,7 +287,7 @@ namespace eve
       }
       else // o is scalar here
       {
-        return self /= Z1(o);
+        return self /= make_dd(o, as<Z1>());
       }
     }
 
@@ -380,18 +377,6 @@ namespace eve
     return if_else(cond, to_dd(z1), to_dd(z2));
   }
 
-  template <ordered_value T>
-  EVE_FORCEINLINE auto  make_dd (T a,  T b) noexcept
-  {
-    auto [l, h] = two_add(a, b);
-    return as_dd_t<T>(l, h);
-  }
-
-  template <ordered_value T>
-  EVE_FORCEINLINE auto  make_dd (kumi::tuple<T, T> const & t) noexcept
-  {
-    return make_dd(get<0>(t), get<1>(t));
-  }
   //================================================================================================
   //! @}
   //================================================================================================
