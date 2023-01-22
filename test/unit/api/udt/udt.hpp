@@ -6,6 +6,7 @@
 */
 //==================================================================================================
 #include <eve/traits/product_type.hpp>
+#include <eve/module/core.hpp>
 #include <type_traits>
 
 namespace udt
@@ -36,7 +37,7 @@ namespace udt
   }
 
   // Stream insertion is also on your behalf
-  std::ostream& operator<<( std::ostream& os, grid2d const& p)
+  inline std::ostream& operator<<( std::ostream& os, grid2d const& p)
   {
     return os << "[x: " << p.x << " - y: " << p.y << "]";
   }
@@ -52,6 +53,7 @@ namespace udt
   //------------------------------------------------------------------------------------------------
   // This test UDT is made to be a placeholder for easier case where one just inherits from
   // kumi::tuple and adapt its interface
+  // It now has non-trivial ctor setup to test for construct
   //------------------------------------------------------------------------------------------------
   struct label_position : kumi::tuple<float, std::uint8_t>
   {
@@ -64,10 +66,36 @@ namespace udt
     {
       return get<1>(std::forward<decltype(self)>(self));
     }
+
+    // Small set of non-trivial ctor for construct test
+    label_position() = default;
+
+    label_position(float x)
+    {
+      position(*this) = x;
+      label(*this) = 'A' + x;
+    }
+
+    label_position(float x, std::uint8_t c)
+    {
+      position(*this) = x;
+      label(*this)    = c;
+    }
+
+    template<typename N>
+    friend auto tagged_dispatch ( eve::tag::construct_
+                                , eve::as<eve::wide<label_position,N>>, auto const& v
+                                )
+    {
+      eve::wide<label_position,N> that;
+      position(that)  = v;
+      label(that)     = 'A' + eve::convert(position(that), eve::as<std::uint8_t>{});
+      return  that;
+    }
   };
 
   // Stream insertion is also on your behalf
-  std::ostream& operator<<( std::ostream& os, label_position const& p)
+  inline std::ostream& operator<<( std::ostream& os, label_position const& p)
   {
     return os << "'" << label(p) << "'@( " << position(p) << " )";
   }

@@ -125,6 +125,19 @@ TTS_CASE( "Check eve::wide<udt> enumerating constructor" )
 };
 
 //==================================================================================================
+// Construct by calling a non-trivial UDT ctor
+//==================================================================================================
+TTS_CASE( "Check eve::wide<udt> non-trivial constructor" )
+{
+  constexpr auto sz = eve::wide<udt::label_position>::size();
+
+  eve::wide<udt::label_position> vp( [](int i, int) { return 1.f/(i+1.f);} );
+
+  TTS_EQUAL(get<0>(vp), (eve::wide<float>([](int i, int) { return 1.f/(i+1.f);})) );
+  TTS_EQUAL(get<1>(vp), (eve::wide<std::uint8_t,eve::fixed<sz>>([](int i, int) { return 'A' + 1.f/(i+1.f);})) );
+};
+
+//==================================================================================================
 // Construct from raw storage
 //==================================================================================================
 TTS_CASE( "Check eve::wide<udt> constructor from raw storage")

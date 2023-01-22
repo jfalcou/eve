@@ -19,6 +19,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
 #include <eve/detail/function/compounds.hpp>
+#include <eve/detail/function/construct.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
@@ -162,17 +163,8 @@ namespace eve
     template<typename S0, typename... Ss>
     explicit EVE_FORCEINLINE wide(S0 const& v0, Ss const&...vs) noexcept
     requires(kumi::sized_product_type_or_more<Type,1+sizeof...(Ss)>)
-    {
-      storage_base::storage() = [&]<std::size_t... I>(std::index_sequence<I...>)
-        {
-          constexpr auto K = sizeof...(Ss);
-          return kumi::map([]<typename W>(auto const& n, W const&) { return W{n}; },
-                                 kumi::make_tuple(v0, vs..., kumi::element_t<K+I,Type>{}...),
-                                 *this
-                                );
-        }(std::make_index_sequence<kumi::size_v<Type> - (1+sizeof...(Ss))>{});
-    }
-
+            : storage_base( construct(as<wide>{},v0,vs...) )
+    {}
 
     //==============================================================================================
     //! @brief Constructs a eve::wide from a @callable.
