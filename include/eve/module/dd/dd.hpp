@@ -249,7 +249,8 @@ namespace eve
       if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
       {
         auto & [x0, x1] = self;
-        auto ohi = high(o);
+        using e_t = decltype(x0);
+        auto ohi = e_t(high(o));
         auto [p0, p1] = two_prod(x0, ohi);
         auto finitex0 = is_finite(x0);
         if (eve::none(finitex0)){
@@ -258,7 +259,7 @@ namespace eve
         }
         else
         {
-          auto olo = low(o);
+          auto olo = e_t(low(o));
           auto [p2, p4] = two_prod(x0, olo);
           auto [p3, p5] = two_prod(x1, ohi);
           auto p6 = x1*olo;
