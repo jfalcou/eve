@@ -223,18 +223,14 @@ namespace eve
         if (s1 != 0.0)
         {
           kumi::tie(s1, s2) = quick_two_add(s1, c2);
-          if (s2 != 0.0)
-            kumi::tie(s2, s3) = quick_two_add(s2, c3);
-          else
-            kumi::tie(s1, s2) = quick_two_add(s1, c3);
+          if (s2 != 0.0) kumi::tie(s2, s3) = quick_two_add(s2, c3);
+          else           kumi::tie(s1, s2) = quick_two_add(s1, c3);
         }
         else
         {
           kumi::tie(s0, s1) = quick_two_add(s0, c2);
-          if (s1 != 0.0)
-            kumi::tie(s1, s2) = quick_two_add(s1, c3);
-          else
-            kumi::tie(s0, s1) = quick_two_add(s0, c3);
+          if (s1 != 0.0) kumi::tie(s1, s2) = quick_two_add(s1, c3);
+          else           kumi::tie(s0, s1) = quick_two_add(s0, c3);
         }
         return kumi::tie(s0, s1, s2, s3);
       }
@@ -269,18 +265,14 @@ namespace eve
           if (s2 != 0.0)
           {
             kumi::tie(s2, s3)= quick_two_add(s2, c3);
-            if (s3 != 0.0)
-              s3 += c4;
-            else
-              s2 += c4;
+            if (s3 != 0.0) s3 += c4;
+            else           s2 += c4;
           }
           else
           {
             kumi::tie(s1, s2) = quick_two_add(s1, c3);
-            if (s2 != 0.0)
-              kumi::tie(s2, s3) = quick_two_add(s2, c4);
-            else
-              kumi::tie(s1, s2) = quick_two_add(s1, c4);
+            if (s2 != 0.0) kumi::tie(s2, s3) = quick_two_add(s2, c4);
+            else           kumi::tie(s1, s2) = quick_two_add(s1, c4);
           }
         }
         else
@@ -289,18 +281,14 @@ namespace eve
           if (s1 != 0.0)
           {
             kumi::tie(s1, s2) = quick_two_add(s1, c3);
-            if (s2 != 0.0)
-              kumi::tie(s2, s3)= quick_two_add(s2, c4);
-            else
-              kumi::tie(s1, s2)= quick_two_add(s1, c4);
+            if (s2 != 0.0) kumi::tie(s2, s3)= quick_two_add(s2, c4);
+            else           kumi::tie(s1, s2)= quick_two_add(s1, c4);
           }
           else
           {
             kumi::tie(s0, s1) = quick_two_add(s0, c3);
-            if (s1 != 0.0)
-              kumi::tie(s1, s2) = quick_two_add(s1, c4);
-            else
-              kumi::tie(s0, s1) = quick_two_add(s0, c4);
+            if (s1 != 0.0) kumi::tie(s1, s2) = quick_two_add(s1, c4);
+            else           kumi::tie(s0, s1) = quick_two_add(s0, c4);
           }
         }
         return {s0, s1, s2, s3};
@@ -311,7 +299,7 @@ namespace eve
       }
     }
 
-    template<ordered_value T>
+    template<ordered_value T>// quad-double = double-double * double-double
     EVE_FORCEINLINE  auto qd_mul_(EVE_SUPPORTS(cpu_)
                                  , T const & a, T const & b) noexcept
     requires(is_dd_v<T>)
@@ -330,7 +318,26 @@ namespace eve
       return renorm(p0, p1, p2, p3, p4);
     }
 
-    template<ordered_value T,ordered_value U>
+    template<ordered_value T> // triple-double = double-double * triple-double
+    EVE_FORCEINLINE  auto td_mul_(EVE_SUPPORTS(cpu_)
+                                 , T const & a, kumi::tuple<T, T, T> const & b) noexcept
+    requires(is_dd_v<T>)
+  {
+    auto [p0, p1] = two_prod(high(a), get<0>(b));   //  0, 1
+    auto [p2, p4] = two_prod(high(a), get<1>(b));   //  1, 2
+    auto [p3, p5] = two_prod(low(a),  get<0>(b));   //  1, 2
+    auto [p6, p8] = two_prod(high(a), get<2>(b));   //  2, 3
+    auto [p7, p9] = two_prod(low(a),  get<1>(b));   //  2, 3
+    auto p10 = low(a) * get<2>(b);                  //  3
+    kumi::tie(p1, p2, p3) = three_sum(p1, p2, p3);
+    kumi::tie(p4, p5, p6) = three_sum(p4, p5, p6);
+    kumi::tie(p2, p4, p7) = three_sum(p2, p4, p7);
+    p3 += p4 + p5 + p8 + p9 + p10;
+    return renorm(p0, p1, p2, p3);
+  }
+
+
+    template<ordered_value T,ordered_value U> //quad-double = quad-double + double-double
     EVE_FORCEINLINE kumi::tuple<T, T, T, T> qd_add_(EVE_SUPPORTS(cpu_)
                                                    , kumi::tuple<T, T, T, T> const&  a
                                                    , U const& b) noexcept
@@ -370,7 +377,7 @@ namespace eve
       return o;
     else if constexpr(std::same_as<underlying_type_t<T>, underlying_type_t<O>>)
     {
-      using e_t = decltype(low(T()));
+      using e_t = std::decay_t<decltype(low(T()))>;
       return T(e_t(high(o)), e_t(low(o)));
     }
     else // o is scalar with different type

@@ -95,8 +95,9 @@ namespace eve
     {
       auto h = high(r);
       auto l = low(r);
-      os << '(' << h << ')';
-      if(is_positive(l)) os << "+(" << l << ')'; else os << "-(" << -l << ')';
+//      os << '(' << h << ')';
+//      if(is_positive(l)) os << "+(" << l << ')'; else os << "-(" << -l << ')';
+      os << "dd_t(" << h << ", " << l << ')';
       return os;
     }
 
@@ -205,13 +206,14 @@ namespace eve
       if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
       {
         auto & [x0, x1] = self;
-        auto   [z0, s2] = two_add(x0, high(o));
+        using e_t = decltype(x0);
+        auto   [z0, s2] = two_add(x0, e_t(high(o)));
         x0 = z0;
         auto finitex0 = is_finite(x0);
         if (eve::none(finitex0)) x1 = zero(as(x1));
         else
         {
-          auto [t1, t2] = two_add( x1, low(o));
+          auto [t1, t2] = two_add( x1, e_t(low(o)));
           auto [t3, t4] = two_add(s2, t1);
           x1 = t3;
           t4 += t2;

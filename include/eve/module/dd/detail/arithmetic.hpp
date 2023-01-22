@@ -237,6 +237,12 @@ namespace eve::detail
     return as_wide_as_t<Z, N>(ldexp(high(z1), n), ldexp(low(z1), n));
   }
 
+  template<typename Z, typename Z1>
+  EVE_FORCEINLINE auto dd_nary_dispatch(tag::ldexp_, Z const& z1, Z1 n) noexcept
+  {
+    EVE_ASSERT(eve::all(is_flint(n)), "some n are not flint");
+    return as_wide_as_t<Z, Z1>(ldexp(high(z1), high(n)), ldexp(low(z1), high(n)));
+  }
 
   //================================================================================================
   //  ternary functions
