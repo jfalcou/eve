@@ -37,6 +37,11 @@ namespace eve::detail
   { return dd_mk_cts(eve::tag::euler_{}, as<T>(), 2.718281828459045091e+00, 1.445646891729250158e-16); }
 
   template<typename T>
+  EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::invlog_2_, as<T> const&) noexcept
+  { return dd_mk_cts(eve::tag::invlog_2_{}, as<T>(), 0x1.71547652b82fep+0, 0x1.777d0ffda0d24p-56); }
+
+
+  template<typename T>
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::log_10_, as<T> const&) noexcept
   { return dd_mk_cts(eve::tag::log_10_{}, as<T>(), 2.302585092994045901e+00, -2.170756223382249351e-16); }
 

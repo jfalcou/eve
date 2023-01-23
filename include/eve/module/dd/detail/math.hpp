@@ -271,4 +271,14 @@ namespace eve::detail
     return x;
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::log2_, Z const& x) noexcept
+  {
+    Z z(log2(high(x)));
+    z =   if_else(is_infinite(z), z, z+invlog_2(as(x))*dec(x*exp2(-z)));
+    return if_else(is_ltz(x), nan(as(x)), z);
+  }
+
+
 }
