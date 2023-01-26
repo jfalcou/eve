@@ -94,6 +94,15 @@ namespace eve::detail
   }
 
   template<ordered_value T>
+  EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::third_, as<T> const&) noexcept
+  requires(is_dd_v<T>)
+  {
+    using t_t = underlying_type_t<T>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.555556p-2, -0x1.555556p-27);
+    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.5555555555555p-2, 0x1.5555555555555p-56);
+  }
+
+  template<ordered_value T>
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::valmax_, as<T> const&) noexcept
   requires(is_dd_v<T>)
   {

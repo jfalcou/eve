@@ -26,6 +26,15 @@ namespace eve::detail
     return x;
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::frexp_, Z const& z) noexcept
+  {
+    auto [h, n] = frexp(high(z));
+    auto l = ldexp(low(z), -n);
+    return kumi::tuple{Z(h, l), n};
+  }
+
   //================================================================================================
   //  unary functions
   //================================================================================================
@@ -234,7 +243,10 @@ namespace eve::detail
   template<typename Z, integral_value N>
   EVE_FORCEINLINE auto dd_n_binary_dispatch(tag::ldexp_, Z const& z1, N n) noexcept
   {
-    return as_wide_as_t<Z, N>(ldexp(high(z1), n), ldexp(low(z1), n));
+    auto [zh, zl] = z1;
+    auto h = ldexp(zh, n);
+    auto l = ldexp(zl, n);
+    return make_dd(h, l);
   }
 
   template<typename Z, typename Z1>

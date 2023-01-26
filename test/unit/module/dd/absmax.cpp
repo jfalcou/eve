@@ -9,6 +9,7 @@
 #include "test.hpp"
 #include "measures.hpp"
 #include <eve/module/dd.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 TTS_CASE_WITH( "Check behavior of absmax on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
@@ -18,7 +19,6 @@ TTS_CASE_WITH( "Check behavior of absmax on scalar"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   using dd_t = eve::dd<e_t>;
   for(auto e : a0)
@@ -27,15 +27,8 @@ TTS_CASE_WITH( "Check behavior of absmax on scalar"
     {
       auto z1 = dd_t(e, f);
       auto z2 = dd_t(f, e);
-      if constexpr(sizeof(e_t) == 4)
-      {
-        TTS_EQUAL ( eve::to_double(eve::absmax(z1, z2)), eve::absmax(eve::to_double(z1), to_double(z2)));
-      }
-      else
-      {
-        auto am =  bm::abs(tts::uptype(z1) > tts::uptype(z2) ? tts::uptype(z1) : tts::uptype(z2));
-        TTS_EQUAL ( tts::uptype(eve::absmax(z1, z2)), am);
-      }
+      auto am =  bm::abs(tts::uptype(z1) > tts::uptype(z2) ? tts::uptype(z1) : tts::uptype(z2));
+      TTS_EQUAL ( tts::uptype(eve::absmax(z1, z2)), am);
     }
   }
 };

@@ -7,6 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "measures.hpp"
 #include <eve/module/dd.hpp>
 
 TTS_CASE_WITH( "Check behavior of oneminus on scalar"
@@ -18,16 +19,14 @@ TTS_CASE_WITH( "Check behavior of oneminus on scalar"
   <typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
-  for(auto e : a0)
+  using dd_t= eve::dd<e_t>;
+  auto thresh = 2*eve::high(eve::eps(eve::as<eve::dd<e_t>>()));
+ for(auto e : a0)
   {
     for(auto f : a1)
     {
-//      auto [h, l] = eve::dd<e_t>(e, f);
-//      TTS_EQUAL( eve::oneminus(eve::dd<e_t>(e, f)), eve::dd<e_t>(ch, cl) ) << eve::dd<e_t>(e, f) << '\n' ;
-      if constexpr(sizeof(e_t) == 4)
-      {
-        TTS_EQUAL ( eve::to_double(eve::oneminus(eve::dd<e_t>(e, f))), eve::oneminus(eve::to_double(eve::dd<e_t>(e, f))));
-      }
+      auto x = dd_t(e, f);
+      TTS_EXPECT ( abs(tts::uptype(eve::oneminus(eve::dd<e_t>(e, f)))-  (tts::uptype(eve::one(eve::as(x))-x)))/tts::uptype(eve::oneminus(x)) < thresh);
     }
   }
 };

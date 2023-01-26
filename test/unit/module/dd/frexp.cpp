@@ -7,10 +7,9 @@
 //==================================================================================================
 
 #include "test.hpp"
-#include "measures.hpp"
 #include <eve/module/dd.hpp>
 
-TTS_CASE_WITH( "Check behavior of dec on scalar"
+TTS_CASE_WITH( "Check behavior of frexp on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate ( tts::randoms(-10, 10)
                              , tts::randoms(-10, 10)
@@ -23,12 +22,15 @@ TTS_CASE_WITH( "Check behavior of dec on scalar"
   {
     for(auto f : a1)
     {
-     TTS_EQUAL ( tts::uptype(eve::dec(eve::dd<e_t>(e, f))), tts::uptype(eve::dd<e_t>(e, f)-1));
+     auto x = eve::dd<e_t>(e, f);
+     auto [m, n] = eve::frexp(x);
+
+     TTS_EQUAL (x, m*pow(2, int(n)));
     }
   }
 };
 
-TTS_CASE_WITH( "Check behavior of dec on wide"
+TTS_CASE_WITH( "Check behavior of frexp on wide"
         , eve::test::simd::ieee_reals
         , tts::generate ( tts::randoms(-10, 10)
                               , tts::randoms(-10, 10)
@@ -37,6 +39,7 @@ TTS_CASE_WITH( "Check behavior of dec on wide"
   <typename T>(T const& a0, T const& a1 )
 {
   auto z = make_dd(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::dec, z));
-  TTS_EQUAL ( eve::dec(z), az);
+  using r_t =  std::decay_t<decltype(eve::low(z))>;
+  auto [m, n] = eve::frexp(z);
+  TTS_EQUAL (z, m*eve::pow(r_t(2), eve::int32(n)));
 };

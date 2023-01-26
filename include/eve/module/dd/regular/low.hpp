@@ -53,7 +53,7 @@ namespace eve
   namespace detail
   {
     template<value V>
-    EVE_FORCEINLINE V low_( EVE_SUPPORTS(cpu_), V const &) noexcept
+    EVE_FORCEINLINE V low_( EVE_SUPPORTS(cpu_), V) noexcept
     {
       return V(0);
     }

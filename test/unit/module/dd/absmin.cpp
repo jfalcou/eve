@@ -7,7 +7,9 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "measures.hpp"
 #include <eve/module/dd.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 TTS_CASE_WITH( "Check behavior of absmin on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
@@ -23,12 +25,10 @@ TTS_CASE_WITH( "Check behavior of absmin on scalar"
   {
     for(auto f : a1)
     {
-     if constexpr(sizeof(e_t) == 4)
-      {
-        auto z1 = dd_t(e, f);
-        auto z2 = dd_t(f, e);
-        TTS_EQUAL ( eve::to_double(eve::absmin(z1, z2)), eve::absmin(eve::to_double(z1), to_double(z2)));
-      }
+      auto z1 = dd_t(e, f);
+      auto z2 = dd_t(f, e);
+      auto am =  abs(tts::uptype(z1) < tts::uptype(z2) ? tts::uptype(z1) : tts::uptype(z2));
+      TTS_EQUAL ( tts::uptype(eve::absmin(z1, z2)), am);
     }
   }
 };
@@ -46,6 +46,7 @@ TTS_CASE_WITH( "Check behavior of absmin on wide"
   {
     auto z1 = make_dd(a0,a1);
     auto z2 = make_dd(a1,a0);
-    TTS_EQUAL ( eve::to_double(eve::absmin(z1, z2)), eve::absmin(eve::to_double(z1), to_double(z2)));
+    auto amz = decltype(z1)(eve::detail::map(eve::absmin, z1, z2));
+    TTS_EQUAL ( eve::absmin(z1, z2), amz);
   }
 };

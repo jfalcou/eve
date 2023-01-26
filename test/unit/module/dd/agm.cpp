@@ -41,11 +41,8 @@ TTS_CASE_WITH( "Check behavior of agm on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
-  if constexpr(sizeof(e_t) == 4)
-  {
-    auto z1 = make_dd(a0,a1);
-    auto z2 = make_dd(a1,a0);
-    TTS_EQUAL ( eve::to_double(eve::agm(z1, z2)), eve::agm(eve::to_double(z1), to_double(z2)));
-  }
+  auto z1 = make_dd(a0,a1);
+  auto z2 = make_dd(a1,a0);
+  auto amz = decltype(z1)(eve::detail::map(eve::agm, z1, z2));
+  TTS_EQUAL ( eve::agm(z1, z2), amz);
 };

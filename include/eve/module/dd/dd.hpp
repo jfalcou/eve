@@ -70,8 +70,9 @@ namespace eve
     explicit  dd(Type h        ) noexcept : parent{h,0} {}
               dd(Type a, Type b) noexcept : parent{a,0}
     {
-      *this += b; //ensures a two_add call to normalize high and low parts //TODO for simd
-                  //this is guaranted to be commutative ie dd(a, b) is identical to dd(b, a)
+
+       *this += b; //ensures a two_add call to normalize high and low parts //TODO for simd
+                   //this is guaranted to be commutative ie dd(a, b) is identical to dd(b, a)
     }
 
     dd(const char * s) noexcept : parent{0,0}
@@ -97,7 +98,7 @@ namespace eve
       auto l = low(r);
 //      os << '(' << h << ')';
 //      if(is_positive(l)) os << "+(" << l << ')'; else os << "-(" << -l << ')';
-      os << "dd_t(" << h << ", " << l << ')';
+      os << std::hexfloat <<  "dd_t(" << h << ", " << l << ')';
       return os;
     }
 
@@ -361,6 +362,19 @@ namespace eve
     }
 
   };
+
+  template<typename Z, integral_value N>
+  EVE_FORCEINLINE auto dd_n_binary_dispatch(tag::ldexp_, Z const& z1, N n) noexcept
+  {
+    return as_wide_as_t<Z, N>(ldexp(high(z1), n), ldexp(low(z1), n));
+  }
+
+  template<typename Z, typename Z1>
+  EVE_FORCEINLINE auto dd_nary_dispatch(tag::ldexp_, Z const& z1, Z1 n) noexcept
+  {
+    EVE_ASSERT(eve::all(is_flint(n)), "some n are not flint");
+    return as_wide_as_t<Z, Z1>(ldexp(high(z1), high(n)), ldexp(low(z1), high(n)));
+  }
 
   template<ordered_value Z>
   EVE_FORCEINLINE   auto to_dd( Z const & v) noexcept

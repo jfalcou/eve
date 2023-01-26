@@ -17,90 +17,7 @@
 namespace eve::detail
 {
 
-  //================================================================================================
-  //  unary functions
-  //================================================================================================
-//   template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::exp_, Z const& z) noexcept
-//   {
-//     auto n = nearest(z);
-//     auto x = (z - n);
-//     auto u = (((((((((((x +
-//                         156)*x + 12012)*x +
-//                       600600)*x + 21621600)*x +
-//                     588107520)*x + 12350257920)*x +
-//                   201132771840)*x + 2514159648000)*x +
-//                 23465490048000)*x + 154872234316800)*x +
-//               647647525324800)*x + 1295295050649600;
-//     auto v = (((((((((((x -
-//                         156)*x + 12012)*x -
-//                       600600)*x + 21621600)*x -
-//                     588107520)*x + 12350257920)*x -
-//                   201132771840)*x + 2514159648000)*x -
-//                 23465490048000)*x + 154872234316800)*x -
-//               647647525324800)*x + 1295295050649600;
-//     return pow(euler(as(z)), int(high(n)))*u/v;
-//   }
 
-
-//  template<typename Z>
-//   EVE_FORCEINLINE auto
-//   dd_unary_dispatch(eve::tag::exp_, Z const& x) noexcept
-//   {
-//      using dd_t =  element_type_t<Z>;
-//     auto invlog2e = dd_t(0x1.71547652b82fep+0, 0x1.777d0ffda0d24p-56);
-//   std::cout << invlog2e << std::endl;
-// //     /* Pade' coefficients for exp(x) - 1
-// //        Theoretical peak relative error = 2.2e-37,
-// //        relative peak error spread = 9.2e-38
-// //     */
-// //     static long double P[5] = {
-// //       3.279723985560247033712687707263393506266E-10L,
-// //       6.141506007208645008909088812338454698548E-7L,
-// //       2.708775201978218837374512615596512792224E-4L,
-// //       3.508710990737834361215404761139478627390E-2L,
-// //       9.999999999999999999999999999999999998502E-1L
-// //     };
-// //     static long double Q[6] = {
-// //       2.980756652081995192255342779918052538681E-12L,
-// //       1.771372078166251484503904874657985291164E-8L,
-// //       1.504792651814944826817779302637284053660E-5L,
-// //       3.611828913847589925056132680618007270344E-3L,
-// //       2.368408864814233538909747618894558968880E-1L,
-// //       2.000000000000000000000000000000000000150E0
-// //     };
-// //     /* C1 + C2 = -ln 2 */
-// //     static long double C1 = -6.93145751953125E-1L;
-// //     static long double C2 = -1.428606820309417232121458176568075500134E-6L;
-
-// /* Express e**x = e**g 2**n
-//  *   = e**g e**( n loge(2) )
-//  *   = e**( g + n loge(2) )
-//  */
-
-//   auto px = nearest( invlog2e * x );
-//   return px;
-// // n = px;
-// // x += px * C1;
-// // x += px * C2;
-// // /* rational approximation for exponential
-// //  * of the fractional part:
-// //  * e**x =  1 + 2x P(x**2)/( Q(x**2) - P(x**2) )
-// //  */
-// // xx = x * x;
-// // px = x * polevll( xx, P, 4 );
-// // xx = polevll( xx, Q, 5 );
-// // x =  px/( xx - px );
-// // x = 1.0L + x + x;
-
-// // x = ldexpl( x, n );
-// // return(x);
-
-// // //     kumi::tuple < T, T, T > one_o_lg2 = {0x1.71547652b82fep+0, 0x1, 0x1.777d0ffda0d2p-56.d3e88eb578p-107};
-// // //     auto alg = td_mul(a, alge)
-// // //     return td_exp2(alg);
-// //   }
 // // //   //================================================================================================
 // // //   //  Binary functions
 // // //   //================================================================================================
@@ -111,8 +28,46 @@ namespace eve::detail
 // // //     return z1 + z2;
 // // //   }
 
+// // //   //================================================================================================
+// // //   //  Unary functions
+// // //   //================================================================================================
 
   template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::cbrt_, Z const& a) noexcept
+  {
+    if constexpr(has_native_abi_v<Z>)
+    {
+      auto pos = is_gtz(a);
+      auto [r, e] = frexp(abs(a ));
+      auto ee = int_(e);
+      auto test = is_nez(ee-3*(ee/3));
+      while ( eve::any(test) )
+      {
+        ee = inc[test](ee);
+        r = if_else(test, ldexp(r,-1), r);
+        test = is_nez(ee-3*(ee/3));
+      }
+      // at this point, 0.125 <= r < 1.0
+//      Z x(pow( high(r), -third(as(high(r)))));
+      Z x(rec(cbrt(high(r))));
+      std::cout << "init " << x << std::endl;
+
+      //  refine estimate using Newton's iteration
+      x += x * oneminus(r * sqr(x) * x) * third(as(x));
+      x += x * oneminus(r * sqr(x) * x) * third(as(x));
+      x = rec(x);
+
+      x = if_else(pos, x, -x);
+      std::cout << "ee/3 " << (ee/3) << " ---- x " << x << std::endl;
+      auto xx = ldexp( x, ee / 3 );
+      return  if_else ( is_not_finite( a ) || is_eqz( a ), a, xx);
+    }
+    else return apply_over(cbrt, a);
+  }
+
+
+    template<typename Z>
   EVE_FORCEINLINE auto
   dd_unary_dispatch(eve::tag::exp_, Z const& xx) noexcept
   {
