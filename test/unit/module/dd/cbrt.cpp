@@ -30,9 +30,6 @@ TTS_CASE_WITH( "Check behavior of cbrt on scalar"
       auto x = dd_t(e, f);
       auto cbrtdd = eve::cbrt(eve::dd<e_t>(e, f));
       auto cbrt128 =  cbrt(tts::uptype(x));
-      std::cout << "cbrtdd  = " << std::setprecision(20) << cbrtdd<< std::endl;
-      std::cout << "cbrt128 = " <<cbrt128<< std::endl;
-      std::cout << "diff " <<  (abs((tts::uptype(cbrtdd)-cbrt128)/cbrt128)) << "? < " << thresh<< std::endl;
       TTS_EXPECT ( (abs((tts::uptype(cbrtdd)-cbrt128)/cbrt128)) < thresh);
     }
       TTS_EQUAL(eve::cbrt(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()));
@@ -49,21 +46,8 @@ TTS_CASE_WITH( "Check behavior of cbrt on wide"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  if(a0.size() == 2 and sizeof(eve::element_type_t<T>) == 8)
-  {
-    auto z = make_dd(a0,a1);
-    auto az = decltype(z)(eve::detail::map(eve::cbrt, z));
-    auto cz = eve::cbrt(z);
-//   std::cout << az << std::endl;
-//   std::cout << eve::cbrt(z)<< std::endl;
-    TTS_EQUAL ( cz, az);
-//    std::cout << eve::abs(eve::cbrt(z)-az) << std::endl;
-//  TTS_EQUAL (0, 0);
-    std::cout << " ================================= " << std::endl;
-    std::cout << az*az*az-z << std::endl;
-    std::cout << cz*cz*cz-z << std::endl;
-  }
-//   dd < fa(0x1.8f05a2p+0, 0x0p+0);
-//   eve::dd < T > b(0x1.8f05ap+0, 0x0p+0);
-//   std::cout << std::hexfloat << a < "   " << b << std::endl;
- };
+  auto z = make_dd(a0,a1);
+  auto az = decltype(z)(eve::detail::map(eve::cbrt, z));
+  auto cz = eve::cbrt(z);
+  TTS_EQUAL(az, cz);
+};

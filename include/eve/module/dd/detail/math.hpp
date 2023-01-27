@@ -18,19 +18,10 @@ namespace eve::detail
 {
 
 
-// // //   //================================================================================================
-// // //   //  Binary functions
-// // //   //================================================================================================
 
-// // //   EVE_FORCEINLINE auto
-// // //   dd_binary_dispatch(eve::tag::pow_, auto const& z1, auto const& z2) noexcept
-// // //   {
-// // //     return z1 + z2;
-// // //   }
-
-// // //   //================================================================================================
-// // //   //  Unary functions
-// // //   //================================================================================================
+//================================================================================================
+//  Unary functions
+//================================================================================================
 
   template<typename Z>
   EVE_FORCEINLINE auto
@@ -66,8 +57,7 @@ namespace eve::detail
     else return apply_over(cbrt, a);
   }
 
-
-    template<typename Z>
+  template<typename Z>
   EVE_FORCEINLINE auto
   dd_unary_dispatch(eve::tag::exp_, Z const& xx) noexcept
   {
@@ -237,3 +227,4 @@ namespace eve::detail
 
 
 }
+#include <eve/module/dd/detail/invtrig.hpp>

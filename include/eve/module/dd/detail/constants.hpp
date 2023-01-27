@@ -28,8 +28,8 @@ namespace eve::detail
     detail::callable_object<Tag> cst;
     using t_t = underlying_type_t<T>;
     using e_t = dd<t_t>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(e_t(cst(as<double>())));
-    else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(hi, lo));
+    if constexpr( std::is_same_v<t_t, float> ) return T(e_t(cst(as<double>())));//float-float from double
+    else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(hi, lo));//double-double from given pair
   }
 
   template<typename T>
@@ -95,20 +95,23 @@ namespace eve::detail
 
   template<ordered_value T>
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::third_, as<T> const&) noexcept
-  requires(is_dd_v<T>)
-  {
-    using t_t = underlying_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.555556p-2, -0x1.555556p-27);
-    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.5555555555555p-2, 0x1.5555555555555p-56);
-  }
+  { return dd_mk_cts(eve::tag::third_{}, as<T>(), 0x1.5555555555555p-2, 0x1.5555555555555p-56); }
+//   requires(is_dd_v<T>)
+//   {
+//     using t_t = underlying_type_t<T>;
+//     using e_t = dd<t_t>;
+//     if constexpr( std::is_same_v<t_t, float> ) return T(e_t(0x1.555556p-2, -0x1.555556p-27));
+//     else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(0x1.5555555555555p-2, 0x1.5555555555555p-56));
+//   }
 
   template<ordered_value T>
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::valmax_, as<T> const&) noexcept
   requires(is_dd_v<T>)
   {
     using t_t = underlying_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(3.4028235e+38f, 1.0141204e+31f);
-    else if constexpr( std::is_same_v<t_t, double> ) return T(1.79769313486231570815e+308, 9.97920154767359795037e+291);
+    using e_t = dd<t_t>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(e_t(3.4028235e+38f, 1.0141204e+31f));
+    else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(1.79769313486231570815e+308, 9.97920154767359795037e+291));
   }
 
   template<ordered_value T>
@@ -116,8 +119,9 @@ namespace eve::detail
   requires(is_dd_v<T>)
   {
     using t_t = underlying_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(-3.4028235e+38f, -1.0141204e+31f);
-    else if constexpr( std::is_same_v<t_t, double> ) return T(-1.79769313486231570815e+308, -9.97920154767359795037e+291);
+    using e_t = dd<t_t>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(e_t(-3.4028235e+38f, -1.0141204e+31f));
+    else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(-1.79769313486231570815e+308, -9.97920154767359795037e+291));
   }
 
 // const dd_real dd_real::_safe_max =
