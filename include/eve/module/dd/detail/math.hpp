@@ -39,18 +39,11 @@ namespace eve::detail
         r = if_else(test, ldexp(r,-1), r);
         test = is_nez(ee-3*(ee/3));
       }
-      // at this point, 0.125 <= r < 1.0
-//      Z x(pow( high(r), -third(as(high(r)))));
       Z x(rec(cbrt(high(r))));
-      std::cout << "init " << x << std::endl;
-
-      //  refine estimate using Newton's iteration
       x += x * oneminus(r * sqr(x) * x) * third(as(x));
       x += x * oneminus(r * sqr(x) * x) * third(as(x));
       x = rec(x);
-
       x = if_else(pos, x, -x);
-      std::cout << "ee/3 " << (ee/3) << " ---- x " << x << std::endl;
       auto xx = ldexp( x, ee / 3 );
       return  if_else ( is_not_finite( a ) || is_eqz( a ), a, xx);
     }

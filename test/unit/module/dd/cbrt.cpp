@@ -30,6 +30,9 @@ TTS_CASE_WITH( "Check behavior of cbrt on scalar"
       auto x = dd_t(e, f);
       auto cbrtdd = eve::cbrt(eve::dd<e_t>(e, f));
       auto cbrt128 =  cbrt(tts::uptype(x));
+      std::cout << "cbrtdd  = " << std::setprecision(20) << cbrtdd<< std::endl;
+      std::cout << "cbrt128 = " <<cbrt128<< std::endl;
+      std::cout << "diff " <<  (abs((tts::uptype(cbrtdd)-cbrt128)/cbrt128)) << "? < " << thresh<< std::endl;
       TTS_EXPECT ( (abs((tts::uptype(cbrtdd)-cbrt128)/cbrt128)) < thresh);
     }
       TTS_EQUAL(eve::cbrt(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()));
