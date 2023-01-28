@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/logical.hpp>
+#include <eve/concept/simd.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/traits/is_logical.hpp>

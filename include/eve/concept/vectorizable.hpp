@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/logical.hpp>
 #include <eve/concept/scalar.hpp>
 #include <concepts>
 

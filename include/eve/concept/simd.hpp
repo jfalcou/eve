@@ -27,4 +27,21 @@ namespace eve
 
   template<typename T>
   concept product_simd_value = arithmetic_simd_value<T> && kumi::product_type<element_type_t<T>>;
+
+  template<typename Type> struct logical;
+
+  //================================================================================================
+  //! @concept logical_simd_value
+  //! @brief Specify that a type represents a logical SIMD value
+  //!
+  //! The concept `logical_simd_value<T>` is satisfied if and only if T is an instance of
+  //! eve::logical and its contents satisfy eve::plain_simd_value
+  //!
+  //! ## Example Types
+  //! - eve::logical<eve::wide<float>>
+  //! - eve::logical<eve::wide<int,eve::fixed<2>>>
+  //================================================================================================
+  template<typename T>
+  concept logical_simd_value  =   detail::instance_of<T,logical>
+                              &&  plain_simd_value<typename T::mask_type>;
 }
