@@ -32,7 +32,9 @@ gather_(EVE_SUPPORTS(cpu_), C cx, U const *ptr, wide<T, N> const& v) noexcept
 {
   auto src = alternative(cx, wide<U, N> {}, as<wide<U, N>> {});
   auto m   = expand_mask(cx, as<wide<U, N>> {});
-  return if_else(m, gather(ptr, v), src);
+
+  wide<U, N> that = [=](auto i, auto) { return m.get(i) ? ptr[v.get(i)] : src.get(i); };
+  return that;
 }
 
 //================================================================================================
