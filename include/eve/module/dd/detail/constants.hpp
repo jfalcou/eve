@@ -55,7 +55,7 @@ namespace eve::detail
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::pio_2_, as<T> const&) noexcept
-  { return dd_mk_cts(eve::tag::pio_2_{}, as<T>(), 0.570796326794896558e+00, 6.123233995736766036e-17 ); }
+  { return dd_mk_cts(eve::tag::pio_2_{}, as<T>(), 1.570796326794896558e+00, 6.123233995736766036e-17 ); }
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto dd_cts_dispatch(eve::tag::pio_4_, as<T> const&) noexcept

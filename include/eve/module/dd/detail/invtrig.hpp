@@ -11,12 +11,12 @@
 #include <eve/module/math.hpp>
 #include <eve/module/dd/regular/traits.hpp>
 #include <eve/module/dd/detail/utilities.hpp>
-
+#include <eve/../../test/unit/module/dd/measures.hpp>
 namespace eve::detail
 {
 
   template<typename Z>
-  EVE_FORCEINLINE auto
+  auto
   dd_unary_dispatch(eve::tag::asin_, Z const& xx) noexcept
   {
     using dd_t =  element_type_t<Z>;
@@ -150,4 +150,43 @@ namespace eve::detail
       return if_else(posx, r, -r);
     }
   }
+
+  template<typename Z>
+  auto
+  dd_unary_dispatch(eve::tag::acos_, Z const& x) noexcept
+  {
+
+    if constexpr(scalar_value<Z>)
+    {
+      if (eve::abs(x) > one(as(x))) return nan(as(x));
+      if( x < mhalf(as(x)) )
+        return pi(as(x)) - 2 * asin(sqrt(average(one(as(x)), x)));
+      if( x > half(as(x)) )
+        return 2 * asin(sqrt(average(one(as(x)),-x)));
+      return  pio_2(as(x)) - asin(x);
+    }
+    else if constexpr(has_native_abi_v<Z>)
+    {
+      auto r = nan(as(x));
+      auto notdone = x <= one(as(x));
+      auto small = [](auto x) { return pi(as(x)) - 2*asin(sqrt(average(one(as(x)), x))) ; };
+      auto great = [](auto x) { return 2*asin(sqrt(average(one(as(x)),-x))); };
+      auto medium = [](auto x) { return  pio_2(as(x)) - asin(x); };
+
+      if( eve::any(notdone) )
+      {
+        notdone = next_interval(small, notdone, x < mhalf(as(x)), r, x);
+        if( eve::any(notdone) )
+        {
+          notdone = next_interval(great, notdone, x > half(as(x)), r, x);
+          if( eve::any(notdone) ) { last_interval(medium, abs(x) <= half(as(x)), r, x); }
+        }
+      }
+      return r;
+    }
+    else
+      return apply_over(acos, x);
+  }
+
+
 }
