@@ -124,45 +124,36 @@ requires x86_abi<abi_t<T, N>>
       constexpr bool d_i64x8  = match(c, int64x8 , uint64x8);
 
       auto src = alternative(cx, wide<U, N>{}, as<wide<U, N>> {});
-      auto m   = [&]()
-      {
-        auto const mm = expand_mask(cx, as<wide<U, N>> {});
-
-        // Extract the kmask from the logical
-        if constexpr(current_api >= avx512) return mm.storage().value;
-        // On AVX512, there is no AVX2-like mask, so we convert the kmask back to a wide mask
-        // On AVX2, this is no-op
-        else                                return mm.mask();
-      }();
+      auto m = expand_mask(cx, as<wide<U, N>> {});
 
       // 64 bits integer data
-      if      constexpr(i_32x8 && d_i64x8)  return _mm512_mask_i32gather_epi64(src,m, v     ,p,8);
-      else if constexpr(i_32x4 && d_i64x2)  return _mm_mask_i32gather_epi64   (src,pl_t(p),v,m,8);
-      else if constexpr(i_32x4 && d_i64x4)  return _mm256_mask_i32gather_epi64(src,pl_t(p),v,m,8);
-      else if constexpr(i_64x8 && d_i64x8)  return _mm512_mask_i64gather_epi64(src,m, v     ,p,8);
-      else if constexpr(i_64x4 && d_i64x4)  return _mm256_mask_i64gather_epi64(src,pl_t(p),v,m,8);
-      else if constexpr(i_64x2 && d_i64x2)  return _mm_mask_i64gather_epi64   (src,pl_t(p),v,m,8);
+      if      constexpr(i_32x8 && d_i64x8)  return _mm512_mask_i32gather_epi64(src,m.storage().value,v,p,8);
+      else if constexpr(i_32x4 && d_i64x2)  return _mm_mask_i32gather_epi64   (src,pl_t(p),v,m.mask(),8);
+      else if constexpr(i_32x4 && d_i64x4)  return _mm256_mask_i32gather_epi64(src,pl_t(p),v,m.mask(),8);
+      else if constexpr(i_64x8 && d_i64x8)  return _mm512_mask_i64gather_epi64(src,m.storage().value,v,p,8);
+      else if constexpr(i_64x4 && d_i64x4)  return _mm256_mask_i64gather_epi64(src,pl_t(p),v,m.mask(),8);
+      else if constexpr(i_64x2 && d_i64x2)  return _mm_mask_i64gather_epi64   (src,pl_t(p),v,m.mask(),8);
       // 64 bits float data
-      else if constexpr(i_32x8 && c == float64x8) return _mm512_mask_i32gather_pd(src,m,v,p,8);
-      else if constexpr(i_32x4 && c == float64x4) return _mm256_mask_i32gather_pd(src,p,v,m,8);
-      else if constexpr(i_32x4 && c == float64x2) return _mm_mask_i32gather_pd   (src,p,v,m,8);
-      else if constexpr(i_64x8 && c == float64x8) return _mm512_mask_i64gather_pd(src,m,v,p,8);
-      else if constexpr(i_64x4 && c == float64x4) return _mm256_mask_i64gather_pd(src,p,v,m,8);
-      else if constexpr(i_64x2 && c == float64x2) return _mm_mask_i64gather_pd   (src,p,v,m,8);
+      else if constexpr(i_32x8 && c == float64x8) return _mm512_mask_i32gather_pd(src,m.storage().value,v,p,8);
+      else if constexpr(i_32x4 && c == float64x4) return _mm256_mask_i32gather_pd(src,p,v,m.mask(),8);
+      else if constexpr(i_32x4 && c == float64x2) return _mm_mask_i32gather_pd   (src,p,v,m.mask(),8);
+      else if constexpr(i_64x8 && c == float64x8) return _mm512_mask_i64gather_pd(src,m.storage().value,v,p,8);
+      else if constexpr(i_64x4 && c == float64x4) return _mm256_mask_i64gather_pd(src,p,v,m.mask(),8);
+      else if constexpr(i_64x2 && c == float64x2) return _mm_mask_i64gather_pd   (src,p,v,m.mask(),8);
       // 32 bits integer data
-      else if constexpr(i_32x16 && d_i32x16)  return _mm512_mask_i32gather_epi32(src,m,v,p,4);
-      else if constexpr(i_32x8  && d_i32x8 )  return _mm256_mask_i32gather_epi32(src,pi_t(p),v,m,4);
-      else if constexpr(i_32x4  && d_i32x4 )  return _mm_mask_i32gather_epi32   (src,pi_t(p),v,m,4);
-      else if constexpr(i_64x8  && d_i32x8 )  return _mm512_mask_i64gather_epi32(src,m,v,p,4);
-      else if constexpr(i_64x4  && d_i32x4 )  return _mm256_mask_i64gather_epi32(src,pi_t(p),v,m,4);
-      else if constexpr(i_64x2  && d_i32x4 )  return _mm_mask_i64gather_epi32   (src,pi_t(p),v,m,4);
+      else if constexpr(i_32x16 && d_i32x16)  return _mm512_mask_i32gather_epi32(src,m.storage().value,v,p,4);
+      else if constexpr(i_32x8  && d_i32x8 )  return _mm256_mask_i32gather_epi32(src,pi_t(p),v,m.mask(),4);
+      else if constexpr(i_32x4  && d_i32x4 )  return _mm_mask_i32gather_epi32   (src,pi_t(p),v,m.mask(),4);
+      else if constexpr(i_64x8  && d_i32x8 )  return _mm512_mask_i64gather_epi32(src,m.storage().value,v,p,4);
+      else if constexpr(i_64x4  && d_i32x4 )  return _mm256_mask_i64gather_epi32(src,pi_t(p),v,m.mask(),4);
+      else if constexpr(i_64x2  && d_i32x4 )  return _mm_mask_i64gather_epi32   (src,pi_t(p),v,m.mask(),4);
       // 32 bits float data
-      else if constexpr(i_32x16 && c == float32x16) return _mm512_mask_i32gather_ps(src,m,v,p,4);
-      else if constexpr(i_32x8  && c == float32x8 ) return _mm256_mask_i32gather_ps(src,p,v,m,4);
-      else if constexpr(i_32x4  && c == float32x4 ) return _mm_mask_i32gather_ps   (src,p,v,m,4);
-      else if constexpr(i_64x8  && c == float32x8 ) return _mm512_mask_i64gather_ps(src,m,v,p,4);
-      else if constexpr(i_64x4  && c == float32x4 ) return _mm256_mask_i64gather_ps(src,p,v,m,4);
-      else if constexpr(i_64x2  && c == float32x4 ) return _mm_mask_i64gather_ps   (src,p,v,m,4);
+      else if constexpr(i_32x16 && c == float32x16) return _mm512_mask_i32gather_ps(src,m.storage().value,v,p,4);
+      else if constexpr(i_32x8  && c == float32x8 ) return _mm256_mask_i32gather_ps(src,p,v,m.mask(),4);
+      else if constexpr(i_32x4  && c == float32x4 ) return _mm_mask_i32gather_ps   (src,p,v,m.mask(),4);
+      else if constexpr(i_64x8  && c == float32x8 ) return _mm512_mask_i64gather_ps(src,m.storage().value,v,p,4);
+      else if constexpr(i_64x4  && c == float32x4 ) return _mm256_mask_i64gather_ps(src,p,v,m.mask(),4);
+      else if constexpr(i_64x2  && c == float32x4 ) return _mm_mask_i64gather_ps   (src,p,v,m.mask(),4);
       // All other cases
       else                                          return gather_(EVE_RETARGET(cpu_), p, v);
     }
