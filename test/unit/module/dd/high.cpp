@@ -40,7 +40,6 @@ TTS_CASE_WITH( "Check behavior of high on wide"
   using e_t = typename T::value_type;
   using z_t = eve::wide<eve::dd<e_t>, typename T::cardinal_type>;
   auto [h, l] = eve::two_add(a0, a1);
-//  TTS_EQUAL( eve::high(z_t{a0,a1}), h ); //TODO still not ok
   TTS_EQUAL( eve::high(make_dd(a0,a1)), h );
   TTS_EQUAL( eve::high(z_t{h, l }), h );
 };

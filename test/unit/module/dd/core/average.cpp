@@ -25,23 +25,20 @@ TTS_CASE_WITH( "Check behavior of average on scalar"
   {
     for(auto f : a1)
     {
-     if constexpr(sizeof(e_t) == 4)
-      {
-        auto z1 = dd_t(e, f);
-        auto z2 = dd_t(f, e);
-        auto am =  z1/2+z2/2;
-        TTS_EQUAL ( tts::uptype(eve::average(z1, z2)), tts::uptype(am));
-      }
+      auto z1 = dd_t(e, f);
+      auto z2 = dd_t(f, e);
+      auto am =  z1/2+z2/2;
+      TTS_EQUAL ( tts::uptype(eve::average(z1, z2)), tts::uptype(am));
     }
   }
 };
 
 TTS_CASE_WITH( "Check behavior of average on wide"
-        , eve::test::simd::ieee_reals
-        , tts::generate ( tts::randoms(-10, 10)
-                              , tts::randoms(-10, 10)
-                              )
-        )
+             , eve::test::simd::ieee_reals
+             , tts::generate ( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             )
+             )
   <typename T>(T const& a0, T const& a1 )
 {
 

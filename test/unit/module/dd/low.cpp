@@ -40,8 +40,6 @@ TTS_CASE_WITH( "Check behavior of low on wide"
   using e_t = typename T::value_type;
   using z_t = eve::wide<eve::dd<e_t>, typename T::cardinal_type>;
   auto [h, l] = eve::two_add(a0, a1);
-
-//  TTS_EQUAL( eve::low(z_t{a0,a1}), l ); //TODO still not ok
   TTS_EQUAL( eve::low(make_dd(a0,a1)), l );
   TTS_EQUAL( eve::low(z_t{h, l }), l );
 };
