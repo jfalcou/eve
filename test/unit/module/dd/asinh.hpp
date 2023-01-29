@@ -14,22 +14,12 @@
 
 TTS_CASE_WITH( "Check behavior of abs on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-0.5, 0.5)
-                              , tts::randoms(-0.5, 0.5)
+             , tts::generate ( tts::randoms(-0.7, 0.7)
+                              , tts::randoms(-0.3, 0.3)
                              )
              )
-  <typename T>(T const& a0, T const& a1)
+  <typename T>(T const& a0, T const& a1 )
 {
-//     using e_t = typename T::value_type;
-//     auto z = eve::dd<e_t>(1.0, 1.0);
-//     TTS_ULP_EQUAL(z, z, 0.5);
-//     auto ac = eve::acos(z);
-//     TTS_ULP_EQUAL(ac, ac, 0.5);
-//     auto bmbc = bm::acos(tts::uptype(z));
-//     eve::dd<e_t> bc(bmbc);
-//    TTS_ULP_EQUAL(bc, bc, 0.5);
-//    TTS_ULP_EQUAL(bc, ac, 0.5);
-
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   for(auto e : a0)
@@ -37,15 +27,14 @@ TTS_CASE_WITH( "Check behavior of abs on scalar"
     for(auto f : a1)
     {
       auto z = eve::dd<e_t>(e, f);
-      auto ac = eve::acos(z);
-      auto bmbc = bm::acos(tts::uptype(z));
-      eve::dd<e_t> bc(bmbc);
-      TTS_ULP_EQUAL(bc, ac, 0.5);
+      std::cout << std::setprecision(20) << std::defaultfloat << "z " << z << std::endl;
+      std::cout << bm::abs(tts::uptype(eve::asinh(z))- bm::asinh(tts::uptype(z))) << "? < " << tts::uptype(eve::eps(eve::as(z))) << std::endl;
+      TTS_EXPECT ( bm::abs(tts::uptype(eve::asinh(z))- bm::asinh(tts::uptype(z))) < tts::uptype(eve::eps(eve::as(z))));
     }
   }
 };
 
-TTS_CASE_WITH( "Check behavior of acos on wide"
+TTS_CASE_WITH( "Check behavior of asinh on wide"
              , eve::test::simd::ieee_reals
              , tts::generate ( tts::randoms(-0.7, 0.7)
                              , tts::randoms(-0.3, 0.3)
@@ -54,8 +43,7 @@ TTS_CASE_WITH( "Check behavior of acos on wide"
   <typename T>(T const& a0, T const& a1 )
 {
   auto z = make_dd(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::acos, z));
-  auto cz = eve::acos(z);
+  auto az = decltype(z)(eve::detail::map(eve::asinh, z));
+  auto cz = eve::asinh(z);
   TTS_EQUAL ( cz, az);
-  TTS_ULP_EQUAL(cz, az, 0.5);
 };

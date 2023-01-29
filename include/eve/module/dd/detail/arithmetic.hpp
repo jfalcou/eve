@@ -256,6 +256,24 @@ namespace eve::detail
     return as_wide_as_t<Z, Z1>(ldexp(high(z1), high(n)), ldexp(low(z1), high(n)));
   }
 
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto dd_nary_dispatch(tag::ulpdist_, Z1 const& a0, Z2 const & a1) noexcept
+  {
+      auto [ m1, e1] = frexp(a0);
+      auto [ m2, e2] = frexp(a1);
+      auto expo = -max(e1, e2);
+      auto e = eve::abs(if_else( e1 == e2
+                               , m1-m2
+                               , ldexp(a0, expo)-ldexp(a1, expo)
+                               )
+                       );
+      return if_else ( (is_nan(a0) && is_nan(a1)) || (a0 == a1)
+                     , zero
+                     , e/eve::eps(eve::as(a0))
+                     );
+  }
+
+
   //================================================================================================
   //  ternary functions
   //================================================================================================

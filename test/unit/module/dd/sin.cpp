@@ -12,24 +12,14 @@
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
 
-TTS_CASE_WITH( "Check behavior of abs on scalar"
+TTS_CASE_WITH( "Check behavior of sin on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-0.5, 0.5)
-                              , tts::randoms(-0.5, 0.5)
+             , tts::generate ( tts::randoms(-1.544, 1.54)
+                              , tts::randoms(-0.001, +0.001)
                              )
              )
   <typename T>(T const& a0, T const& a1)
 {
-//     using e_t = typename T::value_type;
-//     auto z = eve::dd<e_t>(1.0, 1.0);
-//     TTS_ULP_EQUAL(z, z, 0.5);
-//     auto ac = eve::acos(z);
-//     TTS_ULP_EQUAL(ac, ac, 0.5);
-//     auto bmbc = bm::acos(tts::uptype(z));
-//     eve::dd<e_t> bc(bmbc);
-//    TTS_ULP_EQUAL(bc, bc, 0.5);
-//    TTS_ULP_EQUAL(bc, ac, 0.5);
-
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   for(auto e : a0)
@@ -37,25 +27,25 @@ TTS_CASE_WITH( "Check behavior of abs on scalar"
     for(auto f : a1)
     {
       auto z = eve::dd<e_t>(e, f);
-      auto ac = eve::acos(z);
-      auto bmbc = bm::acos(tts::uptype(z));
+      auto ac = eve::half_circle(eve::sin)(z);
+      auto bmbc = bm::sin(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
       TTS_ULP_EQUAL(bc, ac, 0.5);
     }
   }
 };
 
-TTS_CASE_WITH( "Check behavior of acos on wide"
+TTS_CASE_WITH( "Check behavior of sin on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-0.7, 0.7)
-                             , tts::randoms(-0.3, 0.3)
+             , tts::generate ( tts::randoms(-1.544, 1.54)
+                             , tts::randoms(-0.001, +0.001)
                              )
              )
   <typename T>(T const& a0, T const& a1 )
 {
   auto z = make_dd(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::acos, z));
-  auto cz = eve::acos(z);
+  auto az = decltype(z)(eve::detail::map(eve::half_circle(eve::sin), z));
+  auto cz = eve::half_circle(eve::sin)(z);
   TTS_EQUAL ( cz, az);
   TTS_ULP_EQUAL(cz, az, 0.5);
 };

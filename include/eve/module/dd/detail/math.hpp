@@ -221,3 +221,4 @@ namespace eve::detail
 
 }
 #include <eve/module/dd/detail/invtrig.hpp>
+#include <eve/module/dd/detail/trigo.hpp>

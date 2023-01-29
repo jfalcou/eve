@@ -80,6 +80,15 @@ namespace eve
       *this = read(s);
     }
 
+    dd(boost::multiprecision::cpp_bin_float_quad t)
+    {
+      using u_t =  underlying_type;
+      u_t h(t);
+      auto self = two_add(h, u_t(t-boost::multiprecision::cpp_bin_float_quad(h)));
+      get<0>(*this) = get<0>(self);
+      get<1>(*this) = get<1>(self);
+
+    }
     template <ordered_value T> // construction from a scalar of different type
     dd(T t)
     requires(!std::same_as<T, underlying_type> && plain_scalar_value<T>)
@@ -98,7 +107,7 @@ namespace eve
       auto l = low(r);
 //      os << '(' << h << ')';
 //      if(is_positive(l)) os << "+(" << l << ')'; else os << "-(" << -l << ')';
-      os << std::hexfloat <<  "dd_t(" << h << ", " << l << ')';
+    os << std::defaultfloat <<  "dd_t(" << h << ", " << l << ')';
       return os;
     }
 
@@ -112,12 +121,12 @@ namespace eve
       return detail::dd_unary_dispatch(tag, z);
     }
 
-//     template<typename Tag, decorator D, like<dd> Z>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
-//         -> decltype(detail::dd_unary_dispatch(tag, d, z))
-//     {
-//       return detail::dd_unary_dispatch(tag, d, z);
-//     }
+    template<typename Tag, decorator D, like<dd> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
+        -> decltype(detail::dd_unary_dispatch(tag, d, z))
+    {
+      return detail::dd_unary_dispatch(tag, d, z);
+    }
 
     template<typename Tag, like<dd> Z1, like<dd> Z2>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Z2 const& z2) noexcept
