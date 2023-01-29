@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/concept/logical.hpp>
+#include <eve/concept/simd.hpp>
 
 TTS_CASE("Check for logical_scalar/simd_value on regular types" )
 {
