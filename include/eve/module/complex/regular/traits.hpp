@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 #include <eve/concept/value.hpp>
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/traits.hpp>
 
 namespace eve
@@ -60,4 +61,11 @@ namespace eve
                             >
   {
   };
+
+  namespace domain
+  {
+    using complex_converter = eve::decorated<eve::convert_by_<eve::as_complex, false>()>;
+    inline constexpr complex_converter const complex = {};
+  }
+
 }

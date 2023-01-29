@@ -78,6 +78,13 @@ namespace eve::detail
     return if_else(negimag, conj(res), res);
  }
 
+  template<floating_ordered_value T>
+  EVE_FORCEINLINE constexpr auto
+  complex_domain_dispatch(eve::tag::sqrt_, T const & x) noexcept
+  {
+    return eve::sqrt( eve::as_complex_t<T>{x,T{0}} );
+  }
+
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : rsqrt
   //===-------------------------------------------------------------------------------------------

@@ -225,6 +225,17 @@ namespace eve
     }
 
     //==============================================================================================
+    // converter support
+    //==============================================================================================
+
+    template<typename Tag, like<complex>... Zs>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, eve::domain::complex_converter, Zs const&... zs) noexcept
+    -> decltype(detail::complex_domain_dispatch(tag, zs...))
+    {
+      return detail::complex_domain_dispatch(tag, zs...);
+    }
+
+    //==============================================================================================
     // Constants support
     //==============================================================================================
     template<typename Tag, like<complex> Z>

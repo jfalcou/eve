@@ -33,6 +33,7 @@ TTS_CASE_WITH( "Check behavior of sqrt on scalar"
     for(auto f : a1)
     {
       TTS_ULP_EQUAL(eve::sqrt(eve::complex<e_t>(e, f)),  cv(std::sqrt(c_t(e, f))), ulp);
+      std::cout << eve::domain::complex(eve::sqrt)(e_t(-1)) << std::endl;
     }
   }
 };
