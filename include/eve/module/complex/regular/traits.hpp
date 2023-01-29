@@ -67,5 +67,4 @@ namespace eve
     using complex_converter = eve::decorated<eve::convert_by_<eve::as_complex, false>()>;
     inline constexpr complex_converter const complex = {};
   }
-
 }

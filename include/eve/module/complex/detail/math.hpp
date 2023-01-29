@@ -17,12 +17,20 @@
 
 namespace eve::detail
 {
+  //==============================================================================================
+  // non-complex => complex kind of functions
+  //==============================================================================================
+  template<floating_ordered_value T>
+  EVE_FORCEINLINE constexpr auto
+  sqrt_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    return eve::sqrt( eve::as_complex_t<T>{v,T{0}} );
+  }
 
   //==============================================================================================
   // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec are here.
   // acos asin atanh are in specific files included at the end
   //==============================================================================================
-
 
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : cbrt
@@ -77,13 +85,6 @@ namespace eve::detail
     }
     return if_else(negimag, conj(res), res);
  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr auto
-  complex_domain_dispatch(eve::tag::sqrt_, T const & x) noexcept
-  {
-    return eve::sqrt( eve::as_complex_t<T>{x,T{0}} );
-  }
 
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : rsqrt
