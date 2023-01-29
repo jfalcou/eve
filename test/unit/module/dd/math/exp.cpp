@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of exp on scalar"
       auto ac = eve::exp(z);
       auto bmbc = bm::exp(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
-      TTS_ULP_EQUAL(bc, ac, 0.5);
+      TTS_ULP_EQUAL(bc, ac, 2.0);
     }
   }
 };

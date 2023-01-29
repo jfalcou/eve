@@ -10,37 +10,24 @@
 #include <eve/module/dd.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 namespace bm =  boost::multiprecision;
-using bm104 = bm::number<bm::backends::cpp_bin_float<104, bm::backends::digit_base_2, void, std::int16_t, -1022, 1023>, bm::et_off>;
+using bm110 = bm::number<bm::backends::cpp_bin_float<110, bm::backends::digit_base_2, void, std::int16_t, -1022, 1023>, bm::et_off>;
 using bm46  = bm::number<bm::backends::cpp_bin_float<46 , bm::backends::digit_base_2, void, std::int16_t, -126, 127>, bm::et_off>;
 namespace tts
 {
+  template<eve::ordered_value Z>
+  EVE_FORCEINLINE  auto to_bm110( Z const& z) noexcept
+  requires(eve::is_dd_v<Z>)
+  {
+    auto [h, l] = z;
+    return  bm110(h)+bm110(l);
+  }
+
   template<typename T>
   auto uptype(T const & z)
   {
     if constexpr(sizeof(T) == 4) return eve::to_double(z);
-    else return eve::to_float128(z);
+    else return to_bm110(z);
   }
-//   template<typename T>
-//   double ulp_distance_impl(T const &l, T const &r)
-//   {
-//     auto diff = l-r;
-//     auto [rl, il] = l;
-//     auto [rr, ir] = r;
-//     auto udr = eve::ulpdist(il, ir);
-//     auto udi = eve::ulpdist(rl, rr);
-//     if(eve::is_eqz(eve::maximum(udr))) return eve::maximum(udi);
-//     if(eve::is_eqz(eve::maximum(udi))) return eve::maximum(udr);
-//     udr = eve::if_else(eve::is_not_finite(udr), eve::inf(eve::as(udr)), udr);
-//     udi = eve::if_else(eve::is_not_finite(udi), eve::inf(eve::as(udi)), udi);
-//     auto d = eve::if_else ( eve::almost(eve::is_real)(diff)
-//                           , udr
-//                           , eve::if_else( eve::almost(eve::is_imag)(diff)
-//                                         , udi
-//                                         , eve::max(udi, udr)
-//                                         )
-//                           );
-//     return eve::maximum(d);
-//   }
 
   template<typename T>
   double ulp_distance(T const & l, T const & r) requires( eve::is_dd_v<T> )
@@ -55,21 +42,21 @@ namespace tts
    return eve::maximum(eve::high(eve::ulpdist(l,r)));
   }
 
-  template<typename T> auto relative_distance(T const &l, T const &r) requires(eve::is_dd_v<T>)
+  template<typename T> double relative_distance(T const &a, T const &b) requires(eve::is_dd_v<T>)
   {
-    auto [rl,il] = l;
-    auto [rr,ir] = r;
-
-    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
+    if((a == b) || (std::isnan(a) && std::isnan(b))) return 0.;
+    if(std::isinf(a) || std::isinf(b) || std::isnan(a) || std::isnan(b))
+      return std::numeric_limits<double>::infinity();
+    return 100. * (eve::abs(a - b) / eve::max(eve::one(eve::as(a)), eve::max(eve::abs(a), eve::abs(b))));
   }
 
   template<typename T, typename N>
-  auto relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_dd_v<T>)
+  auto relative_distance(eve::wide<T,N> const &a, eve::wide<T,N> const &b) requires(eve::is_dd_v<T>)
   {
-    auto [rl,il] = l;
-    auto [rr,ir] = r;
-
-    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
+    if((a == b) || (std::isnan(a) && std::isnan(b))) return 0.;
+    if(std::isinf(a) || std::isinf(b) || std::isnan(a) || std::isnan(b))
+      return std::numeric_limits<double>::infinity();
+    return 100. * (eve::abs(a - b) / eve::max(eve::one(eve::as(a)), eve::max(eve::abs(a), eve::abs(b))));
   }
 
   template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_dd_v<T>)

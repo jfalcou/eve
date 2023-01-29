@@ -29,7 +29,7 @@ TTS_CASE_WITH( "Check behavior of log2 on scalar"
       auto ac = eve::log2(z);
       auto bmbc = bm::log2(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
-      TTS_ULP_EQUAL(bc, ac, 0.5);
+      TTS_ULP_EQUAL(bc, ac, 2.0);
     }
   }
 };

@@ -9,8 +9,6 @@
 #include "test.hpp"
 #include "../measures.hpp"
 #include <eve/module/dd.hpp>
-#include <boost/multiprecision/cpp_bin_float.hpp>
-
 
 TTS_CASE_WITH( "Check behavior of acos on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
@@ -20,7 +18,6 @@ TTS_CASE_WITH( "Check behavior of acos on scalar"
              )
   <typename T>(T const& a0, T const& a1)
 {
-  namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   for(auto e : a0)
   {
