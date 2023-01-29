@@ -10,7 +10,8 @@
 #include <eve/module/dd.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 namespace bm =  boost::multiprecision;
-
+using bm104 = bm::number<bm::backends::cpp_bin_float<104, bm::backends::digit_base_2, void, std::int16_t, -1022, 1023>, bm::et_off>;
+using bm46  = bm::number<bm::backends::cpp_bin_float<46 , bm::backends::digit_base_2, void, std::int16_t, -126, 127>, bm::et_off>;
 namespace tts
 {
   template<typename T>
