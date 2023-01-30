@@ -61,6 +61,13 @@ namespace eve
 //!  @godbolt{doc/math/regular/acsc.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct acsc_;
+}
+
+template<> struct supports_optimized_conversion<tag::acsc_> : std::true_type
+{};
 
 EVE_MAKE_CALLABLE(acsc_, acsc);
 }

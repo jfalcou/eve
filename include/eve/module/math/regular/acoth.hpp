@@ -60,6 +60,13 @@ namespace eve
 //!  @godbolt{doc/math/regular/acoth.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct acoth_;
+}
+
+template<> struct supports_optimized_conversion<tag::acoth_> : std::true_type
+{};
 EVE_MAKE_CALLABLE(acoth_, acoth);
 }
 

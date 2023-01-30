@@ -30,10 +30,11 @@ TTS_CASE_WITH( "Check behavior of sqrt on scalar"
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
+    TTS_ULP_EQUAL(eve::domain::complex(eve::sqrt)(e), eve::sqrt(eve::complex<e_t>(e, e_t(0))), 0.5);
+    TTS_ULP_EQUAL(eve::domain::complex(eve::sqrt)(e), eve::domain::complex(eve::sqrt)(eve::complex<e_t>(e, e_t(0))), 0.5);
     for(auto f : a1)
     {
       TTS_ULP_EQUAL(eve::sqrt(eve::complex<e_t>(e, f)),  cv(std::sqrt(c_t(e, f))), ulp);
-      std::cout << eve::domain::complex(eve::sqrt)(e_t(-1)) << std::endl;
     }
   }
 };
@@ -61,6 +62,8 @@ TTS_CASE_WITH( "Check behavior of sqrt on wide"
     return b;
   };
   TTS_ULP_EQUAL(eve::sqrt(z_t{a0,a1}), init_with_std(a0, a1), ulp);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::sqrt)(a0), eve::sqrt(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::sqrt)(a0), eve::domain::complex(eve::sqrt)(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
 };
 
 TTS_CASE_TPL( "Check corner cases of sqrt", eve::test::scalar::ieee_reals)

@@ -85,6 +85,14 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct acosh_;
+}
+
+template<> struct supports_optimized_conversion<tag::acosh_> : std::true_type
+{};
+
 EVE_MAKE_CALLABLE(acosh_, acosh);
 }
 

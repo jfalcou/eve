@@ -162,6 +162,8 @@ namespace eve
       i = eve::if_else( ltzia0,-i, i);
       r = if_else(realinf, zero(as(a0r)), r);
       i = if_else(realinf, -sign(a0r)*pio_2(as(a0r)), i);
+      r = if_else(is_real(a0) && a0r < one(as(a0r)), atanh(a0r), r);
+      i = if_else(is_real(a0) && a0r < one(as(a0r)), zero, i);
       return  Z{r, i};
     }
   }

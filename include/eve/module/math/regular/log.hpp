@@ -95,7 +95,15 @@ namespace eve
 //!        @godbolt{doc/math/masked/log.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(log_, log);
+namespace tag
+{
+  struct log_;
+}
+
+template<> struct supports_optimized_conversion<tag::log_> : std::true_type
+{};
+
+  EVE_MAKE_CALLABLE(log_, log);
 }
 
 #include <eve/module/math/regular/impl/log.hpp>

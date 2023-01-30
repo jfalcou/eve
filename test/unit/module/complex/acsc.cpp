@@ -21,6 +21,8 @@ TTS_CASE_WITH ( "Check behavior of acsc on scalar"
   using e_t =  typename T::value_type;
   for(auto e : a0)
   {
+    TTS_ULP_EQUAL(eve::domain::complex(eve::acsc)(e), eve::acsc(eve::complex<e_t>(e, e_t(0))), 0.5);
+    TTS_ULP_EQUAL(eve::domain::complex(eve::acsc)(e), eve::domain::complex(eve::acsc)(eve::complex<e_t>(e, e_t(0))), 0.5);
     for(auto f : a1)
     {
       auto z = eve::complex<e_t>(e, f);
@@ -39,4 +41,6 @@ TTS_CASE_WITH( "Check behavior of acsc on wide"
   using z_t = eve::as_complex_t<T>;
   auto z = z_t{a0, a1};
   TTS_ULP_EQUAL(eve::acsc(z), eve::asin(eve::rec(z)), 2.0);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::acsc)(a0), eve::acsc(z_t(a0, eve::zero(eve::as(a0)))), 2.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::acsc)(a0), eve::domain::complex(eve::acsc)(z_t(a0, eve::zero(eve::as(a0)))), 2.5);
 };
