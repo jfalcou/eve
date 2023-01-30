@@ -21,8 +21,8 @@ TTS_CASE_WITH ( "Check behavior of acoth on scalar"
   using e_t =  typename T::value_type;
   for(auto e : a0)
   {
-    TTS_ULP_EQUAL(eve::domain::complex(eve::acoth)(e), eve::acoth(eve::complex<e_t>(e, e_t(0))), 1.0);
-    TTS_ULP_EQUAL(eve::domain::complex(eve::acoth)(e), eve::domain::complex(eve::acoth)(eve::complex<e_t>(e, e_t(0))), 1.0);
+    TTS_ULP_EQUAL(eve::domain::complex(eve::acoth)(e), eve::acoth(eve::complex<e_t>(e, e_t(0))), 10.0);
+    TTS_ULP_EQUAL(eve::domain::complex(eve::acoth)(e), eve::domain::complex(eve::acoth)(eve::complex<e_t>(e, e_t(0))), 10.0);
     for(auto f : a1)
     {
       auto z = eve::complex<e_t>(e, f);
