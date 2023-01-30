@@ -76,8 +76,10 @@ requires x86_abi<abi_t<T, N>>
   constexpr bool d_i64x2  = match(c, int64x2 , uint64x2);
   constexpr bool d_i64x4  = match(c, int64x4 , uint64x4);
 
+  // Aggregation cases
+  if      constexpr(has_aggregated_abi_v<wide<U, N>>) return gather_(EVE_RETARGET(cpu_), cx, p, v);
   // Smaller data goes through the generic cases
-  if      constexpr(sizeof(U) <= 2)           return gather_(EVE_RETARGET(cpu_), cx, p, v);
+  else if constexpr(sizeof(U) <= 2)                   return gather_(EVE_RETARGET(cpu_), cx, p, v);
   // Small index get converted then we recall gather
   else if constexpr(sizeof(T) <  4)           return gather[cx](p, convert(v, as<std::int32_t>{}));
   else if constexpr( current_api == avx2 )
