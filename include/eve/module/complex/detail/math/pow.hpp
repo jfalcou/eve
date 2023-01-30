@@ -105,5 +105,29 @@ namespace eve
       return pow(inc(z1), z2);
     }
 
+    //powm1
+    template<value T, value U>
+    EVE_FORCEINLINE constexpr auto
+    powm1_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& t, U const& u) noexcept
+    {
+      if constexpr(is_complex_v<T>|| is_complex_v<U>)
+        return powm1(t, u);
+      else if(floating_ordered_value<T>)
+      {
+        return if_else(is_positive(t), eve::as_complex_t<T>{powm1(t, u), T{0}}, powm1(eve::as_complex_t<T>(t), u));
+      }
+    }
+
+    template<value T, value U>
+    EVE_FORCEINLINE constexpr auto
+    pow1p_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& t, U const& u) noexcept
+    {
+      if constexpr(is_complex_v<T>|| is_complex_v<U>)
+        return pow1p(t, u);
+      else if(floating_ordered_value<T>)
+      {
+        return if_else(is_positive(t), eve::as_complex_t<T>{pow1p(t, u), T{0}}, pow1p(eve::as_complex_t<T>(t), u));
+      }
+    }
   }
 }

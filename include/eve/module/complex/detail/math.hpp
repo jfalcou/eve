@@ -803,6 +803,34 @@ namespace eve::detail
     }
   }
 
+  //log2
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  log2_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return log2(v);
+    else if(floating_ordered_value<T>)
+    {
+      auto s = log2(eve::abs(v));
+      return if_else(is_positive(v), eve::as_complex_t<T>{s,T{0}}, eve::as_complex_t<T>{s, pi(as(v))*invlog_2(as(v))} );
+    }
+  }
+
+  //log10
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  log10_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return log10(v);
+    else if(floating_ordered_value<T>)
+    {
+      auto s = log10(eve::abs(v));
+      return if_else(is_positive(v), eve::as_complex_t<T>{s,T{0}}, eve::as_complex_t<T>{s, pi(as(v))*invlog_10(as(v))} );
+    }
+  }
+
   //asin
   template<value T>
   EVE_FORCEINLINE constexpr auto

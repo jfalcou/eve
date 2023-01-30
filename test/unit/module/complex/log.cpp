@@ -60,8 +60,8 @@ TTS_CASE_WITH( "Check behavior of log on wide"
     return b;
   };
   TTS_ULP_EQUAL(eve::log(z_t{a0,a1}), init_with_std(a0, a1), 20);
-  TTS_ULP_EQUAL(eve::domain::complex(eve::sqrt)(a0), eve::sqrt(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
-  TTS_ULP_EQUAL(eve::domain::complex(eve::sqrt)(a0), eve::domain::complex(eve::sqrt)(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::log)(a0), eve::log(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::log)(a0), eve::domain::complex(eve::log)(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
 };
 
 TTS_CASE_TPL( "Check corner cases of log", eve::test::scalar::ieee_reals)
