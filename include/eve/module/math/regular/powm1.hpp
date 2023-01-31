@@ -68,6 +68,14 @@ namespace eve
 //!        @godbolt{doc/math/masked/powm1.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct powm1_;
+}
+
+template<> struct supports_optimized_conversion<tag::powm1_> : std::true_type
+{};
+
 EVE_MAKE_CALLABLE(powm1_, powm1);
 }
 

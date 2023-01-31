@@ -97,6 +97,14 @@ namespace eve
 //!        @godbolt{doc/math/masked/pow.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct pow_;
+}
+
+template<> struct supports_optimized_conversion<tag::pow_> : std::true_type
+{};
+
 EVE_MAKE_CALLABLE(pow_, pow);
 }
 

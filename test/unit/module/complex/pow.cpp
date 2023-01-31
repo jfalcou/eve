@@ -75,3 +75,16 @@ TTS_CASE_WITH ( "Check behavior of pow on wide"
   TTS_ULP_EQUAL( eve::pow(ce_t(nan, 1), ce_t(0, 0)), ce_t(1, 0), 10);
   TTS_ULP_EQUAL( eve::pow(ce_t(0, 0),  ce_t(0, 0)), ce_t(1, 0), 10);
 };
+
+TTS_CASE_WITH( "Check behavior of pow on wide"
+             , eve::test::simd::ieee_reals
+             , tts::generate( tts::randoms(-10, 10)
+                            , tts::randoms(-10, 10))
+             )
+  <typename T>(T const& a0, T const&  a1)
+{
+  using z_t = eve::as_complex_t<T>;
+
+  TTS_RELATIVE_EQUAL(eve::domain::complex(eve::pow)(a0, a1), eve::pow(z_t(a0), z_t(a1)), 5.0e-3);
+  TTS_RELATIVE_EQUAL(eve::domain::complex(eve::pow)(a0, a1), eve::domain::complex(eve::pow)(z_t(a0), z_t(a1)), 5.0e-3);
+};

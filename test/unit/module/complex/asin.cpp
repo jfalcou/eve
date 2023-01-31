@@ -38,6 +38,8 @@ TTS_CASE_WITH ( "Check behavior of asin on scalar"
     for(auto f : a1)
     {
       TTS_RELATIVE_EQUAL(eve::asin(eve::complex<e_t>(e, f)),  cv(std::asin(c_t(e, f))), ulp);
+      TTS_ULP_EQUAL(eve::domain::complex(eve::asin)(e), eve::asin(eve::complex<e_t>(e, e_t(0))), 0.5);
+      TTS_ULP_EQUAL(eve::domain::complex(eve::asin)(e), eve::domain::complex(eve::asin)(eve::complex<e_t>(e, e_t(0))), 0.5);
     }
   }
 };
@@ -65,6 +67,8 @@ TTS_CASE_WITH( "Check behavior of asin on wide"
     return b;
   };
   TTS_ULP_EQUAL(eve::asin(z_t{a0,a1}), init_with_std(a0, a1), ulp);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::asin)(a0), eve::asin(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::asin)(a0), eve::domain::complex(eve::asin)(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
 };
 
 TTS_CASE_TPL( "Check corner casesof eve::asin", eve::test::scalar::ieee_reals)

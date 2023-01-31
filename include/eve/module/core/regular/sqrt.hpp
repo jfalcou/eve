@@ -92,6 +92,14 @@ namespace eve
 //!
 //! @}
 //================================================================================================
+namespace tag
+{
+  struct sqrt_;
+}
+
+template<> struct supports_optimized_conversion<tag::sqrt_> : std::true_type
+{};
+
 EVE_MAKE_CALLABLE(sqrt_, sqrt);
 }
 
