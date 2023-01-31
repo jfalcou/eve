@@ -7,6 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "../measures.hpp"
 #include <eve/module/dd.hpp>
 
 TTS_CASE_WITH( "Check behavior of sqr on scalar"
@@ -22,12 +23,10 @@ TTS_CASE_WITH( "Check behavior of sqr on scalar"
   {
     for(auto f : a1)
     {
-//      auto [h, l] = eve::dd<e_t>(e, f);
-//      TTS_EQUAL( eve::sqr(eve::dd<e_t>(e, f)), eve::dd<e_t>(ch, cl) ) << eve::dd<e_t>(e, f) << '\n' ;
-      if constexpr(sizeof(e_t) == 4)
-      {
-        TTS_ULP_EQUAL ( eve::to_double(eve::sqr(eve::dd<e_t>(e, f))), eve::sqr(eve::to_double(eve::dd<e_t>(e, f))), 32);
-      }
+      TTS_ULP_EQUAL(eve::domain::dd(eve::sqr)(e), eve::sqr(eve::dd<e_t>(e)), 0.5);
+      TTS_ULP_EQUAL(eve::domain::dd(eve::sqr)(e), eve::domain::dd(eve::sqr)(eve::dd<e_t>(e)), 0.5);
+      auto z = eve::dd<e_t>(e, f);
+      TTS_ULP_EQUAL ( eve::sqr(z), z*z, 0.5);
     }
   }
 };
@@ -40,10 +39,10 @@ TTS_CASE_WITH( "Check behavior of sqr on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
-  auto z = make_dd(a0,a1);
-  if constexpr(sizeof(e_t) == 4)
-  {
-    TTS_ULP_EQUAL ( eve::to_double(eve::sqr(z)), eve::sqr(eve::to_double(z)), 32);
-  }
+  auto z = eve::make_dd(a0,a1);
+  TTS_ULP_EQUAL ( eve::sqr(z), z*z, 0.5);
+
+  TTS_ULP_EQUAL(eve::domain::dd(eve::sqr)(a0), eve::sqr(eve::make_dd(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::dd(eve::sqr)(a0), eve::domain::dd(eve::sqr)(eve::make_dd(a0, eve::zero(eve::as(a0)))), 0.5);
+
 };

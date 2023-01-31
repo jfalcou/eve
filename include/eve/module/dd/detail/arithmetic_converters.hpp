@@ -16,23 +16,20 @@
 namespace eve::detail
 {
 
-  template<typename Ts...>
+  template<typename Tag, typename ...Zs>
   EVE_FORCEINLINE constexpr auto
-  trivial_dd_converter(Tag const & tag, T const& ...zs) noexcept
+  trivial_dd_converter(Tag const &, Zs const& ...zs) noexcept
   {
     detail::callable_object<Tag> func;
-    if constexpr(is_dd_v<T>)
-      return func(zs...);
-    else if(floating_ordered_value<T>)
-      return func(as_dd_t(zs...));
+    return func(eve::as_dd_t<Zs>(zs) ...);
    }
-  
+
   //rec
   template<value T>
   EVE_FORCEINLINE constexpr auto
   rec_(EVE_SUPPORTS(cpu_), eve::domain::dd_converter const&, T const& z) noexcept
   {
-    return trivial_dd_converter(eve::tag::rec_, z); 
+    return trivial_dd_converter(eve::tag::rec_{}, z);
 //     if constexpr(is_dd_v<T>)
 //       return rec(z);
 //     else if(floating_ordered_value<T>)
@@ -80,9 +77,9 @@ namespace eve::detail
     if constexpr(is_dd_v<T>)
       return sqr(z);
     else if(floating_ordered_value<T>)
-      return Z(two_sqr(z, z)); 
+      return make_dd(two_sqr(z));
   }
-  
+
 //   template<typename Z>
 //   EVE_FORCEINLINE auto
 //   dd_unary_dispatch(eve::tag::sqr_, Z const& a) noexcept

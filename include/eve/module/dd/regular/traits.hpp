@@ -63,8 +63,8 @@ namespace eve
 
   namespace domain
   {
-    using complex_converter = eve::decorated<eve::convert_by_<eve::as_dd, false>()>;
-    inline constexpr complex_converter const dd = {};
+    using dd_converter = eve::decorated<eve::convert_by_<eve::as_dd, false>()>;
+    inline constexpr dd_converter const dd = {};
   }
 
 }
