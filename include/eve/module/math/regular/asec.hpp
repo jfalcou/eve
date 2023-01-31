@@ -61,6 +61,13 @@ namespace eve
 //!  @godbolt{doc/math/regular/asec.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct asec_;
+}
+
+template<> struct supports_optimized_conversion<tag::asec_> : std::true_type
+{};
 
 EVE_MAKE_CALLABLE(asec_, asec);
 }

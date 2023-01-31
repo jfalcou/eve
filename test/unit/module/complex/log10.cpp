@@ -28,6 +28,8 @@ TTS_CASE_WITH( "Check behavior of log10 on scalar"
   auto std_log10 = [](auto x){return std::log(x)/eve::log_10(eve::as<e_t>()); };
   for(auto e : a0)
   {
+    TTS_ULP_EQUAL(eve::domain::complex(eve::log10)(e), eve::log10(eve::complex<e_t>(e, e_t(0))), 0.5);
+    TTS_ULP_EQUAL(eve::domain::complex(eve::log10)(e), eve::domain::complex(eve::log10)(eve::complex<e_t>(e, e_t(0))), 0.5);
     for(auto f : a1)
     {
       TTS_ULP_EQUAL(eve::log10(eve::complex<e_t>(e, f)),  cv(std_log10(c_t(e, f))), 5);
@@ -44,6 +46,8 @@ TTS_CASE_WITH ( "Check behavior of log10 on wide"
   using e_t = typename T::value_type;
   using z_t = eve::as_complex_t<T>;
   TTS_ULP_EQUAL(eve::log10(z_t{a0,a1}), eve::log(z_t{a0, a1})/eve::log_10(eve::as<e_t>()), 2);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::log10)(a0), eve::log10(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::log10)(a0), eve::domain::complex(eve::log10)(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
 };
 
 TTS_CASE_TPL( "Check corner cases of eve::log10", eve::test::scalar::ieee_reals)

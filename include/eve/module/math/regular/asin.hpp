@@ -71,6 +71,13 @@ namespace eve
 //!  @godbolt{doc/complex/regular/asin.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct asin_;
+}
+
+template<> struct supports_optimized_conversion<tag::asin_> : std::true_type
+{};
 
 EVE_MAKE_CALLABLE(asin_, asin);
 }

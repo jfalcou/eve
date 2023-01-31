@@ -32,6 +32,8 @@ TTS_CASE_WITH( "Check behavior of atanh on scalar"
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
+    TTS_RELATIVE_EQUAL(eve::domain::complex(eve::atanh)(e), eve::atanh(eve::complex<e_t>(e, e_t(0))),  1.0e-4);
+    TTS_RELATIVE_EQUAL(eve::domain::complex(eve::atanh)(e), eve::domain::complex(eve::atanh)(eve::complex<e_t>(e, e_t(0))),  1.0e-4);
     for(auto f : a1)
     {
       TTS_RELATIVE_EQUAL(eve::atanh(eve::complex<e_t>(e, f)),  cv(std::atanh(c_t(e, f))), 1.0e-4);
@@ -61,6 +63,8 @@ TTS_CASE_WITH( "Check behavior of atanh on wide"
     return b;
   };
   TTS_RELATIVE_EQUAL(eve::atanh(z_t{a0,a1}), init_with_std(a0, a1), 1.0e-4);
+  TTS_RELATIVE_EQUAL(eve::domain::complex(eve::atanh)(a0), eve::atanh(z_t(a0, eve::zero(eve::as(a0)))),  5.0e-3);
+  TTS_RELATIVE_EQUAL(eve::domain::complex(eve::atanh)(a0), eve::domain::complex(eve::atanh)(z_t(a0, eve::zero(eve::as(a0)))),  5.0e-3);
 };
 
 

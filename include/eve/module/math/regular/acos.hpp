@@ -89,6 +89,13 @@ namespace eve
 //!     [floating real values](@ref floating_value) which can be slightly less accurate near 1.
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct acos_;
+}
+
+template<> struct supports_optimized_conversion<tag::acos_> : std::true_type
+{};
 
 EVE_MAKE_CALLABLE(acos_, acos);
 }

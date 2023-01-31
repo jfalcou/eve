@@ -27,9 +27,11 @@ TTS_CASE_WITH( "Check behavior of acos on scalar"
   using c_t = std::complex<e_t>;
   for(auto e : a0)
   {
+    TTS_ULP_EQUAL(eve::domain::complex(eve::acos)(e), eve::acos(eve::complex<e_t>(e, e_t(0))), 0.5);
+    TTS_ULP_EQUAL(eve::domain::complex(eve::acos)(e), eve::domain::complex(eve::acos)(eve::complex<e_t>(e, e_t(0))), 0.5);
     for(auto f : a1)
     {
-      TTS_RELATIVE_EQUAL(eve::acos(eve::complex<e_t>(e, f)),  cv(std::acos(c_t(e, f))), 0.001);
+    TTS_RELATIVE_EQUAL(eve::acos(eve::complex<e_t>(e, f)),  cv(std::acos(c_t(e, f))), 0.001);
     }
   }
 };
@@ -56,6 +58,8 @@ TTS_CASE_WITH( "Check behavior of acos on wide"
     return b;
   };
   TTS_RELATIVE_EQUAL(eve::acos(z_t{a0,a1}), init_with_std(a0, a1), 0.001);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::acos)(a0), eve::acos(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::complex(eve::acos)(a0), eve::domain::complex(eve::acos)(z_t(a0, eve::zero(eve::as(a0)))), 0.5);
 };
 
 

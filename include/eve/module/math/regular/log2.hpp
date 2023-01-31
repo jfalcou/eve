@@ -76,6 +76,14 @@ namespace eve
 //!        @godbolt{doc/math/masked/log2.cpp}
 //!  @}
 //================================================================================================
+namespace tag
+{
+  struct log2_;
+}
+
+template<> struct supports_optimized_conversion<tag::log2_> : std::true_type
+{};
+
 EVE_MAKE_CALLABLE(log2_, log2);
 }
 

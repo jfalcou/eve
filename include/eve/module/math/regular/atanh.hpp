@@ -82,7 +82,15 @@ namespace eve
 //!  @godbolt{doc/complex/regular/atanh.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(atanh_, atanh);
+namespace tag
+{
+  struct atanh_;
+}
+
+template<> struct supports_optimized_conversion<tag::atanh_> : std::true_type
+{};
+
+  EVE_MAKE_CALLABLE(atanh_, atanh);
 }
 
 #include <eve/module/math/regular/impl/atanh.hpp>

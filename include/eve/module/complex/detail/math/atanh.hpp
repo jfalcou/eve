@@ -46,6 +46,12 @@ namespace eve
       rtype inf =  eve::inf(as(a0r));
       rtype x = eve::abs(a0r);
       rtype y = eve::abs(a0i);
+      auto special = is_eqz(y) && (x < one(as(a0r)));
+      auto sr = atanh(a0r);
+      if (eve::all(special)) {
+        return Z{sr, zero(as(sr))};
+      }
+
       rtype r = zero(as(a0r));
       rtype i = zero(as(a0r));
       auto gtxmax = (x > s_max);
@@ -162,6 +168,8 @@ namespace eve
       i = eve::if_else( ltzia0,-i, i);
       r = if_else(realinf, zero(as(a0r)), r);
       i = if_else(realinf, -sign(a0r)*pio_2(as(a0r)), i);
+      r = if_else(special, sr, r);
+      i = if_else(special, zero, i);
       return  Z{r, i};
     }
   }

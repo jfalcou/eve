@@ -18,11 +18,11 @@
 namespace eve::detail
 {
 
+
   //==============================================================================================
   // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec are here.
   // acos asin atanh are in specific files included at the end
   //==============================================================================================
-
 
   //===-------------------------------------------------------------------------------------------
   //  Unary functions : cbrt
@@ -762,10 +762,177 @@ namespace eve::detail
   {
     return d(lpnorm)(p, abs(z1), abs(z2)...);
   }
-
 }
 
 #include <eve/module/complex/detail/math/acos.hpp>
 #include <eve/module/complex/detail/math/asin.hpp>
 #include <eve/module/complex/detail/math/atanh.hpp>
 #include <eve/module/complex/detail/math/pow.hpp>
+
+namespace eve::detail
+{
+
+  //==============================================================================================
+  // non-complex => complex kind of functions
+  //==============================================================================================
+  //sqrt
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  sqrt_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return sqrt(v);
+    else if(floating_ordered_value<T>)
+    {
+      auto s = sqrt(eve::abs(v));
+      return if_else(is_gez(v), eve::as_complex_t<T>{s,T{0}}, eve::as_complex_t<T>{T{0}, s} );
+    }
+  }
+
+  //log
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  log_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return log(v);
+    else if(floating_ordered_value<T>)
+    {
+      auto s = log_abs(v);
+      return if_else(is_positive(v), eve::as_complex_t<T>{s,T{0}}, eve::as_complex_t<T>{s, pi(as(v))} );
+    }
+  }
+
+  //log2
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  log2_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return log2(v);
+    else if(floating_ordered_value<T>)
+    {
+      auto s = log2(eve::abs(v));
+      return if_else(is_positive(v), eve::as_complex_t<T>{s,T{0}}, eve::as_complex_t<T>{s, pi(as(v))*invlog_2(as(v))} );
+    }
+  }
+
+  //log10
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  log10_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return log10(v);
+    else if(floating_ordered_value<T>)
+    {
+      auto s = log10(eve::abs(v));
+      return if_else(is_positive(v), eve::as_complex_t<T>{s,T{0}}, eve::as_complex_t<T>{s, pi(as(v))*invlog_10(as(v))} );
+    }
+  }
+
+  //asin
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  asin_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return asin(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(abs(v) <= one(as(v)), eve::as_complex_t<T>{asin(v),T{0}}, asin(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //acos
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  acos_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return acos(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(abs(v) < one(as(v)), eve::as_complex_t<T>{acos(v),T{0}}, acos(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //acsc
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  acsc_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return acsc(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(abs(v) >= one(as(v)), eve::as_complex_t<T>{acsc(v),T{0}}, acsc(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //asec
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  asec_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return asec(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(abs(v) >=  one(as(v)), eve::as_complex_t<T>{asec(v),T{0}}, asec(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //acosh
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  acosh_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return acosh(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(v >=   one(as(v)), eve::as_complex_t<T>{acosh(v),T{0}}, acosh(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //atanh
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  atanh_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return atanh(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(eve::abs(v) <= one(as(v)), eve::as_complex_t<T>{atanh(v),T{0}}, atanh(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //acoth
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  acoth_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& v) noexcept
+  {
+    if constexpr(is_complex_v<T>)
+      return acoth(v);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(eve::abs(v) >= one(as(v)), eve::as_complex_t<T>{acoth(v),T{0}}, acoth(eve::as_complex_t<T>(v)));
+    }
+  }
+
+  //pow
+  template<value T, value U>
+  EVE_FORCEINLINE constexpr auto
+  pow_(EVE_SUPPORTS(cpu_), eve::domain::complex_converter const&, T const& t, U const& u) noexcept
+  {
+    if constexpr(is_complex_v<T>|| is_complex_v<U>)
+      return pow(t, u);
+    else if(floating_ordered_value<T>)
+    {
+      return if_else(is_positive(t), eve::as_complex_t<T>{pow_abs(t, u), T{0}}, pow(eve::as_complex_t<T>(t), u));
+    }
+  }
+
+}
