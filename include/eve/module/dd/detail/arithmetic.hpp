@@ -289,3 +289,4 @@ namespace eve::detail
     return r_t(a0, a1);
   }
 }
+#include <eve/module/dd/detail/arithmetic_converters.hpp>
