@@ -47,4 +47,8 @@ namespace eve
 EVE_MAKE_CALLABLE(gather_, gather);
 }
 
-#include <eve/module/core/regular/impl/simd/gather.hpp>
+#include <eve/module/core/regular/impl/gather.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/gather.hpp>
+#endif
