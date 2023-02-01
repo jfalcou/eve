@@ -22,7 +22,7 @@ namespace eve::detail
   {
     auto r = rec(high(z));
     Z x(r);
-    x += r*(Z(1)-z*r);
+    x += r*oneminus(z*r);
     return x;
   }
 
