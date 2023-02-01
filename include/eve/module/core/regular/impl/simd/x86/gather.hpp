@@ -63,8 +63,9 @@ gather_(EVE_SUPPORTS(avx2_), C cx, U const* p, wide<T, N> v) noexcept -> wide<U,
 requires x86_abi<abi_t<T, N>>
 {
   using enum category;
+  using out_t = wide<U, N>;
   constexpr auto i = categorize<wide<T, N>>();
-  constexpr auto c = categorize<wide<U, N>>();
+  constexpr auto c = categorize<out_t>();
 
   constexpr bool i_32x4   = match(i, int32x4 , uint32x4);
   constexpr bool i_32x8   = match(i, int32x8 , uint32x8);
@@ -76,18 +77,20 @@ requires x86_abi<abi_t<T, N>>
   constexpr bool d_i64x2  = match(c, int64x2 , uint64x2);
   constexpr bool d_i64x4  = match(c, int64x4 , uint64x4);
 
+  // Ignore All case : just return the alternative if any
+  if      constexpr(C::is_complete && !C::is_inverted)  return alternative(cx, out_t{}, as<out_t>{});
   // Aggregation cases
-  if      constexpr(has_aggregated_abi_v<wide<U, N>>) return gather_(EVE_RETARGET(cpu_), cx, p, v);
+  else if constexpr(has_aggregated_abi_v<out_t>)        return gather_(EVE_RETARGET(cpu_),cx,p,v);
   // Smaller data goes through the generic cases
-  else if constexpr(sizeof(U) <= 2)                   return gather_(EVE_RETARGET(cpu_), cx, p, v);
+  else if constexpr(sizeof(U) <= 2)                     return gather_(EVE_RETARGET(cpu_),cx,p,v);
   // Small index get converted then we recall gather
   else if constexpr(sizeof(T) <  4)           return gather[cx](p, convert(v, as<std::int32_t>{}));
   else if constexpr( current_api == avx2 )
   {
     using pl_t = long long const*;
     using pi_t = int const*;
-    auto s = alternative(cx, wide<U, N>{}, as<wide<U, N>> {});
-    auto m = expand_mask(cx, as<wide<U, N>> {});
+    auto s = alternative(cx, out_t{}, as<out_t> {});
+    auto m = expand_mask(cx, as<out_t> {});
 
     if      constexpr(i_32x4 && d_i64x2       ) return _mm_mask_i32gather_epi64   (s,pl_t(p),v,m,8);
     else if constexpr(i_64x2 && d_i64x2       ) return _mm_mask_i64gather_epi64   (s,pl_t(p),v,m,8);
@@ -118,8 +121,8 @@ requires x86_abi<abi_t<T, N>>
       constexpr bool d_i32x16 = match(c, int32x16, uint32x16);
       constexpr bool d_i64x8  = match(c, int64x8 , uint64x8);
 
-      auto s = alternative(cx, wide<U, N>{}, as<wide<U, N>> {});
-      auto m = expand_mask(cx, as<wide<U, N>> {}).storage().value;
+      auto s = alternative(cx, out_t{}, as<out_t> {});
+      auto m = expand_mask(cx, as<out_t> {}).storage().value;
 
       if      constexpr(i_32x8  && d_i64x8 )        return _mm512_mask_i32gather_epi64 (s,m,v,p,8);
       else if constexpr(i_32x4  && d_i64x2 )        return _mm_mmask_i32gather_epi64   (s,m,v,p,8);
