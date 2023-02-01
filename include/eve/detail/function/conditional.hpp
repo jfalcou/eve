@@ -32,14 +32,8 @@ namespace eve::detail
   template<conditional_expr C, typename Target>
   EVE_FORCEINLINE auto expand_mask(C const& c, as<Target> const&)
   {
-    auto m = [](auto cx)
-    {
-      auto msk = cx.mask( as<Target>{} );
-      return as_wide_t<decltype(msk), cardinal_t<Target>>(msk);
-    }(c);
-
-    if constexpr( C::is_inverted ) m = !m;
-    return m;
+    auto msk = c.mask( as<Target>{} );
+    return as_wide_t<decltype(msk), cardinal_t<Target>>(msk);
   }
 
   //================================================================================================
