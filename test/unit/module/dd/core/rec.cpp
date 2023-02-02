@@ -33,18 +33,18 @@ TTS_CASE_WITH( "Check behavior of rec on scalar"
 };
 
 
-// TTS_CASE_WITH( "Check behavior of rec on wide"
-//         , eve::test::simd::ieee_reals
-//         , tts::generate ( tts::randoms(-10, 10)
-//                               , tts::randoms(-10, 10)
-//                               )
-//         )
-//   <typename T>(T const& a0, T const& a1 )
-// {
-//   auto z = eve::make_dd(a0,a1);
-//   TTS_ULP_EQUAL ( eve::rec(z), z*z, 0.5);
+TTS_CASE_WITH( "Check behavior of rec on wide"
+        , eve::test::simd::ieee_reals
+        , tts::generate ( tts::randoms(-10, 10)
+                              , tts::randoms(-10, 10)
+                              )
+        )
+  <typename T>(T const& a0, T const& a1 )
+{
+  auto z = eve::make_dd(a0,a1);
+  TTS_ULP_EQUAL ( eve::rec(z), eve::one(eve::as(z))/z, 0.5);
 
-//   TTS_ULP_EQUAL(eve::domain::dd(eve::rec)(a0), eve::rec(eve::make_dd(a0, eve::zero(eve::as(a0)))), 0.5);
-//   TTS_ULP_EQUAL(eve::domain::dd(eve::rec)(a0), eve::domain::dd(eve::rec)(eve::make_dd(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::dd(eve::rec)(a0), eve::rec(eve::make_dd(a0, eve::zero(eve::as(a0)))), 0.5);
+  TTS_ULP_EQUAL(eve::domain::dd(eve::rec)(a0), eve::domain::dd(eve::rec)(eve::make_dd(a0, eve::zero(eve::as(a0)))), 0.5);
 
-// };
+};
