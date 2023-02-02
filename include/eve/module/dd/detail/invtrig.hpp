@@ -194,97 +194,38 @@ namespace eve::detail
 
   template<typename Z>
   auto
-  dd_unary_dispatch(eve::tag::atan_, Z const& xx) noexcept
+  dd_unary_dispatch(eve::tag::atan_, Z const& x) noexcept
   {
-    using dd_t =  element_type_t<Z>;
-    auto PQ = [](){
-      if constexpr(std::same_as<underlying_type_t<dd_t>, double>)
-      {
-        using A10 = kumi::result::generate_t<10, dd_t>;
-        using A11 = kumi::result::generate_t<11, dd_t>;
-        const A10 P = {
-          dd_t(-0x1.5be85838aa26fp-11, -0x1.f8082d8ed7236p-66),
-          dd_t(-0x1.c0f17ae68a185p-1, -0x1.4d15f92f8ac3ap-56),
-          dd_t(-0x1.97b0dc1f4d103p+4, -0x1.528b9c5138997p-54),
-          dd_t(-0x1.f38d4e47779a2p+7, 0x1.e629473a3261ap-49),
-          dd_t(-0x1.1f0a8586c6427p+10, 0x1.88d386f96fb11p-44),
-          dd_t(-0x1.5d08ba6501455p+11, -0x1.d0f5157516744p-49),
-          dd_t(-0x1.ce087656cfbe1p+11, -0x1.bc62fcfd6d2e6p-43),
-          dd_t(-0x1.3a5a8d629fc73p+11, 0x1.a64867dcd01a6p-43),
-          dd_t(-0x1.5807a6c98431fp+9, 0x1.220925aa344cbp-45),
-        };
-        const A11 Q = {
-          dd_t(0x1p+0, 0x0p+0),
-          dd_t(0x1.1d4c974b22bc1p+5, -0x1.9b35ac4ff6456p-50),
-          dd_t(0x1.aed5b7e20c37ap+8, 0x1.6c61b042da819p-46),
-          dd_t(0x1.37d5c6fdd0cd8p+11, 0x1.c47afc808a585p-43),
-          dd_t(0x1.ef892855649ep+12, 0x1.6ac99cf727771p-43),
-          dd_t(0x1.c7c8d1c45b09ep+13, -0x1.91bf13dabc041p-41),
-          dd_t(0x1.e38f8ba0a8971p+13, 0x1.d35b836ba0cddp-41),
-          dd_t(0x1.1277f99a3d1bp+13, -0x1.a1151111841ccp-42),
-          dd_t(0x1.0205bd1723257p+11, 0x1.33c91e02c634ap-46),
-        };
-        dd_t t3p8(dd_t(0x1.3504f333f9de6p+1, 0x1.21165f626cdd5p-53));
-        dd_t tp8( dd_t(0x1.a827999fcef32p-2, 0x1.08b2fb1366ea9p-56));
-        return kumi::tuple{P, Q, t3p8, tp8};
-      }
-      else //float
-      {
-        using A5 = kumi::result::generate_t<5, dd_t>;
-        using A6 = kumi::result::generate_t<6, dd_t>;
-        const A5 P = {
-          dd_t(-0x1.c007fap-1, -0x1.f72594p-29),
-          dd_t(-0x1.028546p+4, 0x1.251fe2p-22),
-          dd_t(-0x1.2c08c4p+6, 0x1.2effb2p-19),
-          dd_t(-0x1.eb8bf2p+6, -0x1.a0b744p-19),
-          dd_t(-0x1.0366ap+6, 0x1.6b89b8p-21),
-        };
-        const A6 Q = {
-          dd_t(0x1p+0, 0x0p+0),
-          dd_t(0x1.8dbc46p+4, -0x1.3ae7fp-22),
-          dd_t(0x1.4a0dd4p+7, 0x1.dc7d12p-20),
-          dd_t(0x1.b0e18ep+8, -0x1.a3a838p-17),
-          dd_t(0x1.e563f2p+8, -0x1.89f6c2p-17),
-          dd_t(0x1.8519fp+7, -0x1.10a744p-19),
-        };
-        dd_t t3p8(dd_t(0x1.3504f4p+1, -0x1.980c44p-24));
-        dd_t tp8(dd_t(0x1.a8279ap-2, -0x1.80c434p-28));
-        return kumi::tuple{P, Q, t3p8, tp8};
-      }
-    };
-    auto [P, Q, t3p8, tp8] = PQ();
-    auto posx = is_gtz(xx);
-    auto x = eve::abs(xx);
-    auto y(zero(as(x)));
-    auto great = x > t3p8;
-    auto medium =  x > tp8;
-    if constexpr(scalar_value<Z>)
+    if constexpr(has_native_abi_v<Z>)
+      return asin(x/sqrt(inc(sqr(x))));
+    else
+      return apply_over(atan, x);
+  }
+
+  template<typename Z>
+  auto
+  dd_unary_dispatch(eve::tag::acot_, Z const& x) noexcept
+  {
+    if constexpr(has_native_abi_v<Z>)
     {
-      if( great )
+      auto ax =  eve::abs(x);
+      auto sgn = signnz(x);
+        auto r = sgn*asin(rec(sqrt(inc(sqr(x)))));
+      auto test = ax > Z(1.0e-10);
+      if (eve::all(test)) return r;
+      else
       {
-        y = pio_2(as(x));
-        std::cout << "2 " << y << std::endl;
-        x = -rec(x);
+        auto x2 =  sqr(x);
+        auto ix = x*dec(x2/3);
+        std::cout << "ix " << ix << std::endl;
+        auto r1 =  (pio_2(as(x))+ix)*sgn;
+        return if_else(test, r1, r);
       }
-      else if( medium )
-      {
-        y = pio_4(as(x));
-        std::cout << "4 " << y << std::endl;
-        x = dec(x)/inc(x);
-      }
-      auto z = sqr(x);
-      y += ( horner(z, P)/horner(z, Q) )*z*x + x;
-      return  posx ? y : -y;
     }
     else
-    {
-      y = if_else(great, pio_2(as(x)), if_else(medium, pio_4(as(x)), zero));
-      x = if_else(great, -rec(x),      if_else(medium, dec(x)/inc(x), zero));
-      auto z = sqr(x);
-      y +=  ( horner(z, P)/horner(z, Q) )*z*x + x;
-      return  if_else(posx, y, -y);
-    }
+      return apply_over(acot, x);
   }
+
 //   //atan2
 //   template<typename Z>
 //   auto
@@ -292,9 +233,9 @@ namespace eve::detail
 //   {
 //     auto hx = high(x);
 //     auto hy = high(y);
-//     auto z = atan2(hx, hy);   
+//     auto z = atan2(hx, hy);
 //     auto[ s, c] = sincos(z);
-//     auto axgtay =  eve::abs(hx) >  eve::abs(hy); 
+//     auto axgtay =  eve::abs(hx) >  eve::abs(hy);
 //     auto compute = [](auto x, auto y){
 //       auto axgtay =  eve::abs(hx) >  eve::abs(hy);
 //       {

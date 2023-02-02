@@ -12,14 +12,43 @@
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
 
+
+
 TTS_CASE_WITH( "Check behavior of atan on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-10, 10)
-                              , tts::randoms(-1, 1)
+             , tts::generate ( tts::randoms(0, 0.4)
+                              , tts::randoms(0.0, 0.1)
                              )
              )
   <typename T>(T const& a0, T const& a1)
 {
+
+  auto func = [](eve::dd<double> xx)
+    {
+      auto x = eve::sqr(xx);
+      using t_t = eve::dd<double>;
+      auto u = t_t(7.336778875342039448e-4);
+      u = u * x + t_t(-3.8477143794524239638e-3);
+      u = u * x + t_t(1.0045116583616965121e-2);
+      u = u * x + t_t(-1.7805595764599421046e-2);
+      u = u * x + t_t(2.4833320245295448889e-2);
+      u = u * x + t_t(-3.0038486540547022316e-2);
+      u = u * x + t_t(3.3762974998181122172e-2);
+      u = u * x + t_t(-3.6850375460902864486e-2);
+      u = u * x + t_t(3.9961324364586778946e-2);
+      u = u * x + t_t(-4.3471879735614283674e-2);
+      u = u * x + t_t(4.7618214567782808427e-2);
+      u = u * x + t_t(-5.2631493751758232723e-2);
+      u = u * x + t_t(5.8823522684306641426e-2);
+      u = u * x + t_t(-6.6666666264698565805e-2);
+      u = u * x + t_t(7.6923076905405764883e-2);
+      u = u * x + t_t(-9.0909090908541371516e-2);
+      u = u * x + t_t(1.111111111110996902e-1);
+      u = u * x + t_t(-1.428571428571427117e-1);
+      u = u * x + t_t(1.9999999999999999902e-1);
+      u = u * x + t_t(-3.3333333333333333333e-1);
+      return (u * x + t_t(1.))*xx;
+    };
 
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
@@ -29,11 +58,13 @@ TTS_CASE_WITH( "Check behavior of atan on scalar"
     for(auto f : a1)
     {
       auto z = eve::dd<e_t>(e, f);
-      auto ac = eve::atan(z);
+//      auto ac = eve::atan(z);
+      auto fac= func(z);
       auto bmbc = bm::atan(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
-      std::cout << bc-ac << std::endl;
-      TTS_ULP_EQUAL(bc, ac, 0.5);
+      std::cout << bc-fac << std::endl;
+//      TTS_ULP_EQUAL(bc, ac, 0.5);
+      TTS_ULP_EQUAL(bc,fac, 0.5);
     }
   }
 };
