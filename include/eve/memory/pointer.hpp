@@ -65,9 +65,7 @@ namespace eve::detail
   };
 
   template <typename Ptr>
-  concept scalar_pointer = std::is_pointer_v<Ptr> || requires (Ptr ptr) {
-    { []<typename T, typename N>(aligned_ptr<T, N>) {}(ptr) };
-  };
+  concept scalar_pointer = std::is_pointer_v<Ptr> || instance_of<Ptr, aligned_ptr>;
 
   template<typename T, typename Ptr> struct dereference_as;
 
