@@ -20,10 +20,9 @@ abs_(EVE_SUPPORTS(sve_), wide<T, N> const& a) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-  using enum detail::category;
 
-  if constexpr( match(c, unsigned_) ) return a;
-  else                                return svabs_z(sve_true<T>(),a);
+  if constexpr( match(c, category::unsigned_) ) return a;
+  else return svabs_z(sve_true<T>(),a);
 }
 
 template<conditional_expr C, scalar_value T, typename N>
@@ -32,9 +31,8 @@ abs_(EVE_SUPPORTS(sve_), C const& cx, wide<T, N> const& v) noexcept -> wide<T, N
 requires sve_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-  using enum detail::category;
 
-  if constexpr( match(c, unsigned_) ) return v;
+  if constexpr( match(c, category::unsigned_) ) return v;
   else
   {
     if constexpr( C::is_complete ) return abs_(EVE_RETARGET(cpu_), cx, v);

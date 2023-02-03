@@ -23,11 +23,12 @@ constexpr bool prefer_min_max() noexcept
   if constexpr( scalar_value<W> ) return true;
   else
   {
-    using enum category;
-    constexpr bool is_ints64 = match(categorize<W>(), int64x4, uint64x4, int64x2, uint64x2);
+    constexpr bool is_ints64 = match(categorize<W>(),
+      category::int64x4, category::uint64x4,
+      category::int64x2, category::uint64x2);
 
     // AVX is fine for non-64 bits as its min/max on other types has been fixed
-    if constexpr( x86_tag<current_api_type> )       return current_api == avx512 || !is_ints64;
+         if constexpr( x86_tag<current_api_type> )  return current_api == avx512 || !is_ints64;
     else if constexpr( arm_tag<current_api_type> )  return !is_ints64;
     else return true;
   }

@@ -21,14 +21,13 @@ convert_impl(EVE_SUPPORTS(sve_), wide<float, N> const& v, as<U> const& tgt) noex
 requires sve_abi<abi_t<float, N>>
 {
   constexpr auto c_o = categorize<wide<U, N>>();
-  using enum detail::category;
 
   auto const mask = sve_true<float>();
 
   auto from_f32 = [&](auto w)
   {
-    if constexpr( std::same_as<U, double> ) return svcvt_f64_z(mask, w);
-    else if constexpr( std::same_as<U, std::int64_t> ) return svcvt_s64_z(mask, w);
+         if constexpr( std::same_as<U, double>        ) return svcvt_f64_z(mask, w);
+    else if constexpr( std::same_as<U, std::int64_t>  ) return svcvt_s64_z(mask, w);
     else if constexpr( std::same_as<U, std::uint64_t> ) return svcvt_u64_z(mask, w);
   };
 
@@ -52,10 +51,10 @@ requires sve_abi<abi_t<float, N>>
     }
   };
 
-  if constexpr( sizeof(U) == 8 ) return sve_split(v);
-  else if constexpr( match(c_o, int32) ) return svcvt_s32_z(mask, v);
-  else if constexpr( match(c_o, uint32) ) return svcvt_u32_z(mask, v);
-  else return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+       if constexpr( sizeof(U) == 8               ) return sve_split(v);
+  else if constexpr( match(c_o, category::int32)  ) return svcvt_s32_z(mask, v);
+  else if constexpr( match(c_o, category::uint32) ) return svcvt_u32_z(mask, v);
+  else                                              return convert_impl(EVE_RETARGET(cpu_), v, tgt);
 }
 
 template<scalar_value T, scalar_value U, typename N>
