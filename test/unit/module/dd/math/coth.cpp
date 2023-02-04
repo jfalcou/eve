@@ -39,15 +39,15 @@ TTS_CASE_WITH( "Check behavior of coth on scalar"
     {
       auto z = dd_t(e, f);
       auto ac = eve::coth(z);
-      auto bmbc = bm::coth(tts::uptype(z));
+      auto bmbc = 1/bm::tanh(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
       TTS_ULP_EQUAL(bc, ac, 32);
     }
   }
   TTS_ULP_EQUAL(eve::coth(eve::inf(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
   TTS_ULP_EQUAL(eve::coth(eve::minf(eve::as<dd_t>())), eve::mone(eve::as<dd_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::coth(eve::zero(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::coth(eve::mzero(eve::as<dd_t>())), eve::mzero(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::zero(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::mzero(eve::as<dd_t>())), eve::minf(eve::as<dd_t>()), 0.5);
   TTS_ULP_EQUAL(eve::coth(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
 };
 
