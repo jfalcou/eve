@@ -24,7 +24,7 @@ namespace eve::detail
 //================================================================================================
 
   template<typename Z>
-  EVE_FORCEINLINE auto
+  auto
   dd_unary_dispatch(eve::tag::cbrt_, Z const& a) noexcept
   {
     if constexpr(has_native_abi_v<Z>)
@@ -51,7 +51,7 @@ namespace eve::detail
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto
+  auto
   dd_unary_dispatch(eve::tag::exp_, Z const& xx) noexcept
   {
      using dd_t =  element_type_t<Z>;
@@ -125,14 +125,14 @@ namespace eve::detail
     x =  px/( qx - px );
     x = inc(x + x);
 
-    x = ldexp( x, high(nx) );
-    x = if_else(xx == minf(as(xx)), zero(as(xx)), x);
+    x = pedantic(ldexp)( x, high(nx) );
+    x = if_else(xx == minf(as(xx)), zero, x);
     x = if_else(xx ==  inf(as(xx)), xx, x);
     return x;
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto
+  auto
   dd_unary_dispatch(eve::tag::log_, Z const& x) noexcept
   {
     Z z(log(high(x)));
@@ -141,7 +141,7 @@ namespace eve::detail
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto
+   auto
   dd_unary_dispatch(eve::tag::exp2_, Z const& xx) noexcept
   {
      using dd_t =  element_type_t<Z>;
@@ -203,14 +203,14 @@ namespace eve::detail
     auto qx =  horner(x2, Q);
     x =  px/( qx - px );
     x = inc(x + x);
-    x = ldexp( x, high(nx) );
+    x = pedantic(ldexp)( x, high(nx) );
     x = if_else(xx == minf(as(xx)), zero(as(xx)), x);
     x = if_else(xx ==  inf(as(xx)), xx, x);
     return x;
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto
+   auto
   dd_unary_dispatch(eve::tag::log2_, Z const& x) noexcept
   {
     Z z(log2(high(x)));
@@ -219,7 +219,7 @@ namespace eve::detail
   }
 
     template<typename Z>
-  EVE_FORCEINLINE auto
+   auto
   dd_unary_dispatch(eve::tag::expm1_, Z const& xx) noexcept
   {
     using dd_t =  element_type_t<Z>;
@@ -272,6 +272,7 @@ namespace eve::detail
       // TO DO AGAIN / PERHAPS CONSTRUCTOR PB SOMEWHERE
       //////////////////////////////////////////////////////////////////////////////
        return if_else(great, dec(exp(xx)), x);
+
     }
     else
     {
@@ -292,7 +293,8 @@ namespace eve::detail
       auto r = xx * horner( x2, P);
       r = 2*r/( horner( x2, Q) - r );
       if(eve::none(great)) return r;
-      return if_else(great, dec(exp(xx)), r);
+      auto r1 = dec(exp(xx));
+      return if_else(great, r1, r);
     }
   }
 

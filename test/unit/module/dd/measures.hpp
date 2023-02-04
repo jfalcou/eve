@@ -45,19 +45,23 @@ namespace tts
 
   template<typename T> double relative_distance(T const &a, T const &b) requires(eve::is_dd_v<T>)
   {
-    if((a == b) || (std::isnan(a) && std::isnan(b))) return 0.;
-    if(std::isinf(a) || std::isinf(b) || std::isnan(a) || std::isnan(b))
+    if((a == b) || (eve::is_nan(a) && eve::is_nan(b))) return 0.;
+    if(eve::is_infinite(a) || eve::is_infinite(b) || eve::is_nan(a) || eve::is_nan(b))
       return std::numeric_limits<double>::infinity();
-    return 100. * (eve::abs(a - b) / eve::max(eve::one(eve::as(a)), eve::max(eve::abs(a), eve::abs(b))));
+    return eve::high(100. * (eve::abs(a - b) / eve::max(eve::one(eve::as(a)), eve::max(eve::abs(a), eve::abs(b)))));
   }
 
   template<typename T, typename N>
   auto relative_distance(eve::wide<T,N> const &a, eve::wide<T,N> const &b) requires(eve::is_dd_v<T>)
   {
-    if((a == b) || (std::isnan(a) && std::isnan(b))) return 0.;
-    if(std::isinf(a) || std::isinf(b) || std::isnan(a) || std::isnan(b))
-      return std::numeric_limits<double>::infinity();
-    return 100. * (eve::abs(a - b) / eve::max(eve::one(eve::as(a)), eve::max(eve::abs(a), eve::abs(b))));
+    auto r = eve::if_else(((a == b) || (eve::is_nan(a) && eve::is_nan(b))),
+                     eve::zero,
+                     eve::if_else((eve::is_infinite(a) || eve::is_infinite(b) || eve::is_nan(a) || eve::is_nan(b))
+                            ,  eve::inf(eve::as(a)),
+                             100. * (eve::abs(a - b) / eve::max(eve::one(eve::as(a)), eve::max(eve::abs(a), eve::abs(b))))
+                            )
+                    );
+    return double(eve::maximum(eve::high(r)));
   }
 
   template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_dd_v<T>)

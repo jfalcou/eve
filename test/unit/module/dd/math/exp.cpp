@@ -22,6 +22,7 @@ TTS_CASE_WITH( "Check behavior of exp on scalar"
 {
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
+  using dd_t = eve::dd<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
@@ -33,6 +34,11 @@ TTS_CASE_WITH( "Check behavior of exp on scalar"
       TTS_ULP_EQUAL(bc, ac, 2.0);
     }
   }
+  TTS_ULP_EQUAL(eve::exp(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::exp(eve::minf(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::exp(eve::zero(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::exp(eve::mzero(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::exp(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
 };
 
 TTS_CASE_WITH( "Check behavior of exp on wide"

@@ -37,6 +37,8 @@ cosh_(EVE_SUPPORTS(cpu_), T a0) noexcept
     auto x = eve::abs(a0);
     if constexpr( scalar_value<T> )
     {
+//       if(is_not_finite(x)) return x;
+//       else
       if( x >= ovflimitmln2 )
       {
         auto w = exp(x * half(eve::as<T>()));

@@ -21,6 +21,7 @@ TTS_CASE_WITH( "Check behavior of log2 on scalar"
 {
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
+  using dd_t = eve::dd<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
@@ -32,6 +33,11 @@ TTS_CASE_WITH( "Check behavior of log2 on scalar"
       TTS_ULP_EQUAL(bc, ac, 2.0);
     }
   }
+  TTS_ULP_EQUAL(eve::log2(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::log2(eve::minf(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::log2(eve::zero(eve::as<dd_t>())), eve::minf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::log2(eve::mzero(eve::as<dd_t>())), eve::minf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::log2(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
 };
 
 TTS_CASE_WITH( "Check behavior of log2 on wide"

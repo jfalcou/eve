@@ -143,6 +143,12 @@ namespace eve
       return detail::dd_n_binary_dispatch(tag, z1, n);
     }
 
+//     template<typename Tag, like<dd> Z1, decorator D, integral_value N>
+//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const & d, Z1 const& z1, N const& n) noexcept
+//         -> decltype(detail::dd_n_binary_dispatch(tag, d, z1, n))
+//     {
+//       return detail::dd_n_binary_dispatch(tag, d, z1, n);
+//     }
 //     template<decorator D, typename Tag, like<dd> Z1, like<dd> Z2>
 //     EVE_FORCEINLINE
 //     friend auto tagged_dispatch(Tag const& tag, D const& d, Z1 const& z1, Z2 const& z2) noexcept
@@ -257,10 +263,13 @@ namespace eve
     template<like<dd> Z1, like<dd> Z2>
     EVE_FORCEINLINE friend auto& operator*=(Z1& self, Z2 const& o) noexcept
     {
+
       if constexpr(std::same_as<underlying_type_t<Z1>, underlying_type_t<Z2>>)
       {
         auto & [x0, x1] = self;
+        auto oinf = is_infinite(o);
         using e_t = decltype(x0);
+        auto x0o = x0*high(o);
         auto ohi = e_t(high(o));
         auto [p0, p1] = two_prod(x0, ohi);
         auto finitex0 = is_finite(x0);
@@ -280,7 +289,9 @@ namespace eve
           x0 = p0;
           x1 = p1;
         }
-        return self;
+        x0 = if_else(oinf, x0o, x0);
+        x1 = if_else(oinf, zero,x1);
+         return self;
       }
       else // o is scalar here
       {
@@ -297,6 +308,8 @@ namespace eve
         Z1 r(eve::rec(o));
         Z1 x(r);
         x += r*oneminus(o*r); //newton inverse of o
+        x = if_else(is_infinite(o), zero(as(r))*signnz(o), x);
+        x = if_else(is_eqz(o),      inf(as(r))*signnz(o), x);
         return self *= x;
       }
       else // o is scalar here

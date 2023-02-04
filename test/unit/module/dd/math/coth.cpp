@@ -22,7 +22,7 @@ auto maxi = []<typename T>(eve::as<T> const&)
 auto mini = []<typename T>(eve::as<T> const& tgt) { return -maxi(tgt); };
 
 
-TTS_CASE_WITH( "Check behavior of sinh on scalar"
+TTS_CASE_WITH( "Check behavior of coth on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate ( tts::randoms(tts::constant(mini), tts::constant(maxi))
                              , tts::randoms(tts::constant(mini), tts::constant(maxi))
@@ -37,21 +37,21 @@ TTS_CASE_WITH( "Check behavior of sinh on scalar"
   {
     for(auto f : a1)
     {
-      auto z = eve::dd<e_t>(e, f);
-      auto ac = eve::sinh(z);
-      auto bmbc = bm::sinh(tts::uptype(z));
+      auto z = dd_t(e, f);
+      auto ac = eve::coth(z);
+      auto bmbc = bm::coth(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
       TTS_ULP_EQUAL(bc, ac, 32);
     }
   }
-  TTS_ULP_EQUAL(eve::sinh(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::minf(eve::as<dd_t>())), eve::minf(eve::as<dd_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::zero(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::mzero(eve::as<dd_t>())), eve::mzero(eve::as<dd_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::inf(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::minf(eve::as<dd_t>())), eve::mone(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::zero(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::mzero(eve::as<dd_t>())), eve::mzero(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::coth(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
 };
 
-TTS_CASE_WITH( "Check behavior of sinh on wide"
+TTS_CASE_WITH( "Check behavior of coth on wide"
              , eve::test::simd::ieee_reals
              , tts::generate ( tts::randoms(tts::constant(mini), tts::constant(maxi))
                              , tts::randoms(tts::constant(mini), tts::constant(maxi))
@@ -59,8 +59,8 @@ TTS_CASE_WITH( "Check behavior of sinh on wide"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-   auto z = make_dd(a0,a1);
-    auto az = decltype(z)(eve::detail::map(eve::sinh, z));
-    auto cz = eve::sinh(z);
-    TTS_ULP_EQUAL(cz, az, 2.5);
+  auto z = make_dd(a0,a1);
+  auto az = decltype(z)(eve::detail::map(eve::coth, z));
+  auto cz = eve::coth(z);
+  TTS_EQUAL ( cz, az);
 };

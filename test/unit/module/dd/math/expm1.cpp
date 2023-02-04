@@ -24,17 +24,24 @@ TTS_CASE_WITH( "Check behavior of expm1 on scalar"
 {
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
+  using dd_t = eve::dd<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      auto z = eve::dd<e_t>(e, f);
+      auto z = dd_t(e, f);
       auto ac = eve::expm1(z);
       auto bmbc = bm::expm1(tts::uptype(z));
       eve::dd<e_t> bc(bmbc);
       TTS_ULP_EQUAL(bc, ac, 2.5);
     }
   }
+  TTS_ULP_EQUAL(eve::expm1(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(eve::minf(eve::as<dd_t>())), eve::mone(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(eve::zero(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(eve::mzero(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::expm1(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
+
 };
 
 TTS_CASE_WITH( "Check behavior of expm1 on wide"

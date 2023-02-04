@@ -23,6 +23,8 @@ namespace eve::detail
     auto r = rec(high(z));
     Z x(r);
     x += r*oneminus(z*r);
+    x = if_else(is_infinite(z), zero(as(z))*signnz(z), x);
+    x = if_else(is_eqz(z),      inf(as(z))*signnz(z), x);
     return x;
   }
 
@@ -206,6 +208,15 @@ namespace eve::detail
     return z1 * signnz(high(z2));
   }
 
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  dd_binary_dispatch(eve::tag::copysign_, Z1 const& z1, Z2 const& z2) noexcept
+  {
+    auto [z1h, z1l] = z1;
+    auto cz1h = copysign(z1h, high(z2));
+    auto cz1l = if_else(cz1h != z1h, -z1l, z1l);
+    return make_dd(cz1h, cz1l);
+  }
 
   //================================================================================================
   //  Binary functions with integral second parameter
@@ -254,6 +265,13 @@ namespace eve::detail
   {
     EVE_ASSERT(eve::all(is_flint(n)), "some n are not flint");
     return as_wide_as_t<Z, Z1>(ldexp(high(z1), high(n)), ldexp(low(z1), high(n)));
+  }
+
+  template<typename Z, typename Z1, decorator D>
+  EVE_FORCEINLINE auto dd_nary_dispatch(tag::ldexp_, D const & d, Z const& z1, Z1 n) noexcept
+  {
+    EVE_ASSERT(eve::all(is_flint(n)), "some n are not flint");
+    return as_wide_as_t<Z, Z1>(d(ldexp)(high(z1), high(n)), d(ldexp)(low(z1), high(n)));
   }
 
   template<typename Z1, typename Z2>

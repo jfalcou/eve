@@ -207,21 +207,7 @@ namespace eve::detail
   dd_unary_dispatch(eve::tag::acot_, Z const& x) noexcept
   {
     if constexpr(has_native_abi_v<Z>)
-    {
-      auto ax =  eve::abs(x);
-      auto sgn = signnz(x);
-        auto r = sgn*asin(rec(sqrt(inc(sqr(x)))));
-      auto test = ax > Z(1.0e-10);
-      if (eve::all(test)) return r;
-      else
-      {
-        auto x2 =  sqr(x);
-        auto ix = x*dec(x2/3);
-        std::cout << "ix " << ix << std::endl;
-        auto r1 =  (pio_2(as(x))+ix)*sgn;
-        return if_else(test, r1, r);
-      }
-    }
+      return signnz(x)*asin(rec(sqrt(inc(sqr(x)))));
     else
       return apply_over(acot, x);
   }

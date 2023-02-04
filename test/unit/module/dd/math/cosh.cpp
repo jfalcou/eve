@@ -32,6 +32,7 @@ TTS_CASE_WITH( "Check behavior of cosh on scalar"
 {
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
+  using dd_t = eve::dd<e_t>;
   for(auto e : a0)
   {
     for(auto f : a1)
@@ -43,7 +44,12 @@ TTS_CASE_WITH( "Check behavior of cosh on scalar"
       TTS_ULP_EQUAL(bc, ac, 32);
     }
   }
-};
+  TTS_ULP_EQUAL(eve::cosh(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::cosh(eve::minf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::cosh(eve::zero(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::cosh(eve::mzero(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::cosh(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
+ };
 
 TTS_CASE_WITH( "Check behavior of cosh on wide"
              , eve::test::simd::ieee_reals
@@ -58,7 +64,4 @@ TTS_CASE_WITH( "Check behavior of cosh on wide"
   auto cz = eve::cosh(z);
   TTS_EQUAL ( cz, az);
   TTS_ULP_EQUAL(cz, az, 2.5);
-  std::cout << z << std::endl;
-  std::cout << cz << std::endl;
-  std::cout << eve::cosh(eve::high(z))<< std::endl;
 };
