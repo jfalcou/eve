@@ -33,9 +33,6 @@ requires sve_abi<abi_t<T, N>>
   using i_t   = make_integer_t<sizeof(T)>;
   using u_t   = make_integer_t<sizeof(U)>;
 
-  // Fix up offset
-  v *= sizeof(U);
-
   // Ignore All case : just return the alternative if any
   if      constexpr(C::is_complete && !C::is_inverted)  return alternative(cx, out_t{}, as<out_t>{});
   // Aggregation cases
@@ -51,6 +48,8 @@ requires sve_abi<abi_t<T, N>>
     auto s = alternative(cx, out_t{}, as<out_t> {});
     auto m = expand_mask(cx, as<out_t> {});
 
+    // Fix up offset
+    v *= sizeof(U);
     out_t res = svld1_gather_offset(m, p, v);
 
     if constexpr(C::has_alternative)  return eve::replace_ignored(res, cx, s);
