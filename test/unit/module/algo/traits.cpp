@@ -111,6 +111,19 @@ TTS_CASE("eve.algo.traits, type and cardinal")
   }
 };
 
+TTS_CASE("eve.algo.traits, no_unrolling") {
+  eve::algo::traits expected{ eve::algo::unroll<1> };
+  eve::algo::traits actual  {eve::algo::no_unrolling};
+  TTS_TYPE_IS (decltype(actual), decltype(expected));
+};
+
+TTS_CASE("eve.algo.traits, expensive_callable") {
+  eve::algo::traits expected{eve::algo::no_aligning, eve::algo::unroll<1>};
+  eve::algo::traits actual  {eve::algo::expensive_callable};
+
+  TTS_TYPE_IS( decltype(expected), decltype(process_equivalents(actual)) );
+};
+
 // Funciton with traits support
 
 template <typename TraitsSupport>

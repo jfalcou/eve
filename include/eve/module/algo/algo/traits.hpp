@@ -88,6 +88,34 @@ namespace eve::algo
   //================================================================================================
   inline constexpr auto no_aligning = ::rbr::flag( no_aligning_tag{} );
 
+
+  //================================================================================================
+  //! @addtogroup algorithms
+  //! @{
+  //!   @var no_unrolling
+  //!
+  //!   @brief Convinient equivalent to unroll<1>.
+  //! @}
+  //================================================================================================
+  inline constexpr auto no_unrolling = unroll<1>;
+
+  struct expensive_callable_tag {};
+
+  //================================================================================================
+  //! @addtogroup algorithms
+  //! @{
+  //!   @var expensive_callable
+  //!
+  //!   @brief *NOTE*: equivalent to no_aligning + no_unrolling
+  //!          By default eve algorithms will assume that the passed predicates/computation
+  //!          are failry simple and will unroll and align data accesses.
+  //!
+  //!          However, if your callback and/or iterators are very heavy, those transformations
+  //!          will not help you. In that case passing `expensive_callable` trait will help.
+  //! @}
+  //================================================================================================
+  inline constexpr auto expensive_callable = ::rbr::flag( expensive_callable_tag{} );
+
   // getters -------------------
 
   template <typename Traits>
@@ -149,6 +177,15 @@ namespace eve::algo
 
   template <typename Traits>
   constexpr bool has_cardinal_overrides_v = Traits::contains(force_cardinal_key);
+
+  template <typename Settings>
+  inline constexpr auto process_equivalents(traits<Settings> tr) {
+    if constexpr ( Settings::contains(expensive_callable) ) {
+      return default_to(traits{no_aligning, unroll<1>}, drop_key(expensive_callable, tr));
+    } else {
+      return tr;
+    }
+  }
 
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
   inline constexpr algo::traits no_traits{};

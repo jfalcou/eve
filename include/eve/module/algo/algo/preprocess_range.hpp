@@ -75,8 +75,9 @@ namespace eve::algo
 
   // Base case. Should validate that I, S are a valid iterator pair
   template<typename Traits, iterator I_, sentinel_for<I_> S_>
-  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
+  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits with_equivalents_, I_ f_, S_ l_) const
   {
+    auto traits_ = process_equivalents(with_equivalents_);
     auto f = detail::fix_up_cardinal(traits_, f_);
     auto l = detail::fix_up_cardinal(traits_, l_);
 
