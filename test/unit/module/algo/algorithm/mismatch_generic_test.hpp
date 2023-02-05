@@ -70,7 +70,7 @@ namespace algo_test
   {
     std::mt19937 gen;
 
-    mismatch_one_algo_test(eve::as<eve::wide<typename T::value_type>>{}, alg, check, gen);
+    mismatch_one_algo_test(eve::as<eve::nofs_wide<typename T::value_type>>{}, alg, check, gen);
 
     mismatch_one_algo_test(tgt, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<2>], check, gen);
     mismatch_one_algo_test(tgt, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<3>], check, gen);

@@ -63,7 +63,7 @@ namespace algo_test
   template <typename T, typename Algo, typename Check>
   void find_generic_test(eve::as<T> as_t, Algo alg, Check check)
   {
-    find_generic_test_page_ends(eve::as<eve::wide<typename T::value_type>>{}, alg, check);
+    find_generic_test_page_ends(eve::as<eve::nofs_wide<typename T::value_type>>{}, alg, check);
 
     find_generic_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<1>], check);
     find_generic_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<2>], check);

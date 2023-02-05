@@ -59,7 +59,8 @@ namespace simd
     auto ins  = eve::views::zip(xs, ys);
     auto outs = eve::views::zip(rho, theta);
 
-    eve::algo::transform_to ( ins, outs
+    eve::algo::transform_to[eve::algo::allow_frequency_scaling]
+                           ( ins, outs
                             , [](auto in) { return to_polar( get<0>(in), get<1>(in)); }
                             );
 

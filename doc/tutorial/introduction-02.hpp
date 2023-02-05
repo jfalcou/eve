@@ -50,18 +50,19 @@ In SIMD algorithms we by default assume that the provided operation is simple (a
 since this is the common case. This means we use aligned reads and do unrolling, which is an
 important optimisation. However, for a complex case, like here, it is beneficial to opt out.
 
-__EVE__ provides various traits to customize algorithms behavior. The two main traits we're
+__EVE__ provides various traits to customize algorithms behavior. The traits we're
 interested in are:
+  - eve::algo::expensive_callable - let's **EVE** know that the passed callable is fairly large.
+    By default **EVE** will assume that the passed callables are cheap and it will align loads/stores,
+    and unroll the loop body. There are also individual `eve::algo::no_aligning`, `eve::algo::unrolling`
 
-  - eve::algo::no_aligning that stops **EVE** from using aligned loads/stores in case where it leads
-    to more code.
-
-  - eve::algo::unroll that specify how many times the function will be unrolled inside the
-    algorithm. Unrolling is most efficient with small functions as it will maximize the use
-    of SIMD registers. Unrolling can be turned off by using eve::algo::unroll<1>.
+  - eve::algo::allow_frequency_scaling - tells **EVE** to use the maximum avaliable register size even
+    if it can substentially temporary reduce processor's frequency. This only makes sense for really big
+    arrays or if you spend most of your time doing simd operations.
+    (At the moment this is only relevant for avx512). More details in frequency-scaling tutorial.
 
 Algorithms in **EVE** being callable object, you can apply traits using their `[]` operators.
-For example, the following code disable aligning and force unroll to be 1.
+For example, the following code let's **EVE** know that the loop body is heavy.
 
 @snippet tutorial/intro-02.cpp simd-transform-traits
 

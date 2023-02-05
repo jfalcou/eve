@@ -93,15 +93,21 @@ TTS_CASE("eve.algo.traits, type and cardinal")
 {
   {
     eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::nofs_cardinal_v<int>>);
+    eve::algo::traits tr1{eve::algo::allow_frequency_scaling};
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr1), int*>), eve::fixed<eve::expected_cardinal_v<int>>);
   }
   {
     eve::algo::traits tr{eve::algo::force_cardinal<2>};
     TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<2>);
+    eve::algo::traits tr1{eve::algo::force_cardinal<2>, eve::algo::allow_frequency_scaling};
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr1), int*>), eve::fixed<2>);
   }
   {
     eve::algo::traits tr{eve::algo::consider_types<double>};
-    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::expected_cardinal_v<double>>);
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr), int*>), eve::fixed<eve::nofs_cardinal_v<double>>);
+    eve::algo::traits tr1{eve::algo::consider_types<double>, eve::algo::allow_frequency_scaling};
+    TTS_TYPE_IS((eve::algo::iteration_cardinal_t<decltype(tr1), int*>), eve::fixed<eve::expected_cardinal_v<double>>);
   }
   {
     eve::algo::traits tr;
