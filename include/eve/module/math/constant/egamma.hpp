@@ -58,9 +58,9 @@ namespace detail
     return Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>(); // 0.57721566490153286060651209008
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto egamma_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     if constexpr( std::is_same_v<D, upward_type> )
       return Ieee_constant<T, 0x3f13c468U, 0x3fe2788cfc6fb619ULL>();

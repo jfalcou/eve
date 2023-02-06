@@ -59,7 +59,7 @@ namespace detail
     else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x400921FB54442D18ULL>();
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
       requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
