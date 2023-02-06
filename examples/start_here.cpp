@@ -67,7 +67,7 @@ void polar_to_cartesian(
   eve::algo::soa_vector<cartesian>   & cart
 )
 {
-  eve::algo::transform_to[eve::algo::unroll<1>](pol, cart, convert_polar_to_cartesian);
+  eve::algo::transform_to[eve::algo::expensive_callable](pol, cart, convert_polar_to_cartesian);
 }
 
 void cartesian_to_polar(
@@ -75,7 +75,7 @@ void cartesian_to_polar(
   eve::algo::soa_vector<polar>           & pol
 )
 {
-  eve::algo::transform_to[eve::algo::unroll<1>](cart, pol, convert_cartesian_to_polar);
+  eve::algo::transform_to[eve::algo::expensive_callable](cart, pol, convert_cartesian_to_polar);
 }
 
 // Same function but if you use std::vectors.
@@ -88,7 +88,7 @@ void polar_to_cartesian_vectors(
   std::vector<double>       & y
 )
 {
-  eve::algo::transform_to[eve::algo::unroll<1>][eve::algo::no_aligning]
+  eve::algo::transform_to[eve::algo::expensive_callable]
   (
     eve::views::zip(radius, angle),
     eve::views::zip(x, y),
