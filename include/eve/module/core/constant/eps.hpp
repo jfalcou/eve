@@ -65,6 +65,7 @@ EVE_MAKE_CALLABLE(eps_, eps);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
     using t_t = element_type_t<T>;
@@ -75,8 +76,9 @@ namespace detail
   }
 
   template<floating_value T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto eps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(eps(as<T>()))
   {
     return eps(as<T>());
   }

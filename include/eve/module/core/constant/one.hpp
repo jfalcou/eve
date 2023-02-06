@@ -52,14 +52,16 @@ EVE_MAKE_CALLABLE(one_, one);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
     return T(1);
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(one(as<T>()))
   {
     return one(as<T>());
   }

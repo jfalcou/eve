@@ -68,9 +68,9 @@ namespace detail
     else if constexpr( std::is_same_v<t_t, double> ) return i_t(-1022);
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto minexponent_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     return minexponent(as<T>());
   }

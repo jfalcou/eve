@@ -70,8 +70,8 @@ namespace detail
   }
 
   template<floating_value T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto twotonmb_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     return twotonmb(as<T>());
   }
