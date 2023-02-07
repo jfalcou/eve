@@ -212,34 +212,13 @@ namespace eve::detail
       return apply_over(acot, x);
   }
 
-//   //atan2
-//   template<typename Z>
-//   auto
-//   dd_binary_dispatch(eve::tag::atan2_, Z const& x,  Z const & y) noexcept
-//   {
-//     auto hx = high(x);
-//     auto hy = high(y);
-//     auto z = atan2(hx, hy);
-//     auto[ s, c] = sincos(z);
-//     auto axgtay =  eve::abs(hx) >  eve::abs(hy);
-//     auto compute = [](auto x, auto y){
-//       auto axgtay =  eve::abs(hx) >  eve::abs(hy);
-//       {
-//         auto a =x/y;
-//         z += numeric(fma)(a, c, -s) * c;
-//       sincos(z, sin_z, cos_z);
-//       z += Fma(a, cos_z, -sin_z) * cos_z;
-//     }
-//     else
-//     {
-//       dd_real inv_a = x / y;
-
-//       sincos(z, sin_z, cos_z);
-//       z -= Fma(inv_a, sin_z, -cos_z) * sin_z;
-//       sincos(z, sin_z, cos_z);
-//       z -= Fma(inv_a, sin_z, -cos_z) * sin_z;
-//     }
-
-//     return z;
-//   }
+  //atan2
+  template<typename Z>
+  auto
+  dd_binary_dispatch(eve::tag::atan2_, Z const& a0,  Z const & a1) noexcept
+  {
+    auto q = eve::abs(a0 / a1);
+    auto z = atan(q);
+    return if_else(is_positive(a1), z, (pi(eve::as(a0)) - z)) * signnz(a0);
+  }
  }

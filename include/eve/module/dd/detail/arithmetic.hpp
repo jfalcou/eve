@@ -154,9 +154,6 @@ namespace eve::detail
     Z r(sqrt(high(a)));
     r +=  (a-sqr(r))/(2*r);
     return r;
- //    auto err = low(a)/(2*high(r));
-//     return add(err, r);
-//    return r + (half(as(low(a)))*low(a))*rec(2*r);
   }
 
   template<typename Z>
