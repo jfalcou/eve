@@ -22,6 +22,14 @@ namespace udt
 
     // You're still responsible for your non-SIMD ordering
     friend constexpr auto operator<=>(grid2d,grid2d) = default;
+
+    // Constants support
+    template<typename Tag, eve::like<grid2d> T>
+    EVE_FORCEINLINE friend auto  tagged_dispatch(Tag const&, eve::as<T> const&) noexcept
+    {
+      eve::detail::callable_object<Tag> cst;
+      return T{ cst(eve::as<int>{}), cst(eve::as<int>{})};
+    }
   };
 
   // Adapt as a structured bindings compatible type for eve::product_type
@@ -36,7 +44,7 @@ namespace udt
   }
 
   // Stream insertion is also on your behalf
-  std::ostream& operator<<( std::ostream& os, grid2d const& p)
+  inline std::ostream& operator<<( std::ostream& os, grid2d const& p)
   {
     return os << "[x: " << p.x << " - y: " << p.y << "]";
   }
@@ -67,7 +75,7 @@ namespace udt
   };
 
   // Stream insertion is also on your behalf
-  std::ostream& operator<<( std::ostream& os, label_position const& p)
+  inline std::ostream& operator<<( std::ostream& os, label_position const& p)
   {
     return os << "'" << label(p) << "'@( " << position(p) << " )";
   }
