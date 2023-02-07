@@ -27,17 +27,11 @@ TTS_CASE_WITH( "Check behavior of sincos on scalar"
     for(auto f : a1)
     {
       auto z = eve::dd<e_t>(e, f);
-      std::cout << "e,  f " << e << " --- " << f << std::endl;
-      if constexpr(sizeof(e_t) == 8)
-      {
-        auto bmbs = bm::sin(tts::uptype(z));
-        auto bmbc = bm::cos(tts::uptype(z));
-        eve::dd<e_t> c(bmbc);
-        eve::dd<e_t> s(bmbs);
-        auto[ss, cc] = eve::sincos(z);
-        TTS_ULP_EQUAL(c, cc , 0.5);
-        TTS_ULP_EQUAL(s, ss , 0.5);
-      }
+      auto s = eve::sin(z);
+      auto c = eve::cos(z);
+      auto[ss, cc] = eve::sincos(z);
+      TTS_ULP_EQUAL(c, cc , 0.5);
+      TTS_ULP_EQUAL(s, ss , 0.5);
     }
   }
 };

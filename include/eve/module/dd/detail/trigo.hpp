@@ -202,8 +202,8 @@ namespace eve::detail
     auto r1 =  z  +  z * (zz * horner( zz, S));
     auto r2 =  oneminus(ldexp(zz, -1))+zz*zz*horner(zz, C);
     test = Z(yj) == Z(1) || Z(yj) == Z(2);
-    auto sr = if_else( test, r1, r2);
-    auto cr = if_else( test, r2, r1);
+    auto sr = if_else( test, r2, r1);
+    auto cr = if_else( test, r1, r2);
     sr = if_else(toobig, nan(as(x)), ssign*sr);
     cr = if_else(toobig, nan(as(x)), csign*cr);
     return kumi::tuple{sr, cr};

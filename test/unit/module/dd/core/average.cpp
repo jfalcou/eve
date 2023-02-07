@@ -25,8 +25,8 @@ TTS_CASE_WITH( "Check behavior of average on scalar"
   {
     for(auto f : a1)
     {
-      auto z1 = dd_t(e, f);
-      auto z2 = dd_t(f, e);
+      auto z1 = dd_t(e, f/1000);
+      auto z2 = dd_t(f, e/1000);
       auto am =  z1/2+z2/2;
       TTS_EQUAL ( tts::uptype(eve::average(z1, z2)), tts::uptype(am));
     }
@@ -42,8 +42,8 @@ TTS_CASE_WITH( "Check behavior of average on wide"
   <typename T>(T const& a0, T const& a1 )
 {
 
-  auto z1 = make_dd(a0,a1);
-  auto z2 = make_dd(a1,a0);
+  auto z1 = make_dd(a0,a1/1000);
+  auto z2 = make_dd(a1,a0/1000);
   auto amz = decltype(z1)(eve::detail::map(eve::average, z1, z2));
   TTS_EQUAL ( eve::average(z1, z2), amz);
 };
