@@ -116,6 +116,22 @@ namespace eve::algo
   //================================================================================================
   inline constexpr auto expensive_callable = ::rbr::flag( expensive_callable_tag{} );
 
+  struct fuse_operations_tag {};
+  //================================================================================================
+  //! @addtogroup algorithms
+  //! @{
+  //!   @var fuse_operations
+  //!
+  //!   @brief Some algorithms (for example `transform_reduce`) can be implemented more efficient
+  //!   if you fuse multiple operations provided in a single function.
+  //!
+  //!   Example: if you want to use `fma` instead of doing `multiply` + `add`.
+  //!
+  //!   This flag replaces the functions with their more parameter equivalents.
+  //! @}
+  //================================================================================================
+  inline constexpr auto fuse_operations = ::rbr::flag( fuse_operations_tag{} );
+
   // getters -------------------
 
   template <typename Traits>

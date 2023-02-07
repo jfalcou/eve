@@ -40,12 +40,18 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
       sums[0] = add_op(sums[0], init);
     }
 
-    EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
+    template <typename I>
+    EVE_FORCEINLINE bool step(I it, eve::relative_conditional_expr auto ignore, auto idx)
     {
       auto loaded = eve::load[ignore](it);
-      auto mapped = map_op(loaded);
-      auto cvt    = eve::convert(mapped, eve::as<element_type_t<SumWide>> {});
-      sums[idx()] = add_op(sums[idx()], if_else(ignore, cvt, zero));
+
+      if constexpr (traits_type::contains(fuse_operations)) {
+        sums[idx()] = if_else(ignore, map_op(loaded, sums[idx()]), sums[idx()]);
+      } else {
+        auto mapped = map_op(loaded);
+        auto cvt    = eve::convert(mapped, eve::as<element_type_t<SumWide>> {});
+        sums[idx()] = add_op(sums[idx()], if_else(ignore, cvt, zero));
+      }
       return false;
     }
 
@@ -107,7 +113,10 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 //!  Due to the nature of how SIMD algorithms work, the reduce operation has to be paired with its,
 //!  neutral element. For example, for add you pass `{add, zero}` as zero is the identity for add.
 //!  Instead of zero it can be beneficial to pass eve's constants like `eve::zero`, `eve::one`
-//!  because sometimes the implementation can be improved
+//!  because sometimes the implementation can be improved.
+//!
+//!  Supports `fuse_operations` trait => `map_op` starts to take an extra parameter: current sum.
+//!  Allows to use fma. Note that `add` operations and `zero` are still used and have to be correct.
 //!
 //!  @note
 //!         * The interface differs from the standard because we felt this better matches our use case:
