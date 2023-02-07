@@ -53,16 +53,23 @@ EVE_MAKE_CALLABLE(zero_, zero);
 namespace detail
 {
   template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE T zero_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
-    return T{0};
+    if constexpr( kumi::product_type<T> )
+    {
+      // Can't just T{kumi::map} because that does not work for scalar product types
+      T res;
+      // This better inline.
+      kumi::for_each([](auto& m) { m = zero(as(m)); }, res);
+
+      return res;
+    }
+    else return T(0);
   }
 
   template<typename T, typename D>
   requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto zero_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(zero(as<T>()))
   {
     return zero(as<T>());
   }
