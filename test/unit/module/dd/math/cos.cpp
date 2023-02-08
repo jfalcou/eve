@@ -28,7 +28,7 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
     {
       auto z = eve::dd<e_t>(e, f);
       auto bmbc = bm::cos(tts::uptype(z));
-      eve::dd<e_t> bc(bmbc);
+      auto bc = tts::to_dd<e_t>(bmbc);
       auto s  = eve::cos(z);
       TTS_ULP_EQUAL(bc, s , 0.5);
     }

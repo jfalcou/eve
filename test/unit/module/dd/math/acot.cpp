@@ -28,7 +28,7 @@ TTS_CASE_WITH( "Check behavior of acot on scalar"
       auto z = eve::dd<e_t>(e, f);
       auto ac = eve::acot(z);
       auto bmbc = bm::atan(tts::uptype(eve::rec(z)));
-      eve::dd<e_t> bc(bmbc);
+      auto bc = tts::to_dd<e_t>(bmbc);
       TTS_RELATIVE_EQUAL(bc, ac, eve::eps(eve::as(e)));
     }
   }

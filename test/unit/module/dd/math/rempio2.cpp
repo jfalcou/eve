@@ -107,7 +107,7 @@ TTS_CASE_WITH( "Check behavior of rem_piby2 on scalar"
 //       auto z = eve::dd<e_t>(e, f);
 //       auto ac = eve::expm1(z);
 //       auto bmbc = bm::expm1(tts::uptype(z));
-//       eve::dd<e_t> bc(bmbc);
+//       auto bc = tts::to_dd<e_t>(bmbc);
 //       TTS_ULP_EQUAL(bc, ac, 2.5);
 //     }
 //   }

@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of sin on scalar"
       if constexpr(sizeof(e_t) == 8)
       {
         auto bmbc = bm::sin(tts::uptype(z));
-        eve::dd<e_t> bc(bmbc);
+        auto bc = tts::to_dd<e_t>(bmbc);
         auto s  = eve::sin(z);
         TTS_ULP_EQUAL(bc, s , 0.5);
       }

@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of acsc on scalar"
       auto z = eve::dd<e_t>(e, f);
       auto ac = eve::acsc(z);
       auto bmbc = bm::asin(tts::uptype(eve::rec(z)));
-      eve::dd<e_t> bc(bmbc);
+      auto bc = tts::to_dd<e_t>(bmbc);
       TTS_ULP_EQUAL(bc, ac, 0.5);
     }
   }

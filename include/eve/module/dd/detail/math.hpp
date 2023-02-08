@@ -141,7 +141,7 @@ namespace eve::detail
   }
 
   template<typename Z>
-   auto
+  auto
   dd_unary_dispatch(eve::tag::exp2_, Z const& xx) noexcept
   {
      using dd_t =  element_type_t<Z>;
@@ -208,6 +208,88 @@ namespace eve::detail
     x = if_else(xx ==  inf(as(xx)), xx, x);
     return x;
   }
+
+/// TODO ne fonctionne pas
+//   template<typename Z>
+//   auto
+//   dd_unary_dispatch(eve::tag::exp10_, Z const& xx) noexcept
+//   {
+//     using dd_t =  element_type_t<Z>;
+
+//     using A6 = kumi::result::generate_t<6, dd_t>;
+//     using A7 = kumi::result::generate_t<7, dd_t>;
+//     using A3 = kumi::result::generate_t<3, dd_t>;
+//     using A4 = kumi::result::generate_t<4, dd_t>;
+
+//     auto PQ = [](){
+//       if constexpr(std::same_as<underlying_type_t<dd_t>, double>)
+//       {
+//         const A6 P = {
+//           dd_t(0x1.0f4753592b646p+6, 0x1.c16dc118e7a8ap-48),
+//           dd_t(0x1.813bc6e0b2e8bp+15, 0x1.25e8b175ad4ccp-39),
+//           dd_t(0x1.161b0d6ece1f9p+23, -0x1.a41adfbf85838p-32),
+//           dd_t(0x1.186516dcd6e45p+29, -0x1.c05925f15183p-25),
+//           dd_t(0x1.81af4f357c5a9p+33, 0x1.25455694106cbp-22),
+//           dd_t(0x1.f5f69601851d9p+35, 0x1.3b27a0722befdp-21),
+//         };
+
+//         const A7 Q = {
+//           dd_t(0x1p+0, 0x0p+0),
+//           dd_t(0x1.1bb3480b1f4cap+11, -0x1.0c2ed19cf48afp-44),
+//           dd_t(0x1.78946958ce2dcp+19, 0x1.c420da8bd115bp-36),
+//           dd_t(0x1.3d1bf9db25735p+26, 0x1.4780e79bd0f14p-28),
+//           dd_t(0x1.7c944f74983a9p+31, -0x1.e8c03ecf1625bp-23),
+//           dd_t(0x1.1462ca3250891p+35, -0x1.628803c467fa1p-19),
+
+//         };
+//         dd_t log210 = dd_t(0x1.a934f0979a371p+1, 0x1.7f2495fb7fa6ep-53);
+//         dd_t lg102a = dd_t(0x1.344p-2, 0x0p+0);
+//         dd_t lg102b = dd_t(0x1.3509f79fef312p-18, -0x1.da994fd20dba2p-75);
+//         return kumi::tuple{P, Q, log210, lg102a, lg102b};
+//       }
+//       else
+//       {
+//         const A3 P = {
+//           dd_t(0x1.4fd76p-5, -0x1.9f3a46p-30),
+//           dd_t(0x1.77d948p+3, -0x1.6754dap-22),
+//           dd_t(0x1.96b7ap+8, 0x1.40d278p-18),
+//         };
+//         const A4 Q = {
+//           dd_t(0x1p+0, 0x0p+0),
+//           dd_t(0x1.545fdcp+6, 0x1.ca394p-19),
+//           dd_t(0x1.3e05eep+10, 0x1.facefp-15),
+//           dd_t(0x1.03f376p+11, 0x1.437db8p-15),
+
+//         };
+//         dd_t log210 = dd_t(0x1.a934fp+1, 0x1.2f346ep-24);
+//         dd_t lg102a = dd_t(0x1.344p-2, 0x0p+0) ;
+//         dd_t lg102b = dd_t(0x1.3509f8p-18, -0x1.80433cp-44);
+//         return kumi::tuple{P, Q, log210, lg102a, lg102b};
+//       }
+//     };
+//     auto [P, Q, log210, lg102a, lg102b] = PQ();
+//  //     std::cout << "xx " << xx << std::endl;
+// //      std::cout << "log210 *xx " << log210 *xx << std::endl;
+
+//     auto nx = floor(log210 *xx+half(as(xx)));
+// //     std::cout << "nx " << nx << std::endl;
+//     auto x = xx - nx * lg102a;
+//     x -= nx * lg102b;
+// //    std::cout << "x " << x << std::endl;
+
+//     auto x2 = sqr(x);
+//     auto px = x * horner(x2, P);
+//     auto qx =  horner(x2, Q);
+//     x =  px/( qx - px );
+//     x = inc(x + x);
+//     x = pedantic(ldexp)( x, high(nx) );
+//     x = if_else(xx == minf(as(xx)), zero(as(xx)), x);
+//     x = if_else(xx == inf(as(xx)), xx, x);
+//     return x;
+//   }
+
+
+
 
   template<typename Z>
    auto
@@ -296,6 +378,16 @@ namespace eve::detail
       auto r1 = dec(exp(xx));
       return if_else(great, r1, r);
     }
+  }
+
+  template<typename Z>
+  auto
+  dd_unary_dispatch(eve::tag::log1p_, Z const& x) noexcept
+  {
+    Z z(log1p(high(x)));
+    Z z1 = z-exp(-z)*(expm1(z)-x);
+    z =   if_else(is_infinite(z), z, z1);
+    return if_else(x < mone(as(x)), nan(as(x)), z);
   }
 
 }

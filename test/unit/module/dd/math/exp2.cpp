@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of exp2 on scalar"
       auto z = eve::dd<e_t>(e, f);
       auto ac = eve::exp2(z);
       auto bmbc = bm::exp2(tts::uptype(z));
-      eve::dd<e_t> bc(bmbc);
+      auto bc = tts::to_dd<e_t>(bmbc);
       TTS_ULP_EQUAL(bc, ac, 0.5);
     }
   }

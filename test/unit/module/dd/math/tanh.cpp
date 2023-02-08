@@ -40,7 +40,7 @@ TTS_CASE_WITH( "Check behavior of tanh on scalar"
       auto z = dd_t(e, f);
       auto ac = eve::tanh(z);
       auto bmbc = bm::tanh(tts::uptype(z));
-      eve::dd<e_t> bc(bmbc);
+      auto bc = tts::to_dd<e_t>(bmbc);
       TTS_ULP_EQUAL(bc, ac, 32);
     }
   }

@@ -1,0 +1,62 @@
+//==================================================================================================
+/**
+  EVE - Exp10ressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+**/
+//==================================================================================================
+
+#include "test.hpp"
+#include "../measures.hpp"
+#include <eve/module/dd.hpp>
+#include <boost/math/constants/constants.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
+
+TTS_CASE_WITH( "Check behavior of exp10 on scalar"
+             , tts::bunch<eve::test::scalar::ieee_reals>
+             , tts::generate ( tts::randoms(1, 2)
+                             , tts::randoms(0, 0.1)
+                             )
+             )
+  <typename T>(T const& , T const& )
+{
+  namespace bm = boost::multiprecision;
+  using e_t = typename T::value_type;
+  using dd_t = eve::dd<e_t>;
+//   if constexpr(sizeof(e_t) == 4)
+//   for(auto e : a0)
+//   {
+//     for(auto f : a1)
+//     {
+//       auto z = eve::dd<e_t>(e, f);
+//       auto ac = eve::exp10(z);
+//       auto bmbc = eve::exp10(to_double(z)); //bm::exp(bm::log(tts::uptype(dd_t(10)))*tts::uptype(z));
+//       auto bc = tts::to_dd<e_t>(bmbc);
+//       TTS_ULP_EQUAL(bc, ac, 0.5);
+//     }
+//   }
+
+ for(int i=0; i <10 ; ++i)
+ {
+   std::cout << i << std::endl;
+   std::cout << eve::exp10(dd_t(i)) << std::endl;
+ }
+//   TTS_ULP_EQUAL(eve::exp10(eve::inf(eve::as<dd_t>())), eve::inf(eve::as<dd_t>()), 0.5);
+//   TTS_ULP_EQUAL(eve::exp10(eve::minf(eve::as<dd_t>())), eve::zero(eve::as<dd_t>()), 0.5);
+//   TTS_ULP_EQUAL(eve::exp10(eve::zero(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+//   TTS_ULP_EQUAL(eve::exp10(eve::mzero(eve::as<dd_t>())), eve::one(eve::as<dd_t>()), 0.5);
+//   TTS_ULP_EQUAL(eve::exp10(eve::nan(eve::as<dd_t>())), eve::nan(eve::as<dd_t>()), 0.5);
+};
+
+// TTS_CASE_WITH( "Check behavior of exp10 on wide"
+//              , eve::test::simd::ieee_reals
+//              , tts::generate ( tts::randoms(-10, 10)
+//                              , tts::randoms(-10, 10)
+//                              )
+//              )
+//   <typename T>(T const& a0, T const& a1 )
+// {
+//   auto z = make_dd(a0,a1);
+//   auto az = decltype(z)(eve::detail::map(eve::exp10, z));
+//   TTS_ULP_EQUAL ( eve::exp10(z), az, 0.5);
+// };

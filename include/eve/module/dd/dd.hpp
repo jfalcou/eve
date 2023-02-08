@@ -19,7 +19,7 @@
 #include <eve/traits/product_type.hpp>
 #include <ostream>
 #include <iomanip>
-#include <boost/multiprecision/cpp_bin_float.hpp>
+//#include <boost/multiprecision/cpp_bin_float.hpp>
 
 namespace eve
 {
@@ -45,14 +45,14 @@ namespace eve
     return float64(h)+float64(l);
   }
 
-  template<ordered_value Z>
-  EVE_FORCEINLINE  auto to_float128( Z const& z) noexcept
-  requires(is_dd_v<Z>)
-  {
-    auto [h, l] = z;
-    return  boost::multiprecision::cpp_bin_float_quad(h)+
-            boost::multiprecision::cpp_bin_float_quad(l);
-  }
+//   template<ordered_value Z>
+//   EVE_FORCEINLINE  auto to_float128( Z const& z) noexcept
+//   requires(is_dd_v<Z>)
+//   {
+//     auto [h, l] = z;
+//     return  boost::multiprecision::cpp_bin_float_quad(h)+
+//             boost::multiprecision::cpp_bin_float_quad(l);
+//   }
 
   template<floating_scalar_value Type>
   struct dd : struct_support<dd<Type>, Type, Type>
@@ -80,15 +80,16 @@ namespace eve
       *this = read(s);
     }
 
-    dd(boost::multiprecision::cpp_bin_float_quad t)
-    {
-      using u_t =  underlying_type;
-      u_t h(t);
-      auto self = two_add(h, u_t(t-boost::multiprecision::cpp_bin_float_quad(h)));
-      get<0>(*this) = get<0>(self);
-      get<1>(*this) = get<1>(self);
+//     dd(boost::multiprecision::cpp_bin_float_quad t)
+//     {
+//       using u_t =  underlying_type;
+//       u_t h(t);
+//       auto self = two_add(h, u_t(t-boost::multiprecision::cpp_bin_float_quad(h)));
+//       get<0>(*this) = get<0>(self);
+//       get<1>(*this) = get<1>(self);
 
-    }
+//     }
+
     template <ordered_value T> // construction from a scalar of different type
     dd(T t)
     requires(!std::same_as<T, underlying_type> && plain_scalar_value<T>)

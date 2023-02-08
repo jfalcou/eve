@@ -28,7 +28,7 @@ TTS_CASE_WITH( "Check behavior of dist on scalar"
       auto z1 = dd_t(e, f/1000);
       auto z2 = dd_t(f, e/1000);
       auto am =  bm::abs(tts::uptype(z1)-tts::uptype(z2));
-      TTS_ULP_EQUAL ( eve::dist(z1, z2), dd_t(am), 0.5);
+      TTS_ULP_EQUAL ( eve::dist(z1, z2), tts::to_dd<e_t>(am), 0.5);
     }
   }
 };

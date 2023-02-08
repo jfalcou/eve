@@ -27,7 +27,7 @@ TTS_CASE_WITH( "Check behavior of hypot on scalar"
     {
       auto z1 = dd_t(e, f);
       auto z2 = dd_t(f, e);
-      dd_t am =  dd_t(bm::hypot(tts::uptype(z1), tts::uptype(z2)));
+      dd_t am =  tts::to_dd<e_t>(bm::hypot(tts::uptype(z1), tts::uptype(z2)));
       TTS_ULP_EQUAL ( eve::hypot(z1, z2), am, 0.5);
     }
   }

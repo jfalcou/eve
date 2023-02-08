@@ -30,6 +30,16 @@ namespace tts
     else return to_bm110(z);
   }
 
+  template < typename T >
+  auto  to_dd(boost::multiprecision::cpp_bin_float_quad t)
+    requires (eve::scalar_value<T>)
+  {
+    using u_t = eve::underlying_type_t<T>;
+    u_t h(t);
+    auto self = eve::two_add(h, u_t(t-boost::multiprecision::cpp_bin_float_quad(h)));
+    return eve::make_dd(self);
+  }
+
   template<typename T>
   double ulp_distance(T const & l, T const & r) requires( eve::is_dd_v<T> )
   {
