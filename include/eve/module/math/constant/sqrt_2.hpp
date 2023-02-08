@@ -59,9 +59,9 @@ namespace detail
         0X3FF6A09E667F3BCDULL>(); // 1.41421356237309504880168872420969807856967187537694
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto sqrt_2_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     if constexpr( std::is_same_v<D, upward_type> )
       return Ieee_constant<T, 0X3FB504F4U, 0X3FF6A09E667F3BCDULL>();

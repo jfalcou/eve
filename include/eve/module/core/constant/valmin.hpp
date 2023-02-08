@@ -56,15 +56,18 @@ EVE_MAKE_CALLABLE(valmin_, valmin);
 
 namespace detail
 {
-  template<typename T> EVE_FORCEINLINE auto valmin_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
+  template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
+  EVE_FORCEINLINE auto valmin_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
     using t_t = element_type_t<T>;
     return T(std::numeric_limits<t_t>::lowest());
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto valmin_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(valmin(as<T>()))
   {
     return valmin(as<T>());
   }

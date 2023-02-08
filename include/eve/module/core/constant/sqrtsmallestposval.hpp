@@ -62,6 +62,7 @@ EVE_MAKE_CALLABLE(sqrtsmallestposval_, sqrtsmallestposval);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE constexpr auto sqrtsmallestposval_(EVE_SUPPORTS(cpu_),
                                                      eve::as<T> const& = {}) noexcept
   {
@@ -72,9 +73,10 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto
   sqrtsmallestposval_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(sqrtsmallestposval(as<T>()))
   {
     return sqrtsmallestposval(as<T>());
   }

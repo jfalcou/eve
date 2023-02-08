@@ -57,6 +57,7 @@ EVE_MAKE_CALLABLE(allbits_, allbits);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
   {
     using t_t           = element_type_t<T>;
@@ -68,8 +69,9 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(allbits(as<T>()))
   {
     return allbits(as<T>());
   }

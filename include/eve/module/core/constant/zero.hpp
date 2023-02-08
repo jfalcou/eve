@@ -52,7 +52,8 @@ EVE_MAKE_CALLABLE(zero_, zero);
 
 namespace detail
 {
-  template<typename T> EVE_FORCEINLINE T zero_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
+  template<typename T>
+  EVE_FORCEINLINE T zero_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
     if constexpr( kumi::product_type<T> )
     {
@@ -67,8 +68,8 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto zero_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     return zero(as<T>());
   }
