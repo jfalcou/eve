@@ -61,6 +61,7 @@ EVE_MAKE_CALLABLE(smallestposval_, smallestposval);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE auto smallestposval_(EVE_SUPPORTS(cpu_), eve::as<T> const& = {}) noexcept
   {
     using t_t = element_type_t<T>;
@@ -74,9 +75,9 @@ namespace detail
   }
 
   template<typename T, typename D>
-  EVE_FORCEINLINE constexpr auto
-  smallestposval_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  EVE_FORCEINLINE constexpr auto smallestposval_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+  -> decltype(smallestposval(as<T>()))
   {
     return smallestposval(as<T>());
   }

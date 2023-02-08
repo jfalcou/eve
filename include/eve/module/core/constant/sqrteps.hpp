@@ -58,7 +58,9 @@ EVE_MAKE_CALLABLE(sqrteps_, sqrteps);
 
 namespace detail
 {
-  template<typename T> EVE_FORCEINLINE auto sqrteps_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
+  template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
+  EVE_FORCEINLINE auto sqrteps_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
   {
     using t_t = element_type_t<T>;
     if constexpr( std::is_same_v<t_t, float> ) { return Constant<T, 0x39B504F3U>(); }
@@ -70,8 +72,9 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto sqrteps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(sqrteps(as<T>()))
   {
     using t_t = element_type_t<T>;
     if constexpr( std::is_same_v<t_t, float> )

@@ -69,8 +69,8 @@ namespace detail
   }
 
   template<floating_value T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     if constexpr( std::is_same_v<D, downward_type> ) return logeps(as<T>());
     else return Ieee_constant<T, 0XC17F1401U, 0XC04205966F2B4F11ULL>();

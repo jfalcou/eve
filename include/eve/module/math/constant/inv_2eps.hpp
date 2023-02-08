@@ -60,9 +60,9 @@ namespace detail
     else return T(1);
   }
 
-  template<typename T, typename D>
+  template<floating_ordered_value T, typename D>
   EVE_FORCEINLINE constexpr auto inv_2eps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     return inv_2eps(as<T>());
   }

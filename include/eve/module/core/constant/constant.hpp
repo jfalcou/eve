@@ -55,8 +55,8 @@ namespace eve
 //================================================================================================
 
 template<typename T, auto BitsPattern>
-EVE_FORCEINLINE auto
-Constant(eve::as<T> const& = {})
+requires(plain_scalar_value<element_type_t<T>>)
+EVE_FORCEINLINE auto Constant(eve::as<T> const& = {})
 {
   using t_t = element_type_t<T>;
 

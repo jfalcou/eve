@@ -57,6 +57,7 @@ EVE_MAKE_CALLABLE(valmax_, valmax);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE auto valmax_(EVE_SUPPORTS(cpu_), eve::as<T> const& = {}) noexcept
   {
     using t_t = element_type_t<T>;
@@ -64,8 +65,9 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto valmax_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(valmax(as<T>()))
   {
     return valmax(as<T>());
   }

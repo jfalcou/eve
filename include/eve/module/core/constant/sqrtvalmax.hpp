@@ -62,6 +62,7 @@ EVE_MAKE_CALLABLE(sqrtvalmax_, sqrtvalmax);
 namespace detail
 {
   template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
   EVE_FORCEINLINE constexpr auto sqrtvalmax_(EVE_SUPPORTS(cpu_), eve::as<T> const& = {}) noexcept
   {
     using t_t = element_type_t<T>;
@@ -81,8 +82,9 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto sqrtvalmax_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  -> decltype(sqrtvalmax(as<T>()))
   {
     return sqrtvalmax(as<T>());
   }

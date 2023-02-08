@@ -59,9 +59,9 @@ namespace detail
     else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0X3FE921FB54442D18LL>();
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto pio_4_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     using t_t = element_type_t<T>;
     if constexpr( std::is_same_v<t_t, float> )

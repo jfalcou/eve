@@ -59,7 +59,7 @@ namespace detail
         0X4005BF0A8B145769ULL>(); // 2.7182818284590452353602874713526624977572470937;
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto euler_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
       requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {

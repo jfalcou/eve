@@ -69,8 +69,8 @@ namespace detail
   }
 
   template<typename T, typename D>
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   EVE_FORCEINLINE constexpr auto maxexponentm1_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     return maxexponentm1(as<T>());
   }

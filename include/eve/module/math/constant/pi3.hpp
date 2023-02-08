@@ -60,7 +60,7 @@ namespace detail
 
   template<floating_ordered_value T, typename D>
   EVE_FORCEINLINE constexpr auto pi3_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     using t_t = element_type_t<T>;
     if constexpr( std::is_same_v<D, upward_type> )

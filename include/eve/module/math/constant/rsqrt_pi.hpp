@@ -59,9 +59,9 @@ namespace detail
         0X3FE20DD750429B6DULL>(); // 0.564189583547756286948079451560772585844050629329
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto rsqrt_pi_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     if constexpr( std::is_same_v<D, downward_type> )
     {

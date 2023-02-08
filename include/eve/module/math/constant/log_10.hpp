@@ -56,9 +56,9 @@ namespace detail
     return Ieee_constant<T, 0X40135D8EU, 0X40026BB1BBB55516ULL>();
   }
 
-  template<typename T, typename D>
+  template<floating_value T, typename D>
   EVE_FORCEINLINE constexpr auto log_10_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
+  requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
     if constexpr( std::is_same_v<D, upward_type> ) return eve::log_10(as<T>());
     else return Ieee_constant<T, 0X40135D8DU, 0X40026BB1BBB55515ULL>();
