@@ -26,8 +26,8 @@ namespace eve::detail
 
   namespace internal
   {
-    template <typename Z >
-    auto SC(){
+    template <typename Z > auto SC()
+    {
       using dd_t =  element_type_t<Z>;
       using A6  = kumi::result::generate_t< 6, dd_t>;
       using A11 = kumi::result::generate_t<11, dd_t>;
@@ -209,5 +209,19 @@ namespace eve::detail
     return kumi::tuple{sr, cr};
   }
 
+  template<typename Z>
+  auto
+  dd_unary_dispatch(eve::tag::tan_, Z const& xx) noexcept
+  {
+    auto [s, c] =  sincos(xx);
+    return s/c;
+  }
 
+  template<typename Z>
+  auto
+  dd_unary_dispatch(eve::tag::cot_, Z const& xx) noexcept
+  {
+    auto [s, c] =  sincos(xx);
+    return c/s;
+  }
 }
