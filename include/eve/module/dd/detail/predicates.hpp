@@ -129,6 +129,10 @@ namespace eve::detail
     return is_positive(high(z));
   }
 
+  EVE_FORCEINLINE auto dd_unary_dispatch( tag::is_pow2_, auto const& z ) noexcept
+  {
+    return is_pow2(high(z)) && is_eqz(low(z));
+  }
   //==============================================================================================
   //  binary is_equal, is_not_equal
   //==============================================================================================

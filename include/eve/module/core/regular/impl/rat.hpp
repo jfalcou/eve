@@ -27,7 +27,7 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value S>
+template<ordered_value T, ordered_value S>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_),
      T const& x,
@@ -39,7 +39,7 @@ rat_(EVE_SUPPORTS(cpu_),
   return rat(r_t(x), r_t(tol));
 }
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
 {
@@ -65,7 +65,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
       lastd       = savedd;
     }
     n *= sign(d);
-    d = saturated(abs)(d);
+    d = eve::abs(d);
     return kumi::tuple<T, T> {n, d};
   }
   else
@@ -74,7 +74,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
     {
       auto is_inf = is_infinite(x);
       auto y      = if_else(is_inf, zero, x);
-      auto n      = round(y);
+      auto n      = nearest(y);
       auto d      = one(as(y));
       auto frac   = y - n;
       auto lastn  = one(as(y));
@@ -85,7 +85,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
         auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
         if( none(notdone) ) break;
         auto flip   = if_else(notdone, rec(frac), frac);
-        auto step   = if_else(notdone, round(flip), zero);
+        auto step   = if_else(notdone, nearest(flip), zero);
         frac        = flip - step;
         auto savedn = n;
         auto savedd = d;
@@ -95,7 +95,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
         lastd       = savedd;
       }
       n *= sign(d);
-      d = saturated(abs)(d);
+      d = abs(d);
       n = if_else(is_inf, sign(x), n);
       d = if_else(is_inf, zero, d);
       return kumi::tuple<T, T> {n, d};
@@ -104,7 +104,7 @@ rat_(EVE_SUPPORTS(cpu_), T const& x, T const& tol) noexcept
   }
 }
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 rat_(EVE_SUPPORTS(cpu_), T const& x) noexcept
 {
