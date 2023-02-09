@@ -31,28 +31,6 @@ namespace eve
   {
     using value_type = kumi::tuple<typename pointer_traits<Ptrs>::value_type...>;
   };
-
-  template<typename T>
-  struct pointer_cardinal : expected_cardinal<typename pointer_traits<T>::value_type>
-  {};
-
-  template<typename T>
-  requires requires { typename T::cardinal; }
-  struct pointer_cardinal<T>
-  {
-    using type = typename T::cardinal;
-  };
-
-  template<typename T>
-  requires requires { T::iterator_cardinal(); }
-  struct pointer_cardinal<T>
-  {
-    using type = decltype(T::iterator_cardinal());
-  };
-
-  template<typename Type, typename Lanes>
-  struct  pointer_cardinal<eve::aligned_ptr<Type, Lanes>> : expected_cardinal<Type>
-  {};
 }
 
 namespace eve::detail
