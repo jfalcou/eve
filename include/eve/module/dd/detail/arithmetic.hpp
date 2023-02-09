@@ -58,6 +58,7 @@ namespace eve::detail
     return exponent(high(z));
   }
 
+
   template<typename Z>
   EVE_FORCEINLINE auto
   dd_unary_dispatch(eve::tag::floor_, Z const& z) noexcept
@@ -163,6 +164,12 @@ namespace eve::detail
     return if_else(is_positive(high(z)), floor(z), ceil(z));
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  dd_unary_dispatch(eve::tag::mantissa_, Z const& z) noexcept
+  {
+    return ldexp(z, -exponent(high(z)));
+  }
 
   //================================================================================================
   //  Binary functions
