@@ -27,7 +27,7 @@ TTS_CASE_WITH( "Check behavior of mantissa on scalar"
       auto z = dd_t(e, f);
       auto [m, e] = eve::frexp(z);
       auto ma = eve::mantissa(z);
-      TTS_ULP_EQUAL(eve::mantissa(z), m*2, 0.5);
+      TTS_ULP_EQUAL(ma, m*2, 0.5);
     }
   }
 };
