@@ -23,8 +23,23 @@ namespace eve::detail
   {
     detail::callable_object<Tag> func;
     return func(eve::as_dd_t<Zs>(zs) ...);
-   }
+  }
 
+  //binarize
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  binarize_(EVE_SUPPORTS(cpu_), eve::domain::dd_converter const&, as_logical<T> const& z) noexcept
+  {
+    return /*eve::as_dd_t<T>*/(binarize(z));
+  }
+
+  //binarize_not
+  template<value T>
+  EVE_FORCEINLINE constexpr auto
+  binarize_not_(EVE_SUPPORTS(cpu_), eve::domain::dd_converter const&, as_logical<T> const& z) noexcept
+  {
+    return eve::as_dd_t<T>(binarize_not(z));
+  }
   //rec
   template<value T>
   EVE_FORCEINLINE constexpr auto
