@@ -7,13 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/arch/fundamental_cardinal.hpp>
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/load.hpp>
+#include <eve/detail/function/simd/arm/sve/iota.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/as_integer.hpp>
-#include <eve/arch/arm/sve/sve_true.hpp>
 
 namespace eve::detail
 {
@@ -22,7 +23,8 @@ namespace eve::detail
 //================================================================================================
 template<arithmetic_scalar_value T, typename N, typename... Vs>
 EVE_FORCEINLINE auto
-make(eve::as<wide<T, N>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
+make(eve::as<wide<T, N>>, Vs... vs) noexcept
+requires sve_abi<abi_t<T, N>>
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
 
@@ -46,16 +48,14 @@ make(eve::as<wide<T, N>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
-make(eve::as<wide<T, N>>, T x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
+make(eve::as<wide<T, N>>, T x) noexcept
+requires sve_abi<abi_t<T, N>> && (N::value > 1)
 {
   // This may be suboptimal, we a one instruction iota on sve
   if constexpr( N::value < eve::fundamental_cardinal_v<T> )
   {
-    return [&]<std::size_t... i>(std::index_sequence<i...> const&)
-    {
-      return make(as<wide<T, fundamental_cardinal_t<T>>> {}, (i < N::value ? x : 0)...);
-    }
-    (std::make_index_sequence<fundamental_cardinal_v<T>>());
+    // Use svdup then mask using optimized iota comparison
+    return wide<T>{x} & (linear_ramp(as<wide<as_integer_t<T>>>{}) < N::value).mask();
   }
   else
   {
@@ -79,7 +79,8 @@ make(eve::as<wide<T, N>>, T x) noexcept requires sve_abi<abi_t<T, N>> &&(N::valu
 //================================================================================================
 template<arithmetic_scalar_value T, typename N, typename... Vs>
 EVE_FORCEINLINE auto
-make(as<logical<wide<T, N>>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
+make(as<logical<wide<T, N>>>, Vs... vs) noexcept
+requires sve_abi<abi_t<T, N>>
 {
   using bits_type = typename logical<wide<T, N>>::bits_type;
   using e_t       = element_type_t<bits_type>;
@@ -90,17 +91,15 @@ make(as<logical<wide<T, N>>>, Vs... vs) noexcept requires sve_abi<abi_t<T, N>>
 
 template<arithmetic_scalar_value T, typename N, typename V>
 EVE_FORCEINLINE auto
-make(eve::as<logical<wide<T, N>>>, V x) noexcept requires sve_abi<abi_t<T, N>> &&(N::value > 1)
+make(eve::as<logical<wide<T, N>>>, V x) noexcept
+requires sve_abi<abi_t<T, N>> && (N::value > 1)
 {
   using f_t = fundamental_cardinal_t<T>;
 
   if constexpr( N::value < f_t::value )
   {
-    return [&]<std::size_t... i>(std::index_sequence<i...> const&)
-    {
-      return make(as<logical<wide<T, f_t>>> {}, (i < N::value ? (bool)x : false)...);
-    }
-    (std::make_index_sequence<f_t::value>());
+    // Use svdup then mask using optimized iota comparison
+    return logical<wide<T>>{(bool)x} && (linear_ramp(as<wide<as_integer_t<T>>>{}) < N::value);
   }
   else
   {
