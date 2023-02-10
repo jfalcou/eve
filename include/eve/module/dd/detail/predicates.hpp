@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/dd/regular/high.hpp>
+#include <eve/module/dd/regular/low.hpp>
 
 namespace eve::detail
 {
@@ -136,6 +138,12 @@ namespace eve::detail
   //==============================================================================================
   //  binary is_equal, is_not_equal
   //==============================================================================================
+  EVE_FORCEINLINE auto dd_binary_dispatch(eve::tag::is_equal_
+                                              , auto const& z1, auto const& z2) noexcept
+  {
+    return (is_equal)(high(z1), high(z2)) && (is_equal)(low(z1), low(z2));
+  }
+
   EVE_FORCEINLINE auto dd_binary_dispatch(eve::tag::is_equal_, eve::numeric_type const &
                                               , auto const& z1, auto const& z2) noexcept
   {
@@ -147,5 +155,4 @@ namespace eve::detail
   {
     return numeric(is_not_equal)(high(z1), high(z2)) || numeric(is_not_equal)(low(z1), low(z2));
   }
-
 }

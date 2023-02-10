@@ -319,6 +319,42 @@ namespace eve
       }
     }
 
+    // -----  Operator <
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto operator< (Z1 const & z1, Z2 const& z2) noexcept
+    requires(!std::same_as<Z1, Z2>)
+    {
+      using a_t = decltype(z1+z2);
+     return  make_dd(z1, as<a_t>()) < make_dd(z2, as<a_t>());
+    }
+
+    // -----  Operator <=
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto operator<= (Z1 const & z1, Z2 const& z2) noexcept
+    requires(!std::same_as<Z1, Z2>)
+    {
+      using a_t = decltype(z1+z2);
+     return  make_dd(z1, as<a_t>()) <=  make_dd(z2, as<a_t>());
+    }
+
+    // -----  Operator <
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto operator > (Z1 const & z1, Z2 const& z2) noexcept
+    requires(!std::same_as<Z1, Z2>)
+    {
+      using a_t = decltype(z1+z2);
+     return  make_dd(z1, as<a_t>()) >  make_dd(z2, as<a_t>());
+    }
+
+    // -----  Operator <=
+    template<like<dd> Z1, like<dd> Z2>
+    EVE_FORCEINLINE friend auto operator >= (Z1 const & z1, Z2 const& z2) noexcept
+    requires(!std::same_as<Z1, Z2>)
+    {
+      using a_t = decltype(z1+z2);
+     return  make_dd(z1, as<a_t>()) >=  make_dd(z2, as<a_t>());
+    }
+
   private :
 
     // Reads in a dd from a string. */

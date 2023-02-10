@@ -23,12 +23,15 @@ TTS_CASE_WITH( "Check behavior of is_less on scalar"
   {
     for(auto f : a1)
     {
-     if constexpr(sizeof(e_t) == 4)
-      {
-        auto z1 = dd_t(e, f);
-        auto z2 = dd_t(f, e);
-        TTS_EQUAL ( eve::is_less(z1, z2), (z1 < z2));
-      }
+      auto z1 = dd_t(e, f/1000);
+      auto z2 = dd_t(f, e/1000);
+      TTS_EQUAL ( eve::is_less(z1, z2), (z1 < z2));
+      TTS_EQUAL ( eve::is_less(z1, e), z1 < dd_t(e));
+      TTS_EQUAL ( eve::is_less(f, z1),dd_t(f) < z1);
+      TTS_EQUAL ( (z1 < e), (z1 < make_dd(e, eve::as(z1))));
+      TTS_EQUAL ( (z1 < eve::dd<e_t>(1.0)), (z1 < make_dd(1.0, eve::as(z1))));
+      TTS_EQUAL ( (z1 < 1.0), z1 < make_dd(1.0, eve::as(z1)));
+      TTS_EQUAL ( (z1 < 1), z1 < make_dd(1, eve::as(z1)));
     }
   }
 };
@@ -42,10 +45,15 @@ TTS_CASE_WITH( "Check behavior of is_less on wide"
   <typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
-  if constexpr(sizeof(e_t) == 4)
-  {
-    auto z1 = make_dd(a0,a1);
-    auto z2 = make_dd(a1,a0);
-    TTS_EQUAL ( eve::is_less(z1, z2), (z1 < z2));
-  }
+  auto z1 = make_dd(a0,a1/1000);
+  auto z2 = make_dd(a1,a0/1000);
+  TTS_EQUAL ( eve::is_less(z1, z2), (z1 < z2));
+  TTS_EQUAL ( eve::is_less(z1, a1), (z1 < make_dd(a1, eve::as(z1))));
+  TTS_EQUAL ( eve::is_less(z1, 1.0), z1 < make_dd(1.0, eve::as(z1)));
+  TTS_EQUAL ( (z1 < z2), (z1 < z2));
+  TTS_EQUAL ( (z1 < a1), (z1 < make_dd(a1, eve::as(z1))));
+  TTS_EQUAL ( (z1 < eve::dd<e_t>(1.0)), (z1 < make_dd(1.0, eve::as(z1))));
+  TTS_EQUAL ( (z1 < 1.0), z1 < make_dd(1.0, eve::as(z1)));
+  TTS_EQUAL ( (z1 < 1), z1 < make_dd(1, eve::as(z1)));
+
 };
