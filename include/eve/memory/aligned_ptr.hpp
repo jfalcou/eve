@@ -450,7 +450,7 @@ namespace eve
   template <typename T>
   EVE_FORCEINLINE auto previous_aligned_address(T* p) noexcept
   {
-    return previous_aligned_address(p, eve::expected<std::remove_cvref_t<T>>);
+    return previous_aligned_address(p, eve::expected_cardinal_t<std::remove_cvref_t<T>>{});
   }
 
   //================================================================================================
@@ -487,7 +487,7 @@ namespace eve
   template <typename T>
   EVE_FORCEINLINE auto next_aligned_address(T* p) noexcept
   {
-    return next_aligned_address(p, eve::expected<std::remove_cvref_t<T>>);
+    return next_aligned_address(p, eve::expected_cardinal_t<std::remove_cvref_t<T>>{});
   }
 
   //================================================================================================

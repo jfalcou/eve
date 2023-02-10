@@ -54,17 +54,8 @@ namespace eve
   //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
   //!    inline constexpr auto expected_cardinal_v = expected_cardinal_t<Type, ABI>::value;
   //!    @endcode
-  //!
-  //!    @code{.cpp}
-  //!    // Cardinal template inline variable to use with functions like eve::load
-  //!    template<typename Type, typename ABI = eve::current_abi_type>
-  //!    inline constexpr expected_cardinal<Type,ABI> const expected = {};
-  //!    @endcode
   //! @}
   //================================================================================================
   template<typename Type, regular_abi ABI = eve::current_abi_type>
   using expected_cardinal_t = fixed<expected_cardinal_v<Type,ABI>>;
-
-  template<typename Type, typename API = eve::current_abi_type>
-  inline constexpr expected_cardinal_t<Type,API> const expected = {};
 }
