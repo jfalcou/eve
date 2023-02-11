@@ -1,6 +1,44 @@
 Change Log {#changelog}
 ==========
 
+## Version 2023.02.15
+
+Codename: [Perdita Quiescent](https://en.wikipedia.org/wiki/Perdita_(The_Winter%27s_Tale))
+
+### What's Changed
+
+#### Removal and Depreciation
+  * The proba module as been removed. (See #1490) It will be reworked as a separate project later on with a proper API.
+
+#### Architectures/Compilers Support & Fixes
+##### The One Big News for this release: SVE
+
+  * SVE with fixed size, power of 2 cardinal is now supported for most of our API. Some more optimizations are on the way but the support is functional. (See  #1432, #1435, #1436, #1437, #1438, #1448, #1453, #1455, #1456, #1463, #1464, #1472, #1473, #1474,#1487, #1489, #1491, #1494, #1533, #1556)
+
+##### Other Fixes
+  * **EVE** now compiles on ARM M1 with Homebrew g++. (See #1471)
+  * **EVE** now compiles with Apple Clang (See #1479, #1485, #1502, #1530, #1531)
+  * Various efforts have been made to advance the MSVC situation. Help still welcomed.
+  * ARM all and any are now more efficient (See #1500)
+  * Integral sign/signnz functions are now more efficient on x86 (See #1499)
+  * Implementation for X86 AVX2/AVX512 gather and masked gather are now optimized. (See #1526)
+
+#### Features
+  * @jtlap implemented a large amount of new functions for `eve::complex`.
+  * Functions like exp, log or sqrt can now be called with a real entry and a complex output. (See #1528)
+  * Binary functions for which a n-ary extensions is available now support being called with a tuple-like parameter instead of a dynamic range (See #1422, #1509)
+  * The minmax function is now available. (See #1507)
+  * @DenisYaroshevskiy implemented new traits for algorithms to take care of costly kernels, no alignment and to support fused operations. (See #1535, #1543)
+
+#### Bug Fixes
+  * Convert is now more efficient and don't generate piecewise evaluation in some scenario involving logicals. (See #1447, #1428)
+  * `if_else` now uses the proper constant generator in optimized cases. (See #1529)
+  * Prevent constant to erroneously be callable with non-specific product types. (See #1540)
+  * A large cleanup of old traits and concepts has been done. The basics concepts around vectorizable and vectorized types has been therefore simplified and streamlined. (See #1468, #1477, #1527, #1488, #1545)
+  * Fix issue with dynamic SIMD extension detection that were broken by accident. (See #1504)
+
+**Full Changelog**: https://github.com/jfalcou/eve/compare/v2022.09.1...2023.02.15
+
 ## Version 2022.09.1
 
 Codename: [Rosalind Serendipitous](https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It))

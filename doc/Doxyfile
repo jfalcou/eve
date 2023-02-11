@@ -5,7 +5,7 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = E.V.E
 PROJECT_NUMBER         =
-PROJECT_BRIEF          = v2022.09.01
+PROJECT_BRIEF          = v2023.02.15
 PROJECT_LOGO           = logo.png
 
 OUTPUT_DIRECTORY       = $(EVE_DOXYGEN_OUPUT)
