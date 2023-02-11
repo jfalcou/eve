@@ -53,8 +53,8 @@ glob_unit("doc" ${doc_root} "core/saturated/*.cpp" )
 ##==================================================================================================
 ## GLOB and process dd doc tests
 ##==================================================================================================
-add_custom_target(doc.dd.exe        )
-add_dependencies(doc.exe doc.dd.exe )
+add_custom_target(doc.doublereal.exe        )
+add_dependencies(doc.exe doc.doublereal.exe )
 glob_unit("doc" ${doc_root} "dd/regular/*.cpp")
 
 ##==================================================================================================
