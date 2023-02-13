@@ -54,7 +54,7 @@ namespace eve
 //!      * If the element is less than 0, `NaN` is returned.
 //!
 //!   2. Returns [elementwise](@ref glossary_elementwise) the base 2 logarithm of the input
-//!      The behavior of this function is equivalent to `eve::log(z)/eve::log_2(eve::as(x))`.
+//!      The behavior of this function is equivalent to `log(z)/log_2(as(x))`.
 //!
 //!  @groupheader{Example}
 //!

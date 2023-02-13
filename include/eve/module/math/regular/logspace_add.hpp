@@ -44,7 +44,7 @@ namespace eve
 //! The call `logspace_add(arg0, arg1, args...)` is semantically equivalent to
 //!`log(exp(arg0) + exp(arg1) + exp(args)...)`.
 //!
-//! The result type is the [common value type](@ref common_value) of the parameters.
+//! The result type is the [common value type](@ref common_value_t) of the parameters.
 //!
 //!  @groupheader{Example}
 //!

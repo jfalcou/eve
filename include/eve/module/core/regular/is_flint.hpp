@@ -59,7 +59,7 @@ namespace eve
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/masked/is_flint.cpp}
+//!      @godbolt{doc/core/masked/is_flint.cpp}
 //!
 //! @}
 //================================================================================================

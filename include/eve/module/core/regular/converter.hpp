@@ -409,7 +409,7 @@ inline constexpr converter_type<std::int8_t> const int8 = {};
 //! @{
 //! @var int16
 //!
-//! @brief  convert a eve::value to a std;::int16_t based eve::value.
+//! @brief  convert a eve::value to a std::int16_t based eve::value.
 //!
 //!
 //!   **Defined in Header**

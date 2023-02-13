@@ -43,7 +43,7 @@ using splat_type = decorated<splat_()>;
 //!
 //!   **Parameters**
 //!
-//!      * `x`:  An instance of an [scalar value](@ref eve::scalar__value)
+//!      * `x`:  An instance of an [scalar value](@ref eve::scalar_value)
 //!
 //!    **Return value**
 //!

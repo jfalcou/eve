@@ -44,16 +44,16 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
-//!   In particular, for floating inputs:
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
+//!       In particular, for floating inputs:
 //!
-//!     * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!     * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!     * If the element is a `NaN`, `NaN` is returned
+//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
+//!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+//!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!       * If the element is a `NaN`, `NaN` is returned
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of base 10 of the input as if computed
-//!      by `eve::exp (eve::log_2(as(z))*z)`.
+//!   2.  Returns [elementwise](@ref glossary_elementwise) the exponential of base 10 of the input as if computed
+//!       by `eve::exp (eve::log_2(as(z))*z)`.
 //!
 //!  @groupheader{Example}
 //!
@@ -66,9 +66,9 @@ namespace eve
 //!     The call `eve::exp2[mask](x)` provides a masked version of `eve::exp2` which is
 //!     equivalent to `if_else (mask, exp2(x), x)`.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/math/masked/exp2.cpp}
+//!     @godbolt{doc/math/masked/exp2.cpp}
 //!  @}
 //================================================================================================
 namespace tag

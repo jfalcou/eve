@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   The result type is the [common value type](@ref common_value) of the absolute
+//!   The result type is the [common value type](@ref common_value_t) of the absolute
 //!   values of the  parameters.
 //!
 //!  @groupheader{Example}
@@ -59,7 +59,7 @@ namespace eve
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/math/regular/lpnorm.cpp}
+//!      @godbolt{doc/math/masked/lpnorm.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lpnorm_, lpnorm);
