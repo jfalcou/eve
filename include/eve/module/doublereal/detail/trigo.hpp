@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/doublereal/detail/trigo_base.hpp>
+#include <eve/module/doublereal/detail/trigo_eval.hpp>
 
 namespace eve::detail
 {
@@ -40,17 +41,19 @@ namespace eve::detail
   auto
   doublereal_unary_dispatch(eve::tag::sin_, full_circle_type const & , Z const& a) noexcept
   {
-    auto sign =  if_else(is_positive(a), one(as(a)), mone(as(a)));
     auto xx = eve::abs(a);
-    auto [nn, x, dx] = internal::rem_piby2(xx);
-    std::cout << "icitte " << x << std::endl;
-    auto n = if_else(nn > 3, nn-4, nn);
-    auto alpha = if_else(is_odd(n), zero, one(as(x)));
-    auto beta  = if_else(is_odd(n), one(as(x)), zero);
-    sign *=  if_else(n >= 2, mone(as(x)), one(as(x)));
-    auto s =   sign*(sin)(x);
-    auto c =   sign*(cos)(x);
-    return s*alpha+c*beta;
+    return if_else(xx > pi(as(xx)), allbits,  eve::detail::internal::sin_eval(xx));
+//     auto sign =  if_else(is_positive(a), one(as(a)), mone(as(a)));
+//     auto xx = eve::abs(a);
+//     auto [nn, x, dx] = internal::rem_piby2(xx);
+//     std::cout << "icitte " << x << std::endl;
+//     auto n = if_else(nn > 3, nn-4, nn);
+//     auto alpha = if_else(is_odd(n), zero, one(as(x)));
+//     auto beta  = if_else(is_odd(n), one(as(x)), zero);
+//     sign *=  if_else(n >= 2, mone(as(x)), one(as(x)));
+//     auto s =   sign*(sin)(x);
+//     auto c =   sign*(cos)(x);
+//     return s*alpha+c*beta;
   }
 
   template<typename Z>
