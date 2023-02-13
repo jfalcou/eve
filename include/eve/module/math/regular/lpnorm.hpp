@@ -59,7 +59,7 @@ namespace eve
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/math/masked/lpnorm.cpp}
+//!        @godbolt{doc/math/regular/lpnorm.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lpnorm_, lpnorm);

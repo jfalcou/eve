@@ -57,7 +57,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/$name$.cpp}
+//!  @godbolt{doc/core/constant/eps.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(eps_, eps);
