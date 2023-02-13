@@ -52,7 +52,6 @@ namespace eve::algo
   };
   inline constexpr force_cardinal_key_t force_cardinal_key;
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
-  template <typename T> inline constexpr auto force_cardinal_as = force_cardinal<eve::expected_cardinal_v<T>>;
 
   struct consider_types_key_t {};
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
@@ -132,6 +131,24 @@ namespace eve::algo
   //================================================================================================
   inline constexpr auto fuse_operations = ::rbr::flag( fuse_operations_tag{} );
 
+  struct allow_frequency_scaling_tag {};
+  //================================================================================================
+  //! @addtogroup algorithms
+  //! @{
+  //!   @var allow_frequency_scaling
+  //!
+  //!   @brief On intel using 64 byte registers requires processor to scale down it's frequency.
+  //!          This is only benefitial if you have a very large set of data to process. Otherwise
+  //!          it will likely degrade performance not only of the SIMD code but also of the code
+  //!          that follows.
+  //!
+  //!          By default this flag is off.
+  //!
+  //!    **See also nofs**
+  //! @}
+  //================================================================================================
+  inline constexpr auto allow_frequency_scaling = ::rbr::flag( allow_frequency_scaling_tag{} );
+
   // getters -------------------
 
   template <typename Traits>
@@ -147,9 +164,18 @@ namespace eve::algo
   using get_types_to_consider_for =
     kumi::result::cat_t<extra_types_to_consider<Traits>, types_to_consider_for_t<RorI>>;
 
+  namespace detail {
+    template <typename Traits, typename RorI>
+    using default_cardinal_to_use_t = eve::fixed<
+      Traits::contains(allow_frequency_scaling) ?
+        expected_cardinal_v<get_types_to_consider_for<Traits, RorI>> :
+        nofs_cardinal_v    <get_types_to_consider_for<Traits, RorI>>
+    >;
+  }
+
   template <typename Traits, typename RorI>
   using iteration_cardinal_t =
-    rbr::result::fetch_t< (force_cardinal_key | expected_cardinal_t<get_types_to_consider_for<Traits, RorI>>{})
+    rbr::result::fetch_t< (force_cardinal_key | detail::default_cardinal_to_use_t<Traits, RorI>{})
                         , Traits
                         >;
 

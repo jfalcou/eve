@@ -37,7 +37,7 @@ TTS_CASE("eve::views::reverse, reverse of reverse")
 {
   // pointer
   {
-    using ap = eve::aligned_ptr<std::int8_t>;
+    using ap = eve::nofs_aligned_ptr<std::int8_t>;
     ap                                  in{};
     eve::views::reverse_iterator<ap>    rev  = eve::views::reverse(in);
     ap                                  back = eve::views::reverse(rev);
@@ -69,10 +69,10 @@ TTS_CASE("eve::views::reverse, reverse of reverse")
 
 TTS_CASE("eve::views::reverse, preprocess_range")
 {
-  using ap = eve::aligned_ptr<int>;
+  using ap = eve::nofs_aligned_ptr<int>;
   using up = int*;
-  using a_it = eve::algo::ptr_iterator<ap, eve::fixed<eve::expected_cardinal_v<int>>>;
-  using u_it = eve::algo::ptr_iterator<up, eve::fixed<eve::expected_cardinal_v<int>>>;
+  using a_it = eve::algo::ptr_iterator<ap, eve::fixed<eve::nofs_cardinal_v<int>>>;
+  using u_it = eve::algo::ptr_iterator<up, eve::fixed<eve::nofs_cardinal_v<int>>>;
 
   {
     auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::reverse(eve::algo::as_range(ap{}, up{})));
@@ -93,16 +93,16 @@ TTS_CASE("eve::views::reverse, preprocess_range")
 
 TTS_CASE("eve::views::reverse, basic_load_store")
 {
-  std::array<int, eve::expected_cardinal_v<int>> a;
+  std::array<int, eve::nofs_cardinal_v<int>> a;
   a.fill(0);
 
-  eve::wide<int> iota  = [](int i, int) { return i; };
-  eve::wide<int> riota = [](int i, int size) { return size - i - 1; };
+  eve::nofs_wide<int> iota  = [](int i, int) { return i; };
+  eve::nofs_wide<int> riota = [](int i, int size) { return size - i - 1; };
 
   auto processed = eve::algo::preprocess_range(eve::algo::traits{}, eve::views::reverse(a));
 
   eve::store(iota, processed.begin());
 
-  TTS_EQUAL(riota, eve::wide<int>{a.data()});
+  TTS_EQUAL(riota, eve::nofs_wide<int>{a.data()});
   TTS_EQUAL(iota,  eve::load(processed.begin()));
 };

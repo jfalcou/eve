@@ -107,14 +107,15 @@ namespace udt
   {
     auto rho    = eve::hypot(x, y);
     auto theta  = eve::atan2(y, x);
-    return eve::wide<kumi::tuple<float,float>>{ rho, theta };
+    return eve::wide<polar_coords>{rho, theta};
   }
 
   auto to_polar( std::vector<float> const& xs, std::vector<float> const& ys)
   {
     eve::algo::soa_vector<polar_coords> outs(xs.size());
 
-    eve::algo::transform_to ( eve::views::zip(xs, ys), outs
+    eve::algo::transform_to[eve::algo::allow_frequency_scaling]
+                           ( eve::views::zip(xs, ys), outs
                             , [](auto in) { return to_polar( get<0>(in), get<1>(in) ); }
                             );
 
@@ -145,18 +146,20 @@ namespace udt
     }
   };
 
+  auto to_cartesian(eve::like<polar_coords> auto in) {
+    auto r = rho(in);
+    auto t = theta(in);
+   return eve::zip(eve::as<cartesian_coords>{},
+                   r * eve::cos(t), r * eve::sin(t));
+  }
+
   auto to_cartesian( eve::algo::soa_vector<polar_coords> const& ins)
   {
     eve::algo::soa_vector<cartesian_coords> outs(ins.size());
 
-    eve::algo::transform_to ( ins, outs
-                            , [](auto in)
-                              {
-                                auto r = rho(in);
-                                auto t = theta(in);
-                                return eve::wide<cartesian_coords>{ r * eve::cos(t), r * eve::sin(t) };
-                              }
-                            );
+    eve::algo::transform_to ( ins, outs,
+      [](eve::like<polar_coords> auto in) { return to_cartesian(in); }
+    );
 
     return outs;
   }
