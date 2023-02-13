@@ -60,12 +60,17 @@ TTS_CASE_WITH( "Check behavior of sin on wide"
   <typename T>(T const& a0, T const& a1 )
 {
   using e_t = typename T::value_type;
-  if constexpr(sizeof(e_t) == 8)
+  using u_t = eve::underlying_type_t<e_t>;
+  if constexpr(sizeof(u_t) == 8)
   {
     auto z = make_doublereal(a0,a1);
-    auto az = decltype(z)(eve::detail::map(eve::sin, z));
-    auto cz = eve::sin(z);
-    TTS_EQUAL ( cz, az);
-    TTS_ULP_EQUAL(cz, az, 0.5);
+    std::cout << "z " << z << std::endl;
+//    auto z1 = eve::detail::internal::rem_piby2(z);
+//    std::cout << tts::typename_<decltype(z1)> << std::endl;
+    auto cz = decltype(z)(eve::detail::map(eve::sin, z));
+     auto az = eve::full_circle(eve::sin)(z);
+//     auto cz = eve::sin(z);
+//     TTS_EQUAL ( cz, az);
+     TTS_ULP_EQUAL(cz, az, 0.5);
   }
 };
