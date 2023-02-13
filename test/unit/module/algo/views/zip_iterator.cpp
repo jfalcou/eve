@@ -56,7 +56,7 @@ TTS_CASE("zip_iterator for not eve iterators")
 
 TTS_CASE("zip_iterator for not eve iterators, unaligned")
 {
-  using a_p = eve::aligned_ptr<int>;
+  using a_p = eve::nofs_aligned_ptr<int>;
   using u_p = int*;
 
   using expected = eve::views::zip_iterator<u_p, u_p>;

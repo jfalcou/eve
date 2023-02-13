@@ -44,21 +44,25 @@ void inclusive_scan_complex(std::vector<float>& re, std::vector<float>& im, cmpl
     return x;
   };
 
-  eve::algo::inclusive_scan_inplace(  // in eve we have two versions of inclusive_scan
-                                      // _inplace and _to. The _to one is like std.
-                                      // the _inplace is the same as passing first as the output
-                                      // and is slightly more efficient
-                                      // ---
-    zipped,                           // we iterate over both vectors as one range
-                                      // ---
-    std::pair{plus, eve::zero},       // In eve we need not only the operation but also
-                                      // an identity element for that operation, so we accept a pair.
-                                      // eve::zero is an equivalent to cmplx_tuple{0.0, 0.0}
-                                      // but we use the knowledge that it's zero to generate better
-                                      // code for some platforms.
-                                      // ---
-    init                              // init value.
-                                      // Passing eve::zero here is not supported properly at the moment: FIX-955.
+  eve::algo::inclusive_scan_inplace     // in eve we have two versions of inclusive_scan
+                                        // _inplace and _to. The _to one is like std.
+                                        // the _inplace is the same as passing first as the output
+                                        // and is slightly more efficient
+                                        // ---
+  [eve::algo::allow_frequency_scaling]( // When using maximum width registers some CPUs (intel avx512)
+                                        // will very noticeably reduce frequecny. In this example we assume
+                                        // the input arrays to be very large and this being acceptable.
+                                        // ---
+    zipped,                             // we iterate over both vectors as one range
+                                        // ---
+    std::pair{plus, eve::zero},         // In eve we need not only the operation but also
+                                        // an identity element for that operation, so we accept a pair.
+                                        // eve::zero is an equivalent to cmplx_tuple{0.0, 0.0}
+                                        // but we use the knowledge that it's zero to generate better
+                                        // code for some platforms.
+                                        // ---
+    init                                // init value.
+                                        // Passing eve::zero here is not supported properly at the moment: FIX-955.
   );
 }
 

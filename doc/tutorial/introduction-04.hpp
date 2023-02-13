@@ -80,7 +80,9 @@ Let's see how eve::soa_vector can be used as a proper output parameter for out `
 @snippet tutorial/intro-04.cpp simd-soa_vector_out
 
 Now, as a final example, let's a do a `cartesian_coords` SIMD user-defined type and write
-`to_cartesian`.
+`to_cartesian`. We will also make `to_cartesian` to work for both scalar and wide cases,
+so you don't have to reimplement it. Since we made it so generic we also don't need to
+allow frequency scaling.
 
 @snippet tutorial/intro-04.cpp simd-soa_vector_in
 
@@ -90,5 +92,4 @@ In this tutorial, we managed to:
   - create new UDTs compatible with eve::wide by constrcution
   - use eve::soa_vector, the SIMD-aware storage in place of standard containers
   - process SIMD-aware storage with **EVE** algorithms
-
 **/

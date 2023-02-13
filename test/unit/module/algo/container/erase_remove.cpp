@@ -28,7 +28,7 @@ TTS_CASE("erase/remove idiom in eve")
   udt::point2D bad_start{0, 1};
 
   lines.erase(
-    eve::algo::remove_if(lines, [&](eve::wide<udt::line2D> l) {
+    eve::algo::remove_if(lines, [&](eve::nofs_wide<udt::line2D> l) {
       return get_start(l) == bad_start;
     }),
     lines.end()
@@ -50,7 +50,7 @@ TTS_CASE("erase/remove idiom in eve")
   };
 
   points.erase(
-    eve::algo::remove_if(points, [&](eve::wide<udt::point2D> p) {
+    eve::algo::remove_if(points, [&](eve::nofs_wide<udt::point2D> p) {
       return p == bad;
     }),
     points.end()

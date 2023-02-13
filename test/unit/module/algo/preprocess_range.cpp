@@ -18,12 +18,12 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
+  using N = eve::fixed<eve::nofs_cardinal_v<e_t>>;
 
   using u_it  = eve::algo::ptr_iterator<e_t*, N>;
   using uc_it = eve::algo::ptr_iterator<e_t const*, N>;
 
-  alignas(sizeof(eve::wide<e_t, N>) * 2) std::array<e_t, N{}()> arr{};
+  alignas(sizeof(eve::wide<e_t, N>) * 4) std::array<e_t, N{}()> arr{};
 
   std::vector<e_t> vec(100u, 0);
 
@@ -137,7 +137,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
   // over aligned
   {
     common_test(
-      eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{arr.begin()}, eve::aligned_ptr<e_t>{arr.end()},
+      eve::aligned_ptr<e_t, eve::fixed<N{}() * 2>>{arr.begin()}, eve::aligned_ptr<e_t, N>{arr.end()},
       eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{},
       eve::algo::ptr_iterator<eve::aligned_ptr<e_t, N>, N>{}
     );
@@ -159,7 +159,7 @@ TTS_CASE_TPL("Check preprocess_range for eve ptr iterators", algo_test::selected
 {
   using e_t = eve::element_type_t<T>;
   using N = eve::fixed<T::size()>;
-  using expected_N = eve::fixed<eve::expected_cardinal_v<e_t>>;
+  using expected_N = eve::fixed<eve::nofs_cardinal_v<e_t>>;
 
   alignas(sizeof(T)) std::array<e_t, T::size()> arr;
 
@@ -208,7 +208,7 @@ TTS_CASE_TPL("contiguous ranges", algo_test::selected_types)
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  using N = eve::fixed<eve::expected_cardinal_v<e_t>>;
+  using N = eve::fixed<eve::nofs_cardinal_v<e_t>>;
 
   // empty vector
   {
@@ -298,7 +298,7 @@ TTS_CASE_TPL("cardinal/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
-    TTS_TYPE_IS(eve::wide_value_type_t<I>, eve::wide<double>);
+    TTS_TYPE_IS(eve::wide_value_type_t<I>, eve::nofs_wide<double>);
   }
 
   {
@@ -317,7 +317,7 @@ TTS_CASE_TPL("cardinal/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(eve::wide_value_type_t<I>,
-                (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
+                (eve::wide<e_t, eve::fixed<eve::nofs_cardinal_v<double>>>));
   }
 
   {
@@ -326,7 +326,23 @@ TTS_CASE_TPL("cardinal/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(eve::wide_value_type_t<I>,
-                (eve::wide<e_t, eve::fixed<eve::expected_cardinal_v<double>>>));
+                (eve::wide<e_t, eve::fixed<eve::nofs_cardinal_v<double>>>));
+  }
+};
+
+TTS_CASE_TPL("support for equivlanets", algo_test::selected_types)
+<typename T>(tts::type<T>)
+{
+  using e_t = eve::element_type_t<T>;
+
+  std::vector<e_t> v;
+  {
+    auto processed = eve::algo::preprocess_range(
+    eve::algo::traits(eve::algo::expensive_callable), v);
+
+    TTS_TYPE_IS(decltype(processed.traits()),
+               (decltype(eve::algo::traits{eve::algo::no_aligning,
+                         eve::algo::unroll<1>})));
   }
 };
 

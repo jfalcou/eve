@@ -92,7 +92,7 @@ void
 minmax_generic_test(eve::as<T> as_t, Algo alg, Check check)
 {
   minmax_generic_test_page_ends<biggest, right>(
-      eve::as<eve::wide<typename T::value_type>> {}, alg, check);
+      eve::as<eve::nofs_wide<typename T::value_type>> {}, alg, check);
 
   minmax_generic_test_page_ends<biggest, right>(
       as_t, alg[eve::algo::force_cardinal<T::size()>][eve::algo::unroll<1>], check);

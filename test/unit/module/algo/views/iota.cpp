@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check iota_with_step_iterator, conversions", eve::test::scalar::al
   auto f = eve::views::iota_with_step(T(0), T(1));
 
   auto actual_bytes   = eve::views::convert(f, eve::as<std::int8_t>{});
-  auto expected_bytes = eve::views::iota_with_step(std::int8_t{0}, std::int8_t{1}).cardinal_cast(eve::lane<eve::expected_cardinal_v<T>>);
+  auto expected_bytes = eve::views::iota_with_step(std::int8_t{0}, std::int8_t{1}).cardinal_cast(eve::lane<eve::nofs_cardinal_v<T>>);
   TTS_EQUAL(expected_bytes, actual_bytes);
 
   auto actual_back = eve::views::convert(actual_bytes, eve::as<T>{});

@@ -55,6 +55,9 @@ SIMD algorithm call to use eve::views::zip for both the input and output ranges.
 
 @snippet tutorial/intro-03.cpp  simd-transform_zip
 
+@note: In this example we passed `eve::algo::allow_frequency_scaling` to simplify the example.
+We talk more about it in frequency scaling tutorial.
+
 # Conclusion
 In this tutorial, we managed to:
   - handle tuple in SIMD context using eve::wide and [**kumi::tuple**](https://jfalcou.github.io/kumi/)

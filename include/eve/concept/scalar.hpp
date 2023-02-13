@@ -108,4 +108,19 @@ concept product_scalar_value = detail::scalar_tuple<T>();
 //==================================================================================================
 template<typename T>
 concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T>;
+
+//================================================================================================
+//! @concept scalar_value
+//! @brief Specify that a type represents a scalar value
+//!
+//! The concept `scalar_value<T>` is satisfied if and only if it satisfies either
+//! arithmetic_scalar_value or logical_scalar_value.
+//!
+//! @groupheader{Examples}
+//! - `float`
+//! - `logical<std::int32_t>`
+//! - `kumi::tuple<double,std::int32_t>`
+//================================================================================================
+template<typename T>
+concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
 }

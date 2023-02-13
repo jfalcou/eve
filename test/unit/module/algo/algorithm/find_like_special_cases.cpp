@@ -66,7 +66,7 @@ TTS_CASE("eve.algo.find point")
     eve::algo::views::zip(x, y), eve::as<udt::point2D>{});
 
   auto found = eve::algo::find_if(as_points,
-    [](eve::wide<udt::point2D> points) { return get_y(points) != 0; });
+    [](eve::nofs_wide<udt::point2D> points) { return get_y(points) != 0; });
 
   TTS_EQUAL(eve::read(found), (udt::point2D{3, 1}));
 };
@@ -118,7 +118,7 @@ TTS_CASE("eve.algo.mismatch example, first point not within a radius")
   auto x_y = eve::algo::views::zip[eve::algo::common_with_types<double>](x, y);
 
   auto found = eve::algo::mismatch(x_y, within,
-    [](eve::wide<kumi::tuple<double, double>> x_y, eve::wide<double> r) {
+    [](eve::nofs_wide<kumi::tuple<double, double>> x_y, eve::nofs_wide<double> r) {
       auto [x, y] = x_y;
       return x * x + y * y <= r * r;
     }

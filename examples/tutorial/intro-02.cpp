@@ -102,7 +102,7 @@ namespace simd::unrolled
   {
     std::vector<float> out(xs.size());
 
-    eve::algo::transform_to[eve::algo::no_aligning][eve::algo::unroll<1>]
+    eve::algo::transform_to[ eve::algo::expensive_callable ]
                             ( eve::views::zip(xs, ys), out
                             , [](auto xy)
                               {

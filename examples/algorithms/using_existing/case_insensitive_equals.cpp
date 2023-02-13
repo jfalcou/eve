@@ -25,7 +25,7 @@ namespace ascii
   {
     // Making this work for scalar is a bit tricky because scalar code tends to convert to ints alot.
     // So we are only doing wides.
-    EVE_FORCEINLINE auto operator()(eve::wide<std::uint8_t> c) const
+    EVE_FORCEINLINE auto operator()(eve::like<std::uint8_t> auto c) const
     {
       // eve::sub[condition](a, b) is an equivalent to `eve::if_else(condition, a - b, a)`
       // but it will also use masked instructions when those are avaliable.
@@ -52,13 +52,10 @@ namespace ascii
     auto *l1 = reinterpret_cast<std::uint8_t const *>(a.end());
     auto *f2 = reinterpret_cast<std::uint8_t const *>(b.begin());
 
-    return eve::algo::equal(eve::algo::as_range(f1, l1),
-                            f2,
-                            [](eve::wide<std::uint8_t> a, eve::wide<std::uint8_t> b)
-                            {
-                              // convert both to uppercase and then check if they're equal
-                              return to_upper(a) == to_upper(b);
-                            });
+    // convert both to uppercase and then check if they're equal
+    return eve::algo::equal(
+      eve::views::map(eve::algo::as_range(f1, l1), to_upper),
+      eve::views::map(f2, to_upper));
   }
 }
 

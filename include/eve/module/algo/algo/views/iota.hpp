@@ -146,7 +146,7 @@ namespace eve::algo::views
     template <typename T>
     EVE_FORCEINLINE auto operator()(T base, T step) const
     {
-      using N = eve::fixed<eve::expected_cardinal_v<T>>;
+      using N = eve::fixed<eve::nofs_cardinal_v<T>>;
       return iota_with_step_iterator<T, N>{base, step, 0};
     }
 

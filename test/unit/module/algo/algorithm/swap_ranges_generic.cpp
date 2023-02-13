@@ -66,7 +66,7 @@ TTS_CASE_TPL("Check swap ranges", algo_test::selected_pairs_types)
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  auto native_tgt = eve::as<eve::wide<e_t>>{};
+  auto native_tgt = eve::as<eve::nofs_wide<e_t>>{};
 
   swap_ranges_test_page_ends(native_tgt, eve::algo::swap_ranges);
 

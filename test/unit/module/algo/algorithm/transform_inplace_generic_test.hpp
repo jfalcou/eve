@@ -68,7 +68,7 @@ namespace algo_test
   void transform_inplace_generic_test(eve::as<T> tgt, Algo alg, Control control, Args... args)
   {
     using e_t = eve::element_type_t<T>;
-    auto native_tgt = eve::as<eve::wide<e_t>>{};
+    auto native_tgt = eve::as<eve::nofs_wide<e_t>>{};
 
     transform_inplace_generic_test_page_ends(native_tgt, alg, control, args...);
     transform_inplace_generic_test_page_ends(tgt, alg[eve::algo::unroll<1>][eve::algo::force_cardinal<T::size()>],

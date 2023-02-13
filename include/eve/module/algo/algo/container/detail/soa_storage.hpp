@@ -9,7 +9,6 @@
 
 #include <eve/module/algo/algo/copy.hpp>
 #include <eve/module/algo/algo/views/zip.hpp>
-#include <eve/arch/expected_cardinal.hpp>
 #include <eve/concept/simd_allocator.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/memory/aligned_allocator.hpp>
