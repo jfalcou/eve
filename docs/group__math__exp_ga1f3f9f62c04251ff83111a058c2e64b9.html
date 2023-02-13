@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -143,16 +143,16 @@ $(document).ready(function(){initNavTree('group__math__exp_ga1f3f9f62c04251ff831
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> P, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> ... Ts&gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1value.html">value</a> T, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> ... Ts&gt;</div>
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">hypot</a>( T x,Ts ... args ) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:83</div></div>
-<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:70</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
+<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:71</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>p</code>, <code>x</code>, <code>... args</code>: <a class="el" href="concepteve_1_1floating__value.html">floating values</a></p>
+<p ><code>x</code>, <code>... args</code>: <a class="el" href="concepteve_1_1floating__value.html">floating real or complex values</a></p>
 <p ><b>Return value</b></p>
-<p >\(\sqrt{\sum_1^n |x_i|^2}\) is returned. The result type is the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the parameters.</p>
+<p >\(\sqrt{\sum_1^n |x_i|^2}\) is returned. The result type is the <a class="el" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">common value type</a> of the absolute values of the parameters.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
@@ -173,7 +173,6 @@ $(document).ready(function(){initNavTree('group__math__exp_ga1f3f9f62c04251ff831
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                       = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot(pf, qf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; pedantic(hypot)(pf, qf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"><span class="comment">//            ;</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span>        xf = -327680000;</div>
 <div class="line">  <span class="keywordtype">double</span>        yf = 10;</div>
@@ -183,6 +182,7 @@ $(document).ready(function(){initNavTree('group__math__exp_ga1f3f9f62c04251ff831
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                       = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot(xf, yf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; pedantic(hypot)(xf, yf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>)(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr callable_valmax_ valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:55</div></div>
@@ -192,7 +192,7 @@ $(document).ready(function(){initNavTree('group__math__exp_ga1f3f9f62c04251ff831
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
-<p class="startli">The call <code>pedantic(hypot)(x,args...)</code> computes the square root of the sum of the squares of the parameters without undue overflow or underflow at intermediate stages of the computation and can be more accurate than the non-decorated call.</p>
+<p class="startli">The call <code>pedantic(hypot)(x,args...)</code> computes the square root of the sum of the absolute squares of the parameters without undue overflow or underflow at intermediate stages of the computation and can be more accurate than the non-decorated call.</p>
 <p class="startli">Morever it returns \(\infty\) as soon as one of its parameter is infinite, regardless of possible <code>Nan</code> values.</p>
 <p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

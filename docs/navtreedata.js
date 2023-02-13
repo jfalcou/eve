@@ -26,47 +26,58 @@ var NAVTREE =
 [
   [ "E.V.E", "index.html", [
     [ "The Expressive Vector Engine", "index.html", [
-      [ "Video materials", "index.html#autotoc_md93", null ],
-      [ "Bibliographic References", "index.html#autotoc_md94", null ]
+      [ "Video materials", "index.html#autotoc_md94", null ],
+      [ "Bibliographic References", "index.html#autotoc_md95", null ]
     ] ],
     [ "Installation & Quick Start", "install.html", [
-      [ "Pre-requisites", "install.html#autotoc_md115", null ],
-      [ "Retrieving the source", "install.html#autotoc_md116", [
-        [ "Github", "install.html#autotoc_md117", null ],
-        [ "CPM", "install.html#autotoc_md118", null ],
-        [ "SPACK", "install.html#autotoc_md119", null ],
-        [ "AUR", "install.html#autotoc_md120", null ],
-        [ "Conan", "install.html#autotoc_md121", null ],
-        [ "VCPKG", "install.html#autotoc_md122", null ]
+      [ "Pre-requisites", "install.html#autotoc_md116", null ],
+      [ "Retrieving the source", "install.html#autotoc_md117", [
+        [ "Github", "install.html#autotoc_md118", null ],
+        [ "CPM", "install.html#autotoc_md119", null ],
+        [ "SPACK", "install.html#autotoc_md120", null ],
+        [ "AUR", "install.html#autotoc_md121", null ],
+        [ "Conan", "install.html#autotoc_md122", null ],
+        [ "VCPKG", "install.html#autotoc_md123", null ]
       ] ],
-      [ "Installation from Source", "install.html#autotoc_md123", [
-        [ "Setting up the Library", "install.html#autotoc_md124", null ],
-        [ "Building the Documentation", "install.html#autotoc_md125", null ]
+      [ "Installation from Source", "install.html#autotoc_md124", [
+        [ "Setting up the Library", "install.html#autotoc_md125", null ],
+        [ "Building the Documentation", "install.html#autotoc_md126", null ]
       ] ],
-      [ "Using the library", "install.html#autotoc_md126", [
-        [ "Compilation", "install.html#autotoc_md127", null ],
-        [ "Instruction Set Selection", "install.html#autotoc_md128", null ],
-        [ "Execution", "install.html#autotoc_md129", null ],
-        [ "Use in CMake", "install.html#autotoc_md130", null ]
+      [ "Using the library", "install.html#autotoc_md127", [
+        [ "Compilation", "install.html#autotoc_md128", null ],
+        [ "Instruction Set Selection", "install.html#autotoc_md129", null ],
+        [ "Execution", "install.html#autotoc_md130", null ],
+        [ "Use in CMake", "install.html#autotoc_md131", null ]
       ] ],
-      [ "Advanced options", "install.html#autotoc_md131", null ]
+      [ "Advanced options", "install.html#autotoc_md132", null ]
     ] ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2022.09.1", "changelog.html#autotoc_md132", null ],
-      [ "Version 2022.09.0", "changelog.html#autotoc_md133", [
-        [ "What's Changed", "changelog.html#autotoc_md134", null ],
-        [ "New Contributors", "changelog.html#autotoc_md135", null ]
+      [ "Version 2023.02.15", "changelog.html#autotoc_md133", [
+        [ "What's Changed", "changelog.html#autotoc_md134", [
+          [ "Removal and Depreciation", "changelog.html#autotoc_md135", null ],
+          [ "Architectures/Compilers Support & Fixes", "changelog.html#autotoc_md136", [
+            [ "The One Big News for this release: SVE", "changelog.html#autotoc_md137", null ],
+            [ "Other Fixes", "changelog.html#autotoc_md138", null ]
+          ] ],
+          [ "Features", "changelog.html#autotoc_md139", null ],
+          [ "Bug Fixes", "changelog.html#autotoc_md140", null ]
+        ] ]
       ] ],
-      [ "Version 2022.03.0", "changelog.html#autotoc_md136", [
-        [ "What's Changed", "changelog.html#autotoc_md137", null ],
-        [ "New Contributors", "changelog.html#autotoc_md138", null ]
+      [ "Version 2022.09.1", "changelog.html#autotoc_md141", null ],
+      [ "Version 2022.09.0", "changelog.html#autotoc_md142", [
+        [ "What's Changed", "changelog.html#autotoc_md143", null ],
+        [ "New Contributors", "changelog.html#autotoc_md144", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md139", [
-        [ "What's Changed", "changelog.html#autotoc_md140", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md145", [
+        [ "What's Changed", "changelog.html#autotoc_md146", null ],
+        [ "New Contributors", "changelog.html#autotoc_md147", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md141", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md148", [
+        [ "What's Changed", "changelog.html#autotoc_md149", null ]
+      ] ],
+      [ "Version beta.2020.09", "changelog.html#autotoc_md150", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -99,11 +110,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__bessel_ga40e333409894e1ca14d956fc96a3da34.html#ga40e333409894e1ca14d956fc96a3da34",
-"group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1",
-"group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a",
-"structeve_1_1if__.html",
-"structzip__iterator.html"
+"group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5",
+"group__core__predicates_ga2bd76380375d1e9e8b125f61c1c85829.html#ga2bd76380375d1e9e8b125f61c1c85829",
+"group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c",
+"structeve_1_1cardinal.html",
+"structeve_1_1wide_a452a5c32d8a4f59a03610431e9a951a4.html#a452a5c32d8a4f59a03610431e9a951a4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

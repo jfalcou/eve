@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,19 +144,19 @@ $(document).ready(function(){initNavTree('group__polynomial_ga0c1415eb0f5bd49dc3
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> Cs ...&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> Cs ...&gt;</div>
 <div class="line">  T <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">tchebeval</a>(T x, Cs ... cs) <span class="keyword">noexcept</span>;                                     <span class="comment">// 1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T, eve::range R&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::range R&gt;</div>
 <div class="line">  T <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">tchebeval</a>(T x, R r) <span class="keyword">noexcept</span>;                                           <span class="comment">// 2</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> U</div>
-<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> V, eve::range R&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> U</div>
+<div class="line">          , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> V, eve::range R&gt;</div>
 <div class="line">  T <a class="code hl_variable" href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">tchebeval</a>(T x, U a, V b,  R r) <span class="keyword">noexcept</span>;                                <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
-<div class="ttc" id="agroup__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291_html_ga0c1415eb0f5bd49dc31cdb1e044e7291"><div class="ttname"><a href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a></div><div class="ttdeci">constexpr callable_tchebeval_ tchebeval</div><div class="ttdoc">Evaluates a polynomial on the Tchebytchev polynomial basis.</div><div class="ttdef"><b>Definition:</b> tchebeval.hpp:80</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:114</div></div>
+<div class="ttc" id="agroup__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291_html_ga0c1415eb0f5bd49dc31cdb1e044e7291"><div class="ttname"><a href="group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291">eve::tchebeval</a></div><div class="ttdeci">constexpr callable_tchebeval_ tchebeval</div><div class="ttdoc">Evaluates a polynomial on the Tchebytchev polynomial basis.</div><div class="ttdef"><b>Definition:</b> tchebeval.hpp:77</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Evaluates the Tchebytchev polynomial using a variadic list of coefficients.</li>
 <li>Evaluates the Tchebytchev polynomial using a range of coefficients.</li>
@@ -164,10 +164,10 @@ $(document).ready(function(){initNavTree('group__polynomial_ga0c1415eb0f5bd49dc3
 </ol>
 <p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
-<li><code>a</code>, <code>b</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating arguments</a>. If present, they are the bounds of the interval for which the Tchebytchev polynomial must be evaluated ( -1 and 1 by default). A change of variable \( x -&gt; \frac{2x-a-b}{b-a}\) is internally performed.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
+<li><code>a</code>, <code>b</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating arguments</a>. If present, they are the bounds of the interval for which the Tchebytchev polynomial must be evaluated ( -1 and 1 by default). A change of variable \( x -&gt; \frac{2x-a-b}{b-a}\) is internally performed.</li>
 <li><code>cs</code>: <a class="el" href="concepteve_1_1value.html">values </a> expansion pack associated to the coefficients \((a_i)_{0\le i \lt n}\).</li>
-<li><code>r</code> : range containing The polynomial coefficients.</li>
+<li><code>r</code> : Range containing The polynomial coefficients.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >the value of the polynom at <code>x</code> is returned.</p>

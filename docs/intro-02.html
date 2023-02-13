@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('intro-02.html',''); initResizable(); }
 <div class="contents">
 <div class="textblock"><p ><a class="el" href="intro-01.html">In the previous tutorial</a>, we managed to convert a sequential function into a function using SIMD types and functions. In general, such function is meant to be applied to a large set of data instead of a single register.</p>
 <p >As for usual sequential computation, we want to lift ourselves from raw loops and think using algorithms. <b>EVE</b> provides such ready-to-use SIMD aware algorithms and this tutorial will take a look at how to handle them.</p>
-<h1><a class="anchor" id="autotoc_md153"></a>
+<h1><a class="anchor" id="autotoc_md162"></a>
 Initial problem</h1>
 <p >Let's try to apply our sequential conversion function over data stored in <code>std::vector</code> using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
@@ -159,13 +159,12 @@ Initial problem</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Very similar code, except for the fact the input data are passed directly without using iterators.</p>
-<h1><a class="anchor" id="autotoc_md154"></a>
+<h1><a class="anchor" id="autotoc_md163"></a>
 Toward SIMD Algorithms</h1>
 <p >We can turn this range-based code into a SIMD-aware call to one of the algorithms defined in eve::algo. All algorithms in <b>EVE</b> are range-based thus simplifying the transition from code using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo/transform.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/views/zip.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>simd</div>
 <div class="line">{</div>
@@ -183,7 +182,7 @@ Toward SIMD Algorithms</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algorithms_ga023d457444697194cbb8dcf21bcb236e_html_ga023d457444697194cbb8dcf21bcb236e"><div class="ttname"><a href="group__algorithms_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a></div><div class="ttdeci">constexpr auto transform_to</div><div class="ttdoc">SIMD version of std::transform.</div><div class="ttdef"><b>Definition:</b> transform.hpp:112</div></div>
-<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:70</div></div>
+<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr callable_hypot_ hypot</div><div class="ttdoc">Callable object computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:71</div></div>
 <div class="ttc" id="agroup__views_ga351e71cb38111c22884bb11fc51211a4_html_ga351e71cb38111c22884bb11fc51211a4"><div class="ttname"><a href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::algo::views::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Given relaxed_iterors and relaxed ranges, zips them together (creates a single object)....</div><div class="ttdef"><b>Definition:</b> zip.hpp:144</div></div>
 </div><!-- fragment --><p >Let's unpack all the new components:</p>
 <ul>
@@ -191,7 +190,7 @@ Toward SIMD Algorithms</h1>
 <li>eve::algo::transform_to takes a single input range. To pass multiple parallel ranges, we use eve::views::zip that constructs a view over them.</li>
 <li>as we consume a zipped range, the data passed to the lambda function behaves like a tuple. We will dive into details of this tuple later but for now just remember you can retrieve the data member exactly like with a regular tuple (using <code>get</code> or structured bindings).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md155"></a>
+<h1><a class="anchor" id="autotoc_md164"></a>
 Tuning algorithms</h1>
 <p >In SIMD algorithms we by default assume that the provided operation is simple (a few instructions), since this is the common case. This means we use aligned reads and do unrolling, which is an important optimisation. However, for a complex case, like here, it is beneficial to opt out.</p>
 <p ><b>EVE</b> provides various traits to customize algorithms behavior. The two main traits we're interested in are:</p>
@@ -202,8 +201,7 @@ Tuning algorithms</h1>
 <p >Algorithms in <b>EVE</b> being callable object, you can apply traits using their <code>[]</code> operators. For example, the following code disable aligning and force unroll to be 1.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo/transform.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/views/zip.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>simd::unrolled</div>
 <div class="line">{</div>
@@ -223,7 +221,7 @@ Tuning algorithms</h1>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algorithms_ga4e752623318f5d75907ed9f732c826a1_html_ga4e752623318f5d75907ed9f732c826a1"><div class="ttname"><a href="group__algorithms_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdoc">Traits for disabling alignment handling in algorithm.</div><div class="ttdef"><b>Definition:</b> traits.hpp:89</div></div>
 </div><!-- fragment --><p >Best strategy is always to benchmark your code and tune algorithms accordingly.</p>
-<h1><a class="anchor" id="autotoc_md156"></a>
+<h1><a class="anchor" id="autotoc_md165"></a>
 Conclusion</h1>
 <p >In this tutorial, we managed to:</p><ul>
 <li>use a simple algorithms from <b>EVE</b> algorithms set</li>

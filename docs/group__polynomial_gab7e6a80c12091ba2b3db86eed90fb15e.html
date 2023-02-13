@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -149,14 +149,14 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
 <div class="line">  eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>(N n, T x) <span class="keyword">noexcept</span>;                               <span class="comment">//1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
 <div class="line">  eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>(N n, M m, T x) <span class="keyword">noexcept</span>;                          <span class="comment">//2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e_html_gab7e6a80c12091ba2b3db86eed90fb15e"><div class="ttname"><a href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a></div><div class="ttdeci">constexpr callable_legendre_ legendre</div><div class="ttdoc">Computes the value of the Legendre and associated Legendre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> legendre.hpp:115</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Legendre polynomial of order n</li>
 <li>Associated Legendre polynomial of orders m, n</li>
@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <p ><b>Parameters</b></p>
 <ul>
 <li><code>n</code>, <code>m</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive arguments</a>.</li>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of the polynomial at <code>x</code> is returned.</p>
@@ -242,7 +242,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line">}</div>
 <div class="ttc" id="agroup__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599_html_gaa4853888b0e6be1fdbc24c9f6b372599"><div class="ttname"><a href="group__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599.html#gaa4853888b0e6be1fdbc24c9f6b372599">eve::q_kind</a></div><div class="ttdeci">constexpr q_kind_type const q_kind</div><div class="ttdoc">Higher-order Callable Object imbuing q_kind behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> kind.hpp:68</div></div>
 </div><!-- fragment --></li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
+<li><p class="startli"><a class="el" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
 <p class="startli">The expression <code>successor(legendre)(l, x, ln, lnm1)</code> (or <code>successor(legendre)(l, m, x, ln, lnm1)</code>) implements the three term recurrence relation for the (associated) Legendre polynomials, \(\displaystyle \mbox{P}^m_{l+1} =
       \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\) These functions can be used to create a sequence of values evaluated at the same <code>x</code> and for rising <code>l</code>. ( \(m = 0\) and no \(m\) in call are equivalent here).</p>
 <p class="startli"><b>Example</b></p>
@@ -270,14 +270,14 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[1]          = &quot;</span> &lt;&lt;  h[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> = 2; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;= 7; ++<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>)</div>
 <div class="line">  {</div>
-<div class="line">    h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] = <a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a>(<a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>)(<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1, xd, h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1], h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-2]);</div>
+<div class="line">    h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] = <a class="code hl_variable" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a>(<a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>)(<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1, xd, h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-1], h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>-2]);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  h[<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>(<a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> }</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:51</div></div>
-<div class="ttc" id="agroup__core__decorators_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr successor_type const successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> successor.hpp:42</div></div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:52</div></div>
+<div class="ttc" id="agroup__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0_html_ga4eb5977c62725094fe76ad7d62387dd0"><div class="ttname"><a href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a></div><div class="ttdeci">constexpr successor_type const successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> successor.hpp:42</div></div>
 </div><!-- fragment --></li>
 <li><p class="startli">eve::condon_shortley</p>
 <p class="startli">The expression <code>condon_shortley(legendre)(l, m, x)</code> multiplies the associated legendre polynomial value by the Condon-Shortley phase \((-1)^m\) to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math 1.79.</p>

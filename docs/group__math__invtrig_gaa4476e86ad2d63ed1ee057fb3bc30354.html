@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gaa4476e86ad2d63e
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">atan2</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354_html_gaa4476e86ad2d63ed1ee057fb3bc30354"><div class="ttname"><a href="group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354">eve::atan2</a></div><div class="ttdeci">constexpr callable_atan2_ atan2</div><div class="ttdoc">Callable object computing the arc tangent using the signs of arguments to determine the correct quadr...</div><div class="ttdef"><b>Definition:</b> atan2.hpp:85</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">floating real values</a></p>
 <p ><b>Return value</b></p>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gaa4476e86ad2d63e
 <li>If <code>x</code> is \(+\infty\) and <code>y</code> is finite and negative, \(-0\) is returned</li>
 <li><p class="startli">If either <code>x</code> is Nan or <code>y</code> is Nan, Nan is returned</p>
 <p class="startli">The call will return a NaN if <code>x</code> and <code>y</code> are both either null or infinite: this result is not <b>IEEE</b> conformant, but allows to simplify (and speed) the implementation. In all other cases, the result is standard conformant.</p>
-<p class="startli">The result type is the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the two parameters.</p>
+<p class="startli">The result type is the <a class="el" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">common value type</a> of the two parameters.</p>
 </li>
 </ul>
 <h2 class="groupheader">Example </h2>

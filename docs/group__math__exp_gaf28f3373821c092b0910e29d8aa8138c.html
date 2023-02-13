@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -148,11 +148,14 @@ $(document).ready(function(){initNavTree('group__math__exp_gaf28f3373821c092b091
 <div class="line">   <span class="keyword">auto</span> operator()(P p, T x,Ts ... args ) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:83</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>p</code>, <code>x</code>, <code>... args</code>: <a class="el" href="concepteve_1_1floating__value.html">floating values</a></p>
+<ul>
+<li><code>p</code> : <a class="el" href="concepteve_1_1floating__value.html">floating values</a></li>
+<li><code>x</code>, <code>... args</code>: <a class="el" href="concepteve_1_1floating__value.html">floating real or complex values</a></li>
+</ul>
 <p ><b>Return value</b></p>
-<p >The result type is the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the parameters.</p>
+<p >The result type is the <a class="el" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">common value type</a> of the absolute values of the parameters.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -196,7 +199,7 @@ $(document).ready(function(){initNavTree('group__math__exp_gaf28f3373821c092b091
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Computes the IEEE NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
-<div class="ttc" id="agroup__math__exp_gaf28f3373821c092b0910e29d8aa8138c_html_gaf28f3373821c092b0910e29d8aa8138c"><div class="ttname"><a href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a></div><div class="ttdeci">constexpr callable_lpnorm_ lpnorm</div><div class="ttdoc">Callable object computing the lpnorm operation .</div><div class="ttdef"><b>Definition:</b> lpnorm.hpp:63</div></div>
+<div class="ttc" id="agroup__math__exp_gaf28f3373821c092b0910e29d8aa8138c_html_gaf28f3373821c092b0910e29d8aa8138c"><div class="ttname"><a href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a></div><div class="ttdeci">constexpr callable_lpnorm_ lpnorm</div><div class="ttdoc">Callable object computing the lpnorm operation .</div><div class="ttdef"><b>Definition:</b> lpnorm.hpp:65</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
@@ -204,25 +207,7 @@ $(document).ready(function(){initNavTree('group__math__exp_gaf28f3373821c092b091
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code><a class="el" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c" title="Callable object computing the lpnorm operation .">eve::lpnorm</a>[mask](x, ...)</code> provides a masked version of <code><a class="el" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c" title="Callable object computing the lpnorm operation .">eve::lpnorm</a></code> which is equivalent to <code>if_else (mask, lpnorm(x, ...), x)</code>.</p>
 <p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 0.5f, 2.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))},</div>
-<div class="line">    of = { 0.0f, -0.0f, -1.0f, 3.0f},</div>
-<div class="line">    qf = { 20.0f, -5.0f,  8.0f, 1.0f},</div>
-<div class="line">    rf = { 2.0f, 3.0f, 4.0f, 0.0f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt;  <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                           = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm[pf &gt; 1.0](pf, of, qf, rf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>[pf &gt; 1.0](pf, of, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<div class="fragment"></div><!-- fragment --> </li>
 </ul>
 
 </div>

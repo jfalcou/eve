@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -146,57 +146,17 @@ $(document).ready(function(){initNavTree('group__special_ga171cb77f0c3616c132aff
 <div class="line">   <span class="keyword">template</span>&lt; like&lt;complex&gt; T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__special_ga171cb77f0c3616c132afffac1ea9342c.html#ga171cb77f0c3616c132afffac1ea9342c">faddeeva</a>(T z) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_ga171cb77f0c3616c132afffac1ea9342c_html_ga171cb77f0c3616c132afffac1ea9342c"><div class="ttname"><a href="group__special_ga171cb77f0c3616c132afffac1ea9342c.html#ga171cb77f0c3616c132afffac1ea9342c">eve::faddeeva</a></div><div class="ttdeci">constexpr callable_faddeeva_ faddeeva</div><div class="ttdoc">Callable object computing  the scaled complex error func.</div><div class="ttdef"><b>Definition:</b> faddeeva.hpp:60</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__special_ga171cb77f0c3616c132afffac1ea9342c_html_ga171cb77f0c3616c132afffac1ea9342c"><div class="ttname"><a href="group__special_ga171cb77f0c3616c132afffac1ea9342c.html#ga171cb77f0c3616c132afffac1ea9342c">eve::faddeeva</a></div><div class="ttdeci">constexpr callable_faddeeva_ faddeeva</div><div class="ttdoc">Callable object computing  the scaled complex error func.</div><div class="ttdef"><b>Definition:</b> faddeeva.hpp:55</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>z</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floatingl</a> or <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
+<li><code>z</code>: <a class="el" href="concepteve_1_1floating__value.html">floatingl</a> or <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >Returns \(e^{-z^2}\mathrm{erfc}(-iz)\) the scaled complex error func</p>
 <h2 class="groupheader">Example </h2>
 <p ><b>Complex version</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="comment">//using wide_ft = eve::wide &lt;double, eve::fixed&lt;4&gt;&gt;;</span></div>
-<div class="line"><span class="keyword">using      </span>cft = <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;double&gt;</a>;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line"><span class="comment">//   wide_ft ref = { 1.0, 1.0, -1.0, 0.5};</span></div>
-<div class="line"><span class="comment">//   wide_ft imf = { 0.0 , -1.0,  -5.0, 0.0};</span></div>
-<div class="line"><span class="comment">//   auto z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</span></div>
-<div class="line"><span class="comment">//   std::cout</span></div>
-<div class="line"><span class="comment">//     &lt;&lt; &quot;---- simd&quot; &lt;&lt; std::endl</span></div>
-<div class="line"><span class="comment">//     &lt;&lt; &quot;&lt;- z             = &quot; &lt;&lt; z &lt;&lt; std::endl</span></div>
-<div class="line"><span class="comment">//     &lt;&lt; &quot;-&gt; faddeeva(z)  = &quot; &lt;&lt; eve::faddeeva(z) &lt;&lt; std::endl;</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> pr = [](<span class="keywordtype">double</span> x,  <span class="keywordtype">double</span> y){</div>
-<div class="line">    <span class="keyword">auto</span> z = cft{x, y};</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot; z &quot;</span> &lt;&lt; z &lt;&lt; std::endl;</div>
-<div class="line">     <span class="keyword">auto</span> fz =  <a class="code hl_variable" href="group__special_ga171cb77f0c3616c132afffac1ea9342c.html#ga171cb77f0c3616c132afffac1ea9342c">eve::faddeeva</a>(z);</div>
-<div class="line">     std::cout &lt;&lt; <span class="stringliteral">&quot;fz &quot;</span>&lt;&lt; fz &lt;&lt; std::endl;</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">//     std::cout &lt;&lt; &quot;z = &quot; &lt;&lt; z &lt;&lt; &quot;-&gt; fad(z) = &quot;&lt;&lt; fz &lt;&lt; std::endl;</span></div>
-<div class="line">  };</div>
-<div class="line">  pr(1.0, 1.0);</div>
-<div class="line">  pr(0.5, 1.0);</div>
-<div class="line">  pr(10, 10);</div>
-<div class="line">  pr(65, 0);</div>
-<div class="line">  pr(0.01, 1);</div>
-<div class="line">  pr(1.0e-4, 2);</div>
-<div class="line">  pr(0.785398163397448, 0);</div>
-<div class="line">  pr(<a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), 0);</div>
-<div class="line">  pr(<a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()),<a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()));</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr callable_nan_ nan</div><div class="ttdoc">Computes the IEEE NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:53</div></div>
-<div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:40</div></div>
-</div><!-- fragment --> 
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -146,14 +146,17 @@ $(document).ready(function(){initNavTree('group__core__predicates_gae7f301f7acb3
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d">is_not_nan</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d_html_gae7f301f7acb3b0f0830cba0153484c3d"><div class="ttname"><a href="group__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d">eve::is_not_nan</a></div><div class="ttdeci">constexpr callable_is_not_nan_ is_not_nan</div><div class="ttdoc">Returns a logical true if and only if the element value is not NaN.</div><div class="ttdef"><b>Definition:</b> is_not_nan.hpp:62</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d_html_gae7f301f7acb3b0f0830cba0153484c3d"><div class="ttname"><a href="group__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d">eve::is_not_nan</a></div><div class="ttdeci">constexpr callable_is_not_nan_ is_not_nan</div><div class="ttdoc">Returns a logical true if and only if the element value is not NaN.</div><div class="ttdef"><b>Definition:</b> is_not_nan.hpp:65</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real or complex argument</a>.</li>
 </ul>
-<p ><b>Return value</b> </p><pre class="fragment">The call `eve::is_not_nan(x)`  is semantically  equivalent to:
+<p ><b>Return value</b> </p><pre class="fragment">For real entries the call `eve::is_not_nan(x)`  is semantically  equivalent to:
 `eve::is_equal(x, x)` in particular this is always true for integral types.
+
+For complex entries  `is_not_nan(z)` is semantically  equivalent to
+`eve::is_not_nan(real(z)) &amp;&amp; eve::is_not_nan(imag(z))`,
 </pre> <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

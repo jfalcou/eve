@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('structeve_1_1wide.html',''); initResiz
 <div class="textblock"><div class="compoundTemplParams">template&lt;arithmetic_scalar_value Type, typename Cardinal&gt;<br />
 struct eve::wide&lt; Type, Cardinal &gt;</div><p >Wrapper for SIMD registers. </p>
 <p ><b>Required header:</b> <code>#include &lt;eve/wide.hpp&gt;</code></p>
-<p ><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> is an architecture-agnostic representation of a IMD register and provides standardized API to access informations, compute values and manipulate such register.</p>
+<p ><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> is an architecture-agnostic representation of a SIMD register and provides standardized API to access informations, compute values and manipulate such register.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Type</td><td>Type of value to store in the register </td></tr>
@@ -188,6 +188,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a361d5a9fd15f6b2e4a86ec5ae2880e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c3c77232aadeb56066359ff149af963"><td class="memItemLeft" align="right" valign="top"><a id="a4c3c77232aadeb56066359ff149af963" name="a4c3c77232aadeb56066359ff149af963"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> ()</td></tr>
+<tr class="memdesc:a4c3c77232aadeb56066359ff149af963"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
 <tr class="separator:a4c3c77232aadeb56066359ff149af963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ad46a6f998bb898592da9625181634d"><td class="memItemLeft" align="right" valign="top"><a id="a4ad46a6f998bb898592da9625181634d" name="a4ad46a6f998bb898592da9625181634d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;r) noexcept</td></tr>
@@ -215,24 +216,24 @@ requires (kumi::product_type&lt;Type&gt;)</td></tr>
 <tr class="memitem:afd2944c4f0f54a386e887762385c91ba"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1soa__ptr.html">eve::soa_ptr</a>&lt; Ptr... &gt; ptr) noexcept</td></tr>
 <tr class="memdesc:afd2944c4f0f54a386e887762385c91ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
 <tr class="separator:afd2944c4f0f54a386e887762385c91ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ca6afd4d88b463815c5b6d00f59a78e"><td class="memTemplParams" colspan="2"><a id="a5ca6afd4d88b463815c5b6d00f59a78e" name="a5ca6afd4d88b463815c5b6d00f59a78e"></a>
-template&lt;scalar_value S&gt; <br />
-requires requires(S v) { static_cast&lt;Type&gt;(v); }</td></tr>
-<tr class="memitem:a5ca6afd4d88b463815c5b6d00f59a78e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S const &amp;v) noexcept</td></tr>
-<tr class="memdesc:a5ca6afd4d88b463815c5b6d00f59a78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> by splatting a scalar value in all lanes. <br /></td></tr>
-<tr class="separator:a5ca6afd4d88b463815c5b6d00f59a78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00eb579b8dede0a60445a148b01f18e0"><td class="memTemplParams" colspan="2"><a id="a00eb579b8dede0a60445a148b01f18e0" name="a00eb579b8dede0a60445a148b01f18e0"></a>
+template&lt;typename S &gt; <br />
+requires std::constructible_from&lt;Type,S&gt;</td></tr>
+<tr class="memitem:a00eb579b8dede0a60445a148b01f18e0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a00eb579b8dede0a60445a148b01f18e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> by splatting a scalar value in all lanes. <br /></td></tr>
+<tr class="separator:a00eb579b8dede0a60445a148b01f18e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="memTemplParams" colspan="2"><a id="adf12020cb7ac67cc5ee1c165c2b563d7" name="adf12020cb7ac67cc5ee1c165c2b563d7"></a>
 template&lt;scalar_value S0, scalar_value S1, scalar_value... Ss&gt; <br />
 requires ( (Cardinal::value == 2 + sizeof...(vs)) &amp;&amp; std::is_convertible_v&lt;S0,Type&gt; &amp;&amp; (std::is_convertible_v&lt;S1, Type&gt; &amp;&amp; ... &amp;&amp; std::is_convertible_v&lt;Ss, Type&gt;) )</td></tr>
 <tr class="memitem:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S0 v0, S1 v1, Ss... vs) noexcept</td></tr>
 <tr class="memdesc:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a sequence of scalar values of proper size. <br /></td></tr>
 <tr class="separator:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c953809c8fec26c283dacb91f64c0e7"><td class="memTemplParams" colspan="2"><a id="a1c953809c8fec26c283dacb91f64c0e7" name="a1c953809c8fec26c283dacb91f64c0e7"></a>
+<tr class="memitem:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="memTemplParams" colspan="2"><a id="ac0dae309cb7ceee577c5a9f90b4d1841" name="ac0dae309cb7ceee577c5a9f90b4d1841"></a>
 template&lt;typename S0 , typename... Ss&gt; <br />
-requires kumi::sized_product_type&lt;Type, sizeof...(Ss) + 1&gt;</td></tr>
-<tr class="memitem:a1c953809c8fec26c283dacb91f64c0e7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S0 const &amp;v0, Ss const &amp;...vs) noexcept</td></tr>
-<tr class="memdesc:a1c953809c8fec26c283dacb91f64c0e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a sequence of values. <br /></td></tr>
-<tr class="separator:a1c953809c8fec26c283dacb91f64c0e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+requires (kumi::sized_product_type_or_more&lt;Type,1+sizeof...(Ss)&gt;)</td></tr>
+<tr class="memitem:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S0 const &amp;v0, Ss const &amp;...vs) noexcept</td></tr>
+<tr class="memdesc:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a sequence of values. <br /></td></tr>
+<tr class="separator:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a007581d779fcbfc70bfcee970ee95451"><td class="memTemplParams" colspan="2">template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a>, <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a> &gt; Generator&gt; </td></tr>
 <tr class="memitem:a007581d779fcbfc70bfcee970ee95451"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html#a007581d779fcbfc70bfcee970ee95451">wide</a> (Generator &amp;&amp;g) noexcept</td></tr>
 <tr class="memdesc:a007581d779fcbfc70bfcee970ee95451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <a href="structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html#a007581d779fcbfc70bfcee970ee95451">More...</a><br /></td></tr>
@@ -389,78 +390,74 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a cla
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
 <tr class="memdesc:a8e54890bbbde58ea9d9aef6f940da04a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary minus operator. See also: eve::unary_minus. <br /></td></tr>
 <tr class="separator:a8e54890bbbde58ea9d9aef6f940da04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac71a323fa2c072c72cb6d577f6997d7d"><td class="memTemplParams" colspan="2"><a id="ac71a323fa2c072c72cb6d577f6997d7d" name="ac71a323fa2c072c72cb6d577f6997d7d"></a>
-template&lt;real_value V&gt; <br />
-requires (!kumi::product_type&lt;Type&gt;)</td></tr>
-<tr class="memitem:ac71a323fa2c072c72cb6d577f6997d7d"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator+=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V v) noexcept</td></tr>
-<tr class="memdesc:ac71a323fa2c072c72cb6d577f6997d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound addition on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
-<tr class="separator:ac71a323fa2c072c72cb6d577f6997d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44981c570da1fbd94e93b78af2df3035"><td class="memTemplParams" colspan="2"><a id="a44981c570da1fbd94e93b78af2df3035" name="a44981c570da1fbd94e93b78af2df3035"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:a44981c570da1fbd94e93b78af2df3035"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator+=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V v) noexcept -&gt; decltype(detail::self_add(w, v)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:a44981c570da1fbd94e93b78af2df3035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound addition on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:a44981c570da1fbd94e93b78af2df3035"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7061787eec9fca7b788bff662298493"><td class="memItemLeft" align="right" valign="top"><a id="ac7061787eec9fca7b788bff662298493" name="ac7061787eec9fca7b788bff662298493"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
 <tr class="memdesc:ac7061787eec9fca7b788bff662298493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
 <tr class="separator:ac7061787eec9fca7b788bff662298493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ef041bcce0fac22aebc23540850094c"><td class="memItemLeft" align="right" valign="top"><a id="a9ef041bcce0fac22aebc23540850094c" name="a9ef041bcce0fac22aebc23540850094c"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (real_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
-<tr class="memdesc:a9ef041bcce0fac22aebc23540850094c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
-<tr class="separator:a9ef041bcce0fac22aebc23540850094c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ab56a67c48253b4e8a18ec3aec8f4c4"><td class="memItemLeft" align="right" valign="top"><a id="a0ab56a67c48253b4e8a18ec3aec8f4c4" name="a0ab56a67c48253b4e8a18ec3aec8f4c4"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, real_scalar_value auto s) noexcept</td></tr>
-<tr class="memdesc:a0ab56a67c48253b4e8a18ec3aec8f4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
-<tr class="separator:a0ab56a67c48253b4e8a18ec3aec8f4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a129b4a636775ce44ea137fcd1ab91744"><td class="memTemplParams" colspan="2"><a id="a129b4a636775ce44ea137fcd1ab91744" name="a129b4a636775ce44ea137fcd1ab91744"></a>
-template&lt;real_value V&gt; <br />
-requires (!kumi::product_type&lt;Type&gt;)</td></tr>
-<tr class="memitem:a129b4a636775ce44ea137fcd1ab91744"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V v) noexcept</td></tr>
-<tr class="memdesc:a129b4a636775ce44ea137fcd1ab91744"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound difference on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
-<tr class="separator:a129b4a636775ce44ea137fcd1ab91744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0104aef15d7e3cb037fe59f49e8dc947"><td class="memItemLeft" align="right" valign="top"><a id="a0104aef15d7e3cb037fe59f49e8dc947" name="a0104aef15d7e3cb037fe59f49e8dc947"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a0104aef15d7e3cb037fe59f49e8dc947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:a0104aef15d7e3cb037fe59f49e8dc947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423c2f1e709de005abcac3797c408b07"><td class="memItemLeft" align="right" valign="top"><a id="a423c2f1e709de005abcac3797c408b07" name="a423c2f1e709de005abcac3797c408b07"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a423c2f1e709de005abcac3797c408b07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:a423c2f1e709de005abcac3797c408b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfc9456d1af9f80d81e789f12b631582"><td class="memTemplParams" colspan="2"><a id="adfc9456d1af9f80d81e789f12b631582" name="adfc9456d1af9f80d81e789f12b631582"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:adfc9456d1af9f80d81e789f12b631582"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V v) noexcept -&gt; decltype(detail::self_sub(w, v)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:adfc9456d1af9f80d81e789f12b631582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound difference on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:adfc9456d1af9f80d81e789f12b631582"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="memItemLeft" align="right" valign="top"><a id="a01e7120dbe0bcb7f3c4dcd7c9f798f50" name="a01e7120dbe0bcb7f3c4dcd7c9f798f50"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
 <tr class="memdesc:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
 <tr class="separator:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80c7c016756568a56db6217674e4f1cb"><td class="memItemLeft" align="right" valign="top"><a id="a80c7c016756568a56db6217674e4f1cb" name="a80c7c016756568a56db6217674e4f1cb"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (real_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
-<tr class="memdesc:a80c7c016756568a56db6217674e4f1cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
-<tr class="separator:a80c7c016756568a56db6217674e4f1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6f0087c2cc4c172245e29b4639ed4f0"><td class="memItemLeft" align="right" valign="top"><a id="ac6f0087c2cc4c172245e29b4639ed4f0" name="ac6f0087c2cc4c172245e29b4639ed4f0"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, real_scalar_value auto s) noexcept</td></tr>
-<tr class="memdesc:ac6f0087c2cc4c172245e29b4639ed4f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
-<tr class="separator:ac6f0087c2cc4c172245e29b4639ed4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17ba513a3d9e3f483308c7395ac56b05"><td class="memTemplParams" colspan="2"><a id="a17ba513a3d9e3f483308c7395ac56b05" name="a17ba513a3d9e3f483308c7395ac56b05"></a>
-template&lt;real_value V&gt; <br />
-requires (!kumi::product_type&lt;Type&gt;)</td></tr>
-<tr class="memitem:a17ba513a3d9e3f483308c7395ac56b05"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>
-<tr class="memdesc:a17ba513a3d9e3f483308c7395ac56b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound product on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
-<tr class="separator:a17ba513a3d9e3f483308c7395ac56b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a007897f35efa2c0fd8d7d0e4e1effaaa"><td class="memItemLeft" align="right" valign="top"><a id="a007897f35efa2c0fd8d7d0e4e1effaaa" name="a007897f35efa2c0fd8d7d0e4e1effaaa"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a007897f35efa2c0fd8d7d0e4e1effaaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:a007897f35efa2c0fd8d7d0e4e1effaaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b2baa0cc4e98e826753294f209fc4ad"><td class="memItemLeft" align="right" valign="top"><a id="a7b2baa0cc4e98e826753294f209fc4ad" name="a7b2baa0cc4e98e826753294f209fc4ad"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a7b2baa0cc4e98e826753294f209fc4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:a7b2baa0cc4e98e826753294f209fc4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="memTemplParams" colspan="2"><a id="a515ffda667b4cfd8a52c7465b95fdfa6" name="a515ffda667b4cfd8a52c7465b95fdfa6"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept -&gt; decltype(detail::self_mul(w, o)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound product on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="memItemLeft" align="right" valign="top"><a id="a39ece988f1ebba90718a9b6fa5ce6b11" name="a39ece988f1ebba90718a9b6fa5ce6b11"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
 <tr class="memdesc:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
 <tr class="separator:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adaf04e9ce37338a38d81b1361d0de214"><td class="memItemLeft" align="right" valign="top"><a id="adaf04e9ce37338a38d81b1361d0de214" name="adaf04e9ce37338a38d81b1361d0de214"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (real_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
-<tr class="memdesc:adaf04e9ce37338a38d81b1361d0de214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
-<tr class="separator:adaf04e9ce37338a38d81b1361d0de214"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b0a936193ffad516806c772a8025677"><td class="memItemLeft" align="right" valign="top"><a id="a7b0a936193ffad516806c772a8025677" name="a7b0a936193ffad516806c772a8025677"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, real_scalar_value auto s) noexcept</td></tr>
-<tr class="memdesc:a7b0a936193ffad516806c772a8025677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
-<tr class="separator:a7b0a936193ffad516806c772a8025677"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8f479dda0d5189c0652167b5317e7d7"><td class="memTemplParams" colspan="2"><a id="ad8f479dda0d5189c0652167b5317e7d7" name="ad8f479dda0d5189c0652167b5317e7d7"></a>
-template&lt;real_value V&gt; <br />
-requires (!kumi::product_type&lt;Type&gt;)</td></tr>
-<tr class="memitem:ad8f479dda0d5189c0652167b5317e7d7"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>
-<tr class="memdesc:ad8f479dda0d5189c0652167b5317e7d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound division on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
-<tr class="separator:ad8f479dda0d5189c0652167b5317e7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b36d20fbcacad6aafb4388d5f5d0930"><td class="memItemLeft" align="right" valign="top"><a id="a6b36d20fbcacad6aafb4388d5f5d0930" name="a6b36d20fbcacad6aafb4388d5f5d0930"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a6b36d20fbcacad6aafb4388d5f5d0930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:a6b36d20fbcacad6aafb4388d5f5d0930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca092521151ec97b8ad89f15adaddcac"><td class="memItemLeft" align="right" valign="top"><a id="aca092521151ec97b8ad89f15adaddcac" name="aca092521151ec97b8ad89f15adaddcac"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:aca092521151ec97b8ad89f15adaddcac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:aca092521151ec97b8ad89f15adaddcac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="memTemplParams" colspan="2"><a id="aa0bdcf56225155e2b0ea9be2cd771e8a" name="aa0bdcf56225155e2b0ea9be2cd771e8a"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept -&gt; decltype(detail::self_div(w, o)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound division on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="memItemLeft" align="right" valign="top"><a id="a8227ccccaac41f1a70e37f2a8ce5fa49" name="a8227ccccaac41f1a70e37f2a8ce5fa49"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
 <tr class="memdesc:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
 <tr class="separator:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45a7fc0e6151b53c6333a8864ea58a48"><td class="memItemLeft" align="right" valign="top"><a id="a45a7fc0e6151b53c6333a8864ea58a48" name="a45a7fc0e6151b53c6333a8864ea58a48"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (real_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
-<tr class="memdesc:a45a7fc0e6151b53c6333a8864ea58a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
-<tr class="separator:a45a7fc0e6151b53c6333a8864ea58a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2eb4afc49cc48628b7e65726a98b45e"><td class="memItemLeft" align="right" valign="top"><a id="ac2eb4afc49cc48628b7e65726a98b45e" name="ac2eb4afc49cc48628b7e65726a98b45e"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, real_scalar_value auto s) noexcept</td></tr>
-<tr class="memdesc:ac2eb4afc49cc48628b7e65726a98b45e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
-<tr class="separator:ac2eb4afc49cc48628b7e65726a98b45e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafea0be25fd56742c5359c53a971a550"><td class="memItemLeft" align="right" valign="top"><a id="aafea0be25fd56742c5359c53a971a550" name="aafea0be25fd56742c5359c53a971a550"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:aafea0be25fd56742c5359c53a971a550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:aafea0be25fd56742c5359c53a971a550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78289dd6511fa2ace53939950e110a8e"><td class="memItemLeft" align="right" valign="top"><a id="a78289dd6511fa2ace53939950e110a8e" name="a78289dd6511fa2ace53939950e110a8e"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a78289dd6511fa2ace53939950e110a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:a78289dd6511fa2ace53939950e110a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cfdc7944754eb9c050d59c29ecb3041"><td class="memTemplParams" colspan="2"><a id="a2cfdc7944754eb9c050d59c29ecb3041" name="a2cfdc7944754eb9c050d59c29ecb3041"></a>
 template&lt;integral_value V&gt; </td></tr>
 <tr class="memitem:a2cfdc7944754eb9c050d59c29ecb3041"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator%=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -127,16 +127,19 @@ $(document).ready(function(){initNavTree('concepteve_1_1scalar__value.html','');
 <p><code>#include &lt;eve/concept/vectorizable.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Specify that a type represents a scalar value. </p>
-<p >The concept <code>scalar_value&lt;T&gt;</code> is satisfied if and only if it is arithmetic or a product type which types satisfies scalar_value themselves.</p>
+<p >The concept <code>scalar_value&lt;T&gt;</code> is satisfied if and only if it satisfies either arithmetic_scalar_value or logical_scalar_value.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
 <li><code>float</code></li>
-<li><code>std::int32_t</code> </li>
+<li><code>logical&lt;std::int32_t&gt;</code></li>
+<li><code>kumi::tuple&lt;double,std::int32_t&gt;</code> </li>
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1scalar__value.html">eve::scalar_value</a> =  detail::is_scalar_value&lt;T&gt;::value</div>
-<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:71</div></div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1scalar__value.html">eve::scalar_value</a> =  <a class="code hl_concept" href="concepteve_1_1arithmetic__scalar__value.html">arithmetic_scalar_value&lt;T&gt;</a> || <a class="code hl_concept" href="concepteve_1_1logical__scalar__value.html">logical_scalar_value&lt;T&gt;</a></div>
+<div class="ttc" id="aconcepteve_1_1arithmetic__scalar__value_html"><div class="ttname"><a href="concepteve_1_1arithmetic__scalar__value.html">eve::arithmetic_scalar_value</a></div><div class="ttdoc">Specify that a type represents a type suitable for vectorization.</div><div class="ttdef"><b>Definition:</b> scalar.hpp:110</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__scalar__value_html"><div class="ttname"><a href="concepteve_1_1logical__scalar__value.html">eve::logical_scalar_value</a></div><div class="ttdoc">Specify that a type represents a logical scalar value.</div><div class="ttdef"><b>Definition:</b> scalar.hpp:59</div></div>
+<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:28</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

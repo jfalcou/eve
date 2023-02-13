@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::expected_cardinal&lt; Type, ABI &gt; Struct Template Reference</title>
+<title>E.V.E: eve::has_store_equivalent Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structeve_1_1expected__cardinal.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('concepteve_1_1has__store__equivalent.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,60 +117,31 @@ $(document).ready(function(){initNavTree('structeve_1_1expected__cardinal.html',
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="structeve_1_1expected__cardinal-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::expected_cardinal&lt; Type, ABI &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__arch.html">Architecture related Types and Helpers</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::has_store_equivalent Concept Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__arch.html">Architecture related Types and Helpers</a> &raquo; <a class="el" href="group__memory.html">Memory Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Computes the expected cardinal of a given type.  
- <a href="structeve_1_1expected__cardinal.html#details">More...</a></p>
+<p>a concept, tests <code>store_equivalent</code> has a non-default definition for a value and a pointer.  
+<a href="concepteve_1_1has__store__equivalent.html#details">More...</a></p>
 
-<p><code>#include &lt;eve/arch/expected_cardinal.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/core/regular/store_equivalent.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Type, regular_abi ABI = eve::current_abi_type&gt;<br />
-struct eve::expected_cardinal&lt; Type, ABI &gt;</div><p >Computes the expected cardinal of a given type. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/arch/expected_cardinal.hpp&gt;</code></p>
-<p ><a class="el" href="structeve_1_1expected__cardinal.html" title="Computes the expected cardinal of a given type.">eve::expected_cardinal</a> computed the cardinal of the register able to store values of type <code>Type</code> for a given SIMD <code>ABI</code> as a native register type.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
-    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi.</td></tr>
-  </table>
-  </dd>
-</dl>
-<h4><a class="anchor" id="autotoc_md2"></a>
-Member types</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Name   </th><th class="markdownTableHeadLeft">Definition    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>type</code>   </td><td class="markdownTableBodyLeft">The type of cardinal computed for <code>Type</code>   </td></tr>
-</table>
-<p ><br  />
- </p>
-<h4><a class="anchor" id="autotoc_md3"></a>
-Helper types</h4>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = eve::current_abi_type&gt;</div>
-<div class="line"><span class="keyword">using </span>expected_cardinal_t = <span class="keyword">typename</span> <a class="code hl_class" href="structeve_1_1fixed.html">expected_cardinal&lt;Type, ABI&gt;::type</a>;</div>
-<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed&lt; ABI::template expected_cardinal&lt; Type &gt; &gt;</a></div></div>
-</div><!-- fragment --><p ><br  />
- </p>
-<h4><a class="anchor" id="autotoc_md4"></a>
-Helper variable template</h4>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = eve::current_abi_type&gt;</div>
-<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> expected_cardinal_v = expected_cardinal_t&lt;Type, ABI&gt;::value;</div>
-</div><!-- fragment --><div class="fragment"><div class="line"><span class="comment">// Cardinal template inline variable to use with functions like eve::load</span></div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, <span class="keyword">typename</span> ABI = eve::current_abi_type&gt;</div>
-<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <a class="code hl_struct" href="structeve_1_1expected__cardinal.html">expected_cardinal&lt;Type,ABI&gt;</a> <span class="keyword">const</span> expected = {};</div>
-<div class="ttc" id="astructeve_1_1expected__cardinal_html"><div class="ttname"><a href="structeve_1_1expected__cardinal.html">eve::expected_cardinal</a></div><div class="ttdoc">Computes the expected cardinal of a given type.</div><div class="ttdef"><b>Definition:</b> expected_cardinal.hpp:69</div></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+<div class="textblock"><p >a concept, tests <code>store_equivalent</code> has a non-default definition for a value and a pointer. </p>
+</div><h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Ptr&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a> =  simd_compatible_ptr&lt;Ptr, T&gt; &amp;&amp;(</div>
+<div class="line">    !std::same_as&lt;kumi::tuple&lt;ignore_none_, T, Ptr&gt;,</div>
+<div class="line">                  <span class="keyword">decltype</span>(<a class="code hl_variable" href="group__memory_ga72e1a8955910c7a2453b517afe7cde4e.html#ga72e1a8955910c7a2453b517afe7cde4e">store_equivalent</a>(<a class="code hl_variable" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">ignore_none</a>, std::declval&lt;T&gt;(), std::declval&lt;Ptr&gt;()))&gt;)</div>
+<div class="ttc" id="aconcepteve_1_1has__store__equivalent_html"><div class="ttname"><a href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a></div><div class="ttdoc">a concept, tests store_equivalent has a non-default definition for a value and a pointer.</div><div class="ttdef"><b>Definition:</b> store_equivalent.hpp:43</div></div>
+<div class="ttc" id="agroup__conditional_html_gae234dce7533ecc38fe2c70fd69383633"><div class="ttname"><a href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a></div><div class="ttdeci">constexpr ignore_none_ ignore_none</div><div class="ttdoc">Object representing the eve::ignore_none_ conditional expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:240</div></div>
+<div class="ttc" id="agroup__memory_ga72e1a8955910c7a2453b517afe7cde4e_html_ga72e1a8955910c7a2453b517afe7cde4e"><div class="ttname"><a href="group__memory_ga72e1a8955910c7a2453b517afe7cde4e.html#ga72e1a8955910c7a2453b517afe7cde4e">eve::store_equivalent</a></div><div class="ttdeci">constexpr callable_store_equivalent_ store_equivalent</div><div class="ttdoc">Callable object, customisation point. If an iterator's store operation can be done as a store to some...</div><div class="ttdef"><b>Definition:</b> store_equivalent.hpp:31</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1expected__cardinal.html">expected_cardinal</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="concepteve_1_1has__store__equivalent.html">has_store_equivalent</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

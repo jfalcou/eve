@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,20 +144,30 @@ $(document).ready(function(){initNavTree('group__math__invhyper_ga349e3de4ef3f6e
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">acsch</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   T <a class="code hl_variable" href="group__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">acsch</a>(T x) <span class="keyword">noexcept</span>;                                    <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">acsch</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;        <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0_html_ga349e3de4ef3f6e76a1925faf2c24b3b0"><div class="ttname"><a href="group__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">eve::acsch</a></div><div class="ttdeci">constexpr callable_acsch_ acsch</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> acsch.hpp:57</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0_html_ga349e3de4ef3f6e76a1925faf2c24b3b0"><div class="ttname"><a href="group__math__invhyper_ga349e3de4ef3f6e76a1925faf2c24b3b0.html#ga349e3de4ef3f6e76a1925faf2c24b3b0">eve::acsch</a></div><div class="ttdeci">constexpr callable_acsch_ acsch</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> acsch.hpp:63</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:39</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> inverse hyperbolic cosine of the input. The inverse hyperbolic sine is semantically equivalent to \(\log(1/x+\sqrt{1/x^2+1})\).</p>
-<p >In particular:</p>
 <ul>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real value</a>.</li>
+<li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
+</ul>
+<p ><b>Return value</b></p>
+<ol type="1">
+<li><p class="startli">Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> inverse hyperbolic cosine of the input. The inverse hyperbolic sine is semantically equivalent to \(\log(1/x+\sqrt{1/x^2+1})\).</p>
+<p class="startli">In particular:</p><ul>
 <li>If the element is \(\pm\infty\), \(\pm0\) returned.</li>
 <li>If the element is \(\pm1\), \(\pm\infty\) is returned.</li>
 <li>If the element does not belong \(]0,1[\), <code>NaN</code> is returned.</li>
 </ul>
+</li>
+<li>Returns the complex arc hyperbolic cosecant of z, computed as \(\mathop{\mathrm{asinh}}(1/z)\).</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

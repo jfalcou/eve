@@ -17,6 +17,7 @@ var group__core__predicates =
     [ "eve::is_lessgreater", "group__core__predicates_gaa8a0ea2b80fef1303a313d1b46fa9394.html#gaa8a0ea2b80fef1303a313d1b46fa9394", null ],
     [ "eve::is_lez", "group__core__predicates_ga9d53c4cb0975665b1da0ed9c637c8b36.html#ga9d53c4cb0975665b1da0ed9c637c8b36", null ],
     [ "eve::is_ltz", "group__core__predicates_ga8590bd92bfd11ad943fc8f143e07442a.html#ga8590bd92bfd11ad943fc8f143e07442a", null ],
+    [ "eve::is_nan", "group__core__predicates_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784", null ],
     [ "eve::is_negative", "group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15", null ],
     [ "eve::is_nez", "group__core__predicates_ga9138a027fc4acf4517e8e1f2b898ed2d.html#ga9138a027fc4acf4517e8e1f2b898ed2d", null ],
     [ "eve::is_ngez", "group__core__predicates_ga0e4486901aa47bcb1fb5f7304060387a.html#ga0e4486901aa47bcb1fb5f7304060387a", null ],

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,18 +144,18 @@ $(document).ready(function(){initNavTree('group__special_ga170dd94fa3261f88e1cbe
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">erf</a>(T x) <span class="keyword">noexcept</span>;                                  <span class="comment">//1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">erf</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;      <span class="comment">//2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__special_ga170dd94fa3261f88e1cbede2d868e16f_html_ga170dd94fa3261f88e1cbede2d868e16f"><div class="ttname"><a href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">eve::erf</a></div><div class="ttdeci">constexpr callable_erf_ erf</div><div class="ttdoc">Computes the error function:  or its analytic continuation in the complex plane.</div><div class="ttdef"><b>Definition:</b> erf.hpp:65</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
-<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:40</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:39</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
 <li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
 </ul>
 <p ><b>Return value</b></p>
@@ -200,12 +200,14 @@ $(document).ready(function(){initNavTree('group__special_ga170dd94fa3261f88e1cbe
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;double, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide &lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft ref = { 1.0f, 10.0f, -1.0f, 0.5f};</div>
-<div class="line">  wide_ft imf = { 0.2f , 0.2,  -5.0, 0.0};</div>
+<div class="line"><span class="comment">//   wide_ft ref = { 1.0f, 10.0f, -1.0f, 0.5f};</span></div>
+<div class="line"><span class="comment">//   wide_ft imf = { 0.2f , 0.2,  -5.0, 0.0};</span></div>
+<div class="line">  wide_ft imf = {-0.1,   0.1,   1.,   1.,  -1.,   0.000001,   0., 0. };</div>
+<div class="line">  wide_ft ref = { 0.,   0.,   0.,   2.,   2.,   0.000002,   2., 0.0}; ref = -ref;</div>
 <div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
 <div class="line">  <span class="keyword">auto</span> r = <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">eve::erf</a>(z);</div>
 <div class="line">  std::cout</div>
@@ -214,10 +216,11 @@ $(document).ready(function(){initNavTree('group__special_ga170dd94fa3261f88e1cbe
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; erf(z)  = &quot;</span> &lt;&lt; r &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> zs = eve::as_complex_t&lt;float&gt;(-1, -5);</div>
+<div class="line">  <span class="keyword">auto</span> rs = <a class="code hl_variable" href="group__special_ga170dd94fa3261f88e1cbede2d868e16f.html#ga170dd94fa3261f88e1cbede2d868e16f">eve::erf</a>(zs);</div>
 <div class="line">  std::cout</div>
 <div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; std::endl</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- zs       = &quot;</span> &lt;&lt; zs &lt;&lt; std::endl</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; erf(z)   = &quot;</span> &lt;&lt; r &lt;&lt; std::endl;</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- zs        = &quot;</span> &lt;&lt; zs &lt;&lt; std::endl</div>
+<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; erf(zs)   = &quot;</span> &lt;&lt; rs &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8687ec8d4e16
 <div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_ga8687ec8d4e16c23dcb5a836e0d1d02cb.html#ga8687ec8d4e16c23dcb5a836e0d1d02cb">is_greater_equal</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__predicates_ga8687ec8d4e16c23dcb5a836e0d1d02cb_html_ga8687ec8d4e16c23dcb5a836e0d1d02cb"><div class="ttname"><a href="group__core__predicates_ga8687ec8d4e16c23dcb5a836e0d1d02cb.html#ga8687ec8d4e16c23dcb5a836e0d1d02cb">eve::is_greater_equal</a></div><div class="ttdeci">constexpr callable_is_greater_equal_ is_greater_equal</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is greater or equal to...</div><div class="ttdef"><b>Definition:</b> is_greater_equal.hpp:81</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code>, <code>y</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
@@ -204,15 +204,13 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8687ec8d4e16
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
-</ul>
-<p ><code>almost</code></p>
-<p >The expression <code>definitely(is_greater_equal)(x, y, t)</code> where <code>x</code> and <code>y</code> must be floating point values, evals to true if and only if <code>x</code> is almost greater than <code>y</code>. This means that:</p>
-<ul>
+<li><p class="startli"><code>almost</code></p>
+<p class="startli">The expression <code>definitely(is_greater_equal)(x, y, t)</code> where <code>x</code> and <code>y</code> must be floating point values, evals to true if and only if <code>x</code> is almost greater than <code>y</code>. This means that:</p><ul>
 <li>if <code>t</code> is a floating_value then \(x &gt; y - t \max(|x|, |y|)\)</li>
 <li>if <code>t</code> is a positive integral_value then \(x &gt; \mbox{prev}(y, t)\);</li>
 <li>if <code>t</code> is omitted then the tolerance <code>t</code> default to <code>3*eps(as(x))</code>.</li>
 </ul>
-<p ><b>Example</b></p>
+<p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -231,7 +229,9 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8687ec8d4e16
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c_html_gab948026b7cf3543e2fa4b43f32c3311c"><div class="ttname"><a href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a></div><div class="ttdeci">constexpr almost_type const almost</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to little errors semantic onto other Callable Objects...</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:58</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --> </li>
+</ul>
+
 </div>
 </div>
 </div><!-- contents -->

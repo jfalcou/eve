@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,11 +144,12 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9014bc919ce5
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> T,  <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a>... Ts&gt;</div>
-<div class="line">   eve::common_compatible_value&lt;T, Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_ga9014bc919ce5fc1ed1db4775671df597.html#ga9014bc919ce5fc1ed1db4775671df597">negminabs</a>( T x, Ts ... xs ) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a>&lt;T, Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_ga9014bc919ce5fc1ed1db4775671df597.html#ga9014bc919ce5fc1ed1db4775671df597">negminabs</a>( T x, Ts ... xs ) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
 <div class="ttc" id="agroup__core__arithmetic_ga9014bc919ce5fc1ed1db4775671df597_html_ga9014bc919ce5fc1ed1db4775671df597"><div class="ttname"><a href="group__core__arithmetic_ga9014bc919ce5fc1ed1db4775671df597.html#ga9014bc919ce5fc1ed1db4775671df597">eve::negminabs</a></div><div class="ttdeci">constexpr callable_negminabs_ negminabs</div><div class="ttdoc">Computes the negated value of the element of the minimal absolute value.</div><div class="ttdef"><b>Definition:</b> negminabs.hpp:71</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code>, <code>...xs</code>: <a class="el" href="concepteve_1_1value.html">arguments</a>.</li>
