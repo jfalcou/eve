@@ -11,10 +11,10 @@
 
 TTS_CASE("Check for nofs cardinal")
 {
-  //if (!spy::amd64_) {
-    TTS_EQUAL((eve::nofs_cardinal_v<double, eve::x86_512_>),
-              (eve::expected_cardinal_v<double, eve::x86_256_>));
-  //}
+#ifndef EVE_AVX512_DEFAULT_64_BYTES
+  TTS_EQUAL((eve::nofs_cardinal_v<double, eve::x86_512_>),
+            (eve::expected_cardinal_v<double, eve::x86_256_>));
+#endif
   TTS_EQUAL((eve::nofs_cardinal_v<double, eve::x86_256_>),
             (eve::expected_cardinal_v<double, eve::x86_256_>));
   TTS_EQUAL((eve::nofs_cardinal_v<double, eve::arm_128_>),
