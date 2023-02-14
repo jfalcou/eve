@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Architecture related Types and Helpers</title>
+<title>E.V.E: eve::algo::allow_frequency_scaling</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__arch.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algorithms_ga1b9461ddb4574083563052a1fbe355e3.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -116,54 +116,42 @@ $(document).ready(function(){initNavTree('group__arch.html',''); initResizable()
 </iframe>
 </div>
 
-<div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Architecture related Types and Helpers<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
-</div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p >Architecture related Types and Helpers. </p>
-<p >This module defines the types and helpers functions to properly handle architecture specific components </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:group__memory"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory.html">Memory Management</a></td></tr>
-<tr class="memdesc:group__memory"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD-aware container for product types. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1fundamental__cardinal.html">eve::fundamental_cardinal&lt; Type, ABI &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the fundamental cardinal of a given type.  <a href="structeve_1_1fundamental__cardinal.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1platform.html">eve::platform</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform specific constexpr information.  <a href="structeve_1_1platform.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gad810107735c9074d509f0ba2773d14d5"><td class="memTemplParams" colspan="2">template&lt;typename Type , regular_abi ABI = eve::current_abi_type&gt; </td></tr>
-<tr class="memitem:gad810107735c9074d509f0ba2773d14d5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">eve::expected_cardinal_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt; expected_cardinal_v&lt; Type, ABI &gt; &gt;</td></tr>
-<tr class="memdesc:gad810107735c9074d509f0ba2773d14d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the expected cardinal of a given type.  <a href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">More...</a><br /></td></tr>
-<tr class="separator:gad810107735c9074d509f0ba2773d14d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memTemplParams" colspan="2">template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </td></tr>
-<tr class="memitem:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::ptrdiff_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html#gad4fc83261295a7fd4ebe7d16c328fd1f">eve::nofs_cardinal_v</a></td></tr>
-<tr class="memdesc:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">nofs stands for "no frequency scaling".  <a href="group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html#gad4fc83261295a7fd4ebe7d16c328fd1f">More...</a><br /></td></tr>
-<tr class="separator:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<a id="ga1b9461ddb4574083563052a1fbe355e3" name="ga1b9461ddb4574083563052a1fbe355e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1b9461ddb4574083563052a1fbe355e3">&#9670;&nbsp;</a></span>allow_frequency_scaling</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::algo::allow_frequency_scaling = ::rbr::flag( allow_frequency_scaling_tag{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
 </table>
+</div><div class="memdoc">
+
+<p><code>#include &lt;eve/module/algo/algo/traits.hpp&gt;</code></p>
+
+<p>On intel using 64 byte registers requires processor to scale down it's frequency. This is only benefitial if you have a very large set of data to process. Otherwise it will likely degrade performance not only of the SIMD code but also of the code that follows. </p>
+<p >By default this flag is off.</p>
+<p ><b>See also nofs</b> </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="group__algorithms.html">Algorithms and Views</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

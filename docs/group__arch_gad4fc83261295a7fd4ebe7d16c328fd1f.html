@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Architecture related Types and Helpers</title>
+<title>E.V.E: eve::nofs_cardinal_v</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__arch.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -116,54 +116,68 @@ $(document).ready(function(){initNavTree('group__arch.html',''); initResizable()
 </iframe>
 </div>
 
-<div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Architecture related Types and Helpers<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
-</div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p >Architecture related Types and Helpers. </p>
-<p >This module defines the types and helpers functions to properly handle architecture specific components </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:group__memory"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory.html">Memory Management</a></td></tr>
-<tr class="memdesc:group__memory"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD-aware container for product types. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1fundamental__cardinal.html">eve::fundamental_cardinal&lt; Type, ABI &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the fundamental cardinal of a given type.  <a href="structeve_1_1fundamental__cardinal.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1platform.html">eve::platform</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform specific constexpr information.  <a href="structeve_1_1platform.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gad810107735c9074d509f0ba2773d14d5"><td class="memTemplParams" colspan="2">template&lt;typename Type , regular_abi ABI = eve::current_abi_type&gt; </td></tr>
-<tr class="memitem:gad810107735c9074d509f0ba2773d14d5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">eve::expected_cardinal_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt; expected_cardinal_v&lt; Type, ABI &gt; &gt;</td></tr>
-<tr class="memdesc:gad810107735c9074d509f0ba2773d14d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the expected cardinal of a given type.  <a href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">More...</a><br /></td></tr>
-<tr class="separator:gad810107735c9074d509f0ba2773d14d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memTemplParams" colspan="2">template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </td></tr>
-<tr class="memitem:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::ptrdiff_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html#gad4fc83261295a7fd4ebe7d16c328fd1f">eve::nofs_cardinal_v</a></td></tr>
-<tr class="memdesc:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">nofs stands for "no frequency scaling".  <a href="group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html#gad4fc83261295a7fd4ebe7d16c328fd1f">More...</a><br /></td></tr>
-<tr class="separator:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<a id="gad4fc83261295a7fd4ebe7d16c328fd1f" name="gad4fc83261295a7fd4ebe7d16c328fd1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4fc83261295a7fd4ebe7d16c328fd1f">&#9670;&nbsp;</a></span>nofs_cardinal_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::nofs_cardinal_v</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
 </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    (std::same_as&lt;ABI, x86_512_&gt; &amp;&amp; !detail::avx512_default_64_bytes)</div>
+<div class="line">     ? expected_cardinal_v&lt;T, x86_256_&gt; : expected_cardinal_v&lt;T, ABI&gt;</div>
+</div><!-- fragment -->
+<p>nofs stands for "no frequency scaling". </p>
+<p >This refers to extreme frequency scaling one encounters when working with 64 byte registers on intel. The processor scales frequency drammatically for a substantial period of time. So even if the algorithm itself will run faster the overall perf will go down. Generally speaking, 64 byte registers on intel make sense only for really big data sets. <code>nofs_cardinal</code> will produce 32 byte registers on avx512. If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES. This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.</p>
+<dl class="section note"><dt>Note</dt><dd>: frquency scaling exists for avx2 as well but is generally considered acceptable. For example popular implementations of libc use avx2, so you are very likely already have it. You can always set the width manually if needed.</dd>
+<dd>
+: <code>eve::algo</code> by default will use <code>nofs_cardinal</code>. See <code>allow_frequency_scaling</code> trait.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
+    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi. defaults to current.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><br  />
+ </p>
+<h4><a class="anchor" id="autotoc_md6"></a>
+Helpers</h4>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_struct" href="structeve_1_1fixed.html">nofs_cardinal_t</a> = <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;nofs_cardinal_v&lt;T&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;scalar_value T&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_struct" href="structeve_1_1wide.html">nofs_wide</a> = <a class="code hl_struct" href="structeve_1_1wide.html">wide&lt;T, nofs_cardinal_t&lt;T&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;plain_scalar_value T&gt;</div>
+<div class="line"><span class="keyword">using </span>nofs_logical = logical&lt;nofs_wide&lt;T&gt;&gt;;</div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

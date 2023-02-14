@@ -5,6 +5,7 @@ var group__algorithms =
     [ "Views", "group__views.html", "group__views" ],
     [ "eve::algo::ptr_iterator< Ptr, Cardinal >", "structeve_1_1algo_1_1ptr__iterator.html", null ],
     [ "eve::algo::range_ref_wrapper< Rng >", "structeve_1_1algo_1_1range__ref__wrapper.html", null ],
+    [ "eve::algo::allow_frequency_scaling", "group__algorithms_ga1b9461ddb4574083563052a1fbe355e3.html#ga1b9461ddb4574083563052a1fbe355e3", null ],
     [ "eve::algo::expensive_callable", "group__algorithms_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731", null ],
     [ "eve::algo::fill", "group__algorithms.html#ga432fd8a2cb308dad3994a596ab6b11b7", null ],
     [ "eve::algo::for_each", "group__algorithms_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0", null ],

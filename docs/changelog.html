@@ -121,24 +121,24 @@ $(document).ready(function(){initNavTree('changelog.html',''); initResizable(); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_eve_doc_page10_changelog"></a></p>
-<h1><a class="anchor" id="autotoc_md133"></a>
+<h1><a class="anchor" id="autotoc_md134"></a>
 Version 2023.02.15</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Perdita_(The_Winter%27s_Tale)">Perdita Quiescent</a></p>
-<h2><a class="anchor" id="autotoc_md134"></a>
+<h2><a class="anchor" id="autotoc_md135"></a>
 What's Changed</h2>
-<h3><a class="anchor" id="autotoc_md135"></a>
+<h3><a class="anchor" id="autotoc_md136"></a>
 Removal and Depreciation</h3>
 <ul>
 <li>The proba module as been removed. (See #1490) It will be reworked as a separate project later on with a proper API.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md136"></a>
+<h3><a class="anchor" id="autotoc_md137"></a>
 Architectures/Compilers Support &amp; Fixes</h3>
-<h4><a class="anchor" id="autotoc_md137"></a>
+<h4><a class="anchor" id="autotoc_md138"></a>
 The One Big News for this release: SVE</h4>
 <ul>
 <li>SVE with fixed size, power of 2 cardinal is now supported for most of our API. Some more optimizations are on the way but the support is functional. (See #1432, #1435, #1436, #1437, #1438, #1448, #1453, #1455, #1456, #1463, #1464, #1472, #1473, #1474,#1487, #1489, #1491, #1494, #1533, #1556)</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md138"></a>
+<h4><a class="anchor" id="autotoc_md139"></a>
 Other Fixes</h4>
 <ul>
 <li><b>EVE</b> now compiles on ARM M1 with Homebrew g++. (See #1471)</li>
@@ -148,7 +148,7 @@ Other Fixes</h4>
 <li>Integral sign/signnz functions are now more efficient on x86 (See #1499)</li>
 <li>Implementation for X86 AVX2/AVX512 gather and masked gather are now optimized. (See #1526)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md139"></a>
+<h3><a class="anchor" id="autotoc_md140"></a>
 Features</h3>
 <ul>
 <li><b>jtlap</b> implemented a large amount of new functions for <code><a class="el" href="structeve_1_1complex.html" title="SIMD-compatible representation of complex numbers.">eve::complex</a></code>.</li>
@@ -157,7 +157,7 @@ Features</h3>
 <li>The minmax function is now available. (See #1507)</li>
 <li><b>DenisYaroshevskiy</b> implemented new traits for algorithms to take care of costly kernels, no alignment and to support fused operations. (See #1535, #1543)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md140"></a>
+<h3><a class="anchor" id="autotoc_md141"></a>
 Bug Fixes</h3>
 <ul>
 <li>Convert is now more efficient and don't generate piecewise evaluation in some scenario involving logicals. (See #1447, #1428)</li>
@@ -167,15 +167,15 @@ Bug Fixes</h3>
 <li>Fix issue with dynamic SIMD extension detection that were broken by accident. (See #1504)</li>
 </ul>
 <p ><b>Full Changelog</b>: <a href="https://github.com/jfalcou/eve/compare/v2022.09.1...2023.02.15">https://github.com/jfalcou/eve/compare/v2022.09.1...2023.02.15</a></p>
-<h1><a class="anchor" id="autotoc_md141"></a>
+<h1><a class="anchor" id="autotoc_md142"></a>
 Version 2022.09.1</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It)">Rosalind Serendipitous</a></p>
 <p >This is a patch release that fix some issue with the versioning of EVE installation and some documentation issue.</p>
 <p ><b>Full Changelog</b>: <a href="https://github.com/jfalcou/eve/compare/v2022.09.0...2022.09.1">https://github.com/jfalcou/eve/compare/v2022.09.0...2022.09.1</a></p>
-<h1><a class="anchor" id="autotoc_md142"></a>
+<h1><a class="anchor" id="autotoc_md143"></a>
 Version 2022.09.0</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It)">Rosalind Serendipitous</a></p>
-<h2><a class="anchor" id="autotoc_md143"></a>
+<h2><a class="anchor" id="autotoc_md144"></a>
 What's Changed</h2>
 <p >A lot. The main non-code changes is our move from MIT License to the BOOST SOFTWARE License. Next to that, support for more algorithms and complex numbers has been added.</p>
 <p >Starting this fall, we will also try to provide more regular release.</p>
@@ -238,17 +238,17 @@ What's Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md144"></a>
+<h2><a class="anchor" id="autotoc_md145"></a>
 New Contributors</h2>
 <p >Thanks to all our new contributor for this release!</p>
 <ul>
 <li><b>Simran-B</b> made their first contribution in (See #1303)</li>
 <li><b>justend29</b> made their first contribution in (See #1338)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md145"></a>
+<h1><a class="anchor" id="autotoc_md146"></a>
 Version 2022.03.0</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Miranda_(The_Tempest)">Miranda Numinous</a></p>
-<h2><a class="anchor" id="autotoc_md146"></a>
+<h2><a class="anchor" id="autotoc_md147"></a>
 What's Changed</h2>
 <p ><b>This release is an API/ABI breaking changes release.</b></p>
 <p >A lot of improvements in QoL, QoI, and API have been made. Some more breaking ABI changes are planned, including a passive move toward an include file layout more amenable to future modularization.</p>
@@ -341,7 +341,7 @@ What's Changed</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md147"></a>
+<h2><a class="anchor" id="autotoc_md148"></a>
 New Contributors</h2>
 <p >Thanks to all our new contributor for this release!</p>
 <ul>
@@ -351,10 +351,10 @@ New Contributors</h2>
 <li><code>**the-moisrex**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1025">https://github.com/jfalcou/eve/pull/1025</a></li>
 <li><code>**toughengineer**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1182">https://github.com/jfalcou/eve/pull/1182</a></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md148"></a>
+<h1><a class="anchor" id="autotoc_md149"></a>
 Version 2021.10.0</h1>
 <p >Codename: <a href="https://en.wikipedia.org/wiki/Titania_(A_Midsummer_Night%27s_Dream)">Titania Unleashed</a></p>
-<h2><a class="anchor" id="autotoc_md149"></a>
+<h2><a class="anchor" id="autotoc_md150"></a>
 What's Changed</h2>
 <ul>
 <li>First tagged release for <b>EVE</b> which includes:<ul>
@@ -366,7 +366,7 @@ What's Changed</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md150"></a>
+<h1><a class="anchor" id="autotoc_md151"></a>
 Version beta.2020.09</h1>
 <p >Initial beta release </p>
 </div></div><!-- contents -->

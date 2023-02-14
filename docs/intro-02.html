@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('intro-02.html',''); initResizable(); }
 <div class="contents">
 <div class="textblock"><p ><a class="el" href="intro-01.html">In the previous tutorial</a>, we managed to convert a sequential function into a function using SIMD types and functions. In general, such function is meant to be applied to a large set of data instead of a single register.</p>
 <p >As for usual sequential computation, we want to lift ourselves from raw loops and think using algorithms. <b>EVE</b> provides such ready-to-use SIMD aware algorithms and this tutorial will take a look at how to handle them.</p>
-<h1><a class="anchor" id="autotoc_md162"></a>
+<h1><a class="anchor" id="autotoc_md163"></a>
 Initial problem</h1>
 <p >Let's try to apply our sequential conversion function over data stored in <code>std::vector</code> using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
@@ -159,7 +159,7 @@ Initial problem</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p >Very similar code, except for the fact the input data are passed directly without using iterators.</p>
-<h1><a class="anchor" id="autotoc_md163"></a>
+<h1><a class="anchor" id="autotoc_md164"></a>
 Toward SIMD Algorithms</h1>
 <p >We can turn this range-based code into a SIMD-aware call to one of the algorithms defined in eve::algo. All algorithms in <b>EVE</b> are range-based thus simplifying the transition from code using standard algorithms.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
@@ -190,15 +190,14 @@ Toward SIMD Algorithms</h1>
 <li>eve::algo::transform_to takes a single input range. To pass multiple parallel ranges, we use eve::views::zip that constructs a view over them.</li>
 <li>as we consume a zipped range, the data passed to the lambda function behaves like a tuple. We will dive into details of this tuple later but for now just remember you can retrieve the data member exactly like with a regular tuple (using <code>get</code> or structured bindings).</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md164"></a>
+<h1><a class="anchor" id="autotoc_md165"></a>
 Tuning algorithms</h1>
 <p >In SIMD algorithms we by default assume that the provided operation is simple (a few instructions), since this is the common case. This means we use aligned reads and do unrolling, which is an important optimisation. However, for a complex case, like here, it is beneficial to opt out.</p>
-<p ><b>EVE</b> provides various traits to customize algorithms behavior. The two main traits we're interested in are:</p>
-<ul>
-<li>eve::algo::no_aligning that stops <b>EVE</b> from using aligned loads/stores in case where it leads to more code.</li>
-<li>eve::algo::unroll that specify how many times the function will be unrolled inside the algorithm. Unrolling is most efficient with small functions as it will maximize the use of SIMD registers. Unrolling can be turned off by using eve::algo::unroll&lt;1&gt;.</li>
+<p ><b>EVE</b> provides various traits to customize algorithms behavior. The traits we're interested in are:</p><ul>
+<li>eve::algo::expensive_callable - let's <b>EVE</b> know that the passed callable is fairly large. By default <b>EVE</b> will assume that the passed callables are cheap and it will align loads/stores, and unroll the loop body. There are also individual <code>eve::algo::no_aligning</code>, <code>eve::algo::unrolling</code></li>
+<li>eve::algo::allow_frequency_scaling - tells <b>EVE</b> to use the maximum avaliable register size even if it can substentially temporary reduce processor's frequency. This only makes sense for really big arrays or if you spend most of your time doing simd operations. (At the moment this is only relevant for avx512). More details in frequency-scaling tutorial.</li>
 </ul>
-<p >Algorithms in <b>EVE</b> being callable object, you can apply traits using their <code>[]</code> operators. For example, the following code disable aligning and force unroll to be 1.</p>
+<p >Algorithms in <b>EVE</b> being callable object, you can apply traits using their <code>[]</code> operators. For example, the following code let's <b>EVE</b> know that the loop body is heavy.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
@@ -209,7 +208,7 @@ Tuning algorithms</h1>
 <div class="line">  {</div>
 <div class="line">    std::vector&lt;float&gt; out(xs.size());</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_variable" href="group__algorithms_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a>[<a class="code hl_variable" href="group__algorithms_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1">eve::algo::no_aligning</a>][eve::algo::unroll&lt;1&gt;]</div>
+<div class="line">    <a class="code hl_variable" href="group__algorithms_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e">eve::algo::transform_to</a>[ <a class="code hl_variable" href="group__algorithms_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">eve::algo::expensive_callable</a> ]</div>
 <div class="line">                            ( <a class="code hl_variable" href="group__views_ga351e71cb38111c22884bb11fc51211a4.html#ga351e71cb38111c22884bb11fc51211a4">eve::views::zip</a>(xs, ys), out</div>
 <div class="line">                            , [](<span class="keyword">auto</span> xy)</div>
 <div class="line">                              {</div>
@@ -219,9 +218,9 @@ Tuning algorithms</h1>
 <div class="line">    <span class="keywordflow">return</span> out;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algorithms_ga4e752623318f5d75907ed9f732c826a1_html_ga4e752623318f5d75907ed9f732c826a1"><div class="ttname"><a href="group__algorithms_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdoc">Traits for disabling alignment handling in algorithm.</div><div class="ttdef"><b>Definition:</b> traits.hpp:89</div></div>
+<div class="ttc" id="agroup__algorithms_ga244da44511b03c597243683208a3b731_html_ga244da44511b03c597243683208a3b731"><div class="ttname"><a href="group__algorithms_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdoc">NOTE: equivalent to no_aligning + no_unrolling By default eve algorithms will assume that the passed ...</div><div class="ttdef"><b>Definition:</b> traits.hpp:116</div></div>
 </div><!-- fragment --><p >Best strategy is always to benchmark your code and tune algorithms accordingly.</p>
-<h1><a class="anchor" id="autotoc_md165"></a>
+<h1><a class="anchor" id="autotoc_md166"></a>
 Conclusion</h1>
 <p >In this tutorial, we managed to:</p><ul>
 <li>use a simple algorithms from <b>EVE</b> algorithms set</li>

@@ -50,16 +50,6 @@ namespace eve
 //!
 //!  @godbolt{doc/math/regular/lpnorm.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::lpnorm[mask](x, ...)` provides a masked version of `eve::lpnorm` which is
-//!     equivalent to `if_else (mask, lpnorm(x, ...), x)`.
-//!
-//!      **Example**
-//!
-//!      @godbolt{doc/math/masked/lpnorm.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lpnorm_, lpnorm);
