@@ -60,7 +60,7 @@ namespace eve
 //!   * Masked Call
 //!
 //!     The call `eve::is_equal[mask](x)` provides a masked version of `eve::is_equal` which is
-//!     equivalent to `if_else (mask, is_equal(x, y), false_
+//!     equivalent to `if_else (mask, is_equal(x, y), false_)
 //!
 //!      **Example**
 //!

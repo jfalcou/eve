@@ -57,7 +57,7 @@ namespace eve
 //!     equivalent to `if_else(mask, negatenz(x, ...), x)`
 //!      **Example**
 //!
-//!        @godbolt{doc/core/raw/negatenz.cpp}
+//!        @godbolt{doc/core/masked/negatenz.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(negatenz_, negatenz);

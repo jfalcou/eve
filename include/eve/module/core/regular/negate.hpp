@@ -57,7 +57,7 @@ namespace eve
 //!
 //!   **Example**
 //!
-//!    @godbolt{doc/core/raw/negate.cpp}
+//!    @godbolt{doc/core/masked/negate.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(negate_, negate);
