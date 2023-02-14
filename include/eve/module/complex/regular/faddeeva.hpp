@@ -49,7 +49,7 @@ namespace eve
 //!
 //!   **Complex version**
 //!
-//!  @godbolt{test/doc/complex/faddeeva.cpp}
+//!  @godbolt{test/doc/complex/regular/faddeeva.cpp}
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(faddeeva_, faddeeva);
