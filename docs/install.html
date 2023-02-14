@@ -146,16 +146,22 @@ Pre-requisites</h1>
 <li>NEON A32 (64 &amp; 128 bits)</li>
 <li>NEON A64 (64 &amp; 128 bits)</li>
 <li>ASIMD</li>
+<li>SVE with fixed sizes of 128, 256 and 512 bits registers.</li>
 </ul>
 </li>
 </ul>
-<p >The following instructions are tentatively supported (ie code is incomplete and not tested in depth):</p>
-<ul>
+<p >Partial/In-progress support with minimal checks:</p><ul>
 <li><b>PowerPC</b><ul>
+<li>VMX</li>
+<li>VSX</li>
+</ul>
+</li>
+<li>We <b>do not support</b> ARM SVE with dynamic size.</li>
+<li>We <b>do not support</b> GPGPU, this is the job for another tool. The following instructions are tentatively supported (ie code is incomplete and not tested in depth):</li>
+</ul>
+<p ><b>PowerPC</b></p><ul>
 <li>Altivec for Power7 to 9</li>
 <li>VSX for Power9</li>
-</ul>
-</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md118"></a>
 Retrieving the source</h1>

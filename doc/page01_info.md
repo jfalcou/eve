@@ -22,7 +22,15 @@ In term of SIMD extension sets, we actively supports (ie code is optimized and r
   - NEON A32 (64 & 128 bits)
   - NEON A64 (64 & 128 bits)
   - ASIMD
+  - SVE with fixed sizes of 128, 256 and 512 bits registers.
 
+Partial/In-progress support with minimal checks:
+ - **PowerPC**
+   - VMX
+   - VSX
+
+ - We **do not support** ARM SVE with dynamic size.
+ - We **do not support** GPGPU, this is the job for another tool.
 The following instructions are tentatively supported (ie code is incomplete and not tested in depth):
 
 - **PowerPC**
