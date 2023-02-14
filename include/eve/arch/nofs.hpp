@@ -11,6 +11,16 @@
 
 namespace eve
 {
+  namespace detail {
+
+#if defined(EVE_AVX512_DEFAULT_64_BYTES)
+  constexpr bool avx512_default_64_bytes = true;
+#else
+  constexpr bool avx512_default_64_bytes = false;
+#endif
+
+  }  // namespace detail
+
   //================================================================================================
   //! @addtogroup arch
   //! @{
@@ -21,8 +31,9 @@ namespace eve
   //!   registers on intel. The processor scales frequency drammatically for a substantial
   //!   period of time. So even if the algorithm itself will run faster the overall perf
   //!   will go down. Generally speaking, 64 byte registers on intel make sense only
-  //!   for really big data sets. `nofs_cardinal` will produce 32 byte registers on avx512
-  //!   intel.
+  //!   for really big data sets. `nofs_cardinal` will produce 32 byte registers on avx512.
+  //!   If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES.
+  //!   This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.
   //!
   //!   @note: frquency scaling exists for avx2 as well but is generally considered
   //!   acceptable. For example popular implementations of libc use avx2, so you are very
@@ -54,7 +65,7 @@ namespace eve
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
   constexpr std::ptrdiff_t nofs_cardinal_v =
-    (std::same_as<ABI, x86_512_> /*TODO: spy FIX-29 && !spy::amd64_*/)
+    (std::same_as<ABI, x86_512_> && !detail::avx512_default_64_bytes)
      ? expected_cardinal_v<T, x86_256_> : expected_cardinal_v<T, ABI>;
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
