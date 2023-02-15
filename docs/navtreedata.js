@@ -80,7 +80,6 @@ var NAVTREE =
       [ "Version beta.2020.09", "changelog.html#autotoc_md151", null ]
     ] ],
     [ "Licence", "licence.html", null ],
-    [ "Scaling.", "Frequency.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -110,7 +109,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"Frequency.html",
+"algo_rationale.html",
 "group__algos_gafa9b773a01fad373754a55250f503b58.html#gafa9b773a01fad373754a55250f503b58",
 "group__core__predicates_ga1a048a713642bb0aa9c32d2492e0a14d.html#ga1a048a713642bb0aa9c32d2492e0a14d",
 "group__memory_ga0c5c814e7f47fcfe1e38e2436afc7203.html#ga0c5c814e7f47fcfe1e38e2436afc7203",

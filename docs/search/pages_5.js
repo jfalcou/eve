@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['installation_20_26_20quick_20start_0',['Installation &amp; Quick Start',['../install.html',1,'']]]
+  ['handling_20multiple_20architecture_20targets_0',['Handling Multiple Architecture Targets',['../multiarch.html',1,'tutorials']]]
 ];

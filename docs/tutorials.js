@@ -33,6 +33,7 @@ var tutorials =
       ] ],
       [ "Conclusion", "conditional.html#autotoc_md157", null ]
     ] ],
+    [ "Frequency Scaling.", "freqscale.html", null ],
     [ "Handling Multiple Architecture Targets", "multiarch.html", [
       [ "The Issue", "multiarch.html#autotoc_md174", null ],
       [ "From static to dynamic dispatch", "multiarch.html#autotoc_md175", [
