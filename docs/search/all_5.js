@@ -35,13 +35,14 @@ var searchData=
   ['four_5fpio_5f3_32',['four_pio_3',['../group__math__constants_ga348ec58b614ef783f4183689f21850b1.html#ga348ec58b614ef783f4183689f21850b1',1,'eve']]],
   ['frac_33',['frac',['../group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732',1,'eve']]],
   ['fracscale_34',['fracscale',['../group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf',1,'eve']]],
-  ['frexp_35',['frexp',['../group__core__internal_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
-  ['front_36',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::front()'],['../structeve_1_1wide.html#a91abf1f8683e031f8169a5b5473c1660',1,'eve::wide::front()']]],
-  ['fsm_37',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
-  ['fsnm_38',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
-  ['full_5fcircle_39',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
-  ['functions_40',['Functions',['../group__functions.html',1,'']]],
-  ['fundamental_5fcardinal_41',['fundamental_cardinal',['../structeve_1_1fundamental__cardinal.html',1,'eve']]],
-  ['fuse_5foperations_42',['fuse_operations',['../group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]],
-  ['fused_20multiply_20add_20family_43',['Fused multiply add family',['../group__core__fma__family.html',1,'']]]
+  ['frequency_20scaling_2e_35',['Frequency Scaling.',['../freqscale.html',1,'tutorials']]],
+  ['frexp_36',['frexp',['../group__core__internal_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
+  ['front_37',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::front()'],['../structeve_1_1wide.html#a91abf1f8683e031f8169a5b5473c1660',1,'eve::wide::front()']]],
+  ['fsm_38',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
+  ['fsnm_39',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
+  ['full_5fcircle_40',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
+  ['functions_41',['Functions',['../group__functions.html',1,'']]],
+  ['fundamental_5fcardinal_42',['fundamental_cardinal',['../structeve_1_1fundamental__cardinal.html',1,'eve']]],
+  ['fuse_5foperations_43',['fuse_operations',['../group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]],
+  ['fused_20multiply_20add_20family_44',['Fused multiply add family',['../group__core__fma__family.html',1,'']]]
 ];

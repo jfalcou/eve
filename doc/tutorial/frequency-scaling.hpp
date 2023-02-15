@@ -1,7 +1,7 @@
 #error This file is for documentation only - DO NOT INCLUDE
 /**
 
-@page Frequency Scaling.
+@page freqscale Frequency Scaling.
 
 In SIMD programming there is a known issue of processor frequency scaling:
 when working with wider registers, in order to avoid overheating, some processors
@@ -23,7 +23,7 @@ you can pass `eve::algo::allow_frequency_scaling` trait.
 There are also a typedefs `nofs_wide`, `nofs_logical` where `nofs` stands for
 "no frequency scaling".
 
-@note: other than on avx512 on intel we always use the maximum width of the register,
+@note Other than on avx512 on intel we always use the maximum width of the register,
 since we expect the compiler to do it anyways and it is usually accepted.
 If you want to set a specific cardinal for an algorithm, you can always use
 `eve::algo::force_cardinal`.
