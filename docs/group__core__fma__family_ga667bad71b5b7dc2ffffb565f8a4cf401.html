@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -145,13 +145,14 @@ $(document).ready(function(){initNavTree('group__core__fma__family_ga667bad71b5b
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   eve::compatible_value_t <a class="code hl_variable" href="group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401">fsm</a>(T x, U y,  V z) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a> <a class="code hl_variable" href="group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401">fsm</a>(T x, U y,  V z) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401_html_ga667bad71b5b7dc2ffffb565f8a4cf401"><div class="ttname"><a href="group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401">eve::fsm</a></div><div class="ttdeci">constexpr callable_fsm_ fsm</div><div class="ttdoc">Computes the fused negate add multiply of its three parameters.</div><div class="ttdef"><b>Definition:</b> fsm.hpp:82</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code>, <code>z</code> : <a class="el" href="concepteve_1_1value.html">arguments</a>.</li>
+<li><code>x</code>, <code>y</code>, <code>z</code> : <a class="el" href="concepteve_1_1value.html">real or complex arguments</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of <code>-x+y*z</code> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</p>
@@ -166,7 +167,7 @@ $(document).ready(function(){initNavTree('group__core__fma__family_ga667bad71b5b
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">float</span> es  = eve::eps(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <span class="keywordtype">float</span> es  = <a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
 <div class="line">  <span class="keywordtype">float</span> esm1 = es-1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> esp1 = es+1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> vm  = <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
@@ -198,6 +199,7 @@ $(document).ready(function(){initNavTree('group__core__fma__family_ga667bad71b5b
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr callable_valmax_ valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:55</div></div>
+<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr callable_eps_ eps</div><div class="ttdoc">Computes the the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:63</div></div>
 <div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:56</div></div>
 <div class="ttc" id="agroup__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:53</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
@@ -216,7 +218,7 @@ $(document).ready(function(){initNavTree('group__core__fma__family_ga667bad71b5b
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">float</span> es  = eve::eps(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <span class="keywordtype">float</span> es  = <a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
 <div class="line">  <span class="keywordtype">float</span> esm1 = es-1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> esp1 = es+1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> vm  = <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>

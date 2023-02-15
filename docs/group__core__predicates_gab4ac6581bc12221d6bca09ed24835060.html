@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -146,14 +146,15 @@ $(document).ready(function(){initNavTree('group__core__predicates_gab4ac6581bc12
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_gab4ac6581bc12221d6bca09ed24835060.html#gab4ac6581bc12221d6bca09ed24835060">is_infinite</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_gab4ac6581bc12221d6bca09ed24835060_html_gab4ac6581bc12221d6bca09ed24835060"><div class="ttname"><a href="group__core__predicates_gab4ac6581bc12221d6bca09ed24835060.html#gab4ac6581bc12221d6bca09ed24835060">eve::is_infinite</a></div><div class="ttdeci">constexpr callable_is_infinite_ is_infinite</div><div class="ttdoc">Returns a logical true if and only if the element is an infinite value.</div><div class="ttdef"><b>Definition:</b> is_infinite.hpp:64</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__core__predicates_gab4ac6581bc12221d6bca09ed24835060_html_gab4ac6581bc12221d6bca09ed24835060"><div class="ttname"><a href="group__core__predicates_gab4ac6581bc12221d6bca09ed24835060.html#gab4ac6581bc12221d6bca09ed24835060">eve::is_infinite</a></div><div class="ttdeci">constexpr callable_is_infinite_ is_infinite</div><div class="ttdoc">Returns a logical true if and only if the element is an infinite value.</div><div class="ttdef"><b>Definition:</b> is_infinite.hpp:67</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real or complex argument</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >The call <code>is_infinite(x)</code> is semantically equivalent to <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a>(eve::abs(x), eve::inf(as(x))</code>, in particular this is always true for integral types.</p>
+<p >For real entries the call <code>is_infinite(x)</code> is semantically equivalent to <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a>(eve::abs(x), eve::inf(as(x))</code>, in particular this is always false for integral types.</p>
+<p >For complex entries <code>is_infinite(z)</code> is semantically equivalent to <code>eve::is_infinite(real(z)) || eve::is_infinite(imag(z))</code>,</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

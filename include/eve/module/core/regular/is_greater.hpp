@@ -58,23 +58,23 @@ namespace eve
 //!     The call `eve;::is_greater[mask](x,y)` provides a masked version of `eve::is_greater` which
 //!     is equivalent to `if_else (mask, is_greater(x), eve::false( eve::as(x,y)))`.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/core/masked/is_greater.cpp}
+//!     @godbolt{doc/core/masked/is_greater.cpp}
 //!
-//!  * `definitely`
+//!   * `definitely`
 //!
 //!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
-//!      floating point values, evals to true if and only if `x` is definitely greater than `y`.
-//!      This means that:
+//!     floating point values, evals to true if and only if `x` is definitely greater than `y`.
+//!     This means that:
 //!
-//!      - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
-//!      - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
-//!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+//!       - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
+//!       - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
+//!       - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!         @godbolt{doc/core/fuzzy/is_greater.cpp}
+//!     @godbolt{doc/core/fuzzy/is_greater.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_greater_, is_greater);

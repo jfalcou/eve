@@ -12,7 +12,7 @@ var group__core__decorators =
     [ "eve::regular", "group__core__decorators_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253", null ],
     [ "eve::saturated", "group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e", null ],
     [ "eve::sph", "group__core__decorators_gaaf24ab26845a91e5998b2f3134669b5a.html#gaaf24ab26845a91e5998b2f3134669b5a", null ],
-    [ "eve::successor", "group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09", null ],
+    [ "eve::successor", "group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0", null ],
     [ "eve::to_nearest", "group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223", null ],
     [ "eve::tolerant", "group__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a", null ],
     [ "eve::toward_zero", "group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028", null ],

@@ -10,8 +10,7 @@ behaviors **EVE** types and functions can exhibit.
 For any [value type](@ref eve::value), the **cardinal** is the number of elements it contains.
 This information is retrieved via the eve::cardinal type trait.
 
-  - For any [scalar type](@ref eve::scalar_value) `T`, `eve::cardinal<T>::type` evaluates to @ref eve::scalar_cardinal.
-  - For any [SIMD type](@ref eve::simd_value) `T`, `eve::cardinal<T>::type` evaluates to `eve::fixed<N>`, where `N` is the number of lanes of the underlying SIMD register.
+For any [SIMD type](@ref eve::simd_value) `T`, `eve::cardinal<T>::type` evaluates to `eve::fixed<N>`, where `N` is the number of lanes of the underlying SIMD register.
 
 Two types are said to be **cardinal compatible** if they have the same cardinal or at least one of them
 is a [scalar type](@ref eve::scalar_value).
@@ -55,12 +54,12 @@ For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn` , a C
 returning a [value](@ref eve::value) of type `R` is said to be **Element-wise** if the expression
 `R r = f(x1, ...,xn)` is semantically equivalent to:
 
-  - if `R` models @ref eve::simd_value:
+  - if `R` models @ref eve::simd_value :
     @code{.cpp}
     R r = [](auto i, auto) { return f(get(x1,i),  ..., get(xn,i)); };
     @endcode
 
-  - if `R` models @ref eve::scalar_value:
+  - if `R` models @ref eve::scalar_value :
     @code{.cpp}
     R r = f(x1,  ..., xn);
     @endcode

@@ -13,46 +13,6 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_simd
-//! @{
-//!   @var deinterleave_groups
-//!   @brief deinterleaves values in n wides
-//!
-//!    This is a generalization of deinterleave_groups_shuffle for n wides.
-//!
-//!    The different name comes from for 2 wides - this returns a tuple of
-//!    2 wides and a shuffle returns an aggregate
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!         TO DO
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `...xs` :  arguments to deinterleave.
-//!
-//!    **Return value**
-//!
-//!    TO DO
-//!
-//!  @groupheader{Example}
-//!
-//!        @godbolt{doc/core/regular/deinterleave_groups.cpp}
-//! @}
-//================================================================================================
-
-//================================================================================================
 //! @addtogroup core
 //! @{
 //!    @var deinterleave_groups

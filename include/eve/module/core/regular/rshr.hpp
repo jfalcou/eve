@@ -40,7 +40,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::realvalue) to be shifted.
+//!     * `x` :  [argument](@ref eve::ordered_value) to be shifted.
 //!     * `n`:    [shift](@ref eve::integral_value).
 //!
 //!    **Return value**

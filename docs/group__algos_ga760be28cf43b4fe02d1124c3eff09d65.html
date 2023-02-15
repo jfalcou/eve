@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,11 +137,12 @@ $(document).ready(function(){initNavTree('group__algos_ga760be28cf43b4fe02d1124c
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/transform_reduce.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/transform_reduce.hpp&gt;</code></p>
 
 <p>SIMD version of std::transform_reduce for a single range. </p>
 <p >Configurable <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing a SIMD optimized version of the transform_reduce By default, the operation will be unrolled by a factor of 4, align memory accesses and perform conversions if needed.</p>
-<p >Due to the nature of how SIMD algorithms work, the reduce operation has to be paired with its, neutral element. For example, for add you pass <code>{add, zero}</code> as zero is the identity for add. Instead of zero it can be beneficial to pass eve's constants like <code><a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">eve::zero</a></code>, <code><a class="el" href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Computes the constant .">eve::one</a></code> because sometimes the implementation can be improved</p>
+<p >Due to the nature of how SIMD algorithms work, the reduce operation has to be paired with its, neutral element. For example, for add you pass <code>{add, zero}</code> as zero is the identity for add. Instead of zero it can be beneficial to pass eve's constants like <code><a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">eve::zero</a></code>, <code><a class="el" href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5" title="Computes the constant .">eve::one</a></code> because sometimes the implementation can be improved.</p>
+<p >Supports <code>fuse_operations</code> trait =&gt; <code>map_op</code> starts to take an extra parameter: current sum. Allows to use fma. Note that <code>add</code> operations and <code>zero</code> are still used and have to be correct.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The interface differs from the standard because we felt this better matches our use case: do unary transformation and then accumulate that.</li>
 <li>Multiple range interface is omitted for simplicity. Use <a class="el" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94" title="lable object constructing a SoA value.">eve::zip</a> to get that effect.</li>
@@ -162,7 +163,7 @@ $(document).ready(function(){initNavTree('group__algos_ga760be28cf43b4fe02d1124c
 <div class="line">          &gt;</div>
 <div class="line">  U <a class="code hl_variable" href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">transform_reduce</a>(Rng&amp;&amp; rng, MapOp map_op, std::pair&lt;AddOp, Zero&gt; add_zero, U init);   <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algos_ga760be28cf43b4fe02d1124c3eff09d65_html_ga760be28cf43b4fe02d1124c3eff09d65"><div class="ttname"><a href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">eve::algo::transform_reduce</a></div><div class="ttdeci">constexpr auto transform_reduce</div><div class="ttdoc">SIMD version of std::transform_reduce for a single range.</div><div class="ttdef"><b>Definition:</b> transform_reduce.hpp:167</div></div>
+<div class="ttc" id="agroup__algos_ga760be28cf43b4fe02d1124c3eff09d65_html_ga760be28cf43b4fe02d1124c3eff09d65"><div class="ttname"><a href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">eve::algo::transform_reduce</a></div><div class="ttdeci">constexpr auto transform_reduce</div><div class="ttdoc">SIMD version of std::transform_reduce for a single range.</div><div class="ttdef"><b>Definition:</b> transform_reduce.hpp:176</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Applies <code>map_op</code> to each element in the range <code>rng</code> and reduces the results along with the initial value <code>init</code> using regular addition as the reduce operation.</li>
 <li>Applies <code>map_op</code> to each element in the range <code>rng</code> and reduces the results along with the initial value <code>init</code> using the <code>add_zero</code> reduce operation and neutral element.</li>
@@ -181,7 +182,7 @@ $(document).ready(function(){initNavTree('group__algos_ga760be28cf43b4fe02d1124c
 </ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;numeric&gt;</span></div>
@@ -191,25 +192,30 @@ $(document).ready(function(){initNavTree('group__algos_ga760be28cf43b4fe02d1124c
 <div class="line">{</div>
 <div class="line">  std::vector&lt;float&gt;  v = {1.0f, 2.0f, 3.0f, 4.0f};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                                                               = &quot;</span></div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                                                                                        = &quot;</span></div>
 <div class="line">            &lt;&lt; tts::as_string(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::transform_reduce(v, [](auto x) { return x + x }, 0.)                                 = &quot;</span></div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::transform_reduce(v, [](auto x) { return x + x }, 0.f)                                                         = &quot;</span></div>
 <div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">eve::algo::transform_reduce</a>(v, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x + x; }, 0.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; std::transform_reduce(v.begin(), v.end(), std::plus&lt;&gt;{}, 0., [](auto x) { return x + x })       = &quot;</span></div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; std::transform_reduce(v.begin(), v.end(), std::plus&lt;&gt;{}, 0.f, [](auto x) { return x + x })                               = &quot;</span></div>
 <div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">std::transform_reduce</a>(v.begin(), v.end(), 0., std::plus&lt;&gt;{}, [](<span class="keyword">auto</span> x) { return x + x; }) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::reduce(eve::views::map(v, [](auto x) { return x + x }), 0.)                          = &quot;</span></div>
-<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">eve::algo::reduce</a>(<a class="code hl_variable" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a">eve::views::map</a>(v, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x + x; }), 0.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::reduce(eve::views::map(v, [](auto x) { return x + x }), 0.f)                                                  = &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">eve::algo::reduce</a>(<a class="code hl_variable" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a">eve::views::map</a>(v, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x + x; }), 0.f) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::transform_reduce(v, [](auto x) { return x + x }, std::pair{eve::mul, eve::one}, 0.)  = &quot;</span></div>
-<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">eve::algo::transform_reduce</a>(v, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x + x; }, std::pair{<a class="code hl_variable" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">eve::mul</a>, <a class="code hl_variable" href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">eve::one</a>}, 1.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::transform_reduce(v, [](auto x) { return x + x }, std::pair{eve::mul, eve::one}, 1.f)  = &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">eve::algo::transform_reduce</a>(v, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x + x; }, std::pair{<a class="code hl_variable" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">eve::mul</a>, <a class="code hl_variable" href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">eve::one</a>}, 1.f) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::transform_reduce[eve::algo::fuse_operations](v, [](auto x, auto sum) { return eve::fma(x, 2.f, sum); }, 0.f)  = &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65">eve::algo::transform_reduce</a>[<a class="code hl_variable" href="group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c">eve::algo::fuse_operations</a>](v, [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> sum) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a>(x, .5f, sum); }, 0.f) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c_html_gab9f572e15fac2f4f23ecdf3658ce192c"><div class="ttname"><a href="group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c">eve::algo::fuse_operations</a></div><div class="ttdeci">constexpr auto fuse_operations</div><div class="ttdoc">Some algorithms (for example transform_reduce) can be implemented more efficient if you fuse multiple...</div><div class="ttdef"><b>Definition:</b> traits.hpp:132</div></div>
 <div class="ttc" id="agroup__algos_ga48d1396b69183e081e82a9bc91102376_html_ga48d1396b69183e081e82a9bc91102376"><div class="ttname"><a href="group__algos_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376">eve::algo::reduce</a></div><div class="ttdeci">constexpr auto reduce</div><div class="ttdoc">SIMD optimized version of std::reduce.</div><div class="ttdef"><b>Definition:</b> reduce.hpp:152</div></div>
 <div class="ttc" id="agroup__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f_html_ga06eee505775e24c81fa5f5b22382251f"><div class="ttname"><a href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f">eve::mul</a></div><div class="ttdeci">constexpr callable_mul_ mul</div><div class="ttdoc">Computes the sum of its arguments.</div><div class="ttdef"><b>Definition:</b> mul.hpp:83</div></div>
 <div class="ttc" id="agroup__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5_html_ga6a98ab15a9dca6c0d761b0505b222cc5"><div class="ttname"><a href="group__core__constants_ga6a98ab15a9dca6c0d761b0505b222cc5.html#ga6a98ab15a9dca6c0d761b0505b222cc5">eve::one</a></div><div class="ttdeci">constexpr callable_one_ one</div><div class="ttdoc">Computes the constant .</div><div class="ttdef"><b>Definition:</b> one.hpp:51</div></div>
+<div class="ttc" id="agroup__core__fma__family_gaa9a5f13618342522ebb924a864555cc1_html_gaa9a5f13618342522ebb924a864555cc1"><div class="ttname"><a href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a></div><div class="ttdeci">constexpr callable_fma_ fma</div><div class="ttdoc">Computes the fused multiply add of its three parameters.</div><div class="ttdef"><b>Definition:</b> fma.hpp:82</div></div>
 <div class="ttc" id="agroup__views_ga9d242249cc89dfa9637ae866b9df151a_html_ga9d242249cc89dfa9637ae866b9df151a"><div class="ttname"><a href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a">eve::algo::views::map</a></div><div class="ttdeci">struct eve::algo::views::@6 map</div><div class="ttdoc">Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...</div></div>
 </div><!-- fragment --> 
 </div>

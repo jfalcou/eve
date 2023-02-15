@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__algorithms.html',''); initResiz
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >Algorithms and Views. </p>
 <p >This module provides implementation of SIMD versions of some std ranges algorithms. Take care that some prerequisite and syntaxes are not fully standard conformant</p>
-<p ><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span> </div>
+<p ><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span> </div>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
 Modules</h2></td></tr>
@@ -165,7 +165,7 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>eve::algo::
 <tr class="memitem:ga85190bd1728e1754c114f5b18fc5a524"><td class="memItemLeft" align="right" valign="top">constexpr range_ref_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524">eve::algo::range_ref</a></td></tr>
 <tr class="memdesc:ga85190bd1728e1754c114f5b18fc5a524"><td class="mdescLeft">&#160;</td><td class="mdescRight">for a <code>non_owning_range</code> returns it, otherwise returns a <code><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html" title="a non_owning_range wrapper around owning range. Should be created via range_ref">range_ref_wrapper</a></code>.  <a href="group__algorithms_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524">More...</a><br /></td></tr>
 <tr class="separator:ga85190bd1728e1754c114f5b18fc5a524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga887770a88fdcec5759f14329062c4771"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771">eve::algo::reverse</a> = function_with_traits&lt;reverse_&gt;[algo::unroll&lt;1&gt;][no_aligning]</td></tr>
+<tr class="memitem:ga887770a88fdcec5759f14329062c4771"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771">eve::algo::reverse</a> = function_with_traits&lt;reverse_&gt;[no_unrolling][no_aligning]</td></tr>
 <tr class="memdesc:ga887770a88fdcec5759f14329062c4771"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD version of std::reverse.  <a href="group__algorithms_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771">More...</a><br /></td></tr>
 <tr class="separator:ga887770a88fdcec5759f14329062c4771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacabefd0775fc30272c8707c63e3b62a3"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_gacabefd0775fc30272c8707c63e3b62a3.html#gacabefd0775fc30272c8707c63e3b62a3">eve::algo::reverse_copy</a> = function_with_traits&lt;reverse_copy_&gt;[algo::unroll&lt;1&gt;]</td></tr>
@@ -177,6 +177,19 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>eve::algo::
 <tr class="memitem:ga4e752623318f5d75907ed9f732c826a1"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1">eve::algo::no_aligning</a> = ::rbr::flag( no_aligning_tag{} )</td></tr>
 <tr class="memdesc:ga4e752623318f5d75907ed9f732c826a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traits for disabling alignment handling in algorithm.  <a href="group__algorithms_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1">More...</a><br /></td></tr>
 <tr class="separator:ga4e752623318f5d75907ed9f732c826a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga660d80002f91db5c94a04f309e0015e7"><td class="memItemLeft" align="right" valign="top"><a id="ga660d80002f91db5c94a04f309e0015e7" name="ga660d80002f91db5c94a04f309e0015e7"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>eve::algo::no_unrolling</b> = unroll&lt;1&gt;</td></tr>
+<tr class="memdesc:ga660d80002f91db5c94a04f309e0015e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convinient equivalent to unroll&lt;1&gt;. <br /></td></tr>
+<tr class="separator:ga660d80002f91db5c94a04f309e0015e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga244da44511b03c597243683208a3b731"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">eve::algo::expensive_callable</a> = ::rbr::flag( expensive_callable_tag{} )</td></tr>
+<tr class="memdesc:ga244da44511b03c597243683208a3b731"><td class="mdescLeft">&#160;</td><td class="mdescRight"><em>NOTE</em>: equivalent to no_aligning + no_unrolling By default eve algorithms will assume that the passed predicates/computation are failry simple and will unroll and align data accesses.  <a href="group__algorithms_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">More...</a><br /></td></tr>
+<tr class="separator:ga244da44511b03c597243683208a3b731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9f572e15fac2f4f23ecdf3658ce192c"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c">eve::algo::fuse_operations</a> = ::rbr::flag( fuse_operations_tag{} )</td></tr>
+<tr class="memdesc:gab9f572e15fac2f4f23ecdf3658ce192c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some algorithms (for example <code>transform_reduce</code>) can be implemented more efficient if you fuse multiple operations provided in a single function.  <a href="group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c">More...</a><br /></td></tr>
+<tr class="separator:gab9f572e15fac2f4f23ecdf3658ce192c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b9461ddb4574083563052a1fbe355e3"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_ga1b9461ddb4574083563052a1fbe355e3.html#ga1b9461ddb4574083563052a1fbe355e3">eve::algo::allow_frequency_scaling</a> = ::rbr::flag( allow_frequency_scaling_tag{} )</td></tr>
+<tr class="memdesc:ga1b9461ddb4574083563052a1fbe355e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">On intel using 64 byte registers requires processor to scale down it's frequency. This is only benefitial if you have a very large set of data to process. Otherwise it will likely degrade performance not only of the SIMD code but also of the code that follows.  <a href="group__algorithms_ga1b9461ddb4574083563052a1fbe355e3.html#ga1b9461ddb4574083563052a1fbe355e3">More...</a><br /></td></tr>
+<tr class="separator:ga1b9461ddb4574083563052a1fbe355e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabcfe49a76c53b5567df06523ded73cc0"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algorithms_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0">eve::algo::transform_inplace</a> = function_with_traits&lt;transform_inplace_&gt;[default_simple_algo_traits]</td></tr>
 <tr class="memdesc:gabcfe49a76c53b5567df06523ded73cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">same as;  <a href="group__algorithms_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0">More...</a><br /></td></tr>
 <tr class="separator:gabcfe49a76c53b5567df06523ded73cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>

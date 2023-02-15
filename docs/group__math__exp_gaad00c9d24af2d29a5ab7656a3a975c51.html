@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -143,30 +143,31 @@ $(document).ready(function(){initNavTree('group__math__exp_gaad00c9d24af2d29a5ab
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::ordered_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">exp2</a>(T x) <span class="keyword">noexcept</span>;                                     <span class="comment">//1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__math__exp_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a">exp10</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;        <span class="comment">//2</span></div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">exp2</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;        <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__exp_ga90cff7b583b7e96518af4946dcd7378a_html_ga90cff7b583b7e96518af4946dcd7378a"><div class="ttname"><a href="group__math__exp_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a">eve::exp10</a></div><div class="ttdeci">constexpr callable_exp10_ exp10</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> exp10.hpp:98</div></div>
 <div class="ttc" id="agroup__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51_html_gaad00c9d24af2d29a5ab7656a3a975c51"><div class="ttname"><a href="group__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51">eve::exp2</a></div><div class="ttdeci">constexpr callable_exp2_ exp2</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> exp2.hpp:99</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
-<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:40</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:39</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1real__value.html">real value</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1ordered__value.html">ordered value</a>.</li>
 <li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> argument.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> exponential of base 2 of the input. In particular, for floating inputs:</p>
-<ul>
+<ol type="1">
+<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> exponential of base 2 of the input. In particular, for floating inputs:<ul>
 <li>If the element is \(\pm0\), \(1\) is returned</li>
 <li>If the element is \(-\infty\), \(+0\) is returned</li>
 <li>If the element is \(\infty\), \(\infty\) is returned</li>
 <li>If the element is a <code>NaN</code>, <code>NaN</code> is returned</li>
 </ul>
-<p >Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the exponential of base 10 of the input as if computed by <code><a class="el" href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp</a> (eve::log_2(as(z))*z)</code>.</p>
+</li>
+<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the exponential of base 10 of the input as if computed by <code><a class="el" href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp</a> (eve::log_2(as(z))*z)</code>.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

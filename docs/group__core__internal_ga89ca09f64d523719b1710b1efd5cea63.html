@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__core__internal_ga89ca09f64d5237
 <div class="line">   T <a class="code hl_variable" href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">nb_values</a>(T x, T y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__internal_ga89ca09f64d523719b1710b1efd5cea63_html_ga89ca09f64d523719b1710b1efd5cea63"><div class="ttname"><a href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">eve::nb_values</a></div><div class="ttdeci">constexpr callable_nb_values_ nb_values</div><div class="ttdoc">Computes the number of values representable in the type between the arguments.</div><div class="ttdef"><b>Definition:</b> nb_values.hpp:50</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">arguments</a>.</li>
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('group__core__internal_ga89ca09f64d5237
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  w_t <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {0.0f,                                  1.0f, 1.0f-eve::eps(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2, 1.0f              };</div>
+<div class="line">  w_t <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {0.0f,                                  1.0f, 1.0f-<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2, 1.0f              };</div>
 <div class="line">  w_t qi = {<a class="code hl_variable" href="group__core__constants_ga34924224922708e1770206eb025185ec.html#ga34924224922708e1770206eb025185ec">eve::smallestposval</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 2.0f, 1.0f,                     <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()) };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(9) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -179,6 +179,7 @@ $(document).ready(function(){initNavTree('group__core__internal_ga89ca09f64d5237
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; nb_values(xi, yi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">eve::nb_values</a>(xi, yi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr callable_eps_ eps</div><div class="ttdoc">Computes the the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:63</div></div>
 <div class="ttc" id="agroup__core__constants_ga34924224922708e1770206eb025185ec_html_ga34924224922708e1770206eb025185ec"><div class="ttname"><a href="group__core__constants_ga34924224922708e1770206eb025185ec.html#ga34924224922708e1770206eb025185ec">eve::smallestposval</a></div><div class="ttdeci">constexpr callable_smallestposval_ smallestposval</div><div class="ttdoc">Computes the smallest normal positive value.</div><div class="ttdef"><b>Definition:</b> smallestposval.hpp:59</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>

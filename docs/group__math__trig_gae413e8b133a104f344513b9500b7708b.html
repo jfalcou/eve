@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -145,19 +145,30 @@ $(document).ready(function(){initNavTree('group__math__trig_gae413e8b133a104f344
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__math__trig_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">cscpi</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">                        <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">   as_complex_t&lt;T&gt; <a class="code hl_variable" href="group__math__trig_ga03482f35c4921d89499b1034eee99be0.html#ga03482f35c4921d89499b1034eee99be0">cospi</a>(as_complex_t&lt;T&gt; z) <span class="keyword">noexcept</span>;  <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__trig_gae413e8b133a104f344513b9500b7708b_html_gae413e8b133a104f344513b9500b7708b"><div class="ttname"><a href="group__math__trig_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">eve::cscpi</a></div><div class="ttdeci">constexpr callable_cscpi_ cscpi</div><div class="ttdoc">Callable object computing the cosecant in  multiples.</div><div class="ttdef"><b>Definition:</b> cscpi.hpp:66</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__math__trig_ga03482f35c4921d89499b1034eee99be0_html_ga03482f35c4921d89499b1034eee99be0"><div class="ttname"><a href="group__math__trig_ga03482f35c4921d89499b1034eee99be0.html#ga03482f35c4921d89499b1034eee99be0">eve::cospi</a></div><div class="ttdeci">constexpr callable_cospi_ cospi</div><div class="ttdoc">Callable object computing the cosine from an input in  multiples.</div><div class="ttdef"><b>Definition:</b> cospi.hpp:79</div></div>
+<div class="ttc" id="agroup__math__trig_gae413e8b133a104f344513b9500b7708b_html_gae413e8b133a104f344513b9500b7708b"><div class="ttname"><a href="group__math__trig_gae413e8b133a104f344513b9500b7708b.html#gae413e8b133a104f344513b9500b7708b">eve::cscpi</a></div><div class="ttdeci">constexpr callable_cscpi_ cscpi</div><div class="ttdoc">Callable object computing the cosecant in  multiples.</div><div class="ttdef"><b>Definition:</b> cscpi.hpp:75</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</p>
-<p ><b>Return value</b></p>
-<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> cosecant of the input expressed in \(\pi\) multiples.</p>
-<p >The call <code>cscpi(x)</code> is semantically equivalent to \(\csc(\pi x)\). In particular:</p>
 <ul>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
+</ul>
+<p ><b>Return value</b></p>
+<ol type="1">
+<li><p class="startli">Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> cosecant of the input expressed in \(\pi\) multiples.</p>
+<p class="startli">The call <code>cscpi(x)</code> is semantically equivalent to \(\csc(\pi x)\). In particular:</p><ul>
 <li>If the element is \(\pm0\), \(\pm\infty\) is returned.</li>
 <li>If the element is \(\pm\infty\), Nan is returned.</li>
 <li>If the element is a <code>Nan</code>, <code>NaN</code> is returned.</li>
 </ul>
+</li>
+<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the cosecant of the input expressed in \(\pi\) multiples.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

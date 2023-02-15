@@ -2,7 +2,7 @@ var searchData=
 [
   ['half_0',['half',['../group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5',1,'eve']]],
   ['half_5fcircle_1',['half_circle',['../group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9',1,'eve']]],
-  ['half_5flogical_2',['half_logical',['../structeve_1_1top__bits.html#a3fbcbba4730f8f87b8a3383c5cf07e14',1,'eve::top_bits']]],
+  ['half_5flogical_2',['half_logical',['../structeve_1_1top__bits.html#a3332a95c17f90652380d16a746ed91ac',1,'eve::top_bits']]],
   ['handling_20multiple_20architecture_20targets_3',['Handling Multiple Architecture Targets',['../multiarch.html',1,'tutorials']]],
   ['has_5fzeros_4',['has_zeros',['../structeve_1_1pattern__t.html#adaf1e7da40b7b86a9e00d120044039df',1,'eve::pattern_t']]],
   ['hermite_5',['hermite',['../group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25',1,'eve']]],

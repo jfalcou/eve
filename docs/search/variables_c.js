@@ -35,10 +35,11 @@ var searchData=
   ['minlog2denormal_32',['minlog2denormal',['../group__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1',1,'eve']]],
   ['minlogdenormal_33',['minlogdenormal',['../group__math__constants_ga1f2d0ce99a16b97d851663795179afcf.html#ga1f2d0ce99a16b97d851663795179afcf',1,'eve']]],
   ['minmag_34',['minmag',['../group__core__arithmetic_gabac32915710c56d7dba2bf23e9bcdbcc.html#gabac32915710c56d7dba2bf23e9bcdbcc',1,'eve']]],
-  ['minus_35',['minus',['../group__core__arithmetic_ga8b7bbe9ef3171d65271795ff14c98cc9.html#ga8b7bbe9ef3171d65271795ff14c98cc9',1,'eve']]],
-  ['mismatch_36',['mismatch',['../group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4',1,'eve::algo']]],
-  ['modf_37',['modf',['../group__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc.html#ga42fa342353439f0b23e8fab241eecdfc',1,'eve']]],
-  ['mone_38',['mone',['../group__core__constants_gaad7c9ef60300e0df1ef588da7db5bb17.html#gaad7c9ef60300e0df1ef588da7db5bb17',1,'eve']]],
-  ['mul_39',['mul',['../group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f',1,'eve']]],
-  ['mzero_40',['mzero',['../group__core__constants_gad55e4457095a43c4efb949e5ba495113.html#gad55e4457095a43c4efb949e5ba495113',1,'eve']]]
+  ['minmax_35',['minmax',['../group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59',1,'eve']]],
+  ['minus_36',['minus',['../group__core__arithmetic_ga8b7bbe9ef3171d65271795ff14c98cc9.html#ga8b7bbe9ef3171d65271795ff14c98cc9',1,'eve']]],
+  ['mismatch_37',['mismatch',['../group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4',1,'eve::algo']]],
+  ['modf_38',['modf',['../group__core__arithmetic_ga42fa342353439f0b23e8fab241eecdfc.html#ga42fa342353439f0b23e8fab241eecdfc',1,'eve']]],
+  ['mone_39',['mone',['../group__core__constants_gaad7c9ef60300e0df1ef588da7db5bb17.html#gaad7c9ef60300e0df1ef588da7db5bb17',1,'eve']]],
+  ['mul_40',['mul',['../group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f',1,'eve']]],
+  ['mzero_41',['mzero',['../group__core__constants_gad55e4457095a43c4efb949e5ba495113.html#gad55e4457095a43c4efb949e5ba495113',1,'eve']]]
 ];

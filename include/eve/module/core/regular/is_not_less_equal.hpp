@@ -53,24 +53,23 @@ namespace eve
 //!     The call `eve;::is_less_equal[mask](x,y)` provides a masked version of `eve::is_less_equal`
 //!     which is equivalent to `if_else (mask, is_less_equal(x), eve::false( eve::as(x,y)))`.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/core/masked/is_less_equal.cpp}
+//!     @godbolt{doc/core/masked/is_less_equal.cpp}
 //!
-//!  * `definitely`
-//!
+//!   * `definitely`
 //!
 //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
-//!      floating point values, evals to true if and only if and only if `x` is definitely not less
-//!      or equal to `y`. This means that the pair `x, y` is unordered or:
+//!     floating point values, evaluates to true if and only if and only if `x` is definitely not less
+//!     or equal to `y`. This means that the pair `x, y` is unordered or:
 //!
-//!      * if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
-//!      * if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
-//!      * if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+//!       * if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+//!       * if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
+//!       * if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!         @godbolt{doc/core/fuzzy/is_less_equal.cpp}
+//!     @godbolt{doc/core/fuzzy/is_less_equal.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);

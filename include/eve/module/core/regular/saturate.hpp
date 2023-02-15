@@ -14,7 +14,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
-//!   @var bit_cast
+//!   @var saturate
 //!   @brief Computes the saturation of a value in a type.
 //!
 //!   **Defined in Header**

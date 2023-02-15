@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -149,18 +149,18 @@ $(document).ready(function(){initNavTree('group__polynomial_gaee731c76b893d83940
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value T eve::<span class="keywordtype">float</span>ing_real_value T, eve::<span class="keywordtype">float</span>ing_real_value U &gt;</div>
-<div class="line">  eve::as_wide_as&lt;eve::common_compatible_value&lt;T, U&gt;, N&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value T eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::<span class="keywordtype">float</span>ing_ordered_value U &gt;</div>
+<div class="line">  eve::as_wide_as&lt;eve::common_value_t&lt;T, U&gt;, N&gt;</div>
 <div class="line">  <span class="keyword">auto</span>  <a class="code hl_variable" href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">gegenbauer</a>(N n, T <a class="code hl_variable" href="group__special_ga2a11fd0efc3ba16fb4556edfc4e5dc54.html#ga2a11fd0efc3ba16fb4556edfc4e5dc54">lambda</a>, U x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__polynomial_gaee731c76b893d8394075aaa0e5a16cf5_html_gaee731c76b893d8394075aaa0e5a16cf5"><div class="ttname"><a href="group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5">eve::gegenbauer</a></div><div class="ttdeci">constexpr callable_gegenbauer_ gegenbauer</div><div class="ttdoc">Computes the value of a gegenbauer polynomial .</div><div class="ttdef"><b>Definition:</b> gegenbauer.hpp:63</div></div>
-<div class="ttc" id="agroup__special_ga2a11fd0efc3ba16fb4556edfc4e5dc54_html_ga2a11fd0efc3ba16fb4556edfc4e5dc54"><div class="ttname"><a href="group__special_ga2a11fd0efc3ba16fb4556edfc4e5dc54.html#ga2a11fd0efc3ba16fb4556edfc4e5dc54">eve::lambda</a></div><div class="ttdeci">constexpr callable_lambda_ lambda</div><div class="ttdoc">Callable object computing The Dirichlet .</div><div class="ttdef"><b>Definition:</b> lambda.hpp:64</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__special_ga2a11fd0efc3ba16fb4556edfc4e5dc54_html_ga2a11fd0efc3ba16fb4556edfc4e5dc54"><div class="ttname"><a href="group__special_ga2a11fd0efc3ba16fb4556edfc4e5dc54.html#ga2a11fd0efc3ba16fb4556edfc4e5dc54">eve::lambda</a></div><div class="ttdeci">constexpr callable_lambda_ lambda</div><div class="ttdoc">Callable object computing The Dirichlet .</div><div class="ttdef"><b>Definition:</b> lambda.hpp:63</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>n</code> : <a class="el" href="concepteve_1_1integral__value.html">integral argument</a>.</li>
-<li><code>lambda</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>. Must be greater than \(-\frac12\).</li>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a> .</li>
+<li><code>lambda</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>. Must be greater than \(-\frac12\).</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a> .</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of \( \mathbf{C}_n^\lambda(x)\) is returned.</p>

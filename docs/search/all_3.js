@@ -7,7 +7,7 @@ var searchData=
   ['decorators_4',['Decorators',['../group__core__decorators.html',1,'']]],
   ['definitely_5',['definitely',['../group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b',1,'eve']]],
   ['deginrad_6',['deginrad',['../group__math__trig_gac5affe61fab2afe7b8ac2b729a03e523.html#gac5affe61fab2afe7b8ac2b729a03e523',1,'eve']]],
-  ['deinterleave_5fgroups_7',['deinterleave_groups',['../group__core__simd_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5',1,'eve']]],
+  ['deinterleave_5fgroups_7',['deinterleave_groups',['../group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5',1,'eve']]],
   ['deinterleave_5fgroups_5fshuffle_8',['deinterleave_groups_shuffle',['../group__core__simd_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3',1,'eve']]],
   ['design_20decisions_9',['Design Decisions',['../design_rationale.html',1,'eve-dev']]],
   ['deta_10',['deta',['../group__special_gab16102df6845b3f09f39a13526ce3a03.html#gab16102df6845b3f09f39a13526ce3a03',1,'eve']]],

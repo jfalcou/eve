@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__core__accuracy_ga8af2528a0e1737
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">three_fma</a>(T x, U y, V z) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b_html_ga8af2528a0e1737b2cf9729e99950aa5b"><div class="ttname"><a href="group__core__accuracy_ga8af2528a0e1737b2cf9729e99950aa5b.html#ga8af2528a0e1737b2cf9729e99950aa5b">eve::three_fma</a></div><div class="ttdeci">constexpr callable_three_fma_ three_fma</div><div class="ttdoc">Computes the elementwise triple of fma and errors,.</div><div class="ttdef"><b>Definition:</b> three_fma.hpp:65</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <p ><code>x</code>, <code>y</code>, <code>z</code>: <a class="el" href="concepteve_1_1floating__value.html">floating values</a>.</p>
 <p ><b>Return value</b></p>
@@ -167,7 +167,7 @@ $(document).ready(function(){initNavTree('group__core__accuracy_ga8af2528a0e1737
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">float</span> ep = eve::eps(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <span class="keywordtype">float</span> ep = <a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
 <div class="line">  wide_ft pf = {1.0f+ep, 0.5f*(1.0f+ep*4), -1.3f,   1.0f+4*ep};</div>
 <div class="line">  wide_ft qf = {1.0f-ep, 0.5f,             -1.3f,   1.0f-ep/2};</div>
 <div class="line">  wide_ft rf = {1.0f-ep, 0.5f,             -1.3f,   1.0f-ep/2};</div>
@@ -196,6 +196,7 @@ $(document).ready(function(){initNavTree('group__core__accuracy_ga8af2528a0e1737
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; double(sa)+double(sb)+double(sc)         &quot;</span> &lt;&lt;  double(sa)+double(sb)+double(sc)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr callable_eps_ eps</div><div class="ttdoc">Computes the the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:63</div></div>
 <div class="ttc" id="agroup__core__fma__family_gaa9a5f13618342522ebb924a864555cc1_html_gaa9a5f13618342522ebb924a864555cc1"><div class="ttname"><a href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1">eve::fma</a></div><div class="ttdeci">constexpr callable_fma_ fma</div><div class="ttdoc">Computes the fused multiply add of its three parameters.</div><div class="ttdef"><b>Definition:</b> fma.hpp:82</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>

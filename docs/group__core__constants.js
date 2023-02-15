@@ -2,6 +2,7 @@ var group__core__constants =
 [
     [ "eve::allbits", "group__core__constants_ga55b591d755a02c9219c36c5603de6dc2.html#ga55b591d755a02c9219c36c5603de6dc2", null ],
     [ "eve::bitincrement", "group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb", null ],
+    [ "eve::eps", "group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063", null ],
     [ "eve::exponentmask", "group__core__constants_ga9c49e96e0543e6b6719260adde8cca87.html#ga9c49e96e0543e6b6719260adde8cca87", null ],
     [ "eve::false_", "group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6", null ],
     [ "eve::half", "group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5", null ],

@@ -43,9 +43,6 @@ namespace eve
 //!   *  `x`:   [floating value](@ref eve::floating_value).
 //!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
-//!   }
-//!   @endcode
-//!
 //! **Return value**
 //!
 //! The computation returns a pair and is semantically equivalent to `{sinpi(x), cospi(x)}`

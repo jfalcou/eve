@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,25 +144,25 @@ $(document).ready(function(){initNavTree('group__polynomial_ga90f1fb37df377d7fd9
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> C ...&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> C ...&gt;</div>
 <div class="line">  T <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">horner</a>(T x, C ... coefs) <span class="keyword">noexcept</span>;                                   <span class="comment">//1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_real_value T, eve::Range R&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::Range R&gt;</div>
 <div class="line">  T <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">horner</a>(T x, R r) <span class="keyword">noexcept</span>;                                           <span class="comment">//2</span></div>
 <div class="line"> </div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:114</div></div>
 <div class="ttc" id="agroup__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb_html_ga90f1fb37df377d7fd9f95282ec3c70cb"><div class="ttname"><a href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a></div><div class="ttdeci">constexpr callable_horner_ horner</div><div class="ttdoc">Implement the horner scheme to evaluate polynomials/.</div><div class="ttdef"><b>Definition:</b> horner.hpp:82</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Polynom is evaluated at x the other inputs are the polynomial coefficients.</li>
 <li>Polynom is evaluated at x the other input is a range containing the coefficients</li>
 </ol>
 <p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
-<li><code>coefs...</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating arguments</a>. The coefficients by decreasing power order</li>
-<li><code>r</code> : range containing The coefficients by decreasing power order.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
+<li><code>coefs...</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating arguments</a>. The coefficients by decreasing power order</li>
+<li><code>r</code> : Range containing The coefficients by decreasing power order.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of the polynom at <code>x</code> is returned.</p>
@@ -178,37 +178,40 @@ $(document).ready(function(){initNavTree('group__polynomial_ga90f1fb37df377d7fd9
 <div class="line"><span class="preprocessor">#include &lt;list&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line"> </div>
-<div class="line">  wide_ft xd = {-0.3, 0.5, 0.0, 2.0};</div>
-<div class="line">  wide_ft b  = {-2, 10.5, -4, 0.1};</div>
+<div class="line">  w_t xd = {-0.3, 0.5, 0.0, 2.0};</div>
+<div class="line">  w_t b  = {-2, 10.5, -4, 0.1};</div>
 <div class="line"> </div>
-<div class="line">  wide_ft x(0.5);</div>
-<div class="line">  std::vector&lt;float&gt; v {1, -2, 3, -4};</div>
-<div class="line">  std::list&lt;float&gt;   l {1, -2, 3, -4};</div>
-<div class="line">  std::vector&lt;wide_ft&gt; wv { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} };</div>
+<div class="line">  w_t x(0.2);</div>
+<div class="line">  kumi::tuple&lt;float, float, float, float&gt; v {1, -2, 3, -4};</div>
+<div class="line">  kumi::tuple&lt;w_t, w_t, w_t&gt; wv { w_t{1.5, 1, 2, 3}, w_t{4, 5, 6, 7}, w_t{8, 9, 10, 11} };</div>
+<div class="line">  <span class="keyword">auto</span> t = kumi::tuple{1.5f,4.0f,8.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                       = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                        = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- l and v contain  {1, -2, 3, -4} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- wv      contains { {0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }&quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- wv      contains { {1.5, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11} }&quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, 1, -2, 3, -4)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, 1.0f, -2.0f, 3.0f, -4.0f) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5 1, b, 3, -4)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(0.5, 1, b, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5, 1, b, 3, -4)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(0.5, 1, b, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, 1, -2, 3, -4)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, 1, -2, 3, -4)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, l)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, l)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, v)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, v)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, t)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, t)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, t)                             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(x, t)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, wv)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(x, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5f, wv)                         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(0.5, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, wv)                           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(1.0f, t)                          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(1.0f, t) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xs = 0.1;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs               = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs                          = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xs, 1.5, 2.0, 4.0)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xs, 1.5, 2.0, 4.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>

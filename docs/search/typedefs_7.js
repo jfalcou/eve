@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pointer_0',['pointer',['../structeve_1_1aligned__ptr.html#a01fcaadfc18462725723c6ab049a7153',1,'eve::aligned_ptr']]]
+  ['mask_5ftype_0',['mask_type',['../structeve_1_1logical_3_01T_01_4.html#a7f0eebc0478c6f0faf7c0ec92c634609',1,'eve::logical&lt; T &gt;::mask_type()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a552251c1f51965f56d96414cc8f933c8',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::mask_type()']]]
 ];

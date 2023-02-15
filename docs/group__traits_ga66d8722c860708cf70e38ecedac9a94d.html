@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -129,7 +129,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::max_scalar_size_v = kumi::max_flat(T{}, [](auto m) { return sizeof(m); })</td>
+          <td class="memname">eve::max_scalar_size_v</td>
         </tr>
       </table>
   </td>
@@ -138,7 +138,10 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">= kumi::max_flat( kumi::as_tuple_t&lt;T&gt;{}</div>
+<div class="line">                                                          , [](<span class="keyword">auto</span> m) { <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(m); }</div>
+<div class="line">                                                          )</div>
+</div><!-- fragment -->
 <p>A meta function for getting a maximum size of scalar. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">

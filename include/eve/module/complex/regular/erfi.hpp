@@ -37,7 +37,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   *  `z`:   [floatingl](@ref eve::floating_real_value) or [complex ](@ref eve::complex) value.
+//!   *  `z`:   [floatingl](@ref eve::floating_ordered_value) or [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::deinterleave_groups</title>
+<title>E.V.E: eve::algo::fuse_operations</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__simd_gacea6e2b78b85daf62d4b45cf856819c5.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algorithms_gab9f572e15fac2f4f23ecdf3658ce192c.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,8 +117,8 @@ $(document).ready(function(){initNavTree('group__core__simd_gacea6e2b78b85daf62d
 </div>
 
 <div class="contents">
-<a id="gacea6e2b78b85daf62d4b45cf856819c5" name="gacea6e2b78b85daf62d4b45cf856819c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacea6e2b78b85daf62d4b45cf856819c5">&#9670;&nbsp;</a></span>deinterleave_groups</h2>
+<a id="gab9f572e15fac2f4f23ecdf3658ce192c" name="gab9f572e15fac2f4f23ecdf3658ce192c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab9f572e15fac2f4f23ecdf3658ce192c">&#9670;&nbsp;</a></span>fuse_operations</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gacea6e2b78b85daf62d
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::deinterleave_groups = {}</td>
+          <td class="memname">eve::algo::fuse_operations = ::rbr::flag( fuse_operations_tag{} )</td>
         </tr>
       </table>
   </td>
@@ -137,32 +137,11 @@ $(document).ready(function(){initNavTree('group__core__simd_gacea6e2b78b85daf62d
 </table>
 </div><div class="memdoc">
 
-<p>deinterleaves values in n wides </p>
-<p >Callabe object that deinterleaves values in n wides.</p>
-<p >This is a generalization of deinterleave_groups_shuffle for n wides.</p>
-<p >The different name comes from for 2 wides - this returns a tuple of 2 wides and a shuffle returns an aggregate</p>
-<p ><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">      TO DO</div>
-<div class="line">}</div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<ul>
-<li><code>...xs</code> : arguments to deinterleave.</li>
-</ul>
-<p ><b>Return value</b></p>
-<p >TO DO</p>
-<h2 class="groupheader">Example </h2>
-<pre class="fragment">  @include doc/core/regular/deinterleave_groups.cpp 
-</pre><p >This is a generalization of deinterleave_groups_shuffle for n wides.</p>
-<p >The different name comes from for 2 wides - this returns a tuple of 2 wides and a shuffle returns an aggregate</p>
-<p >First parameter is fixed&lt;N&gt; group_size - how many elements we consider one element After that you pass n simd values. Together those n simd values have interleaved values. We return a tuple of wides, where all values are separated between individual wides.</p>
-<p >NOTE: you can think of this function as AoS to SoA, where all fields have the same size. group is the size of the field in wide elements.</p>
-<p >Examples (one letter is a group - first parameter, group order is preserved): ABAB'ABAB ABAB'ABAB =&gt; [AAAA'AAAA BBBB'BBBB] ABCA BCAB CABC =&gt; [AAAA BBBB CCCC] ABCD'EABC DEAB'CDEA BCDE'ABCD EABC'DEA BCDE'ABCD =&gt; [Ax8 Bx8 Cx8 Dx8 Ex8]</p>
-<p ><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code> </p>
+<p><code>#include &lt;eve/module/algo/algo/traits.hpp&gt;</code></p>
+
+<p>Some algorithms (for example <code>transform_reduce</code>) can be implemented more efficient if you fuse multiple operations provided in a single function. </p>
+<p >Example: if you want to use <code>fma</code> instead of doing <code>multiply</code> + <code>add</code>.</p>
+<p >This flag replaces the functions with their more parameter equivalents. </p>
 
 </div>
 </div>
@@ -172,7 +151,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gacea6e2b78b85daf62d
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+    <li class="navelem"><a class="el" href="group__algorithms.html">Algorithms and Views</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

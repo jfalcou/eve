@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">is_equal</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7_html_gad3071564e3dd31bf2aacba41aa2079e7"><div class="ttname"><a href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a></div><div class="ttdeci">constexpr callable_is_equal_ is_equal</div><div class="ttdoc">Returns a logical true if and only if the element value are equal.</div><div class="ttdef"><b>Definition:</b> is_equal.hpp:96</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code>, <code>y</code> : arguments</li>
@@ -168,16 +168,16 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line">  wide_ft qf = {1.0f, -1.0f, -1.0f, 2.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf              = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_equal[pf &gt; 0](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a>[pf &gt; 0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf               = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf               = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_equal(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a></code> which is equivalent to `if_else (mask, is_equal(x, y), false_</p>
+<p class="startli">The call <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a></code> which is equivalent to `if_else (mask, is_equal(x, y), false_)</p>
 <p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -187,13 +187,13 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f};</div>
-<div class="line">  wide_ft qf = {1.0f, -1.0f, -1.0f, -2.0f};</div>
+<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, 2.0f};</div>
+<div class="line">  wide_ft qf = {1.0f, -1.0f, -1.0f, 2.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                          = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                          = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_equal[pf &gt; 0.5f](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a>[pf &gt; 0.5f]((pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf              = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_equal[pf &gt; 0](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a>[pf &gt; 0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
@@ -208,8 +208,8 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">as &lt; float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">as &lt; float&gt;</a>())};</div>
-<div class="line">  wide_ft qf = {1.0f, 1.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(as &lt; float&gt;()), -2.0f};</div>
+<div class="line">  wide_ft pf = {0.0f, 1.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  wide_ft qf = {1.0f, 1.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -2.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                        = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line">{</div>
 <div class="line">  wide_ft pf = {1.0f, 1.0f, -1.0f, -2.0f};</div>
 <div class="line">  wide_ft qf = {1.0f, -1.0f, -1.0f, -2.0f};</div>
-<div class="line">  pf += 3*eve::eps(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  pf += 3*<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                             = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -252,6 +252,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_gad3071564e3dd
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; almost(is_equal)(pf, qf, 2.0f) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a> (<a class="code hl_variable" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7">eve::is_equal</a>)(pf, qf, 2.0f) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr callable_eps_ eps</div><div class="ttdoc">Computes the the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:63</div></div>
 <div class="ttc" id="agroup__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c_html_gab948026b7cf3543e2fa4b43f32c3311c"><div class="ttname"><a href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a></div><div class="ttdeci">constexpr almost_type const almost</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to little errors semantic onto other Callable Objects...</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:58</div></div>
 </div><!-- fragment --> 
 </div>

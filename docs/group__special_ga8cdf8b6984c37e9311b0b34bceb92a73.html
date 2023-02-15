@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -143,18 +143,19 @@ $(document).ready(function(){initNavTree('group__special_ga8cdf8b6984c37e9311b0b
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span> &lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> S</div>
-<div class="line">            , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T</div>
-<div class="line">            , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> U&gt;</div>
-<div class="line">   <a class="code hl_namespace" href="namespaceeve.html">eve</a>:common_compatible_value&lt;S, T, U&gt;  <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a>(S s, T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">template</span> &lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> S</div>
+<div class="line">            , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T</div>
+<div class="line">            , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> U&gt;</div>
+<div class="line">   <a class="code hl_namespace" href="namespaceeve.html">eve</a>:<a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">common_value_t&lt;S, T, U&gt;</a>  <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a>(S s, T x, U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:114</div></div>
 <div class="ttc" id="agroup__special_ga8cdf8b6984c37e9311b0b34bceb92a73_html_ga8cdf8b6984c37e9311b0b34bceb92a73"><div class="ttname"><a href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">eve::betainc_inv</a></div><div class="ttdeci">constexpr callable_betainc_inv_ betainc_inv</div><div class="ttdoc">Computes the inverse relative to the first parameter of the beta incomplete function.</div><div class="ttdef"><b>Definition:</b> betainc_inv.hpp:54</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>s</code> : <a class="el" href="concepteve_1_1floating__real__value.html">real floating argument</a>.</li>
-<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__real__value.html">strictly positive real floating arguments</a>.</li>
+<li><code>s</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
+<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">strictly positive real floating arguments</a>.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >The value of inverse of incomplete beta function relative to the first parameter is returned.</p>

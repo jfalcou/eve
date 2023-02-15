@@ -7,7 +7,7 @@
 
 ## Purpose
 
-EVE is a reimplementation of the old EVE SIMD library by Falcou et al. which for a while was
+EVE is a re-implementation of the old EVE SIMD library by Falcou et al. which for a while was
 named Boost.SIMD. It's a C++20 and onward implementation of a type based wrapper around
 SIMD extensions sets for most current architectures. It aims at showing how C++20 can be used
 to design and implement efficient, low level, high abstraction library suited for high performances.
@@ -39,22 +39,26 @@ EVE is considered **operationnal**: it's usable, has a large feature sets for a 
 
 ### Current roster of supported Instructions Sets
 
+In term of SIMD extension sets, we actively supports (ie code is optimized and regularly tested)
+the following:
+
 Full support with tests:
- - **Intel**
-   - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
-   - AVX, AVX2, FMA3
-   - AVX512 Skymake style (F,CD,DQ,BW,VL)
- - **ARM**
-   - NEON (64 & 128 bits)
-   - AARCH64
+  - **Intel**
+    - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
+    - AVX, AVX2, FMA3
+    - AVX512 in SKylake-AVX512 mode (F, CD, VL, DQ, BW)
+  - **ARM**
+    - NEON A32 (64 & 128 bits)
+    - NEON A64 (64 & 128 bits)
+    - ASIMD
+    - SVE with fixed sizes of 128, 256 and 512 bits registers.
 
 Partial/In-progress support with minimal checks:
- - **PowerPC**
-   - VMX
-   - VSX
+  - **PowerPC**
+    - VMX
+    - VSX
 
- - We **do not support** ARM SVE with dynamic as the execution model makes no sense and the current compiler support is not adequate for us. **WOrk is in progress for fixed size SVE support**.
- - We **do not support** GPGPU, this is the job for another tool.
+We **do not support** ARM SVE with dynamic size nor GPGPU, this is the job for another tool.
 
 ### Current roster of supported compiler
 

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -149,9 +149,9 @@ $(document).ready(function(){initNavTree('group__math__log_gacf37f58fc6f7208ae05
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__math__log_gacf37f58fc6f7208ae058241b6b542ced.html#gacf37f58fc6f7208ae058241b6b542ced">log2</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;      <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__log_gacf37f58fc6f7208ae058241b6b542ced_html_gacf37f58fc6f7208ae058241b6b542ced"><div class="ttname"><a href="group__math__log_gacf37f58fc6f7208ae058241b6b542ced.html#gacf37f58fc6f7208ae058241b6b542ced">eve::log2</a></div><div class="ttdeci">constexpr callable_log2_ log2</div><div class="ttdoc">Callable object computing the base 2 logarithm: .</div><div class="ttdef"><b>Definition:</b> log2.hpp:79</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
-<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:40</div></div>
+<div class="ttc" id="agroup__math__log_gacf37f58fc6f7208ae058241b6b542ced_html_gacf37f58fc6f7208ae058241b6b542ced"><div class="ttname"><a href="group__math__log_gacf37f58fc6f7208ae058241b6b542ced.html#gacf37f58fc6f7208ae058241b6b542ced">eve::log2</a></div><div class="ttdeci">constexpr callable_log2_ log2</div><div class="ttdoc">Callable object computing the base 2 logarithm: .</div><div class="ttdef"><b>Definition:</b> log2.hpp:87</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:39</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
@@ -166,7 +166,7 @@ $(document).ready(function(){initNavTree('group__math__log_gacf37f58fc6f7208ae05
 <li>If the element is less than 0, <code>NaN</code> is returned.</li>
 </ul>
 </li>
-<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the base 2 logarithm of the input The behavior of this function is equivalent to <code>eve::log(z)/eve::log_2(eve::as(x))</code>.</li>
+<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the base 2 logarithm of the input The behavior of this function is equivalent to <code>log(z)/log_2(as(x))</code>.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
 <p ><b>Real version</b></p>

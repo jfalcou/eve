@@ -4,7 +4,7 @@ var searchData=
   ['dec_1',['dec',['../group__core__arithmetic_ga0909b456d35f4111012b71e9bba92ede.html#ga0909b456d35f4111012b71e9bba92ede',1,'eve']]],
   ['definitely_2',['definitely',['../group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b',1,'eve']]],
   ['deginrad_3',['deginrad',['../group__math__trig_gac5affe61fab2afe7b8ac2b729a03e523.html#gac5affe61fab2afe7b8ac2b729a03e523',1,'eve']]],
-  ['deinterleave_5fgroups_4',['deinterleave_groups',['../group__core__simd_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5',1,'eve']]],
+  ['deinterleave_5fgroups_4',['deinterleave_groups',['../group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5',1,'eve']]],
   ['deinterleave_5fgroups_5fshuffle_5',['deinterleave_groups_shuffle',['../group__core__simd_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3',1,'eve']]],
   ['deta_6',['deta',['../group__special_gab16102df6845b3f09f39a13526ce3a03.html#gab16102df6845b3f09f39a13526ce3a03',1,'eve']]],
   ['diff_5fof_5fprod_7',['diff_of_prod',['../group__core__accuracy_ga31d9230d4fa8d9adf0308f7ce820848c.html#ga31d9230d4fa8d9adf0308f7ce820848c',1,'eve']]],

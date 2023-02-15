@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,12 +144,21 @@ $(document).ready(function(){initNavTree('group__math__exp_ga277a659430f603cbb2d
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">powm1</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">powm1</a>(T x, U y) <span class="keyword">noexcept</span>;                                       <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;           <span class="comment">//2</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">powm1</a>(eve::as_complex_t&lt;T&gt; x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;           <span class="comment">//2</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">powm1</a>(T x, eve::as_complex_t&lt;U&gt; y) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">powm1</a>(eve::as_complex_t&lt;T&gt; x, eve::as_complex_t&lt;U&gt; y) <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__exp_ga277a659430f603cbb2d03d29e909b22d_html_ga277a659430f603cbb2d03d29e909b22d"><div class="ttname"><a href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">eve::powm1</a></div><div class="ttdeci">constexpr callable_powm1_ powm1</div><div class="ttdoc">Callable object computing powm1: .</div><div class="ttdef"><b>Definition:</b> powm1.hpp:62</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__math__exp_ga277a659430f603cbb2d03d29e909b22d_html_ga277a659430f603cbb2d03d29e909b22d"><div class="ttname"><a href="group__math__exp_ga277a659430f603cbb2d03d29e909b22d.html#ga277a659430f603cbb2d03d29e909b22d">eve::powm1</a></div><div class="ttdeci">constexpr callable_powm1_ powm1</div><div class="ttdoc">Callable object computing powm1: .</div><div class="ttdef"><b>Definition:</b> powm1.hpp:79</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
-<p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</p>
+<p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real or complex values</a>.</p>
 <p ><b>Return value</b></p>
 <p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> power minus one, with good accuracy, even when <code>y</code> is very small, or when <code>x</code> is close to 1.</p>
 <h2 class="groupheader">Example </h2>

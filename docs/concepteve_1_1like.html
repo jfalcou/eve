@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -124,10 +124,10 @@ $(document).ready(function(){initNavTree('concepteve_1_1like.html',''); initResi
 <p>Specifies semantic compatibility between wrapper/wrapped types.  
 <a href="concepteve_1_1like.html#details">More...</a></p>
 
-<p><code>#include &lt;eve/product_type.hpp&gt;</code></p>
+<p><code>#include &lt;eve/traits/product_type.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Specifies semantic compatibility between wrapper/wrapped types. </p>
-<p ><b>Required header:</b> <code>#include &lt;eve/product_type.hpp&gt;</code></p>
+<p ><b>Required header:</b> <code>#include &lt;eve/traits/product_type.hpp&gt;</code></p>
 <p ><code><a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a>&lt;Wrapper, T&gt;</code> is a concept that indicates that a wrapper type provides most of the functionality of another type <code>T</code>. By definition <code>T</code> always models <code><a class="el" href="concepteve_1_1like.html" title="Specifies semantic compatibility between wrapper/wrapped types.">eve::like</a>&lt;T&gt;</code>.</p>
 <p >A <code>Wrapper</code> models <code>like&lt; Wrapper, T&gt;</code> if it either defines an internal type <code>is_like</code> that evaluates to <code>T</code> or <code><a class="el" href="structeve_1_1supports__like.html" title="Opt-in traits for eve::like concept compliance.">eve::supports_like</a>&lt;Wrapper,T&gt;</code> is specialized to evaluates to <code>T</code>.</p>
 <h2 class="groupheader">Examples </h2>

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -229,6 +229,10 @@ template&lt;scalar_value S&gt; </td></tr>
 <tr class="memitem:a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>logical</b> (S v) noexcept</td></tr>
 <tr class="memdesc:a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical by splatting a scalar value in all lanes. <br /></td></tr>
 <tr class="separator:a0cfcd335f2f3a8d4ffa60ea0f137de44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d65e72f65bf73b5a2da593a6e3874c0"><td class="memItemLeft" align="right" valign="top"><a id="a0d65e72f65bf73b5a2da593a6e3874c0" name="a0d65e72f65bf73b5a2da593a6e3874c0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>logical</b> (bool v) noexcept</td></tr>
+<tr class="memdesc:a0d65e72f65bf73b5a2da593a6e3874c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct from a <code>bool</code> <br /></td></tr>
+<tr class="separator:a0d65e72f65bf73b5a2da593a6e3874c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2326a61c106e43359af2b8661d506ef"><td class="memTemplParams" colspan="2"><a id="aa2326a61c106e43359af2b8661d506ef" name="aa2326a61c106e43359af2b8661d506ef"></a>
 template&lt;typename T0 , typename T1 , typename... Ts&gt; <br />
 requires ( std::convertible_to&lt;T0,logical&lt;Type&gt;&gt; &amp;&amp; std::convertible_to&lt;T0,logical&lt;Type&gt;&gt; &amp;&amp; (... &amp;&amp; std::convertible_to&lt;Ts,logical&lt;Type&gt;&gt;) &amp;&amp; (Cardinal::value == 2 + sizeof...(Ts)) )</td></tr>
@@ -263,10 +267,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="e
 <tr class="memdesc:ae56f9b89b700d9668b761c6d5a3167b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchange this value with another eve::logical. <br /></td></tr>
 <tr class="separator:ae56f9b89b700d9668b761c6d5a3167b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Sequence interface</div></td></tr>
-<tr class="memitem:a7ba62de53449b225d4ff0686630d2fce"><td class="memItemLeft" align="right" valign="top"><a id="a7ba62de53449b225d4ff0686630d2fce" name="a7ba62de53449b225d4ff0686630d2fce"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (std::size_t <a class="el" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, scalar_value auto v) noexcept</td></tr>
-<tr class="memdesc:a7ba62de53449b225d4ff0686630d2fce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a given lane. <br /></td></tr>
-<tr class="separator:a7ba62de53449b225d4ff0686630d2fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0263a92fa0c41d2252b3a7595695fa7"><td class="memItemLeft" align="right" valign="top"><a id="af0263a92fa0c41d2252b3a7595695fa7" name="af0263a92fa0c41d2252b3a7595695fa7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (std::size_t <a class="el" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, std::convertible_to&lt; bool &gt; auto v) noexcept</td></tr>
+<tr class="memdesc:af0263a92fa0c41d2252b3a7595695fa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a given lane. <br /></td></tr>
+<tr class="separator:af0263a92fa0c41d2252b3a7595695fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e669e8b662996c0cb3553c33a09dedc"><td class="memItemLeft" align="right" valign="top"><a id="a7e669e8b662996c0cb3553c33a09dedc" name="a7e669e8b662996c0cb3553c33a09dedc"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::size_t <a class="el" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>) const noexcept</td></tr>
 <tr class="memdesc:a7e669e8b662996c0cb3553c33a09dedc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from a given lane. <br /></td></tr>

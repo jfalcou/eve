@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gaea54ee9da2ff376
 <div class="line">   T <a class="code hl_variable" href="group__math__invtrig_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc">atan2d</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__math__invtrig_gaea54ee9da2ff37652f5153774cda6dbc_html_gaea54ee9da2ff37652f5153774cda6dbc"><div class="ttname"><a href="group__math__invtrig_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc">eve::atan2d</a></div><div class="ttdeci">constexpr callable_atan2d_ atan2d</div><div class="ttdoc">Callable object computing the arc tangent in degrees using the signs of arguments to determine the co...</div><div class="ttdef"><b>Definition:</b> atan2d.hpp:86</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <p ><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">floating real values</a></p>
 <p ><b>Return value</b></p>
@@ -166,7 +166,7 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gaea54ee9da2ff376
 <li>If either <code>x</code> is Nan or <code>y</code> is Nan, Nan is returned</li>
 </ul>
 <p >The call will return a NaN if <code>x</code> and <code>y</code> are both either null or infinite: this result is not <b>IEEE</b> conformant, but allows to simplify (and speed) the implementation. In all other cases, the result is standard conformant.</p>
-<p >The result type is the <a class="el" href="structeve_1_1common__compatible.html">common compatible type</a> of the two parameters.</p>
+<p >The result type is the <a class="el" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">common value type</a> of the two parameters.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

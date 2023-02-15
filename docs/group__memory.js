@@ -43,6 +43,7 @@ var group__memory =
     ] ],
     [ "eve::stack_buffer< T >", "structeve_1_1stack__buffer.html", null ],
     [ "eve::soa_ptr< Ptrs >", "structeve_1_1soa__ptr.html", null ],
+    [ "eve::has_store_equivalent", "concepteve_1_1has__store__equivalent.html", null ],
     [ "eve::unaligned_t", "group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c", null ],
     [ "eve::over", "group__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555", null ],
     [ "eve::under", "group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047", null ],

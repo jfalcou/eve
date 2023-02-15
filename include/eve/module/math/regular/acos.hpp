@@ -86,7 +86,7 @@ namespace eve
 //!
 //!  * eve::raw
 //!     The call `raw(acos)(x)`, call a faster implementation for
-//!     [floating real values](@ref floating_value) which can be slightly less accurate near 1.
+//!     [floating values](@ref eve::floating_value) which can be slightly less accurate near 1.
 //!  @}
 //================================================================================================
 namespace tag

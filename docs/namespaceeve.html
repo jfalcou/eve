@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -162,9 +162,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1element__type.html">element_type</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the scalar part of a type.  <a href="structeve_1_1element__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1expected__cardinal.html">expected_cardinal</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the expected cardinal of a given type.  <a href="structeve_1_1expected__cardinal.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1fixed.html">fixed</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD register cardinal type.  <a href="structeve_1_1fixed.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,9 +210,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1platform.html">platform</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform specific constexpr information.  <a href="structeve_1_1platform.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1scalar__cardinal.html">scalar_cardinal</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cardinal type for scalar values.  <a href="structeve_1_1scalar__cardinal.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1soa__ptr.html">soa_ptr</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a low level abstruction that is like a tuple of pointers to parallel arrays. We think that in code one should use <code>views::zip_iterator</code> instead, it can do everything <code><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstruction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></code> can and more. We are still trying to figure out how/where these abstructions should live.  <a href="structeve_1_1soa__ptr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,12 +228,18 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1top__bits.html">top_bits</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cheapest to get bitset for simd logical.  <a href="structeve_1_1top__bits.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1underlying__type.html">underlying_type</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the most scalar type associated with a type.  <a href="structeve_1_1underlying__type.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide.html">wide</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper for SIMD registers.  <a href="structeve_1_1wide.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1wide__cardinal.html">wide_cardinal</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">concept to determine if this is cardinal type of a wide <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1conditional__expr.html">conditional_expr</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type is a Conditional Expression. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,8 +248,20 @@ Concepts</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1generator.html">generator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1plain__scalar__value.html">plain_scalar_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a plain scalar value. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1logical__scalar__value.html">logical_scalar_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a logical scalar value. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1product__scalar__value.html">product_scalar_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a product type made of scalars. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1arithmetic__scalar__value.html">arithmetic_scalar_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a type suitable for vectorization. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1scalar__value.html">scalar_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a scalar value. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a logical SIMD value. <br /></td></tr>
@@ -266,16 +278,11 @@ Concepts</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1floating__value.html">floating_value</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1real__value.html">real_value</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1floating__real__value.html">floating_real_value</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1integral__real__value.html">integral_real_value</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1logical__value.html">logical_value</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1scalar__value.html">scalar_value</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a scalar value. <br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1ordered__value.html">ordered_value</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1floating__ordered__value.html">floating_ordered_value</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1integral__scalar__value.html">integral_scalar_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents an integral scalar value. <br /></td></tr>
@@ -292,20 +299,26 @@ Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1floating__scalar__value.html">floating_scalar_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a scalar value. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1real__scalar__value.html">real_scalar_value</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a scalar value. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1floating__real__scalar__value.html">floating_real_scalar_value</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a scalar value. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1integral__real__scalar__value.html">integral_real_scalar_value</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a scalar value. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1simd__value.html">simd_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type a SIMD type. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1integral__simd__value.html">integral_simd_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type a SIMD type with integral elements. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1signed__simd__value.html">signed_simd_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type a SIMD type with signed elements. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1unsigned__simd__value.html">unsigned_simd_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type a SIMD type with unsigned elements. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1signed__integral__simd__value.html">signed_integral_simd_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type a SIMD type with signed integral elements. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1floating__simd__value.html">floating_simd_value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that a type a SIMD type with signed integral elements. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1has__store__equivalent.html">has_store_equivalent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a concept, tests <code>store_equivalent</code> has a non-default definition for a value and a pointer. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1like.html">like</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies semantic compatibility between wrapper/wrapped types. <br /></td></tr>
@@ -313,10 +326,19 @@ Concepts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:gad810107735c9074d509f0ba2773d14d5"><td class="memTemplParams" colspan="2">template&lt;typename Type , regular_abi ABI = eve::current_abi_type&gt; </td></tr>
+<tr class="memitem:gad810107735c9074d509f0ba2773d14d5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">expected_cardinal_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt; expected_cardinal_v&lt; Type, ABI &gt; &gt;</td></tr>
+<tr class="memdesc:gad810107735c9074d509f0ba2773d14d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the expected cardinal of a given type.  <a href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">More...</a><br /></td></tr>
+<tr class="separator:gad810107735c9074d509f0ba2773d14d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t</a> = decltype(<a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">unalign</a>(std::declval&lt; T &gt;()))</td></tr>
 <tr class="memdesc:ga33eaeb7216e54812993e44457de2c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code>  <a href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">More...</a><br /></td></tr>
 <tr class="separator:ga33eaeb7216e54812993e44457de2c34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="memTemplParams" colspan="2"><a id="af8e498b268c1b3dad8c2ab481a35c0bc" name="af8e498b268c1b3dad8c2ab481a35c0bc"></a>
+template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>common_value_t</b> = typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type</td></tr>
+<tr class="memdesc:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the SIMD-compatible common type between all <code>Ts</code>. <br /></td></tr>
+<tr class="separator:af8e498b268c1b3dad8c2ab481a35c0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">iterator_cardinal_t</a> = decltype(detail::iterator_cardinal_impl&lt; T &gt;())</td></tr>
 <tr class="memdesc:ga1eb720c70448889dec28d1d72973a980"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <code>iterator_cardinal()</code> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>)  <a href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">More...</a><br /></td></tr>
@@ -399,6 +421,10 @@ template&lt;typename Type &gt; </td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memTemplParams" colspan="2">template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </td></tr>
+<tr class="memitem:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::ptrdiff_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html#gad4fc83261295a7fd4ebe7d16c328fd1f">nofs_cardinal_v</a></td></tr>
+<tr class="memdesc:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">nofs stands for "no frequency scaling".  <a href="group__arch_gad4fc83261295a7fd4ebe7d16c328fd1f.html#gad4fc83261295a7fd4ebe7d16c328fd1f">More...</a><br /></td></tr>
+<tr class="separator:gad4fc83261295a7fd4ebe7d16c328fd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ce7ac450593ee98fe8ca0d9cf65e4b4"><td class="memItemLeft" align="right" valign="top">
 constexpr <a class="el" href="structeve_1_1ignore__all__.html">ignore_all_</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ignore_all</b> = {}</td></tr>
 <tr class="memdesc:ga6ce7ac450593ee98fe8ca0d9cf65e4b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object representing the <a class="el" href="structeve_1_1ignore__all__.html" title="Conditional expression selecting no lane from a eve::simd_value.">eve::ignore_all_</a> conditional expression. <br /></td></tr>
@@ -503,7 +529,7 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memdesc:gab16102df6845b3f09f39a13526ce3a03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \( \displaystyle \sum_0^\infty \frac{(-1)^n}{(kn+1)^z}\).  <a href="group__special_gab16102df6845b3f09f39a13526ce3a03.html#gab16102df6845b3f09f39a13526ce3a03">More...</a><br /></td></tr>
 <tr class="separator:gab16102df6845b3f09f39a13526ce3a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7a78b9f2951d6bde6b2992f4de20b431"><td class="memItemLeft" align="right" valign="top">constexpr callable_eta_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__special_ga7a78b9f2951d6bde6b2992f4de20b431.html#ga7a78b9f2951d6bde6b2992f4de20b431">eta</a> = {}</td></tr>
-<tr class="memdesc:ga7a78b9f2951d6bde6b2992f4de20b431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing The Dirichlet \( \displaystyle \eta(z) = \sum_0^\infty \frac{(-1)^n}{(n+1)^z}\).  <a href="group__special_ga7a78b9f2951d6bde6b2992f4de20b431.html#ga7a78b9f2951d6bde6b2992f4de20b431">More...</a><br /></td></tr>
+<tr class="memdesc:ga7a78b9f2951d6bde6b2992f4de20b431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing The imaginary error function \( \displaystyle \mathrm{erfi}(z) = -i/erf(iz)\).  <a href="group__special_ga7a78b9f2951d6bde6b2992f4de20b431.html#ga7a78b9f2951d6bde6b2992f4de20b431">More...</a><br /></td></tr>
 <tr class="separator:ga7a78b9f2951d6bde6b2992f4de20b431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2949d21bf825780b8c4ce4011904eebc"><td class="memItemLeft" align="right" valign="top">constexpr callable_exp_i_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__complex_ga2949d21bf825780b8c4ce4011904eebc.html#ga2949d21bf825780b8c4ce4011904eebc">exp_i</a> = {}</td></tr>
 <tr class="memdesc:ga2949d21bf825780b8c4ce4011904eebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing exp_iinary part of values.  <a href="group__complex_ga2949d21bf825780b8c4ce4011904eebc.html#ga2949d21bf825780b8c4ce4011904eebc">More...</a><br /></td></tr>
@@ -541,6 +567,9 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memitem:ga2a7b9727dd6e38b4230d14630abc3adb"><td class="memItemLeft" align="right" valign="top">constexpr callable_bitincrement_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">bitincrement</a> = {}</td></tr>
 <tr class="memdesc:ga2a7b9727dd6e38b4230d14630abc3adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the constant of type T in which the only bit set is the least significant.  <a href="group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb">More...</a><br /></td></tr>
 <tr class="separator:ga2a7b9727dd6e38b4230d14630abc3adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09f150f349426116160f46376d5f9063"><td class="memItemLeft" align="right" valign="top">constexpr callable_eps_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eps</a> = {}</td></tr>
+<tr class="memdesc:ga09f150f349426116160f46376d5f9063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the the machine epsilon.  <a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">More...</a><br /></td></tr>
+<tr class="separator:ga09f150f349426116160f46376d5f9063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9c49e96e0543e6b6719260adde8cca87"><td class="memItemLeft" align="right" valign="top">constexpr callable_exponentmask_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga9c49e96e0543e6b6719260adde8cca87.html#ga9c49e96e0543e6b6719260adde8cca87">exponentmask</a> = {}</td></tr>
 <tr class="memdesc:ga9c49e96e0543e6b6719260adde8cca87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the the exponent bit mask of IEEE float or double.  <a href="group__core__constants_ga9c49e96e0543e6b6719260adde8cca87.html#ga9c49e96e0543e6b6719260adde8cca87">More...</a><br /></td></tr>
 <tr class="separator:ga9c49e96e0543e6b6719260adde8cca87"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -554,7 +583,7 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memdesc:gaf750842e89385d68afd663f5a9cd0c08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the infinity ieee value.  <a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">More...</a><br /></td></tr>
 <tr class="separator:gaf750842e89385d68afd663f5a9cd0c08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga048089d9f72f2fecb4dffab41ae615aa"><td class="memItemLeft" align="right" valign="top">constexpr callable_logeps_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga048089d9f72f2fecb4dffab41ae615aa.html#ga048089d9f72f2fecb4dffab41ae615aa">logeps</a> = {}</td></tr>
-<tr class="memdesc:ga048089d9f72f2fecb4dffab41ae615aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the natural logarithm of the machine epsilon.  <a href="group__core__constants_ga048089d9f72f2fecb4dffab41ae615aa.html#ga048089d9f72f2fecb4dffab41ae615aa">More...</a><br /></td></tr>
+<tr class="memdesc:ga048089d9f72f2fecb4dffab41ae615aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the natural logarithm of the machine <a class="el" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">epsilon</a>.  <a href="group__core__constants_ga048089d9f72f2fecb4dffab41ae615aa.html#ga048089d9f72f2fecb4dffab41ae615aa">More...</a><br /></td></tr>
 <tr class="separator:ga048089d9f72f2fecb4dffab41ae615aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga040465fe0ba98419d6ce5397bc60def0"><td class="memItemLeft" align="right" valign="top">constexpr callable_mantissamask_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga040465fe0ba98419d6ce5397bc60def0.html#ga040465fe0ba98419d6ce5397bc60def0">mantissamask</a> = {}</td></tr>
 <tr class="memdesc:ga040465fe0ba98419d6ce5397bc60def0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the mask to extract the mantissa bits of an ieee floating value.  <a href="group__core__constants_ga040465fe0ba98419d6ce5397bc60def0.html#ga040465fe0ba98419d6ce5397bc60def0">More...</a><br /></td></tr>
@@ -688,9 +717,9 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memitem:gaaf24ab26845a91e5998b2f3134669b5a"><td class="memItemLeft" align="right" valign="top">constexpr sph_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_gaaf24ab26845a91e5998b2f3134669b5a.html#gaaf24ab26845a91e5998b2f3134669b5a">sph</a> = {}</td></tr>
 <tr class="memdesc:gaaf24ab26845a91e5998b2f3134669b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing spherical semantic onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_gaaf24ab26845a91e5998b2f3134669b5a.html#gaaf24ab26845a91e5998b2f3134669b5a">More...</a><br /></td></tr>
 <tr class="separator:gaaf24ab26845a91e5998b2f3134669b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37ae7275dffa6350a54dad217041ab09"><td class="memItemLeft" align="right" valign="top">constexpr successor_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">successor</a> = {}</td></tr>
-<tr class="memdesc:ga37ae7275dffa6350a54dad217041ab09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing incrementation behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">More...</a><br /></td></tr>
-<tr class="separator:ga37ae7275dffa6350a54dad217041ab09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eb5977c62725094fe76ad7d62387dd0"><td class="memItemLeft" align="right" valign="top">constexpr successor_type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">successor</a> = {}</td></tr>
+<tr class="memdesc:ga4eb5977c62725094fe76ad7d62387dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing incrementation behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.  <a href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">More...</a><br /></td></tr>
+<tr class="separator:ga4eb5977c62725094fe76ad7d62387dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf9bc648f57be07a02903259faabd2df1"><td class="memItemLeft" align="right" valign="top">constexpr callable_abs_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">abs</a> = {}</td></tr>
 <tr class="memdesc:gaf9bc648f57be07a02903259faabd2df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the absolute value of the parameter.  <a href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">More...</a><br /></td></tr>
 <tr class="separator:gaf9bc648f57be07a02903259faabd2df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -793,7 +822,7 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memitem:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memItemLeft" align="right" valign="top">constexpr callable_conj_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">conj</a> = {}</td></tr>
 <tr class="memdesc:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the the conjugate value.  <a href="group__core__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951">More...</a><br /></td></tr>
 <tr class="separator:ga3da1ad6fd04f08ac14cbe0ff478b6951"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa19dcccbb0ef0ef464e95ffd7a588867"><td class="memItemLeft" align="right" valign="top">constexpr callable_convert_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">convert</a> = {}</td></tr>
+<tr class="memitem:gaa19dcccbb0ef0ef464e95ffd7a588867"><td class="memItemLeft" align="right" valign="top">detail::callable_object&lt; tag::convert_ &gt; const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">convert</a> = {}</td></tr>
 <tr class="memdesc:gaa19dcccbb0ef0ef464e95ffd7a588867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a value to another type.  <a href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">More...</a><br /></td></tr>
 <tr class="separator:gaa19dcccbb0ef0ef464e95ffd7a588867"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga274dac2c4e1dfa15f47d228529791c5a"><td class="memItemLeft" align="right" valign="top">constexpr converter_type&lt; float &gt; const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__conversions_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a">float32</a> = {}</td></tr>
@@ -818,7 +847,7 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memdesc:ga03a0c0686af192634c7b6e0896ba663b"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert a <a class="el" href="concepteve_1_1value.html">eve::value</a> to a std::int8_t based <a class="el" href="concepteve_1_1value.html">eve::value</a>.  <a href="group__core__conversions_ga03a0c0686af192634c7b6e0896ba663b.html#ga03a0c0686af192634c7b6e0896ba663b">More...</a><br /></td></tr>
 <tr class="separator:ga03a0c0686af192634c7b6e0896ba663b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5062b84ed3dd16e3b6e72045f66414f6"><td class="memItemLeft" align="right" valign="top">constexpr converter_type&lt; std::int16_t &gt; const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__conversions_ga5062b84ed3dd16e3b6e72045f66414f6.html#ga5062b84ed3dd16e3b6e72045f66414f6">int16</a> = {}</td></tr>
-<tr class="memdesc:ga5062b84ed3dd16e3b6e72045f66414f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert a <a class="el" href="concepteve_1_1value.html">eve::value</a> to a std;::int16_t based <a class="el" href="concepteve_1_1value.html">eve::value</a>.  <a href="group__core__conversions_ga5062b84ed3dd16e3b6e72045f66414f6.html#ga5062b84ed3dd16e3b6e72045f66414f6">More...</a><br /></td></tr>
+<tr class="memdesc:ga5062b84ed3dd16e3b6e72045f66414f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert a <a class="el" href="concepteve_1_1value.html">eve::value</a> to a std::int16_t based <a class="el" href="concepteve_1_1value.html">eve::value</a>.  <a href="group__core__conversions_ga5062b84ed3dd16e3b6e72045f66414f6.html#ga5062b84ed3dd16e3b6e72045f66414f6">More...</a><br /></td></tr>
 <tr class="separator:ga5062b84ed3dd16e3b6e72045f66414f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga380d6bd2870197f160dda570b1eefc2d"><td class="memItemLeft" align="right" valign="top">constexpr converter_type&lt; std::int32_t &gt; const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__conversions_ga380d6bd2870197f160dda570b1eefc2d.html#ga380d6bd2870197f160dda570b1eefc2d">int32</a> = {}</td></tr>
 <tr class="memdesc:ga380d6bd2870197f160dda570b1eefc2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert a <a class="el" href="concepteve_1_1value.html">eve::value</a> to a std::int32_t based <a class="el" href="concepteve_1_1value.html">eve::value</a>.  <a href="group__core__conversions_ga380d6bd2870197f160dda570b1eefc2d.html#ga380d6bd2870197f160dda570b1eefc2d">More...</a><br /></td></tr>
@@ -859,8 +888,8 @@ constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>
 <tr class="memitem:ga0909b456d35f4111012b71e9bba92ede"><td class="memItemLeft" align="right" valign="top">constexpr callable_dec_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga0909b456d35f4111012b71e9bba92ede.html#ga0909b456d35f4111012b71e9bba92ede">dec</a> = {}</td></tr>
 <tr class="memdesc:ga0909b456d35f4111012b71e9bba92ede"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the input decremented by 1.  <a href="group__core__arithmetic_ga0909b456d35f4111012b71e9bba92ede.html#ga0909b456d35f4111012b71e9bba92ede">More...</a><br /></td></tr>
 <tr class="separator:ga0909b456d35f4111012b71e9bba92ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacea6e2b78b85daf62d4b45cf856819c5"><td class="memItemLeft" align="right" valign="top">constexpr callable_deinterleave_groups_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__simd_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5">deinterleave_groups</a> = {}</td></tr>
-<tr class="memdesc:gacea6e2b78b85daf62d4b45cf856819c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">deinterleaves values in n wides  <a href="group__core__simd_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5">More...</a><br /></td></tr>
+<tr class="memitem:gacea6e2b78b85daf62d4b45cf856819c5"><td class="memItemLeft" align="right" valign="top">constexpr callable_deinterleave_groups_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5">deinterleave_groups</a> = {}</td></tr>
+<tr class="memdesc:gacea6e2b78b85daf62d4b45cf856819c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callabe object that deinterleaves values in n wides.  <a href="group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5">More...</a><br /></td></tr>
 <tr class="separator:gacea6e2b78b85daf62d4b45cf856819c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga98ab2a42f4f490c18533095b6539edf3"><td class="memItemLeft" align="right" valign="top">constexpr callable_deinterleave_groups_shuffle_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__simd_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3">deinterleave_groups_shuffle</a> = {}</td></tr>
 <tr class="memdesc:ga98ab2a42f4f490c18533095b6539edf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for a deinterleave groups shuffle.  <a href="group__core__simd_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3">More...</a><br /></td></tr>
@@ -995,6 +1024,9 @@ constexpr callable_fmod_&#160;</td><td class="memItemRight" valign="bottom"><b>f
 <tr class="memitem:ga8590bd92bfd11ad943fc8f143e07442a"><td class="memItemLeft" align="right" valign="top">constexpr callable_is_ltz_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__predicates_ga8590bd92bfd11ad943fc8f143e07442a.html#ga8590bd92bfd11ad943fc8f143e07442a">is_ltz</a> = {}</td></tr>
 <tr class="memdesc:ga8590bd92bfd11ad943fc8f143e07442a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a logical true if and only if the element value is less than 0.  <a href="group__core__predicates_ga8590bd92bfd11ad943fc8f143e07442a.html#ga8590bd92bfd11ad943fc8f143e07442a">More...</a><br /></td></tr>
 <tr class="separator:ga8590bd92bfd11ad943fc8f143e07442a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae42468308e898fb7528cad77e70f0784"><td class="memItemLeft" align="right" valign="top">constexpr callable_is_nan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__predicates_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784">is_nan</a> = {}</td></tr>
+<tr class="memdesc:gae42468308e898fb7528cad77e70f0784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a logical true if and only if the element value is NaN.  <a href="group__core__predicates_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784">More...</a><br /></td></tr>
+<tr class="separator:gae42468308e898fb7528cad77e70f0784"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7ba2adf258c1260146322c1148845c15"><td class="memItemLeft" align="right" valign="top">constexpr callable_is_negative_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a> = {}</td></tr>
 <tr class="memdesc:ga7ba2adf258c1260146322c1148845c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a logical true if and only if the element value is signed and has its sign bit set.  <a href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">More...</a><br /></td></tr>
 <tr class="separator:ga7ba2adf258c1260146322c1148845c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1133,6 +1165,9 @@ constexpr callable_fmod_&#160;</td><td class="memItemRight" valign="bottom"><b>f
 <tr class="memitem:gabac32915710c56d7dba2bf23e9bcdbcc"><td class="memItemLeft" align="right" valign="top">constexpr callable_minmag_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_gabac32915710c56d7dba2bf23e9bcdbcc.html#gabac32915710c56d7dba2bf23e9bcdbcc">minmag</a> = {}</td></tr>
 <tr class="memdesc:gabac32915710c56d7dba2bf23e9bcdbcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the maximum of the absolute value of its arguments.  <a href="group__core__arithmetic_gabac32915710c56d7dba2bf23e9bcdbcc.html#gabac32915710c56d7dba2bf23e9bcdbcc">More...</a><br /></td></tr>
 <tr class="separator:gabac32915710c56d7dba2bf23e9bcdbcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga915e97f159edb127bff40c450f4cbe59"><td class="memItemLeft" align="right" valign="top">constexpr callable_minmax_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">minmax</a> = {}</td></tr>
+<tr class="memdesc:ga915e97f159edb127bff40c450f4cbe59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the minimum and maximum of its arguments.  <a href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">More...</a><br /></td></tr>
+<tr class="separator:ga915e97f159edb127bff40c450f4cbe59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b7bbe9ef3171d65271795ff14c98cc9"><td class="memItemLeft" align="right" valign="top">constexpr callable_minus_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga8b7bbe9ef3171d65271795ff14c98cc9.html#ga8b7bbe9ef3171d65271795ff14c98cc9">minus</a> = {}</td></tr>
 <tr class="memdesc:ga8b7bbe9ef3171d65271795ff14c98cc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the opposite of the parameter that must be signed.  <a href="group__core__arithmetic_ga8b7bbe9ef3171d65271795ff14c98cc9.html#ga8b7bbe9ef3171d65271795ff14c98cc9">More...</a><br /></td></tr>
 <tr class="separator:ga8b7bbe9ef3171d65271795ff14c98cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1217,6 +1252,9 @@ constexpr callable_fmod_&#160;</td><td class="memItemRight" valign="bottom"><b>f
 <tr class="memitem:ga22a402bb65f6328ecd349368c0f8fe4d"><td class="memItemLeft" align="right" valign="top">constexpr callable_rsqrt_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">rsqrt</a> = {}</td></tr>
 <tr class="memdesc:ga22a402bb65f6328ecd349368c0f8fe4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the inverse of the square root of the parameter.  <a href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">More...</a><br /></td></tr>
 <tr class="separator:ga22a402bb65f6328ecd349368c0f8fe4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3724675648acb38bcb3008a732d14c64"><td class="memItemLeft" align="right" valign="top">constexpr callable_saturate_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__arithmetic_ga3724675648acb38bcb3008a732d14c64.html#ga3724675648acb38bcb3008a732d14c64">saturate</a> = {}</td></tr>
+<tr class="memdesc:ga3724675648acb38bcb3008a732d14c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the saturation of a value in a type.  <a href="group__core__arithmetic_ga3724675648acb38bcb3008a732d14c64.html#ga3724675648acb38bcb3008a732d14c64">More...</a><br /></td></tr>
+<tr class="separator:ga3724675648acb38bcb3008a732d14c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga999433dcb57f95f8d149d92e68c071f0"><td class="memItemLeft" align="right" valign="top">constexpr callable_scan_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__simd_ga999433dcb57f95f8d149d92e68c071f0.html#ga999433dcb57f95f8d149d92e68c071f0">scan</a> = {}</td></tr>
 <tr class="memdesc:ga999433dcb57f95f8d149d92e68c071f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the TODO.  <a href="group__core__simd_ga999433dcb57f95f8d149d92e68c071f0.html#ga999433dcb57f95f8d149d92e68c071f0">More...</a><br /></td></tr>
 <tr class="separator:ga999433dcb57f95f8d149d92e68c071f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1605,6 +1643,9 @@ constexpr callable_fmod_&#160;</td><td class="memItemRight" valign="bottom"><b>f
 <tr class="memitem:gaad2bdaa39988370b7910d041af662efa"><td class="memItemLeft" align="right" valign="top">constexpr callable_acscpi_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__invtrig_gaad2bdaa39988370b7910d041af662efa.html#gaad2bdaa39988370b7910d041af662efa">acscpi</a> = {}</td></tr>
 <tr class="memdesc:gaad2bdaa39988370b7910d041af662efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing he arc cosecant in \(\pi\) multiples.  <a href="group__math__invtrig_gaad2bdaa39988370b7910d041af662efa.html#gaad2bdaa39988370b7910d041af662efa">More...</a><br /></td></tr>
 <tr class="separator:gaad2bdaa39988370b7910d041af662efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade2fe5a934d0269b2a22905188834161"><td class="memItemLeft" align="right" valign="top">constexpr callable_agd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__invhyper_gade2fe5a934d0269b2a22905188834161.html#gade2fe5a934d0269b2a22905188834161">agd</a> = {}</td></tr>
+<tr class="memdesc:gade2fe5a934d0269b2a22905188834161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the inverse gudermanian, i.e. \(2\tanh(\tan(x/2))\).  <a href="group__math__invhyper_gade2fe5a934d0269b2a22905188834161.html#gade2fe5a934d0269b2a22905188834161">More...</a><br /></td></tr>
+<tr class="separator:gade2fe5a934d0269b2a22905188834161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0cac72b6f927ba13a67764846899b535"><td class="memItemLeft" align="right" valign="top">constexpr callable_arg_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__trig_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">arg</a> = {}</td></tr>
 <tr class="memdesc:ga0cac72b6f927ba13a67764846899b535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the phase angle (in radians).  <a href="group__math__trig_ga0cac72b6f927ba13a67764846899b535.html#ga0cac72b6f927ba13a67764846899b535">More...</a><br /></td></tr>
 <tr class="separator:ga0cac72b6f927ba13a67764846899b535"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1707,8 +1748,11 @@ constexpr callable_fmod_&#160;</td><td class="memItemRight" valign="bottom"><b>f
 <tr class="memitem:ga52c9b96548ef6beeb8502c4d6af87745"><td class="memItemLeft" align="right" valign="top">constexpr callable_expm1_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__exp_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745">expm1</a> = {}</td></tr>
 <tr class="memdesc:ga52c9b96548ef6beeb8502c4d6af87745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^x-1\).  <a href="group__math__exp_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745">More...</a><br /></td></tr>
 <tr class="separator:ga52c9b96548ef6beeb8502c4d6af87745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6da020fda3f868fedd54c97ff64698e8"><td class="memItemLeft" align="right" valign="top">constexpr callable_expmx2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__exp_ga6da020fda3f868fedd54c97ff64698e8.html#ga6da020fda3f868fedd54c97ff64698e8">expmx2</a> = {}</td></tr>
+<tr class="memdesc:ga6da020fda3f868fedd54c97ff64698e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^{-x^2}\).  <a href="group__math__exp_ga6da020fda3f868fedd54c97ff64698e8.html#ga6da020fda3f868fedd54c97ff64698e8">More...</a><br /></td></tr>
+<tr class="separator:ga6da020fda3f868fedd54c97ff64698e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="memItemLeft" align="right" valign="top">constexpr callable_expx2_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__exp_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011">expx2</a> = {}</td></tr>
-<tr class="memdesc:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^{\pm x^2}\).  <a href="group__math__exp_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011">More...</a><br /></td></tr>
+<tr class="memdesc:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing \(e^{x^2}\).  <a href="group__math__exp_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011">More...</a><br /></td></tr>
 <tr class="separator:gad8e0e8ed5b7bdffd7247fbb181d55011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga48ce470d1447e0b3f910a4341f63cc05"><td class="memItemLeft" align="right" valign="top">constexpr callable_gd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__hyper_ga48ce470d1447e0b3f910a4341f63cc05.html#ga48ce470d1447e0b3f910a4341f63cc05">gd</a> = {}</td></tr>
 <tr class="memdesc:ga48ce470d1447e0b3f910a4341f63cc05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the gudermanian gd: \(\int_0^\infty 1/\cosh x dx\).  <a href="group__math__hyper_ga48ce470d1447e0b3f910a4341f63cc05.html#ga48ce470d1447e0b3f910a4341f63cc05">More...</a><br /></td></tr>
@@ -1720,9 +1764,6 @@ x_i\right)^{1/n} \).  <a href="group__math__exp_gafac2fbecb48c62079c84db6314ddc0
 <tr class="memitem:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memItemLeft" align="right" valign="top">constexpr callable_hypot_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">hypot</a> = {}</td></tr>
 <tr class="memdesc:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the \(l_2\) norm of its inputs.  <a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">More...</a><br /></td></tr>
 <tr class="separator:ga1f3f9f62c04251ff83111a058c2e64b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga281f9b61b4a782a3ac625deb94faf5d6"><td class="memItemLeft" align="right" valign="top">constexpr callable_invgd_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__invhyper_ga281f9b61b4a782a3ac625deb94faf5d6.html#ga281f9b61b4a782a3ac625deb94faf5d6">invgd</a> = {}</td></tr>
-<tr class="memdesc:ga281f9b61b4a782a3ac625deb94faf5d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the inverse gudermanian.  <a href="group__math__invhyper_ga281f9b61b4a782a3ac625deb94faf5d6.html#ga281f9b61b4a782a3ac625deb94faf5d6">More...</a><br /></td></tr>
-<tr class="separator:ga281f9b61b4a782a3ac625deb94faf5d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1d7c29149e2041dbf869bc56fad863f"><td class="memItemLeft" align="right" valign="top">constexpr callable_log_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__math__log_gab1d7c29149e2041dbf869bc56fad863f.html#gab1d7c29149e2041dbf869bc56fad863f">log</a> = {}</td></tr>
 <tr class="memdesc:gab1d7c29149e2041dbf869bc56fad863f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing the natural logarithm: \(\log x\).  <a href="group__math__log_gab1d7c29149e2041dbf869bc56fad863f.html#gab1d7c29149e2041dbf869bc56fad863f">More...</a><br /></td></tr>
 <tr class="separator:gab1d7c29149e2041dbf869bc56fad863f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1963,7 +2004,7 @@ template&lt;std::ptrdiff_t... I&gt; </td></tr>
 <tr class="memdesc:ga61c6484edbe5ceb7f92946bc798802dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a shuffling pattern. <br /></td></tr>
 <tr class="separator:ga61c6484edbe5ceb7f92946bc798802dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga66d8722c860708cf70e38ecedac9a94d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ga66d8722c860708cf70e38ecedac9a94d"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga66d8722c860708cf70e38ecedac9a94d.html#ga66d8722c860708cf70e38ecedac9a94d">max_scalar_size_v</a> = kumi::max_flat(T{}, [](auto m) { return sizeof(m); })</td></tr>
+<tr class="memitem:ga66d8722c860708cf70e38ecedac9a94d"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga66d8722c860708cf70e38ecedac9a94d.html#ga66d8722c860708cf70e38ecedac9a94d">max_scalar_size_v</a></td></tr>
 <tr class="memdesc:ga66d8722c860708cf70e38ecedac9a94d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <a href="group__traits_ga66d8722c860708cf70e38ecedac9a94d.html#ga66d8722c860708cf70e38ecedac9a94d">More...</a><br /></td></tr>
 <tr class="separator:ga66d8722c860708cf70e38ecedac9a94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,11 +144,12 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga13ddd05c1c51
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a>... Ts&gt;</div>
-<div class="line">   eve::common_compatible_t&lt;Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">sub</a>(Ts ... xs) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a>&lt;Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">sub</a>(Ts ... xs) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
 <div class="ttc" id="agroup__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a_html_ga13ddd05c1c516674e73d2ed018fa5d5a"><div class="ttname"><a href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a></div><div class="ttdeci">constexpr callable_sub_ sub</div><div class="ttdoc">Computes the sum of its arguments.</div><div class="ttdef"><b>Definition:</b> sub.hpp:76</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>... xs</code> : <a class="el" href="concepteve_1_1value.html">real</a> or <a class="el" href="structeve_1_1complex.html">complex</a> arguments.</li>
@@ -181,8 +182,20 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga13ddd05c1c51
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- yi          = &quot;</span> &lt;&lt; yi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; sub(xi, yi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>(xi, yi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; xi - yi     = &quot;</span> &lt;&lt; xi - yi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">// C++ promotion to int</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> k = kumi::tuple{pf, pf, pf, 1};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- multi parameters&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; sub(pi,pi,pi,1)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, 1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; sub(k)                        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>(k)               &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; sub(kumi::tuple{pf, pf})      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>( kumi::tuple{pf, pf})  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; sub(kumi::tuple{pf, 1.0f)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>( kumi::tuple{pf, 1.0f})  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; sub(kumi::tuple{1.0f, pf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>( kumi::tuple{1.0f, pf})  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; saturated(sub)(pi,12,pi,pi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>(<a class="code hl_variable" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a">eve::sub</a>)(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, 12, <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>,<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
@@ -224,7 +237,6 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga13ddd05c1c51
 <div class="line"> </div>
 <div class="line">   <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
 </div><!-- fragment --> </li>
 </ul>
 

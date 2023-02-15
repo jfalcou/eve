@@ -45,6 +45,7 @@ namespace eve::detail
 
 namespace eve
 {
+  /// Computes the SIMD-compatible common type between all `Ts`.
   template<typename... Ts>
   using common_value_t = typename eve::detail::common_value_impl<void, Ts...>::type;
 

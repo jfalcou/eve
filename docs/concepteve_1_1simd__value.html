@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -127,15 +127,17 @@ $(document).ready(function(){initNavTree('concepteve_1_1simd__value.html',''); i
 <p><code>#include &lt;eve/concept/vectorized.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Specifies that a type a SIMD type. </p>
-<p >The concept <code>simd_value&lt;T&gt;</code> is satisfied if and only if T verifies that <code>std::is_same_v&lt;cardinal_t&lt;T&gt;,scalar_cardinal&gt; == false</code>.</p>
+<p >The concept <code>simd_value&lt;T&gt;</code> is satisfied if and only if T satisfies either <code>eve::arithmetic_simd_value</code> or <code><a class="el" href="concepteve_1_1logical__simd__value.html" title="Specify that a type represents a logical SIMD value.">eve::logical_simd_value</a></code>.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
-<li><code>eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;&gt;</code></li>
-<li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;</code> </li>
+<li><code>eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;short&gt;&gt;</code></li>
+<li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;</code></li>
+<li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;int, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;1&gt;&gt;</code> </li>
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1simd__value.html">eve::simd_value</a> =  !std::same_as&lt;eve::cardinal_t&lt;T&gt;, scalar_cardinal&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1simd__value.html">eve::simd_value</a> =  arithmetic_simd_value&lt;T&gt; || <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value&lt;T&gt;</a></div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value.</div><div class="ttdef"><b>Definition:</b> simd.hpp:45</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

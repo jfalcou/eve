@@ -42,10 +42,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!
-//!     * `r` :  [range](@ref eve::range) containing The coefficients by decreasing power order.
-//!
-//!     * `n` :  [range](@ref eve::range) containing The nodes by decreasing power order.
+//!     * `r` :  Range  containing The coefficients by decreasing power order.
+//!     * `n` :  Range  containing The nodes by decreasing power order.
 //!
 //!    **Return value**
 //!

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,19 +144,20 @@ $(document).ready(function(){initNavTree('group__elliptic_gace14dc365b6b985985aa
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> T</div>
-<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> U</div>
-<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> V</div>
-<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a> W&gt;</div>
-<div class="line">   eve::common_compatible_value&lt;T, U, V, W&gt; <a class="code hl_variable" href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">ellint_rj</a>(T x, U y, V z, W p) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T</div>
+<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> U</div>
+<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> V</div>
+<div class="line">           , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> W&gt;</div>
+<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U, V, W&gt;</a> <a class="code hl_variable" href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">ellint_rj</a>(T x, U y, V z, W p) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__real__value_html"><div class="ttname"><a href="concepteve_1_1floating__real__value.html">eve::floating_real_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:103</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:114</div></div>
 <div class="ttc" id="agroup__elliptic_gace14dc365b6b985985aabdddd0a213db_html_gace14dc365b6b985985aabdddd0a213db"><div class="ttname"><a href="group__elliptic_gace14dc365b6b985985aabdddd0a213db.html#gace14dc365b6b985985aabdddd0a213db">eve::ellint_rj</a></div><div class="ttdeci">constexpr callable_ellint_rj_ ellint_rj</div><div class="ttdoc">Computes the Carlson's elliptic integral .</div><div class="ttdef"><b>Definition:</b> ellint_rj.hpp:57</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code>, <code>z</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real arguments</a>. <code>x</code>, <code>y</code> and <code>z</code> must be non negative and at most one of them equal to 0. In any other case, the result is NaN.</li>
-<li><code>p</code>: Non-zero <a class="el" href="concepteve_1_1floating__real__value.html">floating real arguments</a>. In any other case, the result is NaN.</li>
+<li><code>x</code>, <code>y</code>, <code>z</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real arguments</a>. <code>x</code>, <code>y</code> and <code>z</code> must be non negative and at most one of them equal to 0. In any other case, the result is NaN.</li>
+<li><code>p</code>: Non-zero <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real arguments</a>. In any other case, the result is NaN.</li>
 </ul>
 <p ><b>Return value</b></p>
 <p >the value of the \(\mathbf{R}_\mathbf{J}\) Carlson elliptic integral is returned.</p>

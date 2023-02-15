@@ -52,7 +52,7 @@ namespace eve
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
 //!   2. Returns [elementwise](@ref glossary_elementwise) the sine of the input
-//!      The behavior of this function is equivalent to `-i*eve::sinh(i*z)`.
+//!      The behavior of this function is equivalent to `-i * sinh(i*z)`.
 //!
 //!  @groupheader{Example}
 //!

@@ -44,6 +44,7 @@ namespace eve
 //!       @code
 //!         if   constexpr(floating_value<T>) return is_not_equal(x, x);
 //!         else constexpr(integral_value<T>) return false_(as(x));
+//!       @endcode
 //!
 //!       For complex entries  `is_infinite(z)` is semantically  equivalent to
 //!       `eve::is_nan(real(z)) || eve::is_nan(imag(z))`,

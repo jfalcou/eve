@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -138,13 +138,21 @@ template&lt;typename T &gt; </div>
   </table>
   </dd>
 </dl>
-<pre class="fragment">   If T has begin/end - value_type_t for return type of begin
-   If T is std::iterator -&gt; returns iterator_traits&lt;T&gt;::value_type
-   If T has nested `value_type` -&gt; returns it
-   If T is a product type and all elements have value_type_t defined for them -
-      kumi::tuple for the individual product types.
-   Otherwise it's undefined.
-</pre><p> <b>Required header:</b> <code>#include &lt;eve/traits/value_type.hpp&gt;</code>, <code>#include &lt;eve/traits.hpp&gt;</code> </p>
+<p>value_type_t&lt;T&gt; is computed as follows:</p><ul>
+<li>If T has begin/end - value_type_t for return type of begin</li>
+<li>If T is std::iterator -&gt; returns iterator_traits&lt;T&gt;::value_type</li>
+<li>If T has nested <code>value_type</code> -&gt; returns it</li>
+<li>If T is a product type and all elements have value_type_t defined for them -</li>
+<li>kumi::tuple for the individual product types.</li>
+<li>Otherwise it's undefined.</li>
+</ul>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <code>#include &lt;eve/traits.hpp&gt;</code> </p>
 
 </div>
 </div>
