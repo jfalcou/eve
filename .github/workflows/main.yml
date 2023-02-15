@@ -166,7 +166,7 @@ jobs:
         with:
           options:        '${{ matrix.cfg.opts }}'
           cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         0
+          status:         1
           cpu:            3
       - name: Always execute
         if: ${{ always() }}
