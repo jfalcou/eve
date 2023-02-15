@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -138,7 +138,6 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga5341b3d87dbf8ba0
 </div><div class="memdoc">
 
 <p>Computes a a bitwise reinterpretation of an object. </p>
-<p >Computes the saturation of a value in a type.</p>
 <p ><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -148,7 +147,7 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga5341b3d87dbf8ba0
 <div class="line">    To <a class="code hl_variable" href="group__core__bitops_ga5341b3d87dbf8ba07646decaa854ceeb.html#ga5341b3d87dbf8ba07646decaa854ceeb">bit_cast</a> operator()(From x, <a class="code hl_struct" href="structeve_1_1as.html">as&lt;To&gt;</a> t) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__bitops_ga5341b3d87dbf8ba07646decaa854ceeb_html_ga5341b3d87dbf8ba07646decaa854ceeb"><div class="ttname"><a href="group__core__bitops_ga5341b3d87dbf8ba07646decaa854ceeb.html#ga5341b3d87dbf8ba07646decaa854ceeb">eve::bit_cast</a></div><div class="ttdeci">constexpr callable_bit_cast_ bit_cast</div><div class="ttdoc">Computes a a bitwise reinterpretation of an object.</div><div class="ttdef"><b>Definition:</b> bit_cast.hpp:64</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
@@ -188,60 +187,6 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga5341b3d87dbf8ba0
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p ><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">{   <span class="keyword">template</span>&lt;value From, scalar_value To&gt;</div>
-<div class="line">    To <a class="code hl_variable" href="group__core__bitops_ga5341b3d87dbf8ba07646decaa854ceeb.html#ga5341b3d87dbf8ba07646decaa854ceeb">bit_cast</a> operator()(From x, <a class="code hl_struct" href="structeve_1_1as.html">as&lt;To&gt;</a> t) <span class="keyword">noexcept</span>;</div>
-<div class="line">}</div>
-</div><!-- fragment --><p ><b>Parameters</b></p>
-<ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
-<li><code>t</code> : <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the result.</li>
-</ul>
-<p ><b>Template parameters</b></p>
-<ul>
-<li>To: scalar type to which each element of <code>x</code> is saturated</li>
-</ul>
-<p ><b>Return value</b></p>
-<p >For an <code>x</code> of <a class="el" href="concepteve_1_1value.html">real value</a> <code>Target</code>, the call <code>saturate(x, as_&lt;Target&gt;{})</code> returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> a value of type Target which is the conversion of <code>x</code> clamped between the smallest and largest values of Target</p>
-<dl class="section note"><dt>Note</dt><dd>Saturation operated by eve::saturate may lead to Undefined Behaviors if it implies conversions that are themselves U.B.</dd></dl>
-<h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int64_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>int_16 = <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;std::int16_t&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>int_64 = <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;std::int64_t&gt;</a>;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {-1.0f, 2.3f, 45000.7f, -64768.6f};</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {-1, 2, -3, <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;std::int64_t&gt;</a>())};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                         = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturate(pf, int_64()_)    = &quot;</span> &lt;&lt; eve::saturate(pf, int_64()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturate(pf, int_16())     = &quot;</span> &lt;&lt; eve::saturate(pf, int_16()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturate(pi, as(eve::as&lt;double&gt;())) = &quot;</span> &lt;&lt; eve::saturate(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span>        xf = -64768.4f;</div>
-<div class="line">  std::int64_t xi = -64768;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                         = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturate(xf, int_64())     = &quot;</span> &lt;&lt; eve::saturate(xf, int_64()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xi                         = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; saturate(xi, as(eve::as&lt;double&gt;())) = &quot;</span> &lt;&lt; eve::saturate(xi, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr callable_valmax_ valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:55</div></div>
-<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

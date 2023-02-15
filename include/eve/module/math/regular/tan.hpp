@@ -53,7 +53,7 @@ namespace eve
 //!
 //!   2. Returns [elementwise](@ref glossary_elementwise) the cotangent of the input
 //!      in \f$\pi\f$ multiples.
-//!      The behavior of this function is equivalent to `-i*eve::rec(eve::tanh(i*z))`.
+//!      The behavior of this function is equivalent to `-i * rec(tanh(i*z))`.
 //!
 //!  @groupheader{Example}
 //!

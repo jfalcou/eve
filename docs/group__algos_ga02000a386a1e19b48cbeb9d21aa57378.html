@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('group__algos_ga02000a386a1e19b48cbeb9d
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/copy.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/copy.hpp&gt;</code></p>
 
 <p>SIMD optimized copy algorithm. </p>
 <p >Configurable <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing a SIMD optimized version of the copy. By default, the operation will be unrolled by a factor of 4, align memory accesses and perform conversions if needed.</p>
@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('group__algos_ga02000a386a1e19b48cbeb9d
 <li><code>r</code> : An eve::algo::zipped_range_pair of ranges and/or iterators.</li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/algo/copy.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>

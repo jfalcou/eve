@@ -21,7 +21,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
-//!   @var $name$
+//!   @var eps
 //!   @brief Computes the the machine epsilon.
 //!
 //!   **Defined in Header**

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve/algo/container/detail Directory Reference</title>
+<title>E.V.E: eve::floating_ordered_value Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('dir_f82da1145c84decfda832718418cc02b.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('concepteve_1_1floating__ordered__value.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -117,16 +117,30 @@ $(document).ready(function(){initNavTree('dir_f82da1145c84decfda832718418cc02b.h
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">detail Directory Reference</div></div>
+  <div class="headertitle"><div class="title">eve::floating_ordered_value Concept Reference</div></div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+
+<p><code>#include &lt;eve/concept/value.hpp&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >TODO describe</p>
+<h2 class="groupheader">Examples </h2>
+<ul>
+<li><code>double</code></li>
+<li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;2&gt;&gt;</code> </li>
+</ul>
+</div><h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> =  <a class="code hl_concept" href="concepteve_1_1ordered__value.html">ordered_value&lt;T&gt;</a> &amp;&amp; std::floating_point&lt;element_type_t&lt;T&gt;&gt;</div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:114</div></div>
+<div class="ttc" id="aconcepteve_1_1ordered__value_html"><div class="ttname"><a href="concepteve_1_1ordered__value.html">eve::ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:104</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_37aeed337be603fe9d2e51217e93bd20.html">eve</a></li><li class="navelem"><a class="el" href="dir_9b7ec5371ade1847a7835e0d6417f3f8.html">algo</a></li><li class="navelem"><a class="el" href="dir_234d97a4499affa0e6d8bc647adb0e3b.html">container</a></li><li class="navelem"><a class="el" href="dir_f82da1145c84decfda832718418cc02b.html">detail</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="concepteve_1_1floating__ordered__value.html">floating_ordered_value</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -144,22 +144,28 @@ $(document).ready(function(){initNavTree('group__math__hyper_gae4658d7c9b116c396
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">csch</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   T <a class="code hl_variable" href="group__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">csch</a>(T x) <span class="keyword">noexcept</span>;                              <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">   as_complex_t&lt;T&gt; <a class="code hl_variable" href="group__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">csch</a>(as_complex_t&lt;T&gt; z) <span class="keyword">noexcept</span>;  <span class="comment">//2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa_html_gae4658d7c9b116c396866ffa7ff7b47aa"><div class="ttname"><a href="group__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">eve::csch</a></div><div class="ttdeci">constexpr callable_csch_ csch</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> csch.hpp:56</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
+<div class="ttc" id="agroup__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa_html_gae4658d7c9b116c396866ffa7ff7b47aa"><div class="ttname"><a href="group__math__hyper_gae4658d7c9b116c396866ffa7ff7b47aa.html#gae4658d7c9b116c396866ffa7ff7b47aa">eve::csch</a></div><div class="ttdeci">constexpr callable_csch_ csch</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> csch.hpp:62</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1floating__real__value.html">floating real value</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
 </ul>
 <p ><b>Return value</b></p>
-<p >Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> hyperbolic secant of the input.</p>
-<p >In particular:</p>
-<ul>
+<ol type="1">
+<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> hyperbolic secant of the input. In particular:<ul>
 <li>If the element is \(\pm0\), \(\pm\infty\) is returned.</li>
 <li>If the element is \(\pm\infty\), \(\pm0\) is returned.</li>
 <li>If the element is a <code>NaN</code>, <code>NaN</code> is returned.</li>
 </ul>
+</li>
+<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the hyperbolic cosecant of the input The behavior of this function is equivalent to <code>eve::rec(eve::sinh(z))</code>.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

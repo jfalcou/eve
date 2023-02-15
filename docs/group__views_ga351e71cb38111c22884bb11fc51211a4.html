@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,11 +137,11 @@ $(document).ready(function(){initNavTree('group__views_ga351e71cb38111c22884bb11
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/views/zip.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/views/zip.hpp&gt;</code></p>
 
 <p>Given relaxed_iterors and relaxed ranges, zips them together (creates a single object). If at least one component is a <code><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></code> - result is a <code><a class="el" href="structeve_1_1algo_1_1views_1_1zip__range.html" title="A relaxed_range on top of multiple relaxed_range. All individual components have to have the same siz...">zip_range</a></code>, otherwise it's <code><a class="el" href="structeve_1_1algo_1_1views_1_1zip__iterator.html" title="A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...">zip_iterator</a></code>. All range compinents have to have the same length. NOTE: uses <code>range_ref</code> inside, so never owns/copies any elements. </p>
 <p >Supports <code>zip[eve::algo::force_type&lt;T&gt;]</code>, <code>zip[eve::algo::common_type&lt;T&gt;], </code>zip[common_with_types&lt;Ts...&gt;]<code>traits. </code>force_type&lt;T&gt;<code>will convert every component to the type &lt;T&gt;. </code><a class="el" href="structeve_1_1common__type.html" title="Computes a type that can represent all values in a list of types.">common_type</a><code>and</code>common_with_types` will compute the common type (maybe including extra provided), and convert to that.</p>
-<p ><b>Required header:</b> <code>#include &lt;eve/algo/views/zip.hpp&gt;</code></p>
+<p ><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/views/zip.hpp&gt;</code></p>
 <p >Has a shorthand <code>eve::views::zip</code> in <code>&lt;eve/views/zip.hpp&gt;</code>. </p>
 
 </div>

@@ -1,6 +1,44 @@
 Change Log {#changelog}
 ==========
 
+## Version 2023.02.15
+
+Codename: [Perdita Quiescent](https://en.wikipedia.org/wiki/Perdita_(The_Winter%27s_Tale))
+
+### What's Changed
+
+#### Removal and Depreciation
+  * The proba module as been removed. (See #1490) It will be reworked as a separate project later on with a proper API.
+
+#### Architectures/Compilers Support & Fixes
+##### The One Big News for this release: SVE
+
+  * SVE with fixed size, power of 2 cardinal is now supported for most of our API. Some more optimizations are on the way but the support is functional. (See  #1432, #1435, #1436, #1437, #1438, #1448, #1453, #1455, #1456, #1463, #1464, #1472, #1473, #1474,#1487, #1489, #1491, #1494, #1533, #1556)
+
+##### Other Fixes
+  * **EVE** now compiles on ARM M1 with Homebrew g++. (See #1471)
+  * **EVE** now compiles with Apple Clang (See #1479, #1485, #1502, #1530, #1531)
+  * Various efforts have been made to advance the MSVC situation. Help still welcomed.
+  * ARM all and any are now more efficient (See #1500)
+  * Integral sign/signnz functions are now more efficient on x86 (See #1499)
+  * Implementation for X86 AVX2/AVX512 gather and masked gather are now optimized. (See #1526)
+
+#### Features
+  * **jtlap** implemented a large amount of new functions for `eve::complex`.
+  * Functions like exp, log or sqrt can now be called with a real entry and a complex output. (See #1528)
+  * Binary functions for which a n-ary extensions is available now support being called with a tuple-like parameter instead of a dynamic range (See #1422, #1509)
+  * The minmax function is now available. (See #1507)
+  * **DenisYaroshevskiy** implemented new traits for algorithms to take care of costly kernels, no alignment and to support fused operations. (See #1535, #1543)
+
+#### Bug Fixes
+  * Convert is now more efficient and don't generate piecewise evaluation in some scenario involving logicals. (See #1447, #1428)
+  * `if_else` now uses the proper constant generator in optimized cases. (See #1529)
+  * Prevent constant to erroneously be callable with non-specific product types. (See #1540)
+  * A large cleanup of old traits and concepts has been done. The basics concepts around vectorizable and vectorized types has been therefore simplified and streamlined. (See #1468, #1477, #1527, #1488, #1545)
+  * Fix issue with dynamic SIMD extension detection that were broken by accident. (See #1504)
+
+**Full Changelog**: https://github.com/jfalcou/eve/compare/v2022.09.1...2023.02.15
+
 ## Version 2022.09.1
 
 Codename: [Rosalind Serendipitous](https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It))
@@ -57,13 +95,13 @@ Starting this fall, we will also try to provide more regular release.
   - Updated tests and infrastructure to use latest TTS to speedup compile times (See #1313)
   - Add find_package support (#1318)
   - Provide CMake machinery and example for multi-arch support (See #1321)
-  - Refactored EVE's exported CMake target and installation by @justend29 in (See #1336)
-  - Automated integration tests and correct their fetches by @justend29 in (See #1338)
+  - Refactored EVE's exported CMake target and installation by **justend29** in (See #1336)
+  - Automated integration tests and correct their fetches by **justend29** in (See #1338)
 
 * Documentation
   - Add link to EVE bibtex (See #1282)
   - Documentation style and layout changed to become more readable (See #1299)
-  - README: Fix links to website by @Simran-B (See #1303)
+  - README: Fix links to website by **Simran-B** (See #1303)
   - Added more documentation for algorithms (See #1349)
   - Add a local doxygen generation target to simplify documentation works (See #1392)
 
@@ -76,8 +114,8 @@ Starting this fall, we will also try to provide more regular release.
 ### New Contributors
 Thanks to all our new contributor for this release!
 
-  - @Simran-B made their first contribution in (See #1303)
-  - @justend29 made their first contribution in (See #1338)
+  - **Simran-B** made their first contribution in (See #1303)
+  - **justend29** made their first contribution in (See #1338)
 
 ## Version 2022.03.0
 
@@ -98,16 +136,16 @@ including WASM and **gasp** fixed size SVE.
  - Revamped docs to add basic 101 tutorials
  - Fixed most documentation to provide Compiler-Explorer-aware samples
  - Correct tutorial example code for if_else
- - Various proofreading by @pauljurczak and @toughengineer
+ - Various proofreading by **pauljurczak** and **toughengineer**
 
 * Improvements on compress (#947, #1013, #1037, #1213)
   - compress_store is a very important function that has been reimplemented to simplify
     its implementation in term of support for iterators
   - better implementation for X86 architectures (SSE2 and BMI).
-  - provide an alternative implementation based on switch ()
+  - provide an alternative implementation based on switch
 
 * Improvements on algorithms
-`@DenisYaroshevskiy` did a wonderful job on this front.
+`**DenisYaroshevskiy**` did a wonderful job on this front.
   - New algorithm: `reverse` (#1066, #1068)
   - New algorithm: `reverse_copy` (#1060)
   - New algorithm: `iota` (#1016)
@@ -124,7 +162,7 @@ including WASM and **gasp** fixed size SVE.
 
 * Convert
   - Fixed missing code for `eve::convert`. All convert calls now produce optimal code.
-  - More specifically and addition to global fixes, @aguinet contributed:
+  - More specifically and addition to global fixes, **aguinet** contributed:
     - Improvement for u64 => u32 when using AVX2
     - Improvement for u16 => u8 when using AVX2
     - Improvement for u64=>u32 using AVX2 + clang
@@ -138,7 +176,7 @@ including WASM and **gasp** fixed size SVE.
   - Implement AVX512 logical pair interleave using BMI parallel bit deposit
 
 * Build systems
-  - Install directory fix (Thanks `@JPenuchot`)
+  - Install directory fix (Thanks `**JPenuchot`)
   - Prevent CMake error if EVE_BUILD_TEST is set to OFF (#1032)
   - Fix bench compilation issues (#1136)
   - Add CI tests for clang++ with -std=libc++ (#614)
@@ -173,11 +211,11 @@ including WASM and **gasp** fixed size SVE.
 ### New Contributors
 Thanks to all our new contributor for this release!
 
-  * `@aguinet` made their first contribution in https://github.com/jfalcou/eve/pull/1049
-  * `@JPenuchot` made their first contribution in https://github.com/jfalcou/eve/pull/1028
-  * `@pauljurczak` made their first contribution in https://github.com/jfalcou/eve/pull/1123
-  * `@the-moisrex` made their first contribution in https://github.com/jfalcou/eve/pull/1025
-  * `@toughengineer` made their first contribution in https://github.com/jfalcou/eve/pull/1182
+  * `**aguinet**` made their first contribution in https://github.com/jfalcou/eve/pull/1049
+  * `**JPenuchot**` made their first contribution in https://github.com/jfalcou/eve/pull/1028
+  * `**pauljurczak**` made their first contribution in https://github.com/jfalcou/eve/pull/1123
+  * `**the-moisrex**` made their first contribution in https://github.com/jfalcou/eve/pull/1025
+  * `**toughengineer**` made their first contribution in https://github.com/jfalcou/eve/pull/1182
 
 ## Version 2021.10.0
 

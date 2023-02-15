@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -127,7 +127,7 @@ $(document).ready(function(){initNavTree('concepteve_1_1signed__scalar__value.ht
 <p><code>#include &lt;eve/concept/vectorizable.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Specify that a type represents a signed scalar value. </p>
-<p >The concept <code>signed_scalar_value&lt;T&gt;</code> is satisfied if and only if T satisfies <code><a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value.">eve::scalar_value</a>&lt;T&gt;</code> and <code>std::integral&lt;T&gt;</code>.</p>
+<p >The concept <code>signed_scalar_value&lt;T&gt;</code> is satisfied if and only if T satisfies <code><a class="el" href="concepteve_1_1arithmetic__scalar__value.html" title="Specify that a type represents a type suitable for vectorization.">eve::arithmetic_scalar_value</a>&lt;T&gt;</code> and <code>std::integral&lt;T&gt;</code>.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
 <li><code>std::int32_t</code></li>
@@ -135,9 +135,9 @@ $(document).ready(function(){initNavTree('concepteve_1_1signed__scalar__value.ht
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1signed__scalar__value.html">eve::signed_scalar_value</a> =  <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value&lt;T&gt;</a> &amp;&amp; std::is_signed_v&lt;T&gt;</div>
-<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:71</div></div>
-<div class="ttc" id="aconcepteve_1_1signed__scalar__value_html"><div class="ttname"><a href="concepteve_1_1signed__scalar__value.html">eve::signed_scalar_value</a></div><div class="ttdoc">Specify that a type represents a signed scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:98</div></div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1signed__scalar__value.html">eve::signed_scalar_value</a> =  <a class="code hl_concept" href="concepteve_1_1arithmetic__scalar__value.html">arithmetic_scalar_value&lt;T&gt;</a> &amp;&amp; std::is_signed_v&lt;T&gt;</div>
+<div class="ttc" id="aconcepteve_1_1arithmetic__scalar__value_html"><div class="ttname"><a href="concepteve_1_1arithmetic__scalar__value.html">eve::arithmetic_scalar_value</a></div><div class="ttdoc">Specify that a type represents a type suitable for vectorization.</div><div class="ttdef"><b>Definition:</b> scalar.hpp:110</div></div>
+<div class="ttc" id="aconcepteve_1_1signed__scalar__value_html"><div class="ttname"><a href="concepteve_1_1signed__scalar__value.html">eve::signed_scalar_value</a></div><div class="ttdoc">Specify that a type represents a signed scalar value.</div><div class="ttdef"><b>Definition:</b> vectorizable.hpp:40</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

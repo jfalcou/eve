@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('group__algos_gaa58f78bdfa330b44042d13f
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/find.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/find.hpp&gt;</code></p>
 
 <p>a version of find_if with a value to find instead of a predicate to test. </p>
 <p ><b>Alternative Header</b></p>
@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('group__algos_gaa58f78bdfa330b44042d13f
 <div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gaa58f78bdfa330b44042d13fa31369533.html#gaa58f78bdfa330b44042d13fa31369533">find</a>(Rng&amp;&amp; rng, <a class="code hl_typedef" href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t&lt;Rng&gt;</a> v) -&gt; unaligned_iterator_t&lt;Rng&gt;;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algos_gaa58f78bdfa330b44042d13fa31369533_html_gaa58f78bdfa330b44042d13fa31369533"><div class="ttname"><a href="group__algos_gaa58f78bdfa330b44042d13fa31369533.html#gaa58f78bdfa330b44042d13fa31369533">eve::algo::find</a></div><div class="ttdeci">constexpr auto find</div><div class="ttdoc">a version of find_if with a value to find instead of a predicate to test.</div><div class="ttdef"><b>Definition:</b> find.hpp:182</div></div>
-<div class="ttc" id="agroup__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2_html_gaf9ce08c683bb04a9a96e99ddd3edaee2"><div class="ttname"><a href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t</a></div><div class="ttdeci">typename decltype(detail::value_type_impl&lt; T &gt;())::type value_type_t</div><div class="ttdoc">A meta function for getting an associated value_type for a relaxed iterator/range.</div><div class="ttdef"><b>Definition:</b> value_type.hpp:71</div></div>
+<div class="ttc" id="agroup__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2_html_gaf9ce08c683bb04a9a96e99ddd3edaee2"><div class="ttname"><a href="group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2">eve::value_type_t</a></div><div class="ttdeci">typename decltype(detail::value_type_impl&lt; T &gt;())::type value_type_t</div><div class="ttdoc">A meta function for getting an associated value_type for a relaxed iterator/range.</div><div class="ttdef"><b>Definition:</b> value_type.hpp:79</div></div>
 </div><!-- fragment --><p> <b>Parameters</b></p>
 <ul>
 <li><code>rng</code>: Relaxed input range to process</li>
@@ -160,7 +160,7 @@ $(document).ready(function(){initNavTree('group__algos_gaa58f78bdfa330b44042d13f
 <dl class="section see"><dt>See also</dt><dd>find_if</dd></dl>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>

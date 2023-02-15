@@ -106,6 +106,7 @@ namespace eve
     //! default constructor.
     EVE_FORCEINLINE wide() requires(std::is_trivially_constructible_v<Type>) {}
 
+    //! @overload
     EVE_FORCEINLINE wide() requires(!std::is_trivially_constructible_v<Type>) : wide(Type {}) {}
 
     //! Constructs from ABI-specific storage

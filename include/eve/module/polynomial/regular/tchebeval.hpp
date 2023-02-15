@@ -51,16 +51,13 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x` : [real floating argument](@ref eve::floating_ordered_value).
-//!
 //!     * `a`, `b` : [real floating arguments](@ref eve::floating_ordered_value).
 //!       If present,  they are the bounds of   the interval for which the Tchebytchev polynomial
 //!       must be evaluated ( -1 and 1 by default). A change of variable
 //!       \f$ x -> \frac{2x-a-b}{b-a}\f$ is internally performed.
-//!
 //!     * `cs`: [values ](@ref eve::value) expansion pack associated to the
 //!        coefficients \f$(a_i)_{0\le i \lt n}\f$.
-//!
-//!     * `r` : [range](@ref eve::range) containing The polynomial coefficients.
+//!     * `r` : Range containing The polynomial coefficients.
 //!
 //!    **Return value**
 //!

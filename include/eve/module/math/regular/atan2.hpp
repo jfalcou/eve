@@ -62,7 +62,7 @@ namespace eve
 //!    not **IEEE** conformant, but allows to simplify (and
 //!    speed) the implementation. In all other cases, the result is standard conformant.
 //!
-//!    The result type is the [common value type](@ref common_value) of the two parameters.
+//!    The result type is the [common value type](@ref common_value_t) of the two parameters.
 //!
 //!  @groupheader{Example}
 //!

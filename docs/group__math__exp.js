@@ -5,6 +5,7 @@ var group__math__exp =
     [ "eve::exp10", "group__math__exp_ga90cff7b583b7e96518af4946dcd7378a.html#ga90cff7b583b7e96518af4946dcd7378a", null ],
     [ "eve::exp2", "group__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51", null ],
     [ "eve::expm1", "group__math__exp_ga52c9b96548ef6beeb8502c4d6af87745.html#ga52c9b96548ef6beeb8502c4d6af87745", null ],
+    [ "eve::expmx2", "group__math__exp_ga6da020fda3f868fedd54c97ff64698e8.html#ga6da020fda3f868fedd54c97ff64698e8", null ],
     [ "eve::expx2", "group__math__exp_gad8e0e8ed5b7bdffd7247fbb181d55011.html#gad8e0e8ed5b7bdffd7247fbb181d55011", null ],
     [ "eve::geommean", "group__math__exp_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8", null ],
     [ "eve::hypot", "group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9", null ],

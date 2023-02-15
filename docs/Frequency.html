@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::successor</title>
+<title>E.V.E: Scaling.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('Frequency.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -116,58 +116,22 @@ $(document).ready(function(){initNavTree('group__core__decorators_ga37ae7275dffa
 </iframe>
 </div>
 
+<div><div class="header">
+  <div class="headertitle"><div class="title">Scaling. </div></div>
+</div><!--header-->
 <div class="contents">
-<a id="ga37ae7275dffa6350a54dad217041ab09" name="ga37ae7275dffa6350a54dad217041ab09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga37ae7275dffa6350a54dad217041ab09">&#9670;&nbsp;</a></span>successor</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr successor_type const eve::successor = {}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing incrementation behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>. </p>
-<p >Higher-order <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> imbuing incrementing behaviour onto other <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Objects</a>.</p>
-<h4><a class="anchor" id="autotoc_md60"></a>
-Synopsis</h4>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>An instance of eve::callable</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing the same kind of operation but incrementind some parameter(s) v</dd></dl>
-<p>Actually supported by <a class="el" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b" title="Computes the value of the Laguerre and associated Laguerre polynomials of order n at x:">eve::laguerre</a></p>
-<h4><a class="anchor" id="autotoc_md85"></a>
-Synopsis</h4>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>An instance of eve::callable</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing the same kind of operation but incrementing some parameter(s) v </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p >In SIMD programming there is a known issue of processor frequency scaling: when working with wider registers, in order to avoid overheating, some processors limit their CPU frequency. There are a lot of situations where this can happen but it is a noticeable problem mostly for 64 byte registers on intel avx512 cpus.</p>
+<p >This is why, for example, if you look at libc, it at most uses 32 byte registers: sure you might speed up the strlen somewhat but then all the code after will be slower.</p>
+<p >For big datasets the price of lower frequency is often outweighed by processing more numbers in open operation and seed ups of 15% are not unheard of.</p>
+<p >This lead to a dilemma in the API design for us: if the user is on the AVX512 system, most likely they expect the register to be 64 bytes. But we suspect this is not what they actually want. So we decided that <code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></code> on avx512 is by default 64 bytes but algorithms by default use 32 bytes. If you want to get an algorithm to use 64 byte you can pass <code>eve::algo::allow_frequency_scaling</code> trait. There are also a typedefs <code>nofs_wide</code>, <code>nofs_logical</code> where <code>nofs</code> stands for "no frequency scaling".</p>
+<dl class="section note"><dt>Note</dt><dd>: other than on avx512 on intel we always use the maximum width of the register, since we expect the compiler to do it anyways and it is usually accepted. If you want to set a specific cardinal for an algorithm, you can always use <code>eve::algo::force_cardinal</code>. </dd></dl>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

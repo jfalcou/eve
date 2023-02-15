@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['simd_20algorithms_0',['SIMD Algorithms',['../algo_rationale.html',1,'eve-dev']]]
+  ['scaling_2e_0',['Scaling.',['../Frequency.html',1,'']]],
+  ['simd_20algorithms_1',['SIMD Algorithms',['../algo_rationale.html',1,'eve-dev']]]
 ];

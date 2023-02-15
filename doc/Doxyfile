@@ -5,7 +5,7 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = E.V.E
 PROJECT_NUMBER         =
-PROJECT_BRIEF          = v2022.09.01
+PROJECT_BRIEF          = v2023.02.15
 PROJECT_LOGO           = logo.png
 
 OUTPUT_DIRECTORY       = $(EVE_DOXYGEN_OUPUT)
@@ -846,8 +846,7 @@ HTML_EXTRA_STYLESHEET  += doxygen-awesome-sidebar-only.css
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES   = doxystrap.js
-HTML_EXTRA_FILES  += godbolt.js
+HTML_EXTRA_FILES   = godbolt.js
 HTML_EXTRA_FILES  += fragment.js
 HTML_EXTRA_FILES  += paragraph.js
 HTML_EXTRA_FILES  += eve.bibtex

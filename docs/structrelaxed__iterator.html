@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -124,12 +124,12 @@ $(document).ready(function(){initNavTree('structrelaxed__iterator.html',''); ini
 <p>anything that can be reasonably converted to an <code>iterator</code>: std::contigious_iterator, eve::algo::iterator, aligned_ptr. Defined as being totally_ordered, having +/- like an iterator And <code>preprocess_range(eve::algo::traits{}, I, I)</code> should work. <code>eve::unalign(I)</code> should be OK.  
  <a href="structrelaxed__iterator.html#details">More...</a></p>
 
-<p><code>#include &lt;eve/algo/concepts/relaxed.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/concepts/relaxed.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >anything that can be reasonably converted to an <code>iterator</code>: std::contigious_iterator, eve::algo::iterator, aligned_ptr. Defined as being totally_ordered, having +/- like an iterator And <code>preprocess_range(eve::algo::traits{}, I, I)</code> should work. <code>eve::unalign(I)</code> should be OK. </p>
 <p >+/- with std::ptrdiff_t don't have to work for arbitrary N, behaviour along the lines of <code><a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">eve::aligned_ptr</a></code> is sufficient.</p>
 <p >result of <code>eve::unalign(I)</code> should return an iterator that can represent any position.</p>
-<p ><b>Required header:</b> <code>#include &lt;eve/algo/concepts.hpp&gt;</code> </p>
+<p ><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/concepts.hpp&gt;</code> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

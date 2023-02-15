@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve/algo Directory Reference</title>
+<title>E.V.E: eve::expected_cardinal_t</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -98,7 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('dir_9b7ec5371ade1847a7835e0d6417f3f8.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__arch_gad810107735c9074d509f0ba2773d14d5.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -116,27 +116,46 @@ $(document).ready(function(){initNavTree('dir_9b7ec5371ade1847a7835e0d6417f3f8.h
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">algo Directory Reference</div></div>
-</div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="subdirs" name="subdirs"></a>
-Directories</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">directory &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_1ed588ddf3088d2ccc1d04e08cb0e4aa.html">concepts</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">directory &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_234d97a4499affa0e6d8bc647adb0e3b.html">container</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">directory &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_1ba77591ea19c67dcb0ac8c3402ad9e0.html">views</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<a id="gad810107735c9074d509f0ba2773d14d5" name="gad810107735c9074d509f0ba2773d14d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad810107735c9074d509f0ba2773d14d5">&#9670;&nbsp;</a></span>expected_cardinal_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Type , regular_abi ABI = eve::current_abi_type&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">eve::expected_cardinal_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the expected cardinal of a given type. </p>
+<p ><b>Required header:</b> <code>#include &lt;eve/arch/expected_cardinal.hpp&gt;</code></p>
+<p ><a class="el" href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">eve::expected_cardinal_t</a> is the exact cardinal type of the register able to store values of type <code>Type</code> for a given SIMD <code>ABI</code> as a native register type.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
+    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h4><a class="anchor" id="autotoc_md2"></a>
+Helper variable template</h4>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Type, regular_abi ABI = eve::current_abi_type&gt;</div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> expected_cardinal_v = <a class="code hl_struct" href="structeve_1_1fixed.html">expected_cardinal_t&lt;Type, ABI&gt;::value</a>;</div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_37aeed337be603fe9d2e51217e93bd20.html">eve</a></li><li class="navelem"><a class="el" href="dir_9b7ec5371ade1847a7835e0d6417f3f8.html">algo</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

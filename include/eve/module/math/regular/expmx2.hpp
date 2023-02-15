@@ -43,10 +43,6 @@ namespace eve
 //!   *  `x`:   [floating value](@ref eve::floating_value).
 //!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
-//! **Return value**
-//!   }
-//!   @endcode
-//!
 //! **Parameters**
 //!
 //!    `x`:   [floating real or complex value](@ref eve::value).

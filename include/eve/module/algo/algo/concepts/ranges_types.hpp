@@ -25,6 +25,7 @@ namespace eve::algo
 //!   template <relaxed_range R>
 //!   using iterator_t = decltype(std::declval<R>().begin());
 //!   @endcode
+//! @}
 //================================================================================================
 template <typename R>
 using iterator_t = decltype(std::declval<R>().begin());
@@ -42,6 +43,7 @@ using iterator_t = decltype(std::declval<R>().begin());
 //!   template <relaxed_range R>
 //!   using sentinel_t = decltype(std::declval<R>().end());
 //!   @endcode
+//! @}
 //================================================================================================
 template <typename R>
 using sentinel_t = decltype(std::declval<R>().end());
@@ -61,8 +63,8 @@ using sentinel_t = decltype(std::declval<R>().end());
 //!   template <typename R>
 //!   using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
 //!   @endcode
+//! @}
 //================================================================================================
 template <typename R>
 using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
-
 }

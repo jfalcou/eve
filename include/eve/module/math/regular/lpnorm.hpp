@@ -43,23 +43,13 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   The result type is the [common value type](@ref common_value) of the absolute
+//!   The result type is the [common value type](@ref common_value_t) of the absolute
 //!   values of the  parameters.
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/lpnorm.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::lpnorm[mask](x, ...)` provides a masked version of `eve::lpnorm` which is
-//!     equivalent to `if_else (mask, lpnorm(x, ...), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/regular/lpnorm.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lpnorm_, lpnorm);

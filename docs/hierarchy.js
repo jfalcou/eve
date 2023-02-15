@@ -17,11 +17,8 @@ var hierarchy =
     [ "eve::algo::views::converting_range< R, T >", "structeve_1_1algo_1_1views_1_1converting__range.html", null ],
     [ "eve::element_type< T >", "structeve_1_1element__type.html", null ],
     [ "eve::fixed< Cardinal >", "structeve_1_1fixed.html", null ],
-    [ "eve::fixed< ABI::template expected_cardinal< pointer_traits< T >::value_type > >", "structeve_1_1fixed.html", [
-      [ "eve::expected_cardinal< pointer_traits< T >::value_type >", "structeve_1_1expected__cardinal.html", null ]
-    ] ],
-    [ "eve::fixed< ABI::template expected_cardinal< Type > >", "structeve_1_1fixed.html", [
-      [ "eve::expected_cardinal< Type, ABI >", "structeve_1_1expected__cardinal.html", null ]
+    [ "eve::fixed< 1 >", "structeve_1_1fixed.html", [
+      [ "eve::cardinal< Type >", "structeve_1_1cardinal.html", null ]
     ] ],
     [ "eve::fixed< ABI::template fundamental_cardinal< Type > >", "structeve_1_1fixed.html", [
       [ "eve::fundamental_cardinal< Type, ABI >", "structeve_1_1fundamental__cardinal.html", null ]
@@ -58,9 +55,6 @@ var hierarchy =
     [ "reverse_iterator", "structreverse__iterator.html", null ],
     [ "eve::algo::views::reverse_range< R >", "structeve_1_1algo_1_1views_1_1reverse__range.html", null ],
     [ "reverse_range", "structreverse__range.html", null ],
-    [ "eve::scalar_cardinal", "structeve_1_1scalar__cardinal.html", [
-      [ "eve::cardinal< Type >", "structeve_1_1cardinal.html", null ]
-    ] ],
     [ "eve::soa_ptr< Ptrs >", "structeve_1_1soa__ptr.html", null ],
     [ "eve::stack_buffer< T >", "structeve_1_1stack__buffer.html", null ],
     [ "eve::struct_support< Self, Fields >", "structeve_1_1struct__support.html", null ],
@@ -70,6 +64,8 @@ var hierarchy =
     [ "eve::supports_like< Wrapper, Self >", "structeve_1_1supports__like.html", null ],
     [ "eve::supports_ordering< Type >", "structeve_1_1supports__ordering.html", null ],
     [ "eve::top_bits< Logical >", "structeve_1_1top__bits.html", null ],
+    [ "eve::underlying_type< Ts >", "structeve_1_1underlying__type.html", null ],
+    [ "eve::underlying_type< T >", "structeve_1_1underlying__type.html", null ],
     [ "eve::detail::wide_storage< as_logical_register_t< Type, Cardinal, abi_t< Type, Cardinal > > >", null, [
       [ "eve::logical< wide< Type, Cardinal > >", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html", null ]
     ] ],

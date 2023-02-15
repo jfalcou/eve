@@ -11,5 +11,6 @@ var group__core =
     [ "Logical operations", "group__core__logical.html", "group__core__logical" ],
     [ "Predicates", "group__core__predicates.html", "group__core__predicates" ],
     [ "Reductions", "group__core__reduction.html", "group__core__reduction" ],
-    [ "SIMD Specific Operations", "group__core__simd.html", "group__core__simd" ]
+    [ "SIMD Specific Operations", "group__core__simd.html", "group__core__simd" ],
+    [ "eve::deinterleave_groups", "group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5", null ]
 ];

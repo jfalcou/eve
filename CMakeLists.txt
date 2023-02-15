@@ -11,9 +11,9 @@ enable_testing()
 ## =================================================================================================
 project(eve LANGUAGES CXX)
 
-set(EVE_MAJOR_VERSION 2022)
-set(EVE_MINOR_VERSION 9)
-set(EVE_PATCH_VERSION 1)
+set(EVE_MAJOR_VERSION 2023)
+set(EVE_MINOR_VERSION 2)
+set(EVE_PATCH_VERSION 15)
 set(EVE_VERSION ${EVE_MAJOR_VERSION}.${EVE_MINOR_VERSION}.${EVE_PATCH_VERSION})
 
 set(PROJECT_VERSION   ${EVE_VERSION})

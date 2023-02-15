@@ -33,7 +33,7 @@ EVE_MAKE_CALLABLE(store_equivalent_, store_equivalent);
 //================================================================================================
 //! @addtogroup memory
 //! @{
-//!   @var has_store_equivalent
+//!   @concept has_store_equivalent
 //!
 //!   @brief a concept, tests `store_equivalent` has a non-default definition for
 //!          a value and a pointer.

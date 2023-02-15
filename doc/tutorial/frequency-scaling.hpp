@@ -12,7 +12,7 @@ This is why, for example, if you look at libc, it at most uses 32 byte registers
 sure you might speed up the strlen somewhat but then all the code after will be
 slower.
 
-For big datasets the price of lower frequency is often outweighted by processing
+For big datasets the price of lower frequency is often outweighed by processing
 more numbers in open operation and seed ups of 15% are not unheard of.
 
 This lead to a dilemma in the API design for us: if the user is on the AVX512 system,
@@ -24,8 +24,8 @@ There are also a typedefs `nofs_wide`, `nofs_logical` where `nofs` stands for
 "no frequency scaling".
 
 @note: other than on avx512 on intel we always use the maximum width of the register,
-since we expect the compiler to do it anyways and it is usally accepted.
-If you want to set a specific cardianl for an algorithm, you can always use
+since we expect the compiler to do it anyways and it is usually accepted.
+If you want to set a specific cardinal for an algorithm, you can always use
 `eve::algo::force_cardinal`.
 
 **/

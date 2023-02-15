@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('group__algos_gafa9b773a01fad373754a552
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/algo/min_value.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/min_value.hpp&gt;</code></p>
 
 <p>SIMD algorithm that returns minimum value in the range. </p>
 <p >C++ standard only has <code>std::min_element</code> that returns iterator to the minimum element. We have that too (see: <code>eve::algo::min_element</code>) but it's slower then just getting the value. So we also provide <code>min_value</code> for when you don't care about the position. By default unrolls by 4 and aligned all memory accesses.</p>
@@ -169,7 +169,7 @@ we assume that <code><a class="el" href="group__core__predicates_ga419057bf1a8ca
 <p >minimum value from the range. If the input range was empty, it's <code>std::nullopt</code>.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>

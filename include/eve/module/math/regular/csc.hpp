@@ -42,9 +42,6 @@ namespace eve
 //!   *  `x`:   [floating value](@ref eve::floating_value).
 //!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
-//!   }
-//!   @endcode
-//!
 //! **Return value**
 //!
 //!   1.  Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.

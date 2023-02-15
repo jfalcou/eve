@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -124,10 +124,10 @@ $(document).ready(function(){initNavTree('concepteve_1_1logical__scalar__value.h
 <p>Specify that a type represents a logical scalar value.  
 <a href="concepteve_1_1logical__scalar__value.html#details">More...</a></p>
 
-<p><code>#include &lt;eve/concept/logical.hpp&gt;</code></p>
+<p><code>#include &lt;eve/concept/scalar.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Specify that a type represents a logical scalar value. </p>
-<p >The concept <code>logical_scalar_value&lt;T&gt;</code> is satisfied if and only if T is an instance of eve::logical and its contents satisfy eve::plain_scalar_value</p>
+<p >The concept <code>logical_scalar_value&lt;T&gt;</code> is satisfied if and only if T is an instance of eve::logical and its contents satisfy <a class="el" href="concepteve_1_1plain__scalar__value.html" title="Specify that a type represents a plain scalar value.">eve::plain_scalar_value</a></p>
 <h2><a class="anchor" id="autotoc_md8"></a>
 Example Types</h2>
 <ul>
@@ -136,9 +136,10 @@ Example Types</h2>
 </ul>
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1logical__scalar__value.html">eve::logical_scalar_value</a> =    detail::instance_of&lt;T,logical&gt;</div>
-<div class="line">                                &amp;&amp;  plain_scalar_value&lt;typename T::value_type&gt;</div>
-<div class="ttc" id="aconcepteve_1_1logical__scalar__value_html"><div class="ttname"><a href="concepteve_1_1logical__scalar__value.html">eve::logical_scalar_value</a></div><div class="ttdoc">Specify that a type represents a logical scalar value.</div><div class="ttdef"><b>Definition:</b> logical.hpp:30</div></div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1logical__scalar__value.html">eve::logical_scalar_value</a> =  detail::instance_of&lt;T, logical&gt;</div>
+<div class="line">                               &amp;&amp; <a class="code hl_concept" href="concepteve_1_1plain__scalar__value.html">plain_scalar_value&lt;typename T::value_type&gt;</a></div>
+<div class="ttc" id="aconcepteve_1_1logical__scalar__value_html"><div class="ttname"><a href="concepteve_1_1logical__scalar__value.html">eve::logical_scalar_value</a></div><div class="ttdoc">Specify that a type represents a logical scalar value.</div><div class="ttdef"><b>Definition:</b> scalar.hpp:59</div></div>
+<div class="ttc" id="aconcepteve_1_1plain__scalar__value_html"><div class="ttname"><a href="concepteve_1_1plain__scalar__value.html">eve::plain_scalar_value</a></div><div class="ttdoc">Specify that a type represents a plain scalar value.</div><div class="ttdef"><b>Definition:</b> scalar.hpp:45</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

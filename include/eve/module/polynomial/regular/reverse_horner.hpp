@@ -49,11 +49,9 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!
 //!     * `coefs...` :  [real floating arguments](@ref eve::floating_ordered_value).
 //!        The coefficients by increasing power order
-//!
-//!     * `r` :  [range](@ref eve::range) containing The coefficients by increasing power order.
+//!     * `r` :  Range  containing The coefficients by increasing power order.
 //!
 //!    **Return value**
 //!

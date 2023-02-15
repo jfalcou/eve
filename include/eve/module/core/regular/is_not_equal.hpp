@@ -61,35 +61,34 @@ namespace eve
 //!     The call `eve::is_not_equal[mask](x)` provides a masked version of `eve::is_not_equal` which
 //!     is equivalent to `if_else (mask, is_not_equal(x, y), false_
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/core/masked/is_not_equal.cpp}
+//!     @godbolt{doc/core/masked/is_not_equal.cpp}
 //!
-//!  * eve::numeric
+//!   * eve::numeric
 //!
 //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are not equal.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/core/pedantic/is_not_equal.cpp}
+//!     @godbolt{doc/core/pedantic/is_not_equal.cpp}
 //!
-//!  * `definitely`
+//!   * `definitely`
 //!
 //!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point
-//!     values, evals to
-//!      true if and only if `x` is almost equal to `y`.
-//!      This means that:
+//!     values, evals to true if and only if `x` is almost equal to `y`.
+//!     This means that:
 //!
-//!      * if `t` is a floating_value then the relative error of not confusing is `x` and `y` is
-//!      greater than `t` \f$(|x-y| \ge t \max(|x|, |y|))\f$.
-//!      * if `t` is a positive integral_value then there are more than `t` values of the type of
-//!      `x` representable in the interval \f$[x,y[\f$.
-//!      * if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$
-//!      in the `x` type (`3*eps(as(x))`).
+//!       * if `t` is a floating_value then the relative error of not confusing is `x` and `y` is
+//!         greater than `t` \f$(|x-y| \ge t \max(|x|, |y|))\f$.
+//!       * if `t` is a positive integral_value then there are more than `t` values of the type of
+//!         `x` representable in the interval \f$[x,y[\f$.
+//!       * if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$
+//!         in the `x` type (`3*eps(as(x))`).
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/core/fuzzy/is_not_equal.cpp}
+//!     @godbolt{doc/core/fuzzy/is_not_equal.cpp}
 //! @}
 //================================================================================================
 EVE_IMPLEMENT_CALLABLE(is_not_equal_, is_not_equal);

@@ -45,7 +45,7 @@ namespace eve
 //!
 //!   *  The geometric mean of the inputs is returned
 //!
-//!   *  The result type is the [common value type](@ref common_value) of the parameters.
+//!   *  The result type is the [common value type](@ref common_value_t) of the parameters.
 //!
 //!  @groupheader{Example}
 //!

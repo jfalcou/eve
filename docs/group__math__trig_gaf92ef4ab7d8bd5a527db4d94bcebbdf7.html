@@ -56,7 +56,7 @@ MathJax.Hub.Config({
   <td id="projectalign">
    <div id="projectname">E.V.E
    </div>
-   <div id="projectbrief">v2022.09.01</div>
+   <div id="projectbrief">v2023.02.15</div>
   </td>
  </tr>
    <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -150,8 +150,8 @@ $(document).ready(function(){initNavTree('group__math__trig_gaf92ef4ab7d8bd5a527
 <div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__math__trig_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">tan</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;     <span class="comment">//2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__math__trig_gaf92ef4ab7d8bd5a527db4d94bcebbdf7_html_gaf92ef4ab7d8bd5a527db4d94bcebbdf7"><div class="ttname"><a href="group__math__trig_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7">eve::tan</a></div><div class="ttdeci">constexpr callable_tan_ tan</div><div class="ttdoc">Callable object computing the tangent.</div><div class="ttdef"><b>Definition:</b> tan.hpp:79</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> all_of.hpp:22</div></div>
-<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:40</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:39</div></div>
 </div><!-- fragment --><p ><b>Parameters</b></p>
 <ul>
 <li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('group__math__trig_gaf92ef4ab7d8bd5a527
 <li>If the element is a <code>Nan</code>, <code>NaN</code> is returned.</li>
 </ul>
 </li>
-<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the cotangent of the input in \(\pi\) multiples. The behavior of this function is equivalent to <code>-i*eve::rec(eve::tanh(i*z))</code>.</li>
+<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the cotangent of the input in \(\pi\) multiples. The behavior of this function is equivalent to <code>-i * rec(tanh(i*z))</code>.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
 <p ><b>Real version</b></p>
