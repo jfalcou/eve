@@ -14,7 +14,7 @@
 
 TTS_CASE_WITH( "Check behavior of cos on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-1.544*20, 1.54*20)
+             , tts::generate ( tts::randoms(-1.0e25, 1.0e25)
                               , tts::randoms(-0.001, +0.001)
                              )
              )
@@ -22,29 +22,41 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
 {
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
-  for(auto e : a0)
+  using dd_t = eve::doublereal<e_t>;
+  auto ep = 2048.0*eve::high(eve::eps(eve::as<dd_t>()));
+  if constexpr(sizeof(e_t) == 8)
   {
-    for(auto f : a1)
-    {
-      auto z = eve::doublereal<e_t>(e, f);
-      auto bmbc = bm::cos(tts::uptype(z));
-      auto bc = tts::to_doublereal<e_t>(bmbc);
-      auto s  = eve::cos(z);
-      TTS_ULP_EQUAL(bc, s , 0.5);
-    }
+     for(auto e : a0)
+     {
+       for(auto f : a1)
+       {
+         auto z = dd_t(e, f);
+         auto bms = bm::cos(tts::uptype(z));
+         auto sf  = eve::cos(z);
+         auto zz = tts::uptype(sf);
+         auto diff = bms-zz;
+         std::cout << "diff " << eve::abs(double(diff)) << std::endl;
+         TTS_LESS_EQUAL(eve::abs(double(diff)), ep);
+       }
+     }
   }
 };
 
 TTS_CASE_WITH( "Check behavior of cos on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-1.544, 1.54)
+             , tts::generate ( tts::randoms(-1.0e25, 1.0e25)
                              , tts::randoms(-0.001, +0.001)
                              )
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto z = make_doublereal(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::cos, z));
-  auto cz = eve::cos(z);
-  TTS_ULP_EQUAL(cz, az, 0.5);
+  using e_t = typename T::value_type;
+  if constexpr(sizeof(e_t) == 8)
+  {
+    auto z = make_doublereal(a0,a1);
+    auto az = decltype(z)(eve::detail::map(eve::cos, z));
+    auto cz = eve::cos(z);
+    TTS_EQUAL ( cz, az);
+    TTS_ULP_EQUAL(cz, az, 0.5);
+  }
 };

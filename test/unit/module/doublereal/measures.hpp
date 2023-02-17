@@ -10,7 +10,7 @@
 #include <eve/module/doublereal.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 namespace bm =  boost::multiprecision;
-using bm110 = bm::number<bm::backends::cpp_bin_float<110, bm::backends::digit_base_2, void, std::int16_t, -1022, 1023>, bm::et_off>;
+using bm110 = bm::number<bm::backends::cpp_bin_float<165, bm::backends::digit_base_2, void, std::int16_t, -1022, 1023>, bm::et_off>;
 using bm46  = bm::number<bm::backends::cpp_bin_float<46 , bm::backends::digit_base_2, void, std::int16_t, -126, 127>, bm::et_off>;
 
 namespace tts

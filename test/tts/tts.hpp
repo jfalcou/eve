@@ -1427,10 +1427,10 @@ namespace tts
                             << ::tts::as_string(lhs) << " == " << ::tts::as_string(rhs)             \
                             << " within " << std::setprecision(PREC) << std::fixed                  \
                             << r << std::defaultfloat                                               \
-                            << " " << UNIT << " when "                                              \
-                            << std::setprecision(PREC) <<  std::fixed                               \
+                            << " " << UNIT << " when "                                          \
+                            << std::setprecision(PREC) <<  std::scientific                          \
                             << N << std::defaultfloat                                               \
-                            << " " << UNIT << " was expected."                                      \
+                            << " " << UNIT << "  was expected."                                 \
             );                                                                                      \
     return ::tts::logger{};                                                                         \
   }                                                                                                 \

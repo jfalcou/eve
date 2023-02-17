@@ -9,6 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/module/doublereal/doublereal.hpp>
 namespace eve::detail
 {
   namespace internal //just for doublereal
@@ -74,10 +75,8 @@ namespace eve::detail
       }
       else if constexpr(simd_value<T>)
       {
-//        using elt_t = element_type_t<T>;
-          using   u_t =eve::underlying_type_t<T>;
-        using elt_t = doublereal<eve::underlying_type_t<T>>;
-          std::cout << tts::typename_<elt_t> << std::endl;
+        using   u_t =eve::underlying_type_t<T>;
+        //       using elt_t = doublereal<eve::underlying_type_t<T>>;
 
         constexpr uint32_t size = cardinal_v<T>;
         constexpr auto     algt = alignment_v<T>;
@@ -87,16 +86,10 @@ namespace eve::detail
         alignas(algt) std::array<u_t, size> tyrh, tyrl;
         for( uint32_t i = 0; i != size; ++i )
         {
-         auto [a, b, c] = rem_piby2(x.get(i));
-         kumi::tie(tmph[i], tmpl[i]) = a;
-         kumi::tie(txrh[i], txrl[i]) = b;
-         kumi::tie(tyrh[i], tyrl[i]) = c;
-//          tmph[i] = kumi::get<0>(a);
-//          tmpl[i] = kumi::get<1>(a);
-//          txrh[i] = kumi::get<0>(b);
-//          txrl[i] = kumi::get<1>(b);
-//          tyrh[i] = kumi::get<0>(c);
-//          tyrl[i] = kumi::get<1>(c);
+          auto [a, b, c] = rem_piby2(x.get(i));
+          kumi::tie(tmph[i], tmpl[i]) = a;
+          kumi::tie(txrh[i], txrl[i]) = b;
+          kumi::tie(tyrh[i], tyrl[i]) = c;
         }
         auto tmp = T( eve::load(eve::as_aligned(&tmph[0]), cardinal_t<T> {}), eve::load(eve::as_aligned(&tmpl[0]), cardinal_t<T> {}));
         auto txr = T( eve::load(eve::as_aligned(&txrh[0]), cardinal_t<T> {}), eve::load(eve::as_aligned(&txrl[0]), cardinal_t<T> {}));
