@@ -23,9 +23,16 @@ you can pass `eve::algo::allow_frequency_scaling` trait.
 There are also a typedefs `nofs_wide`, `nofs_logical` where `nofs` stands for
 "no frequency scaling".
 
+If you would like the default register size to be 64 bytes on AVX512, for example
+because you are on AMD where this problem does not exist, or you just have a domain
+where that makes sense - you can define EVE_AVX512_DEFAULT_64_BYTES in your compiler
+options.
+
 @note Other than on avx512 on intel we always use the maximum width of the register,
 since we expect the compiler to do it anyways and it is usually accepted.
 If you want to set a specific cardinal for an algorithm, you can always use
 `eve::algo::force_cardinal`.
+
+@snippet tutorial/frequency_scaling.cpp  frequency_scaling_code
 
 **/
