@@ -30,13 +30,13 @@ namespace tts
     else return to_bm110(z);
   }
 
-  template < typename T >
-  auto  to_doublereal(boost::multiprecision::cpp_bin_float_quad t)
+  template < typename T, typename BM>
+  auto  to_doublereal(BM t)
     requires (eve::scalar_value<T>)
   {
     using u_t = eve::underlying_type_t<T>;
     u_t h(t);
-    auto self = eve::two_add(h, u_t(t-boost::multiprecision::cpp_bin_float_quad(h)));
+    auto self = eve::two_add(h, u_t(t-BM(h)));
     return eve::make_doublereal(self);
   }
 

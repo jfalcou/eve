@@ -72,6 +72,14 @@ namespace eve::detail
           }
           return kumi::tuple{T(double(n)), T(remainder[0], remainder[1]), T(remainder[2])};
         }
+        else //float
+        {
+          auto [n, xr, dxr] = rempio2(to_double(x));
+          T tmp0 = make_dd(xr, as<T>());
+          T tmp1 = make_dd(dxr, as<T>());
+          return  kumi::tuple{T(n), tmp0, tmp1};
+
+        }
       }
       else if constexpr(simd_value<T>)
       {
@@ -140,7 +148,7 @@ namespace eve::detail
         auto lossth(doublereal_t(3.6028797018963968E16)); /* 2^55 */
         return kumi::tuple{S, C, dp1, dp2, dp3, lossth};
       }
-      else
+      else //float
       {
         const A6 S = {
           doublereal_t(0x1.5d8fd2p-33,  -0x1.731998p-64),

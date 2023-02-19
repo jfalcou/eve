@@ -16,10 +16,9 @@ namespace eve::detail
 {
 
   template<typename Z, decorator D>
-  auto
-  doublereal_unary_dispatch(eve::tag::sin_, D const & , Z const& a) noexcept
+  auto doublereal_unary_dispatch(eve::tag::sin_, D const & , Z const& a) noexcept
   requires(is_one_of<D>(types<quarter_circle_type, half_circle_type
-                       , full_circle_type, medium_type, big_type> {}))
+                       , full_circle_type, medium_type, big_type> {}) && std::same_as<underlying_type_t<Z>, double>)
   {
       auto ax = eve::abs(a);
     if constexpr(std::same_as<D, quarter_circle_type>)
@@ -54,6 +53,25 @@ namespace eve::detail
     //       x -= (asin(x)-a)*sqrt(oneminus(sqr(high(x))));
     //       x -= (asin(x)-a)*sqrt(oneminus(sqr(high(x))));
     //       return x;
+  }
+
+  template<typename Z, decorator D>
+  auto doublereal_unary_dispatch(eve::tag::sin_, D const & , Z const& a) noexcept
+  requires(is_one_of<D>(types<quarter_circle_type, half_circle_type
+                       , full_circle_type, medium_type, big_type> {}) && std::same_as<underlying_type_t<Z>, float>)
+  {
+    std::cout << "icitte" << std::endl; 
+    if constexpr(scalar_value<Z>)
+      return make_doublereal(sin(to_double(a)), as<Z>());
+    else
+    {
+      auto dbla = to_double(a);
+      auto dblr = sin(dbla);
+      auto flrh = float32(dblr);
+      auto flrl = float32(dblr+float64(flrh));
+      std::cout << (dbla-float64(flrh))-float64(flrl) << std::endl; 
+      return make_doublereal(flrh, flrl);
+    }
   }
 
   template<typename Z>
