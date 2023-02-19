@@ -223,7 +223,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lrising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    return  log( pedantic(div)(tgamma(a0+a1),tgamma(a0)));
+    return  if_else(is_eqz(a1), zero, log( pedantic(div)(tgamma(a0+a1),tgamma(a0))));
   }
 
   template<typename Z1, typename Z2 >
