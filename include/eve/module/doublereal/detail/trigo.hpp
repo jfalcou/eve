@@ -60,18 +60,11 @@ namespace eve::detail
   requires(is_one_of<D>(types<quarter_circle_type, half_circle_type
                        , full_circle_type, medium_type, big_type> {}) && std::same_as<underlying_type_t<Z>, float>)
   {
-    std::cout << "icitte" << std::endl; 
-    if constexpr(scalar_value<Z>)
-      return make_doublereal(sin(to_double(a)), as<Z>());
-    else
-    {
-      auto dbla = to_double(a);
-      auto dblr = sin(dbla);
-      auto flrh = float32(dblr);
-      auto flrl = float32(dblr+float64(flrh));
-      std::cout << (dbla-float64(flrh))-float64(flrl) << std::endl; 
-      return make_doublereal(flrh, flrl);
-    }
+    auto dbla = to_double(a);
+    auto dblr = sin(dbla);
+    auto flrh = float32(dblr);
+    auto flrl = float32(dblr-float64(flrh));
+    return make_doublereal(flrh, flrl);
   }
 
   template<typename Z>
