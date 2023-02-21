@@ -18,6 +18,9 @@
 //!
 //!   @defgroup algo_concepts Concepts
 //!   @brief Provides Concepts for algorithms and related components
+//!
+//!   @defgroup algo_traits AlgoTraits
+//!   @brief Different customisation for algorithms.
 //! @}
 //==================================================================================================
 #include <eve/module/core.hpp>
