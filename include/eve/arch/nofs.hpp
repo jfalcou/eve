@@ -27,6 +27,7 @@ namespace eve
   //!   @var nofs_cardinal_v
   //!   @brief nofs stands for "no frequency scaling".
   //!
+  //!   You can find more explanations in the 'frequency scaling tutorial'.
   //!   This refers to extreme frequency scaling one encounters when working with 64 byte
   //!   registers on intel. The processor scales frequency drammatically for a substantial
   //!   period of time. So even if the algorithm itself will run faster the overall perf
@@ -35,11 +36,11 @@ namespace eve
   //!   If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES.
   //!   This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.
   //!
-  //!   @note: frquency scaling exists for avx2 as well but is generally considered
+  //!   @note frquency scaling exists for avx2 as well but is generally considered
   //!   acceptable. For example popular implementations of libc use avx2, so you are very
   //!   likely already have it. You can always set the width manually if needed.
   //!
-  //!   @note: `eve::algo` by default will use `nofs_cardinal`. See `allow_frequency_scaling`
+  //!   @note `eve::algo` by default will use `nofs_cardinal`. See `allow_frequency_scaling`
   //!   trait.
   //!
   //!   @tparam Type  Type of value to assess

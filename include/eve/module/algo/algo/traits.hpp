@@ -20,6 +20,31 @@
 
 namespace eve::algo
 {
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @struct traits
+  //!
+  //!   @brief A compile time set of all the tuning parameters passed to the algorithm.
+  //!   These allow you to fine-tune the loops and not being stuck with our defaults.
+  //!
+  //!   Unless you write your own algorithms like eve's, you probably won't need to use
+  //!   this class. If you do that, we suggest to looking at one of the algorithms from
+  //!   eve/module/algo/algo.
+  //!
+  //!   When calling you just pass individual traits via [], i.e.
+  //!
+  //!   @code
+  //!   eve::algo::find_if[eve::algo::expensive_callable][eve::algo::cosider_types<double>]()
+  //!   @endcode
+  //!
+  //!   You can also pass traits struct:
+  //!   @code
+  //!   eve::algo::find_if[eve::algo::traits{eve::algo::expensive_callable, eve::algo::cosider_types<double>}]()
+  //!   @endcode
+  //!   This is useful for prebuilding traits (for example eve::algo::default_simple_algo_traits)
+  //! @}
+  //================================================================================================
   template <typename Settings>
   struct traits : Settings
   {
@@ -41,6 +66,27 @@ namespace eve::algo
     }
   };
   inline constexpr unroll_key_t unroll_key;
+
+  //============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var unroll
+  //!
+  //!   @brief A trait that overrides how much algorithm should be unrolled.
+  //!   Keep in mind that by default we will unroll simple algorithms for you
+  //!   (see individual algorithms for default settings).
+  //!   So this is only useful if you want to override that default.
+  //!   Note that sometimes compilers can unroll loops as well,
+  //!   that has nothing to do with us.
+  //!
+  //!   @see expensive_callable if you just want to tell the library to stop.
+  //!
+  //!   @note when not just using our algorithms but writing your own, avoid
+  //!   having dependencies between unrolled loop iterations if possible.
+  //!   Maybe you'd have to use `for_each_iteration` as oppose to just `for_each`
+  //!   to do that.
+  //! @}
+  //============================================================================
   template<int N> inline constexpr auto unroll = (unroll_key = eve::index<N>);
 
   struct force_cardinal_key_t : rbr::as_keyword<force_cardinal_key_t>
@@ -51,31 +97,136 @@ namespace eve::algo
     }
   };
   inline constexpr force_cardinal_key_t force_cardinal_key;
+
+  //=============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var force_cardinal
+  //!
+  //!   @brief A trait that overrides all other cardinal selection and just says
+  //!   to use a certain one. The main usecase for this is ease of interaction with
+  //!   native register code.
+  //!
+  //!   @snipet tutorial/interacting_with_native.cpp interating_with_native_algo
+  //!
+  //!   @see consider_types if maybe using some extra type is the reason you want
+  //!   to change cardinal.
+  //! @}
+  //=============================================================================
   template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
 
   struct consider_types_key_t {};
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
+
+  //=============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var consider_types
+  //!
+  //!   @brief A trait that tells the algorithm to take an extra type into account when
+  //!   selecting a cardinal. This is, for example, used by `reduce` algorithm
+  //!   to consider the sum type.
+  //!
+  //!   @see also algo::views::convert if that's maybe what you need.
+  //! @}
+  //=============================================================================
   template <typename ...Ts> auto consider_types = ( consider_types_key = kumi::tuple<Ts...>{} );
 
   struct force_type_key_t {};
   inline constexpr auto force_type_key = ::rbr::keyword( force_type_key_t{} );
+
+
+  //=============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!    @var force_type
+  //!
+  //!    @brief A `zip` trait for converting all the types in a zip.
+  //!    You can get identical results with with `views::convert` but this is a convinience.
+  //!
+  //!    Just adds conversion for all of the types in a zipped iterator/range to the given one.
+  //!    No examples in the basic algorithms but we believe can be useful in a special case.
+  //!
+  //!    @see common_type
+  //!    @see common_with_types
+  //! @}
+  //=============================================================================
   template <typename T> auto force_type = (force_type_key = std::type_identity<T>{});
 
   struct common_with_types_key_t {};
   inline constexpr auto common_with_types_key = ::rbr::keyword( common_with_types_key_t{} );
 
+  //=============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!    @var common_with_types
+  //!
+  //!    @brief A `zip` trait for converting all the types in a zip.
+  //!    You can get identical results with with `views::convert` but this is a convinience.
+  //!
+  //!    Figures out a common type between all of the types in a zipped iterator/range +
+  //!    all types passed to the trait. Common type is computed via `eve::common_type`.
+  //!    Most of the common cases just need `eve::algo::common_type` trait but we think
+  //!    it come in handy in some more esoteric cases.
+  //!
+  //!    @see common_type
+  //!    @see force_type
+  //! @}
+  //=============================================================================
   template <typename ...Ts>
   inline constexpr auto common_with_types = (common_with_types_key = eve::common_type<Ts...>{});
 
+  //=============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!    @var common_type
+  //!
+  //!    @brief A `zip` trait for converting all the types in a zip,
+  //!    equivalent of common_with_types<>.
+  //!
+  //!    You can get identical results with with `views::convert` but this is a convinience.
+  //!
+  //!    Take all types in a zip_iterator/zip_range and convert them to a common type.
+  //!
+  //!    This is, for example, used by `equal` and `mismatch` algorithms to compare
+  //!    different types
+  //!
+  //!    @see common_with_types
+  //!    @see force_type
+  //! @}
+  //!=============================================================================
   inline constexpr auto common_type = common_with_types<>;
 
   struct divisible_by_cardinal_tag {};
+
+  //=============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!    @var divisible_by_cardinal
+  //!
+  //!    @brief an trait to tell that the input data is strictly divisble by cardinal.
+  //!
+  //!    Aligning takes precident over this: if the data accesses are going to be aligned,
+  //!    the tail handling comes back. You can pass `eve::algo::no_aligning`.
+  //!
+  //!    In other words only does anything if the pointer is aligned_ptr or `no_aligning` is passed.
+  //!
+  //!    @note this trait is deduced automatically if both begin and end of the range are
+  //!    aligned_ptr with alignment >= cardinal. If you are using this, consider aligning
+  //!    your data too.
+  //!
+  //!    @see inclusive_scan_par_unseq example to see how we use chunks with aligned boundaries
+  //!    in parallel algoirthms.
+  //!
+  //!    @see no_aligning
+  //! @}
+  //=============================================================================
   inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
 
   struct no_aligning_tag {};
 
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algo_traits
   //! @{
   //!   @var no_aligning
   //!
@@ -89,7 +240,7 @@ namespace eve::algo
 
 
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algo_traits
   //! @{
   //!   @var no_unrolling
   //!
@@ -101,7 +252,7 @@ namespace eve::algo
   struct expensive_callable_tag {};
 
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algo_traits
   //! @{
   //!   @var expensive_callable
   //!
@@ -117,7 +268,7 @@ namespace eve::algo
 
   struct fuse_operations_tag {};
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algo_traits
   //! @{
   //!   @var fuse_operations
   //!
@@ -133,11 +284,12 @@ namespace eve::algo
 
   struct allow_frequency_scaling_tag {};
   //================================================================================================
-  //! @addtogroup algorithms
+  //! @addtogroup algo_traits
   //! @{
   //!   @var allow_frequency_scaling
   //!
-  //!   @brief On intel using 64 byte registers requires processor to scale down it's frequency.
+  //!   @brief You can find more explanations in the 'frequency scaling tutorial'.
+  //!          On intel using 64 byte registers requires processor to scale down it's frequency.
   //!          This is only benefitial if you have a very large set of data to process. Otherwise
   //!          it will likely degrade performance not only of the SIMD code but also of the code
   //!          that follows.
@@ -151,15 +303,32 @@ namespace eve::algo
 
   // getters -------------------
 
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns unrolling requested by traits (default 1)
+  //! @tparam Traits
+  //================================================================================================
   template <typename Traits>
   constexpr std::ptrdiff_t get_unrolling()
   {
     return rbr::result::fetch_t<(unroll_key | index<1>), Traits>{};
   }
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns extra types to consider requested by traits as a kumi::tuple
+  //! @tparam Traits
+  //================================================================================================
   template <typename Traits>
   using extra_types_to_consider = rbr::result::fetch_t<(consider_types_key | kumi::tuple{}), Traits>;
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns all types that should be considered for a given Traits and Range/Iterator
+  //!        (as a kumi::tuple)
+  //! @tparam Traits, RangeOrIterator
+  //================================================================================================
   template <typename Traits, typename RorI>
   using get_types_to_consider_for =
     kumi::result::cat_t<extra_types_to_consider<Traits>, types_to_consider_for_t<RorI>>;
@@ -173,12 +342,23 @@ namespace eve::algo
     >;
   }
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns cardinal which should be used.
+  //! @tparam Traits, RangeOrIterator
+  //================================================================================================
   template <typename Traits, typename RorI>
   using iteration_cardinal_t =
     rbr::result::fetch_t< (force_cardinal_key | detail::default_cardinal_to_use_t<Traits, RorI>{})
                         , Traits
                         >;
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @var default_to
+  //! @brief taking user traits and default traits, returns new traits
+  //!        where user take precedent over defaults
+  //================================================================================================
   inline constexpr auto default_to =
      []<typename User, typename Default>(traits<User> const& user, traits<Default> const& defaults)
   {
@@ -200,6 +380,10 @@ namespace eve::algo
     }
   };
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief removes a given key from traits.
+  //================================================================================================
   template <typename K, typename Traits>
   EVE_FORCEINLINE constexpr auto drop_key(K k, Traits tr)
   {
@@ -207,6 +391,10 @@ namespace eve::algo
     return traits<settings_t>(rbr::drop(k, tr));
   }
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief removes a given key from traits if and only if the condition is true
+  //================================================================================================
   template <bool cond, typename K, typename Traits>
   EVE_FORCEINLINE constexpr auto drop_key_if(K k, Traits tr)
   {
@@ -214,12 +402,19 @@ namespace eve::algo
     else                 return tr;
   }
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @var has_type_overrides_v
+  //! @brief (for zip traits) do the traits have any type overrides requested
+  //================================================================================================
   template <typename Traits>
   constexpr bool has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key);
 
-  template <typename Traits>
-  constexpr bool has_cardinal_overrides_v = Traits::contains(force_cardinal_key);
-
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief some traits should just be replaced with a combination of different traits.
+  //! do that replacement
+  //================================================================================================
   template <typename Settings>
   inline constexpr auto process_equivalents(traits<Settings> tr) {
     if constexpr ( Settings::contains(expensive_callable) ) {
@@ -229,7 +424,19 @@ namespace eve::algo
     }
   }
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @var default_simple_algo_traits
+  //! @brief what we use by default for algorithms that do not execute too many instructions.
+  //! At this point it is just unroll<4>
+  //================================================================================================
   inline constexpr algo::traits default_simple_algo_traits{algo::unroll<4>};
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @var no_traits
+  //! @brief empty algo traits.
+  //================================================================================================
   inline constexpr algo::traits no_traits{};
 
   // Function helper
@@ -263,6 +470,13 @@ namespace eve::algo
       };
   }
 
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @var function_with_traits
+  //!
+  //! @brief A helper to declare algorithms like eve::algo. See how we do it in
+  //! eve/module/algo/algo if necessary.
+  //================================================================================================
   template <template<typename> typename F>
   constexpr auto function_with_traits = F<detail::supports_traits<F, decltype(no_traits)>>{};
 }
