@@ -10,11 +10,6 @@
 #include <eve/module/complex.hpp>
 #include <complex>
 
-template < typename T >
-auto cv(std::complex < T > sc)
-{
-  return eve::complex<T>(sc.real(), sc.imag());
-}
 
 TTS_CASE_WITH ( "Check behavior of pow on wide"
               , eve::test::simd::ieee_reals
@@ -24,54 +19,25 @@ TTS_CASE_WITH ( "Check behavior of pow on wide"
                               , tts::randoms(0.1, 10)
                               )
               )
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
-//  auto ulp = 100.0;
   using z_t = eve::as_complex_t<T>;
-  using e_t = typename T::value_type;
-  using c_t = std::complex<e_t>;
-  using ce_t = eve::complex<e_t>;
   auto a = z_t(a0, a1);
   auto b = z_t(a2, a3);
 
-  auto init_with_std = [=](auto i, auto)
-  {
-    return cv(std::pow( c_t(a0.get(i), a1.get(i)), c_t(a2.get(i), a3.get(i))));
-  };
-  auto init_with_std1 = [=](auto i, auto)
-  {
-    return cv(std::pow( c_t(eve::abs(a0.get(i)), 0), c_t(a2.get(i), a3.get(i))));
-  };
-  auto init_with_std2 = [=](auto i, auto)
-  {
-    return cv(std::pow( c_t(-eve::abs(a0.get(i)), 0), c_t(a2.get(i), a3.get(i))));
-  };
-  auto init_with_std3 = [=](auto i, auto)
-  {
-    return cv(std::pow(c_t(a2.get(i), a3.get(i)),  c_t(eve::abs(a0.get(i)), 0)));
-  };
+  auto mybeta = [](auto a,  auto b){return eve::tgamma(a)*eve::tgamma(b)/eve::tgamma(a+b); };
+  TTS_ULP_EQUAL(eve::beta(a, b), mybeta(a, b), 0.5);
+};
 
-  TTS_RELATIVE_EQUAL( eve::pow(a, b) , z_t{init_with_std}, 0.5);
-  TTS_ULP_EQUAL( eve::pow(a, 2u), eve::sqr(a), 1024);
-  TTS_ULP_EQUAL( eve::pow(a, 3u), eve::sqr(a)*a,  1024);
-  TTS_ULP_EQUAL( eve::pow(eve::abs(a0), b)   , z_t{init_with_std1}, 1024);
-  TTS_ULP_EQUAL( eve::pow(-eve::abs(a0), b)   , z_t{init_with_std2}, 1024);
-  TTS_RELATIVE_EQUAL( eve::pow(b, eve::abs(a0))   ,  z_t{init_with_std3}, 0.5);
-  TTS_ULP_EQUAL( eve::pow(a, 3u)   , eve::pow(a, e_t(3)),  10);
-  TTS_ULP_EQUAL( eve::pow(a, 2u)   , eve::pow(a, e_t(2)),  10);
-  TTS_ULP_EQUAL( eve::pow(a, -2)   , eve::pow(a, e_t(-2)),  10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(0, 0), ce_t(0, 0)), ce_t(1, 0), 10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(1, 0), ce_t(0, 0)), ce_t(1, 0), 10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(1, 3), ce_t(0, 0)), ce_t(1, 0), 10);
-
-  using eve::as;
-  auto inf = eve::inf(as<e_t>());
-  auto minf = eve::minf(as<e_t>());
-  auto nan = eve::nan(as<e_t>());
-
-  TTS_ULP_EQUAL( eve::pow(ce_t(inf, 0), ce_t(0, 0)), ce_t(1, 0), 10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(minf, 0), ce_t(0, 0)), ce_t(1, 0), 10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(nan, 0), ce_t(0, 0)), ce_t(1, 0), 10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(nan, 1), ce_t(0, 0)), ce_t(1, 0), 10);
-  TTS_ULP_EQUAL( eve::pow(ce_t(0, 0),  ce_t(0, 0)), ce_t(1, 0), 10);
+TTS_CASE_TPL( "Check corner cases of log", eve::test::scalar::ieee_reals)
+  <typename T>(tts::type<T>)
+{
+  using c_t = eve::complex<T>;
+  c_t i(0, 1);
+  c_t o(1, 0);
+  TTS_ULP_EQUAL(eve::beta(i, i),      c_t(-2.376146124821733192409666, -2.63956852027813624177239618242498), 32);
+  TTS_ULP_EQUAL(eve::beta(i, T(0.5)), c_t(1.0794242492709257801356755, -1.41003240566416083828875193632476), 32);
+  TTS_ABSOLUTE_EQUAL(eve::beta(i, o), -i                                                                   , 32*eve::eps(eve::as<T>()));
+  TTS_ULP_EQUAL(eve::beta(o, T(0.5)), c_t(2)                                                               , 32);
+  TTS_ULP_EQUAL(eve::beta(i, 2*i),    c_t(-2.891319789417896828442673, -1.04053537453220827379062834820451), 36);
 };

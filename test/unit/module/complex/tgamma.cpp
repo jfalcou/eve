@@ -35,6 +35,12 @@ TTS_CASE_WITH( "Check behavior of tgamma"
   TTS_ULP_EQUAL( eve::tgamma(z_t(-3.5, 0)), z_t(0.270088205852269, 0), 2.5);
   TTS_ULP_EQUAL( eve::tgamma(z_t(3.75, 0)), z_t(4.422988410460251, 0), 2.5);
   TTS_ULP_EQUAL( eve::tgamma(z_t(-3.75, 0)), z_t(0.267866128861417, 0), 4.5);
-  TTS_ULP_EQUAL( eve::tgamma(z_t(4, 0))    , z_t(6, 0)                , 2.5);
-  TTS_ULP_EQUAL( eve::tgamma(z_t(1, 1))   , z_t( 0.498015668118356, - 0.154949828301811), 4.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(4, 0))   , z_t(6, 0)                , 2.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(1, 1))   , z_t( 0.498015668118356, -0.154949828301811), 4.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(-1,1))   , z_t(-0.17153291990827267, +0.326482748210083), 4.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(1, -1))  , z_t( 0.498015668118356, +0.154949828301811), 4.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(-1,-1))  , z_t(-0.17153291990827267, -0.326482748210083), 4.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(-1,0))   , z_t(eve::nan(eve::as<e_t>()), eve::inf(eve::as<e_t>())), 0.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(1, -2))  , z_t(0.1519040026700361, -0.01980488016185498), 4.5);
+  TTS_ULP_EQUAL( eve::tgamma(z_t(-1,-2))  , z_t(-0.0323612885501927257,  -0.0112294242346326173504), 2.5);
 };

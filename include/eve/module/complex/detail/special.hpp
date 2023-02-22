@@ -20,7 +20,7 @@ namespace eve::detail
   //  Unary functions : tgamma
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::tgamma_, Z const& a0) noexcept
+  auto complex_unary_dispatch( eve::tag::tgamma_, Z const& a0) noexcept
   {
     // 15 sig. digits for 0<=real(z)<=171
     // coeffs should sum to about g*g/2+23/24
@@ -87,7 +87,7 @@ namespace eve::detail
   }
 
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::log_gamma_, Z const& a0) noexcept
+  auto complex_unary_dispatch( eve::tag::log_gamma_, Z const& a0) noexcept
   {
     // 15 sig. digits for 0<=real(z)<=171
     // coeffs should sum to about g*g/2+23/24
@@ -145,7 +145,7 @@ namespace eve::detail
   //  Unary functions : digamma
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
-  EVE_FORCEINLINE auto complex_unary_dispatch( eve::tag::digamma_, Z const& a0) noexcept
+  auto complex_unary_dispatch( eve::tag::digamma_, Z const& a0) noexcept
   {
     // 15 sig. digits for 0<=real(z)<=171
     // coeffs should sum to about g*g/2+23/24
@@ -223,15 +223,14 @@ namespace eve::detail
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lrising_factorial_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    return  log( pedantic(div)(tgamma(a0+a1),tgamma(a0)));
+    return  if_else(is_eqz(a1), zero, log( pedantic(div)(tgamma(a0+a1),tgamma(a0))));
   }
 
   template<typename Z1, typename Z2 >
   EVE_FORCEINLINE auto complex_binary_dispatch( eve::tag::lbeta_
                                              , Z1 const& a0, Z2 const& a1) noexcept
   {
-    auto y = a0 + a1;
-    return log(tgamma(a0)*tgamma(a1)/tgamma(y));
+    return log(beta(a0, a1));
   }
 
   template<typename Z1, typename Z2 >
