@@ -66,7 +66,7 @@ all_(EVE_SUPPORTS(neon128_),
     {
       // Adapted from https://github.com/dotnet/runtime/pull/75864
       auto mask = bit_cast(v0.bits(), as<u32_4>{});
-      return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == -1;
+      return bit_cast(u32_4(vpminq_u32(mask,mask)), as<u64_2>()).get(0) == (std::uint64_t)-1;
     }
   }
   else // chars, no asimd
@@ -74,7 +74,7 @@ all_(EVE_SUPPORTS(neon128_),
     auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
 
     // not the same logic as for uint_32 plain so duplicated.
-    return eve::all[ignore_none](dwords == static_cast<std::uint32_t>(-1));
+    return eve::all[ignore_none](dwords == (std::uint32_t)-1);
   }
 }
 }
