@@ -3,7 +3,7 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
-set(examples_root "${CMAKE_SOURCE_DIR}/examples")
+set(examples_root "${PROJECT_SOURCE_DIR}/examples")
 
 ##==================================================================================================
 ## GLOB and process regular examples tests
