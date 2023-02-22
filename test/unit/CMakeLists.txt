@@ -3,8 +3,8 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
-set(unit_root "${CMAKE_SOURCE_DIR}/test/unit")
-set(module_root "${CMAKE_SOURCE_DIR}/test/unit/module")
+set(unit_root "${PROJECT_SOURCE_DIR}/test/unit")
+set(module_root "${PROJECT_SOURCE_DIR}/test/unit/module")
 
 ##==================================================================================================
 ## GLOB and process arch unit tests
