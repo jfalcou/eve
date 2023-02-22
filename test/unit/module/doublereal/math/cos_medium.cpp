@@ -11,11 +11,11 @@
 #include <eve/module/doublereal.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
-
+double fac = 1.0;
 TTS_CASE_WITH( "Check behavior of cos on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-1.0e25, 1.0e25)
-                              , tts::randoms(-0.001, +0.001)
+             , tts::generate ( tts::randoms(1.0, 1.0e15)
+                              , tts::randoms(0, +0.0001)
                              )
              )
   <typename T>(T const& a0, T const& a1)
@@ -23,35 +23,28 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   using dd_t = eve::doublereal<e_t>;
-  auto ep = 4096.0*eve::high(eve::eps(eve::as<dd_t>()));
   for(auto e : a0)
   {
     for(auto f : a1)
     {
       auto z = dd_t(e, f);
-      auto bms = bm::cos(tts::uptype(z));
-      auto sf  = eve::cos(z);
-      auto zz = tts::uptype(sf);
-      auto diff = bms-zz;
-      std::cout << "z "<< std::setprecision(40)<< tts::uptype(z) << std::endl;
-      std::cout << "bms "<< bms << std::endl;
-      std::cout << "zz  "<< std::setprecision(20) << zz  << std::endl;
-      std::cout << "diff " << eve::abs(double(diff)) << std::endl;
-      TTS_LESS_EQUAL(eve::abs(double(diff)), ep);
+      auto sf  = eve::detail::medium(eve::cos)(z);
+      auto s   = tts::to_doublereal<e_t>((bm::cos)(tts::uptype(z)));
+      TTS_ULP_EQUAL(sf, s , 0.5);
     }
   }
 };
 
 TTS_CASE_WITH( "Check behavior of cos on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-1.0e25, 1.0e25)
+             , tts::generate ( tts::randoms(1.0, 1.0e15)
                              , tts::randoms(-0.001, +0.001)
                              )
              )
-  <typename T>(T const& a0, T const& a1)
+  <typename T>(T const& a0, T const& a1 )
 {
   auto z = make_doublereal(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::cos, z));
-  auto cz = eve::cos(z);
+  auto az = decltype(z)(eve::detail::map(eve::detail::medium(eve::cos), z));
+  auto cz = eve::detail::medium(eve::cos)(z);
   TTS_ULP_EQUAL(cz, az, 0.5);
 };

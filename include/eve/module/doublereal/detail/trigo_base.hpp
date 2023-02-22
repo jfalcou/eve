@@ -75,8 +75,8 @@ namespace eve::detail
         else //float
         {
           auto [n, xr, dxr] = rempio2(to_double(x));
-          T tmp0 = make_dd(xr, as<T>());
-          T tmp1 = make_dd(dxr, as<T>());
+          T tmp0 = make_doublereal(xr, as<T>());
+          T tmp1 = make_doublereal(dxr, as<T>());
           return  kumi::tuple{T(n), tmp0, tmp1};
 
         }

@@ -109,7 +109,7 @@ namespace eve
 //      os << '(' << h << ')';
 //      if(is_positive(l)) os << "+(" << l << ')'; else os << "-(" << -l << ')';
 //    os << std::hexfloat <<  "doublereal_t(" << h << ", " << l << ')';
-    os << " or " << std::defaultfloat << std::setprecision(8) <<  "doublereal_t(" << h << ", " << l << ')';
+    os << " or " << std::defaultfloat << std::setprecision(40) <<  "doublereal_t(" << h << ", " << l << ')';
       return os;
     }
 
