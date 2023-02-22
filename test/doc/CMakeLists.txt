@@ -4,7 +4,7 @@
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
 add_custom_target(doc.exe )
-set(doc_root "${CMAKE_SOURCE_DIR}/test/doc")
+set(doc_root "${PROJECT_SOURCE_DIR}/test/doc")
 
 ##==================================================================================================
 ## GLOB and process algo doc tests
