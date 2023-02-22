@@ -52,4 +52,11 @@ TTS_CASE_WITH ( "Check behavior of rising_factorial on wide"
   TTS_ULP_EQUAL( eve::rising_factorial(ce_t(nan, 0), ce_t(0, 0)), ce_t(1, 0), 10);
   TTS_ULP_EQUAL( eve::rising_factorial(ce_t(nan, 1), ce_t(0, 0)), ce_t(1, 0), 10);
   TTS_ULP_EQUAL( eve::rising_factorial(ce_t(0, 0),  ce_t(0, 0)), ce_t(1, 0), 10);
+  z_t i(0, 1);
+  z_t o(1, 0);
+  TTS_ULP_EQUAL(eve::rising_factorial(i, i),      z_t(0.133408195318916183621, +0.06139167700318597540461), 32);
+  TTS_ULP_EQUAL(eve::rising_factorial(i, T(0.5)), z_t(0.60672961239287904055952, +0.7925599369551407652246), 32);
+  TTS_ABSOLUTE_EQUAL(eve::rising_factorial(i, o), i, 32*eve::eps(eve::as<e_t>()));
+  TTS_ULP_EQUAL(eve::rising_factorial(o, T(0.5)), z_t(0.88622692545275801364908), 32);
+  TTS_ULP_EQUAL(eve::rising_factorial(i, 2*i),    z_t(0.00533756125402432030171473451274, +0.024348078097112309674412896870731), 100);
 };
