@@ -393,3 +393,4 @@ namespace eve::detail
 }
 #include <eve/module/doublereal/detail/invtrig.hpp>
 #include <eve/module/doublereal/detail/trigo.hpp>
+#include <eve/module/doublereal/detail/invhyper.hpp>

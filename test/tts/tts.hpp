@@ -1425,7 +1425,7 @@ namespace tts
     FAILURE ( "Expected: " << TTS_STRING(LHS) << " == " << TTS_STRING(RHS)                          \
                             << " but "                                                              \
                             << ::tts::as_string(lhs) << " == " << ::tts::as_string(rhs)             \
-                            << " within " << std::setprecision(PREC) << std::fixed                  \
+                            << " within " << std::setprecision(PREC) << std::scientific                  \
                             << r << std::defaultfloat                                               \
                             << " " << UNIT << " when "                                          \
                             << std::setprecision(PREC) <<  std::scientific                          \
