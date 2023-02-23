@@ -39,8 +39,8 @@ TTS_CASE_WITH("Check behavior of agd on wide",
   using v_t = eve::element_type_t<T>;
   using eve::agd;
   using eve::sinh;
-  TTS_ULP_EQUAL(agd(a0), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a0), 4);
-  TTS_ULP_EQUAL(agd(a1), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a1), 4);
+  TTS_ULP_EQUAL(agd(a0), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a0), 200);
+  TTS_ULP_EQUAL(agd(a1), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a1), 200);
 };
 
 

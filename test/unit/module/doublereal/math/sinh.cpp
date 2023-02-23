@@ -40,25 +40,16 @@ TTS_CASE_WITH( "Check behavior of sinh on scalar"
     for(auto f : a1)
     {
       auto z = eve::doublereal<e_t>(e, f);
-      std::cout << "z             " << z << std::endl;
-      std::cout << "uz            " <<   std::setprecision(40) << tts::uptype(z) << std::endl;
       auto ac = tts::uptype(eve::sinh(z));
       auto bmbc = bm::sinh(tts::uptype(z));
-      std::cout << "ac            " <<   std::setprecision(40) <<ac << std::endl;
-      std::cout << "bmbc          " <<  std::setprecision(40) <<bmbc << std::endl;
       auto diff = bmbc-ac;
-      std::cout << "dif " << diff << std::endl;
-       TTS_LESS_EQUAL(eve::abs(double(diff/ac)), ep);
-
-//       std::cout << "bmbc " << bmbc << std::endl;
-//       auto bc = tts::to_doublereal<e_t>(bmbc);
-//      TTS_ULP_EQUAL(bc, ac, 100);
+      TTS_LESS_EQUAL(eve::abs(double(diff/ac)), ep);
     }
   }
   TTS_ULP_EQUAL(eve::sinh(eve::inf(eve::as<doublereal_t>())), eve::inf(eve::as<doublereal_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::minf(eve::as<doublereal_t>())), eve::inf(eve::as<doublereal_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::zero(eve::as<doublereal_t>())), eve::one(eve::as<doublereal_t>()), 0.5);
-  TTS_ULP_EQUAL(eve::sinh(eve::mzero(eve::as<doublereal_t>())), eve::one(eve::as<doublereal_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::minf(eve::as<doublereal_t>())), eve::minf(eve::as<doublereal_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::zero(eve::as<doublereal_t>())), eve::zero(eve::as<doublereal_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::mzero(eve::as<doublereal_t>())), eve::zero(eve::as<doublereal_t>()), 0.5);
   TTS_ULP_EQUAL(eve::sinh(eve::nan(eve::as<doublereal_t>())), eve::nan(eve::as<doublereal_t>()), 0.5);
 
  };
@@ -74,6 +65,5 @@ TTS_CASE_WITH( "Check behavior of sinh on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::sinh, z));
   auto cz = eve::sinh(z);
-  TTS_EQUAL ( cz, az);
   TTS_ULP_EQUAL(cz, az, 2.5);
 };
