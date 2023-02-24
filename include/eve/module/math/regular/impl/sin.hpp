@@ -100,7 +100,7 @@ sin_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
     }
     else x = if_else(xnlelim, allbits, x);
     auto [fn, xr, dxr] = D()(rempio2)(x);
-    return sin_finalize(bitofsign(a0), fn, xr, dxr);
+    return sin_finalize(a0, fn, xr, dxr);
   }
   else return apply_over(D()(sin), a0);
 }

@@ -87,99 +87,148 @@ tancot_eval(const T& z) noexcept
   }
 }
 
-template<floating_ordered_value T>
+// template<floating_ordered_value T>
+// EVE_FORCEINLINE constexpr auto
+// cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
+// {
+//   if constexpr( scalar_value<T> )
+//   {
+//     using i_t    = as_integer_t<T, signed>;
+//     i_t n        = i_t(fn);
+//     i_t swap_bit = n & i_t(1);
+//     i_t sign_bit = shl(bit_xor(swap_bit, (n & i_t(2)) >> 1), sizeof(i_t) * 8 - 1);
+//     T   z        = sqr(xr);
+//     T   se       = sin_eval(z, xr);
+//     T   ce       = cos_eval(z);
+//     z            = swap_bit ? fma(dxr, ce, se) : fnma(se, dxr, ce);
+//     return bit_xor(z, sign_bit);
+//   }
+//   else
+//   {
+//     using elt_t   = element_type_t<T>;
+//     auto tmp      = binarize(fn >= T(2));
+//     auto swap_bit = (fma(T(-2), tmp, fn));
+//     auto sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
+//     T    z        = sqr(xr);
+//     T    se       = sin_eval(z, xr);
+//     T    ce       = cos_eval(z);
+//     z             = if_else(swap_bit, fma(dxr, ce, se), fnma(se, dxr, ce));
+//     return bit_xor(z, sign_bit);
+//   }
+// }
+
+
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
 {
-  if constexpr( scalar_value<T> )
-  {
-    using i_t    = as_integer_t<T, signed>;
-    i_t n        = i_t(fn);
-    i_t swap_bit = n & i_t(1);
-    i_t sign_bit = shl(bit_xor(swap_bit, (n & i_t(2)) >> 1), sizeof(i_t) * 8 - 1);
-    T   z        = sqr(xr);
-    T   se       = sin_eval(z, xr);
-    T   ce       = cos_eval(z);
-    z            = swap_bit ? fma(dxr, ce, se) : fnma(se, dxr, ce);
-    return bit_xor(z, sign_bit);
-  }
-  else
-  {
-    using elt_t   = element_type_t<T>;
-    auto tmp      = binarize(fn >= T(2));
-    auto swap_bit = (fma(T(-2), tmp, fn));
-    auto sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
-    T    z        = sqr(xr);
-    T    se       = sin_eval(z, xr);
-    T    ce       = cos_eval(z);
-    z             = if_else(swap_bit, fma(dxr, ce, se), fnma(se, dxr, ce));
-    return bit_xor(z, sign_bit);
-  }
+  auto tmp      = eve::binarize(eve::logical<T>(fn >= T(2)));
+  auto swap_bit = (eve::fma(T(-2), tmp, fn));
+  auto zz1 = eve::is_odd(fn+tmp);
+  auto sign    =  eve::if_else(zz1, eve::mone(eve::as(xr)), eve::one(eve::as(xr)));
+  T    z        = eve::sqr(xr);
+  T    se       = sin_eval(z, xr);
+  T    ce       = cos_eval(z);
+  z             = eve::if_else(swap_bit, eve::fma(dxr, ce, se), eve::fnma(se, dxr, ce));
+  return sign*z;
 }
 
-template<floating_ordered_value T>
-EVE_FORCEINLINE constexpr auto
-sincos_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
+// template<floating_ordered_value T>
+// EVE_FORCEINLINE constexpr auto
+// sincos_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
+// {
+//   auto z   = sqr(xr);
+//   auto se0 = sin_eval(z, xr);
+//   auto ce0 = cos_eval(z);
+//   if constexpr( scalar_value<T> )
+//   {
+//     using i_t         = as_integer_t<T, signed>;
+//     i_t  n            = int_(fn);
+//     i_t  swap_bit     = n & one(eve::as<i_t>());
+//     auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n & i_t(2), sizeof(i_t) * 8 - 2));
+//     i_t  cos_sign_bit = shl(bit_xor(swap_bit, (n & i_t(2)) >> 1), sizeof(i_t) * 8 - 1);
+//     auto ce           = fnma(se0, dxr, ce0);
+//     auto se           = fma(dxr, ce0, se0);
+//     if( swap_bit ) std::swap(ce, se);
+//     se = bit_xor(se, sin_sign_bit);
+//     ce = bit_xor(ce, cos_sign_bit);
+//     return kumi::make_tuple(se, ce);
+//   }
+//   else
+//   {
+//     using elt_t       = element_type_t<T>;
+//     auto tmp          = binarize(fn >= T(2));
+//     auto swap_bit     = (fma(T(-2), tmp, fn));
+//     auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
+//     auto sin_sign_bit = bit_xor(bitofsign(a0), if_else(tmp, signmask(eve::as<T>()), eve::zero));
+//     auto test         = is_nez(swap_bit);
+//     return kumi::make_tuple(bit_xor(if_else(test, ce0, se0), sin_sign_bit),
+//                             bit_xor(if_else(test, se0, ce0), cos_sign_bit));
+//   }
+// }
+template<ordered_value T>
+EVE_FORCEINLINE auto
+sincos_finalize(T a0, const T& fn, const T& xr, const T& dxr = T(0)) noexcept
 {
-  auto z   = sqr(xr);
-  auto se0 = sin_eval(z, xr);
-  auto ce0 = cos_eval(z);
-  if constexpr( scalar_value<T> )
-  {
-    using i_t         = as_integer_t<T, signed>;
-    i_t  n            = int_(fn);
-    i_t  swap_bit     = n & one(eve::as<i_t>());
-    auto sin_sign_bit = bit_xor(bitofsign(a0), shl(n & i_t(2), sizeof(i_t) * 8 - 2));
-    i_t  cos_sign_bit = shl(bit_xor(swap_bit, (n & i_t(2)) >> 1), sizeof(i_t) * 8 - 1);
-    auto ce           = fnma(se0, dxr, ce0);
-    auto se           = fma(dxr, ce0, se0);
-    if( swap_bit ) std::swap(ce, se);
-    se = bit_xor(se, sin_sign_bit);
-    ce = bit_xor(ce, cos_sign_bit);
-    return kumi::make_tuple(se, ce);
-  }
-  else
-  {
-    using elt_t       = element_type_t<T>;
-    auto tmp          = binarize(fn >= T(2));
-    auto swap_bit     = (fma(T(-2), tmp, fn));
-    auto cos_sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
-    auto sin_sign_bit = bit_xor(bitofsign(a0), if_else(tmp, signmask(eve::as<T>()), eve::zero));
-    auto test         = is_nez(swap_bit);
-    return kumi::make_tuple(bit_xor(if_else(test, ce0, se0), sin_sign_bit),
-                            bit_xor(if_else(test, se0, ce0), cos_sign_bit));
-  }
+  using elt_t       = element_type_t<T>;
+  auto tmp          = eve::binarize(eve::logical<T>(fn >= T(2)));
+  auto swap         = eve::is_nez(eve::fma(T(-2), tmp, fn));
+  auto cos_sign     = eve::if_else(eve::is_odd(fn+tmp), eve::mone(eve::as(xr)), eve::one(eve::as(xr)));
+  auto sin_sign     =  eve::signnz(a0);
+  sin_sign *= eve::if_else(tmp, eve::mone(eve::as(a0)), eve::one(eve::as(a0)));
+  auto z            = sqr(xr);
+  auto se0          = sin_eval(z, xr);
+  auto ce0          = cos_eval(z);
+  auto ce           = fnma(se0, dxr, ce0);
+  auto se           = fma(dxr, ce0, se0);
+  return kumi::make_tuple((if_else(swap, ce, se)*sin_sign)
+                         , if_else(swap, se, ce)*cos_sign);
 }
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
-sin_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
+sin_finalize(T a0,  T fn,  T xr, T dxr = T(0)) noexcept
 {
-  if constexpr( scalar_value<T> )
-  {
-    using i_t = as_integer_t<T, signed>;
-    if( is_not_finite(xr) ) return nan(eve::as<T>());
-    i_t  n        = int_(fn);
-    i_t  swap_bit = n & one(eve::as<i_t>());
-    auto sign_bit = bit_xor(bitofsign(a0), shl(n & i_t(2), sizeof(i_t) * 8 - 2));
-    auto z        = sqr(xr);
-    auto se       = sin_eval(z, xr);
-    auto ce       = cos_eval(z);
-    xr            = swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
-    return bit_xor(xr, sign_bit);
-  }
-  else
-  {
-    auto tmp      = binarize(fn >= T(2));
-    auto swap_bit = (fma(T(-2), tmp, fn));
-    auto sign_bit = bit_xor(bitofsign(a0), if_else(tmp, signmask(eve::as<T>()), eve::zero));
-    auto z        = sqr(xr);
-    auto se       = sin_eval(z, xr);
-    auto ce       = cos_eval(z);
-    z             = if_else(swap_bit, fnma(se, dxr, ce), fma(dxr, ce, se));
-    return bit_xor(z, sign_bit);
-  }
+  auto tmp      = eve::binarize(eve::logical<T>(fn >= T(2)));
+  auto swap_bit = (eve::fma(T(-2), tmp, fn));
+  auto sign = eve::signnz(a0);
+  sign *= eve::if_else(tmp, eve::mone(eve::as(a0)), eve::one(eve::as(a0)));
+  auto z        = eve::sqr(xr);
+  auto se       = sin_eval(z, xr);
+  auto ce       = cos_eval(z);
+  z             =  eve::if_else(swap_bit,  eve::fnma(se, dxr, ce),  eve::fma(dxr, ce, se));
+  return sign*z;
 }
+
+// template<floating_ordered_value T>
+// EVE_FORCEINLINE constexpr auto
+// sin_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
+// {
+//   if constexpr( scalar_value<T> )
+//   {
+//     using i_t = as_integer_t<T, signed>;
+//     if( is_not_finite(xr) ) return nan(eve::as<T>());
+//     i_t  n        = int_(fn);
+//     i_t  swap_bit = n & one(eve::as<i_t>());
+//     auto sign_bit = bit_xor(bitofsign(a0), shl(n & i_t(2), sizeof(i_t) * 8 - 2));
+//     auto z        = sqr(xr);
+//     auto se       = sin_eval(z, xr);
+//     auto ce       = cos_eval(z);
+//     xr            = swap_bit ? fnma(se, dxr, ce) : fma(dxr, ce, se);
+//     return bit_xor(xr, sign_bit);
+//   }
+//   else
+//   {
+//     auto tmp      = binarize(fn >= T(2));
+//     auto swap_bit = (fma(T(-2), tmp, fn));
+//     auto sign_bit = bit_xor(bitofsign(a0), if_else(tmp, signmask(eve::as<T>()), eve::zero));
+//     auto z        = sqr(xr);
+//     auto se       = sin_eval(z, xr);
+//     auto ce       = cos_eval(z);
+//     z             = if_else(swap_bit, fnma(se, dxr, ce), fma(dxr, ce, se));
+//     return bit_xor(z, sign_bit);
+//   }
+// }
 
 template<typename T>
 EVE_FORCEINLINE constexpr auto

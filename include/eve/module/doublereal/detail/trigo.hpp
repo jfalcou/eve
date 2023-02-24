@@ -407,4 +407,66 @@ namespace eve::detail
     auto [s, c] =  d(sincos)(xx);
     return c/s;
   }
+
+
+//   EVE_FORCEINLINE constexpr auto
+//   cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
+//   {
+// //     if constexpr( scalar_value<T> )
+// //     {
+// //       using i_t    = as_integer_t<T, signed>;
+// //       i_t n        = i_t(fn);
+// //       i_t swap_bit = n & i_t(1);
+// //       i_t sign_bit = shl(bit_xor(swap_bit, (n & i_t(2)) >> 1), sizeof(i_t) * 8 - 1);
+// //       T   z        = sqr(xr);
+// //       T   se       = sin_eval(z, xr);
+// //       T   ce       = cos_eval(z);
+// //       z            = swap_bit ? fma(dxr, ce, se) : fnma(se, dxr, ce);
+// //       return bit_xor(z, sign_bit);
+// //     }
+// //     else
+// //     {
+//       using elt_t   = element_type_t<T>;
+//       auto tmp      = binarize(fn >= T(2));
+//       auto swap_bit = (fma(T(-2), tmp, fn));
+//       auto sign_bit = binarize(is_nez(bit_xor(swap_bit, tmp)), signmask(eve::as<elt_t>()));
+//       T    z        = sqr(xr);
+//       T    se       = sin_eval(z, xr);
+//       T    ce       = cos_eval(z);
+//       z             = if_else(swap_bit, fma(dxr, ce, se), fnma(se, dxr, ce));
+//       return bit_xor(z, sign_bit);
+// //    }
+//   }
+
+//   template<typename T, decorator D>
+//   auto doublereal_unary_dispatch(eve::tag::cospi_, D const&, T a0) noexcept
+//   requires(is_one_of<D>(types<quarter_circle_type, half_circle_type, full_circle_type, medium_type, big_type> {}))
+//   {
+//     if constexpr( has_native_abi_v<T> )
+//     {
+//       if constexpr( scalar_value<T> )
+//         if( is_not_finite(a0) ) return nan(eve::as<T>());
+//       auto x = eve::abs(a0);
+//       if constexpr( scalar_value<T> )
+//       {
+//         if( x > maxflint(eve::as<T>()) ) return T(1);
+//       }
+//       else
+//       {
+//         if constexpr(std::same_as<D, quarter_circle_type>)
+//         {
+//           return eve::quarter_circle(cos)(x * pi(eve::as<T>()));
+//         }
+//         else
+//         {
+//           x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+//           x = if_else(is_greater(x, maxflint(eve::as(x))), eve::zero, x);
+//         }
+//         auto [fn, xr, dxr] = rem2(x);
+//         return cos_finalize(fn, xr, dxr);
+//       }
+//     }
+//     else return apply_over(D()(cospi), a0);
+//   }
+
 }
