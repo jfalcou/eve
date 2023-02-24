@@ -27,12 +27,19 @@ sve_true()
 
 // Returns clear sve_true for type of a given cardinal
 // while masking potential garbage value
-template<typename T>
+template<relative_conditional_expr C, typename T>
 EVE_FORCEINLINE svbool_t
-sve_true(T const&)
+sve_true(C cond, as<T> tgt)
 {
-  using v_t   = element_type_t<T>;
-  using ec_t  = expected_cardinal_t<v_t, typename T::abi_type>;
-  return keep_first(T::size()).mask(as<as_wide_t<v_t,ec_t>>{});
+  if constexpr(C::is_complete && C::is_inverted)
+  {
+    using v_t   = element_type_t<T>;
+    using ec_t  = expected_cardinal_t<v_t, typename T::abi_type>;
+    return keep_first(T::size()).mask(as<as_wide_t<v_t,ec_t>>{});
+  }
+  else
+  {
+    return cond.mask(tgt);
+  }
 }
-} // namespace eve::detail
+}
