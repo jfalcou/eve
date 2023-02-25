@@ -31,7 +31,7 @@ secpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
 
     a0 *= pi(eve::as<T>());
     auto x2 = sqr(a0);
-    return rec(detail::cos_eval(x2));
+    return rec(cos_eval(x2));
   }
   else { return apply_over(quarter_circle(secpi), a0); }
 }

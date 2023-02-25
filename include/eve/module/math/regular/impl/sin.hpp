@@ -33,7 +33,7 @@ sin_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
     if constexpr( scalar_value<T> )
       if( is_not_less_equal(x2, pi2_16) ) return nan(eve::as<T>());
     auto x = eve::abs(a0);
-    auto r = bit_xor(detail::sin_eval(x2, x), bitofsign(a0));
+    auto r = bit_xor(sin_eval(x2, x), bitofsign(a0));
     if constexpr( scalar_value<T> ) return r;
     else return if_else(is_not_less_equal(x2, pi2_16), eve::allbits, r);
   }
