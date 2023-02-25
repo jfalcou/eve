@@ -22,11 +22,11 @@ namespace eve::detail
   requires(is_one_of<D>(types<quarter_circle_type, half_circle_type
                        , full_circle_type, medium_type, big_type> {}) && std::same_as<underlying_type_t<Z>, double>)
   {
-      auto ax = eve::abs(a);
+    auto ax = eve::abs(a);
     if constexpr(std::same_as<D, quarter_circle_type>)
-      return if_else(ax > pio_4(as(ax)), allbits,  eve::detail::internal::sin_eval(a));
+      return if_else(ax > pio_4(as(ax)), allbits,  sin_eval(sqr(a), a));
     else if constexpr(std::same_as<D, half_circle_type>)
-      return if_else(ax > pio_2(as(ax)), allbits,  eve::detail::internal::sin_eval(a));
+      return if_else(ax > pio_2(as(ax)), allbits,  sin_eval(sqr(a), a));
     else
     {
       auto sign = signnz(a);
@@ -35,8 +35,9 @@ namespace eve::detail
       auto alpha = if_else(is_odd(n), zero, one(as(x)));
       auto beta  = if_else(is_odd(n), one(as(x)), zero);
       sign *=  if_else(n >= 2, mone(as(x)), one(as(x)));
-      auto s =   sign*(eve::detail::internal::sin_eval)(x);
-      auto c =   sign*(eve::detail::internal::cos_eval)(x);
+      auto x2 = sqr(x);
+      auto s =   sign*sin_eval(x2, x);
+      auto c =   sign*cos_eval(x2);
       auto res = s*alpha+c*beta;
       if constexpr(std::same_as<D, full_circle_type>)
       {
@@ -107,7 +108,7 @@ namespace eve::detail
   {
     auto ax = eve::abs(a0);
     if constexpr(std::same_as<D, quarter_circle_type>)
-      return if_else(ax > pio_4(as(ax)), allbits,  eve::detail::internal::cos_eval(ax));
+      return if_else(ax > pio_4(as(ax)), allbits,  cos_eval(sqr(ax)));
     else
     {
       auto med = [](auto xx){
@@ -137,8 +138,8 @@ namespace eve::detail
 
         auto zz = sqr(z);
         auto r = if_else( is_equal(Z(yj), Z(1)) || is_equal(Z(yj), Z(2))
-                        , z  +  z * (zz * horner( zz, S))
-                        , oneminus(ldexp(zz, -1))+zz*zz*horner(zz, C));
+                        , sin_eval(zz, z) //z  +  z * (zz * horner( zz, S))
+                        , cos_eval(zz)); //oneminus(ldexp(zz, -1))+zz*zz*horner(zz, C));
         auto res = if_else(toobig, nan(as(x)), sign*r);
         return res;
       };
@@ -164,8 +165,9 @@ namespace eve::detail
         auto alpha = if_else(is_odd(n), zero, one(as(x))); //c coef
         auto beta  = if_else(is_odd(n), one(as(x)), zero); //s coef
         sign *=  if_else((n == Z(1) || n == Z(2)), mone(as(x)), one(as(x)));
-        auto s =   sign*(eve::detail::internal::sin_eval)(x);
-        auto c =   sign*(eve::detail::internal::cos_eval)(x);
+        auto x2 = x*x;
+        auto s =   sign*sin_eval(x2, x);
+        auto c =   sign*cos_eval(x2);
         auto res = c*alpha+s*beta;
         return res;
       }

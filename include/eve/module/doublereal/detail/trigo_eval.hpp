@@ -11,23 +11,41 @@
 #include <eve/module/math.hpp>
 namespace eve::detail
 {
-  namespace internal //just for doublereal
-  {
-    template<typename Z> auto sin_eval(Z const& xx) noexcept
-    {
-      auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
-      auto z = xx;
-      auto zz = sqr(z);
-      return z  +  z * (zz * horner( zz, S));
-   }
 
-    template<typename Z> auto cos_eval(Z const& xx) noexcept
-    {
-      auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
-      auto z = xx;
-      auto zz = sqr(z);
-      return oneminus(ldexp(zz, -1)-zz*zz*horner(zz, C));
-    }
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  doublereal_binary_dispatch(eve::tag::sin_eval_, Z const& zz, Z const& z) noexcept
+  {
+    auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
+    return z  +  z * (zz * horner( zz, S));
+
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  doublereal_unary_dispatch(eve::tag::cos_eval_, Z const& zz) noexcept
+  {
+    auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
+    return oneminus(zz*half(as(zz))-zz*zz*horner(zz, C));
+
+  }
+   namespace internal //just for doublereal
+  {
+//     template<typename Z> auto sin_eval(Z const& xx) noexcept
+//     {
+//       auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
+//       auto z = xx;
+//       auto zz = sqr(z);
+//       return z  +  z * (zz * horner( zz, S));
+//    }
+
+//     template<typename Z> auto cos_eval(Z const& xx) noexcept
+//     {
+//       auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
+//       auto z = xx;
+//       auto zz = sqr(z);
+//       return oneminus(ldexp(zz, -1)-zz*zz*horner(zz, C));
+//     }
 
     template<typename Z> auto sincos_eval( Z const& xx) noexcept
     {
