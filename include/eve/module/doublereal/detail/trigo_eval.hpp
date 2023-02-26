@@ -31,21 +31,6 @@ namespace eve::detail
   }
    namespace internal //just for doublereal
   {
-//     template<typename Z> auto sin_eval(Z const& xx) noexcept
-//     {
-//       auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
-//       auto z = xx;
-//       auto zz = sqr(z);
-//       return z  +  z * (zz * horner( zz, S));
-//    }
-
-//     template<typename Z> auto cos_eval(Z const& xx) noexcept
-//     {
-//       auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
-//       auto z = xx;
-//       auto zz = sqr(z);
-//       return oneminus(ldexp(zz, -1)-zz*zz*horner(zz, C));
-//     }
 
     template<typename Z> auto sincos_eval( Z const& xx) noexcept
     {
