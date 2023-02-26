@@ -301,6 +301,25 @@ namespace eve::algo
   //================================================================================================
   inline constexpr auto allow_frequency_scaling = ::rbr::flag( allow_frequency_scaling_tag{} );
 
+  struct overflow_key_t : rbr::as_keyword<overflow_key_t>
+  {
+    template<typename Value> constexpr auto operator=(Value const&) const noexcept
+    {
+      return rbr::option<overflow_key_t,Value>{};
+    }
+  };
+  inline constexpr overflow_key_t overflow_key;
+
+  //============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var overflow
+  //!
+  //!   @brief A trait for advanced usage only as parameter for for_each_iteration_fixed_overflow
+  //! @}
+  //============================================================================
+  template<int N> inline constexpr auto overflow = (overflow_key = eve::index<N>);
+
   // getters -------------------
 
 
@@ -352,6 +371,17 @@ namespace eve::algo
     rbr::result::fetch_t< (force_cardinal_key | detail::default_cardinal_to_use_t<Traits, RorI>{})
                         , Traits
                         >;
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns specified overflow
+  //! @tparam Traits
+  //================================================================================================
+  template <typename Traits>
+  constexpr std::ptrdiff_t get_overflow()
+  {
+    return rbr::result::fetch_t<(overflow_key), Traits>{};
+  }
 
   //================================================================================================
   //! @addtogroup algo_traits
