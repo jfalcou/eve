@@ -32,6 +32,17 @@ namespace eve::detail
     else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(hi, lo));//double-double from given pair
   }
 
+  template<typename Tag, typename T, typename S, decorator D>
+  EVE_FORCEINLINE constexpr auto doublereal_mk_cts(Tag const &, D const&, as<T> const&
+                                          , S const & dw,  S const & hw) noexcept
+  {
+    detail::callable_object<Tag> cst;
+//     using t_t = underlying_type_t<T>;
+//     using e_t = doublereal<t_t>;
+    if constexpr( std::is_same_v<D, downward_type> ) return make_doublereal(dw, as<T>());
+    else if constexpr( std::is_same_v<D, upward_type> ) return make_doublereal(hw, as<T>());
+  }
+
   template<typename T>
   EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::euler_, as<T> const&) noexcept
   { return doublereal_mk_cts(eve::tag::euler_{}, as<T>(), 2.718281828459045091e+00, 1.445646891729250158e-16); }
@@ -49,9 +60,31 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::log_2_, as<T> const&) noexcept
   { return doublereal_mk_cts(eve::tag::log_2_{}, as<T>(), 6.931471805599452862e-01, 2.319046813846299558e-17); }
 
+
   template<typename T>
   EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::pi_, as<T> const&) noexcept
   { return doublereal_mk_cts(eve::tag::pi_{}, as<T>(), 3.141592653589793116e+00,1.224646799147353207e-16); }
+
+
+  template<typename T, decorator D>
+  EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::pi_, D const &, as<T> const&) noexcept
+  {
+    using u_t          =  underlying_type_t<T>;
+    using doublereal_t =  doublereal<u_t>;
+    if constexpr(std::same_as<u_t, double>)
+      return doublereal_mk_cts(eve::tag::pi_{}, as<T>()
+                              , doublereal_t(0x1.921fb54442d18p+1, 0x1.1a62633145c06p-53)
+                              , doublereal_t(0x1.921fb54442d18p+1, 0x1.1a62633145c07p-53));
+    else if constexpr(std::same_as<u_t, float>)
+      return doublereal_mk_cts(eve::tag::pi_{}, as<T>()
+                              , doublereal_t(0x1.921fb6p+1, -0x1.777a5ep-24)
+                              , doublereal_t(0x1.921fb6p+1, -0x1.777a5cp-24));
+  }
+
+
+
+
+
 
   template<typename T>
   EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::pio_2_, as<T> const&) noexcept
