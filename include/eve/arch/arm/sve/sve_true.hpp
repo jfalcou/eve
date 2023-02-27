@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/conditional.hpp>
+#include <eve/arch/fundamental_cardinal.hpp>
 
 namespace eve::detail
 {
