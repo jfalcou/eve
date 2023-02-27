@@ -19,7 +19,6 @@
 #include <eve/traits/product_type.hpp>
 #include <ostream>
 #include <iomanip>
-//#include <boost/multiprecision/cpp_bin_float.hpp>
 
 namespace eve
 {
