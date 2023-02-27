@@ -34,10 +34,10 @@ sve_true(C cond, as<T> tgt)
   if constexpr(C::is_complete && C::is_inverted)
   {
     using v_t   = element_type_t<T>;
-    using ec_t  = expected_cardinal_t<v_t, typename T::abi_type>;
+    using fc_t  = fundamental_cardinal_t<v_t>;
 
-    if constexpr(ec_t::value == T::size())      return sve_true<v_t>();
-    else  return keep_first(T::size()).mask(as<as_wide_t<v_t,ec_t>>{});
+    if constexpr(T::size() >= fc_t::value )      return sve_true<v_t>();
+    else  return keep_first(T::size()).mask(as<as_wide_t<v_t,fc_t>>{});
   }
   else
   {
