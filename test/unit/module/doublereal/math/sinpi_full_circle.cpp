@@ -46,6 +46,6 @@ TTS_CASE_WITH( "Check behavior of sin on wide"
 {
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::full_circle(eve::sinpi), z));
-  auto cz = eve::quarter_circle(eve::sinpi)(z);
+  auto cz = eve::full_circle(eve::sinpi)(z);
   TTS_ULP_EQUAL(cz, az, 0.5);
 };

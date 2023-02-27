@@ -25,7 +25,6 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
   using e_t = typename T::value_type;
   using dd_t = eve::doublereal<e_t>;
   auto pi = bm::atan(tts::uptype(eve::one(eve::as<dd_t>())))*4;
-  if constexpr(sizeof(e_t) == 8)
   for(auto e : a0)
   {
     for(auto f : a1)
@@ -39,16 +38,16 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
   }
 };
 
-// TTS_CASE_WITH( "Check behavior of cos on wide"
-//              , eve::test::simd::ieee_reals
-//              , tts::generate ( tts::randoms(-10000.0, 10000.0)
-//                              , tts::randoms(-0.001, +0.001)
-//                              )
-//              )
-//   <typename T>(T const& a0, T const& a1 )
-// {
-//   auto z = make_doublereal(a0,a1);
-//   auto az = decltype(z)(eve::detail::map(eve::cospi, z));
-//   auto cz = eve::cospi(z);
-//   TTS_ULP_EQUAL(cz, az, 0.5);
-// };
+TTS_CASE_WITH( "Check behavior of cos on wide"
+             , eve::test::simd::ieee_reals
+             , tts::generate ( tts::randoms(-10000.0, 10000.0)
+                             , tts::randoms(-0.001, +0.001)
+                             )
+             )
+  <typename T>(T const& a0, T const& a1 )
+{
+  auto z = make_doublereal(a0,a1);
+  auto az = decltype(z)(eve::detail::map(eve::cospi, z));
+  auto cz = eve::cospi(z);
+  TTS_ULP_EQUAL(cz, az, 0.5);
+};

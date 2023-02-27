@@ -23,8 +23,9 @@ is_flint_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( integral_value<T> ) return false_(eve::as<T>());
-    if constexpr( floating_value<T> ) return is_eqz(frac(a)) && (a <= eve::maxflint(eve::as<T>()));
+    using u_t =  underlying_type_t<T>;
+    if constexpr( integral_value<u_t> ) return false_(eve::as<T>());
+    if constexpr( floating_value<u_t> ) return is_eqz(frac(a)) && (a <= eve::maxflint(eve::as<T>()));
   }
   else return apply_over(pedantic(is_flint), a);
 }

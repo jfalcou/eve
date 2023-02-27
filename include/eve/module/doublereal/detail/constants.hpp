@@ -138,4 +138,15 @@ namespace eve::detail
 //     if constexpr( std::is_same_v<t_t, float> ) return T(e_t(-3.4028235e+38f, -1.0141204e+31f));
 //     else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(-1.79769313486231570815e+308, -9.97920154767359795037e+291));
   }
+
+  template<ordered_value T>
+  EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::maxflint_, as<T> const&) noexcept
+  requires(is_doublereal_v<T>)
+  {
+    using t_t = underlying_type_t<T>;
+    using e_t = doublereal<t_t>;
+    if constexpr( std::is_same_v<t_t, float> ) return T(e_t(0x1p+46, -0x1p+0));
+    else if constexpr( std::is_same_v<t_t, double> ) return T(e_t(0x1p+104, -0x1p+0));
+  }
+
 }

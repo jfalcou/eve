@@ -133,7 +133,6 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     sin_finalize(T a0,  T fn,  T xr, T dxr = T(0)) noexcept
     {
-      std::cout << "icitte" << std::endl;
       auto tmp      = eve::binarize(eve::logical<T>(fn >= T(2)));
       auto swap_bit = (eve::fma(T(-2), tmp, fn));
       auto sign = eve::signnz(a0);
