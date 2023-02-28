@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include "eve/traits/is_logical.hpp"
 #include <eve/traits.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/module/core/regular/slide_right.hpp>

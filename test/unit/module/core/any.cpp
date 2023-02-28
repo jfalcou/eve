@@ -6,9 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/core.hpp>
-
 #include <type_traits>
 
 TTS_CASE_TPL("Check eve::any return type", eve::test::simd::all_types)
@@ -20,6 +18,24 @@ TTS_CASE_TPL("Check eve::any return type", eve::test::simd::all_types)
   TTS_EXPECT_NOT((eve::any(false)));
   TTS_EXPECT(eve::any(eve::true_(eve::as<T>())));
   TTS_EXPECT_NOT(eve::any(eve::false_(eve::as<T>())));
+};
+
+TTS_CASE_WITH ( "Check behavior of any on wide"
+              , eve::test::simd::all_types
+              , tts::generate(tts::value(15))
+              )
+<typename T>(T const& a0)
+{
+// complete
+{
+  eve::logical<T> mask = a0 == 15;
+  TTS_EXPECT(eve::any(mask));
+  TTS_EXPECT(eve::any[eve::ignore_none](mask));
+
+  mask = a0 != 15;
+  TTS_EXPECT_NOT(eve::any(mask));
+  TTS_EXPECT_NOT(eve::any[eve::ignore_all](mask));
+}
 };
 
 TTS_CASE_TPL("Check eve::any[ignore]", eve::test::simd::all_types)
@@ -111,8 +127,7 @@ TTS_EXPECT_NOT(eve::any[eve::ignore_all](mask));
     }
   }
 }
-}
-;
+};
 
 TTS_CASE_TPL("Check any(top_bits)", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
