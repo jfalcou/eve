@@ -58,8 +58,8 @@ TTS_CASE_WITH( "Check behavior of exp on scalar"
       zbr_large = ct;
     }
   };
-  auto name = "euler";
-  auto zbm = exp(f128(1));
+  auto name = "inv_pi";
+  auto zbm = f128(1)/(4*(bm::atan(f128(1))));
   dd_t ctd = tts::to_doublereal<dd_t>(zbm);
   ff_t ctf = tts::to_doublereal<ff_t>(zbm);
 

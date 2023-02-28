@@ -140,6 +140,35 @@ namespace eve::detail
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////
+  /// inv_pi
+  ////////////////////////////////////////////////////////////////////////////////////////////
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::inv_pi_, as<T> const&) noexcept
+  {
+    using u_t          =  underlying_type_t<T>;
+    using doublereal_t =  doublereal<u_t>;
+    if constexpr(std::same_as<u_t, double>)
+      return T(doublereal_t(0x1.45f306dc9c883p-2, -0x1.6b01ec5417056p-56));
+    else if constexpr(std::same_as<u_t, float>)
+      return  T(doublereal_t(0x1.45f306p-2, 0x1.b9391p-27));
+  }
+
+  template<typename T, decorator D>
+  EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::inv_pi_, D const &, as<T> const&) noexcept
+  {
+    using u_t          =  underlying_type_t<T>;
+    using doublereal_t =  doublereal<u_t>;
+    if constexpr(std::same_as<u_t, double>)
+      return doublereal_mk_cts(eve::tag::inv_pi_{}, as<T>()
+                            , doublereal_t(0x1.45f306dc9c883p-2, -0x1.6b01ec5417057p-56)
+                            , doublereal_t(0x1.45f306dc9c883p-2, -0x1.6b01ec5417056p-56));
+    else if constexpr(std::same_as<u_t, float>)
+      return doublereal_mk_cts(eve::tag::inv_pi_{}, as<T>()
+                           , doublereal_t(0x1.45f306p-2, 0x1.b9391p-27)
+                           , doublereal_t(0x1.45f306p-2, 0x1.b93912p-27));
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////
   /// log_10
   ////////////////////////////////////////////////////////////////////////////////////////////
   template<typename T>
