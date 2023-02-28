@@ -35,30 +35,73 @@ TTS_CASE_WITH( "Check behavior of exp on scalar"
 {
   using boost::multiprecision::cpp_bin_float_quad;
   using f128 = cpp_bin_float_quad;
-   using e_t = T::value_type;
-   using dd_t = typename eve::doublereal<e_t>;
-   dd_t ct = eve::pio_2(eve::as<dd_t>());
-   std::cout << "ct " << ct << std::endl;
+  using dd_t = typename eve::doublereal<double>;
+  dd_t  zbr_smalld, zbr_larged;
+  using ff_t = typename eve::doublereal<float>;
+  ff_t  zbr_smallf, zbr_largef;
+  auto comp = [](auto ct, auto zbm, auto & zbr_small,  auto & zbr_large){
     auto zdr = tts::uptype(ct);
-   auto zbm = bm::atan(f128(1))*2;
 
-   dd_t zbr_small, zbr_large;
-   if (zdr < zbm)
-   {
-     zbr_small = ct;
-     zbr_large = eve::next(ct);
-   }
-   else if (zdr ==  zbm)
-   {
-     zbr_small = ct;
-     zbr_large = ct;
-   }
-   else if (zdr > zbm)
-   {
-     zbr_small = eve::prev(ct);
-     zbr_large = ct;
-   }
-   std::cout << "small " <<  zbr_small << std::endl;
-   std::cout << "large " <<  zbr_large << std::endl;
-   TTS_EQUAL(0, 0);
+    if (zdr < zbm)
+    {
+      zbr_small = ct;
+      zbr_large = eve::next(ct);
+    }
+    else if (zdr ==  zbm)
+    {
+      zbr_small = ct;
+      zbr_large = ct;
+    }
+    else if (zdr > zbm)
+    {
+      zbr_small = eve::prev(ct);
+      zbr_large = ct;
+    }
+  };
+  auto name = "euler";
+  auto zbm = exp(f128(1));
+  dd_t ctd = tts::to_doublereal<dd_t>(zbm);
+  ff_t ctf = tts::to_doublereal<ff_t>(zbm);
+
+  std::cout << std::setprecision(35) << "zbm " << zbm << std::endl;
+  std::cout << "ctd " << ctd << std::endl;
+  comp(ctd, zbm, zbr_smalld, zbr_larged);
+  std::cout << "smalld " <<  zbr_smalld << std::endl;
+  std::cout << "larged " <<  zbr_larged << std::endl;
+  std::cout << "ctf " << ctf << std::endl;
+  comp(ctf, zbm, zbr_smallf, zbr_largef);
+  std::cout << "smallf " <<  zbr_smallf << std::endl;
+  std::cout << "largef " <<  zbr_largef << std::endl;
+
+  TTS_EQUAL(0, 0);
+
+  std::cout << '\n' <<
+    "  template<typename T>                                                                                       \n" <<
+    "  EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::" << name << "_, as<T> const&) noexcept   \n" <<
+    "  {                                                                                                          \n" <<
+    "    using u_t          =  underlying_type_t<T>;                                                              \n" <<
+    "    using doublereal_t =  doublereal<u_t>;                                                                   \n" <<
+    "    if constexpr(std::same_as<u_t, double>)                                                                  \n" <<
+    "      return T(" << ctd << ");                                                                               \n" <<
+    "    else if constexpr(std::same_as<u_t, float>)                                                              \n" <<
+    "      return  T(" << ctf << ");                                                                              \n" <<
+    "  }                                                                                                          \n" <<
+    "                                                                                                             \n" <<
+    "  template<typename T, decorator D>                                                                          \n" <<
+    "  EVE_FORCEINLINE constexpr auto doublereal_cts_dispatch(eve::tag::" << name << "_, D const &, as<T> const&) noexcept    \n" <<
+    "  {                                                                                                          \n" <<
+    "    using u_t          =  underlying_type_t<T>;                                                              \n" <<
+    "    using doublereal_t =  doublereal<u_t>;                                                                   \n" <<
+    "    if constexpr(std::same_as<u_t, double>)                                                                  \n" <<
+    "      return doublereal_mk_cts(eve::tag::" << name << "_{}, as<T>()                                          \n" <<
+    "                            , " << zbr_smalld <<                                                            "\n" <<
+    "                            , " << zbr_larged << "); " <<                                                   "\n" <<
+    "    else if constexpr(std::same_as<u_t, float>)                                                              \n" <<
+    "      return doublereal_mk_cts(eve::tag::" << name << "_{}, as<T>()                                          \n" <<
+    "                           , " << zbr_smallf <<                                                             "\n" <<
+    "                           , " << zbr_largef << "); " <<                                                    "\n" <<
+    "  }                                                                                                          \n";
+
+
+
 };

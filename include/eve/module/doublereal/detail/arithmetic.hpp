@@ -107,9 +107,9 @@ namespace eve::detail
   doublereal_unary_dispatch(eve::tag::next_, Z1 const& z1) noexcept
   {
     auto nz1  = make_doublereal(high(z1), next(low(z1)));
-    auto pnz1 = make_doublereal(high(nz1), prev(low(nz1)));
-
-    return if_else(pnz1> z1, pnz1, nz1);
+    auto pnz1 = make_doublereal(high(z1), prev(low(z1)));
+    if (eve::any(nz1 == pnz1)) std::cout << "zarbi" << std::endl;
+    return if_else(pnz1> nz1, pnz1, nz1);
   }
 
   template<typename Z1>
@@ -117,8 +117,9 @@ namespace eve::detail
   doublereal_unary_dispatch(eve::tag::prev_, Z1 const& z1) noexcept
   {
     auto pz1 = make_doublereal(high(z1), prev(low(z1)));
-    auto nnz1= make_doublereal(high(pz1), next(low(pz1)));
-    return if_else(nnz1 < z1, nnz1, pz1);
+    auto npz1= make_doublereal(high(z1), next(low(z1)));
+    if (eve::any(pz1 == npz1)) std::cout << "zarbi" << std::endl;
+    return if_else(npz1 < pz1, npz1, pz1);
   }
 
   template<typename Z>
