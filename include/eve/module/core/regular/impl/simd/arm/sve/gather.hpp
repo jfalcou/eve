@@ -30,7 +30,6 @@ gather_(EVE_SUPPORTS(sve_), C cx, U const* p, wide<T, N> v) noexcept -> wide<U, 
 requires sve_abi<abi_t<T, N>>
 {
   using out_t = wide<U, N>;
-  using i_t   = make_integer_t<sizeof(T)>;
   using u_t   = make_integer_t<sizeof(U)>;
 
   // Ignore All case : just return the alternative if any
@@ -40,7 +39,7 @@ requires sve_abi<abi_t<T, N>>
   // Smaller data goes through the generic cases
   else if constexpr(sizeof(U) <= 2)                     return gather_(EVE_RETARGET(cpu_),cx,p,v);
   // Small index get converted then we recall gather
-  else if constexpr(sizeof(T) <  4)                     return gather[cx](p, convert(v, as<i_t>{}));
+  else if constexpr(sizeof(T) <  4)                     return gather[cx](p, convert(v, as<u_t>{}));
   // SVE gather requires same size for index and values
   else if constexpr(sizeof(T) != sizeof(U))             return gather[cx](p, convert(v, as<u_t>{}));
   else
