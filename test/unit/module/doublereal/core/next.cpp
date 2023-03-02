@@ -25,41 +25,24 @@ TTS_CASE_WITH( "Check behavior of next on scalar"
       auto z =  eve::doublereal<e_t>(e, f);
       auto n = eve::next(z);
       TTS_GREATER(n, z);
-      auto np = eve::prev(n);
-      TTS_EQUAL(np, z);
-      auto npp = eve::prev(np);
-      TTS_LESS(npp, z);
+      auto pn = eve::prev(n);
+      TTS_EQUAL(pn, z);
+      auto ppn = eve::prev(pn);
+      TTS_LESS(ppn, z);
     }
   }
-
-//   for(auto e : a0)
-//   {
-//     for(auto f : a1)
-//     {
-//       auto z =  eve::doublereal<e_t>(e, f);
-//       auto n = eve::next(z);
-//       TTS_GREATER(n, z);
-//       auto np = eve::prev(n);
-//       TTS_EQUAL(np, z);
-//       auto npp = eve::prev(np);
-//       TTS_LESS(npp, z);
-//     }
-//   }
 };
 
+TTS_CASE_WITH( "Check behavior of prev on wide"
+        , eve::test::simd::ieee_reals
+             , tts::generate ( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             )
+        )
+  <typename T>(T const& a0, T const& a1 )
+{
+  auto z = make_doublereal(a0,a1);
+  auto az = decltype(z)(eve::detail::map(eve::next, z));
+  TTS_EQUAL ( eve::next(z), az);
 
-
-// TTS_CASE_WITH( "Check behavior of next on wide"
-//         , eve::test::simd::ieee_reals
-//         , tts::generate ( tts::randoms(-10, 10)
-//                               , tts::randoms(-10, 10)
-//                               )
-//         )
-//   <typename T>(T const& a0, T const& a1 )
-// {
-//   using e_t = typename T::value_type;
-//       auto g = eve::next(z) > z;
-//       std::cout << g << std::endl;
-// //  auto z = make_doublereal(a0,a1);
-// //  TTS_EXPECT( eve::next(z) > z);
-// };
+};

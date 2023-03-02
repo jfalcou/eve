@@ -101,25 +101,81 @@ namespace eve::detail
     return Z(hi, lo);
   }
 
+  namespace internal
+  {
+    template<typename Z1>
+    EVE_FORCEINLINE Z1
+    iprev(Z1 const& z1) noexcept;
+
+    template<typename Z1>
+    EVE_FORCEINLINE Z1 inext( Z1 const& z1) noexcept
+    {
+      auto [h, l] = z1;
+      auto nl = if_else(l != 0,  next(l), l);
+      auto nh = if_else(nl != 0, h, next(h));
+      auto nz1 = make_doublereal(nh, nl);
+      return nz1;
+    }
+
+    template<typename Z1>
+    EVE_FORCEINLINE Z1
+    iprev(Z1 const& z1) noexcept
+    {
+      auto [h, l] = z1;
+      auto pl = if_else(l != 0,  prev(l), l);
+      auto ph = if_else(pl != 0, h, prev(h));
+      auto pz1 = make_doublereal(ph, pl);
+      return pz1;
+    }
+  }
+
+  template<typename Z1>
+  EVE_FORCEINLINE auto
+  doublereal_unary_dispatch(eve::tag::prev_, Z1 const& z1) noexcept;
 
   template<typename Z1>
   EVE_FORCEINLINE auto
   doublereal_unary_dispatch(eve::tag::next_, Z1 const& z1) noexcept
   {
-    auto nz1  = make_doublereal(high(z1), next(low(z1)));
-    auto pnz1 = make_doublereal(high(z1), prev(low(z1)));
-    if (eve::any(nz1 == pnz1)) std::cout << "zarbi" << std::endl;
-    return if_else(pnz1> nz1, pnz1, nz1);
+
+   auto [h, l] = z1;
+   auto nl = if_else(l != 0,  next(l), l);
+   auto nh = if_else(nl != 0, h, next(h));
+   auto nz1 = make_doublereal(nh, nl);
+   auto p = [](auto zz1){
+     auto [h, l] = zz1;
+     auto pl = if_else(l != 0,  prev(l), l);
+     auto ph = if_else(pl != 0, h, prev(h));
+     auto pz1 = make_doublereal(ph, pl);
+     return pz1;
+   };
+   auto pnz1= p(nz1);
+   nz1 = if_else(pnz1 > z1, pnz1, nz1);
+   pnz1 = p(nz1);
+   nz1 = if_else(pnz1 > z1, pnz1, nz1);
+   return nz1;
   }
 
   template<typename Z1>
   EVE_FORCEINLINE auto
   doublereal_unary_dispatch(eve::tag::prev_, Z1 const& z1) noexcept
   {
-    auto pz1 = make_doublereal(high(z1), prev(low(z1)));
-    auto npz1= make_doublereal(high(z1), next(low(z1)));
-    if (eve::any(pz1 == npz1)) std::cout << "zarbi" << std::endl;
-    return if_else(npz1 < pz1, npz1, pz1);
+   auto [h, l] = z1;
+   auto pl = if_else(l != 0,  prev(l), l);
+   auto ph = if_else(pl != 0, h, prev(h));
+   auto pz1 = make_doublereal(ph, pl);
+   auto n = [](auto zz1){
+     auto [h, l] = zz1;
+     auto nl = if_else(l != 0,  next(l), l);
+     auto nh = if_else(nl != 0, h, next(h));
+     auto nz1 = make_doublereal(nh, nl);
+     return nz1;
+   };
+   auto npz1= n(pz1);
+   pz1 = if_else(npz1 < z1, npz1, pz1);
+   npz1= n(pz1);
+   pz1 = if_else(npz1 < z1, npz1, pz1);
+   return pz1;
   }
 
   template<typename Z>
@@ -250,7 +306,12 @@ namespace eve::detail
   doublereal_n_binary_dispatch(eve::tag::prev_, Z1 const& z1, N const& n) noexcept
   {
     using r_t = as_wide_as_t<Z1, N>;
+    std::cout << "z1 " << z1 << std::endl;
+
     auto pz1 = r_t(high(z1), prev(low(z1), n));
+    std::cout << "pz1 " << pz1 << std::endl;
+
+
     auto npz1 =  r_t(high(pz1), next(low(z1)));
     auto e = next(npz1, n);
     return if_else(e < z1, npz1, pz1);
