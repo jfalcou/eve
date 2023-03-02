@@ -28,7 +28,6 @@ TTS_CASE_WITH( "Check behavior of cosh on scalar"
              )
   <typename T>(T const& a0, T const& a1)
 {
-  using u_t = typename T::value_type;
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   using doublereal_t = eve::doublereal<e_t>;

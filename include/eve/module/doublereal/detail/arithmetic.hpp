@@ -268,14 +268,12 @@ namespace eve::detail
   template<typename Z, typename Z1>
   EVE_FORCEINLINE auto doublereal_nary_dispatch(tag::ldexp_, Z const& z1, Z1 n) noexcept
   {
-    EVE_ASSERT(eve::all(is_flint(n)), "some n are not flint");
     return as_wide_as_t<Z, Z1>(ldexp(high(z1), high(n)), ldexp(low(z1), high(n)));
   }
 
   template<typename Z, typename Z1, decorator D>
   EVE_FORCEINLINE auto doublereal_nary_dispatch(tag::ldexp_, D const & d, Z const& z1, Z1 n) noexcept
   {
-    EVE_ASSERT(eve::all(is_flint(n)), "some n are not flint");
     return as_wide_as_t<Z, Z1>(d(ldexp)(high(z1), high(n)), d(ldexp)(low(z1), high(n)));
   }
 
