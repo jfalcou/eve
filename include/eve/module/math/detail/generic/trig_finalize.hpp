@@ -114,7 +114,6 @@ namespace eve
     EVE_FORCEINLINE auto
     sincos_finalize(T a0, const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
-      using elt_t       = element_type_t<T>;
       auto tmp          = eve::binarize(eve::logical<T>(fn >= T(2)));
       auto swap         = eve::is_nez(eve::fma(T(-2), tmp, fn));
       auto cos_sign     = eve::if_else(eve::is_odd(fn+tmp), eve::mone(eve::as(xr)), eve::one(eve::as(xr)));
