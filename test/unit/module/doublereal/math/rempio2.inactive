@@ -10,13 +10,7 @@
 #include "../measures.hpp"
 #include <eve/module/doublereal.hpp>
 #include <boost/math/constants/constants.hpp>
-//#include <boost/multiprecision/cpp_bin_float.hpp>
 #include <eve/module/math/detail/scalar/ieee_754_rem_pio2.hpp>
-
-  /////////////////////////////////////////////////////////////////
-  // trigo utilities
-  /////////////////////////////////////////////////////////////////
-
 
 
 TTS_CASE_WITH( "Check behavior of rem_piby2 on scalar"
