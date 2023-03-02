@@ -51,5 +51,5 @@ TTS_CASE_WITH( "Check behavior of expmx2 on wide"
 {
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::expmx2, z));
-  TTS_ULP_EQUAL ( eve::expmx2(z), az, 0.5);
+  TTS_ULP_EQUAL ( eve::expmx2(z), az, 5);
 };

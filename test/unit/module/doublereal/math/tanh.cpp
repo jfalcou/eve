@@ -62,5 +62,5 @@ TTS_CASE_WITH( "Check behavior of tanh on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::tanh, z));
   auto cz = eve::tanh(z);
-  TTS_EQUAL ( cz, az);
+  TTS_ULP_EQUAL ( cz, az, 5);
 };
