@@ -63,7 +63,6 @@ jobs:
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
 
-
   ##################################################################################################
   ## Randomized precision tests
   ##################################################################################################
@@ -144,33 +143,6 @@ jobs:
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.arch.*.exe
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.meta.*.exe
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
-
-  ##################################################################################################
-  ## Targets with incomplete tests set
-  ## Currently: SVE128/256/512
-  ##################################################################################################
-  partial-support:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: gcc, arch: sve128, opts: -Wno-psabi}
-        - { comp: gcc, arch: sve256, opts: -Wno-psabi}
-        - { comp: gcc, arch: sve512, opts: -Wno-psabi}
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v3
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         0
-          cpu:            3
-      - name: Always execute
-        if: ${{ always() }}
-        uses: ./.github/actions/cleanup
 
   ##################################################################################################
   ## X86 Targets
@@ -338,3 +310,30 @@ jobs:
       - name: Running Sanitizer Tests
         if: "${{ matrix.cfg.arch == 'x86_asan' }}"
         run:  cd build && ctest --output-on-failure  -R ^unit.memory.*.exe -j 4
+
+  ##################################################################################################
+  ## ARM SVE Tests
+  ## Currently: SVE128/256/512
+  ##################################################################################################
+  arm-sve:
+    needs: x86-custom
+    runs-on: [self-hosted, generic-x86]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc, arch: sve256, opts: -Wno-psabi}
+        - { comp: gcc, arch: sve512, opts: -Wno-psabi}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_docker
+        with:
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:         1
+          cpu:            16
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
