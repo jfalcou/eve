@@ -87,15 +87,15 @@ namespace eve::detail
         //       using elt_t = doublereal<eve::underlying_type_t<T>>;
 
         constexpr uint32_t size = cardinal_v<T>;
-        constexpr auto     algt = T::alignment();
+//        constexpr auto     algt = T::alignment();
 //        std::cout << "algt " << algt << std::endl;
 
         /*alignas(algt)*/ std::array<u_t, size> tmph, tmpl;
         /*alignas(algt)*/ std::array<u_t, size> txrh, txrl;
         /*alignas(algt)*/ std::array<u_t, size> tyrh, tyrl;
-        std::cout << (void*)&tmph[0] <<  "  " << (void*)&tmpl[0] << std::endl;
-        std::cout << (void*)&txrh[0] <<  "  " << (void*)&txrl[0] << std::endl;
-        std::cout << (void*)&tyrh[0] <<  "  " << (void*)&tyrl[0] << std::endl;
+//         std::cout << (void*)&tmph[0] <<  "  " << (void*)&tmpl[0] << std::endl;
+//         std::cout << (void*)&txrh[0] <<  "  " << (void*)&txrl[0] << std::endl;
+//         std::cout << (void*)&tyrh[0] <<  "  " << (void*)&tyrl[0] << std::endl;
 
         for( uint32_t i = 0; i != size; ++i )
         {
