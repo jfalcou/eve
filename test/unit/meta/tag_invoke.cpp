@@ -5,28 +5,80 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "eve/detail/raberu.hpp"
-#include "eve/traits/invoke/decorator.hpp"
 #include "test.hpp"
 
 #include <eve/traits/invoke.hpp>
 #include <eve/module/core.hpp>
-#include <string>
-#include <sstream>
 
+#include <sstream>
+#include <stdexcept>
+#include <string>
+
+//==================================================================================================
+// Internal test - Does eve::tag_invoke let us write the various use case of EVE callable
+//==================================================================================================
 // Defines some callable for test purpose
 namespace eve::tags
 {
-  struct func1 : elementwise  { EVE_CALLABLE(func1, func1_, "eve::func1");  };
-  struct func2 : reduction    { EVE_CALLABLE(func2, func2_, "func2");       };
+  struct func1 : elementwise
+  {
+    EVE_IMPLEMENTS_CALLABLE(func1, func1_, "eve::func1");
+
+    template<typename T>
+    auto operator()(T const& x) const noexcept -> decltype(eve::tag_invoke(*this, x))
+    {
+      return eve::tag_invoke(*this, x);
+    }
+
+    template<typename... T>
+    unsupported_call<func1(T...)> operator()(T... x) const
+    requires(!requires { eve::tag_invoke(*this, x...); }) =delete;
+  };
+
+  struct func2 : reduction
+  {
+    EVE_IMPLEMENTS_CALLABLE(func2, func2_, "func2");
+
+    auto operator()(auto x) const noexcept -> decltype(eve::tag_invoke(*this, x))
+    {
+      return eve::tag_invoke(*this, x);
+    }
+
+    template<typename... T>
+    unsupported_call<func2(T...)> operator()(T... x) const
+    requires(!requires { eve::tag_invoke(*this, x...); }) =delete;
+  };
 
   struct func3 : constant
   {
     EVE_DEFINES_CALLABLE(func3, "the func III");
-    EVE_CALLABLE_INTERFACE(func3);
+
+    template<typename... T>
+    auto operator()(T&&... x) const noexcept -> decltype(eve::tag_invoke(*this, EVE_FWD(x)...))
+    {
+      return eve::tag_invoke(*this, EVE_FWD(x)...);
+    }
+
+    // Custom error handling - Throw an exception at runtime
+    template<typename... T>
+    unsupported_call<func3(T&&...)> operator()(T&&... x) const
+    requires(!requires { eve::tag_invoke(*this, EVE_FWD(x)...); })
+    {
+      throw std::invalid_argument(tts::typename_<unsupported_call<func3(T&&...)>>);
+    }
   };
 
-  struct func4 : support_options<func4> { EVE_CALLABLE(func4, func4_, "eve::func4"); };
+  struct func4 : support_options<func4>
+  {
+    EVE_DEFERS_CALLABLE(do_func4);
+    EVE_DEFINES_CALLABLE(func4, "eve::func4");
+
+    template<typename... T>
+    auto operator()(T const&... x) const noexcept -> decltype(eve::tag_invoke(*this, x...))
+    {
+      return eve::tag_invoke(*this, x...);
+    }
+  };
 }
 
 namespace eve
@@ -53,7 +105,6 @@ namespace eve
   {
     sort_of(T v) : value(v) {}
 
-    // The way we expect to use tag_invoke on most types
     friend std::string tag_invoke(eve::tag_of<func1> const&, auto, sort_of x)
     {
       return "Sort of " + std::to_string(x.value);
@@ -63,7 +114,7 @@ namespace eve
   };
 }
 
-// Actual external tag_invoke setup - must lives in eve::tags
+// External tag_invoke setup - must lives in eve::tags
 namespace eve::tags
 {
   constexpr auto tag_invoke(func3, auto, eve::integral_value auto v)
@@ -82,7 +133,7 @@ namespace eve::detail
 
   // Decorated func4 - function can mix tag_invoke and deferred call if needed
   template<typename S>
-  constexpr auto func4_(EVE_EXPECTS(cpu_), decorators<S> opts, auto x) noexcept
+  constexpr auto do_func4(EVE_EXPECTS(cpu_), decorators<S> opts, auto x) noexcept
   {
     if constexpr(S::contains(detail::mask))
     {
@@ -136,18 +187,22 @@ TTS_CASE("Check tag_invoke call stack")
 
 TTS_CASE("Check tag_invoke with options")
 {
+  // No mask if no support_option
   bool b{};
-
-  eve::func2("lol");
-
-  // No option if no support_option
   TTS_EXPECT_NOT_COMPILES(b, { eve::func1[b]; });
   TTS_EXPECT_NOT_COMPILES(b, { eve::func2[b]; });
   TTS_EXPECT_NOT_COMPILES(b, { eve::func3[b]; });
 
-  // Options are supported but duplicates are not allowed
-  TTS_EXPECT_COMPILES     (b, { eve::func4[b]; }   );
-  TTS_EXPECT_NOT_COMPILES (b, { eve::func4[b][b]; });
+  // No option if no support_option
+  constexpr auto lz = eve::lazy;
+  TTS_EXPECT_NOT_COMPILES(lz, { eve::func1[lz]; });
+  TTS_EXPECT_NOT_COMPILES(lz, { eve::func2[lz]; });
+  TTS_EXPECT_NOT_COMPILES(lz, { eve::func3[lz]; });
+
+  // Options are supported
+  TTS_EXPECT_COMPILES(b   , { eve::func4[b];      } );
+  TTS_EXPECT_COMPILES(lz  , { eve::func4[lz];     } );
+  TTS_EXPECT_COMPILES(b,lz, { eve::func4[b][lz];  } );
 
   // Check mask/decorators processing
   TTS_EQUAL( eve::func4[true](8.25)                             , -  8.25 );
@@ -159,14 +214,121 @@ TTS_CASE("Check tag_invoke with options")
   TTS_EQUAL( eve::func4[eve::scale = 4][eve::other = '1'](8.25) ,   33    );
 };
 
+// Outside functions using eve::func2 in a SFINAE context
+template<typename T>
+int dependent_call(T x) requires requires{ eve::func2(x); }
+{
+  return eve::func2(x);
+}
+
+template<typename T>
+auto sfinae_call(T x) -> decltype(eve::func2(x))
+{
+  return eve::func2(x);
+}
+
 TTS_CASE("Check tag_invoke error checks")
 {
   int x{};
   auto y = "some text";
-  double z{};
 
-  TTS_EXPECT_NOT_COMPILES(x,  { eve::func1(x); } );
-  TTS_EXPECT_NOT_COMPILES(y,  { eve::func2(y); } );
-  TTS_EXPECT_NOT_COMPILES(z,  { eve::func3(z); } );
+  TTS_EXPECT_NOT_COMPILES(x, { eve::func1(x,x); } );
+  TTS_EXPECT_NOT_COMPILES(x, { eve::func1(x);   } );
+  TTS_EXPECT_NOT_COMPILES(y, { eve::func2(y);   } );
+
+  // Special error reporting is allowed
+  TTS_THROW(eve::func3(6.6), std::invalid_argument);
+
+  // Dependent call are honored
+  TTS_EXPECT_COMPILES    (x, { dependent_call(x); } );
+  TTS_EXPECT_NOT_COMPILES(y, { dependent_call(y); } );
+  TTS_EXPECT_COMPILES    (x, { sfinae_call(x);    } );
+  TTS_EXPECT_NOT_COMPILES(y, { sfinae_call(y);    } );
 };
 
+//==================================================================================================
+// Outsider test - Does eve::tag_invoke let us write callable in a side project
+//==================================================================================================
+
+// Short cut
+#define MYLIB_CALLABLE(TYPE,NAME,ID) EVE_IMPLEMENTS_CALLABLE_FROM(my_lib::detail, TYPE, NAME, ID)
+
+// Register some namespace into the calalble invoke system
+namespace my_lib::detail  { EVE_DEFERRED_NAMESPACE(); }
+namespace my_lib::funcs   { EVE_DEFERRED_INVOKE();    }
+
+namespace my_lib
+{
+  namespace funcs
+  {
+    struct my_func
+    {
+      MYLIB_CALLABLE(my_func, func_, "my_lib.func");
+
+      template<typename T>
+      auto operator()(T& x) const -> decltype(eve::tag_invoke(*this, x))
+      {
+        return eve::tag_invoke(*this, x);
+      }
+
+      template<typename T, typename U>
+      auto operator()(T x, U y) const -> decltype(eve::tag_invoke(*this, x, y))
+      {
+        return eve::tag_invoke(*this, x, y);
+      }
+    };
+  }
+
+  inline constexpr funcs::my_func func = {};
+}
+
+namespace my_lib
+{
+  struct my_data
+  {
+    // Support my_lib callable
+    friend void tag_invoke(funcs::my_func  , auto, my_data& x) { x.value = 99; }
+
+    // Support eve callable
+    friend void tag_invoke(eve::tags::func3, auto, my_data& x) { x.value = 44; }
+
+    int value;
+  };
+}
+
+// Deferred call inside eve for eve callable
+namespace eve::detail
+{
+  constexpr auto func2_(EVE_EXPECTS(cpu_), my_lib::my_data x) noexcept { return 3.5 * x.value; }
+}
+
+// Deferred call inside my_lib for my_lib callable
+namespace my_lib::detail
+{
+  constexpr auto func_(EVE_EXPECTS(eve::cpu_), my_data const& x, double d) noexcept { return d * x.value; }
+}
+
+TTS_CASE("Check callable streaming for external usage")
+{
+  std::ostringstream out;
+  out << my_lib::func;
+
+  TTS_EQUAL(out.str(), "my_lib.func"  );
+};
+
+TTS_CASE("Check tag_invoke call stack for external usage")
+{
+  my_lib::my_data x{0};
+  TTS_EQUAL( x.value  , 0 );
+
+  my_lib::func(x);
+  TTS_EQUAL( x.value, 99 );
+
+  eve::func3(x);
+  TTS_EQUAL( x.value, 44 );
+
+  TTS_EQUAL( my_lib::func(x,10.), 440. );
+
+  // EVE callable on my_lib data structure
+  TTS_EQUAL( eve::func2(x), 154. );
+};
