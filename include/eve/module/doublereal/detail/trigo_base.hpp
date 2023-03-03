@@ -87,7 +87,7 @@ namespace eve::detail
         //       using elt_t = doublereal<eve::underlying_type_t<T>>;
 
         constexpr uint32_t size = cardinal_v<T>;
-        constexpr auto     algt = alignment_v<T>;
+        constexpr auto     algt = 2*alignment_v<T>;
 
         alignas(algt) std::array<u_t, size> tmph, tmpl;
         alignas(algt) std::array<u_t, size> txrh, txrl;
