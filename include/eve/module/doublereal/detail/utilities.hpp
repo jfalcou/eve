@@ -248,7 +248,7 @@ namespace eve
       if constexpr(scalar_value<T>)
       {
         T s0, s1, s2(T(0)), s3(T(0));
-        if (is_not_finite(c0))  return {c0, s2, s2};
+        if (is_not_finite(c0))  return {c0, s2, s2, s3};
 
         kumi::tie(s0, c4) = quick_two_add(c3, c4);
         kumi::tie(s0, c3) = quick_two_add(c2, s0);
