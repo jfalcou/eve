@@ -88,10 +88,15 @@ namespace eve::detail
 
         constexpr uint32_t size = cardinal_v<T>;
         constexpr auto     algt = T::alignment();
+//        std::cout << "algt " << algt << std::endl;
 
-        alignas(algt) std::array<u_t, size> tmph, tmpl;
-        alignas(algt) std::array<u_t, size> txrh, txrl;
-        alignas(algt) std::array<u_t, size> tyrh, tyrl;
+        /*alignas(algt)*/ std::array<u_t, size> tmph, tmpl;
+        /*alignas(algt)*/ std::array<u_t, size> txrh, txrl;
+        /*alignas(algt)*/ std::array<u_t, size> tyrh, tyrl;
+        std::cout << (void*)&tmph[0] <<  "  " << (void*)&tmpl[0] << std::endl;
+        std::cout << (void*)&txrh[0] <<  "  " << (void*)&txrl[0] << std::endl;
+        std::cout << (void*)&tyrh[0] <<  "  " << (void*)&tyrl[0] << std::endl;
+
         for( uint32_t i = 0; i != size; ++i )
         {
           auto [a, b, c] = rem_piby2(x.get(i));
@@ -99,9 +104,13 @@ namespace eve::detail
           kumi::tie(txrh[i], txrl[i]) = b;
           kumi::tie(tyrh[i], tyrl[i]) = c;
         }
-        auto tmp = T( eve::load(eve::as_aligned(&tmph[0]), cardinal_t<T> {}), eve::load(eve::as_aligned(&tmpl[0]), cardinal_t<T> {}));
-        auto txr = T( eve::load(eve::as_aligned(&txrh[0]), cardinal_t<T> {}), eve::load(eve::as_aligned(&txrl[0]), cardinal_t<T> {}));
-        auto tyr = T( eve::load(eve::as_aligned(&tyrh[0]), cardinal_t<T> {}), eve::load(eve::as_aligned(&tyrl[0]), cardinal_t<T> {}));
+        constexpr cardinal_t<T> card = {};
+        auto tmp = T( eve::load(&tmph[0], card), eve::load(&tmpl[0], card));
+        auto txr = T( eve::load(&txrh[0], card), eve::load(&txrl[0], card));
+        auto tyr = T( eve::load(&tyrh[0], card), eve::load(&tyrl[0], card));
+        //        auto tmp = T( eve::load(eve::as_aligned(&tmph[0]), card), eve::load(eve::as_aligned(&tmpl[0]), card));
+        //         auto txr = T( eve::load(eve::as_aligned(&txrh[0]), card), eve::load(eve::as_aligned(&txrl[0]), card));
+        //         auto tyr = T( eve::load(eve::as_aligned(&tyrh[0]), card), eve::load(eve::as_aligned(&tyrl[0]), card));
         return kumi::make_tuple(tmp, txr, tyr);
       }
     }
