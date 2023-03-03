@@ -7,6 +7,7 @@
 //====================================================================================================
 #pragma once
 
+#include <eve/arch/spec.hpp>
 #include <eve/detail/abi.hpp>
 
 #include <ostream>
@@ -23,12 +24,12 @@ namespace eve::func_ns
 struct invoker
 {
   template<typename Tag, typename... Args>
-  requires requires(Tag tag, Args&&...args) { tag_invoke(tag, EVE_FWD(args)...); }
+  requires requires(Tag tag, Args&&...args) { tag_invoke(tag, current_api, EVE_FWD(args)...); }
   EVE_FORCEINLINE constexpr auto operator()(Tag tag, Args&&...args) const
-      noexcept(noexcept(tag_invoke(tag, EVE_FWD(args)...)))
-          -> decltype(tag_invoke(tag, EVE_FWD(args)...))
+  noexcept(noexcept(tag_invoke(tag, current_api, EVE_FWD(args)...)))
+      -> decltype(tag_invoke(tag, current_api, EVE_FWD(args)...))
   {
-    return tag_invoke(tag, EVE_FWD(args)...);
+    return tag_invoke(tag, current_api, EVE_FWD(args)...);
   }
 };
 }

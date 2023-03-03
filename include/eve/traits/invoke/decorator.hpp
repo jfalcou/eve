@@ -106,18 +106,16 @@ namespace eve
 
       template<typename... Args>
       EVE_FORCEINLINE auto operator()(Args&&... x) const
-      -> tag_invoke_result<Tag, current_api_type, decorators<Settings>, Args&&...>
+      -> tag_invoke_result<Tag, decorators<Settings>, Args&&...>
       {
-        return tag_invoke(Tag{}, current_api, decorators{opts}, EVE_FWD(x)...);
+        return eve::tag_invoke(Tag{}, decorators{opts}, EVE_FWD(x)...);
       }
 
-#if !defined(EVE_ALLOW_VERBOSE_CALLABLE_ERRORS)
       template<typename... T>
-      unsupported_call<Tag, Settings, T...> operator()(T&&...x) const noexcept
+      unsupported_call<Tag(Settings, T...)> operator()(T&&...x) const noexcept
       requires(!requires(decorators<Settings> const& s)
-                { tag_invoke(Tag{}, current_api, s, EVE_FWD(x)...); }
+                { eve::tag_invoke(Tag{}, s, EVE_FWD(x)...); }
               ) = delete;
-#endif
 
       Settings opts;
     };

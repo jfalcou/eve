@@ -25,10 +25,10 @@ namespace eve
 //! incorrect parameter types or quantity. Its template parameters embed the tag of the @callable
 //! along with the parameter types that caused the error.
 //!
-//! @tparam Tag   Tag type of the incorrectly called @callable.
-//! @tparam Args  Arguments used in the incorrect call.
+//! @tparam Signature Function type describing the erroneous call
 //==================================================================================================
-template<typename Tag, typename... Args> struct unsupported_call
+template<typename Signature>
+struct unsupported_call
 {};
 
 //! @brief Tag type for elementwise @callable properties
@@ -127,16 +127,25 @@ concept constant_callable = callable<T> && requires(T) { typename T::constant_ta
 // This binds all existing implementation of <func>_ back to tag_invoke.
 // This specialization lives in eve::tags to be found by ADL as tag themselves will be defines
 // in eve::tags.
+//
+// The EVE_DEFERRED_INVOKE macro is there to help use this mechanism in external project;
 //==================================================================================================
 namespace eve::tags
 {
   constexpr   auto tag_invoke(deferred_callable auto tag, auto arch, auto... x)
-  noexcept(noexcept(tag.deferred_call(arch, x...)))
-          ->  decltype(tag.deferred_call(arch, x...))
+  noexcept(noexcept(tag.deferred_call(arch, x...))) -> decltype(tag.deferred_call(arch, x...))
   {
     return tag.deferred_call(arch, x...);
   }
 }
+
+#define EVE_DEFERRED_INVOKE()                                                                     \
+constexpr   auto tag_invoke(eve::deferred_callable auto tag, auto arch, auto... x)                \
+noexcept(noexcept(tag.deferred_call(arch, x...))) -> decltype(tag.deferred_call(arch, x...))      \
+{                                                                                                 \
+  return tag.deferred_call(arch, x...);                                                           \
+}                                                                                                 \
+/**/
 
 //==================================================================================================
 //! @}
@@ -161,24 +170,6 @@ inline friend std::ostream& operator<<(std::ostream& os, TYPE const&)           
 using callable_tag_type                       = TYPE;                                             \
 static constexpr std::string_view callable_id = ID                                                \
 /**/
-
-//==================================================================================================
-//  Short-cut macro for defining the callable local poison pill that uses =delete to stop error
-//  message propagation and contains the informations required to locate the incorrect call.
-//  NOTE: This is the preferred way to have SFINAE-Friendly callable and get short error messages.
-//        If you want to do something else, you're free to do so.
-//  NOTE: THis behavior can be deactivated via the EVE_ALLOW_VERBOSE_CALLABLE_ERRORS macro
-//==================================================================================================
-#if !defined(EVE_ALLOW_VERBOSE_CALLABLE_ERRORS)
-#define EVE_EXCLUDE_INCORRECT_CALLABLE(TYPE)                                                      \
-template<typename... T>                                                                           \
-eve::unsupported_call<TYPE, T...> operator()(T const&...x) const noexcept                         \
-requires(!requires { tag_invoke(*this, eve::current_api, x...); }) = delete                       \
-/**/
-#else
-#define EVE_EXCLUDE_INCORRECT_CALLABLE(TYPE) using verbose_callable_tag = void \
-/**/
-#endif
 
 //==================================================================================================
 // When using external deferred call to shorten the overload set of any given function, EVE expects
@@ -237,32 +228,7 @@ EVE_DEFINES_CALLABLE(TYPE, ID)                                                  
 //==================================================================================================
 //  EVE-specific macro that use eve::detail as the deferred namespace
 //==================================================================================================
-#define EVE_IMPLEMENTS_CALLABLE(TYPE,NAME,ID) EVE_IMPLEMENTS_CALLABLE_FROM(eve::detail,TYPE,NAME,ID)
-
-//==================================================================================================
-//  General macro generating a tag_invoke interface. Use this if nothing special needs to be done
-//  at the callable level.
-//==================================================================================================
-#define EVE_CALLABLE_INTERFACE(TYPE)                                                              \
-template<typename... T>                                                                           \
-auto operator()(T const&... x) const noexcept                                                     \
--> decltype(tag_invoke(*this, eve::current_api, x...))                                            \
-{                                                                                                 \
-  return tag_invoke(*this, eve::current_api, x...);                                               \
-}                                                                                                 \
-EVE_EXCLUDE_INCORRECT_CALLABLE(TYPE)
-
-//==================================================================================================
-//  Defines the complete extended tag_invoke with deferred call support and named_callable interface
-//==================================================================================================
-//  Generic macro for complete callable interface setup
-//==================================================================================================
-#define EVE_CALLABLE_FROM(NS, TYPE, NAME, ID)                                                     \
-EVE_IMPLEMENTS_CALLABLE_FROM(NS,TYPE,NAME,ID);                                                    \
-EVE_CALLABLE_INTERFACE(TYPE)                                                                      \
+#define EVE_IMPLEMENTS_CALLABLE(TYPE,NAME,ID)                                                     \
+EVE_DEFERS_CALLABLE(NAME);                                                                        \
+EVE_DEFINES_CALLABLE(TYPE, ID)                                                                    \
 /**/
-
-//==================================================================================================
-//  EVE-specific macro for complete callable interface setup
-//==================================================================================================
-#define EVE_CALLABLE(TYPE,NAME,ID) EVE_CALLABLE_FROM(eve::detail,TYPE,NAME,ID)
