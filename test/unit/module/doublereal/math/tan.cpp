@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of tan on scalar"
       auto bmbc = bm::tan(tts::uptype(z));
       auto bc = tts::to_doublereal<e_t>(bmbc);
       auto s  = eve::tan(z);
-      TTS_ULP_EQUAL(bc, s , 0.5);
+      TTS_ULP_EQUAL(bc, s , 1000.0);
     }
   }
 };

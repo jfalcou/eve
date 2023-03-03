@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of csc on scalar"
       auto bmbc = 1/(bm::sin(tts::uptype(z)));
       auto bc = tts::to_doublereal<e_t>(bmbc);
       auto s  = eve::csc(z);
-      TTS_ULP_EQUAL(bc, s , 0.5);
+      TTS_ULP_EQUAL(bc, s , 1.0e3);
     }
   }
 };

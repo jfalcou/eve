@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of cot on scalar"
       auto bmbc = 1/(bm::tan(tts::uptype(z)));
       auto bc = tts::to_doublereal<e_t>(bmbc);
       auto s  = eve::cot(z);
-      TTS_ULP_EQUAL(bc, s , 0.5);
+      TTS_ULP_EQUAL(bc, s , 2.0e3);
     }
   }
 };

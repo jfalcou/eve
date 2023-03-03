@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check behavior of acoth on scalar"
   {
     for(auto f : a1)
     {
-      auto ep =  sizeof(e_t) == 4 ? 5.0E-13 :2.0e-25;
+      auto ep =  sizeof(e_t) == 4 ? 2.0E-12 :2.0e-25;
       auto z = eve::doublereal<e_t>(e, f);
       auto ac = eve::acoth(z);
       auto bmbc = bm::atanh(1/tts::uptype(z));

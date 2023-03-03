@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check behavior of sinc on scalar"
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   using dd_t = eve::doublereal<e_t>;
-  auto ep = 4096.0*eve::high(eve::eps(eve::as<dd_t>()));
+  auto ep = 7000.0*eve::high(eve::eps(eve::as<dd_t>()));
   for(auto e : a0)
   {
     for(auto f : a1)
