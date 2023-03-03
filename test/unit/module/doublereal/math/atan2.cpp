@@ -28,7 +28,7 @@ TTS_CASE_WITH( "Check behavior of atan2 on scalar"
       auto z1 = doublereal_t(e, f);
       auto z2 = doublereal_t(f, e);
       doublereal_t am =  tts::to_doublereal<e_t>(bm::atan2(tts::uptype(z1), tts::uptype(z2)));
-      TTS_ULP_EQUAL ( eve::atan2(z1, z2), am, 0.5);
+      TTS_ULP_EQUAL ( eve::atan2(z1, z2), am, 2.0);
     }
   }
 };

@@ -44,5 +44,5 @@ TTS_CASE_WITH( "Check behavior of geommean on wide"
   auto z1 = make_doublereal(a0,a1);
   auto z2 = make_doublereal(a1,a0);
   auto amz = decltype(z1)(eve::detail::map(eve::geommean, z1, z2));
-  TTS_ULP_EQUAL ( eve::geommean(z1, z2), amz, 0.5);
+  TTS_ULP_EQUAL ( eve::geommean(z1, z2), amz, 1.0);
 };

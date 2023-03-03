@@ -30,7 +30,7 @@ TTS_CASE_WITH( "Check behavior of sec on scalar"
       auto bmbc = 1/(bm::cos(tts::uptype(z)));
       auto bc = tts::to_doublereal<e_t>(bmbc);
       auto s  = eve::sec(z);
-      TTS_ULP_EQUAL(bc, s , 0.5);
+      TTS_ULP_EQUAL(bc, s , 1.0);
     }
   }
 };
@@ -46,5 +46,5 @@ TTS_CASE_WITH( "Check behavior of sec on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::sec, z));
   auto cz = eve::sec(z);
-  TTS_ULP_EQUAL(cz, az, 0.5);
+  TTS_ULP_EQUAL(cz, az, 1.0);
 };

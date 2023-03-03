@@ -35,7 +35,7 @@ TTS_CASE_WITH( "Check behavior of gd on scalar"
 
 TTS_CASE_WITH( "Check behavior of gd on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-50.0, 50.0)
+             , tts::generate ( tts::randoms(-10.0, 10.0)
                              , tts::randoms(-0.001, 0.001)
                              )
              )

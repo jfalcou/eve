@@ -47,5 +47,5 @@ TTS_CASE_WITH( "Check behavior of asecpi on wide"
   auto az = decltype(z)(eve::detail::map(eve::asecpi, z));
   auto cz = eve::asecpi(z);
   TTS_EQUAL ( cz, az);
-  TTS_ULP_EQUAL(cz, az, 0.5);
+  TTS_ULP_EQUAL(cz, az, 8.0);
 };

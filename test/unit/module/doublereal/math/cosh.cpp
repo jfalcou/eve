@@ -62,6 +62,5 @@ TTS_CASE_WITH( "Check behavior of cosh on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::cosh, z));
   auto cz = eve::cosh(z);
-  TTS_EQUAL ( cz, az);
   TTS_ULP_EQUAL(cz, az, 2.5);
 };

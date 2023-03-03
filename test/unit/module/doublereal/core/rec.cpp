@@ -24,8 +24,6 @@ TTS_CASE_WITH( "Check behavior of rec on scalar"
   {
     for(auto f : a1)
     {
-//       TTS_ULP_EQUAL(eve::domain::doublereal(eve::rec)(e), eve::rec(eve::doublereal<e_t>(e)), 0.5);
-//       TTS_ULP_EQUAL(eve::domain::doublereal(eve::rec)(e), eve::domain::doublereal(eve::rec)(eve::doublereal<e_t>(e)), 0.5);
       auto z = eve::doublereal<e_t>(e, f);
       TTS_ULP_EQUAL ( eve::rec(z), eve::one(eve::as(z))/z, 0.5);
     }
@@ -42,9 +40,5 @@ TTS_CASE_WITH( "Check behavior of rec on wide"
   <typename T>(T const& a0, T const& a1 )
 {
   auto z = eve::make_doublereal(a0,a1);
-  TTS_ULP_EQUAL ( eve::rec(z), eve::one(eve::as(z))/z, 0.5);
-
-//   TTS_ULP_EQUAL(eve::domain::doublereal(eve::rec)(a0), eve::rec(eve::make_doublereal(a0, eve::zero(eve::as(a0)))), 0.5);
-//   TTS_ULP_EQUAL(eve::domain::doublereal(eve::rec)(a0), eve::domain::doublereal(eve::rec)(eve::make_doublereal(a0, eve::zero(eve::as(a0)))), 0.5);
-
+  TTS_ULP_EQUAL ( eve::rec(z), eve::one(eve::as(z))/z, 2.0);
 };

@@ -27,9 +27,8 @@ TTS_CASE_WITH( "Check behavior of sqrt on scalar"
       if constexpr(sizeof(e_t) == 4)
       {
         TTS_ULP_EQUAL ( eve::to_double(eve::sqrt(eve::doublereal<e_t>(e, f))), eve::sqrt(eve::to_double(eve::doublereal<e_t>(e, f))), 10);
-        std::cout << eve::to_double(eve::sqrt(eve::doublereal<e_t>(e, f)))- eve::sqrt(eve::to_double(eve::doublereal<e_t>(e, f))) << std::endl;
       }
-//       else
+//       else //TO DO
 //       {
 //         TTS_EQUAL ( eve::to_float128(eve::sqrt(eve::doublereal<e_t>(e, f))), bm::sqrt(eve::to_float128(eve::doublereal<e_t>(e, f))));
 //       }
@@ -47,9 +46,8 @@ TTS_CASE_WITH( "Check behavior of sqrt on wide"
 {
   using e_t = typename T::value_type;
   auto z = make_doublereal(a0,a1);
-  if constexpr(sizeof(e_t) == 4)
+  if constexpr(sizeof(e_t) == 4) //TODO
   {
     TTS_ULP_EQUAL ( eve::to_double(eve::sqrt(z)), eve::sqrt(eve::to_double(z)), 10);
-  std::cout <<  eve::to_double(eve::sqrt(z))- eve::sqrt(eve::to_double(z))<< std::endl;
   }
 };

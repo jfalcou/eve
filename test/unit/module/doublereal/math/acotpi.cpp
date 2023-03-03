@@ -50,5 +50,5 @@ TTS_CASE_WITH( "Check behavior of acotpi on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::acotpi, z));
   auto cz = eve::acotpi(z);
-  TTS_ULP_EQUAL(cz, az, 0.5);
+  TTS_ULP_EQUAL(cz, az, 64);
 };

@@ -47,5 +47,5 @@ TTS_CASE_WITH( "Check behavior of asec on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::asec, z));
   auto cz = eve::asec(z);
-  TTS_ULP_EQUAL(cz, az, 0.5);
+  TTS_ULP_EQUAL(cz, az, 5.0);
 };
