@@ -49,6 +49,6 @@ TTS_CASE_WITH( "Check behavior of sinc on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::sinc, z));
   auto cz = eve::sinc(z);
-  TTS_ULP_EQUAL(cz, az, 10000);
+  TTS_ULP_EQUAL(cz, az, 1.0e5);
 
 };

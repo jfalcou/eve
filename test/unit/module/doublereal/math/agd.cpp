@@ -44,5 +44,5 @@ TTS_CASE_WITH( "Check behavior of agd on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::agd, z));
   auto cz = eve::agd(z);
-  TTS_ULP_EQUAL(cz, az, 2.00e+04);
+  TTS_ULP_EQUAL(cz, az, 2.0e+04);
 };
