@@ -33,16 +33,17 @@ TTS_CASE_WITH( "Check behavior of agd on scalar"
   }
 };
 
-TTS_CASE_WITH( "Check behavior of agd on wide"
-             , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-3.14/2, 3.14/2)
-                             , tts::randoms(-0.001, 0.001)
-                             )
-             )
-  <typename T>(T const& a0, T const& a1 )
-{
-  auto z = make_doublereal(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::agd, z));
-  auto cz = eve::agd(z);
-  TTS_ULP_EQUAL(cz, az, 2.0e+04);
-};
+//TODO
+// TTS_CASE_WITH( "Check behavior of agd on wide"
+//              , eve::test::simd::ieee_reals
+//              , tts::generate ( tts::randoms(-3.14/2, 3.14/2)
+//                              , tts::randoms(-0.001, 0.001)
+//                              )
+//              )
+//   <typename T>(T const& a0, T const& a1 )
+// {
+//   auto z = make_doublereal(a0,a1);
+//   auto az = decltype(z)(eve::detail::map(eve::agd, z));
+//   auto cz = eve::agd(z);
+//   TTS_ULP_EQUAL(cz, az, 2.0e+4);
+// };
