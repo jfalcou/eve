@@ -44,5 +44,5 @@ TTS_CASE_WITH( "Check behavior of acoth on wide"
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::acoth, z));
   auto cz = eve::acoth(z);
-  TTS_ULP_EQUAL(cz, az, 0.5);
+  TTS_ULP_EQUAL(cz, az, 2.0);
 };

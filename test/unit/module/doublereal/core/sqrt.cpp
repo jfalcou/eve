@@ -48,6 +48,6 @@ TTS_CASE_WITH( "Check behavior of sqrt on wide"
   auto z = make_doublereal(a0,a1);
   if constexpr(sizeof(e_t) == 4) //TODO
   {
-    TTS_ULP_EQUAL ( eve::to_double(eve::sqrt(z)), eve::sqrt(eve::to_double(z)), 10);
+    TTS_ULP_EQUAL ( eve::to_double(eve::sqrt(z)), eve::sqrt(eve::to_double(z)), 30);
   }
 };

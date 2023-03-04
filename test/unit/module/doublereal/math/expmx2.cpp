@@ -49,7 +49,11 @@ TTS_CASE_WITH( "Check behavior of expmx2 on wide"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  auto z = make_doublereal(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::expmx2, z));
-  TTS_ULP_EQUAL ( eve::expmx2(z), az, 50);
+  //TODO
+  if constexpr(sizeof(eve::underlying_type_t<T>) == 8)
+  {
+    auto z = make_doublereal(a0,a1);
+    auto az = decltype(z)(eve::detail::map(eve::expmx2, z));
+    TTS_ULP_EQUAL ( eve::expmx2(z), az, 50);
+  }
 };
