@@ -5,6 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
+#include "eve/traits/invoke/protocol.hpp"
 #include "test.hpp"
 
 #include <eve/traits/invoke.hpp>
@@ -22,7 +23,7 @@ namespace eve::tags
 {
   struct func1 : elementwise
   {
-    EVE_IMPLEMENTS_CALLABLE(func1, func1_, "eve::func1");
+    EVE_IMPLEMENTS_CALLABLE(func1, func1_);
 
     template<typename T>
     auto operator()(T const& x) const noexcept -> decltype(eve::tag_invoke(*this, x))
@@ -37,7 +38,7 @@ namespace eve::tags
 
   struct func2 : reduction
   {
-    EVE_IMPLEMENTS_CALLABLE(func2, func2_, "func2");
+    EVE_IMPLEMENTS_CALLABLE(func2, func2_);
 
     auto operator()(auto x) const noexcept -> decltype(eve::tag_invoke(*this, x))
     {
@@ -51,7 +52,7 @@ namespace eve::tags
 
   struct func3 : constant
   {
-    EVE_DEFINES_CALLABLE(func3, "the func III");
+    using callable_tag_type = func3;
 
     template<typename... T>
     auto operator()(T&&... x) const noexcept -> decltype(eve::tag_invoke(*this, EVE_FWD(x)...))
@@ -71,7 +72,7 @@ namespace eve::tags
   struct func4 : support_options<func4>
   {
     EVE_DEFERS_CALLABLE(do_func4);
-    EVE_DEFINES_CALLABLE(func4, "eve::func4");
+    using callable_tag_type = func4;
 
     template<typename... T>
     auto operator()(T const&... x) const noexcept -> decltype(eve::tag_invoke(*this, x...))
@@ -172,9 +173,9 @@ TTS_CASE("Check callable streaming")
   out2 << eve::func2;
   out3 << eve::func3;
 
-  TTS_EQUAL(out1.str(), "eve::func1"  );
-  TTS_EQUAL(out2.str(), "func2"       );
-  TTS_EQUAL(out3.str(), "the func III");
+  TTS_EQUAL(out1.str(), "eve::tags::func1" );
+  TTS_EQUAL(out2.str(), "eve::tags::func2" );
+  TTS_EQUAL(out3.str(), "eve::tags::func3" );
 };
 
 TTS_CASE("Check tag_invoke call stack")
@@ -251,7 +252,7 @@ TTS_CASE("Check tag_invoke error checks")
 //==================================================================================================
 
 // Short cut
-#define MYLIB_CALLABLE(TYPE,NAME,ID) EVE_IMPLEMENTS_CALLABLE_FROM(my_lib::detail, TYPE, NAME, ID)
+#define MYLIB_CALLABLE(TYPE,NAME) EVE_IMPLEMENTS_CALLABLE_FROM(my_lib::detail, TYPE, NAME)
 
 // Register some namespace into the calalble invoke system
 namespace my_lib::detail  { EVE_DEFERRED_NAMESPACE(); }
@@ -261,9 +262,10 @@ namespace my_lib
 {
   namespace funcs
   {
-    struct my_func
+    // By inheriting from eve::elementwise, we have access to the tag streaming operator
+    struct my_func : eve::elementwise
     {
-      MYLIB_CALLABLE(my_func, func_, "my_lib.func");
+      MYLIB_CALLABLE(my_func, func_);
 
       template<typename T>
       auto operator()(T& x) const -> decltype(eve::tag_invoke(*this, x))
@@ -313,7 +315,7 @@ TTS_CASE("Check callable streaming for external usage")
   std::ostringstream out;
   out << my_lib::func;
 
-  TTS_EQUAL(out.str(), "my_lib.func"  );
+  TTS_EQUAL(out.str(), "my_lib::funcs::my_func" );
 };
 
 TTS_CASE("Check tag_invoke call stack for external usage")

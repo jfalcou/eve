@@ -7,6 +7,7 @@
 //====================================================================================================
 #pragma once
 
+#include "eve/detail/raberu.hpp"
 #include <eve/arch/spec.hpp>
 #include <eve/traits/invoke/tag_invoke.hpp>
 
@@ -74,18 +75,6 @@ template<typename T>
 concept deferred_callable = requires(T) { typename T::deferred_callable_tag; };
 
 //==================================================================================================
-//! @concept named_callable
-//! @brief **EVE** callable with a text description
-//!
-//! A type `T` satisfies eve::callable if and only if it is an eve::callable and provides a
-//! `callable_tag_name` static member that can be streamed.
-//!
-//! @tparam T Tag type for the @callable to check
-//==================================================================================================
-template<typename T>
-concept named_callable = callable<T> && requires(T, std::ostream& os) { os << T::callable_id; };
-
-//==================================================================================================
 //! @concept elementwise_callable
 //! @brief **EVE** callable with elementwise semantic
 //!
@@ -120,6 +109,17 @@ concept reduction_callable = callable<T> && requires(T) { typename T::reduction_
 //==================================================================================================
 template<typename T>
 concept constant_callable = callable<T> && requires(T) { typename T::constant_tag; };
+
+//==================================================================================================
+// All callable can have their type streamed to an output stream
+// Other project can use tags that inherit from an EVE tag family type or add
+// `using eve::operator<<;` to their own tags namespace to benefit from this.
+//==================================================================================================
+template<callable Tag>
+std::ostream& operator<<(std::ostream& os, Tag const&)
+{
+  return os << rbr::detail::type<Tag>.name();
+}
 }
 
 //==================================================================================================
@@ -157,19 +157,6 @@ noexcept(noexcept(tag.deferred_call(arch, x...))) -> decltype(tag.deferred_call(
 //        EVE-dependent library or any user-facing code. The required interface for EVE callable is
 //        short enough to be written manually if the need arise.
 //==================================================================================================
-
-//==================================================================================================
-//  Short-cut macro for defining the basic interface to satisfy callable and named_callable.
-//  Also defined a hidden friend stream insertion operator
-//==================================================================================================
-#define EVE_DEFINES_CALLABLE(TYPE, ID)                                                            \
-inline friend std::ostream& operator<<(std::ostream& os, TYPE const&)                             \
-{                                                                                                 \
-  return os << ID;                                                                                \
-}                                                                                                 \
-using callable_tag_type                       = TYPE;                                             \
-static constexpr std::string_view callable_id = ID                                                \
-/**/
 
 //==================================================================================================
 // When using external deferred call to shorten the overload set of any given function, EVE expects
@@ -220,15 +207,12 @@ using deferred_callable_tag = void                                              
 //  General macro taking the deferred namespace NS and the function NAME
 //  NOTE: Don't hesitate to wrap this macro if you need it in your EVE-dependent library.
 //==================================================================================================
-#define EVE_IMPLEMENTS_CALLABLE_FROM(NS, TYPE, NAME, ID)                                          \
+#define EVE_IMPLEMENTS_CALLABLE_FROM(NS, TYPE, NAME)                                              \
 EVE_DEFERS_CALLABLE_FROM(NS,NAME);                                                                \
-EVE_DEFINES_CALLABLE(TYPE, ID)                                                                    \
+using callable_tag_type = TYPE                                                                    \
 /**/
 
 //==================================================================================================
 //  EVE-specific macro that use eve::detail as the deferred namespace
 //==================================================================================================
-#define EVE_IMPLEMENTS_CALLABLE(TYPE,NAME,ID)                                                     \
-EVE_DEFERS_CALLABLE(NAME);                                                                        \
-EVE_DEFINES_CALLABLE(TYPE, ID)                                                                    \
-/**/
+#define EVE_IMPLEMENTS_CALLABLE(TYPE,NAME)  EVE_IMPLEMENTS_CALLABLE_FROM(eve::detail,TYPE,NAME)

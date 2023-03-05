@@ -190,7 +190,8 @@ namespace rbr::detail
   template<typename T, auto ID = type_array<T>>
   struct type_t
   {
-    static constexpr auto name() { return std::string_view(ID.data(), ID.size());}
+    static constexpr auto len(auto p, auto r) noexcept { while(*p) { r++; p++; } return r; }
+    static constexpr auto name() { return std::string_view(ID.data(), len(ID.data(),0));}
   };
 
   template<typename T>
