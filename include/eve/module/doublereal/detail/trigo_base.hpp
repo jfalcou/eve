@@ -115,6 +115,27 @@ namespace eve::detail
       }
     }
 
+    template <typename Z > auto DP()
+    {
+      using doublereal_t =  element_type_t<Z>;
+      if constexpr(std::same_as<eve::underlying_type_t<doublereal_t>, double>)
+      {
+        auto dp1 =  doublereal_t(0x1.921fb54442d18p-1, 0x1p-55);
+        auto dp2 =   doublereal_t(0x1.a62633145c06ep-59, 0x0p+0);
+        auto dp3 =   doublereal_t(0x1.cd129024e088ap-116, 0x1.9f31d0082efaap-170);
+        auto lossth(doublereal_t(3.6028797018963968E16)); /* 2^55 */
+        return kumi::tuple{dp1, dp2, dp3, lossth};
+      }
+      else //float
+      {
+        auto dp1 =      doublereal_t(0x1.921fb4p-1, 0x0p+0);
+        auto dp2 =      doublereal_t(0x1.4442dp-25, 0x0p+0);
+        auto dp3 =      doublereal_t(0x1.84698ap-49, -0x1.cceba4p-75);
+        auto lossth(doublereal_t(1.073741824e9)); /* 2^30*/
+        return kumi::tuple{dp1, dp2, dp3, lossth};
+      }
+    }
+
     template <typename Z > auto SC()
     {
       using doublereal_t =  element_type_t<Z>;
@@ -184,6 +205,51 @@ namespace eve::detail
         return kumi::tuple{S, C, dp1, dp2, dp3, lossth};
       }
     }
+
+    template <typename Z > auto tan_PQ()
+    {
+      using doublereal_t =  element_type_t<Z>;
+      using A3 = kumi::result::generate_t<3, doublereal_t>;
+      using A4 = kumi::result::generate_t<4, doublereal_t>;
+      using A6 = kumi::result::generate_t<6, doublereal_t>;
+      using A7 = kumi::result::generate_t<7, doublereal_t>;
+      if constexpr(std::same_as<eve::underlying_type_t<doublereal_t>, double>)
+      {
+        const A6 P = {
+          doublereal_t(-0x1.fa5d486820e21p-1, 0x1.9a1c8e1475743p-55),
+          doublereal_t(0x1.3e130edd12945p+10, 0x1.500bd8e53e23dp-45),
+          doublereal_t(-0x1.9f024bdcc6c39p+18, 0x1.ea3a79319d30fp-36),
+          doublereal_t(0x1.89b0ed404622dp+25, -0x1.eb36cf2ccf4a4p-30),
+          doublereal_t(-0x1.1304fe4d63313p+31, -0x1.f64c4779336fcp-23),
+          doublereal_t(0x1.ada98af62f837p+34, -0x1.60f153949c756p-22)
+        };
+        const A7 Q = {
+          doublereal_t(0x1p+0, 0x0p+0),
+          doublereal_t(-0x1.494f98d3c1cafp+10, 0x1.3f8a35c20b114p-44),
+          doublereal_t(0x1.ba538d331a98dp+18, -0x1.1676a5a9dcacap-37),
+          doublereal_t(-0x1.b57281a9f10b3p+25, 0x1.7967234450a31p-29),
+          doublereal_t(0x1.48d6025d9b414p+31, -0x1.62104f1cb7042p-25),
+          doublereal_t(-0x1.355d0fdbd24e8p+35, 0x1.93ebcb12553f9p-20),
+        };
+        return kumi::tuple{P, Q};
+      }
+      else //float
+      {
+        const A3 P = {
+          doublereal_t(0x1.992d8ep+13, -0x1.b61818p-12),
+          doublereal_t(0x1.199ecap+20, 0x1.7f2778p-6),
+          doublereal_t(-0x1.11feaep+24, 0x1.9acdd2p-1)
+        };
+        const A4 Q = {
+          doublereal_t(0x1p+0, 0x0p+0),
+          doublereal_t(0x1.ab8a5ep+13, 0x1.d66caep-12),
+          doublereal_t(-0x1.427bc6p+20, 0x1.f550dap-6),
+          doublereal_t(0x1.7d98fcp+24, 0x1.756c78p-3)
+        };
+        return kumi::tuple{P, Q};
+      }
+    }
+
 
 //     template<typename Z> auto sin_eval(Z const& xx) noexcept
 //     {

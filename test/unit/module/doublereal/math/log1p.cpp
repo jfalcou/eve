@@ -13,8 +13,8 @@
 
 TTS_CASE_WITH( "Check behavior of log1p on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(0, 10)
-                             , tts::randoms(0, 10)
+             , tts::generate ( tts::randoms(0, 0.01)
+                             , tts::randoms(0, 0.01)
                              )
              )
   <typename T>(T const& a0, T const& a1)

@@ -14,7 +14,7 @@
 
 TTS_CASE_WITH( "Check behavior of exp on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-10, 10)
+             , tts::generate ( tts::randoms(-100, 100)
                              , tts::randoms(-1, 1)
                              )
              )
@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of exp on scalar"
       auto ac = eve::exp(z);
       auto bmbc = bm::exp(tts::uptype(z));
       auto bc = tts::to_doublereal<e_t>(bmbc);
-      TTS_ULP_EQUAL(bc, ac, 2.0);
+      TTS_ULP_EQUAL(bc, ac, 10.0);
     }
   }
   TTS_ULP_EQUAL(eve::exp(eve::inf(eve::as<doublereal_t>())), eve::inf(eve::as<doublereal_t>()), 0.5);

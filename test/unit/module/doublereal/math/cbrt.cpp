@@ -14,8 +14,8 @@
 
 TTS_CASE_WITH( "Check behavior of cbrt on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-100, 100)
-                             , tts::randoms(-100, 100)
+             , tts::generate ( tts::randoms(-10000, 10000)
+                             , tts::randoms(-10000, 10000)
                              )
              )
   <typename T>(T const& a0, T const& a1)

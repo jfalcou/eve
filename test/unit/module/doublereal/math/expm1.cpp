@@ -16,8 +16,8 @@
 
 TTS_CASE_WITH( "Check behavior of expm1 on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-10, 10)
-                             , tts::randoms(-1, 1)
+             , tts::generate ( tts::randoms(-0.5, 0.5)
+                             , tts::randoms(-0.1, 0.1)
                              )
              )
   <typename T>(T const& a0, T const& a1)

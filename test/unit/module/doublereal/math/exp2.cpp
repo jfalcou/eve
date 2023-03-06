@@ -14,7 +14,7 @@
 
 TTS_CASE_WITH( "Check behavior of exp2 on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-10, 10)
+             , tts::generate ( tts::randoms(-100, 100)
                              , tts::randoms(-10, 10)
                              )
              )
