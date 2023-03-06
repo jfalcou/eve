@@ -13,7 +13,7 @@ CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 
 BRIEF_MEMBER_DESC      = YES
-REPEAT_BRIEF           = YES
+REPEAT_BRIEF           = NO
 ABBREVIATE_BRIEF       = "The $name class" \
                          "The $name widget" \
                          "The $name file" \
