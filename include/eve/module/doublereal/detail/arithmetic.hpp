@@ -101,33 +101,33 @@ namespace eve::detail
     return Z(hi, lo);
   }
 
-  namespace internal
-  {
-    template<typename Z1>
-    EVE_FORCEINLINE Z1
-    iprev(Z1 const& z1) noexcept;
+//   namespace internal
+//   {
+//     template<typename Z1>
+//     EVE_FORCEINLINE Z1
+//     iprev(Z1 const& z1) noexcept;
 
-    template<typename Z1>
-    EVE_FORCEINLINE Z1 inext( Z1 const& z1) noexcept
-    {
-      auto [h, l] = z1;
-      auto nl = if_else(l != 0,  next(l), l);
-      auto nh = if_else(nl != 0, h, next(h));
-      auto nz1 = make_doublereal(nh, nl);
-      return nz1;
-    }
+//     template<typename Z1>
+//     EVE_FORCEINLINE Z1 inext( Z1 const& z1) noexcept
+//     {
+//       auto [h, l] = z1;
+//       auto nl = if_else(l != 0,  next(l), l);
+//       auto nh = if_else(nl != 0, h, next(h));
+//       auto nz1 = make_doublereal(nh, nl);
+//       return nz1;
+//     }
 
-    template<typename Z1>
-    EVE_FORCEINLINE Z1
-    iprev(Z1 const& z1) noexcept
-    {
-      auto [h, l] = z1;
-      auto pl = if_else(l != 0,  prev(l), l);
-      auto ph = if_else(pl != 0, h, prev(h));
-      auto pz1 = make_doublereal(ph, pl);
-      return pz1;
-    }
-  }
+//     template<typename Z1>
+//     EVE_FORCEINLINE Z1
+//     iprev(Z1 const& z1) noexcept
+//     {
+//       auto [h, l] = z1;
+//       auto pl = if_else(l != 0,  prev(l), l);
+//       auto ph = if_else(pl != 0, h, prev(h));
+//       auto pz1 = make_doublereal(ph, pl);
+//       return pz1;
+//     }
+//   }
 
   template<typename Z1>
   EVE_FORCEINLINE auto
@@ -282,39 +282,44 @@ namespace eve::detail
   //================================================================================================
   //  Binary functions with integral second parameter
   //================================================================================================
-  template<typename Z1, integral_value N> //TODO this doesnot work see prev.cpp
+  template<typename Z1, integral_value N>
   EVE_FORCEINLINE auto
   doublereal_n_binary_dispatch(eve::tag::prev_, Z1 const& z1, N const& n) noexcept;
 
-  template<typename Z1, integral_value N> //TODO this doesnot work see next.cpp
+  template<typename Z1, integral_value N>
   EVE_FORCEINLINE auto
   doublereal_n_binary_dispatch(eve::tag::next_, Z1 const& z1, N const& n) noexcept
   {
     using r_t = as_wide_as_t<Z1, N>;
-    auto nz1 = r_t(high(z1), next(low(z1), n));
-    auto pnz1 = r_t(high(nz1), prev(low(z1), n));
-    auto e =pnz1; //prev(pnz1, n);
-    return if_else(e > z1, pnz1, nz1);
+    N i(0);
+    r_t r(z1);
+    auto test = i < n;
+    while (eve::any(test))
+    {
+      r =  if_else(test, next(r), r);
+      test = (++i) < n;
+    }
+    return r;
   }
 
-  template<typename Z1, integral_value N> //TODO this doesnot work see prev.cpp
+  template<typename Z1, integral_value N>
   EVE_FORCEINLINE auto
   doublereal_n_binary_dispatch(eve::tag::next_, Z1 const& z1, N const& n) noexcept;
 
-  template<typename Z1, integral_value N> //TODO this doesnot work see prev.cpp
+  template<typename Z1, integral_value N>
   EVE_FORCEINLINE auto
   doublereal_n_binary_dispatch(eve::tag::prev_, Z1 const& z1, N const& n) noexcept
   {
     using r_t = as_wide_as_t<Z1, N>;
-    std::cout << "z1 " << z1 << std::endl;
-
-    auto pz1 = r_t(high(z1), prev(low(z1), n));
-    std::cout << "pz1 " << pz1 << std::endl;
-
-
-    auto npz1 =  r_t(high(pz1), next(low(z1)));
-    auto e = next(npz1, n);
-    return if_else(e < z1, npz1, pz1);
+    N i(0);
+    r_t r(z1);
+    auto test = i < n;
+    while (eve::any(test))
+    {
+      r =  if_else(test, prev(r), r);
+      test = (++i) < n;
+    }
+    return r;
   }
 
   template<typename Z, integral_value N>
