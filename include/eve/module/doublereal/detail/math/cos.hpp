@@ -24,7 +24,7 @@ namespace eve::detail
     else
     {
       auto med = [](auto xx){
-        auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
+        auto [dp1, dp2, dp3, lossth] = internal::DP<Z>();
         auto sign = one(as((xx)));
         auto x = eve::abs(xx);
         auto toobig = x >  lossth;
@@ -100,7 +100,8 @@ namespace eve::detail
       else if( eve::all(x <= pio_2(as(a0))) )
       {
         auto xx = a0;
-        auto [S, C, dp1, dp2, dp3, lossth] = internal::SC<Z>();
+        auto [S, C] = internal::SC<Z>();
+        auto [dp1, dp2, dp3, lossth] = internal::DP<Z>();
         auto sign = one(as((xx)));
         auto x = eve::abs(xx);
         auto toobig = x >  lossth;

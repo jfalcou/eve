@@ -11,10 +11,11 @@
 #include <eve/module/doublereal.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
 
-TTS_CASE_WITH( "Check behavior of acot on scalar"
+
+TTS_CASE_WITH( "Check behavior of tan on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-10000, 10000)
-                              , tts::randoms(-0.0001, 0.0001)
+             , tts::generate ( tts::randoms(-1.54/2, 1.54/2)
+                              , tts::randoms(-0.001, +0.001)
                              )
              )
   <typename T>(T const& a0, T const& a1)
@@ -26,25 +27,24 @@ TTS_CASE_WITH( "Check behavior of acot on scalar"
     for(auto f : a1)
     {
       auto z = eve::doublereal<e_t>(e, f);
-      auto ac = eve::acot(z);
-      auto bmbc = bm::atan(tts::uptype(eve::rec(z)));
+      auto bmbc = bm::tan(tts::uptype(z));
       auto bc = tts::to_doublereal<e_t>(bmbc);
-      TTS_RELATIVE_EQUAL(bc, ac, eve::eps(eve::as(e)));
+      auto s  = eve::quarter_circle(eve::tan)(z);
+      TTS_ULP_EQUAL(bc, s , 1.0);
     }
   }
 };
 
-TTS_CASE_WITH( "Check behavior of acot on wide"
+TTS_CASE_WITH( "Check behavior of tan on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-10, 10)
-                             , tts::randoms(-1, 1)
+             , tts::generate ( tts::randoms(-1.544/2, 1.54/2)
+                             , tts::randoms(-0.001, +0.001)
                              )
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = eve::underlying_type_t<T>;
   auto z = make_doublereal(a0,a1);
-  auto az = decltype(z)(eve::detail::map(eve::acot, z));
-  auto cz = eve::acot(z);
-  TTS_RELATIVE_EQUAL(cz, az, eve::eps(eve::as<e_t>()));
+  auto az = decltype(z)(eve::detail::map(eve::quarter_circle(eve::tan), z));
+  auto cz = eve::quarter_circle(eve::tan)(z);
+  TTS_ULP_EQUAL(cz, az, 0.5);
 };

@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/doublereal/doublereal.hpp>
+
 namespace eve::detail
 {
   namespace internal //just for doublereal
@@ -87,15 +88,9 @@ namespace eve::detail
         //       using elt_t = doublereal<eve::underlying_type_t<T>>;
 
         constexpr uint32_t size = cardinal_v<T>;
-//        constexpr auto     algt = T::alignment();
-//        std::cout << "algt " << algt << std::endl;
-
-        /*alignas(algt)*/ std::array<u_t, size> tmph, tmpl;
-        /*alignas(algt)*/ std::array<u_t, size> txrh, txrl;
-        /*alignas(algt)*/ std::array<u_t, size> tyrh, tyrl;
-//         std::cout << (void*)&tmph[0] <<  "  " << (void*)&tmpl[0] << std::endl;
-//         std::cout << (void*)&txrh[0] <<  "  " << (void*)&txrl[0] << std::endl;
-//         std::cout << (void*)&tyrh[0] <<  "  " << (void*)&tyrl[0] << std::endl;
+        std::array<u_t, size> tmph, tmpl;
+        std::array<u_t, size> txrh, txrl;
+        std::array<u_t, size> tyrh, tyrl;
 
         for( uint32_t i = 0; i != size; ++i )
         {
@@ -108,9 +103,6 @@ namespace eve::detail
         auto tmp = T( eve::load(&tmph[0], card), eve::load(&tmpl[0], card));
         auto txr = T( eve::load(&txrh[0], card), eve::load(&txrl[0], card));
         auto tyr = T( eve::load(&tyrh[0], card), eve::load(&tyrl[0], card));
-        //        auto tmp = T( eve::load(eve::as_aligned(&tmph[0]), card), eve::load(eve::as_aligned(&tmpl[0]), card));
-        //         auto txr = T( eve::load(eve::as_aligned(&txrh[0]), card), eve::load(eve::as_aligned(&txrl[0]), card));
-        //         auto tyr = T( eve::load(eve::as_aligned(&tyrh[0]), card), eve::load(eve::as_aligned(&tyrl[0]), card));
         return kumi::make_tuple(tmp, txr, tyr);
       }
     }
@@ -171,12 +163,7 @@ namespace eve::detail
           doublereal_t(-0x1.6c16c16c16c17p-10, 0x1.f49f49f4a449p-65),
           doublereal_t(0x1.5555555555555p-5, 0x1.555555555555p-59),
         };
-
-        auto dp1 =  doublereal_t(0x1.921fb54442d18p-1, 0x1p-55);
-        auto dp2 =   doublereal_t(0x1.a62633145c06ep-59, 0x0p+0);
-        auto dp3 =   doublereal_t(0x1.cd129024e088ap-116, 0x1.9f31d0082efaap-170);
-        auto lossth(doublereal_t(3.6028797018963968E16)); /* 2^55 */
-        return kumi::tuple{S, C, dp1, dp2, dp3, lossth};
+        return kumi::tuple{S, C};
       }
       else //float
       {
@@ -197,58 +184,53 @@ namespace eve::detail
           doublereal_t(0x1.555556p-5, -0x1.555556p-30),
 
         };
-
-        auto dp1 =      doublereal_t(0x1.921fb4p-1, 0x0p+0);
-        auto dp2 =      doublereal_t(0x1.4442dp-25, 0x0p+0);
-        auto dp3 =      doublereal_t(0x1.84698ap-49, -0x1.cceba4p-75);
-        auto lossth(doublereal_t(1.073741824e9)); /* 2^30*/
-        return kumi::tuple{S, C, dp1, dp2, dp3, lossth};
+        return kumi::tuple{S, C};
       }
     }
 
-    template <typename Z > auto tan_PQ()
-    {
-      using doublereal_t =  element_type_t<Z>;
-      using A3 = kumi::result::generate_t<3, doublereal_t>;
-      using A4 = kumi::result::generate_t<4, doublereal_t>;
-      using A6 = kumi::result::generate_t<6, doublereal_t>;
-      using A7 = kumi::result::generate_t<7, doublereal_t>;
-      if constexpr(std::same_as<eve::underlying_type_t<doublereal_t>, double>)
-      {
-        const A6 P = {
-          doublereal_t(-0x1.fa5d486820e21p-1, 0x1.9a1c8e1475743p-55),
-          doublereal_t(0x1.3e130edd12945p+10, 0x1.500bd8e53e23dp-45),
-          doublereal_t(-0x1.9f024bdcc6c39p+18, 0x1.ea3a79319d30fp-36),
-          doublereal_t(0x1.89b0ed404622dp+25, -0x1.eb36cf2ccf4a4p-30),
-          doublereal_t(-0x1.1304fe4d63313p+31, -0x1.f64c4779336fcp-23),
-          doublereal_t(0x1.ada98af62f837p+34, -0x1.60f153949c756p-22)
-        };
-        const A7 Q = {
-          doublereal_t(0x1p+0, 0x0p+0),
-          doublereal_t(-0x1.494f98d3c1cafp+10, 0x1.3f8a35c20b114p-44),
-          doublereal_t(0x1.ba538d331a98dp+18, -0x1.1676a5a9dcacap-37),
-          doublereal_t(-0x1.b57281a9f10b3p+25, 0x1.7967234450a31p-29),
-          doublereal_t(0x1.48d6025d9b414p+31, -0x1.62104f1cb7042p-25),
-          doublereal_t(-0x1.355d0fdbd24e8p+35, 0x1.93ebcb12553f9p-20),
-        };
-        return kumi::tuple{P, Q};
-      }
-      else //float
-      {
-        const A3 P = {
-          doublereal_t(0x1.992d8ep+13, -0x1.b61818p-12),
-          doublereal_t(0x1.199ecap+20, 0x1.7f2778p-6),
-          doublereal_t(-0x1.11feaep+24, 0x1.9acdd2p-1)
-        };
-        const A4 Q = {
-          doublereal_t(0x1p+0, 0x0p+0),
-          doublereal_t(0x1.ab8a5ep+13, 0x1.d66caep-12),
-          doublereal_t(-0x1.427bc6p+20, 0x1.f550dap-6),
-          doublereal_t(0x1.7d98fcp+24, 0x1.756c78p-3)
-        };
-        return kumi::tuple{P, Q};
-      }
-    }
+//     template <typename Z > auto tan_PQ()
+//     {
+//       using doublereal_t =  element_type_t<Z>;
+//       using A3 = kumi::result::generate_t<3, doublereal_t>;
+//       using A4 = kumi::result::generate_t<4, doublereal_t>;
+//       using A6 = kumi::result::generate_t<6, doublereal_t>;
+//       using A7 = kumi::result::generate_t<7, doublereal_t>;
+//       if constexpr(std::same_as<eve::underlying_type_t<doublereal_t>, double>)
+//       {
+//         const A6 P = {
+//           doublereal_t(-0x1.fa5d486820e21p-1, 0x1.9a1c8e1475743p-55),
+//           doublereal_t(0x1.3e130edd12945p+10, 0x1.500bd8e53e23dp-45),
+//           doublereal_t(-0x1.9f024bdcc6c39p+18, 0x1.ea3a79319d30fp-36),
+//           doublereal_t(0x1.89b0ed404622dp+25, -0x1.eb36cf2ccf4a4p-30),
+//           doublereal_t(-0x1.1304fe4d63313p+31, -0x1.f64c4779336fcp-23),
+//           doublereal_t(0x1.ada98af62f837p+34, -0x1.60f153949c756p-22)
+//         };
+//         const A7 Q = {
+//           doublereal_t(0x1p+0, 0x0p+0),
+//           doublereal_t(-0x1.494f98d3c1cafp+10, 0x1.3f8a35c20b114p-44),
+//           doublereal_t(0x1.ba538d331a98dp+18, -0x1.1676a5a9dcacap-37),
+//           doublereal_t(-0x1.b57281a9f10b3p+25, 0x1.7967234450a31p-29),
+//           doublereal_t(0x1.48d6025d9b414p+31, -0x1.62104f1cb7042p-25),
+//           doublereal_t(-0x1.355d0fdbd24e8p+35, 0x1.93ebcb12553f9p-20),
+//         };
+//         return kumi::tuple{P, Q};
+//       }
+//       else //float
+//       {
+//         const A3 P = {
+//           doublereal_t(0x1.992d8ep+13, -0x1.b61818p-12),
+//           doublereal_t(0x1.199ecap+20, 0x1.7f2778p-6),
+//           doublereal_t(-0x1.11feaep+24, 0x1.9acdd2p-1)
+//         };
+//         const A4 Q = {
+//           doublereal_t(0x1p+0, 0x0p+0),
+//           doublereal_t(0x1.ab8a5ep+13, 0x1.d66caep-12),
+//           doublereal_t(-0x1.427bc6p+20, 0x1.f550dap-6),
+//           doublereal_t(0x1.7d98fcp+24, 0x1.756c78p-3)
+//         };
+//         return kumi::tuple{P, Q};
+//       }
+//     }
 
 
 //     template<typename Z> auto sin_eval(Z const& xx) noexcept

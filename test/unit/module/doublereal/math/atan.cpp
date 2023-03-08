@@ -16,7 +16,7 @@
 
 TTS_CASE_WITH( "Check behavior of atan on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-10, 10)
+             , tts::generate ( tts::randoms(-10000, 10000)
                               , tts::randoms(-0.0001, 0.0001)
                              )
              )

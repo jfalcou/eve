@@ -21,8 +21,6 @@ namespace eve::detail
     auto ax = eve::abs(a);
     if constexpr(std::same_as<D, quarter_circle_type>)
       return if_else(ax > pio_4(as(ax)), allbits,  sin_eval(sqr(a), a));
-    else if constexpr(std::same_as<D, half_circle_type>)
-      return if_else(ax > pio_2(as(ax)), allbits,  sin_eval(sqr(a), a));
     else
     {
       auto sign = signnz(a);
@@ -35,7 +33,11 @@ namespace eve::detail
       auto s =   sign*sin_eval(x2, x);
       auto c =   sign*cos_eval(x2);
       auto res = s*alpha+c*beta;
-      if constexpr(std::same_as<D, full_circle_type>)
+      if constexpr(std::same_as<D, half_circle_type>)
+      {
+        return if_else(ax > pio_2(as(ax)), allbits,  res);
+      }
+      else if constexpr(std::same_as<D, full_circle_type>)
       {
         return if_else(eve::abs(x) > pi(as(ax)), allbits,  res);
       }

@@ -21,9 +21,9 @@
 #include <eve/module/doublereal/detail/math/cos.hpp>
 #include <eve/module/doublereal/detail/math/sincos.hpp>
 #include <eve/module/doublereal/detail/math/tan.hpp>
+#include <eve/module/doublereal/detail/math/cot.hpp>
+#include <eve/module/doublereal/detail/math/inv_trigo.hpp>
 
-//#include <eve/module/doublereal/detail/trigo.hpp>
-
-#include <eve/module/doublereal/detail/invtrig.hpp>
+//#include <eve/module/doublereal/detail/invtrig.hpp>
 #include <eve/module/doublereal/detail/pi_trigo.hpp>
 #include <eve/module/doublereal/detail/invhyper.hpp>

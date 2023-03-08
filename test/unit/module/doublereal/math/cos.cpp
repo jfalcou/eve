@@ -33,10 +33,6 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
       auto sf  = eve::cos(z);
       auto zz = tts::uptype(sf);
       auto diff = bms-zz;
-      std::cout << "z "<< std::setprecision(40)<< tts::uptype(z) << std::endl;
-      std::cout << "bms "<< bms << std::endl;
-      std::cout << "zz  "<< std::setprecision(20) << zz  << std::endl;
-      std::cout << "diff " << eve::abs(double(diff)) << std::endl;
       TTS_LESS_EQUAL(eve::abs(double(diff)), ep);
     }
   }
