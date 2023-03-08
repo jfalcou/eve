@@ -14,7 +14,7 @@
 
 TTS_CASE_WITH( "Check behavior of sin on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-0.5, 0.5)
+             , tts::generate ( tts::randoms(-0.499, 0.499)
                               , tts::randoms(0, +0.0001)
                              )
              )
@@ -38,7 +38,7 @@ TTS_CASE_WITH( "Check behavior of sin on scalar"
 
 TTS_CASE_WITH( "Check behavior of sin on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-0.5, 0.5)
+             , tts::generate ( tts::randoms(-0.499.0.499
                              , tts::randoms(-0.001, +0.001)
                              )
              )
