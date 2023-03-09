@@ -24,17 +24,17 @@ TTS_CASE_WITH( "Check behavior of ceil on scalar"
   {
     for(auto f : a1)
     {
-     TTS_EQUAL ( tts::uptype(eve::ceil(eve::doublereal<e_t>(e, f))), bm::ceil(tts::uptype(eve::doublereal<e_t>(e, f))));
+      TTS_EQUAL ( tts::uptype(eve::ceil(eve::doublereal<e_t>(e, f))), bm::ceil(tts::uptype(eve::doublereal<e_t>(e, f))));
     }
   }
 };
 
 TTS_CASE_WITH( "Check behavior of ceil on wide"
-        , eve::test::simd::ieee_reals
+             , eve::test::simd::ieee_reals
              , tts::generate ( tts::randoms(-10, 10)
                              , tts::randoms(-10, 10)
-                              )
-        )
+                             )
+             )
   <typename T>(T const& a0, T const& a1 )
 {
   auto z = make_doublereal(a0,a1);

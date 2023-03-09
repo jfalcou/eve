@@ -13,9 +13,11 @@ TTS_CASE_WITH( "Check behavior of is_unordered on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate ( tts::randoms(-10, 10)
                              , tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
                              )
              )
-  <typename T>(T const& a0, T const& a1 )
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
   using e_t = typename T::value_type;
   using doublereal_t = eve::doublereal<e_t>;
@@ -23,11 +25,14 @@ TTS_CASE_WITH( "Check behavior of is_unordered on scalar"
   {
     for(auto f : a1)
     {
-     if constexpr(sizeof(e_t) == 4)
+      for(auto g : a2)
       {
-        auto z1 = doublereal_t(e, f);
-        auto z2 = doublereal_t(f, e);
-        TTS_EQUAL ( eve::is_unordered(z1, z2), (eve::is_nan(z1) || eve::is_nan(z2)));
+        for(auto h : a3)
+        {
+          auto z1 = doublereal_t(e, f);
+          auto z2 = doublereal_t(g, h);
+          TTS_EQUAL ( eve::is_unordered(z1, z2), eve::is_nan(z1)||eve::is_nan(z1));
+        }
       }
     }
   }
@@ -37,15 +42,14 @@ TTS_CASE_WITH( "Check behavior of is_unordered on wide"
              , eve::test::simd::ieee_reals
              , tts::generate ( tts::randoms(-10, 10)
                              , tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
                              )
         )
-  <typename T>(T const& a0, T const& a1 )
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
-  using e_t = typename T::value_type;
-  if constexpr(sizeof(e_t) == 4)
-  {
-    auto z1 = make_doublereal(a0,a1);
-    auto z2 = make_doublereal(a1,a0);
-    TTS_EQUAL ( eve::is_unordered(z1, z2), (eve::is_nan(z1) || eve::is_nan(z2)));
-  }
+  auto z1 = make_doublereal(a0,a1);
+  auto z2 = make_doublereal(a2, a3);
+  TTS_EQUAL ( eve::is_unordered(z1, z2), eve::is_nan(z1)||eve::is_nan(z1));
+
 };
