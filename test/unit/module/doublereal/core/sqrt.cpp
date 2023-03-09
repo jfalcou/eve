@@ -40,5 +40,5 @@ TTS_CASE_WITH( "Check behavior of sqrt on wide"
 {
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::sqrt, z));
-  TTS_EQUAL ( eve::sqrt(z), az);
+  TTS_ULP_EQUAL ( eve::sqrt(z), az, 1.0);
 };

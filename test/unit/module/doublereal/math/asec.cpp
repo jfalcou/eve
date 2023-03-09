@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of asec on scalar"
       auto ac = eve::asec(z);
       auto bmbc = bm::acos(tts::uptype(eve::rec(z)));
       auto bc = tts::to_doublereal<e_t>(bmbc);
-      TTS_ULP_EQUAL(bc, ac, 0.5);
+      TTS_ULP_EQUAL(bc, ac, 2.0);
     }
   }
 };

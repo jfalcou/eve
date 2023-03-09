@@ -25,7 +25,7 @@ TTS_CASE_WITH( "Check behavior of sqr_abs on scalar"
     for(auto f : a1)
     {
       auto z = eve::doublereal<e_t>(e, f);
-      TTS_ULP_EQUAL ( eve::sqr_abs(z), z*z, 0.5);
+      TTS_ULP_EQUAL ( eve::sqr_abs(z), eve::sqr(eve::abs(z)), 0.5);
     }
   }
 };

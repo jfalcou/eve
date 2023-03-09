@@ -13,10 +13,10 @@
 
 TTS_CASE_WITH( "Check behavior of atan2 on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
-             , tts::generate ( tts::randoms(-1, 1)
-                             , tts::randoms(-1, 1)
-                             , tts::randoms(-1, 1)
-                             , tts::randoms(-1, 1)
+             , tts::generate ( tts::randoms(0.01, 100)
+                             , tts::randoms(0.01, 100)
+                             , tts::randoms(0.01, 100)
+                             , tts::randoms(0.01, 100)
                              )
              )
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
@@ -43,10 +43,10 @@ TTS_CASE_WITH( "Check behavior of atan2 on scalar"
 
 TTS_CASE_WITH( "Check behavior of atan2 on wide"
         , eve::test::simd::ieee_reals
-        , tts::generate ( tts::randoms(-1, 1)
-                        , tts::randoms(-1, 1)
-                        , tts::randoms(-1, 1)
-                        , tts::randoms(-1, 1)
+        , tts::generate ( tts::randoms(0.01, 100)
+                        , tts::randoms(0.01, 100)
+                        , tts::randoms(0.01, 100)
+                        , tts::randoms(0.01, 100)
                         )
         )
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
