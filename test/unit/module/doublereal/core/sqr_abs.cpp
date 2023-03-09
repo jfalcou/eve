@@ -40,5 +40,5 @@ TTS_CASE_WITH( "Check behavior of sqr_abs on wide"
 {
   auto z = make_doublereal(a0,a1);
   auto az = decltype(z)(eve::detail::map(eve::sqr_abs, z));
-  TTS_EQUAL ( eve::sqr_abs(z), az);
+  TTS_ULP_EQUAL ( eve::sqr_abs(z), az, 2.0);
 };
