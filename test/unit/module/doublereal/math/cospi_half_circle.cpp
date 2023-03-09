@@ -39,8 +39,8 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
 
 TTS_CASE_WITH( "Check behavior of cos on wide"
              , eve::test::simd::ieee_reals
-             , tts::generate ( tts::randoms(-0.25, 0.25)
-                             , tts::randoms(-0.001, +0.001)
+             , tts::generate ( tts::randoms(-0.24, 0.24)
+                             , tts::randoms(-0.01, +0.01)
                              )
              )
   <typename T>(T const& a0, T const& a1 )
