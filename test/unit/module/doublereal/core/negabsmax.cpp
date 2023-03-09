@@ -7,7 +7,9 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "../measures.hpp"
 #include <eve/module/doublereal.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 TTS_CASE_WITH( "Check behavior of negabsmax on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
@@ -23,12 +25,10 @@ TTS_CASE_WITH( "Check behavior of negabsmax on scalar"
   {
     for(auto f : a1)
     {
-     if constexpr(sizeof(e_t) == 4)
-      {
-        auto z1 = doublereal_t(e, f);
-        auto z2 = doublereal_t(f, e);
-        TTS_EQUAL ( eve::to_double(eve::negabsmax(z1, z2)), eve::negabsmax(eve::to_double(z1), to_double(z2)));
-      }
+      auto z1 = doublereal_t(e, f/1000);
+      auto z2 = doublereal_t(f, e/1000);
+      auto am =  (tts::uptype(z1) >   tts::uptype(z2)) ? -bm::abs(tts::uptype(z1)) : -bm::abs(tts::uptype(z2));
+      TTS_EQUAL ( tts::uptype(eve::negabsmax(z1, z2)), am);
     }
   }
 };
@@ -41,11 +41,8 @@ TTS_CASE_WITH( "Check behavior of negabsmax on wide"
         )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
-  if constexpr(sizeof(e_t) == 4)
-  {
-    auto z1 = make_doublereal(a0,a1);
-    auto z2 = make_doublereal(a1,a0);
-    TTS_EQUAL ( eve::to_double(eve::negabsmax(z1, z2)), eve::negabsmax(eve::to_double(z1), to_double(z2)));
-  }
+  auto z1 = make_doublereal(a0,a1/1000);
+  auto z2 = make_doublereal(a1,a0/1000);
+  auto amz = decltype(z1)(eve::detail::map(eve::negabsmax, z1, z2));
+  TTS_EQUAL ( eve::negabsmax(z1, z2), amz);
 };

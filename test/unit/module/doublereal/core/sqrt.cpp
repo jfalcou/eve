@@ -7,9 +7,8 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "../measures.hpp"
 #include <eve/module/doublereal.hpp>
-//namespace bm =  boost::multiprecision;
-
 
 TTS_CASE_WITH( "Check behavior of sqrt on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
@@ -19,19 +18,14 @@ TTS_CASE_WITH( "Check behavior of sqrt on scalar"
              )
   <typename T>(T const& a0, T const& a1 )
 {
+  namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      if constexpr(sizeof(e_t) == 4)
-      {
-        TTS_ULP_EQUAL ( eve::to_double(eve::sqrt(eve::doublereal<e_t>(e, f))), eve::sqrt(eve::to_double(eve::doublereal<e_t>(e, f))), 10);
-      }
-//       else //TO DO
-//       {
-//         TTS_EQUAL ( eve::to_float128(eve::sqrt(eve::doublereal<e_t>(e, f))), bm::sqrt(eve::to_float128(eve::doublereal<e_t>(e, f))));
-//       }
+      auto z = eve::doublereal<e_t>(e, f);
+      TTS_ULP_EQUAL ( eve::sqrt(z), tts::to_doublereal<e_t>(sqrt(tts::uptype(z))),0.5 );
     }
   }
 };
@@ -44,10 +38,7 @@ TTS_CASE_WITH( "Check behavior of sqrt on wide"
              )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
   auto z = make_doublereal(a0,a1);
-  if constexpr(sizeof(e_t) == 4) //TODO
-  {
-    TTS_ULP_EQUAL ( eve::to_double(eve::sqrt(z)), eve::sqrt(eve::to_double(z)), 30);
-  }
+  auto az = decltype(z)(eve::detail::map(eve::sqrt, z));
+  TTS_EQUAL ( eve::sqrt(z), az);
 };

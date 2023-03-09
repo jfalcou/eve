@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of is_not_equal on scalar"
         {
           auto z1 = doublereal_t(e, f);
           auto z2 = doublereal_t(g, h);
-          TTS_EQUAL ( eve::is_not_equal(z1, z2), (z1 == z2));
+          TTS_EQUAL ( eve::is_not_equal(z1, z2), (z1 != z2));
         }
       }
     }
@@ -50,5 +50,5 @@ TTS_CASE_WITH( "Check behavior of is_not_equal on wide"
 {
   auto z1 = make_doublereal(a0,a1);
   auto z2 = make_doublereal(a2, a3);
-  TTS_EQUAL ( eve::is_not_equal(z1, z2), (z1 == z2));
+  TTS_EQUAL ( eve::is_not_equal(z1, z2), (z1 != z2));
 };

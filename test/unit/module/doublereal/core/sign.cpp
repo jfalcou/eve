@@ -7,6 +7,7 @@
 //==================================================================================================
 
 #include "test.hpp"
+#include "../measures.hpp"
 #include <eve/module/doublereal.hpp>
 
 TTS_CASE_WITH( "Check behavior of sign on scalar"
@@ -17,33 +18,27 @@ TTS_CASE_WITH( "Check behavior of sign on scalar"
              )
   <typename T>(T const& a0, T const& a1 )
 {
+  namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-//      auto [h, l] = eve::doublereal<e_t>(e, f);
-//      TTS_EQUAL( eve::sign(eve::doublereal<e_t>(e, f)), eve::doublereal<e_t>(ch, cl) ) << eve::doublereal<e_t>(e, f) << '\n' ;
-      if constexpr(sizeof(e_t) == 4)
-      {
-        TTS_ULP_EQUAL ( eve::to_double(eve::sign(eve::doublereal<e_t>(e, f))), eve::sign(eve::to_double(eve::doublereal<e_t>(e, f))), 32);
-      }
+      auto z = eve::doublereal<e_t>(e, f);
+      TTS_EQUAL ( eve::sign(z), (eve::is_gtz(z) ? eve::one(eve::as(z)) : eve::mone(eve::as(z))));
     }
   }
 };
 
 TTS_CASE_WITH( "Check behavior of sign on wide"
-        , eve::test::simd::ieee_reals
-        , tts::generate ( tts::randoms(-10, 10)
-                              , tts::randoms(-10, 10)
-                              )
-        )
+             , eve::test::simd::ieee_reals
+             , tts::generate ( tts::randoms(-10, 10)
+                             , tts::randoms(-10, 10)
+                             )
+             )
   <typename T>(T const& a0, T const& a1 )
 {
-  using e_t = typename T::value_type;
   auto z = make_doublereal(a0,a1);
-  if constexpr(sizeof(e_t) == 4)
-  {
-    TTS_ULP_EQUAL ( eve::to_double(eve::sign(z)), eve::sign(eve::to_double(z)), 32);
-  }
+  auto az = decltype(z)(eve::detail::map(eve::sign, z));
+  TTS_EQUAL ( eve::sign(z), az);
 };
