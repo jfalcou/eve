@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of cos on scalar"
       auto sf  = eve::cospi(z);
       auto s   = tts::to_doublereal<e_t>((bm::cos)(tts::uptype(z)*pi));
 
-      TTS_ULP_EQUAL(sf, s , 0.5) << (eve::abs(z) >= 1) << " sf " << tts::uptype(sf) << " s " << tts::uptype(s) << '\n';
+      TTS_ULP_EQUAL(sf, s , 0.5);
     }
   }
 };
