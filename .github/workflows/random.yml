@@ -1,0 +1,41 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Randomized Precision Tests
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: random-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ##################################################################################################
+  ## Randomized precision tests
+  ##################################################################################################
+  random:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: -msse2    }
+        - { comp: clang, arch: x86    , opts: -mavx2    }
+        - { comp: gcc  , arch: aarch64, opts: -Wno-psabi}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Check EVE via Random Sampling with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        uses: ./.github/actions/run_docker
+        with:
+          options:        '${{ matrix.cfg.opts }}'
+          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
+          status:         2
+          cpu:            4
+      - name: Always execute
+        if: ${{ always() }}
+        uses: ./.github/actions/cleanup
