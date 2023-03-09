@@ -10,8 +10,6 @@
 #include "../measures.hpp"
 #include <eve/module/doublereal.hpp>
 #include <boost/multiprecision/cpp_bin_float.hpp>
-#include <eve/module/doublereal/detail/pi_trigo.hpp>
-
 
 TTS_CASE_WITH( "Check behavior of cos on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>

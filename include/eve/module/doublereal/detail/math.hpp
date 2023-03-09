@@ -23,5 +23,11 @@
 #include <eve/module/doublereal/detail/math/tan.hpp>
 #include <eve/module/doublereal/detail/math/cot.hpp>
 #include <eve/module/doublereal/detail/math/inv_trigo.hpp>
-#include <eve/module/doublereal/detail/pi_trigo.hpp>
-#include <eve/module/doublereal/detail/invhyper.hpp>
+
+#include <eve/module/doublereal/detail/math/sinpi.hpp>
+#include <eve/module/doublereal/detail/math/cospi.hpp>
+#include <eve/module/doublereal/detail/math/sinpicospi.hpp>
+#include <eve/module/doublereal/detail/math/tanpi.hpp>
+#include <eve/module/doublereal/detail/math/cotpi.hpp>
+
+#include <eve/module/doublereal/detail/math/inv_hyper.hpp>
