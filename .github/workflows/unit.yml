@@ -132,6 +132,7 @@ jobs:
   ## Phase 2 - Non-X86 - Requires gcc and qemu
   ##################################################################################################
   other-arch:
+    if: ${{ always() }}
     needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     strategy:
@@ -159,6 +160,7 @@ jobs:
   ## Phase 3 - Pre-Skylake SIMD ISA - g++
   ##################################################################################################
   x86-gcc:
+    if: ${{ always() }}
     needs: other-arch
     runs-on: [self-hosted, generic-x86]
     strategy:
@@ -189,6 +191,7 @@ jobs:
   ## Phase 3 - Pre-Skylake SIMD ISA - Special cases
   ##################################################################################################
   x86-custom:
+    if: ${{ always() }}
     needs: x86-gcc
     runs-on: [self-hosted, generic-x86]
     strategy:
@@ -266,6 +269,7 @@ jobs:
   ## Currently: SVE128/256/512
   ##################################################################################################
   arm-sve:
+    if: ${{ always() }}
     needs: x86-custom
     runs-on: [self-hosted, generic-x86]
     strategy:
