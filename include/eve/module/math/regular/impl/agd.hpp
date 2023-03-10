@@ -20,7 +20,7 @@ agd_(EVE_SUPPORTS(cpu_), T x) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    return if_else(abs(x) <= pio_2(as(x)), asinh(tan(x)), allbits);
+    return 2*atanh(tan(x*half(as(x))));
   }
   else return apply_over(agd, x);
 }
