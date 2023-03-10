@@ -15,7 +15,6 @@ add_dependencies(tests unit)
 ## Setup aggregation of tests
 ##==================================================================================================
 add_custom_target(unit.exe              )
-add_custom_target(random.exe            )
 add_custom_target(exhaustive.exe        )
 add_custom_target(exhaustive.scalar.exe )
 add_custom_target(exhaustive.simd.exe   )
