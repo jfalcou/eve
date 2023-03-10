@@ -74,7 +74,9 @@ function(generate_test root rootpath dep file)
                           ${MAKE_UNIT_TARGET_PROPERTIES}
                         )
 
-  add_dependencies(unit ${test})
+  if ( NOT (${root} MATCHES "doc.*") )
+    add_dependencies(unit ${test})
+  endif()
 
   if( NOT dep STREQUAL "")
     add_dependencies(${dep} ${test})
