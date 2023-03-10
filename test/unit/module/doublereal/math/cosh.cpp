@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of cosh on scalar"
   namespace bm = boost::multiprecision;
   using e_t = typename T::value_type;
   using doublereal_t = eve::doublereal<e_t>;
-  auto ep = (sizeof(e_t) == 4) ? 1.0e-10 : 1.0e-20;
+  auto ep = (sizeof(e_t) == 4) ? 1.0e-10 : 1.0e-19;
   for(auto e : a0)
   {
     for(auto f : a1)

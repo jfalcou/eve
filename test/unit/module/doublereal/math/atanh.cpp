@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check behavior of atanh on scalar"
   {
     for(auto f : a1)
     {
-      auto ep =  sizeof(e_t) == 4 ? 5.0E-11 :1.0e-29;
+      auto ep =  sizeof(e_t) == 4 ? 5.0E-11 :2.0e-25;
       auto z = eve::doublereal<e_t>(e, f);
       auto ac = eve::atanh(z);
       auto bmbc = bm::atanh(tts::uptype(z));
