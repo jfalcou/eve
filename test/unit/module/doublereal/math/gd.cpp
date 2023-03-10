@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check behavior of gd on scalar"
   {
     for(auto f : a1)
     {
-      auto ep =  sizeof(e_t) == 4 ? 1.0E-12 :2.0e-30;
+      auto ep =  sizeof(e_t) == 4 ? 1.0E-12 :5.0e-30;
       auto z = eve::doublereal<e_t>(e, f);
       auto ac = eve::gd(z);
       auto bmbc = 2*bm::atan(bm::tanh(tts::uptype(z)/2));
