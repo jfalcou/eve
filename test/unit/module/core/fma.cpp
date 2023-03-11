@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types)
 };
 
 //==================================================================================================
-//== fma tests
+//  fma tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -117,7 +117,7 @@ TTS_CASE_WITH("Check behavior of promote(fma) on all types",
 };
 
 //==================================================================================================
-//== fma masked
+//  fma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fma on all types full range",
               eve::test::simd::all_types,
