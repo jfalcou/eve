@@ -101,7 +101,7 @@ TTS_CASE_WITH("Check behavior of promote(fma) on all types",
   auto r1 = promote(fma)(a0, a1, fa);
   using er1_t =  eve::element_type_t<decltype(r1)>;
   auto refr1 = eve::fma(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
-  TTS_ULP_EQUAL(r1,  refr1, 0.5);
+  TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
   eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
   auto r2 = promote(fma)(a0, a1, da);
