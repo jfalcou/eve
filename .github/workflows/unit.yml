@@ -58,9 +58,9 @@ jobs:
           mkdir build && cd build
           cmake .. -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && make unit -j 2
+        run:  cd build && make unit.exe -j 2
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 2
+        run: cd build && ctest --output-on-failure -j 2  -E ^doc.*.exe
 
   ##################################################################################################
   ## Windows Targets
@@ -121,9 +121,9 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit -j 8
+        run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 8
+        run: cd build && ctest --output-on-failure -j 8  -E ^doc.*.exe
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
@@ -180,9 +180,9 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit -j 8
+        run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 8
+        run: cd build && ctest --output-on-failure -j 8  -E ^doc.*.exe
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
@@ -213,10 +213,10 @@ jobs:
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
         if: "${{ matrix.cfg.comp != 'clang_libcpp' }}"
-        run:  cd build && ninja unit -j 8
+        run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
         if: "${{ matrix.cfg.comp != 'clang_libcpp' }}"
-        run: cd build && ctest --output-on-failure -j 8
+        run: cd build && ctest --output-on-failure -j 8 -E ^doc.*.exe
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         if: "${{ matrix.cfg.comp == 'clang_libcpp' }}"
         uses: ./.github/actions/run_docker
@@ -253,13 +253,13 @@ jobs:
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
         if: "${{ matrix.cfg.arch != 'x86_asan' }}"
-        run:  cd build && ninja unit -j 5
+        run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
         if: "${{ matrix.cfg.arch != 'x86_asan' }}"
-        run:  cd build && ctest --output-on-failure -j 4
+        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
       - name: Compiling Sanitizer Tests
         if: "${{ matrix.cfg.arch == 'x86_asan' }}"
-        run:  cd build &&  ninja unit.memory.exe -j 5
+        run:  cd build &&  ninja unit.exe.memory.exe -j 5
       - name: Running Sanitizer Tests
         if: "${{ matrix.cfg.arch == 'x86_asan' }}"
         run:  cd build && ctest --output-on-failure  -R ^unit.memory.*.exe -j 4
