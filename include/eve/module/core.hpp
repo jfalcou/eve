@@ -98,6 +98,7 @@
 #include <eve/module/core/fuzzy/core.hpp>
 #include <eve/module/core/numeric/core.hpp>
 #include <eve/module/core/pedantic/core.hpp>
+#include <eve/module/core/promote/core.hpp>
 #include <eve/module/core/saturated/core.hpp>
 #include <eve/wide.hpp>
 #include <eve/arch/nofs.hpp>
