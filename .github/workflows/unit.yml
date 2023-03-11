@@ -259,7 +259,7 @@ jobs:
         run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
       - name: Compiling Sanitizer Tests
         if: "${{ matrix.cfg.arch == 'x86_asan' }}"
-        run:  cd build &&  ninja unit.exe.memory.exe -j 5
+        run:  cd build &&  ninja unit.memory.exe -j 5
       - name: Running Sanitizer Tests
         if: "${{ matrix.cfg.arch == 'x86_asan' }}"
         run:  cd build && ctest --output-on-failure  -R ^unit.memory.*.exe -j 4
