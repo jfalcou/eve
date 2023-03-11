@@ -15,14 +15,6 @@ namespace eve
 //================================================================================================
 //================================================================================================
 // Function decorators mark-up used in function overloads
-struct promote_
-{
-  template<auto N> static constexpr auto combine(decorated<diff_<N>()> const&) noexcept
-  {
-    return decorated<diff_<N>(promote_)> {};
-  }
-};
-
 using promote_type = decorated<promote_()>;
 //================================================================================================
 //! @addtogroup core_decorators
