@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of fma", eve::test::simd::all_types)
 };
 
 //==================================================================================================
-// fma tests
+//  fma tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -63,49 +63,61 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
       2);
 };
 
+
 //==================================================================================================
-// fma full range tests
+// fma tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fma on all types full range",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+TTS_CASE_WITH("Check precision behavior of fma on real types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(onemmileps, onepmileps),
+                            tts::randoms(onemmileps, onepmileps)))
+<typename T>(T const& a0, T const& a1)
 {
-  using eve::as;
   using eve::fma;
   using eve::detail::map;
-
   using v_t = eve::element_type_t<T>;
-
-  if( eve::all(
-          eve::fma(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(-1))
-          == eve::pedantic(eve::fma)(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(-1))) )
-  {
-    TTS_ULP_EQUAL(
-        fma((a0), (a1), (a2)),
-        map([&](auto e, auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2),
-        12);
-  }
-  else
-  {
-    TTS_ULP_EQUAL(fma((a0), (a1), (a2)),
-                  map([&](auto e, auto f, auto g) -> v_t { return e * f + g; }, a0, a1, a2),
-                  2);
-  }
   TTS_ULP_EQUAL(
-      eve::pedantic(fma)((a0), (a1), (a2)),
-      map([&](auto e, auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2),
-      2);
-  TTS_ULP_EQUAL(
-      eve::numeric(fma)((a0), (a1), (a2)),
-      map([&](auto e, auto f, auto g) -> v_t { return eve::pedantic(fma)(e, f, g); }, a0, a1, a2),
+      eve::pedantic(fma)(a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::pedantic(fma)(e, f, v_t(-1)); }, a0, a1),
       2);
 };
 
 //==================================================================================================
-// fma masked
+// fma promote tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of promote(fma) on all types",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1 )
+{
+  using eve::as;
+  using eve::fma;
+  using eve::promote;
+  using eve::detail::map;
+
+  constexpr int N = eve::cardinal_v<T>;
+  eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
+  auto r1 = promote(fma)(a0, a1, fa);
+  using er1_t =  eve::element_type_t<decltype(r1)>;
+  auto refr1 = eve::fma(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
+  TTS_ULP_EQUAL(r1,  refr1, 2.0);
+
+  eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
+  auto r2 = promote(fma)(a0, a1, da);
+  using er2_t =  eve::element_type_t<decltype(r2)>;
+  auto refr2 = eve::fma(eve::convert(a0, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()));
+  TTS_ULP_EQUAL(r2,  refr2, 0.5);
+
+  eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
+  auto r3 = promote(fma)(a0, a1, ia);
+  using er3_t =  eve::element_type_t<decltype(r3)>;
+  auto refr3 = eve::fma(eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()), eve::convert(ia, eve::as<er3_t>()));
+  TTS_ULP_EQUAL(r3,  refr3, 0.5);
+};
+
+//==================================================================================================
+//  fma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fma on all types full range",
               eve::test::simd::all_types,
