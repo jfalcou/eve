@@ -7,15 +7,16 @@
 ##==================================================================================================
 ## Setup PCH
 ##==================================================================================================
-file(TOUCH "${PROJECT_BINARY_DIR}/pch.cpp" )
+file(WRITE "${PROJECT_BINARY_DIR}/doc_pch.cpp" "int main() {}\n" )
+file(TOUCH "${PROJECT_BINARY_DIR}/test_pch.cpp" )
 
-add_library(bench_pch  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/pch.cpp> )
-add_library(test_pch   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/pch.cpp> )
-add_library(doc_pch    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/pch.cpp> )
+add_executable(bench_pch  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/test_pch.cpp> )
+add_executable(test_pch   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/test_pch.cpp> )
+add_executable(doc_pch    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/doc_pch.cpp> )
 
 target_link_libraries(bench_pch PUBLIC eve_bench)
-target_link_libraries(test_pch  PUBLIC eve_test)
-target_link_libraries(doc_pch   PUBLIC eve_test)
+target_link_libraries(test_pch  PUBLIC eve_test )
+target_link_libraries(doc_pch   PUBLIC eve_test )
 
 set_property( TARGET bench_pch  PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bench" )
 set_property( TARGET test_pch   PROPERTY RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit" )

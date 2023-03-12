@@ -10,7 +10,7 @@ inputs:
     description: 'CMake options'
     required: false
     default: ''
-  status:  # How much of the test we shoudl run
+  status:  # How much of the test we should run
     description: 'Completion Status'
     required: false
     default: '1'

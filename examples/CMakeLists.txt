@@ -9,7 +9,7 @@ set(examples_root "${PROJECT_SOURCE_DIR}/examples")
 ## GLOB and process regular examples tests
 ##==================================================================================================
 add_custom_target(examples.exe         )
-add_dependencies(examples.exe unit.api.exe )
+add_dependencies(unit.exe examples.exe )
 glob_unit("examples" ${examples_root} "*.cpp")
 glob_unit("examples" ${examples_root} "algorithms/writing_new/*.cpp")
 glob_unit("examples" ${examples_root} "oop/*.cpp")
