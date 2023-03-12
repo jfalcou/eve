@@ -1,0 +1,77 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+**/
+//==================================================================================================
+#include "test.hpp"
+#include "measures.hpp"
+#include <eve/module/dd.hpp>
+
+TTS_CASE_TPL( "Check dd::add", eve::test::scalar::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using dd_t   = eve::dd<T>;
+  using w_t   = eve::wide<T>;
+  using wdd_t  = eve::wide<dd_t>;
+  using eve::add;
+
+  auto fill_r = [](auto i, auto) { return T(1+i); };
+  auto fill_i = [](auto i, auto) { return T(1)/(1+i); };
+  auto fill   = [](auto i, auto) { return eve::dd<T>(T(1+i),T(1)/(1+i)); };
+
+  dd_t   z_s1(T{1.234}, T{5.678}), z_s2(T{2.468}, T{1.357});
+  wdd_t  z_v1(fill), z_v2(fill_i,fill_r);
+  w_t   rv(fill_r);
+
+  // dd + dd
+  TTS_EQUAL(add(z_s1   , z_s2  ) , (dd_t{3.702,7.035}));
+
+  // i and real
+  TTS_EQUAL(add(1   , eve::i) , (dd_t{1.f,1.f }));
+  TTS_EQUAL(add(2.  , eve::i) , (dd_t{2.,1.   }));
+  TTS_EQUAL(add(3.f , eve::i) , (dd_t{3.f,1.f }));
+  TTS_EQUAL(add(eve::i , 1  ) , (dd_t{1.f,1.f }));
+  TTS_EQUAL(add(eve::i , 2. ) , (dd_t{2.,1.   }));
+  TTS_EQUAL(add(eve::i , 3.f) , (dd_t{3.f,1.f }));
+
+  TTS_EQUAL(add(rv  , eve::i) , (wdd_t{rv,1.f }));
+  TTS_EQUAL(add(eve::i , rv ) , (wdd_t{rv,1.f }));
+
+  // dd + real / real + dd
+  TTS_EQUAL(add(z_s1   , 1     ) , (dd_t{2.234,5.678}));
+  TTS_EQUAL(add(z_s1   , 2.    ) , (dd_t{3.234,5.678}));
+  TTS_EQUAL(add(z_s1   , 3.f   ) , (dd_t{4.234,5.678}));
+  TTS_EQUAL(add(z_s1   , eve::i) , (dd_t{1.234,6.678}));
+
+  TTS_EQUAL(add(1      , z_s1  ) , (dd_t{2.234,5.678}));
+  TTS_EQUAL(add(2.     , z_s1  ) , (dd_t{3.234,5.678}));
+  TTS_EQUAL(add(3.f    , z_s1  ) , (dd_t{4.234,5.678}));
+  TTS_EQUAL(add(eve::i , z_s1  ) , (dd_t{1.234,6.678}));
+
+  // dd + wide real / wide real + dd
+  TTS_EQUAL(add(z_s1   , rv    ) , (wdd_t{[&](auto i, auto){ return z_s1 + rv.get(i);}}));
+  TTS_EQUAL(add(rv     , z_s1  ) , (wdd_t{[&](auto i, auto){ return z_s1 + rv.get(i);}}));
+
+  // dd + wide dd / wide dd + dd
+  TTS_EQUAL(add(z_s1 , z_v1) , (wdd_t{[&](auto i, auto){ return z_s1 + z_v1.get(i);}}));
+  TTS_EQUAL(add(z_v1 , z_s1) , (wdd_t{[&](auto i, auto){ return z_s1 + z_v1.get(i);}}));
+
+  // wide dd + wide dd
+  TTS_EQUAL(add(z_v1   , z_v2  ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + z_v2.get(i));}}));
+
+  // wide dd + real / real + wide dd
+  TTS_EQUAL(add(z_v1   , 1     ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + 1          );}}));
+  TTS_EQUAL(add(z_v1   , 2.    ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + 2.         );}}));
+  TTS_EQUAL(add(z_v1   , 3.f   ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + 3.f        );}}));
+  TTS_EQUAL(add(z_v1   , eve::i) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + eve::i     );}}));
+  TTS_EQUAL(add(1      , z_v1  ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + 1          );}}));
+  TTS_EQUAL(add(2.     , z_v1  ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + 2.         );}}));
+  TTS_EQUAL(add(3.f    , z_v1  ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + 3.f        );}}));
+  TTS_EQUAL(add(eve::i , z_v1  ) , (wdd_t{[&](auto i, auto){ return dd_t( z_v1.get(i) + eve::i     );}}));
+
+  // wide dd + wide real / wide real + wide dd
+  TTS_EQUAL(add(z_v1   , rv    ) , (wdd_t{[&](auto i, auto){ return z_v1.get(i) + rv.get(i);}}));
+  TTS_EQUAL(add(rv     , z_v1  ) , (wdd_t{[&](auto i, auto){ return z_v1.get(i) + rv.get(i);}}));
+};

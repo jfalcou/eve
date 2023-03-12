@@ -36,7 +36,7 @@ to_logical(wide<T, N> const& v) noexcept
   }
   else
   {
-    return map([](auto e) { return logical<T>(e != 0); }, v);
+    return map([](auto e) { return as_logical_t<T>(e != 0); }, v);
   }
 }
 
