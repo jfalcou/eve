@@ -11,25 +11,25 @@
 
 namespace eve
 {
+
 //================================================================================================
 //================================================================================================
 // Function decorators mark-up used in function overloads
-struct cyl_
-{
+struct promote_{
   template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 };
 
-using cyl_type = decorated<cyl_()>;
+using promote_type = decorated<promote_()>;
 //================================================================================================
 //! @addtogroup core_decorators
 //! @{
-//! @var cyl
+//! @var promote
 //!
-//! @brief  Higher-order @callable imbuing cylindrical semantic onto other @callable{s}.
+//! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
 //!
 //! #### Synopsis
 //!
-//!  if cyl(eve::fname) is to be called then
+//!  if promote(eve::fname) is to be called then
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
 //!  #include <eve/module/core.hpp>
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,9 +44,10 @@ using cyl_type = decorated<cyl_()>;
 //! An instance of eve::callable
 //!
 //! @return
-//! A @callable performing the same kind of operation but implying cylindrical semantic.
+//! A @callable performing the same kind of operation but called with promoted parameters to tha
+//! comon compatible type.
 //!
 //!  @}
 //================================================================================================
-[[maybe_unused]] inline constexpr cyl_type const cyl = {};
+[[maybe_unused]] inline constexpr promote_type const promote = {};
 }

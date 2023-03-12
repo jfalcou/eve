@@ -72,10 +72,7 @@ inline constexpr q_kind_type const q_kind = {};
 // Function decorators mark-up used in function overloads
 struct kind_1_
 {
-  template<auto N> static constexpr auto combine(decorated<diff_<N>()> const&) noexcept
-  {
-    return decorated<diff_<N>(kind_1_)> {};
-  }
+  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 };
 
 using kind_1_type = decorated<kind_1_()>;
@@ -103,10 +100,7 @@ inline constexpr kind_1_type const kind_1 = {};
 // Function decorators mark-up used in function overloads
 struct kind_2_
 {
-  template<auto N> static constexpr auto combine(decorated<diff_<N>()> const&) noexcept
-  {
-    return decorated<diff_<N>(kind_2_)> {};
-  }
+  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 };
 
 using kind_2_type = decorated<kind_2_()>;

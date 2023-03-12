@@ -11,16 +11,12 @@
 
 namespace eve
 {
-template<auto Param> struct diff_;
 //================================================================================================
 //================================================================================================
 // Function decorators mark-up used in function overloads
 struct compensated_
 {
-  template<auto N> static constexpr auto combine(decorated<diff_<N>()> const&) noexcept
-  {
-    return decorated<diff_<N>(compensated_)> {};
-  }
+  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 };
 
 using compensated_type = decorated<compensated_()>;

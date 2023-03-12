@@ -14,7 +14,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                                 = " << pf << '\n'
-            << "-> convert(pf, int_64()_)             = " << eve::convert(pf, int_64()) << '\n'
+            << "-> convert(pf, int_64())              = " << eve::convert(pf, int_64()) << '\n'
             << "-> convert(pf, int_16()) =            = " << eve::convert(pf, int_16()) << '\n'
             << "<- pi                                 = " << pi << '\n'
             << "-> convert(pi, as(eve::as<double>())) = " << eve::convert(pi, eve::as<double>()) << '\n';
