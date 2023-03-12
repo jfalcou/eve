@@ -37,9 +37,9 @@ nextafter_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 requires has_native_abi_v<T>
 {
   if constexpr( scalar_value<T> )
-    return (a < b) ? next(a) : ((b < a) ? prev(a) : a);
+    return (a < b) ? next(a) : ((a > b) ? prev(a) : a);
   else if constexpr( simd_value<T> )
-    return if_else(a < b, next(a), if_else(b < a, prev(a), a));
+    return if_else(a < b, next(a), if_else(a > b, prev(a), a));
 }
 // -----------------------------------------------------------------------------------------------
 // Masked case

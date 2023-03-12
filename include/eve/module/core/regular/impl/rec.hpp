@@ -32,7 +32,10 @@ rec_(EVE_SUPPORTS(cpu_), T a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( floating_value<T> ) { return T {1} / a; }
+    if constexpr( floating_value<T> )
+    {
+      return T {1} / a;
+    }
     else if( integral_value<T> )
     {
       if constexpr( scalar_value<T> )

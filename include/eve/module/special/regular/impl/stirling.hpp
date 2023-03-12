@@ -55,17 +55,13 @@ stirling_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
       y *= v;
       y = if_else(test, y, y * v); /* Avoid overflow in pow() */
       y *= Sqrt_2pi * w;
-#ifndef BOOST_SIMD_NO_INFINITIES
       y = if_else(a0 == inf(eve::as<T>()), a0, y);
-#endif
       return if_else(a0 > Stirlinglargelim, inf(eve::as<T>()), y);
     }
     else if constexpr( scalar_value<T> )
     {
       if( is_ltz(a0) ) return nan(eve::as<T>());
-#ifndef BOOST_SIMD_NO_INVALIDS
       if( is_nan(a0) ) return a0;
-#endif
       if( a0 > Stirlinglargelim ) return inf(eve::as<T>());
       T w = rec(a0);
       w   = fma(w, stirling1(w), one(eve::as<T>()));

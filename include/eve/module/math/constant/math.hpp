@@ -60,6 +60,7 @@
 #include <eve/module/math/constant/pio_3.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/constant/pio_6.hpp>
+#include <eve/module/math/constant/quarter.hpp>
 #include <eve/module/math/constant/rayleigh_kurtosis.hpp>
 #include <eve/module/math/constant/rayleigh_kurtosis_excess.hpp>
 #include <eve/module/math/constant/rayleigh_skewness.hpp>

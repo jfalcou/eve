@@ -14,7 +14,7 @@
 namespace eve::detail
 {
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cosh_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
@@ -31,13 +31,14 @@ cosh_(EVE_SUPPORTS(cpu_), T a0) noexcept
   }
   if constexpr( has_native_abi_v<T> )
   {
-    auto ovflimitmln2 =
-        Ieee_constant<T, 0X42AF5DC0U, 0X408628B76E3A7B61LL>(); // 87.68310404,
-                                                               // 709.08956571282405469058276787854
+    T ovflimitmln2 = maxlog(as(a0))-log_2(as(a0));
+//       Ieee_constant<underlying_type_t<T>, 0X42AF5DC0U, 0X408628B76E3A7B61LL>()); // 87.68310404,
+//                                                               // 709.08956571282405469058276787854
     auto x = eve::abs(a0);
     if constexpr( scalar_value<T> )
     {
-      if( x >= ovflimitmln2 )
+      if(is_not_finite(x)) return x;
+      else if( x >= ovflimitmln2 )
       {
         auto w = exp(x * half(eve::as<T>()));
         auto t = half(eve::as<T>()) * w;
@@ -45,12 +46,12 @@ cosh_(EVE_SUPPORTS(cpu_), T a0) noexcept
         return t;
       }
       auto t = exp(x);
-      return (x > T(22.0f)) ? t * half(eve::as<T>()) : average(t, rec(t));
+      return (x > 22) ? t * half(eve::as<T>()) : average(t, rec(t));
     }
     else
     {
       auto t    = exp(x);
-      auto invt = if_else(x > T(22.0f), eve::zero, rec(t));
+      auto invt = if_else(x > 22, eve::zero, rec(t));
       auto c    = average(t, invt);
       auto test = x < ovflimitmln2;
       if( eve::all(test) ) return c;

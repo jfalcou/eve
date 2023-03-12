@@ -17,7 +17,8 @@ quadrant_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    if constexpr( floating_value<T> )
+    using u_t =  underlying_type_t<T>;
+    if constexpr( floating_value<u_t> )
     {
       T b = a * T(0.25);
       return (b - floor(b)) * T(4);

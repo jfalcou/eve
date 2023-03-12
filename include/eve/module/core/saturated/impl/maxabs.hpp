@@ -34,6 +34,18 @@ maxabs_(EVE_SUPPORTS(cpu_),
         T const& a,
         T const& b) noexcept requires has_native_abi_v<T>
 {
-  return max(saturated(eve::abs)(a), saturated(eve::abs)(b));
+  return eve::max(saturated(eve::abs)(a), saturated(eve::abs)(b));
+}
+
+//================================================================================================
+// N parameters
+//================================================================================================
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
+auto
+maxabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(maxabs(a0, a1, args...))
+{
+  auto sa = saturated(eve::abs);
+  return eve::max(sa(a0), sa(a1), sa(args)...);
 }
 }

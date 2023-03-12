@@ -198,11 +198,7 @@
 #include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
-#include <eve/module/core/regular/three_fma.hpp>
 #include <eve/module/core/regular/trunc.hpp>
-#include <eve/module/core/regular/two_add.hpp>
-#include <eve/module/core/regular/two_prod.hpp>
-#include <eve/module/core/regular/two_split.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
