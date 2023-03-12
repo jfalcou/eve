@@ -61,7 +61,16 @@ else
   echo "::endgroup::"
 fi
 
-if [ "$3" -eq "2" ]
+if [ "$3" -eq "3" ]
+then
+  echo "::group:: Compiling Documentation Tests"
+  ninja doc.exe -j $4
+  echo "::endgroup::"
+
+  echo "::group:: Running Documentation Tests"
+  ctest --output-on-failure -j $4 -R ^doc.*.exe
+  echo "::endgroup::"
+elif [ "$3" -eq "2" ]
 then
   echo "::group:: Compiling Random Tests"
   ninja random.exe -j $4
@@ -73,11 +82,11 @@ then
 elif [ "$3" -eq "1" ]
 then
   echo "::group:: Compiling Unit Tests"
-  ninja unit -j $4
+  ninja unit.exe -j $4
   echo "::endgroup::"
 
   echo "::group:: Running Unit Tests"
-  ctest --output-on-failure -j $4
+  ctest --output-on-failure -j $4 -E ^doc.*.exe
   echo "::endgroup::"
 else
   echo "::group:: Compiling Unit Tests"
