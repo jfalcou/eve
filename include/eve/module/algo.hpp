@@ -33,6 +33,7 @@
 #include <eve/module/algo/algo/find_last.hpp>
 #include <eve/module/algo/algo/find.hpp>
 #include <eve/module/algo/algo/for_each_iteration.hpp>
+#include <eve/module/algo/algo/for_each_iteration_fixed_overflow.hpp>
 #include <eve/module/algo/algo/for_each.hpp>
 #include <eve/module/algo/algo/inclusive_scan.hpp>
 #include <eve/module/algo/algo/iota.hpp>
