@@ -23,7 +23,6 @@ namespace eve::detail
   {
     using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
     constexpr auto N = std::max({cardinal_v<T>,cardinal_v<U>,cardinal_v<V>});
-    using r_t = wide<er_t, fixed<N>>;
     auto cv_t = as(eve::as<er_t>());
     return fms(convert(a, cv_t), convert(b, cv_t), convert(c,cv_t));
   }
