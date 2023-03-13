@@ -104,16 +104,21 @@ TTS_CASE_WITH("Check behavior of promote(fma) on all types",
   TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
   eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
-  auto r2 = promote(fma)(a0, a1, da);
+  auto r2 = promote(fma)(a0, da, a1);
   using er2_t =  eve::element_type_t<decltype(r2)>;
-  auto refr2 = eve::fma(eve::convert(a0, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()));
+  auto refr2 = eve::fma(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
   TTS_ULP_EQUAL(r2,  refr2, 0.5);
 
   eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
-  auto r3 = promote(fma)(a0, a1, ia);
+  auto r3 = promote(fma)(ia, a0, a1);
   using er3_t =  eve::element_type_t<decltype(r3)>;
-  auto refr3 = eve::fma(eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()), eve::convert(ia, eve::as<er3_t>()));
+  auto refr3 = eve::fma(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));
   TTS_ULP_EQUAL(r3,  refr3, 0.5);
+
+  auto r4 = promote(fma)(ia, da, a1);
+  using er4_t =  eve::element_type_t<decltype(r4)>;
+  auto refr4= eve::fma(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
+  TTS_ULP_EQUAL(r4,  refr4, 0.5);
 };
 
 //==================================================================================================
