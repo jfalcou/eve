@@ -25,11 +25,6 @@ namespace eve::detail
     constexpr auto N = std::max({cardinal_v<T>,cardinal_v<U>,cardinal_v<V>});
     using r_t = wide<er_t, fixed<N>>;
     auto cv_t = as(eve::as<er_t>());
-    if constexpr(has_native_abi_v<r_t>)
-    {
-      return fma(convert(a, cv_t), convert(b, cv_t), convert(c,cv_t));
-    }
-    else
-      return apply_over(fma, convert(a, cv_t), convert(b, cv_t), convert(c, cv_t));
+    return fma(convert(a, cv_t), convert(b, cv_t), convert(c,cv_t));
   }
 }
