@@ -15,7 +15,7 @@
 namespace eve::detail
 {
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 sinh_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
@@ -47,7 +47,7 @@ sinh_(EVE_SUPPORTS(cpu_), T a0) noexcept
     }
     else
     {
-      auto h    = if_else(is_gtz(a0), one(eve::as<T>()), eve::mone);
+      auto h    = if_else(is_gtz(a0), one(eve::as<T>()), mone);
       auto t    = expm1(x);
       auto inct = inc(t);
       auto u    = t / inct;

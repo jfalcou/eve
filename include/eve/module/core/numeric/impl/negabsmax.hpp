@@ -41,7 +41,7 @@ negabsmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noex
 //================================================================================================
 template<value T0, value T1, value... Ts>
 auto
-negabsmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+negabsmax_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args) noexcept
 {
   return minus(numeric(eve::absmax)(a0, a1, args...));
 }

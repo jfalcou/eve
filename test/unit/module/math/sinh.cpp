@@ -50,6 +50,13 @@ TTS_CASE_WITH("Check behavior of sinh on wide",
 
   TTS_ULP_EQUAL(sinh(a0), map([](auto e) -> v_t { return std::sinh(e); }, a0), 2);
   TTS_ULP_EQUAL(sinh(a1), map([](auto e) -> v_t { return std::sinh(e); }, a1), 2);
+
+  TTS_ULP_EQUAL(eve::sinh(eve::inf(eve::as<v_t>())), eve::inf(eve::as<v_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::minf(eve::as<v_t>())), eve::minf(eve::as<v_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::zero(eve::as<v_t>())), eve::zero(eve::as<v_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::mzero(eve::as<v_t>())), eve::mzero(eve::as<v_t>()), 0.5);
+  TTS_ULP_EQUAL(eve::sinh(eve::nan(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0.5);
+
 };
 
 
@@ -60,7 +67,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sinh)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::sinh[mask](a0),

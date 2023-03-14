@@ -70,6 +70,7 @@ namespace eve
 //!     very poor accuracy in return. Otherwise it uses the non decorated call.
 //! @}
 //================================================================================================
+
 EVE_MAKE_CALLABLE(rec_, rec);
 }
 

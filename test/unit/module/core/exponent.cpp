@@ -47,6 +47,7 @@ TTS_CASE_WITH("Check behavior of eve::exponent(simd)",
                 a0));
   TTS_EQUAL(eve::exponent[t](a0),
             eve::if_else(t, eve::exponent(a0), eve::convert(a0, eve::as<vi_t>())));
+  TTS_EQUAL(eve::exponent(2.5), std::ilogb(2.5));
 };
 
 //==================================================================================================

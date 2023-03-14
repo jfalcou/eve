@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, decorator D>
+template<ordered_value T, decorator D>
 EVE_FORCEINLINE constexpr auto
 sec_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
 {

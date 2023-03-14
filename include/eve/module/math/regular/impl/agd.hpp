@@ -8,19 +8,19 @@
 #pragma once
 
 #include <eve/module/math/constant/pio_2.hpp>
-#include <eve/module/math/regular/atan.hpp>
-#include <eve/module/math/regular/sinh.hpp>
+#include <eve/module/math/regular/asinh.hpp>
+#include <eve/module/math/regular/tan.hpp>
 
 namespace eve::detail
 {
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 agd_(EVE_SUPPORTS(cpu_), T x) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    return if_else(abs(x) <= pio_2(as(x)), atanh(sin(x)), allbits);
+    return 2*atanh(tan(x*half(as(x))));
   }
   else return apply_over(agd, x);
 }

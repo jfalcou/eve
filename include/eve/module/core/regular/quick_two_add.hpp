@@ -14,9 +14,9 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var three_fma
+//!   @var quick_two_add
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   triple  of  fma  and errors,
+//!   pair of  sum and error,
 //!
 //!   **Defined in Header**
 //!
@@ -29,40 +29,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U , eve::floating_value V >
-//!      auto three_fma(T x, U y, V z) noexcept;
+//!      template< eve::floating_value T, eve::floating_value U  >
+//!      kumi::tuple<T, T> quick_two_add(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!      `x`, `y`, `z`:   [floating values](@ref eve::floating_value).
+//!     * `x` :  [argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
-//!     Computes [elementwise](@ref glossary_elementwise) a triple of values `[a,b,c]` such that:
+//!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
 //!
-//!     * `a` is `x*y+z`
-//!     * `b`, `c` are values such that (`a`\f$\oplus\f$`b`) \f$\oplus\f$`c`is exactly to
-//!              `x`\f$\otimes\f$`y`\f$\oplus\f$`z`
+//!     * `a` is `x+y`
+//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
 //!
-//!     where \f$\oplus\f$ (resp. \f$\otimes\f$) adds (resp. multiplies) its two parameters with
-//!     infinite precision..
+//! where \f$\oplus\f$ adds its two parameters with infinite precision.
+//!
+//! @warning    Assumes |x| >= |y|
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/three_fma.cpp}
+//!  @godbolt{doc/core/regular/quick_two_add.cpp}
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct three_fma_;
-}
-template<> struct supports_conditional<tag::three_fma_> : std::false_type
-{};
 
-EVE_MAKE_CALLABLE(three_fma_, three_fma);
+EVE_MAKE_CALLABLE(quick_two_add_, quick_two_add);
 }
 
-#include <eve/module/core/regular/impl/three_fma.hpp>
+#include <eve/module/core/regular/impl/quick_two_add.hpp>
