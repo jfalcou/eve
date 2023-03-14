@@ -19,10 +19,10 @@ namespace eve::detail
 {
   template<ordered_value T, ordered_value U, ordered_value V>
   EVE_FORCEINLINE auto
-  fma_(EVE_SUPPORTS(cpu_), promote_type const&, T const& a, U const& b, V const& c) noexcept
+  fms_(EVE_SUPPORTS(cpu_), promote_type const&, T const& a, U const& b, V const& c) noexcept
   {
     using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
     auto cv_t = as(eve::as<er_t>());
-    return fma(convert(a, cv_t), convert(b, cv_t), convert(c,cv_t));
+    return fms(convert(a, cv_t), convert(b, cv_t), convert(c,cv_t));
   }
 }
