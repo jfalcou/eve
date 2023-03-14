@@ -18,9 +18,9 @@ namespace eve::detail
   {
     if constexpr(kumi::product_type<Type>)
     {
-      return kumi::min_flat (  kumi::as_tuple_t<Type>{}
-                            , []<typename M>(M) { return ABI::template expected_cardinal<M>; }
-                            );
+      return kumi::min( kumi::result::flatten_all_t<kumi::as_tuple_t<Type>>{}
+                      , []<typename M>(M) { return ABI::template expected_cardinal<M>; }
+                      );
     }
     else
     {
