@@ -48,7 +48,7 @@ namespace eve
 //!
 //! where \f$\oplus\f$ subs its two parameters with infinite precision.
 //!
-//! @warning    Assumes |x| >= |y|  
+//! @warning    Assumes |x| >= |y|
 //!
 //!  @groupheader{Example}
 //!
@@ -56,12 +56,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct quick_two_sub_;
-}
-template<> struct supports_conditional<tag::quick_two_sub_> : std::false_type
-{};
 
 EVE_MAKE_CALLABLE(quick_two_sub_, quick_two_sub);
 }

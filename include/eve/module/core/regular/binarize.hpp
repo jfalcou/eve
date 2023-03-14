@@ -53,13 +53,6 @@ namespace eve
 //!  @godbolt{doc/core/regular/binarize.cpp}
 //! @}
 //================================================================================================
-// namespace tag
-// {
-//   struct binarize_;
-// }
-
-// template<> struct supports_optimized_conversion<tag::binarize_> : std::true_type
-// {};
 
   EVE_MAKE_CALLABLE(binarize_, binarize);
 }

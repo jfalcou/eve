@@ -55,12 +55,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct quick_two_add_;
-}
-template<> struct supports_conditional<tag::quick_two_add_> : std::false_type
-{};
 
 EVE_MAKE_CALLABLE(quick_two_add_, quick_two_add);
 }

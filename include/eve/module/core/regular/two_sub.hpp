@@ -54,12 +54,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct two_sub_;
-}
-template<> struct supports_conditional<tag::two_sub_> : std::false_type
-{};
 
 EVE_MAKE_CALLABLE(two_sub_, two_sub);
 }
