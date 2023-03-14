@@ -29,10 +29,7 @@ TTS_CASE_TPL("Check return types of cosh", eve::test::simd::ieee_reals)
 //==================================================================================================
 auto maxi = []<typename T>(eve::as<T> const&)
 {
-  using v_t = eve::element_type_t<T>;
-  v_t ovl   = eve::Ieee_constant<v_t, 0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f,
-                                                                             // 709.782712893384
-  return T(ovl);
+ return eve::maxlog(eve::as<T>())-eve::log_2(eve::as<T>());
 };
 
 auto mini = []<typename T>(eve::as<T> const& tgt) { return -maxi(tgt); };
@@ -60,7 +57,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cosh)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::cosh[mask](a0),

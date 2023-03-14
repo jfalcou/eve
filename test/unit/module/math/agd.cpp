@@ -38,9 +38,8 @@ TTS_CASE_WITH("Check behavior of agd on wide",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using eve::agd;
-  using eve::sinh;
-  TTS_ULP_EQUAL(agd(a0), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a0), 4);
-  TTS_ULP_EQUAL(agd(a1), map([](auto e) -> v_t { return std::atanh(std::sin(e)); }, a1), 4);
+  TTS_ULP_EQUAL(agd(a0), map([](auto e) -> v_t { return 2*std::atanh(std::tan(e*eve::half(eve::as(e)))); }, a0), 8.0);
+  TTS_ULP_EQUAL(agd(a1), map([](auto e) -> v_t { return 2*std::atanh(std::tan(e*eve::half(eve::as(e)))); }, a1), 8.0);
 };
 
 
@@ -51,7 +50,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::agd)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::agd[mask](a0),

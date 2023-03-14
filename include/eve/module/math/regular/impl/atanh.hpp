@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 atanh_(EVE_SUPPORTS(cpu_), const T& x) noexcept
 {
@@ -26,7 +26,7 @@ atanh_(EVE_SUPPORTS(cpu_), const T& x) noexcept
     auto tmp  = if_else(test, absx, t) / z1;
     if constexpr( scalar_value<T> ) tmp = test ? fma(t, tmp, t) : tmp;
     else tmp = if_else(test, fma(t, tmp, t), tmp);
-    return bit_xor(bitofsign(x), half(eve::as<T>()) * log1p(tmp));
+    return signnz(x)*half(eve::as<T>()) * log1p(tmp);
   }
   else return apply_over(atanh, x);
 }

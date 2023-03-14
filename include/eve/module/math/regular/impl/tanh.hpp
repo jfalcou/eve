@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr auto
 tanh_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
@@ -30,7 +30,7 @@ tanh_(EVE_SUPPORTS(cpu_), T a0) noexcept
     if constexpr( scalar_value<T> )
     {
       auto r = test ? fnma(T(2), rt2, T(1)) : t * rt2;
-      return is_negative(a0) ? -r : r;
+      return copysign(r, a0);
     }
     else if constexpr( simd_value<T> )
     {

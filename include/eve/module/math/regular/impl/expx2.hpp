@@ -15,7 +15,7 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // regular case
-template<floating_value T>
+template<ordered_value T>
 EVE_FORCEINLINE constexpr T
 expx2_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
@@ -28,8 +28,9 @@ expx2_(EVE_SUPPORTS(cpu_), T a0) noexcept
     if constexpr( scalar_value<T> && eve::platform::supports_infinites )
       if( is_infinite(a0) ) return inf(as<T>());
     T       x       = eve::abs(a0);
-    const T Expx2c1 = Ieee_constant<T, 0x42000000U, 0x4060000000000000ull>();
-    const T Expx2c2 = Ieee_constant<T, 0x3d000000U, 0x3f80000000000000ull>();
+    using u_t = underlying_type_t<T>;
+    const u_t Expx2c1 = Ieee_constant<u_t, 0x42000000U, 0x4060000000000000ull>();
+    const u_t Expx2c2 = Ieee_constant<u_t, 0x3d000000U, 0x3f80000000000000ull>();
     /* Represent x as an exact multiple of 1/32 plus a residual.  */
     T m = Expx2c1 * eve::floor(fma(Expx2c2, x, half(as<T>())));
     x -= m;

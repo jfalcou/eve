@@ -15,9 +15,6 @@
 #include <eve/module/core/pedantic/max.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
-#include <eve/module/core/regular/is_not_greater_equal.hpp>
-#include <eve/module/core/saturated/abs.hpp>
 #include <eve/arch/platform.hpp>
 
 #include <type_traits>
@@ -40,5 +37,19 @@ EVE_FORCEINLINE auto
 maxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
 {
   return pedantic(max)(eve::abs(a), eve::abs(b));
+}
+
+//================================================================================================
+// N parameters
+//================================================================================================
+template<value T0, value T1, value... Ts>
+auto
+maxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args) noexcept
+-> decltype(maxabs(a0, a1, args...))
+{
+  using r_t = decltype(maxabs(a0, a1, args...));
+  r_t that(pedantic(maxabs)(r_t(a0), r_t(a1)));
+  ((that = pedantic(maxabs)(that, r_t(args))), ...);
+  return that;
 }
 }

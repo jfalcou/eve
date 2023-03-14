@@ -41,7 +41,7 @@ negabsmin_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noex
 //================================================================================================
 template<value T0, value T1, value... Ts>
 auto
-negabsmin_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+negabsmin_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(negabsmin(a0,a1, args...))
 {
   return minus(numeric(eve::absmin)(a0, a1, args...));

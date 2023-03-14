@@ -81,20 +81,18 @@ div_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexce
 //================================================================================================
 //==  regular N parameters
 //================================================================================================
-template<value T0, value T1, value... Ts>
+template<value T0, value... Ts>
 auto
 div_(EVE_SUPPORTS(cpu_),
      T0 a0,
-     T1 a1,
      Ts... args) noexcept
--> common_value_t<T0, T1, Ts...>
+-> common_value_t<T0, Ts...>
 {
-  using r_t = common_value_t<T0, T1, Ts...>;
-  r_t that(a1);
-  that = mul(that, r_t(args)...);
+  using r_t = common_value_t<T0, Ts...>;
+  auto that((args * ...));
   if constexpr(std::is_integral_v<eve::element_type_t<r_t>>)
     EVE_ASSERT(eve::all(is_nez(that)), "[eve] div - 0/0 is undefined");
-  return div(r_t(a0), that);
+  return r_t(a0)/r_t(that);
 }
 
 //================================================================================================

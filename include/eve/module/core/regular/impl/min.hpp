@@ -31,12 +31,12 @@ min_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 
 template<ordered_value T>
 EVE_FORCEINLINE T
-min_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+min_(EVE_SUPPORTS(cpu_), T const& a0, T const& a1) noexcept
 {
   if constexpr(scalar_value<T>)
-    return b < a ? b : a;
+    return a0 < a1 ? a0 : a1;
   else
-     return apply_over(min, a, b);
+    return if_else(a0 < a1, a0, a1);
 }
 
 //================================================================================================

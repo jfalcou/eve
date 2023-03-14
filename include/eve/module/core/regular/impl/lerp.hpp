@@ -29,7 +29,8 @@ lerp_(EVE_SUPPORTS(cpu_),
       V const& t) noexcept
 -> common_value_t<U, V, T>
 {
-  return arithmetic_call(lerp, a, b, t);
+  using r_t = common_value_t<U, V, T>;
+  return lerp(r_t(a),r_t(b), r_t(t));
 }
 
 template<value T>

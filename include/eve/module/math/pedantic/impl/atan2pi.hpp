@@ -14,14 +14,14 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value U>
+template<ordered_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 atan2pi_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, U const& b) noexcept
 {
   return arithmetic_call(pedantic(atan2pi), a, b);
 }
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE auto
 atan2pi_(EVE_SUPPORTS(cpu_),
          pedantic_type const&,

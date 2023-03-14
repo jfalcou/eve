@@ -27,7 +27,7 @@ negmaxabs_(EVE_SUPPORTS(cpu_),
            pedantic_type const&,
            T const& a,
            U const& b) noexcept
--> decltype(negmaxabs(a, b))
+-> decltype(maxabs(a, b))
 {
   return arithmetic_call(pedantic(negmaxabs), a, b);
 }
@@ -36,7 +36,7 @@ template<value T>
 EVE_FORCEINLINE auto
 negmaxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
 {
-  return -pedantic(maxabs)(a, b);
+  return minus(pedantic(maxabs)(a, b));
 }
 
 //================================================================================================
@@ -45,7 +45,7 @@ negmaxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noe
 template<value T0, value T1, value... Ts>
 auto
 negmaxabs_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 a0, T1 a1, Ts... args)
--> decltype(negmaxabs_(a0, a1, args...))
+-> decltype(negmaxabs(a0, a1, args...))
 {
   return minus(pedantic(eve::maxabs)(a0, a1, args...));
 }

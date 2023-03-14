@@ -68,7 +68,7 @@ minabs_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args) noexcept
 {
   auto dma  = D()(min);
   using r_t = decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...));
-  r_t that(dma(eve::abs(a0), eve::abs((a1))));
+  r_t that(dma(r_t(eve::abs(a0)), r_t(eve::abs((a1)))));
   ((that = dma(that, eve::abs(args))), ...);
   return that;
 }
@@ -79,7 +79,7 @@ minabs_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
 ->  decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...))
 {
   using r_t = decltype(eve::add(eve::abs(a0), eve::abs(a1), eve::abs(args)...));
-  r_t that(min(eve::abs(a0), eve::abs((a1))));
+  r_t that(min(r_t(eve::abs(a0)), r_t(eve::abs((a1)))));
   ((that = min(that, eve::abs(args))), ...);
   return that;
 }

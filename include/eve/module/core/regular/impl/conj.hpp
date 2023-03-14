@@ -9,7 +9,7 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
+  template<ordered_value T>
   EVE_FORCEINLINE constexpr auto conj_(EVE_SUPPORTS(cpu_)
                                       , T const &a) noexcept
   {
@@ -18,7 +18,7 @@ namespace eve::detail
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_ordered_value U>
+template<conditional_expr C, ordered_value U>
 EVE_FORCEINLINE auto
 conj_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

@@ -83,6 +83,13 @@ namespace eve
 //!
 //! @}
 //================================================================================================
+// namespace tag
+// {
+//   struct sqr_;
+// }
+
+// template<> struct supports_optimized_conversion<tag::sqr_> : std::true_type
+// {};
 
 EVE_MAKE_CALLABLE(sqr_, sqr);
 }

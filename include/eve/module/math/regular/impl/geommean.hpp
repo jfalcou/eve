@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value U>
+template<ordered_value T, ordered_value U>
 EVE_FORCEINLINE auto
 geommean_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
 -> common_value_t<T, U>
@@ -20,7 +20,7 @@ geommean_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
   return arithmetic_call(geommean, a, b);
 }
 
-template<floating_ordered_value T>
+template<ordered_value T>
 EVE_FORCEINLINE T
 geommean_(EVE_SUPPORTS(cpu_), T a, T b) noexcept requires has_native_abi_v<T>
 {
@@ -30,7 +30,7 @@ geommean_(EVE_SUPPORTS(cpu_), T a, T b) noexcept requires has_native_abi_v<T>
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, floating_ordered_value U, floating_ordered_value V>
+template<conditional_expr C, ordered_value U, ordered_value V>
 EVE_FORCEINLINE auto
 geommean_(EVE_SUPPORTS(cpu_),
           C const& cond,
@@ -45,7 +45,7 @@ geommean_(EVE_SUPPORTS(cpu_),
 // N parameters
 //================================================================================================
 
-template<floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
+template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
 geommean_(EVE_SUPPORTS(cpu_),
           T0 a0,
@@ -82,7 +82,7 @@ geommean_(EVE_SUPPORTS(cpu_), Ts tup)
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, floating_value T0, floating_value T1, floating_value... Ts>
+template<conditional_expr C, value T0, value T1, value... Ts>
 auto
 geommean_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args)
 {

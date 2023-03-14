@@ -42,10 +42,10 @@ negmaxabs_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
-negmaxabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
+negmaxabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args)
 -> decltype(negmaxabs(a0, a1, args...))
 {
-    return saturated(minus)(saturated(eve::maxabs)(a0, a1, args...));
+  return saturated(minus)(saturated(eve::maxabs)(a0, a1, args...));
 }
 
 }

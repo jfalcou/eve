@@ -41,8 +41,8 @@ negmaxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noex
 //================================================================================================
 template<value T0, value T1, value... Ts>
 auto
-negmaxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
--> decltype(negmaxabs(a0, a1, args...))
+negmaxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args) noexcept
+  -> decltype(negmaxabs(a0, a1, args...))
 {
   return minus(numeric(eve::maxabs)(a0, a1, args...));
 }

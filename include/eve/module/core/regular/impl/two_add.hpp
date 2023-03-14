@@ -18,7 +18,9 @@ namespace eve::detail
 {
 template<floating_ordered_value T>
 EVE_FORCEINLINE kumi::tuple<T, T>
-                two_add_(EVE_SUPPORTS(cpu_), const T                &a, const T                &b) noexcept
+                two_add_(EVE_SUPPORTS(cpu_)
+                        , const T &a
+                        , const T &b) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
