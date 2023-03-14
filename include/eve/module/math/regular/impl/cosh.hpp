@@ -32,8 +32,6 @@ cosh_(EVE_SUPPORTS(cpu_), T a0) noexcept
   if constexpr( has_native_abi_v<T> )
   {
     T ovflimitmln2 = maxlog(as(a0))-log_2(as(a0));
-//       Ieee_constant<underlying_type_t<T>, 0X42AF5DC0U, 0X408628B76E3A7B61LL>()); // 87.68310404,
-//                                                               // 709.08956571282405469058276787854
     auto x = eve::abs(a0);
     if constexpr( scalar_value<T> )
     {

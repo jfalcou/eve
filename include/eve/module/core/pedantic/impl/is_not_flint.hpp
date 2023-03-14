@@ -26,7 +26,7 @@ is_not_flint_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
   {
     using u_t =  underlying_type_t<T>;
     if constexpr( integral_value<u_t> ) return true_(eve::as<T>());
-    if constexpr( floating_value<u_t> ) return is_nez(frac(a)) || (a > eve::maxflint(eve::as<T>()));
+    else if constexpr( floating_value<u_t> ) return is_nez(frac(a)) || (a > eve::maxflint(eve::as<T>()));
   }
   else return apply_over(pedantic(is_not_flint), a);
 }

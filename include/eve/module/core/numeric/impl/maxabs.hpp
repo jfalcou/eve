@@ -46,7 +46,7 @@ maxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noexcep
 //================================================================================================
 template<ordered_value T0, ordered_value T1, ordered_value... Ts>
 auto
-maxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+maxabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args) noexcept
   -> decltype(maxabs(a0, a1, args...))
 {
   using r_t = common_value_t<T0, T1, Ts...>;

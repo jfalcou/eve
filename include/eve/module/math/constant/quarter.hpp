@@ -59,20 +59,10 @@ namespace detail
   }
 
   template<floating_ordered_value T, typename D>
-  EVE_FORCEINLINE constexpr auto quarter_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
+  EVE_FORCEINLINE constexpr auto quarter_(EVE_SUPPORTS(cpu_), D const&, as<T> const& a) noexcept
       requires(is_one_of<D>(types<upward_type, downward_type> {}))
   {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<D, upward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.0p-2);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.0p-2);
-    }
-    else if constexpr( std::is_same_v<D, downward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.0p-2);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.0p-2);
-    }
+    return quarter(a);
   }
 }
 }

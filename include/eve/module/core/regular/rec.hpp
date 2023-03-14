@@ -70,13 +70,6 @@ namespace eve
 //!     very poor accuracy in return. Otherwise it uses the non decorated call.
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct rec_;
-}
-
-template<> struct supports_optimized_conversion<tag::rec_> : std::true_type
-{};
 
 EVE_MAKE_CALLABLE(rec_, rec);
 }

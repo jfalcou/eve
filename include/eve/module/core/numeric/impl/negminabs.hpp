@@ -41,7 +41,7 @@ negminabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b) noex
 //================================================================================================
 template<value T0, value T1, value... Ts>
 auto
-negminabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args)
+negminabs_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 a0, T1 a1, Ts... args) noexcept
   -> decltype(negminabs(a0, a1, args...))
 {
   return minus(numeric(eve::minabs)(a0, a1, args...));
