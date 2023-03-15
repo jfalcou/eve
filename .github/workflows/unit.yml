@@ -20,6 +20,8 @@ jobs:
   ##################################################################################################
   no_pch:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
     strategy:
       fail-fast: false
       matrix:
@@ -28,16 +30,20 @@ jobs:
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
-      - name: Check EVE with no PCH
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DEVE_USE_PCH=0 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         1
-          cpu:            4
-      - name: Always execute
-        if: ${{ always() }}
-        uses: ./.github/actions/cleanup
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 4
+      - name: Running Random Sampling Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 -E ^doc.*.exe
 
   ##################################################################################################
   ## Mac OS X Targets
@@ -134,6 +140,8 @@ jobs:
   other-arch:
     needs: x86-clang
     runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
     strategy:
       fail-fast: false
       matrix:
@@ -144,13 +152,20 @@ jobs:
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         1
-          cpu:            10
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 8
+      - name: Running Random Sampling Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 8 -E ^doc.*.exe
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
@@ -268,6 +283,8 @@ jobs:
   arm-sve:
     needs: x86-custom
     runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
     strategy:
       fail-fast: false
       matrix:
@@ -277,13 +294,20 @@ jobs:
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
-      - name: Testing EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         1
-          cpu:            16
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 12
+      - name: Running Random Sampling Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 12 -E ^doc.*.exe
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
