@@ -21,9 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v6
-      credentials:
-        username: jfalcou
-        password: ${{ secrets.ghcr_password}}
     strategy:
       fail-fast: false
       matrix:
@@ -35,21 +32,23 @@ jobs:
       - name: Fetch current branch
         uses: actions/checkout@v3
 
-      - name: Prepare EVE with ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
           cd build
-          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake" -DEVE_BUILD_RANDOM=ON
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake" \
+                    -DEVE_BUILD_RANDOM=ON
 
       - name: Compile Random Sampling Tests
         run:  |
           cd build
-          ninja random.exe -j 2
+          ninja random.exe -j 4
 
       - name: Running Random Sampling Tests
         run:  |
           cd build
-          ctest --output-on-failure -j 2 -R ^random.*.exe
+          ctest --output-on-failure -j 4 -R ^random.*.exe
 
       - name: Always execute
         if: ${{ always() }}
