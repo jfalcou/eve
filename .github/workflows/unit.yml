@@ -206,6 +206,8 @@ jobs:
   x86-custom:
     needs: x86-gcc
     runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
     strategy:
       fail-fast: false
       matrix:
@@ -219,24 +221,13 @@ jobs:
       - name: Fetch current branch
         uses: actions/checkout@v3
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: "${{ matrix.cfg.comp != 'clang_libcpp' }}"
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        if: "${{ matrix.cfg.comp != 'clang_libcpp' }}"
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
-        if: "${{ matrix.cfg.comp != 'clang_libcpp' }}"
         run: cd build && ctest --output-on-failure -j 8 -E ^doc.*.exe
-      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: "${{ matrix.cfg.comp == 'clang_libcpp' }}"
-        uses: ./.github/actions/run_docker
-        with:
-          options:        '${{ matrix.cfg.opts }}'
-          cmake-options:  '-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake'
-          status:         1
-          cpu:            8
       - name: Always execute
         if: ${{ always() }}
         uses: ./.github/actions/cleanup
