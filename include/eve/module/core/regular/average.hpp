@@ -59,6 +59,8 @@ namespace eve
 //!       by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
 //!       simd intrinsics to perform the operation, the scalar results may differ by one unit from
 //!       simd ones which are system dependent.
+//!       However the dowward (respectively upward) decorators can be used to ensure the result is
+//!       `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
 //!
 //!  @groupheader{Example}
 //!

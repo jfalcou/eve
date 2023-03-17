@@ -127,3 +127,18 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
   TTS_IEEE_EQUAL(eve::average[mask](a0, a1),
             eve::if_else(mask, eve::average(a0, a1), a0));
 };
+
+//==================================================================================================
+// Tests for downward upward  average
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::upward(eve::average)(eve::wide)",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax))
+             )
+<typename T>(T const& a0, T const& a1)
+{
+  TTS_EQUAL(eve::downward(eve::average)(a0, a1), eve::average(a0, a1));
+  TTS_EXPECT(eve::all(eve::average(a0, a1) <= eve::upward(eve::average)(a0, a1)));
+  TTS_EXPECT(eve::all(eve::inc(eve::average(a0, a1)) >= eve::upward(eve::average)(a0, a1)));
+};

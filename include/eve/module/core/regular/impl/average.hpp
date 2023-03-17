@@ -13,6 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/constant/half.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/all.hpp>
@@ -40,7 +41,7 @@ average_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
   if constexpr(has_native_abi_v<T>)
   {
-    if constexpr( integral_value<T> ) return (a & b) + ((a ^ b) >> 1);
+    if constexpr( integral_value<T> ) return (a & b) + ((a ^ b) >> 1); //compute ceil( (x+y)/2 )
     else return fma(a, half(eve::as(a)), b * half(eve::as(a)));
   }
   else return apply_over(average, a, b);
@@ -112,6 +113,27 @@ average_(EVE_SUPPORTS(cpu_),
          Ts... args)
 {
   return mask_op(cond, eve::average, a0, args...);
+}
+
+////////////////////////////////////////////////////////
+// upward and downward average useful in integral cases
+////////////////////////////////////////////////////////
+template<value T>
+EVE_FORCEINLINE T
+average_(EVE_SUPPORTS(cpu_), downward_type const &, T const& a, T const& b) noexcept
+{
+  return average(a, b);
+}
+
+template<value T> EVE_FORCEINLINE T
+average_(EVE_SUPPORTS(cpu_), upward_type const &, T const& a, T const& b) noexcept
+{
+  if constexpr(has_native_abi_v<T>)
+  {
+    if constexpr( integral_value<T> ) return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
+    else return fma(a, half(eve::as(a)), b * half(eve::as(a)));
+  }
+  else return apply_over(average, a, b);
 }
 
 }
