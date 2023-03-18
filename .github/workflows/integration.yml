@@ -1,0 +1,94 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Integration Tests
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: install-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  ##################################################################################################
+  ## Check install process of EVE via CMake
+  ##################################################################################################
+  install:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Install EVE for branch ${{ github.head_ref }} via install target
+        run: |
+          git config --global --add safe.directory $PWD
+          cmake -B build -S . -G Ninja -DEVE_BUILD_INTEGRATION=ON -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=OFF
+          ctest --test-dir build --output-on-failure -R integration.install-eve.exe
+      - name: Test EVE via the install target
+        run:  ctest --test-dir build --output-on-failure -R integration.install.exe
+
+  ##################################################################################################
+  ## Check install process of EVE via CPM
+  ##################################################################################################
+  cpm:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Install EVE for branch ${{ github.head_ref }} via CPM
+        run: |
+          git config --global --add safe.directory $PWD
+          cmake -B build -S . -G Ninja -DEVE_BUILD_INTEGRATION=ON -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=OFF
+          ctest --test-dir build --output-on-failure -R integration.cpm.exe
+
+  ##################################################################################################
+  ## Check install process of EVE via FetchContents
+  ##################################################################################################
+  fetch:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Install EVE for branch ${{ github.head_ref }} via FetchContents
+        run: |
+          git config --global --add safe.directory $PWD
+          cmake -B build -S . -G Ninja -DEVE_BUILD_INTEGRATION=ON -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=OFF
+          ctest --test-dir build --output-on-failure -R integration.fetch.exe
+
+  ##################################################################################################
+  ## Check EVE multi-architecture setup
+  ##################################################################################################
+  multi-arch:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
+      credentials:
+        username: jfalcou
+        password: ${{ secrets.ghcr_password}}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Prepare EVE repository for branch ${{ github.head_ref }}
+        run: |
+          git config --global --add safe.directory $PWD
+          mkdir build && cd build
+          cmake .. -G Ninja
+          ninja install > /dev/null
+      - name: Test EVE multi-architecture support
+        run: |
+          mkdir multi-test && cd multi-test
+          CURRENT_SHA1=`git rev-parse HEAD`
+          cmake ../examples/multi-arch -G Ninja
+          ninja multi-arch
+          ./multi-arch
+

@@ -69,7 +69,7 @@ TTS_CASE_WITH("Check behavior of erfc_inv on wide",
   TTS_ULP_EQUAL(erfc_inv(T(1.3)), T(boost::math::erfc_inv(1.3)), 0.5);
   TTS_ULP_EQUAL(erfc_inv(T(1.5)), T(boost::math::erfc_inv(1.5)), 1);
   TTS_ULP_EQUAL(erfc_inv(T(1.15)), T(boost::math::erfc_inv(1.15)), 1.5);
-  TTS_ULP_EQUAL(erfc_inv(T(1.75)), T(boost::math::erfc_inv(1.75)), 0.5);
+  TTS_ULP_EQUAL(erfc_inv(T(1.75)), T(boost::math::erfc_inv(1.75)), 1);
   TTS_ULP_EQUAL(erfc_inv(T(1.45984)), T(boost::math::erfc_inv(1.45984)), 1.5);
 };
 

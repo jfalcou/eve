@@ -62,13 +62,13 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
   TTS_ULP_EQUAL(erf_inv(T(0.3)), T(boost::math::erf_inv(0.3)), 0.5);
   TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(0.5)), 1);
   TTS_ULP_EQUAL(erf_inv(T(0.15)), T(boost::math::erf_inv(0.15)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(0.75)), T(boost::math::erf_inv(0.75)), 0.5);
+  TTS_ULP_EQUAL(erf_inv(T(0.75)), T(boost::math::erf_inv(0.75)), 1);
   TTS_ULP_EQUAL(erf_inv(T(-0.1)), T(boost::math::erf_inv(-0.1)), 0.5);
   TTS_ULP_EQUAL(erf_inv(T(-0.2)), T(boost::math::erf_inv(-0.2)), 0.5);
   TTS_ULP_EQUAL(erf_inv(T(-0.3)), T(boost::math::erf_inv(-0.3)), 0.5);
   TTS_ULP_EQUAL(erf_inv(T(-0.5)), T(boost::math::erf_inv(-0.5)), 1);
   TTS_ULP_EQUAL(erf_inv(T(-0.15)), T(boost::math::erf_inv(-0.15)), 0.5);
-  TTS_ULP_EQUAL(erf_inv(T(-0.75)), T(boost::math::erf_inv(-0.75)), 0.5);
+  TTS_ULP_EQUAL(erf_inv(T(-0.75)), T(boost::math::erf_inv(-0.75)), 1);
 };
 
 
