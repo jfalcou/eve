@@ -78,6 +78,13 @@ glob_unit("doc" ${doc_root} "polynomial/sph/*.cpp"             )
 glob_unit("doc" ${doc_root} "polynomial/successor/*.cpp"       )
 
 ##==================================================================================================
+## GLOB and process fft doc tests
+##==================================================================================================
+add_custom_target(doc.fft.exe        )
+add_dependencies(doc.exe doc.fft.exe )
+glob_unit("doc" ${doc_root} "fft/*.cpp" )
+
+##==================================================================================================
 ## GLOB and process special doc tests
 ##==================================================================================================
 add_custom_target(doc.special.exe        )

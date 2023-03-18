@@ -102,6 +102,10 @@ add_custom_target(unit.polynomial.exe         )
 add_dependencies(unit.exe unit.polynomial.exe )
 glob_unit("unit" ${unit_root} "module/polynomial/*.cpp" )
 
+add_custom_target(unit.fft.exe         )
+add_dependencies(unit.exe unit.fft.exe )
+glob_unit("unit" ${unit_root} "module/fft/*.cpp" )
+
 add_custom_target(unit.special.exe         )
 add_dependencies(unit.exe unit.special.exe )
 glob_unit("unit" ${unit_root} "module/special/*.cpp" )
