@@ -56,7 +56,9 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fft_, fft);
+EVE_MAKE_CALLABLE(naive_fft_, naive_fft);
+EVE_MAKE_CALLABLE(totally_naive_fft_, totally_naive_fft);
+
 }
 
 #include <eve/module/fft/regular/impl/naive_fft.hpp>
