@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 #include <array>
-#include <ranges>
+#include <algorithm>
 #include <bit>
 
 namespace eve::detail
@@ -30,7 +30,7 @@ namespace eve::detail
       else
       {
         auto b = std::bit_cast<std::array<uint8_t, S>>(x);
-        std::ranges::reverse(b.begin(), b.end());
+        std::reverse(b.begin(), b.end());
         return std::bit_cast<T>(b);
       }
     }
