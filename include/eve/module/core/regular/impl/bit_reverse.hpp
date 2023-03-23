@@ -11,22 +11,35 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
+#include <eve/module/core/regular/load.hpp>
+#include <eve/module/core/regular/store.hpp>
+#include <bit>
 
 
 namespace eve::detail
 {
+    template<integral_value T>
+  EVE_FORCEINLINE auto
+  bit_reverse_(EVE_SUPPORTS(cpu_), T x) noexcept;
+
   template<integral_value T>
   EVE_FORCEINLINE auto
   bit_reverse_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
-    if constexpr(has_native_abi_v<T>)
+    using e_t =  element_type_t<T>;
+    constexpr auto S = sizeof(e_t);
+    if constexpr(scalar_value<T>)
     {
-      using e_t =  element_type_t<T>;
-      constexpr auto S = sizeof(e_t);
+      wide<T, fixed<1>> w(x);
+      return bit_reverse(w).get(0);
+    }
+    else if constexpr(has_native_abi_v<T>)
+    {
       if constexpr(S == 1)
       {
         constexpr uint8_t m1 = 0x55;
@@ -40,7 +53,7 @@ namespace eve::detail
       else
       {
         using u8_t = wide<uint8_t, fixed<S*cardinal_v<T>>>;
-        auto z = bit_cast(x, as<u8_t>());
+        auto z = eve::bit_cast(x, as<u8_t>());
         return byte_reverse( bit_cast(bit_reverse(z), as<T>()));
       }
     }
