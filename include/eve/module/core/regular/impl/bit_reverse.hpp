@@ -16,8 +16,8 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
-#include <eve/module/core/regular/load.hpp>
-#include <eve/module/core/regular/store.hpp>
+#include <eve/module/core/regular/bit_swap.hpp>
+#include <eve/module/core/regular/rotl.hpp>
 #include <bit>
 
 
@@ -35,19 +35,30 @@ namespace eve::detail
     constexpr auto S = sizeof(e_t);
     if constexpr(scalar_value<T>)
     {
-      wide<T, fixed<1>> w(x);
-      return bit_reverse(w).get(0);
+      x = bit_swap(x, std::integral_constant<size_t, 1>());
+      x = bit_swap(x, std::integral_constant<size_t, 2>());
+      x = bit_swap(x, std::integral_constant<size_t, 4>());
+      if constexpr(sizeof(T) >= 2)
+        x = bit_swap(x, std::integral_constant<size_t, 8>());
+      else
+        return x;
+      if constexpr(sizeof(T) >= 4)
+        x = bit_swap(x, std::integral_constant<size_t, 16>());
+      else
+        return x;
+      if constexpr(sizeof(T) ==  8)
+        x = bit_swap(x, std::integral_constant<size_t, 32>());
+      return x;
     }
     else if constexpr(has_native_abi_v<T>)
     {
       if constexpr(S == 1)
       {
-        constexpr uint8_t m1 = 0x55;
-        x =  ((x & m1) << 1) | ((x & (bit_not(m1))) >> 1);
-        constexpr uint8_t m2 = 0x33;
-        x =  ((x & m2) << 2) | ((x & (bit_not(m2))) >> 2);
-        constexpr uint8_t m3 = 0x0f;
-        x =  ((x & m3) << 4) | ((x & (bit_not(m3))) >> 4);
+        //       constexpr uint8_t m1 = 0x55;
+        x =  ((x & uint8_t(0x55)) << 1) | ((x & uint8_t(0xaa)) >> 1);
+        //   constexpr uint8_t m2 = 0x33;
+        x =  ((x & uint8_t(0x33)) << 2) | ((x & uint8_t(0xcc)) >> 2);
+        x =  rotl(x, 4);
         return x;
       }
       else

@@ -28,18 +28,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< auto N, eve::integral_value T >
-//!      T bit_swap(T x) noexcept;
+//!      template< size_t N, eve::integral_value T >
+//!      T bit_swap(T x, std::integral_constant<size_t, N> n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::integral_value).
-//!
-//!  **Template parameters**
-//!
-//!     * N: size of the groups of bits to be swapped
+//!     * `n` :  size of the groups of bits to be swapped.
 //!
 //!    **Return value**
 //!
