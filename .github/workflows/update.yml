@@ -1,0 +1,36 @@
+##==================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+##==================================================================================================
+name: EVE Documentation Update
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-doc:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v6
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v3
+      - name: Prepare EVE
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=ON
+
+      - name: Generate Doxygen
+        run: |
+          cd build
+          ninja doxygen
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs

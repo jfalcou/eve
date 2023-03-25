@@ -20,14 +20,8 @@ endif (DOXYGEN_FOUND)
 ##==================================================================================================
 if (DOXYGEN_FOUND)
   set(DOXYGEN_CONFIG ${PROJECT_SOURCE_DIR}/doc/Doxyfile)
-  add_custom_target ( doxygen
-                      COMMAND EVE_DOXYGEN_OUPUT=../docs ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONFIG}
-                      WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doc
-                      COMMENT "[eve] Generating API documentation with Doxygen"
-                      VERBATIM
-                    )
 
-  add_custom_target ( doxygen-local
+  add_custom_target ( doxygen
                       COMMAND EVE_DOXYGEN_OUPUT=${PROJECT_BINARY_DIR}/docs ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONFIG}
                       WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/doc
                       COMMENT "[eve] Generating API documentation with Doxygen - Local version"
