@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_swap
-//!   @brief swaps groups of N bits .
+//!   @brief swaps elementwise groups of N bits.
 //!
 //!   **Defined in Header**
 //!

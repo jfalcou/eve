@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var byte_reverse
-//!   @brief reverses the byte order.
+//!   @brief elementwise reverses the byte order.
 //!
 //!   **Defined in Header**
 //!
