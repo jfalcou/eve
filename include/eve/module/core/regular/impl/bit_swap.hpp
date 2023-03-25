@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
-#include <eve/module/core/regular/rotl.hpp>
 #include <bit>
 
 
@@ -45,59 +44,68 @@ namespace eve::detail
       }
       return r;
     };
+    auto swp = [](auto x, auto m, int n){
+      return ((x & m) << n) | ((x & (bit_not(m))) >> n);
+    };
     if constexpr (N > S*4) return e_t(0);
     else if constexpr(N == 0) return x;
     else if constexpr(N == 1) //Return x with neighbor bits swapped.
     {
-      e_t m = mk_ct(0x55);
-      x =  ((x & m) << 1) | ((x & (bit_not(m))) >> 1);
-      return x;
+      return swp(x, mk_ct(0x55), N);
+ //      e_t m = mk_ct(0x55);
+//       x =  ((x & m) << 1) | ((x & (bit_not(m))) >> 1);
+//       return x;
     }
     else if constexpr(N == 2)//Return x with group of 2 bits swapped.
     {
-      e_t m = mk_ct(0x33);
-      x =  ((x & m) << 2) | ((x & (bit_not(m))) >> 2);
-      return x;
+      return swp(x, mk_ct(0x33), N);
+//      e_t m = mk_ct(0x33);
+//       x =  ((x & m) << 2) | ((x & (bit_not(m))) >> 2);
+//       return x;
     }
     else if constexpr(N == 4)//Return x with group of 4 bits swapped.
     {
-      e_t m = mk_ct(0x0f);
-      x =  ((x & m) << 4) | ((x & (bit_not(m))) >> 4);
-      return x;
+      return swp(x, mk_ct(0x0f), N);
+//       e_t m = mk_ct(0x0f);
+//       x =  ((x & m) << 4) | ((x & (bit_not(m))) >> 4);
+//       return x;
     }
     else if constexpr(N == 8)//Return x with group of 8 bits swapped.
     {
       if constexpr( S == 2)
       {
-        return rotl(x, 8);
+        return (x << 8) | (x >> 8);
       }
       else if constexpr( S == 4)
       {
-        e_t m = 0x00ff00ffULL;
-        x =  ((x & m) << 8) | ((x & (bit_not(m))) >> 8);
-        return x;
+      return swp(x, 0x00ff00ffULL, N);
+ //        e_t m = 0x00ff00ffULL;
+//         x =  ((x & m) << 8) | ((x & (bit_not(m))) >> 8);
+//         return x;
       }
        else if constexpr( S == 8)
       {
-        e_t m = 0x00ff00ff00ff00ffULL;
-        x =  ((x & m) << 8) | ((x & (bit_not(m))) >> 8);
-        return x;
+        return swp(x, 0x00ff00ff00ff00ffULL, N);
+//         e_t m = 0x00ff00ff00ff00ffULL;
+//         x =  ((x & m) << 8) | ((x & (bit_not(m))) >> 8);
+//         return x;
       }
    }
     else if constexpr(N == 16)//Return x with group of 16 bits swapped.
     {
       if constexpr(S == 8)
       {
-        e_t m = 0x0000ffff0000ffffULL;
-        x =  ((x & m) << 16) | ((x & (bit_not(m))) >> 16);
-        return x;
+        return swp(x, 0x0000ffff0000ffffULL, N);
+//         e_t m = 0x0000ffff0000ffffULL;
+//         x =  ((x & m) << 16) | ((x & (bit_not(m))) >> 16);
+//         return x;
       }
       else if constexpr( S == 4)
-        return  rotl(x, 16); ;
+        return (x << N) | (x >> N);
     }
     else if constexpr(N == 32)//Return x with group of 32 bits swapped. (S = 8)
     {
-      return rotl(x, 32);
+        return (x << N) | (x >> N);
     }
   }
 

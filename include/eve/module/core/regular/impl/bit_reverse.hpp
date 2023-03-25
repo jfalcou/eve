@@ -55,7 +55,7 @@ namespace eve::detail
       {
         x =  ((x & uint8_t(0x55)) << 1) | ((x & uint8_t(0xaa)) >> 1);
         x =  ((x & uint8_t(0x33)) << 2) | ((x & uint8_t(0xcc)) >> 2);
-        x =  ((x << 4) & (x >> 4));
+        x =  ((x << 4) | (x >> 4));
         return x;
       }
       else
