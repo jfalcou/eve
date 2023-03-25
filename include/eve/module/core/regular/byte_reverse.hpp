@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var byte_reverse
-//!   @brief computes the ones complement of the parameter.
+//!   @brief reverses the byte order.
 //!
 //!   **Defined in Header**
 //!

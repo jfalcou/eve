@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_swap
-//!   @brief computes the ones complement of the parameter.
+//!   @brief swaps groups of N bits .
 //!
 //!   **Defined in Header**
 //!
