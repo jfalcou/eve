@@ -54,11 +54,9 @@ namespace eve::detail
     {
       if constexpr(S == 1)
       {
-        //       constexpr uint8_t m1 = 0x55;
         x =  ((x & uint8_t(0x55)) << 1) | ((x & uint8_t(0xaa)) >> 1);
-        //   constexpr uint8_t m2 = 0x33;
         x =  ((x & uint8_t(0x33)) << 2) | ((x & uint8_t(0xcc)) >> 2);
-        x =  rotl(x, 4);
+        x =  /*((x << 4) & (x >> 4)); */  x = rotl(x, 4);
         return x;
       }
       else
