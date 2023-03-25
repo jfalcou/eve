@@ -73,15 +73,15 @@ var hierarchy =
     [ "eve::underlying_type< Ts >", "structeve_1_1underlying__type.html", null ],
     [ "eve::underlying_type< T >", "structeve_1_1underlying__type.html", null ],
     [ "eve::unsupported_call< Signature >", "structeve_1_1unsupported__call.html", null ],
+    [ "eve::detail::wide_storage< Storage >", null, [
+      [ "eve::wide< value_type_t< I >, N >", "structeve_1_1wide.html", null ],
+      [ "eve::wide< value_type, N >", "structeve_1_1wide.html", null ]
+    ] ],
     [ "eve::detail::wide_storage< as_logical_register_t< Type, Cardinal, abi_t< Type, Cardinal > > >", null, [
       [ "eve::logical< wide< Type, Cardinal > >", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html", null ]
     ] ],
     [ "eve::detail::wide_storage< as_register_t< Type, Cardinal, abi_t< Type, Cardinal > > >", null, [
       [ "eve::wide< Type, Cardinal >", "structeve_1_1wide.html", null ]
-    ] ],
-    [ "eve::detail::wide_storage< as_register_t< Type, N, abi_t< Type, N > > >", null, [
-      [ "eve::wide< value_type_t< I >, N >", "structeve_1_1wide.html", null ],
-      [ "eve::wide< value_type, N >", "structeve_1_1wide.html", null ]
     ] ],
     [ "eve::algo::views::zip_iterator< Is >", "structeve_1_1algo_1_1views_1_1zip__iterator.html", null ],
     [ "zip_iterator", "structzip__iterator.html", null ],

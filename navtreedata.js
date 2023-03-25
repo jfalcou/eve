@@ -25,10 +25,7 @@
 var NAVTREE =
 [
   [ "E.V.E", "index.html", [
-    [ "The Expressive Vector Engine", "index.html", [
-      [ "Video materials", "index.html#autotoc_md97", null ],
-      [ "Bibliographic References", "index.html#autotoc_md98", null ]
-    ] ],
+    [ "The Expressive Vector Engine", "index.html", "index" ],
     [ "Installation & Quick Start", "install.html", [
       [ "Pre-requisites", "install.html#autotoc_md119", null ],
       [ "Retrieving the source", "install.html#autotoc_md120", [
@@ -113,11 +110,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__algos_ga12158ae18d0b51c0ea82040b2a8217f8.html#ga12158ae18d0b51c0ea82040b2a8217f8",
-"group__core__internal_gaf1ba6612bfd82759bf6150e2e353e7d3.html#gaf1ba6612bfd82759bf6150e2e353e7d3",
-"group__math__trig_ga664582204f1e5e323b88bf429706c77f.html#ga664582204f1e5e323b88bf429706c77f",
-"structeve_1_1aligned__ptr.html#a3eae8f3254e53333dbad75b49401adea",
-"structeve_1_1wide.html#a88a8c49f2e9d541594854dc7369a7162"
+"group__conditional_gab99c14f8c7e6cd5fc693a79c97bc89d8.html#gab99c14f8c7e6cd5fc693a79c97bc89d8",
+"group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf",
+"group__special_ga389ba76da33441489ce62a08b142f782.html#ga389ba76da33441489ce62a08b142f782",
+"structeve_1_1ignore__first.html#a929fdfe9d5d91d9fa5b6d1baebdd3391"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
