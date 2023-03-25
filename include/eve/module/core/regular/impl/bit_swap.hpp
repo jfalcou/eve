@@ -23,7 +23,7 @@ namespace eve::detail
 {
   template<auto N, unsigned_value T>
   EVE_FORCEINLINE auto
-  bit_swap_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N> n) noexcept
+  bit_swap_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N>) noexcept
   {
     using e_t =  element_type_t<T>;
     constexpr auto S = sizeof(e_t);
