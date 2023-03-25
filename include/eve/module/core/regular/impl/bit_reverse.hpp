@@ -11,22 +11,16 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/forward.hpp>
-#include <eve/module/core/regular/load.hpp>
-#include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
 #include <eve/module/core/regular/bit_swap.hpp>
-#include <bit>
-
+#include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
 
 namespace eve::detail
 {
-    template<integral_value T>
-  EVE_FORCEINLINE auto
-  bit_reverse_(EVE_SUPPORTS(cpu_), T x) noexcept;
-
-  template<integral_value T>
+  template<unsigned_value T>
   EVE_FORCEINLINE auto
   bit_reverse_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
@@ -53,9 +47,9 @@ namespace eve::detail
     {
       if constexpr(S == 1)
       {
-        x =  ((x & uint8_t(0x55)) << 1) | ((x & uint8_t(0xaa)) >> 1);
-        x =  ((x & uint8_t(0x33)) << 2) | ((x & uint8_t(0xcc)) >> 2);
-        x =  ((x << 4) | (x >> 4));
+        x =  bit_shl((x & uint8_t(0x55)), 1) | bit_shr((x & uint8_t(0xaa)), 1);
+        x =  bit_shl((x & uint8_t(0x33)), 2) | bit_shr((x & uint8_t(0xcc)), 2);
+        x =  (bit_shl(x, 4) | bit_shr(x, 4));
         return x;
       }
       else
@@ -70,7 +64,7 @@ namespace eve::detail
   }
 
   // Masked case
-  template<conditional_expr C, ordered_value U>
+  template<conditional_expr C, unsigned_value U>
   EVE_FORCEINLINE auto
   bit_reverse_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
   {

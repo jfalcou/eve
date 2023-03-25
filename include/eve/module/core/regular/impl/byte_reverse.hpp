@@ -45,7 +45,8 @@ namespace eve::detail
         using u8_t = wide<uint8_t, fixed<S*C>>;
         auto p = [] (auto i, auto ) { auto S = sizeof(e_t); return (i/S+1)*S-1-i%S; };
         auto y = eve::shuffle(bit_cast(x, as<u8_t>()), eve::as_pattern(p));
-        return bit_cast(y, as<T>());
+        x = bit_cast(y, as<T>());
+        return x;
       }
     }
     else

@@ -16,22 +16,16 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
-#include <bit>
-
+#include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
 
 namespace eve::detail
 {
-  template<auto N, integral_value T>
-  EVE_FORCEINLINE auto
-  bit_swap_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N>) noexcept;
-
-  template<auto N, integral_value T>
+  template<auto N, unsigned_value T>
   EVE_FORCEINLINE auto
   bit_swap_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N> n) noexcept
   {
     using e_t =  element_type_t<T>;
-    if constexpr(std::is_signed_v<e_t>)
-      return bit_cast(bit_swap(bit_cast(x, as<as_uinteger_t<T>>()), n), as<T>());
     constexpr auto S = sizeof(e_t);
     auto  mk_ct = [S](uint8_t C){
       e_t r = C;
@@ -44,73 +38,34 @@ namespace eve::detail
       }
       return r;
     };
-    auto swp = [](auto x, auto m, int n){
-      return ((x & m) << n) | ((x & (bit_not(m))) >> n);
+    auto swp = [](auto x, auto m, int n)->T{
+      return bit_or(bit_shl(bit_and(x, T(m)), n), bit_shr(bit_andnot(x, T(m)), n));
     };
     if constexpr (N > S*4) return e_t(0);
     else if constexpr(N == 0) return x;
     else if constexpr(N == 1) //Return x with neighbor bits swapped.
-    {
       return swp(x, mk_ct(0x55), N);
- //      e_t m = mk_ct(0x55);
-//       x =  ((x & m) << 1) | ((x & (bit_not(m))) >> 1);
-//       return x;
-    }
     else if constexpr(N == 2)//Return x with group of 2 bits swapped.
-    {
       return swp(x, mk_ct(0x33), N);
-//      e_t m = mk_ct(0x33);
-//       x =  ((x & m) << 2) | ((x & (bit_not(m))) >> 2);
-//       return x;
-    }
     else if constexpr(N == 4)//Return x with group of 4 bits swapped.
-    {
       return swp(x, mk_ct(0x0f), N);
-//       e_t m = mk_ct(0x0f);
-//       x =  ((x & m) << 4) | ((x & (bit_not(m))) >> 4);
-//       return x;
-    }
     else if constexpr(N == 8)//Return x with group of 8 bits swapped.
     {
-      if constexpr( S == 2)
-      {
-        return (x << 8) | (x >> 8);
-      }
-      else if constexpr( S == 4)
-      {
-      return swp(x, 0x00ff00ffULL, N);
- //        e_t m = 0x00ff00ffULL;
-//         x =  ((x & m) << 8) | ((x & (bit_not(m))) >> 8);
-//         return x;
-      }
-       else if constexpr( S == 8)
-      {
-        return swp(x, 0x00ff00ff00ff00ffULL, N);
-//         e_t m = 0x00ff00ff00ff00ffULL;
-//         x =  ((x & m) << 8) | ((x & (bit_not(m))) >> 8);
-//         return x;
-      }
-   }
+      if      constexpr(S == 2) return (x << N) | (x >> N);
+      else if constexpr(S == 4) return swp(x, 0x00ff00ffU, N);
+      else if constexpr(S == 8) return swp(x, 0x00ff00ff00ff00ffUL, N);
+    }
     else if constexpr(N == 16)//Return x with group of 16 bits swapped.
     {
-      if constexpr(S == 8)
-      {
-        return swp(x, 0x0000ffff0000ffffULL, N);
-//         e_t m = 0x0000ffff0000ffffULL;
-//         x =  ((x & m) << 16) | ((x & (bit_not(m))) >> 16);
-//         return x;
-      }
-      else if constexpr( S == 4)
-        return (x << N) | (x >> N);
+      if      constexpr(S == 4) return (x << N) | (x >> N);
+      else if constexpr(S == 8) return swp(x, 0x0000ffff0000ffffUL, N);
     }
     else if constexpr(N == 32)//Return x with group of 32 bits swapped. (S = 8)
-    {
-        return (x << N) | (x >> N);
-    }
+      return (x << N) | (x >> N);
   }
 
   // Masked case
-  template<conditional_expr C, ordered_value U, size_t N>
+  template<conditional_expr C, ordered_value U, auto N>
   EVE_FORCEINLINE auto
   bit_swap_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, std::integral_constant<size_t, N> const & n) noexcept
   {
