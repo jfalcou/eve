@@ -1,0 +1,387 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: Change Log</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('changelog.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Change Log </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p ><a class="anchor" id="md_eve_doc_page10_changelog"></a></p>
+<h1><a class="anchor" id="autotoc_md136"></a>
+Version 2023.02.15</h1>
+<p >Codename: <a href="https://en.wikipedia.org/wiki/Perdita_(The_Winter%27s_Tale)">Perdita Quiescent</a></p>
+<h2><a class="anchor" id="autotoc_md137"></a>
+What's Changed</h2>
+<h3><a class="anchor" id="autotoc_md138"></a>
+Removal and Depreciation</h3>
+<ul>
+<li>The proba module as been removed. (See #1490) It will be reworked as a separate project later on with a proper API.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md139"></a>
+Architectures/Compilers Support &amp; Fixes</h3>
+<h4><a class="anchor" id="autotoc_md140"></a>
+The One Big News for this release: SVE</h4>
+<ul>
+<li>SVE with fixed size, power of 2 cardinal is now supported for most of our API. Some more optimizations are on the way but the support is functional. (See #1432, #1435, #1436, #1437, #1438, #1448, #1453, #1455, #1456, #1463, #1464, #1472, #1473, #1474,#1487, #1489, #1491, #1494, #1533, #1556)</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md141"></a>
+Other Fixes</h4>
+<ul>
+<li><b>EVE</b> now compiles on ARM M1 with Homebrew g++. (See #1471)</li>
+<li><b>EVE</b> now compiles with Apple Clang (See #1479, #1485, #1502, #1530, #1531)</li>
+<li>Various efforts have been made to advance the MSVC situation. Help still welcomed.</li>
+<li>ARM all and any are now more efficient (See #1500)</li>
+<li>Integral sign/signnz functions are now more efficient on x86 (See #1499)</li>
+<li>Implementation for X86 AVX2/AVX512 gather and masked gather are now optimized. (See #1526)</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md142"></a>
+Features</h3>
+<ul>
+<li><b>jtlap</b> implemented a large amount of new functions for <code><a class="el" href="structeve_1_1complex.html" title="SIMD-compatible representation of complex numbers.">eve::complex</a></code>.</li>
+<li>Functions like exp, log or sqrt can now be called with a real entry and a complex output. (See #1528)</li>
+<li>Binary functions for which a n-ary extensions is available now support being called with a tuple-like parameter instead of a dynamic range (See #1422, #1509)</li>
+<li>The minmax function is now available. (See #1507)</li>
+<li><b>DenisYaroshevskiy</b> implemented new traits for algorithms to take care of costly kernels, no alignment and to support fused operations. (See #1535, #1543)</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md143"></a>
+Bug Fixes</h3>
+<ul>
+<li>Convert is now more efficient and don't generate piecewise evaluation in some scenario involving logicals. (See #1447, #1428)</li>
+<li><code>if_else</code> now uses the proper constant generator in optimized cases. (See #1529)</li>
+<li>Prevent constant to erroneously be callable with non-specific product types. (See #1540)</li>
+<li>A large cleanup of old traits and concepts has been done. The basics concepts around vectorizable and vectorized types has been therefore simplified and streamlined. (See #1468, #1477, #1527, #1488, #1545)</li>
+<li>Fix issue with dynamic SIMD extension detection that were broken by accident. (See #1504)</li>
+</ul>
+<p ><b>Full Changelog</b>: <a href="https://github.com/jfalcou/eve/compare/v2022.09.1...2023.02.15">https://github.com/jfalcou/eve/compare/v2022.09.1...2023.02.15</a></p>
+<h1><a class="anchor" id="autotoc_md144"></a>
+Version 2022.09.1</h1>
+<p >Codename: <a href="https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It)">Rosalind Serendipitous</a></p>
+<p >This is a patch release that fix some issue with the versioning of EVE installation and some documentation issue.</p>
+<p ><b>Full Changelog</b>: <a href="https://github.com/jfalcou/eve/compare/v2022.09.0...2022.09.1">https://github.com/jfalcou/eve/compare/v2022.09.0...2022.09.1</a></p>
+<h1><a class="anchor" id="autotoc_md145"></a>
+Version 2022.09.0</h1>
+<p >Codename: <a href="https://en.wikipedia.org/wiki/Rosalind_(As_You_Like_It)">Rosalind Serendipitous</a></p>
+<h2><a class="anchor" id="autotoc_md146"></a>
+What's Changed</h2>
+<p >A lot. The main non-code changes is our move from MIT License to the BOOST SOFTWARE License. Next to that, support for more algorithms and complex numbers has been added.</p>
+<p >Starting this fall, we will also try to provide more regular release.</p>
+<p ><b>This release is an API/ABI breaking changes release.</b></p>
+<ul>
+<li>ABI/API changes<ul>
+<li>Promote module like includes by removing eve/function/ (See #1378)</li>
+<li>EVE support for automatic differentiation has been moved to <a href="https://github.com/codereckons/fluxion">https://github.com/codereckons/fluxion</a> (See #1309, #1324)</li>
+<li>Reworked the basic concepts used to discriminate scalar and SIMD values (See #1144, #1306, #1307, #1314)</li>
+<li>diff_of_prod/sum_of_prod are now more precise and propose a raw variant (See #1369)</li>
+<li>Architecture tag and object names has been streamlined to be easier to use (See #1319)</li>
+<li>category API was cleaned up (See #1399)</li>
+</ul>
+</li>
+<li>New features<ul>
+<li>Added newest Boost.Constant support (See #1291)</li>
+<li>Added support for EVE complex numbers type and functions (See #1289, #1308, #1310, #1301)</li>
+<li>Implemented Jacobi polynomial (See #1284)</li>
+<li>Implemented better Tchebytchev polynomial (See #1292)</li>
+<li>First steps for SVE-fixed size support (See #1341, #1364, #1376, #1386)</li>
+<li>Added support for more masked functions (See #1384)</li>
+<li>Implemented last_true (See #1340)</li>
+<li>Implemented predicated min/max (See #1337)</li>
+<li>Implemented eve::algo::min_value and eve::algo::min_element (See #1345)</li>
+<li>Implemented eve::algo::max_value and eve::algo::max_element (See #1372)</li>
+<li>Implemented eve::algo::transform_reduce (See #1335)</li>
+<li>Implemented eve::algo::find_last (See #1347, #1368)</li>
+</ul>
+</li>
+<li>Performances fixes<ul>
+<li>Optimized is_ltz for g++ x86 (See #1302)</li>
+<li>Better cleanup for functions sliding data in from incomplete wide (See #1315)</li>
+<li>Improve conditional code-gen by replacing some lambda by FORCEINLINE callable (See #1383)</li>
+<li>Better integral conversions (See #1408)</li>
+<li>Calling zip with iota now use alignment (See #1322)</li>
+</ul>
+</li>
+<li>Build system<ul>
+<li>Fix compilation for g++ 12.1 (See #1296)</li>
+<li>Updated tests and infrastructure to use latest TTS to speedup compile times (See #1313)</li>
+<li>Add find_package support (#1318)</li>
+<li>Provide CMake machinery and example for multi-arch support (See #1321)</li>
+<li>Refactored EVE's exported CMake target and installation by <b>justend29</b> in (See #1336)</li>
+<li>Automated integration tests and correct their fetches by <b>justend29</b> in (See #1338)</li>
+</ul>
+</li>
+<li>Documentation<ul>
+<li>Add link to EVE bibtex (See #1282)</li>
+<li>Documentation style and layout changed to become more readable (See #1299)</li>
+<li>README: Fix links to website by <b>Simran-B</b> (See #1303)</li>
+<li>Added more documentation for algorithms (See #1349)</li>
+<li>Add a local doxygen generation target to simplify documentation works (See #1392)</li>
+</ul>
+</li>
+<li>Other Fixes<ul>
+<li>Fixed ASAN checks (See #1305, #1288)</li>
+<li>Fix compile error when wide is included after some functions (See #1391)</li>
+<li>Missing constexpr leads to constants in the output (See #1396)</li>
+<li>Conversion from conditional to logical has been cleaned up (See #1374)</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md147"></a>
+New Contributors</h2>
+<p >Thanks to all our new contributor for this release!</p>
+<ul>
+<li><b>Simran-B</b> made their first contribution in (See #1303)</li>
+<li><b>justend29</b> made their first contribution in (See #1338)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md148"></a>
+Version 2022.03.0</h1>
+<p >Codename: <a href="https://en.wikipedia.org/wiki/Miranda_(The_Tempest)">Miranda Numinous</a></p>
+<h2><a class="anchor" id="autotoc_md149"></a>
+What's Changed</h2>
+<p ><b>This release is an API/ABI breaking changes release.</b></p>
+<p >A lot of improvements in QoL, QoI, and API have been made. Some more breaking ABI changes are planned, including a passive move toward an include file layout more amenable to future modularization.</p>
+<p >A bunch of platform supports changes are also in to prepare for new platform including WASM and <b>gasp</b> fixed size SVE.</p>
+<ul>
+<li>Improvements of documentation<ul>
+<li>Revamped docs to add basic 101 tutorials</li>
+<li>Fixed most documentation to provide Compiler-Explorer-aware samples</li>
+<li>Correct tutorial example code for if_else</li>
+<li>Various proofreading by <b>pauljurczak</b> and <b>toughengineer</b></li>
+</ul>
+</li>
+<li>Improvements on compress (#947, #1013, #1037, #1213)<ul>
+<li>compress_store is a very important function that has been reimplemented to simplify its implementation in term of support for iterators</li>
+<li>better implementation for X86 architectures (SSE2 and BMI).</li>
+<li>provide an alternative implementation based on switch</li>
+</ul>
+</li>
+<li>Improvements on algorithms <code>**DenisYaroshevskiy**</code> did a wonderful job on this front.<ul>
+<li>New algorithm: <code>reverse</code> (#1066, #1068)</li>
+<li>New algorithm: <code>reverse_copy</code> (#1060)</li>
+<li>New algorithm: <code>iota</code> (#1016)</li>
+<li>New algorithm: <code>fill</code> (#1119)</li>
+<li>New views : <code>map</code>, <code>map_convert</code> (#889)</li>
+<li>Fix <code>copy</code> backward (#1099, #1111)</li>
+</ul>
+</li>
+<li>Improvements on wide handling<ul>
+<li>Fix the "no garbage after cardinal" for small wide (#815)</li>
+<li>Fix aliasing issue in <code>wide::get</code> and <code>wide::set</code> (#1047)</li>
+<li><code>wide&lt;product_type&gt;</code> has correct <code>sizeof</code></li>
+<li>Adapt wide to handle more complex construction from <code>product_type</code></li>
+<li>Added an emulation layer for <code>std::experimental::simd</code> types</li>
+</ul>
+</li>
+<li>Convert<ul>
+<li>Fixed missing code for <code><a class="el" href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867" title="Converts a value to another type.">eve::convert</a></code>. All convert calls now produce optimal code.</li>
+<li>More specifically and addition to global fixes, <b>aguinet</b> contributed:<ul>
+<li>Improvement for u64 =&gt; u32 when using AVX2</li>
+<li>Improvement for u16 =&gt; u8 when using AVX2</li>
+<li>Improvement for u64=&gt;u32 using AVX2 + clang</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Shuffle<ul>
+<li>Removed shuffling via operator[] and introduced <code>eve::shuffle</code> (#1103)</li>
+<li>Added slide_left shuffle (#1088)</li>
+<li>Added interleave_groups/interleave_groups_shuffle (#1170)</li>
+<li>Added interleave_groups/interleave_groups_shuffle (#1170)</li>
+<li>Fix swap_adjacent_group for AVX512 aggregated</li>
+<li>Implement AVX512 logical pair interleave using BMI parallel bit deposit</li>
+</ul>
+</li>
+<li>Build systems<ul>
+<li>Install directory fix (Thanks <code>**JPenuchot</code>)</li>
+<li>Prevent CMake error if EVE_BUILD_TEST is set to OFF (#1032)</li>
+<li>Fix bench compilation issues (#1136)</li>
+<li>Add CI tests for clang++ with -std=libc++ (#614)</li>
+<li>Remove dependency to <code>std::bit_cast</code> in tests</li>
+</ul>
+</li>
+<li>Compiler/Platform supports<ul>
+<li>clang++ 13 is now the minimum clang version</li>
+<li>Added minimum toolchain for WASM</li>
+<li>Enable partial build on appveyor for MSVC for small test samples</li>
+<li>Fixed usage of ARM v8 intrinsic in ARM v7 code</li>
+<li>Fixed a bunch of ULPs boundaries in unit and random tests</li>
+<li>rat tests use more convenient divisor (#1038)</li>
+<li>Reactivate wide * scalar optimization for ARM (#993)</li>
+<li>Removed support for XOP/FMA4</li>
+<li>Enable compatibility with CPM</li>
+<li></li>
+</ul>
+</li>
+<li>Other changes<ul>
+<li>Constants can now be queried as an interval</li>
+<li><code><a class="el" href="structeve_1_1top__bits.html" title="The cheapest to get bitset for simd logical.">eve::top_bits</a></code> is now public API (#586)</li>
+<li>Implements <code>has_aggregated_component</code></li>
+<li>Implemented airy functions</li>
+<li>Implemented Lambert function</li>
+<li>Implemented the omega function</li>
+<li>Implemented spherical legendre functions</li>
+<li>Implemented spherical bessel functions</li>
+<li>Implemented <code>sign_alternative</code>: a fast -1^N evaluation</li>
+<li>Fixed codegen for aggregated operator&lt;&lt; and &gt;&gt;</li>
+<li>Fixed issue with non-terminating gcd/lcm</li>
+<li>Make write API consistent with store API</li>
+<li>Replace <code>std::forward</code> by EVE_FWD</li>
+</ul>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md150"></a>
+New Contributors</h2>
+<p >Thanks to all our new contributor for this release!</p>
+<ul>
+<li><code>**aguinet**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1049">https://github.com/jfalcou/eve/pull/1049</a></li>
+<li><code>**JPenuchot**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1028">https://github.com/jfalcou/eve/pull/1028</a></li>
+<li><code>**pauljurczak**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1123">https://github.com/jfalcou/eve/pull/1123</a></li>
+<li><code>**the-moisrex**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1025">https://github.com/jfalcou/eve/pull/1025</a></li>
+<li><code>**toughengineer**</code> made their first contribution in <a href="https://github.com/jfalcou/eve/pull/1182">https://github.com/jfalcou/eve/pull/1182</a></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md151"></a>
+Version 2021.10.0</h1>
+<p >Codename: <a href="https://en.wikipedia.org/wiki/Titania_(A_Midsummer_Night%27s_Dream)">Titania Unleashed</a></p>
+<h2><a class="anchor" id="autotoc_md152"></a>
+What's Changed</h2>
+<ul>
+<li>First tagged release for <b>EVE</b> which includes:<ul>
+<li>Fully functional x86 and AARCH64 supports</li>
+<li>Standard-like SIMD algorithms</li>
+<li>Support for adapting <code>struct</code> as vectorizable type</li>
+<li>389 ready to use numerical functions</li>
+<li><a href="https://jfalcou.github.io/eve/">Documentation</a></li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md153"></a>
+Version beta.2020.09</h1>
+<p >Initial beta release </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

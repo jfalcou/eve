@@ -1,0 +1,18 @@
+var group__algorithms =
+[
+    [ "AlgoTraits", "group__algo__traits.html", "group__algo__traits" ],
+    [ "Algorithms", "group__algos.html", "group__algos" ],
+    [ "Concepts", "group__algo__concepts.html", "group__algo__concepts" ],
+    [ "Views", "group__views.html", "group__views" ],
+    [ "eve::algo::ptr_iterator< Ptr, Cardinal >", "structeve_1_1algo_1_1ptr__iterator.html", null ],
+    [ "eve::algo::range_ref_wrapper< Rng >", "structeve_1_1algo_1_1range__ref__wrapper.html", null ],
+    [ "eve::algo::fill", "group__algorithms.html#ga432fd8a2cb308dad3994a596ab6b11b7", null ],
+    [ "eve::algo::for_each", "group__algorithms_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0", null ],
+    [ "eve::algo::iota", "group__algorithms_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a", null ],
+    [ "eve::algo::range_ref", "group__algorithms_ga85190bd1728e1754c114f5b18fc5a524.html#ga85190bd1728e1754c114f5b18fc5a524", null ],
+    [ "eve::algo::reverse", "group__algorithms_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771", null ],
+    [ "eve::algo::reverse_copy", "group__algorithms_gacabefd0775fc30272c8707c63e3b62a3.html#gacabefd0775fc30272c8707c63e3b62a3", null ],
+    [ "eve::algo::swap_ranges", "group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641", null ],
+    [ "eve::algo::transform_inplace", "group__algorithms_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0", null ],
+    [ "eve::algo::transform_to", "group__algorithms_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e", null ]
+];

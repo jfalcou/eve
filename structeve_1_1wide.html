@@ -1,0 +1,610 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.5"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::wide&lt; Type, Cardinal &gt; Struct Template Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.5 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Search','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('structeve_1_1wide.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="structeve_1_1wide-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">eve::wide&lt; Type, Cardinal &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Wrapper for SIMD registers.  
+ <a href="structeve_1_1wide.html#details">More...</a></p>
+
+<p><code>#include &lt;eve/arch/cpu/wide.hpp&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;arithmetic_scalar_value Type, typename Cardinal&gt;<br />
+struct eve::wide&lt; Type, Cardinal &gt;</div><p ><b>Required header:</b> <code>#include &lt;eve/wide.hpp&gt;</code></p>
+<p ><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> is an architecture-agnostic representation of a SIMD register and provides standardized API to access informations, compute values and manipulate such register.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to store in the register </td></tr>
+    <tr><td class="paramname">Cardinal</td><td>Cardinal of the register. By default, the best cardinal for current architecture is selected. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad6e0f9fd221ca191f42484f47660662c"><td class="memItemLeft" align="right" valign="top"><a id="ad6e0f9fd221ca191f42484f47660662c" name="ad6e0f9fd221ca191f42484f47660662c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = Type</td></tr>
+<tr class="memdesc:ad6e0f9fd221ca191f42484f47660662c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type stored in the register. <br /></td></tr>
+<tr class="separator:ad6e0f9fd221ca191f42484f47660662c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fa4bc0f15f5ef18b0cc09a0d2298429"><td class="memItemLeft" align="right" valign="top"><a id="a5fa4bc0f15f5ef18b0cc09a0d2298429" name="a5fa4bc0f15f5ef18b0cc09a0d2298429"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>abi_type</b> = abi_t&lt; Type, Cardinal &gt;</td></tr>
+<tr class="memdesc:a5fa4bc0f15f5ef18b0cc09a0d2298429"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ABI tag for this register. <br /></td></tr>
+<tr class="separator:a5fa4bc0f15f5ef18b0cc09a0d2298429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a592b87d63264bcc3271b84bc3a7a0f53"><td class="memItemLeft" align="right" valign="top"><a id="a592b87d63264bcc3271b84bc3a7a0f53" name="a592b87d63264bcc3271b84bc3a7a0f53"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>storage_type</b> = typename storage_base::storage_type</td></tr>
+<tr class="memdesc:a592b87d63264bcc3271b84bc3a7a0f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used for this register storage. <br /></td></tr>
+<tr class="separator:a592b87d63264bcc3271b84bc3a7a0f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920f3e350e21c8f5c217d7e199efc299"><td class="memItemLeft" align="right" valign="top"><a id="a920f3e350e21c8f5c217d7e199efc299" name="a920f3e350e21c8f5c217d7e199efc299"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>cardinal_type</b> = Cardinal</td></tr>
+<tr class="memdesc:a920f3e350e21c8f5c217d7e199efc299"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type describing the number of lanes of current wide. <br /></td></tr>
+<tr class="separator:a920f3e350e21c8f5c217d7e199efc299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49b0787fd69bd2084750eb9d42cfcef4"><td class="memItemLeft" align="right" valign="top"><a id="a49b0787fd69bd2084750eb9d42cfcef4" name="a49b0787fd69bd2084750eb9d42cfcef4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>size_type</b> = std::ptrdiff_t</td></tr>
+<tr class="memdesc:a49b0787fd69bd2084750eb9d42cfcef4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the size of the current wide. <br /></td></tr>
+<tr class="separator:a49b0787fd69bd2084750eb9d42cfcef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3a86e07d2a7b5aac81be591630dc0c"><td class="memItemLeft" align="right" valign="top"><a id="aff3a86e07d2a7b5aac81be591630dc0c" name="aff3a86e07d2a7b5aac81be591630dc0c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>is_like</b> = <a class="el" href="structeve_1_1wide.html#ad6e0f9fd221ca191f42484f47660662c">value_type</a></td></tr>
+<tr class="memdesc:aff3a86e07d2a7b5aac81be591630dc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opt-in for like concept. <br /></td></tr>
+<tr class="separator:aff3a86e07d2a7b5aac81be591630dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68f8b26fc435b652492ebb9163b30ed5"><td class="memTemplParams" colspan="2"><a id="a68f8b26fc435b652492ebb9163b30ed5" name="a68f8b26fc435b652492ebb9163b30ed5"></a>
+template&lt;typename T , typename N  = expected_cardinal_t&lt;T&gt;&gt; </td></tr>
+<tr class="memitem:a68f8b26fc435b652492ebb9163b30ed5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>rebind</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt; T, N &gt;</td></tr>
+<tr class="memdesc:a68f8b26fc435b652492ebb9163b30ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a different type <code>T</code> and cardinal <code>N</code>. If unspecified, <code>N</code> is computed as <code>expected_cardinal_t&lt;T&gt;</code>. <br /></td></tr>
+<tr class="separator:a68f8b26fc435b652492ebb9163b30ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a279755384913a23181f151ece5a4658f"><td class="memTemplParams" colspan="2"><a id="a279755384913a23181f151ece5a4658f" name="a279755384913a23181f151ece5a4658f"></a>
+template&lt;typename N &gt; </td></tr>
+<tr class="memitem:a279755384913a23181f151ece5a4658f"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>rescale</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, N &gt;</td></tr>
+<tr class="memdesc:a279755384913a23181f151ece5a4658f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> type from a different cardinal <code>N</code>. <br /></td></tr>
+<tr class="separator:a279755384913a23181f151ece5a4658f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr class="memitem:a361d5a9fd15f6b2e4a86ec5ae2880e06"><td class="memItemLeft" align="right" valign="top"><a id="a361d5a9fd15f6b2e4a86ec5ae2880e06" name="a361d5a9fd15f6b2e4a86ec5ae2880e06"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> ()</td></tr>
+<tr class="memdesc:a361d5a9fd15f6b2e4a86ec5ae2880e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor This operation is a no-op unless <code>Type</code> satisfies eve::product_type and has a non trivial default constructor. <br /></td></tr>
+<tr class="separator:a361d5a9fd15f6b2e4a86ec5ae2880e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c3c77232aadeb56066359ff149af963"><td class="memItemLeft" align="right" valign="top"><a id="a4c3c77232aadeb56066359ff149af963" name="a4c3c77232aadeb56066359ff149af963"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> ()</td></tr>
+<tr class="memdesc:a4c3c77232aadeb56066359ff149af963"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. <br /></td></tr>
+<tr class="separator:a4c3c77232aadeb56066359ff149af963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad46a6f998bb898592da9625181634d"><td class="memItemLeft" align="right" valign="top"><a id="a4ad46a6f998bb898592da9625181634d" name="a4ad46a6f998bb898592da9625181634d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;r) noexcept</td></tr>
+<tr class="memdesc:a4ad46a6f998bb898592da9625181634d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs from ABI-specific storage. <br /></td></tr>
+<tr class="separator:a4ad46a6f998bb898592da9625181634d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75fcee86f103e039da6bb498b7c59cf2"><td class="memTemplParams" colspan="2"><a id="a75fcee86f103e039da6bb498b7c59cf2" name="a75fcee86f103e039da6bb498b7c59cf2"></a>
+template&lt;std::input_iterator It&gt; </td></tr>
+<tr class="memitem:a75fcee86f103e039da6bb498b7c59cf2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (It b, It e) noexcept</td></tr>
+<tr class="memdesc:a75fcee86f103e039da6bb498b7c59cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a pair of <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterator</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
+<tr class="separator:a75fcee86f103e039da6bb498b7c59cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memTemplParams" colspan="2"><a id="a2b902c5e2c2b9cccd1a5ebb94ea4f295" name="a2b902c5e2c2b9cccd1a5ebb94ea4f295"></a>
+template&lt;detail::range Range&gt; <br />
+requires (!std::same_as&lt;<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a>, std::remove_reference_t&lt;Range&gt;&gt;)</td></tr>
+<tr class="memitem:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (Range &amp;&amp;r) noexcept</td></tr>
+<tr class="memdesc:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <code>r</code> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
+<tr class="separator:a2b902c5e2c2b9cccd1a5ebb94ea4f295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be"><td class="memTemplParams" colspan="2"><a id="a9e8f8635331b18d7ce9e1c28019722be" name="a9e8f8635331b18d7ce9e1c28019722be"></a>
+template&lt;simd_compatible_ptr&lt; <a class="el" href="structeve_1_1wide.html">wide</a> &gt; Ptr&gt; </td></tr>
+<tr class="memitem:a9e8f8635331b18d7ce9e1c28019722be"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (Ptr ptr) noexcept</td></tr>
+<tr class="memdesc:a9e8f8635331b18d7ce9e1c28019722be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
+<tr class="separator:a9e8f8635331b18d7ce9e1c28019722be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd2944c4f0f54a386e887762385c91ba"><td class="memTemplParams" colspan="2"><a id="afd2944c4f0f54a386e887762385c91ba" name="afd2944c4f0f54a386e887762385c91ba"></a>
+template&lt;detail::data_source... Ptr&gt; <br />
+requires (kumi::product_type&lt;Type&gt;)</td></tr>
+<tr class="memitem:afd2944c4f0f54a386e887762385c91ba"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1soa__ptr.html">eve::soa_ptr</a>&lt; Ptr... &gt; ptr) noexcept</td></tr>
+<tr class="memdesc:afd2944c4f0f54a386e887762385c91ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a SIMD compatible pointer. <br /></td></tr>
+<tr class="separator:afd2944c4f0f54a386e887762385c91ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00eb579b8dede0a60445a148b01f18e0"><td class="memTemplParams" colspan="2"><a id="a00eb579b8dede0a60445a148b01f18e0" name="a00eb579b8dede0a60445a148b01f18e0"></a>
+template&lt;typename S &gt; <br />
+requires std::constructible_from&lt;Type,S&gt;</td></tr>
+<tr class="memitem:a00eb579b8dede0a60445a148b01f18e0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a00eb579b8dede0a60445a148b01f18e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> by splatting a scalar value in all lanes. <br /></td></tr>
+<tr class="separator:a00eb579b8dede0a60445a148b01f18e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="memTemplParams" colspan="2"><a id="adf12020cb7ac67cc5ee1c165c2b563d7" name="adf12020cb7ac67cc5ee1c165c2b563d7"></a>
+template&lt;scalar_value S0, scalar_value S1, scalar_value... Ss&gt; <br />
+requires ( (Cardinal::value == 2 + sizeof...(vs)) &amp;&amp; std::is_convertible_v&lt;S0,Type&gt; &amp;&amp; (std::is_convertible_v&lt;S1, Type&gt; &amp;&amp; ... &amp;&amp; std::is_convertible_v&lt;Ss, Type&gt;) )</td></tr>
+<tr class="memitem:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S0 v0, S1 v1, Ss... vs) noexcept</td></tr>
+<tr class="memdesc:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a sequence of scalar values of proper size. <br /></td></tr>
+<tr class="separator:adf12020cb7ac67cc5ee1c165c2b563d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="memTemplParams" colspan="2"><a id="ac0dae309cb7ceee577c5a9f90b4d1841" name="ac0dae309cb7ceee577c5a9f90b4d1841"></a>
+template&lt;typename S0 , typename... Ss&gt; <br />
+requires (kumi::sized_product_type_or_more&lt;Type,1+sizeof...(Ss)&gt;)</td></tr>
+<tr class="memitem:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S0 const &amp;v0, Ss const &amp;...vs) noexcept</td></tr>
+<tr class="memdesc:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a sequence of values. <br /></td></tr>
+<tr class="separator:ac0dae309cb7ceee577c5a9f90b4d1841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a007581d779fcbfc70bfcee970ee95451"><td class="memTemplParams" colspan="2">template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a>, <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a> &gt; Generator&gt; </td></tr>
+<tr class="memitem:a007581d779fcbfc70bfcee970ee95451"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html#a007581d779fcbfc70bfcee970ee95451">wide</a> (Generator &amp;&amp;g) noexcept</td></tr>
+<tr class="memdesc:a007581d779fcbfc70bfcee970ee95451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <a href="structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html#a007581d779fcbfc70bfcee970ee95451">More...</a><br /></td></tr>
+<tr class="separator:a007581d779fcbfc70bfcee970ee95451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac160ba5fd444550682594fa16c5f189d"><td class="memTemplParams" colspan="2"><a id="ac160ba5fd444550682594fa16c5f189d" name="ac160ba5fd444550682594fa16c5f189d"></a>
+template&lt;typename Half &gt; <br />
+requires (Cardinal::value == 2 * Half::value)</td></tr>
+<tr class="memitem:ac160ba5fd444550682594fa16c5f189d"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (<a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Half &gt; const &amp;l, <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Half &gt; const &amp;h) noexcept</td></tr>
+<tr class="memdesc:ac160ba5fd444550682594fa16c5f189d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> by combining two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of half the current cardinal. Does not participate in overload resolution if <code>Cardinal::value != 2 * Half::value</code>. <br /></td></tr>
+<tr class="separator:ac160ba5fd444550682594fa16c5f189d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:aba9bb24eb9587da6113d66145fe55966"><td class="memItemLeft" align="right" valign="top"><a id="aba9bb24eb9587da6113d66145fe55966" name="aba9bb24eb9587da6113d66145fe55966"></a>
+<a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53">storage_type</a> const &amp;r)</td></tr>
+<tr class="memdesc:aba9bb24eb9587da6113d66145fe55966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of an architecture-specific SIMD register. <br /></td></tr>
+<tr class="separator:aba9bb24eb9587da6113d66145fe55966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76549abd93145924149aba145078104"><td class="memTemplParams" colspan="2"><a id="aa76549abd93145924149aba145078104" name="aa76549abd93145924149aba145078104"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:aa76549abd93145924149aba145078104"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (S v) noexcept</td></tr>
+<tr class="memdesc:aa76549abd93145924149aba145078104"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of a scalar value by splatting it in all lanes. <br /></td></tr>
+<tr class="separator:aa76549abd93145924149aba145078104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Modifiers</div></td></tr>
+<tr class="memitem:a0c558b1099d1ab8939c82b766f12355a"><td class="memItemLeft" align="right" valign="top"><a id="a0c558b1099d1ab8939c82b766f12355a" name="a0c558b1099d1ab8939c82b766f12355a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (std::size_t <a class="el" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, scalar_value auto v) noexcept</td></tr>
+<tr class="memdesc:a0c558b1099d1ab8939c82b766f12355a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a given lane. <br /></td></tr>
+<tr class="separator:a0c558b1099d1ab8939c82b766f12355a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f47b4c7696ac6bf60ad8641c42f88b4"><td class="memItemLeft" align="right" valign="top"><a id="a5f47b4c7696ac6bf60ad8641c42f88b4" name="a5f47b4c7696ac6bf60ad8641c42f88b4"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::size_t <a class="el" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>) const noexcept</td></tr>
+<tr class="memdesc:a5f47b4c7696ac6bf60ad8641c42f88b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value from a given lane. <br /></td></tr>
+<tr class="separator:a5f47b4c7696ac6bf60ad8641c42f88b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf80b38c88fb9495bad8f20f842a7ae"><td class="memItemLeft" align="right" valign="top"><a id="acbf80b38c88fb9495bad8f20f842a7ae" name="acbf80b38c88fb9495bad8f20f842a7ae"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>back</b> () const noexcept</td></tr>
+<tr class="memdesc:acbf80b38c88fb9495bad8f20f842a7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value of the first lanes. <br /></td></tr>
+<tr class="separator:acbf80b38c88fb9495bad8f20f842a7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91abf1f8683e031f8169a5b5473c1660"><td class="memItemLeft" align="right" valign="top"><a id="a91abf1f8683e031f8169a5b5473c1660" name="a91abf1f8683e031f8169a5b5473c1660"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>front</b> () const noexcept</td></tr>
+<tr class="memdesc:a91abf1f8683e031f8169a5b5473c1660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value of the first lane. <br /></td></tr>
+<tr class="separator:a91abf1f8683e031f8169a5b5473c1660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2088fca71239dcd0ab7e7eaa37fb1ca"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_ac2088fca71239dcd0ab7e7eaa37fb1ca.html#ac2088fca71239dcd0ab7e7eaa37fb1ca">slice</a> () const</td></tr>
+<tr class="memdesc:ac2088fca71239dcd0ab7e7eaa37fb1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slice a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of half cardinal. Does not participate in overload resolution if <code>Cardinal::value == 1</code>.  <a href="structeve_1_1wide_ac2088fca71239dcd0ab7e7eaa37fb1ca.html#ac2088fca71239dcd0ab7e7eaa37fb1ca">More...</a><br /></td></tr>
+<tr class="separator:ac2088fca71239dcd0ab7e7eaa37fb1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a452a5c32d8a4f59a03610431e9a951a4"><td class="memTemplParams" colspan="2">template&lt;std::size_t Slice&gt; <br />
+requires (Cardinal::value &gt; 1)</td></tr>
+<tr class="memitem:a452a5c32d8a4f59a03610431e9a951a4"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_a452a5c32d8a4f59a03610431e9a951a4.html#a452a5c32d8a4f59a03610431e9a951a4">slice</a> (slice_t&lt; Slice &gt; s) const</td></tr>
+<tr class="memdesc:a452a5c32d8a4f59a03610431e9a951a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the upper or lower half-sized slice of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. Does not participate in overload resolution if <code>Cardinal::value == 1</code>.  <a href="structeve_1_1wide_a452a5c32d8a4f59a03610431e9a951a4.html#a452a5c32d8a4f59a03610431e9a951a4">More...</a><br /></td></tr>
+<tr class="separator:a452a5c32d8a4f59a03610431e9a951a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55d8e55d3b731a5c3c9e87a6f464faea"><td class="memItemLeft" align="right" valign="top"><a id="a55d8e55d3b731a5c3c9e87a6f464faea" name="a55d8e55d3b731a5c3c9e87a6f464faea"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;other)</td></tr>
+<tr class="memdesc:a55d8e55d3b731a5c3c9e87a6f464faea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchange this value with another <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a55d8e55d3b731a5c3c9e87a6f464faea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef65082a19780da5397211d2cd070564"><td class="memItemLeft" align="right" valign="top"><a id="aef65082a19780da5397211d2cd070564" name="aef65082a19780da5397211d2cd070564"></a>
+<a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> () noexcept</td></tr>
+<tr class="memdesc:aef65082a19780da5397211d2cd070564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-incrementation operator. <br /></td></tr>
+<tr class="separator:aef65082a19780da5397211d2cd070564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18191cf0606c11d4334837659121f274"><td class="memItemLeft" align="right" valign="top"><a id="a18191cf0606c11d4334837659121f274" name="a18191cf0606c11d4334837659121f274"></a>
+<a class="el" href="structeve_1_1wide.html">wide</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> () noexcept</td></tr>
+<tr class="memdesc:a18191cf0606c11d4334837659121f274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-decrementation operator. <br /></td></tr>
+<tr class="separator:a18191cf0606c11d4334837659121f274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a926c371e6e63f7c8bbe921b4e66ca41f"><td class="memItemLeft" align="right" valign="top"><a id="a926c371e6e63f7c8bbe921b4e66ca41f" name="a926c371e6e63f7c8bbe921b4e66ca41f"></a>
+<a class="el" href="structeve_1_1wide.html">wide</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> (int) noexcept</td></tr>
+<tr class="memdesc:a926c371e6e63f7c8bbe921b4e66ca41f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-incrementation operator. <br /></td></tr>
+<tr class="separator:a926c371e6e63f7c8bbe921b4e66ca41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31cc77d8a8f3300e7e810036f7065aa9"><td class="memItemLeft" align="right" valign="top"><a id="a31cc77d8a8f3300e7e810036f7065aa9" name="a31cc77d8a8f3300e7e810036f7065aa9"></a>
+<a class="el" href="structeve_1_1wide.html">wide</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> (int) noexcept</td></tr>
+<tr class="memdesc:a31cc77d8a8f3300e7e810036f7065aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-decrementation operator. <br /></td></tr>
+<tr class="separator:a31cc77d8a8f3300e7e810036f7065aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Indexing and reordering</div></td></tr>
+<tr class="memitem:a1d3739186033f12c8fe47755f598b60b"><td class="memItemLeft" align="right" valign="top"><a id="a1d3739186033f12c8fe47755f598b60b" name="a1d3739186033f12c8fe47755f598b60b"></a>
+static constexpr <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () noexcept</td></tr>
+<tr class="memdesc:a1d3739186033f12c8fe47755f598b60b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the wide in number of lanes. <br /></td></tr>
+<tr class="separator:a1d3739186033f12c8fe47755f598b60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21322b111e584432db366e3cc3ff7011"><td class="memItemLeft" align="right" valign="top"><a id="a21322b111e584432db366e3cc3ff7011" name="a21322b111e584432db366e3cc3ff7011"></a>
+static constexpr <a class="el" href="structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>max_size</b> () noexcept</td></tr>
+<tr class="memdesc:a21322b111e584432db366e3cc3ff7011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximal number of lanes for a given wide. <br /></td></tr>
+<tr class="separator:a21322b111e584432db366e3cc3ff7011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d49e69b0ec9ecbabcbffef68eba84eb"><td class="memItemLeft" align="right" valign="top"><a id="a1d49e69b0ec9ecbabcbffef68eba84eb" name="a1d49e69b0ec9ecbabcbffef68eba84eb"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () noexcept</td></tr>
+<tr class="memdesc:a1d49e69b0ec9ecbabcbffef68eba84eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a wide contains 0 lanes. <br /></td></tr>
+<tr class="separator:a1d49e69b0ec9ecbabcbffef68eba84eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ad1d370008485018ecd5bd61aa2fdd7b7"><td class="memItemLeft" align="right" valign="top"><a id="ad1d370008485018ecd5bd61aa2fdd7b7" name="ad1d370008485018ecd5bd61aa2fdd7b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;lhs, <a class="el" href="structeve_1_1wide.html">wide</a> &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:ad1d370008485018ecd5bd61aa2fdd7b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of <code>lhs</code> and <code>rhs</code> by calling <code>lhs.swap(rhs)</code>. <br /></td></tr>
+<tr class="separator:ad1d370008485018ecd5bd61aa2fdd7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff1a293cd2c26ba5aeb7ec16c1f6c187"><td class="memItemLeft" align="right" valign="top"><a id="aff1a293cd2c26ba5aeb7ec16c1f6c187" name="aff1a293cd2c26ba5aeb7ec16c1f6c187"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator~</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:aff1a293cd2c26ba5aeb7ec16c1f6c187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise complement on all the wide lanes. <br /></td></tr>
+<tr class="separator:aff1a293cd2c26ba5aeb7ec16c1f6c187"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92175766763da6bee387de4f7b943832"><td class="memTemplParams" colspan="2">template&lt;value V&gt; </td></tr>
+<tr class="memitem:a92175766763da6bee387de4f7b943832"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_a92175766763da6bee387de4f7b943832.html#a92175766763da6bee387de4f7b943832">operator&amp;=</a> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>
+<tr class="separator:a92175766763da6bee387de4f7b943832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c3016d62a87842dccf18c18d583d14"><td class="memTemplParams" colspan="2"><a id="a47c3016d62a87842dccf18c18d583d14" name="a47c3016d62a87842dccf18c18d583d14"></a>
+template&lt;scalar_value U, typename M &gt; </td></tr>
+<tr class="memitem:a47c3016d62a87842dccf18c18d583d14"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&amp;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, M &gt; const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a47c3016d62a87842dccf18c18d583d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise and between all lanes of two wide instances. Do not participate to overload resolution if both wide doesn't has the same <code>sizeof</code> <br /></td></tr>
+<tr class="separator:a47c3016d62a87842dccf18c18d583d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b6c789311183c4e0c7834377abba421"><td class="memTemplParams" colspan="2"><a id="a4b6c789311183c4e0c7834377abba421" name="a4b6c789311183c4e0c7834377abba421"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a4b6c789311183c4e0c7834377abba421"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&amp;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, S w) noexcept</td></tr>
+<tr class="memdesc:a4b6c789311183c4e0c7834377abba421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise and between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar Do not participate to overload resolution if <code>sizeof(Type) != sizeof(S)</code> <br /></td></tr>
+<tr class="separator:a4b6c789311183c4e0c7834377abba421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78d2b8f91f31575fca6b10f03367b00e"><td class="memTemplParams" colspan="2"><a id="a78d2b8f91f31575fca6b10f03367b00e" name="a78d2b8f91f31575fca6b10f03367b00e"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a78d2b8f91f31575fca6b10f03367b00e"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&amp;</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a78d2b8f91f31575fca6b10f03367b00e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise and between all lanes of a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> Do not participate to overload resolution if <code>sizeof(Type) != sizeof(S)</code> <br /></td></tr>
+<tr class="separator:a78d2b8f91f31575fca6b10f03367b00e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a279194ae7a135cfe4ae0e5f936975536"><td class="memTemplParams" colspan="2">template&lt;value V&gt; </td></tr>
+<tr class="memitem:a279194ae7a135cfe4ae0e5f936975536"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1wide_a279194ae7a135cfe4ae0e5f936975536.html#a279194ae7a135cfe4ae0e5f936975536">operator|=</a> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>
+<tr class="separator:a279194ae7a135cfe4ae0e5f936975536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afad6534882296d4887f8c405dc4ec3df"><td class="memTemplParams" colspan="2"><a id="afad6534882296d4887f8c405dc4ec3df" name="afad6534882296d4887f8c405dc4ec3df"></a>
+template&lt;scalar_value U, typename M &gt; </td></tr>
+<tr class="memitem:afad6534882296d4887f8c405dc4ec3df"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator|</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, M &gt; const &amp;w) noexcept</td></tr>
+<tr class="memdesc:afad6534882296d4887f8c405dc4ec3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise or between all lanes of two wide instances. Do not participate to overload resolution if both wide doesn't has the same <code>sizeof</code> <br /></td></tr>
+<tr class="separator:afad6534882296d4887f8c405dc4ec3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd3502d6e1c36dc4cc0da6ff1f421ab7"><td class="memTemplParams" colspan="2"><a id="abd3502d6e1c36dc4cc0da6ff1f421ab7" name="abd3502d6e1c36dc4cc0da6ff1f421ab7"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:abd3502d6e1c36dc4cc0da6ff1f421ab7"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator|</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, S w) noexcept</td></tr>
+<tr class="memdesc:abd3502d6e1c36dc4cc0da6ff1f421ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise or between all lanes of a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> Do not participate to overload resolution if <code>sizeof(Type) != sizeof(S)</code> <br /></td></tr>
+<tr class="separator:abd3502d6e1c36dc4cc0da6ff1f421ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871fd2210db2590c27b6a138db5719e7"><td class="memTemplParams" colspan="2"><a id="a871fd2210db2590c27b6a138db5719e7" name="a871fd2210db2590c27b6a138db5719e7"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a871fd2210db2590c27b6a138db5719e7"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator|</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a871fd2210db2590c27b6a138db5719e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise or between all lanes of a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> Do not participate to overload resolution if <code>sizeof(Type) != sizeof(S)</code> <br /></td></tr>
+<tr class="separator:a871fd2210db2590c27b6a138db5719e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b4b1ce508d304ac88b25367faaaf4b9"><td class="memTemplParams" colspan="2"><a id="a3b4b1ce508d304ac88b25367faaaf4b9" name="a3b4b1ce508d304ac88b25367faaaf4b9"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:a3b4b1ce508d304ac88b25367faaaf4b9"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator^=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>
+<tr class="memdesc:a3b4b1ce508d304ac88b25367faaaf4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise xor on all the wide lanes and assign the result to the current one. <br /></td></tr>
+<tr class="separator:a3b4b1ce508d304ac88b25367faaaf4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1381717bc1cf7bb76529bb51a7118766"><td class="memTemplParams" colspan="2"><a id="a1381717bc1cf7bb76529bb51a7118766" name="a1381717bc1cf7bb76529bb51a7118766"></a>
+template&lt;scalar_value U, typename M &gt; </td></tr>
+<tr class="memitem:a1381717bc1cf7bb76529bb51a7118766"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator^</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, M &gt; const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a1381717bc1cf7bb76529bb51a7118766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise xor between all lanes of two wide instances. Do not participate to overload resolution if both wide doesn't has the same <code>sizeof</code> <br /></td></tr>
+<tr class="separator:a1381717bc1cf7bb76529bb51a7118766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a639a7dd4e74a426b1bf3ba1ad026f458"><td class="memTemplParams" colspan="2"><a id="a639a7dd4e74a426b1bf3ba1ad026f458" name="a639a7dd4e74a426b1bf3ba1ad026f458"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a639a7dd4e74a426b1bf3ba1ad026f458"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator^</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, S w) noexcept</td></tr>
+<tr class="memdesc:a639a7dd4e74a426b1bf3ba1ad026f458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise xor between all lanes of a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> Do not participate to overload resolution if <code>sizeof(Type) != sizeof(S)</code> <br /></td></tr>
+<tr class="separator:a639a7dd4e74a426b1bf3ba1ad026f458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a907dff44bdca625423b14cabb27b5385"><td class="memTemplParams" colspan="2"><a id="a907dff44bdca625423b14cabb27b5385" name="a907dff44bdca625423b14cabb27b5385"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a907dff44bdca625423b14cabb27b5385"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator^</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a907dff44bdca625423b14cabb27b5385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a bitwise xor between all lanes of a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> Do not participate to overload resolution if <code>sizeof(Type) != sizeof(S)</code> <br /></td></tr>
+<tr class="separator:a907dff44bdca625423b14cabb27b5385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02c4976011c472dc04940eea479c12b9"><td class="memItemLeft" align="right" valign="top"><a id="a02c4976011c472dc04940eea479c12b9" name="a02c4976011c472dc04940eea479c12b9"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a02c4976011c472dc04940eea479c12b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary plus operator. <br /></td></tr>
+<tr class="separator:a02c4976011c472dc04940eea479c12b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e54890bbbde58ea9d9aef6f940da04a"><td class="memItemLeft" align="right" valign="top"><a id="a8e54890bbbde58ea9d9aef6f940da04a" name="a8e54890bbbde58ea9d9aef6f940da04a"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a8e54890bbbde58ea9d9aef6f940da04a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary minus operator. See also: eve::unary_minus. <br /></td></tr>
+<tr class="separator:a8e54890bbbde58ea9d9aef6f940da04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44981c570da1fbd94e93b78af2df3035"><td class="memTemplParams" colspan="2"><a id="a44981c570da1fbd94e93b78af2df3035" name="a44981c570da1fbd94e93b78af2df3035"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:a44981c570da1fbd94e93b78af2df3035"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator+=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V v) noexcept -&gt; decltype(detail::self_add(w, v)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:a44981c570da1fbd94e93b78af2df3035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound addition on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:a44981c570da1fbd94e93b78af2df3035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7061787eec9fca7b788bff662298493"><td class="memItemLeft" align="right" valign="top"><a id="ac7061787eec9fca7b788bff662298493" name="ac7061787eec9fca7b788bff662298493"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:ac7061787eec9fca7b788bff662298493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:ac7061787eec9fca7b788bff662298493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0104aef15d7e3cb037fe59f49e8dc947"><td class="memItemLeft" align="right" valign="top"><a id="a0104aef15d7e3cb037fe59f49e8dc947" name="a0104aef15d7e3cb037fe59f49e8dc947"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a0104aef15d7e3cb037fe59f49e8dc947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:a0104aef15d7e3cb037fe59f49e8dc947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423c2f1e709de005abcac3797c408b07"><td class="memItemLeft" align="right" valign="top"><a id="a423c2f1e709de005abcac3797c408b07" name="a423c2f1e709de005abcac3797c408b07"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a423c2f1e709de005abcac3797c408b07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the addition between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8" title="Computes the sum of its arguments.">eve::add</a>. <br /></td></tr>
+<tr class="separator:a423c2f1e709de005abcac3797c408b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfc9456d1af9f80d81e789f12b631582"><td class="memTemplParams" colspan="2"><a id="adfc9456d1af9f80d81e789f12b631582" name="adfc9456d1af9f80d81e789f12b631582"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:adfc9456d1af9f80d81e789f12b631582"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V v) noexcept -&gt; decltype(detail::self_sub(w, v)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:adfc9456d1af9f80d81e789f12b631582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound difference on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:adfc9456d1af9f80d81e789f12b631582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="memItemLeft" align="right" valign="top"><a id="a01e7120dbe0bcb7f3c4dcd7c9f798f50" name="a01e7120dbe0bcb7f3c4dcd7c9f798f50"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:a01e7120dbe0bcb7f3c4dcd7c9f798f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a007897f35efa2c0fd8d7d0e4e1effaaa"><td class="memItemLeft" align="right" valign="top"><a id="a007897f35efa2c0fd8d7d0e4e1effaaa" name="a007897f35efa2c0fd8d7d0e4e1effaaa"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a007897f35efa2c0fd8d7d0e4e1effaaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:a007897f35efa2c0fd8d7d0e4e1effaaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b2baa0cc4e98e826753294f209fc4ad"><td class="memItemLeft" align="right" valign="top"><a id="a7b2baa0cc4e98e826753294f209fc4ad" name="a7b2baa0cc4e98e826753294f209fc4ad"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a7b2baa0cc4e98e826753294f209fc4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the difference between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a" title="Computes the sum of its arguments.">eve::sub</a>. <br /></td></tr>
+<tr class="separator:a7b2baa0cc4e98e826753294f209fc4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="memTemplParams" colspan="2"><a id="a515ffda667b4cfd8a52c7465b95fdfa6" name="a515ffda667b4cfd8a52c7465b95fdfa6"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept -&gt; decltype(detail::self_mul(w, o)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound product on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:a515ffda667b4cfd8a52c7465b95fdfa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="memItemLeft" align="right" valign="top"><a id="a39ece988f1ebba90718a9b6fa5ce6b11" name="a39ece988f1ebba90718a9b6fa5ce6b11"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:a39ece988f1ebba90718a9b6fa5ce6b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b36d20fbcacad6aafb4388d5f5d0930"><td class="memItemLeft" align="right" valign="top"><a id="a6b36d20fbcacad6aafb4388d5f5d0930" name="a6b36d20fbcacad6aafb4388d5f5d0930"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a6b36d20fbcacad6aafb4388d5f5d0930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:a6b36d20fbcacad6aafb4388d5f5d0930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca092521151ec97b8ad89f15adaddcac"><td class="memItemLeft" align="right" valign="top"><a id="aca092521151ec97b8ad89f15adaddcac" name="aca092521151ec97b8ad89f15adaddcac"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:aca092521151ec97b8ad89f15adaddcac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the product between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_ga06eee505775e24c81fa5f5b22382251f.html#ga06eee505775e24c81fa5f5b22382251f" title="Computes the sum of its arguments.">eve::mul</a>. <br /></td></tr>
+<tr class="separator:aca092521151ec97b8ad89f15adaddcac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="memTemplParams" colspan="2"><a id="aa0bdcf56225155e2b0ea9be2cd771e8a" name="aa0bdcf56225155e2b0ea9be2cd771e8a"></a>
+template&lt;value V&gt; </td></tr>
+<tr class="memitem:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept -&gt; decltype(detail::self_div(w, o)) requires(!kumi::product_type&lt; Type &gt;)</td></tr>
+<tr class="memdesc:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound division on all the wide lanes and assign the result to the current one. See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:aa0bdcf56225155e2b0ea9be2cd771e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="memItemLeft" align="right" valign="top"><a id="a8227ccccaac41f1a70e37f2a8ce5fa49" name="a8227ccccaac41f1a70e37f2a8ce5fa49"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of its parameters See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:a8227ccccaac41f1a70e37f2a8ce5fa49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafea0be25fd56742c5359c53a971a550"><td class="memItemLeft" align="right" valign="top"><a id="aafea0be25fd56742c5359c53a971a550" name="aafea0be25fd56742c5359c53a971a550"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (plain_scalar_value auto s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:aafea0be25fd56742c5359c53a971a550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:aafea0be25fd56742c5359c53a971a550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78289dd6511fa2ace53939950e110a8e"><td class="memItemLeft" align="right" valign="top"><a id="a78289dd6511fa2ace53939950e110a8e" name="a78289dd6511fa2ace53939950e110a8e"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, plain_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a78289dd6511fa2ace53939950e110a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the division between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar See also: <a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="Computes the division of multiple values.">eve::div</a>. <br /></td></tr>
+<tr class="separator:a78289dd6511fa2ace53939950e110a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cfdc7944754eb9c050d59c29ecb3041"><td class="memTemplParams" colspan="2"><a id="a2cfdc7944754eb9c050d59c29ecb3041" name="a2cfdc7944754eb9c050d59c29ecb3041"></a>
+template&lt;integral_value V&gt; </td></tr>
+<tr class="memitem:a2cfdc7944754eb9c050d59c29ecb3041"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator%=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, V o) noexcept</td></tr>
+<tr class="memdesc:a2cfdc7944754eb9c050d59c29ecb3041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound modulo on all the wide lanes and assign the result to the current one. Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a2cfdc7944754eb9c050d59c29ecb3041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30062a067e1482c9fb61d49e12db32e5"><td class="memItemLeft" align="right" valign="top"><a id="a30062a067e1482c9fb61d49e12db32e5" name="a30062a067e1482c9fb61d49e12db32e5"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator%</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;w) noexcept</td></tr>
+<tr class="memdesc:a30062a067e1482c9fb61d49e12db32e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the modulo between all lanes of its parameters. Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a30062a067e1482c9fb61d49e12db32e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11c12eb6691b179552797bee0abae0e8"><td class="memTemplParams" colspan="2"><a id="a11c12eb6691b179552797bee0abae0e8" name="a11c12eb6691b179552797bee0abae0e8"></a>
+template&lt;integral_scalar_value S&gt; </td></tr>
+<tr class="memitem:a11c12eb6691b179552797bee0abae0e8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator%</b> (S s, <a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v) noexcept</td></tr>
+<tr class="memdesc:a11c12eb6691b179552797bee0abae0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the modulo between a scalar and all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a11c12eb6691b179552797bee0abae0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608ed24dd6c80c15cc4d656120207498"><td class="memItemLeft" align="right" valign="top"><a id="a608ed24dd6c80c15cc4d656120207498" name="a608ed24dd6c80c15cc4d656120207498"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator%</b> (<a class="el" href="structeve_1_1wide.html">wide</a> const &amp;v, integral_scalar_value auto s) noexcept</td></tr>
+<tr class="memdesc:a608ed24dd6c80c15cc4d656120207498"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the modulo between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar Does not participate in overload resolution if <code>Type</code> does not models integral_scalar_value. <br /></td></tr>
+<tr class="separator:a608ed24dd6c80c15cc4d656120207498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a63d4983d7b90347131decf5c5e9f7"><td class="memTemplParams" colspan="2"><a id="ac4a63d4983d7b90347131decf5c5e9f7" name="ac4a63d4983d7b90347131decf5c5e9f7"></a>
+template&lt;integral_value S&gt; </td></tr>
+<tr class="memitem:ac4a63d4983d7b90347131decf5c5e9f7"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, S s) noexcept</td></tr>
+<tr class="memdesc:ac4a63d4983d7b90347131decf5c5e9f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound left-shift on all the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes and assign the result to current one. <br /></td></tr>
+<tr class="separator:ac4a63d4983d7b90347131decf5c5e9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0952de838b35b55b415b1d5b898c9d63"><td class="memTemplParams" colspan="2"><a id="a0952de838b35b55b415b1d5b898c9d63" name="a0952de838b35b55b415b1d5b898c9d63"></a>
+template&lt;integral_value S&gt; </td></tr>
+<tr class="memitem:a0952de838b35b55b415b1d5b898c9d63"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S s) noexcept</td></tr>
+<tr class="memdesc:a0952de838b35b55b415b1d5b898c9d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the left-shift between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and an integral scalar. <br /></td></tr>
+<tr class="separator:a0952de838b35b55b415b1d5b898c9d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a831cbe7560dd4e9813185797a68c31"><td class="memTemplParams" colspan="2"><a id="a1a831cbe7560dd4e9813185797a68c31" name="a1a831cbe7560dd4e9813185797a68c31"></a>
+template&lt;integral_value S&gt; </td></tr>
+<tr class="memitem:a1a831cbe7560dd4e9813185797a68c31"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;&gt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, S s) noexcept</td></tr>
+<tr class="memdesc:a1a831cbe7560dd4e9813185797a68c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound right-shift on all the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes and assign the result to current one. <br /></td></tr>
+<tr class="separator:a1a831cbe7560dd4e9813185797a68c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0be60111aec8c0aef7ab33b1d8d33066"><td class="memTemplParams" colspan="2"><a id="a0be60111aec8c0aef7ab33b1d8d33066" name="a0be60111aec8c0aef7ab33b1d8d33066"></a>
+template&lt;integral_value S&gt; </td></tr>
+<tr class="memitem:a0be60111aec8c0aef7ab33b1d8d33066"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;&gt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S s) noexcept</td></tr>
+<tr class="memdesc:a0be60111aec8c0aef7ab33b1d8d33066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the right-shift between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and an integral scalar. <br /></td></tr>
+<tr class="separator:a0be60111aec8c0aef7ab33b1d8d33066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7b281af73da31581d699e1e915d75a"><td class="memItemLeft" align="right" valign="top"><a id="a0f7b281af73da31581d699e1e915d75a" name="a0f7b281af73da31581d699e1e915d75a"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a0f7b281af73da31581d699e1e915d75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a0f7b281af73da31581d699e1e915d75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b8cf0694ba3031f77ef3b0afc324262"><td class="memTemplParams" colspan="2"><a id="a6b8cf0694ba3031f77ef3b0afc324262" name="a6b8cf0694ba3031f77ef3b0afc324262"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1wide.html">wide</a> {s}; }</td></tr>
+<tr class="memitem:a6b8cf0694ba3031f77ef3b0afc324262"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a6b8cf0694ba3031f77ef3b0afc324262"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar value. <br /></td></tr>
+<tr class="separator:a6b8cf0694ba3031f77ef3b0afc324262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca13ccdb4597e8e4a9401add90ded89"><td class="memTemplParams" colspan="2"><a id="a5ca13ccdb4597e8e4a9401add90ded89" name="a5ca13ccdb4597e8e4a9401add90ded89"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1wide.html">wide</a> {s}; }</td></tr>
+<tr class="memitem:a5ca13ccdb4597e8e4a9401add90ded89"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a5ca13ccdb4597e8e4a9401add90ded89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a scalar value and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a5ca13ccdb4597e8e4a9401add90ded89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cf7d4bed1404895c4b7eae34737fe42"><td class="memItemLeft" align="right" valign="top"><a id="a3cf7d4bed1404895c4b7eae34737fe42" name="a3cf7d4bed1404895c4b7eae34737fe42"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a3cf7d4bed1404895c4b7eae34737fe42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a3cf7d4bed1404895c4b7eae34737fe42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88a8c49f2e9d541594854dc7369a7162"><td class="memTemplParams" colspan="2"><a id="a88a8c49f2e9d541594854dc7369a7162" name="a88a8c49f2e9d541594854dc7369a7162"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1wide.html">wide</a> {s}; }</td></tr>
+<tr class="memitem:a88a8c49f2e9d541594854dc7369a7162"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a88a8c49f2e9d541594854dc7369a7162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar value. <br /></td></tr>
+<tr class="separator:a88a8c49f2e9d541594854dc7369a7162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0fbac266ab0cc213a53a17d3cf76019"><td class="memTemplParams" colspan="2"><a id="ad0fbac266ab0cc213a53a17d3cf76019" name="ad0fbac266ab0cc213a53a17d3cf76019"></a>
+template&lt;scalar_value S&gt; <br />
+requires requires(S s) { <a class="el" href="structeve_1_1wide.html">wide</a> {s}; }</td></tr>
+<tr class="memitem:ad0fbac266ab0cc213a53a17d3cf76019"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:ad0fbac266ab0cc213a53a17d3cf76019"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a scalar value and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:ad0fbac266ab0cc213a53a17d3cf76019"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01573fbcf76e04995cf6f5b88a902bec"><td class="memItemLeft" align="right" valign="top"><a id="a01573fbcf76e04995cf6f5b88a902bec" name="a01573fbcf76e04995cf6f5b88a902bec"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a01573fbcf76e04995cf6f5b88a902bec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise less-than comparison between <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a01573fbcf76e04995cf6f5b88a902bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9abb8905b9a063ce5c18add352d7a122"><td class="memTemplParams" colspan="2"><a id="a9abb8905b9a063ce5c18add352d7a122" name="a9abb8905b9a063ce5c18add352d7a122"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a9abb8905b9a063ce5c18add352d7a122"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a9abb8905b9a063ce5c18add352d7a122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise less-than comparison between a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar. <br /></td></tr>
+<tr class="separator:a9abb8905b9a063ce5c18add352d7a122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18df866d4981e1dcb6084e1a9d49c78b"><td class="memTemplParams" colspan="2"><a id="a18df866d4981e1dcb6084e1a9d49c78b" name="a18df866d4981e1dcb6084e1a9d49c78b"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a18df866d4981e1dcb6084e1a9d49c78b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a18df866d4981e1dcb6084e1a9d49c78b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise less-than comparison between a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a18df866d4981e1dcb6084e1a9d49c78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63d284e8ad7bfd153e5ec2462a9e9e6"><td class="memItemLeft" align="right" valign="top"><a id="af63d284e8ad7bfd153e5ec2462a9e9e6" name="af63d284e8ad7bfd153e5ec2462a9e9e6"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:af63d284e8ad7bfd153e5ec2462a9e9e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise greater-than comparison between <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:af63d284e8ad7bfd153e5ec2462a9e9e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b2459f9e09887921b0425fddf3b08c"><td class="memTemplParams" colspan="2"><a id="a32b2459f9e09887921b0425fddf3b08c" name="a32b2459f9e09887921b0425fddf3b08c"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a32b2459f9e09887921b0425fddf3b08c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a32b2459f9e09887921b0425fddf3b08c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise greater-than comparison between a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar. <br /></td></tr>
+<tr class="separator:a32b2459f9e09887921b0425fddf3b08c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab3bc1edf6db4de101b3a3b07e4cf1b"><td class="memTemplParams" colspan="2"><a id="aeab3bc1edf6db4de101b3a3b07e4cf1b" name="aeab3bc1edf6db4de101b3a3b07e4cf1b"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:aeab3bc1edf6db4de101b3a3b07e4cf1b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:aeab3bc1edf6db4de101b3a3b07e4cf1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise greater-than comparison between a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:aeab3bc1edf6db4de101b3a3b07e4cf1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5723a515922926a4469b1876d4890d81"><td class="memItemLeft" align="right" valign="top"><a id="a5723a515922926a4469b1876d4890d81" name="a5723a515922926a4469b1876d4890d81"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a5723a515922926a4469b1876d4890d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise greater-or-equal comparison between <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a5723a515922926a4469b1876d4890d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ea7bf48bce3481d546af5be1420e563"><td class="memTemplParams" colspan="2"><a id="a3ea7bf48bce3481d546af5be1420e563" name="a3ea7bf48bce3481d546af5be1420e563"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a3ea7bf48bce3481d546af5be1420e563"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:a3ea7bf48bce3481d546af5be1420e563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise greater-or-equal comparison between a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar. <br /></td></tr>
+<tr class="separator:a3ea7bf48bce3481d546af5be1420e563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6720aef32fc9eed12daf564bf1fadfe"><td class="memTemplParams" colspan="2"><a id="ad6720aef32fc9eed12daf564bf1fadfe" name="ad6720aef32fc9eed12daf564bf1fadfe"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:ad6720aef32fc9eed12daf564bf1fadfe"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;=</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:ad6720aef32fc9eed12daf564bf1fadfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise greater-or-equal comparison between a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:ad6720aef32fc9eed12daf564bf1fadfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d9eca32bf57d8d7a14d10d7f18f0057"><td class="memItemLeft" align="right" valign="top"><a id="a9d9eca32bf57d8d7a14d10d7f18f0057" name="a9d9eca32bf57d8d7a14d10d7f18f0057"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a9d9eca32bf57d8d7a14d10d7f18f0057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise less-or-equal comparison between <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a9d9eca32bf57d8d7a14d10d7f18f0057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfa7ac70bc5090bdd18397bb406b13cc"><td class="memTemplParams" colspan="2"><a id="acfa7ac70bc5090bdd18397bb406b13cc" name="acfa7ac70bc5090bdd18397bb406b13cc"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:acfa7ac70bc5090bdd18397bb406b13cc"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S w) noexcept</td></tr>
+<tr class="memdesc:acfa7ac70bc5090bdd18397bb406b13cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise less-or-equal comparison between a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and a scalar. <br /></td></tr>
+<tr class="separator:acfa7ac70bc5090bdd18397bb406b13cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99edd5276b11e2a30955f29ab5b24690"><td class="memTemplParams" colspan="2"><a id="a99edd5276b11e2a30955f29ab5b24690" name="a99edd5276b11e2a30955f29ab5b24690"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a99edd5276b11e2a30955f29ab5b24690"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;=</b> (S v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
+<tr class="memdesc:a99edd5276b11e2a30955f29ab5b24690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise less-or-equal comparison between a scalar and a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
+<tr class="separator:a99edd5276b11e2a30955f29ab5b24690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6866135977bdf52db203c4a82b74091"><td class="memItemLeft" align="right" valign="top"><a id="ad6866135977bdf52db203c4a82b74091" name="ad6866135977bdf52db203c4a82b74091"></a>
+logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operator!</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v) noexcept</td></tr>
+<tr class="memdesc:ad6866135977bdf52db203c4a82b74091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical complement of its parameter. <br /></td></tr>
+<tr class="separator:ad6866135977bdf52db203c4a82b74091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d742b27eea1a869eb7cfa2f1a83547"><td class="memItemLeft" align="right" valign="top"><a id="ab3d742b27eea1a869eb7cfa2f1a83547" name="ab3d742b27eea1a869eb7cfa2f1a83547"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, <a class="el" href="structeve_1_1wide.html">wide</a> p)</td></tr>
+<tr class="memdesc:ab3d742b27eea1a869eb7cfa2f1a83547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into a output stream. <br /></td></tr>
+<tr class="separator:ab3d742b27eea1a869eb7cfa2f1a83547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="structeve_1_1wide.html">wide</a></li>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>
