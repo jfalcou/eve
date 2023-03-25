@@ -15,7 +15,6 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
-#include <eve/module/core/regular/byte_reverse.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
 
@@ -27,7 +26,7 @@ namespace eve::detail
   {
     using e_t =  element_type_t<T>;
     constexpr auto S = sizeof(e_t);
-    auto  mk_ct = [S](uint8_t C){
+    auto  mk_ct = [](uint8_t C){
       e_t r = C;
       size_t shift = 4;
       constexpr size_t ls = S/2-(S == 8);
