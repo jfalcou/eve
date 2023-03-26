@@ -29,7 +29,7 @@ namespace eve::detail
     auto bs=[](auto x){
       auto b = std::bit_cast<std::array<std::uint8_t, sizeof(S)>>(x);
       std::reverse(b.begin(), b.end());
-      return std::bit_cast<S>(b);
+      return std::bit_cast<T>(b);
     };
     if constexpr(sizeof(T)==1)
     {
