@@ -10,29 +10,65 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/builtin_detect.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 #include <array>
 #include <algorithm>
 #include <bit>
 
+constexpr bool has_swap = __has_builtin(builtin_swap32) && __has_builtin(builtin_swap64);
+
 namespace eve::detail
 {
+  template<unsigned_scalar_value T>
+  T bswap(T x)
+  {
+    constexpr size_t S = sizeof(T);
+    auto bs=[](auto x){
+      auto b = std::bit_cast<std::array<std::uint8_t, sizeof(S)>>(x);
+      std::ranges::reverse(b);
+      return std::bit_cast<S>(b);
+    };
+    if constexpr(sizeof(T)==1)
+    {
+      return x;
+    }
+    else    if constexpr(sizeof(T)==2)
+    {
+      return bit_shl(x, 8) | bit_shr(x, 8);
+    }
+    else if constexpr(sizeof(T)==8)
+    {
+      if constexpr(has_builtin_swap64())
+      {
+        if constexpr(spy::compiler==spy::msvc_) return _byteswap_uint64(x);
+        else return __builtin_bswap64(x);
+      }
+      else return bs(x);
+    }
+    else    if constexpr(sizeof(T)==4)
+    {
+      if constexpr(has_builtin_swap32())
+      {
+        if constexpr(spy::compiler==spy::msvc_) return _byteswap_uint32(x);
+        else return __builtin_bswap64(x);
+      }
+      else return bs(x);
+    }
+  }
+
   template<integral_value T>
   EVE_FORCEINLINE auto
   byte_reverse_(EVE_SUPPORTS(cpu_), T x) noexcept
   {
     if constexpr(scalar_value<T>)
     {
-      constexpr auto S = sizeof(T);
-      if constexpr(S == 1) return x;
-      else
-      {
-        auto b = std::bit_cast<std::array<uint8_t, S>>(x);
-        std::reverse(b.begin(), b.end());
-        return std::bit_cast<T>(b);
-      }
+      using u_t = as_uinteger_t<T>;
+      return std::bit_cast<T>(bswap(std::bit_cast<u_t>(x)));
     }
     else if constexpr(has_native_abi_v<T>)
     {
@@ -54,7 +90,7 @@ namespace eve::detail
   }
 
   // Masked case
-  template<conditional_expr C, ordered_value U>
+  template<conditional_expr C, integral_value U>
   EVE_FORCEINLINE auto
   byte_reverse_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
   {
