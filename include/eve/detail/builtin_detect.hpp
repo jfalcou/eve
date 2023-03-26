@@ -11,12 +11,12 @@ namespace eve::detail
 {
 
   constexpr bool has_builtin_swap32(){
-    constexpr bool b = __has_builtin(__builtin_bswap32) || __has_builtin(_byteswap_ulong);
+    constexpr bool b = spy::compiler== spy::msvc_ || __has_builtin(_byteswap_ulong);
     return b;
   }
 
   constexpr bool has_builtin_swap64(){
-    constexpr bool b = __has_builtin(__builtin_bswap64)|| __has_builtin(_byteswap_uint64);
+    constexpr bool b = spy::compiler== spy::msvc_ || __has_builtin(_byteswap_uint64);
     return b;
   }
 }
