@@ -30,7 +30,7 @@ namespace eve::detail
     constexpr size_t S = sizeof(T);
     auto bs=[](auto x){
       auto b = std::bit_cast<std::array<std::uint8_t, sizeof(S)>>(x);
-      std::ranges::reverse(b);
+      std::reverse(b.begin(), b.end());
       return std::bit_cast<S>(b);
     };
     if constexpr(sizeof(T)==1)
