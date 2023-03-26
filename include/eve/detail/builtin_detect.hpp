@@ -10,13 +10,28 @@
 namespace eve::detail
 {
 
-  constexpr bool has_builtin_swap32(){
-    if constexpr (spy::compiler== spy::msvc_) return true;
-    else return __has_builtin(__builtin__bwap32);
+  constexpr inline bool has_builtin_swap32(){
+    return (spy::compiler== spy::msvc_
+               || spy::compiler== spy::gcc_
+               || spy::compiler== spy::clang_);
   }
 
-  constexpr bool has_builtin_swap64(){
-    if constexpr (spy::compiler== spy::msvc_) return true;
-    else return __has_builtin(__builtin__bwap64);
+  auto inline builtin_bswap32(auto x) noexcept
+  {
+    if constexpr(spy::compiler== spy::msvc_) return _bswap_ulong(x);
+    else return __builtin_bswap32(x);
   }
+
+  constexpr inline  bool has_builtin_swap64(){
+    return (spy::compiler== spy::msvc_
+               || spy::compiler== spy::gcc_
+               || spy::compiler== spy::clang_);
+  }
+
+  auto inline builtin_bswap64(auto x) noexcept
+  {
+    if constexpr(spy::compiler== spy::msvc_) return _bswap_uint64(x);
+    else return __builtin_bswap64(x);
+  }
+
 }

@@ -41,20 +41,12 @@ namespace eve::detail
     }
     else if constexpr(sizeof(T)==8)
     {
-      if constexpr(has_builtin_swap64())
-      {
-        if constexpr(spy::compiler==spy::msvc_) return _byteswap_uint64(x);
-        else return __builtin_bswap64(x);
-      }
+      if constexpr(has_builtin_swap64()) return builtin_bswap64(x);
       else return bs(x);
     }
     else    if constexpr(sizeof(T)==4)
     {
-      if constexpr(has_builtin_swap32())
-      {
-        if constexpr(spy::compiler==spy::msvc_) return _byteswap_ulong(x);
-        else return __builtin_bswap632(x);
-      }
+      if constexpr(has_builtin_swap32())  return builtin_bswap32(x);
       else return bs(x);
     }
   }
