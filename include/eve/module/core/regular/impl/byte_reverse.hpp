@@ -20,8 +20,6 @@
 #include <algorithm>
 #include <bit>
 
-constexpr bool has_swap = __has_builtin(builtin_swap32) && __has_builtin(builtin_swap64);
-
 namespace eve::detail
 {
   template<unsigned_scalar_value T>
