@@ -54,8 +54,8 @@ namespace eve::detail
     {
       if constexpr(has_builtin_swap32())
       {
-        if constexpr(spy::compiler==spy::msvc_) return _byteswap_uint32(x);
-        else return __builtin_bswap64(x);
+        if constexpr(spy::compiler==spy::msvc_) return _byteswap_ulong(x);
+        else return __builtin_bswap632(x);
       }
       else return bs(x);
     }
