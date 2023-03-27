@@ -28,7 +28,7 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, unsigned_value U, auto N>
   EVE_FORCEINLINE auto
-  byte_swap_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, std::integral_constant<size_t, N> const & n) noexcept
+  byte_swap_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, std::integral_constant<size_t, N> const &) noexcept
   {
     return mask_op(cond, eve::bit_swap, t, std::integral_constant<size_t, N*8>());
   }
