@@ -41,6 +41,10 @@ namespace eve
 //!
 //!    The values of the of the parameter are returned with bytes in reversed order.
 //!
+//!   @note eve::byte_reverse is the functional equivalent to std::byte_swap.
+//!   However, we decided to name it byte_reverse in order to keep a proper naming
+//!   scheme aligned with the eve::bit_swap/eve::bit_reverse functions.
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/byte_reverse.cpp}
