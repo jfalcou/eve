@@ -21,7 +21,7 @@
 namespace eve::detail
 {
   template<auto N, unsigned_value T>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE T
   bit_swap_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N>) noexcept
   {
     using e_t =  element_type_t<T>;
@@ -40,7 +40,7 @@ namespace eve::detail
     auto swp = [](auto x, auto m, int n)->T{
       return bit_or(bit_shl(bit_and(x, T(m)), n), bit_shr(bit_andnot(x, T(m)), n));
     };
-    if constexpr (N > S*4) return e_t(0);
+    if constexpr (N > S*4) return zero(as(x));
     else if constexpr(N == 0) return x;
     else if constexpr(N == 1) //Return x with neighbor bits swapped.
       return swp(x, mk_ct(0x55), N);

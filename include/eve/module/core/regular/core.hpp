@@ -36,6 +36,7 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
+#include <eve/module/core/regular/byte_swap.hpp>
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/broadcast_group.hpp>
 #include <eve/module/core/regular/ceil.hpp>
