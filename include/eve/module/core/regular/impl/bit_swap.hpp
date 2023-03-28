@@ -11,9 +11,9 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/forward.hpp>
-#include <eve/module/core/regular/load.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
