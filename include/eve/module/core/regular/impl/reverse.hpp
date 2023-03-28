@@ -58,7 +58,7 @@ namespace eve::detail
 
   template<simd_value T, auto N>
   EVE_FORCEINLINE T
-  reverse_(EVE_SUPPORTS(cpu_), T const& v, std::integral_constant<size_t, N> m)
+  reverse_(EVE_SUPPORTS(cpu_), T const& v, std::integral_constant<size_t, N>)
   {
     constexpr auto S   = cardinal_v<T>;
     if constexpr(scalar_value<T>) return v;
