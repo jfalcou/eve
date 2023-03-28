@@ -56,7 +56,7 @@ namespace eve::detail
     else { return bit_cast(reverse(v.bits()), as(v)); }
   }
 
-  template<simd_value T, auto N>
+  template<value T, auto N>
   EVE_FORCEINLINE T
   reverse_(EVE_SUPPORTS(cpu_), T const& v, std::integral_constant<size_t, N>)
   {
@@ -75,7 +75,7 @@ namespace eve::detail
      }
   }
 
-  template<simd_value T,  auto N>
+  template<value T,  auto N>
   EVE_FORCEINLINE logical<T>
   reverse_(EVE_SUPPORTS(cpu_), logical<T> const &v,  std::integral_constant<size_t, N> n)
   {
