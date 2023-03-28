@@ -13,6 +13,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/module/core/regular/replace.hpp>
+#include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
 #include <eve/wide.hpp>
 
