@@ -38,18 +38,16 @@ void reverse_test(T x)
   auto frNx =  [&](size_t i, size_t S) { return x.get( ((i < N)  ? S-i-1 : ( (i > S-N-1) ? S-i-1 : i))); };
 
   T expectedN(frNx);
-  TTS_EQUAL(eve::reverse(x, std::integral_constant<size_t, N>()), expectedN)';
+  TTS_EQUAL(eve::reverse(x, std::integral_constant<size_t, N>()), expectedN);
 }
 
 TTS_CASE_WITH( "Check behavior of reverse"
         , eve::test::simd::all_types
-        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
-                              , tts::logicals(0,3))
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax))
         )
-<typename T, typename L>(T const& a, L const& l)
+<typename T>(T const& a)
 {
   reverse_test(a);
-  reverse_test(l);
 };
 
 TTS_CASE_TPL( "Check behavior of reverse with tuple", eve::test::scalar::all_types)

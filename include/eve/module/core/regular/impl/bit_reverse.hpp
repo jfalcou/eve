@@ -70,4 +70,5 @@ namespace eve::detail
   {
     return mask_op(cond, eve::bit_reverse, t);
   }
+
 }
