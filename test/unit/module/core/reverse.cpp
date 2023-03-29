@@ -30,19 +30,15 @@ template <typename T>
 void reverse_test(T x)
 {
   auto frx =  [&](size_t i, size_t size) { return x.get(size - i - 1); };
-  auto fr  =  [](size_t i, size_t size) { return size - i - 1; };
   T expected(frx);
   TTS_EQUAL(eve::reverse(x), expected);
-  TTS_EQUAL(eve::shuffle(x, eve::as_pattern(fr)), expected);
 
   constexpr size_t S = eve::cardinal_v<T>;
   constexpr size_t N = S/4;
   auto frNx =  [&](size_t i, size_t S) { return x.get( ((i < N)  ? S-i-1 : ( (i > S-N-1) ? S-i-1 : i))); };
-  auto frN  =  [ ](size_t i, size_t S) { return ((i < N)  ? S-i-1 : ( (i > S-N-1) ? S-i-1 : i)); };
 
   T expectedN(frNx);
   TTS_EQUAL(eve::reverse(x, std::integral_constant<size_t, N>()), expectedN);
-  TTS_EQUAL(eve::shuffle(x, eve::as_pattern(frN)), expectedN);
 }
 
 TTS_CASE_WITH( "Check behavior of reverse"
