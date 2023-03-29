@@ -82,7 +82,7 @@ namespace eve::detail
   reverse_(EVE_SUPPORTS(cpu_), logical<T> const &v,  std::integral_constant<size_t, N> n)
   {
     using abi_t = typename T::abi_type;
-    if constexpr( !simd_value<T>/*abi_t::is_wide_logical*/ )
+    if constexpr( !abi_t::is_wide_logical )
     {
       // Reconstruct mask, reverse then turn to mask again
       auto const m   = v.mask();
