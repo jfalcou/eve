@@ -41,19 +41,21 @@ namespace eve::detail
     }
   }
 
-  template<simd_value T, std::ptrdiff_t N>
+  template<simd_value T>
   EVE_FORCEINLINE logical<T>
   reverse_(EVE_SUPPORTS(cpu_), logical<T> const                &v)
   {
-    using abi_t = typename T::abi_type;
-    if constexpr( abi_t::is_wide_logical )
+     using abi_t = typename T::abi_type;
+    if constexpr( !abi_t::is_wide_logical )
     {
       // Reconstruct mask, reverse then turn to mask again
       auto const m   = v.mask();
       auto const res = eve::reverse(m);
       return to_logical(res);
     }
-    else { return bit_cast(reverse(v.bits()), as(v)); }
+    else {
+       return bit_cast(reverse(v.bits()), as(v));
+    }
   }
 
   template<value T, auto N>
@@ -80,13 +82,15 @@ namespace eve::detail
   reverse_(EVE_SUPPORTS(cpu_), logical<T> const &v,  std::integral_constant<size_t, N> n)
   {
     using abi_t = typename T::abi_type;
-    if constexpr( abi_t::is_wide_logical )
+    if constexpr( !abi_t::is_wide_logical )
     {
       // Reconstruct mask, reverse then turn to mask again
       auto const m   = v.mask();
       auto const res = eve::reverse(m, n);
       return to_logical(res);
     }
-    else { return bit_cast(bit_swap(v.bits(), n), as(v)); }
+    else {
+      return bit_cast(bit_swap(v.bits(), n), as(v));
+    }
   }
 }
