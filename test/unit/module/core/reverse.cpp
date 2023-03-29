@@ -14,7 +14,7 @@ namespace {
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of eve::abs", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of eve::reverse", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -38,7 +38,7 @@ void reverse_test(T x)
   auto frNx =  [&](size_t i, size_t S) { return x.get( ((i < N)  ? S-i-1 : ( (i > S-N-1) ? S-i-1 : i))); };
 
   T expectedN(frNx);
-  TTS_EQUAL(eve::reverse(x, std::integral_constant<size_t, N>()), expectedN);
+  TTS_EQUAL(eve::reverse(x, std::integral_constant<size_t, N>()), expectedN)';
 }
 
 TTS_CASE_WITH( "Check behavior of reverse"
