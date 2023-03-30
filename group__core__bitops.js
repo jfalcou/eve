@@ -11,11 +11,15 @@ var group__core__bitops =
     [ "eve::bit_notor", "group__core__bitops_ga2b4fed649fc2407cbacc82390c215d7e.html#ga2b4fed649fc2407cbacc82390c215d7e", null ],
     [ "eve::bit_or", "group__core__bitops_gad17f49d0aa8a13d742091ed5490bf999.html#gad17f49d0aa8a13d742091ed5490bf999", null ],
     [ "eve::bit_ornot", "group__core__bitops_gad0a437aa5d4f510c8b57fe889732c783.html#gad0a437aa5d4f510c8b57fe889732c783", null ],
+    [ "eve::bit_reverse", "group__core__bitops_ga7598d052e64022099cc9e0eb5741c185.html#ga7598d052e64022099cc9e0eb5741c185", null ],
     [ "eve::bit_select", "group__core__bitops_gaa920ed91dcfe6fc7ec9d977dd4aa2c8b.html#gaa920ed91dcfe6fc7ec9d977dd4aa2c8b", null ],
     [ "eve::bit_shl", "group__core__bitops_ga9f6327b5e9978f3905e8ad3c4c711a77.html#ga9f6327b5e9978f3905e8ad3c4c711a77", null ],
     [ "eve::bit_shr", "group__core__bitops_gaf996698e31643fc5a631c460bce725fd.html#gaf996698e31643fc5a631c460bce725fd", null ],
+    [ "eve::bit_swap", "group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140", null ],
     [ "eve::bit_width", "group__core__bitops_ga1fdf2e92b8ef8b2824b3513057ccf2a4.html#ga1fdf2e92b8ef8b2824b3513057ccf2a4", null ],
     [ "eve::bit_xor", "group__core__bitops_gaeabb8dbb9fe8afe4e47d6a8543cc4399.html#gaeabb8dbb9fe8afe4e47d6a8543cc4399", null ],
+    [ "eve::byte_reverse", "group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50", null ],
+    [ "eve::byte_swap", "group__core__bitops_ga72a1b22cc885084ffd5adcaa6c6d9255.html#ga72a1b22cc885084ffd5adcaa6c6d9255", null ],
     [ "eve::countl_one", "group__core__bitops_gac3ea8b4c98c60b7969d5204c18e24107.html#gac3ea8b4c98c60b7969d5204c18e24107", null ],
     [ "eve::countl_zero", "group__core__bitops_ga29c9c15fec7733014b176d759adecc62.html#ga29c9c15fec7733014b176d759adecc62", null ],
     [ "eve::countr_one", "group__core__bitops_ga0f2c79073c4fd02eba8f003f2809013a.html#ga0f2c79073c4fd02eba8f003f2809013a", null ],
@@ -25,5 +29,6 @@ var group__core__bitops =
     [ "eve::hi", "group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524", null ],
     [ "eve::lo", "group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60", null ],
     [ "eve::lohi", "group__core__bitops_ga5fa01768959ec399cb0a910af345dd8b.html#ga5fa01768959ec399cb0a910af345dd8b", null ],
-    [ "eve::popcount", "group__core__bitops_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322", null ]
+    [ "eve::popcount", "group__core__bitops_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322", null ],
+    [ "eve::reverse", "group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5", null ]
 ];

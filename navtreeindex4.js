@@ -1,5 +1,10 @@
 var NAVTREEINDEX4 =
 {
+"structeve_1_1ignore__extrema.html#a44743fbbbe8ef415498cb627834415fa":[7,0,2,2,9,4],
+"structeve_1_1ignore__extrema.html#a4a2136bdee642bce65e9983043d1c488":[7,0,2,2,9,2],
+"structeve_1_1ignore__extrema.html#ab553daa802541398e3dd66455c0b2706":[7,0,2,2,9,3],
+"structeve_1_1ignore__extrema_a8b1bf4ee47838a4ae4897f6bcd21b93c.html#a8b1bf4ee47838a4ae4897f6bcd21b93c":[7,0,2,2,9,1],
+"structeve_1_1ignore__first.html":[7,0,2,2,7],
 "structeve_1_1ignore__first.html#a929fdfe9d5d91d9fa5b6d1baebdd3391":[7,0,2,2,7,0],
 "structeve_1_1ignore__first.html#a9542a4416c2fdd4465e331f8536574d0":[7,0,2,2,7,2],
 "structeve_1_1ignore__first.html#ad7e3fb7e846eb8b2913808a62d0ba092":[7,0,2,2,7,3],
