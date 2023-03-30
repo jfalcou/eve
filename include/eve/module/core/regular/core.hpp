@@ -32,6 +32,7 @@
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/bit_swap.hpp>
+#include <eve/module/core/regular/bit_swap_pairs.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>

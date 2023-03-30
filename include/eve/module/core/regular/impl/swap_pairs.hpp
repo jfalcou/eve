@@ -38,14 +38,4 @@ namespace eve::detail
       return x;
     }
   }
-
-  // Masked case
-  template<conditional_expr C, value T, auto I0, auto I1>
-  EVE_FORCEINLINE auto
-  swap_pairs_(EVE_SUPPORTS(cpu_), C const& cond, T const& t
-                  , std::integral_constant<size_t, I0> const & i0
-                  , std::integral_constant<size_t, I1> const & i1 ) noexcept
-  {
-    return mask_op(cond, eve::swap_pairs, t, i0, i1);
-  }
 }
