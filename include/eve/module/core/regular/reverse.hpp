@@ -14,6 +14,43 @@
 
 namespace eve
 {
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var reverse
+//!   @brief elementwise reverses the elements order.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T >
+//!      T reverse(T x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [argument](@ref eve::value).
+//!
+//!    **Return value**
+//!
+//!    The values of the parameter are shuffled and returned in reverse order.
+//!    On scalar values reverse is the identity.   
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/reverse.cpp}
+//!
+//! @}
+//================================================================================================
 EVE_MAKE_CALLABLE(reverse_, reverse);
 
 namespace detail
