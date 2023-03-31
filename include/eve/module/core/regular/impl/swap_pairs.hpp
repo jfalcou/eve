@@ -16,8 +16,8 @@ namespace eve::detail
   template<value T, auto I0, auto I1>
   EVE_FORCEINLINE T
   swap_pairs_(EVE_SUPPORTS(cpu_), T x
-                  , std::integral_constant<size_t, I0> const & i0
-                  , std::integral_constant<size_t, I1> const & i1 ) noexcept
+                  , std::integral_constant<size_t, I0> const &
+                  , std::integral_constant<size_t, I1> const &  ) noexcept
   {
     constexpr size_t C = cardinal_v<T>;
     EVE_ASSERT((I0 < C) && (I1 < C), "some index(es) are out or range");

@@ -41,8 +41,8 @@ namespace eve::detail
   template<unsigned_value T, auto I0, auto I1>
   EVE_FORCEINLINE T
   bit_swap_pairs_(EVE_SUPPORTS(cpu_), T x
-                 , std::integral_constant<size_t, I0> const & i0
-                 , std::integral_constant<size_t, I1> const & i1) noexcept
+                 , std::integral_constant<size_t, I0> const & 
+                 , std::integral_constant<size_t, I1> const &) noexcept
   {
     constexpr auto S =  sizeof(element_type_t<T>)*8;
     if constexpr(I0 >= S)
