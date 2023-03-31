@@ -35,7 +35,7 @@ namespace eve::detail
   template<unsigned_value T, auto I0>
   EVE_FORCEINLINE T
   bit_unset_(EVE_SUPPORTS(cpu_), T x
-                 , std::integral_constant<size_t, I0> const & i0) noexcept
+                 , std::integral_constant<size_t, I0> const & ) noexcept
   {
     constexpr auto S =  sizeof(element_type_t<T>)*8;
     if constexpr(I0 >= S) return x;
