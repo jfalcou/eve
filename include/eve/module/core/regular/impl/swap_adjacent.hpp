@@ -19,7 +19,6 @@ namespace eve::detail
   EVE_FORCEINLINE T
   swap_adjacent_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N>) noexcept
   {
-    using e_t =  element_type_t<T>;
     if constexpr(N == 0) return x;
     else if constexpr(scalar_value<T> || N >= cardinal_v<T>) return zero(as(x));
     else return swap_adjacent_groups(x, fixed<N>());

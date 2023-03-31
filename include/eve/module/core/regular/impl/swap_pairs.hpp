@@ -23,7 +23,6 @@ namespace eve::detail
     EVE_ASSERT((I0 < C) && (I1 < C), "some index(es) are out or range");
     if constexpr(simd_value<T>)
     {
-      using e_t =  element_type_t<T>;
       constexpr size_t C = cardinal_v<T>;
       EVE_ASSERT(I0 < C && I1 < C, "some index(es) are out or range");
       auto p = [](auto i,  auto){

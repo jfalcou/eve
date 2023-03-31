@@ -52,7 +52,6 @@ namespace eve::detail
     {
       using w_t = wide<T>;
       auto wx = w_t(x);
-      using u_t = wide<uint8_t, fixed<sizeof(T)>>;
       return byte_swap_pairs(wx, i0, i1).get(0);
     }
   }
