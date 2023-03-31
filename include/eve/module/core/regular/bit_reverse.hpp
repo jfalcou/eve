@@ -29,17 +29,26 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T bit_reverse(T x) noexcept;
+//!      T bit_reverse(T x) noexcept;                                         //1
+//!      template< eve::value T auto N>
+//!      T bit_reverse(T x
+//!                    , std::integral_constant<size_tN> const & n) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
+//!     * `n` :  n delimit the band to be reversed at both ends of x
 //!
 //!    **Return value**
 //!
 //!    The values of the of the parameter are returned with bits in reversed order.
+//!    if n is present :
+//!      - if n == 0 the call returns x
+//!      - if 2*n >= sizeof(element_type_t<T>)   the call is identical to reverse(x)
+//!      - otherwise the first n bits and the last n bits of each element of x are swapped in
+//!        reverse order and the central remaining bits are unchanged.
 //!
 //!  @groupheader{Example}
 //!

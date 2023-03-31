@@ -14,8 +14,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var bit_swap_pairs
-//!   @brief swap_pairs elementwise groups of N bits.
+//!   @var bit_set
+//!   @brief set to 1 the ith bit of each element.
 //!
 //!   **Defined in Header**
 //!
@@ -28,44 +28,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<eve::unsigned_value T, unsigned_value I0, unsigned_value I1 >
-//!      T bit_swap_pairs(T x, I0 i0, I1 i1);
+//!      template< eve::value T, unsigned_value I>
+//!      T bit_set(T x, I0 i0) noexcept; //1
 //!
-//!      template<eve::unsigned_value T, auto I0, auto I1 >
-//!      T bit_swap_pairs(T x, std::integral_constant<size_t, I0> i0>
-//!                          , std::integral_constant<size_t, I1> i1);
+//!      template< eve::value T,  auto I>
+//!      T bit_set(T x, std:integral_constant<size_t, I> i) noexcept; //2
+//!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::integral_value).
-//!     * `i0` : first index
-//!     * `i1` : second index
+//!     * `x` :  [argument](@ref eve::value).
+//!     * `i` :  index to set
 //!
 //!    **Return value**
 //!
-//!    Return x with elementwise bit i0 and i1 swapped.
-//!    Assert if i0 or i1 are out of range.
+//!    The value of the parameter is returned with the ith bit set to 1
+//!        -  In the first case index out of range asserts.
+//!        -  In the second case index out of range returns x unchanged.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_swap_pairs.cpp}
+//!  @godbolt{doc/core/regular/bit_set.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve::bit_swap_pairs[mask](x, ...)` provides a masked
-//!     version of `bit_swap_pairs` which is
-//!     equivalent to `if_else(mask, bit_swap_pairs(x, ...), x)`
+//!     The call `eve::bit_set[mask](x, ...)` provides a masked
+//!     version of `bit_set` which is
+//!     equivalent to `if_else(mask, bit_set(x, ...), x)`
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/masked/bit_swap_pairs.cpp}
+//!        @godbolt{doc/core/masked/bit_set.cpp}
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_swap_pairs_, bit_swap_pairs);
+EVE_MAKE_CALLABLE(bit_set_, bit_set);
 }
 
-#include <eve/module/core/regular/impl/bit_swap_pairs.hpp>
+#include <eve/module/core/regular/impl/bit_set.hpp>

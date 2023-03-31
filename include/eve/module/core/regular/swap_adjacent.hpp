@@ -14,8 +14,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var bit_swap
-//!   @brief swaps elementwise groups of N bits.
+//!   @var swap_adjacent
+//!   @brief swap_adjacents  groups of N elements.
 //!
 //!   **Defined in Header**
 //!
@@ -29,41 +29,45 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< size_t N, eve::integral_value T >
-//!      T bit_swap(T x, std::integral_constant<size_t, N> n) noexcept;
+//!      T swap_adjacent(T x, std::integral_constant<size_t, N> n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::integral_value).
-//!     * `n` :  size of the groups of bits to be swapped. Must be a power of 2.
+//!     * `n` :  size of the groups of elements to be swapped. Must be a power of 2.
 //!
 //!    **Return value**
 //!
-//!    Return x with elementwise groups of N bits swapped.
+//!    Return x with elementwise groups of N bytes swapped.
 //!
-//!    - If N is greater to sizeof(x)*8 0 is returned.
-//!    - If N is equal   to sizeof(x)*8 x is returned.
+//!    - If N is greater or equal to cardinal_v(x) 0 is returned.
+//!    - If N is equal            to 0             x is returned.
+//!
+//!   @note take care that eve::swap_adjacent is NOT the functional equivalent to std::swap.
+//!   eve::reverse IS. As the name does not say, std::swap reverse the order
+//!   of the bytes which is not a contiguous swapping expect for 16 bits words.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_swap.cpp}
+//!  @godbolt{doc/core/regular/swap_adjacent.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve::bit_swap[mask](x, ...)` provides a masked
-//!     version of `bit_swap` which is
-//!     equivalent to `if_else(mask, bit_swap(x, ...), x)`
+//!     The call `eve::swap_adjacent[mask](x, ...)` provides a masked
+//!     version of `swap_adjacent` which is
+//!     equivalent to `if_else(mask, swap_adjacent(x, ...), x)`
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/masked/bit_swap.cpp}
+//!        @godbolt{doc/core/masked/swap_adjacent.cpp}
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_swap_, bit_swap);
+EVE_MAKE_CALLABLE(swap_adjacent_, swap_adjacent);
 }
 
-#include <eve/module/core/regular/impl/bit_swap.hpp>
+#include <eve/module/core/regular/impl/swap_adjacent.hpp>
