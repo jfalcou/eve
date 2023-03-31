@@ -12,6 +12,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {
