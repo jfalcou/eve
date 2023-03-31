@@ -82,7 +82,7 @@ namespace eve::detail
       else
       {
         constexpr auto o = e_t(1);
-        constexpr e_t mask0 = (e_t((o << N)-o) << S-N);
+        constexpr e_t mask0 = (e_t(e_t(o << N)-o) << (S-N));
         auto mask =  bit_or(mask0, bit_reverse(mask0));
         return bit_or( bit_and(y, mask), bit_andnot(x, mask));
       }
