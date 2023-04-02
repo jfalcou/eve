@@ -16,20 +16,20 @@
 
 namespace eve::detail
 {
-  template<auto N, unsigned_value T>
+  template<unsigned_value T,  integral_value N>
   EVE_FORCEINLINE auto
-  byte_swap_adjacent_(EVE_SUPPORTS(cpu_), T x, std::integral_constant<size_t, N>) noexcept
+  byte_swap_adjacent_(EVE_SUPPORTS(cpu_), T x, N n) noexcept
   {
     using v_t = element_type_t<T>;
     if constexpr(sizeof(v_t) == 0) return x;
-    else return bit_swap_adjacent(x, std::integral_constant<size_t, N*8>());
+    else return bit_swap_adjacent(x, n*8);
   }
 
   // Masked case
-  template<conditional_expr C, unsigned_value U, auto N>
+  template<conditional_expr C, unsigned_value U,  integral_value N>
   EVE_FORCEINLINE auto
-  byte_swap_adjacent_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, std::integral_constant<size_t, N> const &) noexcept
+  byte_swap_adjacent_(EVE_SUPPORTS(cpu_), C const& cond, U const& t, N const & n) noexcept
   {
-    return mask_op(cond, eve::bit_swap_adjacent, t, std::integral_constant<size_t, N*8>());
+    return mask_op(cond, eve::bit_swap_adjacent, t, n*8);
   }
 }

@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_swap_adjacent
-//!   @brief swap_adjacents elementwise groups of N bits.
+//!   @brief swap_adjacents elementwise groups of n bits.
 //!
 //!   **Defined in Header**
 //!
@@ -28,15 +28,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< size_t N, eve::integral_value T >
-//!      T bit_swap_adjacent(T x, std::integral_constant<size_t, N> n) noexcept;
+//!      template<unsigned_value T, integral_scalar_value N >
+//!      T bit_swap_adjacent(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::integral_value).
-//!     * `n` :  size of the groups of bits to be swap_adjacentped. n MUST be a power of 2
+//!     * `n` :  size of the groups of bits to be swapped. n MUST be a power of 2
 //!              else the call will assert.
 //!
 //!    **Return value**

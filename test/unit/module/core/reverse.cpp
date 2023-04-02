@@ -20,9 +20,7 @@ TTS_CASE_TPL("Check return types of eve::reverse", eve::test::simd::all_types)
   using v_t = eve::element_type_t<T>;
 
   TTS_EXPR_IS(eve::reverse(T()), T);
-  TTS_EXPR_IS(eve::reverse(T(), std::integral_constant<size_t, 1>()), T);
   TTS_EXPR_IS(eve::reverse(v_t()), v_t);
-  TTS_EXPR_IS(eve::reverse(v_t(), std::integral_constant<size_t, 1>()), v_t);
 
 };
 
@@ -32,13 +30,6 @@ void reverse_test(T x)
   auto frx =  [&](size_t i, size_t size) { return x.get(size - i - 1); };
   T expected(frx);
   TTS_EQUAL(eve::reverse(x), expected);
-
-  constexpr size_t S = eve::cardinal_v<T>;
-  constexpr size_t N = S/4;
-  auto frNx =  [&](size_t i, size_t S) { return x.get( ((i < N)  ? S-i-1 : ( (i > S-N-1) ? S-i-1 : i))); };
-
-  T expectedN(frNx);
-  TTS_EQUAL(eve::reverse(x, std::integral_constant<size_t, N>()), expectedN);
 }
 
 TTS_CASE_WITH( "Check behavior of reverse"

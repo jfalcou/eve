@@ -28,12 +28,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<eve::unsigned_value T, unsigned_value I0, unsigned_value I1 >
+//!      template<eve::unsigned_value T, integral_value I0, integral_value I1 >
 //!      T bit_swap_pairs(T x, I0 i0, I1 i1);
-//!
-//!      template<eve::unsigned_value T, auto I0, auto I1 >
-//!      T bit_swap_pairs(T x, std::integral_constant<size_t, I0> i0>
-//!                          , std::integral_constant<size_t, I1> i1);
 //!   @endcode
 //!
 //!   **Parameters**

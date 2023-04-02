@@ -29,17 +29,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T bit_reverse(T x) noexcept;                                         //1
+//!      T bit_reverse(T x) noexcept;       //1
 //!      template< eve::value T auto N>
-//!      T bit_reverse(T x
-//!                    , std::integral_constant<size_tN> const & n) noexcept; //2
+//!      T bit_reverse(T x , N n) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
-//!     * `n` :  n delimit the band to be reversed at both ends of x
+//!     * `n` :  n delimit the band to be reversed at both ends of x.
 //!
 //!    **Return value**
 //!

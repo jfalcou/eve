@@ -14,8 +14,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var swap_pairs
-//!   @brief swap chosen pair of elements.
+//!   @var bit_flip
+//!   @brief flip the value the ith bit of each element.
 //!
 //!   **Defined in Header**
 //!
@@ -28,29 +28,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<value T, auto I0, auto I1 >
-//!      T swap_pairs(T x
-//!                      , std::integral_constant<size_t, I0> const & i0>
-//!                      , std::integral_constant<size_t, I1> const & i1);
+//!      template< eve::value T, integral_value I>
+//!      T bit_flip(T x, I i) noexcept;
+//!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
-//!     * `i0` : first index
-//!     * `i1` : second index
+//!     * `i` :  index to flip.
 //!
 //!    **Return value**
 //!
-//!    Return x with element i0 and i1 swapped. Action on scalar is identity.
-//!    Assert if i0 or i1 are out of range.
+//!    The value of the parameter is returned with the ith bit flip.
+//!    if the index is out of range the call will assert.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/swap_pairs.cpp}
+//!  @godbolt{doc/core/regular/bit_flip.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::bit_flip[mask](x, ...)` provides a masked
+//!     version of `bit_flip` which is
+//!     equivalent to `if_else(mask, bit_flip(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/bit_flip.cpp}
+//!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(swap_pairs_, swap_pairs);
+EVE_MAKE_CALLABLE(bit_flip_, bit_flip);
 }
 
-#include <eve/module/core/regular/impl/swap_pairs.hpp>
+#include <eve/module/core/regular/impl/bit_flip.hpp>

@@ -20,6 +20,7 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_ceil.hpp>
+#include <eve/module/core/regular/bit_flip.hpp>
 #include <eve/module/core/regular/bit_floor.hpp>
 #include <eve/module/core/regular/bit_mask.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
@@ -32,15 +33,14 @@
 #include <eve/module/core/regular/bit_set.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
-#include <eve/module/core/regular/bit_swap_adjacent.hpp>
 #include <eve/module/core/regular/bit_swap_pairs.hpp>
+#include <eve/module/core/regular/bit_swap_adjacent.hpp>
 #include <eve/module/core/regular/bit_unset.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
 #include <eve/module/core/regular/byte_reverse.hpp>
 #include <eve/module/core/regular/byte_swap_adjacent.hpp>
-#include <eve/module/core/regular/byte_swap_pairs.hpp>
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/broadcast_group.hpp>
 #include <eve/module/core/regular/ceil.hpp>
@@ -204,10 +204,8 @@
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/sum_of_prod.hpp>
-#include <eve/module/core/regular/swap_adjacent.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
-#include <eve/module/core/regular/swap_pairs.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>

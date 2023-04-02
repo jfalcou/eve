@@ -28,15 +28,16 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< size_t N, eve::integral_value T >
-//!      T byte_swap_adjacent(T x, std::integral_constant<size_t, N> n) noexcept;
+//!      template< size_t N, eve::unsigned_value T,  integral_scalar_value N>
+//!      T byte_swap_adjacent(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::integral_value).
-//!     * `n` :  size of the groups of bytes to be swap_adjacentped. Must be a power of 2.
+//!     * `n` :  size of the groups of bytes to be swapped. Must be a power of 2 and
+//!              less than the half size of the elements of x
 //!
 //!    **Return value**
 //!
@@ -45,9 +46,9 @@ namespace eve
 //!    - If N is greater to sizeof(x) 0 is returned.
 //!    - If N is equal   to sizeof(x) x is returned.
 //!
-//!   @note take care that eve::byte_swap_adjacent is NOT the functional equivalent to std::byte_swap_adjacent.
-//!   eve::byte_reverse IS. As the name does not say, std::byte_swap_adjacent reverse the order
-//!   of the bytes which is not a contiguous swap_adjacentping expect for 16 bits words.
+//!   @note Take care that eve::byte_swap_adjacent is NOT the EVE functional equivalent to std::byteswap.
+//!   eve::byte_reverse IS. As the name does not say, std::byteswap reverse the order
+//!   of the bytes which is not an adjacent swapping except for 16 bits words.
 //!
 //!  @groupheader{Example}
 //!

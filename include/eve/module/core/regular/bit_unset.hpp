@@ -28,11 +28,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, unsigned_value I>
-//!      T bit_unset(T x, I i) noexcept; //1
-//!
-//!      template< eve::value T,  auto i>
-//!      T bit_unset(T x, std:integral_constant<size_t, I> i) noexcept; //2
+//!      template< eve::value T, integral_value I>
+//!      T bit_unset(T x, I i) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -44,8 +41,7 @@ namespace eve
 //!    **Return value**
 //!
 //!    The value of the parameter is returned with the ith bit set to 0
-//!        -  In the first case index out of range asserts.
-//!        -  In the second case index out of range returns x unchanged.
+//!    if the index is out of range the call will assert.
 //!
 //!  @groupheader{Example}
 //!
