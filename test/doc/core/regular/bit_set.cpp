@@ -16,8 +16,7 @@ int main()
             << "-> bit_set(pi, 2) = " << eve::bit_set(pi, 2) << '\n'
             << "-> bit_set(pi, 3) = " << eve::bit_set(pi, 3) << '\n'
             << "-> bit_set(pi, 4) = " << eve::bit_set(pi, 4) << '\n'
-            << "-> bit_set(pi, 8) = " << eve::bit_set(pi, 8) << '\n'
-            << "-> bit_set(pi, 17)= " << eve::bit_set(pi, 17) << '\n';
+            << "-> bit_set(pi, 8) = " << eve::bit_set(pi, 8) << '\n';
 
 
   std::uint8_t xf = 48;

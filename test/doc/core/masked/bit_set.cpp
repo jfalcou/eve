@@ -16,8 +16,7 @@ int main()
             << "-> bit_set[pi > 15](pi, 2) = " << eve::bit_set[pi > 15](pi, 2) << '\n'
             << "-> bit_set[pi > 15](pi, 3) = " << eve::bit_set[pi > 15](pi, 3) << '\n'
             << "-> bit_set[pi > 15](pi, 4) = " << eve::bit_set[pi > 15](pi, 4) << '\n'
-            << "-> bit_set[pi > 15](pi, 8) = " << eve::bit_set[pi > 15](pi, 8) << '\n'
-            << "-> bit_set[pi > 15](pi, 17)= " << eve::bit_set[pi > 15](pi, 17) << '\n';
+            << "-> bit_set[pi > 15](pi, 8) = " << eve::bit_set[pi > 15](pi, 8) << '\n';
 
   return 0;
 }
