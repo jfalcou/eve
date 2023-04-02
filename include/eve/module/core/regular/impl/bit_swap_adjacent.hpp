@@ -42,6 +42,7 @@ namespace eve::detail
     auto swp = [](auto x, auto m, int n)->T{
       return bit_or(bit_shl(bit_and(x, T(m)), n), bit_shr(bit_andnot(x, T(m)), n));
     };
+
     if (n > N(S*4)) return zero(as(x));
     else if (n == 0) return x;
     else if (n == 1) //Return x with neighbor bits swapped.
@@ -55,11 +56,13 @@ namespace eve::detail
       if      constexpr(S == 2) return (x << n) | (x >> n);
       else if constexpr(S == 4) return swp(x, 0x00ff00ffU, n);
       else if constexpr(S == 8) return swp(x, 0x00ff00ff00ff00ffUL, n);
+      else return  zero(as(x));
     }
     else if (n == 16) //Return x with group of 16 bits swapped.
     {
       if      constexpr(S == 4) return (x << n) | (x >> n);
       else if constexpr(S == 8) return swp(x, 0x0000ffff0000ffffUL, n);
+      else return  zero(as(x));
     }
     else if (n == 32) //Return x with group of 32 bits swapped. (S = 8)
       return (x << n) | (x >> n);

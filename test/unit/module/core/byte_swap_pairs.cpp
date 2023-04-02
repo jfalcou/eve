@@ -17,13 +17,14 @@ TTS_CASE_WITH("Check behavior of byte_swap_pairs(simd) on integral types",
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename U>(T const& a0, U const& t)
 {
-  using v_t = eve::element_type_t<T>;
-  constexpr size_t S = sizeof(v_t);
-  constexpr auto _0 = eve::index<0>();
-  constexpr auto _S = eve::index<S-1>();
-  constexpr auto _H = eve::index<S/2>();
+ using v_t = eve::element_type_t<T>;
+ constexpr auto  S = sizeof(v_t);
+  constexpr auto _0 = eve::index_t<0>();
+ constexpr auto _S = eve::index_t<S-1>();
+ constexpr auto _H = eve::index_t<S/2>();
   using eve::byte_swap_pairs;
   using eve::detail::map;
+  std::cout << tts::typename_<decltype(_0)> << std::endl;
   TTS_EQUAL(byte_swap_pairs(a0, _0, _S), map([_0, _S](auto e) -> v_t { return eve::byte_swap_pairs(e, _0, _S); }, a0));
   TTS_EQUAL(eve::byte_swap_pairs[t](a0, _0, _S), eve::if_else(t, eve::byte_swap_pairs(a0, _0, _S), a0));
   TTS_EQUAL(byte_swap_pairs(a0, _0, _H), map([_0, _H](auto e) -> v_t { return eve::byte_swap_pairs(e, _0, _H); }, a0));

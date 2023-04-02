@@ -18,13 +18,13 @@
 
 namespace eve::detail
 {
-  template<unsigned_value T, std::integral auto I0, std::integral auto I1>
+  template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
   EVE_FORCEINLINE T
-  byte_swap_pairs_(EVE_SUPPORTS(cpu_), T x , index_t<I0> i0, index_t<I1> i1) noexcept;
+  byte_swap_pairs_(EVE_SUPPORTS(cpu_), T x , index_t<I0> const & i0, index_t<I1> const & i1) noexcept;
 
-  template<unsigned_value T, std::integral auto I0, std::integral auto I1>
+  template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
   EVE_FORCEINLINE T
-  byte_swap_pairs_(EVE_SUPPORTS(cpu_), T x , index_t<I0> i0, index_t<I1> i1) noexcept
+  byte_swap_pairs_(EVE_SUPPORTS(cpu_), T x , index_t<I0> const & i0, index_t<I1> const & i1) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -33,7 +33,7 @@ namespace eve::detail
       constexpr size_t C = cardinal_v<T>;
       EVE_ASSERT(eve::all(I0 < S && I1 < S), "some index(es) are out or range");
       using u8_t = wide<uint8_t, fixed<S*C>>;
-      auto p = [&](auto i,  auto){
+      auto p = [](auto i,  auto){
         auto ii = i%S;
         auto jj = (i/S)*S;
         return (ii == I0) ? I1+jj :(ii == I1 ? I0+jj : i) ;
@@ -47,12 +47,12 @@ namespace eve::detail
     {
       using w_t = wide<T>;
       auto wx = w_t(x);
-      return byte_swap_pairs(wx, I0, I1).get(0);
+      return byte_swap_pairs(wx, i0, i1).get(0);
     }
   }
 
   // Masked case
-  template<conditional_expr C, unsigned_value T, auto I0, auto I1>
+  template<conditional_expr C, unsigned_value T, std::integral auto I0, std::integral auto I1>
   EVE_FORCEINLINE auto
   byte_swap_pairs_(EVE_SUPPORTS(cpu_), C const& cond, T const& t
                   , index_t<I0> const & i0
