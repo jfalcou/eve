@@ -13,6 +13,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve::detail
 {
