@@ -42,7 +42,7 @@ namespace eve::detail
     auto swp = [](auto x, auto m, int n)->T{
       return bit_or(bit_shl(bit_and(x, T(m)), n), bit_shr(bit_andnot(x, T(m)), n));
     };
-    if (n > S*4) return zero(as(x));
+    if (n > N(S*4)) return zero(as(x));
     else if (n == 0) return x;
     else if (n == 1) //Return x with neighbor bits swapped.
       return swp(x, mk_ct(0x55), n);
@@ -63,6 +63,8 @@ namespace eve::detail
     }
     else if (n == 32) //Return x with group of 32 bits swapped. (S = 8)
       return (x << n) | (x >> n);
+    else return zero(as(x));
+
   }
 
   // Masked case
