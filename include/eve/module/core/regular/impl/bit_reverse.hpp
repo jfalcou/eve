@@ -71,12 +71,12 @@ namespace eve::detail
   bit_reverse_(EVE_SUPPORTS(cpu_), T x, N n) noexcept
   {
     using e_t =  element_type_t<T>;
-    constexpr size_t S = sizeof(e_t)*8;
+    constexpr auto S = sizeof(e_t)*8;
     if (n == 0)         return x;
     else
     {
       auto y =  bit_reverse(x);
-      if (2*n >= S)     return y;
+      if (n >= N(S/2))     return y;
       else if (n == 1u) return bit_swap_pairs(x, 0u, S-1u);
       else
       {
