@@ -30,6 +30,7 @@ namespace eve
 //!   {
 //!      template<eve::unsigned_value T, integral_value I0, integral_value I1 >
 //!      T bit_swap_pairs(T x, I0 i0, I1 i1);
+//!   }
 //!   @endcode
 //!
 //!   **Parameters**

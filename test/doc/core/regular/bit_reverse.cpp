@@ -12,7 +12,6 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pi                         = " << pi << '\n'
             << "-> bit_reverse(pi)            = " << eve::bit_reverse(pi) << '\n'
-            << "-> sbit_reverse(pi)           = " << eve::detail::map(eve::bit_reverse, pi)<< '\n'
             << "-> bit_reverse(pi, 4)         = " << eve::bit_reverse(pi, 4)<< '\n'
             << "-> bit_reverse[pi>2](pi)      = " << eve::bit_reverse[pi > 2](pi)<< '\n'
             << "-> bit_reverse[pi > 2](pi, 4) = " << eve::bit_reverse[pi > 2](pi, 4)<< '\n'
