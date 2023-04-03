@@ -28,7 +28,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, integral_value I>
+//!      template< unsigned_value T, integral_value I>
 //!      T bit_set(T x, I i) noexcept;
 //!   }
 //!   @endcode

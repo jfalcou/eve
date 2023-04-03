@@ -28,8 +28,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<unsigned_value T, integral_value I0, integral_value I1 >
-//!      T byte_swap_pairs(T x, I0 i0, I1 i1);
+//!      template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
+//!      T byte_swap_pairs(T x, , index_t<I0> const & i0, index_t<I1> const & i1) noexcept;
 //!   @endcode
 //!
 //!   **Parameters**

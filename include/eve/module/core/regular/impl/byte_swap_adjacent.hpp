@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<unsigned_value T,  integral_value N>
+  template<unsigned_value T,  integral_scalar_value N>
   EVE_FORCEINLINE auto
   byte_swap_adjacent_(EVE_SUPPORTS(cpu_), T x, N n) noexcept
   {

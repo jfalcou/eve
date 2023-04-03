@@ -28,7 +28,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, integral_value I>
+//!      template< eunsigned_value T, integral_value I>
 //!      T bit_flip(T x, I i) noexcept;
 //!   }
 //!   @endcode
@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The value of the parameter is returned with the ith bit flip.
+//!    The value of the parameter is returned with the ith bit flipped.
 //!    if the index is out of range the call will assert.
 //!
 //!  @groupheader{Example}

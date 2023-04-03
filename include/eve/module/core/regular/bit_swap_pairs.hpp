@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_swap_pairs
-//!   @brief swap_pairs elementwise groups of N bits.
+//!   @brief swap_pairs elementwise.
 //!
 //!   **Defined in Header**
 //!
@@ -40,7 +40,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    Return x with elementwise bit i0 and i1 swapped.
+//!    Return x bit i0 and i1 swapped in each element of x.
 //!    Assert if i0 or i1 are out of range.
 //!
 //!  @groupheader{Example}

@@ -28,7 +28,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< size_t N, eve::unsigned_value T,  integral_scalar_value N>
+//!      template< eve::unsigned_value T, integral_scalar_value N>
 //!      T byte_swap_adjacent(T x, N n) noexcept;
 //!   }
 //!   @endcode
