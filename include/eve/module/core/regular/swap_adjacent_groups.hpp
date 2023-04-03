@@ -13,6 +13,55 @@
 
 namespace eve
 {
+//================================================================================================
+//! @addtogroup core_bitops
+//! @{
+//!   @var swap_adjacent_groups
+//!   @brief swap adjacent groups of elements of chosen number.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template<simd_value T, std::ptrdiff_t N>
+//!      T swap_adjacent groups(T x, fixed<N> const &) noexcept;
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` : [argument](@ref eve::integral_value).
+//!     * `N` : number of elements in group
+//!
+//!    **Return value**
+//!
+//!    Return x where groups with contiguous groups of N elements swapped
+//!    for N =  0 or cardinal_v<T> acts as noop.
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/core/regular/swap_adjacent groups.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::swap_adjacent groups[mask](x, ...)` provides a masked
+//!     version of `swap_adjacent groups` which is
+//!     equivalent to `if_else(mask, swap_adjacent groups(x, ...), x)`
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/core/masked/swap_adjacent groups.cpp}
+//!
+//! @}
+//================================================================================================
 EVE_MAKE_CALLABLE(swap_adjacent_groups_, swap_adjacent_groups);
 
 template<std::ptrdiff_t G, std::ptrdiff_t N>
