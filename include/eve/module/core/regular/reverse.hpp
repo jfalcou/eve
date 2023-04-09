@@ -42,8 +42,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The values of the parameter are shuffled and returned in reverse order.
-//!    On scalar values reverse is the identity.   
+//!    The values of the parameter are shuffled in reverse order.
+//!    On scalar values reverse is the identity.
 //!
 //!  @groupheader{Example}
 //!
