@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::bit_swap</title>
+<title>E.V.E: eve::swap_pairs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga2987985a4c4c2525
 </div>
 
 <div class="contents">
-<a id="ga2987985a4c4c2525d2e76c54a78e6140" name="ga2987985a4c4c2525d2e76c54a78e6140"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2987985a4c4c2525d2e76c54a78e6140">&#9670;&#160;</a></span>bit_swap</h2>
+<a id="ga80d559963dc763b6d8b2350e4c4b0576" name="ga80d559963dc763b6d8b2350e4c4b0576"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga80d559963dc763b6d8b2350e4c4b0576">&#9670;&#160;</a></span>swap_pairs</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga2987985a4c4c2525
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::bit_swap = {}</td>
+          <td class="memname">eve::swap_pairs = {}</td>
         </tr>
       </table>
   </td>
@@ -145,60 +145,46 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga2987985a4c4c2525
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; <span class="keywordtype">size_t</span> N, eve::<span class="keywordtype">int</span>egral_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">bit_swap</a>(T x, std::integral_constant&lt;size_t, N&gt; n) <span class="keyword">noexcept</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140_html_ga2987985a4c4c2525d2e76c54a78e6140"><div class="ttname"><a href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">eve::bit_swap</a></div><div class="ttdeci">constexpr callable_bit_swap_ bit_swap</div><div class="ttdoc">swaps elementwise groups of N bits.</div><div class="ttdef"><b>Definition:</b> bit_swap.hpp:66</div></div>
+<div class="line">   <span class="keyword">template</span>&lt;value T, std::ptrdiff_t I0, std::ptrdiff_t I1 &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576">swap_pairs</a>(T x, index_t&lt;I0&gt; <span class="keyword">const</span> &amp; i0, index_t&lt;I1&gt; <span class="keyword">const</span> &amp; i1);</div>
+<div class="ttc" id="agroup__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576_html_ga80d559963dc763b6d8b2350e4c4b0576"><div class="ttname"><a href="group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576">eve::swap_pairs</a></div><div class="ttdeci">constexpr callable_swap_pairs_ swap_pairs</div><div class="ttdoc">swap chosen pair of elements.</div><div class="ttdef"><b>Definition:</b> swap_pairs.hpp:51</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1integral__value.html">argument</a>.</li>
-<li><code>n</code> : size of the groups of bits to be swapped. Must be a power of 2.</li>
+<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>i0</code> : first index</li>
+<li><code>i1</code> : second index</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Return x with elementwise groups of N bits swapped.</p>
-<ul>
-<li>If N is greater to sizeof(x)*8 0 is returned.</li>
-<li>If N is equal to sizeof(x)*8 x is returned.</li>
-</ul>
+<p>Return x with element i0 and i1 swapped. Action on scalar is identity. Assert if i0 or i1 are out of range.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;bit&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {1, 3, 7, 15, 31, 63, 127, 255};</div>
-<div class="line"> </div>
+<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {1, 3, 7, 15};</div>
+<div class="line">  <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>);</div>
+<div class="line">  <span class="keyword">auto</span> _0 =eve::index_t&lt;0&gt;();</div>
+<div class="line">  <span class="keyword">auto</span> _1 =eve::index_t&lt;1&gt;();</div>
+<div class="line">  <span class="keyword">auto</span> _2 =eve::index_t&lt;2&gt;();</div>
+<div class="line">  <span class="keyword">auto</span> _3 =eve::index_t&lt;3&gt;();</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap(pi, std::integral_constant&lt;size_t, 1&gt;{}) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">eve::bit_swap</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, std::integral_constant&lt;size_t, 1&gt;{} ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap(pi, std::integral_constant&lt;size_t, 2&gt;{}) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">eve::bit_swap</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, std::integral_constant&lt;size_t, 2&gt;{} ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap(pi, std::integral_constant&lt;size_t, 4&gt;{}) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">eve::bit_swap</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, std::integral_constant&lt;size_t, 4&gt;{} ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap(pi, std::integral_constant&lt;size_t, 8&gt;{}) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">eve::bit_swap</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, std::integral_constant&lt;size_t, 8&gt;{} ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_pairs(pi, _0, _3) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576">eve::swap_pairs</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _0, _3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_pairs(pi, _1, _2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576">eve::swap_pairs</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _1, _2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_pairs(pi, _0, _1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576">eve::swap_pairs</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _0, _1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  std::uint8_t xf = 48;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf              = &quot;</span> &lt;&lt; +xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap(xf, std::integral_constant&lt;size_t, 2&gt;{}) = &quot;</span> &lt;&lt; +<a class="code hl_variable" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140">eve::bit_swap</a>(xf, std::integral_constant&lt;size_t, 2&gt;{}) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr callable_inc_ inc</div><div class="ttdoc">return the input incremented by one.</div><div class="ttdef"><b>Definition:</b> inc.hpp:71</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__bitops_ga2987985a4c4c2525d2e76c54a78e6140.html#ga2987985a4c4c2525d2e76c54a78e6140" title="swaps elementwise groups of N bits.">eve::bit_swap</a>[mask](x, ...)</code> provides a masked version of <code>bit_swap</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, bit_swap(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"></div><!-- fragment --> </li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

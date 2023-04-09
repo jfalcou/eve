@@ -87,5 +87,6 @@ var searchData=
   ['supports_5fordering_84',['supports_ordering',['../structeve_1_1supports__ordering.html',1,'eve']]],
   ['swap_85',['swap',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae56f9b89b700d9668b761c6d5a3167b4',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::swap()'],['../structeve_1_1aligned__ptr.html#ab30d7f5154fcc11c9538fb558cbbe7e6',1,'eve::aligned_ptr::swap()'],['../structeve_1_1wide.html#ad1d370008485018ecd5bd61aa2fdd7b7',1,'eve::wide::swap()'],['../structeve_1_1wide.html#a55d8e55d3b731a5c3c9e87a6f464faea',1,'eve::wide::swap(wide &amp;other)'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7cec0220f0393e97f10e78ea89c112a0',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::swap()']]],
   ['swap_5fif_86',['swap_if',['../group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c',1,'eve']]],
-  ['swap_5franges_87',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
+  ['swap_5fpairs_87',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]],
+  ['swap_5franges_88',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
 ];
