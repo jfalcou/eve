@@ -14,8 +14,9 @@ namespace eve
 //================================================================================================
 //! @addtogroup fft
 //! @{
-//!   @var naive_fft
-//!   @brief Implement the raw fft
+//!   @var idx_swap
+//!   @brief given a relaxed_range an two indexes swap the corresponding range elements of the range
+//!
 //!   **Defined in header**
 //!
 //!   @code
@@ -27,30 +28,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::Range R, floating_ordered_value T>
-//!     R fft(R const &a) noexcept;
+//!     template< relaxed_range R, integral_value I>
+//!     void idx_swap(R & f, I const& idx1, I const & idx2) noexcept;
+//!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `a` :  [range of  arguments](@ref eve::value).
-//!
-//!     *  sign : \f$\pm1\f$
-//!
-//!     * `fac` : floating factor by which all elements of the range ouput are multiplied.
+//!     * `x`             : [contiguous range of  arguments](@ref eve::value).
+//!     * ``idx1`, `idx2` : indexes of the values to be swapped
 //!
 //!   **Return value**
 //!
-//!   The  Fourier coefficients.
+//!     f is submitted to a permutation that swaps f[idx1] and f[idx2].
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/fft/regular/naive_fft.cpp}
+//!   @godbolt{doc/fft/utils/idx_swap.cpp}
 //!
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(fft_000_, fft_000);
+  EVE_MAKE_CALLABLE(idx_swap_, idx_swap);
+
 }
 
-#include <eve/module/fft/regular/impl/fft_000.hpp>
+#include <eve/module/fft/utils/impl/idx_swap.hpp>

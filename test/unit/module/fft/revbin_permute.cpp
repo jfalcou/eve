@@ -8,7 +8,7 @@
 
 #include "test.hpp"
 #include "../complex/measures.hpp"
-#include <eve/module/fft/regular/revbin_permute.hpp>
+#include <eve/module/fft.hpp>
 
 
 TTS_CASE_TPL("Check revbin_permute", eve::test::simd::unsigned_integers)
@@ -22,21 +22,19 @@ TTS_CASE_TPL("Check revbin_permute", eve::test::simd::unsigned_integers)
       std::cout << ")\n";
     };
 
-    size_t n = 128;
-    std::vector<int> vi(n);
-    for(size_t i=0; i < n ; ++i) vi[i] = i;
-    pr("vi ", vi);
-    std::cout << " =============================== " << std::endl;
 
-    vi = /*eve::raw*/(eve::revbin_permute)(vi);
-    pr("vi  ", vi);
-    vi = /*eve::raw*/(eve::revbin_permute)(vi);
-    pr("rvi ", vi);
-    std::cout << " =============================== " << std::endl;
-//     vi= eve::raw(eve::revbin_permute)(vi);
-//     pr("vi  ", vi);
-//     vi= eve::raw(eve::revbin_permute)(vi);
-//     pr("rvi ", vi);
-    TTS_EQUAL(0, 0);
-  };
-  };
+    for(int n=2; n < 32; n <<= 1)
+    {
+      std::vector<int32_t> vi(n), orig(n);
+      for(int i=0; i < n ; ++i) vi[i] = i;
+//      pr("vi ", vi);
+      std::cout << " =============================== " << n<< std::endl;
+      vi = eve::revbin_permute(vi);
+      pr("vi  ", vi);
+      vi = eve::revbin_permute(vi);
+//      pr("rvi ", vi);
+      std::cout << " ------------------------------- " << std::endl;
+      for(int i = 0; i < n; i++) TTS_EQUAL(vi[i], i);
+    }
+  }
+};

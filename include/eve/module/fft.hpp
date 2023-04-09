@@ -19,9 +19,9 @@
 //! @}
 //==================================================================================================
 
-#include <eve/module/fft/regular/revbin_permute.hpp>
-#include <eve/module/fft/regular/naive_fft.hpp>
-#include <eve/module/fft/regular/fft_depth_first_dif2.hpp>
-#include <eve/module/fft/regular/fft_depth_first_dit2.hpp>
-#include <eve/module/fft/regular/fft_usual_dit2.hpp>
-#include <eve/module/fft/regular/fft_000.hpp>
+#include <eve/module/fft/utils.hpp>
+// #include <eve/module/fft/regular/naive_fft.hpp>
+// #include <eve/module/fft/regular/fft_depth_first_dif2.hpp>
+// #include <eve/module/fft/regular/fft_depth_first_dit2.hpp>
+// #include <eve/module/fft/regular/fft_usual_dit2.hpp>
+// #include <eve/module/fft/regular/fft_000.hpp>

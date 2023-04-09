@@ -12,10 +12,10 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup fft
 //! @{
-//!   @var revbint
-//!   @brief Implement the revbin permutation of a wide
+//!   @var revbin_permute
+//!   @brief Implement the revbin_permute permutation of a range of 2^n elements
 //!
 //!   **Defined in header**
 //!
@@ -28,28 +28,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< value x>
-//!     auto revbin(T x) noexcept;
+//!     template< range r>
+//!     auto revbin_permutet(T r) noexcept;
 //!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [range of  arguments](@ref eve::value).
+//!     * `r` :  [range of  arguments](@ref eve::value).
 //!
 //!   **Return value**
 //!
-//!     x submitted to a permutation that swaps elements whose binary indices are mutual reversals.
+//!     r submitted to a permutation that swaps elements whose binary indices are mutual reversals.
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/fft/regular/naive_fft.cpp}
+//!   @godbolt{doc/fft/utils/revbin_permute.cpp}
 //!
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(revbin_, revbin);
+EVE_MAKE_CALLABLE(revbin_permute_, revbin_permute);
 
 }
 
-#include <eve/module/fft/regular/impl/revbin.hpp>
+#include <eve/module/fft/utils/impl/revbin_permute.hpp>
