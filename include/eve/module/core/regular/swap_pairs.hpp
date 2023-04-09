@@ -14,8 +14,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var byte_reverse
-//!   @brief elementwise reverses the byte order.
+//!   @var swap_pairs
+//!   @brief swap chosen pair of elements.
 //!
 //!   **Defined in Header**
 //!
@@ -28,42 +28,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T byte_reverse(T x) noexcept;
-//!   }
+//!      template<value T, std::ptrdiff_t I0, std::ptrdiff_t I1 >
+//!      T swap_pairs(T x, index_t<I0> const & i0, index_t<I1> const & i1);
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
+//!     * `i0` : first index
+//!     * `i1` : second index
 //!
 //!    **Return value**
 //!
-//!    The values of the parameter elements are returned with bytes in reversed order.
-//!
-//!   @note eve::byte_reverse is the functional equivalent to std::byte_swap.
-//!   However, we decided to name it byte_reverse in order to keep a proper naming
-//!   scheme aligned with the eve::bit_swap/eve::bit_reverse functions.
+//!    Return x with element i0 and i1 swapped. Action on scalar is identity.
+//!    Assert if i0 or i1 are out of range.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/byte_reverse.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::byte_reverse[mask](x, ...)` provides a masked
-//!     version of `byte_reverse` which is
-//!     equivalent to `if_else(mask, byte_reverse(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/byte_reverse.cpp}
-//!
+//!  @godbolt{doc/core/regular/swap_pairs.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(byte_reverse_, byte_reverse);
+EVE_MAKE_CALLABLE(swap_pairs_, swap_pairs);
 }
 
-#include <eve/module/core/regular/impl/byte_reverse.hpp>
+#include <eve/module/core/regular/impl/swap_pairs.hpp>

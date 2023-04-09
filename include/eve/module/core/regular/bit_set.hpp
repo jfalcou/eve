@@ -14,8 +14,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var byte_reverse
-//!   @brief elementwise reverses the byte order.
+//!   @var bit_set
+//!   @brief set to 1 the ith bit of each element.
 //!
 //!   **Defined in Header**
 //!
@@ -28,42 +28,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T byte_reverse(T x) noexcept;
+//!      template< unsigned_value T, integral_value I>
+//!      T bit_set(T x, I i) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
+//!     * `i` :  index to set
 //!
 //!    **Return value**
 //!
-//!    The values of the parameter elements are returned with bytes in reversed order.
-//!
-//!   @note eve::byte_reverse is the functional equivalent to std::byte_swap.
-//!   However, we decided to name it byte_reverse in order to keep a proper naming
-//!   scheme aligned with the eve::bit_swap/eve::bit_reverse functions.
+//!    The value of the parameter is returned with the ith bit set to 1
+//!    if the index is out of range the call will assert.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/byte_reverse.cpp}
+//!  @godbolt{doc/core/regular/bit_set.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve::byte_reverse[mask](x, ...)` provides a masked
-//!     version of `byte_reverse` which is
-//!     equivalent to `if_else(mask, byte_reverse(x, ...), x)`
+//!     The call `eve::bit_set[mask](x, ...)` provides a masked
+//!     version of `bit_set` which is
+//!     equivalent to `if_else(mask, bit_set(x, ...), x)`
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/masked/byte_reverse.cpp}
+//!        @godbolt{doc/core/masked/bit_set.cpp}
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(byte_reverse_, byte_reverse);
+EVE_MAKE_CALLABLE(bit_set_, bit_set);
 }
 
-#include <eve/module/core/regular/impl/byte_reverse.hpp>
+#include <eve/module/core/regular/impl/bit_set.hpp>

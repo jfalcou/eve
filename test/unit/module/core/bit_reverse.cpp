@@ -17,6 +17,8 @@ TTS_CASE_TPL("Check return types of bit_reverse", eve::test::simd::unsigned_inte
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS(eve::bit_reverse(T()), T);
   TTS_EXPR_IS(eve::bit_reverse(v_t()), v_t);
+  TTS_EXPR_IS(eve::bit_reverse(T(), int()), T);
+  TTS_EXPR_IS(eve::bit_reverse(v_t(), int()), v_t);
 };
 
 //==================================================================================================
@@ -30,6 +32,8 @@ TTS_CASE_WITH("Check behavior of bit_reverse(simd) on integral types",
   using v_t = eve::element_type_t<T>;
   using eve::bit_reverse;
   using eve::detail::map;
-  TTS_EQUAL(bit_reverse(a0), map([](auto e) -> v_t { return bit_reverse(e); }, a0)) << a0 << '\n';
+  TTS_EQUAL(bit_reverse(a0), map([](auto e) -> v_t { return bit_reverse(e); }, a0));
   TTS_EQUAL(eve::bit_reverse[t](a0), eve::if_else(t, eve::bit_reverse(a0), a0));
+  TTS_EQUAL(bit_reverse(a0, 2), map([](auto e) -> v_t { return bit_reverse(e, 2); }, a0));
+  TTS_EQUAL(eve::bit_reverse[t](a0, 2), eve::if_else(t, eve::bit_reverse(a0, 2), a0));
 };

@@ -14,8 +14,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var byte_reverse
-//!   @brief elementwise reverses the byte order.
+//!   @var bit_swap_adjacent
+//!   @brief swap_adjacents elementwise groups of n bits.
 //!
 //!   **Defined in Header**
 //!
@@ -28,42 +28,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T byte_reverse(T x) noexcept;
+//!      template<unsigned_value T, integral_scalar_value N >
+//!      T bit_swap_adjacent(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [argument](@ref eve::integral_value).
+//!     * `n` :  size of the groups of bits to be swapped. n MUST be a power of 2
+//!              else the call will assert.
 //!
 //!    **Return value**
 //!
-//!    The values of the parameter elements are returned with bytes in reversed order.
+//!    Return x with pairs of contiguous groups of N bits swapped in each element.
 //!
-//!   @note eve::byte_reverse is the functional equivalent to std::byte_swap.
-//!   However, we decided to name it byte_reverse in order to keep a proper naming
-//!   scheme aligned with the eve::bit_swap/eve::bit_reverse functions.
+//!    - If N is greater or equal to sizeof(x)*8 0 is returned.
+//!    - If N is equal            to 0           x is returned.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/byte_reverse.cpp}
+//!  @godbolt{doc/core/regular/bit_swap_adjacent.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve::byte_reverse[mask](x, ...)` provides a masked
-//!     version of `byte_reverse` which is
-//!     equivalent to `if_else(mask, byte_reverse(x, ...), x)`
+//!     The call `eve::bit_swap_adjacent[mask](x, ...)` provides a masked
+//!     version of `bit_swap_adjacent` which is
+//!     equivalent to `if_else(mask, bit_swap_adjacent(x, ...), x)`
 //!
 //!      **Example**
 //!
-//!        @godbolt{doc/core/masked/byte_reverse.cpp}
+//!        @godbolt{doc/core/masked/bit_swap_adjacent.cpp}
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(byte_reverse_, byte_reverse);
+EVE_MAKE_CALLABLE(bit_swap_adjacent_, bit_swap_adjacent);
 }
 
-#include <eve/module/core/regular/impl/byte_reverse.hpp>
+#include <eve/module/core/regular/impl/bit_swap_adjacent.hpp>
