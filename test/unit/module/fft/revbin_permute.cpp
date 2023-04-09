@@ -22,21 +22,21 @@ TTS_CASE_TPL("Check revbin_permute", eve::test::simd::unsigned_integers)
       std::cout << ")\n";
     };
 
-    size_t n = 16;
+    size_t n = 128;
     std::vector<int> vi(n);
     for(size_t i=0; i < n ; ++i) vi[i] = i;
     pr("vi ", vi);
     std::cout << " =============================== " << std::endl;
 
-    vi = eve::revbin_permute(vi);
+    vi = /*eve::raw*/(eve::revbin_permute)(vi);
     pr("vi  ", vi);
-    vi = eve::revbin_permute(vi);
+    vi = /*eve::raw*/(eve::revbin_permute)(vi);
     pr("rvi ", vi);
     std::cout << " =============================== " << std::endl;
-    vi= eve::raw(eve::revbin_permute)(vi);
-    pr("vi  ", vi);
-    vi= eve::raw(eve::revbin_permute)(vi);
-    pr("rvi ", vi);
+//     vi= eve::raw(eve::revbin_permute)(vi);
+//     pr("vi  ", vi);
+//     vi= eve::raw(eve::revbin_permute)(vi);
+//     pr("rvi ", vi);
     TTS_EQUAL(0, 0);
   };
   };

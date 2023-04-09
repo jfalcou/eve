@@ -28,28 +28,28 @@ namespace eve::detail
       return g;
     };
 
-    template < typename VT, typename VI>
-    auto perm2(VT const & f,  VI const & ind) noexcept
-    {
-      VT g(f.size());
-      auto view = eve::views::zip(ind, g);
-      auto doit = [&f](auto zz, auto){
-        auto [ ind_it, g_it] = zz;
-        auto [ ii, gg] = load(zz);
-        auto r = eve::gather(f.data(), ii);
-        eve::store(r, g_it);
-      };
-      eve::algo::for_each(view, doit);
+//     template < typename VT, typename VI>
+//     auto perm2(VT const & f,  VI const & ind) noexcept
+//     {
+//       VT g(f.size());
+//       auto view = eve::views::zip(ind, g);
+//       auto doit = [&f](auto zz, auto){
+//         auto [ ind_it, g_it] = zz;
+//         auto [ ii, gg] = load(zz);
+//         auto r = eve::gather(f.data(), ii);
+//         eve::store(r, g_it);
+//       };
+//       eve::algo::for_each(view, doit);
 
-      return g;
-    };
+//       return g;
+//     };
 
     template<value T>
     inline auto revbin_permute_leq_64(std::vector<T> const & f)
     // Must have f.size() \in {2, 4, 8, 16, 32, 64}
     {
       auto n = f.size();
-//      std::cout << "n " << n << std::endl;
+     std::cout << "n " << n << std::endl;
       EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
 
       std::vector<T> g(f.size());
@@ -86,65 +86,65 @@ namespace eve::detail
       }
     }
 
-    template<value T>
-    inline auto revbin_permute_gt_64(std::vector<T> & f)
-    {
-      [[maybe_unused]] auto revbin = []<typename UI>(UI x){ // Return x with reversed bit order.
-        using e_t = element_type_t<UI>;
-        auto s = bit_shr(sizeof(e_t)*8, 1);
-//        std::cout << "s "<< s << std::endl;
-        auto m = bit_shr(allbits(as<UI>()), s);
-        while ( s )
-        {
-          x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
-          s >>= 1;
-          m ^= (m<<s);
-        }
-        return  x;
-      };
+//     template<value T>
+//     inline auto revbin_permute_gt_64(std::vector<T> & f)
+//     {
+//       [[maybe_unused]] auto revbin = []<typename UI>(UI x){ // Return x with reversed bit order.
+//         using e_t = element_type_t<UI>;
+//         auto s = bit_shr(sizeof(e_t)*8, 1);
+// //        std::cout << "s "<< s << std::endl;
+//         auto m = bit_shr(allbits(as<UI>()), s);
+//         while ( s )
+//         {
+//           x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
+//           s >>= 1;
+//           m ^= (m<<s);
+//         }
+//         return  x;
+//       };
 
-      [[maybe_unused]] auto  rvb = [revbin](auto x, auto ldn){
-        // Return word with the ldn least significant bits
-        //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
-        //   the other bits are set to zero.
-        using e_t =  element_type_t<decltype(x)>;
-//        std::cout << "(sizeof(x)*8-ldn) "<< (sizeof(e_t)*8-ldn) << std::endl;
-        return  revbin(x) >> (sizeof(e_t)*8-ldn);
-      };
+//       [[maybe_unused]] auto  rvb = [revbin](auto x, auto ldn){
+//         // Return word with the ldn least significant bits
+//         //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
+//         //   the other bits are set to zero.
+//         using e_t =  element_type_t<decltype(x)>;
+// //        std::cout << "(sizeof(x)*8-ldn) "<< (sizeof(e_t)*8-ldn) << std::endl;
+//         return  revbin(x) >> (sizeof(e_t)*8-ldn);
+//       };
 
-      auto view = eve::views::iota(std::uint32_t{0}, f.size());
-//      std::cout <<  tts::typename_<decltype(view)> << std::endl;
-      auto doit = [&f, rvb](auto x, auto){
-        auto xx = load(x);
-//        std::cout << "xx " << xx << std::endl;
-        auto rr = rvb(xx, countr_zero(f.size()));
-//        std::cout << countr_zero(f.size()) << " ->rr = "<< rr  << std::endl;
-        auto swap_idx =  [&f](auto r,  auto x){
-          for(size_t i=0; i < cardinal_v<decltype(x)>; ++i)
-          {
-            auto ri = r.get(i);
-            auto xi = x.get(i);
-            if(ri >  xi){
-              auto z = f[ri];  f[ri] = f[xi]; f[xi] = z;
-            }
-          }
-        };
-
+//       auto view = eve::views::iota(std::uint32_t{0}, f.size());
+// //      std::cout <<  tts::typename_<decltype(view)> << std::endl;
+//       auto doit = [&f, rvb](auto x, auto){
+//         auto xx = load(x);
+// //        std::cout << "xx " << xx << std::endl;
+//         auto rr = rvb(xx, countr_zero(f.size()));
+// //        std::cout << countr_zero(f.size()) << " ->rr = "<< rr  << std::endl;
 //         auto swap_idx =  [&f](auto r,  auto x){
-//           auto fr =  gather(f.data(), r);
-//           auto fx =  gather(f.data(), x);
-//           scatter[r >  x](f.data(), r, fx);
-//           scatter[r >  x](f.data(), x, fr);
+//           for(size_t i=0; i < cardinal_v<decltype(x)>; ++i)
+//           {
+//             auto ri = r.get(i);
+//             auto xi = x.get(i);
+//             if(ri >  xi){
+//               auto z = f[ri];  f[ri] = f[xi]; f[xi] = z;
+//             }
+//           }
 //         };
-        swap_idx(rr, xx);
-       };
-      eve::algo::for_each(view, doit);
-      return f;
-    }
-  }
+
+// //         auto swap_idx =  [&f](auto r,  auto x){
+// //           auto fr =  gather(f.data(), r);
+// //           auto fx =  gather(f.data(), x);
+// //           scatter[r >  x](f.data(), r, fx);
+// //           scatter[r >  x](f.data(), x, fr);
+// //         };
+//         swap_idx(rr, xx);
+//        };
+//       eve::algo::for_each(view, doit);
+//       return f;
+//     }
+   }
 
   template<scalar_value T>
-  auto revbin_permute_(EVE_SUPPORTS(cpu_), raw_type const &
+  auto revbin_permute_(EVE_SUPPORTS(cpu_)/*, raw_type const &*/
                       , std::vector<T> & f) noexcept
   {
     auto n = f.size();
@@ -167,118 +167,120 @@ namespace eve::detail
       // Return word with the ldn least significant bits
       //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
       //   the other bits are set to zero.
-//      std::cout << "(sizeof(x)*8-ldn) "<< (sizeof(x)*8-ldn) << std::endl;
+//     std::cout << "(sizeof(x)*8-ldn) "<< (sizeof(x)*8-ldn) << std::endl;
       return  revbin(x) >> (sizeof(size_t)*8-ldn);
     };
 
     if ( n<=8 )
     {
+      std::cout << "le64" << std::endl;
       return internal::revbin_permute_leq_64(f);
     }
     else
     {
-      return internal::revbin_permute_gt_64(f);
-//       for (size_t x =0; x < n; ++x)
+      //    return internal::revbin_permute_gt_64(f);
+      for (size_t x =0; x < n; ++x)
+      {
+        auto r = rvb(x, countr_zero(n));
+
+        if (r>x) idx_swap(x, r);
+      }
+      std::cout << "gt64" << std::endl;
+      return f;
+    }
+  }
+
+//   template<scalar_value T>
+//   auto revbin_permute_(EVE_SUPPORTS(cpu_)
+//                       , std::vector<T> & f) noexcept
+//   {
+
+//     auto n = f.size();
+//     auto  idx_swap = [&f](auto k,  auto r){
+//       auto z = f[k];  f[k] = f[r]; f[r] = z;
+//     };
+//     auto revbin = [](size_t x){ // Return x with reversed bit order.
+//                                 // version using dynamically generated masks:
+//       size_t s = sizeof(size_t)*8 >> 1;
+//       size_t m = allbits(as<size_t>()) >> s;
+//       while ( s )
 //       {
-//         auto r = rvb(x, countr_zero(n));
-
-//         if (r>x) idx_swap(x, r);
+//         x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
+//         s >>= 1;
+//         m ^= (m<<s);
 //       }
-//       return f;
-    }
-  }
+//       return  x;
+//     };
 
-  template<scalar_value T>
-  auto revbin_permute_(EVE_SUPPORTS(cpu_)
-                      , std::vector<T> & f) noexcept
-  {
+//     auto  rvb = [revbin](size_t x, size_t ldn){
+//       // Return word with the ldn least significant bits
+//       //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
+//       //   the other bits are set to zero.
+//       return  revbin(x) >> (sizeof(size_t)*8-ldn);
+//     };
 
-    auto n = f.size();
-    auto  idx_swap = [&f](auto k,  auto r){
-      auto z = f[k];  f[k] = f[r]; f[r] = z;
-    };
-    auto revbin = [](size_t x){ // Return x with reversed bit order.
-                                // version using dynamically generated masks:
-      size_t s = sizeof(size_t)*8 >> 1;
-      size_t m = allbits(as<size_t>()) >> s;
-      while ( s )
-      {
-        x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
-        s >>= 1;
-        m ^= (m<<s);
-      }
-      return  x;
-    };
+//     if ( n<=64 )
+//     {
+//       return internal::revbin_permute_leq_64(f);
+//     }
+//     constexpr size_t  RBP_SYMM = 4; // amount of symmetry used
 
-    auto  rvb = [revbin](size_t x, size_t ldn){
-      // Return word with the ldn least significant bits
-      //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
-      //   the other bits are set to zero.
-      return  revbin(x) >> (sizeof(size_t)*8-ldn);
-    };
+//     const size_t nh = (n>>1);
+//     const size_t n1  = n - 1;     // = 11111111
+//     const size_t nx1 = nh - 2;    // = 01111110
+//     const size_t nx2 = n1 - nx1;  // = 10111101
 
-    if ( n<=64 )
-    {
-      return internal::revbin_permute_leq_64(f);
-    }
-    constexpr size_t  RBP_SYMM = 4; // amount of symmetry used
+//     size_t k = 0,  r = 0;
+//     while ( k < (n/RBP_SYMM)  )  // n>=16, n/2>=8, n/4>=4
+//     {
+//       // ----- k%4 == 0:
+//       if ( r>k )
+//       {
+//         idx_swap(k, r);          // <nh, <nh 11
+//         idx_swap(n1^k, n1^r);    // >nh, >nh 00
+//         idx_swap(nx1^k, nx1^r);  // <nh, <nh 11
+//         idx_swap(nx2^k, nx2^r);  // >nh, >nh 00
+//       }
 
-    const size_t nh = (n>>1);
-    const size_t n1  = n - 1;     // = 11111111
-    const size_t nx1 = nh - 2;    // = 01111110
-    const size_t nx2 = n1 - nx1;  // = 10111101
+//       ++k;
+//       r ^= nh;
 
-    size_t k = 0,  r = 0;
-    while ( k < (n/RBP_SYMM)  )  // n>=16, n/2>=8, n/4>=4
-    {
-      // ----- k%4 == 0:
-      if ( r>k )
-      {
-        idx_swap(k, r);          // <nh, <nh 11
-        idx_swap(n1^k, n1^r);    // >nh, >nh 00
-        idx_swap(nx1^k, nx1^r);  // <nh, <nh 11
-        idx_swap(nx2^k, nx2^r);  // >nh, >nh 00
-      }
+//       // ----- k%4 == 1:
+//       if ( r>k )
+//       {
+//         idx_swap(k, r);  // <nh, >nh 10
+//         idx_swap(n1^k, n1^r);  // >nh, <nh 01
+//       }
 
-      ++k;
-      r ^= nh;
+//       ++k;
+//       const size_t ldn = countr_zero(n);
+//       r = rvb(k, ldn);
 
-      // ----- k%4 == 1:
-      if ( r>k )
-      {
-        idx_swap(k, r);  // <nh, >nh 10
-        idx_swap(n1^k, n1^r);  // >nh, <nh 01
-      }
+//       // ----- k%4 == 2:
+//       if ( r>k )
+//       {
+//         idx_swap(k, r);  // <nh, <nh 11
+//         idx_swap(n1^k, n1^r);  // >nh, >nh 00
+//       }
 
-      ++k;
-      const size_t ldn = countr_zero(n);
-      r = rvb(k, ldn);
-
-      // ----- k%4 == 2:
-      if ( r>k )
-      {
-        idx_swap(k, r);  // <nh, <nh 11
-        idx_swap(n1^k, n1^r);  // >nh, >nh 00
-      }
-
-      ++k;
+//       ++k;
 
 
-      // ----- k%4 == 3:
-      if ( r>k )
-      {
-        idx_swap(k, r);    // <nh, >nh 10
-        idx_swap(nx1^k, nx1^r);   // <nh, >nh 10
-      }
+//       // ----- k%4 == 3:
+//       if ( r>k )
+//       {
+//         idx_swap(k, r);    // <nh, >nh 10
+//         idx_swap(nx1^k, nx1^r);   // <nh, >nh 10
+//       }
 
-      ++k;
+//       ++k;
 
 
-      r = rvb(k, countr_zero(n));
+//       r = rvb(k, countr_zero(n));
 
-    }
-    return f;
-  }
+//     }
+//     return f;
+//   }
 
   template < typename T>
   auto revbin_permute_(EVE_SUPPORTS(cpu_), eve::algo::soa_vector<eve::complex<T>>  & f)
@@ -297,7 +299,7 @@ namespace eve::detail
     auto n = f.size();
     std::vector<eve::complex<T>> g(n);
     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-    raw(revbin_permute)(g);
+    revbin_permute(g);
     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
     return f;
   }
