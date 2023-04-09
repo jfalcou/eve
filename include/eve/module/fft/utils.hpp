@@ -9,3 +9,4 @@
 
 #include <eve/module/fft/utils/revbin_permute.hpp>
 #include <eve/module/fft/utils/idx_swap.hpp>
+#include <eve/module/fft/utils/ifft.hpp>
