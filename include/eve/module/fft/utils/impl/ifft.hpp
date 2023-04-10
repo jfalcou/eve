@@ -22,7 +22,7 @@ namespace eve::detail
                             , F const & fft
                             , R & f
                             , T const & fac) noexcept
-  requires(is_one_of<D>(types<aos_type, soa_type> {}))
+  requires(eve::is_complex_v<typename R::value_type> && is_one_of<D>(types<aos_type, soa_type> {}))
   {
     auto conjmuli = []<typename C>(C x){
       auto  [r, i] = x; return C(i, r);
@@ -41,6 +41,7 @@ namespace eve::detail
                             , F const & fft
                             , R & f
                             , T const & fac) noexcept
+  requires(eve::is_complex_v<typename R::value_type>)
   {
     return soa(ifft)(fft, f, fac);
   }
@@ -51,6 +52,7 @@ namespace eve::detail
                             , R & fr
                             , R & fi
                             , T const & fac) noexcept
+  requires(std::is_floating_point_v<typename R::value_type>)
   {
     fft(fi, fr, fac);
     std::swap(fr, fi);
