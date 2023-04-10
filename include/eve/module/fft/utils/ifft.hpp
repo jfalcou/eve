@@ -17,6 +17,14 @@ namespace eve
 //!   @var revbin_permute
 //!   @brief take a fft object and make provision to compute the inverse
 //!
+//!   when applied to complex number ranges the inverse of a fft is simply given by applying the fft to the
+//!   data where real and imaginary parts are swapped.
+//!   ifft does the job by applying the chosen fft object function to the properly swapped datas.
+//!
+//!   The call depending of the data representation, two decorators can be
+//!   used to specify that the ranges are soa or aos
+//!   A separate call is provided if the datas are given in two ranges of real and imaginary parts
+//!
 //!   **Defined in header**
 //!
 //!   @code
@@ -30,17 +38,23 @@ namespace eve
 //!   {
 //!     template< callable F, range R, value T>
 //!     auto ifft(F const & fft, R & f, T fac) noexcept;
+//!
+//!     template< callable F, range R, value T>
+//!     auto ifft(F const & fft, R & rf, R & if, T fac) noexcept;
+//!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!     * `fft` : direct fft method
-//!     * `f`   :  range of  complex argumentsarguments.
+//!     * `f`   : soa range of  complex arguments.
+//!     * `rf"  : range of  real parts.
+//!     * `if"  : range of  imaginary parts.
 //!     * `fac` : normalization factor.
 //!
 //!   **Return value**
 //!
-//!     f contains after call the inverse fft scaled by fac.
+//!     f or (rf, if) contains after call the inverse fft scaled by fac.
 //!
 //!   @groupheader{Example}
 //!
