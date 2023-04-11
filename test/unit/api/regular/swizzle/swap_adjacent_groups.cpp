@@ -23,12 +23,12 @@ TTS_CASE_WITH( "Check behavior of SWAGs swizzle"
 <typename T, typename L>(T data, L logicals)
 {
   constexpr auto ssz = std::bit_width( std::size_t(T::size()) );
-
   [&]<std::size_t... I>( std::index_sequence<I...>)
   {
     auto f  = [&]<std::size_t N, typename S>(S simd, std::integral_constant<std::size_t,N>)
             {
               constexpr std::size_t sz = 1ULL << N;
+
               S ref = [=](auto i, auto c)
               {
                 constexpr auto p = eve::swap_adjacent_groups_pattern<sz,S::size()>;
@@ -43,4 +43,5 @@ TTS_CASE_WITH( "Check behavior of SWAGs swizzle"
     ( f(data    , std::integral_constant<std::size_t,I>{}), ... );
     ( f(logicals, std::integral_constant<std::size_t,I>{}), ... );
   }( std::make_index_sequence<ssz>{} );
+  TTS_EQUAL(eve::swap_adjacent_groups(data, eve::fixed<0>{}), data);
 };
