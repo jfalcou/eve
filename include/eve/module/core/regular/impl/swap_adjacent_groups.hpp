@@ -42,7 +42,7 @@ template<simd_value Wide, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 swap_adjacent_groups_(EVE_SUPPORTS(cpu_), Wide v, fixed<G>) noexcept requires(G <= Wide::size())
 {
-  if constexpr( G == Wide::size() ) { return v; }
+  if constexpr( G == Wide::size() || G == 0) { return v; }
   else if constexpr( has_aggregated_abi_v<Wide> )
   {
     if constexpr( G == Wide::size() / 2 )
