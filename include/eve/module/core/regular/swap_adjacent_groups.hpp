@@ -14,7 +14,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_bitops
+//! @addtogroup core
 //! @{
 //!   @var swap_adjacent_groups
 //!   @brief swap adjacent groups of elements of chosen number.
@@ -48,29 +48,17 @@ namespace eve
 //!
 //!  @godbolt{doc/core/regular/swap_adjacent groups.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::swap_adjacent groups[mask](x, ...)` provides a masked
-//!     version of `swap_adjacent groups` which is
-//!     equivalent to `if_else(mask, swap_adjacent groups(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/swap_adjacent groups.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(swap_adjacent_groups_, swap_adjacent_groups);
 
 template<std::ptrdiff_t G, std::ptrdiff_t N>
 inline constexpr auto swap_adjacent_groups_pattern = fix_pattern<N>(
-    [](auto i, auto)
-    {
-      if( G != N ) return (i + G) % (G * 2) + (G * 2) * (i / (G * 2));
-      else return i;
-    });
+  [](auto i, auto)
+  {
+    if constexpr (G != N && G != 0) return (i + G) % (G * 2) + (G * 2) * (i / (G * 2));
+    else return i;
+  });
 }
 
 #include <eve/module/core/regular/impl/swap_adjacent_groups.hpp>

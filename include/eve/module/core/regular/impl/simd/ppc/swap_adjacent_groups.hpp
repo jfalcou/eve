@@ -19,7 +19,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
     requires(G <= N::value)
     && ppc_abi<abi_t<T, N>>
 {
-  if constexpr( G == N::value ) { return v; }
+  if constexpr( G == N::value || G == 0) { return v; }
   else
   {
     /// TODO: Maybe there's better than just vec_perm ??

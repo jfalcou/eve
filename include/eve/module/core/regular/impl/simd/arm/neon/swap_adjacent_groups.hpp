@@ -21,7 +21,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 {
   using that_t = wide<T, N>;
 
-  if constexpr( G == N::value ) { return v; }
+  if constexpr( G == N::value || G == 0) { return v; }
   else
   {
     constexpr auto c = categorize<that_t>();
