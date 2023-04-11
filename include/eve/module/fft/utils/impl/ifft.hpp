@@ -32,6 +32,10 @@ namespace eve::detail
     else  if constexpr(std::same_as<D, soa_type>)
       eve::algo::transform_inplace(f, conjmuli);
     fft(f, fac);
+    if constexpr(std::same_as<D, aos_type>)
+      std::transform(f.data(), f.data()+f.size(), f.data(), conjmuli);
+    else  if constexpr(std::same_as<D, soa_type>)
+      eve::algo::transform_inplace(f, conjmuli);
   }
 
   /////////////////////////////////////////////////////////

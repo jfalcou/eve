@@ -15,33 +15,7 @@
 #include <eve/concept/range.hpp>
 #include <algorithm>
 
-// template<typename F, eve::detail::range R, eve::scalar_value T>
-//   void ifft( F const & fft
-//            , R & f
-//            , T const & fac) noexcept
-// {
-//   auto conjmuli = []<typename C>(C x){
-//     auto  [r, i] = x; return  C(i, r);
-//   };
-//   std::transform(f.data(), f.data()+f.size(), f.data(), conjmuli);
-//   fft(f, fac);
-// }
-
-// template<typename F, typename T0, eve::scalar_value T>
-//   void ifft( F const & fft
-//            , eve::algo::soa_vector<T0> & f
-//            , T const & fac) noexcept
-// {
-//   auto conjmuli = []<typename C>(C x){
-//     auto  [r, i] = x; return  C(i, r);
-//   };
-//   eve::algo::transform_inplace(f, conjmuli);
-//   fft(f, fac);
-// }
-
-
-
-TTS_CASE_TPL("Check revbin_permute", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check ifft", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   if constexpr(std::same_as<eve::element_type_t<T>, float>&& eve::cardinal_v<T> == 1)

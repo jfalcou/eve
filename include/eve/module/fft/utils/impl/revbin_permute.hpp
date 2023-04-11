@@ -11,6 +11,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo.hpp>
 #include <eve/module/complex.hpp>
+#include <eve/module/fft/utils/aos_soa.hpp>
 #include <eve/concept/range.hpp>
 #include <type_traits>
 #include <eve/pattern.hpp>
@@ -21,19 +22,21 @@ namespace eve::detail
   namespace internal
   {
     // scalar perm
-    template < typename VT, typename VI>
-    auto scalar_perm(VT const & f,  VI const & ind) noexcept
+    template < range F, range I>
+    auto perm(F const & f,  I const & ind) noexcept
     {
-      VT g(f.size());
-      for(size_t i = 0;  i < f.size();  ++i) g[i] = f[ind[i]];
+      F g(f.size());
+      auto fb =  f.begin();
+      auto ib =  ind.begin();
+      for(auto gb =  g.begin(); gb < g.end(); ++gb, ++ib) *gb = *(fb+*ib);
       return g;
-    };
+    }
 
     // simd perm
-    template < typename VT, typename VI>
-    auto perm(VT const & f,  VI const & ind) noexcept
+    template < range F, range I>
+    auto simd_perm(F const & f,  I const & ind) noexcept
     {
-      VT g(f.size());
+      F g(f.size());
       auto view = eve::views::zip(ind, g);
       auto doit = [&f](auto zz, auto ignore){
         auto [ ind_it, g_it] = zz;
@@ -44,35 +47,33 @@ namespace eve::detail
       eve::algo::for_each(view, doit);
 
       return g;
-    };
+    }
 
-    template<value T>
-    inline auto revbin_permute_leq_64(std::vector<T> const & f)
+    template < range R>
+    inline void revbin_permute_leq_64(R & f)
     // Must have f.size() \in {2, 4, 8, 16, 32, 64}
     {
       auto n = f.size();
-     std::cout << "n " << n << std::endl;
       EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
 
-      std::vector<T> g(f.size());
       switch ( n ) {
-      case 1: return f; break;
-      case 2: return f; break;
+      case 1:  break;
+      case 2:  break;
       case 4: {
         constexpr std::array<std::uint32_t, 4> ind{0, 2, 1, 3};
-        return perm(f, ind); break;
+        f = perm(f, ind); break;
       }
       case 8: {
         constexpr std::array<std::uint32_t, 8> ind{0, 4, 2, 6, 1, 5, 3, 7};
-        return perm(f, ind); break;
+        perm(f, ind); break;
       }
       case 16: {
         constexpr std::array<std::uint32_t, 16> ind{0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
-        return perm(f, ind); break;
+        f = perm(f, ind); break;
       }
       case 32: {
         constexpr std::array<std::uint32_t, 32> ind{0, 16, 8, 24, 4, 20, 12, 28, 2, 18, 10, 26, 6, 22, 14, 30 , 1, 17, 9, 25, 5, 21, 13, 29, 3, 19, 11, 27, 7, 23, 15, 31};
-        return perm(f, ind); break;
+        f = perm(f, ind); break;
       }
       case 64: {
         constexpr std::array<std::uint32_t, 64> ind{
@@ -82,20 +83,23 @@ namespace eve::detail
             30, 62, 1, 33, 17, 49, 9, 41, 25, 57,
             5, 37, 21, 53, 13, 45, 29, 61, 3, 35, 19, 51,
             11, 43, 27, 59, 7, 39, 23, 55, 15, 47, 31, 63};
-        return perm(f, ind); break;
+        f = perm(f, ind); break;
       }
-      default: return f; // not so good...
+      default:;  // not so good...
       }
     }
 
-    template<value T>
-    inline auto revbin_permute_gt_64(std::vector<T> & f)
+    template < range R>
+    inline auto revbin_permute_gt_64(R & f)
     // Must have f.size() 2^n > 64
     {
       auto n = f.size();
-       auto idx_swap = [&f](auto k,  auto r){
-        auto z = f[k];  f[k] = f[r]; f[r] = z;
+      auto idx_swap = [&f](auto k,  auto r){
+        auto pos1 = f.data()+k;
+        auto pos2 = f.data()+r;
+        auto z = *pos1;  *pos1 = *pos2; *pos2 = z;
       };
+
       auto revbin = []<typename UI>(UI x){ // Return x with reversed bit order.
         size_t s = sizeof(UI)*8 >> 1;
         size_t m = allbits(as<UI>()) >> s;
@@ -122,46 +126,59 @@ namespace eve::detail
   }
 
 
-  template<scalar_value T>
-  auto revbin_permute_(EVE_SUPPORTS(cpu_)
-                      , std::vector<T> & f) noexcept
+  template<range R>
+  EVE_FORCEINLINE constexpr void
+  revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & f) noexcept
   {
+    std::cout << "revbin_permute_" << std::endl;
     auto n = f.size();
-    std::cout << "size " << n << std::endl;
+     std::cout << "size " << n << std::endl;
     if ( n<=64 )
     {
       std::cout << "le64" << std::endl;
-      return internal::revbin_permute_leq_64(f);
+      internal::revbin_permute_leq_64(f);
     }
     else
     {
       std::cout << "gt64" << std::endl;
-      return internal::revbin_permute_gt_64(f);
-      return f;
+      internal::revbin_permute_gt_64(f);
     }
   }
 
-  template < typename T>
-  auto revbin_permute_(EVE_SUPPORTS(cpu_), eve::algo::soa_vector<eve::complex<T>>  & f)
+  template <range R>
+  auto revbin_permute_(EVE_SUPPORTS(cpu_), soa_type const &, R & f)
+  requires(eve::is_complex_v<typename R::value_type>)
   {
+    using T = typename R::value_type;
     auto n = f.size();
-    std::vector<eve::complex<T>> g(n);
+    std::vector<T> g(n);
     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-    revbin_permute(g);
+    aos(revbin_permute)(g);
     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
-    return f;
   }
 
-  template < typename T>
-  auto revbin_permute_(EVE_SUPPORTS(cpu_), raw_type const &, eve::algo::soa_vector<eve::complex<T>>  & f)
-  {
-    auto n = f.size();
-    std::vector<eve::complex<T>> g(n);
-    for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-    revbin_permute(g);
-    for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
-    return f;
-  }
+
+//   template <typename T>
+//   auto revbin_permute_(EVE_SUPPORTS(cpu_), eve::algo::soa_vector<eve::complex<T>>  & f)
+//   {
+//     auto n = f.size();
+//     std::vector<eve::complex<T>> g(n);
+//     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
+//     revbin_permute(g);
+//     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
+//     return f;
+//   }
+
+//   template < typename T>
+//   auto revbin_permute_(EVE_SUPPORTS(cpu_), raw_type const &, eve::algo::soa_vector<eve::complex<T>>  & f)
+//   {
+//     auto n = f.size();
+//     std::vector<eve::complex<T>> g(n);
+//     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
+//     revbin_permute(g);
+//     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
+//     return f;
+//   }
 
 }
 
