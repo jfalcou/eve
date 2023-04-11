@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"group__simd.html":[7,0],
 "group__simd__types.html":[7,0,2],
 "group__simd__types.html#ga11b65eff854b205c9f9ef8dbd559bb9b":[7,0,2,12],
 "group__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd":[7,0,2,13],
@@ -108,7 +109,7 @@ var NAVTREEINDEX3 =
 "namespaceeve.html#a0280fa32cdcf6ac1877275412df23158":[8,0,0,92],
 "namespaceeve.html#a5c8abb85533f462eaf77e6b4bc945b7f":[8,0,0,93],
 "namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc":[8,0,0,78],
-"namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40":[8,0,0,614],
+"namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40":[8,0,0,615],
 "namespacemembers.html":[8,1,0,0],
 "namespacemembers.html":[8,1,0],
 "namespacemembers_b.html":[8,1,0,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "structeve_1_1if__.html#af4da25e9482c78b71639ae7a8d9bd282":[7,0,2,2,1,3],
 "structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c":[7,0,2,2,1,1],
 "structeve_1_1ignore__all__.html":[7,0,2,2,2],
-"structeve_1_1ignore__all__.html#a6b9f1768807e073cc40f885ba214d711":[7,0,2,2,2,4],
-"structeve_1_1ignore__all__.html#a96e1fd8540348e3e19115e87ebd4963e":[7,0,2,2,2,3]
+"structeve_1_1ignore__all__.html#a6b9f1768807e073cc40f885ba214d711":[7,0,2,2,2,4]
 };

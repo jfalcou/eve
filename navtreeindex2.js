@@ -22,6 +22,7 @@ var NAVTREEINDEX2 =
 "group__core__simd_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e":[7,0,1,2,11,3],
 "group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d":[7,0,1,2,11,0],
 "group__core__simd_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8":[7,0,1,2,11,8],
+"group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e":[7,0,1,2,13],
 "group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5":[7,0,1,2,12],
 "group__elliptic.html":[7,0,1,3],
 "group__elliptic_ga399581902e638b91ced137b1673ab42e.html#ga399581902e638b91ced137b1673ab42e":[7,0,1,3,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "group__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599.html#gaa4853888b0e6be1fdbc24c9f6b372599":[7,0,1,5,9],
 "group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e":[7,0,1,5,7],
 "group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed":[7,0,1,5,5],
-"group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5":[7,0,1,5,0],
-"group__simd.html":[7,0]
+"group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5":[7,0,1,5,0]
 };
