@@ -33,22 +33,24 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::Range R, floating_ordered_value T>
-//!     auto fft(R a, T sign = 1, T fac = 1) noexcept;                                   //1
+//!     void fft(R a, T fac = 1, T sign = -1) noexcept;         //1
 //!
+//!     template< eve::Range R, floating_ordered_value T>
+//!     void fft(R ar, R ai, T fac = 1, T sign = -1) noexcept;  //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `a` :  [range of  arguments](@ref eve::value).
-//!
-//!     *  sign : \f$\pm1\f$
-//!
+//!     * `a`   :  soa range of complex.
+//!     * `ar"  :  range of real parts
+//!     * `ai"  :  range of imaginary parts
 //!     * `fac` : floating factor by which all elements of the range ouput are multiplied.
+//!     *  sign : \f$\pm1\f$ direction of the fft
 //!
 //!   **Return value**
 //!
-//!   The Range contained of the transformed Fourier coefficients.
+//!   void. the inputs are modified to contain the fft values.
 //!
 //!   @groupheader{Example}
 //!
@@ -57,8 +59,7 @@ namespace eve
 //! @}
 //================================================================================================
   EVE_MAKE_CALLABLE(naive_fft_, naive_fft);
-  EVE_MAKE_CALLABLE(totally_naive_fft_, totally_naive_fft);
-  
+
 }
 
 #include <eve/module/fft/regular/impl/naive_fft.hpp>

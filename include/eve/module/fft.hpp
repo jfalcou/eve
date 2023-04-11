@@ -23,7 +23,5 @@
 #include <eve/module/fft/regular/naive_fft.hpp>
 #include <eve/module/fft/regular/fft_df_dif2.hpp>
 #include <eve/module/fft/regular/fft_df_dit2.hpp>
-// #include <eve/module/fft/regular/fft_depth_first_dif2.hpp>
-// #include <eve/module/fft/regular/fft_depth_first_dit2.hpp>
-// #include <eve/module/fft/regular/fft_usual_dit2.hpp>
+#include <eve/module/fft/regular/fft_usual_dit2.hpp>
 // #include <eve/module/fft/regular/fft_000.hpp>
