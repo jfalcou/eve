@@ -120,7 +120,6 @@ namespace eve::detail
         auto r = rvb(x, countr_zero(n));
         if (r>x) idx_swap(x, r);
       }
-      std::cout << "gt64" << std::endl;
       return f;
     }
   }
@@ -130,17 +129,13 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & f) noexcept
   {
-    std::cout << "revbin_permute_" << std::endl;
     auto n = f.size();
-     std::cout << "size " << n << std::endl;
     if ( n<=64 )
     {
-      std::cout << "le64" << std::endl;
       internal::revbin_permute_leq_64(f);
     }
     else
     {
-      std::cout << "gt64" << std::endl;
       internal::revbin_permute_gt_64(f);
     }
   }

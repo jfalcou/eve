@@ -96,10 +96,7 @@ namespace eve::detail
       {
         for (i_t r=0; r<n; r+=m)
         {
-          auto doit = [phi](
-            eve::algo::soa_vector<eve::complex<T>>& f,
-            std::ptrdiff_t r,
-            std::ptrdiff_t mh) {
+          auto doit = [phi, &f](std::ptrdiff_t r, std::ptrdiff_t mh) {
             EVE_ASSERT(mh > eve::nofs_cardinal_v<T>, "");
             auto s = f.begin() + r;
             auto m = s + mh;
@@ -118,7 +115,7 @@ namespace eve::detail
                 eve::store[ignore]((u - v), v_it);
               });
           };
-          doit(f, r, mh);
+          doit(r, mh);
         }
       }
     };

@@ -9,6 +9,7 @@
 #include "test.hpp"
 #include "../complex/measures.hpp"
 #include <eve/module/fft.hpp>
+#include <chrono>
 
 
 TTS_CASE_TPL("Check revbin_permute", eve::test::simd::unsigned_integers)
@@ -18,7 +19,7 @@ TTS_CASE_TPL("Check revbin_permute", eve::test::simd::unsigned_integers)
   {
     auto pr = [](auto name, auto v){
       std::cout << name << " = (";
-      for(size_t i=0; i < v.size() ; ++i) std::cout << v[i] << " ";
+      for(size_t i=0; i < v.size() ; ++i) std::cout << eve::read(v.data()+i) << " ";
       std::cout << ")\n";
     };
 
@@ -36,5 +37,25 @@ TTS_CASE_TPL("Check revbin_permute", eve::test::simd::unsigned_integers)
       std::cout << " ------------------------------- " << std::endl;
       for(int i = 0; i < n; i++) TTS_EQUAL(vi[i], i);
     }
+
+    using c_t =  eve::complex<float>;
+    int n=32768;
+    {
+      std::vector<c_t> vi(n);
+      auto tic =  std::chrono::steady_clock::now();
+      eve::aos(eve::revbin_permute)(vi);
+      auto toc =  std::chrono::steady_clock::now();
+      std::cout << "duration = " << (toc-tic) << "\n" << std::endl;
+      pr("vi  ", vi);
+    }
+    {
+      eve::algo::soa_vector<c_t> vi(n);
+      auto tic =  std::chrono::steady_clock::now();
+      eve::soa(eve::revbin_permute)(vi);
+      auto toc =  std::chrono::steady_clock::now();
+      std::cout << "duration = " << (toc-tic) << "\n" << std::endl;
+      pr("vi  ", vi);
+    }
+
   }
 };

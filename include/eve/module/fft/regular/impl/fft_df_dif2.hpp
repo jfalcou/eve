@@ -23,7 +23,6 @@ namespace eve::detail
   fft_df_dif2_(EVE_SUPPORTS(cpu_), aos_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-//    using  c_t = complex<T>;
     auto n =  f.size();
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
@@ -59,7 +58,6 @@ namespace eve::detail
   requires(eve::is_complex_v<typename R::value_type>)
   {
     constexpr size_t cardinal = eve::nofs_cardinal_v<T>;
-    std::cout << "cardinal "<< cardinal << std::endl;
     using  c_t = complex<T>;
     auto n =  f.size();
     using i_t = decltype(n);
