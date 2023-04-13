@@ -49,7 +49,7 @@ void timeit(std::string const & title, F const & fft, D const &, T fac, int max 
     using namespace std::literals;
     auto tic =  std::chrono::steady_clock::now();
     fft(a, fac);
-//    std::cout << eve::read(a.begin()) << std::endl;
+    std::cout << eve::read(a.begin()) << std::endl;
     auto toc =  std::chrono::steady_clock::now()-tic;
     durations[i] = std::chrono::duration<double>(toc).count()*1000;
     size[i] = j;

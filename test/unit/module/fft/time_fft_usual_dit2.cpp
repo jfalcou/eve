@@ -69,7 +69,7 @@ void timeit(std::string const & title, F const & fft, D const &, T fac, int max 
 
 }
 
-TTS_CASE_TPL("Check naive_fft", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check fft_df_dit2", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   if(eve::cardinal_v<T> == 1)

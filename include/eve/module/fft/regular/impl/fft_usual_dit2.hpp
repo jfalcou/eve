@@ -57,50 +57,6 @@ namespace eve::detail
      for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
 
-//   /////////////////////////////////////////////////////////////////////////////////////////
-//   template<value T, value T1>
-//   constexpr auto fft_dt2_scalar_(EVE_SUPPORTS(cpu_)
-//                          , eve::algo::soa_vector<eve::complex<T>> & f
-//                          , T1 fac
-//                          , T1 s) noexcept
-//   {
-
-//       using  c_t = complex<T>;
-//     auto n =  f.size();
-//     using i_t = decltype(n);
-//     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
-//     std::vector<c_t> c(n);
-//     auto ldn = eve::countr_zero(n); //eve::log2(n));
-
-//     f = revbin_permute(f);
-
-//     for (i_t ldm=1; ldm<=ldn; ++ldm)
-//     {
-//       const i_t m = (1UL<<ldm);
-//       const i_t mh = (m>>1);
-//       const T phi = s/T(mh);
-//       for (i_t r=0; r<n; r+=m)
-//       {
-//         for (i_t j=0; j<mh; ++j)
-//         {
-//           i_t i0 = r + j;
-//           i_t i1 = i0 + mh;
-
-//           auto u = f.get(i0);
-//           auto v = f.get(i1)*exp_ipi( phi*j );
-
-//           f[i0] = u + v;
-//           f[i1] = u - v;
-//         }
-//       }
-//     }
-
-//     std::cout << "soa vector scalar" << std::endl;
-//     for(size_t i=0; i < n; ++i) f[i] *= fac;
-//     return f;
-//   }
-
-
   template<range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
   fft_usual_dit2_(EVE_SUPPORTS(cpu_), soa_type const &, R & f, T fac) noexcept
@@ -111,7 +67,6 @@ namespace eve::detail
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n);
-
     soa(revbin_permute)(f);
 
     for (i_t ldm=1; ldm<=ldn; ++ldm)
@@ -119,7 +74,7 @@ namespace eve::detail
       const i_t m = (1UL<<ldm);
       const i_t mh = (m>>1);
       const T phi = rec(T(mh));
-      if (cardinal >=  mh)
+      if (cardinal >=  m)
       {
         for (i_t j=0; j<mh; ++j)
         {
@@ -137,33 +92,27 @@ namespace eve::detail
       }
       else
       {
-        for (i_t j=0; j<mh; ++j)
-        {
-          auto w = exp_ipi( phi*j );
-
-          auto doit = [m, &f, w](std::ptrdiff_t j, std::ptrdiff_t mh) {
-            EVE_ASSERT(mh > eve::nofs_cardinal_v<T>, "");
-            auto s = f.begin() + j;
-            auto p = s + mh;
-
-            // maybe uint64_t for doubles
-            auto view = eve::views::zip(eve::algo::as_range(s, p), p,
-                                        eve::views::iota_with_step(i_t{0}, m));
-
-            // transform does
-            eve::algo::for_each[eve::algo::expensive_callable](
-              view, [w](auto zz, auto ignore) {
-                auto [u_it, v_it, _] = zz;
-                auto [u, v, idx] = eve::load[ignore](zz);
-                v*=  w;
-                eve::store[ignore]((u + v), u_it);
-                eve::store[ignore]((u - v), v_it);
-              });
-          };
-          doit(j, mh);
-        }
+        auto js = eve::views::iota(T{0}, mh);
+        auto doit = [phi, n, m, mh, &f](auto zz, auto ignore){
+          auto jj = load[ignore](zz);
+          auto w = exp_ipi( phi*jj); //eve::convert(j, eve::as<T>{}));
+          for (i_t r=0; r<n; r+=m)
+          {
+            auto i0 = jj.get(0)+r; ;
+            auto i1 = i0 + mh;
+            using cw_t = wide<eve::complex<T>>;
+            auto init0 =  [i0, &f](auto i, auto){return f.get(i+i0);};
+            auto init1 =  [i1, &f](auto i, auto){return f.get(i+i1);};
+            cw_t u(init0);
+            cw_t v(init1);
+            v*= w;
+            store[ignore](u + v, f.data()+i0);
+            store[ignore](u - v, f.data()+i1);
+          }
+        };
+        eve::algo::for_each[eve::algo::expensive_callable](js, doit);
       }
-    };
+    }
     if (fac != T(1))
       for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
   }
