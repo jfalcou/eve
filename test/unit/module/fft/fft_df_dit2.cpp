@@ -22,12 +22,12 @@ TTS_CASE_TPL("Check fft_df_dit2 on aos", eve::test::simd::ieee_reals)
       for(size_t i=0; i < v.size() ; ++i) std::cout << v[i] << " ";
       std::cout << ")\n";
     };
-    size_t N = 1024;
+    size_t N = 16;
     std::cout << tts::typename_<T> << std::endl; ;
     using e_t = typename T::value_type;
     using c_t = eve::complex<e_t>;
     std::vector<c_t> a(N), orig(N);
-    for(size_t i=0; i < N ; ++i) orig[i] = a[i] = c_t(i+1, i+2);
+    for(size_t i=0; i < N ; ++i) orig[i] = a[i] = c_t(i+0.5, i+1);
     pr("a avant", a);
     eve::aos(eve::fft_df_dit2)(a, e_t(1.0));
     pr("a apres", a);
@@ -48,13 +48,13 @@ TTS_CASE_TPL("Check fft_df_dit2 on soa", eve::test::simd::ieee_reals)
       for(size_t i=0; i < v.size() ; ++i) std::cout << v.get(i) << " ";
       std::cout << ")\n";
     };
-    size_t N = 1024;
+    size_t N = 16;
     std::cout << tts::typename_<T> << std::endl; ;
     using e_t = typename T::value_type;
     using c_t = eve::complex<e_t>;
     eve::algo::soa_vector<c_t> a(N), orig(N);
     for(size_t i=0; i < N ; ++i) {
-      a.set(i, c_t(i+1, i+2));
+      a.set(i, c_t(i+0.5, i+1));
       orig.set(i, a.get(i));
     }
     pr("a avant", a);

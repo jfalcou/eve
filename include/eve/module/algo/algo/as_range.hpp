@@ -23,6 +23,8 @@ namespace eve::algo
     using is_non_owning = void;
 
     I begin() const { return f; }
+    I data()  const { return f; }
     S end  () const { return l; }
+    size_t size() const noexcept {return l-f; }
   };
 }

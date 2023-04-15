@@ -31,47 +31,90 @@ namespace eve::detail
 
     for (i_t ldm=ldn; ldm>=lx; ldm-=lx)
     {
-        i_t m = (1UL<<ldm);
-        i_t m4 = (m>>lx);
-        auto ph0 = rec(T(m));
+      i_t m = (1UL<<ldm);
+      i_t m4 = (m>>lx);
+      auto ph0 = rec(T(m));
+//      std::cout << "m4 " << m4 << std::endl;
+//       if(m4 >= eve::nofs_cardinal_v<T>)
+//       {
+//         auto js = eve::views::iota(T{0}, m4);
+//         auto phs= eve::views::iota_with_step(T{0}, ph0, m4);
+//         auto view = eve::views::zip(js, phs);
+//         auto doit = [n, m, m4, &f](auto zz, auto ignore){
+//           auto [j, ph] = load[ignore](zz);
+//           auto e  = exp_ipi(ph);
+//           auto e2 = exp_ipi(T(2)*ph);
+//           auto e3 = exp_ipi(T(3)*ph);
 
-        for (i_t j=0; j<m4; j++)
+//           for (i_t r=0; r<n; r+=m)
+//           {
+//             i_t i0 = j.get(0) + r;
+//             i_t i1 = i0 + m4;
+//             i_t i2 = i1 + m4;
+//             i_t i3 = i2 + m4;
+
+//             auto a0 = load(f.data()+i0); //f[i0];
+//             auto a1 = load(f.data()+i1); //f[i1];
+//             auto a2 = load(f.data()+i2); //f[i2];
+//             auto a3 = load(f.data()+i3); //f[i3];
+
+//             auto t0 = (a0+a2) + (a1+a3);
+//             auto t2 = (a0+a2) - (a1+a3);
+
+//             auto t1 = (a0-a2) + (a1-a3);
+//             auto t3 = (a0-a2) - (a1-a3);
+
+// //             t1 *= e;
+// //             t2 *= e2;
+// //             t3 *= e3;
+
+//             store(f.data()+i0, t0);
+//             store(f.data()+i1, t2*e2);  // (!)
+//             store(f.data()+i2, t1*e);   // (!)
+//             store(f.data()+i3, t3*e);
+//           }
+//         };
+//         eve::algo::for_each[eve::algo::expensive_callable](view, doit);
+//       }
+//       else
+//       {
+      for (i_t j=0; j<m4; j++)
+      {
+        auto phi = j * ph0;
+        auto e  = exp_ipi(phi);
+        auto e2 = exp_ipi(T(2)*phi);
+        auto e3 = exp_ipi(T(3)*phi);
+
+        for (i_t r=0; r<n; r+=m)
         {
-            auto phi = j * ph0;
-            auto e  = exp_ipi(phi);
-            auto e2 = exp_ipi(T(2)*phi);
-            auto e3 = exp_ipi(T(3)*phi);
+          i_t i0 = j + r;
+          i_t i1 = i0 + m4;
+          i_t i2 = i1 + m4;
+          i_t i3 = i2 + m4;
 
-            for (i_t r=0; r<n; r+=m)
-            {
-                i_t i0 = j + r;
-                i_t i1 = i0 + m4;
-                i_t i2 = i1 + m4;
-                i_t i3 = i2 + m4;
+          auto a0 = *(f.data()+i0); //f[i0];
+          auto a1 = *(f.data()+i1); //f[i1];
+          auto a2 = *(f.data()+i2); //f[i2];
+          auto a3 = *(f.data()+i3); //f[i3];
 
-                auto a0 = *(f.data()+i0); //f[i0];
-                auto a1 = *(f.data()+i1); //f[i1];
-                auto a2 = *(f.data()+i2); //f[i2];
-                auto a3 = *(f.data()+i3); //f[i3];
+          auto t0 = (a0+a2) + (a1+a3);
+          auto t2 = (a0+a2) - (a1+a3);
 
-                auto t0 = (a0+a2) + (a1+a3);
-                auto t2 = (a0+a2) - (a1+a3);
+          auto t1 = (a0-a2) + (a1-a3);
+          auto t3 = (a0-a2) - (a1-a3);
 
-                auto t1 = (a0-a2) + (a1-a3);
-                auto t3 = (a0-a2) - (a1-a3);
+          t1 *= e;
+          t2 *= e2;
+          t3 *= e3;
 
-                t1 *= e;
-                t2 *= e2;
-                t3 *= e3;
-
-                *(f.data()+i0)/*f[i0]*/ = t0;
-                *(f.data()+i1)/*f[i1]*/ = t2;  // (!)
-                *(f.data()+i2)/*f[i2]*/ = t1;  // (!)
-                *(f.data()+i3)/*f[i3]*/ = t3;
-            }
+          *(f.data()+i0)/*f[i0]*/ = t0;
+          *(f.data()+i1)/*f[i1]*/ = t2;  // (!)
+          *(f.data()+i2)/*f[i2]*/ = t1;  // (!)
+          *(f.data()+i3)/*f[i3]*/ = t3;
         }
+//        }
+      }
     }
-
     if ( (ldn&1)!=0 )  // n is not a power of 4, need a radix-2 step
     {
         for (i_t r=0; r<n; r+=2)

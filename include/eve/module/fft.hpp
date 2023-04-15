@@ -26,5 +26,8 @@
 #include <eve/module/fft/regular/fft_usual_dif2.hpp>
 #include <eve/module/fft/regular/fft_usual_dit2.hpp>
 #include <eve/module/fft/regular/fft_no_dif4.hpp>
+#include <eve/module/fft/regular/fft_dif4.hpp>
+#include <eve/module/fft/regular/fft_dit4.hpp>
+
 
 // #include <eve/module/fft/regular/fft_000.hpp>
