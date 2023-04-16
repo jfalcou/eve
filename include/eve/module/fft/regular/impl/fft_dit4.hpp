@@ -30,7 +30,7 @@ namespace eve::detail
 
     auto pr = [](auto name, auto v){
       std::cout << name << " = (";
-      for(size_t i=0; i < v.size() ; ++i) std::cout << v[i] << " ";
+      for(size_t i=0; i < v.size() ; ++i) std::cout << *(v.begin()+i) << " ";
       std::cout << ")\n";
     };
     pr("fr ", fr);
@@ -59,7 +59,6 @@ namespace eve::detail
       u = x * c - y * s;
       v = y * c + x * s;
     };
-
     auto sumdiff3_r = [](auto &a, auto b, auto &d){
       // {a,b,d} <--| {a+b, b, b-a}  (used in split-radix FFTs)
       // NEVER call like func(a,b,a) or func(a,b,b)
@@ -88,6 +87,8 @@ namespace eve::detail
       return;
     }
     i_t ldm = (ldn&1);
+    std::cout << "ldm " << ldm << std::endl;
+    std::cout << "ldn " << ldn << std::endl;
     if ( ldm!=0 )  // n is not a power of 4, need a radix-8 step
     {
       std::cout << "exit" << std::endl;
@@ -103,15 +104,15 @@ namespace eve::detail
         i_t i2 = i1 + 1;
         i_t i3 = i2 + 1;
 
-        sumdiffb(fr[i0], fr[i1], xr, ur);
-        sumdiffb(fr[i2], fr[i3], yr, vi);
-        sumdiffb(fi[i0], fi[i1], xi, ui);
-        sumdiffb(fi[i3], fi[i2], yi, vr);
+        sumdiffb(*(fr.begin()+i0), *(fr.begin()+i1), xr, ur);
+        sumdiffb(*(fr.begin()+i2), *(fr.begin()+i3), yr, vi);
+        sumdiffb(*(fi.begin()+i0), *(fi.begin()+i1), xi, ui);
+        sumdiffb(*(fi.begin()+i3), *(fi.begin()+i2), yi, vr);
 
-        sumdiffb(ui, vi, fi[i1], fi[i3]);
-        sumdiffb(xi, yi, fi[i0], fi[i2]);
-        sumdiffb(ur, vr, fr[i1], fr[i3]);
-        sumdiffb(xr, yr, fr[i0], fr[i2]);
+        sumdiffb(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
+        sumdiffb(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
+        sumdiffb(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
+        sumdiffb(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
       }
 //      pr1("ensuite frbeg ", frbeg);
     }
@@ -252,15 +253,15 @@ namespace eve::detail
 //           std::cout << "fri3 " << fr[i3] << std::endl;
 
             //           cmult(c2, s2, fr[i1], fi[i1], xr, xi);
-            auto [xr, xi] = cs2*c_t(fr[i1], fi[i1]);
+            auto [xr, xi] = cs2*c_t(*(fr.begin()+i1), *(fi.begin()+i1));
             T ur, ui;
-            sumdiff3_r(xr, fr[i0], ur);
-            sumdiff3_r(xi, fi[i0], ui);
+            sumdiff3_r(xr, *(fr.begin()+i0), ur);
+            sumdiff3_r(xi, *(fi.begin()+i0), ui);
             //             std::cout << "xr " << xr << std::endl;
             //             std::cout << "xi " << xi << std::endl;
             T yr, vr, vi, yi;
-            cmult(c,  s,  fr[i2], fi[i2], yr, vr);
-            cmult(c3, s3, fr[i3], fi[i3], vi, yi);
+            cmult(c,  s,  *(fr.begin()+i2), *(fi.begin()+i2), yr, vr);
+            cmult(c3, s3, *(fr.begin()+i3), *(fi.begin()+i3), vi, yi);
 
             sumdiff(yr, vi);
             sumdiff(yi, vr);
@@ -269,10 +270,10 @@ namespace eve::detail
 //             std::cout << "vi " << vi << std::endl;
 //             std::cout << "yi " << yi << std::endl;
 
-            sumdiffb(ur, vr, fr[i1], fr[i3]);
-            sumdiffb(ui, vi, fi[i1], fi[i3]);
-            sumdiffb(xr, yr, fr[i0], fr[i2]);
-            sumdiffb(xi, yi, fi[i0], fi[i2]);
+            sumdiffb(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
+            sumdiffb(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
+            sumdiffb(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
+            sumdiffb(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
 //           std::cout << "ap fri0 " << fr[i0] << std::endl;
 //            std::cout << "ap fri1 " << fr[i1] << std::endl;
 //            std::cout << "ap fri2 " << fr[i2] << std::endl;
@@ -320,23 +321,18 @@ namespace eve::detail
     }
   }
 
-//   template<range R, floating_scalar_value T>
-//   EVE_FORCEINLINE  void
-//   fft_dit4_(EVE_SUPPORTS(cpu_), soa_type const &
-//               , R &f
-//               , T fac) noexcept
-//   requires(eve::is_complex_v<typename R::value_type>)
-//   {
-//     auto n =  f.size();
-// //    using i_t =  decltype(n);
-// //    using c_t = eve::complex<T>;
-// //    std::vector<T> fr(n),  fi(n);
-//     auto b = f.begin().base;
-//     auto [bfr, bfi] = b;
-//     auto fr = eve::algo::as_range(bfr, bfr+n);
-//     auto fi = eve::algo::as_range(bfi, bfi+n);
-//     aos(fft_dit4)(fr, fi, fac);
-// //    f =  algo::views::zip(as_range(bfr, bfr+n), as_range(bfi, bfi+n));
-//   }
+  template<range R, floating_scalar_value T>
+  EVE_FORCEINLINE  void
+  fft_dit4_(EVE_SUPPORTS(cpu_), soa_type const &
+           , R &f
+           , T fac) noexcept
+  requires(eve::is_complex_v<typename R::value_type>)
+  {
+    auto n =  f.size();
+    auto [bfr, bfi] = f.begin().base;
+    auto fr = eve::algo::as_range(bfr, bfr+n);
+    auto fi = eve::algo::as_range(bfi, bfi+n);
+    aos(fft_dit4)(fr, fi, fac);
+  }
 
 }

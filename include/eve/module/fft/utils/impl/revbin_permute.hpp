@@ -32,6 +32,25 @@ namespace eve::detail
       return g;
     }
 
+//     template < range F, range I>
+//     auto perm(F & f,  I const & ind) noexcept
+//     {
+//       std::cout << "icitte" << std::endl;
+//       using i_t =  typename I::value_type;
+//       auto startf = f.begin();
+//       auto startind = ind.begin();
+//       auto ib =  startind;
+//       auto fb =  startf;
+//       for(  i_t i = 0; fb < f.end(); ++fb, ++ib, ++i){
+//         if (i < *(startind+*ib)) {
+//           std::swap(*fb, *(startf+*(startind+*ib)));
+//         auto tmp = *(startf+*(startind+*ib)); *(startf+*(startind+*ib)) = *fb; *fb = tmp;
+//         }
+//       }
+//       return f;
+//     }
+
+
     // simd perm
     template < range F, range I>
     auto simd_perm(F const & f,  I const & ind) noexcept
@@ -129,15 +148,15 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & f) noexcept
   {
-    auto n = f.size();
-    if ( n<=64 )
-    {
-      internal::revbin_permute_leq_64(f);
-    }
-    else
-    {
+//     auto n = f.size();
+//     if ( n<=64 )
+//     {
+//       internal::revbin_permute_leq_64(f);
+//     }
+//     else
+//     {
       internal::revbin_permute_gt_64(f);
-    }
+//    }
   }
 
   template <range R>
