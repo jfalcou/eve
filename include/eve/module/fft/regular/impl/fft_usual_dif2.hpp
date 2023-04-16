@@ -60,8 +60,9 @@ namespace eve::detail
      *(f.data()+r+1) = pi0-pi1;
    }
    aos(revbin_permute)(f);
-   if (fac != T(1))
-     for(size_t i=0; i < n; ++i) f[i] *= fac;
+   aos(scaleit)(f, fac);
+//    if (fac != T(1))
+//      for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
 
   template<range R, floating_scalar_value T>
@@ -126,8 +127,8 @@ namespace eve::detail
      f.set(r+1, u - v);
    }
    soa(revbin_permute)(f);
-
-   if (fac != T(1))
-     for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
+   soa(scaleit)(f, fac);
+//    if (fac != T(1))
+//      for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
   }
 }

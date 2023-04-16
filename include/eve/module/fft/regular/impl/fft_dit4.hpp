@@ -359,14 +359,15 @@ namespace eve::detail
         // return;
       }
     }
-    if (fac != T(1))
-    {
-      for(size_t i=0; i < n; ++i)
-      {
-        *(frbeg+i) *= fac;
-        *(fibeg+i) *= fac;
-      }
-    }
+    scaleit(fr, fi, fac);
+//    if (fac != T(1))
+//     {
+//       for(size_t i=0; i < n; ++i)
+//       {
+//         *(frbeg+i) *= fac;
+//         *(fibeg+i) *= fac;
+//       }
+//     }
 
   }
 
@@ -402,10 +403,7 @@ namespace eve::detail
            , T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
-    auto [bfr, bfi] = f.begin().base;
-    auto fr = eve::algo::as_range(bfr, bfr+n);
-    auto fi = eve::algo::as_range(bfi, bfi+n);
+    auto [fr, fi] = soac2ri(f);
     aos(fft_dit4)(fr, fi, fac);
   }
 

@@ -11,3 +11,7 @@
 #include <eve/module/fft/utils/idx_swap.hpp>
 #include <eve/module/fft/utils/aos_soa.hpp>
 #include <eve/module/fft/utils/ifft.hpp>
+#include <eve/module/fft/utils/soac2ri.hpp>
+#include <eve/module/fft/utils/caos2csoa.hpp>
+#include <eve/module/fft/utils/csoa2caos.hpp>
+#include <eve/module/fft/utils/scaleit.hpp>

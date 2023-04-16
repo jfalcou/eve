@@ -128,8 +128,9 @@ namespace eve::detail
     }
 
     aos(revbin_permute)(f);
-    if (fac != T(1))
-      for(size_t i=0; i < n; ++i) f[i] *= fac;
+    aos(scaleit)(f, fac);
+//     if (fac != T(1))
+//       for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
 
 //   template<range R, floating_scalar_value T>

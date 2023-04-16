@@ -23,7 +23,7 @@ void timeit(std::string const & title, F const & fft, D const &, T fac, int max 
 
   using e_t = T;
   using c_t = eve::complex<e_t>;
-  std::int32_t j = 4;
+  std::int32_t j = 8;
   std::cout << "duration for " << title;
   std::cout << ",  type being " << tts::typename_<e_t> << std::endl;
   std::vector<double> durations(max);

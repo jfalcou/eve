@@ -53,8 +53,9 @@ namespace eve::detail
        }
      }
    }
-   if (fac != T(1))
-     for(size_t i=0; i < n; ++i) f[i] *= fac;
+   aos(scaleit)(f, fac);
+//    if (fac != T(1))
+//      for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
 
   template<range R, floating_scalar_value T>
@@ -113,7 +114,8 @@ namespace eve::detail
         eve::algo::for_each[eve::algo::expensive_callable](js, doit);
       }
     }
-    if (fac != T(1))
-      for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
+    soa(scaleit)(f, fac);
+//     if (fac != T(1))
+//       for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
   }
 }
