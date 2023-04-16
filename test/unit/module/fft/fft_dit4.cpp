@@ -24,8 +24,8 @@ TTS_CASE_TPL("Check fft_df_dif2 on aos", eve::test::simd::ieee_reals)
       for(size_t i=0; i < v.size() ; ++i) std::cout << v[i] << " ";
       std::cout << ")\n";
     };
-    size_t N = 1 << 4; //16;
-    std::cout << tts::typename_<T> << std::endl; ;
+    size_t N = 512;
+//    std::cout << tts::typename_<T> << std::endl; ;
     using e_t = typename T::value_type;
     using c_t = eve::complex<e_t>;
     std::vector<c_t> a(N), orig(N);
@@ -54,8 +54,8 @@ TTS_CASE_TPL("Check fft_df_dif2 on soa", eve::test::simd::ieee_reals)
       for(size_t i=0; i < v.size() ; ++i) std::cout << v.get(i) << " ";
       std::cout << ")\n";
     };
-    size_t N = 256;
-    std::cout << tts::typename_<T> << std::endl; ;
+    size_t N = 512;
+//    std::cout << tts::typename_<T> << std::endl; ;
     using e_t = typename T::value_type;
     using c_t = eve::complex<e_t>;
     eve::algo::soa_vector<c_t> a(N), orig(N);

@@ -23,7 +23,7 @@ void timeit(std::string const & title, F const & fft, D const &, T fac, int max 
 
   using e_t = T;
   using c_t = eve::complex<e_t>;
-  std::int32_t j = 4;
+  std::int32_t j = 512;
   std::cout << "duration for " << title;
   std::cout << ",  type being " << tts::typename_<e_t> << std::endl;
   std::vector<double> durations(max);
@@ -31,7 +31,7 @@ void timeit(std::string const & title, F const & fft, D const &, T fac, int max 
   std::vector<std::int32_t> size(max);
   for(std::int32_t i=0; i < max; ++i)
   {
-    j <<= 2;
+    j <<= 1;
     auto data = [j](){
       if constexpr(std::same_as<D, eve::aos_type>){
         std::vector<c_t> a(j, c_t(1, 2));

@@ -91,9 +91,83 @@ namespace eve::detail
 //     std::cout << "ldn " << ldn << std::endl;
     if ( ldm!=0 )  // n is not a power of 4, need a radix-8 step
     {
-      std::cout << "exit" << std::endl;
-      exit(1); // pas fait
-      //for (i_t i0=0; i0<n; i0+=8)  fft8_dit_core_p1(fr+i0, fi+i0);
+      auto fft8_dit_core_p1 = [](auto frb, auto fib){
+        // 8-point decimation in time FFT
+        const T invsqrt2 = invsqrt_2(as<T>());
+        // INPUT_RE:
+        T t1r = *(frb+0) + *(frb+1);
+        T t2r = *(frb+2) + *(frb+3);
+        T t7r = t1r + t2r;
+        T t3r = *(frb+4) - *(frb+5);
+        T t4r = *(frb+4) + *(frb+5);
+        T t5r = *(frb+6) + *(frb+7);
+        T t8r = t4r + t5r;
+        T t6r = *(frb+6) - *(frb+7);
+
+        T m0r = t7r + t8r;
+        T m1r = t7r - t8r;
+        T m2r = t1r - t2r;
+        T m3r = *(frb+0) - *(frb+1);
+        T m4r = invsqrt2 * (t3r - t6r);
+
+        t8r = invsqrt2 * (t3r + t6r);
+        t6r = t5r - t4r;
+        t7r = *(frb+3) - *(frb+2);
+
+        // INPUT_IM:
+        T t1i = *(fib+0) + *(fib+1);
+        T t2i = *(fib+2) + *(fib+3);
+        T t7i = t1i + t2i;
+        T t3i = *(fib+4) - *(fib+5);
+        T t4i = *(fib+4) + *(fib+5);
+        T t5i = *(fib+6) + *(fib+7);
+        T t8i = t4i + t5i;
+        T t6i = *(fib+6) - *(fib+7);
+
+        T m0i = t7i + t8i;
+        T m1i = t7i - t8i;
+        T m2i = t1i - t2i;
+        T m3i = *(fib+0) - *(fib+1);
+        T m4i = invsqrt2 * (t3i - t6i);
+
+        t8i = invsqrt2 * (t3i + t6i);
+        t6i = t4i - t5i;
+        t7i = *(fib+2) - *(fib+3);
+
+        t1r = m3r + m4r;
+        t2r = m3r - m4r;
+        t3r = t7i + t8i;
+        t4r = t7i - t8i;
+
+        // OUTPUT_RE:
+        *(frb+0) = m0r;
+        *(frb+7) = t1r + t3r;
+        *(frb+6) = m2r + t6i;
+        *(frb+5) = t2r - t4r;
+        *(frb+4) = m1r;
+        *(frb+3) = t2r + t4r;
+        *(frb+2) = m2r - t6i;
+        *(frb+1) = t1r - t3r;
+
+        t1r = m3i + m4i;
+        t2r = m3i - m4i;
+        t3r = t7r - t8r;
+        t4r = t7r + t8r;
+
+        // OUTPUT_IM:
+        *(fib+0) = m0i;
+        *(fib+7) = t1r + t3r;
+        *(fib+6) = m2i + t6r;
+        *(fib+5) = t2r - t4r;
+        *(fib+4) = m1i;
+        *(fib+3) = t2r + t4r;
+        *(fib+2) = m2i - t6r;
+        *(fib+1) = t1r - t3r;
+      };
+
+      for (i_t i0=0; i0<n; i0+=8){
+         fft8_dit_core_p1(frbeg+i0, fibeg+i0);
+      }
     }
     else
     {
