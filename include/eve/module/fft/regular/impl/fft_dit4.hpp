@@ -28,13 +28,13 @@ namespace eve::detail
   //  requires(eve::is_complex_v<typename R::value_type>)
   {
 
-    auto pr = [](auto name, auto v){
+    [[maybe_unused]] auto pr = [](auto name, auto v){
       std::cout << name << " = (";
       for(size_t i=0; i < v.size() ; ++i) std::cout << *(v.begin()+i) << " ";
       std::cout << ")\n";
     };
-    pr("fr ", fr);
-    pr("fi ", fi);
+//     pr("fr ", fr);
+//     pr("fi ", fi);
     aos(revbin_permute)(fr);
     aos(revbin_permute)(fi);
     //    using c_t = eve::complex<T>;
@@ -87,8 +87,8 @@ namespace eve::detail
       return;
     }
     i_t ldm = (ldn&1);
-    std::cout << "ldm " << ldm << std::endl;
-    std::cout << "ldn " << ldn << std::endl;
+//     std::cout << "ldm " << ldm << std::endl;
+//     std::cout << "ldn " << ldn << std::endl;
     if ( ldm!=0 )  // n is not a power of 4, need a radix-8 step
     {
       std::cout << "exit" << std::endl;
@@ -126,7 +126,7 @@ namespace eve::detail
 
       if(m4 >= eve::nofs_cardinal_v<T>)
       {
-         std::cout << "simd" << std::endl;
+//         std::cout << "simd" << std::endl;
 //         pr("scrav fr", fr);
 //         pr("scrav fi", fi);
 
@@ -156,8 +156,8 @@ namespace eve::detail
             i_t i1 = i0 + m4;
             i_t i2 = i1 + m4;
             i_t i3 = i2 + m4;
- //           std::cout << " i0 = " << i0 << ", i1 = " << i1
- //                     << ", i2 = " << i2 << ", i3 = " << i3 << std::endl;
+//           std::cout << " i0 = " << i0 << ", i1 = " << i1
+//                     << ", i2 = " << i2 << ", i3 = " << i3 << std::endl;
             auto frbeg = fr.data();
             auto fibeg = fi.data();
             auto fri0 = load(frbeg+i0);
@@ -213,12 +213,12 @@ namespace eve::detail
           }
         };
         eve::algo::for_each[eve::algo::expensive_callable](view, doit);
-        pr("simd ap fr", fr);
-        pr("simd ap fi", fi);
+//         pr("simd ap fr", fr);
+//         pr("simd ap fi", fi);
       }
       else
       {
-        std::cout << "scalar" << std::endl;
+//        std::cout << "scalar" << std::endl;
 //         pr("av fr", fr);
 //         pr("av fi", fi);
         T ph(0);
@@ -257,8 +257,8 @@ namespace eve::detail
             T ur, ui;
             sumdiff3_r(xr, *(fr.begin()+i0), ur);
             sumdiff3_r(xi, *(fi.begin()+i0), ui);
-            //             std::cout << "xr " << xr << std::endl;
-            //             std::cout << "xi " << xi << std::endl;
+//             std::cout << "xr " << xr << std::endl;
+//             std::cout << "xi " << xi << std::endl;
             T yr, vr, vi, yi;
             cmult(c,  s,  *(fr.begin()+i2), *(fi.begin()+i2), yr, vr);
             cmult(c3, s3, *(fr.begin()+i3), *(fi.begin()+i3), vi, yi);
@@ -280,8 +280,8 @@ namespace eve::detail
 //           std::cout << "ap fri3 " << fr[i3] << std::endl;
           }
         }
-        pr("scal ap fr", fr);
-        pr("scal ap fi", fi);
+//         pr("scal ap fr", fr);
+//         pr("scal ap fi", fi);
         // return;
       }
     }

@@ -75,9 +75,8 @@ TTS_CASE_TPL("Check naive_fft", eve::test::simd::ieee_reals)
   if(eve::cardinal_v<T> == 1)
   {
     using e_t = eve::element_type_t<T>;
-    timeit("eve::aos(eve::fft_dif4)", eve::aos(eve::fft_dif4), eve::aos_type{}, e_t(1.0), 10);
-//     using e_t = eve::element_type_t<T>;
-//     timeit("eve::soa(eve::fft_no_dif2)", eve::soa(eve::fft_dif2), eve::soa_type{}, e_t(1.0), 16);
+    timeit("eve::aos(eve::fft_dit4)", eve::aos(eve::fft_dit4), eve::aos_type{}, e_t(1.0), 10);
+    timeit("eve::soa(eve::fft_dit4)", eve::soa(eve::fft_dit4), eve::soa_type{}, e_t(1.0), 10);
     std::cout << "==========================================================================================================================" << std::endl;
   }
   TTS_EQUAL(0, 0);
