@@ -19,6 +19,7 @@
 //! @}
 //==================================================================================================
 
+#include <eve/module/fft/detail/combined_ops.hpp>
 #include <eve/module/fft/utils.hpp>
 #include <eve/module/fft/regular/naive_fft.hpp>
 #include <eve/module/fft/regular/fft_df_dif2.hpp>

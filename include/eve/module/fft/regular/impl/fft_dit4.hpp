@@ -43,27 +43,6 @@ namespace eve::detail
     i_t lx = 2;
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n); //eve::log2(n));
-    auto sumdiff = [](auto &a, auto &b){
-      // {a, b}  <--| {a+b, a-b}
-      auto t=a-b; a+=b; b=t;
-    };
-    auto sumdiffb = [](auto a, auto b, auto &s, auto &d){
-      // {s, d}  <--| {a+b, a-b}
-      s=a+b; d=a-b;
-    };
-    auto  cmult = [](auto c, auto s,
-                     auto x, auto y,
-                     auto &u, auto &v){
-      // {u,v} <--| {x*c-y*s, x*s+y*c}
-      // used in generated complex fhts
-      u = x * c - y * s;
-      v = y * c + x * s;
-    };
-    auto sumdiff3_r = [](auto &a, auto b, auto &d){
-      // {a,b,d} <--| {a+b, b, b-a}  (used in split-radix FFTs)
-      // NEVER call like func(a,b,a) or func(a,b,b)
-      d=b-a; a+=b;
-    };
 
 //     auto pr1 = [n](auto name, auto pr){
 //       std::cout << name << " = (";
@@ -81,8 +60,8 @@ namespace eve::detail
     {
       if ( n==2 )
       {
-        sumdiff(*frbeg, *(frbeg+1));
-        sumdiff(*fibeg, *(fibeg+1));
+        sd(*frbeg, *(frbeg+1));
+        sd(*fibeg, *(fibeg+1));
       }
       return;
     }
@@ -178,15 +157,15 @@ namespace eve::detail
         i_t i2 = i1 + 1;
         i_t i3 = i2 + 1;
 
-        sumdiffb(*(fr.begin()+i0), *(fr.begin()+i1), xr, ur);
-        sumdiffb(*(fr.begin()+i2), *(fr.begin()+i3), yr, vi);
-        sumdiffb(*(fi.begin()+i0), *(fi.begin()+i1), xi, ui);
-        sumdiffb(*(fi.begin()+i3), *(fi.begin()+i2), yi, vr);
+       sd(*(fr.begin()+i0), *(fr.begin()+i1), xr, ur);
+       sd(*(fr.begin()+i2), *(fr.begin()+i3), yr, vi);
+       sd(*(fi.begin()+i0), *(fi.begin()+i1), xi, ui);
+       sd(*(fi.begin()+i3), *(fi.begin()+i2), yi, vr);
 
-        sumdiffb(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
-        sumdiffb(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
-        sumdiffb(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
-        sumdiffb(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
+       sd(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
+       sd(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
+       sd(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
+       sd(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
       }
 //      pr1("ensuite frbeg ", frbeg);
     }
@@ -209,7 +188,7 @@ namespace eve::detail
         auto phs= eve::views::iota_with_step(T{0}, ph0, m4);
         auto view = eve::views::zip(js, phs);
 //        int brk = 0;
-        auto doit = [/*&brk, */n, m, m4, &fr, &fi, sumdiff, sumdiff3_r, cmult, sumdiffb](auto zz, auto ignore){
+        auto doit = [/*&brk, */n, m, m4, &fr, &fi](auto zz, auto ignore){
 //           if (brk == 2) return;
 //           ++brk;
           auto [j, ph] = load[ignore](zz);
@@ -222,8 +201,8 @@ namespace eve::detail
 //          std::cout << "cs2 " << cs2<< std::endl;
           auto cs3 = cs2*cs;
 //          std::cout << "cs3 " << cs3<< std::endl;
-          auto [c, s] = cs;
-          auto [c3, s3] = cs3;
+//           auto [c, s] = cs;
+//           auto [c3, s3] = cs3;
           for (i_t r=0; r<n; r+=m)
           {
             i_t i0 = j.get(0) + r;
@@ -253,25 +232,26 @@ namespace eve::detail
             //         [xr, xi] = cs2*c_t(fri1, fii1);
             using wT_t = decltype(xr);
             wT_t ur, ui;
-            sumdiff3_r(xr, fri0, ur);
-            sumdiff3_r(xi, fii0, ui);
+            srd(xr, fri0, ur);
+            srd(xi, fii0, ui);
 //             std::cout << "xr " << xr << std::endl;
 //             std::cout << "xi " << xi << std::endl;
-            wT_t yr, vr, vi, yi;
-            cmult(c,  s,  fri2, fii2, yr, vr);
-            cmult(c3, s3, fri3, fii3, vi, yi);
-
-            sumdiff(yr, vi);
-            sumdiff(yi, vr);
+//            wT_t yr, vr, vi, yi;
+//             cmult(c,  s,  fri2, fii2, yr, vr);
+//             cmult(c3, s3, fri3, fii3, vi, yi);
+            auto [yr, vr] = cs*c_t(fri2, fii2);
+            auto [vi, yi] = cs3*c_t(fri3, fii3);
+            sd(yr, vi);
+            sd(yi, vr);
 
 //             std::cout << "yr " << yr << std::endl;
 //             std::cout << "vr " << vr << std::endl;
 //             std::cout << "vi " << vi << std::endl;
 //             std::cout << "yi " << yi << std::endl;
-            sumdiffb(ur, vr, fri1, fri3);
-            sumdiffb(ui, vi, fii1, fii3);
-            sumdiffb(xr, yr, fri0, fri2);
-            sumdiffb(xi, yi, fii0, fii2);
+            sd(ur, vr, fri1, fri3);
+            sd(ui, vi, fii1, fii3);
+            sd(xr, yr, fri0, fri2);
+            sd(xi, yi, fii0, fii2);
 //            std::cout << "ap fri0 " << fri0 << std::endl;
 //            std::cout << "ap fri1 " << fri1 << std::endl;
 //           std::cout << "ap fri2 " << fri2 << std::endl;
@@ -309,9 +289,9 @@ namespace eve::detail
           ph += ph0;
           auto cs2 = sqr(cs);
           auto cs3 = cs2*cs;
-          auto [c, s] = cs;
+//            auto [c, s] = cs;
 //        std::cout << "cs " << cs << " c " << c << " s " << s << std::endl;
-          auto [c3, s3] = cs3;
+//          auto [c3, s3] = cs3;
 
           for (i_t r=0; r<n; r+=m)
           {
@@ -329,25 +309,26 @@ namespace eve::detail
             //           cmult(c2, s2, fr[i1], fi[i1], xr, xi);
             auto [xr, xi] = cs2*c_t(*(fr.begin()+i1), *(fi.begin()+i1));
             T ur, ui;
-            sumdiff3_r(xr, *(fr.begin()+i0), ur);
-            sumdiff3_r(xi, *(fi.begin()+i0), ui);
+            srd(xr, *(fr.begin()+i0), ur);
+            srd(xi, *(fi.begin()+i0), ui);
 //             std::cout << "xr " << xr << std::endl;
 //             std::cout << "xi " << xi << std::endl;
-            T yr, vr, vi, yi;
-            cmult(c,  s,  *(fr.begin()+i2), *(fi.begin()+i2), yr, vr);
-            cmult(c3, s3, *(fr.begin()+i3), *(fi.begin()+i3), vi, yi);
-
-            sumdiff(yr, vi);
-            sumdiff(yi, vr);
+//            T yr, vr, vi, yi;
+//             cmult(c,  s,  *(fr.begin()+i2), *(fi.begin()+i2), yr, vr);
+//             cmult(c3, s3, *(fr.begin()+i3), *(fi.begin()+i3), vi, yi);
+            auto [yr, vr] = cs*c_t(*(fr.begin()+i2), *(fi.begin()+i2));
+            auto [vi, yi] = cs3*c_t(*(fr.begin()+i3), *(fi.begin()+i3));
+            sd(yr, vi);
+            sd(yi, vr);
 //                       std::cout << "yr " << yr << std::endl;
 //                       std::cout << "vr " << vr << std::endl;
 //             std::cout << "vi " << vi << std::endl;
 //             std::cout << "yi " << yi << std::endl;
 
-            sumdiffb(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
-            sumdiffb(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
-            sumdiffb(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
-            sumdiffb(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
+            sd(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
+            sd(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
+            sd(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
+            sd(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
 //           std::cout << "ap fri0 " << fr[i0] << std::endl;
 //            std::cout << "ap fri1 " << fr[i1] << std::endl;
 //            std::cout << "ap fri2 " << fr[i2] << std::endl;
