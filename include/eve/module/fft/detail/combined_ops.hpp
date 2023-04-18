@@ -37,4 +37,13 @@ namespace eve::detail
   EVE_FORCEINLINE auto srd(auto &a, auto b, auto & s, auto & rd ) noexcept {rd=b-a; s = a+b; }
 
 
+  // 2 parameters difference and sum inplace  {a, b}  -> {a-b, a+b}
+  EVE_FORCEINLINE void ds(auto &a, auto &b) noexcept { auto t=a-b; b+= a; a = t; }
+  // 3 parameters difference {a, b} and sum -> {a-b, b, a+b}
+  // a untouched b receives difference and s receive sum
+  EVE_FORCEINLINE auto ds(auto a, auto &b, auto & s ) noexcept {s=a+b; b = a-b; }
+  // 4 parameters sum and difference {a, b}  -> {a, b, a+b, a-b}
+  // a, b untouched, s receives sum and d receives difference
+  EVE_FORCEINLINE void ds(auto a, auto b, auto & d, auto &s) noexcept {s = a+b; d = a-b; }
+
 }

@@ -15,7 +15,7 @@ namespace eve::detail
   template<range R, integral_value I>
   EVE_FORCEINLINE void idx_swap_(EVE_SUPPORTS(cpu_)
                                 , R & f
-                                , I const& idx1
+                                , I const & idx1
                                 , I const & idx2) noexcept
   {
     EVE_ASSERT(eve::all(idx1 < f.size() && idx2 < f.size()), "some indexes are out of range");
@@ -36,7 +36,6 @@ namespace eve::detail
       scatter(f.data(), idx2, fr);
     }
   }
-
 
   template<range R, typename C, integral_value I>
   EVE_FORCEINLINE void idx_swap_(EVE_SUPPORTS(cpu_)
