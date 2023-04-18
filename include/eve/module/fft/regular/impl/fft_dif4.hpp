@@ -28,7 +28,7 @@ namespace eve::detail
   //  requires(eve::is_complex_v<typename R::value_type>)
   {
 //    std::cout << "icitte" << std::endl;
-    //    using c_t = eve::complex<T>;
+    using c_t = eve::complex<T>;
     auto n =  fr.size();
     using i_t = decltype(n);
     i_t lx = 2;
@@ -54,7 +54,7 @@ namespace eve::detail
       return;
     }
     i_t lx2 = lx << 1;
-    std::cout << "ldn " << ldn << std::endl;
+//    std::cout << "ldn " << ldn << std::endl;
 //     std::cout << "lx2 " << lx2 << std::endl;
 //     std::cout << "lx  " << lx << std::endl;
 
@@ -66,124 +66,205 @@ namespace eve::detail
       auto ph = T(0);
       const auto ph0 = 2*rec(T(m));
 
-        using c_t =  eve::complex<T>;
+//       if(m4 < eve::nofs_cardinal_v<T>)
+//       {
+//      using c_t =  eve::complex<T>;
 //        std::cout << "m4 " << m4 << std::endl;
-        for (i_t j=0; j<m4; ++j)
-        {
-          auto cs  = exp_ipi(ph);
-          ph+= ph0;
-          auto cs2 = sqr(cs);
-          auto cs3 = cs2*cs;
+      for (i_t j=0; j<m4; ++j)
+      {
+        auto cs  = exp_ipi(ph);
+        ph+= ph0;
+        auto cs2 = sqr(cs);
+        auto cs3 = cs2*cs;
 //          std::cout << "n" << n << std::endl;
-          std::cout << "cs " << cs << "  " << cs2 <<  "   " << cs3 << std::endl;
-          for (i_t r=0; r<n; r+=m)
-          {
-//            std::cout << "r" << r << std::endl;
-            i_t i0 = j + r;
-            i_t i1 = i0 + m4;
-            i_t i2 = i1 + m4;
-            i_t i3 = i2 + m4;
-            auto bfri0 = (frbeg+i0);
-            auto bfri1 = (frbeg+i1);
-            auto bfri2 = (frbeg+i2);
-            auto bfri3 = (frbeg+i3);
+//          std::cout << "cs " << cs << "  " << cs2 <<  "   " << cs3 << std::endl;
+        for (i_t r=0; r<n; r+=m)
+        {
+//           std::cout << "r" << r << std::endl;
+          i_t i0 = j + r;
+          i_t i1 = i0 + m4;
+          i_t i2 = i1 + m4;
+          i_t i3 = i2 + m4;
+          auto bfri0 = (frbeg+i0);
+          auto bfri1 = (frbeg+i1);
+          auto bfri2 = (frbeg+i2);
+          auto bfri3 = (frbeg+i3);
 
-            auto bfii0 = (fibeg+i0);
-            auto bfii1 = (fibeg+i1);
-            auto bfii2 = (fibeg+i2);
-            auto bfii3 = (fibeg+i3);
-            {
-              auto a0 = c_t(*bfri0, *bfii0);
-              auto a1 = c_t(*bfri1, *bfii1);
-              auto a2 = c_t(*bfri2, *bfii2);
-              auto a3 = c_t(*bfri3, *bfii3);
+          auto bfii0 = (fibeg+i0);
+          auto bfii1 = (fibeg+i1);
+          auto bfii2 = (fibeg+i2);
+          auto bfii3 = (fibeg+i3);
+//           {
+//             auto a0 = c_t(*bfri0, *bfii0);
+//             auto a1 = c_t(*bfri1, *bfii1);
+//             auto a2 = c_t(*bfri2, *bfii2);
+//             auto a3 = c_t(*bfri3, *bfii3);
 
-              auto t0 = (a0+a2) + (a1+a3);
-              auto t2 = (a0+a2) - (a1+a3);
+//             auto t0 = (a0+a2) + (a1+a3);
+//             auto t2 = (a0+a2) - (a1+a3);
 
-              auto t1 = (a0-a2) + (a1-a3);
-              auto t3 = (a0-a2) - (a1-a3);
+//             auto t1 = (a0-a2) + eve::i(as<T>())*(a1-a3);
+//             auto t3 = (a0-a2) - eve::i(as<T>())*(a1-a3);
 
-              t1 *= cs;
-              t2 *= cs2;
-              t3 *= cs3;
+//             t1 *= cs;
+//             t2 *= cs2;
+//             t3 *= cs3;
 
-              std::cout << t0 << "   " << t2 << "   " << t1 << "   " << t3 << std::endl;
-              *bfri0 = real(t0);
-              *bfii0 = imag(t0);
-              *bfri1 = real(t2);
-              *bfii1 = imag(t2);
-              *bfri2 = real(t1);
-              *bfii2 = imag(t1);
-              *bfri3 = real(t3);
-              *bfii3 = imag(t3);
-            }
- //            {
-//               T xr, yr, ur, vr, xi, yi, ui, vi;
-//               auto  sumdiff = [](auto a, auto b, auto &s, auto &d)// {s, d}  <--| {a+b, a-b}
-//                 { s=a+b; d=a-b; };
-//              auto diffsum3 = [](auto a, auto &b, auto &s)
-//                 { s=a+b; b=a-b; };
-//              auto cmult = [](auto c, auto s,
-//                              auto x, auto y,
-//                              auto &u, auto &v)
-//                {
-//                  u = x * c - y * s;
-//                  v = y * c + x * s;
-//                };
+//             std::cout << t0 << "   " << t2 << "   " << t1 << "   " << t3 << std::endl;
+//             *bfri0 = real(t0);
+//             *bfii0 = imag(t0);
+//             *bfri1 = real(t2);
+//             *bfii1 = imag(t2);
+//             *bfri2 = real(t1);
+//             *bfii2 = imag(t1);
+//             *bfri3 = real(t3);
+//             *bfii3 = imag(t3);
+//           }
 
-//               // {x, u} = {f[i0]+f[i2], f[i0]-f[i2]}:
-//               sumdiff(*bfri0, *bfri2, xr, ur);
-//               sumdiff(*bfii0, *bfii2, xi, ui);
+          T xr, yr, ur, vr, xi, yi, ui, vi;
+//           auto  sumdiff = [](auto a, auto b, auto &s, auto &d)// {s, d}  <--| {a+b, a-b}
+//             { s=a+b; d=a-b; };
+//           auto diffsum3 = [](auto a, auto &b, auto &s)
+//             { s=a+b; b=a-b; };
+//           auto cmult = [](auto c, auto s,
+//                           auto x, auto y,
+//                           auto &u, auto &v)
+//             {
+//               u = x * c - y * s;
+//               v = y * c + x * s;
+//             };
 
-//               // {y, v} = {f[i1]+f[i3], (f[i1]-f[i3])*(0,is)}:
-//               sumdiff(*bfii3, *bfii1, yi, vr);
-//               sumdiff(*bfri1, *bfri3, yr, vi);
+          // {x, u} = {f[i0]+f[i2], f[i0]-f[i2]}:
+          sd(*bfri0, *bfri2, xr, ur);
+          sd(*bfii0, *bfii2, xi, ui);
 
-//               diffsum3(xr, yr, *bfri0);
-//               diffsum3(xi, yi, *bfii0);
+          // {y, v} = {f[i1]+f[i3], (f[i1]-f[i3])*(0,is)}:
+          sd(*bfii3, *bfii1, yi, vr);
+          sd(*bfri1, *bfri3, yr, vi);
 
-//               //cmult(c2, s2, yr, yi, bfri1, bfii1);
-// //           std::cout << "av bfri1" << *bfri1 << std::endl;
-//               cmult(real(cs2), imag(cs2), yr, yi, *bfri1, *bfii1);
-// //              {auto [rr, ii] =  cs2*c_t(yr, yi); *bfri1 = rr; *bfii1 = ii;}
-// //           std::cout << "ap bfri1" << *bfri1 << std::endl;
+          ds(xr, yr, *bfri0);
+          ds(xi, yi, *bfii0);
 
-//               sumdiff(ur, vr, xr, yr);
-//               sumdiff(ui, vi, xi, yi);
+          //cmult(c2, s2, yr, yi, bfri1, bfii1);
+//          cmult(real(cs2), imag(cs2), yr, yi, *bfri1, *bfii1);
+          {auto [rr, ii] =  cs2*c_t(yr, yi); *bfri1 = rr; *bfii1 = ii;}
 
-//               //cmult(c3, s3, yr, yi, bfri3, bfii3);
-//               //             {auto [rr, ii] =  cs3*c_t(yr, yi); *bfri3 = rr; *bfii3 = ii;}
-//               cmult(real(cs3), imag(cs3), yr, yi, *bfri3, *bfii3);
-//               // std::tie(bfri3, bfii3) = cs3*c_t(yr, yi);
 
-//               //            {auto [rr, ii] =  cs*c_t(xr, xi); *bfri2 = rr; *bfii2 = ii;}
-//               cmult(real(cs), imag(cs), xr, xi, *bfri2, *bfii2);
-//                //cmult(c,  s,  xr, xi, bfri2, bfii2);
-//               //           std::tie(bfri2, bfii2) = cs*c_t(xr, xi);
-//                std::swap(*bfri3, *bfri2);
+          sd(ur, vr, xr, yr);
+          sd(ui, vi, xi, yi);
 
-//               std::cout << *bfri0 << ", " << *bfii0
-//                         << "    " << *bfri1 << ", " << *bfii1
-//                         << "    " << *bfri2 << ", " << *bfii2
-//                         << "    " << *bfri3 << ", " << *bfii3 << std::endl;
-//             }
-          }
+          //cmult(c3, s3, yr, yi, bfri3, bfii3);
+          {auto [rr, ii] =  cs3*c_t(yr, yi); *bfri3 = rr; *bfii3 = ii;}
+//          cmult(real(cs3), imag(cs3), yr, yi, *bfri3, *bfii3);
+          // std::tie(bfri3, bfii3) = cs3*c_t(yr, yi);
 
+          {auto [rr, ii] =  cs*c_t(xr, xi); *bfri2 = rr; *bfii2 = ii;}
+          //  cmult(real(cs), imag(cs), xr, xi, *bfri2, *bfii2);
+          //  cmult(c,  s,  xr, xi, bfri2, bfii2);
+          //           std::tie(bfri2, bfii2) = cs*c_t(xr, xi);
+//          std::swap(*bfri3, *bfri2);
+
+//           std::cout << *bfri0 << ", " << *bfii0
+//                     << "    " << *bfri1 << ", " << *bfii1
+//                     << "    " << *bfri2 << ", " << *bfii2
+//                     << "    " << *bfri3 << ", " << *bfii3 << std::endl;
         }
+      }
+
+    }
 //           pr("loop fr", fr);
 //           pr("loop fi", fi);
 //      }
-    }
+
     if ( (ldn&1)!=0 )  // n is not a power of 4, need a radix-8 step
     {
       // for (i_t i0=0; i0<n; i0+=8)  fft8_dif_core_p1(fr+i0, fi+i0);
-      std::cout << "notdone" << std::endl;
-      exit(1);
+      auto fft8_dif_core_p1 = [](auto frb, auto fib){
+        // 8-point decimation in frequency FFT
+        const T invsqrt2 = invsqrt_2(as<T>());
+        // INPUT_RE:
+        auto t1r = *(frb+0) + *(frb+4);
+        auto t2r = *(frb+2) + *(frb+6);
+        auto t7r = t1r + t2r;
+        auto t3r = *(frb+1) - *(frb+5);
+        auto t4r = *(frb+1) + *(frb+5);
+        auto t5r = *(frb+3) + *(frb+7);
+        auto t8r = t4r + t5r;
+        auto t6r = *(frb+3) - *(frb+7);
+
+        auto m0r = t7r + t8r;
+        auto m1r = t7r - t8r;
+        auto m2r = t1r - t2r;
+        auto m3r = *(frb+0) - *(frb+4);
+        auto m4r = invsqrt2 * (t3r - t6r);
+
+
+
+#define m5i t6r
+#define m6i t7r
+#define m7i t8r
+        t8r =  -(invsqrt2 * (t3r + t6r));
+        t6r = t5r - t4r;
+        t7r = *(frb+6) - *(frb+2);
+
+        // INPUT_IM:
+        auto t1i = *(fib+0) + *(fib+4);
+        auto t2i = *(fib+2) + *(fib+6);
+        auto t7i = t1i + t2i;
+        auto t3i = *(fib+1) - *(fib+5);
+        auto t4i = *(fib+1) + *(fib+5);
+        auto t5i = *(fib+3) + *(fib+7);
+        auto t8i = t4i + t5i;
+        auto t6i = *(fib+3) - *(fib+7);
+
+        auto m0i = t7i + t8i;
+        auto m1i = t7i - t8i;
+        auto m2i = t1i - t2i;
+        auto m3i = *(fib+0) - *(fib+4);
+        auto m4i = invsqrt2 * (t3i - t6i);
+
+#define m5r t6i
+#define t7i t7i
+#define m7r t8i
+        t8i = invsqrt2 * (t3i + t6i);
+        t6i = t4i - t5i;
+        t7i = *(fib+2) - *(fib+6);
+        t1r = m3r + m4r;
+        t2r = m3r - m4r;
+        t3r = t7i + t8i;
+        t4r = t7i - t8i;
+
+        // OUTPUT_RE:
+        *(frb+0) = m0r;
+        *(frb+7) = t1r + t3r;
+        *(frb+3) = m2r + t6i;
+        *(frb+5) = t2r - t4r;
+        *(frb+1) = m1r;
+        *(frb+6) = t2r + t4r;
+        *(frb+2) = m2r - t6i;
+        *(frb+4) = t1r - t3r;
+        t1r = m3i + m4i;
+        t2r = m3i - m4i;
+        t3r = t7r + t8r;
+        t4r = t7r - t8r;
+
+        // OUTPUT_IM:
+        *(fib+0) = m0i;
+        *(fib+7) = t1r + t3r;
+        *(fib+3) = m2i + t6r;
+        *(fib+5) = t2r - t4r;
+        *(fib+1) = m1i;
+        *(fib+6) = t2r + t4r;
+        *(fib+2) = m2i - t6r;
+        *(fib+4) = t1r - t3r;
+      };
+      for (i_t i0=0; i0<n; i0+=8){
+        fft8_dif_core_p1(frbeg+i0, fibeg+i0);
+      }
     }
     else
     {
-      std::cout << "n " << n << std::endl;
+//      std::cout << "n " << n << std::endl;
       for (i_t i0=0; i0<n; i0+=4)
       {
         T xr, yr, ur, vr, xi, yi, ui, vi;

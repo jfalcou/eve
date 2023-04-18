@@ -25,7 +25,7 @@ namespace eve::detail
               , R & fr
               , R & fi
               , T fac) noexcept
-  //  requires(eve::is_complex_v<typename R::value_type>)
+  //  requires(std::is_floating_point_v<typename R::value_type>)
   {
 
     [[maybe_unused]] auto pr = [](auto name, auto v){
@@ -33,29 +33,16 @@ namespace eve::detail
       for(size_t i=0; i < v.size() ; ++i) std::cout << *(v.begin()+i) << " ";
       std::cout << ")\n";
     };
-//     pr("fr ", fr);
-//     pr("fi ", fi);
     aos(revbin_permute)(fr);
     aos(revbin_permute)(fi);
-    //    using c_t = eve::complex<T>;
     auto n =  fr.size();
     using i_t = decltype(n);
     i_t lx = 2;
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n); //eve::log2(n));
 
-//     auto pr1 = [n](auto name, auto pr){
-//       std::cout << name << " = (";
-//       for(size_t i=0; i < n ; ++i) std::cout << *(pr+i) << " ";
-//       std::cout << ")\n";
-//     };
-
     auto frbeg = fr.data();
     auto fibeg = fi.data();
-//     pr1("frbeg ", frbeg);
-//     pr1("fibeg ", fibeg);
-//     auto z =  load(frbeg);
-//     std::cout << "z " << z << std::endl;
     if ( n<=2 )
     {
       if ( n==2 )
@@ -66,8 +53,6 @@ namespace eve::detail
       return;
     }
     i_t ldm = (ldn&1);
-//     std::cout << "ldm " << ldm << std::endl;
-//     std::cout << "ldn " << ldn << std::endl;
     if ( ldm!=0 )  // n is not a power of 4, need a radix-8 step
     {
       auto fft8_dit_core_p1 = [](auto frb, auto fib){
@@ -167,50 +152,30 @@ namespace eve::detail
        sd(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
        sd(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
       }
-//      pr1("ensuite frbeg ", frbeg);
     }
     ldm += 2*lx;
     for ( ; ldm<=ldn; ldm+=lx)
     {
       i_t m = (1UL<<ldm);
       i_t m4 = (m>>lx);
-//       std::cout << "m =  " << m << " m4 "<< m4 << std::endl;
       const auto ph0 = T(2)/m;
-
       if(m4 >= eve::nofs_cardinal_v<T>)
       {
-//         std::cout << "simd" << std::endl;
-//         pr("scrav fr", fr);
-//         pr("scrav fi", fi);
-
-//         std::cout << "m4 " << m4 << std::endl;
         auto js = eve::views::iota(T{0}, m4);
         auto phs= eve::views::iota_with_step(T{0}, ph0, m4);
         auto view = eve::views::zip(js, phs);
-//        int brk = 0;
         auto doit = [/*&brk, */n, m, m4, &fr, &fi](auto zz, auto ignore){
-//           if (brk == 2) return;
-//           ++brk;
           auto [j, ph] = load[ignore](zz);
-//          std::cout << "j  " << j << std::endl;
-//          std::cout << "ph " << ph<< std::endl;
           auto cs  = exp_ipi(ph);
-//          std::cout << "cs " << cs<< std::endl;
           using c_t =  decltype(cs);
           auto cs2 = sqr(cs);
-//          std::cout << "cs2 " << cs2<< std::endl;
           auto cs3 = cs2*cs;
-//          std::cout << "cs3 " << cs3<< std::endl;
-//           auto [c, s] = cs;
-//           auto [c3, s3] = cs3;
           for (i_t r=0; r<n; r+=m)
           {
             i_t i0 = j.get(0) + r;
             i_t i1 = i0 + m4;
             i_t i2 = i1 + m4;
             i_t i3 = i2 + m4;
-//           std::cout << " i0 = " << i0 << ", i1 = " << i1
-//                     << ", i2 = " << i2 << ", i3 = " << i3 << std::endl;
             auto frbeg = fr.data();
             auto fibeg = fi.data();
             auto fri0 = load(frbeg+i0);
@@ -222,40 +187,23 @@ namespace eve::detail
             auto fii2 = load(fibeg+i2);
             auto fii3 = load(fibeg+i3);
             auto tmp = cs2*c_t(fri1, fii1);
-//             std::cout << "fri0 " << fri0 << std::endl;
-//             std::cout << "fri1 " << fri1 << std::endl;
-//             std::cout << "fri2 " << fri2 << std::endl;
-//             std::cout << "fri3 " << fri3 << std::endl;
 
             auto xr = real(tmp);
             auto xi = imag(tmp);
             //         [xr, xi] = cs2*c_t(fri1, fii1);
+
             using wT_t = decltype(xr);
             wT_t ur, ui;
             srd(xr, fri0, ur);
             srd(xi, fii0, ui);
-//             std::cout << "xr " << xr << std::endl;
-//             std::cout << "xi " << xi << std::endl;
-//            wT_t yr, vr, vi, yi;
-//             cmult(c,  s,  fri2, fii2, yr, vr);
-//             cmult(c3, s3, fri3, fii3, vi, yi);
             auto [yr, vr] = cs*c_t(fri2, fii2);
             auto [vi, yi] = cs3*c_t(fri3, fii3);
             sd(yr, vi);
             sd(yi, vr);
-
-//             std::cout << "yr " << yr << std::endl;
-//             std::cout << "vr " << vr << std::endl;
-//             std::cout << "vi " << vi << std::endl;
-//             std::cout << "yi " << yi << std::endl;
             sd(ur, vr, fri1, fri3);
             sd(ui, vi, fii1, fii3);
             sd(xr, yr, fri0, fri2);
             sd(xi, yi, fii0, fii2);
-//            std::cout << "ap fri0 " << fri0 << std::endl;
-//            std::cout << "ap fri1 " << fri1 << std::endl;
-//           std::cout << "ap fri2 " << fri2 << std::endl;
-//            std::cout << "ap fri3 " << fri3 << std::endl;
             store(fri0, frbeg+i0);
             store(fri1, frbeg+i1);
             store(fri2, frbeg+i2);
@@ -267,89 +215,40 @@ namespace eve::detail
           }
         };
         eve::algo::for_each[eve::algo::expensive_callable](view, doit);
-//         pr("simd ap fr", fr);
-//         pr("simd ap fi", fi);
       }
       else
       {
-//        std::cout << "scalar" << std::endl;
-//         pr("av fr", fr);
-//         pr("av fi", fi);
         T ph(0);
         using c_t =  eve::complex<T>;
-        //       int brk = 0;
         for (i_t j=0; j<m4; j++)
         {
-//          if (brk == 8) break;
-//          ++brk;
           auto cs  = exp_ipi(ph);
-//         std::cout << "j " << j;
-//         std::cout << " phi " << ph;
-//         std::cout << " cs  " << cs << std::endl;
           ph += ph0;
           auto cs2 = sqr(cs);
           auto cs3 = cs2*cs;
-//            auto [c, s] = cs;
-//        std::cout << "cs " << cs << " c " << c << " s " << s << std::endl;
-//          auto [c3, s3] = cs3;
-
           for (i_t r=0; r<n; r+=m)
           {
             i_t i0 = j + r;
             i_t i1 = i0 + m4;
             i_t i2 = i1 + m4;
             i_t i3 = i2 + m4;
-//           std::cout << "->i0 = " << i0 << ", i1 = " << i1 <<
-//             ", i2 = " << i2 << ", i3 = " << i3 << std::endl;
-//           std::cout << "fri0 " << fr[i0] << std::endl;
-//           std::cout << "fri1 " << fr[i1] << std::endl;
-//           std::cout << "fri2 " << fr[i2] << std::endl;
-//           std::cout << "fri3 " << fr[i3] << std::endl;
-
-            //           cmult(c2, s2, fr[i1], fi[i1], xr, xi);
-            auto [xr, xi] = cs2*c_t(*(fr.begin()+i1), *(fi.begin()+i1));
+            auto [xr, xi] = cs2*c_t(*(frbeg+i1), *(fibeg+i1));
             T ur, ui;
-            srd(xr, *(fr.begin()+i0), ur);
-            srd(xi, *(fi.begin()+i0), ui);
-//             std::cout << "xr " << xr << std::endl;
-//             std::cout << "xi " << xi << std::endl;
-//            T yr, vr, vi, yi;
-//             cmult(c,  s,  *(fr.begin()+i2), *(fi.begin()+i2), yr, vr);
-//             cmult(c3, s3, *(fr.begin()+i3), *(fi.begin()+i3), vi, yi);
-            auto [yr, vr] = cs*c_t(*(fr.begin()+i2), *(fi.begin()+i2));
-            auto [vi, yi] = cs3*c_t(*(fr.begin()+i3), *(fi.begin()+i3));
+            srd(xr, *(frbeg+i0), ur);
+            srd(xi, *(fibeg+i0), ui);
+            auto [yr, vr] = cs*c_t(*(frbeg+i2), *(fibeg+i2));
+            auto [vi, yi] = cs3*c_t(*(frbeg+i3), *(fibeg+i3));
             sd(yr, vi);
             sd(yi, vr);
-//                       std::cout << "yr " << yr << std::endl;
-//                       std::cout << "vr " << vr << std::endl;
-//             std::cout << "vi " << vi << std::endl;
-//             std::cout << "yi " << yi << std::endl;
-
-            sd(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
-            sd(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
-            sd(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
-            sd(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
-//           std::cout << "ap fri0 " << fr[i0] << std::endl;
-//            std::cout << "ap fri1 " << fr[i1] << std::endl;
-//            std::cout << "ap fri2 " << fr[i2] << std::endl;
-//           std::cout << "ap fri3 " << fr[i3] << std::endl;
+            sd(ur, vr, *(frbeg+i1), *(frbeg+i3));
+            sd(ui, vi, *(fibeg+i1), *(fibeg+i3));
+            sd(xr, yr, *(frbeg+i0), *(frbeg+i2));
+            sd(xi, yi, *(fibeg+i0), *(fibeg+i2));
           }
         }
-//         pr("scal ap fr", fr);
-//         pr("scal ap fi", fi);
-        // return;
       }
     }
     scaleit(fr, fi, fac);
-//    if (fac != T(1))
-//     {
-//       for(size_t i=0; i < n; ++i)
-//       {
-//         *(frbeg+i) *= fac;
-//         *(fibeg+i) *= fac;
-//       }
-//     }
-
   }
 
   template<range R, floating_scalar_value T>

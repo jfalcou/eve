@@ -29,6 +29,7 @@
 #include <eve/module/fft/regular/fft_no_dif4.hpp>
 #include <eve/module/fft/regular/fft_dif4.hpp>
 #include <eve/module/fft/regular/fft_dit4.hpp>
+#include <eve/module/fft/regular/fft_split.hpp>
 
 
 // #include <eve/module/fft/regular/fft_000.hpp>
