@@ -142,6 +142,7 @@ namespace eve::detail
         i_t i2 = i1 + 1;
         i_t i3 = i2 + 1;
 
+//        auto fr0 = load(fr.begin()+i0
        sd(*(fr.begin()+i0), *(fr.begin()+i1), xr, ur);
        sd(*(fr.begin()+i2), *(fr.begin()+i3), yr, vi);
        sd(*(fi.begin()+i0), *(fi.begin()+i1), xi, ui);
