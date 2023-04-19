@@ -13,6 +13,7 @@
 #include <eve/concept/range.hpp>
 #include <vector>
 #include <eve/module/fft/utils.hpp>
+#include <eve/pattern.hpp>
 
 namespace eve::detail
 {
@@ -33,8 +34,8 @@ namespace eve::detail
       for(size_t i=0; i < v.size() ; ++i) std::cout << *(v.begin()+i) << " ";
       std::cout << ")\n";
     };
-    aos(revbin_permute)(fr);
-    aos(revbin_permute)(fi);
+    aos(revbin_permute)(fr, fi);
+    //   aos(revbin_permute)(fi);
     auto n =  fr.size();
     using i_t = decltype(n);
     i_t lx = 2;
@@ -137,21 +138,43 @@ namespace eve::detail
     {
       for (i_t i0=0; i0<n; i0+=4)
       {
-        T xr, yr, ur, vr, xi, yi, ui, vi;
-        i_t i1 = i0 + 1;
-        i_t i2 = i1 + 1;
-        i_t i3 = i2 + 1;
+        if constexpr(eve::nofs_cardinal_v<T> >= 8)
+        {
+          using w_t = wide<T, fixed<4>>;
+          auto fr0 = load(fr.data()+i0, as<w_t>());
+          auto fi0 = load(fi.data()+i0, as<w_t>());
+          auto z = eve::combine(fr0, fi0);
+          auto xryrxiyi = eve::shuffle(z, eve::pattern<0, 2, 4+0, 4+3>);
+          auto urviuivr = eve::shuffle(z, eve::pattern<1, 3, 4+1, 4+2>);
+          w_t a, b;
+          sd(xryrxiyi, urviuivr, a, b);
+          z = eve::combine(a, b);
+          auto uixiurxr = eve::shuffle(z, eve::pattern<4+2, 2, 4+0, 0>);
+          auto viyivryr = eve::shuffle(z, eve::pattern<4+1, 3, 4+3, 1>);
+          w_t  ii1_ii0_ri1_ri0, ii3_ii2_ri3_ri2;
+          sd(uixiurxr, viyivryr, ii1_ii0_ri1_ri0, ii3_ii2_ri3_ri2);
+          z = eve::combine(ii1_ii0_ri1_ri0, ii3_ii2_ri3_ri2);
+          auto rr = eve::shuffle(z, eve::pattern<3, 2, 4+3, 4+2>);
+          auto ii = eve::shuffle(z, eve::pattern<1, 0, 4+1, 4+0>);
+          store(rr, fr.data()+i0);
+          store(ii, fi.data()+i0);
+        }
+        else
+        {
+          T xr, yr, ur, vr, xi, yi, ui, vi;
+          i_t i1 = i0 + 1;
+          i_t i2 = i1 + 1;
+          i_t i3 = i2 + 1;
+          sd(*(fr.begin()+i0), *(fr.begin()+i1), xr, ur);
+          sd(*(fr.begin()+i2), *(fr.begin()+i3), yr, vi);
+          sd(*(fi.begin()+i0), *(fi.begin()+i1), xi, ui);
+          sd(*(fi.begin()+i3), *(fi.begin()+i2), yi, vr);
 
-//        auto fr0 = load(fr.begin()+i0
-       sd(*(fr.begin()+i0), *(fr.begin()+i1), xr, ur);
-       sd(*(fr.begin()+i2), *(fr.begin()+i3), yr, vi);
-       sd(*(fi.begin()+i0), *(fi.begin()+i1), xi, ui);
-       sd(*(fi.begin()+i3), *(fi.begin()+i2), yi, vr);
-
-       sd(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
-       sd(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
-       sd(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
-       sd(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
+          sd(ui, vi, *(fi.begin()+i1), *(fi.begin()+i3));
+          sd(xi, yi, *(fi.begin()+i0), *(fi.begin()+i2));
+          sd(ur, vr, *(fr.begin()+i1), *(fr.begin()+i3));
+          sd(xr, yr, *(fr.begin()+i0), *(fr.begin()+i2));
+        }
       }
     }
     ldm += 2*lx;
@@ -165,7 +188,7 @@ namespace eve::detail
         auto js = eve::views::iota(T{0}, m4);
         auto phs= eve::views::iota_with_step(T{0}, ph0, m4);
         auto view = eve::views::zip(js, phs);
-        auto doit = [/*&brk, */n, m, m4, &fr, &fi](auto zz, auto ignore){
+        auto doit = [n, m, m4, &fr, &fi](auto zz, auto ignore){
           auto [j, ph] = load[ignore](zz);
           auto cs  = exp_ipi(ph);
           using c_t =  decltype(cs);
@@ -187,11 +210,7 @@ namespace eve::detail
             auto fii1 = load(fibeg+i1);
             auto fii2 = load(fibeg+i2);
             auto fii3 = load(fibeg+i3);
-            auto tmp = cs2*c_t(fri1, fii1);
-
-            auto xr = real(tmp);
-            auto xi = imag(tmp);
-            //         [xr, xi] = cs2*c_t(fri1, fii1);
+            auto  [xr, xi] = cs2*c_t(fri1, fii1);
 
             using wT_t = decltype(xr);
             wT_t ur, ui;
@@ -215,7 +234,7 @@ namespace eve::detail
             store(fii3, fibeg+i3);
           }
         };
-        eve::algo::for_each[eve::algo::expensive_callable](view, doit);
+        eve::algo::for_each/*[eve::algo::expensive_callable] ?? */(view, doit);
       }
       else
       {

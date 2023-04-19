@@ -21,147 +21,171 @@ namespace eve::detail
 
   namespace internal
   {
-    // scalar perm
-    template < range F, range I>
-    auto perm(F const & f,  I const & ind) noexcept
-    {
-      F g(f.size());
-      auto fb =  f.begin();
-      auto ib =  ind.begin();
-      for(auto gb =  g.begin(); gb < g.end(); ++gb, ++ib) *gb = *(fb+*ib);
-      return g;
-    }
-
-//     template < range F, range I>
-//     auto perm(F & f,  I const & ind) noexcept
-//     {
-//       std::cout << "icitte" << std::endl;
-//       using i_t =  typename I::value_type;
-//       auto startf = f.begin();
-//       auto startind = ind.begin();
-//       auto ib =  startind;
-//       auto fb =  startf;
-//       for(  i_t i = 0; fb < f.end(); ++fb, ++ib, ++i){
-//         if (i < *(startind+*ib)) {
-//           std::swap(*fb, *(startf+*(startind+*ib)));
-//         auto tmp = *(startf+*(startind+*ib)); *(startf+*(startind+*ib)) = *fb; *fb = tmp;
-//         }
-//       }
-//       return f;
-//     }
-
-
-    // simd perm
-    template < range F, range I>
-    auto simd_perm(F const & f,  I const & ind) noexcept
-    {
-      F g(f.size());
-      auto view = eve::views::zip(ind, g);
-      auto doit = [&f](auto zz, auto ignore){
-        auto [ ind_it, g_it] = zz;
-        auto [ ii, gg] = load[ignore](zz);
-        auto r = eve::gather[ignore](f.data(), ii);
-        eve::store[ignore](r, g_it);
-      };
-      eve::algo::for_each(view, doit);
-
-      return g;
-    }
-
     template < range R>
     inline void revbin_permute_leq_64(R & f)
-    // Must have f.size() \in {2, 4, 8, 16, 32, 64}
+    // Must have f.size() \in {1, 2, 4, 8, 16, 32, 64}
     {
       auto n = f.size();
+      auto fbeg = f.data();
       EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
+      auto iswap = [fbeg](auto k, auto r)  {
+        auto t(*(fbeg+k));  *(fbeg+k) = *(fbeg+r); *(fbeg+r) = t;
+      };
 
       switch ( n ) {
       case 1:  break;
       case 2:  break;
-      case 4: {
-        constexpr std::array<std::uint32_t, 4> ind{0, 2, 1, 3};
-        f = perm(f, ind); break;
+      case 4: { iswap(1, 2);
+          break; }
+      case 8: { iswap(1, 4);  iswap(3, 6);
+          break; }
+      case 16:{ iswap(1, 8);  iswap(2, 4);   iswap(3, 12);  iswap(5, 10);  iswap(7, 14);  iswap(11, 13);
+          break; }
+      case 32:{ iswap(1, 16); iswap(2, 8);   iswap(3, 24);  iswap(5, 20);  iswap(6, 12);  iswap(7, 28);
+                iswap(9, 18); iswap(11, 26); iswap(13, 22); iswap(15, 30); iswap(19, 25); iswap(23, 29);
+          break; }
+      case 64:{ iswap(1, 32); iswap(2, 16);  iswap(3, 48);  iswap(4, 8);   iswap(5, 40);  iswap(6, 24);
+                iswap(7, 56); iswap(9, 36);  iswap(10, 20); iswap(11, 52); iswap(13, 44); iswap(14, 28);
+                iswap(15, 60);iswap(17, 34); iswap(19, 50); iswap(21, 42); iswap(22, 26); iswap(23, 58);
+                iswap(25, 38);iswap(27, 54); iswap(29, 46); iswap(31, 62); iswap(35, 49); iswap(37, 41);
+                iswap(39, 57);iswap(43, 53); iswap(47, 61); iswap(55, 59);
+          break; }
+      default:;  // normally have asserted here
       }
-      case 8: {
-        constexpr std::array<std::uint32_t, 8> ind{0, 4, 2, 6, 1, 5, 3, 7};
-        perm(f, ind); break;
-      }
-      case 16: {
-        constexpr std::array<std::uint32_t, 16> ind{0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
-        f = perm(f, ind); break;
-      }
-      case 32: {
-        constexpr std::array<std::uint32_t, 32> ind{0, 16, 8, 24, 4, 20, 12, 28, 2, 18, 10, 26, 6, 22, 14, 30 , 1, 17, 9, 25, 5, 21, 13, 29, 3, 19, 11, 27, 7, 23, 15, 31};
-        f = perm(f, ind); break;
-      }
-      case 64: {
-        constexpr std::array<std::uint32_t, 64> ind{
-            0, 32, 16, 48, 8, 40, 24, 56, 4, 36,
-            20, 52, 12, 44, 28, 60, 2, 34, 18, 50,
-            10, 42, 26, 58, 6, 38, 22, 54, 14, 46,
-            30, 62, 1, 33, 17, 49, 9, 41, 25, 57,
-            5, 37, 21, 53, 13, 45, 29, 61, 3, 35, 19, 51,
-            11, 43, 27, 59, 7, 39, 23, 55, 15, 47, 31, 63};
-        f = perm(f, ind); break;
-      }
-      default:;  // not so good...
+    }
+
+    inline auto revbin_le64(auto iswap, auto n) noexcept
+    {
+      switch ( n ) {
+      case 1:  break;
+      case 2:  break;
+      case 4: { iswap(1, 2);
+          break; }
+      case 8: { iswap(1, 4);  iswap(3, 6);
+          break; }
+      case 16:{ iswap(1, 8);  iswap(2, 4);   iswap(3, 12);  iswap(5, 10);  iswap(7, 14);  iswap(11, 13);
+          break; }
+      case 32:{ iswap(1, 16); iswap(2, 8);   iswap(3, 24);  iswap(5, 20);  iswap(6, 12);  iswap(7, 28);
+                iswap(9, 18); iswap(11, 26); iswap(13, 22); iswap(15, 30); iswap(19, 25); iswap(23, 29);
+          break; }
+      case 64:{ iswap(1, 32); iswap(2, 16);  iswap(3, 48);  iswap(4, 8);   iswap(5, 40);  iswap(6, 24);
+                iswap(7, 56); iswap(9, 36);  iswap(10, 20); iswap(11, 52); iswap(13, 44); iswap(14, 28);
+                iswap(15, 60);iswap(17, 34); iswap(19, 50); iswap(21, 42); iswap(22, 26); iswap(23, 58);
+                iswap(25, 38);iswap(27, 54); iswap(29, 46); iswap(31, 62); iswap(35, 49); iswap(37, 41);
+                iswap(39, 57);iswap(43, 53); iswap(47, 61); iswap(55, 59);
+          break; }
+      default:;  // normally have asserted here
       }
     }
 
     template < range R>
-    inline auto revbin_permute_gt_64(R & f)
-    // Must have f.size() 2^n > 64
+    inline void revbin_permute_le_64(R & f)
+    // Must have f.size() \in {1, 2, 4, 8, 16, 32, 64}
     {
       auto n = f.size();
-      auto idx_swap = [&f](auto k,  auto r){
-        auto pos1 = f.data()+k;
-        auto pos2 = f.data()+r;
-        auto z = *pos1;  *pos1 = *pos2; *pos2 = z;
+      auto fbeg = f.data();
+      EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
+      auto iswap = [fbeg](auto k, auto r)  {
+        auto t(*(fbeg+k));  *(fbeg+k) = *(fbeg+r); *(fbeg+r) = t;
       };
+      revbin_le64(iswap, n);
+    }
 
-      auto revbin = []<typename UI>(UI x){ // Return x with reversed bit order.
-        size_t s = sizeof(UI)*8 >> 1;
-        size_t m = allbits(as<UI>()) >> s;
-        while ( s )
-        {
-          x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
-          s >>= 1;
-          m ^= (m<<s);
-        }
-        return  x;
+    template < range R>
+    inline void revbin_permute_le_64(R & fr, R& fi)
+    {
+      auto n = fr.size();
+      auto frbeg = fr.data();
+      auto fibeg = fi.data();
+      EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
+      auto iswap = [frbeg, fibeg](auto k, auto r)  {
+        auto tr(*(frbeg+k));  *(frbeg+k) = *(frbeg+r); *(frbeg+r) = tr;
+        auto ti(*(fibeg+k));  *(fibeg+k) = *(fibeg+r); *(fibeg+r) = ti;
       };
-      auto  rvb = [revbin](size_t x, size_t ldn){
-        return  revbin(x) >> (sizeof(size_t)*8-ldn);
-      };
+      revbin_le64(iswap, n);
+    }
 
-      for (size_t x =0; x < n; ++x)
+    inline auto revbin_gt64(auto iswap, auto n)
+    {
+      auto revbin = [](auto x, auto ldn){
+        auto siz = sizeof(element_type_t< decltype(x)>)*8;
+        return  eve::bit_reverse(x) >> (siz-ldn);
+      };
+      EVE_ASSERT(n > 64u, "revbin_permute_gt_64 : not enough datas elements");
+      EVE_ASSERT(is_pow2(n), "data size must be a power of 2");
+      const size_t ldn =  eve::countr_zero(n);
+      const size_t nh = (n>>1);
+      const size_t n1  = n - 1;
+      const size_t nx1 = nh - 2;
+      const size_t nx2 = n1 - nx1;
+
+      size_t k = 0,  r = 0;
+      while ( k < (n >> 2)  )
       {
-        auto r = rvb(x, countr_zero(n));
-        if (r>x) idx_swap(x, r);
+        if ( r>k ){  iswap(k, r); iswap(n1^k, n1^r); iswap(nx1^k, nx1^r); iswap(nx2^k, nx2^r); }
+        ++k;
+        r ^= nh;
+        if ( r>k ) { iswap(k, r); iswap(n1^k, n1^r); }
+        ++k;
+        r = revbin(k, ldn);
+        if ( r>k ) { iswap(k, r); iswap(n1^k, n1^r); }
+        ++k;
+        r ^= nh;
+        if ( r>k ) {  iswap(k, r); iswap(nx1^k, nx1^r); }
+        ++k;
+        r = revbin(k, ldn);
       }
-      return f;
+    }
+
+    template < range R>
+    inline auto revbin_permute_gt_64(R & fr, R & fi)
+    {
+      auto frbeg = fr.data();
+      auto fibeg = fi.data();
+      auto iswap = [frbeg, fibeg](auto k, auto r)  {
+        auto tr(*(frbeg+k));  *(frbeg+k) = *(frbeg+r); *(frbeg+r) = tr;
+        auto ti(*(fibeg+k));  *(fibeg+k) = *(fibeg+r); *(fibeg+r) = ti;
+      };
+      revbin_gt64(iswap, fr.size());
+    }
+
+    template < range R>
+    inline auto revbin_permute_gt_64(R & f)
+    {
+      auto fbeg = f.data();
+      auto iswap = [fbeg](auto k, auto r)  {
+        auto t(*(fbeg+k));  *(fbeg+k) = *(fbeg+r); *(fbeg+r) = t;
+      };
+      revbin_gt64(iswap, f.size());
     }
   }
-
 
   template<range R>
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & f) noexcept
   {
-//     auto n = f.size();
-//     if ( n<=64 )
-//     {
-//       internal::revbin_permute_leq_64(f);
-//     }
-//     else
-//     {
+    auto n = f.size();
+    if ( n<=64 )
+      internal::revbin_permute_le_64(f);
+    else
       internal::revbin_permute_gt_64(f);
-//    }
+  }
+
+  template<range R>
+  EVE_FORCEINLINE constexpr void
+  revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr, R & fi) noexcept
+  {
+    EVE_ASSERT(fr.size() == fi.size(), "fr and fi must share the same size");
+    auto n = fr.size();
+    if ( n<=64 )
+      internal::revbin_permute_le_64(fr, fi);
+    else
+      internal::revbin_permute_gt_64(fr, fi);
   }
 
   template <range R>
   auto revbin_permute_(EVE_SUPPORTS(cpu_), soa_type const &, R & f)
-  requires(eve::is_complex_v<typename R::value_type>)
+    requires(eve::is_complex_v<typename R::value_type>)
   {
     using T = typename R::value_type;
     auto n = f.size();
@@ -170,231 +194,4 @@ namespace eve::detail
     aos(revbin_permute)(g);
     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
   }
-
-
-//   template <typename T>
-//   auto revbin_permute_(EVE_SUPPORTS(cpu_), eve::algo::soa_vector<eve::complex<T>>  & f)
-//   {
-//     auto n = f.size();
-//     std::vector<eve::complex<T>> g(n);
-//     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-//     revbin_permute(g);
-//     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
-//     return f;
-//   }
-
-//   template < typename T>
-//   auto revbin_permute_(EVE_SUPPORTS(cpu_), raw_type const &, eve::algo::soa_vector<eve::complex<T>>  & f)
-//   {
-//     auto n = f.size();
-//     std::vector<eve::complex<T>> g(n);
-//     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-//     revbin_permute(g);
-//     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
-//     return f;
-//   }
-
 }
-
-
-
-
-
-
-
-
-//     template<value T>
-//     inline auto revbin_permute_gt_64(std::vector<T> & f)
-//     {
-//       [[maybe_unused]] auto revbin = []<typename UI>(UI x){ // Return x with reversed bit order.
-//         using e_t = element_type_t<UI>;
-//         auto s = bit_shr(sizeof(e_t)*8, 1);
-// //        std::cout << "s "<< s << std::endl;
-//         auto m = bit_shr(allbits(as<UI>()), s);
-//         while ( s )
-//         {
-//           x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
-//           s >>= 1;
-//           m ^= (m<<s);
-//         }
-//         return  x;
-//       };
-
-//       [[maybe_unused]] auto  rvb = [revbin](auto x, auto ldn){
-//         // Return word with the ldn least significant bits
-//         //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
-//         //   the other bits are set to zero.
-//         using e_t =  element_type_t<decltype(x)>;
-// //        std::cout << "(sizeof(x)*8-ldn) "<< (sizeof(e_t)*8-ldn) << std::endl;
-//         return  revbin(x) >> (sizeof(e_t)*8-ldn);
-//       };
-
-//       auto view = eve::views::iota(std::uint32_t{0}, f.size());
-// //      std::cout <<  tts::typename_<decltype(view)> << std::endl;
-//       auto doit = [&f, rvb](auto x, auto){
-//         auto xx = load(x);
-// //        std::cout << "xx " << xx << std::endl;
-//         auto rr = rvb(xx, countr_zero(f.size()));
-// //        std::cout << countr_zero(f.size()) << " ->rr = "<< rr  << std::endl;
-//         auto swap_idx =  [&f](auto r,  auto x){
-//           for(size_t i=0; i < cardinal_v<decltype(x)>; ++i)
-//           {
-//             auto ri = r.get(i);
-//             auto xi = x.get(i);
-//             if(ri >  xi){
-//               auto z = f[ri];  f[ri] = f[xi]; f[xi] = z;
-//             }
-//           }
-//         };
-
-// //         auto swap_idx =  [&f](auto r,  auto x){
-// //           auto fr =  gather(f.data(), r);
-// //           auto fx =  gather(f.data(), x);
-// //           scatter[r >  x](f.data(), r, fx);
-// //           scatter[r >  x](f.data(), x, fr);
-// //         };
-//         swap_idx(rr, xx);
-//        };
-//       eve::algo::for_each(view, doit);
-//       return f;
-//     }
-//   }
-
-//   template<scalar_value T>
-//   auto revbin_permute_(EVE_SUPPORTS(cpu_)/*, raw_type const &*/
-//                       , std::vector<T> & f) noexcept
-//   {
-//     auto n = f.size();
-//      [[maybe_unused]] auto idx_swap = [&f](auto k,  auto r){
-//       auto z = f[k];  f[k] = f[r]; f[r] = z;
-//     };
-//      [[maybe_unused]] auto revbin = []<typename UI>(UI x){ // Return x with reversed bit order.
-//       size_t s = sizeof(UI)*8 >> 1;
-//       size_t m = allbits(as<UI>()) >> s;
-//       while ( s )
-//       {
-//         x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
-//         s >>= 1;
-//         m ^= (m<<s);
-//       }
-//       return  x;
-//     };
-
-//      [[maybe_unused]] auto  rvb = [revbin](size_t x, size_t ldn){
-//       // Return word with the ldn least significant bits
-//       //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
-//       //   the other bits are set to zero.
-// //     std::cout << "(sizeof(x)*8-ldn) "<< (sizeof(x)*8-ldn) << std::endl;
-//       return  revbin(x) >> (sizeof(size_t)*8-ldn);
-//     };
-
-//     if ( n<=8 )
-//     {
-//       std::cout << "le64" << std::endl;
-//       return internal::revbin_permute_leq_64(f);
-//     }
-//     else
-//     {
-//       //    return internal::revbin_permute_gt_64(f);
-//       for (size_t x =0; x < n; ++x)
-//       {
-//         auto r = rvb(x, countr_zero(n));
-
-//         if (r>x) idx_swap(x, r);
-//       }
-//       std::cout << "gt64" << std::endl;
-//       return f;
-//     }
-//   }
-
-//   template<scalar_value T>
-//   auto revbin_permute_(EVE_SUPPORTS(cpu_)
-//                       , std::vector<T> & f) noexcept
-//   {
-
-//     auto n = f.size();
-//     auto  idx_swap = [&f](auto k,  auto r){
-//       auto z = f[k];  f[k] = f[r]; f[r] = z;
-//     };
-//     auto revbin = [](size_t x){ // Return x with reversed bit order.
-//                                 // version using dynamically generated masks:
-//       size_t s = sizeof(size_t)*8 >> 1;
-//       size_t m = allbits(as<size_t>()) >> s;
-//       while ( s )
-//       {
-//         x = ( (x & m) << s ) ^ ( (x & (~m)) >> s );
-//         s >>= 1;
-//         m ^= (m<<s);
-//       }
-//       return  x;
-//     };
-
-//     auto  rvb = [revbin](size_t x, size_t ldn){
-//       // Return word with the ldn least significant bits
-//       //   (i.e. bit_0 ... bit_{ldn-1})  of x reversed,
-//       //   the other bits are set to zero.
-//       return  revbin(x) >> (sizeof(size_t)*8-ldn);
-//     };
-
-//     if ( n<=64 )
-//     {
-//       return internal::revbin_permute_leq_64(f);
-//     }
-//     constexpr size_t  RBP_SYMM = 4; // amount of symmetry used
-
-//     const size_t nh = (n>>1);
-//     const size_t n1  = n - 1;     // = 11111111
-//     const size_t nx1 = nh - 2;    // = 01111110
-//     const size_t nx2 = n1 - nx1;  // = 10111101
-
-//     size_t k = 0,  r = 0;
-//     while ( k < (n/RBP_SYMM)  )  // n>=16, n/2>=8, n/4>=4
-//     {
-//       // ----- k%4 == 0:
-//       if ( r>k )
-//       {
-//         idx_swap(k, r);          // <nh, <nh 11
-//         idx_swap(n1^k, n1^r);    // >nh, >nh 00
-//         idx_swap(nx1^k, nx1^r);  // <nh, <nh 11
-//         idx_swap(nx2^k, nx2^r);  // >nh, >nh 00
-//       }
-
-//       ++k;
-//       r ^= nh;
-
-//       // ----- k%4 == 1:
-//       if ( r>k )
-//       {
-//         idx_swap(k, r);  // <nh, >nh 10
-//         idx_swap(n1^k, n1^r);  // >nh, <nh 01
-//       }
-
-//       ++k;
-//       const size_t ldn = countr_zero(n);
-//       r = rvb(k, ldn);
-
-//       // ----- k%4 == 2:
-//       if ( r>k )
-//       {
-//         idx_swap(k, r);  // <nh, <nh 11
-//         idx_swap(n1^k, n1^r);  // >nh, >nh 00
-//       }
-
-//       ++k;
-
-
-//       // ----- k%4 == 3:
-//       if ( r>k )
-//       {
-//         idx_swap(k, r);    // <nh, >nh 10
-//         idx_swap(nx1^k, nx1^r);   // <nh, >nh 10
-//       }
-
-//       ++k;
-
-
-//       r = rvb(k, countr_zero(n));
-
-//     }
-//     return f;
-//   }
