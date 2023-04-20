@@ -109,7 +109,7 @@ namespace eve::detail
             store[ignore](u - v, f.data()+i1);
           }
         };
-        eve::algo::for_each[eve::algo::expensive_callable](js, doit);
+        eve::algo::for_each[eve::algo::expensive_callable][eve::algo::allow_frequency_scaling](js, doit);
       }
     }
     soa(scaleit)(f, fac);

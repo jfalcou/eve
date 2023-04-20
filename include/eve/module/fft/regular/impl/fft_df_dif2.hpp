@@ -56,7 +56,7 @@ namespace eve::detail
   fft_df_dif2_(EVE_SUPPORTS(cpu_), soa_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    constexpr size_t cardinal = eve::nofs_cardinal_v<T>;
+    constexpr size_t cardinal = eve::expected_cardinal_v<T>;
     using  c_t = complex<T>;
     auto n =  std::size(f);
     using i_t = decltype(n);
@@ -100,7 +100,7 @@ namespace eve::detail
                                         eve::views::iota(std::uint32_t{0}));
 
             // transform does
-            eve::algo::for_each[eve::algo::expensive_callable](
+            eve::algo::for_each[eve::algo::expensive_callable][eve::algo::allow_frequency_scaling](
               view, [phi](auto zz, auto ignore) {
                 auto [u_it, v_it, _] = zz;
                 auto [u, v, idx] = eve::load[ignore](zz, eve::fixed<cardinal>{});
@@ -116,8 +116,6 @@ namespace eve::detail
       }
     }
     soa(revbin_permute)(f);
-    std::cout << "fac again " << fac << std::endl;
-
     soa(scaleit)(f, fac);
    }
 }

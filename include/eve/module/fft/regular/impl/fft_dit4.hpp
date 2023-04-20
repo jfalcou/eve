@@ -181,7 +181,7 @@ namespace eve::detail
       i_t m = (1UL<<ldm);
       i_t m4 = (m>>lx);
       const auto ph0 = T(2)/m;
-      if(m4 >= eve::nofs_cardinal_v<T>)
+      if(m4 >= eve::expected_cardinal_v<T>)
       {
         auto js = eve::views::iota(T{0}, m4);
         auto phs= eve::views::iota_with_step(T{0}, ph0, m4);
@@ -232,7 +232,7 @@ namespace eve::detail
             store(fii3, fibeg+i3);
           }
         };
-        eve::algo::for_each(view, doit);
+        eve::algo::for_each[eve::algo::allow_frequency_scaling](view, doit);
       }
       else
       {

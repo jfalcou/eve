@@ -102,7 +102,7 @@ namespace eve::detail
             auto view = eve::views::zip(eve::algo::as_range(s, m), m,
                                         eve::views::iota(std::uint32_t{0}));
 
-            eve::algo::for_each[eve::algo::expensive_callable](
+            eve::algo::for_each[eve::algo::expensive_callable][eve::algo::allow_frequency_scaling](
               view, [phi](auto zz, auto ignore) {
                 auto [u_it, v_it, _] = zz;
                 auto [u, v, idx] = eve::load[ignore](zz);

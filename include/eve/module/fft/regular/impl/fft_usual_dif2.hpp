@@ -114,7 +114,7 @@ namespace eve::detail
             store[ignore]((u - v)*w, f.data()+i1);
           }
         };
-        eve::algo::for_each[eve::algo::expensive_callable](js, doit);
+        eve::algo::for_each[eve::algo::expensive_callable][eve::algo::allow_frequency_scaling](js, doit);
       }
     }
     for (i_t r=0; r<n; r+=2)

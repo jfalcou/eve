@@ -62,7 +62,7 @@ namespace eve::detail
       n2 >>= 1;
       i_t n4 = n2 >> 2;
       auto ph0 = 2*rec(T(n2));
-      if(n4 >= eve::nofs_cardinal_v<T>)
+      if(n4 >= eve::expected_cardinal_v<T>)
       {
         auto js = eve::views::iota(T{0}, n4);
         auto phs= eve::views::iota_with_step(T{0}, ph0, n4);
@@ -76,7 +76,6 @@ namespace eve::detail
            i_t id = (n2<<1);
            while ( ix<n )
            {
-//             std::cout << "ix " << ix << " id " << id << std::endl;
              for (i_t i0=ix; i0<n; i0+=id)
              {
                i_t i1 = i0 + n4;
@@ -120,7 +119,7 @@ namespace eve::detail
              id <<= 2;
            }
         };
-        eve::algo::for_each[eve::algo::expensive_callable](view, doit);
+        eve::algo::for_each[eve::algo::expensive_callable][eve::algo::allow_frequency_scaling](view, doit);
       }
       else
       {

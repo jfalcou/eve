@@ -58,7 +58,7 @@ namespace eve::detail
       auto ph = T(0);
       const auto ph0 = 2*rec(T(m));
 
-      if(m4 > eve::nofs_cardinal_v<T>)
+      if(m4 > eve::expected_cardinal_v<T>)
       {
         auto js = eve::views::iota(T{0}, m4);
         auto phs= eve::views::iota_with_step(T{0}, ph0, m4);
@@ -82,7 +82,7 @@ namespace eve::detail
             auto fii1 = load(fibeg+i1);
             auto fii2 = load(fibeg+i2);
             auto fii3 = load(fibeg+i3);
-            using wT_t = eve::wide<T, fixed<nofs_cardinal_v<T>>>;
+            using wT_t = eve::wide<T, fixed<expected_cardinal_v<T>>>;
 //            using wC_t = eve::as_complex<wT_t>;
             wT_t xr, yr, ur, vr, xi, yi, ui, vi;
             sd(fri0, fri2, xr, ur);
@@ -91,11 +91,15 @@ namespace eve::detail
             sd(fri1, fri3, yr, vi);
             ds(xr, yr, fri0);
             ds(xi, yi, fii0);
-            { auto [rr, ii] =  cs2*eve::as_complex_t<wT_t>{yr, yi}; fri1 = rr; fii1 = ii;}
+
+            kumi::tie(fri1, fii1) = kumi::to_tuple(cs2*eve::as_complex_t<wT_t>{yr, yi});
+            //           { auto [rr, ii] =  cs2*eve::as_complex_t<wT_t>{yr, yi}; fri1 = rr; fii1 = ii;}
             sd(ur, vr, xr, yr);
             sd(ui, vi, xi, yi);
-            {auto [rr, ii] = cs3*eve::as_complex_t<wT_t>{yr, yi}; fri3 = rr; fii3 = ii;}
-            {auto [rr, ii] = cs* eve::as_complex_t<wT_t>{xr, xi}; fri2 = rr; fii2 = ii;}
+            kumi::tie(fri3, fii3) = kumi::to_tuple(cs3*eve::as_complex_t<wT_t>{yr, yi});
+//            {auto [rr, ii] = cs3*eve::as_complex_t<wT_t>{yr, yi}; fri3 = rr; fii3 = ii;}
+            kumi::tie(fri2, fii2) = kumi::to_tuple(cs*eve::as_complex_t<wT_t>{xr, xi});
+//            {auto [rr, ii] = cs* eve::as_complex_t<wT_t>{xr, xi}; fri2 = rr; fii2 = ii;}
             store(fri0, frbeg+i0);
             store(fri1, frbeg+i1);
             store(fri2, frbeg+i2);
@@ -105,7 +109,7 @@ namespace eve::detail
             store(fii2, fibeg+i2);
             store(fii3, fibeg+i3);          }
         };
-        eve::algo::for_each[eve::algo::expensive_callable](view, doit);
+        eve::algo::for_each[eve::algo::expensive_callable][eve::algo::allow_frequency_scaling](view, doit);
       }
       else
       {
