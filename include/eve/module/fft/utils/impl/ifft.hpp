@@ -13,6 +13,7 @@
 #include <eve/module/fft/utils/aos_soa.hpp>
 #include <type_traits>
 #include <vector>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -24,13 +25,23 @@ namespace eve::detail
                             , T const & fac) noexcept
   requires(eve::is_complex_v<typename R::value_type> && is_one_of<D>(types<aos_type, soa_type> {}))
   {
-    auto conjmuli = []<typename C>(C x){
+    auto pr = [](auto name, auto v){
+         std::cout << name << " = (";
+         for(size_t i=0; i < std::size(v); ++i) std::cout << v.get(i) << " ";
+      std::cout << ")\n";
+    };
+     auto conjmuli = []<typename C>(C x){
       auto  [r, i] = x; return C(i, r);
     };
     if constexpr(std::same_as<D, aos_type>)
       std::transform(f.data(), f.data()+f.size(), f.data(), conjmuli);
     else  if constexpr(std::same_as<D, soa_type>)
+    {
+      pr("f avant ", f);
       eve::algo::transform_inplace(f, conjmuli);
+      pr("f apres ",  f);
+    }
+    std::cout << "fac " << fac << std::endl;
     fft(f, fac);
     if constexpr(std::same_as<D, aos_type>)
       std::transform(f.data(), f.data()+f.size(), f.data(), conjmuli);

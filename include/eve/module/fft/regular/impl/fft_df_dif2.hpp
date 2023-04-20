@@ -29,7 +29,7 @@ namespace eve::detail
     auto ldn = eve::countr_zero(n); //eve::log2(n));
     for (i_t ldm=ldn; ldm>=1; --ldm)
     {
-      const ulong m = (1UL<<ldm);
+      const i_t m = (1UL<<ldm);
       const i_t mh = m >> 1;
       const T  phi = rec( T(mh) );
       for (i_t r=0; r<n; r+=m)
@@ -65,7 +65,7 @@ namespace eve::detail
     auto ldn = eve::countr_zero(n);
     for (i_t ldm=ldn; ldm>=1; --ldm)
     {
-      const ulong m = (1UL<<ldm);
+      const i_t m = (1UL<<ldm);
       const i_t mh = m >> 1;
       const T  phi = rec(T(mh));
       if (cardinal >=  mh)
@@ -116,6 +116,8 @@ namespace eve::detail
       }
     }
     soa(revbin_permute)(f);
+    std::cout << "fac again " << fac << std::endl;
+
     soa(scaleit)(f, fac);
    }
 }

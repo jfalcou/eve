@@ -27,8 +27,7 @@ namespace eve::detail
     if (fac != one(as(fac)))
     {
       using e_t = typename R::value_type;
-      auto mul = [fac](auto it, auto ignore){
-        auto c = eve::load[ignore](it);
+      auto mul = [fac](auto &c){
         return c *= fac;
       };
       if constexpr(std::same_as<D, aos_type>)
@@ -38,17 +37,21 @@ namespace eve::detail
           eve::algo::transform_inplace(f, mul);
         }
         else
-        {
-          auto muls = [fac](auto c){
-            return c *= fac;
-          };
-           std::transform(f.data(), f.data()+std::size(f), f.data(), muls);
+        {  //TODO make eve::transform_inplace work here
+           std::transform(f.data(), f.data()+std::size(f), f.data(), mul);
         }
       }
       else if constexpr(std::same_as<D, soa_type>)
       {
-
-        eve::algo::for_each(f,  mul);
+        auto pr = [](auto name, auto v){
+          std::cout << name << " = (";
+          for(size_t i=0; i < std::size(v); ++i) std::cout << v.get(i) << " ";
+          std::cout << ")\n";
+        };
+        std::cout << "scaleit " << std::endl;
+        pr("f avant ", f);
+        eve::algo::transform_inplace(f,  mul);
+        pr("f apres ", f);
       }
     }
   }
