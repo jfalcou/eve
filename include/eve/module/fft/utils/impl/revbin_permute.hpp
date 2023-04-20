@@ -25,7 +25,7 @@ namespace eve::detail
     inline void revbin_permute_leq_64(R & f)
     // Must have f.size() \in {1, 2, 4, 8, 16, 32, 64}
     {
-      auto n = f.size();
+      auto n = size(f);
       auto fbeg = f.data();
       EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
       auto iswap = [fbeg](auto k, auto r)  {
@@ -82,7 +82,7 @@ namespace eve::detail
     inline void revbin_permute_le_64(R & f)
     // Must have f.size() \in {1, 2, 4, 8, 16, 32, 64}
     {
-      auto n = f.size();
+      auto n = std::size(f);
       auto fbeg = f.data();
       EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
       auto iswap = [fbeg](auto k, auto r)  {
@@ -94,7 +94,7 @@ namespace eve::detail
     template < range R>
     inline void revbin_permute_le_64(R & fr, R& fi)
     {
-      auto n = fr.size();
+      auto n = std::size(fr);
       auto frbeg = fr.data();
       auto fibeg = fi.data();
       EVE_ASSERT(n <= 64 && is_pow2(n), "size is greater than 64 or is not a power of 2");
@@ -146,7 +146,7 @@ namespace eve::detail
         auto tr(*(frbeg+k));  *(frbeg+k) = *(frbeg+r); *(frbeg+r) = tr;
         auto ti(*(fibeg+k));  *(fibeg+k) = *(fibeg+r); *(fibeg+r) = ti;
       };
-      revbin_gt64(iswap, fr.size());
+      revbin_gt64(iswap, std::size(fr));
     }
 
     template < range R>
@@ -156,7 +156,7 @@ namespace eve::detail
       auto iswap = [fbeg](auto k, auto r)  {
         auto t(*(fbeg+k));  *(fbeg+k) = *(fbeg+r); *(fbeg+r) = t;
       };
-      revbin_gt64(iswap, f.size());
+      revbin_gt64(iswap, std::size(f));
     }
   }
 
@@ -164,7 +164,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & f) noexcept
   {
-    auto n = f.size();
+    auto n = std::size(f);
     if ( n<=64 )
       internal::revbin_permute_le_64(f);
     else
@@ -175,8 +175,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr, R & fi) noexcept
   {
-    EVE_ASSERT(fr.size() == fi.size(), "fr and fi must share the same size");
-    auto n = fr.size();
+    EVE_ASSERT(std::size(fr) == std::size(fi), "fr and fi must share the same size");
+    auto n = std::size(fr);
     if ( n<=64 )
       internal::revbin_permute_le_64(fr, fi);
     else
@@ -188,7 +188,7 @@ namespace eve::detail
     requires(eve::is_complex_v<typename R::value_type>)
   {
     using T = typename R::value_type;
-    auto n = f.size();
+    auto n = std::size(f);
     std::vector<T> g(n);
     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
     aos(revbin_permute)(g);

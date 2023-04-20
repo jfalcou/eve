@@ -28,7 +28,7 @@ namespace eve::detail
 //       for(size_t i=0; i < v.size() ; ++i) std::cout << v[i] << " ";
 //       std::cout << ")\n";
 //     };
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     i_t lx = 2;
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");

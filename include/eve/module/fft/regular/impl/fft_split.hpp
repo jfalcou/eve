@@ -16,11 +16,11 @@
 
 namespace eve::detail
 {
-  template <typename Type>
-  static inline void sumdiff3_r(Type &a, Type b, Type &d)
-  // {a,b,d} <--| {a+b, b, b-a}  (used in split-radix FFTs)
-  // NEVER call like func(a,b,a) or func(a,b,b)
-  { d=b-a; a+=b; }
+//   template <typename Type>
+//   static inline void sumdiff3_r(Type &a, Type b, Type &d)
+//   // {a,b,d} <--| {a+b, b, b-a}  (used in split-radix FFTs)
+//   // NEVER call like func(a,b,a) or func(a,b,b)
+//   { d=b-a; a+=b; }
 
   ///////////////////////////////////////////////////////////////////
   // fft decimation in frequency radix 4
@@ -104,7 +104,7 @@ namespace eve::detail
                sd(tr0, ti1, t3);
                tr0 = -tr0;
 
-               sumdiff3_r(tr1, ti0, t4);
+               srd(tr1, ti0, t4);
                kumi::tie(fri2, fii2) = kumi::to_tuple(sc1*eve::as_complex_t<w_t>{t4, tr0});
                kumi::tie(fii3, fri3) = kumi::to_tuple(cs3*eve::as_complex_t<w_t>{tr1, t3});
                store(fri0, frbeg+i0);
@@ -160,7 +160,7 @@ namespace eve::detail
               sd(tr0, ti1, t3);
               tr0 = -tr0;
 
-              sumdiff3_r(tr1, ti0, t4);
+              srd(tr1, ti0, t4);
               kumi::tie(*fri2, *fii2) = kumi::to_tuple(sc1*c_t{t4, tr0});
               kumi::tie(*fii3, *fri3) = kumi::to_tuple(cs3*c_t{tr1, t3});
            }
@@ -184,8 +184,7 @@ namespace eve::detail
 
         ix = 2*(id-1);
     }
-    aos(revbin_permute)(fr);
-    aos(revbin_permute)(fi);
+    aos(revbin_permute)(fr, fi);
     scaleit(fr, fi, fac);
   }
 
@@ -196,7 +195,7 @@ namespace eve::detail
               , T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t =  decltype(n);
     using c_t = eve::complex<T>;
     std::vector<T> fr(n),  fi(n);

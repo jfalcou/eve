@@ -26,7 +26,7 @@ namespace eve::detail
   fft_usual_dit2_(EVE_SUPPORTS(cpu_), aos_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "fft_df_dit2: data size is not a power of 2");
     auto ldn = eve::countr_zero(n); //eve::log2(n));
@@ -54,8 +54,6 @@ namespace eve::detail
      }
    }
    aos(scaleit)(f, fac);
-//    if (fac != T(1))
-//      for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
 
   template<range R, floating_scalar_value T>
@@ -64,7 +62,7 @@ namespace eve::detail
   requires(eve::is_complex_v<typename R::value_type>)
   {
     size_t cardinal = eve::nofs_cardinal_v<T>;
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n);
@@ -115,7 +113,5 @@ namespace eve::detail
       }
     }
     soa(scaleit)(f, fac);
-//     if (fac != T(1))
-//       for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
   }
 }

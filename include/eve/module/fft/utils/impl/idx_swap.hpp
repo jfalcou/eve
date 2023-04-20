@@ -18,7 +18,7 @@ namespace eve::detail
                                 , I const & idx1
                                 , I const & idx2) noexcept
   {
-    EVE_ASSERT(eve::all(idx1 < f.size() && idx2 < f.size()), "some indexes are out of range");
+    EVE_ASSERT(eve::all(idx1 < std::size(f) && idx2 < std::size(f)), "some indexes are out of range");
     if constexpr(scalar_value<I>)
     {
       auto b =  f.data();
@@ -62,9 +62,8 @@ namespace eve::detail
 //       }
       auto fr =  gather(f.data(), idx1);
       auto fx =  gather(f.data(), idx2);
-      auto test = idx1 > idx2;
-      scatter[test](f.data(), idx1, fx);
-      scatter[test](f.data(), idx2, fr);
+      scatter[cond](f.data(), idx1, fx);
+      scatter[cond](f.data(), idx2, fr);
     }
   }
 }

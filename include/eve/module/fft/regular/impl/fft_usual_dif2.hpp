@@ -26,7 +26,7 @@ namespace eve::detail
   fft_usual_dif2_(EVE_SUPPORTS(cpu_), aos_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "fft_df_dif2: data size is not a power of 2");
     auto ldn = eve::countr_zero(n); //eve::log2(n));
@@ -61,21 +61,19 @@ namespace eve::detail
    }
    aos(revbin_permute)(f);
    aos(scaleit)(f, fac);
-//    if (fac != T(1))
-//      for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
-
+  
   template<range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
   fft_usual_dif2_(EVE_SUPPORTS(cpu_), soa_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
     size_t cardinal = eve::nofs_cardinal_v<T>;
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n);
-
+    
     for (i_t ldm=ldn; ldm >=2; --ldm)
     {
       const i_t m = (1UL<<ldm);
@@ -119,16 +117,14 @@ namespace eve::detail
         eve::algo::for_each[eve::algo::expensive_callable](js, doit);
       }
     }
-   for (i_t r=0; r<n; r+=2)
-   {
-     auto u = f.get(r);
-     auto v = f.get(r+1);
-     f.set(r,   u + v);
-     f.set(r+1, u - v);
-   }
-   soa(revbin_permute)(f);
-   soa(scaleit)(f, fac);
-//    if (fac != T(1))
-//      for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
+    for (i_t r=0; r<n; r+=2)
+    {
+      auto u = f.get(r);
+      auto v = f.get(r+1);
+      f.set(r,   u + v);
+      f.set(r+1, u - v);
+    }
+    soa(revbin_permute)(f);
+    soa(scaleit)(f, fac);
   }
 }

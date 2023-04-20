@@ -26,7 +26,7 @@ namespace eve::detail
   fft_df_dit2_(EVE_SUPPORTS(cpu_), aos_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n); //eve::log2(n));
@@ -53,8 +53,6 @@ namespace eve::detail
       }
     }
     aos(scaleit)(f, fac);
-//     if (fac != T(1))
-//       for(size_t i=0; i < n; ++i) f[i] *= fac;
   }
 
   template<range R, floating_scalar_value T>
@@ -64,7 +62,7 @@ namespace eve::detail
   {
     size_t cardinal = eve::nofs_cardinal_v<T>;
     using  c_t = complex<T>;
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     std::vector<c_t> c(n);
@@ -101,11 +99,9 @@ namespace eve::detail
             auto s = f.begin() + r;
             auto m = s + mh;
 
-            // maybe uint64_t for doubles
             auto view = eve::views::zip(eve::algo::as_range(s, m), m,
                                         eve::views::iota(std::uint32_t{0}));
 
-            // transform does
             eve::algo::for_each[eve::algo::expensive_callable](
               view, [phi](auto zz, auto ignore) {
                 auto [u_it, v_it, _] = zz;
@@ -120,7 +116,5 @@ namespace eve::detail
       }
     };
     soa(scaleit)(f, fac);
-//     if (fac != T(1))
-//       for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
   }
 }

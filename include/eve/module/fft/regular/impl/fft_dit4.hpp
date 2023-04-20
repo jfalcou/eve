@@ -26,7 +26,6 @@ namespace eve::detail
               , R & fr
               , R & fi
               , T fac) noexcept
-  //  requires(std::is_floating_point_v<typename R::value_type>)
   {
 
     [[maybe_unused]] auto pr = [](auto name, auto v){
@@ -35,7 +34,6 @@ namespace eve::detail
       std::cout << ")\n";
     };
     aos(revbin_permute)(fr, fi);
-    //   aos(revbin_permute)(fi);
     auto n =  fr.size();
     using i_t = decltype(n);
     i_t lx = 2;
@@ -234,7 +232,7 @@ namespace eve::detail
             store(fii3, fibeg+i3);
           }
         };
-        eve::algo::for_each/*[eve::algo::expensive_callable] ?? */(view, doit);
+        eve::algo::for_each(view, doit);
       }
       else
       {
@@ -278,7 +276,7 @@ namespace eve::detail
               , T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t =  decltype(n);
     using c_t = eve::complex<T>;
     std::vector<T> fr(n),  fi(n);

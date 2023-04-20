@@ -264,7 +264,7 @@ namespace eve::detail
               , T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t =  decltype(n);
     using c_t = eve::complex<T>;
     std::vector<T> fr(n),  fi(n);

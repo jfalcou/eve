@@ -27,8 +27,9 @@ namespace eve::detail
     if (fac != one(as(fac)))
     {
       using e_t = typename R::value_type;
-      auto  mul = [fac]<typename C>(C x){
-        return x*fac;
+      auto mul = [fac](auto it, auto ignore){
+        auto c = eve::load[ignore](it);
+        return c *= fac;
       };
       if constexpr(std::same_as<D, aos_type>)
       {
@@ -38,14 +39,16 @@ namespace eve::detail
         }
         else
         {
-          std::transform(f.data(), f.data()+f.size(), f.data(), mul);
+          auto muls = [fac](auto c){
+            return c *= fac;
+          };
+           std::transform(f.data(), f.data()+std::size(f), f.data(), muls);
         }
       }
       else if constexpr(std::same_as<D, soa_type>)
       {
-        auto [fr, fi] = soac2ri(f);
-        eve::algo::transform_inplace(fr, mul);
-        eve::algo::transform_inplace(fi, mul);
+
+        eve::algo::for_each(f,  mul);
       }
     }
   }

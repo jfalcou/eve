@@ -23,7 +23,7 @@ namespace eve::detail
   fft_df_dif2_(EVE_SUPPORTS(cpu_), aos_type const &, R & f, T fac) noexcept
   requires(eve::is_complex_v<typename R::value_type>)
   {
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     auto ldn = eve::countr_zero(n); //eve::log2(n));
@@ -48,9 +48,7 @@ namespace eve::detail
       }
     }
     aos(revbin_permute)(f);
-    //scaleit(f, fac);
-     if (fac != T(1))
-       for(size_t i=0; i < n; ++i) f[i] *= fac;
+    aos(scaleit)(f, fac);
   }
 
   template<range R, floating_scalar_value T>
@@ -60,7 +58,7 @@ namespace eve::detail
   {
     constexpr size_t cardinal = eve::nofs_cardinal_v<T>;
     using  c_t = complex<T>;
-    auto n =  f.size();
+    auto n =  std::size(f);
     using i_t = decltype(n);
     EVE_ASSERT(is_pow2(n),  "data size is not a power of 2");
     std::vector<c_t> c(n);
@@ -118,7 +116,6 @@ namespace eve::detail
       }
     }
     soa(revbin_permute)(f);
-    if(fac != T(1))
-      for(size_t i=0; i < n; ++i) f.set(i, f.get(i)*fac);
-  }
+    soa(scaleit)(f, fac);
+   }
 }
