@@ -33,7 +33,7 @@ namespace eve::detail
       {
         if constexpr(std::is_floating_point_v<e_t>)
         {
-          eve::algo::transform_inplace(f, mul);
+          eve::algo::transform_inplace[eve::algo::unroll<2>](f, mul);
         }
         else
         {  //TODO make eve::transform_inplace work here
@@ -42,7 +42,7 @@ namespace eve::detail
       }
       else if constexpr(std::same_as<D, soa_type>)
       {
-        eve::algo::transform_inplace(f,  mul);
+        eve::algo::transform_inplace[eve::algo::unroll<2>](f,  mul);
       }
     }
   }
