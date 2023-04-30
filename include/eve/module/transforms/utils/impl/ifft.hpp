@@ -10,7 +10,6 @@
 #include <eve/module/algo.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/concept/range.hpp>
-#include <eve/module/fft/utils/aos_soa.hpp>
 #include <type_traits>
 #include <vector>
 #include <iostream>
@@ -39,18 +38,6 @@ namespace eve::detail
       eve::algo::transform_inplace(f, conjmuli);
   }
 
-  /////////////////////////////////////////////////////////
-  // default is soa
-  template<typename F, range R, scalar_value T>
-  EVE_FORCEINLINE void ifft_(EVE_SUPPORTS(cpu_)
-                            , F const & fft
-                            , R & f
-                            , T const & fac) noexcept
-  requires(eve::is_complex_v<typename R::value_type>)
-  {
-    return soa(ifft)(fft, f, fac);
-  }
-
   template<typename F, range R, scalar_value T>
   EVE_FORCEINLINE void ifft_(EVE_SUPPORTS(cpu_)
                             , F const & fft
@@ -60,7 +47,6 @@ namespace eve::detail
   requires(std::is_floating_point_v<typename R::value_type>)
   {
     fft(fi, fr, fac);
-    std::swap(fr, fi);
   }
 
 

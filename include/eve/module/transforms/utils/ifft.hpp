@@ -54,7 +54,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     f or (rf, if) contains after call the inverse fft scaled by fac.
+//!     f or (rf, if) contains after call the  fft scaled by fac of the swapped datas.
 //!
 //!   @groupheader{Example}
 //!
@@ -66,4 +66,4 @@ EVE_MAKE_CALLABLE(ifft_, ifft);
 
 }
 
-#include <eve/module/fft/utils/impl/ifft.hpp>
+#include <eve/module/transforms/utils/impl/ifft.hpp>

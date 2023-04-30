@@ -10,6 +10,7 @@
 #include <eve/module/transforms/utils/aos_soa.hpp>
 #include <eve/module/transforms/utils/scaleit.hpp>
 #include <eve/module/transforms/utils/ft_ht_cv.hpp>
+#include <eve/module/transforms/utils/ifft.hpp>
 //#include <eve/module/transforms/utils/idx_swap.hpp>
 //#include <eve/module/transforms/utils/soac2ri.hpp>
 // #include <eve/module/transforms/utils/caos2csoa.hpp>
