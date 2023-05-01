@@ -19,10 +19,10 @@
 //! @}
 //==================================================================================================
 #include <eve/module/transforms/fht/naive_ht.hpp>
+#include <eve/module/transforms/fht/small_fht.hpp>
+//#include <eve/module/transforms/fht/fht.hpp>
 
-// #include <eve/module/fht/detail/combined_ops.hpp>
-// #include <eve/module/fht/utils.hpp>
-// #include <eve/module/fht/regular/fft_fht_conv.hpp>
+
 // #include <eve/module/fht/regular/fht_dif_no_simd.hpp>
 // #include <eve/module/fht/regular/fht_dif.hpp>
 // #include <eve/module/fht/regular/fht_dif_loc.hpp>
@@ -35,4 +35,3 @@
 // // #include <eve/module/fht/regular/fht_dif4.hpp>
 // // #include <eve/module/fht/regular/fht_dit4.hpp>
 // // #include <eve/module/fht/regular/fht_split.hpp>
-// #include <eve/module/fht/regular/naive_fft.hpp>
