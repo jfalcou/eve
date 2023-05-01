@@ -20,6 +20,7 @@
 //==================================================================================================
 
 #include <eve/module/transforms/fft/naive_ft.hpp>
+#include <eve/module/transforms/fft/fft_ht.hpp>
 
 // #include <eve/module/fft/detail/combined_ops.hpp>
 // #include <eve/module/fft/utils.hpp>

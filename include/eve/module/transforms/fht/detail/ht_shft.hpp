@@ -19,6 +19,7 @@ namespace eve::detail
     using i_t = decltype(n);
     using e_t =  std::remove_reference_t<decltype(ff[0])>;
     const double phi0 = rec(e_t(n));
+    auto phi = zero(as(phi0));
     for (i_t i=1, j=n-1;  i<j;  ++i, --j)
     {
       phi += phi0;
