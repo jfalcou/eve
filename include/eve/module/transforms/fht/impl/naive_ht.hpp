@@ -22,7 +22,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto cas(auto x)
   {
     auto [c, s] = sinpicospi(x);
-    return (c+s);
+    return (c+s)*invsqrt_2(as(x));
   }
 
   template<range R, floating_scalar_value T>

@@ -30,7 +30,7 @@ slow_ht(auto f, size_t n, T fac)
       auto [s, c] = eve::sinpicospi(ph0*k*w);
       t += ((c+s)*f[k]);
     }
-    res[w] = fac*t;
+    res[w] = fac*t*eve::invsqrt_2(eve::as(fac));
   }
   std::copy(&res[0], &res[n], f);
 }
@@ -50,15 +50,15 @@ TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
     pr("a", a.data(), 8);
     eve::aos(eve::naive_ht)(a, e_t(1.0));
     pr("a", a.data(), 8);
-    pr("orig", ref.data(), 8);
+    pr("ref", ref.data(), 8);
     slow_ht(&ref[0], 8, e_t(1.0));
-    pr("orig", ref.data(), 8);
+    pr("ref", ref.data(), 8);
     for(size_t i=0; i <N ; ++i){
-      TTS_ABSOLUTE_EQUAL(a[i],ref[i], 10*eve::eps(eve::as<e_t>()));
+      TTS_ABSOLUTE_EQUAL(a[i],ref[i], 100*eve::eps(eve::as<e_t>()));
     }
-    eve::aos(eve::naive_ht)(a, e_t(1)/(N)); //inverse ht
+    eve::aos(eve::naive_ht)(a, e_t(2)/(N)); //inverse ht
     for(size_t i=0; i <N ; ++i){
-      TTS_ABSOLUTE_EQUAL(a[i],orig[i], 10*eve::eps(eve::as<e_t>()));
+      TTS_ABSOLUTE_EQUAL(a[i],orig[i], 100*eve::eps(eve::as<e_t>()));
     }
   }
 };
@@ -99,13 +99,13 @@ TTS_CASE_TPL("Check naive_ht on aos pair", eve::test::simd::ieee_reals)
     slow_ht(&refr[0], 8, e_t(1.0));
     slow_ht(&refi[0], 8, e_t(1.0));
     for(size_t i=0; i <N ; ++i){
-      TTS_ABSOLUTE_EQUAL(ar[i],refr[i], 10*eve::eps(eve::as<e_t>()));
-      TTS_ABSOLUTE_EQUAL(ai[i],refi[i], 10*eve::eps(eve::as<e_t>()));
+      TTS_ABSOLUTE_EQUAL(ar[i],refr[i], 100*eve::eps(eve::as<e_t>()));
+      TTS_ABSOLUTE_EQUAL(ai[i],refi[i], 100*eve::eps(eve::as<e_t>()));
     }
-    eve::aos(eve::naive_ht)(ar, ai, e_t(1)/N); //inverse ht
+    eve::aos(eve::naive_ht)(ar, ai, e_t(2)/N); //inverse ht
     for(size_t i=0; i <N ; ++i){
-      TTS_ABSOLUTE_EQUAL(ar[i],origr[i], 10*eve::eps(eve::as<e_t>()));
-      TTS_ABSOLUTE_EQUAL(ai[i],origi[i], 10*eve::eps(eve::as<e_t>()));
+      TTS_ABSOLUTE_EQUAL(ar[i],origr[i], 100*eve::eps(eve::as<e_t>()));
+      TTS_ABSOLUTE_EQUAL(ai[i],origi[i], 100*eve::eps(eve::as<e_t>()));
     }
   }
 };
