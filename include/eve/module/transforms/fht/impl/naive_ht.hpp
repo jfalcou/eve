@@ -21,7 +21,8 @@ namespace eve::detail
 
   EVE_FORCEINLINE auto cas(auto x)
   {
-    return cospi(x+quarter(as(x)));
+    auto [c, s] = sinpicospi(x);
+    return (c+s);
   }
 
   template<range R, floating_scalar_value T>
@@ -33,11 +34,11 @@ namespace eve::detail
     using i_t = decltype(N);
     std::vector<t_t> c(N);
 
-    auto s = T(2)/N;
+    auto phi0 = T(2)/N;
     for (i_t w=0; w<N; ++w)
     {
-      auto z = s*w;
-      t_t t = zero(as<t_t>());
+      auto z = phi0*w;
+      t_t t = zero(as(phi0));
       for (i_t k=0; k<N; ++k)   t += *(a.data()+k)* eve::detail::cas( k*z );
       c[w] = f*t;
     }
