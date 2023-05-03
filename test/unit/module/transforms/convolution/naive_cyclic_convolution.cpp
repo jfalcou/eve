@@ -1,0 +1,34 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+*/
+//==================================================================================================
+
+#include "test.hpp"
+#include "../measures.hpp"
+#include <eve/module/transforms/detail/pr.hpp>
+#include <eve/module/transforms.hpp>
+#include <vector>
+
+TTS_CASE_TPL("Check naive_cyclic_convolution on aos", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  if constexpr(std::same_as<eve::element_type_t<T>, double> && eve::cardinal_v<T> == 1)
+  {
+    size_t N = 8;
+    std::cout << tts::typename_<T> << std::endl; ;
+    using e_t = eve::element_type_t<T>;
+    std::vector<e_t> a(N), b(N), c(N);
+    std::vector<e_t> ref(N, e_t(8));
+    for(size_t i=0; i < N ; ++i) b[i] = a[i] = 1;
+    //     pr("a", a.data(), 8);
+    //     pr("b", b.data(), 8);
+    eve::aos(eve::naive_cyclic_convolution)(a, b, c);
+    //    pr("c", c.data(), 8);
+    for(size_t i=0; i <N ; ++i){
+      TTS_EQUAL(c[i],ref[i]);
+    }
+  }
+};

@@ -113,6 +113,7 @@ glob_unit("unit" ${unit_root} "module/transforms/utils/*.cpp" )
 glob_unit("unit" ${unit_root} "module/transforms/permute/*.cpp" )
 glob_unit("unit" ${unit_root} "module/transforms/fft/*.cpp" )
 glob_unit("unit" ${unit_root} "module/transforms/fht/*.cpp" )
+glob_unit("unit" ${unit_root} "module/transforms/convolution/*.cpp" )
 
 
 endif()

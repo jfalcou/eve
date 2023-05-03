@@ -54,15 +54,4 @@
 #include <eve/module/transforms/permute.hpp>
 #include <eve/module/transforms/fft.hpp>
 #include <eve/module/transforms/fht.hpp>
-// #include <eve/module/transforms/regular/naive_transforms.hpp>
-// #include <eve/module/transforms/regular/transforms_df_dif2.hpp>
-// #include <eve/module/transforms/regular/transforms_df_dit2.hpp>
-// #include <eve/module/transforms/regular/transforms_usual_dif2.hpp>
-// #include <eve/module/transforms/regular/transforms_usual_dit2.hpp>
-// #include <eve/module/transforms/regular/transforms_no_dif4.hpp>
-// #include <eve/module/transforms/regular/transforms_dif4.hpp>
-// #include <eve/module/transforms/regular/transforms_dit4.hpp>
-// #include <eve/module/transforms/regular/transforms_split.hpp>
-
-
-// #include <eve/module/transforms/regular/transforms_000.hpp>
+#include <eve/module/transforms/convolution.hpp>
