@@ -32,7 +32,7 @@ constexpr bool prefer_min_max() noexcept
     else if constexpr( arm_tag<current_api_type> )  return !is_ints64;
     else return true;
   }
-};
+}
 
 // -----  Regular
 template<ordered_value T0, ordered_value T1, ordered_value... Ts>
