@@ -16,13 +16,15 @@ namespace eve::detail
 {
   template < bool final_radix_16 = true >
   EVE_FORCEINLINE constexpr void
-  fht_df_kernel(auto f, auto log2_n, bool simd = true) noexcept
+  fht_df_kernel(auto f, auto log2_n, const bool simd = true) noexcept
   //  requires(std::is_floating_point_v<typename R::value_type>)
   {
     auto n = 1UL << log2_n;
     using i_t = decltype(n);
     using e_t = eve::underlying_type_t<std::remove_reference_t<decltype(f[0])>>;
     using c_t =  complex<e_t>;
+    [[maybe_unused]] const auto  invsqrt2 = invsqrt_2(as<e_t>());
+    [[maybe_unused]] const auto  sqrt2    = sqrt_2(as<e_t>());
     if ( log2_n<=2 )
     {
       if ( log2_n==1 )
@@ -96,7 +98,7 @@ namespace eve::detail
       };
       i_t cardinal = eve::expected_cardinal_v<e_t>;
       auto sm = min(cardinal, kh);
-      for (i_t i=1; i < sm; i++) scalar(i); //scalar preamble. Is it possible to avoid it ?
+      for (i_t i=1; i < sm; i++) scalar(i);
       if (simd && (kh > cardinal))
       {
         auto flip = []<typename U>(U c){
@@ -161,7 +163,6 @@ namespace eve::detail
 
     if (is_odd(ldk))
     {
-      const auto sqrt2 = eve::sqrt_2(as<e_t>());
       for (e_t *fi=f; fi<fn; fi+=8)  // radix-8 step
       {
         e_t g0, f0, f1, g1;
@@ -186,9 +187,6 @@ namespace eve::detail
       if constexpr(final_radix_16)
       {
         // ldk == 4
-        [[maybe_unused]] auto  invsqrt2 = invsqrt_2(as<e_t>());
-        [[maybe_unused]] auto  sqrt2    = sqrt_2(as<e_t>());
-//      std::cout << "final radix 16" << std::endl;
         for (auto fi=f; fi<fn; fi+=16)  // radix-16 step
         {
           e_t f0, f1, f2, f3;
@@ -237,11 +235,9 @@ namespace eve::detail
           constexpr e_t c1 = e_t( 0.923879532511286756128183189397);
           constexpr e_t s1 = e_t( 0.382683432365089771728459984029);
           kumi::tie(b, a) = c_t(s1, c1)*c_t(f2, g3);
-//            cmult(s1, c1, f2, g3, b, a);
           sd(f0, a, fi[8], fi[9]);
           sd(g1, b, fi[14], fi[15]);
           kumi::tie(b, a) = c_t(c1, s1)*c_t(g2, f3);
-//            cmult(c1, s1, g2, f3, b, a);
           sd(g0, a, fi[12], fi[13]);
           sd(f1, b, fi[10], fi[11]);
         }
@@ -249,7 +245,6 @@ namespace eve::detail
       else // final radix 4
       {
         // ldk == 2
-        //      std::cout << "final radix 4" << std::endl;
         for (auto fi=f; fi<fn; fi+=4)  // radix-4 step
         {
           e_t f0, f1, f2, f3;

@@ -22,7 +22,7 @@ namespace eve::detail
   fht_loc_df_core(auto f, auto log2_n, bool simd) noexcept
   // requires(std::is_floating_point_v<typename R::value_type>)
   {
-    if ( log2_n<= 13 )  // sizeof(Type)*(2**threshold) <= L1_CACHE_BYTES
+    if ( log2_n <= 12 )  // sizeof(Type)*(2**threshold) <= L1_CACHE_BYTES
     {
       fht_df_kernel<is_final_radix_16>(f, log2_n, simd);
       return;
