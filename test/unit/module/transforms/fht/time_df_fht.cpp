@@ -35,11 +35,11 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
     [[maybe_unused]] auto a = data();
     using namespace std::literals;
     auto tic =  std::chrono::steady_clock::now();
-    eve::aos(eve::small_fht)(a, e_t(1));
+    eve::aos(eve::small_df_fht)(a, e_t(1));
     auto toc =  std::chrono::steady_clock::now()-tic;
     scal_durations[i] = std::chrono::duration<double>(toc).count()*1000;
     tic =  std::chrono::steady_clock::now();
-    eve::aos(eve::large_fht)(a, e_t(1));
+    eve::aos(eve::large_df_fht)(a, e_t(1));
     toc =  std::chrono::steady_clock::now()-tic;
     simd_durations[i] = std::chrono::duration<double>(toc).count()*1000;
     size[i] = j;

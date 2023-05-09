@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
     eve::aos(eve::naive_ht)(naiv, e_t(1.0));
     pr("naiv  ", naiv.data(), 8);
      pr("a  ", a.data(), 8);
-     eve::aos(eve::small_fht_dt)(a, e_t(1.0), true);
+     eve::aos(eve::small_dt_fht)(a, e_t(1.0), true);
     pr("a  ", a.data(), 8);
     for(size_t i=0; i <N ; ++i){
       TTS_ABSOLUTE_EQUAL(a[i],naiv[i], 100*eve::eps(eve::as<e_t>()));
