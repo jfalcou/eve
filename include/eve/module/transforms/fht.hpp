@@ -22,4 +22,4 @@
 #include <eve/module/transforms/fht/small_df_fht.hpp>
 #include <eve/module/transforms/fht/small_dt_fht.hpp>
 #include <eve/module/transforms/fht/large_df_fht.hpp>
-//#include <eve/module/transforms/fht/large_dt_fht.hpp>
+#include <eve/module/transforms/fht/large_dt_fht.hpp>

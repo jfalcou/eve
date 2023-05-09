@@ -20,7 +20,6 @@ namespace eve::detail
   fht_dt_kernel(auto f, auto log2_n, const bool simd = true) noexcept
   //  requires(std::is_floating_point_v<typename R::value_type>)
   {
-    std::cout << "simd " << simd << std::endl;
     auto n = 1UL << log2_n;
     using i_t = decltype(n);
     using e_t = eve::underlying_type_t<std::remove_reference_t<decltype(f[0])>>;
@@ -51,7 +50,6 @@ namespace eve::detail
     {
       if constexpr(initial_radix_16)
       {
-        std::cout << "icitte" << std::endl;
         for (auto fi=f; fi<fn; fi+=16)  // radix-16 step
         {
           e_t f0, f1, f2, f3;
@@ -110,7 +108,6 @@ namespace eve::detail
       }
       else
       {
-        std::cout << "icitte 2 " << simd << std::endl;
         for (auto fi=f; fi<fn; fi+=4)  // radix-4 step
         {
           e_t f0, f1, f2, f3;
@@ -126,7 +123,6 @@ namespace eve::detail
     {
       for (auto fi=f; fi<fn; fi+=8)  // radix-8 step
       {
-        std::cout << "icitte 3 " << simd << std::endl;
         e_t g0, f0, f1, g1;
         sd(fi[0], fi[1], f0, g0);
         sd(fi[2], fi[3], f1, g1);
