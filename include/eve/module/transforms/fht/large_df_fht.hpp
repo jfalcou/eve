@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(large_fht_,  large_fht);
+  EVE_MAKE_CALLABLE(large_df_fht_,  large_df_fht);
 }
 
-#include <eve/module/transforms/fht/impl/large_fht.hpp>
+#include <eve/module/transforms/fht/impl/large_df_fht.hpp>

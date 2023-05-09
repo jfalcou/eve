@@ -10,16 +10,13 @@
 //==================================================================================================
 //! @addtogroup transforms
 //! @{
-//!   @defgroup fht fast hartley discrete transform
-//!   @brief Hartley transform
+//!   @defgroup zt z-transform
+//!   @brief zt transform
 //!
-//!   This module provides some implementation of the Hartley discrete real and complex transforms
+//!   This module provides some implementation of the zt transform
 //!
-//!   **Required header:** @code{.cpp} #include <eve/module/fht.hpp> @endcode
+//!   **Required header:** @code{.cpp} #include <eve/module/transforms.hpp> @endcode
 //! @}
 //==================================================================================================
-#include <eve/module/transforms/fht/naive_ht.hpp>
-#include <eve/module/transforms/fht/small_df_fht.hpp>
-#include <eve/module/transforms/fht/small_dt_fht.hpp>
-#include <eve/module/transforms/fht/large_df_fht.hpp>
-//#include <eve/module/transforms/fht/large_dt_fht.hpp>
+#include <eve/module/transforms/fzt/naive_zt.hpp>
+//#include <eve/module/transforms/fzt/fzt.hpp>

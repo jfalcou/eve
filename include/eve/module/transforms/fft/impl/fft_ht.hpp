@@ -25,8 +25,8 @@ namespace eve::detail
   fft_ht_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr,  R & fi, T fac) noexcept
   {
     aos(ht_ft_cv)(fi, fr);
-    aos(large_fht)(fr, T(1));
-    aos(large_fht)(fi, T(1)) ;
+    aos(large_df_fht)(fr, T(1));
+    aos(large_df_fht)(fi, T(1)) ;
     scaleit(fr, fi, fac*sqrt_2(as(fac)));
   }
 }

@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
-  small_fht_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr, T fac, bool simd = true) noexcept
+  small_df_fht_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr, T fac, bool simd = true) noexcept
   {
     // "Small" Hartley Transform decimation in frequency
     // better for size(fr) less than 128

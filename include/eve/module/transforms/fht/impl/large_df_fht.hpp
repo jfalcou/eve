@@ -15,7 +15,7 @@ namespace eve::detail
 {
 
   template <range  R, floating_scalar_value T>
-  EVE_FORCEINLINE void large_fht_(EVE_SUPPORTS(cpu_)
+  EVE_FORCEINLINE void large_df_fht_(EVE_SUPPORTS(cpu_)
                                , aos_type const &
                                , R& fr
                                , T fac

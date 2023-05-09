@@ -11,7 +11,7 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(small_fht_,  small_fht);
+  EVE_MAKE_CALLABLE(small_df_fht_,  small_df_fht);
 }
 
-#include <eve/module/transforms/fht/impl/small_fht.hpp>
+#include <eve/module/transforms/fht/impl/small_df_fht.hpp>
