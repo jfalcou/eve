@@ -27,6 +27,7 @@
 #include <eve/module/algo/algo/common_forceinline_lambdas.hpp>
 #include <eve/module/algo/algo/concepts.hpp>
 #include <eve/module/algo/algo/container/soa_vector.hpp>
+#include <eve/module/algo/algo/traits/soa_vector.hpp>
 #include <eve/module/algo/algo/copy.hpp>
 #include <eve/module/algo/algo/equal.hpp>
 #include <eve/module/algo/algo/fill.hpp>
