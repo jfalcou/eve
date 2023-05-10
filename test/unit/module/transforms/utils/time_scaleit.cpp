@@ -57,7 +57,7 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
     [[maybe_unused]] auto a = data();
     using namespace std::literals;
     auto tic =  std::chrono::steady_clock::now();
-    eve::aos(eve::scaleit)(a, e_t(3.5));
+    eve::scaleit(a, e_t(3.5));
     auto toc =  std::chrono::steady_clock::now()-tic;
     simd_durations[i] = std::chrono::duration<double>(toc).count()*1000;
      tic =  std::chrono::steady_clock::now();

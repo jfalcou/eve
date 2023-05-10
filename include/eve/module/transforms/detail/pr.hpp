@@ -8,6 +8,7 @@
 #pragma once
 
 #include <iostream>
+#include <iomanip>
 #include <eve/module/core.hpp>
 #include <eve/module/algo.hpp>
 

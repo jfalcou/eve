@@ -16,22 +16,24 @@
 
 namespace eve::detail
 {
-  template<decorator D, range R, scalar_value T>
+  template<range R, scalar_value T>
   EVE_FORCEINLINE void scaleit_(EVE_SUPPORTS(cpu_)
-                            , D const &
                             , R & f
-                            , T const & fac) noexcept
-  requires(is_one_of<D>(types<aos_type, soa_type> {}))
+                            , T const & norm) noexcept
   {
-    if (fac != one(as(fac)))
+    if (norm != one(as(norm)))
     {
-      using e_t = typename R::value_type;
-      auto mul = [fac](auto &c) noexcept{
-        return c *= fac;
-      };
-      if constexpr(std::same_as<D, aos_type>)
+      using t_t = typename R::value_type;
+      using e_t = underlying_type_t<t_t>;
+      e_t fac(norm);
+      auto mul = [fac](auto &c) noexcept{return c *= fac;};
+      if constexpr(eve::algo::is_soa_vector_v<R>)
       {
-        if constexpr(std::is_floating_point_v<e_t>)
+        eve::algo::transform_inplace[eve::algo::unroll<2>](f,  mul);
+      }
+      else
+      {
+        if constexpr(std::is_floating_point_v<t_t>)
         {
           eve::algo::transform_inplace[eve::algo::unroll<2>](f, mul);
         }
@@ -40,10 +42,6 @@ namespace eve::detail
            std::transform(f.data(), f.data()+std::size(f), f.data(), mul);
         }
       }
-      else if constexpr(std::same_as<D, soa_type>)
-      {
-        eve::algo::transform_inplace[eve::algo::unroll<2>](f,  mul);
-      }
     }
   }
 
@@ -51,13 +49,15 @@ namespace eve::detail
   EVE_FORCEINLINE void scaleit_(EVE_SUPPORTS(cpu_)
                             , R & fr
                             , R & fi
-                            , T const & fac) noexcept
+                            , T const & norm) noexcept
+  requires (std::is_floating_point_v<typename R::value_type>)
   {
-    if (fac != one(as(fac)))
+   if (norm != one(as(norm)))
     {
-      auto  mul = [fac]<typename C>(C x) noexcept{
-        return x*fac;
-      };
+      using t_t = typename R::value_type;
+      using e_t = underlying_type_t<t_t>;
+      e_t fac(norm);
+      auto  mul = [fac]<typename C>(C x) noexcept{return x*fac;};
       eve::algo::transform_inplace(fr, mul);
       eve::algo::transform_inplace(fi, mul);
     }

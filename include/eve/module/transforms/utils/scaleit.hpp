@@ -28,19 +28,20 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template<D decorator, range R, value T>
+//!     template<range R, value T>
 //!     auto scaleit(R & f, T fac) noexcept;
 //!
-//!     template<D decorator, range R, value T>
+//!     template<range R, value T>
 //!     auto scaleit(R & fr, R &fi, T fac) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
-//!     * `f`   : range of  complex or real arguments.
-//!     * `fr   : range of  real arguments
-//!     * `fi   : range of  real arguments (of same size as fr)
-//!     * `fac` : scale factor.
+//!     * `f`   : range of complex or scalar ordered arguments.
+//!     * `fr   : range of scalar ordered arguments
+//!     * `fi   : range of scalar ordered  arguments (of same size as fr)
+//!     * `fac` : scalar ordered normalization factor. (converted to the underlying type of R
+//!               elements before the  scaling is done)
 //!
 //!   **Return value**
 //!

@@ -43,7 +43,7 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
     [[maybe_unused]] auto a = data();
     using namespace std::literals;
     auto tic =  std::chrono::steady_clock::now();
-    eve::aos(eve::revbin_permute)(a);
+    eve::revbin_permute(a);
     auto toc =  std::chrono::steady_clock::now()-tic;
     durations[i] = std::chrono::duration<double>(toc).count()*1000;
     size[i] = j;

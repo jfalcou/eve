@@ -36,12 +36,12 @@ namespace eve::detail
         sd(f0, f2, f[0], f[2]);
         sd(f1, f3, f[1], f[3]);
       }
-      aos(scaleit)(fr, fac*invsqrt_2(as(fac)));
+      scaleit(fr, fac*invsqrt_2(as(fac)));
       return;
     }
 
     fht_df_kernel(f, log2_n, simd);
-    aos(revbin_permute)(fr);
-    aos(scaleit)(fr, fac*invsqrt_2(as(fac)));
+    revbin_permute(fr);
+    scaleit(fr, fac*invsqrt_2(as(fac)));
   }
 }

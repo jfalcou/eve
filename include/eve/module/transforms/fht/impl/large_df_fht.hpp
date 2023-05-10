@@ -24,7 +24,7 @@ namespace eve::detail
     auto n =  std::size(fr);
     auto log2_n = eve::countr_zero(n); //eve::log2(n));
     fht_loc_df_core(fr.data(), log2_n, simd);
-    aos(revbin_permute)(fr);
-    aos(scaleit)(fr, fac*invsqrt_2(as(fac)));
+    revbin_permute(fr);
+    scaleit(fr, fac*invsqrt_2(as(fac)));
   }
 }

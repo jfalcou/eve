@@ -20,8 +20,8 @@ TTS_CASE_TPL("Check revbin_permute", eve::test::simd::ieee_reals)
     {
       std::vector<int32_t> vi(n), orig(n);
       for(int i=0; i < n ; ++i) vi[i] = i;
-      eve::aos(eve::revbin_permute)(vi);
-      eve::aos(eve::revbin_permute)(vi);
+      eve::revbin_permute(vi);
+      eve::revbin_permute(vi);
       for(int i = 0; i < n; i++) TTS_EQUAL(vi[i], i);
     }
   }

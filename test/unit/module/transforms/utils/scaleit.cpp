@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check ft_ht_cv on aos", eve::test::simd::ieee_reals)
         std::vector<e_t> f0(N), f1(N);
         for(size_t i=0; i < N ; ++i){ f0[i] = f1[i] = i+0.5; };
         ref_scaleit (f0,  e_t(3.5));
-        eve::aos(eve::scaleit)(f1, e_t(3.5));
+        eve::scaleit(f1, e_t(3.5));
         for(size_t i=0; i < N ; ++i){
           TTS_EQUAL(f1[i], f0[i]);
           TTS_EQUAL(f1[i], f0[i]);

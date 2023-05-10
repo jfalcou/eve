@@ -162,36 +162,48 @@ namespace eve::detail
 
   template<range R>
   EVE_FORCEINLINE constexpr void
-  revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & f) noexcept
+  revbin_permute_(EVE_SUPPORTS(cpu_), R & f) noexcept
   {
+//    using T = typename R::value_type;
     auto n = std::size(f);
-    if ( n<=64 )
-      internal::revbin_permute_le_64(f);
+    if constexpr(eve::algo::is_soa_vector_v<R>)
+    {
+      auto[pr,pi] = f.begin().base;
+      revbin_permute(as_range(pr, pr+n));
+      revbin_permute(as_range(pi, pi+n));
+//       std::vector<T> g(n);
+//       for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
+//       aos(revbin_permute)(g);
+//       for(size_t i=0; i < n ; ++i) f.set(i, g[i]);
+    }
     else
-      internal::revbin_permute_gt_64(f);
+    {
+      auto n = std::size(f);
+      if ( n<=64 ) internal::revbin_permute_le_64(f);
+      else         internal::revbin_permute_gt_64(f);
+    }
   }
 
   template<range R>
   EVE_FORCEINLINE constexpr void
-  revbin_permute_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr, R & fi) noexcept
+  revbin_permute_(EVE_SUPPORTS(cpu_), R & fr, R & fi) noexcept
+  requires (std::is_floating_point_v<typename R::value_type>)
   {
     EVE_ASSERT(std::size(fr) == std::size(fi), "fr and fi must share the same size");
     auto n = std::size(fr);
-    if ( n<=64 )
-      internal::revbin_permute_le_64(fr, fi);
-    else
-      internal::revbin_permute_gt_64(fr, fi);
+    if ( n<=64 ) internal::revbin_permute_le_64(fr, fi);
+    else         internal::revbin_permute_gt_64(fr, fi);
   }
 
-  template <range R>
-  auto revbin_permute_(EVE_SUPPORTS(cpu_), soa_type const &, R & f)  noexcept
-    requires(eve::is_complex_v<typename R::value_type>)
-  {
-    using T = typename R::value_type;
-    auto n = std::size(f);
-    std::vector<T> g(n);
-    for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-    aos(revbin_permute)(g);
-    for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
-  }
+//   template <range R>
+//   auto revbin_permute_(EVE_SUPPORTS(cpu_), soa_type const &, R & f)  noexcept
+//     requires(eve::is_complex_v<typename R::value_type>)
+//   {
+//     using T = typename R::value_type;
+//     auto n = std::size(f);
+//     std::vector<T> g(n);
+//     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
+//     aos(revbin_permute)(g);
+//     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
+//   }
 }

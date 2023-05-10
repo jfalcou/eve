@@ -142,9 +142,9 @@ namespace eve::detail
   {
     auto n =  std::size(fr);
     auto log2_n = eve::countr_zero(n); //eve::log2(n));
-    aos(revbin_permute)(fr);
+    revbin_permute(fr);
     fht_loc_dif_core(fr.data(), log2_n, simd);
-    aos(scaleit)(fr, fac);
+    scaleit(fr, fac);
   }
 
 }
