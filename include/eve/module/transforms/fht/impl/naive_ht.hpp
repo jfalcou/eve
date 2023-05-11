@@ -25,9 +25,10 @@ namespace eve::detail
     return (c+s)*invsqrt_2(as(x));
   }
 
-  template<range R, floating_scalar_value T>
+  template<eve::algo::relaxed_range R, floating_ordered_value T>
   EVE_FORCEINLINE constexpr void
-  naive_ht_(EVE_SUPPORTS(cpu_), aos_type const &, R & a, T f) noexcept
+  naive_ht_(EVE_SUPPORTS(cpu_), R & a, T f) noexcept
+  requires(!eve::algo::is_soa_vector_v<R>)
   {
     using  t_t = decltype(read(a.data()));
     auto N =  std::size(a);
@@ -45,9 +46,10 @@ namespace eve::detail
     std::copy(c.begin(), c.end(), a.begin());
   }
 
-  template<range R, floating_scalar_value T>
+  template<eve::algo::relaxed_range R, floating_ordered_value T>
   EVE_FORCEINLINE constexpr void
-  naive_ht_(EVE_SUPPORTS(cpu_), soa_type const &, R & a, T f) noexcept
+  naive_ht_(EVE_SUPPORTS(cpu_), R & a, T f) noexcept
+  requires(eve::algo::is_soa_vector_v<R>)
   {
     using c_t = eve::complex<T>;
     auto N =  a.size();
@@ -65,12 +67,12 @@ namespace eve::detail
     eve::algo::copy(c, a);
   }
 
-  template<range R, floating_scalar_value T>
+  template<eve::algo::relaxed_range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
-  naive_ht_(EVE_SUPPORTS(cpu_), aos_type const &, R & ar, R & ai, T f) noexcept
+  naive_ht_(EVE_SUPPORTS(cpu_), R & ar, R & ai, T f) noexcept
   {
-    aos(naive_ht)(ar, f);
-    aos(naive_ht)(ai, f);
+    naive_ht(ar, f);
+    naive_ht(ai, f);
   }
 
 }

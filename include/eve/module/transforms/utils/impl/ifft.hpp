@@ -16,26 +16,19 @@
 
 namespace eve::detail
 {
-  template<decorator D, typename F, range R, scalar_value T>
+  template<typename F, range R, scalar_value T>
   EVE_FORCEINLINE void ifft_(EVE_SUPPORTS(cpu_)
-                            , D const &
                             , F const & fft
                             , R & f
                             , T const & fac) noexcept
-  requires(eve::is_complex_v<typename R::value_type> && is_one_of<D>(types<aos_type, soa_type> {}))
+  requires(eve::algo::is_soa_vector_v<R>)
   {
     auto conjmuli = []<typename C>(C x) noexcept {
       auto  [r, i] = x; return C(i, r);
     };
-    if constexpr(std::same_as<D, aos_type>)
-      std::transform(f.data(), f.data()+f.size(), f.data(), conjmuli);
-    else  if constexpr(std::same_as<D, soa_type>)
-      eve::algo::transform_inplace(f, conjmuli);
+    eve::algo::transform_inplace(f, conjmuli);
     fft(f, fac);
-    if constexpr(std::same_as<D, aos_type>)
-      std::transform(f.data(), f.data()+f.size(), f.data(), conjmuli);
-    else  if constexpr(std::same_as<D, soa_type>)
-      eve::algo::transform_inplace(f, conjmuli);
+    eve::algo::transform_inplace(f, conjmuli);
   }
 
   template<typename F, range R, scalar_value T>

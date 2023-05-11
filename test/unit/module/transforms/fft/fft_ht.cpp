@@ -25,7 +25,7 @@ TTS_CASE_TPL("Check fft_ht on aos", eve::test::simd::ieee_reals)
     using e_t = typename T::value_type;
     std::vector<e_t> ar(N), br(N), ai(N), bi(N);
     for(size_t i=0; i < N ; ++i){ br[i] = ar[i] =  i+1; bi[i] = ai[i] = i+2; };
-    eve::aos(eve::naive_ft)(ar, ai, e_t(1.0), e_t(-1));
+    eve::naive_ft(ar, ai, e_t(1.0), e_t(-1));
     eve::aos(eve::fft_ht)(br, bi, e_t(1.0));
     for(size_t i=0; i <N ; ++i){
       TTS_ULP_EQUAL(          ar[i],            br[i] , 10000);

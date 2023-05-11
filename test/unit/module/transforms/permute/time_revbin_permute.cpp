@@ -16,7 +16,6 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
 {
 
   using e_t = T;
-  using c_t = eve::complex<e_t>;
   std::int32_t j = start;
   std::int32_t max = maxi;
   std::cout << "duration for " << title;
@@ -29,13 +28,13 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
     j <<= 1;
     auto data = [j](){
       if constexpr(std::same_as<D, eve::aos_type>){
-        std::vector<c_t> a(j, c_t(1, 2));
-        for(std::int32_t i=0; i < j; ++i) a[i] = c_t(i, i+1);
+        std::vector<e_t> a(j);
+        for(std::int32_t i=0; i < j; ++i) a[i] = e_t(i+1);
         return a;
       }
       else if constexpr(std::same_as<D, eve::soa_type>){
-        eve::algo::soa_vector<c_t> a(j, c_t(1, 2));
-        for(std::int32_t i=0; i < j; ++i) a.set(i, c_t(i, i+1));
+        eve::algo::soa_vector<e_t> a(j);
+        for(std::int32_t i=0; i < j; ++i) a.set(i, e_t(i+1));
         return a;
       }
     };

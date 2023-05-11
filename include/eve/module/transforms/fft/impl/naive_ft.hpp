@@ -20,8 +20,9 @@ namespace eve::detail
 
   template<range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
-  naive_ft_(EVE_SUPPORTS(cpu_), aos_type const &, R & ar,  R & ai, T f, T s = -1) noexcept
-  {
+  naive_ft_(EVE_SUPPORTS(cpu_), R & ar,  R & ai, T f, T s = -1) noexcept
+  requires(!eve::algo::is_soa_vector_v<R>)
+ {
     EVE_ASSERT(eve::abs(s) == 1, "sign must be one or minus one");
     EVE_ASSERT(std::size(ar) == std::size(ai), "ranges ar and ai must share the same size");
     using  c_t = eve::complex<T>;
@@ -46,13 +47,13 @@ namespace eve::detail
 
   template<range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
-  naive_ft_(EVE_SUPPORTS(cpu_), aos_type const &, R & a, T f, T s = -1) noexcept
-  requires(eve::is_complex_v<typename R::value_type>)
+  naive_ft_(EVE_SUPPORTS(cpu_), R & a, T f, T s = -1) noexcept
+  requires(!eve::algo::is_soa_vector_v<R>)
   {
     EVE_ASSERT(eve::abs(s) == 1, "sign must be one or minus one");
     using  c_t = complex<underlying_type_t<T>>;
     auto N =  std::size(a);
-    std::vector<c_t> c(N);
+    eve::algo::soa_vector<c_t> c(N);
     using i_t = decltype(N);
 
     s *= T(2)/N;
@@ -61,15 +62,15 @@ namespace eve::detail
       auto z = s*w;
       c_t t = zero(as<c_t>());
       for (i_t k=0; k<N; ++k)   t = fam(t, a[k], exp_ipi( k*z ));
-      c[w] = f*t;
+      c.set(w, f*t);
     }
-    std::copy(c.begin(), c.end(), a.begin());
+    eve::algo::copy(c, a);
   }
 
-  template<range R, floating_scalar_value T>
+  template<eve::algo::relaxed_range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
-  naive_ft_(EVE_SUPPORTS(cpu_), soa_type const &, R & a, T f, T s = -1) noexcept
-  requires(eve::is_complex_v<typename R::value_type>)
+  naive_ft_(EVE_SUPPORTS(cpu_), R & a, T f, T s = -1) noexcept
+  requires(eve::algo::is_soa_vector_v<R>)
   {
     EVE_ASSERT(eve::abs(s) == 1, "s must be one or minus one");
     using c_t = eve::complex<T>;

@@ -18,7 +18,7 @@ namespace eve::detail
 
 
   template < bool is_final_radix_16 = true >
-  EVE_FORCEINLINE constexpr void
+  constexpr void
   fht_loc_dt_core(auto f, auto log2_n, bool simd) noexcept
   // requires(std::is_floating_point_v<typename R::value_type>)
   {

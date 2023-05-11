@@ -21,7 +21,7 @@ namespace eve::detail
 
   namespace internal
   {
-    template < range R>
+    template <eve::algo::relaxed_range R>
     inline void revbin_permute_leq_64(R & f) noexcept
     // Must have f.size() \in {1, 2, 4, 8, 16, 32, 64}
     {
@@ -78,7 +78,7 @@ namespace eve::detail
       }
     }
 
-    template < range R>
+    template <eve::algo::relaxed_range R>
     inline void revbin_permute_le_64(R & f) noexcept
     // Must have f.size() \in {1, 2, 4, 8, 16, 32, 64}
     {
@@ -91,7 +91,7 @@ namespace eve::detail
       revbin_le64(iswap, n);
     }
 
-    template < range R>
+    template <eve::algo::relaxed_range R>
     inline void revbin_permute_le_64(R & fr, R& fi) noexcept
     {
       auto n = std::size(fr);
@@ -137,7 +137,7 @@ namespace eve::detail
       }
     }
 
-    template < range R>
+    template <eve::algo::relaxed_range R>
     inline auto revbin_permute_gt_64(R & fr, R & fi)  noexcept
     {
       auto frbeg = fr.data();
@@ -149,7 +149,7 @@ namespace eve::detail
       revbin_gt64(iswap, std::size(fr));
     }
 
-    template < range R>
+    template <eve::algo::relaxed_range R>
     inline auto revbin_permute_gt_64(R & f)  noexcept
     {
       auto fbeg = f.data();
@@ -160,21 +160,19 @@ namespace eve::detail
     }
   }
 
-  template<range R>
+ 
+  template<eve::algo::relaxed_range R>
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), R & f) noexcept
   {
-//    using T = typename R::value_type;
     auto n = std::size(f);
     if constexpr(eve::algo::is_soa_vector_v<R>)
     {
-      auto[pr,pi] = f.begin().base;
-      revbin_permute(as_range(pr, pr+n));
-      revbin_permute(as_range(pi, pi+n));
-//       std::vector<T> g(n);
-//       for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-//       aos(revbin_permute)(g);
-//       for(size_t i=0; i < n ; ++i) f.set(i, g[i]);
+      auto [pr, pi] = f.begin().base;
+      auto zr = eve::algo:: as_range(pr, pr+n);
+      auto zi = eve::algo:: as_range(pi, pi+n);
+      revbin_permute(zr);
+      revbin_permute(zi);
     }
     else
     {
@@ -184,7 +182,7 @@ namespace eve::detail
     }
   }
 
-  template<range R>
+  template<eve::algo::relaxed_range R>
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), R & fr, R & fi) noexcept
   requires (std::is_floating_point_v<typename R::value_type>)
@@ -194,16 +192,4 @@ namespace eve::detail
     if ( n<=64 ) internal::revbin_permute_le_64(fr, fi);
     else         internal::revbin_permute_gt_64(fr, fi);
   }
-
-//   template <range R>
-//   auto revbin_permute_(EVE_SUPPORTS(cpu_), soa_type const &, R & f)  noexcept
-//     requires(eve::is_complex_v<typename R::value_type>)
-//   {
-//     using T = typename R::value_type;
-//     auto n = std::size(f);
-//     std::vector<T> g(n);
-//     for(size_t i=0; i < n ; ++i) g[i] = f.get(i);
-//     aos(revbin_permute)(g);
-//     for(size_t i=0; i < n ; ++i)  f.set(i, g[i]);
-//   }
 }

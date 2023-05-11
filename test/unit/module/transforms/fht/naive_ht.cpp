@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
     std::vector<e_t> a(N), ref(N), orig(N);
     for(size_t i=0; i < N ; ++i) orig[i] = ref[i] = a[i] = i+1;
     pr("a", a.data(), 8);
-    eve::aos(eve::naive_ht)(a, e_t(1.0));
+    eve::naive_ht(a, e_t(1.0));
     pr("a", a.data(), 8);
     pr("ref", ref.data(), 8);
     slow_ht(&ref[0], 8, e_t(1.0));
@@ -56,7 +56,7 @@ TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
     for(size_t i=0; i <N ; ++i){
       TTS_ABSOLUTE_EQUAL(a[i],ref[i], 100*eve::eps(eve::as<e_t>()));
     }
-    eve::aos(eve::naive_ht)(a, e_t(2)/(N)); //inverse ht
+    eve::naive_ht(a, e_t(2)/(N)); //inverse ht
     for(size_t i=0; i <N ; ++i){
       TTS_ABSOLUTE_EQUAL(a[i],orig[i], 100*eve::eps(eve::as<e_t>()));
     }
@@ -95,14 +95,14 @@ TTS_CASE_TPL("Check naive_ht on aos pair", eve::test::simd::ieee_reals)
     using e_t = typename T::value_type;
     std::vector<e_t> ar(N), ai(N), origr(N), origi(N), refr(N), refi(N);
     for(size_t i=0; i < N ; ++i){ refr[i] = origr[i] = ar[i] = e_t(i)+1; refi[i] = origi[i] = ai[i] = e_t(1);}
-    eve::aos(eve::naive_ht)(ar, ai, e_t(1.0));
+    eve::naive_ht(ar, ai, e_t(1.0));
     slow_ht(&refr[0], 8, e_t(1.0));
     slow_ht(&refi[0], 8, e_t(1.0));
     for(size_t i=0; i <N ; ++i){
       TTS_ABSOLUTE_EQUAL(ar[i],refr[i], 100*eve::eps(eve::as<e_t>()));
       TTS_ABSOLUTE_EQUAL(ai[i],refi[i], 100*eve::eps(eve::as<e_t>()));
     }
-    eve::aos(eve::naive_ht)(ar, ai, e_t(2)/N); //inverse ht
+    eve::naive_ht(ar, ai, e_t(2)/N); //inverse ht
     for(size_t i=0; i <N ; ++i){
       TTS_ABSOLUTE_EQUAL(ar[i],origr[i], 100*eve::eps(eve::as<e_t>()));
       TTS_ABSOLUTE_EQUAL(ai[i],origi[i], 100*eve::eps(eve::as<e_t>()));
