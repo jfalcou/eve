@@ -106,6 +106,8 @@ add_custom_target(unit.special.exe         )
 add_dependencies(unit.exe unit.special.exe )
 glob_unit("unit" ${unit_root} "module/special/*.cpp" )
 
+endif()
+
 add_custom_target(unit.transforms.exe                   )
 add_dependencies(unit.exe unit.transforms.exe   )
 glob_unit("unit" ${unit_root} "module/transforms/*.cpp" )
@@ -114,6 +116,3 @@ glob_unit("unit" ${unit_root} "module/transforms/permute/*.cpp" )
 glob_unit("unit" ${unit_root} "module/transforms/fft/*.cpp" )
 glob_unit("unit" ${unit_root} "module/transforms/fht/*.cpp" )
 glob_unit("unit" ${unit_root} "module/transforms/convolution/*.cpp" )
-
-
-endif()

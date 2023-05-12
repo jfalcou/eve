@@ -35,7 +35,7 @@ int main()
   using c_t = eve::complex<e_t>;
   using aos_ct = std::vector<c_t>;
   aos_ct aosvri(4, c_t(1.0f, -1.0f));
-  eve::scaleit(aosvri, 2, true); // pourquoi ça ne compile pas si true n'est pas là ?
+  eve::scaleit(aosvri, 2, true); // pourquoi ca ne compile pas si true n'est pas la ?
   pr("aosvri", aosvri);
 
   using soa_ct = eve::algo::soa_vector<c_t>;

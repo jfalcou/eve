@@ -166,7 +166,7 @@ namespace eve::detail
             eve::store[ignore](dd, fl_it);
             eve::store[ignore](cc, fk_it);
           };
-          eve::algo::for_each[eve::algo::no_aligning][eve::algo::unroll<2>](view, doit);
+          eve::algo::for_each[eve::algo::no_aligning][eve::algo::unroll<2>][eve::algo::allow_frequency_scaling](view, doit);
         }
       }
     }
