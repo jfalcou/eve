@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/complex.hpp>
-#include <eve/concept/range.hpp>
 #include <eve/module/transforms/fht/detail/ht_shft.hpp>
 #include <eve/module/transforms/fht/detail/fht_dt_kernel.hpp>
 #include <type_traits>
@@ -19,23 +18,23 @@ namespace eve::detail
 
   template < bool is_final_radix_16 = true >
   constexpr void
-  fht_loc_dt_core(auto f, auto log2_n, bool simd) noexcept
+  fht_loc_dt_core(auto f, auto l2_n, bool simd) noexcept
   // requires(std::is_floating_point_v<typename R::value_type>)
   {
-    if ( log2_n <= 12 )  // sizeof(Type)*(2**threshold) <= L1_CACHE_BYTES
+    if ( l2_n <= 12 )  // sizeof(Type)*(2**threshold) <= L1_CACHE_BYTES
     {
-      fht_dt_kernel<is_final_radix_16>(f, log2_n, simd);
+      fht_dt_kernel<is_final_radix_16>(f, l2_n, simd);
       return;
     }
     else
     {
-      using i_t = decltype(log2_n);
-      for (i_t ldm=1; ldm<log2_n; ++ldm)
-        fht_loc_dt_core(f+(1UL<<ldm), ldm, simd);
+      using i_t = decltype(l2_n);
+      for (i_t l2_m=1; l2_m<l2_n; ++l2_m)
+        fht_loc_dt_core(f+(1UL<<l2_m), l2_m, simd);
 
-      for (i_t ldm=1; ldm<=log2_n; ++ldm)
+      for (i_t l2_m=1; l2_m<=l2_n; ++l2_m)
       {
-        const i_t m = (1UL<<ldm);
+        const i_t m = (1UL<<l2_m);
         const i_t mh = (m>>1);
 
         ht_shft_simd(f+mh, mh);
@@ -51,23 +50,20 @@ namespace eve::detail
             store[ignore](f2, f2_it);
           };
          eve::algo::for_each[eve::algo::unroll<2>](view, doit);
- //        for (i_t t1=0, t2=mh;  t1<mh;  ++t1, ++t2)
-//           sd(f[t1], f[t2]);
       }
     }
   }
 
-  template <range  R, floating_scalar_value T>
+  template <eve::algo::relaxed_range  R, floating_scalar_value T>
   EVE_FORCEINLINE void fht_dit_loc_(EVE_SUPPORTS(cpu_)
-                               , aos_type const &
                                , R& fr
                                , T fac
                                , bool simd = true)
   {
     auto n =  std::size(fr);
-    auto log2_n = eve::countr_zero(n); //eve::log2(n));
+    auto l2_n = eve::countr_zero(n); //log2(n));
     revbin_permute(fr);
-    fht_loc_dt_core(fr.data(), log2_n, simd);
+    fht_loc_dt_core(fr.data(), l2_n, simd);
     scaleit(fr, fac);
   }
 }

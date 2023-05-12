@@ -14,7 +14,7 @@
 #include <eve/module/transforms.hpp>
 #include <vector>
 
-TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check naive_ht", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   if constexpr(std::same_as<eve::element_type_t<T>, double> && eve::cardinal_v<T> == 1)
@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
     eve::naive_ht(naiv, e_t(1.0));
     pr("naiv  ", naiv.data(), 8);
     pr("a  ", a.data(), 8);
-    eve::aos(eve::small_df_fht)(a, e_t(1.0), true);
+    eve::small_df_fht(a, e_t(1.0), true);
     pr("a  ", a.data(), 8);
     for(size_t i=0; i <N ; ++i){
       TTS_ABSOLUTE_EQUAL(a[i],naiv[i], 100*eve::eps(eve::as<e_t>()));

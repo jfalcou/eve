@@ -36,7 +36,7 @@ slow_ht(auto f, size_t n, T fac)
 }
 
 
-TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check naive_ht", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   if constexpr(std::same_as<eve::element_type_t<T>, double> && eve::cardinal_v<T> == 1)
@@ -85,7 +85,7 @@ TTS_CASE_TPL("Check naive_ht on aos", eve::test::simd::ieee_reals)
 // };
 
 
-TTS_CASE_TPL("Check naive_ht on aos pair", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check naive_ht on  pairs", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   if constexpr(std::same_as<eve::element_type_t<T>, double> && eve::cardinal_v<T> == 1)

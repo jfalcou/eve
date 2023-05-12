@@ -21,8 +21,6 @@ namespace eve
 //!   data where real and imaginary parts are swapped.
 //!   ifft does the job by applying the chosen fft object function to the properly swapped datas.
 //!
-//!   The call depending of the data representation, two decorators can be
-//!   used to specify that the ranges are soa or aos
 //!   A separate call is provided if the datas are given in two ranges of real and imaginary parts
 //!
 //!   **Defined in header**

@@ -13,22 +13,21 @@
 
 namespace eve::detail
 {
-  template<range R, floating_scalar_value T>
+  template<eve::algo::relaxed_range R, floating_scalar_value T>
   EVE_FORCEINLINE constexpr void
-  small_df_fht_(EVE_SUPPORTS(cpu_), aos_type const &, R & fr, T fac, bool simd = true) noexcept
+  small_df_fht_(EVE_SUPPORTS(cpu_), R & fr, T fac, bool simd = true) noexcept
   {
-    // "Small" Hartley Transform decimation in frequency
-    // better for size(fr) less than 128
+    // better for size(fr) less than <= 64
     auto f = fr.data();
     auto n =  std::size(fr);
-    auto log2_n = eve::countr_zero(n); //eve::log2(n));
-    if ( log2_n<=2 )
+    auto l2_n = eve::countr_zero(n); //log2(n));
+    if ( l2_n<=2 )
     {
-      if ( log2_n==1 )  // two point fht
+      if ( l2_n==1 )
       {
         sd(f[0], f[1]);
       }
-      else if ( log2_n==2 )  // four point fht
+      else if ( l2_n==2 )
       {
         T f0, f1, f2, f3;
         sd(f[0], f[2], f0, f1);
@@ -40,7 +39,7 @@ namespace eve::detail
       return;
     }
 
-    fht_df_kernel(f, log2_n, simd);
+    fht_df_kernel(f, l2_n, simd);
     revbin_permute(fr);
     scaleit(fr, fac*invsqrt_2(as(fac)));
   }

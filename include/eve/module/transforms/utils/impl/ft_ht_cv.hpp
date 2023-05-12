@@ -21,7 +21,6 @@ namespace eve::detail
 
   template <int sign = 1, range  R>
   EVE_FORCEINLINE void ht_ft_cv_(EVE_SUPPORTS(cpu_)
-                                , aos_type const &
                                 , R& fr
                                 , R& fi
                                 , std::integral_constant<int, sign> const &)
@@ -80,19 +79,17 @@ namespace eve::detail
 
   template <range  R>
   EVE_FORCEINLINE void ht_ft_cv_(EVE_SUPPORTS(cpu_)
-                                , aos_type const &
                                 , R& fr
                                 , R& fi)
   {
-    aos(ht_ft_cv)(fr, fi, std::integral_constant<int, 1>());
+    ht_ft_cv(fr, fi, std::integral_constant<int, 1>());
   }
 
     template <range  R>
   EVE_FORCEINLINE void inv_ht_ft_cv_(EVE_SUPPORTS(cpu_)
-                                    , aos_type const &
                                     , R& fr
                                     , R& fi)
   {
-    aos(ht_ft_cv)(fr, fi, std::integral_constant<int, -1>());
+    ht_ft_cv(fr, fi, std::integral_constant<int, -1>());
   }
 }

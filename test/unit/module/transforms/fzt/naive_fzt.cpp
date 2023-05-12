@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check naive_ft on aos", eve::test::simd::ieee_reals)
                             , 0.016124968505891957, 0.0079360158720316321 };
     for(size_t i=0; i < N ; ++i) a[i] = e_t(i);
     pr("a", a.data(), N);
-    eve::aos(eve::naive_zt)(a, e_t(0.5));
+    eve::naive_zt(a, e_t(0.5));
     pr("a", a.data(), N);
     for(size_t i=0; i <N ; ++i){
       TTS_ULP_EQUAL(          a[i],            ref[i] , 10000);

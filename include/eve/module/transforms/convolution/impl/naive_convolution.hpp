@@ -17,7 +17,7 @@ namespace eve::detail
 
   template<range R>
   EVE_FORCEINLINE constexpr void
-  naive_cyclic_convolution_(EVE_SUPPORTS(cpu_), aos_type const &, R aa, R bb, R & cc) noexcept
+  naive_cyclic_convolution_(EVE_SUPPORTS(cpu_), R aa, R bb, R & cc) noexcept
   {
     EVE_ASSERT(std::size(aa) == std::size(bb), "aa and bb  must have  the same size");
     EVE_ASSERT(std::size(aa) == std::size(cc), "aa and cc  must have  the same size");
@@ -42,14 +42,14 @@ namespace eve::detail
 
   template<range R>
   EVE_FORCEINLINE constexpr void
-  naive_linear_convolution_(EVE_SUPPORTS(cpu_), aos_type const &, R aa, R bb, R & cc) noexcept
+  naive_linear_convolution_(EVE_SUPPORTS(cpu_), R aa, R bb, R & cc) noexcept
   {
     EVE_ASSERT(std::size(aa) == std::size(bb), "aa and bb  must have  the same size");
     EVE_ASSERT(std::size(cc) == 2*std::size(aa), "cc must have 2 times the size of a");
     auto a = aa.data();
     auto b = bb.data();
     auto c = cc.data();
-    auto n = std::size(aa); 
+    auto n = std::size(aa);
     using i_t = decltype(n);
     using e_t =  std::remove_reference_t<decltype(a[0])>;
     for (i_t m=0; m<n; ++m)

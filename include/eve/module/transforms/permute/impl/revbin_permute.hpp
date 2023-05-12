@@ -11,7 +11,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo.hpp>
 #include <eve/module/complex.hpp>
-#include <eve/module/transforms/utils/aos_soa.hpp>
 #include <eve/concept/range.hpp>
 #include <type_traits>
 #include <eve/pattern.hpp>
@@ -160,7 +159,7 @@ namespace eve::detail
     }
   }
 
- 
+
   template<eve::algo::relaxed_range R>
   EVE_FORCEINLINE constexpr void
   revbin_permute_(EVE_SUPPORTS(cpu_), R & f) noexcept

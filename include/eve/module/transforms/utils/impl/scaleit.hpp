@@ -11,7 +11,6 @@
 #include <eve/module/algo.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/concept/range.hpp>
-#include <eve/module/transforms/utils/aos_soa.hpp>
 #include <type_traits>
 #include <execution>
 

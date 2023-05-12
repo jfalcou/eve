@@ -19,9 +19,9 @@
 namespace eve::detail
 {
 
-  template<range R, value T>
+  template<eve::algo::relaxed_range R, value T>
   EVE_FORCEINLINE constexpr void
-  naive_zt_(EVE_SUPPORTS(cpu_), aos_type const &, R & aa, T z) noexcept
+  naive_zt_(EVE_SUPPORTS(cpu_), R & aa, T z) noexcept
   {
     using  t_t = decltype(read(aa.data()));
     auto N =  std::size(aa);

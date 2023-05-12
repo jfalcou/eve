@@ -135,7 +135,6 @@ namespace eve::detail
 
   template <range  R, floating_scalar_value T>
   EVE_FORCEINLINE void fht_dif_loc_(EVE_SUPPORTS(cpu_)
-                               , aos_type const &
                                , R& fr
                                , T fac
                                , bool simd = true)

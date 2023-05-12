@@ -46,7 +46,7 @@ namespace eve::detail
 
   template<range R>
   EVE_FORCEINLINE constexpr void
-  fht_cyclic_convolution_(EVE_SUPPORTS(cpu_), aos_type const &, R aa, R bb, R & cc) noexcept
+  fht_cyclic_convolution_(EVE_SUPPORTS(cpu_), R aa, R bb, R & cc) noexcept
   {
     EVE_ASSERT(std::size(aa) == std::size(bb), "aa and bb  must have  the same size");
     EVE_ASSERT(std::size(aa) == std::size(cc), "aa and cc  must have  the same size");
@@ -56,8 +56,8 @@ namespace eve::detail
     auto n = std::ssize(aa);
     using e_t = eve::underlying_type_t<std::remove_reference_t<decltype(aa[0])>>;
 
-    aos(large_df_fht)(aa, e_t(1));
-    aos(large_df_fht)(bb, e_t(1));
+    large_df_fht(aa, e_t(1));
+    large_df_fht(bb, e_t(1));
     fht_convolution_kernel(a, b, n, rsqrt(e_t(n)));
     pr("bb", bb.data(), n);
     std::memcpy(c, b, n*sizeof(e_t));
@@ -65,7 +65,7 @@ namespace eve::detail
 
   template<range R>
   EVE_FORCEINLINE constexpr void
-  fht_linear_convolution_(EVE_SUPPORTS(cpu_), aos_type const &, R aa, R bb, R & cc) noexcept
+  fht_linear_convolution_(EVE_SUPPORTS(cpu_), R aa, R bb, R & cc) noexcept
   {
     EVE_ASSERT(std::size(aa) == std::size(bb), "aa and bb  must have  the same size");
     EVE_ASSERT(std::size(cc) == 2*std::size(aa), "cc must have 2 times the size of a");
@@ -74,10 +74,10 @@ namespace eve::detail
     std::vector < e_t> da(aa), db(bb);
     da.resize(2*n); pr("da", da.data(), 2*n);
     db.resize(2*n); pr("db", db.data(), 2*n);
-    aos(large_df_fht)(da, e_t(1));
-    aos(large_df_fht)(db, e_t(1));
+    large_df_fht(da, e_t(1));
+    large_df_fht(db, e_t(1));
     fht_convolution_kernel(da.data(), db.data(), 2*n, rsqrt(e_t(n))/2);
-    aos(large_df_fht)(db, e_t(1));
+    large_df_fht(db, e_t(1));
     pr("db", db.data(), 2*n);
     std::memcpy(cc.data(), db.data(), 2*n*sizeof(e_t));
   }

@@ -25,12 +25,12 @@ TTS_CASE_TPL("Check naive_cyclic_convolution on aos", eve::test::simd::ieee_real
     for(size_t i=0; i < N ; ++i)  b[i] = a[i] = 1;
     pr("a", a.data(), N);
     pr("b", b.data(), N);
-    eve::aos(eve::naive_linear_convolution)(a, b, ref);
+    eve::naive_linear_convolution(a, b, ref);
      pr("a", a.data(), N);
      pr("b", b.data(), N);
      pr("ref", ref.data(), 2*N);
 
-    eve::aos(eve::fht_linear_convolution)(a, b, c);
+    eve::fht_linear_convolution(a, b, c);
     pr("c", c.data(), N);
     pr("ref", ref.data(), N);
     for(size_t i=0; i <N ; ++i){

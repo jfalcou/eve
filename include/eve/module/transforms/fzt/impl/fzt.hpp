@@ -56,7 +56,7 @@ namespace eve::detail
   }
 //   template<range R, value T>
 //   EVE_FORCEINLINE constexpr void
-//   fzt_(EVE_SUPPORTS(cpu_), aos_type const &, R & aa, T z) noexcept
+//   fzt_(EVE_SUPPORTS(cpu_), R & aa, T z) noexcept
 //   {
 //     using  e_t = decltype(read(aa.data()));
 //     auto N =  std::size(aa);

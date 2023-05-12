@@ -71,7 +71,7 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
     auto toc =  std::chrono::steady_clock::now()-tic;
     scal_durations[i] = std::chrono::duration<double>(toc).count()*1000;
     tic =  std::chrono::steady_clock::now();
-    eve::aos(eve::ht_ft_cv)(ar, ai);
+    eve::ht_ft_cv(ar, ai);
     toc =  std::chrono::steady_clock::now()-tic;
     simd_durations[i] = std::chrono::duration<double>(toc).count()*1000;
     size[i] = j;

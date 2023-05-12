@@ -14,16 +14,15 @@
 namespace eve::detail
 {
 
-  template <range  R, floating_scalar_value T>
+  template <eve::algo::relaxed_range  R, floating_scalar_value T>
   EVE_FORCEINLINE void large_df_fht_(EVE_SUPPORTS(cpu_)
-                               , aos_type const &
                                , R& fr
                                , T fac
                                , bool simd = true)
   {
     auto n =  std::size(fr);
-    auto log2_n = eve::countr_zero(n); //eve::log2(n));
-    fht_loc_df_core(fr.data(), log2_n, simd);
+    auto l2_n = eve::countr_zero(n); //log2(n));
+    fht_loc_df_core(fr.data(), l2_n, simd);
     revbin_permute(fr);
     scaleit(fr, fac*invsqrt_2(as(fac)));
   }
