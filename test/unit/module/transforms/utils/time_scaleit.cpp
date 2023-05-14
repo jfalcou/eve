@@ -26,8 +26,8 @@ EVE_FORCEINLINE void ref_scaleit(R& f, T fac)
 }
 
 
-template <typename T, eve::decorator D>
-void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
+template <typename T>
+void timeit(std::string const & title, auto start, auto maxi = 16 )
 {
 
   using e_t = T;
@@ -42,12 +42,12 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
   for(std::int32_t i=0; i < max; ++i)
   {
     auto data = [j](){
-      if constexpr(std::same_as<D, eve::aos_type>){
+      if constexpr(!eve::algo::is_soa_vector_v<T>){
         std::vector<e_t> a(j);
         for(std::int32_t i=0; i < j; ++i) {a[i] = i+1; }
         return a;
       }
-      else if constexpr(std::same_as<D, eve::soa_type>){
+      else {
         eve::algo::soa_vector<e_t> a(j, e_t(1));
         for(std::int32_t i=0; i < j; ++i) {a.set(i, i+1); }
         return a;
@@ -83,15 +83,15 @@ void timeit(std::string const & title, D const &, auto start, auto maxi = 16 )
   std::cout << "\n";
 }
 
-TTS_CASE_TPL("Check ht_ft_cv", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check scaleit durations", eve::test::simd::ieee_reals)
   <typename T>(tts::type<T>)
 {
   if constexpr( eve::cardinal_v<T> == 1)
   {
     using e_t = eve::element_type_t<T>;
-    timeit<e_t>("ht_ft_cv", eve::aos_type{}, 2,  8);
-    timeit<e_t>("ht_ft_cv", eve::aos_type{}, 512, 8);
-    timeit<e_t>("ht_ft_cv", eve::aos_type{}, 131072, 8);
+    timeit<e_t>("scaleit", 2,  8);
+    timeit<e_t>("scaleit", 512, 8);
+    timeit<e_t>("scaleit", 131072, 8);
     std::string sep(116, '-');
     std::cout << sep << std::endl;
     TTS_EQUAL(0, 0);

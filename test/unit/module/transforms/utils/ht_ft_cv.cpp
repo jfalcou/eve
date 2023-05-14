@@ -52,7 +52,7 @@ TTS_CASE_TPL("Check ft_ht_cv", eve::test::simd::ieee_reals)
       else if (v.size() > max) std::cout << v[v.size()-1];
       std::cout << ")\n";
     };
-    size_t ldn = 11;
+    size_t ldn = 8;
     size_t N = 1 << ldn;
     using e_t = eve::element_type_t<T>;
     {
