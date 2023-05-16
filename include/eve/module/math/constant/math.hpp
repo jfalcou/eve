@@ -10,6 +10,7 @@
 #include <eve/module/math/constant/catalan.hpp>
 #include <eve/module/math/constant/cbrt_pi.hpp>
 #include <eve/module/math/constant/cos_1.hpp>
+#include <eve/module/math/constant/cos_pio_8.hpp>
 #include <eve/module/math/constant/cosh_1.hpp>
 #include <eve/module/math/constant/egamma.hpp>
 #include <eve/module/math/constant/egamma_sqr.hpp>
@@ -69,6 +70,7 @@
 #include <eve/module/math/constant/rsqrt_pi.hpp>
 #include <eve/module/math/constant/rsqrt_pio_2.hpp>
 #include <eve/module/math/constant/sin_1.hpp>
+#include <eve/module/math/constant/sin_pio_8.hpp>
 #include <eve/module/math/constant/sinh_1.hpp>
 #include <eve/module/math/constant/sixth.hpp>
 #include <eve/module/math/constant/sqrt_2.hpp>
