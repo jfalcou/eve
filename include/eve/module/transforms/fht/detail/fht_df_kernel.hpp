@@ -142,26 +142,27 @@ namespace eve::detail
     i_t thresh = final_radix_16 ? 2 : 1;
     for (  ; ldk>thresh;  ldk-=2)
     {
-      i_t k   = o<<ldk;
-      i_t kh  = k >> 1;
-      i_t k2  = k << 1;
-      i_t k3  = k2 + k;
+      constexpr i_t k0  = 0;
+      i_t k1  = o<<ldk;
+      i_t kh  = k1>> 1;
+      i_t k2  = k1<< 1;
+      i_t k3  = k2 + k1;
       i_t k4  = k2 << 1;
-//       std::cout << " n  " << n   << " ldk " << ldk << " k  " << k << std::endl;
+//       std::cout << " n  " << n   << " ldk1" << ldk1<< " k1 " << k1<< std::endl;
 //       std::cout << " k2 " << k2  << " k3  " << k3  << " k4 " << k4 << std::endl;
       const auto sqrt2 = eve::sqrt_2(as<e_t>());
-      i_t cardinal = expected_cardinal_v<e_t>;
+      i_t exp_card = expected_cardinal_v<e_t>;
       for (auto fi=f, gi=f+kh;  fi<fn;  fi+=k4, gi+=k4)
       {
         e_t f0, f1, f2, f3;
-        sd(fi[0], fi[k], f0, f1);
+        sd(fi[k0], fi[k1], f0, f1);
         sd(fi[k2], fi[k3], f2, f3);
-        sd(f0, f2, fi[0], fi[k2]);
-        sd(f1, f3, fi[k], fi[k3]);
+        sd(f0, f2, fi[k0], fi[k2]);
+        sd(f1, f3, fi[k1], fi[k3]);
 
-        sd(gi[0], gi[k2], f0, f1);
-        sd(gi[k], gi[k3], f2, f3);
-        sd(f0, f2, gi[0], gi[k]);
+        sd(gi[k0], gi[k2], f0, f1);
+        sd(gi[k1], gi[k3], f2, f3);
+        sd(f0, f2, gi[k0], gi[k1]);
         gi[k2] = sqrt2 * f1;
         gi[k3] = sqrt2 * f3;
       }
@@ -198,22 +199,22 @@ namespace eve::detail
         auto cs1b = c_t(c1, -s1);
         auto sc1b = c_t(s1, -c1);
         auto sc2b = c_t(s2, -c2);
-        for (auto fi=f+i, gi=f+k-i;  fi<fn;  fi+=k4, gi+=k4)
+        for (auto fi=f+i, gi=f+k1-i;  fi<fn;  fi+=k4, gi+=k4)
         {
-          scramble(gi[0], gi[k], gi[k2], gi[k3],
-                   fi[0], fi[k], fi[k2], fi[k3],
+          scramble(gi[k0], gi[k1], gi[k2], gi[k3],
+                   fi[k0], fi[k1], fi[k2], fi[k3],
                    sc1b, cs1b, sc2b);
         }
       };
-      auto sm = min(cardinal, kh);
+      auto sm = min(exp_card, kh);
       for (i_t i=1; i < sm; i++) scalar(i);
-      if (simd && (kh > cardinal))
+      if (simd && (kh > exp_card))
       {
-        auto phi0 = tt*cardinal;
-        auto is = eve::views::iota(e_t(cardinal), kh-cardinal);
-        auto phs= eve::views::iota_with_step(e_t{phi0}, tt, kh-cardinal);
+        auto phi0 = tt*exp_card;
+        auto is = eve::views::iota(e_t(exp_card), kh-exp_card);
+        auto phs= eve::views::iota_with_step(e_t{phi0}, tt, kh-exp_card);
         auto view = eve::views::zip(is, phs);
-        auto doit = [scramble, k, k2, k3, k4, tt, &f, cardinal, fn](auto zz, auto ignore){
+        auto doit = [scramble, k1, k2, k3, k4, tt, &f, exp_card, fn](auto zz, auto ignore){
           auto [i, ph] = load[ignore](zz);
           auto cs1 = exp_ipi(tt*i);
           auto [c1, s1] = cs1;
@@ -224,25 +225,25 @@ namespace eve::detail
           auto sc1b = c_t(s1, -c1);
           auto sc2b = c_t(s2, -c2);
           auto i0 = size_t(i.get(0));
-          for (auto fi=f+i0, gi=f+k-i0-cardinal+1;  fi<fn;  fi+=k4, gi+=k4)
+          for (auto fi=f+i0, gi=f+k1-i0-exp_card+1;  fi<fn;  fi+=k4, gi+=k4)
           {
-            auto dgik0  =reverse(load(gi+0 ));
-            auto dgik1  =reverse(load(gi+k ));
+            auto dgik0  =reverse(load(gi+k0 ));
+            auto dgik1  =reverse(load(gi+k1));
             auto dgik2  =reverse(load(gi+k2));
             auto dgik3  =reverse(load(gi+k3));
-            auto dfik0  =load(fi+0 );
-            auto dfik1  =load(fi+k );
+            auto dfik0  =load(fi+k0 );
+            auto dfik1  =load(fi+k1);
             auto dfik2  =load(fi+k2);
             auto dfik3  =load(fi+k3);
             scramble(dgik0, dgik1, dgik2, dgik3,
                      dfik0, dfik1, dfik2, dfik3,
                      sc1b, cs1b, sc2b);
-            store(reverse(dgik0), gi+0 );
-            store(reverse(dgik1), gi+k );
+            store(reverse(dgik0), gi+k0 );
+            store(reverse(dgik1), gi+k1);
             store(reverse(dgik2), gi+k2);
             store(reverse(dgik3), gi+k3);
-            store(dfik0, fi+0 );
-            store(dfik1, fi+k );
+            store(dfik0, fi+k0 );
+            store(dfik1, fi+k1);
             store(dfik2, fi+k2);
             store(dfik3, fi+k3);
 
