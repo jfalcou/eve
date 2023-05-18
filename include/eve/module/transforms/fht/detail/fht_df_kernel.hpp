@@ -127,13 +127,27 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr void
   fht_df_kernel(auto f, auto log2_n, const bool simd = true) noexcept
   {
-  //  requires(std::is_floating_point_v<typename R::value_type>)
-    auto n = 1UL << log2_n;
-    using i_t = decltype(n);
     using e_t = eve::underlying_type_t<std::remove_reference_t<decltype(f[0])>>;
-//    using c_t =  complex<e_t>;
+    using i_t =as_integer_t<e_t>;
+    auto n = i_t(1) << log2_n;
     [[maybe_unused]] const auto  invsqrt2 = invsqrt_2(as<e_t>());
     [[maybe_unused]] const auto  sqrt2    = sqrt_2(as<e_t>());
+
+    auto scramble0 = [sqrt2](auto &dgik0, auto &dgik1, auto &dgik2, auto &dgik3,
+                             auto &dfik0, auto &dfik1, auto &dfik2, auto &dfik3){
+      using t_t = std::remove_reference_t<decltype(dgik0)>;
+      t_t f0, f1, f2, f3;
+      sd(dfik0, dfik1, f0, f1);
+      sd(dfik2, dfik3, f2, f3);
+      sd(f0, f2, dfik0, dfik2);
+      sd(f1, f3, dfik1, dfik3);
+      sd(dgik0, dgik2, f0, f1);
+      sd(dgik1, dgik3, f2, f3);
+      sd(f0, f2, dgik0, dgik1);
+      dgik2 = sqrt2 * f1;
+      dgik3 = sqrt2 * f3;
+    };
+
     if(log2_n == 1) { df_2(f); return; }
     if(log2_n == 2) { df_4(f); return; }
     auto o = one(as(n));
@@ -150,21 +164,12 @@ namespace eve::detail
       i_t k4  = k2 << 1;
 //       std::cout << " n  " << n   << " ldk1" << ldk1<< " k1 " << k1<< std::endl;
 //       std::cout << " k2 " << k2  << " k3  " << k3  << " k4 " << k4 << std::endl;
-      const auto sqrt2 = eve::sqrt_2(as<e_t>());
-      i_t exp_card = expected_cardinal_v<e_t>;
+
+
+
       for (auto fi=f, gi=f+kh;  fi<fn;  fi+=k4, gi+=k4)
       {
-        e_t f0, f1, f2, f3;
-        sd(fi[k0], fi[k1], f0, f1);
-        sd(fi[k2], fi[k3], f2, f3);
-        sd(f0, f2, fi[k0], fi[k2]);
-        sd(f1, f3, fi[k1], fi[k3]);
-
-        sd(gi[k0], gi[k2], f0, f1);
-        sd(gi[k1], gi[k3], f2, f3);
-        sd(f0, f2, gi[k0], gi[k1]);
-        gi[k2] = sqrt2 * f1;
-        gi[k3] = sqrt2 * f3;
+        scramble0(gi[k0], gi[k1], gi[k2], gi[k3], fi[k0], fi[k1], fi[k2], fi[k3]);
       }
 
       auto tt = rec(4*e_t(kh));
@@ -206,6 +211,7 @@ namespace eve::detail
                    sc1b, cs1b, sc2b);
         }
       };
+      i_t exp_card = expected_cardinal_v<e_t>;
       auto sm = min(exp_card, kh);
       for (i_t i=1; i < sm; i++) scalar(i);
       if (simd && (kh > exp_card))
