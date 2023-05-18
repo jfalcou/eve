@@ -36,9 +36,9 @@ namespace eve::detail
   {
     using e_t = eve::underlying_type_t<std::remove_reference_t<decltype(f[0])>>;
     e_t f0, f1, f2, f3;
-    sd(f[0], f[k1], f0, f1);
+    sd(f[k0], f[k1], f0, f1);
     sd(f[k2], f[k3], f2, f3);
-    sd(f0, f2, f[0], f[k2]);
+    sd(f0, f2, f[k0], f[k2]);
     sd(f1, f3, f[k1], f[k3]);
   }
 
@@ -127,6 +127,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr void
   fht_df_kernel(auto f, auto log2_n, const bool simd = true) noexcept
   {
+//    std::cout << "fht_df_kernel" << std::endl;
     using e_t = eve::underlying_type_t<std::remove_reference_t<decltype(f[0])>>;
     using i_t =as_integer_t<e_t>;
     auto n = i_t(1) << log2_n;
@@ -136,6 +137,8 @@ namespace eve::detail
     auto scramble0 = [sqrt2](auto &dgik0, auto &dgik1, auto &dgik2, auto &dgik3,
                              auto &dfik0, auto &dfik1, auto &dfik2, auto &dfik3){
       using t_t = std::remove_reference_t<decltype(dgik0)>;
+//       std::cout << "f " << dfik0<< "  " << dfik1 <<"  " << dfik2<< "  " << dfik3 << std::endl;
+//       std::cout << "g " <<dgik0<< "  " << dgik1 <<"  " << dgik2<< "  " << dgik3 << std::endl;
       t_t f0, f1, f2, f3;
       sd(dfik0, dfik1, f0, f1);
       sd(dfik2, dfik3, f2, f3);
@@ -165,13 +168,54 @@ namespace eve::detail
 //       std::cout << " n  " << n   << " ldk1" << ldk1<< " k1 " << k1<< std::endl;
 //       std::cout << " k2 " << k2  << " k3  " << k3  << " k4 " << k4 << std::endl;
 
+      using fix4 = fixed<4>;
+      using we4_t = eve::wide<e_t, fix4>;
+      i_t cardinal = eve::expected_cardinal_v<we4_t>;
+      i_t shft = 4*k4*cardinal;
 
-
-      for (auto fi=f, gi=f+kh;  fi<fn;  fi+=k4, gi+=k4)
+      if (n >= shft)
       {
-        scramble0(gi[k0], gi[k1], gi[k2], gi[k3], fi[k0], fi[k1], fi[k2], fi[k3]);
+        using wi4_t =  eve::as_integer_t<we4_t>;
+        wi4_t ramp([](auto i,  auto){return i; });
+        auto idx = ramp*k4;
+//        std::cout << "idx " << idx << std::endl;
+//         auto fi = f;
+//         auto gi = f+kh;
+//        i_t l = 0;
+//        std::cout << " n " << n << "shft " << shft << std::endl;
+        for (auto fi=f, gi=f+kh;  fi<fn;  fi+=shft, gi+=shft)
+        {
+//          std::cout << "simd l " << l +idx << "  " << l+k1+idx  << " " << l+k2+idx << " " << l+k3+idx << std::endl;
+//          l+= shft;
+          auto dfik0 = eve::gather(fi+k0, idx);
+          auto dfik1 = eve::gather(fi+k1, idx);
+          auto dfik2 = eve::gather(fi+k2, idx);
+          auto dfik3 = eve::gather(fi+k3, idx);
+          auto dgik0 = eve::gather(gi+k0, idx);
+          auto dgik1 = eve::gather(gi+k1, idx);
+          auto dgik2 = eve::gather(gi+k2, idx);
+          auto dgik3 = eve::gather(gi+k3, idx);
+          scramble0(dgik0, dgik1, dgik2, dgik3, dfik0, dfik1, dfik2, dfik3);
+          scatter(gi+k0, idx, dgik0);
+          scatter(gi+k1, idx, dgik1);
+          scatter(gi+k2, idx, dgik2);
+          scatter(gi+k3, idx, dgik3);
+          scatter(fi+k0, idx, dfik0);
+          scatter(fi+k1, idx, dfik1);
+          scatter(fi+k2, idx, dfik2);
+          scatter(fi+k3, idx, dfik3);
+        }
       }
-
+      else
+      {
+//        i_t l = 0;
+        for (auto fi=f, gi=f+kh;  fi<fn;  fi+=k4, gi+=k4)
+        {
+//           std::cout << "scal l " << l <<  std::endl;
+//           l+= k4;
+          scramble0(gi[k0], gi[k1], gi[k2], gi[k3], fi[k0], fi[k1], fi[k2], fi[k3]);
+        }
+      }
       auto tt = rec(4*e_t(kh));
 
       auto scramble = [](auto &dgik0, auto &dgik1, auto &dgik2, auto &dgik3,
