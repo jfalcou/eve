@@ -64,7 +64,7 @@ namespace eve::detail
       auto gj = eve::views::reverse(eve::algo::as_range(gg+n/2+1, gg+n-cardinal+1));
 
       auto view = eve::views::zip(fi, fj, gi, gj);
-      auto doit = [scramble, ff, gg](auto zz, auto ignore){
+      auto doit = [scramble](auto zz, auto ignore){
         auto [fi_it, fj_it, gi_it, gj_it]= zz;
         auto [fi, fj, gi, gj] = eve::load[ignore](zz);
         scramble(fi, fj, gi, gj);
