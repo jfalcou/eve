@@ -341,23 +341,7 @@ TTS_CASE_TPL("support for equivlanets", algo_test::selected_types)
     eve::algo::traits(eve::algo::expensive_callable), v);
 
     TTS_TYPE_IS(decltype(processed.traits()),
-               (decltype(eve::algo::traits{eve::algo::no_aligning,
-                         eve::algo::unroll<1>})));
-  }
-};
-
-TTS_CASE_TPL("support for equivlanets", algo_test::selected_types)
-<typename T>(tts::type<T>)
-{
-  using e_t = eve::element_type_t<T>;
-
-  std::vector<e_t> v;
-  {
-    auto processed = eve::algo::preprocess_range(
-    eve::algo::traits(eve::algo::expensive_callable), v);
-
-    TTS_TYPE_IS(decltype(processed.traits()),
-               (decltype(eve::algo::traits{eve::algo::no_aligning,
-                         eve::algo::unroll<1>})));
+                (decltype(eve::algo::traits {
+                    eve::algo::no_aligning, eve::algo::unroll<1>, eve::algo::single_pass})));
   }
 };

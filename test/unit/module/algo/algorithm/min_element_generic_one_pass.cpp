@@ -10,13 +10,13 @@
 
 #include <eve/module/algo.hpp>
 
-#include <algorithm>
-
-TTS_CASE_TPL("Check min_element", algo_test::selected_types)
+TTS_CASE_TPL("Check min_element one_pass", algo_test::selected_types)
 <typename T>(tts::type<T>)
 {
   algo_test::minmax_generic_test</*biggest*/ false, /*right*/ false>(
       eve::as<T> {},
-      eve::algo::min_element,
-      [](auto, auto, auto expected, auto actual) { TTS_EQUAL(expected, actual); });
+      eve::algo::min_element[eve::algo::single_pass],
+      [](auto, auto, auto expected, auto actual) {
+         TTS_EQUAL(expected, actual);
+      });
 };

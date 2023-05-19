@@ -124,10 +124,41 @@ TTS_CASE("eve.algo.traits, no_unrolling") {
 };
 
 TTS_CASE("eve.algo.traits, expensive_callable") {
-  eve::algo::traits expected{eve::algo::no_aligning, eve::algo::unroll<1>};
+  eve::algo::traits expected{eve::algo::no_aligning, eve::algo::unroll<1>, eve::algo::single_pass};
   eve::algo::traits actual  {eve::algo::expensive_callable};
 
   TTS_TYPE_IS( decltype(expected), decltype(process_equivalents(actual)) );
+};
+
+TTS_CASE("eve.algo.traits, index_type") {
+  // default
+  {
+    eve::algo::traits tr;
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), std::int8_t*>), (std::uint16_t));
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), short*>), (std::uint16_t));
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), std::int32_t*>), (std::uint32_t));
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), std::int64_t*>), (std::uint64_t));
+
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), kumi::tuple<std::int8_t, std::int32_t>*>), (std::uint32_t));
+  }
+
+  // overriden
+  {
+    eve::algo::traits tr {eve::algo::index_type<std::uint8_t>};
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), std::int8_t*>),  (std::uint8_t));
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), short*>),        (std::uint8_t));
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), std::int32_t*>), (std::uint8_t));
+    TTS_TYPE_IS( (eve::algo::get_index_type_t<decltype(tr), std::int64_t*>), (std::uint8_t));
+  }
+};
+
+TTS_CASE("eve.algo.traits, oveflow")
+{
+    using before_max_idx_t =
+        std::conditional_t<sizeof(ptrdiff_t) == 4, std::uint16_t, std::uint32_t>;
+    eve::algo::traits tr {eve::algo::overflow<std::numeric_limits<before_max_idx_t>::max()>};
+    TTS_CONSTEXPR_EQUAL(eve::algo::get_overflow<decltype(tr)>(),
+                        std::numeric_limits<before_max_idx_t>::max());
 };
 
 // Funciton with traits support
