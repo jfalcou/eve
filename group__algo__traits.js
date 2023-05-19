@@ -10,8 +10,10 @@ var group__algo__traits =
     [ "eve::algo::force_cardinal", "group__algo__traits_ga0fabb4acfda0758f53418e007ff346ad.html#ga0fabb4acfda0758f53418e007ff346ad", null ],
     [ "eve::algo::force_type", "group__algo__traits_gabd02cb4bcd8c6634bc3391499f5b1c11.html#gabd02cb4bcd8c6634bc3391499f5b1c11", null ],
     [ "eve::algo::fuse_operations", "group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c", null ],
+    [ "eve::algo::index_type", "group__algo__traits_gab558357c4268f0f43e82dc3205e71263.html#gab558357c4268f0f43e82dc3205e71263", null ],
     [ "eve::algo::no_aligning", "group__algo__traits_ga4e752623318f5d75907ed9f732c826a1.html#ga4e752623318f5d75907ed9f732c826a1", null ],
     [ "eve::algo::no_unrolling", "group__algo__traits.html#ga660d80002f91db5c94a04f309e0015e7", null ],
     [ "eve::algo::overflow", "group__algo__traits.html#gaa8930f7c6f6695df724456400e2192de", null ],
+    [ "eve::algo::single_pass", "group__algo__traits_ga213805e139827e376705611968b1e62b.html#ga213805e139827e376705611968b1e62b", null ],
     [ "eve::algo::unroll", "group__algo__traits_gacdfe3fb0999d566d02a71a0297b8bb88.html#gacdfe3fb0999d566d02a71a0297b8bb88", null ]
 ];

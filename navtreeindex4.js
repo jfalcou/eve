@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"structeve_1_1ignore__all__.html":[7,0,2,2,2],
+"structeve_1_1ignore__all__.html#a6b9f1768807e073cc40f885ba214d711":[7,0,2,2,2,4],
 "structeve_1_1ignore__all__.html#a96e1fd8540348e3e19115e87ebd4963e":[7,0,2,2,2,3],
 "structeve_1_1ignore__all__.html#adcff5af1df65386006d67c4ce9412a50":[7,0,2,2,2,2],
 "structeve_1_1ignore__all__.html#adfc42f06827e37f560d291f2d15dad7b":[7,0,2,2,2,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "structmap__range.html":[7,0,0,3,17],
 "structmap__store__op.html":[7,0,0,2,5],
 "structrelaxed__iterator.html":[7,0,0,2,1],
-"structrelaxed__range.html":[7,0,0,2,3],
-"structrelaxed__sentinel__for.html":[7,0,0,2,2],
-"structreverse__iterator.html":[7,0,0,3,18]
+"structrelaxed__range.html":[7,0,0,2,3]
 };

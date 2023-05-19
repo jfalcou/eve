@@ -131,6 +131,7 @@ $(document).ready(function(){initNavTree('group__algo__traits.html',''); initRes
 <p>some traits should just be replaced with a combination of different traits. do that replacement</p>
 <p>removes a given key from traits if and only if the condition is true</p>
 <p>removes a given key from traits.</p>
+<p>returns specified if any, otherwise the default index type suggested by the library</p>
 <p>returns specified overflow</p>
 <p>returns cardinal which should be used.</p>
 <p>returns all types that should be considered for a given Traits and Range/Iterator (as a kumi::tuple)</p>
@@ -186,8 +187,11 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>eve::algo::
 <tr class="memdesc:ga660d80002f91db5c94a04f309e0015e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convinient equivalent to unroll&lt;1&gt;. <br /></td></tr>
 <tr class="separator:ga660d80002f91db5c94a04f309e0015e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga244da44511b03c597243683208a3b731"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo__traits_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">eve::algo::expensive_callable</a> = ::rbr::flag( expensive_callable_tag{} )</td></tr>
-<tr class="memdesc:ga244da44511b03c597243683208a3b731"><td class="mdescLeft">&#160;</td><td class="mdescRight"><em>NOTE</em>: equivalent to no_aligning + no_unrolling By default eve algorithms will assume that the passed predicates/computation are failry simple and will unroll and align data accesses.  <br /></td></tr>
+<tr class="memdesc:ga244da44511b03c597243683208a3b731"><td class="mdescLeft">&#160;</td><td class="mdescRight"><em>NOTE</em>: equivalent to no_aligning + no_unrolling + single_pass By default eve algorithms will assume that the passed predicates/computation are failry simple and will unroll and align data accesses.  <br /></td></tr>
 <tr class="separator:ga244da44511b03c597243683208a3b731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga213805e139827e376705611968b1e62b"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo__traits_ga213805e139827e376705611968b1e62b.html#ga213805e139827e376705611968b1e62b">eve::algo::single_pass</a> = ::rbr::flag(single_pass_tag {})</td></tr>
+<tr class="memdesc:ga213805e139827e376705611968b1e62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trait that changes the algorithm for min_element/max_element for index tracking.  <br /></td></tr>
+<tr class="separator:ga213805e139827e376705611968b1e62b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab9f572e15fac2f4f23ecdf3658ce192c"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c">eve::algo::fuse_operations</a> = ::rbr::flag( fuse_operations_tag{} )</td></tr>
 <tr class="memdesc:gab9f572e15fac2f4f23ecdf3658ce192c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Some algorithms (for example <code>transform_reduce</code>) can be implemented more efficient if you fuse multiple operations provided in a single function.  <br /></td></tr>
 <tr class="separator:gab9f572e15fac2f4f23ecdf3658ce192c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,10 +199,14 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>eve::algo::
 <tr class="memdesc:ga1b9461ddb4574083563052a1fbe355e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">You can find more explanations in the 'frequency scaling tutorial'. On intel using 64 byte registers requires processor to scale down it's frequency. This is only benefitial if you have a very large set of data to process. Otherwise it will likely degrade performance not only of the SIMD code but also of the code that follows.  <br /></td></tr>
 <tr class="separator:ga1b9461ddb4574083563052a1fbe355e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8930f7c6f6695df724456400e2192de"><td class="memTemplParams" colspan="2"><a id="gaa8930f7c6f6695df724456400e2192de" name="gaa8930f7c6f6695df724456400e2192de"></a>
-template&lt;int N&gt; </td></tr>
+template&lt;std::ptrdiff_t N&gt; </td></tr>
 <tr class="memitem:gaa8930f7c6f6695df724456400e2192de"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eve::algo::overflow</b> = (overflow_key = eve::index&lt;N&gt;)</td></tr>
 <tr class="memdesc:gaa8930f7c6f6695df724456400e2192de"><td class="mdescLeft">&#160;</td><td class="mdescRight">A trait for advanced usage only as parameter for for_each_iteration_fixed_overflow. <br /></td></tr>
 <tr class="separator:gaa8930f7c6f6695df724456400e2192de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab558357c4268f0f43e82dc3205e71263"><td class="memTemplParams" colspan="2">template&lt;std::unsigned_integral T&gt; </td></tr>
+<tr class="memitem:gab558357c4268f0f43e82dc3205e71263"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__algo__traits_gab558357c4268f0f43e82dc3205e71263.html#gab558357c4268f0f43e82dc3205e71263">eve::algo::index_type</a> = (index_type_key = std::type_identity&lt;T&gt;{})</td></tr>
+<tr class="memdesc:gab558357c4268f0f43e82dc3205e71263"><td class="mdescLeft">&#160;</td><td class="mdescRight">A trait that allows to override the default index type for algorithms that require to keep track of an index.  <br /></td></tr>
+<tr class="separator:gab558357c4268f0f43e82dc3205e71263"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

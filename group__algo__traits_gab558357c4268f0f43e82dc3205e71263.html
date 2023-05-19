@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::unroll</title>
+<title>E.V.E: eve::algo::index_type</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algo__traits_gacdfe3fb0999d566d02a71a0297b8bb88.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algo__traits_gab558357c4268f0f43e82dc3205e71263.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,19 +121,19 @@ $(document).ready(function(){initNavTree('group__algo__traits_gacdfe3fb0999d566d
 </div>
 
 <div class="contents">
-<a id="gacdfe3fb0999d566d02a71a0297b8bb88" name="gacdfe3fb0999d566d02a71a0297b8bb88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gacdfe3fb0999d566d02a71a0297b8bb88">&#9670;&#160;</a></span>unroll</h2>
+<a id="gab558357c4268f0f43e82dc3205e71263" name="gab558357c4268f0f43e82dc3205e71263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab558357c4268f0f43e82dc3205e71263">&#9670;&#160;</a></span>index_type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;int N&gt; </div>
+template&lt;std::unsigned_integral T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::unroll = (unroll_key = eve::index&lt;N&gt;)</td>
+          <td class="memname">eve::algo::index_type = (index_type_key = std::type_identity&lt;T&gt;{})</td>
         </tr>
       </table>
   </td>
@@ -144,8 +144,7 @@ template&lt;int N&gt; </div>
 </div><div class="memdoc">
 
 <p><code>#include &lt;eve/module/algo/algo/traits.hpp&gt;</code></p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__algo__traits_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731" title="NOTE: equivalent to no_aligning + no_unrolling + single_pass By default eve algorithms will assume th...">expensive_callable</a> if you just want to tell the library to stop.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>when not just using our algorithms but writing your own, avoid having dependencies between unrolled loop iterations if possible. Maybe you'd have to use <code>for_each_iteration</code> as oppose to just <code>for_each</code> to do that. </dd></dl>
+<p>index type, by default, matches the bit size of the max type used in the algorithm, but is at least u16 (for chars we don't want to overflow every 255 elements) </p>
 
 </div>
 </div>
