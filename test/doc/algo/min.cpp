@@ -7,19 +7,25 @@ int main()
 {
   std::vector<int> v{ 2, -1, 4, -1, 0 };
 
-  std::cout << " -> v                                                       = "
+  std::cout << " -> v                                                                              = "
             << tts::as_string(v)
             << "\n";
 
-  std::cout << " -> eve::algo::min_value(v)                                 = "
+  std::cout << " -> eve::algo::min_value(v)                                                       = "
             << *eve::algo::min_value(v) << "\n";
 
-  std::cout << " -> eve::algo::min_element(v) - v.begin()                   = "
+  std::cout << " -> eve::algo::min_element(v) - v.begin()                                         = "
             << eve::algo::min_element(v) - v.begin() << "\n";
 
-  std::cout << " -> eve::algo::min_value(v, eve::is_greater)                = "
+  std::cout << " -> eve::algo::min_value(v, eve::is_greater)                                      = "
             << *eve::algo::min_value(v, eve::is_greater) << "\n";
 
-  std::cout << " -> eve::algo::min_value(v, eve::is_greater) - v.begin()    = "
+  std::cout << " -> eve::algo::min_value(v, eve::is_greater) - v.begin()                          = "
             << eve::algo::min_element(v, eve::is_greater) - v.begin() << "\n";
+
+
+  auto absolutes = eve::views::map(v, eve::abs);
+  std::cout << " -> eve::algo::min_element[eve::algo::single_pass](absolutes) - absolutes.begin() = "
+            << eve::algo::min_element[eve::algo::single_pass](absolutes) - absolutes.begin() << "\n";
+
 }

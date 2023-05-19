@@ -256,7 +256,7 @@ namespace eve::algo
   //! @{
   //!   @var expensive_callable
   //!
-  //!   @brief *NOTE*: equivalent to no_aligning + no_unrolling
+  //!   @brief *NOTE*: equivalent to no_aligning + no_unrolling + single_pass
   //!          By default eve algorithms will assume that the passed predicates/computation
   //!          are failry simple and will unroll and align data accesses.
   //!
@@ -265,6 +265,28 @@ namespace eve::algo
   //! @}
   //================================================================================================
   inline constexpr auto expensive_callable = ::rbr::flag( expensive_callable_tag{} );
+
+
+  struct single_pass_tag {};
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var single_pass
+  //!
+  //!   @brief Trait that changes the algorithm for min_element/max_element for index tracking.
+  //!
+  //!          By default min/max algorithms are min_value + find, since that proves to be faster
+  //!          on our benchmarks. However, if the body of your loop is expensive, you probably want
+  //!          to use index tracking.
+  //!
+  //!          *NOTE*: consider if you should pass `expensive_callable` instead.
+  //!          *NOTE*: in a discussion [here](https://stackoverflow.com/a/70813588/5021064) Peter
+  //!          Cordes suspected that for large enough array one pass will be better as well - you can
+  //!          try.
+  //! @}
+  //================================================================================================
+  inline constexpr auto single_pass = ::rbr::flag(single_pass_tag {});
 
   struct fuse_operations_tag {};
   //================================================================================================
@@ -318,7 +340,32 @@ namespace eve::algo
   //!   @brief A trait for advanced usage only as parameter for for_each_iteration_fixed_overflow
   //! @}
   //============================================================================
-  template<int N> inline constexpr auto overflow = (overflow_key = eve::index<N>);
+  template<std::ptrdiff_t N> inline constexpr auto overflow = (overflow_key = eve::index<N>);
+
+  struct index_type_key_t : rbr::as_keyword<index_type_key_t>
+  {
+    template<typename Value> constexpr auto operator=(Value const&) const noexcept
+    {
+      return rbr::option<index_type_key_t, Value> {};
+    }
+  };
+
+  inline constexpr index_type_key_t index_type_key;
+
+  //============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var index_type
+  //!
+  //!   @brief A trait that allows to override the default index type for algorithms
+  //!   that require to keep track of an index.
+  //!
+  //!   index type, by default, matches the bit size of the max type used in the
+  //!   algorithm, but is at least u16 (for chars we don't want to overflow every 255
+  //!   elements)
+  //! @}
+  //============================================================================
+  template<std::unsigned_integral T> inline constexpr auto index_type = (index_type_key = std::type_identity<T>{});
 
   // getters -------------------
 
@@ -382,6 +429,29 @@ namespace eve::algo
   {
     return rbr::result::fetch_t<(overflow_key), Traits>{};
   }
+
+  namespace detail {
+
+  template<typename RorI>
+  constexpr auto default_index_type_to_use() {
+    using T = eve::value_type_t<RorI>;
+    constexpr std::size_t max_size = kumi::max_flat( T{}, [](auto m) { return sizeof(m); });
+         if constexpr (max_size <= 2U) return std::type_identity<std::uint16_t>{};
+    else if constexpr (max_size == 4U) return std::type_identity<std::uint32_t>{};
+    else                               return std::type_identity<std::uint64_t>{};
+  }
+
+  }  // namespace detail
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns specified if any, otherwise the default index type suggested by the library
+  //! @tparam Traits
+  //================================================================================================
+  template<typename Traits, typename RorI>
+  using get_index_type_t =
+    typename rbr::result::fetch_t<(index_type_key | detail::default_index_type_to_use<RorI>()),
+                           Traits>::type;
 
   //================================================================================================
   //! @addtogroup algo_traits
@@ -448,7 +518,7 @@ namespace eve::algo
   template <typename Settings>
   inline constexpr auto process_equivalents(traits<Settings> tr) {
     if constexpr ( Settings::contains(expensive_callable) ) {
-      return default_to(traits{no_aligning, unroll<1>}, drop_key(expensive_callable, tr));
+      return default_to(traits{no_aligning, unroll<1>, single_pass}, drop_key(expensive_callable, tr));
     } else {
       return tr;
     }
