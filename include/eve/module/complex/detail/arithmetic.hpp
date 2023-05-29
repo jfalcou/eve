@@ -202,6 +202,23 @@ namespace eve::detail
   }
 
   //================================================================================================
+  //  trivial extension of some real tetrary functions
+  //================================================================================================
+  template<typename Z1, typename Z2, typename Z3, typename Z4>
+  EVE_FORCEINLINE auto
+  complex_nary_dispatch(eve::tag::sum_of_prod_, Z1 const& z1, Z2 const& z2, Z3 const& z3, Z4 const& z4) noexcept
+  {
+    return z1*z2 + z3*z4;
+  }
+
+  template<typename Z1, typename Z2, typename Z3, typename Z4>
+  EVE_FORCEINLINE auto
+  complex_nary_dispatch(eve::tag::diff_of_prod_, Z1 const& z1, Z2 const& z2, Z3 const& z3, Z4 const& z4) noexcept
+  {
+    return z1*z2 - z3*z4;
+  }
+
+  //================================================================================================
   //  Unary functions
   //================================================================================================
   EVE_FORCEINLINE auto
