@@ -25,7 +25,7 @@ namespace eve::detail
                                    , const W& d
                                    ) noexcept -> decltype(a*b-c*d)
   {
-    using r_t = decltype(a*b+c*d);
+    using r_t = decltype(a*b-c*d);
     return diff_of_prod(r_t(a), r_t(b), r_t(c), r_t(d));
   }
 
