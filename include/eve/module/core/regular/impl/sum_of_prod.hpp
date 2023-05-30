@@ -37,7 +37,6 @@ namespace eve::detail
                                    , const T& c
                                    , const T& d
                                    ) noexcept
-  requires(has_native_abi_v<T>)
   {
     if constexpr(std::is_integral_v<eve::element_type_t<T>>)
       return fma(a, b, c*d);
@@ -70,7 +69,6 @@ namespace eve::detail
                                    , const T& c
                                    , const T& d
                                    ) noexcept
-  requires(has_native_abi_v<T>)
   {
     return fma(a, b, c*d);
   }
