@@ -20,28 +20,28 @@ namespace eve::detail
   //================================================================================================
   template<typename Z1, typename Z2>
   EVE_FORCEINLINE auto
-  complex_binary_dispatch(eve::tag::add_, Z1 const& z1, Z2 const& z2) noexcept
+  complex_binary_dispatch(eve::tag::add_, Z1 const& z1, Z2 const& z2) noexcept -> decltype(z1+z2)
   {
     return z1 + z2;
   }
 
   template<typename Z1, typename Z2>
   EVE_FORCEINLINE auto
-  complex_binary_dispatch(eve::tag::sub_, Z1 const& z1, Z2 const& z2) noexcept
+  complex_binary_dispatch(eve::tag::sub_, Z1 const& z1, Z2 const& z2) noexcept -> decltype(z1+z2)
   {
     return z1 - z2;
   }
 
   template<typename Z1, typename Z2>
   EVE_FORCEINLINE auto
-  complex_binary_dispatch(eve::tag::mul_, Z1 const& z1, Z2 const& z2) noexcept
+  complex_binary_dispatch(eve::tag::mul_, Z1 const& z1, Z2 const& z2) noexcept -> decltype(z1+z2)
   {
     return z1 * z2;
   }
 
   template<typename Z1, typename Z2>
   EVE_FORCEINLINE auto
-  complex_binary_dispatch(eve::tag::div_, Z1 const& z1, Z2 const& z2) noexcept
+  complex_binary_dispatch(eve::tag::div_, Z1 const& z1, Z2 const& z2) noexcept -> decltype(z1+z2)
   {
     return z1 / z2;
   }
