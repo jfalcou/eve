@@ -8,10 +8,11 @@
 #pragma once
 
 #include <eve/module/core/detail/basic_shuffle.hpp>
-#include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/broadcast_group.hpp>
+#include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 #include <eve/module/core/regular/reverse.hpp>
+#include <eve/module/core/regular/rotate.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 #include <eve/module/core/regular/swap_adjacent_groups.hpp>
@@ -129,6 +130,10 @@ find_optimized_shuffle_pattern()
     return bound {slide_right, index<is_slide_right<I0, I...>>};
   }
   else if constexpr( is_reverse<InCardinal, I0, I...> ) return bound {reverse};
+  else if constexpr( is_rotate<InCardinal, I0, I...> != 0 )
+  {
+    return bound {rotate, index<is_rotate<InCardinal, I0, I...>>};
+  }
   else if constexpr( is_deinterleave_groups_shuffle<I0, I...> != sz )
   {
     return bound {deinterleave_groups_shuffle, is_deinterleave_groups_shuffle<I0, I...>};

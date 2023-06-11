@@ -182,6 +182,7 @@
 #include <eve/module/core/regular/remdiv.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/reverse.hpp>
+#include <eve/module/core/regular/rotate.hpp>
 #include <eve/module/core/regular/rotl.hpp>
 #include <eve/module/core/regular/rotr.hpp>
 #include <eve/module/core/regular/round.hpp>
@@ -194,13 +195,13 @@
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/shl.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/sign_alternate.hpp>
+#include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/signnz.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
-#include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/sqr_abs.hpp>
+#include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/sub.hpp>

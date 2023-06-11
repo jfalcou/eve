@@ -551,7 +551,7 @@ TTS_CASE("Check slide_right get optimized")
               );
 };
 
-TTS_CASE("Check slide_right get optimized")
+TTS_CASE("Check deinterleave get optimized")
 {
   using eve::fixed;
   using eve::detail::find_optimized_shuffle_pattern;
@@ -577,5 +577,51 @@ TTS_CASE("Check slide_right get optimized")
               );
   TTS_EXPR_IS ( (find_optimized_shuffle_pattern<16,0,1,2,3,8,9,10,11,4,5,6,7,12,13,14,15>())
               , (bound<deinter, fixed<4>>)
+              );
+};
+
+TTS_CASE("Check rotate get optimized")
+{
+  using eve::index_t;
+  using eve::detail::find_optimized_shuffle_pattern;
+  using eve::detail::bound;
+  using eve::callable_rotate_;
+  using eve::callable_basic_shuffle_;
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,1,2,3,0>())
+              , (bound<callable_rotate_,index_t<1>>)
+              );
+
+  // Checking that this is not selected as rotate
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,1,2,3,0>())
+              , (bound<callable_basic_shuffle_, eve::pattern_t<1,2,3,0>>)
+              );
+
+  // swag
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<4,3,0,1,2>())
+              , (bound<callable_rotate_,index_t<3>>)
+              );
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,1,2,3,4,5,6,7,0>())
+              , (bound<callable_rotate_,index_t<1>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,2,3,4,5,6,7,0,1>())
+              , (bound<callable_rotate_,index_t<2>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,3,4,5,6,7,0,1,2>())
+              , (bound<callable_rotate_,index_t<3>>)
+              );
+
+  // swag
+
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,5,6,7,0,1,2,3,4>())
+              , (bound<callable_rotate_,index_t<5>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,6,7,0,1,2,3,4,5>())
+              , (bound<callable_rotate_,index_t<6>>)
+              );
+  TTS_EXPR_IS ( (find_optimized_shuffle_pattern<8,7,0,1,2,3,4,5,6>())
+              , (bound<callable_rotate_,index_t<7>>)
               );
 };
