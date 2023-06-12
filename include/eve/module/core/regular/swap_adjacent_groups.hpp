@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/swap_adjacent groups.cpp}
+//!  @godbolt{doc/core/regular/swap_adjacent_groups.cpp}
 //!
 //! @}
 //================================================================================================
