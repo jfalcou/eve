@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e":[7,0,1,5,7],
 "group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed":[7,0,1,5,5],
 "group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5":[7,0,1,5,0],
 "group__simd.html":[7,0],
@@ -111,7 +112,7 @@ var NAVTREEINDEX3 =
 "namespaceeve.html#a0280fa32cdcf6ac1877275412df23158":[8,0,0,92],
 "namespaceeve.html#a5c8abb85533f462eaf77e6b4bc945b7f":[8,0,0,93],
 "namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc":[8,0,0,78],
-"namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40":[8,0,0,615],
+"namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40":[8,0,0,616],
 "namespacemembers.html":[8,1,0,0],
 "namespacemembers.html":[8,1,0],
 "namespacemembers_b.html":[8,1,0,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "structeve_1_1if__.html#a1dd72a0565bcd14b0fa5320d511f39a9":[7,0,2,2,1,0],
 "structeve_1_1if__.html#a6897dfced8eacc49373a2dcda5d55616":[7,0,2,2,1,2],
 "structeve_1_1if__.html#ab95afb50101c2b268a415e4b4bdeb186":[7,0,2,2,1,4],
-"structeve_1_1if__.html#af4da25e9482c78b71639ae7a8d9bd282":[7,0,2,2,1,3],
-"structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c":[7,0,2,2,1,1]
+"structeve_1_1if__.html#af4da25e9482c78b71639ae7a8d9bd282":[7,0,2,2,1,3]
 };

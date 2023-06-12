@@ -524,6 +524,7 @@ var namespaceeve =
     [ "reverse", "group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5", null ],
     [ "reverse_horner", "group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe", null ],
     [ "rising_factorial", "group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd", null ],
+    [ "rotate", "group__core_ga073de555026307d7265ba21c49940a7f.html#ga073de555026307d7265ba21c49940a7f", null ],
     [ "round", "group__core__arithmetic_gaf23afad64ceaef8914f279dc10f03faf.html#gaf23afad64ceaef8914f279dc10f03faf", null ],
     [ "roundscale", "group__core__arithmetic_ga677dabc1ce72bb1de0bf181b322aa8b6.html#ga677dabc1ce72bb1de0bf181b322aa8b6", null ],
     [ "rshl", "group__core__arithmetic_ga205ca694d591b328c1d3830bd0b4caec.html#ga205ca694d591b328c1d3830bd0b4caec", null ],
