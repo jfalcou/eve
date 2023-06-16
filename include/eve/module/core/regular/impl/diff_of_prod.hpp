@@ -17,45 +17,51 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V, floating_ordered_value W >
+  template<ordered_value T, ordered_value U, ordered_value V, ordered_value W >
   EVE_FORCEINLINE auto diff_of_prod_(EVE_SUPPORTS(cpu_)
                                    , const T& a
                                    , const U& b
                                    , const V& c
                                    , const W& d
-                                   ) noexcept
+                                   ) noexcept -> decltype(a*b-c*d)
   {
-    return arithmetic_call(diff_of_prod, a, b, c, d);
+    using r_t = decltype(a*b-c*d);
+    return diff_of_prod(r_t(a), r_t(b), r_t(c), r_t(d));
   }
 
-  template<floating_ordered_value T>
+  template<ordered_value T>
   EVE_FORCEINLINE auto diff_of_prod_(EVE_SUPPORTS(cpu_)
                                    , const T& a
                                    , const T& b
                                    , const T& c
                                    , const T& d
                                    ) noexcept
-  requires(has_native_abi_v<T>)
   {
+    if constexpr(std::is_integral_v<eve::element_type_t<T>>)
+      return fms(a, b, c*d);
+    else
+    {
       T cd = c * d;
       T err = fnma(c, d, cd);
       T dop = fms(a, b, cd);
      return if_else(is_finite(err), dop + err, dop);
-   }
+    }
+  }
 
-  template<floating_ordered_value T, floating_ordered_value U, floating_ordered_value V, floating_ordered_value W >
+  template<ordered_value T, ordered_value U, ordered_value V, ordered_value W >
   EVE_FORCEINLINE auto diff_of_prod_(EVE_SUPPORTS(cpu_)
                                    , raw_type const &
                                    , const T& a
                                    , const U& b
                                    , const V& c
                                    , const W& d
-                                   ) noexcept
+                                   ) noexcept -> decltype(a*b-c*d)
   {
-    return arithmetic_call(raw(diff_of_prod), a, b, c, d);
+    using r_t = decltype(a*b-c*d);
+    return raw(diff_of_prod)(r_t(a), r_t(b), r_t(c), r_t(d));
   }
 
-  template<floating_ordered_value T>
+  template<ordered_value T>
   EVE_FORCEINLINE auto dif_of_prod_(EVE_SUPPORTS(cpu_)
                                    , raw_type const &
                                    , const T& a
@@ -63,7 +69,6 @@ namespace eve::detail
                                    , const T& c
                                    , const T& d
                                    ) noexcept
-  requires(has_native_abi_v<T>)
   {
     return fms(a, b, c*d);
   }

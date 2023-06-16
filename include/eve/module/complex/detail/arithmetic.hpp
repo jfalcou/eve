@@ -201,6 +201,7 @@ namespace eve::detail
     return z_t {lerp(real(z1), real(z2), t), lerp(imag(z1), imag(z2), t)};
   }
 
+
   //================================================================================================
   //  Unary functions
   //================================================================================================
@@ -395,5 +396,23 @@ namespace eve::detail
   complex_ternary_dispatch(eve::tag::fsnm_, auto const& z1, auto const& z2, auto const& z3) noexcept
   {
     return fnms(z2, z3, z1);
+  }
+
+
+  //================================================================================================
+  //  trivial extension of some real tetrary functions
+  //================================================================================================
+  template<typename Z1, typename Z2, typename Z3, typename Z4>
+  EVE_FORCEINLINE auto
+  complex_nary_dispatch(eve::tag::sum_of_prod_, Z1 const& z1, Z2 const& z2, Z3 const& z3, Z4 const& z4) noexcept
+  {
+    return fma(z1, z2, z3*z4);
+  }
+
+  template<typename Z1, typename Z2, typename Z3, typename Z4>
+  EVE_FORCEINLINE auto
+  complex_nary_dispatch(eve::tag::diff_of_prod_, Z1 const& z1, Z2 const& z2, Z3 const& z3, Z4 const& z4) noexcept
+  {
+    return fms(z1, z2, z3*z4);
   }
 }
