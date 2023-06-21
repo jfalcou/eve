@@ -1,7 +1,7 @@
 var structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4 =
 [
     [ "abi_type", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#aac957e33daa41b5a3f551ed78c05c100", null ],
-    [ "bits_type", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#adb0e98ce3f9d38e138e3055cada7d4e3", null ],
+    [ "bits_type", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a12f93e894ed656207297404449381d25", null ],
     [ "cardinal_type", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a1c043e9a2264e6257e715022ffbbe9a9", null ],
     [ "mask_type", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a552251c1f51965f56d96414cc8f933c8", null ],
     [ "rebind", "structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a814d09107a0280ceb564cf053d075dee", null ],
