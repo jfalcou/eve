@@ -34,22 +34,20 @@ TTS_CASE_WITH( "Check behavior of pure on scalar"
   }
 };
 
-// TTS_CASE_WITH( "Check behavior of pure on wide"
-//         , eve::test::simd::ieee_reals
-//         , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
-//                         , tts::randoms(eve::valmin, eve::valmax)
-//                         , tts::randoms(eve::valmin, eve::valmax)
-//                         , tts::randoms(eve::valmin, eve::valmax)
-//                         )
-//         )
-// <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
-// {
-//   using e_t = typename T::value_type;
-//   using z_t = eve::wide<eve::quaternion<e_t>, typename T::cardinal_type>;
+TTS_CASE_WITH( "Check behavior of pure on wide"
+        , eve::test::simd::ieee_reals
+        , tts::generate ( tts::randoms(eve::valmin, eve::valmax)
+                        , tts::randoms(eve::valmin, eve::valmax)
+                        , tts::randoms(eve::valmin, eve::valmax)
+                        , tts::randoms(eve::valmin, eve::valmax)
+                        )
+        )
+<typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
+{
+  using e_t = typename T::value_type;
+  using z_t = eve::wide<eve::quaternion<e_t>, typename T::cardinal_type>;
 
-//   auto q = eve::pure(z_t(a0,a1,a2,a3));
-//   auto ref =  z_t(0,a1,a2,a3);
-//   std::cout << "q " << q << std::endl;
-//   std::cout << "ref " << ref <<  std::endl;
-// //  TTS_EQUAL( eve::real(q), eve::real(ref));
-// };
+  auto q = eve::pure(z_t(a0,a1,a2,a3));
+  auto ref =  z_t(0,a1,a2,a3);
+  TTS_EQUAL( eve::real(q), eve::real(ref));
+};

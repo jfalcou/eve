@@ -91,7 +91,12 @@ namespace eve
     EVE_FORCEINLINE friend decltype(auto) tagged_dispatch(eve::tag::pure_, like<quaternion> auto && z )
     {
       using u_t =  std::remove_reference_t<decltype(real(z))>;
-      return quaternion<Type>(u_t(0), get<1>(EVE_FWD(z)), get<2>(EVE_FWD(z)), get<3>(EVE_FWD(z)));
+      auto z1 = z;
+      real(z1) = u_t(0);
+      return z1;
+//       using c_t = eve::as_complex_t<V>;
+//       using u_t =  std::remove_reference_t<decltype(real(z))>;
+//       return quaternion<Type>(u_t(0), get<1>(EVE_FWD(z)), get<2>(EVE_FWD(z)), get<3>(EVE_FWD(z)));
     }
 
 //     //==============================================================================================
