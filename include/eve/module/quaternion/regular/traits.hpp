@@ -35,8 +35,8 @@ namespace eve
   template<floating_scalar_value T, typename N>
   struct as_quaternion<wide<quaternion<T>,N>>  { using type = wide<quaternion<T>,N>; };
 
-//   template<typename T>
-//   using as_quaternion_t = typename as_quaternion<T>::type;
+  template<typename T>
+  using as_quaternion_t = typename as_quaternion<T>::type;
 
 //   template<typename T>              struct as_real;
 //   template<value T>                 struct as_real<T>           { using type = T; };

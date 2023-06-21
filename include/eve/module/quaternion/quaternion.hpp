@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/quaternion/regular/traits.hpp>
-// #include <eve/module/quaternion/detail/arithmetic.hpp>
+#include <eve/module/quaternion/detail/arithmetic.hpp>
 // #include <eve/module/quaternion/detail/math.hpp>
 // #include <eve/module/quaternion/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
@@ -94,121 +94,127 @@ namespace eve
       auto z1 = z;
       real(z1) = u_t(0);
       return z1;
-//       using c_t = eve::as_complex_t<V>;
-//       using u_t =  std::remove_reference_t<decltype(real(z))>;
-//       return quaternion<Type>(u_t(0), get<1>(EVE_FWD(z)), get<2>(EVE_FWD(z)), get<3>(EVE_FWD(z)));
     }
 
-//     //==============================================================================================
-//     // Operators
-//     //==============================================================================================
-//     // -----  Operator +
-//     EVE_FORCEINLINE friend auto operator+(like<quaternion> auto const& z) noexcept { return z; }
+    //==============================================================================================
+    // Operators
+    //==============================================================================================
+    // -----  Operator +
+    EVE_FORCEINLINE friend auto operator+(like<quaternion> auto const& z) noexcept { return z; }
 
-//     template<like<quaternion> Z1, like<quaternion> Z2>
-//     EVE_FORCEINLINE friend auto& operator+=(Z1& self, Z2 const& o) noexcept
-//     {
-//       real(self) += real(o);
-//       if constexpr(is_quaternion_v<Z2>) imag(self) += imag(o);
-//       return self;
-//     }
+    template<like<quaternion> Z1, like<quaternion> Z2>
+    EVE_FORCEINLINE friend auto& operator+=(Z1& self, Z2 const& o) noexcept
+    {
+      real(self) += real(o);
+      if constexpr(is_quaternion_v<Z2>)
+      {
+        ipart(self) += ipart(o);
+        jpart(self) += jpart(o);
+        kpart(self) += kpart(o);
+      }
+      return self;
+    }
 
-//     EVE_FORCEINLINE friend auto& operator+=(like<quaternion> auto& self, callable_i_ const&) noexcept
-//     {
-//       imag(self)++;
-//       return self;
-//     }
+    EVE_FORCEINLINE friend auto& operator+=(like<quaternion> auto& self, callable_i_ const&) noexcept
+    {
+      ipart(self)++;
+      return self;
+    }
 
-//     // -----  Operator -
-//     template<like<quaternion> Z> EVE_FORCEINLINE friend auto operator-(Z const& z) noexcept
-//     {
-//       return Z{-real(z), -imag(z)};
-//     }
+    // -----  Operator -
+    template<like<quaternion> Z> EVE_FORCEINLINE friend auto operator-(Z const& z) noexcept
+    {
+      return Z{-real(z),-ipart(z),-jpart(z),-kpart(z)};
+    }
 
-//     template<like<quaternion> Z1, like<quaternion> Z2>
-//     EVE_FORCEINLINE friend auto& operator-=(Z1& self, Z2 const& o) noexcept
-//     {
-//       real(self) -= real(o);
-//       if constexpr(is_quaternion_v<Z2>) imag(self) -= imag(o);
-//       return self;
-//     }
+    template<like<quaternion> Z1, like<quaternion> Z2>
+    EVE_FORCEINLINE friend auto& operator-=(Z1& self, Z2 const& o) noexcept
+    {
+      real(self) -= real(o);
+      if constexpr(is_quaternion_v<Z2>)
+      {
+        ipart(self) -= ipart(o);
+        jpart(self) -= jpart(o);
+        kpart(self) -= kpart(o);
+      }
+      return self;
+    }
 
-//     EVE_FORCEINLINE friend auto& operator-=(like<quaternion> auto& self, callable_i_ const&) noexcept
-//     {
-//       imag(self)--;
-//       return self;
-//     }
+    EVE_FORCEINLINE friend auto& operator-=(like<quaternion> auto& self, callable_i_ const&) noexcept
+    {
+      ipart(self)--;
+      return self;
+    }
 
-//     // -----  Operator *
-//     template<like<quaternion> Z1, like<quaternion> Z2>
-//     EVE_FORCEINLINE friend auto& operator*=(Z1& self, Z2 const& o) noexcept
-//     {
-//       auto [a, b] = self;
-//       auto c = real(o);
+    // -----  Operator *
+    template<like<quaternion> Z1, like<quaternion> Z2>
+    EVE_FORCEINLINE friend auto& operator*=(Z1& self, Z2 const& e) noexcept
+    {
+      auto [a, b, c, d] = self;
+      if constexpr(is_complex_v<Z2>)
+      {
+        auto [ae, be] = e;
+        real(self)  = a*ae - b*be;
+        ipart(self) = a*be + b*ae;
+        jpart(self) = c*ae + d*be;
+        kpart(self) = d*ae - c*be;
+      }
+      else if constexpr(is_quaternion_v<Z2>)
+      {
+        auto [ae, be, ce, de] = e;
+        real(self)  = a*ae - b*be - c*ce - d*de;
+        ipart(self) = a*be + b*ae + c*de - d*ce;
+        jpart(self) = a*ce - b*de + c*ae + d*be;
+        kpart(self) = a*de + b*ce - c*be + d*ae;
+      }
+      else
+      {
+        real(self)  = a*e;
+        ipart(self) = b*e;
+        jpart(self) = c*e;
+        kpart(self) = d*e;
+      }
+      return self;
+    }
 
-//       if constexpr(is_quaternion_v<Z2>)
-//       {
-//         auto d = imag(o);
-//         real(self) = a*c-b*d;
-//         imag(self) = a*d+b*c;
-//       }
-//       else
-//       {
-//         real(self) = a*c;
-//         imag(self) = b*c;
-//       }
+    EVE_FORCEINLINE friend auto& operator*=(like<quaternion> auto& self, callable_i_ const&) noexcept
+    {
+      auto[a, b, c, d] = self;
+      real(self)  = -b;
+      ipart(self) = a;
+      jpart(self) = d;
+      kpart(self) = -c;
+      return self;
+    }
 
-//       return self;
-//     }
+    // -----  Operator /
+    template<like<quaternion> Z1, like<quaternion> Z2>
+    EVE_FORCEINLINE friend auto& operator/= (Z1& self, Z2 const& o) noexcept
+    {
+      self = self*conj(o);
+      self = self*rec(sqr_abs(o));
+      return self; //*= conj(o)*rec(sqr_abs(o));
+    }
 
-//     EVE_FORCEINLINE friend auto& operator*=(like<quaternion> auto& self, callable_i_ const&) noexcept
-//     {
-//       auto[r,i] = self;
-//       real(self) = -i;
-//       imag(self) =  r;
-//       return self;
-//     }
+    EVE_FORCEINLINE friend auto& operator/=(like<quaternion> auto& self, callable_i_ const&) noexcept
+    {
+      auto[a, b, c, d] = self;
+      real(self)  = b;
+      ipart(self) = -a;
+      jpart(self) = -d;
+      kpart(self) = c;
+      return self;
+    }
 
-//     // -----  Operator /
-//     template<like<quaternion> Z1, like<quaternion> Z2>
-//     EVE_FORCEINLINE friend auto& operator/= (Z1& self, Z2 const& o) noexcept
-//     {
-//       auto [a, b] = self;
-//       auto c = real(o);
-
-//       if constexpr(is_quaternion_v<Z2>)
-//       {
-//         auto d = imag(o);
-//         auto n = c*c+d*d;
-//         real(self) = (a*c+b*d)/n;
-//         imag(self) = (b*c-a*d)/n;
-//       }
-//       else
-//       {
-//         real(self) = a/c;
-//         imag(self) = b/c;
-//       }
-
-//       return self;
-//     }
-
-//     EVE_FORCEINLINE friend auto& operator/=(like<quaternion> auto& self, callable_i_ const&) noexcept
-//     {
-//       auto[r,i] = self;
-//       real(self) = i;
-//       imag(self) = -r;
-//       return self;
-//     }
-
-//     //==============================================================================================
-//     // Functions support
-//     //==============================================================================================
-//     template<typename Tag, like<quaternion> Z>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z const& z) noexcept
-//         -> decltype(detail::quaternion_unary_dispatch(tag, z))
-//     {
-//       return detail::quaternion_unary_dispatch(tag, z);
-//     }
+    //==============================================================================================
+    // Functions support
+    //==============================================================================================
+    template<typename Tag, like<quaternion> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z const& z) noexcept
+        -> decltype(detail::quaternion_unary_dispatch(tag, z))
+    {
+      return detail::quaternion_unary_dispatch(tag, z);
+    }
 
 //     template<typename Tag, decorator D, like<quaternion> Z>
 //     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
@@ -217,12 +223,12 @@ namespace eve
 //       return detail::quaternion_unary_dispatch(tag, d, z);
 //     }
 
-//     template<typename Tag, like<quaternion> Z1, like<quaternion> Z2>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Z2 const& z2) noexcept
-//         -> decltype(detail::quaternion_binary_dispatch(tag, z1, z2))
-//     {
-//       return detail::quaternion_binary_dispatch(tag, z1, z2);
-//     }
+    template<typename Tag, like<quaternion> Z1, like<quaternion> Z2>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Z2 const& z2) noexcept
+        -> decltype(detail::quaternion_binary_dispatch(tag, z1, z2))
+    {
+      return detail::quaternion_binary_dispatch(tag, z1, z2);
+    }
 
 //     template<decorator D, typename Tag, like<quaternion> Z1, like<quaternion> Z2>
 //     EVE_FORCEINLINE
@@ -232,15 +238,15 @@ namespace eve
 //       return detail::quaternion_binary_dispatch(tag, d, z1, z2);
 //     }
 
-//     template<typename Tag, like<quaternion> Z1, like<quaternion> Z2, like<quaternion> Z3>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag,
-//                                                 Z1 const & z1,
-//                                                 Z2 const & z2,
-//                                                 Z3 const & z3) noexcept
-//         -> decltype(detail::quaternion_ternary_dispatch(tag, z1, z2, z3))
-//     {
-//       return detail::quaternion_ternary_dispatch(tag, z1, z2, z3);
-//     }
+    template<typename Tag, like<quaternion> Z1, like<quaternion> Z2, like<quaternion> Z3>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag,
+                                                Z1 const & z1,
+                                                Z2 const & z2,
+                                                Z3 const & z3) noexcept
+        -> decltype(detail::quaternion_ternary_dispatch(tag, z1, z2, z3))
+    {
+      return detail::quaternion_ternary_dispatch(tag, z1, z2, z3);
+    }
 
 //     template<typename Tag, like<quaternion> Z1, like<quaternion>... Zs>
 //     EVE_FORCEINLINE
@@ -250,19 +256,19 @@ namespace eve
 //       return detail::quaternion_nary_dispatch(tag, z1, zs...);
 //     }
 
-//     //==============================================================================================
-//     // Constants support
-//     //==============================================================================================
-//     template<typename Tag, like<quaternion> Z>
-//     requires( !detail::one_of<Tag, tag::i_> )
-//     EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
-//     {
-//       detail::callable_object<Tag> cst;
-//       if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
-//         return cst(as(real(Z{})));
-//       else
-//         return Z{ cst(as<Type>{}), Type{0}};
-//     }
+    //==============================================================================================
+    // Constants support
+    //==============================================================================================
+    template<typename Tag, like<quaternion> Z>
+    requires( !detail::one_of<Tag, tag::i_> )
+    EVE_FORCEINLINE friend  auto  tagged_dispatch(Tag const&, as<Z> const&) noexcept
+    {
+      detail::callable_object<Tag> cst;
+      if constexpr(std::same_as<Tag,tag::true__> || std::same_as<Tag,tag::false__>)
+        return cst(as(real(Z{})));
+      else
+        return Z{ cst(as<Type>{}), Type{0}, Type{0}, Type{0}};
+    }
 
 //     //==============================================================================================
 //     // Specific function support
@@ -274,28 +280,28 @@ namespace eve
 //     }
    };
 
-//   template<ordered_value Z>
-//   EVE_FORCEINLINE   auto to_quaternion( Z const & v) noexcept
-//   -> decltype(as_quaternion_t<Z>(v, 0))
-//   {
-//     return as_quaternion_t<Z>(v, 0);
-//   }
+  template<ordered_value Z>
+  EVE_FORCEINLINE   auto to_quaternion( Z const & v) noexcept
+  -> decltype(as_quaternion_t<Z>(v, 0, 0, 0))
+  {
+    return as_quaternion_t<Z>(v, 0, 0, 0);
+  }
 
-//   template<value Z>
-//   EVE_FORCEINLINE auto to_quaternion(Z const & v) noexcept
-//   {
-//     return v;
-//   }
+  template<value Z>
+  EVE_FORCEINLINE auto to_quaternion(Z const & v) noexcept
+  {
+    return v;
+  }
 
-//   template<value Z1, value Z2>
-//   EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,
-//                                               auto const& cond,
-//                                               Z1 const  & z1,
-//                                               Z2 const  & z2) noexcept
-//   requires(is_quaternion_v<Z1> != is_quaternion_v<Z2>)
-//   {
-//     return if_else(cond, to_quaternion(z1), to_quaternion(z2));
-//   }
+  template<value Z1, value Z2>
+  EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,
+                                              auto const& cond,
+                                              Z1 const  & z1,
+                                              Z2 const  & z2) noexcept
+  requires(is_quaternion_v<Z1> != is_quaternion_v<Z2>)
+  {
+    return if_else(cond, to_quaternion(z1), to_quaternion(z2));
+  }
 
   //================================================================================================
   //! @}
