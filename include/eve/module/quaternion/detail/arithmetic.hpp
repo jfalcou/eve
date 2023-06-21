@@ -11,8 +11,6 @@
 #include <eve/module/math.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/quaternion/regular/traits.hpp>
-// #include <eve/module/core/regular/conj.hpp>
-// #include <eve/module/quaternion/regular/proj.hpp>
 
 namespace eve::detail
 {
@@ -46,88 +44,6 @@ namespace eve::detail
   {
     return z1 / z2;
   }
-
-//   //================================================================================================
-//   // operators as pedantic functions
-//   //================================================================================================
-//   template<typename Z1, typename Z2>
-//   EVE_FORCEINLINE auto
-//   quaternion_binary_dispatch(eve::tag::mul_, pedantic_type const&, Z1 const& z1, Z2 const& z2) noexcept
-//   {
-//     using v_t = decltype(real(z1) * real(z2));
-//     using r_t = eve::as_quaternion_t<v_t>;
-
-//     r_t r;
-//     auto a = real(z1);
-//     auto b = imag(z1);
-
-//     auto c = real(z2);
-//     auto d = imag(z2);
-
-//     if constexpr( !is_quaternion_v<Z1> || !is_quaternion_v<Z1> ) { r = z1 * z2; }
-//     else
-//     {
-//       auto rr = pedantic(diff_of_prod)(a, c, b, d);
-//       auto ri = pedantic(sum_of_prod)(a, d, b, c);
-//       r       = r_t(rr, ri);
-//     }
-//     auto test = is_finite(r);
-//     if( eve::all(test) ) return r;
-//     auto cur = logical_andnot(is_real(z1), test);
-//     if( eve::any(cur) )
-//     {
-//       r    = if_else(cur, a * z2, r);
-//       test = logical_or(test, cur);
-//       if( eve::all(test) ) return r;
-//     }
-//     cur = eve::logical_andnot(is_imag(z1), test);
-//     if( eve::any(cur) )
-//     {
-//       r    = if_else(cur, b * z2 * eve::i, r);
-//       test = logical_or(test, cur);
-//       if( eve::all(test) ) return r;
-//     }
-//     cur = eve::logical_andnot(is_real(z2), test);
-//     if( eve::any(cur) )
-//     {
-//       r    = if_else(cur, c * z1, r);
-//       test = logical_or(test, cur);
-//       if( eve::all(test) ) return r;
-//     }
-//     cur = eve::logical_andnot(is_imag(z2), test);
-//     if( eve::any(cur) )
-//     {
-//       r    = if_else(cur, d * z1 * eve::i, r);
-//       test = logical_or(test, cur);
-//       if( eve::all(test) ) return r;
-//     }
-//     return r;
-//   }
-
-//   template<typename Z1, typename Z2>
-//   EVE_FORCEINLINE auto
-//   quaternion_binary_dispatch(eve::tag::div_, pedantic_type const&, Z1 const& z1, Z2 const& z2) noexcept
-//   {
-//     using v_t = decltype(real(z1) / real(z2));
-//     using r_t = eve::as_quaternion_t<v_t>;
-//     if constexpr( !is_quaternion_v<Z2> )
-//     {
-//       auto iz2 = pedantic(rec)(z2);
-//       return pedantic(mul)(z1, iz2);
-//     }
-//     else
-//     {
-//       auto rr = eve::abs(real(z1));
-//       auto ii = eve::abs(imag(z1));
-//       auto e  = -if_else((rr < ii), exponent(ii), exponent(rr));
-//       auto zz2(eve::ldexp(z2, e));
-//       auto denom = sqr_abs(zz2);
-//       r_t  r     = pedantic(mul)(z1, conj(zz2));
-//       r /= denom;
-//       r = if_else(is_not_infinite(denom), r, zero);
-//       return ldexp(r, e);
-//     }
-//   }
 
   //================================================================================================
   //  trivial extension of some real unary functions
@@ -276,12 +192,12 @@ namespace eve::detail
     return if_else(is_eqz(z), zero, z / abs(z));
   }
 
-//   template<typename Z>
-//   EVE_FORCEINLINE auto quaternion_unary_dispatch(eve::tag::modf_, Z const& z) noexcept
-//   {
-//     auto t = trunc(z);
-//     return kumi::tuple {z - t, t};
-//   }
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch(eve::tag::modf_, Z const& z) noexcept
+  {
+    auto t = trunc(z);
+    return kumi::tuple {z - t, t};
+  }
 
   //================================================================================================
   //  Binary functions

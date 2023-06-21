@@ -12,7 +12,7 @@
 #include <eve/module/complex.hpp>
 #include <eve/module/quaternion/regular/traits.hpp>
 #include <eve/module/quaternion/detail/arithmetic.hpp>
-// #include <eve/module/quaternion/detail/math.hpp>
+#include <eve/module/quaternion/detail/math.hpp>
 // #include <eve/module/quaternion/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
 #include <ostream>
@@ -248,13 +248,13 @@ namespace eve
       return detail::quaternion_ternary_dispatch(tag, z1, z2, z3);
     }
 
-//     template<typename Tag, like<quaternion> Z1, like<quaternion>... Zs>
-//     EVE_FORCEINLINE
-//     friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Zs const&...zs) noexcept
-//         -> decltype(detail::quaternion_nary_dispatch(tag, z1, zs...))
-//     {
-//       return detail::quaternion_nary_dispatch(tag, z1, zs...);
-//     }
+    template<typename Tag, like<quaternion> Z1, like<quaternion>... Zs>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Zs const&...zs) noexcept
+        -> decltype(detail::quaternion_nary_dispatch(tag, z1, zs...))
+    {
+      return detail::quaternion_nary_dispatch(tag, z1, zs...);
+    }
 
     //==============================================================================================
     // Constants support
@@ -269,16 +269,7 @@ namespace eve
       else
         return Z{ cst(as<Type>{}), Type{0}, Type{0}, Type{0}};
     }
-
-//     //==============================================================================================
-//     // Specific function support
-//     //==============================================================================================
-//     template<like<quaternion> Z, integral_value N>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(tag::ldexp_, Z const& z1, N n) noexcept
-//     {
-//       return as_wide_as_t<Z, N>(ldexp(real(z1), n), ldexp(imag(z1), n));
-//     }
-   };
+  };
 
   template<ordered_value Z>
   EVE_FORCEINLINE   auto to_quaternion( Z const & v) noexcept

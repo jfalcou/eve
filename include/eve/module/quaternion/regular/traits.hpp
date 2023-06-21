@@ -38,15 +38,6 @@ namespace eve
   template<typename T>
   using as_quaternion_t = typename as_quaternion<T>::type;
 
-//   template<typename T>              struct as_real;
-//   template<value T>                 struct as_real<T>           { using type = T; };
-//   template<floating_scalar_value T> struct as_real<quaternion<T>>  { using type = T; };
-//   template<floating_scalar_value T, typename N>
-//   struct as_real<wide<quaternion<T>,N>>  { using type = wide<T,N>; };
-
-//   template<typename T>
-//   using as_real_t = typename as_real<T>::type;
-
   template<typename T> struct is_quaternion                       : std::false_type {};
   template<typename T> struct is_quaternion<quaternion<T>>        : std::true_type {};
   template<typename T, typename N> struct is_quaternion<wide<quaternion<T>, N>>  : std::true_type {};
