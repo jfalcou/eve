@@ -26,7 +26,6 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
-#include <eve/traits/as_integer.hpp>
 
 #include <cstring>
 #include <concepts>
@@ -74,7 +73,7 @@ namespace eve
     using size_type     = std::ptrdiff_t;
 
     //! Type representing the bits of the logical value
-    using bits_type = wide<as_integer_t<Type, unsigned>, Cardinal>;
+    using bits_type = wide<detail::make_integer_t<sizeof(Type), unsigned>, Cardinal>;
 
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Cardinal>;
