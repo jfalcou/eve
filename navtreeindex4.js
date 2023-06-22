@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"structeve_1_1if__.html#a6897dfced8eacc49373a2dcda5d55616":[7,0,2,2,1,2],
+"structeve_1_1if__.html#ab95afb50101c2b268a415e4b4bdeb186":[7,0,2,2,1,4],
 "structeve_1_1if__.html#af4da25e9482c78b71639ae7a8d9bd282":[7,0,2,2,1,3],
 "structeve_1_1if___a3c412a82b915cb199e4e120c916fb32c.html#a3c412a82b915cb199e4e120c916fb32c":[7,0,2,2,1,1],
 "structeve_1_1ignore__all__.html":[7,0,2,2,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "structeve_1_1wide_ac2088fca71239dcd0ab7e7eaa37fb1ca.html#ac2088fca71239dcd0ab7e7eaa37fb1ca":[7,0,2,7,30],
 "structiota__with__step__iterator.html":[7,0,0,3,15],
 "structmap__iterator.html":[7,0,0,3,16],
-"structmap__load__op.html":[7,0,0,2,4],
-"structmap__range.html":[7,0,0,3,17],
-"structmap__store__op.html":[7,0,0,2,5]
+"structmap__load__op.html":[7,0,0,2,4]
 };

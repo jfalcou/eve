@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7":[7,0,1,2,9,1],
 "group__core__predicates_gad8c0f5b1fcc6893e05d6460f7846006e.html#gad8c0f5b1fcc6893e05d6460f7846006e":[7,0,1,2,9,24],
 "group__core__predicates_gadb59eac8d4aed0fa759b6feadcefc406.html#gadb59eac8d4aed0fa759b6feadcefc406":[7,0,1,2,9,4],
 "group__core__predicates_gae42468308e898fb7528cad77e70f0784.html#gae42468308e898fb7528cad77e70f0784":[7,0,1,2,9,17],
@@ -25,8 +26,8 @@ var NAVTREEINDEX2 =
 "group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d":[7,0,1,2,11,0],
 "group__core__simd_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8":[7,0,1,2,11,8],
 "group__core_ga073de555026307d7265ba21c49940a7f.html#ga073de555026307d7265ba21c49940a7f":[7,0,1,2,13],
-"group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e":[7,0,1,2,14],
-"group__core_ga5e30586d8e422b2c42b352fe857e13de.html#ga5e30586d8e422b2c42b352fe857e13de":[7,0,1,2,15],
+"group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e":[7,0,1,2,15],
+"group__core_ga5e30586d8e422b2c42b352fe857e13de.html#ga5e30586d8e422b2c42b352fe857e13de":[7,0,1,2,16],
 "group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5":[7,0,1,2,12],
 "group__elliptic.html":[7,0,1,3],
 "group__elliptic_ga399581902e638b91ced137b1673ab42e.html#ga399581902e638b91ced137b1673ab42e":[7,0,1,3,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838":[7,0,1,5,12],
 "group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f":[7,0,1,5,8],
 "group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25":[7,0,1,5,1],
-"group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb":[7,0,1,5,2],
-"group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d":[7,0,1,5,3]
+"group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb":[7,0,1,5,2]
 };

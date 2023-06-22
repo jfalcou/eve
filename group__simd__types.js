@@ -190,5 +190,6 @@ var group__simd__types =
     ] ],
     [ "eve::wide_cardinal", "concepteve_1_1wide__cardinal.html", null ],
     [ "eve::na_", "group__simd__types.html#ga11b65eff854b205c9f9ef8dbd559bb9b", null ],
-    [ "eve::pattern", "group__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd", null ]
+    [ "eve::pattern", "group__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd", null ],
+    [ "eve::we_", "group__simd__types.html#gab6c3c30138d82ef45b1bbcf9e65145d4", null ]
 ];
