@@ -83,6 +83,9 @@ namespace eve
   //! @brief Tag for zeroing swizzle index
   inline constexpr std::ptrdiff_t na_ = -1;
 
+  //! @brief Tag for indicating to a shuffle that the value doesn't matter.
+  inline constexpr std::ptrdiff_t we_ = -2;
+
   //! @brief Generate a shuffling pattern
   template<std::ptrdiff_t... I> inline constexpr auto pattern = pattern_t<I...>{};
 
