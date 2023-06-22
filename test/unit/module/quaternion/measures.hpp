@@ -20,7 +20,7 @@ namespace tts
   template<typename T, typename N>
   auto relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_quaternion_v<T>)
   {
-    return eve::maximum(eve::sqrt(eve::sqr_abs(l-r)/eve::max(eve::sqr_abs(l), eve::sqr_abs(r))));
+    return eve::maximum(eve::sqrt(eve::sqr_abs(l-r)/eve::max(eve::sqr_abs(l), eve::sqr_abs(r)))).get(0);
   }
 
   template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_quaternion_v<T>)
