@@ -25,7 +25,8 @@ TTS_CASE_WITH( "Check behavior of average on wide quaternion"
   auto b = z_t(a0*2, a1*3, a2*4, a3*5);
   auto m = z_t(a0*1.5, a1*2, a2*2.5, a3*3);
   auto c = z_t(a2, 0, 0, 0);
-  TTS_EXPECT( eve::all(eve::abs(eve::average(a, b)- m) <= 20.*eve::eps(eve::as<T>())));
-  TTS_EXPECT( eve::all(eve::abs( eve::average(a, a2)-  eve::average(a, c))<= 2.*eve::eps(eve::as<T>())));
-  TTS_RELATIVE_EQUAL(eve::average(a, b),  m, 20.*eve::eps(eve::as<T>()));
+  using e_t = eve::element_type_t<T>;
+  auto tol = 100.0*eve::eps(eve::as<e_t>());
+  TTS_RELATIVE_EQUAL(eve::average(a, a2), eve::average(a, c), tol);
+  TTS_RELATIVE_EQUAL(eve::average(a, b),  m, tol);
 };

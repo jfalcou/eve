@@ -415,4 +415,16 @@ namespace eve::detail
   {
     return fms(z1, z2, z3*z4);
   }
+
+  //================================================================================================
+  //  relative distance
+  //================================================================================================
+   template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  complex_binary_dispatch(eve::tag::reldist_, Z1 const& z1, Z2 const& z2) noexcept -> decltype(abs(z1+z2))
+  {
+    using r_t = decltype(abs(z1+z2));
+    return dist(z1, z2)/max(abs(z1), abs(z2), one(as<r_t>()));
+  }
+
 }

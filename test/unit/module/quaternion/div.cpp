@@ -35,22 +35,23 @@ TTS_CASE_TPL( "Check quaternion::div", eve::test::scalar::ieee_reals)
   TTS_EQUAL(div(z_s1   , 8.f   ) , (q_t{0.125 , 0.25, 0.375, 0.5}));
 //  TTS_EQUAL(div(z_s1   , eve::i) , (q_t{3.   ,-1. }));
 
-  TTS_RELATIVE_EQUAL(div(1      , z_s2  ) , (q_t{2./15, -1./10, -1./15, -1./30}), eve::eps(eve::as<T>()));
-  TTS_RELATIVE_EQUAL(div(2.     , z_s2  ) , (q_t{4./15, -2./10, -2./15, -1./15  }), eve::eps(eve::as<T>()));
-  TTS_RELATIVE_EQUAL(div(4.f    , z_s2  ) , (q_t{8./15, -4./10, -4./15, -2./15  }),  eve::eps(eve::as<T>()));
+  double tol = 100.0*eve::eps(eve::as<T>());
+  TTS_RELATIVE_EQUAL(div(1      , z_s2  ) , (q_t{2./15, -1./10, -1./15, -1./30}), tol);
+  TTS_RELATIVE_EQUAL(div(2.     , z_s2  ) , (q_t{4./15, -2./10, -2./15, -1./15  }), tol);
+  TTS_RELATIVE_EQUAL(div(4.f    , z_s2  ) , (q_t{8./15, -4./10, -4./15, -2./15  }),  tol);
 
 //  TTS_EQUAL(div(eve::i,  z_s2  ) , (q_t{-0.25, 0.25}));
 
   // quaternion / wide real / wide real / quaternion
-  TTS_RELATIVE_EQUAL(div(z_s1   , rv    ) , (wq_t{[&](auto i, auto){ return z_s1 / rv.get(i);}}), eve::eps(eve::as<T>()));
-  TTS_RELATIVE_EQUAL(div(rv     , z_s1  ) , (wq_t{[&](auto i, auto){ return rv.get(i) / z_s1;}}), eve::eps(eve::as<T>()));
+  TTS_RELATIVE_EQUAL(div(z_s1   , rv    ) , (wq_t{[&](auto i, auto){ return z_s1 / rv.get(i);}}), tol);
+  TTS_RELATIVE_EQUAL(div(rv     , z_s1  ) , (wq_t{[&](auto i, auto){ return rv.get(i) / z_s1;}}), tol);
 
   // quaternion / wide quaternion / wide quaternion / quaternion
-  TTS_RELATIVE_EQUAL(div(z_s1,  z_v1) , (wq_t{[&](auto i, auto){ return z_s1 / z_v1.get(i);}}), eve::eps(eve::as<T>()));
-  TTS_RELATIVE_EQUAL(div(z_v1,  z_s1) , (wq_t{[&](auto i, auto){ return z_v1.get(i) / z_s1;}}), eve::eps(eve::as<T>()));
+  TTS_RELATIVE_EQUAL(div(z_s1,  z_v1) , (wq_t{[&](auto i, auto){ return z_s1 / z_v1.get(i);}}), tol);
+  TTS_RELATIVE_EQUAL(div(z_v1,  z_s1) , (wq_t{[&](auto i, auto){ return z_v1.get(i) / z_s1;}}), tol);
 
   // wide quaternion / wide quaternion
-  TTS_RELATIVE_EQUAL(div(z_v1   , z_v2  ) , (wq_t{[&](auto i, auto){ return q_t( z_v1.get(i) / z_v2.get(i));}}), eve::eps(eve::as<T>()));
+  TTS_RELATIVE_EQUAL(div(z_v1   , z_v2  ) , (wq_t{[&](auto i, auto){ return q_t( z_v1.get(i) / z_v2.get(i));}}), tol);
 
   // wide quaternion / real / real / wide quaternion
   TTS_RELATIVE_EQUAL(div(z_v1   , 1     ) , (wq_t{[&](auto i, auto){ return q_t( z_v1.get(i) / 1     );}}), 1e-4);

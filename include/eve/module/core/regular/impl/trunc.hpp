@@ -67,7 +67,7 @@ trunc_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, ordered_value T>
+template<conditional_expr C, value T>
 EVE_FORCEINLINE auto
 trunc_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
 {
