@@ -13,7 +13,7 @@
 #include <eve/module/quaternion/regular/traits.hpp>
 #include <eve/module/quaternion/detail/arithmetic.hpp>
 #include <eve/module/quaternion/detail/math.hpp>
-// #include <eve/module/quaternion/detail/predicates.hpp>
+#include <eve/module/quaternion/detail/predicates.hpp>
 #include <eve/traits/product_type.hpp>
 #include <ostream>
 

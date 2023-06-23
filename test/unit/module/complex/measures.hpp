@@ -11,27 +11,66 @@
 
 namespace tts
 {
-
-  template<typename T> auto relative_distance(T const &l, T const &r) requires(eve::is_quaternion_v<T>)
+  template<typename T>
+  double ulp_distance_impl(T const &l, T const &r)
   {
-    auto d = eve::sqr_abs(l-r);
-    return eve::sqrt(d/max(sqr_abs(l)*sqr(abs(r)));
+    auto diff = l-r;
+    auto [rl, il] = l;
+    auto [rr, ir] = r;
+    auto udr = eve::ulpdist(il, ir);
+    auto udi = eve::ulpdist(rl, rr);
+    if(eve::is_eqz(eve::maximum(udr))) return eve::maximum(udi);
+    if(eve::is_eqz(eve::maximum(udi))) return eve::maximum(udr);
+    udr = eve::if_else(eve::is_not_finite(udr), eve::inf(eve::as(udr)), udr);
+    udi = eve::if_else(eve::is_not_finite(udi), eve::inf(eve::as(udi)), udi);
+    auto d = eve::if_else ( eve::almost(eve::is_real)(diff)
+                          , udr
+                          , eve::if_else( eve::almost(eve::is_imag)(diff)
+                                        , udi
+                                        , eve::max(udi, udr)
+                                        )
+                          );
+    return eve::maximum(d);
+  }
+
+  template<typename T>
+  double ulp_distance(T const &l, T const &r) requires( eve::is_complex_v<T> )
+  {
+    return ulp_distance_impl(l,r);
   }
 
   template<typename T, typename N>
-  auto relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_quaternion_v<T>)
+  double ulp_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r)
+  requires( eve::is_complex_v<T> )
   {
-    auto d = eve::sqr_abs(l-r);
-    return eve::sqrt(d/eve::max(eve::sqr_abs(l)*eve::sqr(abs(r)));
+    return ulp_distance_impl(l,r);
   }
 
-  template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_quaternion_v<T>)
+  template<typename T> auto relative_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
   {
-    return eve::abs(l-r);
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+
+    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
+  }
 
   template<typename T, typename N>
-  auto absolute_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_quaternion_v<T>)
+  auto relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_complex_v<T>)
   {
-    return eve::abs(l-r);
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+
+    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
+  }
+
+  template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
+  {
+     return eve::maximum(eve::dist(l, r));
+  }
+
+  template<typename T, typename N>
+  auto absolute_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_complex_v<T>)
+  {
+     return eve::maximum(eve::dist(l, r));
   }
 }
