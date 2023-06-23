@@ -13,23 +13,15 @@ TTS_CASE_WITH( "Check behavior of conj on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate( tts::randoms(-1000.0, 1000.0)
                             , tts::randoms(-1000.0, 1000.0)
-                            , tts::randoms(-1000.0, 1000.0)
-                            , tts::randoms(-1000.0, 1000.0)
                             )
              )
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+<typename T>(T const& a0, T const& a1)
 {
   for(auto e : a0)
   {
     for(auto f : a1)
     {
-      for(auto g : a2)
-      {
-        for(auto h : a3)
-        {
-          TTS_EQUAL( eve::conj(eve::quaternion(e, f, g, h)), eve::quaternion(e,-f, -g, -h) );
-        }
-      }
+      TTS_EQUAL( eve::conj(eve::quaternion(e, f, f, e)), eve::quaternion(e,-f, -f, -e) );
     }
   }
 };

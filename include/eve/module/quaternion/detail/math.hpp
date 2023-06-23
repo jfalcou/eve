@@ -17,9 +17,32 @@ namespace eve::detail
 
 
   //==============================================================================================
-  // sqrt cosh cos acosh asinh atan exp exp_i exp_ipi log rec are here.
-  // acos asin atanh are in specific files included at the end
+  //  cosh sinh cos  sin exp rec are here.
   //==============================================================================================
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::exp_
+                                             , Z const& z) noexcept
+  {
+    auto az = eve::abs(eve::pure(z));
+    auto r  = eve::exp(real(z));
+    auto w = r*eve::sinc(az);
+    return Z{r*cos(az), w*ipart(z), w*jpart(z), w*kpart(z)};
+  }
+
+
+  //===-------------------------------------------------------------------------------------------
+  //=== expm1
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::expm1_
+                                             , Z const& z) noexcept
+  {
+    return dec(exp(z));
+  }
 
   //===-------------------------------------------------------------------------------------------
   //=== cosh
@@ -29,7 +52,9 @@ namespace eve::detail
                                              , Z const& z
                                              ) noexcept
   {
-    return average(exp(z)+exp(-z));
+    return eve::average(exp(z), exp(minus(z)));
+//     using u_t = eve::underlying_type_t<Z>;
+//     return half(as<u_t>())*(exp(z)+exp(minus(z)));
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -40,7 +65,7 @@ namespace eve::detail
                                              , Z const& z
                                              ) noexcept
   {
-    return average(exp(z)-exp(-z));
+    return average(exp(z), -exp(-z));
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -151,41 +176,6 @@ namespace eve::detail
     auto [s, c] = sincos(z);
     return c/s;
    }
-
-
-  //===-------------------------------------------------------------------------------------------
-  //=== exp
-  //===-------------------------------------------------------------------------------------------
-  template<typename Z>
-  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::exp_
-                                             , Z const& z) noexcept
-  {
-    auto az = eve::abs(eve::pure(z));
-    auto r  = eve::exp(real(z));
-    auto w = eve::sinc(z);
-    return Z{r*cos(az), w*ipart(z), w*jpart(z), w*kpart(z)};
-  }
-
-
-  //===-------------------------------------------------------------------------------------------
-  //=== expm1
-  //===-------------------------------------------------------------------------------------------
-  template<typename Z>
-  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::expm1_
-                                             , Z const& z) noexcept
-  {
-    return dec(exp(z));
-  }
-
-  //===-------------------------------------------------------------------------------------------
-  //=== exp_i
-  //===-------------------------------------------------------------------------------------------
-  template<typename Z>
-  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::exp_i_, Z const& z ) noexcept
-  {
-    return exp(eve::i(as<Z>())*z);
-  }
-
 
   //===-------------------------------------------------------------------------------------------
   //=== rec

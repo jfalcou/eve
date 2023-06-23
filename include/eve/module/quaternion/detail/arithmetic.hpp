@@ -203,11 +203,13 @@ namespace eve::detail
   //  Binary functions
   //================================================================================================
   EVE_FORCEINLINE auto
-  quaternion_binary_dispatch(eve::tag::average_, auto const& z1, auto const& z2) noexcept
+  quaternion_binary_dispatch(eve::tag::average_, auto const& z1, auto const& z2) noexcept -> decltype(z1+z2)
   {
-    using z_t = decltype(z1 + z2);
-    return z_t {eve::average(real(z1), real(z2)), eve::average(ipart(z1), ipart(z2))
-        , eve::average(jpart(z1), jpart(z2)) , eve::average(kpart(z1), kpart(z2))};
+    using z_t = decltype(add(z1, z2));
+    return z_t { eve::average(real(z1), real(z2))
+        , eve::average(ipart(z1), ipart(z2))
+        , eve::average(jpart(z1), jpart(z2))
+        , eve::average(kpart(z1), kpart(z2))};
   }
 
   //================================================================================================
