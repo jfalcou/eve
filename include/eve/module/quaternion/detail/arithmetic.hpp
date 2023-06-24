@@ -168,7 +168,7 @@ namespace eve::detail
 
   template<typename Z>
   EVE_FORCEINLINE auto
-  quaternion_unary_dispatch(eve::tag::sqr_, Z const& z) noexcept
+  quaternion_unary_dispatch(eve::tag::sqr_, Z z) noexcept
   {
     auto [a, b, c, d] = z;
     real(z)  = a*a - b*b - c*c - d*d;
