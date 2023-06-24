@@ -7,18 +7,21 @@
 //==================================================================================================
 #include "test.hpp"
 #include "measures.hpp"
-#include <eve/module/complex.hpp>
-#include <complex>
+#include <eve/module/quaternion.hpp>
 
-TTS_CASE_WITH( "Check behavior of is_eqz on wide"
+TTS_CASE_WITH( "Check behavior of is_nan on wide"
              , eve::test::simd::ieee_reals
              , tts::generate(tts::randoms(-10, 10)
                             , tts::randoms(-10, 10)
                             )
              )
-  <typename T>(T const& a0, T const& a1 )
+  <typename T>(T a0, T const& a1 )
 {
-  using z_t = eve::as_complex_t<T>;
-  auto a = z_t(a0, a1);
-  TTS_EQUAL( eve::is_eqz(a), (eve::is_eqz(a0) && eve::is_eqz(a1)));
+  using z_t = eve::as_quaternion_t<T>;
+  auto a = z_t(a0, a1, a0, a1);
+  TTS_EQUAL( eve::is_nan(a), (eve::is_nan(a0) && eve::is_nan(a1)));
+  auto nan = eve::nan(eve::as(eve::element_type_t<T>()));
+  a0.set(0, nan);
+  auto b = z_t(a0, a1, a0, a1);
+  TTS_EQUAL( eve::is_nan(b), eve::is_nan(a0)||eve::is_nan(a1));
 };

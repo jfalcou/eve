@@ -134,8 +134,8 @@ namespace eve::detail
     auto ch  = cosh(az);
     auto wc = c*shc;
     auto ws =-s*shc;
-    auto sq = Z{s*ch , ws*ipart(z),ws*jpart(z), ws*kpart(z)};
-    auto cq = Z{c*ch , wc*ipart(z),wc*jpart(z), wc*kpart(z)};
+    auto sq = Z{s*ch , wc*ipart(z),wc*jpart(z), wc*kpart(z)};
+    auto cq = Z{c*ch , ws*ipart(z),ws*jpart(z), ws*kpart(z)};
     return kumi::tuple{sq, cq};
   }
 

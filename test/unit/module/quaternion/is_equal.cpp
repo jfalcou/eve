@@ -7,18 +7,21 @@
 //==================================================================================================
 #include "test.hpp"
 #include "measures.hpp"
-#include <eve/module/complex.hpp>
-#include <complex>
+#include <eve/module/quaternion.hpp>
 
-TTS_CASE_WITH( "Check behavior of is_nez on wide"
+TTS_CASE_WITH( "Check behavior of is_equal on wide"
              , eve::test::simd::ieee_reals
              , tts::generate(tts::randoms(-10, 10)
                             , tts::randoms(-10, 10)
+                            , tts::randoms(-10, 10)
+                            , tts::randoms(-10, 10)
                             )
              )
-  <typename T>(T const& a0, T const& a1 )
+  <typename T>(T a0, T const& a1, T const& a2, T const& a3 )
 {
-  using z_t = eve::as_complex_t<T>;
-  auto a = z_t(a0, a1);
-  TTS_EQUAL( eve::is_nez(a), (eve::is_nez(a0) || eve::is_nez(a1)));
+  using z_t = eve::as_quaternion_t<T>;
+  auto a = z_t(a0, a1, a2, a3);
+  a0.set(0, 1.0);
+  auto b = z_t(a0, a1, a2, a3);
+  TTS_EQUAL( eve::is_equal(a, b).get(0), eve::is_equal(a.get(0), b.get(0)));
 };

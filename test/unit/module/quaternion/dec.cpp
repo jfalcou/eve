@@ -9,7 +9,7 @@
 #include "measures.hpp"
 #include <eve/module/quaternion.hpp>
 
-TTS_CASE_WITH ( "Check behavior of abs on scalar"
+TTS_CASE_WITH ( "Check behavior of dec on scalar"
               , tts::bunch<eve::test::scalar::ieee_reals>
               , tts::generate(tts::randoms(-1000.0, +1000.0)
                              , tts::randoms(-1000.0, +1000.0))
@@ -21,11 +21,11 @@ TTS_CASE_WITH ( "Check behavior of abs on scalar"
     for(auto f : a1)
     {
       auto z = eve::quaternion(e, f, e, f);
-      TTS_EQUAL( eve::abs(z), eve::hypot(e, f, e, f));
+      TTS_EQUAL( eve::dec(z), eve::quaternion(eve::dec(e), f, e, f));
     }
 };
 
-TTS_CASE_WITH ( "Check behavior of abs on wide"
+TTS_CASE_WITH ( "Check behavior of dec on wide"
               , eve::test::simd::ieee_reals
               , tts::generate(tts::randoms(-1000.0, +1000.0)
                              , tts::randoms(-1000.0, +1000.0)
@@ -37,5 +37,5 @@ TTS_CASE_WITH ( "Check behavior of abs on wide"
 {
   using z_t = eve::as_quaternion_t<T>;
   auto z = z_t(a0, a1, a2, a3);
-  TTS_EQUAL( eve::abs(z), eve::hypot(a0, a1, a2, a3));
+  TTS_EQUAL( eve::dec(z), z_t(eve::dec(a0), a1, a2, a3));
 };

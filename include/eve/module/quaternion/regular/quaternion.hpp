@@ -13,3 +13,4 @@
 #include <eve/module/quaternion/regular/ipart.hpp>
 #include <eve/module/quaternion/regular/jpart.hpp>
 #include <eve/module/quaternion/regular/kpart.hpp>
+#include <eve/module/quaternion/regular/is_pure.hpp>

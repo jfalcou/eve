@@ -24,10 +24,10 @@ namespace eve::detail
     return is_not_denormal(real(z)) && is_not_denormal(ipart(z)) && is_not_denormal(jpart(z)) && is_not_denormal(kpart(z));
   }
 
-//   EVE_FORCEINLINE auto quaternion_unary_dispatch(tag::is_pure_, auto const& z) noexcept
-//   {
-//     return is_eqz(real(z));
-//   }
+  EVE_FORCEINLINE auto quaternion_unary_dispatch(tag::is_pure_, auto const& z) noexcept
+  {
+    return is_eqz(real(z));
+  }
 
   EVE_FORCEINLINE auto quaternion_unary_dispatch(tag::is_real_, auto const& z) noexcept
   {
