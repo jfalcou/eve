@@ -178,6 +178,23 @@ namespace eve::detail
     return z;
   }
 
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  quaternion_unary_dispatch(eve::tag::sqrt_, Z z) noexcept
+  {
+    auto r = abs(z);
+    auto theta = acos(real(z)/r);
+    auto u = sign(pure(z));
+    auto [s, c] = sincos(theta*half(as(theta)));
+    auto res = u*s;
+    real(res) = c;
+    res = if_else(is_eqz(r), zero(as(z))
+                 , if_else(is_real(z), Z(sqrt(real(z))), res*sqrt(r)
+                          )
+                 );
+    return res;
+  }
+
   EVE_FORCEINLINE auto
   quaternion_unary_dispatch(eve::tag::sqr_abs_, auto const& z) noexcept
   {

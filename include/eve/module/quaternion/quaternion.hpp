@@ -279,6 +279,22 @@ namespace eve
   }
 
   template<value Z>
+  EVE_FORCEINLINE   auto to_quaternion( Z const & v) noexcept
+   -> decltype(as_quaternion_t<element_type_t<Z>>(real(v), imag(v), 0, 0))
+  //    requires(is_complex<Z>)
+  {
+    return as_quaternion_t<Z>(real(v), imag(v), 0, 0);
+  }
+
+  template<value Z>
+  EVE_FORCEINLINE   auto to_quaternion( Z const & v1, Z const & v2) noexcept
+  -> decltype(as_quaternion_t<element_type_t<Z>>(real(v1), imag(v1), real(v2), imag(v2)))
+  //    requires(is_complex<Z>)
+  {
+    return as_quaternion_t<Z>(real(v1), imag(v1), real(v2), imag(v2));
+  }
+
+  template<value Z>
   EVE_FORCEINLINE auto to_quaternion(Z const & v) noexcept
   {
     return v;
