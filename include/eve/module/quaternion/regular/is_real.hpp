@@ -7,25 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/module/math.hpp>
-
 namespace eve
 {
   //================================================================================================
-  //! @addtogroup complex
+  //! @addtogroup quaternion
   //! @{
-  //! @var exp_i
+  //! @var is_real
   //!
-  //! @brief Callable object computing exp_iinary part of values.
+  //! @brief Callable object computing is_realinary part of values.
   //!
-  //! **Required header:** `#include <eve/module/complex.hpp>`
+  //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of exp(i*x)                               |
+  //! | `operator()` | is the pure part of x 0             |
   //!
   //! ---
   //!
@@ -38,25 +35,13 @@ namespace eve
   //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
-  //!  a complex value
+  //! true  if `x` the pure  part of `x` if 0,  false otherwise
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/complex/regular/exp_i.cpp}
+  //! @godbolt{doc/quaternion/regular/is_real.cpp}
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(exp_i_, exp_i);
 
-  namespace detail
-  {
-    template<floating_ordered_value V>
-    EVE_FORCEINLINE auto exp_i_( EVE_SUPPORTS(cpu_)
-                               , V const & v) noexcept
-    {
-      using c_t = eve::as_complex_t<V>;
-      auto [s, c] = sincos(v);
-      return c_t{c, s};
-    }
-  }
 }

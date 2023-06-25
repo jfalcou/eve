@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing ipart part of values.
   //!
-  //! **Required header:** `#include <eve/module/quaternion.hpp>`
+  //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -38,7 +38,8 @@ namespace eve
   //!
   //! **Return value**
   //! 0 if `x` is real, imag(x) if x is an instance of eve::complex,
-  //! or the ipart part of `x` if x is an instance of eve::quaternion.
+  //! or the ipart (second component) of `x`
+  //! if x is an instance of eve::quaternion.
   //!
   //! #### Example
   //!

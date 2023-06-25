@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing real part of values.
   //!
-  //! **Required header:** `#include <eve/module/quaternion.hpp>`
+  //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!
   //! #### Members Functions
   //!

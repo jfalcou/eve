@@ -19,13 +19,13 @@ namespace eve
   //!
   //! @brief Callable object computing is_pureinary part of values.
   //!
-  //! **Required header:** `#include <eve/module/quaternion.hpp>`
+  //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!
   //! #### Members Functions
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of is_pure part                         |
+  //! | `operator()` | is x a pure quaternion (i.e. with 0 real part)             |
   //!
   //! ---
   //!
@@ -38,7 +38,7 @@ namespace eve
   //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
-  //! 0 if `x` is real or the unreal part of `x` if x is an instance of eve::quaternion or eve::complex
+  //! true  if `x` the real  part of `x` if 0,  false otherwise
   //!
   //! #### Example
   //!

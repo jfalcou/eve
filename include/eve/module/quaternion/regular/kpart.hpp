@@ -18,7 +18,7 @@ namespace eve
   //!
   //! @brief Callable object computing kpart part of values.
   //!
-  //! **Required header:** `#include <eve/module/quaternion.hpp>`
+  //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!
   //! #### Members Functions
   //!
@@ -37,7 +37,8 @@ namespace eve
   //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
-  //! 0 if `x` is real or complex or the kpart part of `x` if x is an instance of eve::quaternion.
+  //! 0 if `x` is real or complex or the kpart (third component)  of `x`
+  //! if x is an instance of eve::quaternion.
   //!
   //! #### Example
   //!

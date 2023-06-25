@@ -14,3 +14,9 @@
 #include <eve/module/quaternion/regular/jpart.hpp>
 #include <eve/module/quaternion/regular/kpart.hpp>
 #include <eve/module/quaternion/regular/is_pure.hpp>
+#include <eve/module/quaternion/regular/spherical.hpp>
+#include <eve/module/quaternion/regular/semipolar.hpp>
+#include <eve/module/quaternion/regular/multipolar.hpp>
+#include <eve/module/quaternion/regular/cylindrospherical.hpp>
+#include <eve/module/quaternion/regular/cylindrical.hpp>
+
