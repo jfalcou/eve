@@ -17,11 +17,25 @@ shuffle_l0_test()
   shuffle_test::run<api, T, N, G, I...>(eve::shuffle_l0);
 }
 
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+[[maybe_unused]] void
+shuffle_l0_2_test()
+{
+  shuffle_test::run2<api, T, N, G, I...>(eve::shuffle_l0);
+}
+
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
 [[maybe_unused]] void
 shuffle_l0_all()
 {
   shuffle_test::run_all<api, T, N, G, tests>(eve::shuffle_l0);
+}
+
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
+[[maybe_unused]] void
+shuffle_l0_2_all()
+{
+  shuffle_test::run2_all<api, T, N, G, tests>(eve::shuffle_l0);
 }
 
 #if defined(EVE_HW_X86)
@@ -37,10 +51,43 @@ TTS_CASE("Perfect shuffle, x86, 16 bytes")
   // < sse4.1 requires a mask for set 0
   shuffle_l0_test<eve::sse2, double, 2, 1, eve::na_, 0>();
   shuffle_l0_test<eve::sse2, double, 2, 1, 1, eve::na_>();
+  shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, 0, eve::na_>();
   shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, eve::na_, 0>();
   shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, 1, eve::na_>();
   shuffle_l0_all<eve::sse4_1, double, 2, 1, shuffle_test::kLen20sTests>();
   shuffle_l0_all<eve::sse4_1, std::uint64_t, 2, 1, shuffle_test::kLen20sTests>();
+};
+
+TTS_CASE("Perfect shuffle, x86, 16x2")
+{
+  shuffle_l0_2_all<eve::sse2, double, 2, 2, shuffle_test::kLen1x2Tests>();
+  shuffle_l0_2_all<eve::sse2, std::uint64_t, 2, 2, shuffle_test::kLen1x2Tests>();
+
+  // 8x2x2
+  shuffle_l0_2_test<eve::sse2, double, 2, 1, eve::na_, 0>();
+  shuffle_l0_2_test<eve::sse2, double, 2, 1, 2, eve::na_>();
+  shuffle_l0_2_all<eve::sse2, double, 2, 1, shuffle_test::kLen2x2_No0sTests>();
+  shuffle_l0_2_all<eve::sse2, std::uint64_t, 2, 1, shuffle_test::kLen2x2_No0sTests>();
+
+  // 4x4x2 blend
+  shuffle_l0_2_all<eve::sse4_1, float, 4, 1, shuffle_test::kLen4x2_No0sBlendTests>();
+  shuffle_l0_2_all<eve::sse4_1, std::uint32_t, 4, 1, shuffle_test::kLen4x2_No0sBlendTests>();
+
+  if constexpr ( eve::current_api >= eve::sse4_1 )
+  {
+    eve::wide<std::uint16_t, eve::fixed<8>> a {1, 2, 3, 4, 5, 6, 7, 8};
+    auto b = a + 8;
+
+    a = _mm_blend_epi16(a, b, 1);
+    eve::wide<std::uint16_t, eve::fixed<8>> expected {9, 2, 3, 4, 5, 6, 7, 8};
+
+    TTS_EQUAL(a, expected);
+  }
+
+  // 2x8x2 blend
+#if 0 // FIX-1617 - enable `_mm_blend_epi16`
+  shuffle_l0_2_all<eve::sse4_1, std::uint16_t, 4, 1, shuffle_test::kLen2x8x2_No0sBlendTests>();
+#endif
 };
 
 TTS_CASE("Perfect shuffle, x86, 32 bytes")
