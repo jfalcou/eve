@@ -76,14 +76,10 @@ namespace idx
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(sse2_), wide<T, N> x, fixed<G>, pattern_t<I...>)
-requires std::same_as<abi_t<T, N>, x86_128_>
+shuffle_l0_x86_128_8x2(wide<T, N> x, fixed<G>, pattern_t<I...>)
 {
-  constexpr std::array idxs {I...};
-
-  if constexpr( idx::is_identity(idxs) ) return x;
-  else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
-  else if constexpr( sizeof(T) == 8 && !idx::has_zeroes(idxs) )
+  constexpr std::array  idxs {I...};
+  if constexpr( !idx::has_zeroes(idxs) )
   {
     if constexpr( std::same_as<T, double> )
     {
@@ -96,6 +92,35 @@ requires std::same_as<abi_t<T, N>, x86_128_>
       return _mm_shuffle_epi32(x, mm);
     }
   }
+  // has zeroes
+  else
+  {
+    if constexpr( idx::matches(idxs, {na_, 0}, {1, na_}) )
+    {
+      __m128i u64x2 = eve::bit_cast(x, eve::as<__m128i> {});
+      if constexpr( idxs[0] == na_ ) return _mm_bslli_si128(u64x2, 8);
+      else return _mm_bsrli_si128(u64x2, 8);
+    }
+    else if constexpr ( current_api >= sse4_1 )
+    {
+      // 0, na_ or na_, 1
+      __m128i u64x2 = eve::bit_cast(x, eve::as<__m128i> {});
+      return  _mm_insert_epi64(u64x2, 0, idxs[0] == na_ ? 0 : 1);
+    }
+    else return no_matching_shuffle;
+  }
+}
+
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+EVE_FORCEINLINE auto
+shuffle_l0_impl_(EVE_SUPPORTS(sse2_), wide<T, N> x, fixed<G> g, pattern_t<I...> p)
+requires std::same_as<abi_t<T, N>, x86_128_>
+{
+  constexpr std::array idxs {I...};
+
+  if constexpr( idx::is_identity(idxs) ) return x;
+  else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
+  else if constexpr( sizeof(T) == 8 ) return shuffle_l0_x86_128_8x2(x, g, p);
   else return no_matching_shuffle;
 }
 

@@ -34,6 +34,13 @@ TTS_CASE("Perfect shuffle, x86, 16 bytes")
   // 8x2
   shuffle_l0_all<eve::sse2, double, 2, 1, shuffle_test::kLen2No0sTests>();
   shuffle_l0_all<eve::sse2, std::uint64_t, 2, 1, shuffle_test::kLen2No0sTests>();
+  // < sse4.1 requires a mask for set 0
+  shuffle_l0_test<eve::sse2, double, 2, 1, eve::na_, 0>();
+  shuffle_l0_test<eve::sse2, double, 2, 1, 1, eve::na_>();
+  shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, eve::na_, 0>();
+  shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, 1, eve::na_>();
+  shuffle_l0_all<eve::sse4_1, double, 2, 1, shuffle_test::kLen20sTests>();
+  shuffle_l0_all<eve::sse4_1, std::uint64_t, 2, 1, shuffle_test::kLen20sTests>();
 };
 
 TTS_CASE("Perfect shuffle, x86, 32 bytes")
