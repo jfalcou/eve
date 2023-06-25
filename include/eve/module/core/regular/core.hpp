@@ -131,6 +131,7 @@
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_pow2.hpp>
 #include <eve/module/core/regular/is_real.hpp>
+#include <eve/module/core/regular/is_unit.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/last_true.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
