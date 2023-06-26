@@ -46,16 +46,21 @@ namespace tts
     return ulp_distance_impl(l,r);
   }
 
-  template<typename T>
-  double relative_distance(T const &l, T const &r) requires( eve::is_complex_v<T> )
+  template<typename T> auto relative_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
   {
-    return  eve::reldist(l,r);
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+
+    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
   }
 
   template<typename T, typename N>
-  double relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires( eve::is_complex_v<T> )
+  auto relative_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_complex_v<T>)
   {
-    return eve::maximum(eve::reldist(l,r));
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+
+    return eve::max(relative_distance(rl,rr), relative_distance(il,ir));
   }
 
   template<typename T> auto absolute_distance(T const &l, T const &r) requires(eve::is_complex_v<T>)
@@ -66,6 +71,6 @@ namespace tts
   template<typename T, typename N>
   auto absolute_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_complex_v<T>)
   {
-     return eve::dist(l, r);
+     return eve::maximum(eve::dist(l, r));
   }
 }
