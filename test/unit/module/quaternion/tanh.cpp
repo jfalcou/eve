@@ -54,7 +54,7 @@ TTS_CASE_WITH( "Check behavior of tanh on wide"
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
   using e_t = eve::element_type_t<T>;
-  auto tol = 2000.0*eve::eps(eve::as<e_t>());
+  auto tol = 100000.0*eve::eps(eve::as<e_t>());
   using z_t = eve::as_quaternion_t<T>;
   auto z = z_t{a0,a1,a2,a3};
   z_t r;

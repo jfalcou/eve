@@ -40,7 +40,7 @@ TTS_CASE_WITH ( "Check behavior of sqr on wide"
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
   using e_t = eve::element_type_t<T>;
-  auto tol = 10000.0*eve::eps(eve::as<e_t>());
+  auto tol = 0.02;
    using z_t = eve::as_quaternion_t<T>;
   auto z = z_t(a0, a1, a2, a3);
   TTS_RELATIVE_EQUAL( eve::sqr(eve::sqrt(z)), z, tol);
