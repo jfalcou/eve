@@ -53,6 +53,7 @@ TTS_CASE_WITH( "Check behavior of coth on wide"
         )
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
+  using e_t = typename T::value_type;
   auto tol = 0.01;
   using z_t = eve::as_quaternion_t<T>;
   auto z = z_t{a0,a1,a2,a3};
