@@ -87,4 +87,19 @@ namespace eve::detail
    return numeric(is_not_equal)(real(z1), real(z2)) || numeric(is_not_equal)(ipart(z1), ipart(z2))
       || numeric(is_not_equal)(jpart(z1), jpart(z2)) || numeric(is_not_equal)(kpart(z1), kpart(z2));
   }
+
+  EVE_FORCEINLINE auto quaternion_binary_dispatch(eve::tag::is_ordered_
+                                              , auto const& z1, auto const& z2) noexcept
+  {
+    return is_ordered(real(z1), real(z2)) && is_ordered(ipart(z1), ipart(z2))
+      && is_ordered(jpart(z1), jpart(z2)) && is_ordered(kpart(z1), kpart(z2));
+  }
+
+  EVE_FORCEINLINE auto quaternion_binary_dispatch(eve::tag::is_unordered_
+                                              , auto const& z1, auto const& z2) noexcept
+  {
+   return is_unordered(real(z1), real(z2)) || is_unordered(ipart(z1), ipart(z2))
+      || is_unordered(jpart(z1), jpart(z2)) || is_unordered(kpart(z1), kpart(z2));
+  }
+
 }

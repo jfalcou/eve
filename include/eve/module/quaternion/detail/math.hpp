@@ -15,12 +15,6 @@
 
 namespace eve::detail
 {
-
-
-  //==============================================================================================
-  //  cosh sinh cos  sin exp rec are here.
-  //==============================================================================================
-
   //===-------------------------------------------------------------------------------------------
   //=== exp
   //===-------------------------------------------------------------------------------------------
@@ -54,8 +48,6 @@ namespace eve::detail
                                              ) noexcept
   {
     return eve::average(exp(z), exp(minus(z)));
-//     using u_t = eve::underlying_type_t<Z>;
-//     return half(as<u_t>())*(exp(z)+exp(minus(z)));
   }
 
   //===-------------------------------------------------------------------------------------------
@@ -265,8 +257,6 @@ namespace eve::detail
                                  , thetap+thetam
                                  )
                         );
-    std::cout << "isz " << isz << std::endl;
-    std::cout << "ispio2 "<< ispio2 << std::endl;
     e_t theta1 = if_else(isz || ispio2, zero, thetap-thetam);
     if constexpr(not_proper)
     {

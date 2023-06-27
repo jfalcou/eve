@@ -216,12 +216,12 @@ namespace eve
       return detail::quaternion_unary_dispatch(tag, z);
     }
 
-//     template<typename Tag, decorator D, like<quaternion> Z>
-//     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
-//         -> decltype(detail::quaternion_unary_dispatch(tag, d, z))
-//     {
-//       return detail::quaternion_unary_dispatch(tag, d, z);
-//     }
+    template<typename Tag, decorator D, like<quaternion> Z>
+    EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, D const& d, Z const& z) noexcept
+        -> decltype(detail::quaternion_unary_dispatch(tag, d, z))
+    {
+      return detail::quaternion_unary_dispatch(tag, d, z);
+    }
 
     template<typename Tag, like<quaternion> Z1, like<quaternion> Z2>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Z2 const& z2) noexcept
@@ -230,13 +230,13 @@ namespace eve
       return detail::quaternion_binary_dispatch(tag, z1, z2);
     }
 
-//     template<decorator D, typename Tag, like<quaternion> Z1, like<quaternion> Z2>
-//     EVE_FORCEINLINE
-//     friend auto tagged_dispatch(Tag const& tag, D const& d, Z1 const& z1, Z2 const& z2) noexcept
-//         -> decltype(detail::quaternion_binary_dispatch(tag, d, z1, z2))
-//     {
-//       return detail::quaternion_binary_dispatch(tag, d, z1, z2);
-//     }
+    template<decorator D, typename Tag, like<quaternion> Z1, like<quaternion> Z2>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(Tag const& tag, D const& d, Z1 const& z1, Z2 const& z2) noexcept
+        -> decltype(detail::quaternion_binary_dispatch(tag, d, z1, z2))
+    {
+      return detail::quaternion_binary_dispatch(tag, d, z1, z2);
+    }
 
     template<typename Tag, like<quaternion> Z1, like<quaternion> Z2, like<quaternion> Z3>
     EVE_FORCEINLINE friend auto tagged_dispatch(Tag const& tag,
