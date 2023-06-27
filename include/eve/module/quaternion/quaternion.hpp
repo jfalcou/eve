@@ -256,6 +256,14 @@ namespace eve
       return detail::quaternion_nary_dispatch(tag, z1, zs...);
     }
 
+    template<typename Tag, like<quaternion> Z1, typename... Zs>
+    EVE_FORCEINLINE
+    friend auto tagged_dispatch(Tag const& tag, Z1 const& z1, Zs const&...zs) noexcept
+        -> decltype(detail::quaternion_nary_dispatch(tag, z1, zs...))
+    {
+      return detail::quaternion_nary_dispatch(tag, z1, zs...);
+    }
+
     //==============================================================================================
     // Constants support
     //==============================================================================================

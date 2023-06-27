@@ -58,6 +58,9 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+
+  namespace tag { struct spherical_; }
+  template<> struct supports_conditional<tag::spherical_> : std::false_type {};
   EVE_MAKE_CALLABLE(spherical_, spherical);
 
   namespace detail
@@ -83,9 +86,8 @@ namespace eve
       auto [st, ct] = sincos(theta);
       auto [sp1, cp1] = sincos(phi1);
       auto [sp2, cp2] = sincos(phi2);
-      auto d = sp2;
       auto f = cp1*cp2;
-      return rho*z_t{ct*f, st*f, sp1*d, d};
+      return rho*z_t{ct*f, st*f, sp1*cp2, sp2};
     }
   }
 }

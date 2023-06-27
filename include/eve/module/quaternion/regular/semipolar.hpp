@@ -57,6 +57,9 @@ namespace eve
   //! @godbolt{doc/quaternion/regular/semipolar.cpp}
   //!  @}
   //================================================================================================
+  namespace tag { struct semipolar_; }
+  template<> struct supports_conditional<tag::semipolar_> : std::false_type {};
+
   EVE_MAKE_CALLABLE(semipolar_, semipolar);
 
   namespace detail

@@ -10,6 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/quaternion/detail/arithmetic.hpp>
+#include <eve/module/quaternion/detail/math.hpp>
 
 
 namespace eve::detail
@@ -226,12 +227,53 @@ namespace eve::detail
     return d(lpnorm)(p, abs(z1), abs(z2)...);
   }
 
-//   template<typename Z1, integral_value N>
-//   EVE_FORCEINLINE auto quaternion_binary_dispatch( eve::tag::hypot_
-//                                             , Z1 const& z1, N const&.n
-//                                             ) noexcept
-//   {
-//     return
-//   }
+  template<int I,  int J,  int K, typename Z>
+  EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::to_euler_
+                                               , Z const& q
+                                               , std::integral_constant<int, I>
+                                               , std::integral_constant<int, J>
+                                               , std::integral_constant<int, K>
+                                            ) noexcept
+  {
+    EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
+    using e_t =  std::remove_reference_t<decltype(real(Z()))>;
+    static_assert(I != J && J != K);
+    constexpr bool not_proper = I == K;
+    constexpr int KK = 6-I-J;
+    constexpr int sign = (I-J)*(J-KK)*(KK-I)/2; // even (+1) permutation or odd (-1);
+    auto a = real(q);
+    auto b = get<I>(q);
+    auto c = get<J>(q);
+    auto d = get<K>(q)*sign;
+    if constexpr (not_proper)
+    {
+      a += get<J>(q);
+      b += get<KK>(q)*sign;
+      c += real(q);
+      d -= get<I>(q);
+    }
+    auto a2pb2 = sqr(a)+sqr(b);
+    e_t theta2 = acos(dec(2*(a2pb2/(a2pb2+sqr(c)+sqr(d)))));
+    auto thetap = atan2(b, a);
+    auto thetam = atan2(d, c);
+    thetam = if_else(is_nan(thetam), zero, thetam);
+    auto isz = almost(is_equal)(theta2, zero(as(theta2)));
+    auto ispio2 = almost(is_equal)(theta2, pio_2(as(theta2)));
+    e_t theta3 = if_else(isz, 2*thetap-thetam
+                        , if_else(ispio2
+                                 , 2*thetam+thetap
+                                 , thetap+thetam
+                                 )
+                        );
+    std::cout << "isz " << isz << std::endl;
+    std::cout << "ispio2 "<< ispio2 << std::endl;
+    e_t theta1 = if_else(isz || ispio2, zero, thetap-thetam);
+    if constexpr(not_proper)
+    {
+      theta3 *= sign;
+      theta2 -= pio_2(as(theta2));
+    }
+    return kumi::tuple{theta1, theta2, theta3};
+  }
 
 }

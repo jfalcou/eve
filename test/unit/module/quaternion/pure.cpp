@@ -49,5 +49,5 @@ TTS_CASE_WITH( "Check behavior of pure on wide"
 
   auto q = eve::pure(z_t(a0,a1,a2,a3));
   auto ref =  z_t(0,a1,a2,a3);
-  TTS_EQUAL( eve::real(q), eve::real(ref));
+  TTS_EQUAL( q, ref);
 };

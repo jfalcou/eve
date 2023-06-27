@@ -55,6 +55,10 @@ namespace eve
   //! @godbolt{doc/quaternion/regular/cylindrical.cpp}
   //!  @}
   //================================================================================================
+
+  namespace tag { struct cylindrical_; }
+  template<> struct supports_conditional<tag::cylindrical_> : std::false_type {};
+
   EVE_MAKE_CALLABLE(cylindrical_, cylindrical);
 
   namespace detail

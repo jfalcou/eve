@@ -57,6 +57,9 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
+  namespace tag { struct cylindrospherical_; }
+  template<> struct supports_conditional<tag::cylindrospherical_> : std::false_type {};
+
   EVE_MAKE_CALLABLE(cylindrospherical_, cylindrospherical);
 
   namespace detail
