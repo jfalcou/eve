@@ -78,7 +78,6 @@ namespace eve
                                   , std::integral_constant<int, K> ) noexcept
 
     {
-      EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
       return  kumi::tuple{zero(as<V>()), zero(as<V>()), zero(as<V>())};
     }
 
