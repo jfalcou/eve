@@ -31,7 +31,6 @@ int main()
     << "-> lpnorm(3, q1, q2)  = " << eve::lpnorm(3, q1, q2) << std::endl
     << "-> manhattan(q1, q2)  = " << eve::manhattan(q1, q2) << std::endl
     << "-> pow(q1, 4)         = " << eve::pow(q1, 4) << std::endl
-    << "-> powm1q1, 4)        = " << eve::powm1(q1, 4) << std::endl
     << "-> sin(q1)            = " << eve::sin(q1) << std::endl
     << "-> sinh(q1)           = " << eve::sinh(q1) << std::endl
     << "-> sqrt(q1)           = " << eve::sqrt(q1) << std::endl
