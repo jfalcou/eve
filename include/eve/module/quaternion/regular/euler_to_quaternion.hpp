@@ -82,7 +82,6 @@ namespace eve
                                              ) noexcept
 
     {
-      EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
       EVE_ASSERT(I != J && J != K, "Expected consecutive axes to be different");
       std::array<as_quaternion_t<V>, 3> qs;
       auto [sa, ca] = sincos(v3/2);
