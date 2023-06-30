@@ -219,15 +219,18 @@ namespace eve::detail
     return d(lpnorm)(p, abs(z1), abs(z2)...);
   }
 
-  template<typename Z>
+  template<typename Z, int II,  int JJ,  int KK>
   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::to_euler_
                                                , Z const& q
-                                               , int I
-                                               , int J
-                                               , int K
+                                               , axis<II>
+                                               , axis<JJ>
+                                               , axis<KK>
                                                , bool extrinsic
-                                            ) noexcept
+                                               ) noexcept
   {
+    int I = II;
+    int J = JJ;
+    int K = KK;
     using e_t =  std::remove_reference_t<decltype(real(Z()))>;
     std::array<e_t, 4> aq{get<0>(q), get<1>(q), get<2>(q), get<3>(q)};
     EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
