@@ -21,4 +21,5 @@
 #include <eve/module/quaternion/regular/cylindrospherical.hpp>
 #include <eve/module/quaternion/regular/cylindrical.hpp>
 #include <eve/module/quaternion/regular/to_euler.hpp>
-//#include <eve/module/quaternion/regular/euler_to_quaternion.hpp>
+#include <eve/module/quaternion/regular/euler_to_quaternion.hpp>
+#include <eve/module/quaternion/regular/slerp.hpp>

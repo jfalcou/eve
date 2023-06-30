@@ -17,8 +17,8 @@
 //!
 //!
 //! In mathematics, the quaternion number system extends the complex numbers. The set of quaternions
-//! is generally denoted by \f$\mathbb{H}\f$ as for first described by the Irish mathematician William
-//! Rowan Hamilton in 1843
+//! is generally denoted by \f$\mathbb{H}\f$ as for first described by the Irish mathematician
+//! William Rowan Hamilton in 1843
 //!
 //! Quaternions are generally represented in the form
 //!
@@ -32,10 +32,11 @@
 //! As complex number can algebraize rotations in f$\mathbb{R}^2\f$, quanternion number can to
 //!  it in f$\mathbb{R}^3\f$
 //!
-//! Quaternions form a four-dimensional non-commutative but associative normed division algebra over
-//! the real numbers,
+//! Quaternions form a four-dimensional non-commutative but associative normed division algebra
+//! over the real numbers,
 //!
-//! Given the associativity of the multiplication,  the general rule can be divised from the following table
+//! Given the associativity of the multiplication,  the general rule can be divised from
+//! the following table
 //!
 //!  | *  |  1  |  i  |  j  |  k |
 //!  | -- | --- | --- | --- | -- |
@@ -44,50 +45,58 @@
 //!  | j  |  j  | -k  | -1  |  i |
 //!  | k  |  k  |  j  | -i  | -1 |
 //!
-//! The implementation is largely inspired by the Boost::math::quaternion one of Hubert Holin,  with some adds
-//!  and name change to fit **EVE**
+//! The implementation is largely inspired by the Boost::math::quaternion one of Hubert Holin,
+//!  with some adds and name changes to fit **EVE**
 //!
 //! # Operators implementation
 //!
 //!  addition, substraction, multiplication and division can be done mixing simd and scalar values
-//!  of floating points,  eve::complex  and eve::quaternions of same underlying type. Infix notations can be used.
+//!  of floating points, eve::complex and eve::quaternions of same underlying type. Infix notations
+//!  can be used.
 //!
-//!  @warning multiplication is not commutative execpt if on of the two argument satify to the is_real
+//!  @warning multiplication is not commutative exept if one of the two argument satifies to the is_real
 //!            predicate
 //!
-//!  For a quaternion q the call to real(q), ipart(q), jpart(q) and kpart(q)  allow accessing to the quaternion basis coefficients
+//!  For a quaternion q the calls to real(q), ipart(q), jpart(q) or kpart(q)  allows accessing the
+//!  quaternion basis coefficients
 //!
 //!  # Constructors
 //!
-//!  quaternions can be created from quadruplet of floating point values or pair of complex values using the call to
-//!  eve::to_quaternions or eve::as_quaternion_t<T>. We refer to the product tpe documentation to see why it is generally advisable not yo use
-//!  the direct constructors.
+//!  Quaternions can be created from quadruplet of floating point values or pair of complex values
+//!  using the call to eve::to_quaternions or eve::as_quaternion_t<T>. We refer to the product tpe
+//!  documentation to see why it is generally advisable not to use the direct constructors.
 //!
-//!  given a quater
-//!
-//!  the functions `semipolar`, `cylindrical`,`cylindrospherical` and `spherical`can also be used to generate quaternion
-//!  from various  \f$\mathbb{R}^4\f$ element representations, quite as creating complex numbers using polar representation.
+//!  the functions `semipolar`, `cylindrical`,`cylindrospherical` and `spherical`can also be used
+//!  to generate quaternions  from various  \f$\mathbb{R}^4\f$ element representations, quite as
+//!  creating complex numbers using polar representation.
 //!
 //!  #arithmetic fonctions
 //!
 //!  Some but not all arithmetic function are at hand :
 //!
-//!  |          |         |         |           |           |          |          |
-//!  | -------- | ------ -| ------- | --------- | --------- | -------- | -------- |
-//!  |  abs     | add     | average | ceil      | conj      | dec      | dist     |
-//!  |  div     | floor   | frac    | inc       | lerp      | maxabs   | minabs   |
-//!  |  minus   | mul     | nearest | negmaxabs | negminabs | oneminus | plus     |
-//!  |  pure    | rec     | reldist | sign      | sqr       | sqr_abs  | sub      |
-//!  |  trunc   |         |         |           |           |          |          |
+//!  |          |          |         |           |           |          |          |
+//!  | -------- | -------- | ------- | --------- | --------- | -------- | -------- |
+//!  |  abs     | add      | average | ceil      | conj      | dec      | dist     |
+//!  |  div     | floor    | frac    | inc       | lerp      | maxabs   | minabs   |
+//!  |  minus   | mul      | nearest | negmaxabs | negminabs | oneminus | plus     |
+//!  |  pure    | rec      | reldist | sign      | slerp     | sqr      | sqr_abs  |
+//!  |  sub     | to_euler | trunc   |           |           |          |          |
 //!
-//! @note `sqr_abs` computes the so calleg Cayley norm of a quaternion,  which is in fact the square
-//!       of the Euclidian norm (given by ``sqr_abs`) anso is not a norm at all
+//!    * `sqr_abs` computes the so called Cayley norm of a quaternion,  which is the square
+//!       of the Euclidian norm (given by `abs`) and so is not a norm at all but a quadratic form
 //!
-//! @note `pure` return a quaternion with zeroed real part (sometimes called unreal).
+//!    * `pure` return a quaternion with zeroed real part (sometimes denoted as  "unreal").
+//!
+//!    * `slerp`,  (the spherical interpolation) interpolates betwween two quaternions
+//!        considered as elements of the unit \$f\mathbb{R]^4\$f hypersphere and
+//!        is a common operation in keyframe animation.
+//!
+//!    * `to_euler` takes a quaternion three axes and a boolean (extrinsic/intrinsic), to computes three angle
+//!       in radian which are the Euler or Bryan-Taits angles according to the axes given.
 //!
 //!  #Mathematical fonctions
 //!
-//!  Some but not all arithmetic function are at hand :
+//!  Some but not all math function are at hand :
 //!
 //!  |          |             |         |           |           |          |          |
 //!  | -------- | ----------- | ------- | --------- | --------- | -------- | -------- |
@@ -96,22 +105,22 @@
 //!  | sinhcosh | sqrt        | tan     | tanh      |           |          |          |
 //!
 //!  @note `sqrt` on quaternions can have two square roots (general case) or infinitely many ones
-//!         is the predicate is_real is satisfyied and the real part is negative. We always return
+//!         is the quaternion "is real" and the real part is negative. We always return
 //!         the root with positive or null real part and the complex i*sqrt(abs(q)) in the second
 //!         case.
 //!
 //!
 //!  #Predicate fonctions
 //!
-//! There is no order on the quaternion  compatible with the algebra operators.
-//! What remains are equality or inequality, ieee relative properties and `is_pure` (resp. `is_not_pure`),
-//! that return true (resp. false) for quaternion with 0 real part (resp. non 0 real part).
+//!  There is no order on the quaternions  compatible with the algebra operators.
+//!  What remains are equality or inequality, ieee relative properties and `is_pure` (resp. `is_not_pure`),
+//!  that return true (resp. false) for quaternion with 0 real part (resp. non 0 real part).
 //!
 //!  |                  |               |                |                 |             |             |             |
 //!  | ---------------- | ------------- | -------------- | --------------- | ----------- | ----------- | ----------- |
-//!  |  is_denormal     | is_equal      | is_eqz         | is_finite       | is_infinite | is_nan      | is_nez      |
+//!  | is_denormal      | is_equal      | is_eqz         | is_finite       | is_infinite | is_nan      | is_nez      |
 //!  | is_not_denormal  | is_not_equal  | is_not_finite  | is_not_infinite | is_not_nan  | is_not_pure | is_not_real |
-//!  | is_pure          | is_real       |                |                 |             |             |             |
+//!  | is_ordered       | is_pure       | is_real        | is_unordered    |             |             |             |
 //!
 //! @}
 //==================================================================================================

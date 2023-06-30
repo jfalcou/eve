@@ -219,51 +219,95 @@ namespace eve::detail
     return d(lpnorm)(p, abs(z1), abs(z2)...);
   }
 
-  template<int I,  int J,  int K, typename Z>
+  template<typename Z>
   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::to_euler_
                                                , Z const& q
-                                               , std::integral_constant<int, I>
-                                               , std::integral_constant<int, J>
-                                               , std::integral_constant<int, K>
+                                               , int I
+                                               , int J
+                                               , int K
+                                               , bool extrinsic
                                             ) noexcept
   {
-    EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
     using e_t =  std::remove_reference_t<decltype(real(Z()))>;
-    static_assert(I != J && J != K);
-    constexpr bool not_proper = I == K;
-    constexpr int KK = 6-I-J;
-    constexpr int sign = (I-J)*(J-KK)*(KK-I)/2; // even (+1) permutation or odd (-1);
-    auto a = real(q);
-    auto b = get<I>(q);
-    auto c = get<J>(q);
-    auto d = get<K>(q)*sign;
-    if constexpr (not_proper)
+    std::array<e_t, 4> aq{get<0>(q), get<1>(q), get<2>(q), get<3>(q)};
+    EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
+    EVE_ASSERT(I != J && J != K, "Expected consecutive axes to be different");
+    bool is_proper = I == K; //Proper Euler angles else Tait-Bryan
+    if (!extrinsic) std::swap(I, K);
+    K = 6-I-J;
+    int sign = (I-J)*(J-K)*(K-I)/2; // even (+1) permutation or odd (-1);
+    // std::cout  << std::scientific << std::setprecision(10) << " q = " << q << std::endl;
+    // std::cout  << std::scientific << std::setprecision(10) << "aq = ("<<  get<1>(q)<< ", "<< get<2>(q)<< ", "<< get<3>(q)<< ", "<< get<0>(q) << ")" << std::endl;
+    // std::cout  << std::scientific << std::setprecision(10) << "aq = ("<<  aq[1] << ", "<< aq[2] << ", "<< aq[3] << ", "  << aq[0] << ")" << std::endl;
+    // std::cout << "sign " << sign << std::endl;
+    // std::cout << "is_proper " << is_proper << std::endl;
+    // std::cout << "extrinsic " << extrinsic << std::endl;
+    auto a = aq[0];
+    auto b = aq[I];
+    auto c = aq[J];
+    auto d = aq[K]*sign;
+    if (!is_proper)
     {
-      a += get<J>(q);
-      b += get<KK>(q)*sign;
-      c += real(q);
-      d -= get<I>(q);
+      a -= aq[J];
+      b += aq[K]*sign;
+      c += aq[0];
+      d -= aq[I];
     }
+    // std::cout << "a " << a << std::endl;
+    // std::cout << "b " << b << std::endl;
+    // std::cout << "c " << c << std::endl;
+    // std::cout << "d " << d << std::endl;
     auto a2pb2 = sqr(a)+sqr(b);
-    e_t theta2 = acos(dec(2*(a2pb2/(a2pb2+sqr(c)+sqr(d)))));
-    auto thetap = atan2(b, a);
-    auto thetam = atan2(d, c);
-    thetam = if_else(is_nan(thetam), zero, thetam);
-    auto isz = almost(is_equal)(theta2, zero(as(theta2)));
-    auto ispio2 = almost(is_equal)(theta2, pio_2(as(theta2)));
-    e_t theta3 = if_else(isz, 2*thetap-thetam
-                        , if_else(ispio2
-                                 , 2*thetam+thetap
-                                 , thetap+thetam
-                                 )
-                        );
-    e_t theta1 = if_else(isz || ispio2, zero, thetap-thetam);
-    if constexpr(not_proper)
+    auto n2 = a2pb2+sqr(c)+sqr(d);
+    auto theta1 = acos(dec(2*a2pb2/n2));
+    // std::cout << "theta1 " << theta1 << std::endl;
+    auto eps = 1e-7;
+    auto pi  = eve::pi(as<e_t>());
+    auto twopi = eve::two_pi(as<e_t>());
+    auto mpi = -pi;
+    auto is_safe1 = abs(theta1) >= eps;
+    auto is_safe2 = abs(theta1 - pi) >= eps;
+    auto is_safe = is_safe1 && is_safe2;
+    // std::cout << "is_safe1 " << is_safe1 << std::endl;
+    // std::cout << "is_safe2 " << is_safe2 << std::endl;
+
+    auto hp = atan2(b, a);
+    auto hm = atan2(-d, c);
+    // std::cout << "hp " << hp << std::endl;
+    // std::cout << "hm " << hm << std::endl;
+
+    auto theta0 = hp + hm;
+    auto theta2 = hp - hm;
+    // std::cout << "theta0 " << theta0 << std::endl;
+    // std::cout << "theta2 " << theta2 << std::endl;
+    if (!extrinsic)
     {
-      theta3 *= sign;
-      theta2 -= pio_2(as(theta2));
+      theta0 = if_else(!is_safe, zero, theta0);
+      theta2 = if_else(!is_safe1, 2*hp, theta2);
+      theta2 = if_else(!is_safe2, -2*hm, theta2);
     }
-    return kumi::tuple{theta1, theta2, theta3};
+    else
+    {
+      theta2 = if_else(!is_safe, zero, theta2);
+      theta0 = if_else(!is_safe1, 2*hp, theta0);
+      theta0 = if_else(!is_safe2, 2*hm, theta0);
+    }
+    theta0 += if_else(theta0 < mpi, twopi, zero);
+    theta0 -= if_else(theta0 >  pi, twopi, zero);
+    theta1 += if_else(theta1 < mpi, twopi, zero);
+    theta1 -= if_else(theta1 >  pi, twopi, zero);
+    theta2 += if_else(theta2 < mpi, twopi, zero);
+    theta2 -= if_else(theta2 >  pi, twopi, zero);
+
+    // for Tait-Bryan thetas
+    if(!is_proper)
+    {
+      theta2 *= sign;
+      theta1 -= pi / 2;
+    }
+    if (!extrinsic) std::swap(theta0, theta2);
+
+    return kumi::tuple{theta0, theta1, theta2};
   }
 
 }
