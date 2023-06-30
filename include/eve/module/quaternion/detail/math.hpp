@@ -239,12 +239,6 @@ namespace eve::detail
     if (!extrinsic) std::swap(I, K);
     K = 6-I-J;
     int sign = (I-J)*(J-K)*(K-I)/2; // even (+1) permutation or odd (-1);
-    // std::cout  << std::scientific << std::setprecision(10) << " q = " << q << std::endl;
-    // std::cout  << std::scientific << std::setprecision(10) << "aq = ("<<  get<1>(q)<< ", "<< get<2>(q)<< ", "<< get<3>(q)<< ", "<< get<0>(q) << ")" << std::endl;
-    // std::cout  << std::scientific << std::setprecision(10) << "aq = ("<<  aq[1] << ", "<< aq[2] << ", "<< aq[3] << ", "  << aq[0] << ")" << std::endl;
-    // std::cout << "sign " << sign << std::endl;
-    // std::cout << "is_proper " << is_proper << std::endl;
-    // std::cout << "extrinsic " << extrinsic << std::endl;
     auto a = aq[0];
     auto b = aq[I];
     auto c = aq[J];
@@ -256,14 +250,9 @@ namespace eve::detail
       c += aq[0];
       d -= aq[I];
     }
-    // std::cout << "a " << a << std::endl;
-    // std::cout << "b " << b << std::endl;
-    // std::cout << "c " << c << std::endl;
-    // std::cout << "d " << d << std::endl;
     auto a2pb2 = sqr(a)+sqr(b);
     auto n2 = a2pb2+sqr(c)+sqr(d);
     auto theta1 = acos(dec(2*a2pb2/n2));
-    // std::cout << "theta1 " << theta1 << std::endl;
     auto eps = 1e-7;
     auto pi  = eve::pi(as<e_t>());
     auto twopi = eve::two_pi(as<e_t>());
@@ -271,18 +260,13 @@ namespace eve::detail
     auto is_safe1 = abs(theta1) >= eps;
     auto is_safe2 = abs(theta1 - pi) >= eps;
     auto is_safe = is_safe1 && is_safe2;
-    // std::cout << "is_safe1 " << is_safe1 << std::endl;
-    // std::cout << "is_safe2 " << is_safe2 << std::endl;
 
     auto hp = atan2(b, a);
     auto hm = atan2(-d, c);
-    // std::cout << "hp " << hp << std::endl;
-    // std::cout << "hm " << hm << std::endl;
 
     auto theta0 = hp + hm;
     auto theta2 = hp - hm;
-    // std::cout << "theta0 " << theta0 << std::endl;
-    // std::cout << "theta2 " << theta2 << std::endl;
+
     if (!extrinsic)
     {
       theta0 = if_else(!is_safe, zero, theta0);
