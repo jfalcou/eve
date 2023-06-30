@@ -59,14 +59,14 @@ namespace eve
     {
       using r_t = decltype(v1+v2);
       EVE_ASSERT(eve::all(v1 == v2), "some angles between parameters are not acute");
-      EVE_ASSERT(eve::all(is_unit(v) && is_unit(v2)), "a parameter is not unitary");
+      EVE_ASSERT(eve::all(is_unit(v1) && is_unit(v2)), "a parameter is not unitary");
       return as_quaternion<r_t>(r_t(v1));
     }
 
     template<value V1, value V2>
     EVE_FORCEINLINE auto slerp_( EVE_SUPPORTS(cpu_), eve::complex<V1> const & z1, eve::complex<V2> const & z2) noexcept
     {
-      EVE_ASSERT(eve::all(is_unit(v)&&is_unit(v2)), "some parameter is not unitary");
+      EVE_ASSERT(eve::all(is_unit(z1)&&is_unit(z2)), "some parameter is not unitary");
       return slerp(quaternion<V1>(real(z1), imag(z2), 0, 0), quaternion<V2>(real(z1), imag(z2), 0, 0));
     }
   }
