@@ -24,7 +24,7 @@ requires std::same_as<abi_t<T, N>, arm_64_>
   else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
   else if constexpr( sizeof(T) == 4 )
   {
-    if constexpr( idx::has_zeroes(idxs) )
+    if constexpr( idxm::has_zeroes(idxs) )
     {
       if constexpr( idx::matches(idxs, {0, na_}, {na_, 1}) )
       {

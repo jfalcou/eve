@@ -49,3 +49,7 @@ namespace eve
 }
 
 #include <eve/module/core/regular/impl/try_each_group_position.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/try_each_group_position.hpp>
+#endif

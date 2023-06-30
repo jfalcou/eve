@@ -52,41 +52,6 @@ is_zero(std::span<const std::ptrdiff_t> idxs)
 }
 
 constexpr bool
-has_zeroes(std::span<const std::ptrdiff_t> idxs)
-{
-  // std::any_of but in compile time that's not free.
-  for( auto x : idxs )
-  {
-    if( x == na_ ) return true;
-  }
-  return false;
-}
-
-constexpr bool
-are_below_ignoring_speicals(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t ub)
-{
-  // std::any_of but in compile time that's not free.
-  for( auto x : idxs )
-  {
-    if( x == na_ || x == we_ ) continue;
-    if( x >= ub ) return false;
-  }
-  return true;
-}
-
-constexpr bool
-are_above_ignoring_speicals(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t lb)
-{
-  // std::any_of but in compile time that's not free.
-  for( auto x : idxs )
-  {
-    if( x == na_ || x == we_ ) continue;
-    if( x < lb ) return false;
-  }
-  return true;
-}
-
-constexpr bool
 is_blend(std::span<const std::ptrdiff_t> idxs)
 {
   std::ptrdiff_t s = std::ssize(idxs);
