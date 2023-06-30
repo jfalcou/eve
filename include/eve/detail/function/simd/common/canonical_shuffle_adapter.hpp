@@ -12,32 +12,31 @@
 namespace eve::detail
 {
 
-template<typename Internal, simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
-canonical_shuffle_adapter_impl_(EVE_SUPPORTS(cpu_), Internal, T, fixed<G>, pattern_t<I...>)
-requires(G > T::size())
-{
-  // NOTE: we catch this specifically because:
-  //  * sfinae failure here is most likely an error that the user will just miss.
-  //  * It is very easy for the user to add this requirement somewhere at the top
-  static_assert(G <= T::size(), "Group sized passed is bigger than a register, very likely a bug");
-}
-
-template<typename Internal, typename T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename Internal,
+         std::ptrdiff_t G,
+         std::ptrdiff_t... I,
+         typename T,
+         typename N,
+         typename... Ts>
 EVE_FORCEINLINE auto
 canonical_shuffle_adapter_impl_(EVE_SUPPORTS(cpu_),
-                                Internal                 internal,
-                                logical<eve::wide<T, N>> x,
-                                fixed<G>                 g,
-                                pattern_t<I...>          p)
-requires(abi_t<T, N>::is_wide_logical) && (G <= N::value)
+                                Internal            internal,
+                                pattern_t<I...>     p,
+                                fixed<G>            g,
+                                logical<wide<T, N>> x,
+                                Ts... xs)
+requires(abi_t<T, N>::is_wide_logical)
 {
-  auto shuffle_bits = canonical_shuffle_adapter_impl(internal, x.mask(), g, p);
+  auto shuffle_bits = canonical_shuffle_adapter_impl(internal, p, g, x.mask(), xs.mask()...);
   if constexpr( std::same_as<decltype(shuffle_bits), no_matching_shuffle_t> )
   {
     return no_matching_shuffle;
   }
-  else { return bit_cast(shuffle_bits, as(x)); }
+  else
+  {
+    using N1 = typename decltype(shuffle_bits)::cardinal_type;
+    return bit_cast(shuffle_bits, as<logical<wide<T, N1>>>{});
+  }
 }
 
 template<typename Internal, std::ptrdiff_t G, std::ptrdiff_t... I> struct BundleLambda
@@ -45,9 +44,9 @@ template<typename Internal, std::ptrdiff_t G, std::ptrdiff_t... I> struct Bundle
   Internal internal;
 
   EVE_FORCEINLINE
-  auto operator()(auto x) const noexcept
+  auto operator()(auto... xs) const noexcept
   {
-    return canonical_shuffle_adapter_impl(internal, x, lane<G>, pattern<I...>);
+    return canonical_shuffle_adapter_impl(internal, pattern<I...>, lane<G>, xs...);
   }
 };
 
@@ -63,16 +62,17 @@ template<typename Internal,
          product_scalar_value T,
          typename N,
          std::ptrdiff_t G,
-         std::ptrdiff_t... I>
+         std::ptrdiff_t... I,
+         typename... Ts>
 EVE_FORCEINLINE auto
 canonical_shuffle_adapter_impl_(EVE_SUPPORTS(cpu_),
-                                Internal   internal,
-                                wide<T, N> x,
+                                Internal internal,
+                                pattern_t<I...>,
                                 fixed<G>,
-                                pattern_t<I...>)
-requires(G <= N::value)
+                                wide<T, N> x,
+                                Ts... xs)
 {
-  auto each_part = kumi::map(BundleLambda<Internal, G, I...> {internal}, x);
+  auto each_part = kumi::map(BundleLambda<Internal, G, I...> {internal}, x, xs...);
 
   if constexpr( had_no_matching_shuffle_v<decltype(each_part)> ) { return no_matching_shuffle; }
   else { return wide<T, N>(each_part); }
@@ -135,96 +135,125 @@ upscale_pattern(pattern_t<I...> p)
   }
 }
 
-template<typename T, typename G, typename P> struct simplified_pattern
+template<typename G, typename P, typename... Ts> struct simplified_pattern
 {
-  T x;
-  G g;
-  P p;
+  kumi::tuple<Ts...> x;
+  G                  g;
+  P                  p;
 };
 
-template<typename T, typename G, typename P>
-simplified_pattern(T, G, P) -> simplified_pattern<T, G, P>;
+template<typename G, typename P, typename... Ts>
+simplified_pattern(kumi::tuple<Ts...>, G, P) -> simplified_pattern<G, P, Ts...>;
 
-template<plain_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename N, typename... Ts>
 EVE_FORCEINLINE auto
-simplify_plain_shuffle1(eve::wide<T, N> x, eve::fixed<G> g, pattern_t<I...> p)
+simplify_plain_shuffle1(pattern_t<I...> p, eve::fixed<G> g, eve::wide<T, N> x, Ts... xs)
 {
   // On an emulation bitcasting types won't be helpful for anything.
-  if constexpr( !supports_simd ) { return simplified_pattern {x, g, p}; }
+  if constexpr( !supports_simd ) { return simplified_pattern {kumi::tuple {x, xs...}, g, p}; }
   else if constexpr( G >= 2 && sizeof(T) < 8 )
   {
-    if constexpr ( sizeof(T) == 4 && current_api == neon)
+    if constexpr( sizeof(T) == 4 && current_api == neon )
     {
-      using up_t = std::uint64_t;
-      const auto up = bit_cast(x, as<wide<up_t, typename N::split_type>>());
-      return simplify_plain_shuffle1(up, eve::lane<G / 2>, p);
+      using up_t = eve::wide<std::uint64_t, typename N::split_type>;
+      return simplify_plain_shuffle1(
+          p, eve::lane<G / 2>, bit_cast(x, as<up_t> {}), bit_cast(xs, as<up_t> {})...);
     }
     else
     {
-      using up_t    = upgrade_t<T>;
-      const auto up = bit_cast(x, as<wide<up_t, typename N::split_type>>());
-      return simplify_plain_shuffle1(up, eve::lane<G / 2>, p);
+      using up_t = eve::wide<upgrade_t<T>, typename N::split_type>;
+      return simplify_plain_shuffle1(
+          p, eve::lane<G / 2>, bit_cast(x, as<up_t> {}), bit_cast(xs, as<up_t> {})...);
     }
   }
   else if constexpr( std::signed_integral<T> )
   {
-    using u_t = std::make_unsigned_t<T>;
-    auto cast = bit_cast(x, as<wide<u_t, N>>());
-    return simplify_plain_shuffle1(cast, g, p);
+    using u_t = eve::wide<std::make_unsigned_t<T>, N>;
+    return simplify_plain_shuffle1(p, g, bit_cast(x, as<u_t> {}), bit_cast(xs, as<u_t> {})...);
   }
   else if constexpr( current_api == avx && std::same_as<T, std::uint32_t> && N::value == 8 )
   {
-    auto cast = bit_cast(x, as<wide<float, N>> {});
-    return simplify_plain_shuffle1(cast, g, p);
+    using f_t = eve::wide<float, N>;
+    return simplify_plain_shuffle1(p, g, bit_cast(x, as<f_t> {}), bit_cast(xs, as<f_t> {})...);
   }
   else if constexpr( current_api == avx && std::same_as<T, std::uint64_t> && N::value == 4 )
   {
-    auto cast = bit_cast(x, as<wide<double, N>> {});
-    return simplify_plain_shuffle1(cast, g, p);
+    using f_t = eve::wide<double, N>;
+    return simplify_plain_shuffle1(p, g, bit_cast(x, as<f_t> {}), bit_cast(xs, as<f_t> {})...);
   }
   else if constexpr( fundamental_cardinal_v<T> > N::value )
   {
-    auto cast         = bit_cast(x, as<wide<T, fundamental_cardinal_t<T>>> {});
     auto next_pattern = []<std::size_t... i>(std::index_sequence<i...>) {
       return pattern_t<I..., ((void)i, we_)...> {};
     }(std::make_index_sequence<fundamental_cardinal_v<T> - sizeof...(I)> {});
-    return simplify_plain_shuffle1(cast, g, next_pattern);
+    using T1 = wide<T, fundamental_cardinal_t<T>>;
+    return simplify_plain_shuffle1(
+        next_pattern, g, bit_cast(x, as<T1> {}), bit_cast(xs, as<T1> {})...);
   }
-  else { return simplified_pattern {x, g, p}; }
+  else { return simplified_pattern {kumi::tuple {x, xs...}, g, p}; }
 }
 
-template<plain_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<std::ptrdiff_t G, std::ptrdiff_t... I, typename... Ts>
 EVE_FORCEINLINE auto
-simplify_plain_shuffle(eve::wide<T, N> x, eve::fixed<G> g, pattern_t<I...>)
+simplify_plain_shuffle(pattern_t<I...>, eve::fixed<G> g, Ts... xs)
 {
   constexpr auto p  = pattern<I...>;
   constexpr auto up = upscale_pattern(p);
 
-  if constexpr( up != p ) return simplify_plain_shuffle(x, eve::lane<G * 2>, up);
-  else return simplify_plain_shuffle1(x, g, p);
+  if constexpr( up != p ) return simplify_plain_shuffle(up, eve::lane<G * 2>, xs...);
+  else return simplify_plain_shuffle1(p, g, xs...);
 }
 
-template<typename Internal, plain_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename... Ts, std::size_t... i>
+EVE_FORCEINLINE auto
+sfinae_friendly_apply_impl(auto               invocable,
+                           auto               p,
+                           auto               g,
+                           kumi::tuple<Ts...> t,
+                           std::index_sequence<i...>) noexcept
+    -> decltype(invocable(p, g, get<i>(t)...))
+{
+  return invocable(p, g, get<i>(t)...);
+}
+
+template<typename... Ts>
+EVE_FORCEINLINE auto
+sfinae_friendly_apply(auto                           invocable,
+                      auto                           p,
+                      auto                           g,
+                      kumi::tuple<Ts...>             t,
+                      std::index_sequence_for<Ts...> is = {}) noexcept
+    -> decltype(sfinae_friendly_apply_impl(invocable, p, g, t, is))
+{
+  return sfinae_friendly_apply_impl(invocable, p, g, t, is);
+}
+
+template<typename Internal,
+         std::ptrdiff_t G,
+         std::ptrdiff_t... I,
+         plain_scalar_value T,
+         typename N,
+         typename... Ts>
 EVE_FORCEINLINE auto
 canonical_shuffle_adapter_impl_(EVE_SUPPORTS(cpu_),
                                 Internal        internal,
-                                wide<T, N>      x,
+                                pattern_t<I...> p,
                                 fixed<G>        g,
-                                pattern_t<I...> p)
-requires(G <= N::value)
+                                wide<T, N>      x,
+                                Ts... xs)
 {
-  auto [_x, _g, _p] = simplify_plain_shuffle(x, g, p);
+  auto xgp = simplify_plain_shuffle(p, g, x, xs...);
 
-  if constexpr( !std::invocable<Internal, decltype(_x), decltype(_g), decltype(_p)> )
+  if constexpr( requires { sfinae_friendly_apply(internal, xgp.p, xgp.g, xgp.x); } )
   {
-    return no_matching_shuffle;
-  }
-  else
-  {
-    auto r = internal(_x, _g, _p);
+    auto r = sfinae_friendly_apply(internal, xgp.p, xgp.g, xgp.x);
     if constexpr( std::same_as<decltype(r), no_matching_shuffle_t> ) { return r; }
-    else { return bit_cast(r, as<wide<T, N>> {}); }
+    else
+    {
+      using N1 = eve::fixed<sizeof...(I) * G >;
+      return bit_cast(r, as<wide<T, N1>> {}); }
   }
+  else { return no_matching_shuffle; }
 }
 
 }

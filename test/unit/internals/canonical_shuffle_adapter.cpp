@@ -21,7 +21,7 @@ template<typename T, std::ptrdiff_t G = 1> using some_p_t = decltype(some_patter
 TTS_CASE("Canonical shuffle propagates not found")
 {
   // Propagate sfinae
-  constexpr auto op = []<typename T, typename N>(eve::wide<T, N> x, auto...)
+  constexpr auto op = []<typename T, typename N>(auto /*p*/, auto /*g*/, eve::wide<T, N> x, auto...)
   requires(sizeof(T) > 1)
   {
     if constexpr( std::same_as<T, float> ) return eve::detail::no_matching_shuffle;
@@ -32,10 +32,23 @@ TTS_CASE("Canonical shuffle propagates not found")
   TTS_CONSTEXPR_EXPECT((std::invocable<decltype(shuffle),
                                        eve::wide<std::int16_t>,
                                        some_p_t<eve::wide<std::int16_t>>>));
+  TTS_CONSTEXPR_EXPECT((std::invocable<decltype(shuffle),
+                                       eve::wide<std::int16_t>,
+                                       eve::wide<std::int16_t>,
+                                       some_p_t<eve::wide<std::int16_t>>>));
+
   TTS_CONSTEXPR_EXPECT_NOT(
       (std::invocable<decltype(shuffle), eve::wide<float>, some_p_t<eve::wide<float>>>));
+  TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(shuffle),
+                                           eve::wide<float>,
+                                           eve::wide<float>,
+                                           some_p_t<eve::wide<float>>>));
   TTS_CONSTEXPR_EXPECT_NOT(
       (std::invocable<decltype(shuffle), eve::wide<char>, some_p_t<eve::wide<char>>>));
+  TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(shuffle),
+                                           eve::wide<char>,
+                                           eve::wide<char>,
+                                           some_p_t<eve::wide<char>>>));
 };
 
 TTS_CASE_TPL("Check canonical shuffle, wide logicals", eve::test::simd::all_types)
@@ -47,7 +60,10 @@ TTS_CASE_TPL("Check canonical shuffle, wide logicals", eve::test::simd::all_type
   {
     std::ptrdiff_t numTimesCalled = 0;
     auto           hasShuffle     = eve::detail::as_canonical_shuffle(
-        [&numTimesCalled]<std::ptrdiff_t... i>(auto x, eve::fixed<1>, eve::pattern_t<i...>)
+        [&numTimesCalled]<std::ptrdiff_t... i>(eve::pattern_t<i...>,
+                                               eve::fixed<1>,
+                                               eve::plain_simd_value auto x,
+                                               std::same_as<decltype(x)> auto...)
         {
           ++numTimesCalled;
           return x;
@@ -62,6 +78,9 @@ TTS_CASE_TPL("Check canonical shuffle, wide logicals", eve::test::simd::all_type
         eve::detail::as_canonical_shuffle([](auto...) { return eve::detail::no_matching_shuffle; });
 
     TTS_CONSTEXPR_EXPECT((std::invocable<decltype(hasShuffle), eve::logical<T>, P>));
+    TTS_CONSTEXPR_EXPECT(
+        (std::invocable<decltype(hasShuffle), eve::logical<T>, eve::logical<T>, P>));
+    TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(notFound), eve::logical<T>, P>));
     TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(notFound), eve::logical<T>, P>));
     TTS_CONSTEXPR_EXPECT((std::invocable<decltype(hasShuffle), eve::logical<T>, eve::fixed<1>, P>));
 
@@ -69,6 +88,35 @@ TTS_CASE_TPL("Check canonical shuffle, wide logicals", eve::test::simd::all_type
     {
       TTS_CONSTEXPR_EXPECT_NOT(
           (std::invocable<decltype(notFound), eve::logical<T>, eve::fixed<2>, P>));
+    }
+  }
+};
+
+TTS_CASE_TPL("Check canonical shuffle, half", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  if constexpr( T::size() == 1U )
+  {
+    TTS_PASS();
+    return;
+  }
+  else
+  {
+    auto half_shuffle =
+        eve::detail::as_canonical_shuffle([](auto, auto, auto x) { return x.slice(eve::lower_); });
+
+    using half_t = typename T::template rescale<eve::fixed<T::size() / 2>>;
+
+    auto in       = T {0};
+    auto shuffled = half_shuffle(in, some_pattern<half_t>);
+    TTS_TYPE_IS(decltype(shuffled), half_t);
+
+    using abi = typename T::abi_type;
+    if constexpr( abi::is_wide_logical )
+    {
+      auto l_in       = eve::logical<T> {true};
+      auto l_shuffled = half_shuffle(l_in, some_pattern<half_t>);
+      TTS_TYPE_IS(decltype(l_shuffled), eve::logical<half_t>);
     }
   }
 };
@@ -83,7 +131,7 @@ TTS_CASE_TPL("Check canonical shuffle, bundle", eve::test::simd::all_types)
 
   std::ptrdiff_t numTimesCalled = 0;
   auto           shuffle        = eve::detail::as_canonical_shuffle(
-      [&numTimesCalled]<std::ptrdiff_t... i>(auto x, eve::fixed<1>, eve::pattern_t<i...>)
+      [&numTimesCalled]<std::ptrdiff_t... i>(eve::pattern_t<i...>, eve::fixed<1>, auto x, auto...)
       {
         TTS_CONSTEXPR_EXPECT(eve::plain_simd_value<decltype(x)>);
         ++numTimesCalled;
@@ -95,6 +143,7 @@ TTS_CASE_TPL("Check canonical shuffle, bundle", eve::test::simd::all_types)
   if constexpr( sizeof(e_t) == 2 )
   {
     TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(shuffle), w_t, P>));
+    TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(shuffle), w_t, w_t, P>));
     TTS_CONSTEXPR_EXPECT_NOT((std::invocable<decltype(shuffle), ww_t, P>));
   }
   else
@@ -102,6 +151,11 @@ TTS_CASE_TPL("Check canonical shuffle, bundle", eve::test::simd::all_types)
     auto r = shuffle(w_t {}, P {});
     TTS_EQUAL(numTimesCalled, 3);
     TTS_TYPE_IS(decltype(r), w_t);
+
+    numTimesCalled = 0;
+    auto r1        = shuffle(w_t {}, w_t {}, P {});
+    TTS_EQUAL(numTimesCalled, 3);
+    TTS_TYPE_IS(decltype(r1), w_t);
 
     numTimesCalled = 0;
     auto r2        = shuffle(ww_t {}, P {});
@@ -122,11 +176,22 @@ simplify_test(P0Gen, P1Gen)
   constexpr auto p0 = eve::fix_pattern<T0::size() / G0>(P0Gen {});
   constexpr auto p1 = eve::fix_pattern<T1::size() / G1>(P1Gen {});
 
-  auto [x_, g_, p_] = eve::detail::simplify_plain_shuffle(T0 {}, eve::lane<G0>, p0);
+  {
+    auto [x_, g_, p_] = eve::detail::simplify_plain_shuffle(p0, eve::lane<G0>, T0 {});
 
-  TTS_TYPE_IS(decltype(x_), T1);
-  TTS_CONSTEXPR_EQUAL(decltype(g_)::value, G1);
-  TTS_EQUAL(p_, p1);
+    TTS_TYPE_IS(std::remove_cvref_t<decltype(get<0>(x_))>, T1);
+    TTS_CONSTEXPR_EQUAL(decltype(g_)::value, G1);
+    TTS_EQUAL(p_, p1);
+  }
+
+  {
+    auto [x_, g_, p_] = eve::detail::simplify_plain_shuffle(p0, eve::lane<G0>, T0 {}, T0 {});
+
+    TTS_TYPE_IS(std::remove_cvref_t<decltype(get<0>(x_))>, T1);
+    TTS_TYPE_IS(std::remove_cvref_t<decltype(get<1>(x_))>, T1);
+    TTS_CONSTEXPR_EQUAL(decltype(g_)::value, G1);
+    TTS_EQUAL(p_, p1);
+  }
 }
 
 template<typename T0, std::ptrdiff_t G0, typename T1, std::ptrdiff_t G1>
@@ -169,10 +234,7 @@ TTS_CASE("Check simplification, types")
     {
       simplify_test<eve::wide<float>, 2, eve::wide<std::uint64_t>, 1>();
     }
-    else
-    {
-      simplify_test<eve::wide<float>, 2, eve::wide<double>, 1>();
-    }
+    else { simplify_test<eve::wide<float>, 2, eve::wide<double>, 1>(); }
   }
 
   simplify_test<eve::wide<std::int8_t>, 1, eve::wide<std::uint8_t>, 1>();
@@ -182,7 +244,6 @@ TTS_CASE("Check simplification, types")
   using very_wide = eve::wide<double, eve::fixed<8>>;
   simplify_test<very_wide, 2, very_wide, 2>();
 };
-
 
 template<typename T, typename N>
 void
@@ -239,16 +300,10 @@ TTS_CASE("Check simplification, upscale")
   simplify_test<eve::wide<double>, 1, eve::wide<double>, eve::expected_cardinal_v<double>>(
       [](int i, int) { return i; }, [](int i, int) { return i; });
 
-  using up_wide = std::conditional_t<
-    eve::supports_simd,
-    eve::wide<std::uint16_t>,
-    eve::wide<std::uint8_t>
-  >;
+  using up_wide =
+      std::conditional_t<eve::supports_simd, eve::wide<std::uint16_t>, eve::wide<std::uint8_t>>;
 
-  simplify_test<eve::wide<std::uint8_t>,
-                1,
-                up_wide,
-                eve::supports_simd ? 1 : 2>(
+  simplify_test<eve::wide<std::uint8_t>, 1, up_wide, eve::supports_simd ? 1 : 2>(
       [](int i, int size) -> std::ptrdiff_t
       {
         int group_i  = (size - i - 1) / 2;
@@ -258,7 +313,6 @@ TTS_CASE("Check simplification, upscale")
       },
       [](int i, int size) { return size - i - 1; });
 };
-
 
 TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
@@ -271,7 +325,8 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
   }
 
   auto shuffle = eve::detail::as_canonical_shuffle(
-      []<typename U, typename N, std::ptrdiff_t G>(eve::wide<U, N> x, eve::fixed<G>, auto)
+      []<typename U, typename N, std::ptrdiff_t G>(
+          auto, eve::fixed<G>, eve::wide<U, N> x, std::same_as<eve::wide<U, N>> auto...)
       {
         TTS_CONSTEXPR_EXPECT(std::unsigned_integral<U> || std::floating_point<U>);
         if constexpr( T::size() > 1 )
@@ -285,6 +340,7 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
 
   constexpr int G = T::size() == 1 ? 1 : 2;
   shuffle(T {}, eve::lane<G>, some_pattern<T, G>);
+  shuffle(T {}, T {}, eve::lane<G>, some_pattern<T, G>);
 };
 
 } // namespace

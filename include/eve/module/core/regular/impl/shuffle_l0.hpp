@@ -33,8 +33,9 @@ matches(const std::span<const std::ptrdiff_t> idxs, std::initializer_list<std::p
 // Can't variadic this
 constexpr bool
 matches(const std::span<const std::ptrdiff_t> idxs,
-       std::initializer_list<std::ptrdiff_t> p1,
-       std::initializer_list<std::ptrdiff_t> p2) {
+        std::initializer_list<std::ptrdiff_t> p1,
+        std::initializer_list<std::ptrdiff_t> p2)
+{
   return idx::matches(idxs, p1) || idx::matches(idxs, p2);
 }
 
@@ -59,6 +60,45 @@ has_zeroes(std::span<const std::ptrdiff_t> idxs)
     if( x == na_ ) return true;
   }
   return false;
+}
+
+constexpr bool
+are_below_ignoring_speicals(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t ub)
+{
+  // std::any_of but in compile time that's not free.
+  for( auto x : idxs )
+  {
+    if( x == na_ || x == we_ ) continue;
+    if( x >= ub ) return false;
+  }
+  return true;
+}
+
+constexpr bool
+are_above_ignoring_speicals(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t lb)
+{
+  // std::any_of but in compile time that's not free.
+  for( auto x : idxs )
+  {
+    if( x == na_ || x == we_ ) continue;
+    if( x < lb ) return false;
+  }
+  return true;
+}
+
+constexpr bool
+is_blend(std::span<const std::ptrdiff_t> idxs)
+{
+  std::ptrdiff_t s = std::ssize(idxs);
+  if( s == 1 ) return false;
+
+  // std::all_of
+  for( int i = 0; i != s; ++i )
+  {
+    if( idxs[i] == na_ || idxs[i] == i || idxs[i] == i + s ) continue;
+    return false;
+  }
+  return true;
 }
 
 template<std::size_t N>
