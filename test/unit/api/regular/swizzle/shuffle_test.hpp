@@ -26,7 +26,7 @@ verify(eve::wide<T, N> x, eve::fixed<G>, eve::pattern_t<I...> p, eve::wide<T, U>
 
   bool has_failures = [&]
   {
-    if (G * sizeof...(I) != U::value) return true;
+    if( G * sizeof...(I) != U::value ) return true;
 
     int out_i = 0;
     for( auto group_i : {I...} )
@@ -68,6 +68,27 @@ run(auto shuffle, eve::pattern_t<I...> = {})
   }
 }
 
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+void
+run2(auto shuffle, eve::pattern_t<I...> = {})
+{
+  using Wide = eve::wide<T, eve::fixed<N * 2>>;
+
+  if constexpr( eve::current_api < api )
+  {
+    TTS_PASS();
+    return;
+  }
+  else
+  {
+    Wide input {[](int i, int) { return i + 1; }};
+    auto [x, y] = input.slice();
+    eve::wide<T, eve::fixed<sizeof...(I) *G>> actual =
+        shuffle(x, y, eve::lane<G>, eve::pattern<I...>);
+    verify(input, eve::lane<G>, eve::pattern<I...>, actual);
+  }
+}
+
 template<auto arr>
 auto
 pattern_from_array()
@@ -82,6 +103,15 @@ run_all(auto shuffle)
 {
   [&]<std::size_t... i>(std::index_sequence<i...>) {
     (run<api, T, N, G>(shuffle, pattern_from_array<tests[i]>()), ...);
+  }(std::make_index_sequence<tests.size()> {});
+}
+
+template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
+void
+run2_all(auto shuffle)
+{
+  [&]<std::size_t... i>(std::index_sequence<i...>) {
+    (run2<api, T, N, G>(shuffle, pattern_from_array<tests[i]>()), ...);
   }(std::make_index_sequence<tests.size()> {});
 }
 
@@ -223,5 +253,71 @@ constexpr std::array kLen4No0Tests_Scrambled = {
 
 [[maybe_unused]] constexpr std::array kLen4N0Tests_CrossLane =
     concat(kLen4No0Tests_IndependentHalves_Reversed, kLen4No0Tests_Scrambled);
+
+// -----------------------------------------------------------------------------
+// 2 register tests
+
+[[maybe_unused]] constexpr std::array kLen1x2Tests = {
+    arr<1> {0},        //
+    arr<1> {1},        //
+    arr<1> {eve::we_}, //
+    arr<1> {eve::na_}, //
+};
+
+[[maybe_unused]] constexpr std::array kLen2x2_No0sTests = {
+    arr<2> {0, 0},        //
+    arr<2> {1, 0},        //
+    arr<2> {1, 1},        //
+    arr<2> {1, eve::we_}, //
+    arr<2> {eve::we_, 0}, //
+    //---------------------
+    arr<2> {2, 2},        //
+    arr<2> {3, 2},        //
+    arr<2> {3, 3},        //
+    arr<2> {3, eve::we_}, //
+    arr<2> {eve::we_, 2}, //
+    //---------------------
+    arr<2> {0, 2}, //
+    arr<2> {0, 3}, //
+    arr<2> {1, 2}, //
+    arr<2> {1, 3}, //
+    arr<2> {2, 0}, //
+    arr<2> {2, 1}, //
+    arr<2> {3, 0}, //
+    arr<2> {3, 1}, //
+                   //---------------------
+};
+
+[[maybe_unused]] constexpr std::array kLen4x2_No0sBlendTests = {
+    arr<4> {0, 1, 6, 3}, //
+    arr<4> {0, 1, 2, 7}, //
+    arr<4> {0, 1, 6, 7}, //
+    // --------------------
+    arr<4> {4, 1, 2, 3}, //
+    arr<4> {4, 1, 6, 3}, //
+    arr<4> {4, 1, 2, 7}, //
+    arr<4> {4, 1, 6, 7}, //
+    // --------------------
+    arr<4> {0, 5, 2, 3}, //
+    arr<4> {0, 5, 6, 3}, //
+    arr<4> {0, 5, 2, 7}, //
+    arr<4> {0, 5, 6, 7}, //
+    // --------------------
+    arr<4> {4, 5, 6, 3}, //
+    arr<4> {4, 5, 2, 7}, //
+    // --------------------
+};
+
+// Not doing all
+[[maybe_unused]] constexpr std::array kLen2x8x2_No0sBlendTests = {
+    // -------------------------------
+    arr<8> {8, 1, 2, 3, 4, 5, 6, 7},  //
+    arr<8> {0, 9, 2, 3, 4, 5, 6, 7},  //
+    arr<8> {0, 1, 2, 3, 12, 5, 6, 7}, //
+    arr<8> {0, 1, 2, 3, 4, 5, 6, 15}, //
+    // -------------------------------
+    arr<8> {0, 9, 2, 11, 4, 13, 6, 15}, //
+    arr<8> {8, 1, 2, 11, 12, 5, 6, 15}, //
+};
 
 }

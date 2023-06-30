@@ -14,7 +14,7 @@ namespace eve::detail
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(neon128_), wide<T, N> x, fixed<G>, pattern_t<I...>)
+shuffle_l0_impl_(EVE_SUPPORTS(neon128_),  pattern_t<I...>, fixed<G>, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, arm_64_>
 {
   constexpr std::array idxs {I...};
