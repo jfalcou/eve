@@ -121,14 +121,31 @@ namespace eve::detail
 
   template<typename Z1, typename Z2, ordered_value T>
   EVE_FORCEINLINE auto
-  quaternion_ternary_dispatch(eve::tag::slerp_, Z1 const& z1, Z2 const& z2, T const& t) noexcept
+  quaternion_ternary_dispatch(eve::tag::slerp_, Z1 const& z1, Z2  z2, T const& t) noexcept
   {
+    std::cout << "z1 " << z1              << std::endl;
+    std::cout << "z2 " << z2              << std::endl;
     EVE_ASSERT(eve::all(is_unit(z1)&&is_unit(z2)), "a parameter is not unitary");
-    auto ct = fma(real(z1, real(z2), fma(ipart(z1), ipart(z2), fma(jpart(z1), jpart(z2), kpart(z1)*kpart(z2)))));
-    EVE_ASSERT(eve::all(is_gez(ct)), "angle between quaternion must be acute");
+    auto ct = fma(real(z1), real(z2), fma(ipart(z1), ipart(z2), fma(jpart(z1), jpart(z2), kpart(z1)*kpart(z2))));
+    std::cout << "ct " << ct << std::endl;
+//     auto is_not_sp = is_ltz(ct);
+//     z2 = if_else(is_not_sp, -z2, z2);
+//     ct = if_else(is_not_sp, -ct, ct);
+//     ct = clamp(ct, mone(as(ct)), one(as(ct)));
     auto theta = acos(ct);
     auto invs = csc(theta);
-    return if_else(abs(ct) < 3*eps(as(ct)), z1, (invs*sin(t*theta))*z1+(invs*sin(dec(t))*theta)*z2);
+//     auto res = ( (invs*sin(t*theta))*z1+(invs*sin(dec(t)*theta))*z2 );
+//    auto [s, c] = sincos(t*theta);
+//     auto pipo = sign(z1*c+(z1-z2*ct)*s);
+//     std::cout << "norm " << sqr_abs(pipo-res) << std::endl;
+//     std::cout << "pipo " << pipo              << std::endl;
+//     std::cout << "res  " << res               << std::endl;
+//    return if_else(abs(ct-1) < 3*eps(as(ct)), z1, res);
+    auto z1m1z2 = rec(z1)*z2;
+    auto p =  pure(z1m1z2)*invs;
+    auto [s, c] = sincos(theta*t);
+
+    return z1*(c+s*p);
   }
 
   //================================================================================================
@@ -251,38 +268,3 @@ namespace eve::detail
     return dist(z1, z2)/max(abs(z1), abs(z2), one(as<r_t>()));
   }
 }
-// /These constants areprecomputed or inlined by the compiler.
-// Realmu = 1.85298109240830; // fromTable2
-// Realu[8]=        // 1/[i(2i+1)]fori>=1
-// {
-//    1.0/3),1.0/(2*5),1.0/(3*7),1.0/(4*9),1.0/(5*11),1.0/(6*13),1.0/(7*15),mu/(8*17)
-// };
-// Realv[8]=// i/(2i+1)fori>=1
-// {
-//    1.0/3,2.0/5,3.0/7,4.0/9,5.0/11,6.0/13,7.0/15,mu*8.0/17
-// };
-// // It is assumed that the angle between q0 and q1 is acute.
-// QuaternionSLERP(Realt,Quaternionq0,Quaternionq1)
-// {
-// Real xm1=Dot(q0,q1)−1;// in [−1,0]
-// Real d=1−t, sqrT=t*t, sqrD=d*d;
-// Real bT[8], bD[8];
-// bT[] stores t−relatedvalues, bD[] stores 1-t−relatedvalues
-//
-// for(inti=7;i>=0;−−i)
-// {
-//   bT[i]=(u[i]*sqrT−v[i])*xm1;
-//   bD[i]=(u[i]*sqrD−v[i])*xm1;
-// }
-//
-// Real f0=t*(
-//  1+bT[0]*(1+bT[1]*(1+bT[2]*(1+bT[3]*(
-//  1+bT[4]*(1+bT[5]*(1+bT[6]*(1+bT[7]))))))));
-//
-// Realf1=d*(
-// 1+bD[0]*(1+bD[1]*(1+bD[2]*(1+bD[3]*(
-// 1+bD[4]*(1+bD[5]*(1+bD[6]*(1+bD[7]))))))));
-//
-// Quaternion slerp=f0*q0+f1*q1;
-// return slerp;
-// }

@@ -14,10 +14,11 @@
 namespace eve
 {
   template<floating_scalar_value Type> struct quaternion;
+  template<floating_scalar_value Type> struct complex;
 
   template<typename T> struct as_quaternion;
 
-  template<scalar_value T> struct as_quaternion<T>
+  template<floating_scalar_value T> struct as_quaternion<T>
   {
     using type = eve::quaternion<T>;
   };
@@ -27,13 +28,19 @@ namespace eve
     using type = eve::quaternion<T>;
   };
 
-  template<floating_simd_value T> struct as_quaternion<T>
+  template<floating_scalar_value T> struct as_quaternion<complex<T>>
   {
-    using type = eve::wide<eve::quaternion<element_type_t<T>>, cardinal_t<T>>;
+    using type = eve::quaternion<T>;
   };
 
   template<floating_scalar_value T, typename N>
+  struct as_quaternion<wide<T,N>> { using type = wide<quaternion<T>,N>; };
+
+  template<floating_scalar_value T, typename N>
   struct as_quaternion<wide<quaternion<T>,N>>  { using type = wide<quaternion<T>,N>; };
+
+  template<floating_scalar_value T, typename N>
+  struct as_quaternion<wide<complex<T>,N>>  { using type = wide<quaternion<T>,N>; };
 
   template<typename T>
   using as_quaternion_t = typename as_quaternion<T>::type;

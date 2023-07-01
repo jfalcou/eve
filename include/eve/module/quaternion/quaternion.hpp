@@ -8,13 +8,13 @@
 #pragma once
 
 #include <eve/concept/vectorizable.hpp>
+#include <eve/traits/product_type.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/complex.hpp>
 #include <eve/module/quaternion/regular/traits.hpp>
 #include <eve/module/quaternion/detail/arithmetic.hpp>
 #include <eve/module/quaternion/detail/math.hpp>
 #include <eve/module/quaternion/detail/predicates.hpp>
-#include <eve/traits/product_type.hpp>
 #include <ostream>
 
 namespace eve
@@ -51,6 +51,7 @@ namespace eve
     explicit  quaternion(Type r                        ) noexcept : parent{r,0,0,0} {}
               quaternion(Type r, Type i, Type j, Type k) noexcept : parent{r,i,j,k} {}
               quaternion(c_t r0, c_t r1                ) noexcept : parent{real(r0), imag(r0), real(r1), imag(r1)} {}
+              quaternion(c_t r0                        ) noexcept : parent{real(r0), imag(r0), 0, 0} {}
 
     /// Stream insertion operator
     friend std::ostream& operator<<(std::ostream& os, like<quaternion> auto const& z)
@@ -88,9 +89,9 @@ namespace eve
       return get<3>(EVE_FWD(z));
     }
 
-    EVE_FORCEINLINE friend decltype(auto) tagged_dispatch(eve::tag::pure_, like<quaternion> auto && z )
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::pure_, like<quaternion> auto z )
     {
-      using u_t =  std::remove_reference_t<decltype(real(z))>;
+      using u_t =  std::decay_t<decltype(real(z))>;
       auto z1 = z;
       real(z1) = u_t(0);
       return z1;
@@ -279,40 +280,43 @@ namespace eve
     }
   };
 
-  template<ordered_value Z>
-  EVE_FORCEINLINE   auto to_quaternion( Z const & v) noexcept
-  -> decltype(as_quaternion_t<Z>(v, 0, 0, 0))
+  template<typename Q>
+  EVE_FORCEINLINE auto to_quaternion( Q const & q) noexcept
+  //  requires(floating_value<underlying_type_t<Q>>)
   {
-    return as_quaternion_t<Z>(v, 0, 0, 0);
+    if constexpr(is_quaternion_v<Q>)
+    {
+      std::cout << "icitteq" << std::endl;
+      return q;
+    }
+    else if constexpr(is_complex_v<Q>)
+    {
+      using e_t = std::decay_t<decltype(real(q))>;
+      using r_t = as_quaternion_t<e_t>;
+      std::cout << "icittec" << std::endl;
+      return r_t(real(q), imag(q), zero(as(real(q))), zero(as(real(q))));
+    }
+    else if constexpr(floating_value<Q>)
+    {
+      std::cout << "icittes" << std::endl;
+      return as_quaternion_t<Q>(q, zero(as(q)),zero(as(q)),zero(as(q)));
+    }
   }
 
-  template<value Z>
-  EVE_FORCEINLINE   auto to_quaternion( Z const & v) noexcept
-   -> decltype(as_quaternion_t<element_type_t<Z>>(real(v), imag(v), 0, 0))
-  //    requires(is_complex<Z>)
+  template<value Q1, value Q2>
+  EVE_FORCEINLINE   auto to_quaternion( Q1 const & q1, Q2 const & q2) noexcept
+  requires(is_complex_v<Q1> && is_complex_v<Q2>)
   {
-    return as_quaternion_t<Z>(real(v), imag(v), 0, 0);
-  }
-
-  template<value Z>
-  EVE_FORCEINLINE   auto to_quaternion( Z const & v1, Z const & v2) noexcept
-  -> decltype(as_quaternion_t<element_type_t<Z>>(real(v1), imag(v1), real(v2), imag(v2)))
-  //    requires(is_complex<Z>)
-  {
-    return as_quaternion_t<Z>(real(v1), imag(v1), real(v2), imag(v2));
-  }
-
-  template<value Z>
-  EVE_FORCEINLINE auto to_quaternion(Z const & v) noexcept
-  {
-    return v;
+    using e_t = std::decay_t<decltype(real(q1+q2))>;
+    std::cout << "icittecc" << std::endl;
+    return as_quaternion_t<e_t>(real(q1), imag(q1), real(q2), imag(q2));
   }
 
   template<value Z1, value Z2>
   EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,
-                                              auto const& cond,
-                                              Z1 const  & z1,
-                                              Z2 const  & z2) noexcept
+                                       auto const& cond,
+                                       Z1 const  & z1,
+                                       Z2 const  & z2) noexcept
   requires(is_quaternion_v<Z1> != is_quaternion_v<Z2>)
   {
     return if_else(cond, to_quaternion(z1), to_quaternion(z2));

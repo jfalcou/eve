@@ -171,6 +171,28 @@ namespace eve::detail
    }
 
   //===-------------------------------------------------------------------------------------------
+  //=== log
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::log_
+                                                , Z const& q                                             ) noexcept
+  {
+//      using e_t = underlying_type_t<Z>;
+//    using c_t = as_complex<e_t>;
+    auto aq = abs(q);
+    auto v = pure(q);
+    auto s = real(q);
+    auto z = log(aq)+(acos(s/aq)/abs(v))*v;
+    return if_else( is_eqz(z)
+                  , Z(minf(as(aq)))
+                  , if_else( is_real(z)
+                           , to_quaternion(log(to_complex(real(z))))
+                           , z
+                           )
+                  );
+  }
+
+  //===-------------------------------------------------------------------------------------------
   //=== rec
   //===-------------------------------------------------------------------------------------------
 
