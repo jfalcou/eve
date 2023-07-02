@@ -19,18 +19,16 @@ TTS_CASE_WITH( "Check behavior of real on scalar"
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using e_t = typename T::value_type;
-  for(auto e : a0)
+  using q_t = eve::quaternion<e_t>;
+  for(size_t i = 0; i < a0.size(); ++i)
   {
-    for(auto f : a1)
-    {
-      for(auto g : a2)
-      {
-        for(auto h : a3)
-        {
-          TTS_EQUAL( eve::real(eve::quaternion<e_t>(e, f, g, h)), e );
-        }
-      }
-    }
+    TTS_EQUAL( eve::real(q_t(a0[i],a1[i],a2[i],a3[i])), a0[i] );
+    q_t c;
+    eve::real(c) = a0[i];
+    eve::ipart(c) = a1[i];
+    eve::jpart(c) = a2[i];
+    eve::kpart(c) = a3[i];
+    TTS_EQUAL(q_t(a0[i],a1[i],a2[i],a3[i]), c );
   }
 };
 
@@ -44,8 +42,14 @@ TTS_CASE_WITH( "Check behavior of real on wide"
         )
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
-  using e_t = typename T::value_type;
-  using z_t = eve::wide<eve::quaternion<e_t>, typename T::cardinal_type>;
+  using e_t = eve::element_type_t<T>;
+  using z_t = eve::wide<eve::quaternion<e_t>, eve::cardinal_t<T> >;
 
   TTS_EQUAL( eve::real(z_t(a0,a1,a2,a3)), a0 );
+  z_t c;
+  eve::real(c) = a0;
+  eve::ipart(c) = a1;
+  eve::jpart(c) = a2;
+  eve::kpart(c) = a3;
+  TTS_EQUAL(z_t(a0,a1,a2,a3), c );
 };

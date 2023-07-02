@@ -22,10 +22,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::exp_
                                              , Z const& z) noexcept
   {
-    auto az = eve::abs(eve::pure(z));
+    auto p = eve::pure(z);
+    auto az = eve::abs(p);
     auto r  = eve::exp(real(z));
     auto w = r*eve::sinc(az);
-    return Z{r*cos(az), w*ipart(z), w*jpart(z), w*kpart(z)};
+    return r*cos(az) + w*p;
   }
 
 
@@ -38,6 +39,29 @@ namespace eve::detail
   {
     return dec(exp(z));
   }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp2
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::exp2_
+                                             , Z const& z) noexcept
+  {
+    using e_t = underlying_type_t<Z>;
+    return exp(z*log_2(as<e_t>()));
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== exp10
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::exp10_
+                                             , Z const& z) noexcept
+  {
+    using e_t = underlying_type_t<Z>;
+    return exp(z*log_10(as<e_t>()));
+  }
+
 
   //===-------------------------------------------------------------------------------------------
   //=== cosh
@@ -175,14 +199,13 @@ namespace eve::detail
   //===-------------------------------------------------------------------------------------------
   template<typename Z>
   EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::log_
-                                                , Z const& q                                             ) noexcept
+                                                , Z const& q
+                                                ) noexcept
   {
-//      using e_t = underlying_type_t<Z>;
-//    using c_t = as_complex<e_t>;
     auto aq = abs(q);
     auto v = pure(q);
     auto s = real(q);
-    auto z = log(aq)+(acos(s/aq)/abs(v))*v;
+    auto z = eve::log(aq)+(eve::acos(s/aq)/abs(v))*v;
     return if_else( is_eqz(z)
                   , Z(minf(as(aq)))
                   , if_else( is_real(z)
@@ -190,6 +213,30 @@ namespace eve::detail
                            , z
                            )
                   );
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log2
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::log2_
+                                                , Z const& q
+                                                ) noexcept
+  {
+    using e_t = underlying_type_t<Z>;
+    return log(q)*invlog_2(as<e_t>());
+  }
+
+  //===-------------------------------------------------------------------------------------------
+  //=== log10
+  //===-------------------------------------------------------------------------------------------
+  template<typename Z>
+  EVE_FORCEINLINE auto quaternion_unary_dispatch( eve::tag::log10_
+                                                , Z const& q
+                                                ) noexcept
+  {
+    using e_t = underlying_type_t<Z>;
+    return log(q)*invlog_10(as<e_t>());
   }
 
   //===-------------------------------------------------------------------------------------------

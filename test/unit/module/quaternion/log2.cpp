@@ -12,7 +12,7 @@
 #include <eve/module/quaternion.hpp>
 #include <boost/math/quaternion.hpp>
 
-TTS_CASE_WITH( "Check behavior of log on scalar"
+TTS_CASE_WITH( "Check behavior of log2 on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate( tts::randoms(-10, 10)
                             , tts::randoms(-10, 10)
@@ -27,12 +27,12 @@ TTS_CASE_WITH( "Check behavior of log on scalar"
   for(size_t i = 0; i < a1.size(); ++i)
   {
     auto z  = eq_t(a0[i],a1[i],a2[i],a3[i]);
-    auto lz = eve::log(z); ;
-    TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.001);
+    auto lz = eve::log2(z); ;
+    TTS_RELATIVE_EQUAL(eve::exp2(lz), z, 0.001);
   }
 };
 
-TTS_CASE_WITH( "Check behavior of log on wide"
+TTS_CASE_WITH( "Check behavior of log2 on wide"
         , eve::test::simd::ieee_reals
              , tts::generate( tts::randoms(-10, 10)
                             , tts::randoms(-10, 10)
@@ -45,7 +45,7 @@ TTS_CASE_WITH( "Check behavior of log on wide"
   using e_t = eve::element_type_t<T>;
   using z_t = eve::wide<eve::quaternion<e_t>, eve::cardinal_t<T> >;
   auto z = z_t{a0,a1,a2,a3};
-  z_t lz = eve::log(z);
+  z_t lz = eve::log2(z);
 
-  TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.001);
+  TTS_RELATIVE_EQUAL(eve::exp2(lz), z, 0.001);
 };

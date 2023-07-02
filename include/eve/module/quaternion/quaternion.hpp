@@ -282,23 +282,20 @@ namespace eve
 
   template<typename Q>
   EVE_FORCEINLINE auto to_quaternion( Q const & q) noexcept
-  //  requires(floating_value<underlying_type_t<Q>>)
+  requires(floating_value<underlying_type_t<Q>>)
   {
     if constexpr(is_quaternion_v<Q>)
     {
-      std::cout << "icitteq" << std::endl;
       return q;
     }
     else if constexpr(is_complex_v<Q>)
     {
       using e_t = std::decay_t<decltype(real(q))>;
       using r_t = as_quaternion_t<e_t>;
-      std::cout << "icittec" << std::endl;
       return r_t(real(q), imag(q), zero(as(real(q))), zero(as(real(q))));
     }
     else if constexpr(floating_value<Q>)
     {
-      std::cout << "icittes" << std::endl;
       return as_quaternion_t<Q>(q, zero(as(q)),zero(as(q)),zero(as(q)));
     }
   }
@@ -308,7 +305,6 @@ namespace eve
   requires(is_complex_v<Q1> && is_complex_v<Q2>)
   {
     using e_t = std::decay_t<decltype(real(q1+q2))>;
-    std::cout << "icittecc" << std::endl;
     return as_quaternion_t<e_t>(real(q1), imag(q1), real(q2), imag(q2));
   }
 
