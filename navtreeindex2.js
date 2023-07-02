@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"group__core__predicates_gac7357b852948396d38469bc6fa05a066.html#gac7357b852948396d38469bc6fa05a066":[7,0,1,2,9,10],
+"group__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384":[7,0,1,2,9,7],
 "group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7":[7,0,1,2,9,1],
 "group__core__predicates_gad8c0f5b1fcc6893e05d6460f7846006e.html#gad8c0f5b1fcc6893e05d6460f7846006e":[7,0,1,2,9,24],
 "group__core__predicates_gadb59eac8d4aed0fa759b6feadcefc406.html#gadb59eac8d4aed0fa759b6feadcefc406":[7,0,1,2,9,4],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "group__polynomial_ga2f8b95159d4e36163c98074b5d9ed14a.html#ga2f8b95159d4e36163c98074b5d9ed14a":[7,0,1,5,4],
 "group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b":[7,0,1,5,6],
 "group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838":[7,0,1,5,12],
-"group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f":[7,0,1,5,8],
-"group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25":[7,0,1,5,1],
-"group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb":[7,0,1,5,2]
+"group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f":[7,0,1,5,8]
 };

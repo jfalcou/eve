@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"structmap__iterator.html":[7,0,0,3,16],
+"structmap__load__op.html":[7,0,0,2,4],
 "structmap__range.html":[7,0,0,3,17],
 "structmap__store__op.html":[7,0,0,2,5],
 "structrelaxed__iterator.html":[7,0,0,2,1],
