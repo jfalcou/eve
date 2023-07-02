@@ -26,7 +26,8 @@ load_(EVE_SUPPORTS(sse2_),
       C const            & cond,
       safe_type const    & s,
       eve::as<Pack> const& tgt,
-      Ptr p) noexcept requires simd_compatible_ptr<Ptr, Pack> &&(!has_bundle_abi_v<Pack>)
+      Ptr                  p) noexcept
+requires simd_compatible_ptr<Ptr, Pack> && (!has_bundle_abi_v<Pack>)
 {
   using b_t = std::remove_cvref_t<decltype(*p)>;
   using r_t = Pack;
@@ -60,14 +61,19 @@ load_(EVE_SUPPORTS(sse2_),
   else if constexpr( C::is_complete ) return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
   else if constexpr( current_api >= avx512 )
   {
-    r_t that;
-
+#if defined(__clang__)
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wuninitialized"
+#else
+    if constexpr( C::has_alternative )
+    {
+#endif
+    r_t  that;
     auto src = [&](auto const& s)
     {
       if constexpr( C::has_alternative ) return r_t {cond.alternative};
       else return s;
     };
-
     auto           mask = cond.mask(as<r_t> {}).storage().value;
     constexpr auto c    = categorize<r_t>();
 
@@ -104,6 +110,47 @@ load_(EVE_SUPPORTS(sse2_),
     else if constexpr( c == category::uint8x64 ) return _mm512_mask_loadu_epi8(src(that), mask, p);
     else if constexpr( c == category::uint8x32 ) return _mm256_mask_loadu_epi8(src(that), mask, p);
     else if constexpr( c == category::uint8x16 ) return _mm_mask_loadu_epi8(src(that), mask, p);
+#if defined(__clang__)
+#  pragma clang diagnostic pop
+#else
+    }
+    else
+    {
+      auto           mask = cond.mask(as<r_t> {}).storage().value;
+      constexpr auto c    = categorize<r_t>();
+
+      if constexpr( c == category::float64x8 ) return _mm512_maskz_loadu_pd(mask, p);
+      else if constexpr( c == category::float64x4 ) return _mm256_maskz_loadu_pd(mask, p);
+      else if constexpr( c == category::float64x2 ) return _mm_maskz_loadu_pd(mask, p);
+      else if constexpr( c == category::float32x16 ) return _mm512_maskz_loadu_ps(mask, p);
+      else if constexpr( c == category::float32x8 ) return _mm256_maskz_loadu_ps(mask, p);
+      else if constexpr( c == category::float32x4 ) return _mm_maskz_loadu_ps(mask, p);
+      else if constexpr( c == category::int64x8 ) return _mm512_maskz_loadu_epi64(mask, p);
+      else if constexpr( c == category::int64x4 ) return _mm256_maskz_loadu_epi64(mask, p);
+      else if constexpr( c == category::int64x2 ) return _mm_maskz_loadu_epi64(mask, p);
+      else if constexpr( c == category::uint64x8 ) return _mm512_maskz_loadu_epi64(mask, p);
+      else if constexpr( c == category::uint64x4 ) return _mm256_maskz_loadu_epi64(mask, p);
+      else if constexpr( c == category::uint64x2 ) return _mm_maskz_loadu_epi64(mask, p);
+      else if constexpr( c == category::int32x16 ) return _mm512_maskz_loadu_epi32(mask, p);
+      else if constexpr( c == category::int32x8 ) return _mm256_maskz_loadu_epi32(mask, p);
+      else if constexpr( c == category::int32x4 ) return _mm_maskz_loadu_epi32(mask, p);
+      else if constexpr( c == category::uint32x16 ) return _mm512_maskz_loadu_epi32(mask, p);
+      else if constexpr( c == category::uint32x8 ) return _mm256_maskz_loadu_epi32(mask, p);
+      else if constexpr( c == category::uint32x4 ) return _mm_maskz_loadu_epi32(mask, p);
+      else if constexpr( c == category::int16x32 ) return _mm512_maskz_loadu_epi16(mask, p);
+      else if constexpr( c == category::int16x16 ) return _mm256_maskz_loadu_epi16(mask, p);
+      else if constexpr( c == category::int16x8 ) return _mm_maskz_loadu_epi16(mask, p);
+      else if constexpr( c == category::uint16x32 ) return _mm512_maskz_loadu_epi16(mask, p);
+      else if constexpr( c == category::uint16x16 ) return _mm256_maskz_loadu_epi16(mask, p);
+      else if constexpr( c == category::uint16x8 ) return _mm_maskz_loadu_epi16(mask, p);
+      else if constexpr( c == category::int8x64 ) return _mm512_maskz_loadu_epi8(mask, p);
+      else if constexpr( c == category::int8x32 ) return _mm256_maskz_loadu_epi8(mask, p);
+      else if constexpr( c == category::int8x16 ) return _mm_maskz_loadu_epi8(mask, p);
+      else if constexpr( c == category::uint8x64 ) return _mm512_maskz_loadu_epi8(mask, p);
+      else if constexpr( c == category::uint8x32 ) return _mm256_maskz_loadu_epi8(mask, p);
+      else if constexpr( c == category::uint8x16 ) return _mm_maskz_loadu_epi8(mask, p);
+    }
+#endif
   }
   else if constexpr( current_api >= avx )
   {
