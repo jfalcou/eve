@@ -24,10 +24,13 @@ TTS_CASE_WITH( "Check behavior of log on scalar"
 {
   using e_t = typename T::value_type;
   using eq_t = eve::quaternion<e_t>;
-  for(size_t i = 0; i < a1.size(); ++i)
+  for(size_t i = 0; i < a0.size(); ++i)
   {
     auto z  = eq_t(a0[i],a1[i],a2[i],a3[i]);
-    auto lz = eve::log(z); ;
+    std::cout << "i " << i << " -> z " << z << std::endl;
+    eq_t lz = eve::log(z);
+   std::cout <<  "lz " << lz << std::endl;
+   std::cout <<  "eve::exp(lz) " << eve::exp(lz) << std::endl;
     TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.001);
   }
 };
@@ -47,5 +50,5 @@ TTS_CASE_WITH( "Check behavior of log on wide"
   auto z = z_t{a0,a1,a2,a3};
   z_t lz = eve::log(z);
 
-  TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.001);
+  TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.01);
 };

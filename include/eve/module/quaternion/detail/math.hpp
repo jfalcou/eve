@@ -11,6 +11,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/quaternion/detail/arithmetic.hpp>
 #include <eve/module/quaternion/detail/math.hpp>
+#include <eve/module/quaternion/quaternion.hpp>
 
 
 namespace eve::detail
@@ -204,10 +205,14 @@ namespace eve::detail
   {
     auto aq = abs(q);
     auto v = pure(q);
+//     std::cout << "q " << q << std::endl;
+
     auto s = real(q);
     auto z = eve::log(aq)+(eve::acos(s/aq)/abs(v))*v;
+//     std::cout << "z " << z << std::endl;
+
     return if_else( is_eqz(z)
-                  , Z(minf(as(aq)))
+                  , (minf(as(aq)))
                   , if_else( is_real(z)
                            , to_quaternion(log(to_complex(real(z))))
                            , z
@@ -251,7 +256,35 @@ namespace eve::detail
   }
 
   //==============================================================================================
-  //  Binary functions :
+  //  binary functions :
+  //==============================================================================================
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto quaternion_binary_dispatch( eve::tag::pow_
+                                            , Z1 const& z1, Z2 const& z2
+                                            ) noexcept
+  {
+    using r_t =  decltype(z1+z2);
+//     if constexpr(is_quaternion_v<Z1> && is_quaternion_v<Z2>)
+//     {
+      auto r = exp(log(z1)*z2);
+      return if_else (is_eqz(z1), if_else(is_eqz(z2), one(as<r_t>()), zero), r);
+ //    }
+//     else
+  }
+
+  template<typename Z1, typename Z2, floating_ordered_value T>
+  EVE_FORCEINLINE auto quaternion_ternary_dispatch( eve::tag::slerp_
+                                                 , Z1 const& z1, Z2  const & z2, T const & t
+                                                 ) noexcept
+  {
+    EVE_ASSERT(is_unit(z1) && is_unit(z2), "quaternion parameters must be unitary");
+    using r_t =  decltype(z1+z2);
+    using e_t =  underlying_type_t<r_t>;
+    return pow(if_else(dist(z1, z2) <= downward(sqrt_2)(as<e_t>()), z2, -z2)/z1, t);
+  }
+
+  //==============================================================================================
+  //  nary functions :
   //==============================================================================================
 
   template<typename Z1, typename ...Z2>

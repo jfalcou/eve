@@ -119,35 +119,6 @@ namespace eve::detail
                 , lerp(jpart(z1), jpart(z2), t), lerp(kpart(z1), kpart(z2), t)};
   }
 
-  template<typename Z1, typename Z2, ordered_value T>
-  EVE_FORCEINLINE auto
-  quaternion_ternary_dispatch(eve::tag::slerp_, Z1 const& z1, Z2  z2, T const& t) noexcept
-  {
-    std::cout << "z1 " << z1              << std::endl;
-    std::cout << "z2 " << z2              << std::endl;
-    EVE_ASSERT(eve::all(is_unit(z1)&&is_unit(z2)), "a parameter is not unitary");
-    auto ct = fma(real(z1), real(z2), fma(ipart(z1), ipart(z2), fma(jpart(z1), jpart(z2), kpart(z1)*kpart(z2))));
-    std::cout << "ct " << ct << std::endl;
-//     auto is_not_sp = is_ltz(ct);
-//     z2 = if_else(is_not_sp, -z2, z2);
-//     ct = if_else(is_not_sp, -ct, ct);
-//     ct = clamp(ct, mone(as(ct)), one(as(ct)));
-    auto theta = acos(ct);
-    auto invs = csc(theta);
-//     auto res = ( (invs*sin(t*theta))*z1+(invs*sin(dec(t)*theta))*z2 );
-//    auto [s, c] = sincos(t*theta);
-//     auto pipo = sign(z1*c+(z1-z2*ct)*s);
-//     std::cout << "norm " << sqr_abs(pipo-res) << std::endl;
-//     std::cout << "pipo " << pipo              << std::endl;
-//     std::cout << "res  " << res               << std::endl;
-//    return if_else(abs(ct-1) < 3*eps(as(ct)), z1, res);
-    auto z1m1z2 = rec(z1)*z2;
-    auto p =  pure(z1m1z2)*invs;
-    auto [s, c] = sincos(theta*t);
-
-    return z1*(c+s*p);
-  }
-
   //================================================================================================
   //  Unary functions
   //================================================================================================
