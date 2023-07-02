@@ -205,16 +205,12 @@ namespace eve::detail
   {
     auto aq = abs(q);
     auto v = pure(q);
-//     std::cout << "q " << q << std::endl;
-
     auto s = real(q);
-    auto z = eve::log(aq)+(eve::acos(s/aq)/abs(v))*v;
-//     std::cout << "z " << z << std::endl;
-
-    return if_else( is_eqz(z)
-                  , (minf(as(aq)))
-                  , if_else( is_real(z)
-                           , to_quaternion(log(to_complex(real(z))))
+    auto z = (eve::acos(s/aq)/abs(v))*v+eve::log(aq);
+    return if_else( is_eqz(q)
+                  , minf(as(aq))
+                  , if_else( is_real(q)
+                           , to_quaternion(log(to_complex(real(q))))
                            , z
                            )
                   );
