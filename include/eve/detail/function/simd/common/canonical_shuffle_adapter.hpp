@@ -208,28 +208,25 @@ simplify_plain_shuffle(pattern_t<I...>, eve::fixed<G> g, Ts... xs)
   else return simplify_plain_shuffle3(p, g, xs...);
 }
 
-template<typename... Ts, std::size_t... i>
+template<typename Internal,
+         std::ptrdiff_t G,
+         std::ptrdiff_t... I,
+         plain_scalar_value T,
+         typename N,
+         typename... Ts,
+         std::size_t... i>
 EVE_FORCEINLINE auto
-sfinae_friendly_apply_impl(auto               invocable,
-                           auto               p,
-                           auto               g,
-                           kumi::tuple<Ts...> t,
-                           std::index_sequence<i...>) noexcept
-    -> decltype(invocable(p, g, get<i>(t)...))
+canonical_shuffle_adapter_impl_after_simplification(Internal                       internal,
+                                                    pattern_t<I...>                p,
+                                                    fixed<G>                       g,
+                                                    kumi::tuple<wide<T, N>, Ts...> xs,
+                                                    std::index_sequence<i...>)
 {
-  return invocable(p, g, get<i>(t)...);
-}
-
-template<typename... Ts>
-EVE_FORCEINLINE auto
-sfinae_friendly_apply(auto                           invocable,
-                      auto                           p,
-                      auto                           g,
-                      kumi::tuple<Ts...>             t,
-                      std::index_sequence_for<Ts...> is = {}) noexcept
-    -> decltype(sfinae_friendly_apply_impl(invocable, p, g, t, is))
-{
-  return sfinae_friendly_apply_impl(invocable, p, g, t, is);
+  if constexpr( requires { internal(p, g, get<i>(xs)...); } )
+  {
+    return internal(p, g, get<i>(xs)...);
+  }
+  else { return no_matching_shuffle; }
 }
 
 template<typename Internal,
@@ -247,17 +244,18 @@ canonical_shuffle_adapter_impl_(EVE_SUPPORTS(cpu_),
                                 Ts... xs)
 {
   auto xgp = simplify_plain_shuffle(p, g, x, xs...);
-
-  if constexpr( requires { sfinae_friendly_apply(internal, xgp.p, xgp.g, xgp.x); } )
+  auto r   = canonical_shuffle_adapter_impl_after_simplification(
+      internal,
+      xgp.p,
+      xgp.g,
+      xgp.x,
+      std::make_index_sequence<std::tuple_size_v<decltype(xgp.x)>> {});
+  if constexpr( !matched_shuffle<decltype(r)> ) { return r; }
+  else
   {
-    auto r = sfinae_friendly_apply(internal, xgp.p, xgp.g, xgp.x);
-    if constexpr( !matched_shuffle<decltype(r)> ) { return r; }
-    else
-    {
-      using N1 = eve::fixed<sizeof...(I) * G>;
-      return bit_cast(r, as<wide<T, N1>> {});
-    }
+    using N1 = eve::fixed<sizeof...(I) * G>;
+    return bit_cast(r, as<wide<T, N1>> {});
   }
-  else { return no_matching_shuffle; }
 }
+
 }
