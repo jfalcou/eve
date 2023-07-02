@@ -42,72 +42,73 @@ shuffle_l0_2_all()
 TTS_CASE("Perfect shuffle, x86, 16 bytes")
 {
   // 16x1
-  shuffle_l0_all<eve::sse2, double, 2, 2, shuffle_test::kLen1Tests>();
   shuffle_l0_all<eve::sse2, std::uint64_t, 2, 2, shuffle_test::kLen1Tests>();
 
   // 8x2
-  shuffle_l0_all<eve::sse2, double, 2, 1, shuffle_test::kLen2No0sTests>();
   shuffle_l0_all<eve::sse2, std::uint64_t, 2, 1, shuffle_test::kLen2No0sTests>();
   // < sse4.1 requires a mask for set 0
-  shuffle_l0_test<eve::sse2, double, 2, 1, eve::na_, 0>();
-  shuffle_l0_test<eve::sse2, double, 2, 1, 1, eve::na_>();
   shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, 0, eve::na_>();
   shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, eve::na_, 0>();
   shuffle_l0_test<eve::sse2, std::uint64_t, 2, 1, 1, eve::na_>();
-  shuffle_l0_all<eve::sse4_1, double, 2, 1, shuffle_test::kLen20sTests>();
   shuffle_l0_all<eve::sse4_1, std::uint64_t, 2, 1, shuffle_test::kLen20sTests>();
+
+  shuffle_l0_all<eve::sse2, std::uint32_t, 4, 1, shuffle_test::kLen4No0Tests_IndependentHalves>();
+  shuffle_l0_all<eve::sse2, std::uint32_t, 4, 1, shuffle_test::kLen4N0Tests_CrossLane>();
+
+  // rotate
+  shuffle_l0_all<eve::sse3, std::uint16_t, 8, 1, shuffle_test::kRotate8>();
+  shuffle_l0_all<eve::sse3, std::uint8_t, 16, 1, shuffle_test::kRotate16>();
 };
 
 TTS_CASE("Perfect shuffle, x86, 16x2")
 {
-  shuffle_l0_2_all<eve::sse2, double, 2, 2, shuffle_test::kLen1x2Tests>();
   shuffle_l0_2_all<eve::sse2, std::uint64_t, 2, 2, shuffle_test::kLen1x2Tests>();
 
   // 8x2x2
-  shuffle_l0_2_test<eve::sse2, double, 2, 1, eve::na_, 0>();
-  shuffle_l0_2_test<eve::sse2, double, 2, 1, 2, eve::na_>();
-  shuffle_l0_2_all<eve::sse2, double, 2, 1, shuffle_test::kLen2x2_No0sTests>();
+  shuffle_l0_2_test<eve::sse2, std::uint64_t, 2, 1, eve::na_, 0>();
+  shuffle_l0_2_test<eve::sse2, std::uint64_t, 2, 1, 2, eve::na_>();
+  shuffle_l0_2_all<eve::sse2, std::uint64_t, 2, 1, shuffle_test::kLen2x2_No0sTests>();
   shuffle_l0_2_all<eve::sse2, std::uint64_t, 2, 1, shuffle_test::kLen2x2_No0sTests>();
 
   // 4x4x2 blend
-  shuffle_l0_2_all<eve::sse4_1, float, 4, 1, shuffle_test::kLen4x2_No0sBlendTests>();
   shuffle_l0_2_all<eve::sse4_1, std::uint32_t, 4, 1, shuffle_test::kLen4x2_No0sBlendTests>();
 
-  if constexpr ( eve::current_api >= eve::sse4_1 )
-  {
-    eve::wide<std::uint16_t, eve::fixed<8>> a {1, 2, 3, 4, 5, 6, 7, 8};
-    auto b = a + 8;
-
-    a = _mm_blend_epi16(a, b, 1);
-    eve::wide<std::uint16_t, eve::fixed<8>> expected {9, 2, 3, 4, 5, 6, 7, 8};
-
-    TTS_EQUAL(a, expected);
-  }
-
   // 2x8x2 blend
-#if 0 // FIX-1617 - enable `_mm_blend_epi16`
+#  if 0 // FIX-1617 - enable `_mm_blend_epi16`
   shuffle_l0_2_all<eve::sse4_1, std::uint16_t, 4, 1, shuffle_test::kLen2x8x2_No0sBlendTests>();
-#endif
+#  endif
 };
 
 TTS_CASE("Perfect shuffle, x86, 32 bytes")
 {
   // 32x1
-  shuffle_l0_all<eve::avx, double, 4, 4, shuffle_test::kLen1Tests>();
   shuffle_l0_all<eve::avx, std::uint64_t, 4, 4, shuffle_test::kLen1Tests>();
 
   // 16x2
-  shuffle_l0_all<eve::avx, double, 4, 2, shuffle_test::kLen2No0sTests>();
   shuffle_l0_all<eve::avx, std::uint64_t, 4, 2, shuffle_test::kLen2No0sTests>();
-  shuffle_l0_all<eve::avx, double, 4, 2, shuffle_test::kLen20sTests>();
   shuffle_l0_all<eve::avx, std::uint64_t, 4, 2, shuffle_test::kLen20sTests>();
 
   // 8x4 in havles
-  shuffle_l0_all<eve::avx, double, 4, 1, shuffle_test::kLen4No0Tests_IndependentHalves>();
   shuffle_l0_all<eve::avx, std::uint64_t, 4, 1, shuffle_test::kLen4No0Tests_IndependentHalves>();
-
-  shuffle_l0_all<eve::avx2, double, 4, 1, shuffle_test::kLen4N0Tests_CrossLane>();
   shuffle_l0_all<eve::avx2, std::uint64_t, 4, 1, shuffle_test::kLen4N0Tests_CrossLane>();
+
+  // 4x8 in halves, repeating
+  {
+    constexpr auto cases = shuffle_test::concat(
+        shuffle_test::matchRightLane(shuffle_test::kLen4No0Tests_IndependentHalves),
+        shuffle_test::matchRightLane(shuffle_test::kLen4N0Tests_CrossLane));
+
+    shuffle_l0_all<eve::avx, std::uint32_t, 8, 1, cases>();
+  }
+
+  // rotate 128
+  {
+    constexpr auto r8 = shuffle_test::matchRightLane(shuffle_test::kRotate8);
+    constexpr auto r16 = shuffle_test::matchRightLane(shuffle_test::kRotate16);
+
+    shuffle_l0_all<eve::avx2, std::uint16_t, 16, 1, r8>();
+    shuffle_l0_all<eve::avx2, std::uint8_t, 32, 1, r16>();
+  }
 };
 
 // No new patterns but just to see that other behavour works as expected
@@ -140,19 +141,17 @@ TTS_CASE("Perfect shuffle, x86, sanity checks")
 TTS_CASE("Perfect shuffle, arm neon, 8 bytes")
 {
   // 8x1
-  shuffle_l0_all<eve::neon, float, 2, 2, shuffle_test::kLen1Tests>();
   shuffle_l0_all<eve::neon, std::uint64_t, 1, 1, shuffle_test::kLen1Tests>();
 
   // 4x2
-  shuffle_l0_all<eve::neon, float, 2, 1, shuffle_test::kLen2No0sTests>();
   shuffle_l0_all<eve::neon, std::uint32_t, 2, 1, shuffle_test::kLen2No0sTests>();
-  shuffle_l0_all<eve::neon, float, 2, 1, shuffle_test::kLen20sTests>();
   shuffle_l0_all<eve::neon, std::uint32_t, 2, 1, shuffle_test::kLen20sTests>();
 };
 
 TTS_CASE("Perfect shuffle, arm neon, sanity checks")
 {
-  shuffle_l0_test<eve::avx, std::uint16_t, 4, 1, 2, 3, 2, 3>();
+  shuffle_l0_test<eve::neon, std::uint16_t, 4, 1, 2, 3, 2, 3>();
+  shuffle_l0_all<eve::neon, float, 2, 1, shuffle_test::kLen2No0sTests>();
 };
 #endif
 
