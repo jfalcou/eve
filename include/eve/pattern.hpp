@@ -94,12 +94,18 @@ namespace eve
   //================================================================================================
 
   //! @relates eve::pattern_t
+  //! @brief what callable can be a pattern formula
+  template <typename F>
+  concept pattern_formula = std::constructible_from<F> && std::regular_invocable<F, int, int>
+    && !requires { { F::size() }; };
+
+  //! @relates eve::pattern_t
   //! @brief Formula-based pattern holder
-  template<typename F> struct as_pattern { constexpr as_pattern(F) {} };
+  template<pattern_formula F> struct as_pattern { constexpr as_pattern(F) {} };
 
   //! @relates eve::pattern_t
   //! @brief Converts a formula pattern to index pattern
-  template<std::ptrdiff_t Sz, typename F> constexpr auto fix_pattern(F)
+  template<std::ptrdiff_t Sz, pattern_formula F> constexpr auto fix_pattern(F)
   {
     return []<auto... N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
@@ -107,7 +113,7 @@ namespace eve
     }( std::make_integer_sequence<std::ptrdiff_t,Sz>{} );
   }
 
-  template<std::ptrdiff_t Sz, typename F> constexpr auto fix_pattern(as_pattern<F>)
+  template<std::ptrdiff_t Sz, pattern_formula F> constexpr auto fix_pattern(as_pattern<F>)
   {
     return fix_pattern<Sz>( F{} );
   }
@@ -117,7 +123,7 @@ namespace eve
   template<std::ptrdiff_t N, shuffle_pattern Pattern >
   constexpr auto pattern_clamp(Pattern const&) noexcept
   {
-    return fix_pattern<N>( Pattern{} );
+    return fix_pattern<N>( [](int i, int size) { return Pattern{}(i, size); } );
   }
 
   //================================================================================================

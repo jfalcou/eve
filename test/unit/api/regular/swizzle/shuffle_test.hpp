@@ -140,6 +140,27 @@ concat(const A0& a0, const As&...as)
   return (concat_op {a0} + ... + as).self;
 }
 
+template<std::size_t Len>
+constexpr arr<Len>
+toRightHalf(arr<Len> in)
+{
+  for( auto& x : in )
+  {
+    if( x < 0 ) continue;
+    x += (std::ptrdiff_t)Len;
+  }
+  return in;
+}
+
+template<std::size_t N, std::size_t Len>
+constexpr std::array<arr<Len * 2>, N>
+matchRightLane(const std::array<arr<Len>, N>& in)
+{
+  std::array<arr<Len * 2>, N> res = {};
+  for( std::size_t i = 0; i != N; ++i ) { res[i] = concat(in[i], toRightHalf(in[i])); }
+  return res;
+}
+
 // Do not repeat patterns that occur when doubling up
 // We also don't test all we_ because there is a lot of them
 [[maybe_unused]] constexpr std::array kLen1Tests = {
@@ -234,9 +255,7 @@ concat(const A0& a0, const As&...as)
 }();
 
 // Too many to do all
-[[maybe_unused]]
-
-constexpr std::array kLen4No0Tests_Scrambled = {
+[[maybe_unused]] constexpr std::array kLen4No0Tests_Scrambled = {
     arr<4> {0, 1, 0, 0}, //
     arr<4> {1, 0, 1, 1}, //
     // ---
@@ -253,6 +272,22 @@ constexpr std::array kLen4No0Tests_Scrambled = {
 
 [[maybe_unused]] constexpr std::array kLen4N0Tests_CrossLane =
     concat(kLen4No0Tests_IndependentHalves_Reversed, kLen4No0Tests_Scrambled);
+
+// Do not repeat shuffle 4
+[[maybe_unused]]
+constexpr std::array kRotate8 = {
+    arr<8> {1, 2, 3, 4, 5, 6, 7, 0},               //
+    arr<8> {3, 4, 5, 6, 7, 0, 1, 2},               //
+    arr<8> {5, 6, 7, 0, 1, 2, 3, 4},               //
+    arr<8> {7, 0, 1, 2, 3, 4, 5, 6},               //
+    arr<8> {1, eve::we_, 3, 4, 5, eve::we_, 7, 0}, //
+};
+
+[[maybe_unused]]
+constexpr std::array kRotate16 = {
+    arr<16> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0}, //
+    arr<16> {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2}, //
+};
 
 // -----------------------------------------------------------------------------
 // 2 register tests
@@ -285,7 +320,6 @@ constexpr std::array kLen4No0Tests_Scrambled = {
     arr<2> {2, 1}, //
     arr<2> {3, 0}, //
     arr<2> {3, 1}, //
-                   //---------------------
 };
 
 [[maybe_unused]] constexpr std::array kLen4x2_No0sBlendTests = {
@@ -305,7 +339,6 @@ constexpr std::array kLen4No0Tests_Scrambled = {
     // --------------------
     arr<4> {4, 5, 6, 3}, //
     arr<4> {4, 5, 2, 7}, //
-    // --------------------
 };
 
 // Not doing all

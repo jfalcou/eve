@@ -87,46 +87,68 @@ namespace idx
 
 } // namespace idx
 
+/*
+ * 16 byte shuffles that were duplicated in next arches between multiple lanes.
+ */
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+EVE_FORCEINLINE auto
+shuffle_l0_x86_within_128(pattern_t<I...>, fixed<G> g, wide<T, N> x)
+{
+  constexpr std::array  idxs {I...};
+  constexpr std::size_t reg_size = sizeof(T) * N::value;
+  constexpr bool        zeroes   = idxm::has_zeroes(idxs);
+
+  if constexpr( idxs.size() * G * sizeof(T) > 16 )
+  {
+    constexpr auto p_half = idxm::is_repeating_pattern(idxs);
+
+    if constexpr( !p_half ) return no_matching_shuffle;
+    else return shuffle_l0_x86_within_128(idxm::to_pattern<*p_half>(), g, x);
+  }
+  else if constexpr( sizeof(T) >= 4 && !zeroes )
+  {
+    constexpr int m = idx::x86_mm_shuffle_4(idxs);
+
+    if constexpr( reg_size == 16 ) return _mm_shuffle_epi32(x, m);
+    else if constexpr( reg_size == 32 )
+    {
+      // _mm256_shuffle_epi32 has better throughput
+      if constexpr( current_api >= avx2 ) return _mm256_shuffle_epi32(x, m);
+      else return _mm256_permute_ps(eve::bit_cast(x, eve::as<__m256> {}), m);
+    }
+    else if constexpr( reg_size == 64 ) return _mm512_shuffle_epi32(x, m);
+  }
+  else if constexpr( constexpr auto rotation = idxm::is_rotate(idxs);
+                     rotation
+                     && ((current_api >= ssse3 && reg_size == 16)
+                         || (current_api >= avx2 && reg_size == 32)) )
+  {
+    constexpr int m = 16 - G * sizeof(T) * *rotation;
+
+    if constexpr( reg_size == 16 ) return _mm_alignr_epi8(x, x, m);
+    else if constexpr( reg_size == 32 ) return _mm256_alignr_epi8(x, x, m);
+    else if constexpr( reg_size == 64 ) return _mm512_alignr_epi8(x, x, m);
+  }
+  else return no_matching_shuffle;
+}
+
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
 shuffle_l0_x86_128_8x2(pattern_t<I...>, fixed<G>, wide<T, N> x)
 {
   constexpr std::array idxs {I...};
-  if constexpr( !idx::has_zeroes(idxs) )
+  if constexpr( idx::matches(idxs, {0, na_}) ) return _mm_move_epi64(x);
+  else if constexpr( idx::matches(idxs, {na_, 0}, {1, na_}) )
   {
-    if constexpr( std::same_as<T, double> )
-    {
-      constexpr int mm = idx::x86_mm_shuffle_2(idxs);
-      return _mm_shuffle_pd(x, x, mm);
-    }
-    else
-    {
-      constexpr int mm = idx::x86_mm_shuffle_4(idxs);
-      return _mm_shuffle_epi32(x, mm);
-    }
+    if constexpr( idxs[0] == na_ ) return _mm_bslli_si128(x, 8);
+    else return _mm_bsrli_si128(x, 8);
   }
-  // has zeroes
-  else
+  else if constexpr( current_api >= sse4_1 )
   {
-    if constexpr( idx::matches(idxs, {0, na_}) )
-    {
-      __m128i u64x2 = eve::bit_cast(x, eve::as<__m128i> {});
-      return _mm_move_epi64(u64x2);
-    }
-    else if constexpr( idx::matches(idxs, {na_, 0}, {1, na_}) )
-    {
-      __m128i u64x2 = eve::bit_cast(x, eve::as<__m128i> {});
-      if constexpr( idxs[0] == na_ ) return _mm_bslli_si128(u64x2, 8);
-      else return _mm_bsrli_si128(u64x2, 8);
-    }
-    else if constexpr( current_api >= sse4_1 )
-    {
-      // na_, 1
-      __m128i u64x2 = eve::bit_cast(x, eve::as<__m128i> {});
-      return _mm_insert_epi64(u64x2, 0, 1);
-    }
-    else return no_matching_shuffle;
+    // na_, 1
+    return _mm_insert_epi64(x, 0, 1);
   }
+  else return no_matching_shuffle;
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
@@ -139,13 +161,17 @@ requires std::same_as<abi_t<T, N>, x86_128_>
   if constexpr( idxs.size() * G != N::value ) return no_matching_shuffle;
   else if constexpr( idx::is_identity(idxs) ) return x;
   else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
+  else if constexpr( matched_shuffle<decltype(shuffle_l0_x86_within_128(p, g, x))> )
+  {
+    return shuffle_l0_x86_within_128(p, g, x);
+  }
   else if constexpr( sizeof(T) == 8 ) return shuffle_l0_x86_128_8x2(p, g, x);
   else return no_matching_shuffle;
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(avx_), pattern_t<I...>, fixed<G>, wide<T, N> x)
+shuffle_l0_impl_(EVE_SUPPORTS(avx_), pattern_t<I...> p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_256_> && (sizeof...(I) * G == N::value)
 {
   constexpr std::array  idxs {I...};
@@ -154,57 +180,51 @@ requires std::same_as<abi_t<T, N>, x86_256_> && (sizeof...(I) * G == N::value)
   if constexpr( idxs.size() * G != N::value ) return no_matching_shuffle;
   else if constexpr( idx::is_identity(idxs) ) return x;
   else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
-  else if constexpr( current_api >= avx2 && gsize >= 8 && !idx::has_zeroes(idxs) )
+  else if constexpr( matched_shuffle<decltype(shuffle_l0_x86_within_128(p, g, x))> )
+  {
+    return shuffle_l0_x86_within_128(p, g, x);
+  }
+  else if constexpr( current_api >= avx2 && gsize >= 8 && !idxm::has_zeroes(idxs) )
   {
     constexpr int shuffle = idx::x86_mm_shuffle_4(idxs);
-    if constexpr( std::same_as<T, double> ) return _mm256_permute4x64_pd(x, shuffle);
-    else return _mm256_permute4x64_epi64(x, shuffle);
+    return _mm256_permute4x64_epi64(x, shuffle);
   }
   else if constexpr( gsize == 16 )
   {
     constexpr int mm = idx::permute2f128_one_reg_mask(idxs);
-    if constexpr( std::same_as<T, double> ) return _mm256_permute2f128_pd(x, x, mm);
-    else return _mm256_permute2f128_si256(x, x, mm);
+    return _mm256_permute2f128_si256(x, x, mm);
   }
-  else if constexpr( idx::within_lane(idxs) && gsize == 8 && !idx::has_zeroes(idxs) )
+  else if constexpr( idx::within_lane(idxs) && gsize == 8 && !idxm::has_zeroes(idxs) )
   {
     constexpr int mm = idx::x86_shuffle_4_in_lane(idxs);
-    return _mm256_permute_pd(x, mm);
+    return _mm256_permute_pd(eve::bit_cast(x, eve::as<__m256d> {}), mm);
   }
   else return no_matching_shuffle;
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(sse2_), pattern_t<I...> p, fixed<G> g, wide<T, N> y, wide<T, N> x)
+shuffle_l0_impl_(EVE_SUPPORTS(sse2_), pattern_t<I...>, fixed<G>, wide<T, N> y, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_>
 {
   constexpr std::array idxs {I...};
 
   if constexpr( idxs.size() * G != N::value ) return no_matching_shuffle;
-  else if constexpr( idx::are_below_ignoring_speicals(idxs, N::value / G) )
-  {
-    return shuffle_l0_impl(p, g, x);
-  }
-  else if constexpr( idx::are_above_ignoring_speicals(idxs, N::value / G) )
-  {
-    return shuffle_l0_impl(pattern<I < 0 ? I : I - N::value / G...>, g, y);
-  }
   // Immediate blends are very good, even if are covered by other ops
   // https://stackoverflow.com/questions/76552874/how-should-i-chose-between-mm-move-sd-mm-shuffle-pd-mm-blend-pd
   //
   // FIX-1617 - enable `_mm_blend_epi16`
-  else if constexpr ( eve::current_api >= eve::sse4_1 && sizeof(T) >= 4 && idx::is_blend(idxs) )
+  else if constexpr( eve::current_api >= eve::sse4_1 && sizeof(T) >= 4 && idx::is_blend(idxs) )
   {
     constexpr int m = idx::blend_immediate_mask(idxs);
 
-    if constexpr ( sizeof(T) == 8 )
+    if constexpr( sizeof(T) == 8 )
     {
       auto x_f64 = bit_cast(x, eve::as<__m128d> {});
       auto y_f64 = bit_cast(y, eve::as<__m128d> {});
       return _mm_blend_pd(x_f64, y_f64, m);
     }
-    else if constexpr ( sizeof(T) == 4 )
+    else if constexpr( sizeof(T) == 4 )
     {
       auto x_f32 = bit_cast(x, eve::as<__m128> {});
       auto y_f32 = bit_cast(y, eve::as<__m128> {});
@@ -220,22 +240,15 @@ requires std::same_as<abi_t<T, N>, x86_128_>
   }
   else if constexpr( sizeof(T) == 8 )
   {
+    // half from x, half from y
     // No w/e or zeroes are possible here
     auto x_f64 = bit_cast(x, eve::as<__m128d> {});
     auto y_f64 = bit_cast(y, eve::as<__m128d> {});
 
     // There is also _mm_move_sd but there is no reason to generate it for us.
     // Compiler sometimes transforms.
-    if constexpr( idxs[0] >= 2 )
-    {
-      constexpr int m = _MM_SHUFFLE2(idxs[1], idxs[0] - 2);
-      return _mm_shuffle_pd(y_f64, x_f64, m);
-    }
-    else
-    {
-      constexpr int m = _MM_SHUFFLE2(idxs[1] - 2, idxs[0]);
-      return _mm_shuffle_pd(x_f64, y_f64, m);
-    }
+    constexpr int m = _MM_SHUFFLE2(idxs[1] - 2, idxs[0]);
+    return _mm_shuffle_pd(x_f64, y_f64, m);
   }
   else return no_matching_shuffle;
 }
