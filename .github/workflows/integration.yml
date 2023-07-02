@@ -72,9 +72,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v6
-      credentials:
-        username: jfalcou
-        password: ${{ secrets.ghcr_password}}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
