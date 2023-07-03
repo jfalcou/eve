@@ -274,7 +274,7 @@ namespace eve::detail
                                                  ) noexcept
   {
     EVE_ASSERT(is_unit(z1) && is_unit(z2), "quaternion parameters must be unitary");
-    using r_t =  decltype(z1+z2);
+    using r_t =  decltype(z1+z2+t);
     using e_t =  underlying_type_t<r_t>;
     return pow(if_else(dist(z1, z2) <= downward(sqrt_2)(as<e_t>()), z2, -z2)/z1, t);
   }
@@ -282,6 +282,18 @@ namespace eve::detail
   //==============================================================================================
   //  nary functions :
   //==============================================================================================
+
+  template<typename Z1, typename Z2,typename Z3, typename Z4, floating_ordered_value T>
+  EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::squad_
+                                                 , Z1 const& z1, Z2  const & z2
+                                                 , Z3 const& z3, Z4  const & z4, T const & t
+                                                 ) noexcept
+  {
+    EVE_ASSERT(is_unit(z1) && is_unit(z2) && is_unit(z3) && is_unit(z4), "quaternion parameters must be unitary");
+    return slerp(slerp(z1, z4, t),
+                 slerp(z2, z3, t),
+                 2*t*(1-t));
+  }
 
   template<typename Z1, typename ...Z2>
   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::hypot_

@@ -74,13 +74,13 @@
 //!
 //!  Some but not all arithmetic function are at hand :
 //!
-//!  |          |          |         |           |           |          |          |
-//!  | -------- | -------- | ------- | --------- | --------- | -------- | -------- |
-//!  |  abs     | add      | average | ceil      | conj      | dec      | dist     |
-//!  |  div     | floor    | frac    | inc       | lerp      | maxabs   | minabs   |
-//!  |  minus   | mul      | nearest | negmaxabs | negminabs | oneminus | plus     |
-//!  |  pure    | rec      | reldist | sign      | slerp     | sqr      | sqr_abs  |
-//!  |  sub     | to_euler | trunc   |           |           |          |          |
+//!  |          |          |          |         |           |           |          |
+//!  | -------- | -------- | -------- | ------- | --------- | --------- | -------- |
+//!  |  abs     | add      | average  | ceil    | conj      | dec       | dist     |
+//!  |  div     | dot      | floor    | frac    | inc       | lerp      | maxabs   |
+//!  |  minabs  | minus    | mul      | nearest | negmaxabs | negminabs | oneminus |
+//!  |  plus    | pure     | rec      | reldist | sign      | slerp     | sqr      |
+//!  |  sqr_abs | sub      | to_euler | trunc   |           |           |          |
 //!
 //!    * `sqr_abs` computes the so called Cayley norm of a quaternion,  which is the square
 //!       of the Euclidian norm (given by `abs`) and so is not a norm at all but a quadratic form
