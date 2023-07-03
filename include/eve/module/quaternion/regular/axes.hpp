@@ -16,4 +16,9 @@ namespace eve
   auto _X(axis<1>{});
   auto _Y(axis<2>{});
   auto _Z(axis<3>{});
+
+  template < bool e > struct ext:std::integral_constant<bool, e>{};
+  auto Extrinsic(ext<true>{});
+  auto Intrinsic(ext<false>{});
+
 }

@@ -70,7 +70,7 @@ namespace eve
 
   namespace detail
   {
-    template<floating_ordered_value V, int I,  int J,  int K>
+    template<floating_ordered_value V, int I,  int J,  int K, bool Extrinsic>
     EVE_FORCEINLINE auto euler_to_quaternion_( EVE_SUPPORTS(cpu_)
                                              , V const & v1
                                              , V const & v2
@@ -78,33 +78,29 @@ namespace eve
                                              , axis<I>
                                              , axis<J>
                                              , axis<K>
-                                             , bool extrinsic
+                                             , ext<Extrinsic>
                                              ) noexcept
 
+    requires(I != J && J != K)
     {
-      EVE_ASSERT(I != J && J != K, "Expected consecutive axes to be different");
       std::array<as_quaternion_t<V>, 3> qs;
       auto [sa, ca] = sincos(v3/2);
       auto [sb, cb] = sincos(v2/2);
       auto [sc, cc] = sincos(v1/2);
-      if(!extrinsic)
+      get<0>(qs[0]) = ca;
+      get<0>(qs[1]) = cb;
+      get<J>(qs[1]) = sb;
+      get<0>(qs[2]) = cc;
+      if constexpr(!Extrinsic)
       {
-        get<0>(qs[0]) = ca;
         get<K>(qs[0]) = sa;
-        get<0>(qs[1]) = cb;
-        get<J>(qs[1]) = sb;
-        get<0>(qs[2]) = cc;
         get<I>(qs[2]) = sc;
         as_quaternion_t<V> q = qs[2]*qs[1]*qs[0];
         return q;
       }
       else
       {
-        get<0>(qs[0]) = ca;
         get<I>(qs[0]) = sa;
-        get<0>(qs[1]) = cb;
-        get<J>(qs[1]) = sb;
-        get<0>(qs[2]) = cc;
         get<K>(qs[2]) = sc;
         as_quaternion_t<V> q = qs[0]*qs[1]*qs[2];
         return q;

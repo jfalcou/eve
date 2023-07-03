@@ -329,37 +329,143 @@ namespace eve::detail
     return d(lpnorm)(p, abs(z1), abs(z2)...);
   }
 
-  template<typename Z, int II,  int JJ,  int KK>
+//   template<typename Z, int II,  int JJ,  int KK>
+//   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::to_euler_
+//                                                , Z const& q
+//                                                , axis<II>
+//                                                , axis<JJ>
+//                                                , axis<KK>
+//                                                , bool extrinsic
+//                                                ) noexcept
+//   {
+//     int I = II;
+//     int J = JJ;
+//     int K = KK;
+//     using e_t =  std::remove_reference_t<decltype(real(Z()))>;
+//     std::array<e_t, 4> aq{get<0>(q), get<1>(q), get<2>(q), get<3>(q)};
+//     EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
+//     EVE_ASSERT(I != J && J != K, "Expected consecutive axes to be different");
+//     bool is_proper = I == K; //Proper Euler angles else Tait-Bryan
+//     if (!extrinsic) std::swap(I, K);
+//     K = 6-I-J;
+//     int sign = (I-J)*(J-K)*(K-I)/2; // even (+1) permutation or odd (-1);
+//     auto a = aq[0];
+//     auto b = aq[I];
+//     auto c = aq[J];
+//     auto d = aq[K]*sign;
+//     if (!is_proper)
+//     {
+//       a -= aq[J];
+//       b += aq[K]*sign;
+//       c += aq[0];
+//       d -= aq[I];
+//     }
+//     auto a2pb2 = sqr(a)+sqr(b);
+//     auto n2 = a2pb2+sqr(c)+sqr(d);
+//     auto theta1 = acos(dec(2*a2pb2/n2));
+//     auto eps = 1e-7;
+//     auto pi  = eve::pi(as<e_t>());
+//     auto twopi = eve::two_pi(as<e_t>());
+//     auto mpi = -pi;
+//     auto is_safe1 = abs(theta1) >= eps;
+//     auto is_safe2 = abs(theta1 - pi) >= eps;
+//     auto is_safe = is_safe1 && is_safe2;
+
+//     auto hp = atan2(b, a);
+//     auto hm = atan2(-d, c);
+
+//     auto theta0 = hp + hm;
+//     auto theta2 = hp - hm;
+
+//     if (!extrinsic)
+//     {
+//       theta0 = if_else(!is_safe, zero, theta0);
+//       theta2 = if_else(!is_safe1, 2*hp, theta2);
+//       theta2 = if_else(!is_safe2, -2*hm, theta2);
+//     }
+//     else
+//     {
+//       theta2 = if_else(!is_safe, zero, theta2);
+//       theta0 = if_else(!is_safe1, 2*hp, theta0);
+//       theta0 = if_else(!is_safe2, 2*hm, theta0);
+//     }
+//     theta0 += if_else(theta0 < mpi, twopi, zero);
+//     theta0 -= if_else(theta0 >  pi, twopi, zero);
+//     theta1 += if_else(theta1 < mpi, twopi, zero);
+//     theta1 -= if_else(theta1 >  pi, twopi, zero);
+//     theta2 += if_else(theta2 < mpi, twopi, zero);
+//     theta2 -= if_else(theta2 >  pi, twopi, zero);
+
+//     // for Tait-Bryan thetas
+//     if(!is_proper)
+//     {
+//       theta2 *= sign;
+//       theta1 -= pi / 2;
+//     }
+//     if (!extrinsic) std::swap(theta0, theta2);
+
+//     return kumi::tuple{theta0, theta1, theta2};
+//   }
+
+
+    template<typename Z, int II,  int JJ,  int KK, bool Extrinsic>
   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::to_euler_
                                                , Z const& q
                                                , axis<II>
                                                , axis<JJ>
                                                , axis<KK>
-                                               , bool extrinsic
+                                               , ext<Extrinsic>
                                                ) noexcept
+  requires(II != JJ && JJ != KK)
   {
-    int I = II;
-    int J = JJ;
-    int K = KK;
-    using e_t =  std::remove_reference_t<decltype(real(Z()))>;
+     using e_t =  std::remove_reference_t<decltype(real(Z()))>;
     std::array<e_t, 4> aq{get<0>(q), get<1>(q), get<2>(q), get<3>(q)};
     EVE_ASSERT(eve::all(is_nez(q)), "some quaternion are null");
-    EVE_ASSERT(I != J && J != K, "Expected consecutive axes to be different");
-    bool is_proper = I == K; //Proper Euler angles else Tait-Bryan
-    if (!extrinsic) std::swap(I, K);
-    K = 6-I-J;
-    int sign = (I-J)*(J-K)*(K-I)/2; // even (+1) permutation or odd (-1);
-    auto a = aq[0];
-    auto b = aq[I];
-    auto c = aq[J];
-    auto d = aq[K]*sign;
-    if (!is_proper)
-    {
-      a -= aq[J];
-      b += aq[K]*sign;
-      c += aq[0];
-      d -= aq[I];
-    }
+    constexpr bool is_proper = II == KK; //Proper Euler angles else Tait-Bryan
+
+    auto prepare = [&](){
+      if constexpr(Extrinsic)
+      {
+        constexpr int K = 6-II-JJ;
+        constexpr int I = II;
+        constexpr int J = JJ;
+        int sign = (I-J)*(J-K)*(K-I)/2; // even (+1) permutation or odd (-1);
+
+        auto a = aq[0];
+        auto b = aq[I];
+        auto c = aq[J];
+        auto d = aq[K]*sign;
+        if constexpr(!is_proper)
+        {
+          a -= aq[J];
+          b += aq[K]*sign;
+          c += aq[0];
+          d -= aq[I];
+        }
+        return kumi::tuple{a, b, c, d, sign};
+      }
+      else
+      {
+        constexpr int I = KK;
+        constexpr int J = JJ;
+        constexpr int K = 6-I-J;
+        int sign = (I-J)*(J-K)*(K-I)/2; // even (+1) permutation or odd (-1);
+
+        auto a = aq[0];
+        auto b = aq[I];
+        auto c = aq[J];
+        auto d = aq[K]*sign;
+        if constexpr(!is_proper)
+        {
+          a -= aq[J];
+          b += aq[K]*sign;
+          c += aq[0];
+          d -= aq[I];
+        }
+        return kumi::tuple{a, b, c, d, sign};
+      }
+    };
+    auto [a, b, c, d, sign] = prepare();
     auto a2pb2 = sqr(a)+sqr(b);
     auto n2 = a2pb2+sqr(c)+sqr(d);
     auto theta1 = acos(dec(2*a2pb2/n2));
@@ -377,7 +483,7 @@ namespace eve::detail
     auto theta0 = hp + hm;
     auto theta2 = hp - hm;
 
-    if (!extrinsic)
+    if constexpr(!Extrinsic)
     {
       theta0 = if_else(!is_safe, zero, theta0);
       theta2 = if_else(!is_safe1, 2*hp, theta2);
@@ -402,7 +508,7 @@ namespace eve::detail
       theta2 *= sign;
       theta1 -= pi / 2;
     }
-    if (!extrinsic) std::swap(theta0, theta2);
+    if constexpr(!Extrinsic) std::swap(theta0, theta2);
 
     return kumi::tuple{theta0, theta1, theta2};
   }
