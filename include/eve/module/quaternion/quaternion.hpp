@@ -318,6 +318,21 @@ namespace eve
     return if_else(cond, to_quaternion(z1), to_quaternion(z2));
   }
 
+  namespace detail
+  {
+    template<typename Q1, typename Q2>
+    EVE_FORCEINLINE auto dot_( EVE_SUPPORTS(cpu_), Q1 const& v1, Q2 const & v2) noexcept
+    requires ( (is_complex_v<Q1> && is_quaternion_v<Q2>) || (is_complex_v<Q2> && is_quaternion_v<Q1>))
+    {
+      if constexpr(is_complex_v<Q1> )
+        return real(v1)*real(v2)+imag(v1)*ipart(v2);
+      else
+       return real(v1)*real(v2)+ipart(v1)*imag(v2);
+
+    }
+  }
+
+
   //================================================================================================
   //! @}
   //================================================================================================

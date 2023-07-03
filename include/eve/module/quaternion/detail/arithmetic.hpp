@@ -238,4 +238,16 @@ namespace eve::detail
     using r_t = decltype(abs(z1+z2));
     return dist(z1, z2)/max(abs(z1), abs(z2), one(as<r_t>()));
   }
+
+  //================================================================================================
+  //  dot product
+  //================================================================================================
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  quaternion_binary_dispatch(eve::tag::dot_, Z1 const& z1, Z2 const& z2) noexcept
+  {
+    return sum_of_prod(real(z1), real(z2), ipart(z1), ipart(z2))+
+      sum_of_prod(jpart(z1), jpart(z2), kpart(z1), kpart(z2));
+  }
+
 }

@@ -427,4 +427,14 @@ namespace eve::detail
     return dist(z1, z2)/max(abs(z1), abs(z2), one(as<r_t>()));
   }
 
+  //================================================================================================
+  //  dot product
+  //================================================================================================
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  complex_binary_dispatch(eve::tag::dot_, Z1 const& z1, Z2 const& z2) noexcept
+  {
+    return   real(z1)*real(z2), imag(z1)*imag(z2);
+  }
+
 }
