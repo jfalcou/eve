@@ -205,7 +205,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   quaternion_unary_dispatch(eve::tag::sign_, auto const& z) noexcept
   {
-    return if_else(is_eqz(z), zero, z / abs(z));
+    return if_else(is_eqz(z), zero, z / pedantic(abs)(z));
   }
 
   template<typename Z>
@@ -262,7 +262,7 @@ namespace eve::detail
   {
     using e_t = std::decay_t<decltype(real(q))>;
     using v_t = decltype(T()+e_t());
-//    if constexpr (!normalize) EVE_ASSERT(eve::all(is_unit(q)), "some quaternions are not unitary");
+    if constexpr (!normalize) EVE_ASSERT(eve::all(pedantic(is_unit)(q)), "some quaternions are not unitary");
     std::array<v_t, 3> w, wp;
     using a_t = decltype(abs(q));
     a_t fac(2);
