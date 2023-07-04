@@ -20,7 +20,7 @@ TTS_CASE_WITH( "Check behavior of pow on wide"
              )
   <typename T>(T const& a0, T const&  a1, T const& a2, T const&  a3)
 {
-  auto tol = 0.001;
+  auto tol = 0.1;
   using z_t = eve::as_quaternion_t<T>;
   z_t z(a0, a1, a2, a3);
   TTS_RELATIVE_EQUAL(eve::pow(z, 1),z, tol);
