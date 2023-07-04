@@ -250,4 +250,32 @@ namespace eve::detail
       sum_of_prod(jpart(z1), jpart(z2), kpart(z1), kpart(z2));
   }
 
+  //================================================================================================
+  //  rotate vector
+  //================================================================================================
+  template<typename Z1, ordered_value T, bool normalize>
+  EVE_FORCEINLINE auto
+  quaternion_nary_dispatch(eve::tag::rot_vec_
+                            , Z1 const & q
+                            , std::span<T, 3> const & v
+                            , nor<normalize>) noexcept
+  {
+    using e_t = std::decay_t<decltype(real(q))>;
+    using v_t = decltype(T()+e_t());
+    if constexpr (!normalize) EVE_ASSERT(eve::all(is_unit(q)), "some quaternions are not unitary");
+    std::array<v_t, 3> w, wp;
+    using a_t = decltype(abs(q));
+    a_t fac(2);
+    if constexpr(normalize) fac *= rec(abs(q));
+    auto [r, i, j, k] = q;
+    w[0] = fma(r, v[0], diff_of_prod(j, v[2], k, v[1]));
+    w[1] = fma(r, v[1], diff_of_prod(k, v[0], i, v[2]));
+    w[2] = fma(r, v[2], diff_of_prod(i, v[1], j, v[0]));
+
+    wp[0] = fam(v[0], fac, diff_of_prod(j, w[2], k, w[1]));
+    wp[1] = fam(v[1], fac, diff_of_prod(k, w[0], i, w[2]));
+    wp[2] = fam(v[2], fac, diff_of_prod(i, w[1], j, w[0]));
+    return wp;
+  }
+
 }

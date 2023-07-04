@@ -24,3 +24,4 @@
 #include <eve/module/quaternion/regular/euler_to_quaternion.hpp>
 #include <eve/module/quaternion/regular/slerp.hpp>
 #include <eve/module/quaternion/regular/squad.hpp>
+#include <eve/module/quaternion/regular/rot_vec.hpp>

@@ -21,4 +21,7 @@ namespace eve
   auto Extrinsic(ext<true>{});
   auto Intrinsic(ext<false>{});
 
+  template < bool e > struct nor:std::integral_constant<bool, e>{};
+  auto Assume_normalized(nor<false>{});
+  auto Normalize(nor<true>{});
 }
