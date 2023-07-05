@@ -74,7 +74,7 @@ TTS_CASE_WITH ( "Check behavior of rot_vec on wide"
     TTS_RELATIVE_EQUAL(res[j], ref[j], 0.0001);
   }
   auto q1 = wq_t(a0, a1, a2, a3);
-  auto res1 = eve::rot_vec(q, std::span(v), eve::Normalize);
+  auto res1 = eve::rot_vec(q1, std::span(v), eve::Normalize);
   for(int j=0; j <3 ; ++j)
   {
     TTS_RELATIVE_EQUAL(res1[j], ref[j], 0.0001);
