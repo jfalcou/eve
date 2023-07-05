@@ -256,7 +256,7 @@ namespace eve::detail
   template<typename Z1, ordered_value T, bool normalize>
   EVE_FORCEINLINE auto
   quaternion_nary_dispatch(eve::tag::rot_vec_
-                            , Z1 const & q
+                            , Z1 q
                             , std::span<T, 3> const & v
                             , nor<normalize>) noexcept
   {
@@ -266,7 +266,7 @@ namespace eve::detail
     std::array<v_t, 3> w, wp;
     using a_t = decltype(abs(q));
     a_t fac(2);
-    if constexpr(normalize) fac *= rec(abs(q));
+    if constexpr(normalize) fac *= rec(sqr_abs(q));
     auto [r, i, j, k] = q;
     w[0] = fma(r, v[0], diff_of_prod(j, v[2], k, v[1]));
     w[1] = fma(r, v[1], diff_of_prod(k, v[0], i, v[2]));
