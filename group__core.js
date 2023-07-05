@@ -13,6 +13,7 @@ var group__core =
     [ "Reductions", "group__core__reduction.html", "group__core__reduction" ],
     [ "SIMD Specific Operations", "group__core__simd.html", "group__core__simd" ],
     [ "eve::deinterleave_groups", "group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5", null ],
+    [ "eve::has_equal_in", "group__core_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0", null ],
     [ "eve::rotate", "group__core_ga073de555026307d7265ba21c49940a7f.html#ga073de555026307d7265ba21c49940a7f", null ],
     [ "eve::shuffle_l0", "group__core.html#ga32de0d02e8c348cf7551cd5caa4c0b0f", null ],
     [ "eve::swap_adjacent_groups", "group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e", null ],

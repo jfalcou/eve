@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Namespace Members</title>
+<title>E.V.E: eve::has_equal_in</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('namespacemembers_vars_h.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core_ga64cba22849ce7362968aa0c2661a5ab0.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,23 +121,63 @@ $(document).ready(function(){initNavTree('namespacemembers_vars_h.html',''); ini
 </div>
 
 <div class="contents">
-&#160;
+<a id="ga64cba22849ce7362968aa0c2661a5ab0" name="ga64cba22849ce7362968aa0c2661a5ab0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64cba22849ce7362968aa0c2661a5ab0">&#9670;&#160;</a></span>has_equal_in</h2>
 
-<h3><a id="index_h" name="index_h"></a>- h -</h3><ul>
-<li>half&#160;:&#160;<a class="el" href="group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5">eve</a></li>
-<li>half_circle&#160;:&#160;<a class="el" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">eve</a></li>
-<li>has_equal_in&#160;:&#160;<a class="el" href="group__core_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0">eve</a></li>
-<li>hermite&#160;:&#160;<a class="el" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve</a></li>
-<li>hi&#160;:&#160;<a class="el" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve</a></li>
-<li>horner&#160;:&#160;<a class="el" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve</a></li>
-<li>hypot&#160;:&#160;<a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve</a></li>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::has_equal_in = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Optional last parameter allows to ovewrite the equality from <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a></code> to an arbitrary simd binary predicate.</p>
+<p>We took the idea for the operation from: "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
+<p><b>Parameters</b></p><ul>
+<li><code>x</code> : <a class="el" href="concepteve_1_1simd__value.html">argument</a>.</li>
+<li><code>match_against</code> <a class="el" href="concepteve_1_1simd__value.html">argument</a>.</li>
+<li><code>predicate</code> (default <code>eve::is_equal_to</code>)</li>
 </ul>
+<p><b>Return value</b></p>
+<p>logical built as described previously</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_it x = {2, 1, 2, 4};</div>
+<div class="line">  wide_it y = {0, 2, 3, 1};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                  = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- y                  = &quot;</span> &lt;&lt; y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; has_equal_in(x, y) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0">eve::has_equal_in</a>(x, y) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; has_equal_in(y, x) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0">eve::has_equal_in</a>(y, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__core_ga64cba22849ce7362968aa0c2661a5ab0_html_ga64cba22849ce7362968aa0c2661a5ab0"><div class="ttname"><a href="group__core_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0">eve::has_equal_in</a></div><div class="ttdeci">constexpr callable_has_equal_in_ has_equal_in</div><div class="ttdoc">Given two simd_values: x, match_against returns a logical mask. The res[i] == eve::any(x[i] == match_...</div><div class="ttdef"><b>Definition:</b> has_equal_in.hpp:47</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

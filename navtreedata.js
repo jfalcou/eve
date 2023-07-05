@@ -112,9 +112,9 @@ var NAVTREEINDEX =
 "algo_rationale.html",
 "group__conditional.html#ga6ce7ac450593ee98fe8ca0d9cf65e4b4",
 "group__core__predicates_gac7357b852948396d38469bc6fa05a066.html#gac7357b852948396d38469bc6fa05a066",
-"group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25",
-"structeve_1_1if__.html",
-"structmap__iterator.html"
+"group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f",
+"structeve_1_1fundamental__cardinal.html",
+"structiota__with__step__iterator.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
