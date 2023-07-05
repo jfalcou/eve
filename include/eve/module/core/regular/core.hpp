@@ -83,6 +83,7 @@
 #include <eve/module/core/regular/fsm.hpp>
 #include <eve/module/core/regular/fsnm.hpp>
 #include <eve/module/core/regular/gather.hpp>
+#include <eve/module/core/regular/has_equal_in.hpp>
 #include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/if_else.hpp>

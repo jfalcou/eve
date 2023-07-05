@@ -16,16 +16,14 @@ namespace eve
   //================================================================================================
   //! @addtogroup core
   //! @{
-  //!    @var try_each_group_position
-  //!    @brief
-  //!    For a given simd_value and a group size returns a tuple of (x::size() / group_size)
-  //!    permuatitions for this register such that each group will be in each position
-  //!    exactly once.
+  //!    @var has_equal_in
   //!
-  //!    This is useful when one needs to try each element against something.
-  //!    Motivational example could be intersection: try each element from one register
-  //!    against another.
-  //!    Groups allow you to treat N elements as one.
+  //!    @brief
+  //!    Given two simd_values: `x`, `match_against` returns a logical mask.
+  //!    The res[i] == eve::any(x[i] == match_against);
+  //!
+  //!    Optional last parameter allows to ovewrite the equality from `eve::is_equal`
+  //!    to an arbitrary simd binary predicate.
   //!
   //!    We took the idea for the operation from:
   //!    "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions"
@@ -33,25 +31,20 @@ namespace eve
   //!    Link: https://arxiv.org/abs/2112.06342
   //!
   //!   **Parameters**
-  //!
   //!     * `x` : [argument](@ref eve::simd_value).
-  //!     * `fixed<N>` : number of elements in group
+  //!     * `match_against` [argument](@ref eve::simd_value).
+  //!     * `predicate` (default `eve::is_equal_to`)
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    kumi::tuple of all results
+  //!   logical built as described previously
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core/regular/try_each_group_position.cpp}
+  //!  @godbolt{doc/core/regular/has_equal_in.cpp}
   //!
-  //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(try_each_group_position_, try_each_group_position);
+  EVE_MAKE_CALLABLE(has_equal_in_, has_equal_in);
 }
 
-#include <eve/module/core/regular/impl/try_each_group_position.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/try_each_group_position.hpp>
-#endif
+#include <eve/module/core/regular/impl/has_equal_in.hpp>
