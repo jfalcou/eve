@@ -113,8 +113,9 @@ shuffle_l0_x86_within_128(pattern_t<I...>, fixed<G> g, wide<T, N> x)
     else if constexpr( reg_size == 32 )
     {
       // _mm256_shuffle_epi32 has better throughput
+      using f32x8 = eve::wide<float, eve::fixed<8>>;
       if constexpr( current_api >= avx2 ) return _mm256_shuffle_epi32(x, m);
-      else return _mm256_permute_ps(eve::bit_cast(x, eve::as<__m256> {}), m);
+      else return _mm256_permute_ps(eve::bit_cast(x, eve::as<f32x8> {}), m);
     }
     else if constexpr( reg_size == 64 ) return _mm512_shuffle_epi32(x, m);
   }
@@ -196,8 +197,9 @@ requires std::same_as<abi_t<T, N>, x86_256_> && (sizeof...(I) * G == N::value)
   }
   else if constexpr( idx::within_lane(idxs) && gsize == 8 && !idxm::has_zeroes(idxs) )
   {
+    using f64x4      = eve::wide<double, eve::fixed<4>>;
     constexpr int mm = idx::x86_shuffle_4_in_lane(idxs);
-    return _mm256_permute_pd(eve::bit_cast(x, eve::as<__m256d> {}), mm);
+    return _mm256_permute_pd(eve::bit_cast(x, eve::as<f64x4> {}), mm);
   }
   else return no_matching_shuffle;
 }
@@ -220,14 +222,14 @@ requires std::same_as<abi_t<T, N>, x86_128_>
 
     if constexpr( sizeof(T) == 8 )
     {
-      auto x_f64 = bit_cast(x, eve::as<__m128d> {});
-      auto y_f64 = bit_cast(y, eve::as<__m128d> {});
+      auto x_f64 = bit_cast(x, eve::as<eve::wide<double, eve::fixed<2>>> {});
+      auto y_f64 = bit_cast(y, eve::as<eve::wide<double, eve::fixed<2>>> {});
       return _mm_blend_pd(x_f64, y_f64, m);
     }
     else if constexpr( sizeof(T) == 4 )
     {
-      auto x_f32 = bit_cast(x, eve::as<__m128> {});
-      auto y_f32 = bit_cast(y, eve::as<__m128> {});
+      auto x_f32 = bit_cast(x, eve::as<eve::wide<float, eve::fixed<4>>> {});
+      auto y_f32 = bit_cast(y, eve::as<eve::wide<float, eve::fixed<4>>> {});
       return _mm_blend_ps(x_f32, y_f32, m);
     }
 #if 0 // FIX-1617 - enable `_mm_blend_epi16`
@@ -242,8 +244,8 @@ requires std::same_as<abi_t<T, N>, x86_128_>
   {
     // half from x, half from y
     // No w/e or zeroes are possible here
-    auto x_f64 = bit_cast(x, eve::as<__m128d> {});
-    auto y_f64 = bit_cast(y, eve::as<__m128d> {});
+    auto x_f64 = bit_cast(x, eve::as<eve::wide<double, eve::fixed<2>>> {});
+    auto y_f64 = bit_cast(y, eve::as<eve::wide<double, eve::fixed<2>>> {});
 
     // There is also _mm_move_sd but there is no reason to generate it for us.
     // Compiler sometimes transforms.
