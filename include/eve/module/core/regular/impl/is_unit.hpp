@@ -36,7 +36,7 @@ is_unit_(EVE_SUPPORTS(cpu_), pedantic_type const &, T const& a) noexcept
   if constexpr( has_native_abi_v<T> )
   {
     using ar_t = decltype(eve::sqr_abs(a));
-    return almost(is_equal)(pedantic(abs)(a), one(as<ar_t>()), eps(as<ar_t>()));
+    return almost(is_equal)(pedantic(abs)(a), one(as<ar_t>())));
   }
   else return apply_over(pedantic(is_unit), a);
 }

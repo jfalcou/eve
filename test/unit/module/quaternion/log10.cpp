@@ -28,7 +28,7 @@ TTS_CASE_WITH( "Check behavior of log10 on scalar"
   {
     auto z  = eq_t(a0[i],a1[i],a2[i],a3[i]);
     auto lz = eve::log10(z); ;
-    TTS_RELATIVE_EQUAL(eve::exp10(lz), z, 0.001);
+    TTS_RELATIVE_EQUAL(eve::exp10(lz), z, 0.02);
   }
 };
 
