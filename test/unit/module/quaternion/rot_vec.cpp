@@ -31,7 +31,7 @@ TTS_CASE_WITH ( "Check behavior of rot_vec on scalar"
     auto res = eve::rot_vec(q, std::span(v), eve::Assume_normalized);
     auto refq = q*qv*eve::conj(q);
     std::array<e_t, 3> ref{eve::ipart(refq), eve::jpart(refq), eve::kpart(refq)};
-    auto res1 = eve::rot_vec(q, std::span(v), eve::Normalize);
+    auto res1 = eve::rot_vec(q1, std::span(v), eve::Normalize);
     for(int j=0; j <3 ; ++j)
     {
       TTS_RELATIVE_EQUAL(res[j], ref[j], 0.0001);
