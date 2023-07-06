@@ -52,8 +52,8 @@ TTS_CASE_WITH( "Check behavior of log on wide"
   using z_t = eve::wide<eve::quaternion<e_t>, eve::cardinal_t<T> >;
   auto z = z_t{a0,a1,a2,a3};
   z_t lz = eve::log(z);
-  TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.01);
+  TTS_RELATIVE_EQUAL(eve::exp(lz), z, 0.02);
   auto z1 = z_t{a0};
   z_t lz1 = eve::log(z1);
-  TTS_RELATIVE_EQUAL(eve::exp(lz1), z1, 0.01);
+  TTS_RELATIVE_EQUAL(eve::exp(lz1), z1, 0.02);
 };

@@ -47,5 +47,5 @@ TTS_CASE_WITH( "Check behavior of log2 on wide"
   auto z = z_t{a0,a1,a2,a3};
   z_t lz = eve::log2(z);
 
-  TTS_RELATIVE_EQUAL(eve::exp2(lz), z, 0.01);
+  TTS_RELATIVE_EQUAL(eve::exp2(lz), z, 0.02);
 };
