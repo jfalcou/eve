@@ -44,10 +44,12 @@ namespace eve
 //! @}
 //==================================================================================================
 
-inline namespace callable_ns
+namespace callable_ns
 {
   inline constexpr func_ns::invoker tag_invoke = {};
 }
+
+using namespace callable_ns;
 
 //==================================================================================================
 //! @addtogroup invoke
