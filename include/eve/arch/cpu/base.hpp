@@ -9,13 +9,9 @@
 
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/function/friends.hpp>
-#include <eve/detail/spy.hpp>
+#include <eve/detail/pragmas.hpp>
 
-#if defined(SPY_COMPILER_IS_GCC)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wuninitialized"
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
+EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 
 namespace eve::detail
 {
@@ -59,6 +55,4 @@ namespace eve::detail
   };
 }
 
-#if defined(SPY_COMPILER_IS_GCC)
-#pragma GCC diagnostic pop
-#endif
+EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
