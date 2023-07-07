@@ -14,6 +14,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/pragmas.hpp>
 
 namespace eve::detail
 {
@@ -26,7 +27,8 @@ load_(EVE_SUPPORTS(sse2_),
       C const            & cond,
       safe_type const    & s,
       eve::as<Pack> const& tgt,
-      Ptr p) noexcept requires simd_compatible_ptr<Ptr, Pack> &&(!has_bundle_abi_v<Pack>)
+      Ptr                  p) noexcept
+requires simd_compatible_ptr<Ptr, Pack> && (!has_bundle_abi_v<Pack>)
 {
   using b_t = std::remove_cvref_t<decltype(*p)>;
   using r_t = Pack;
@@ -59,15 +61,14 @@ load_(EVE_SUPPORTS(sse2_),
   else if constexpr( !std::is_pointer_v<Ptr> ) return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
   else if constexpr( C::is_complete ) return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
   else if constexpr( current_api >= avx512 )
-  {
-    r_t that;
-
+    {
+EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
+    r_t  that;
     auto src = [&](auto const& s)
     {
       if constexpr( C::has_alternative ) return r_t {cond.alternative};
       else return s;
     };
-
     auto           mask = cond.mask(as<r_t> {}).storage().value;
     constexpr auto c    = categorize<r_t>();
 
@@ -104,6 +105,7 @@ load_(EVE_SUPPORTS(sse2_),
     else if constexpr( c == category::uint8x64 ) return _mm512_mask_loadu_epi8(src(that), mask, p);
     else if constexpr( c == category::uint8x32 ) return _mm256_mask_loadu_epi8(src(that), mask, p);
     else if constexpr( c == category::uint8x16 ) return _mm_mask_loadu_epi8(src(that), mask, p);
+EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
   }
   else if constexpr( current_api >= avx )
   {
