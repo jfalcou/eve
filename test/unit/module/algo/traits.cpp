@@ -161,6 +161,18 @@ TTS_CASE("eve.algo.traits, oveflow")
                         std::numeric_limits<before_max_idx_t>::max());
 };
 
+TTS_CASE("eve.algo.traits, expect_smaller_range")
+{
+  {
+    eve::algo::traits tr {eve::algo::expect_smaller_range<1>};
+    TTS_CONSTEXPR_EQUAL(eve::algo::get_expected_smaller_r<decltype(tr)>(), 1);
+  }
+  {
+    eve::algo::traits tr;
+    TTS_CONSTEXPR_EQUAL(eve::algo::get_expected_smaller_r<decltype(tr)>(), std::nullopt);
+  }
+};
+
 // Funciton with traits support
 
 template <typename TraitsSupport>

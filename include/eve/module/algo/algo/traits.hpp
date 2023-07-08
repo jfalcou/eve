@@ -304,6 +304,32 @@ namespace eve::algo
   //================================================================================================
   inline constexpr auto fuse_operations = ::rbr::flag( fuse_operations_tag{} );
 
+  struct expect_smaller_range_key_t : rbr::as_keyword<expect_smaller_range_key_t>
+  {
+    template<typename Value> constexpr auto operator=(Value const&) const noexcept
+    {
+      return rbr::option<expect_smaller_range_key_t,Value>{};
+    }
+  };
+  inline constexpr expect_smaller_range_key_t expect_smaller_range_key;
+
+  //============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var expect_smaller_range
+  //!
+  //!   @brief some algorithms (for example set_intersection) have a better
+  //!   implementation if we know that one of the input ranges is smaller.
+  //!   Then you can give the library this information by passing [expect_smaller_range<idx>]
+  //!   (idx - base 0 index of the range that you expect to be smaller).
+  //!
+  //!   @note smaller is often not quite the right word to describe when an
+  //!   algorithm is better: benchmark, tune and experiment.
+  //!
+  //! @}
+  //============================================================================
+  template<int N> inline constexpr auto expect_smaller_range = (expect_smaller_range_key = eve::index<N>);
+
   struct allow_frequency_scaling_tag {};
   //================================================================================================
   //! @addtogroup algo_traits
@@ -428,6 +454,19 @@ namespace eve::algo
   constexpr std::ptrdiff_t get_overflow()
   {
     return rbr::result::fetch_t<(overflow_key), Traits>{};
+  }
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns expected_smaller_r if one is specificed
+  //! @tparam Traits
+  //================================================================================================
+  template<typename Traits>
+  constexpr std::optional<std::ptrdiff_t>
+  get_expected_smaller_r()
+  {
+    constexpr int got = rbr::result::fetch_t<(expect_smaller_range_key | index<-1>), Traits>{};
+    return got == -1 ? std::optional<std::ptrdiff_t>{} : got;
   }
 
   namespace detail {
