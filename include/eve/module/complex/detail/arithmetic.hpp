@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-#include <eve/module/core/regular/conj.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/complex/regular/proj.hpp>
 
 namespace eve::detail
@@ -439,7 +439,7 @@ namespace eve::detail
     else if constexpr(ordered_value<Z2>)
         return z2*real(z1);
     else
-      return   sum_of_prod(real(z1), real(z2), imag(z1), imag(z2));
+      return sum_of_prod(real(z1), real(z2), imag(z1), imag(z2));
   }
 
 }
