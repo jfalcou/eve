@@ -26,7 +26,8 @@ template < typename T> auto cvteq_bq(eve::quaternion<T> const & eq){
 TTS_CASE_WITH( "Check behavior of cos on scalar"
              , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate( tts::randoms(-10, 10)
-                            , tts::randoms(-10, 10))
+                            , tts::randoms(-10, 10)
+                            )
              )
   <typename T>(T const& a0, T const& a1 )
 {

@@ -85,7 +85,7 @@ namespace eve
       auto [st1, ct1] = sincos(theta1);
       auto [st2, ct2] = sincos(theta2);
       auto [sa, ca] = sincos(alpha);
-       return rho*z_t{ca*ct1, ca*st1, sa*ct2, sa*st2};
+      return rho*z_t{ca*ct1, ca*st1, sa*ct2, sa*st2};
     }
   }
 }

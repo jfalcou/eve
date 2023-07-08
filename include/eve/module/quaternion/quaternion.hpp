@@ -23,7 +23,7 @@ namespace eve
   //! @addtogroup simd_types
   //! @{
   //================================================================================================
-  //! @brief SIMD-compatible representation of complex numbers
+  //! @brief SIMD-compatible representation of quaternion numbers
   //!
   //! **Required header:** `#include <eve/module/quaternion.hpp>`
   //!
@@ -194,7 +194,7 @@ namespace eve
     {
       self = self*conj(o);
       self = self*rec(sqr_abs(o));
-      return self; //*= conj(o)*rec(sqr_abs(o));
+      return self;
     }
 
     EVE_FORCEINLINE friend auto& operator/=(like<quaternion> auto& self, callable_i_ const&) noexcept
@@ -331,7 +331,6 @@ namespace eve
 
     }
   }
-
 
   //================================================================================================
   //! @}

@@ -434,7 +434,12 @@ namespace eve::detail
   EVE_FORCEINLINE auto
   complex_binary_dispatch(eve::tag::dot_, Z1 const& z1, Z2 const& z2) noexcept
   {
-    return   real(z1)*real(z2), imag(z1)*imag(z2);
+    if constexpr(ordered_value<Z1>)
+      return z1*real(z2);
+    else if constexpr(ordered_value<Z2>)
+        return z2*real(z1);
+    else
+      return   sum_of_prod(real(z1), real(z2), imag(z1), imag(z2));
   }
 
 }

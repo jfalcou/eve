@@ -91,6 +91,5 @@ namespace eve
     {
       return to_euler<I, J, K>(eve::as_quaternion_t<Z>(q));
     }
-
   }
 }

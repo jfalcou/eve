@@ -78,10 +78,6 @@ namespace eve
                                     , U const & rho2
                                     , U const & theta2) noexcept
     {
-//      using z_t = eve::as_quaternion_t<U>;
-//       auto [st1, ct1] = sincos(theta1);
-//       auto [st2, ct2] = sincos(theta2);
-//       return z_t{rho1*ct1, rho1*st1, rho2*ct2, rho2*st2};
       return to_quaternion(polar(rho1, theta1), polar(rho2, theta2));
     }
   }

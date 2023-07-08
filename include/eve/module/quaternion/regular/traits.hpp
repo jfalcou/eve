@@ -57,9 +57,7 @@ namespace eve
         : std::bool_constant<   std::same_as<eve::quaternion<T>, element_type_t<Wrapper>>
                             ||  std::same_as<T, element_type_t<Wrapper>>
                             ||  plain_scalar_value<Wrapper>
-                            >
-  {
-  };
+                            >{};
 
   namespace domain
   {
