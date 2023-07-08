@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/quaternion/regular/traits.hpp>
-#include <eve/module/quaternion/regular/real.hpp>
 #include <eve/module/quaternion/regular/pure.hpp>
 #include <eve/module/quaternion/regular/ipart.hpp>
 #include <eve/module/quaternion/regular/jpart.hpp>
