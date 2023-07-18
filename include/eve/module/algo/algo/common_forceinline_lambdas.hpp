@@ -69,21 +69,16 @@ namespace eve::algo
 
   struct unroll_by_calling_single_step
   {
-    template<typename I, std::size_t N, typename Delegate> struct impl
+    template<typename I, std::size_t N, typename Delegate, std::size_t... i>
+    EVE_FORCEINLINE bool impl(std::array<I, N> arr, Delegate& delegate, std::index_sequence<i...>) const
     {
-      std::array<I, N> *arr;
-      Delegate         *delegate;
-
-      EVE_FORCEINLINE void operator()(auto i) const
-      {
-        delegate->step((*arr)[i()], eve::ignore_none, i);
-      }
-    };
+      return (delegate.step(arr[i], ignore_none, eve::index<(std::ptrdiff_t)i>) || ...);
+    }
 
     template<typename I, std::size_t N, typename Delegate>
-    EVE_FORCEINLINE void operator()(std::array<I, N> arr, Delegate& delegate) const
+    EVE_FORCEINLINE bool operator()(std::array<I, N> arr, Delegate& delegate) const
     {
-      eve::detail::for_<0, 1, N>(impl<I, N, Delegate> {&arr, &delegate});
+      return impl(arr, delegate, std::make_index_sequence<N> {});
     }
   };
 
