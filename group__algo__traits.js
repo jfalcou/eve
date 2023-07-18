@@ -6,6 +6,7 @@ var group__algo__traits =
     [ "eve::algo::common_with_types", "group__algo__traits_ga52374a3523265b6c8725b571c2935236.html#ga52374a3523265b6c8725b571c2935236", null ],
     [ "eve::algo::consider_types", "group__algo__traits_gae39c02c8504a76a66ba1b2dd39db4ea1.html#gae39c02c8504a76a66ba1b2dd39db4ea1", null ],
     [ "eve::algo::divisible_by_cardinal", "group__algo__traits_ga266dc4246f7e3a43f11992c4c74e48ce.html#ga266dc4246f7e3a43f11992c4c74e48ce", null ],
+    [ "eve::algo::expect_smaller_range", "group__algo__traits_gacdd74cb4fad88646e4782a56d69ebddf.html#gacdd74cb4fad88646e4782a56d69ebddf", null ],
     [ "eve::algo::expensive_callable", "group__algo__traits_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731", null ],
     [ "eve::algo::force_cardinal", "group__algo__traits_ga0fabb4acfda0758f53418e007ff346ad.html#ga0fabb4acfda0758f53418e007ff346ad", null ],
     [ "eve::algo::force_type", "group__algo__traits_gabd02cb4bcd8c6634bc3391499f5b1c11.html#gabd02cb4bcd8c6634bc3391499f5b1c11", null ],

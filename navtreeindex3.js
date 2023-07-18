@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b":[7,0,1,5,6],
+"group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838":[7,0,1,5,12],
 "group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f":[7,0,1,5,8],
 "group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25":[7,0,1,5,1],
 "group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb":[7,0,1,5,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "structeve_1_1complex.html#afd48e594b4deefe91da424aea69580de":[7,0,2,9,0],
 "structeve_1_1constant.html":[7,0,2,3,0,5],
 "structeve_1_1decorators.html":[7,0,2,3,0,0],
-"structeve_1_1element__type.html":[7,0,2,3,7],
-"structeve_1_1elementwise.html":[7,0,2,3,0,3],
-"structeve_1_1fixed.html":[7,0,2,4]
+"structeve_1_1element__type.html":[7,0,2,3,7]
 };

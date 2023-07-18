@@ -18,5 +18,6 @@ var group__algos =
     [ "eve::algo::mismatch", "group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4", null ],
     [ "eve::algo::none_of", "group__algos_ga0385dc0d44b416d165ee39b191d00924.html#ga0385dc0d44b416d165ee39b191d00924", null ],
     [ "eve::algo::reduce", "group__algos_ga48d1396b69183e081e82a9bc91102376.html#ga48d1396b69183e081e82a9bc91102376", null ],
+    [ "eve::algo::set_intersection", "group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba", null ],
     [ "eve::algo::transform_reduce", "group__algos_ga760be28cf43b4fe02d1124c3eff09d65.html#ga760be28cf43b4fe02d1124c3eff09d65", null ]
 ];
