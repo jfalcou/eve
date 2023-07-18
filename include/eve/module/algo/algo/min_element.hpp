@@ -71,8 +71,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
 
     EVE_FORCEINLINE bool unrolled_step(auto arr)
     {
-      unroll_by_calling_single_step{}(arr, *this);
-      return false;
+      return unroll_by_calling_single_step{}(arr, *this);
     }
 
     struct is_not_best_lambda
