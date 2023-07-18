@@ -12,10 +12,10 @@
 
 namespace eve
 {
-  template < int N > struct axis:std::integral_constant<int, N>{};
-  auto _X(axis<1>{});
-  auto _Y(axis<2>{});
-  auto _Z(axis<3>{});
+  template < int N > struct axes:std::integral_constant<int, N>{};
+  auto _X(axes<1>{});
+  auto _Y(axes<2>{});
+  auto _Z(axes<3>{});
 
   template < bool e > struct ext:std::integral_constant<bool, e>{};
   auto Extrinsic(ext<true>{});

@@ -262,29 +262,38 @@ namespace eve::detail
 
   template<typename Z1, typename Z2, floating_ordered_value T>
   EVE_FORCEINLINE auto quaternion_ternary_dispatch( eve::tag::slerp_
-                                                 , Z1 const& z1, Z2  const & z2, T const & t
+                                                 , Z1 const& z1, Z2  z2, T const & t
                                                  ) noexcept
   {
     EVE_ASSERT(is_unit(z1) && is_unit(z2), "quaternion parameters must be unitary");
-    using r_t =  decltype(z1+z2+t);
-    using e_t =  underlying_type_t<r_t>;
-    return pow(if_else(dist(z1, z2) <= downward(sqrt_2)(as<e_t>()), z2, -z2)/z1, t);
+    z2 = if_else(is_gez(dot(z1, z2)), z2, -z2);
+    return z1*pow(conj(z1)*z2, t);
   }
 
   //==============================================================================================
   //  nary functions :
   //==============================================================================================
 
-  template<typename Z1, typename Z2,typename Z3, typename Z4, floating_ordered_value T>
+  template<typename Q0, typename Q1, typename Q2, typename Q3, floating_ordered_value T>
   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::squad_
-                                                 , Z1 const& z1, Z2  const & z2
-                                                 , Z3 const& z3, Z4  const & z4, T const & t
+                                               , Q0 const& q0, Q1 const& q1, Q2  const & q2, Q3  const & q3
+                                               , T const & t
                                                  ) noexcept
   {
-    EVE_ASSERT(is_unit(z1) && is_unit(z2) && is_unit(z3) && is_unit(z4), "quaternion parameters must be unitary");
-    return slerp(slerp(z1, z4, t),
-                 slerp(z2, z3, t),
-                 2*t*(1-t));
+    // t interpolates between q1 and q2
+    // q0 and q3 are the preceding and following quaternion
+    // if one want to interpolate between qq0, qq1, ... qqn
+    // the first call can take q0 = q1 = qq0 and the last q2 = q3 = qqn
+    EVE_ASSERT(is_unit(q0) && is_unit(q1) && is_unit(q2) && is_unit(q3) , "quaternion parameters must be unitary");
+    using e_t = underlying_type_t<Q0>;
+    auto mh = (-e_t(0.25));
+    auto cq1 = conj(q1);
+    auto s1 = q1*exp((log(cq1*q2)+log(cq1*q0))*mh);
+    auto cq2 = conj(q2);
+    auto s2 = q2*exp((log(cq2*q3)*log(cq2*q1))*mh);
+    return slerp(slerp(q1, q2, t),
+                 slerp(s1, s2, t),
+                 2*t*oneminus(t));
   }
 
   template<typename Z1, typename ...Z2>
@@ -324,9 +333,9 @@ namespace eve::detail
   template<typename Z, int II,  int JJ,  int KK, bool Extrinsic>
   EVE_FORCEINLINE auto quaternion_nary_dispatch( eve::tag::to_euler_
                                                , Z const& q
-                                               , axis<II>
-                                               , axis<JJ>
-                                               , axis<KK>
+                                               , axes<II>
+                                               , axes<JJ>
+                                               , axes<KK>
                                                , ext<Extrinsic>
                                                ) noexcept
   requires(II != JJ && JJ != KK)

@@ -75,9 +75,9 @@ namespace eve
                                              , V const & v1
                                              , V const & v2
                                              , V const & v3
-                                             , axis<I>
-                                             , axis<J>
-                                             , axis<K>
+                                             , axes<I>
+                                             , axes<J>
+                                             , axes<K>
                                              , ext<Extrinsic>
                                              ) noexcept
 

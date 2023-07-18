@@ -278,4 +278,30 @@ namespace eve::detail
     return wp;
   }
 
+  //================================================================================================
+  // axis
+  //================================================================================================
+  template<typename Z1, ordered_value T>
+  EVE_FORCEINLINE auto
+  quaternion_unary_dispatch(eve::tag::axis_
+                          , Z1 q) noexcept
+  {
+    using e_t = std::decay_t<decltype(real(q))>;
+    auto invn = rec(abs(pure(q)));
+    std::array<e_t, 3> v{ipart(q)*invn, jpart(q)*invn, kpart(q)*invn};
+    return v;
+  }
+
+  //================================================================================================
+  // angle
+  //================================================================================================
+  template<typename Z1, ordered_value T>
+  EVE_FORCEINLINE auto
+  quaternion_unary_dispatch(eve::tag::angle_
+                          , Z1 q) noexcept
+  {
+    return 2*atan2(real(q), abs(pure(q)));
+  }
+
+
 }
