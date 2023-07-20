@@ -281,7 +281,7 @@ namespace eve::detail
   //================================================================================================
   // axis
   //================================================================================================
-  template<typename Z1, ordered_value T>
+  template<typename Z1>
   EVE_FORCEINLINE auto
   quaternion_unary_dispatch(eve::tag::axis_
                           , Z1 q) noexcept
@@ -295,7 +295,7 @@ namespace eve::detail
   //================================================================================================
   // angle
   //================================================================================================
-  template<typename Z1, ordered_value T>
+  template<typename Z1>
   EVE_FORCEINLINE auto
   quaternion_unary_dispatch(eve::tag::angle_
                           , Z1 q) noexcept
@@ -303,5 +303,44 @@ namespace eve::detail
     return 2*atan2(real(q), abs(pure(q)));
   }
 
+  //================================================================================================
+  // to_rotation_matrix
+  //================================================================================================
+  template<typename Z, bool normalize>
+  EVE_FORCEINLINE auto
+  quaternion_nary_dispatch(eve::tag::to_rotation_matrix_
+                           , Z const & q , nor<normalize> const &) noexcept
+  {
+    if constexpr (!normalize) EVE_ASSERT(eve::all(pedantic(is_unit)(q)), "some quaternions are not unitary");
+    else return to_rotation_matrix(q/abs(q), Assume_normalized);
 
+    auto q0 = real(q);
+    auto q1 = ipart(q);
+    auto q2 = jpart(q);
+    auto q3 = kpart(q);
+
+    // First row of the rotation matrix
+    auto r00 = 2 * (sqr(q0) + sqr(q1)) - 1;
+    auto r01 = 2 * (q1 * q2 - q0 * q3);
+    auto r02 = 2 * (q1 * q3 + q0 * q2);
+
+    // Second row of the rotation matrix
+    auto r10 = 2 * (q1 * q2 + q0 * q3);
+    auto r11 = 2 * (sqr(q0) + sqr(q2)) - 1;
+    auto r12 = 2 * (q2 * q3 - q0 * q1);
+
+    // Third row of the rotation matrix
+    auto r20 = 2 * (q1 * q3 - q0 * q2);
+    auto r21 = 2 * (q2 * q3 + q0 * q1);
+    auto r22 = 2 * (sqr(q0) + sqr(q3)) - 1;
+
+    // 3x3 rotation matrix
+    using e_t = std::decay_t<decltype(q0)>;
+    using l_t = std::array<e_t, 3>;
+    using m_t = std::array< l_t, 3>;
+    std::array<e_t, 3> l1{r00, r01, r02};
+    std::array<e_t, 3> l2{r10, r11, r12};
+    std::array<e_t, 3> l3{r20, r21, r22};
+    return m_t{l1, l2, l3};
+  }
 }
