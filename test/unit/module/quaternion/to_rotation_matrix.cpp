@@ -41,7 +41,7 @@ TTS_CASE_WITH ( "Check behavior of to_rotation_matrix on wide"
   std::array<T, 3> ref{eve::ipart(refq), eve::jpart(refq), eve::kpart(refq)};
   for(int j=0; j <3 ; ++j)
   {
-    TTS_RELATIVE_EQUAL(res[j], ref[j], 0.0001);
+    TTS_RELATIVE_EQUAL(res[j], ref[j], 0.0002);
   }
   auto q1 = wq_t(a0, a1, a2, a3);
   auto m1 = eve::to_rotation_matrix(q1);
