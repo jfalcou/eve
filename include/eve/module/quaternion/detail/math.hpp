@@ -265,7 +265,7 @@ namespace eve::detail
                                                  , Z1 const& z1, Z2  z2, T const & t
                                                  ) noexcept
   {
-    EVE_ASSERT(is_unit(z1) && is_unit(z2), "quaternion parameters must be unitary");
+    EVE_ASSERT(eve::all(is_unit(z1) && is_unit(z2)), "quaternion parameters must be unitary");
     z2 = if_else(is_gez(dot(z1, z2)), z2, -z2);
     return z1*pow(conj(z1)*z2, t);
   }
@@ -284,7 +284,7 @@ namespace eve::detail
     // q0 and q3 are the preceding and following quaternion
     // if one want to interpolate between qq0, qq1, ... qqn
     // the first call can take q0 = q1 = qq0 and the last q2 = q3 = qqn
-    EVE_ASSERT(is_unit(q0) && is_unit(q1) && is_unit(q2) && is_unit(q3) , "quaternion parameters must be unitary");
+    EVE_ASSERT(eve::all(is_unit(q0) && is_unit(q1) && is_unit(q2) && is_unit(q3)) , "quaternion parameters must be unitary");
     using e_t = underlying_type_t<Q0>;
     auto mh = (-e_t(0.25));
     auto cq1 = conj(q1);
