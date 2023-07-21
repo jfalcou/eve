@@ -72,7 +72,7 @@ namespace eve
   {
     template<floating_ordered_value V, bool normalize>
     EVE_FORCEINLINE auto to_rotation_matrix_( EVE_SUPPORTS(cpu_)
-                                            , V const & , nor<normalize> ) noexcept
+                                            , [[maybe_unused]] V const & q, nor<normalize> ) noexcept
 
     {
       if constexpr (!normalize) EVE_ASSERT(eve::all(abs(q) == V(1)), "some quaternions are not unitary");
@@ -94,7 +94,10 @@ namespace eve
                                             , Z const & q, nor<normalize>) noexcept
     requires(is_complex_v<Z>)
     {
-      if constexpr (!normalize) EVE_ASSERT(eve::all(sqr_abs(q) == e_t(1)), "some quaternions are not unitary");
+      if constexpr (!normalize)
+      {
+        EVE_ASSERT(eve::all(sqr_abs(q) == decltype(sqr_abs(q))(1)), "some quaternions are not unitary");
+      }
       auto q0 = real(q);
       auto q1 = imag(q);
       auto q02 = 2*sqr(q0)-1;
