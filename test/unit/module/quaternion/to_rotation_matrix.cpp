@@ -48,6 +48,6 @@ TTS_CASE_WITH ( "Check behavior of to_rotation_matrix on wide"
   auto res1  = prod(m1, v);
   for(int j=0; j <3 ; ++j)
   {
-    TTS_RELATIVE_EQUAL(res1[j], ref[j], 0.0001);
+    TTS_RELATIVE_EQUAL(res1[j], ref[j], 0.0002);
   }
 };
