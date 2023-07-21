@@ -27,3 +27,4 @@
 #include <eve/module/quaternion/regular/axis.hpp>
 #include <eve/module/quaternion/regular/angle.hpp>
 #include <eve/module/quaternion/regular/to_rotation_matrix.hpp>
+#include <eve/module/quaternion/regular/from_rotation_matrix.hpp>

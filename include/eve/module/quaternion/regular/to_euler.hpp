@@ -9,6 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/module/math.hpp>
+#include <eve/module/quaternion/regular/axes.hpp>
 
 namespace eve
 {
@@ -36,7 +37,10 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template < int I, int J, int K > auto to_euler(auto q) const noexcept;
+  //!      template < int I, int J, int K >
+  //!      auto to_euler(auto q
+  //!                  , axes<I> const &, axes<J> const &, axes<K> const &) const noexcept
+  //!        requires(I != J && J != K)
   //!   }
   //!   @endcode
   //!
@@ -46,7 +50,8 @@ namespace eve
   //!
   //!  **Template parameters**
   //!
-  //!     * I, J, K
+  //!     * I, J, K : actual parameters can be chosen between axes values _X,  _Y,  _Z from
+  //!                 which I, J and K are deduced
   //!
   //!
   //!   The computation method is taken from the article : "Quaternion to Euler angles conversion: A
@@ -73,9 +78,9 @@ namespace eve
     template<auto I, auto J, auto K, floating_ordered_value V>
     EVE_FORCEINLINE auto to_euler_( EVE_SUPPORTS(cpu_)
                                   , V const &
-                                  , std::integral_constant<int, I>
-                                  , std::integral_constant<int, J>
-                                  , std::integral_constant<int, K> ) noexcept
+                                  , axes<I>
+                                  , axes<J>
+                                  , axes<K> ) noexcept
 
     {
       return  kumi::tuple{zero(as<V>()), zero(as<V>()), zero(as<V>())};
@@ -84,9 +89,9 @@ namespace eve
     template<auto I, auto J, auto K, value Z>
     EVE_FORCEINLINE auto to_euler_( EVE_SUPPORTS(cpu_)
                                   , Z const & q
-                                  , std::integral_constant<int, I>
-                                  , std::integral_constant<int, J>
-                                  , std::integral_constant<int, K> ) noexcept
+                                  , axes<I>
+                                  , axes<J>
+                                  , axes<K> ) noexcept
     requires(is_complex_v<Z>)
     {
       return to_euler<I, J, K>(eve::as_quaternion_t<Z>(q));

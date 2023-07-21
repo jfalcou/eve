@@ -278,6 +278,15 @@ namespace eve::detail
     return wp;
   }
 
+  template<typename Z1, ordered_value T>
+  EVE_FORCEINLINE auto
+  quaternion_nary_dispatch(eve::tag::rot_vec_
+                            , Z1 q
+                            , std::span<T, 3> const & v) noexcept
+  {
+    return rot_vec(q, v, Normalize);
+  }
+
   //================================================================================================
   // axis
   //================================================================================================
@@ -342,5 +351,13 @@ namespace eve::detail
     std::array<e_t, 3> l2{r10, r11, r12};
     std::array<e_t, 3> l3{r20, r21, r22};
     return m_t{l1, l2, l3};
+  }
+
+  template<typename Z>
+  EVE_FORCEINLINE auto
+  quaternion_unary_dispatch(eve::tag::to_rotation_matrix_
+                           , Z const & q) noexcept
+  {
+    return to_rotation_matrix(q, Normalize);
   }
 }

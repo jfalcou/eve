@@ -31,7 +31,7 @@ TTS_CASE_WITH ( "Check behavior of to_euler on scalar"
         auto q = eve::euler_to_quaternion(t1, t2, t3, eve::_X, eve::_Z, eve::_X, eve::Intrinsic);
         TTS_RELATIVE_EQUAL(q, z,  0.001);
       }
-           {
+      {
         auto z = eve::sign(eve::quaternion(a0[i], a1[i], a2[i], a3[i]));
         auto [t1, t2, t3] = eve::to_euler(z, eve::_X, eve::_Z, eve::_X, eve::Extrinsic);
         auto q = eve::euler_to_quaternion(t1, t2, t3, eve::_X, eve::_Z, eve::_X, eve::Extrinsic);

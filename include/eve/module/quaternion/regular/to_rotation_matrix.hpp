@@ -37,28 +37,27 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template < int I, int J, int K > auto to_rotation_matrix(auto q) const noexcept;
+  //!       auto to_rotation_matrix(auto q) const noexcept;
+  //!       auto to_rotation_matrix(auto q, Assume_normalized) const noexcept;
   //!   }
   //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!  * `q` the rotation quaternion (not necesseraly normalized)
-  //!
-  //!  **Template parameters**
-  //!
-  //!     * I, J, K
+  //!  * `q`  quaternion representing the rotation
+  //!  * `Asume_normalized``: implies that q is already normalized
   //!
   //!
-  //!   The computation method is taken from the article : "Quaternion to Rotation_Matrix angles conversion: A
-  //!   direct, general and computationally efficient method". PLoS ONE
-  //!   17(11): e0276302. https://doi.org/10.1371/journal pone 0276302.
-  //!   Evandro Bernardes, and Stephane Viollet
   //!
   //! **Return value**
   //!
-  //!    kumi tuple of the three rotation_matrix angles in radian.
-  //!    In case of singularity the first angle is 0.
+  //!   compute the rotation matrix associated to the quaternion.
+  //!
+  //!   if T is the element type of q,  returns an std::array<std::array<T, 3>, 3> containing
+  //!   the 9 coefficients of the rotation matrix
+  //!
+  //! @note use this function if you really need the rotation matrix,  but to rotate vectors
+  //!       prefer the function rot_vec that directly uses the quaternion.
   //!
   //!  @groupheader{Example}
   //!
@@ -81,12 +80,20 @@ namespace eve
       return m_t{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}} ;
     }
 
+    template<floating_ordered_value V>
+    EVE_FORCEINLINE auto to_rotation_matrix_( EVE_SUPPORTS(cpu_)
+                                            , V const & ) noexcept
+
+    {
+      using m_t = std::array< std::array<V, 3>, 3>;
+      return m_t{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}} ;
+    }
+
     template<value Z, bool normalize>
     EVE_FORCEINLINE auto to_rotation_matrix_( EVE_SUPPORTS(cpu_)
-                                            , Z const & q, nor<normalize> const &) noexcept
+                                            , Z const & q, nor<normalize>) noexcept
     requires(is_complex_v<Z>)
     {
-//      using e_t = element_type_t<Z>;
       if constexpr (!normalize) EVE_ASSERT(eve::all(sqr_abs(q) == e_t(1)), "some quaternions are not unitary");
       auto q0 = real(q);
       auto q1 = imag(q);
@@ -95,5 +102,14 @@ namespace eve
       using m_t = std::array< std::array<Z, 3>, 3>;
       return m_t{{1, 0, 0}, {0, q02, -q0q1}, {0, q0q1, q02}};
     }
+
+    template<value Z>
+    EVE_FORCEINLINE auto to_rotation_matrix_( EVE_SUPPORTS(cpu_)
+                                            , Z const & q) noexcept
+    requires(is_complex_v<Z>)
+    {
+      return to_rotation_matrix(q, Normalize);
+    }
+
   }
 }

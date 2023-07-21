@@ -65,6 +65,13 @@ namespace eve
       return x;
     }
 
+    template<ordered_value V1, ordered_value T>
+    EVE_FORCEINLINE auto rot_vec_( EVE_SUPPORTS(cpu_), [[maybe_unused]] V1 const &
+                                 , std::span<T, 3> const &x) noexcept
+    {
+      return x;
+    }
+
     template<value V1, ordered_value T, bool normalize>
     EVE_FORCEINLINE auto rot_vec_( EVE_SUPPORTS(cpu_), eve::complex<V1> const & q
                                  , std::span<T, 3> const &v
@@ -81,6 +88,13 @@ namespace eve
       std::array<v_t, 3> w{r*v[0], diff_of_prod(r, v[1], i, v[2]), sum_of_prod (r, v[2], i, v[1])};
       std::array<v_t, 3> wp{v[0], fam(v[1], fac, -i*w[2]), fam(v[2], fac, i*w[1])};
       return wp;
+    }
+
+    template<value V1, ordered_value T>
+    EVE_FORCEINLINE auto rot_vec_( EVE_SUPPORTS(cpu_), eve::complex<V1> const & q
+                                 , std::span<T, 3> const &v) noexcept
+    {
+      return rot_vec(q, v, Normalize);
     }
   }
 }

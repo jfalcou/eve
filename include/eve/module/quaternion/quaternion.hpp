@@ -308,6 +308,13 @@ namespace eve
     return as_quaternion_t<e_t>(real(q1), imag(q1), real(q2), imag(q2));
   }
 
+  template<ordered_value Q0, ordered_value Q1, ordered_value Q2, ordered_value Q3>
+  EVE_FORCEINLINE   auto to_quaternion( Q0 const & q0, Q1 const & q1, Q2 const & q2, Q3 const & q3) noexcept
+  {
+    using e_t = std::decay_t<decltype(real(q0+q1+q2+q3))>;
+    return as_quaternion_t<e_t>(q0, q1, q2, q3);
+  }
+
   template<value Z1, value Z2>
   EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,
                                        auto const& cond,
