@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/spec.hpp>
 #include <eve/pattern.hpp>
 
 #include <span>
@@ -30,6 +31,18 @@ are_below_ignoring_specials(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t
     if( x >= ub ) return false;
   }
   return true;
+}
+
+constexpr bool
+is_identity(std::span<const std::ptrdiff_t> idxs)
+{
+  return idxs.size() == 1 && (idxs[0] == 0 || idxs[0] == we_);
+}
+
+constexpr bool
+is_zero(std::span<const std::ptrdiff_t> idxs)
+{
+  return idxs.size() == 1 && idxs[0] < 0;
 }
 
 template<auto arr>
@@ -211,4 +224,177 @@ is_rotate(std::span<const std::ptrdiff_t> idxs)
   return rotation;
 }
 
+template<std::ptrdiff_t Part, std::ptrdiff_t... I>
+constexpr auto
+slice_pattern(pattern_t<I...>)
+{
+  constexpr std::array idxs {I...};
+  if constexpr( Part >= idxs.size() ) return kumi::tuple {pattern<I...>};
+  else
+  {
+    constexpr auto sliced_array = [&]
+    {
+      using part_t = std::array<std::ptrdiff_t, (std::size_t)Part>;
+
+      std::array<part_t, idxs.size() / Part> res = {};
+
+      const std::ptrdiff_t *in = idxs.data();
+      for( auto& part : res )
+      {
+        std::copy_n(in, Part, part.data());
+        in += Part;
+      }
+
+      return res;
+    }();
+
+    return [&]<std::size_t... i>(std::index_sequence<i...>) {
+      return kumi::tuple {to_pattern<sliced_array[i]>()...};
+    }(std::make_index_sequence<sizeof...(I) / Part> {});
+  }
+}
+
+template<std::ptrdiff_t Cardinal, std::ptrdiff_t... I>
+constexpr auto
+drop_unused_wides(eve::pattern_t<I...>)
+{
+  constexpr std::size_t kSizeNeeded = std::max(std::ptrdiff_t {1}, std::max({I...}) / Cardinal + 1);
+
+  constexpr auto used_buffer_size = [&]
+  {
+    std::array<char, kSizeNeeded> register_used = {};
+    for( auto i : {I...} )
+    {
+      if( i < 0 ) continue;
+      register_used[i / Cardinal] = 1;
+    }
+    std::array<int, kSizeNeeded> r   = {};
+    int                         *out = r.data();
+    for( std::size_t i = 0; i != kSizeNeeded; ++i )
+    {
+      if( register_used[i] ) { *out++ = (int)i; }
+    }
+
+    // no registers means one register.
+    if( out == r.data() ) ++out;
+
+    return std::pair {r, (std::size_t)(out - r.data())};
+  }();
+
+  constexpr auto used_wide_indexes = [&]
+  {
+    std::array<int, used_buffer_size.second> r = {};
+    std::copy_n(used_buffer_size.first.data(), used_buffer_size.second, r.data());
+    return r;
+  }();
+
+  constexpr auto new_pattern_array = [&]
+  {
+    std::array<int, kSizeNeeded> reduce_offset_by = {};
+
+    for( int new_wide_idx = 0; int wide_idx : used_wide_indexes )
+    {
+      reduce_offset_by[(std::size_t)wide_idx] = (wide_idx - new_wide_idx) * Cardinal;
+      ++new_wide_idx;
+    }
+
+    std::array res = {I...};
+
+    for( auto& i : res )
+    {
+      if( i < 0 ) continue;
+      int wide_idx = i / Cardinal;
+      i -= reduce_offset_by[(std::size_t)wide_idx];
+    }
+
+    return res;
+  }();
+
+  return kumi::tuple {to_pattern<new_pattern_array>(), used_wide_indexes};
+}
+
+constexpr bool
+matches(const std::span<const std::ptrdiff_t> idxs, std::initializer_list<std::ptrdiff_t> pattern)
+{
+  if( idxs.size() != pattern.size() ) return false;
+
+  auto pattern_f = pattern.begin();
+  for( unsigned i = 0; i != idxs.size(); ++i )
+  {
+    if( idxs[i] == we_ || pattern_f[i] == we_ ) continue;
+    if( idxs[i] != pattern_f[i] ) return false;
+  }
+
+  return true;
+}
+
+// Can't variadic this
+constexpr bool
+matches(const std::span<const std::ptrdiff_t> idxs,
+        std::initializer_list<std::ptrdiff_t> p1,
+        std::initializer_list<std::ptrdiff_t> p2)
+{
+  return idxm::matches(idxs, p1) || idxm::matches(idxs, p2);
+}
+
+template<std::size_t N>
+constexpr auto
+replace_we(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t with)
+{
+  std::array<std::ptrdiff_t, N> res = {};
+  for( std::size_t i = 0; i != N; ++i ) { res[i] = idxs[i] == we_ ? with : idxs[i]; }
+  return res;
+}
+
+template<std::size_t N>
+constexpr auto
+replace_we(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t with)
+{
+  return replace_we(std::span<const std::ptrdiff_t, N>(idxs), with);
+}
+
+constexpr bool
+is_blend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t cardinal)
+{
+  std::ptrdiff_t s = std::ssize(idxs);
+  if( s == 1 || s != cardinal ) return false;
+
+  // std::all_of
+  for( int i = 0; i != s; ++i )
+  {
+    if( idxs[i] == we_ || idxs[i] == i || idxs[i] == i + s ) continue;
+    return false;
+  }
+  return true;
+}
+
+template<std::ptrdiff_t G, std::size_t N>
+constexpr std::array<std::ptrdiff_t, N * G>
+expand_group(std::span<const std::ptrdiff_t, N> idxs)
+{
+  std::array<std::ptrdiff_t, N * G> res = {};
+
+  std::ptrdiff_t* o = res.data();
+
+  for (auto idx : idxs) {
+    for (int j = 0; j != G; ++j) {
+      if (idx < 0) *o++ = idx;
+      else *o++ = idx * G + j;
+    }
+  }
+
+  return res;
+}
+
+template<std::ptrdiff_t G, std::size_t N>
+constexpr std::array<std::ptrdiff_t, N * G>
+expand_group(std::array<std::ptrdiff_t, N> idxs)
+{
+  return expand_group<G>(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
 } // namespace eve::detail::idxm
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/detail/shuffle_v2/simd/x86/idxm.hpp>
+#endif

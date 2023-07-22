@@ -27,8 +27,12 @@ namespace eve::detail
     {
       // g++ need that
       logical<T> data[N::value];
+
+      using bits_type = typename logical<T>::bits_type;
+      static_assert(sizeof(bits_type) == sizeof(logical<T>));
+
       auto s = p.storage();
-      std::memcpy(&data[0],&s,sizeof(data));
+      std::memcpy(reinterpret_cast<bits_type*>(&data[0]),&s,sizeof(data));
       return data[i];
     }
   }

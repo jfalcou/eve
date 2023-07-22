@@ -26,7 +26,7 @@ namespace eve
   template<std::ptrdiff_t... I> struct pattern_t
   {
     //! Size of the pattern in number of indices
-    static inline constexpr auto size() noexcept { return sizeof...(I); }
+    static inline constexpr std::ptrdiff_t size() noexcept { return sizeof...(I); }
 
     //! Checks if a pattern contains any zeroing index
     static inline constexpr bool has_zeros() noexcept

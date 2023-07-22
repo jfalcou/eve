@@ -8,48 +8,46 @@
 #pragma once
 
 #include <eve/concept/pattern.hpp>
-#include <eve/detail/idxm.hpp>
+#include <eve/detail/shuffle_v2/shuffle_v2_helpers.hpp>
+#include <eve/detail/shuffle_v2/idxm.hpp>
 
 namespace eve
 {
-EVE_REGISTER_CALLABLE(canonical_shuffle_adapter_impl_)
-EVE_DECLARE_CALLABLE(canonical_shuffle_adapter_impl_, canonical_shuffle_adapter_impl)
+
+EVE_REGISTER_CALLABLE(shuffle_v2_driver_impl_)
+EVE_DECLARE_CALLABLE(shuffle_v2_driver_impl_, shuffle_v2_driver_impl)
 
 namespace detail
 {
-  EVE_ALIAS_CALLABLE(canonical_shuffle_adapter_impl_, canonical_shuffle_adapter_impl);
+  EVE_ALIAS_CALLABLE(shuffle_v2_driver_impl_, shuffle_v2_driver_impl);
 } // namespace detail
 
-EVE_CALLABLE_API(canonical_shuffle_adapter_impl_, canonical_shuffle_adapter_impl)
+EVE_CALLABLE_API(shuffle_v2_driver_impl_, shuffle_v2_driver_impl)
+
 }
 
 namespace eve::detail
 {
-struct no_matching_shuffle_t
-{};
-constexpr no_matching_shuffle_t no_matching_shuffle;
 
-template<typename InternalShuffle> struct canocical_shuffle_adapter_bound
+template<typename NativeSelector> struct shuffle_v2_driver
 {
-  InternalShuffle internalShuffle;
+  NativeSelector selector;
 
   template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T, typename... Ts>
   EVE_FORCEINLINE auto operator()(pattern_t<I...> p, eve::fixed<G> g, T x, Ts... xs) const noexcept
   {
-    static_assert(G <= T::size(),
-                  "Group sized passed is bigger than a register, very likely a bug");
     static_assert((std::same_as<T, Ts> && ...), "You can only shuffle the same type");
 
     static_assert(detail::idxm::validate_pattern(
         eve::lane<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...));
-    return canonical_shuffle_adapter_impl(internalShuffle, p, g, x, xs...);
+    return shuffle_v2_driver_impl(selector, p, g, kumi::reverse(kumi::tuple {x, xs...}));
   }
 
   template<pattern_formula Gen, std::ptrdiff_t G, simd_value T, typename... Ts>
   EVE_FORCEINLINE auto operator()(Gen, eve::fixed<G> g, T x, Ts... xs) const noexcept
-      -> decltype(operator()(fix_pattern<T::size() / G> (Gen {}), g, x, xs...))
+      -> decltype(operator()(fix_pattern<T::size() / G>(Gen {}), g, x, xs...))
   {
-    return operator()(fix_pattern<T::size() / G> (Gen {}), g, x, xs...);
+    return operator()(fix_pattern<T::size() / G>(Gen {}), g, x, xs...);
   }
 
   template<std::ptrdiff_t... I>
@@ -67,7 +65,7 @@ template<typename InternalShuffle> struct canocical_shuffle_adapter_bound
   }
 };
 
-template<typename Internal> struct reverse_arguments
+template<typename Internal> struct shuffle_reverse_arguments
 {
   Internal internal;
 
@@ -78,42 +76,43 @@ template<typename Internal> struct reverse_arguments
 
   template<typename... Ts>
   EVE_FORCEINLINE auto operator()(auto... args) const noexcept
-  requires(!std::same_as<no_matching_shuffle_t, decltype(impl(args...))>)
+  requires(matched_shuffle<decltype(get<0>(impl(args...)))>)
   {
     return impl(args...);
   }
 };
 
-template<typename Internal> reverse_arguments(Internal internal) -> reverse_arguments<Internal>;
+template<typename NativeSelector>
+shuffle_reverse_arguments(NativeSelector) -> shuffle_reverse_arguments<NativeSelector>;
 
 /*
- * as_canonical_shuffle is an internal function for writing platform specific
- * shuffles.
+ * make_shuffle_v2 is a part of shuffle_v2 that converts native shuffle selector into
+ * a complete shuffle_v2_core
  *
- * It does the following simplifications
- *
- * * transforms the interfance to (pattern, group_size, wides...);
+ * It handles the following:
+ * * provide correct api to the caller
+ * * emulated abi is handled
+ * * bundle are shuffled by field
+ * * aggregates are split
+ * * multi register shuffles are split into shuffles of up to two registers.
+ *   (there is more work for this - at the moment only 2 regitsers per output)
+ * * extra inputs are removed (shuffle(a, b) => shuffle(b) if only elements
+ *   of b are used.
  * * wide logicals are converted to masks
+ * * when shuffling two registers, prefers a lexicographically smaller pattern:
+ *   uint32x2 x 2 : {2, 0} and {0, 2} are the same shuffle, just registers swapped.
+ *                  will produce {0, 2}
  * * converts all types to std::uint<>_t.
- * * smaller than fundamental cardinals get padded with we_ to fundamental
  * * ups the group size if the pattern allows it ({2, 3, 0, 1} => {1, 0})
  * * ups the element size if the group size allows it: uint32x2 => uint64x1
- * * when shuffling two registers, if the result uses just one - reduce to shuffling one register
- * * when shuffling two registers, prefers a lexicographically smaller pattern:
- *    uint32x2 x 2 : {2, 0} and {0, 2} are the same shuffle, just registers swapped.
- *                   will produce {0, 2}
+ * * smaller than fundamental cardinals get padded with we_ to fundamental
+ * * calls the native selector with (pattern, group_size, wides...);
  */
-template<typename InternalShuffle>
+template<typename NativeSelector>
 constexpr auto
-as_canonical_shuffle(InternalShuffle internalShuffle)
+make_shuffle_v2(NativeSelector selector)
 {
-  return reverse_arguments {canocical_shuffle_adapter_bound<InternalShuffle> {internalShuffle}};
+  return shuffle_reverse_arguments {shuffle_v2_driver<NativeSelector> {selector}};
 }
 
-// As an internal helper
-template<typename T>
-concept matched_shuffle = !std::same_as<no_matching_shuffle_t, T>;
-
 }
-
-#include <eve/detail/function/simd/common/canonical_shuffle_adapter.hpp>

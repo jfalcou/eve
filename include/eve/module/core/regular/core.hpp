@@ -196,7 +196,7 @@
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/shl.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/regular/shuffle_l0.hpp>
+#include <eve/module/core/regular/shuffle_v2.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/sign_alternate.hpp>
 #include <eve/module/core/regular/signnz.hpp>
