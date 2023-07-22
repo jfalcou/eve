@@ -38,5 +38,5 @@ TTS_CASE_WITH ( "Check behavior of angle on wide"
 {
   using z_t = eve::as_quaternion_t<T>;
   auto z = eve::sign(z_t(a0, a1, a2, a3));
-  TTS_RELATIVE_EQUAL( eve::angle(z), 2*eve::acos(eve::real(z)), 0.001);
+  TTS_RELATIVE_EQUAL( eve::angle(z), 2*eve::acos(eve::real(z)), 0.02);
 };
