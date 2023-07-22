@@ -310,7 +310,7 @@ namespace eve::detail
   quaternion_unary_dispatch(eve::tag::angle_
                           , Z1 q) noexcept
   {
-    return 2*atan2(abs(pure(q)), real(q));
+    return 2*pedantic(atan2)(abs(pure(q)), real(q));
   }
 
   //================================================================================================
