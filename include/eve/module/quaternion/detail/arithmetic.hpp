@@ -297,6 +297,7 @@ namespace eve::detail
   {
     using e_t = std::decay_t<decltype(real(q))>;
     auto invn = rec(abs(pure(q)));
+    invn = if_else(is_nan(invn), zero, invn);
     std::array<e_t, 3> v{ipart(q)*invn, jpart(q)*invn, kpart(q)*invn};
     return v;
   }

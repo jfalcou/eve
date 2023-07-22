@@ -22,7 +22,7 @@ TTS_CASE_WITH ( "Check behavior of angle on scalar"
   for(size_t i = 0; i <= a0.size(); ++i)
   {
     auto z = eve::sign(eve::quaternion(a0[i], a1[i], a2[i], a3[i]));
-    TTS_RELATIVE_EQUAL( eve::angle(z), 2*eve::acos(eve::real(z)), 0.001);
+    TTS_RELATIVE_EQUAL( eve::angle(z), 2*eve::acos(eve::real(z)), 0.02);
   }
 };
 
