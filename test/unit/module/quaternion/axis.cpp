@@ -20,7 +20,7 @@ TTS_CASE_WITH ( "Check behavior of axis on scalar"
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
   using e_t = typename T::value_type;
-  for(size_t i = 0; i <= a0.size(); ++i)
+  for(size_t i = 0; i < a0.size(); ++i)
   {
     auto z = eve::sign(eve::quaternion(a0[i], a1[i], a2[i], a3[i]));
     auto q = eve::sign(eve::pure(z));

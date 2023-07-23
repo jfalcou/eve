@@ -20,7 +20,7 @@ TTS_CASE_WITH ( "Check behavior of angle on scalar"
               )
   <typename T>(T const& a0, T const& a1, T const& a2, T const& a3 )
 {
-  for(size_t i = 0; i <= a0.size(); ++i)
+  for(size_t i = 0; i < a0.size(); ++i)
   {
     auto z = eve::sign(eve::quaternion(a0[i], a1[i], a2[i], a3[i]));
     TTS_RELATIVE_EQUAL( eve::angle(z),  2*eve::pedantic(eve::atan2)(eve::abs(eve::pure(z)), eve::real(z)), 0.001);
