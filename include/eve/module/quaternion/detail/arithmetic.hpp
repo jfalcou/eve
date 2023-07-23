@@ -293,7 +293,7 @@ namespace eve::detail
   template<typename Z1>
   EVE_FORCEINLINE auto
   quaternion_unary_dispatch(eve::tag::axis_
-                          , Z1 q) noexcept
+                          , const Z1 & q) noexcept
   {
     using e_t = std::decay_t<decltype(real(q))>;
     auto invn = rec(abs(pure(q)));
@@ -308,7 +308,7 @@ namespace eve::detail
   template<typename Z1>
   EVE_FORCEINLINE auto
   quaternion_unary_dispatch(eve::tag::angle_
-                          , Z1 q) noexcept
+                          , const Z1 &q) noexcept
   {
     return 2*pedantic(atan2)(abs(pure(q)), real(q));
   }

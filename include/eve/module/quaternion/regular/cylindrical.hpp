@@ -52,7 +52,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //! @godbolt{doc/quaternion/regular/cylindrical.cpp}
+  //! @godbolt{doc/quaternion/regular/conversions.cpp}
   //!  @}
   //================================================================================================
 

@@ -54,7 +54,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //! @godbolt{doc/quaternion/regular/semipolar.cpp}
+  //! @godbolt{doc/quaternion/regular/conversions.cpp}
   //!  @}
   //================================================================================================
   namespace tag { struct semipolar_; }

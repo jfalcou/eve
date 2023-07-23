@@ -53,7 +53,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/quaternion/regular/multipolar.cpp}
+  //! @godbolt{doc/quaternion/regular/conversions.cpp}
   //!
   //!  @}
   //================================================================================================

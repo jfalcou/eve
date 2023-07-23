@@ -54,7 +54,7 @@ namespace eve
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/quaternion/regular/spherical.cpp}
+  //! @godbolt{doc/quaternion/regular/conversions.cpp}
   //!
   //!  @}
   //================================================================================================
