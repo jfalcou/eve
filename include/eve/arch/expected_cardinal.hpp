@@ -10,17 +10,20 @@
 #include <eve/arch/cardinals.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/detail/kumi.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve::detail
 {
+  template<typename T> struct fec_box { using type = always<T>; };
+
   template<typename Type, regular_abi ABI>
   constexpr std::ptrdiff_t find_expected_cardinal()
   {
     if constexpr(kumi::product_type<Type>)
     {
-      return kumi::min( kumi::result::flatten_all_t<kumi::as_tuple_t<Type>>{}
-                      , []<typename M>(M) { return ABI::template expected_cardinal<M>; }
-                      );
+      return kumi::min_flat ( kumi::as_tuple_t<Type, fec_box>{}
+                            , []<typename M>(M) { return find_expected_cardinal<typename M::type,ABI>(); }
+                            );
     }
     else
     {
