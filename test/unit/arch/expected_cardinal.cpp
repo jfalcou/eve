@@ -55,3 +55,20 @@ TTS_CASE("Check for 512 bits ABI expected cardinal")
   TTS_EQUAL((eve::expected_cardinal_v<short, eve::x86_512_>), 32);
   TTS_EQUAL((eve::expected_cardinal_v<char, eve::x86_512_>), 64);
 };
+
+#include <eve/traits/product_type.hpp>
+
+struct polar_coords : eve::struct_support<polar_coords,float,float>
+{};
+
+TTS_CASE("Check eve::expected_cardinal works for tuples")
+{
+  using T = kumi::tuple<eve::logical<std::uint32_t>, double>;
+  using bundle = eve::wide<T>;
+
+  constexpr auto ecl = eve::expected_cardinal_v<eve::logical<std::uint32_t>>;
+  constexpr auto ecd = eve::expected_cardinal_v<double>;
+
+  TTS_EQUAL(bundle::size(), std::min(ecl, ecd));
+  TTS_EQUAL(eve::wide<polar_coords>::size(), eve::expected_cardinal_v<float>);
+};
