@@ -50,7 +50,8 @@ namespace eve
 //!      0: noop - this shuffle does not require any assembly.
 //!      1: constant - this shuffle produces requires one constant value and no instructions.
 //!                    (at the moment this is only zeroing out a register)
-//!      2: one instruction - this shuffle requires one instruction, no masks.
+//!      2: one instruction - this shuffle requires one instruction, no vector masks.
+//!                           scalar registers and avx512 masks are allowed.
 //!      3: one instruction, can use masks (there are cases for 1 instruction but 2 masks)
 //!      <N>: sum of previous requirements.
 //!

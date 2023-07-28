@@ -11,24 +11,21 @@
 
 namespace eve
 {
-EVE_REGISTER_CALLABLE(shuffle_l2_)
-EVE_DECLARE_CALLABLE(shuffle_l2_, shuffle_l2)
+
+// level4 and level5 combine up to 2 instructions
+
+EVE_REGISTER_CALLABLE(shuffle_l4_l5_)
+EVE_DECLARE_CALLABLE(shuffle_l4_l5_, shuffle_l4_l5)
 
 namespace detail
 {
-  EVE_ALIAS_CALLABLE(shuffle_l2_, shuffle_l2);
+  EVE_ALIAS_CALLABLE(shuffle_l4_l5_, shuffle_l4_l5);
 } // namespace detail
 
 // level 2 is allowed one instruction with no mask
-EVE_CALLABLE_API(shuffle_l2_, shuffle_l2)
+EVE_CALLABLE_API(shuffle_l4_l5_, shuffle_l4_l5)
 }
 
-#include <eve/detail/shuffle_v2/simd/common/shuffle_l2.hpp>
-
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/shuffle_v2/simd/x86/shuffle_l2.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/detail/shuffle_v2/simd/arm/neon/shuffle_l2.hpp>
+#  include <eve/detail/shuffle_v2/simd/x86/shuffle_l4_l5.hpp>
 #endif
