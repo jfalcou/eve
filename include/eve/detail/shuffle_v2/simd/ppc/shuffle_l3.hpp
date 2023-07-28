@@ -22,18 +22,33 @@ ppc_vec_perm(wide<std::uint8_t, eve::fixed<16>> x,
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(vmx_), pattern_t<I...>, fixed<G>, wide<T, N> x)
+shuffle_l3_(EVE_SUPPORTS(vmx_), pattern_t<I...> p, fixed<G> g, wide<T, N> x)
 {
   constexpr std::array idxs {I...};
-  if constexpr( idxm::has_zeroes(idxs) ) return no_matching_shuffle;
+
+  if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else
   {
-    constexpr auto table_idxs =
-        idxm::to_pattern<idxm::expand_group<G * sizeof(T)>(idxm::replace_we(idxs, 0))>();
     using u8x16 = wide<std::uint8_t, eve::fixed<16>>;
     auto bytes  = eve::bit_cast(x, eve::as<u8x16> {});
 
-    return ppc_vec_perm(bytes, bytes, table_idxs);
+    constexpr auto no_we = idxm::replace_we(idxs, 0);
+
+    if constexpr( !idxm::has_zeroes(idxs) )
+    {
+      constexpr auto expanded   = idxm::expand_group<G * sizeof(T)>(no_we);
+      constexpr auto table_idxs = idxm::to_pattern<expanded>();
+
+      return ppc_vec_perm(bytes, bytes, table_idxs);
+    }
+    else
+    {
+      constexpr auto no_na      = idxm::replace_na(no_we, N::value);
+      constexpr auto expanded   = idxm::expand_group<G * sizeof(T)>(no_na);
+      constexpr auto table_idxs = idxm::to_pattern<expanded>();
+
+      return ppc_vec_perm(bytes, u8x16(0), table_idxs);
+    }
   }
 }
 

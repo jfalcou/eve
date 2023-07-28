@@ -157,6 +157,19 @@ TTS_CASE("is_repeating_pattern")
   no_test(std::array {na_, 0, we_, 3});
 };
 
+TTS_CASE("the_most_repeating_pattern")
+{
+  auto test = []<std::ptrdiff_t... I>(eve::pattern_t<I...> p, auto _expected)
+  {
+    auto actual   = eve::detail::idxm::most_repeated_pattern<I...>;
+    auto expected = to_idxs(_expected);
+    TTS_EQUAL(expected, actual) << p;
+  };
+
+  test(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>, std::array {1, 0});
+  test(eve::pattern<1, we_, 3, 2, 5, we_, 7, we_>, std::array {1, 0});
+};
+
 TTS_CASE("is_identity")
 {
   auto test = []<std::size_t N>(std::array<int, N> _in, bool expected)
@@ -202,6 +215,83 @@ TTS_CASE("has_zeroes")
   test(std::array {we_, 1, na_}, true);
 };
 
+TTS_CASE("is_all_zeroes")
+{
+  auto test = []<std::size_t N>(std::array<int, N> _in, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::is_all_zeroes(in);
+
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {we_, we_}, true);
+  test(std::array {we_, na_}, true);
+  test(std::array {na_, na_}, true);
+  test(std::array {1, na_}, false);
+};
+
+TTS_CASE("is_just_zeroes_replaced")
+{
+  auto test = []<std::size_t N>(std::array<int, N> _in, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::is_just_zeroes_replaced(in);
+
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {we_, we_}, true);
+  test(std::array {we_, na_}, true);
+  test(std::array {na_, na_}, true);
+  test(std::array {1, na_}, false);
+  test(std::array {na_, 1}, true);
+  test(std::array {na_, 0}, false);
+  test(std::array {1, 1}, false);
+};
+
+TTS_CASE("is_just_setting_one_zero")
+{
+  auto test = []<std::size_t N>(std::array<int, N> _in, std::ptrdiff_t expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_just_setting_one_zero(in).value_or(-1);
+
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {we_, we_}, -1);
+  test(std::array {we_, na_}, 1);
+  test(std::array {na_, na_}, -1);
+  test(std::array {1, na_}, -1);
+  test(std::array {na_, 1}, 0);
+  test(std::array {na_, 0}, -1);
+  test(std::array {0, na_}, 1);
+  test(std::array {0, 1}, -1);
+  test(std::array {1, 1}, -1);
+};
+
+TTS_CASE("is_just_setting_one_lane")
+{
+  auto test = []<std::size_t N>(std::array<int, N> _in, auto _expected)
+  {
+    auto in       = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual   = eve::detail::idxm::is_just_setting_one_lane(in).value_or(
+        std::array<std::ptrdiff_t, 2> {-1, -1});
+
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {we_, we_}, std::array {-1, -1});
+  test(std::array {we_, 1}, std::array {-1, -1});
+  test(std::array {we_, 0}, std::array {1, 0});
+  test(std::array {na_, 0}, std::array {-1, -1});
+  test(std::array {0, 0}, std::array {1, 0});
+  test(std::array {1, 1}, std::array {0, 1});
+  test(std::array {1, 0}, std::array {-1, -1});
+};
+
 TTS_CASE("is_in_order")
 {
   auto test = []<std::size_t N>(std::array<int, N> _in, std::ptrdiff_t expected)
@@ -225,6 +315,22 @@ TTS_CASE("is_in_order")
 
   test(std::array {1, we_, 3}, 1);
   test(std::array {1, we_, 2}, -1);
+};
+
+TTS_CASE("is_in_order_from")
+{
+  auto test = [](auto _in, std::ptrdiff_t from, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_in_order_from(in, from);
+    TTS_EQUAL(expected, actual) << tts::as_string(in) << " from: " << from;
+  };
+
+  test(std::array {0, 1}, 0, true);
+  test(std::array {1, 2, 3, 4}, 1, true);
+  test(std::array {1, we_, 3, 4}, 1, true);
+  test(std::array {we_, we_, 3, 4}, 1, true);
+  test(std::array {we_, na_, 3, 4}, 1, false);
 };
 
 TTS_CASE("is_rotate")
@@ -348,30 +454,46 @@ TTS_CASE("repace_we")
   {
     auto in       = to_idxs(_in);
     auto expected = to_idxs(_expected);
-    auto actual = eve::detail::idxm::replace_we(in, with);
+    auto actual   = eve::detail::idxm::replace_we(in, with);
     TTS_EQUAL(expected, actual) << "with: " << with;
   };
 
-  test(std::array{0, 1}, 1, std::array{0, 1});
-  test(std::array{0, we_}, 1, std::array{0, 1});
-  test(std::array{we_, we_}, 1, std::array{1, 1});
+  test(std::array {0, 1}, 1, std::array {0, 1});
+  test(std::array {0, we_}, 1, std::array {0, 1});
+  test(std::array {we_, we_}, 1, std::array {1, 1});
+};
+
+TTS_CASE("repace_na")
+{
+  auto test = [](auto _in, std::ptrdiff_t with, auto _expected)
+  {
+    auto in       = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual   = eve::detail::idxm::replace_na(in, with);
+    TTS_EQUAL(expected, actual) << "with: " << with;
+  };
+
+  test(std::array {0, 1}, 1, std::array {0, 1});
+  test(std::array {0, na_}, 1, std::array {0, 1});
+  test(std::array {na_, we_}, 1, std::array {1, we_});
+  test(std::array {na_, na_}, 1, std::array {1, 1});
 };
 
 TTS_CASE("is_blend")
 {
   auto test = [](auto _in, std::ptrdiff_t cardinal, bool expected)
   {
-    auto in       = to_idxs(_in);
+    auto in     = to_idxs(_in);
     auto actual = eve::detail::idxm::is_blend(in, cardinal);
     TTS_EQUAL(expected, actual) << tts::as_string(in) << "cardinal: " << cardinal;
   };
-  test(std::array{0, 1}, 2, true);
-  test(std::array{2, 1}, 2, true);
-  test(std::array{2, 3}, 2, true);
-  test(std::array{0, 3}, 2, true);
-  test(std::array{4, we_, 2, 3}, 4, true);
-  test(std::array{4, na_, 2, 3}, 4, false);
-  test(std::array{4, 5, 2, 3}, 2, false);
+  test(std::array {0, 1}, 2, true);
+  test(std::array {2, 1}, 2, true);
+  test(std::array {2, 3}, 2, true);
+  test(std::array {0, 3}, 2, true);
+  test(std::array {4, we_, 2, 3}, 4, true);
+  test(std::array {4, na_, 2, 3}, 4, false);
+  test(std::array {4, 5, 2, 3}, 2, false);
 };
 
 TTS_CASE("expand_group")
@@ -380,14 +502,132 @@ TTS_CASE("expand_group")
   {
     auto in       = to_idxs(_in);
     auto expected = to_idxs(_expected);
-    auto actual = eve::detail::idxm::expand_group<G>(in);
+    auto actual   = eve::detail::idxm::expand_group<G>(in);
     TTS_EQUAL(expected, actual) << "G: " << G;
   };
 
-  test(std::array{0, 1}, eve::lane<1>, std::array{0, 1});
-  test(std::array{0, na_}, eve::lane<2>, std::array{0, 1, na_, na_});
-  test(std::array{1, 0}, eve::lane<2>, std::array{2, 3, 0, 1});
-  test(std::array{0, 1}, eve::lane<4>, std::array{0, 1, 2, 3, 4, 5, 6, 7});
+  test(std::array {0, 1}, eve::lane<1>, std::array {0, 1});
+  test(std::array {0, na_}, eve::lane<2>, std::array {0, 1, na_, na_});
+  test(std::array {1, 0}, eve::lane<2>, std::array {2, 3, 0, 1});
+  test(std::array {0, 1}, eve::lane<4>, std::array {0, 1, 2, 3, 4, 5, 6, 7});
+};
+
+TTS_CASE("trim_trailing_we")
+{
+  auto test = [](auto _in, auto _expected)
+  {
+    auto        in       = to_idxs(_in);
+    auto        expected = to_idxs(_expected);
+    auto        actual   = eve::detail::idxm::trim_trailing_we(in);
+    std::vector actual_v(actual.begin(), actual.end());
+    std::vector expected_v(expected.begin(), expected.end());
+    TTS_EQUAL(expected_v, actual_v) << tts::as_string(in);
+  };
+
+  test(std::array {0, 1}, std::array {0, 1});
+  test(std::array {0, we_}, std::array {0});
+  test(std::array {0, we_, we_, we_}, std::array {0});
+
+  std::array<std::ptrdiff_t, 2> idxs {we_, we_};
+  TTS_EXPECT(eve::detail::idxm::trim_trailing_we(idxs).empty());
+};
+
+TTS_CASE("is_slide_left")
+{
+  auto test = [](auto _in, int expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_slide_left(in).value_or(-1);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {0, 1, 2, 3}, 0);
+  test(std::array {1, 2, 3, na_}, 1);
+  test(std::array {2, 3, na_, na_}, 2);
+  test(std::array {3, na_, na_, na_}, 3);
+  test(std::array {3, we_, na_, na_}, 3);
+  test(std::array {3, we_, we_, we_}, 3);
+  test(std::array {1, we_, we_, we_}, 1);
+  test(std::array {we_, 3, we_, we_}, 2);
+  test(std::array {1, na_, we_, we_}, -1);
+  test(std::array {1, 2, na_, na_}, -1);
+};
+
+TTS_CASE("is_slide_right")
+{
+  auto test = [](auto _in, int expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_slide_right(in).value_or(-1);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {0, 1, 2, 3}, 0);
+  test(std::array {na_, 0, 1, 2}, 1);
+  test(std::array {na_, na_, 0, 1}, 2);
+  test(std::array {na_, na_, na_, 0}, 3);
+  test(std::array {na_, na_, we_, 0}, 3);
+  test(std::array {na_, na_, we_, 1}, 2);
+  test(std::array {na_, na_, we_, 2}, -1);
+  test(std::array {we_, we_, we_, 0}, 3);
+  test(std::array {we_, we_, we_, 1}, 2);
+  test(std::array {we_, we_, 0, we_}, 2);
+  test(std::array {we_, we_, na_, 2}, -1);
+  test(std::array {na_, we_, we_, 2}, 1);
+  test(std::array {na_, na_, 1, 2}, -1);
+};
+
+TTS_CASE("is_reverse")
+{
+  auto test = [](auto _in, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_reverse(in);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {0}, true);
+  test(std::array {1, 0}, true);
+  test(std::array {1, we_}, true);
+  test(std::array {we_, we_}, true);
+  test(std::array {we_, 0}, true);
+  test(std::array {0, we_}, false);
+  test(std::array {2, we_}, false);
+  test(std::array {3, 2, 1, 0}, true);
+  test(std::array {3, 2, 1, na_}, false);
+};
+
+TTS_CASE("is_lane_broadcast")
+{
+  auto test = [](auto _in, int expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_lane_broadcast(in).value_or(-1);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {we_}, -1);
+  test(std::array {we_, 1}, 1);
+  test(std::array {we_, 0}, 0);
+  test(std::array {1, 1}, 1);
+};
+
+TTS_CASE("split_to_groups")
+{
+  auto test = []<std::ptrdiff_t G, std::size_t N>(
+                  auto _in, eve::fixed<G>, std::array<int, N> _e0, auto... _expected)
+  {
+    auto in = to_idxs(_in);
+
+    std::array<std::array<std::ptrdiff_t, N>, sizeof...(_expected) + 1> expected {
+        to_idxs(_e0), to_idxs(_expected)...};
+    auto actual = eve::detail::idxm::split_to_groups<(std::size_t)G>(in);
+
+    TTS_EQUAL(expected, actual);
+  };
+
+  test(std::array {0, 1, 2, 3}, eve::lane<2>, std::array {0, 1}, std::array {2, 3});
+  test(std::array {0, 1, 2, 3}, eve::lane<4>, std::array {0, 1, 2, 3});
 };
 
 }

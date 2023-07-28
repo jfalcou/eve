@@ -141,22 +141,4 @@ TTS_CASE("Perfect shuffle, x86, sanity checks")
 };
 #endif
 
-#if defined(EVE_HW_ARM)
-TTS_CASE("Perfect shuffle, arm neon, 8 bytes")
-{
-  // 8x1
-  shuffle_l0_all<eve::neon, std::uint64_t, 1, 1, shuffle_test::kLen1Tests>();
-
-  // 4x2
-  shuffle_l0_all<eve::neon, std::uint32_t, 2, 1, shuffle_test::kLen2No0sTests>();
-  shuffle_l0_all<eve::neon, std::uint32_t, 2, 1, shuffle_test::kLen20sTests>();
-};
-
-TTS_CASE("Perfect shuffle, arm neon, sanity checks")
-{
-  shuffle_l0_test<eve::neon, std::uint16_t, 4, 1, 2, 3, 2, 3>();
-  shuffle_l0_all<eve::neon, float, 2, 1, shuffle_test::kLen2No0sTests>();
-};
-#endif
-
 }

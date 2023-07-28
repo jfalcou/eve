@@ -46,7 +46,8 @@ verify(eve::wide<T, N> x, eve::fixed<G>, eve::pattern_t<I...> p, eve::wide<T, U>
     return false;
   }();
 
-  TTS_EXPECT(!has_failures) << "G: " << G << "\npattern: " << p << "\nactual:  " << shuffled;
+  TTS_EXPECT(!has_failures) << "sizeof(T): " << sizeof(T) << " G: " << G << "\npattern: " << p
+                            << "\nactual:  " << shuffled;
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
@@ -56,23 +57,17 @@ run(auto expected_level, eve::pattern_t<I...> p = {})
   using Wide = eve::wide<T, eve::fixed<N>>;
 
   Wide input {[](int i, int) { return i + 1; }};
-  if constexpr (requires { eve::shuffle_v2_core(input, eve::lane<G>, p); })
+  if constexpr( requires { eve::shuffle_v2_core(input, eve::lane<G>, p); } )
   {
     auto [shuffled, l] = eve::shuffle_v2_core(input, eve::lane<G>, p);
     verify(input, eve::lane<G>, p, shuffled);
-    if constexpr ( eve::supports_simd )
+    if constexpr( eve::supports_simd )
     {
-      TTS_EQUAL(expected_level(std::array{I...}), l()) << "G: " << G << "\npattern: " << p;
+      TTS_EQUAL(expected_level(std::array {I...}), l()) << "G: " << G << "\npattern: " << p;
     }
-    else
-    {
-      TTS_EQUAL(0, l()) << "G: " << G << "\npattern: " << p;
-    }
+    else { TTS_EQUAL(0, l()) << "G: " << G << "\npattern: " << p; }
   }
-  else
-  {
-    TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p);
-  }
+  else { TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p); }
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
@@ -83,19 +78,17 @@ run2(auto expected_level, eve::pattern_t<I...> p = {})
 
   Wide input {[](int i, int) { return i + 1; }};
   auto xy = input.slice();
-  auto x = get<0>(xy);
-  auto y = get<1>(xy);
+  auto x  = get<0>(xy);
+  auto y  = get<1>(xy);
 
-  if constexpr (requires { eve::shuffle_v2_core(x, y, eve::lane<G>, p); })
+  if constexpr( requires { eve::shuffle_v2_core(x, y, eve::lane<G>, p); } )
   {
     auto [shuffled, l] = eve::shuffle_v2_core(x, y, eve::lane<G>, p);
     verify(input, eve::lane<G>, p, shuffled);
-    TTS_EQUAL(expected_level(std::array{I...}), l()) << "G: " << G << "\npattern: " << p;
+    TTS_EQUAL(expected_level(std::array {I...}), l())
+        << "sizeof(T): " << sizeof(T) << " G: " << G << "\npattern: " << p;
   }
-  else
-  {
-    TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p);
-  }
+  else { TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p); }
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
@@ -115,7 +108,6 @@ run2_all(auto expected_level)
     (run2<T, N, G>(expected_level, idxm::to_pattern<tests[i]>()), ...);
   }(std::make_index_sequence<tests.size()> {});
 }
-
 
 template<std::size_t N> using arr = std::array<std::ptrdiff_t, N>;
 
@@ -258,6 +250,11 @@ matchRightLane(const std::array<arr<Len>, N>& in)
   return res;
 }();
 
+[[maybe_unused]] constexpr std::array kLen4No0Tests_Rotates = {
+    arr<4> {1, 2, 3, 0}, //
+    arr<4> {3, 0, 1, 2}, //
+};
+
 // Too many to do all
 [[maybe_unused]] constexpr std::array kLen4No0Tests_Scrambled = {
     arr<4> {0, 1, 0, 0}, //
@@ -275,11 +272,15 @@ matchRightLane(const std::array<arr<Len>, N>& in)
 };
 
 [[maybe_unused]] constexpr std::array kLen4N0Tests_CrossLane =
-    concat(kLen4No0Tests_IndependentHalves_Reversed, kLen4No0Tests_Scrambled);
+    concat(kLen4No0Tests_IndependentHalves_Reversed,
+           kLen4No0Tests_Rotates,
+           kLen4No0Tests_Scrambled);
+
+[[maybe_unused]] constexpr std::array kLen4N0Tests =
+    concat(kLen4No0Tests_IndependentHalves, kLen4N0Tests_CrossLane);
 
 // Do not repeat shuffle 4
-[[maybe_unused]]
-constexpr std::array kRotate8 = {
+[[maybe_unused]] constexpr std::array kRotate8 = {
     arr<8> {1, 2, 3, 4, 5, 6, 7, 0},               //
     arr<8> {3, 4, 5, 6, 7, 0, 1, 2},               //
     arr<8> {5, 6, 7, 0, 1, 2, 3, 4},               //
@@ -287,8 +288,7 @@ constexpr std::array kRotate8 = {
     arr<8> {1, eve::we_, 3, 4, 5, eve::we_, 7, 0}, //
 };
 
-[[maybe_unused]]
-constexpr std::array kRotate16 = {
+[[maybe_unused]] constexpr std::array kRotate16 = {
     arr<16> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0}, //
     arr<16> {3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2}, //
 };
@@ -325,7 +325,6 @@ constexpr std::array kRotate16 = {
     arr<2> {3, 0}, //
     arr<2> {3, 1}, //
 };
-
 
 [[maybe_unused]] constexpr std::array kLen4x2_No0sBlendTests = {
     arr<4> {0, 1, 6, 3}, //
