@@ -30,16 +30,16 @@ reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, Ts... args) noexcept
 //== tuples
 //================================================================================================
 
-template<value T0, kumi::product_type Ts>
+template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, Ts args) noexcept
+reverse_horner_(EVE_SUPPORTS(cpu_), T0 x, kumi::tuple<Ts...> args) noexcept
 {
   return horner(x, kumi::reverse(args));
 }
 
-template<decorator D, value T0, kumi::product_type Ts>
+template<decorator D, value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_), D const & d, T0 x, Ts args) noexcept
+reverse_horner_(EVE_SUPPORTS(cpu_), D const & d, T0 x, kumi::tuple<Ts...> args) noexcept
 {
   return d(horner)(x, kumi::reverse(args));
 }

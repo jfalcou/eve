@@ -10,7 +10,7 @@
 #include <eve/module/complex.hpp>
 #include <complex>
 
-TTS_CASE_WITH( "Check behavior of fam on wide complex"
+TTS_CASE_WITH( "Check behavior of reverse_horner on wide complex"
              , eve::test::simd::ieee_reals
              ,tts::generate( tts::randoms(-10, 10)
                            , tts::randoms(-10, 10)
@@ -31,7 +31,7 @@ TTS_CASE_WITH( "Check behavior of fam on wide complex"
   z_t c2{a4, a5};
   z_t c3{a6, a7};
   auto tol = 0.001;
-  TTS_RELATIVE_EQUAL(eve::horner(x, c1, c2, c3), (c1*x+c2)*x+c3, tol);
-  TTS_RELATIVE_EQUAL(eve::horner(x, c1, c2),     c1*x+c2,tol);
-  TTS_RELATIVE_EQUAL(eve::horner(x, c1),         c1, tol);
+  TTS_RELATIVE_EQUAL(eve::reverse_horner(x, c1, c2, c3), (c3*x+c2)*x+c1, tol);
+  TTS_RELATIVE_EQUAL(eve::reverse_horner(x, c1, c2),     c2*x+c1,tol);
+  TTS_RELATIVE_EQUAL(eve::reverse_horner(x, c1),         c1, tol);
 };

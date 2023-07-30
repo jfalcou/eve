@@ -10,7 +10,7 @@
 #include <eve/module/quaternion.hpp>
 #include <complex>
 
-TTS_CASE_WITH( "Check behavior of horner on wide quaternion"
+TTS_CASE_WITH( "Check behavior of reverse_horner on wide quaternion"
              , eve::test::simd::ieee_reals
              ,tts::generate( tts::randoms(-10, 10)
                            , tts::randoms(-10, 10)
@@ -42,7 +42,7 @@ TTS_CASE_WITH( "Check behavior of horner on wide quaternion"
   z_t q3{a12, a13, a14, a15};
   using e_t = eve::element_type_t<T>;
    auto tol = 100.0*eve::eps(eve::as<e_t>());
-  TTS_RELATIVE_EQUAL(eve::horner(x, q1, q2, q3), (q1*x+q2)*x+q3, tol);
-  TTS_RELATIVE_EQUAL(eve::horner(x, q1, q2),     q1*x+q2,tol);
-  TTS_RELATIVE_EQUAL(eve::horner(x, q1),         q1, tol);
+  TTS_RELATIVE_EQUAL(eve::reverse_horner(x, q1, q2, q3), (q3*x+q2)*x+q1, tol);
+  TTS_RELATIVE_EQUAL(eve::reverse_horner(x, q1, q2),     q2*x+q1,tol);
+  TTS_RELATIVE_EQUAL(eve::reverse_horner(x, q1),         q1, tol);
 };

@@ -22,7 +22,7 @@
 namespace eve::detail
 {
 
-template<decorator D, floating_value T0, value C0, value... Cs>
+template<decorator D, value T0, value C0, value... Cs>
 EVE_FORCEINLINE constexpr auto
 reverse_horner_impl(D const& d, T0 xx, C0 c0, Cs... cs) noexcept
 -> decltype(horner(xx, c0, cs...))
