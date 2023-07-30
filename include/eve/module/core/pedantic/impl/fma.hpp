@@ -24,7 +24,7 @@
 
 namespace eve::detail
 {
-template<ordered_value T, ordered_value U, ordered_value V>
+template<value T, value U, value V>
 EVE_FORCEINLINE auto
 fma_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, U const& b, V const& c) noexcept
 -> decltype(fsm(a, b, c))
@@ -32,7 +32,7 @@ fma_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, U const& b, V const& 
   return arithmetic_call(pedantic(fma), a, b, c);
 }
 
-template<ordered_value T>
+template<value T>
 EVE_FORCEINLINE T
 fma_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& c) noexcept requires
     has_native_abi_v<T>
@@ -63,6 +63,10 @@ fma_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& 
     using u_t = as_integer_t<T, unsigned>;
     return bit_cast(fma(bit_cast(a, as<u_t>()), bit_cast(b, as<u_t>()), bit_cast(c, as<u_t>())),
                     as<T>());
+  }
+  else
+  {
+    return fma(a, b, c); 
   }
 }
 }

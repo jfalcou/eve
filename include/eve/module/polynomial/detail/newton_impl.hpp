@@ -23,9 +23,6 @@ namespace eve::detail
 template<decorator D, value T0, std::input_iterator IT1, std::input_iterator IT2>
 EVE_FORCEINLINE constexpr auto
 newton_impl(D const& d, T0 xx, IT1 const& firstc, IT1 const& lastc, IT2 const& firstn) noexcept
-    requires(compatible_values<T0, typename std::iterator_traits<IT1>::value_type>&&
-                 compatible_values<T0, typename std::iterator_traits<IT2>::value_type>)
-
 {
   using r_t = common_compatible_t<T0,
                                   typename std::iterator_traits<IT1>::value_type,
@@ -41,8 +38,8 @@ newton_impl(D const& d, T0 xx, IT1 const& firstc, IT1 const& lastc, IT2 const& f
     advance(curc, 1);
     advance(curn, 1);
     auto dfma = d(fma);
-    r_t  that(dfma(sub(x, *firstn), *firstc, *curc));
-    auto step = [&](auto that, auto argc, auto argn) { return dfma(sub(x, argn), that, argc); };
+    r_t  that(dfma(*firstc, sub(x, *firstn), *curc));
+    auto step = [&](auto that, auto argc, auto argn) { return dfma(that, sub(x, argn), argc); };
     for( advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1) )
       that = step(that, *curc, *curn);
     return that;
@@ -55,12 +52,8 @@ newton_impl(D const& d, T0 xx, IT1 const& firstc, IT1 const& lastc, IT2 const& f
 template<decorator D, value T0, range R1, range R2>
 EVE_FORCEINLINE constexpr auto
 newton_impl(D const& d, T0 xx, R1 const& rc, R2 rn) noexcept
-// requires(
-//     compatible_values<T0, typename R1::value_type>&&
-//         compatible_values<T0, typename R2::value_type> && (!simd_value<R1>)&&(!simd_value<R2>))
 {
   using r_t   = decltype(xx+ (typename R1::value_type)(0)+(typename R2::value_type)(0));
-//    common_compatible_t<T0, typename R1::value_type, typename R2::value_type>;
   auto x      = r_t(xx);
   auto firstc = begin(rc);
   auto lastc  = end(rc);
@@ -80,8 +73,8 @@ newton_impl(D const& d, T0 xx, R1 const& rc, R2 rn) noexcept
       advance(curc, 1);
       advance(curn, 1);
       auto dfma = d(fma);
-      r_t  that(dfma(sub(x, *firstn), *firstc, *curc));
-      auto step = [&](auto that, auto argc, auto argn) { return dfma(sub(x, argn), that, argc); };
+      r_t  that(dfma(*firstc, sub(x, *firstn), *curc));
+      auto step = [&](auto that, auto argc, auto argn) { return dfma( that, sub(x, argn), argc); };
       for( advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1) )
         that = step(that, *curc, *curn);
       return that;
