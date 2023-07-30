@@ -71,6 +71,17 @@ TTS_CASE_TPL( "Check quaternion::mul", eve::test::scalar::ieee_reals)
   // wide quaternion * wide real / wide real * wide quaternion
   TTS_EQUAL(mul(z_v1   , rv    ) , (wq_t{[&](auto i, auto){ return z_v1.get(i) * rv.get(i);}}));
   TTS_EQUAL(mul(rv     , z_v1  ) , (wq_t{[&](auto i, auto){ return z_v1.get(i) * rv.get(i);}}));
+
+  eve::quaternion<T> ii{0, 1, 0, 0};
+  eve::quaternion<T> jj{0, 0, 1, 0};
+  eve::quaternion<T> kk{0, 0, 0, 1};
+  std::cout << ii*jj << std::endl;
+  std::cout << jj*ii << std::endl;
+  wq_t wii(ii);
+  wq_t wjj(jj);
+  std::cout << wii*wjj << std::endl;
+  std::cout << wjj*wii << std::endl;
+
 };
 
 // TTS_CASE_WITH( "Check pedantic(quaternion::mul)"
