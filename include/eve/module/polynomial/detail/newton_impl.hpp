@@ -54,11 +54,13 @@ newton_impl(D const& d, T0 xx, IT1 const& firstc, IT1 const& lastc, IT2 const& f
 //================================================================================================
 template<decorator D, value T0, range R1, range R2>
 EVE_FORCEINLINE constexpr auto
-newton_impl(D const& d, T0 xx, R1 const& rc, R2 rn) noexcept requires(
-    compatible_values<T0, typename R1::value_type>&&
-        compatible_values<T0, typename R2::value_type> && (!simd_value<R1>)&&(!simd_value<R2>))
+newton_impl(D const& d, T0 xx, R1 const& rc, R2 rn) noexcept
+// requires(
+//     compatible_values<T0, typename R1::value_type>&&
+//         compatible_values<T0, typename R2::value_type> && (!simd_value<R1>)&&(!simd_value<R2>))
 {
-  using r_t   = common_compatible_t<T0, typename R1::value_type, typename R2::value_type>;
+  using r_t   = decltype(xx+ (typename R1::value_type)(0)+(typename R2::value_type)(0));
+//    common_compatible_t<T0, typename R1::value_type, typename R2::value_type>;
   auto x      = r_t(xx);
   auto firstc = begin(rc);
   auto lastc  = end(rc);

@@ -29,11 +29,12 @@ newton_(EVE_SUPPORTS(cpu_), T0 xx, IT0 const& firstc, IT0 const& lastc, IT1 cons
 //================================================================================================
 template<value T0, range R1, range R2>
 EVE_FORCEINLINE constexpr auto
-newton_(EVE_SUPPORTS(cpu_), T0 xx, R1 const& rc, R2 const& rn) noexcept requires(
-    compatible_values<
-        T0,
-        typename R1::
-            value_type> && (!simd_value<R1>)&&compatible_values<T0, typename R2::value_type> && (!simd_value<R2>))
+newton_(EVE_SUPPORTS(cpu_), T0 xx, R1 const& rc, R2 const& rn) noexcept
+// requires(
+//     compatible_values<
+//         T0,
+//         typename R1::
+//             value_type> && (!simd_value<R1>)&&compatible_values<T0, typename R2::value_type> && (!simd_value<R2>))
 {
   return detail::newton_impl(regular_type(), xx, rc, rn);
 }
@@ -78,7 +79,7 @@ newton_(EVE_SUPPORTS(cpu_), T0 xx, Coefs const& cs, Nodes const& ns) noexcept
     auto compute = [&](auto ... args){
       auto doit = [&](auto an){
         auto [a, n] = an;
-        that =  fma(xx-n, that, a);
+        that =  fma(that, xx-n, a);
       };
       ((doit(args), ...));
       return that;

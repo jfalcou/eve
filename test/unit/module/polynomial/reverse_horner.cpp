@@ -89,4 +89,4 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
     TTS_EQUAL(numeric(reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
   }
 
-};
+ };
