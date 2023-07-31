@@ -67,8 +67,8 @@ newton_(EVE_SUPPORTS(cpu_), T0 xx,  kumi::tuple<Coefs...> const& cs
 {
   EVE_ASSERT((kumi::size_v<decltype(cs)> == 0 && kumi::size_v<decltype(ns)> == 0)||
              (kumi::size_v<decltype(cs)> ==  kumi::size_v<decltype(ns)>+1), "nodes andcoefs have incompatible sizes");
-  using r1_t  = decltype((xx+...+Coefs(0)));
-  using r2_t  = decltype((xx +...+Nodes(0)));
+  using r1_t  = std::decay_t<decltype((xx+...+Coefs(0)))>;
+  using r2_t  = std::decay_t<decltype((xx +...+Nodes(0)))>;
   using r_t   = decltype(r1_t{}+r2_t{});
   if constexpr(kumi::size_v<decltype(cs)> == 0) return zero(as<r_t>());
   else if constexpr(kumi::size_v<decltype(cs)> == 1) return r_t(get<0>(cs));
@@ -93,8 +93,8 @@ EVE_FORCEINLINE constexpr auto
 newton_(EVE_SUPPORTS(cpu_), D const& d, T0 xx,  kumi::tuple<Coefs...> const& cs
        , kumi::tuple<Nodes...> const& ns) noexcept
 {
-  using r1_t  = decltype((xx+...+Coefs(0)));
-  using r2_t  = decltype((xx +...+Nodes(0)));
+  using r1_t  = std::decay_t<decltype((xx+...+Coefs(0)))>;
+  using r2_t  = std::decay_t<decltype((xx +...+Nodes(0)))>;
   using r_t   = decltype(r1_t{}+r2_t{});
   if constexpr(kumi::size_v<decltype(cs)> == 0) return zero(as<r_t>());
   else if constexpr(kumi::size_v<decltype(cs)> == 1) return r_t(get<0>(cs));
