@@ -545,7 +545,6 @@ var namespaceeve =
     [ "secpi", "group__math__trig_ga84c8a10368a87019fd81eb234c3f09da.html#ga84c8a10368a87019fd81eb234c3f09da", null ],
     [ "shl", "group__core__arithmetic_gae5098d24d083fd3e2f9d54135c8a84d8.html#gae5098d24d083fd3e2f9d54135c8a84d8", null ],
     [ "shr", "group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f", null ],
-    [ "shuffle_l0", "group__core.html#ga32de0d02e8c348cf7551cd5caa4c0b0f", null ],
     [ "sign", "group__core__arithmetic_ga51432e6f8f1e6386e37b58e32183bcc4.html#ga51432e6f8f1e6386e37b58e32183bcc4", null ],
     [ "sign_alternate", "group__core__arithmetic_gacb3f3a2bad075621eb24f44b445dded3.html#gacb3f3a2bad075621eb24f44b445dded3", null ],
     [ "signgam", "group__special_ga61d15ea4565d12bf9dbbe92491ea064a.html#ga61d15ea4565d12bf9dbbe92491ea064a", null ],
