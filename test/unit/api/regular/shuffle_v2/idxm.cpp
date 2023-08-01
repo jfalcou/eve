@@ -7,8 +7,6 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/detail/idxm.hpp>
-
 namespace
 {
 
@@ -159,6 +157,36 @@ TTS_CASE("is_repeating_pattern")
   no_test(std::array {na_, 0, we_, 3});
 };
 
+TTS_CASE("is_identity")
+{
+  auto test = []<std::size_t N>(std::array<int, N> _in, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::is_identity(in);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+  test(std::array {0}, true);
+  test(std::array {we_}, true);
+  test(std::array {1}, false);
+  // We assume that the pattern is simplified
+  test(std::array {0, 1}, false);
+};
+
+TTS_CASE("is_zero")
+{
+  auto test = []<std::size_t N>(std::array<int, N> _in, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::is_zero(in);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+  test(std::array {na_}, true);
+  test(std::array {we_}, true);
+  test(std::array {0}, false);
+  // We assume that the pattern is simplified
+  test(std::array {na_, na_}, false);
+};
+
 TTS_CASE("has_zeroes")
 {
   auto test = []<std::size_t N>(std::array<int, N> _in, bool expected)
@@ -233,6 +261,133 @@ TTS_CASE("is_rotate")
   test(std::array {0, 0}, -1);
   test(std::array {0, 0, 0, 0}, -1);
   test(std::array {1, 2, 3, 1}, -1);
+};
+
+TTS_CASE("slice_pattern")
+{
+  TTS_TYPE_IS((kumi::tuple<eve::pattern_t<0>>),
+              decltype(eve::detail::idxm::slice_pattern<1>(eve::pattern<0>)));
+
+  TTS_TYPE_IS((kumi::tuple<eve::pattern_t<0>>),
+              decltype(eve::detail::idxm::slice_pattern<2>(eve::pattern<0>)));
+
+  TTS_TYPE_IS((kumi::tuple<eve::pattern_t<1>, eve::pattern_t<0>>),
+              decltype(eve::detail::idxm::slice_pattern<1>(eve::pattern<1, 0>)));
+
+  TTS_TYPE_IS((kumi::tuple<eve::pattern_t<0, 1>, eve::pattern_t<2, 3>, eve::pattern_t<4, 5>>),
+              decltype(eve::detail::idxm::slice_pattern<2>(eve::pattern<0, 1, 2, 3, 4, 5>)));
+};
+
+TTS_CASE("drop_unused_regiters")
+{
+  // Can't use eq because not printing properly
+  TTS_EXPECT((kumi::tuple {eve::pattern<0>, std::array {0}}
+              == eve::detail::idxm::drop_unused_wides<1>(eve::pattern<0>)));
+  TTS_EXPECT((kumi::tuple {eve::pattern<0>, std::array {1}}
+              == eve::detail::idxm::drop_unused_wides<1>(eve::pattern<1>)));
+  TTS_EXPECT((kumi::tuple {eve::pattern<0, 1>, std::array {0, 1}}
+              == eve::detail::idxm::drop_unused_wides<1>(eve::pattern<0, 1>)));
+
+  TTS_EXPECT((kumi::tuple {eve::pattern<0, 1, 0, 1>, std::array {0}}
+              == eve::detail::idxm::drop_unused_wides<2>(eve::pattern<0, 1, 0, 1>)));
+
+  TTS_EXPECT((kumi::tuple {eve::pattern<0, 2, 0, 3>, std::array {1, 2}}
+              == eve::detail::idxm::drop_unused_wides<2>(eve::pattern<2, 4, 2, 5>)));
+
+  TTS_EXPECT((kumi::tuple {eve::pattern<0, 2, eve::we_, eve::na_>, std::array {1, 2}}
+              == eve::detail::idxm::drop_unused_wides<2>(eve::pattern<2, 4, eve::we_, eve::na_>)));
+
+  TTS_EXPECT((kumi::tuple {eve::pattern<eve::we_>, std::array {0}}
+              == eve::detail::idxm::drop_unused_wides<2>(eve::pattern<eve::we_>)));
+
+  TTS_EXPECT((kumi::tuple {eve::pattern<eve::na_>, std::array {0}}
+              == eve::detail::idxm::drop_unused_wides<2>(eve::pattern<eve::na_>)));
+};
+
+TTS_CASE("matches 1")
+{
+  auto test = [](auto _in, std::initializer_list<std::ptrdiff_t> p, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::matches(to_idxs(_in), p);
+    TTS_EQUAL(expected, actual) << "in: " << tts::as_string(in) << " p: " << tts::as_string(p);
+  };
+
+  test(std::array {we_}, {0}, true);
+  test(std::array {we_}, {1}, true);
+  test(std::array {na_, na_}, {na_, na_}, true);
+  test(std::array {1, we_}, {we_, 1}, true);
+  test(std::array {1, 2}, {1, 2}, true);
+  test(std::array {we_}, {1, 2}, false);
+  test(std::array {we_, na_}, {1, na_}, true);
+  test(std::array {1, 2, 3, 4}, {1, 2, we_, 4}, true);
+  test(std::array {1, 2, 3, 4}, {1, 2, 4, we_}, false);
+};
+
+TTS_CASE("matches many")
+{
+  auto test = [](auto                                  _in,
+                 std::initializer_list<std::ptrdiff_t> p0,
+                 std::initializer_list<std::ptrdiff_t> p1,
+                 bool                                  expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::matches(to_idxs(_in), p0, p1);
+    TTS_EQUAL(expected, actual) << "in: " << tts::as_string(in) << " p0: " << tts::as_string(p0)
+                                << " p1: " << tts::as_string(p1);
+  };
+
+  test(std::array {1}, {0}, {we_}, true);
+  test(std::array {1}, {1}, {na_}, true);
+  test(std::array {1, 2}, {1, na_}, {na_, 2}, false);
+};
+
+TTS_CASE("repace_we")
+{
+  auto test = [](auto _in, std::ptrdiff_t with, auto _expected)
+  {
+    auto in       = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual = eve::detail::idxm::replace_we(in, with);
+    TTS_EQUAL(expected, actual) << "with: " << with;
+  };
+
+  test(std::array{0, 1}, 1, std::array{0, 1});
+  test(std::array{0, we_}, 1, std::array{0, 1});
+  test(std::array{we_, we_}, 1, std::array{1, 1});
+};
+
+TTS_CASE("is_blend")
+{
+  auto test = [](auto _in, std::ptrdiff_t cardinal, bool expected)
+  {
+    auto in       = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_blend(in, cardinal);
+    TTS_EQUAL(expected, actual) << tts::as_string(in) << "cardinal: " << cardinal;
+  };
+  test(std::array{0, 1}, 2, true);
+  test(std::array{2, 1}, 2, true);
+  test(std::array{2, 3}, 2, true);
+  test(std::array{0, 3}, 2, true);
+  test(std::array{4, we_, 2, 3}, 4, true);
+  test(std::array{4, na_, 2, 3}, 4, false);
+  test(std::array{4, 5, 2, 3}, 2, false);
+};
+
+TTS_CASE("expand_group")
+{
+  auto test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _expected)
+  {
+    auto in       = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual = eve::detail::idxm::expand_group<G>(in);
+    TTS_EQUAL(expected, actual) << "G: " << G;
+  };
+
+  test(std::array{0, 1}, eve::lane<1>, std::array{0, 1});
+  test(std::array{0, na_}, eve::lane<2>, std::array{0, 1, na_, na_});
+  test(std::array{1, 0}, eve::lane<2>, std::array{2, 3, 0, 1});
+  test(std::array{0, 1}, eve::lane<4>, std::array{0, 1, 2, 3, 4, 5, 6, 7});
 };
 
 }

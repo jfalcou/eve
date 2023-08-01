@@ -5,37 +5,52 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "unit/api/regular/swizzle/shuffle_test.hpp"
+#include "unit/api/regular/shuffle/shuffle_v2_test.hpp"
+
+/*
+ * These tests should be supported for all platforms and migrated
+ * into appropriate nxm files.
+ */
 
 namespace
 {
+
+constexpr auto expect_l2 = [](std::span<const std::ptrdiff_t> p)
+{
+  if( p.size() == 1 ) return p[0] == eve::na_ ? 1 : 0;
+  return 2;
+};
 
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 [[maybe_unused]] void
 shuffle_l0_test()
 {
-  shuffle_test::run<api, T, N, G, I...>(eve::shuffle_l0);
+  if constexpr( eve::current_api < api ) TTS_PASS();
+  else shuffle_test::run<T, N, G, I...>(expect_l2);
 }
 
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 [[maybe_unused]] void
 shuffle_l0_2_test()
 {
-  shuffle_test::run2<api, T, N, G, I...>(eve::shuffle_l0);
+  if constexpr( eve::current_api < api ) TTS_PASS();
+  else shuffle_test::run2<T, N, G, I...>(expect_l2);
 }
 
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
 [[maybe_unused]] void
 shuffle_l0_all()
 {
-  shuffle_test::run_all<api, T, N, G, tests>(eve::shuffle_l0);
+  if constexpr( eve::current_api < api ) TTS_PASS();
+  else shuffle_test::run_all<T, N, G, tests>(expect_l2);
 }
 
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
 [[maybe_unused]] void
 shuffle_l0_2_all()
 {
-  shuffle_test::run2_all<api, T, N, G, tests>(eve::shuffle_l0);
+  if constexpr( eve::current_api < api ) TTS_PASS();
+  else shuffle_test::run2_all<T, N, G, tests>(expect_l2);
 }
 
 #if defined(EVE_HW_X86)
@@ -103,7 +118,7 @@ TTS_CASE("Perfect shuffle, x86, 32 bytes")
 
   // rotate 128
   {
-    constexpr auto r8 = shuffle_test::matchRightLane(shuffle_test::kRotate8);
+    constexpr auto r8  = shuffle_test::matchRightLane(shuffle_test::kRotate8);
     constexpr auto r16 = shuffle_test::matchRightLane(shuffle_test::kRotate16);
 
     shuffle_l0_all<eve::avx2, std::uint16_t, 16, 1, r8>();
@@ -114,7 +129,6 @@ TTS_CASE("Perfect shuffle, x86, 32 bytes")
 // No new patterns but just to see that other behavour works as expected
 TTS_CASE("Perfect shuffle, x86, sanity checks")
 {
-  shuffle_l0_test<eve::avx, std::uint32_t, 8, 1, 0, 1, 2, 3, 4, 5, 6, 7>();
   shuffle_l0_test<eve::avx, float, 8, 2, 0, 0, 2, 2>();
   shuffle_l0_test<eve::avx, std::int64_t, 4, 1, 0, 0, 2, 2>();
   shuffle_l0_test<eve::avx, double, 4, 1, 0, 0, eve::we_, 2>();
@@ -124,16 +138,6 @@ TTS_CASE("Perfect shuffle, x86, sanity checks")
 
   // pattern got upscaled properly
   shuffle_l0_test<eve::avx, float, 4, 1, 2, 3, 0, 1>();
-
-  // To see that sfiane works. Reverting 16 chars on x86 needs a mask - so
-  // not perfect shuffle.
-  TTS_CONSTEXPR_EXPECT_NOT(
-      (std::invocable<decltype(eve::shuffle_l0),
-                      eve::wide<std::int8_t, eve::fixed<16>>,
-                      eve::fixed<1>,
-                      eve::pattern_t<15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0>>
-
-       ));
 };
 #endif
 

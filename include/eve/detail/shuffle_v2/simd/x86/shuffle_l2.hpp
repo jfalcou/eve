@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/implementation.hpp>
-
 namespace eve::detail
 {
 namespace idx
@@ -33,58 +31,6 @@ namespace idx
     return true;
   }
 
-  constexpr int x86_shuffle_4_in_lane(std::span<const std::ptrdiff_t, 4> idxs)
-  {
-    // we_ doesn't affect here
-    int res = 0;
-    if( idxs[0] == 1 ) res |= 1;
-    if( idxs[1] == 1 ) res |= 1 << 1;
-    if( idxs[2] == 3 ) res |= 1 << 2;
-    if( idxs[3] == 3 ) res |= 1 << 3;
-    return res;
-  }
-
-  constexpr int x86_mm_shuffle_2(std::span<const std::ptrdiff_t, 2> _idxs)
-  {
-    auto idxs = replace_we(_idxs, 0);
-    return _MM_SHUFFLE2(idxs[1], idxs[0]);
-  }
-
-  constexpr int x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 2> _idxs)
-  {
-    std::array<std::ptrdiff_t, 2> idxs = replace_we(_idxs, 0);
-    idxs[0] *= 2;
-    idxs[1] *= 2;
-    return _MM_SHUFFLE(idxs[1] + 1, idxs[1], idxs[0] + 1, idxs[0]);
-  }
-
-  constexpr int x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 4> _idxs)
-  {
-    std::array<std::ptrdiff_t, 4> idxs = replace_we(_idxs, 0);
-    return _MM_SHUFFLE(idxs[3], idxs[2], idxs[1], idxs[0]);
-  }
-
-  constexpr int permute2f128_one_reg_mask(std::span<const std::ptrdiff_t, 2> _idxs)
-  {
-    auto idxs = replace_we(_idxs, 0);
-    if( idxs[0] == na_ ) idxs[0] = 0xf;
-    if( idxs[1] == na_ ) idxs[1] = 0xf;
-    return idxs[0] | idxs[1] << 4;
-  }
-
-  constexpr int blend_immediate_mask(std::span<const std::ptrdiff_t> idxs)
-  {
-    int r = 0;
-    int s = std::ssize(idxs);
-    for( int pos = 0; auto i : idxs )
-    {
-      // we_ < s
-      if( i >= s ) { r |= 1 << pos; }
-      ++pos;
-    }
-    return r;
-  }
-
 } // namespace idx
 
 /*
@@ -92,7 +38,7 @@ namespace idx
  */
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_x86_within_128(pattern_t<I...>, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_within_128(pattern_t<I...>, fixed<G> g, wide<T, N> x)
 {
   constexpr std::array  idxs {I...};
   constexpr std::size_t reg_size = sizeof(T) * N::value;
@@ -103,11 +49,11 @@ shuffle_l0_x86_within_128(pattern_t<I...>, fixed<G> g, wide<T, N> x)
     constexpr auto p_half = idxm::is_repeating_pattern(idxs);
 
     if constexpr( !p_half ) return no_matching_shuffle;
-    else return shuffle_l0_x86_within_128(idxm::to_pattern<*p_half>(), g, x);
+    else return shuffle_l2_x86_within_128(idxm::to_pattern<*p_half>(), g, x);
   }
   else if constexpr( sizeof(T) >= 4 && !zeroes )
   {
-    constexpr int m = idx::x86_mm_shuffle_4(idxs);
+    constexpr int m = idxm::x86_mm_shuffle_4(idxs);
 
     if constexpr( reg_size == 16 ) return _mm_shuffle_epi32(x, m);
     else if constexpr( reg_size == 32 )
@@ -135,11 +81,11 @@ shuffle_l0_x86_within_128(pattern_t<I...>, fixed<G> g, wide<T, N> x)
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_x86_128_8x2(pattern_t<I...>, fixed<G>, wide<T, N> x)
+shuffle_l2_x86_128_8x2(pattern_t<I...>, fixed<G>, wide<T, N> x)
 {
   constexpr std::array idxs {I...};
-  if constexpr( idx::matches(idxs, {0, na_}) ) return _mm_move_epi64(x);
-  else if constexpr( idx::matches(idxs, {na_, 0}, {1, na_}) )
+  if constexpr( idxm::matches(idxs, {0, na_}) ) return _mm_move_epi64(x);
+  else if constexpr( idxm::matches(idxs, {na_, 0}, {1, na_}) )
   {
     if constexpr( idxs[0] == na_ ) return _mm_bslli_si128(x, 8);
     else return _mm_bsrli_si128(x, 8);
@@ -154,51 +100,47 @@ shuffle_l0_x86_128_8x2(pattern_t<I...>, fixed<G>, wide<T, N> x)
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(sse2_), pattern_t<I...> p, fixed<G> g, wide<T, N> x)
+shuffle_l2_(EVE_SUPPORTS(sse2_), pattern_t<I...> p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_128_>
 {
   constexpr std::array idxs {I...};
 
   if constexpr( idxs.size() * G != N::value ) return no_matching_shuffle;
-  else if constexpr( idx::is_identity(idxs) ) return x;
-  else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
-  else if constexpr( matched_shuffle<decltype(shuffle_l0_x86_within_128(p, g, x))> )
+  else if constexpr( matched_shuffle<decltype(shuffle_l2_x86_within_128(p, g, x))> )
   {
-    return shuffle_l0_x86_within_128(p, g, x);
+    return shuffle_l2_x86_within_128(p, g, x);
   }
-  else if constexpr( sizeof(T) == 8 ) return shuffle_l0_x86_128_8x2(p, g, x);
+  else if constexpr( sizeof(T) == 8 ) return shuffle_l2_x86_128_8x2(p, g, x);
   else return no_matching_shuffle;
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(avx_), pattern_t<I...> p, fixed<G> g, wide<T, N> x)
+shuffle_l2_(EVE_SUPPORTS(avx_), pattern_t<I...> p, fixed<G> g, wide<T, N> x)
 requires std::same_as<abi_t<T, N>, x86_256_> && (sizeof...(I) * G == N::value)
 {
   constexpr std::array  idxs {I...};
   constexpr std::size_t gsize = sizeof(T) * G;
 
   if constexpr( idxs.size() * G != N::value ) return no_matching_shuffle;
-  else if constexpr( idx::is_identity(idxs) ) return x;
-  else if constexpr( idx::is_zero(idxs) ) return wide<T, N> {0};
-  else if constexpr( matched_shuffle<decltype(shuffle_l0_x86_within_128(p, g, x))> )
+  else if constexpr( matched_shuffle<decltype(shuffle_l2_x86_within_128(p, g, x))> )
   {
-    return shuffle_l0_x86_within_128(p, g, x);
+    return shuffle_l2_x86_within_128(p, g, x);
   }
   else if constexpr( current_api >= avx2 && gsize >= 8 && !idxm::has_zeroes(idxs) )
   {
-    constexpr int shuffle = idx::x86_mm_shuffle_4(idxs);
+    constexpr int shuffle = idxm::x86_mm_shuffle_4(idxs);
     return _mm256_permute4x64_epi64(x, shuffle);
   }
   else if constexpr( gsize == 16 )
   {
-    constexpr int mm = idx::permute2f128_one_reg_mask(idxs);
+    constexpr int mm = idxm::x86_permute2f128_one_reg_mask(idxs);
     return _mm256_permute2f128_si256(x, x, mm);
   }
   else if constexpr( idx::within_lane(idxs) && gsize == 8 && !idxm::has_zeroes(idxs) )
   {
     using f64x4      = eve::wide<double, eve::fixed<4>>;
-    constexpr int mm = idx::x86_shuffle_4_in_lane(idxs);
+    constexpr int mm = idxm::x86_shuffle_4_in_lane(idxs);
     return _mm256_permute_pd(eve::bit_cast(x, eve::as<f64x4> {}), mm);
   }
   else return no_matching_shuffle;
@@ -206,7 +148,7 @@ requires std::same_as<abi_t<T, N>, x86_256_> && (sizeof...(I) * G == N::value)
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_l0_impl_(EVE_SUPPORTS(sse2_), pattern_t<I...>, fixed<G>, wide<T, N> y, wide<T, N> x)
+shuffle_l2_(EVE_SUPPORTS(sse2_), pattern_t<I...>, fixed<G>, wide<T, N> x, wide<T, N> y)
 requires std::same_as<abi_t<T, N>, x86_128_>
 {
   constexpr std::array idxs {I...};
@@ -216,9 +158,10 @@ requires std::same_as<abi_t<T, N>, x86_128_>
   // https://stackoverflow.com/questions/76552874/how-should-i-chose-between-mm-move-sd-mm-shuffle-pd-mm-blend-pd
   //
   // FIX-1617 - enable `_mm_blend_epi16`
-  else if constexpr( eve::current_api >= eve::sse4_1 && sizeof(T) >= 4 && idx::is_blend(idxs) )
+  else if constexpr( eve::current_api >= eve::sse4_1 && sizeof(T) >= 4
+                     && idxm::is_blend(idxs, N::value / G) )
   {
-    constexpr int m = idx::blend_immediate_mask(idxs);
+    constexpr int m = idxm::x86_blend_immediate_mask(idxs);
 
     if constexpr( sizeof(T) == 8 )
     {
