@@ -9,10 +9,10 @@
 
 #include <eve/module/core.hpp>
 
-#include <numeric>
-
 namespace shuffle_test
 {
+
+namespace idxm = eve::detail::idxm;
 
 template<typename T, typename N, typename U, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
@@ -49,71 +49,73 @@ verify(eve::wide<T, N> x, eve::fixed<G>, eve::pattern_t<I...> p, eve::wide<T, U>
   TTS_EXPECT(!has_failures) << "G: " << G << "\npattern: " << p << "\nactual:  " << shuffled;
 }
 
-template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
-run(auto shuffle, eve::pattern_t<I...> = {})
+run(auto expected_level, eve::pattern_t<I...> p = {})
 {
   using Wide = eve::wide<T, eve::fixed<N>>;
 
-  if constexpr( eve::current_api < api )
+  Wide input {[](int i, int) { return i + 1; }};
+  if constexpr (requires { eve::shuffle_v2_core(input, eve::lane<G>, p); })
   {
-    TTS_PASS();
-    return;
+    auto [shuffled, l] = eve::shuffle_v2_core(input, eve::lane<G>, p);
+    verify(input, eve::lane<G>, p, shuffled);
+    if constexpr ( eve::supports_simd )
+    {
+      TTS_EQUAL(expected_level(std::array{I...}), l()) << "G: " << G << "\npattern: " << p;
+    }
+    else
+    {
+      TTS_EQUAL(0, l()) << "G: " << G << "\npattern: " << p;
+    }
   }
   else
   {
-    Wide input {[](int i, int) { return i + 1; }};
-    Wide actual = shuffle(input, eve::lane<G>, eve::pattern<I...>);
-    verify(input, eve::lane<G>, eve::pattern<I...>, actual);
+    TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p);
   }
 }
 
-template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
-run2(auto shuffle, eve::pattern_t<I...> = {})
+run2(auto expected_level, eve::pattern_t<I...> p = {})
 {
   using Wide = eve::wide<T, eve::fixed<N * 2>>;
 
-  if constexpr( eve::current_api < api )
+  Wide input {[](int i, int) { return i + 1; }};
+  auto xy = input.slice();
+  auto x = get<0>(xy);
+  auto y = get<1>(xy);
+
+  if constexpr (requires { eve::shuffle_v2_core(x, y, eve::lane<G>, p); })
   {
-    TTS_PASS();
-    return;
+    auto [shuffled, l] = eve::shuffle_v2_core(x, y, eve::lane<G>, p);
+    verify(input, eve::lane<G>, p, shuffled);
+    TTS_EQUAL(expected_level(std::array{I...}), l()) << "G: " << G << "\npattern: " << p;
   }
   else
   {
-    Wide input {[](int i, int) { return i + 1; }};
-    auto [x, y] = input.slice();
-    eve::wide<T, eve::fixed<sizeof...(I) *G>> actual =
-        shuffle(x, y, eve::lane<G>, eve::pattern<I...>);
-    verify(input, eve::lane<G>, eve::pattern<I...>, actual);
+    TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p);
   }
 }
 
-template<auto arr>
-auto
-pattern_from_array()
-{
-  return []<std::size_t... i>(std::index_sequence<i...>)
-  { return eve::pattern<arr[i]...>; }(std::make_index_sequence<arr.size()> {});
-}
-
-template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
 void
-run_all(auto shuffle)
+run_all(auto expected_level)
 {
   [&]<std::size_t... i>(std::index_sequence<i...>) {
-    (run<api, T, N, G>(shuffle, pattern_from_array<tests[i]>()), ...);
+    (run<T, N, G>(expected_level, idxm::to_pattern<tests[i]>()), ...);
   }(std::make_index_sequence<tests.size()> {});
 }
 
-template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
+template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
 void
-run2_all(auto shuffle)
+run2_all(auto expected_level)
 {
   [&]<std::size_t... i>(std::index_sequence<i...>) {
-    (run2<api, T, N, G>(shuffle, pattern_from_array<tests[i]>()), ...);
+    (run2<T, N, G>(expected_level, idxm::to_pattern<tests[i]>()), ...);
   }(std::make_index_sequence<tests.size()> {});
 }
+
 
 template<std::size_t N> using arr = std::array<std::ptrdiff_t, N>;
 
@@ -182,6 +184,8 @@ matchRightLane(const std::array<arr<Len>, N>& in)
     arr<2> {eve::na_, 0}, //
     arr<2> {1, eve::na_}, //
 };
+
+[[maybe_unused]] constexpr std::array kLen2Tests = concat(kLen2No0sTests, kLen20sTests);
 
 [[maybe_unused]] constexpr std::array kLen4No0sTests_OnlyLhs = {
     arr<4> {0, 0, 2, 3}, //
@@ -321,6 +325,7 @@ constexpr std::array kRotate16 = {
     arr<2> {3, 0}, //
     arr<2> {3, 1}, //
 };
+
 
 [[maybe_unused]] constexpr std::array kLen4x2_No0sBlendTests = {
     arr<4> {0, 1, 6, 3}, //
