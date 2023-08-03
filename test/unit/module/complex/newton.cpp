@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "measures.hpp"
 
 #include <eve/module/polynomial.hpp>
 #include <eve/module/complex.hpp>
@@ -59,53 +60,49 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   c_t c1(a2, a3);
   c_t c2(a4, a5);
   c_t c3(a6, a7);
-//   std::cout << "x  " << x << std::endl;
-//   std::cout << "c1 " << c1<< std::endl;
-//   std::cout << "c2 " << c2<< std::endl;
   //============================================================================
   //== ranges
   //============================================================================
   std::vector<c_t> tab0;
   std::vector<c_t> tab1{c1};
   std::vector<c_t> tab2{c1, c2};
-//   std::vector<c_t> tab3{c1, c2, c3};
-
-//   TTS_RELATIVE_EQUAL((newton)(x, tab0, tab0), c_t(0), 0.0001);
-//   TTS_RELATIVE_EQUAL((newton)(x, tab1, tab0), c1, 0.0001);
+  std::vector<c_t> tab3{c1, c2, c3};
+  TTS_RELATIVE_EQUAL((newton)(x, tab0, tab0), c_t(0), 0.0001);
+  TTS_RELATIVE_EQUAL((newton)(x, tab1, tab0), c1, 0.0001);
   TTS_RELATIVE_EQUAL((newton)(x, tab2, tab1), (c1*(x-c1)+c2), 0.0001);
-//   TTS_RELATIVE_EQUAL((newton)(x, tab3, tab2), (c1*x+c2)*x+c3, 0.0001);
+  TTS_RELATIVE_EQUAL((newton)(x, tab3, tab2), (c1*(x-c1)+c2)*(x-c2)+c3, 0.0001);
 
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab0, tab0),  c_t(0), 0.0001);
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab1, tab0),  c1, 0.0001);
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab2, tab1),  (c1*x+c2), 0.0001);
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab3, tab2),  (c1*x+c2)*x+c3, 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab0, tab0),  c_t(0), 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab1, tab0),  c1, 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab2, tab1),  (c1*(x-c1)+c2), 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tab3, tab2),  (c1*(x-c1)+c2)*(x-c2)+c3, 0.0001);
 
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tab0, tab0),  c_t(0), 0.0001);
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tab1, tab0),  c1, 0.0001);
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tab2, tab1),  (c1*x+c2), 0.0001);
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tab3, tab2),  (c1*x+c2)*x+c3, 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tab0, tab0),  c_t(0), 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tab1, tab0),  c1, 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tab2, tab1),  (c1*(x-c1)+c2), 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tab3, tab2),  (c1*(x-c1)+c2)*(x-c2)+c3, 0.0001);
 
 
-//   //============================================================================
-//   //== tuples
-//   //============================================================================
-//   auto tup0 = kumi::tuple{};
-//   auto tup1 = kumi::tuple{c1};
-//   auto tup2 = kumi::tuple{c1, c2};
-//   auto tup3 = kumi::tuple{c1, c2, c3};
+  //============================================================================
+  //== tuples
+  //============================================================================
+  auto tup0 = kumi::tuple{};
+  auto tup1 = kumi::tuple{c1};
+  auto tup2 = kumi::tuple{c1, c2};
+  auto tup3 = kumi::tuple{c1, c2, c3};
 
-//   TTS_RELATIVE_EQUAL((newton)(x, tup0, tup0), c_t(0), 0.0001);
-//   TTS_RELATIVE_EQUAL((newton)(x, tup1, tup0), c1, 0.0001);
-//   TTS_RELATIVE_EQUAL((newton)(x, tup2, tup1), (c1*x+c2), 0.0001);
-//   TTS_RELATIVE_EQUAL((newton)(x, tup3, tup2), (c1*x+c2)*x+c3, 0.0001);
+  TTS_RELATIVE_EQUAL((newton)(x, tup0, tup0), c_t(0), 0.0001);
+  TTS_RELATIVE_EQUAL((newton)(x, tup1, tup0), c1, 0.0001);
+  TTS_RELATIVE_EQUAL((newton)(x, tup2, tup1), (c1*(x-c1)+c2), 0.0001);
+  TTS_RELATIVE_EQUAL((newton)(x, tup3, tup2), (c1*(x-c1)+c2)*(x-c2)+c3, 0.0001);
 
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup0, tup0), c_t(0), 0.0001);
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup1, tup0), c1, 0.0001);
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup2, tup1), (c1*x+c2), 0.0001);
-//   TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup3, tup2), (c1*x+c2)*x+c3, 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup0, tup0), c_t(0), 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup1, tup0), c1, 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup2, tup1), (c1*(x-c1)+c2), 0.0001);
+  TTS_RELATIVE_EQUAL(pedantic(newton)(x, tup3, tup2), (c1*(x-c1)+c2)*(x-c2)+c3, 0.0001);
 
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tup0, tup0), c_t(0), 0.0001);
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tup1, tup0), c1, 0.0001);
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tup2, tup1), (c1*x+c2), 0.0001);
-//   TTS_RELATIVE_EQUAL(numeric(newton)(x, tup3, tup2), (c1*x+c2)*x+c3, 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tup0, tup0), c_t(0), 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tup1, tup0), c1, 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tup2, tup1), (c1*(x-c1)+c2), 0.0001);
+  TTS_RELATIVE_EQUAL(numeric(newton)(x, tup3, tup2), (c1*(x-c1)+c2)*(x-c2)+c3, 0.0001);
 };
