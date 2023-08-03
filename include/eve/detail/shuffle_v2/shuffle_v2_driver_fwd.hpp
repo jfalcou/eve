@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/concept/pattern.hpp>
-#include <eve/detail/shuffle_v2/shuffle_v2_helpers.hpp>
 #include <eve/detail/shuffle_v2/idxm.hpp>
+#include <eve/detail/shuffle_v2/shuffle_v2_helpers.hpp>
 
 namespace eve
 {
@@ -24,6 +24,21 @@ namespace detail
 
 EVE_CALLABLE_API(shuffle_v2_driver_impl_, shuffle_v2_driver_impl)
 
+template<std::ptrdiff_t G> struct not_positive_group_size
+{
+  using is_shuffle_user_error = void;
+};
+
+template<typename... Ts> struct cant_shuffle_different_types
+{
+  using is_shuffle_user_error = void;
+};
+
+template<typename Pattern, typename G, typename... Ts> struct pattern_failed_validation
+{
+  using is_shuffle_user_error = void;
+};
+
 }
 
 namespace eve::detail
@@ -36,11 +51,17 @@ template<typename NativeSelector> struct shuffle_v2_driver
   template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T, typename... Ts>
   EVE_FORCEINLINE auto operator()(pattern_t<I...> p, eve::fixed<G> g, T x, Ts... xs) const noexcept
   {
-    static_assert((std::same_as<T, Ts> && ...), "You can only shuffle the same type");
-
-    static_assert(detail::idxm::validate_pattern(
-        eve::lane<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...));
-    return shuffle_v2_driver_impl(selector, p, g, kumi::reverse(kumi::tuple {x, xs...}));
+    if constexpr( G <= 0 ) return not_positive_group_size<G> {};
+    else if constexpr( !(std::same_as<T, Ts> && ...) )
+    {
+      return cant_shuffle_different_types<T, Ts...> {};
+    }
+    else if constexpr( !detail::idxm::validate_pattern(
+                           eve::lane<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...) )
+    {
+      return pattern_failed_validation<pattern_t<I...>, fixed<G>, T, Ts...> {};
+    }
+    else { return shuffle_v2_driver_impl(selector, p, g, kumi::reverse(kumi::tuple {x, xs...})); }
   }
 
   template<pattern_formula Gen, std::ptrdiff_t G, simd_value T, typename... Ts>
@@ -74,11 +95,18 @@ template<typename Internal> struct shuffle_reverse_arguments
     return kumi::apply(internal, kumi::reverse(kumi::tuple {args...}));
   }
 
-  template<typename... Ts>
   EVE_FORCEINLINE auto operator()(auto... args) const noexcept
   requires(matched_shuffle<decltype(get<0>(impl(args...)))>)
   {
     return impl(args...);
+  }
+
+  EVE_FORCEINLINE auto operator()(auto... args) const noexcept
+  requires(shuffle_user_error<decltype(impl(args...))>)
+  {
+    auto error = impl(args...);
+    static_assert(!shuffle_user_error<decltype(error)>);
+    return kumi::tuple{error, eve::index<0>};
   }
 };
 

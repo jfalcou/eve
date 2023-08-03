@@ -28,7 +28,7 @@ x86_shuffle_4_in_lane(std::span<const std::ptrdiff_t, 4> idxs)
 constexpr int
 x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 2> _idxs)
 {
-  std::array<std::ptrdiff_t, 2> idxs = replace_we(_idxs, 0);
+  std::array<std::ptrdiff_t, 2> idxs = replace_na(replace_we(_idxs, 0), 0);
   idxs[0] *= 2;
   idxs[1] *= 2;
   return _MM_SHUFFLE(idxs[1] + 1, idxs[1], idxs[0] + 1, idxs[0]);
@@ -37,7 +37,7 @@ x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 2> _idxs)
 constexpr int
 x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 4> _idxs)
 {
-  std::array<std::ptrdiff_t, 4> idxs = replace_we(_idxs, 0);
+  std::array<std::ptrdiff_t, 4> idxs = replace_na(replace_we(_idxs, 0), 0);
   return _MM_SHUFFLE(idxs[3], idxs[2], idxs[1], idxs[0]);
 }
 

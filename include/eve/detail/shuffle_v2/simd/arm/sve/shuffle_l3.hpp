@@ -12,23 +12,40 @@ namespace eve::detail
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t... I>
 EVE_FORCEINLINE wide<T, N>
-svtbl(wide<T, N> x, pattern_t<I...>)
+                sve_tbl(wide<T, N> x, pattern_t<I...>)
 {
   wide<T, N> table {I...};
-  if constexpr( std::same_as<T, std::uint64_t> ) return svtbl_u64(x, table);
-  else if constexpr( std::same_as<T, std::uint32_t> ) return svtbl_u32(x, table);
-  else if constexpr( std::same_as<T, std::uint16_t> ) return svtbl_u16(x, table);
-  else return svtbl_u8(x, table);
+ return svtbl(x, table);
 }
 
-template<arithmetic_scalar_value T, typename N, std::ptrdiff_t G, std::ptrdiff_t... I>
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t... I>
+EVE_FORCEINLINE wide<T, N>
+                sve_tbl2(wide<T, N> x, wide<T, N> y, pattern_t<I...>)
+{
+  return svtbl2(svcreate2(x, y), wide<T, N>{I...});
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(sve_), pattern_t<I...>, fixed<G>, wide<T, N> x)
+shuffle_l3_(EVE_SUPPORTS(sve_), P, fixed<G>, wide<T, N> x)
 {
   constexpr auto table_idxs =
-      idxm::to_pattern<idxm::expand_group<G>(idxm::replace_we(std::array {I...}, eve::na_))>();
+      idxm::to_pattern<idxm::expand_group<G>(idxm::replace_we(P::idxs, eve::na_))>();
 
-  return svtbl(x, table_idxs);
+  return sve_tbl(x, table_idxs);
 }
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l3_(EVE_SUPPORTS(sve_), P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  constexpr auto table_idxs =
+      idxm::to_pattern<idxm::expand_group<G>(idxm::replace_we(P::idxs, eve::na_))>();
+
+  // hard to say if this is trully l3, the registers have to be moved in the struct.
+  // I guess we'll see.
+  return sve_tbl2(x, y, table_idxs);
+}
+
 
 }
