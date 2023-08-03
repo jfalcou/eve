@@ -87,9 +87,10 @@ var searchData=
   ['supports_5fnans_84',['supports_nans',['../structeve_1_1platform.html#a9d25ead24e42a5f986a811c5a80e673f',1,'eve::platform']]],
   ['supports_5fnegative_5fzero_85',['supports_negative_zero',['../structeve_1_1platform.html#a4a992b4e125de11d8ab63fe5efe67d09',1,'eve::platform']]],
   ['supports_5fordering_86',['supports_ordering',['../structeve_1_1supports__ordering.html',1,'eve']]],
-  ['swap_87',['swap',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae56f9b89b700d9668b761c6d5a3167b4',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::swap()'],['../structeve_1_1aligned__ptr.html#ab30d7f5154fcc11c9538fb558cbbe7e6',1,'eve::aligned_ptr::swap()'],['../structeve_1_1wide.html#ad1d370008485018ecd5bd61aa2fdd7b7',1,'eve::wide::swap()'],['../structeve_1_1wide.html#a55d8e55d3b731a5c3c9e87a6f464faea',1,'eve::wide::swap(wide &amp;other)'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7cec0220f0393e97f10e78ea89c112a0',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::swap()']]],
-  ['swap_5fadjacent_5fgroups_88',['swap_adjacent_groups',['../group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e',1,'eve']]],
-  ['swap_5fif_89',['swap_if',['../group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c',1,'eve']]],
-  ['swap_5fpairs_90',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]],
-  ['swap_5franges_91',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
+  ['swap_87',['swap',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7cec0220f0393e97f10e78ea89c112a0',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::swap()'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ae56f9b89b700d9668b761c6d5a3167b4',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::swap(logical &amp;other)'],['../structeve_1_1wide.html#a55d8e55d3b731a5c3c9e87a6f464faea',1,'eve::wide::swap(wide &amp;other)'],['../structeve_1_1wide.html#ad1d370008485018ecd5bd61aa2fdd7b7',1,'eve::wide::swap()'],['../structeve_1_1aligned__ptr.html#ab30d7f5154fcc11c9538fb558cbbe7e6',1,'eve::aligned_ptr::swap()']]],
+  ['swap_5fadjacent_88',['swap_adjacent',['../group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5',1,'eve']]],
+  ['swap_5fadjacent_5fgroups_89',['swap_adjacent_groups',['../group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e',1,'eve']]],
+  ['swap_5fif_90',['swap_if',['../group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c',1,'eve']]],
+  ['swap_5fpairs_91',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]],
+  ['swap_5franges_92',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
 ];

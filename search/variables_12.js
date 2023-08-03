@@ -66,7 +66,8 @@ var searchData=
   ['supports_5finvalids_63',['supports_invalids',['../structeve_1_1platform.html#aa68340aa769d90df23eac41ccace3202',1,'eve::platform']]],
   ['supports_5fnans_64',['supports_nans',['../structeve_1_1platform.html#a9d25ead24e42a5f986a811c5a80e673f',1,'eve::platform']]],
   ['supports_5fnegative_5fzero_65',['supports_negative_zero',['../structeve_1_1platform.html#a4a992b4e125de11d8ab63fe5efe67d09',1,'eve::platform']]],
-  ['swap_5fadjacent_5fgroups_66',['swap_adjacent_groups',['../group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e',1,'eve']]],
-  ['swap_5fpairs_67',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]],
-  ['swap_5franges_68',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
+  ['swap_5fadjacent_66',['swap_adjacent',['../group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5',1,'eve']]],
+  ['swap_5fadjacent_5fgroups_67',['swap_adjacent_groups',['../group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e',1,'eve']]],
+  ['swap_5fpairs_68',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]],
+  ['swap_5franges_69',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
 ];

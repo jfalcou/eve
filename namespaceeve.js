@@ -593,6 +593,7 @@ var namespaceeve =
     [ "sub", "group__core__arithmetic_ga13ddd05c1c516674e73d2ed018fa5d5a.html#ga13ddd05c1c516674e73d2ed018fa5d5a", null ],
     [ "successor", "group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0", null ],
     [ "sum_of_prod", "group__core__accuracy_gaa823eeef980dc21ff27d088758f98338.html#gaa823eeef980dc21ff27d088758f98338", null ],
+    [ "swap_adjacent", "group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5", null ],
     [ "swap_adjacent_groups", "group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e", null ],
     [ "swap_pairs", "group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576", null ],
     [ "tan", "group__math__trig_gaf92ef4ab7d8bd5a527db4d94bcebbdf7.html#gaf92ef4ab7d8bd5a527db4d94bcebbdf7", null ],

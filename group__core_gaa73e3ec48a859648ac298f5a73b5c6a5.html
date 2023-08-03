@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::swap_adjacent_groups</title>
+<title>E.V.E: eve::swap_adjacent</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828b3fe9d7e.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828
 </div>
 
 <div class="contents">
-<a id="ga1050443b632340373229d828b3fe9d7e" name="ga1050443b632340373229d828b3fe9d7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1050443b632340373229d828b3fe9d7e">&#9670;&#160;</a></span>swap_adjacent_groups</h2>
+<a id="gaa73e3ec48a859648ac298f5a73b5c6a5" name="gaa73e3ec48a859648ac298f5a73b5c6a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa73e3ec48a859648ac298f5a73b5c6a5">&#9670;&#160;</a></span>swap_adjacent</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::swap_adjacent_groups = {}</td>
+          <td class="memname">eve::swap_adjacent = detail::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td>
         </tr>
       </table>
   </td>
@@ -140,24 +140,16 @@ $(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t N&gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a> groups(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;N&gt;</a> <span class="keyword">const</span> &amp;) <span class="keyword">noexcept</span>;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t G&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;G&gt;</a> <span class="keyword">const</span> &amp;) <span class="keyword">noexcept</span>;  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;simd_value T&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a>(T x) <span class="keyword">noexcept</span>;  <span class="comment">// (2)</span></div>
 <div class="ttc" id="agroup__core_gaa73e3ec48a859648ac298f5a73b5c6a5_html_gaa73e3ec48a859648ac298f5a73b5c6a5"><div class="ttname"><a href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a></div><div class="ttdeci">constexpr auto swap_adjacent</div><div class="ttdoc">goes through all pairs of elements and them: [0, 1, 2, 3] =&gt; [1,0,3, 2] Can do that for group sizes i...</div><div class="ttdef"><b>Definition:</b> swap_adjacent_groups.hpp:98</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
-<ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1integral__value.html">argument</a>.</li>
-<li><code>N</code> : number of elements in group</li>
-</ul>
+</div><!-- fragment --><p>(2) calls (1) with G == 1; (1) swaps adjacent groups of elements of size G</p>
 <p><b>Return value</b></p>
-<p>Return x where groups with contiguous groups of N elements swapped for N = 0 or cardinal_v&lt;T&gt; acts as noop.</p>
-<h2 class="groupheader">Example </h2>
+<p>Return x where groups with contiguous groups of N elements swapped for N = 0 or cardinal_v&lt;T&gt; acts as noop. </p><h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
