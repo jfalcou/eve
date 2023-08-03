@@ -45,6 +45,94 @@ is_zero(std::span<const std::ptrdiff_t> idxs)
   return idxs.size() == 1 && idxs[0] < 0;
 }
 
+constexpr bool
+has_zeroes(std::span<const std::ptrdiff_t> idxs)
+{
+  // std::any_of but in compile time that's not free.
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  while( f != l )
+  {
+    if( *f == na_ ) return true;
+    ++f;
+  }
+  return false;
+}
+
+constexpr bool
+is_all_zeroes(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  while( f != l )
+  {
+    if( *f >= 0 ) return false;
+    ++f;
+  }
+  return true;
+}
+
+constexpr bool
+is_just_zeroes_replaced(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  for( const auto *i = f; i != l; ++i )
+  {
+    if( *i == na_ || *i == we_ || *i == (i - f) ) continue;
+    return false;
+  }
+
+  return true;
+}
+
+constexpr std::optional<std::ptrdiff_t>
+is_just_setting_one_zero(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  const std::ptrdiff_t *pos = nullptr;
+
+  for( const auto *i = f; i != l; ++i )
+  {
+    if( *i == we_ || *i == (i - f) ) continue;
+    if( *i == na_ )
+    {
+      if( pos ) return std::nullopt;
+      pos = i;
+      continue;
+    }
+    return std::nullopt;
+  }
+
+  if( !pos ) return std::nullopt;
+  return pos - f;
+}
+
+constexpr std::optional<std::array<std::ptrdiff_t, 2>>
+is_just_setting_one_lane(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  const std::ptrdiff_t *pos = nullptr;
+
+  for( const auto *i = f; i != l; ++i )
+  {
+    if( *i == we_ || *i == (i - f) ) continue;
+    if( *i == na_ ) return std::nullopt;
+    if( pos ) return std::nullopt;
+    pos = i;
+  }
+
+  if( !pos ) return std::nullopt;
+  return std::array {pos - f, *pos};
+}
+
 template<auto arr>
 constexpr auto
 to_pattern()
@@ -106,6 +194,48 @@ fix_indexes_to_fundamental(const std::array<std::ptrdiff_t, PatternSize>& p,
   return res;
 }
 
+constexpr bool
+shuffle_within_halves(std::span<const std::ptrdiff_t> idxs)
+{
+  const std::ptrdiff_t ssize = std::ssize(idxs);
+  const std::ptrdiff_t half  = ssize / 2;
+
+  if( ssize % 2 ) return false;
+
+  for( std::ptrdiff_t i = 0; i != half; ++i )
+  {
+    if( idxs[i] >= half ) return false;
+  }
+
+  for( std::ptrdiff_t i = half; i != ssize; ++i )
+  {
+    if( 0 <= idxs[i] && idxs[i] < half ) return false;
+  }
+
+  return true;
+}
+
+template<std::size_t N>
+constexpr auto
+shuffle_halves_independetly(const std::array<std::ptrdiff_t, N>& p)
+{
+  auto lo = p;
+  auto hi = p;
+
+  for( std::size_t i = 0; i != N / 2; ++i )
+  {
+    if( p[i] == we_ ) hi[i] = we_;
+    else hi[i] = (std::ptrdiff_t)i;
+  }
+  for( std::size_t i = N / 2; i != N; ++i )
+  {
+    if( p[i] == we_ ) lo[i] = we_;
+    else lo[i] = (std::ptrdiff_t)i;
+  }
+
+  return std::array {lo, hi};
+}
+
 template<std::size_t N>
 constexpr std::optional<std::array<std::ptrdiff_t, N / 2>>
 is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
@@ -141,15 +271,84 @@ is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
   return res;
 }
 
-constexpr bool
-has_zeroes(std::span<const std::ptrdiff_t> idxs)
+template<auto idxs>
+constexpr auto
+most_repeated_pattern_impl()
 {
-  // std::any_of but in compile time that's not free.
-  for( auto x : idxs )
+  if constexpr( constexpr auto p_half = idxm::is_repeating_pattern(idxs) )
   {
-    if( x == na_ ) return true;
+    return most_repeated_pattern_impl<*p_half>();
   }
-  return false;
+  else return idxs;
+}
+
+template<std::ptrdiff_t... I>
+constexpr auto most_repeated_pattern = most_repeated_pattern_impl<std::array {I...}>();
+
+template<std::size_t target, auto idxs>
+constexpr auto
+reduce_repeated_pattern_until_impl()
+{
+  if constexpr( idxs.size() <= target ) return idxs;
+  else if constexpr( constexpr auto p_half = idxm::is_repeating_pattern(idxs) )
+  {
+    return reduce_repeated_pattern_until_impl<target, *p_half>();
+  }
+  else return idxs;
+}
+
+template<std::size_t target, std::ptrdiff_t... I>
+constexpr auto reduce_repeated_pattern_until =
+    reduce_repeated_pattern_until_impl<target, std::array {I...}>();
+
+template<std::size_t target, std::ptrdiff_t... I>
+constexpr auto repeated_pattern_of_size = []
+{
+  if constexpr( target == 0 ) return std::optional<std::array<std::ptrdiff_t, 1>> {};
+  else
+  {
+    std::optional<std::array<std::ptrdiff_t, target>> res;
+    constexpr auto repeated = idxm::reduce_repeated_pattern_until_impl<target, std::array {I...}>();
+    if constexpr (repeated.size() == target) {
+      res = repeated;
+    }
+    return res;
+  }
+}();
+
+template<std::size_t Times, std::size_t N>
+constexpr std::array<std::ptrdiff_t, Times * N>
+repeat(std::span<const std::ptrdiff_t, N> in)
+{
+  std::array<std::ptrdiff_t, Times *N> res = {};
+
+  const auto *f = in.data();
+  const auto *l = in.data() + in.size();
+
+  std::ptrdiff_t *o   = res.data();
+  std::ptrdiff_t *o_l = res.data() + res.size();
+
+  std::ptrdiff_t offset = 0;
+
+  while( o != o_l )
+  {
+    for( const auto *i = f; i != l; ++i )
+    {
+      *o = *i;
+      if( *i >= 0 ) *o += offset;
+      ++o;
+    }
+    offset += (std::ptrdiff_t)N;
+  }
+
+  return res;
+}
+
+template<std::size_t Times, std::size_t N>
+auto
+repeat(const std::array<std::ptrdiff_t, N>& in)
+{
+  return repeat<Times>(std::span<const std::ptrdiff_t, N>(in));
 }
 
 // returns the starting index
@@ -181,6 +380,21 @@ is_in_order(std::span<const std::ptrdiff_t> idxs)
     if( idxs[i] == we_ ) continue;
     if( idxs[i] != expected ) return std::nullopt;
   }
+}
+
+constexpr bool
+is_in_order_from(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t from)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+  while( f != l )
+  {
+    if( *f != we_ && *f != from ) return false;
+    ++from;
+    ++f;
+  }
+
+  return true;
 }
 
 constexpr std::optional<std::ptrdiff_t>
@@ -222,6 +436,40 @@ is_rotate(std::span<const std::ptrdiff_t> idxs)
   if( lhs_start != (idxs.size() - rotation) && lhs_start != we_ ) return std::nullopt;
 
   return rotation;
+}
+
+template<std::size_t N>
+constexpr std::optional<std::array<std::array<std::ptrdiff_t, N>, 2>>
+rotate_as_two_shifts_and_or(std::array<std::ptrdiff_t, N> idxs)
+{
+  if constexpr( N != 1 )
+  {
+    auto halve = is_repeating_pattern(idxs);
+    if( halve )
+    {
+      auto r = rotate_as_two_shifts_and_or(*halve);
+      if( !r ) return std::nullopt;
+      auto [lo, hi] = *r;
+      return std::array {repeat<2>(lo), repeat<2>(hi)};
+    }
+  }
+
+  std::optional pos = is_rotate(idxs);
+  if( !pos ) return std::nullopt;
+
+  std::array<std::ptrdiff_t, N> shift_left  = idxs;
+  std::array<std::ptrdiff_t, N> shift_right = idxs;
+
+  std::size_t rotation_point = *pos;
+
+  for( std::size_t i = 0; i != N; ++i )
+  {
+    if( idxs[i] == we_ ) continue;
+    if( i < rotation_point ) shift_right[i] = na_;
+    else shift_left[i] = na_;
+  }
+
+  return std::array {shift_left, shift_right};
 }
 
 template<std::ptrdiff_t Part, std::ptrdiff_t... I>
@@ -353,6 +601,22 @@ replace_we(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t with)
   return replace_we(std::span<const std::ptrdiff_t, N>(idxs), with);
 }
 
+template<std::size_t N>
+constexpr auto
+replace_na(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t with)
+{
+  std::array<std::ptrdiff_t, N> res = {};
+  for( std::size_t i = 0; i != N; ++i ) { res[i] = idxs[i] == na_ ? with : idxs[i]; }
+  return res;
+}
+
+template<std::size_t N>
+constexpr auto
+replace_na(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t with)
+{
+  return replace_na(std::span<const std::ptrdiff_t, N>(idxs), with);
+}
+
 constexpr bool
 is_blend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t cardinal)
 {
@@ -372,13 +636,15 @@ template<std::ptrdiff_t G, std::size_t N>
 constexpr std::array<std::ptrdiff_t, N * G>
 expand_group(std::span<const std::ptrdiff_t, N> idxs)
 {
-  std::array<std::ptrdiff_t, N * G> res = {};
+  std::array<std::ptrdiff_t, N *G> res = {};
 
-  std::ptrdiff_t* o = res.data();
+  std::ptrdiff_t *o = res.data();
 
-  for (auto idx : idxs) {
-    for (int j = 0; j != G; ++j) {
-      if (idx < 0) *o++ = idx;
+  for( auto idx : idxs )
+  {
+    for( int j = 0; j != G; ++j )
+    {
+      if( idx < 0 ) *o++ = idx;
       else *o++ = idx * G + j;
     }
   }
@@ -391,6 +657,161 @@ constexpr std::array<std::ptrdiff_t, N * G>
 expand_group(std::array<std::ptrdiff_t, N> idxs)
 {
   return expand_group<G>(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
+constexpr std::span<const std::ptrdiff_t>
+trim_trailing_we(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  while( f != l )
+  {
+    if( *(l - 1) != we_ ) break;
+    --l;
+  }
+
+  return {f, l};
+}
+
+constexpr std::optional<std::ptrdiff_t>
+is_slide_left(std::span<const std::ptrdiff_t> idxs)
+{
+  // find(idxs, na_)
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  while( f != l )
+  {
+    if( *f == na_ ) break;
+    ++f;
+  }
+
+  if( !is_all_zeroes(std::span(f, l)) ) return std::nullopt;
+
+  std::span<const std::ptrdiff_t> remaining   = std::span(idxs.data(), f);
+  auto                            first_index = is_in_order(remaining);
+  if( !first_index ) return std::nullopt;
+
+  // Can be bigger that std::ssize(idxs) if ordered chunk ends in we_
+  if( *first_index + std::ssize(remaining) < std::ssize(idxs) ) return std::nullopt;
+  return *first_index;
+}
+
+constexpr std::optional<std::ptrdiff_t>
+is_slide_right(std::span<const std::ptrdiff_t> idxs)
+{
+  // find(reverse(idxs), na_)
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  const auto *m = l;
+
+  while( true )
+  {
+    if( m == f ) break;
+    --m;
+    if( *m == na_ ) break;
+  }
+
+  if( !is_all_zeroes(std::span {f, m}) ) return std::nullopt;
+  // unclear if this is correct but it doesn't matter
+  if( m == l ) return std::ssize(idxs);
+
+  if( *m == na_ ) { ++m; }
+  f = m;
+
+  //     [na_, na_, we_, 1]
+  //  or [na_, we_,   0, 1]
+
+  // tracing all we_.
+  while( m != l )
+  {
+    if( *m != we_ ) break;
+    ++m;
+  }
+
+  if( !is_in_order_from(std::span {m, l}, *m) ) return std::nullopt;
+
+  // [na_, na_, we_, 2]
+  if( *m > (m - f) ) return std::nullopt;
+
+  return (m - idxs.data()) - *m;
+}
+
+constexpr bool
+is_reverse(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  while( f != l )
+  {
+    if( *f == we_ || *f == (l - f - 1) )
+    {
+      ++f;
+      continue;
+    }
+    return false;
+  }
+  return true;
+}
+
+constexpr std::optional<std::ptrdiff_t>
+is_lane_broadcast(std::span<const std::ptrdiff_t> idxs)
+{
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  while( f != l )
+  {
+    if( *f != we_ ) break;
+    ++f;
+  }
+
+  if( f == l ) return std::nullopt;
+
+  std::ptrdiff_t r = *f;
+  ++f;
+
+  while( f != l )
+  {
+    if( *f != we_ && *f != r ) return std::nullopt;
+    ++f;
+  }
+  return r;
+}
+
+template<std::size_t G, std::size_t N>
+constexpr auto
+split_to_groups(std::span<const std::ptrdiff_t, N> idxs)
+{
+  static_assert(N % G == 0);
+
+  using sub = std::array<std::ptrdiff_t, G>;
+
+  std::array<sub, N / G> res = {};
+
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+
+  auto *o = res.data();
+
+  while( f != l )
+  {
+    std::copy_n(f, G, o->data());
+    ++o;
+    f += G;
+  }
+
+  return res;
+}
+
+template<std::size_t G, std::size_t N>
+constexpr auto
+split_to_groups(const std::array<std::ptrdiff_t, N>& idxs)
+{
+  return split_to_groups<G>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
 } // namespace eve::detail::idxm

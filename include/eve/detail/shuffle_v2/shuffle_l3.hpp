@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/shuffle_v2/shuffle_v2_fwd.hpp>
+#include <eve/detail/shuffle_v2/native_shuffle_helpers.hpp>
 
 namespace eve
 {
@@ -22,6 +22,16 @@ namespace detail
 // level 3 is allowed one instruction with no mask
 EVE_CALLABLE_API(shuffle_l3_, shuffle_l3)
 }
+
+#include <eve/detail/shuffle_v2/simd/common/shuffle_l3.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/detail/shuffle_v2/simd/x86/shuffle_l3.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/detail/shuffle_v2/simd/arm/neon/shuffle_l3.hpp>
+#endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/detail/shuffle_v2/simd/arm/sve/shuffle_l3.hpp>
