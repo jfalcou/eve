@@ -18,7 +18,7 @@ namespace eve
   //! @{
   //! @var to_euler
   //!
-  //! @brief Callable object computing a quaternion from its to_euler representation.
+  //! @brief Callable object computing euler angles  from a quaternion.
   //!
   //!  This function build euler angles from a quaternion. Template parameters I, J, K of type int
   //!  are used to choose the euler order.
@@ -39,7 +39,7 @@ namespace eve
   //!   {
   //!      template < int I, int J, int K >
   //!      auto to_euler(auto q
-  //!                  , axes<I> const &, axes<J> const &, axes<K> const &) const noexcept
+  //!                  , axes<I> const & a1, axes<J> const & a2, axes<K> const & a3) const noexcept
   //!        requires(I != J && J != K)
   //!   }
   //!   @endcode
@@ -47,6 +47,8 @@ namespace eve
   //! **Parameters**
   //!
   //!  * `q` the rotation quaternion (not necesseraly normalized)
+  //!  * `a1`, `a2`, `a3` : the axes parameters to be chosen between _X,  _Y, _Z (two consecutive axes cannot be the same)
+  //!  *                    depending of the euler order
   //!
   //!  **Template parameters**
   //!
@@ -75,26 +77,28 @@ namespace eve
 
   namespace detail
   {
-    template<auto I, auto J, auto K, floating_ordered_value V>
+    template<auto I, auto J, auto K, floating_ordered_value V, bool Extrinsic>
     EVE_FORCEINLINE auto to_euler_( EVE_SUPPORTS(cpu_)
                                   , V const &
-                                  , axes<I>
-                                  , axes<J>
-                                  , axes<K> ) noexcept
+                                  , axes<I> const &
+                                  , axes<J> const &
+                                  , axes<K> const &
+                                  , ext<Extrinsic>  const &) noexcept
 
     {
       return  kumi::tuple{zero(as<V>()), zero(as<V>()), zero(as<V>())};
     }
 
-    template<auto I, auto J, auto K, value Z>
+    template<auto I, auto J, auto K, value Z, bool Extrinsic>
     EVE_FORCEINLINE auto to_euler_( EVE_SUPPORTS(cpu_)
-                                  , Z const & q
-                                  , axes<I>
-                                  , axes<J>
-                                  , axes<K> ) noexcept
+                                  , Z const & c
+                                  , axes<I> const & a1
+                                  , axes<J> const & a2
+                                  , axes<K> const & a3
+                                  , ext<Extrinsic> const & e) noexcept
     requires(is_complex_v<Z>)
     {
-      return to_euler<I, J, K>(eve::as_quaternion_t<Z>(q));
+      return to_euler(eve::as_quaternion_t<Z>(c), a1, a2, a3, e);
     }
   }
 }

@@ -21,11 +21,11 @@ int main()
     << "<- d                               = " << d << std::endl
     << "<- r1                              = " << c << std::endl
     << "<- r2                              = " << d << std::endl
-    << "-> cylindrical(r1, b, c, d)        = " << eve::cylindrical(r1, b, c, d) << std::endl
-    << "-> cylindrospherical(r1, r2, c, d) = " << eve::cylindrospherical(r1, r2, c, d) << std::endl
-    << "-> multipolar(r1, c, r2, d)        = " << eve::multipolar(r1, c, r2, d) << std::endl
-    << "-> semipolar(r1, b, c, d)          = " << eve::semipolar(r1, b, c, d) << std::endl
-    << "-> spherical(r1, b, c, d)          = " << eve::spherical(r1, b, c, d) << std::endl
+    << "-> cylindrical(r1, b, c, d)        = " << eve::from_cylindrical(r1, b, c, d) << std::endl
+    << "-> cylindrospherical(r1, r2, c, d) = " << eve::from_cylindrospherical(r1, r2, c, d) << std::endl
+    << "-> multipolar(r1, c, r2, d)        = " << eve::from_multipolar(r1, c, r2, d) << std::endl
+    << "-> semipolar(r1, b, c, d)          = " << eve::from_semipolar(r1, b, c, d) << std::endl
+    << "-> spherical(r1, b, c, d)          = " << eve::from_spherical(r1, b, c, d) << std::endl
    ;
 
   return 0;

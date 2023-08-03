@@ -28,13 +28,13 @@ TTS_CASE_WITH ( "Check behavior of to_euler on scalar"
       {
         auto z = eve::sign(eve::quaternion(a0[i], a1[i], a2[i], a3[i]));
         auto [t1, t2, t3] = eve::to_euler(z, eve::_X, eve::_Z, eve::_X, eve::Intrinsic);
-        auto q = eve::euler_to_quaternion(t1, t2, t3, eve::_X, eve::_Z, eve::_X, eve::Intrinsic);
+        auto q = eve::from_euler(t1, t2, t3, eve::_X, eve::_Z, eve::_X, eve::Intrinsic);
         TTS_RELATIVE_EQUAL(q, z,  0.001);
       }
       {
         auto z = eve::sign(eve::quaternion(a0[i], a1[i], a2[i], a3[i]));
         auto [t1, t2, t3] = eve::to_euler(z, eve::_X, eve::_Z, eve::_X, eve::Extrinsic);
-        auto q = eve::euler_to_quaternion(t1, t2, t3, eve::_X, eve::_Z, eve::_X, eve::Extrinsic);
+        auto q = eve::from_euler(t1, t2, t3, eve::_X, eve::_Z, eve::_X, eve::Extrinsic);
         TTS_RELATIVE_EQUAL(q, z,  0.001);
       }
     }
@@ -56,14 +56,14 @@ TTS_CASE_WITH ( "Check behavior of to_euler on scalar"
     for(size_t i = 0; i < a0.size(); ++i)
     {
       {
-        auto z = eve::euler_to_quaternion(a0[i], a1[i], a2[i], eve::_Z, eve::_X, eve::_Z, eve::Extrinsic);
+        auto z = eve::from_euler(a0[i], a1[i], a2[i], eve::_Z, eve::_X, eve::_Z, eve::Extrinsic);
         auto [t1, t2, t3] = eve::to_euler(z, eve::_Z, eve::_X, eve::_Z, eve::Extrinsic);
         TTS_RELATIVE_EQUAL(t1, a0[i], 0.001);
         TTS_RELATIVE_EQUAL(t2, a1[i], 0.001);
         TTS_RELATIVE_EQUAL(t3, a2[i], 0.001);
       }
       {
-        auto z = eve::euler_to_quaternion(a0[i], a1[i], a2[i], eve::_Z, eve::_X, eve::_Z, eve::Intrinsic);
+        auto z = eve::from_euler(a0[i], a1[i], a2[i], eve::_Z, eve::_X, eve::_Z, eve::Intrinsic);
         auto [t1, t2, t3] = eve::to_euler(z, eve::_Z, eve::_X, eve::_Z, eve::Intrinsic);
         TTS_RELATIVE_EQUAL(t1, a0[i], 0.001);
         TTS_RELATIVE_EQUAL(t2, a1[i], 0.001);

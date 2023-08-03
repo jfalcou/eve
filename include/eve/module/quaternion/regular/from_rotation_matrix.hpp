@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var from_rotation_matrix
   //!
-  //! @brief Callable object computing a quaternion from its from_rotation_matrix representation.
+  //! @brief Callable object computing a quaternion from its rotation_matrix representation.
   //!
   //!  This function returns a quaternion associated to the input rotation matrix m.
   //!  If m is not a proper rotation 3x3 rotation matrix (i.e an orthogonal matrix with determinant 1)
@@ -35,14 +35,14 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template < typename M >
-  //!      auto from_rotation_matrix(auto q) const noexcept
-  //!        requires(I != J && J != K)
+  //!      auto from_rotation_matrix(auto m) const noexcept
   //!   }
   //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!  * `q` the rotation quaternion (not necesseraly normalized)
+  //!  * `m` the rotation matrix. The actual implementation assumes that m[i][j] will return
+  //!        the ith line and jth column element of the matrix (indices starting from 0).
   //!
   //!
   //!   The computation method is inspired from the article : "Accurate Computation of

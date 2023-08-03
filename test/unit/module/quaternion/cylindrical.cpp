@@ -17,7 +17,7 @@ template < typename T> auto cvtbq_eq(bm::quaternion<T> const & bq){
 }
 
 
-TTS_CASE_WITH( "Check behavior of conj on scalar"
+TTS_CASE_WITH( "Check behavior of from_cylindrical on scalar"
         , tts::bunch<eve::test::scalar::ieee_reals>
              , tts::generate( tts::randoms(-1000.0, 1000.0)
                             , tts::randoms(-1000.0, 1000.0)
@@ -31,13 +31,13 @@ TTS_CASE_WITH( "Check behavior of conj on scalar"
   {
     for(auto f : a1)
     {
-      TTS_RELATIVE_EQUAL( eve::cylindrical(e, f, f, e)
+      TTS_RELATIVE_EQUAL( eve::from_cylindrical(e, f, f, e)
                         , cvtbq_eq(bm::cylindrical(e,f, f, e)), tol);
     }
   }
 };
 
-TTS_CASE_WITH( "Check behavior of conj on wide"
+TTS_CASE_WITH( "Check behavior of from_cylindrical on wide"
              , eve::test::simd::ieee_reals
              , tts::generate(tts::randoms(-1000.0, 1000.0)
                             , tts::randoms(-1000.0, 1000.0)
@@ -56,5 +56,5 @@ TTS_CASE_WITH( "Check behavior of conj on wide"
     r.set(i, eq);
   }
 
-  TTS_RELATIVE_EQUAL(eve::cylindrical(a0, a1, a2, a3), r, tol);
+  TTS_RELATIVE_EQUAL(eve::from_cylindrical(a0, a1, a2, a3), r, tol);
 };

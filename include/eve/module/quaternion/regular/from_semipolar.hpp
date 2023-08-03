@@ -15,14 +15,14 @@ namespace eve
   //================================================================================================
   //! @addtogroup quaternion
   //! @{
-  //! @var semipolar
+  //! @var from_semipolar
   //!
   //! @brief Callable object computing a quaternion from its semipolar representation.
   //!
   //!  This function build quaternions in a way similar to the way polar builds complex numbers
   //!  from a semipolar representation of an \f$\mathbb{R}^4\f$ element.
   //!
-  //!  semipolar takes as a first input the magnitude of the quaternion,
+  //!  from_semipolar takes as a first input the magnitude of the quaternion,
   //!  as a second input an angle in the range 0 to \f$\pi/2\f$ such that magnitudes of the first
   //!  two \f$\mathbb{C}\f$ components of the quaternion are the product of the first input and the sine and cosine
   //!  of this angle, respectively, and finally as third and fourth inputs angles in the range \f$-\pi/2\f$ to \f$+\pi/2\f$
@@ -39,7 +39,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     auto semipolar(auto rho, auto alpha auto theta1, auto theta2) const noexcept;
+  //!     auto from_semipolar(auto rho, auto alpha auto theta1, auto theta2) const noexcept;
   //!   }
   //!   @endcode
   //!
@@ -57,25 +57,25 @@ namespace eve
   //! @godbolt{doc/quaternion/regular/conversions.cpp}
   //!  @}
   //================================================================================================
-  namespace tag { struct semipolar_; }
-  template<> struct supports_conditional<tag::semipolar_> : std::false_type {};
+  namespace tag { struct from_semipolar_; }
+  template<> struct supports_conditional<tag::from_semipolar_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(semipolar_, semipolar);
+  EVE_MAKE_CALLABLE(from_semipolar_, from_semipolar);
 
   namespace detail
   {
     template<ordered_value V,  ordered_value U,  ordered_value W,  ordered_value T>
-    EVE_FORCEINLINE auto semipolar_( EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_semipolar_( EVE_SUPPORTS(cpu_)
                                , V const & rho
                                , U const & alpha
                                , W const & theta1
                                , T const & theta2    ) noexcept
     {
-      return arithmetic_call(semipolar, rho, alpha, theta1, theta2);
+      return arithmetic_call(from_semipolar, rho, alpha, theta1, theta2);
     }
 
     template<floating_value U>
-    EVE_FORCEINLINE auto semipolar_(EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_semipolar_(EVE_SUPPORTS(cpu_)
                                    , U const & rho
                                    , U const & alpha
                                    , U const & theta1

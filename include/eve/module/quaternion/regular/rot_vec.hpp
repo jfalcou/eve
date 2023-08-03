@@ -17,7 +17,7 @@ namespace eve
   //! @{
   //! @var rot_vecrot_vec
   //!
-  //! @brief Callable object computing rot_vecinary part of values.
+  //! @brief Callable object rotatating an \f$\mathbb{R}\f$ using a quaternion.
   //!
   //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!

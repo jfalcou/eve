@@ -15,12 +15,12 @@ namespace eve
   //================================================================================================
   //! @addtogroup quaternion
   //! @{
-  //! @var euler_to_quaternion
+  //! @var from_euler
   //!
-  //! @brief Callable object computing a quaternion from its euler_to_quaternion representation.
+  //! @brief Callable object computing a quaternion from its euler representation.
   //!
-  //!  This function build euler angles from a quaternion. Template parameters I, J, K of type int
-  //!  are used to choose the euler order.
+  //!  This function build euler angles from 3 euler angles in radian. Template parameters I, J, K of type int
+  //!  are used to choose the euler axis order.
   //!
   //!  for instance I = 3, J = 2, K = 3 choose the ZYZ sequence.
   //!  the values of I, J, and K must be in {1, 2, 3} ans satisfy I != J && J != K.
@@ -36,17 +36,23 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template < int I, int J, int K > auto euler_to_quaternion(auto q) const noexcept;
+  //!      template < int I, int J, int K > auto from_euler(auto a, auto b, auto c
+  //!                                                      , axes<I> a1, axes<J> a2,  axes<K> a3
+  //!                                                      , ext e
+  //!                                                      ) const noexcept;
+  //!      requires(I != J && J != K)
   //!   }
   //!   @endcode
   //!
   //! **Parameters**
   //!
-  //!  * `q` the rotation quaternion (not necesseraly normalized)
+  //!  * `a`, `b`, `c` : the angles in radian
+  //!  * `a1`, `a2`, `a3` the axes parameters to be chosen between _X,  _Y, _Z (two consecutive axes cannot be the same)
+  //!  * `e' : allows to choos between extrinsic Extrinsic or Intrinsic representations.
   //!
   //!  **Template parameters**
   //!
-  //!     * I, J, K
+  //!     * I, J, K : are on call deduced from the axes parameters
   //!
   //!
   //!   The computation method is taken from the article : "Quaternion to Euler angles conversion: A
@@ -56,22 +62,21 @@ namespace eve
   //!
   //! **Return value**
   //!
-  //!    kumi tuple of the three euler angles in radian.
-  //!    In case of singularity the first angle is 0.
+  //!    quaternion representing the rotation
   //!
   //!  @groupheader{Example}
   //!
-  //! @godbolt{doc/quaternion/regular/euler_to_quaternion.cpp}
+  //! @godbolt{doc/quaternion/regular/from_euler.cpp}
   //!  @}
   //================================================================================================
-  namespace tag { struct euler_to_quaternion_; }
-  template<> struct supports_conditional<tag::euler_to_quaternion_> : std::false_type {};
-  EVE_MAKE_CALLABLE(euler_to_quaternion_, euler_to_quaternion);
+  namespace tag { struct from_euler_; }
+  template<> struct supports_conditional<tag::from_euler_> : std::false_type {};
+  EVE_MAKE_CALLABLE(from_euler_, from_euler);
 
   namespace detail
   {
     template<floating_ordered_value V, int I,  int J,  int K, bool Extrinsic>
-    EVE_FORCEINLINE auto euler_to_quaternion_( EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_euler_( EVE_SUPPORTS(cpu_)
                                              , V const & v1
                                              , V const & v2
                                              , V const & v3

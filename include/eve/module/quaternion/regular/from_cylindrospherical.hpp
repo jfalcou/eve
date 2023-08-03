@@ -15,7 +15,7 @@ namespace eve
   //================================================================================================
   //! @addtogroup quaternion
   //! @{
-  //! @var cylindrospherical
+  //! @var from_cylindrospherical
   //!
   //! @brief Callable object computing a quaternion from its cylindrospherical representation.
   //!
@@ -36,7 +36,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     auto cylindrospherical(auto t, auto radius, auto longitude, auto latitude) const noexcept;
+  //!     auto from_cylindrospherical(auto t, auto radius, auto longitude, auto latitude) const noexcept;
   //!   }
   //!   @endcode
   //!
@@ -57,25 +57,25 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct cylindrospherical_; }
-  template<> struct supports_conditional<tag::cylindrospherical_> : std::false_type {};
+  namespace tag { struct from_cylindrospherical_; }
+  template<> struct supports_conditional<tag::from_cylindrospherical_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(cylindrospherical_, cylindrospherical);
+  EVE_MAKE_CALLABLE(from_cylindrospherical_, from_cylindrospherical);
 
   namespace detail
   {
     template<ordered_value V,  ordered_value U,  ordered_value W,  ordered_value T>
-    EVE_FORCEINLINE auto cylindrospherical_( EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_cylindrospherical_( EVE_SUPPORTS(cpu_)
                                , V const & t
                                , U const & radius
                                , W const & longitude
                                , T const & latitude    ) noexcept
     {
-      return arithmetic_call(cylindrospherical, t, radius, longitude, latitude);
+      return arithmetic_call(from_cylindrospherical, t, radius, longitude, latitude);
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE auto cylindrospherical_(EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_cylindrospherical_(EVE_SUPPORTS(cpu_)
                                            , T const & t
                                            , T const &  r
                                            , T const & longitude

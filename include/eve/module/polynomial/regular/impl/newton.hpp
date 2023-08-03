@@ -18,8 +18,7 @@ namespace eve::detail
 template<value T0, std::input_iterator IT0, std::input_iterator IT1>
 EVE_FORCEINLINE constexpr auto
 newton_(EVE_SUPPORTS(cpu_), T0 xx, IT0 const& firstc, IT0 const& lastc, IT1 const& firstn) noexcept
-//     requires((compatible_values<T0, typename std::iterator_traits<IT0>::value_type>)&&(
-//         compatible_values<T0, typename std::iterator_traits<IT1>::value_type>))
+
 {
   return detail::newton_impl(regular_type(), xx, firstc, lastc, firstn);
 }
@@ -30,33 +29,10 @@ newton_(EVE_SUPPORTS(cpu_), T0 xx, IT0 const& firstc, IT0 const& lastc, IT1 cons
 template<value T0, range R1, range R2>
 EVE_FORCEINLINE constexpr auto
 newton_(EVE_SUPPORTS(cpu_), T0 xx, R1 const& rc, R2 const& rn) noexcept
-// requires(
-//     compatible_values<
-//         T0,
-//         typename R1::
-//             value_type> && (!simd_value<R1>)&&compatible_values<T0, typename R2::value_type> && (!simd_value<R2>))
 {
   return detail::newton_impl(regular_type(), xx, rc, rn);
 }
 
-namespace pipo{
-template<kumi::product_type Tuple>
-void print(const char * s, std::ostream& os, Tuple const& t)
-{
-  kumi::apply
-  (
-    [&os, s](auto const&... args)
-    {
-      os << s << " = [";
-      std::size_t n{0};
-      ((os << args << (++n != kumi::size<Tuple>::value ? ", " : "")), ...);
-      os << ']';
-    }, t
-  );
-
-  os << '\n';
-}
-}
 //================================================================================================
 //== Newton with tuples
 //================================================================================================

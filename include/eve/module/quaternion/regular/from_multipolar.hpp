@@ -17,14 +17,14 @@ namespace eve
   //================================================================================================
   //! @addtogroup quaternion
   //! @{
-  //! @var multipolar
+  //! @var from_multipolar
   //!
   //! @brief Callable object computing a quaternion from its multipolar representation.
   //!
   //!  This function build quaternions in a way similar to the way polar builds complex numbers
   //!  from a multipolar representation of an \f$\mathbb{R}^4\f$ element.
   //!
-  //!  multipolar  the two \f$\mathbb{C}\f$ components of the quaternion are given in polar coordinates
+  //!  from_multipolar  the two \f$\mathbb{C}\f$ components of the quaternion are given in polar coordinates
   //!
   //! **Defined in header**
   //!
@@ -37,7 +37,7 @@ namespace eve
   //!   @code
   //!   namespace eve
  //!   {
-  //!     auto multipolar( auto rho1, auto theta1 auto rho2, auto theta2) const noexcept;
+  //!     auto from_multipolar( auto rho1, auto theta1 auto rho2, auto theta2) const noexcept;
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   //!
   //! **Parameters**
@@ -57,22 +57,22 @@ namespace eve
   //!
   //!  @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(multipolar_, multipolar);
+  EVE_MAKE_CALLABLE(from_multipolar_, from_multipolar);
 
   namespace detail
   {
     template<ordered_value V,  ordered_value U,  ordered_value W,  ordered_value T>
-    EVE_FORCEINLINE auto multipolar_( EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_multipolar_( EVE_SUPPORTS(cpu_)
                                     , V const & rho1
                                     , U const & theta1
                                     , W const & rho2
                                     , T const & theta2) noexcept
     {
-      return arithmetic_call(multipolar, rho1, theta1, rho2, theta2);
+      return arithmetic_call(from_multipolar, rho1, theta1, rho2, theta2);
     }
 
     template<floating_value U>
-    EVE_FORCEINLINE auto multipolar_(EVE_SUPPORTS(cpu_)
+    EVE_FORCEINLINE auto from_multipolar_(EVE_SUPPORTS(cpu_)
                                     , U const & rho1
                                     , U const & theta1
                                     , U const & rho2
