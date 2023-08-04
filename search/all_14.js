@@ -9,7 +9,7 @@ var searchData=
   ['unalign_6',['unalign',['../group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a',1,'eve']]],
   ['unaligned_5ft_7',['unaligned_t',['../group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c',1,'eve']]],
   ['under_8',['under',['../group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047',1,'eve::under()'],['../structeve_1_1pattern__t.html#aef70581b6e3b30db25467efcc08eff1c',1,'eve::pattern_t::under()']]],
-  ['underlying_5ftype_9',['underlying_type',['../structeve_1_1underlying__type.html',1,'eve::underlying_type&lt; Ts &gt;'],['../structeve_1_1complex.html#afd48e594b4deefe91da424aea69580de',1,'eve::complex::underlying_type()']]],
+  ['underlying_5ftype_9',['underlying_type',['../structeve_1_1underlying__type.html',1,'eve::underlying_type&lt; Ts &gt;'],['../structeve_1_1complex.html#afd48e594b4deefe91da424aea69580de',1,'eve::complex::underlying_type()'],['../structeve_1_1quaternion.html#a5e89c547a13cc15bebb4c6798db5e49a',1,'eve::quaternion::underlying_type()']]],
   ['underlying_5ftype_3c_20t_20_3e_10',['underlying_type&lt; T &gt;',['../structeve_1_1underlying__type.html',1,'eve']]],
   ['unroll_11',['unroll',['../group__algo__traits_gacdfe3fb0999d566d02a71a0297b8bb88.html#gacdfe3fb0999d566d02a71a0297b8bb88',1,'eve::algo']]],
   ['unsupported_5fcall_12',['unsupported_call',['../structeve_1_1unsupported__call.html',1,'eve']]],

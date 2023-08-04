@@ -26,5 +26,6 @@ var searchData=
   ['prime_5fceil_23',['prime_ceil',['../group__combinatorial_ga1a7b8f61e2ec6ff6063469c85dc9c665.html#ga1a7b8f61e2ec6ff6063469c85dc9c665',1,'eve']]],
   ['prime_5ffloor_24',['prime_floor',['../group__combinatorial_ga88c5c11a1583d1787e367f08385a7dc8.html#ga88c5c11a1583d1787e367f08385a7dc8',1,'eve']]],
   ['proj_25',['proj',['../group__complex_ga3fda63f928f141d661e8752b5eb523a8.html#ga3fda63f928f141d661e8752b5eb523a8',1,'eve']]],
-  ['promote_26',['promote',['../group__core__decorators_ga63fa4c4c0497b3cf285de3885ef541bd.html#ga63fa4c4c0497b3cf285de3885ef541bd',1,'eve']]]
+  ['promote_26',['promote',['../group__core__decorators_ga63fa4c4c0497b3cf285de3885ef541bd.html#ga63fa4c4c0497b3cf285de3885ef541bd',1,'eve']]],
+  ['pure_27',['pure',['../group__quaternion_ga75d2302ac58ed3e3bc2e96d3051ddc37.html#ga75d2302ac58ed3e3bc2e96d3051ddc37',1,'eve']]]
 ];

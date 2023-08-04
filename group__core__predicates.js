@@ -41,5 +41,6 @@ var group__core__predicates =
     [ "eve::is_positive", "group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1", null ],
     [ "eve::is_pow2", "group__core__predicates_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306", null ],
     [ "eve::is_real", "group__core__predicates_ga38314db2a1da99c8bdec146b4ed56c9b.html#ga38314db2a1da99c8bdec146b4ed56c9b", null ],
+    [ "eve::is_unit", "group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0", null ],
     [ "eve::is_unordered", "group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413", null ]
 ];

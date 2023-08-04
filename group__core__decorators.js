@@ -11,6 +11,7 @@ var group__core__decorators =
     [ "eve::promote", "group__core__decorators_ga63fa4c4c0497b3cf285de3885ef541bd.html#ga63fa4c4c0497b3cf285de3885ef541bd", null ],
     [ "eve::raw", "group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3", null ],
     [ "eve::regular", "group__core__decorators_ga937d8a32ddb68361283b635de3ee5253.html#ga937d8a32ddb68361283b635de3ee5253", null ],
+    [ "eve::right", "group__core__decorators_ga7208f166d28c70de0106887ac92c5227.html#ga7208f166d28c70de0106887ac92c5227", null ],
     [ "eve::saturated", "group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e", null ],
     [ "eve::sph", "group__core__decorators_gaaf24ab26845a91e5998b2f3134669b5a.html#gaaf24ab26845a91e5998b2f3134669b5a", null ],
     [ "eve::successor", "group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0", null ],

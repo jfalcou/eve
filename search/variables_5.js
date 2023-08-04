@@ -33,8 +33,14 @@ var searchData=
   ['frac_30',['frac',['../group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732',1,'eve']]],
   ['fracscale_31',['fracscale',['../group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf',1,'eve']]],
   ['frexp_32',['frexp',['../group__core__internal_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
-  ['fsm_33',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
-  ['fsnm_34',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
-  ['full_5fcircle_35',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
-  ['fuse_5foperations_36',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]]
+  ['from_5fcylindrical_33',['from_cylindrical',['../group__quaternion_gae04815c0bd88d9cd7ac82bd2083105dc.html#gae04815c0bd88d9cd7ac82bd2083105dc',1,'eve']]],
+  ['from_5fcylindrospherical_34',['from_cylindrospherical',['../group__quaternion_gab6804fdf4fb6fc3c9a8a26eb2078179e.html#gab6804fdf4fb6fc3c9a8a26eb2078179e',1,'eve']]],
+  ['from_5feuler_35',['from_euler',['../group__quaternion_gaea83d537d3c67558345d999dd975342a.html#gaea83d537d3c67558345d999dd975342a',1,'eve']]],
+  ['from_5frotation_5fmatrix_36',['from_rotation_matrix',['../group__quaternion_ga55de6b8fee6c5f88ab3275d48bd2a9e9.html#ga55de6b8fee6c5f88ab3275d48bd2a9e9',1,'eve']]],
+  ['from_5fsemipolar_37',['from_semipolar',['../group__quaternion_ga14b76367534b7a9615eaadac3bf0669b.html#ga14b76367534b7a9615eaadac3bf0669b',1,'eve']]],
+  ['from_5fspherical_38',['from_spherical',['../group__quaternion_ga2df5089d7b478677749d4ad47cebaaad.html#ga2df5089d7b478677749d4ad47cebaaad',1,'eve']]],
+  ['fsm_39',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
+  ['fsnm_40',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
+  ['full_5fcircle_41',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
+  ['fuse_5foperations_42',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]]
 ];

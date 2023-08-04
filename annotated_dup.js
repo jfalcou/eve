@@ -49,6 +49,7 @@ var annotated_dup =
       [ "or_", "structeve_1_1or__.html", "structeve_1_1or__" ],
       [ "pattern_t", "structeve_1_1pattern__t.html", "structeve_1_1pattern__t" ],
       [ "platform", "structeve_1_1platform.html", null ],
+      [ "quaternion", "structeve_1_1quaternion.html", "structeve_1_1quaternion" ],
       [ "reduction", "structeve_1_1reduction.html", null ],
       [ "soa_ptr", "structeve_1_1soa__ptr.html", null ],
       [ "stack_buffer", "structeve_1_1stack__buffer.html", null ],
