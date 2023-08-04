@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/complex/regular/traits.hpp>
-#include <eve/module/core/regular/conj.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/complex/regular/proj.hpp>
 
 namespace eve::detail
@@ -415,4 +415,31 @@ namespace eve::detail
   {
     return fms(z1, z2, z3*z4);
   }
+
+  //================================================================================================
+  //  relative distance
+  //================================================================================================
+   template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  complex_binary_dispatch(eve::tag::reldist_, Z1 const& z1, Z2 const& z2) noexcept -> decltype(abs(z1+z2))
+  {
+    using r_t = decltype(abs(z1+z2));
+    return dist(z1, z2)/max(abs(z1), abs(z2), one(as<r_t>()));
+  }
+
+  //================================================================================================
+  //  dot product
+  //================================================================================================
+  template<typename Z1, typename Z2>
+  EVE_FORCEINLINE auto
+  complex_binary_dispatch(eve::tag::dot_, Z1 const& z1, Z2 const& z2) noexcept
+  {
+    if constexpr(ordered_value<Z1>)
+      return z1*real(z2);
+    else if constexpr(ordered_value<Z2>)
+        return z2*real(z1);
+    else
+      return real(z1)*real(z2)+ imag(z1)*imag(z2);
+  }
+
 }

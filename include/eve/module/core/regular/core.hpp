@@ -63,6 +63,7 @@
 #include <eve/module/core/regular/diff_of_prod.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/regular/epsilon.hpp>
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/fam.hpp>
@@ -131,6 +132,7 @@
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_pow2.hpp>
 #include <eve/module/core/regular/is_real.hpp>
+#include <eve/module/core/regular/is_unit.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/last_true.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
@@ -178,6 +180,7 @@
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/regular/refine_rec.hpp>
+#include <eve/module/core/regular/reldist.hpp>
 #include <eve/module/core/regular/rem.hpp>
 #include <eve/module/core/regular/remainder.hpp>
 #include <eve/module/core/regular/remdiv.hpp>

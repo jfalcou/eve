@@ -23,9 +23,9 @@ horner_(EVE_SUPPORTS(cpu_), T0 x, Ts... args) noexcept
 //================================================================================================
 //== tuples
 //================================================================================================
-template<value T0, kumi::product_type Ts>
+template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), T0 x, Ts tup) noexcept
+horner_(EVE_SUPPORTS(cpu_), T0 x, kumi::tuple<Ts...> tup) noexcept
 {
   return kumi::apply( [&](auto... m) { return horner(x, m...); }, tup);
 }

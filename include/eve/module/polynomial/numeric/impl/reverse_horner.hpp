@@ -99,9 +99,9 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 //== tuples
 //================================================================================================
-template<value T0, kumi::product_type Ts>
+template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const & , T0 x, Ts args) noexcept
+reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const & , T0 x, kumi::tuple<Ts...> args) noexcept
 {
   return numeric(horner)(x, kumi::reverse(args));
 }
