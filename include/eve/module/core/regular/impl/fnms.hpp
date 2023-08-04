@@ -18,18 +18,19 @@
 
 namespace eve::detail
 {
-template<ordered_value T, ordered_value U, ordered_value V>
+template<value T, value U, value V>
 EVE_FORCEINLINE auto
 fnms_(EVE_SUPPORTS(cpu_),
       T const& a,
       U const& b,
-      V const& c) noexcept requires properly_convertible<U, V, T>
+      V const& c) noexcept
+-> common_value_t<T, U, V>
 {
   using r_t = common_value_t<T, U, V>;
   return arithmetic_call(fnms, r_t(a), r_t(b), r_t(c));
 }
 
-template<ordered_value T>
+template<value T>
 EVE_FORCEINLINE T
 fnms_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
 requires has_native_abi_v<T>
@@ -43,7 +44,7 @@ requires has_native_abi_v<T>
 //================================================================================================
 // Masked case
 //================================================================================================
-template<conditional_expr C, ordered_value T, ordered_value U, ordered_value V>
+template<conditional_expr C, value T, value U, value V>
 EVE_FORCEINLINE auto
 fnms_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b, V const& c) noexcept
 {

@@ -25,7 +25,7 @@
 
 namespace eve::detail
 {
-template<ordered_value T, ordered_value U, ordered_value V>
+template<value T, value U, value V>
 EVE_FORCEINLINE auto
 fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& c) noexcept
 -> common_value_t<T, U, V>
@@ -33,7 +33,7 @@ fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, U const& b, V const& c
   return arithmetic_call(numeric(fma), a, b, c);
 }
 
-template<ordered_value T>
+template<value T>
 EVE_FORCEINLINE T
 fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& c) noexcept requires
     has_native_abi_v<T>
@@ -64,6 +64,10 @@ fma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& c
     using u_t = as_integer_t<T, unsigned>;
     return bit_cast(fma(bit_cast(a, as<u_t>()), bit_cast(b, as<u_t>()), bit_cast(c, as<u_t>())),
                     as<T>());
+  }
+  else
+  {
+    return fma(a, b, c);
   }
 }
 }

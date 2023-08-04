@@ -103,6 +103,10 @@ add_custom_target(unit.polynomial.exe         )
 add_dependencies(unit.exe unit.polynomial.exe )
 glob_unit("unit" ${unit_root} "module/polynomial/*.cpp" )
 
+add_custom_target(unit.quaternion.exe         )
+add_dependencies(unit.exe unit.quaternion.exe )
+glob_unit("unit" ${unit_root} "module/quaternion/*.cpp" )
+
 add_custom_target(unit.special.exe         )
 add_dependencies(unit.exe unit.special.exe )
 glob_unit("unit" ${unit_root} "module/special/*.cpp" )

@@ -41,7 +41,7 @@ frac_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, ordered_value U>
+template<conditional_expr C, value U>
 EVE_FORCEINLINE auto
 frac_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
 {

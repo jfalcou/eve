@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #pragma once
-
+#include <eve/module/core.hpp>
 #include <eve/module/polynomial/detail/newton_impl.hpp>
 #include <eve/traits/common_value.hpp>
 
@@ -35,7 +35,7 @@ newton_(EVE_SUPPORTS(cpu_),
 template<value T0, range R1, range R2>
 EVE_FORCEINLINE constexpr auto
 newton_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, R1 const& rc, R2 const& rn) noexcept
--> decltype(detail::newton_impl(pedantic_type(), xx, rc, rn))
+//-> decltype(detail::newton_impl(pedantic_type(), xx, rc, rn))
 {
   return detail::newton_impl(pedantic_type(), xx, rc, rn);
 }
