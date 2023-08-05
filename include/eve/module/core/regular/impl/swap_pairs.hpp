@@ -19,7 +19,7 @@ namespace eve::detail
                   , index_t<I0> const &
                   , index_t<I1> const &  ) noexcept
   {
-    constexpr ptrdiff_t C = scalar_value<T> ? 1 : cardinal_v<T>;
+    [[maybe_unused]] constexpr std::ptrdiff_t C = scalar_value<T> ? 1 : cardinal_v<T>;
     EVE_ASSERT((I0 >= 0) && (I1 >= 0) && (I0 < C) && (I1 < C), "some index(es) are out or range");
     if constexpr(simd_value<T>)
     {

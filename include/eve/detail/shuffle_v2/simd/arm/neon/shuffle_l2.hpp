@@ -139,8 +139,7 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_neon_dup_lane(P, fixed<G>, wide<T, N> x)
 {
-  constexpr auto lane       = idxm::is_lane_broadcast(P::idxs);
-  constexpr bool is_8_bytes = sizeof(T) * N::value == 8;
+  constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
 
   if constexpr( !lane ) return no_matching_shuffle_t {};
   else

@@ -12,7 +12,7 @@ namespace eve::detail
 
 template<typename N, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-neon_vtbl(wide<std::uint8_t, N> x, pattern_t<I...> p)
+neon_vtbl(wide<std::uint8_t, N> x, pattern_t<I...>)
 {
   if constexpr( N::value == 8 ) return vtbl1_u8(x, wide<std::uint8_t, N> {I...});
   else return vqtbl1q_u8(x, wide<std::uint8_t, N> {I...});
@@ -20,7 +20,7 @@ neon_vtbl(wide<std::uint8_t, N> x, pattern_t<I...> p)
 
 template<typename N, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-neon_vtbl(wide<std::uint8_t, N> x, wide<std::uint8_t, N> y, pattern_t<I...> p)
+neon_vtbl(wide<std::uint8_t, N> x, wide<std::uint8_t, N> y, pattern_t<I...>)
 {
   if constexpr( N::value == 8 ) return vtbx1_u8(x, y, wide<std::uint8_t, N> {I...});
   else return vqtbx1_u8(x, y, wide<std::uint8_t, N> {I...});
