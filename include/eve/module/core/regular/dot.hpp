@@ -54,8 +54,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-//   namespace tag { struct dot_; }
-//   template<> struct supports_conditional<tag::dot_> : std::false_type {};
 
   EVE_MAKE_CALLABLE(dot_, dot);
 
