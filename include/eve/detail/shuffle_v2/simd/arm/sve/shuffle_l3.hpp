@@ -35,17 +35,4 @@ shuffle_l3_(EVE_SUPPORTS(sve_), P, fixed<G>, wide<T, N> x)
   return sve_tbl(x, table_idxs);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(sve_), P, fixed<G>, wide<T, N> x, wide<T, N> y)
-{
-  constexpr auto table_idxs =
-      idxm::to_pattern<idxm::expand_group<G>(idxm::replace_we(P::idxs, eve::na_))>();
-
-  // hard to say if this is trully l3, the registers have to be moved in the struct.
-  // I guess we'll see.
-  return sve_tbl2(x, y, table_idxs);
-}
-
-
 }

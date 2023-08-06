@@ -13,7 +13,7 @@ namespace idxm = eve::detail::idxm;
 
 TTS_CASE("shuffle_v2: 64x1")
 {
-  if constexpr (eve::avx <= eve::current_api && eve::current_api <= eve::avx2)
+  if constexpr (eve::expected_cardinal_v<std::uint64_t> < 8)
   {
     TTS_PASS();
     // This needs a 2 reg shuffle we do not suport yet
