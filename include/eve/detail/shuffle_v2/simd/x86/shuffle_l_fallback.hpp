@@ -33,9 +33,40 @@ requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size)
 
     x = wide<T, N> {shuffled_lo, shuffled_hi};
 
-    auto l = eve::index<decltype(lo_l)::value + decltype(hi_l)::value + 4>;
+    // 4 to extract + combine
+    return kumi::tuple {x, idxm::add_shuffle_levels(lo_l, hi_l, eve::index<4>)};
+  }
+  else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
+}
 
-    return kumi::tuple {x, l};
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l_fallback_(EVE_SUPPORTS(avx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+requires std::same_as<abi_t<T, N>, x86_256_> && (P::out_reg_size == P::reg_size)
+         && (P::g_size <= 2) && (current_api == avx)
+{
+  auto x_01     = x.slice();
+  auto y_01     = y.slice();
+  auto p_01 = idxm::slice_pattern<N() / 2>(p);
+
+  auto x0 = get<0>(x_01);
+  auto x1 = get<1>(x_01);
+  auto y0 = get<0>(y_01);
+  auto y1 = get<1>(y_01);
+  auto p0 = get<0>(p_01);
+  auto p1 = get<1>(p_01);
+
+  if constexpr(
+      requires { shuffle_v2_core(x0, x1, y0, y1, g, p0); }
+      && requires { shuffle_v2_core(x0, x1, y0, y1, g, p1); } )
+  {
+    auto [shuffled0, l0] = shuffle_v2_core(x0, x1, y0, y1, g, p0);
+    auto [shuffled1, l1] = shuffle_v2_core(x0, x1, y0, y1, g, p1);
+
+    x = wide<T, N> {shuffled0, shuffled1};
+
+    // 4 to extract + combine
+    return kumi::tuple {x, idxm::add_shuffle_levels(l0, l1, eve::index<4>)};
   }
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }

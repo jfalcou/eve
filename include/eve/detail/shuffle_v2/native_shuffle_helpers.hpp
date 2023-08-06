@@ -52,9 +52,21 @@ struct expanded_pattern_t : pattern_t<I...>
   static constexpr auto repeated_8 = idxm::repeated_pattern_of_size<8 / g_size, I...>;
   static constexpr auto repeated_16 = idxm::repeated_pattern_of_size<16 / g_size, I...>;
   static constexpr auto repeated_32 = idxm::repeated_pattern_of_size<32 / g_size, I...>;
+
+  static constexpr std::array xy_swapped = idxm::swap_xy(idxs, std::ssize(idxs));
 };
 
 template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
 constexpr expanded_pattern_t<T, G, I...> expanded_pattern;
+
+template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
+EVE_FORCEINLINE auto
+shuffle_2_using_or(pattern_t<I...>, fixed<G> g, T x, T y)
+{
+  constexpr std::array idxs{I...};
+  auto [x_, xl] = shuffle_v2_core(x, g, idxm::to_pattern<idxm::just_first_shuffle(idxs, na_)>());
+  auto [y_, yl] = shuffle_v2_core(y, g, idxm::to_pattern<idxm::just_second_shuffle(idxs, na_)>());
+  return kumi::tuple{ x_ | y_, idxm::add_shuffle_levels(xl, yl, eve::index<2>) };
+}
 
 }

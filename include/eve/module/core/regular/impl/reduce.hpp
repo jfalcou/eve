@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/minimum.hpp>
 #include <eve/module/core/regular/plus.hpp>
 #include <eve/module/core/regular/splat.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 
 namespace eve::detail
 {

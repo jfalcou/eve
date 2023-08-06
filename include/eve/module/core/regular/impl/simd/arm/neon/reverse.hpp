@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 
 namespace eve::detail
 {
@@ -23,10 +23,10 @@ reverse_(EVE_SUPPORTS(neon128_), wide<T, N> v) noexcept requires arm_abi<abi_t<T
   if constexpr( N() >= 8 && one_instruction_basic_shuffle ) return reverse_(EVE_RETARGET(cpu_), v);
   else
   {
-    if constexpr( N() >= 16 ) v = eve::swap_adjacent_groups(v, lane<8>);
-    if constexpr( N() >= 8 ) v = eve::swap_adjacent_groups(v, lane<4>);
-    if constexpr( N() >= 4 ) v = eve::swap_adjacent_groups(v, lane<2>);
-    if constexpr( N() >= 2 ) v = eve::swap_adjacent_groups(v, lane<1>);
+    if constexpr( N() >= 16 ) v = eve::swap_adjacent(v, lane<8>);
+    if constexpr( N() >= 8 ) v = eve::swap_adjacent(v, lane<4>);
+    if constexpr( N() >= 4 ) v = eve::swap_adjacent(v, lane<2>);
+    if constexpr( N() >= 2 ) v = eve::swap_adjacent(v, lane<1>);
     return v;
   }
 }
