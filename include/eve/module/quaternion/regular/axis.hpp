@@ -39,6 +39,7 @@ namespace eve
   //!
   //! **Return value**
   //!   (1, 0, 0) if `x` is real or the unreal part of `x/abs(x)` if x is an instance of eve::quaternion or eve::complex
+  //!   in an std::array of 3 elements
   //!
   //! #### Example
   //!
