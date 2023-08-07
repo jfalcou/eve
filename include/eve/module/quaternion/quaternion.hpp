@@ -16,6 +16,7 @@
 #include <eve/module/quaternion/detail/math.hpp>
 #include <eve/module/quaternion/detail/predicates.hpp>
 #include <ostream>
+#include <array>
 
 namespace eve
 {
@@ -47,11 +48,13 @@ namespace eve
     using underlying_type = underlying_type_t<Type>;
 
     /// Default constructor
-              quaternion(                              ) noexcept : parent{0,0,0,0} {}
-    explicit  quaternion(Type r                        ) noexcept : parent{r,0,0,0} {}
-              quaternion(Type r, Type i, Type j, Type k) noexcept : parent{r,i,j,k} {}
-              quaternion(c_t r0, c_t r1                ) noexcept : parent{real(r0), imag(r0), real(r1), imag(r1)} {}
+              quaternion(                              ) noexcept : parent{0,0,0,0}{}
+    explicit  quaternion(Type r                        ) noexcept : parent{r,0,0,0}{}
+              quaternion(Type r, Type i, Type j, Type k) noexcept : parent{r,i,j,k}{}
+              quaternion(c_t r0, c_t r1                ) noexcept : parent{real(r0), imag(r0), real(r1), imag(r1)}{}
               quaternion(c_t r0                        ) noexcept : parent{real(r0), imag(r0), 0, 0} {}
+              quaternion(Type r0, kumi::tuple<Type, Type, Type> v) noexcept
+              : parent{r0, get<0>(v), get<1>(v), get<2>(v)}{}
 
     /// Stream insertion operator
     friend std::ostream& operator<<(std::ostream& os, like<quaternion> auto const& z)
@@ -95,6 +98,12 @@ namespace eve
       auto z1 = z;
       real(z1) = u_t(0);
       return z1;
+    }
+
+    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::purepart_, like<quaternion> auto q )
+    {
+      using a_t =  std::array<std::decay_t<decltype(real(q))>, 3>;
+      return a_t{ipart(q), jpart(q), kpart(q)};
     }
 
     //==============================================================================================
@@ -315,7 +324,14 @@ namespace eve
     return as_quaternion_t<e_t>(q0, q1, q2, q3);
   }
 
-  template<value Z1, value Z2>
+  template<ordered_value Q0, ordered_value Q1, ordered_value Q2, ordered_value Q3>
+  EVE_FORCEINLINE   auto to_quaternion( Q0 const & q0, kumi::tuple<Q1, Q2, Q3>  const & v) noexcept
+  {
+    using e_t = std::decay_t<decltype(real(q0+get<0>(v)+get<1>(v)+get<2>(v)))>;
+    return as_quaternion_t<e_t>(e_t(q0), e_t(get<0>(v)), e_t(get<1>(v)), e_t(get<2>(v)));
+  }
+
+ template<value Z1, value Z2>
   EVE_FORCEINLINE auto tagged_dispatch(eve::tag::if_else_,
                                        auto const& cond,
                                        Z1 const  & z1,
