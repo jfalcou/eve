@@ -60,7 +60,7 @@
 //!  For a quaternion q the calls to real(q), ipart(q), jpart(q) or kpart(q)  allows accessing the
 //!  quaternion basis coefficients
 //!
-//!  #constructors
+//!  # Constructors
 //!
 //!  a quaternion can be constructed :
 //!
@@ -75,7 +75,7 @@
 //!  @note `from_euler` takes three angles (in radian),  three axes and a boolean (extrinsic/intrinsic),
 //!      `to compute a quaternion representation of the rotation.
 //!
-//!  #extractors
+//!  # Extractors
 //!
 //!  As alredy stated, a quaternion is considered to be represented as
 //!  \f${\displaystyle a+b\ \mathbf {i} +c\ \mathbf {j} +d\ \mathbf {k} ,}\f$.
@@ -90,7 +90,7 @@
 //!       * q == as_quaternion_t<T>(real(q), purepart(q))
 //!       * q == real(q)+pure(q)
 //!
-//!  #arithmetic functions
+//!  # Arithmetic functions
 //!
 //!  Some arithmetic function are at hand :
 //!
@@ -119,7 +119,7 @@
 //!    * `to_euler` takes a quaternion three axes and a boolean (extrinsic/intrinsic), to compute three angles
 //!       in radian which are the Euler or Bryan-Taits angles according to the axes given.
 //!
-//!  #Mathematical functions
+//!  # Mathematical functions
 //!
 //!  Some but not all math function are at hand :
 //!
@@ -135,7 +135,7 @@
 //!         i*sqrt(abs(q)) in the second one.
 //!
 //!
-//!  #Predicate functions
+//!  # Predicate functions
 //!
 //!  There is no order on the quaternions  compatible with the algebra operators.
 //!  What remains are equality or inequality, ieee relative properties and `is_pure` (resp. `is_not_pure`),

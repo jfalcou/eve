@@ -309,26 +309,26 @@ namespace eve
     }
   }
 
+  template<ordered_value Q0, ordered_value Q1, ordered_value Q2, ordered_value Q3>
+  EVE_FORCEINLINE   auto to_quaternion( Q0 const & q0, Q1 const & q1, Q2 const & q2, Q3 const & q3) noexcept
+  {
+    using e_t = std::decay_t<decltype(real(add(q0, q1, q2, q3)))>;
+    return as_quaternion_t<e_t>(q0, q1, q2, q3);
+  }
+
   template<value Q1, value Q2>
   EVE_FORCEINLINE   auto to_quaternion( Q1 const & q1, Q2 const & q2) noexcept
   requires(is_complex_v<Q1> && is_complex_v<Q2>)
   {
-    using e_t = std::decay_t<decltype(real(q1+q2))>;
-    return as_quaternion_t<e_t>(real(q1), imag(q1), real(q2), imag(q2));
+    return to_quaternion(real(q1), imag(q1), real(q2), imag(q2));
   }
 
-  template<ordered_value Q0, ordered_value Q1, ordered_value Q2, ordered_value Q3>
-  EVE_FORCEINLINE   auto to_quaternion( Q0 const & q0, Q1 const & q1, Q2 const & q2, Q3 const & q3) noexcept
-  {
-    using e_t = std::decay_t<decltype(real(q0+q1+q2+q3))>;
-    return as_quaternion_t<e_t>(q0, q1, q2, q3);
-  }
 
-  template<ordered_value Q0, ordered_value Q1, ordered_value Q2, ordered_value Q3>
-  EVE_FORCEINLINE   auto to_quaternion( Q0 const & q0, kumi::tuple<Q1, Q2, Q3>  const & v) noexcept
+  template<ordered_value Q0, kumi::sized_product_type<3> P>
+  EVE_FORCEINLINE   auto to_quaternion( Q0 const & q0, P  const & p) noexcept
   {
-    using e_t = std::decay_t<decltype(real(q0+get<0>(v)+get<1>(v)+get<2>(v)))>;
-    return as_quaternion_t<e_t>(e_t(q0), e_t(get<0>(v)), e_t(get<1>(v)), e_t(get<2>(v)));
+    using e_t = std::decay_t<decltype(real(add(q0, get<0>(p), get<1>(p), get<2>(p))))>;
+    return to_quaternion(e_t(q0), e_t(get<0>(p)), e_t(get<1>(p)), e_t(get<2>(p)));
   }
 
  template<value Z1, value Z2>
