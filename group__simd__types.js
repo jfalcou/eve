@@ -3,7 +3,6 @@ var group__simd__types =
     [ "Architecture related Types and Helpers", "group__arch.html", "group__arch" ],
     [ "Complex Numbers", "group__complex.html", "group__complex" ],
     [ "Conditional Expressions", "group__conditional.html", "group__conditional" ],
-    [ "Quaternion Numbers", "group__quaternion.html", "group__quaternion" ],
     [ "Type traits", "group__traits.html", "group__traits" ],
     [ "eve::fixed< Cardinal >", "structeve_1_1fixed.html", null ],
     [ "eve::logical< T >", "structeve_1_1logical_3_01T_01_4.html", [

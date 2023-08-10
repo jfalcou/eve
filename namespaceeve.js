@@ -521,6 +521,7 @@ var namespaceeve =
     [ "proj", "group__complex_ga3fda63f928f141d661e8752b5eb523a8.html#ga3fda63f928f141d661e8752b5eb523a8", null ],
     [ "promote", "group__core__decorators_ga63fa4c4c0497b3cf285de3885ef541bd.html#ga63fa4c4c0497b3cf285de3885ef541bd", null ],
     [ "pure", "group__quaternion_ga75d2302ac58ed3e3bc2e96d3051ddc37.html#ga75d2302ac58ed3e3bc2e96d3051ddc37", null ],
+    [ "purepart", "group__quaternion_ga2e889cccfaca5d8adca1f4a060633f19.html#ga2e889cccfaca5d8adca1f4a060633f19", null ],
     [ "q_kind", "group__polynomial_gaa4853888b0e6be1fdbc24c9f6b372599.html#gaa4853888b0e6be1fdbc24c9f6b372599", null ],
     [ "quadrant", "group__math__trig_gaf3716c407dc2f76f32b48455c1f6189f.html#gaf3716c407dc2f76f32b48455c1f6189f", null ],
     [ "quarter", "group__math__constants_ga98984927f36697347e571b0d587f47e7.html#ga98984927f36697347e571b0d587f47e7", null ],

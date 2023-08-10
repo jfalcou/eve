@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Quaternion Numbers</title>
+<title>E.V.E: Quaternion</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -123,84 +123,10 @@ $(document).ready(function(){initNavTree('group__quaternion.html',''); initResiz
 <div class="header">
   <div class="summary">
 <a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Quaternion Numbers<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a></div></div></div>
+  <div class="headertitle"><div class="title">Quaternion</div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This module provides types and functions to handle quaternion numbers.</p>
-<p>In mathematics, the quaternion number system extends the complex numbers. The set of quaternions is generally denoted by \(\mathbb{H}\) as for first described by the Irish mathematician William Rowan Hamilton in 1843</p>
-<p>Quaternions are generally represented in the form</p>
-<p>\({\displaystyle a+b\ \mathbf {i} +c\ \mathbf {j} +d\ \mathbf {k} ,}\)</p>
-<p>where a, b, c, and d are real numbers; and 1, i, j, and k are the basis vectors or basis elements.</p>
-<p>Quaternions are used in pure mathematics, but also have practical uses in applied mathematics, particularly for calculations involving three-dimensional rotations.</p>
-<p>As complex number can algebraize rotations in f$\mathbb{R}^2 \(, quanternion number can to
-     it in f$\mathbb{R}^3\)</p>
-<p>Quaternions form a four-dimensional non-commutative but associative normed division algebra over the real numbers,</p>
-<p>Given the associativity of the multiplication, the general rule can be divised from the following table</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">*   </th><th class="markdownTableHeadNone">1   </th><th class="markdownTableHeadNone">i   </th><th class="markdownTableHeadNone">j   </th><th class="markdownTableHeadNone">k    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">i   </td><td class="markdownTableBodyNone">j   </td><td class="markdownTableBodyNone">k    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">i   </td><td class="markdownTableBodyNone">i   </td><td class="markdownTableBodyNone">-1   </td><td class="markdownTableBodyNone">k   </td><td class="markdownTableBodyNone">-j    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">j   </td><td class="markdownTableBodyNone">j   </td><td class="markdownTableBodyNone">-k   </td><td class="markdownTableBodyNone">-1   </td><td class="markdownTableBodyNone">i    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">k   </td><td class="markdownTableBodyNone">k   </td><td class="markdownTableBodyNone">j   </td><td class="markdownTableBodyNone">-i   </td><td class="markdownTableBodyNone">-1   </td></tr>
-</table>
-<p>The implementation is largely inspired by the Boost::math::quaternion one of Hubert Holin, with some adds and name changes to fit <b>EVE</b></p>
-<h1><a class="anchor" id="autotoc_md89"></a>
-Operators implementation</h1>
-<p>addition, substraction, multiplication and division can be done mixing simd and scalar values of floating points, <a class="el" href="structeve_1_1complex.html" title="SIMD-compatible representation of complex numbers.">eve::complex</a> and eve::quaternions of same underlying type. Infix notations can be used.</p>
-<dl class="section warning"><dt>Warning</dt><dd>multiplication is not commutative exept if one of the two argument satifies to the is_real predicate</dd></dl>
-<p>For a quaternion q the calls to <a class="el" href="group__complex_ga59c3b80b72894e8fe0487d8fc2bf216e.html#ga59c3b80b72894e8fe0487d8fc2bf216e" title="Callable object computing real part of values.">real(q)</a>, <a class="el" href="group__quaternion_ga2daca498356d4e95f30deaa8082b247f.html#ga2daca498356d4e95f30deaa8082b247f" title="Callable object computing ipart part of values.">ipart(q)</a>, <a class="el" href="group__quaternion_ga92fa867109d12795bd69bb8a9d41868c.html#ga92fa867109d12795bd69bb8a9d41868c" title="Callable object computing jpart part of values.">jpart(q)</a> or <a class="el" href="group__quaternion_ga0fed5fc30632ff0454ed64e50b39e189.html#ga0fed5fc30632ff0454ed64e50b39e189" title="Callable object computing kpart part of values.">kpart(q)</a> allows accessing the quaternion basis coefficients</p>
-<h1><a class="anchor" id="autotoc_md90"></a>
-Constructors</h1>
-<p>Quaternions can be created from quadruplet of floating point values or pair of complex values using the call to eve::to_quaternions or eve::as_quaternion_t&lt;T&gt;. We refer to the product tpe documentation to see why it is generally advisable not to use the direct constructors.</p>
-<p>the functions <code>semipolar</code>, <code>cylindrical</code>,<code>cylindrospherical</code> and <code>spherical</code>can also be used to generate quaternions from various \(\mathbb{R}^4\) element representations, quite as creating complex numbers using polar representation.</p>
-<p>#arithmetic fonctions</p>
-<p>Some but not all arithmetic function are at hand :</p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">abs   </td><td class="markdownTableBodyNone">add   </td><td class="markdownTableBodyNone">average   </td><td class="markdownTableBodyNone">ceil   </td><td class="markdownTableBodyNone">conj   </td><td class="markdownTableBodyNone">dec   </td><td class="markdownTableBodyNone">dist    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">div   </td><td class="markdownTableBodyNone">dot   </td><td class="markdownTableBodyNone">floor   </td><td class="markdownTableBodyNone">frac   </td><td class="markdownTableBodyNone">inc   </td><td class="markdownTableBodyNone">lerp   </td><td class="markdownTableBodyNone">maxabs    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">minabs   </td><td class="markdownTableBodyNone">minus   </td><td class="markdownTableBodyNone">mul   </td><td class="markdownTableBodyNone">nearest   </td><td class="markdownTableBodyNone">negmaxabs   </td><td class="markdownTableBodyNone">negminabs   </td><td class="markdownTableBodyNone">oneminus    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">plus   </td><td class="markdownTableBodyNone">pure   </td><td class="markdownTableBodyNone">rec   </td><td class="markdownTableBodyNone">reldist   </td><td class="markdownTableBodyNone">sign   </td><td class="markdownTableBodyNone">slerp   </td><td class="markdownTableBodyNone">sqr    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">sqr_abs   </td><td class="markdownTableBodyNone">sub   </td><td class="markdownTableBodyNone">to_euler   </td><td class="markdownTableBodyNone">trunc   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
-</table>
-<ul>
-<li><code>sqr_abs</code> computes the so called Cayley norm of a quaternion, which is the square of the Euclidian norm (given by <code>abs</code>) and so is not a norm at all but a quadratic form</li>
-<li><code>pure</code> return a quaternion with zeroed real part (sometimes denoted as "unreal").</li>
-<li><code>slerp</code>, (the spherical interpolation) interpolates betwween two quaternions considered as elements of the unit $f\mathbb{R]^4$f hypersphere and is a common operation in keyframe animation. ! <code>to_euler</code> takes a quaternion three axes and a boolean (extrinsic/intrinsic), to computes three angle in radian which are the Euler or Bryan-Taits angles according to the axes given. ! #Mathematical fonctions ! Some but not all math function are at hand : ! <table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">cos   </td><td class="markdownTableBodyNone">cosh   </td><td class="markdownTableBodyNone">cot   </td><td class="markdownTableBodyNone">coth   </td><td class="markdownTableBodyNone">exp   </td><td class="markdownTableBodyNone">expm1   </td><td class="markdownTableBodyNone">hypot    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">lpnorm   </td><td class="markdownTableBodyNone">manhattan   </td><td class="markdownTableBodyNone">pow   </td><td class="markdownTableBodyNone">powm1   </td><td class="markdownTableBodyNone">sin   </td><td class="markdownTableBodyNone">sincos   </td><td class="markdownTableBodyNone">sinh    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">sinhcosh   </td><td class="markdownTableBodyNone">sqrt   </td><td class="markdownTableBodyNone">tan   </td><td class="markdownTableBodyNone">tanh   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
-</table>
-! <dl class="section note"><dt>Note</dt><dd><code>sqrt</code> on quaternions can have two square roots (general case) or infinitely many ones is the quaternion "is real" and the real part is negative. We always return the root with positive or null real part and the complex i*sqrt(<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="Computes the absolute value of the parameter.">abs(q)</a>) in the second case. ! ! #Predicate fonctions ! There is no order on the quaternions compatible with the algebra operators. What remains are equality or inequality, ieee relative properties and <code>is_pure</code> (resp. <code>is_not_pure</code>), that return true (resp. false) for quaternion with 0 real part (resp. non 0 real part). ! <table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">is_denormal   </td><td class="markdownTableBodyNone">is_equal   </td><td class="markdownTableBodyNone">is_eqz   </td><td class="markdownTableBodyNone">is_finite   </td><td class="markdownTableBodyNone">is_infinite   </td><td class="markdownTableBodyNone">is_nan   </td><td class="markdownTableBodyNone">is_nez    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">is_not_denormal   </td><td class="markdownTableBodyNone">is_not_equal   </td><td class="markdownTableBodyNone">is_not_finite   </td><td class="markdownTableBodyNone">is_not_infinite   </td><td class="markdownTableBodyNone">is_not_nan   </td><td class="markdownTableBodyNone">is_not_pure   </td><td class="markdownTableBodyNone">is_not_real    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">is_ordered   </td><td class="markdownTableBodyNone">is_pure   </td><td class="markdownTableBodyNone">is_real   </td><td class="markdownTableBodyNone">is_unordered   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone"></td></tr>
-</table>
-! </dd></dl>
-</li>
-</ul>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -246,6 +172,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ga75d2302ac58ed3e3bc2e96d3051ddc37"><td class="memItemLeft" align="right" valign="top">constexpr callable_pure_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quaternion_ga75d2302ac58ed3e3bc2e96d3051ddc37.html#ga75d2302ac58ed3e3bc2e96d3051ddc37">eve::pure</a> = {}</td></tr>
 <tr class="memdesc:ga75d2302ac58ed3e3bc2e96d3051ddc37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing pureinary part of values.  <br /></td></tr>
 <tr class="separator:ga75d2302ac58ed3e3bc2e96d3051ddc37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e889cccfaca5d8adca1f4a060633f19"><td class="memItemLeft" align="right" valign="top">constexpr callable_purepart_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quaternion_ga2e889cccfaca5d8adca1f4a060633f19.html#ga2e889cccfaca5d8adca1f4a060633f19">eve::purepart</a> = {}</td></tr>
+<tr class="memdesc:ga2e889cccfaca5d8adca1f4a060633f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing purepart part of values.  <br /></td></tr>
+<tr class="separator:ga2e889cccfaca5d8adca1f4a060633f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6fbb7b021f402f8ca91e2ca2f63f63b2"><td class="memItemLeft" align="right" valign="top">constexpr callable_slerp_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__quaternion_ga6fbb7b021f402f8ca91e2ca2f63f63b2.html#ga6fbb7b021f402f8ca91e2ca2f63f63b2">eve::slerp</a> = {}</td></tr>
 <tr class="memdesc:ga6fbb7b021f402f8ca91e2ca2f63f63b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object computing slerpinary part of values.  <br /></td></tr>
 <tr class="separator:ga6fbb7b021f402f8ca91e2ca2f63f63b2"><td class="memSeparator" colspan="2">&#160;</td></tr>

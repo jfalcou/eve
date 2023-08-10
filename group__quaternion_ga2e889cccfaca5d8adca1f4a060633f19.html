@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::slerp</title>
+<title>E.V.E: eve::purepart</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__quaternion_ga6fbb7b021f402f8ca91e2ca2f63f63b2.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__quaternion_ga2e889cccfaca5d8adca1f4a060633f19.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__quaternion_ga6fbb7b021f402f8ca9
 </div>
 
 <div class="contents">
-<a id="ga6fbb7b021f402f8ca91e2ca2f63f63b2" name="ga6fbb7b021f402f8ca91e2ca2f63f63b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga6fbb7b021f402f8ca91e2ca2f63f63b2">&#9670;&#160;</a></span>slerp</h2>
+<a id="ga2e889cccfaca5d8adca1f4a060633f19" name="ga2e889cccfaca5d8adca1f4a060633f19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2e889cccfaca5d8adca1f4a060633f19">&#9670;&#160;</a></span>purepart</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__quaternion_ga6fbb7b021f402f8ca9
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::slerp = {}</td>
+          <td class="memname">eve::purepart = {}</td>
         </tr>
       </table>
   </td>
@@ -141,21 +141,21 @@ $(document).ready(function(){initNavTree('group__quaternion_ga6fbb7b021f402f8ca9
 </table>
 </div><div class="memdoc">
 <p><b>Defined in header</b> <code>#include &lt;eve/module/quaternion.hpp&gt;</code></p>
-<h4><a class="anchor" id="autotoc_md125"></a>
+<h4><a class="anchor" id="autotoc_md119"></a>
 Members Functions</h4>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the computation of slerp part   </td></tr>
+<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">the computation of purepart part   </td></tr>
 </table>
 <hr  />
 <div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <p><code>x</code>: <a class="el" href="concepteve_1_1value.html">value</a>.</p>
-<p><b>Return value</b> 0 if <code>x</code> is real or the unreal part of <code>x</code> if x is an instance of <a class="el" href="structeve_1_1quaternion.html" title="SIMD-compatible representation of quaternion numbers.">eve::quaternion</a> or <a class="el" href="structeve_1_1complex.html" title="SIMD-compatible representation of complex numbers.">eve::complex</a></p>
-<h4><a class="anchor" id="autotoc_md127"></a>
+<p><b>Return value</b> 0 if <code>x</code> is real, <a class="el" href="group__complex_gaed1090f6f8498a10742020643de3a13b.html#gaed1090f6f8498a10742020643de3a13b" title="Callable object computing imaginary part of values.">imag(x)</a> if x is an instance of <a class="el" href="structeve_1_1complex.html" title="SIMD-compatible representation of complex numbers.">eve::complex</a>, or the purepart (second component) of <code>x</code> if x is an instance of <a class="el" href="structeve_1_1quaternion.html" title="SIMD-compatible representation of quaternion numbers.">eve::quaternion</a>.</p>
+<h4><a class="anchor" id="autotoc_md121"></a>
 Example</h4>
 <div class="fragment"></div><!-- fragment --> 
 </div>

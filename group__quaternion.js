@@ -14,6 +14,7 @@ var group__quaternion =
     [ "eve::jpart", "group__quaternion_ga92fa867109d12795bd69bb8a9d41868c.html#ga92fa867109d12795bd69bb8a9d41868c", null ],
     [ "eve::kpart", "group__quaternion_ga0fed5fc30632ff0454ed64e50b39e189.html#ga0fed5fc30632ff0454ed64e50b39e189", null ],
     [ "eve::pure", "group__quaternion_ga75d2302ac58ed3e3bc2e96d3051ddc37.html#ga75d2302ac58ed3e3bc2e96d3051ddc37", null ],
+    [ "eve::purepart", "group__quaternion_ga2e889cccfaca5d8adca1f4a060633f19.html#ga2e889cccfaca5d8adca1f4a060633f19", null ],
     [ "eve::slerp", "group__quaternion_ga6fbb7b021f402f8ca91e2ca2f63f63b2.html#ga6fbb7b021f402f8ca91e2ca2f63f63b2", null ],
     [ "eve::squad", "group__quaternion_gab95990e1aa5195d0751c87e1a171cab5.html#gab95990e1aa5195d0751c87e1a171cab5", null ],
     [ "eve::to_euler", "group__quaternion_ga43b96d8a2fbf685b289426483126203a.html#ga43b96d8a2fbf685b289426483126203a", null ],
