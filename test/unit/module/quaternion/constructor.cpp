@@ -24,6 +24,8 @@ TTS_CASE_TPL( "Check quaternion constructor from constants", eve::test::scalar::
   eve::wide<eve::quaternion<T>>  z_vs{wo,spi,spi,spi};
   eve::wide<eve::quaternion<T>>  z_sv{spi,wo,wo,wo};
   eve::wide<eve::quaternion<T>>  z_vv{wo,wpi,wpi,wpi};
+  auto a = kumi::make_tuple(wpi,wpi,wpi);
+  eve::wide<eve::quaternion<T>> z_ra =  eve::to_quaternion(wo,a);
 
   TTS_EQUAL( eve::real(z_sd), T{0}  );
   TTS_EQUAL( eve::ipart(z_sd), T{0} );
@@ -59,6 +61,11 @@ TTS_CASE_TPL( "Check quaternion constructor from constants", eve::test::scalar::
   TTS_EQUAL( eve::ipart(z_vv), wpi);
   TTS_EQUAL( eve::jpart(z_vv), wpi);
   TTS_EQUAL( eve::kpart(z_vv), wpi);
+
+  TTS_EQUAL( eve::real(z_ra), wo );
+  TTS_EQUAL( eve::ipart(z_ra), wpi);
+  TTS_EQUAL( eve::jpart(z_ra), wpi);
+  TTS_EQUAL( eve::kpart(z_ra), wpi);
 };
 
 TTS_CASE_TPL("Check quaternion constructor from lambda", eve::test::scalar::ieee_reals)

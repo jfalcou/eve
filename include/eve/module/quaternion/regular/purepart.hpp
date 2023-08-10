@@ -8,16 +8,15 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/complex.hpp>
 
 namespace eve
 {
   //================================================================================================
   //! @addtogroup quaternion
   //! @{
-  //! @var axis
+  //! @var purepart
   //!
-  //! @brief Callable object computing axisinary part of values.
+  //! @brief Callable object computing purepart part of values.
   //!
   //! **Defined in header** `#include <eve/module/quaternion.hpp>`
   //!
@@ -25,7 +24,7 @@ namespace eve
   //!
   //! | Member       | Effect                                                     |
   //! |:-------------|:-----------------------------------------------------------|
-  //! | `operator()` | the  computation of axis part                         |
+  //! | `operator()` | the  computation of purepart part                              |
   //!
   //! ---
   //!
@@ -38,32 +37,34 @@ namespace eve
   //!`x`:   [value](@ref eve::value).
   //!
   //! **Return value**
-  //!   (1, 0, 0) if `x` is real or the unreal part of `x/abs(x)` if x is an instance of eve::quaternion or eve::complex
-  //!   in an std::array of 3 elements
+  //! 0 if `x` is real, imag(x) if x is an instance of eve::complex,
+  //! or the purepart (second component) of `x`
+  //! if x is an instance of eve::quaternion.
   //!
   //! #### Example
   //!
-  //! @godbolt{doc/quaternion/regular/axis.cpp}
+  //! @godbolt{doc/quaternion/regular/purepart.cpp}
   //!
   //!  @}
   //================================================================================================
-  namespace tag { struct axis_; }
-  template<> struct supports_conditional<tag::axis_> : std::false_type {};
 
-  EVE_MAKE_CALLABLE(axis_, axis);
+  namespace tag { struct purepart_; }
+  template<> struct supports_conditional<tag::purepart_> : std::false_type {};
+
+  EVE_MAKE_CALLABLE(purepart_, purepart);
 
   namespace detail
   {
     template<value V>
-    EVE_FORCEINLINE auto axis_( EVE_SUPPORTS(cpu_), V const &) noexcept
+    EVE_FORCEINLINE auto purepart_( EVE_SUPPORTS(cpu_), V const& ) noexcept
     {
-      return std::array<V, 3>{1, 0, 0}; //it's identitity here so I choose as axis what I want
+      return std::array<V, 3>{0, 0, 0};
     }
 
     template<value V>
-    EVE_FORCEINLINE V axis_( EVE_SUPPORTS(cpu_), eve::complex<V> const & z) noexcept
+    EVE_FORCEINLINE auto purepart_( EVE_SUPPORTS(cpu_), eve::complex<V> const & z) noexcept
     {
-      return std::array<V, 3>{imag(z)/abs(z), 0, 0};
+      return  std::array<V, 3>{imag(z), 0, 0};
     }
   }
 }
