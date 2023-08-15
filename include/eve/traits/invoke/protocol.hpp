@@ -7,7 +7,7 @@
 //====================================================================================================
 #pragma once
 
-#include "eve/detail/raberu.hpp"
+#include <eve/detail/raberu.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/traits/invoke/tag_invoke.hpp>
 
@@ -30,7 +30,9 @@ namespace eve
 //==================================================================================================
 template<typename Signature>
 struct unsupported_call
-{};
+{
+  constexpr operator bool() const noexcept { return false; }
+};
 
 //! @brief Tag type for elementwise @callable properties
 struct elementwise
@@ -132,18 +134,22 @@ std::ostream& operator<<(std::ostream& os, Tag const&)
 //==================================================================================================
 namespace eve::tags
 {
-  constexpr   auto tag_invoke(deferred_callable auto tag, auto arch, auto... x)
-  noexcept(noexcept(tag.deferred_call(arch, x...))) -> decltype(tag.deferred_call(arch, x...))
+  template<deferred_callable Tag>
+  EVE_FORCEINLINE constexpr auto tag_invoke(Tag, auto arch, auto&&... x)
+  noexcept(noexcept(Tag::deferred_call(arch, EVE_FWD(x)...)))
+  -> decltype(Tag::deferred_call(arch, EVE_FWD(x)...))
   {
-    return tag.deferred_call(arch, x...);
+    return Tag::deferred_call(arch, EVE_FWD(x)...);
   }
 }
 
 #define EVE_DEFERRED_INVOKE()                                                                     \
-constexpr   auto tag_invoke(eve::deferred_callable auto tag, auto arch, auto... x)                \
-noexcept(noexcept(tag.deferred_call(arch, x...))) -> decltype(tag.deferred_call(arch, x...))      \
+template<eve::deferred_callable Tag>                                                              \
+EVE_FORCEINLINE constexpr auto tag_invoke(Tag, auto arch, auto&&... x)                            \
+noexcept(noexcept(Tag::deferred_call(arch, EVE_FWD(x)...)))                                       \
+-> decltype(Tag::deferred_call(arch, EVE_FWD(x)...))                                              \
 {                                                                                                 \
-  return tag.deferred_call(arch, x...);                                                           \
+  return Tag::deferred_call(arch, EVE_FWD(x)...);                                                 \
 }                                                                                                 \
 /**/
 
@@ -188,7 +194,7 @@ namespace eve::detail
 //  General macro taking the deferred namespace NS and the function NAME
 //==================================================================================================
 #define EVE_DEFERS_CALLABLE_FROM(NS,NAME)                                                         \
-static auto deferred_call(auto arch, auto&&...args) noexcept                                      \
+static EVE_FORCEINLINE auto deferred_call(auto arch, auto&&...args) noexcept                      \
     -> decltype(NAME(NS::adl_delay, arch, EVE_FWD(args)...))                                      \
 {                                                                                                 \
   return NAME(NS::adl_delay, arch, EVE_FWD(args)...);                                             \
