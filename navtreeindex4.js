@@ -1,6 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"structeve_1_1aligned__ptr.html#ad762c64085048c2ba6ae0b8d128bc401":[7,0,2,0,0,1,12],
 "structeve_1_1aligned__ptr.html#aed55f842914bf195c481887441623ca4":[7,0,2,0,0,1,2],
 "structeve_1_1aligned__ptr.html#af6dfde7e9c59f0f8d1cda928fc4e07b9":[7,0,2,0,0,1,17],
 "structeve_1_1aligned__ptr_a28fd884a05e3b74a5252025c69239e7f.html#a28fd884a05e3b74a5252025c69239e7f":[7,0,2,0,0,1,28],
@@ -173,9 +172,8 @@ var NAVTREEINDEX4 =
 "structeve_1_1stack__buffer.html":[7,0,2,0,0,2],
 "structeve_1_1struct__support.html":[7,0,2,3,1,2],
 "structeve_1_1support__options.html":[7,0,2,3,0,1],
-"structeve_1_1support__options.html#a3a1d1ca1427d2e0535b53d9a86c9f125":[7,0,2,3,0,1,3],
+"structeve_1_1support__options.html#a3a1d1ca1427d2e0535b53d9a86c9f125":[7,0,2,3,0,1,2],
 "structeve_1_1support__options.html#a7500cdbd074c8f4dcfde8055482ac113":[7,0,2,3,0,1,1],
-"structeve_1_1support__options.html#ab1cfc5e992a44566ee85a69b83296d0b":[7,0,2,3,0,1,2],
 "structeve_1_1support__options.html#acf449c3f5b1018bff28b6697ded92ab5":[7,0,2,3,0,1,0],
 "structeve_1_1supports__like.html":[7,0,2,3,1,1],
 "structeve_1_1supports__ordering.html":[7,0,2,3,1,0],
@@ -249,5 +247,7 @@ var NAVTREEINDEX4 =
 "structeve_1_1wide.html#a99edd5276b11e2a30955f29ab5b24690":[7,0,2,7,69],
 "structeve_1_1wide.html#a9abb8905b9a063ce5c18add352d7a122":[7,0,2,7,64],
 "structeve_1_1wide.html#a9d9eca32bf57d8d7a14d10d7f18f0057":[7,0,2,7,71],
-"structeve_1_1wide.html#a9e8f8635331b18d7ce9e1c28019722be":[7,0,2,7,13]
+"structeve_1_1wide.html#a9e8f8635331b18d7ce9e1c28019722be":[7,0,2,7,13],
+"structeve_1_1wide.html#aa0bdcf56225155e2b0ea9be2cd771e8a":[7,0,2,7,62],
+"structeve_1_1wide.html#aa76549abd93145924149aba145078104":[7,0,2,7,27]
 };

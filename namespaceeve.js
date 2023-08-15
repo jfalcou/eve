@@ -96,7 +96,6 @@ var namespaceeve =
     [ "align", "group__memory_ga0c5c814e7f47fcfe1e38e2436afc7203.html#ga0c5c814e7f47fcfe1e38e2436afc7203", null ],
     [ "as_aligned", "namespaceeve.html#a0280fa32cdcf6ac1877275412df23158", null ],
     [ "as_aligned", "namespaceeve.html#a5c8abb85533f462eaf77e6b4bc945b7f", null ],
-    [ "decorators", "group__invoke.html#gadb02ff3b1a1d82d65c762261480c7143", null ],
     [ "drop_alternative", "group__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b", null ],
     [ "is_aligned", "group__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13", null ],
     [ "is_aligned", "group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74", null ],

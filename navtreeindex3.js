@@ -1,6 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a":[7,0,2,0,0,19],
 "group__polynomial.html":[7,0,1,5],
 "group__polynomial_ga0c1415eb0f5bd49dc31cdb1e044e7291.html#ga0c1415eb0f5bd49dc31cdb1e044e7291":[7,0,1,5,11],
 "group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe":[7,0,1,5,10],
@@ -145,9 +144,9 @@ var NAVTREEINDEX3 =
 "namespaceeve.html#a0280fa32cdcf6ac1877275412df23158":[8,0,0,94],
 "namespaceeve.html#a5c8abb85533f462eaf77e6b4bc945b7f":[8,0,0,95],
 "namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc":[8,0,0,80],
-"namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40":[8,0,0,644],
-"namespacemembers.html":[8,1,0,0],
+"namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40":[8,0,0,643],
 "namespacemembers.html":[8,1,0],
+"namespacemembers.html":[8,1,0,0],
 "namespacemembers_b.html":[8,1,0,1],
 "namespacemembers_c.html":[8,1,0,2],
 "namespacemembers_d.html":[8,1,0,3],
@@ -172,8 +171,8 @@ var NAVTREEINDEX3 =
 "namespacemembers_type.html":[8,1,3],
 "namespacemembers_u.html":[8,1,0,20],
 "namespacemembers_v.html":[8,1,0,21],
-"namespacemembers_vars.html":[8,1,2,0],
 "namespacemembers_vars.html":[8,1,2],
+"namespacemembers_vars.html":[8,1,2,0],
 "namespacemembers_vars_b.html":[8,1,2,1],
 "namespacemembers_vars_c.html":[8,1,2,2],
 "namespacemembers_vars_d.html":[8,1,2,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX3 =
 "structeve_1_1aligned__ptr.html#ab455c40952363fcdc630a5a192282558":[7,0,2,0,0,1,16],
 "structeve_1_1aligned__ptr.html#ab5f56e187fd085ffc8df8352fbe6f2fd":[7,0,2,0,0,1,15],
 "structeve_1_1aligned__ptr.html#ac34c57982bdea91092bd8d24ed25802d":[7,0,2,0,0,1,21],
-"structeve_1_1aligned__ptr.html#ad093d3fbfa02d18d397c33ecbc5b81ad":[7,0,2,0,0,1,1]
+"structeve_1_1aligned__ptr.html#ad093d3fbfa02d18d397c33ecbc5b81ad":[7,0,2,0,0,1,1],
+"structeve_1_1aligned__ptr.html#ad762c64085048c2ba6ae0b8d128bc401":[7,0,2,0,0,1,12]
 };

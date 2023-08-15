@@ -5,7 +5,7 @@ var searchData=
   ['deallocate_2',['deallocate',['../structeve_1_1aligned__allocator.html#af60ee2a91559c5158a13ab8b81f3b2f9',1,'eve::aligned_allocator']]],
   ['dec_3',['dec',['../group__core__arithmetic_ga0909b456d35f4111012b71e9bba92ede.html#ga0909b456d35f4111012b71e9bba92ede',1,'eve']]],
   ['decorators_4',['Decorators',['../group__core__decorators.html',1,'']]],
-  ['decorators_5',['decorators',['../group__invoke.html#gadb02ff3b1a1d82d65c762261480c7143',1,'eve::decorators(Options &amp;&amp;... options) -&gt; decorators&lt; decltype(rbr::settings(static_cast&lt; decltype(options) &amp;&amp; &gt;(options) ...))&gt;'],['../structeve_1_1decorators.html',1,'eve::decorators&lt; Settings &gt;']]],
+  ['decorators_5',['decorators',['../structeve_1_1decorators.html',1,'eve']]],
   ['definitely_6',['definitely',['../group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b',1,'eve']]],
   ['deginrad_7',['deginrad',['../group__math__trig_gac5affe61fab2afe7b8ac2b729a03e523.html#gac5affe61fab2afe7b8ac2b729a03e523',1,'eve']]],
   ['deinterleave_5fgroups_8',['deinterleave_groups',['../group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5',1,'eve']]],
