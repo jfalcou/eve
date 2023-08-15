@@ -55,14 +55,17 @@ namespace eve
   struct decorators : Settings
   {
     template <rbr::concepts::option... Options>
-    constexpr explicit decorators(Options && ... options) : Settings(EVE_FWD(options) ...) {}
+    constexpr EVE_FORCEINLINE explicit decorators(Options && ... options) : Settings(EVE_FWD(options) ...) {}
 
-    constexpr decorators(Settings const& options) : Settings(options) {}
+    template <typename... Options>
+    constexpr EVE_FORCEINLINE decorators(rbr::settings<Options...> const& options) : Settings(options) {}
   };
 
-  /// Deduction guide for eve::decorators
   template <rbr::concepts::option ... Options>
   decorators(Options&& ... options) -> decorators<decltype(rbr::settings(EVE_FWD(options) ...))>;
+
+  template <typename... Options>
+  decorators(rbr::settings<Options...> const&)  -> decorators<rbr::settings<Options...>>;
 
   //================================================================================================
   //! @struct support_options
@@ -88,7 +91,7 @@ namespace eve
       template<typename Options>
       EVE_FORCEINLINE auto operator[](Options&& o) const
       {
-        auto new_opts = rbr::merge(rbr::settings{o}, opts);
+        auto new_opts = decorators{rbr::merge(rbr::settings{o}, opts)};
         return fn<decltype(new_opts)>{new_opts};
       }
 
@@ -106,9 +109,9 @@ namespace eve
 
       template<typename... Args>
       EVE_FORCEINLINE auto operator()(Args&&... x) const
-      -> tag_invoke_result<Tag, decorators<Settings>, Args&&...>
+      -> tag_invoke_result<Tag, Settings, Args&&...>
       {
-        return eve::tag_invoke(Tag{}, decorators{opts}, EVE_FWD(x)...);
+        return eve::tag_invoke(Tag{}, opts, EVE_FWD(x)...);
       }
 
       template<typename... T>
@@ -120,18 +123,11 @@ namespace eve
       Settings opts;
     };
 
-    //! @brief Modify the semantic of current eve::callable via a bundle of decorators or masks
-    template<rbr::concepts::settings Settings>
-    EVE_FORCEINLINE auto operator[](Settings const& s) const
-    {
-      return fn<decorators<Settings>>{decorators{s}};
-    }
-
     //! @brief Modify the semantic of current eve::callable by a decorator
     template<rbr::concepts::option Options>
     EVE_FORCEINLINE auto operator[](Options const& o) const
     {
-      return (*this)[decorators{o}];
+      return fn<decltype(decorators{o})>{decorators{o}};
     }
 
     //! @brief Modify the semantic of current eve::callable by a mask
@@ -163,10 +159,12 @@ namespace eve
 namespace eve::tags
 {
   template<typename S>
-  constexpr auto tag_invoke(deferred_callable auto tag, auto arch, decorators<S> opts, auto... x)
-  noexcept(noexcept(tag.deferred_call(arch, opts, x...)))
-          ->  decltype(tag.deferred_call(arch, opts, x...))
+  EVE_FORCEINLINE constexpr auto tag_invoke ( deferred_callable auto tag, auto arch
+                                            , decorators<S> opts, auto&&... x
+                                            )
+  noexcept(noexcept(tag.deferred_call(arch, opts, EVE_FWD(x)...)))
+          ->  decltype(tag.deferred_call(arch, opts, EVE_FWD(x)...))
   {
-    return tag.deferred_call(arch, opts, x...);
+    return tag.deferred_call(arch, opts, EVE_FWD(x)...);
   }
 }
