@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 
 namespace eve::detail
 {
@@ -84,8 +84,8 @@ EVE_FORCEINLINE wide<T, N>
   {
     if constexpr( N() == 4 )
     {
-      v = eve::swap_adjacent_groups(v, eve::lane<2>);
-      return eve::swap_adjacent_groups(v, eve::lane<1>);
+      v = eve::swap_adjacent(v, eve::lane<2>);
+      return eve::swap_adjacent(v);
     }
     else
     {

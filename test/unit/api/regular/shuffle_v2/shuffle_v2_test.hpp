@@ -53,16 +53,12 @@ verify(T x, eve::fixed<G>, eve::pattern_t<I...> p, U shuffled)
 
 template<typename T, std::ptrdiff_t... I>
 void
-run_one_case(std::ptrdiff_t       expected_level,
-             T                    input,
-             auto                 g,
-             eve::pattern_t<I...> p,
-             auto                 shuffle_pattern_arg)
+run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...> p)
 {
   using e_t = eve::element_type_t<T>;
-  if constexpr( requires { eve::shuffle_v2_core(input, g, shuffle_pattern_arg); } )
+  if constexpr( requires { eve::shuffle_v2_core(input, g, p); } )
   {
-    auto [shuffled, l] = eve::shuffle_v2_core(input, g, shuffle_pattern_arg);
+    auto [shuffled, l] = eve::shuffle_v2_core(input, g, p);
     verify(input, g, p, shuffled);
 
     std::array idxs {I...};
@@ -77,22 +73,26 @@ run_one_case(std::ptrdiff_t       expected_level,
   else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }
 }
 
-template<std::ptrdiff_t... I>
+template<typename T, std::ptrdiff_t... I>
 void
-run_one_case(std::ptrdiff_t expected_level, auto input, auto g, eve::pattern_t<I...> p)
+run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I...> p)
 {
-  run_one_case(expected_level, input, g, p, p);
-}
+  using e_t = eve::element_type_t<T>;
+  if constexpr( requires { eve::shuffle_v2_core(x, y, g, p); } )
+  {
+    auto [shuffled, l] = eve::shuffle_v2_core(x, y, g, p);
+    verify(eve::combine(x, y), g, p, shuffled);
 
-template<typename T, std::ptrdiff_t G>
-void
-run_one_case(std::ptrdiff_t            expected_level,
-             T                         input,
-             eve::fixed<G>             g,
-             eve::pattern_formula auto formula)
-{
-  static_assert(G != 0);
-  run_one_case(expected_level, input, g, eve::fix_pattern<T::size() / G>(formula), formula);
+    std::array idxs {I...};
+
+    if( g() >= T::size() || g() >= eve::expected_cardinal_v<e_t> || idxs.size() == 1 )
+    {
+      expected_level = eve::detail::idxm::has_zeroes(idxs);
+    }
+    if( eve::has_emulated_abi_v<T> ) expected_level = 0;
+    TTS_EQUAL(expected_level, l()) << "G: " << g() << "\npattern: " << p;
+  }
+  else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
@@ -115,15 +115,7 @@ run2(auto expected_level, eve::pattern_t<I...> p = {})
   auto xy = input.slice();
   auto x  = get<0>(xy);
   auto y  = get<1>(xy);
-
-  if constexpr( requires { eve::shuffle_v2_core(x, y, eve::lane<G>, p); } )
-  {
-    auto [shuffled, l] = eve::shuffle_v2_core(x, y, eve::lane<G>, p);
-    verify(input, eve::lane<G>, p, shuffled);
-    TTS_EQUAL(expected_level(std::array {I...}), l())
-        << "sizeof(T): " << sizeof(T) << " G: " << G << "\npattern: " << p;
-  }
-  else { TTS_FAIL("Failed to shuffle, G: " << G << "\npattern: " << p); }
+  run2_one_case(expected_level(std::array {I...}), x, y, eve::lane<G>, p);
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G, auto tests>
@@ -186,6 +178,23 @@ for_each_group_size(eve::as<T>, auto op)
   { (op(eve::lane<1 << (int)I>), ...); }(std::make_index_sequence<ssz> {});
 }
 
+template<typename T>
+void
+for_each_group_with_params(eve::as<T> tgt, auto extra_param_gen, auto op)
+{
+  for_each_group_size(tgt,
+                      [&](auto g)
+                      {
+                        kumi::for_each(
+                            [&](auto extra)
+                            {
+                              auto params = kumi::cat(kumi::tuple {g}, extra);
+                              kumi::apply(op, params);
+                            },
+                            extra_param_gen(g));
+                      });
+}
+
 template<bool supports_G_eq_T_Size, typename T, typename NamedShuffle>
 void
 named_shuffle1_test_one_input(T input, NamedShuffle named_shuffle, auto... args)
@@ -201,6 +210,25 @@ named_shuffle1_test_one_input(T input, NamedShuffle named_shuffle, auto... args)
                           run_one_case(expected_level, input, g, pattern);
                         }
                       });
+}
+
+template<bool supports_G_eq_T_Size, typename T, typename NamedShuffle>
+void
+named_shuffle2_test_one_input(T x, T y, NamedShuffle named_shuffle, auto extra_param_gen)
+{
+  auto tgt = eve::as<T> {};
+  for_each_group_with_params(tgt,
+                             extra_param_gen,
+                             [&]<std::ptrdiff_t G>(eve::fixed<G> g, auto... extra)
+                             {
+                               if constexpr( G != T::size() || supports_G_eq_T_Size )
+                               {
+                                 std::ptrdiff_t expected_level =
+                                     named_shuffle.level(tgt, tgt, g, extra...);
+                                 auto pattern = named_shuffle.pattern(tgt, tgt, g, extra...);
+                                 run2_one_case(expected_level, x, y, g, pattern);
+                               }
+                             });
 }
 
 template<bool supports_G_eq_T_Size, typename T, typename NamedShuffle>
@@ -221,6 +249,33 @@ named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... args)
   named_shuffle1_test_one_input<supports_G_eq_T_Size>(mask, named_shuffle, args...);
 }
 
+template<bool supports_G_eq_T_Size, typename T, typename N, typename NamedShuffle>
+void
+named_shuffle2_test(eve::as<eve::wide<T, N>>, NamedShuffle named_shuffle, auto extra_args_gen)
+{
+  if( N::value == 1 && !supports_G_eq_T_Size )
+  {
+    TTS_PASS();
+    return;
+  }
+
+  using wide2 = eve::wide<T, eve::fixed<N::value * 2>>;
+
+  {
+    wide2 xy {[](int i, int) { return i + 1; }};
+
+    auto [x, y] = xy.slice();
+    named_shuffle2_test_one_input<supports_G_eq_T_Size>(x, y, named_shuffle, extra_args_gen);
+  }
+
+  {
+    eve::logical<wide2> xy {[](int i, int) { return std::countl_zero((unsigned)i) & 1; }};
+
+    auto [x, y] = xy.slice();
+    named_shuffle2_test_one_input<supports_G_eq_T_Size>(x, y, named_shuffle, extra_args_gen);
+  }
+}
+
 #if !defined(EVE_NO_SIMD)
 template<int l, typename T, std::ptrdiff_t N, std::ptrdiff_t G, std::ptrdiff_t... I>
 void
@@ -234,21 +289,18 @@ debug_call_shuffle_l_directly()
   w_t x {[](int i, int) { return i + 1; }};
 
 // disabled since no shuffle_l2 for now and breaks compilation
-#if !defined(EVE_INCLUDE_SVE_HEADER) && !defined(EVE_INCLUDE_POWERPC_HEADER)
+#  if !defined(EVE_INCLUDE_SVE_HEADER) && !defined(EVE_INCLUDE_POWERPC_HEADER)
   if constexpr( l == 2 )
   {
     eve::detail::shuffle_l2_(eve::detail::delay_t {}, eve::current_api, p, g, x);
   }
   else
-#endif
-  if constexpr ( l == 99 )
+#  endif
+      if constexpr( l == 99 )
   {
     eve::detail::shuffle_l_fallback_(eve::detail::delay_t {}, eve::current_api, p, g, x);
   }
-  else
-  {
-    std::cout << __func__ << " you need to add l: " << l << std::endl;
-  }
+  else { std::cout << __func__ << " you need to add l: " << l << std::endl; }
 }
 #endif
 

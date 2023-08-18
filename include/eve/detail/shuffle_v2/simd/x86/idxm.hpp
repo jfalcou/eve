@@ -51,15 +51,18 @@ x86_permute2f128_one_reg_mask(std::span<const std::ptrdiff_t, 2> _idxs)
 }
 
 constexpr int
-x86_blend_immediate_mask(std::span<const std::ptrdiff_t> idxs)
+x86_blend_immediate_mask(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t g)
 {
   int r = 0;
   int s = std::ssize(idxs);
-  for( int pos = 0; auto i : idxs )
+  int pos = 0;
+  for(auto i : idxs )
   {
-    // we_ < s
-    if( i >= s ) { r |= 1 << pos; }
-    ++pos;
+    for (int j = 0; j != g; ++j) {
+      // we_ < s
+      if( i * g >= s ) { r |= 1 << pos; }
+      ++pos;
+    }
   }
   return r;
 }

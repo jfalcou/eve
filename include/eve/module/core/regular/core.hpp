@@ -211,7 +211,6 @@
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/sum_of_prod.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/swap_pairs.hpp>
 #include <eve/module/core/regular/trunc.hpp>

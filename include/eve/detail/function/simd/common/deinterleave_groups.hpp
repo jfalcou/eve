@@ -9,7 +9,6 @@
 
 #include <eve/traits/product_type.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 
 namespace eve::detail

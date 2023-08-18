@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
 
 namespace eve::detail
 {
@@ -36,7 +36,7 @@ template<typename T, typename N, std::ptrdiff_t G>
         return deinterleave_groups_shuffle_as_doubles(v, lane<G>);
       else
       {
-        auto swapped = swap_adjacent_groups(v, lane<G * 2>);
+        auto swapped = swap_adjacent(v, lane<G * 2>);
 
         auto lo = _mm256_unpacklo_pd(v, swapped);
         auto hi = _mm256_unpackhi_pd(swapped, v);
