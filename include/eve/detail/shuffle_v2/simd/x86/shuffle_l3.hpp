@@ -52,11 +52,44 @@ shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
+shuffle_l3_x86_perm(P p, fixed<G> g, wide<T, N> x)
+{
+  if constexpr( current_api < avx2 || P::reg_size < 32 ) return no_matching_shuffle;
+  else if constexpr( P::g_size < 4 ) return no_matching_shuffle;
+  // on avx512 masked version on 256 register a different instruction for some reason
+  else if constexpr( P::reg_size == 32 && P::has_zeroes ) return no_matching_shuffle;
+  else if constexpr( P::reg_size == 64 && P::has_zeroes )
+  {
+    auto zero_out = is_na_or_we_mask(p, g, eve::as<logical<wide<T, N>>> {}).storage().value;
+    auto idxs     = make_idx_mask<P::idxs>(as(x));
+
+    if constexpr( P::g_size == 4 ) return _mm512_maskz_permutexvar_epi32(zero_out, idxs, x);
+    else if constexpr( P::g_size == 8 ) return _mm512_maskz_permutexvar_epi64(zero_out, idxs, x);
+  }
+  else
+  {
+    static_assert(G == 1, "we don't expect G > 1 to be here");
+
+    auto idxs = make_idx_mask<P::idxs>(as(x));
+
+    // epi64 handled before for 32 bytes
+    if constexpr( P::reg_size == 32 ) return _mm256_permutevar8x32_epi32(x, idxs);
+    else if constexpr( P::g_size == 4 ) return _mm512_permutexvar_epi32(idxs, x);
+    else return _mm512_permutexvar_epi64(idxs, x);
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
 shuffle_l3_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l3_x86_pshuvb(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l3_x86_perm(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }

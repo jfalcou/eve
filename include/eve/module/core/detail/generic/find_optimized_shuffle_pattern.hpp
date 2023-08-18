@@ -11,7 +11,6 @@
 #include <eve/module/core/regular/broadcast_group.hpp>
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
-#include <eve/module/core/regular/reverse.hpp>
 #include <eve/module/core/regular/rotate.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
@@ -124,6 +123,17 @@ inline constexpr auto is_swag = []()
   // Find the fitting one
   constexpr auto idx = detail::find_index(pattern<I...>, x);
   return fixed<sz / (1 << (idx + 1))> {};
+}();
+
+template<int N, int... I>
+inline constexpr bool is_reverse = []
+{
+  std::array idxs {I...};
+  for( int i = 0; i != static_cast<int>(idxs.size()); ++i )
+  {
+    if( idxs[i] != (static_cast<int>(idxs.size()) - i - 1) ) return false;
+  }
+  return static_cast<int>(idxs.size()) == N;
 }();
 
 // ---------------------------------

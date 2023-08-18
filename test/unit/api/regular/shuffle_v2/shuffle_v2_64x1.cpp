@@ -19,10 +19,15 @@ TTS_CASE("shuffle_v2: 64x1")
     // This needs a 2 reg shuffle we do not suport yet
     return;
   }
-  auto expected_level = [](std::span<const std::ptrdiff_t>)
+  auto expected_level = [](std::span<const std::ptrdiff_t> p)
   {
     // We can do better sometimes but not yet
-    if( eve::current_api >= eve::sve ) return 3;
+    if( eve::current_api >= eve::sve ) {
+      if (idxm::matches(p, {1, 0})) return 2;
+      if (idxm::matches(p, {3, 0, 1, 2})) return 2;
+      if (idxm::matches(p, {1, 2, 3, 0})) return 2;
+      return 3;
+    }
     return 2;
   };
 
