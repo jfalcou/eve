@@ -6,6 +6,7 @@ var group__core__simd =
     [ "eve::compress_store", "group__core__simd_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e", null ],
     [ "eve::deinterleave_groups_shuffle", "group__core__simd_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3", null ],
     [ "eve::gather", "group__core__simd_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0", null ],
+    [ "eve::has_equal_in", "group__core__simd_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0", null ],
     [ "eve::reduce", "group__core__simd_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03", null ],
     [ "eve::scan", "group__core__simd_ga999433dcb57f95f8d149d92e68c071f0.html#ga999433dcb57f95f8d149d92e68c071f0", null ],
     [ "eve::splat", "group__core__simd_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8", null ],

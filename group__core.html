@@ -151,6 +151,8 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__core__logical"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__logical.html">Logical operations</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__core__named__shuffles"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles.html">Named Shuffles</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__core__predicates"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__predicates.html">Predicates</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__core__reduction"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__reduction.html">Reductions</a></td></tr>
@@ -160,21 +162,12 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga64cba22849ce7362968aa0c2661a5ab0"><td class="memItemLeft" align="right" valign="top">constexpr callable_has_equal_in_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0">eve::has_equal_in</a> = {}</td></tr>
-<tr class="memdesc:ga64cba22849ce7362968aa0c2661a5ab0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two simd_values: <code>x</code>, <code>match_against</code> returns a logical mask. The res[i] == <a class="el" href="group__core__reduction_ga66505398697cefc9ea7b11b0ee2c7def.html#ga66505398697cefc9ea7b11b0ee2c7def" title="Computes a bool value which is true if and only if any elements of x is not zero.">eve::any</a>(x[i] == match_against);.  <br /></td></tr>
-<tr class="separator:ga64cba22849ce7362968aa0c2661a5ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacea6e2b78b85daf62d4b45cf856819c5"><td class="memItemLeft" align="right" valign="top">constexpr callable_deinterleave_groups_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_gacea6e2b78b85daf62d4b45cf856819c5.html#gacea6e2b78b85daf62d4b45cf856819c5">eve::deinterleave_groups</a> = {}</td></tr>
 <tr class="memdesc:gacea6e2b78b85daf62d4b45cf856819c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callabe object that deinterleaves values in n wides.  <br /></td></tr>
 <tr class="separator:gacea6e2b78b85daf62d4b45cf856819c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga073de555026307d7265ba21c49940a7f"><td class="memItemLeft" align="right" valign="top">constexpr callable_rotate_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_ga073de555026307d7265ba21c49940a7f.html#ga073de555026307d7265ba21c49940a7f">eve::rotate</a> = {}</td></tr>
 <tr class="memdesc:ga073de555026307d7265ba21c49940a7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotates two halves of the register by a chosen number of elements.  <br /></td></tr>
 <tr class="separator:ga073de555026307d7265ba21c49940a7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a> = detail::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td></tr>
-<tr class="memdesc:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">goes through all pairs of elements and them: [0, 1, 2, 3] =&gt; [1,0,3, 2] Can do that for group sizes instead of elements. If group size is equal to the register size - that's a noop.  <br /></td></tr>
-<tr class="separator:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1050443b632340373229d828b3fe9d7e"><td class="memItemLeft" align="right" valign="top">constexpr callable_swap_adjacent_groups_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e">eve::swap_adjacent_groups</a> = {}</td></tr>
-<tr class="memdesc:ga1050443b632340373229d828b3fe9d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap adjacent groups of elements of chosen number.  <br /></td></tr>
-<tr class="separator:ga1050443b632340373229d828b3fe9d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5e30586d8e422b2c42b352fe857e13de"><td class="memItemLeft" align="right" valign="top">constexpr callable_try_each_group_position_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core_ga5e30586d8e422b2c42b352fe857e13de.html#ga5e30586d8e422b2c42b352fe857e13de">eve::try_each_group_position</a> = {}</td></tr>
 <tr class="memdesc:ga5e30586d8e422b2c42b352fe857e13de"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a given simd_value and a group size returns a tuple of (x::size() / group_size) permuatitions for this register such that each group will be in each position exactly once.  <br /></td></tr>
 <tr class="separator:ga5e30586d8e422b2c42b352fe857e13de"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::swap_adjacent_groups</title>
+<title>E.V.E: eve::swap_adjacent</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828b3fe9d7e.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828
 </div>
 
 <div class="contents">
-<a id="ga1050443b632340373229d828b3fe9d7e" name="ga1050443b632340373229d828b3fe9d7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1050443b632340373229d828b3fe9d7e">&#9670;&#160;</a></span>swap_adjacent_groups</h2>
+<a id="gaa73e3ec48a859648ac298f5a73b5c6a5" name="gaa73e3ec48a859648ac298f5a73b5c6a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa73e3ec48a859648ac298f5a73b5c6a5">&#9670;&#160;</a></span>swap_adjacent</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::swap_adjacent_groups = {}</td>
+          <td class="memname">eve::swap_adjacent = detail::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td>
         </tr>
       </table>
   </td>
@@ -140,50 +140,33 @@ $(document).ready(function(){initNavTree('group__core_ga1050443b632340373229d828
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t N&gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a> groups(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;N&gt;</a> <span class="keyword">const</span> &amp;) <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="agroup__core_gaa73e3ec48a859648ac298f5a73b5c6a5_html_gaa73e3ec48a859648ac298f5a73b5c6a5"><div class="ttname"><a href="group__core_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a></div><div class="ttdeci">constexpr auto swap_adjacent</div><div class="ttdoc">goes through all pairs of elements and them: [0, 1, 2, 3] =&gt; [1,0,3, 2] Can do that for group sizes i...</div><div class="ttdef"><b>Definition:</b> swap_adjacent_groups.hpp:98</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
-<ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1integral__value.html">argument</a>.</li>
-<li><code>N</code> : number of elements in group</li>
-</ul>
-<p><b>Return value</b></p>
-<p>Return x where groups with contiguous groups of N elements swapped for N = 0 or cardinal_v&lt;T&gt; acts as noop.</p>
-<h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t G&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;G&gt;</a>)  <span class="comment">// (1)</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">template</span>&lt;simd_value T&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a>(T x)  <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5_html_gaa73e3ec48a859648ac298f5a73b5c6a5"><div class="ttname"><a href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a></div><div class="ttdeci">constexpr auto swap_adjacent</div><div class="ttdoc">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1,...</div><div class="ttdef"><b>Definition:</b> swap_adjacent.hpp:99</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+</div><!-- fragment --><p>(2) calls (1) with G == 1; (1) swaps adjacent groups of elements of size G</p>
+<p><b>Return value</b></p>
+<p>Return x where groups with contiguous groups of N elements swapped</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {1, 2, 3, 4, 5, 6, 7, 8};</div>
-<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> _1 = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;1&gt;</a>();</div>
-<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> _2 = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;2&gt;</a>();</div>
-<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> _4 = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>();</div>
-<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> _8 = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;8&gt;</a>();</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_adjacent_groups(pi, _1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e">eve::swap_adjacent_groups</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_adjacent_groups(pi, _2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e">eve::swap_adjacent_groups</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_adjacent_groups(pi, _4) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e">eve::swap_adjacent_groups</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; swap_adjacent_groups(pi, _8) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e">eve::swap_adjacent_groups</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, _8) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">;</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t({1, 0, 3, 2}) == <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a>(x)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t({1, 0, 3, 2}) == <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a>(x, eve::lane&lt;1&gt;)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t({2, 3, 0, 1}) == <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a>(x, eve::lane&lt;2&gt;)) );</div>
 <div class="line"> </div>
+<div class="line">  <span class="comment">// lane&lt;0&gt; and lane&lt;4&gt; are not OK.</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core_ga1050443b632340373229d828b3fe9d7e_html_ga1050443b632340373229d828b3fe9d7e"><div class="ttname"><a href="group__core_ga1050443b632340373229d828b3fe9d7e.html#ga1050443b632340373229d828b3fe9d7e">eve::swap_adjacent_groups</a></div><div class="ttdeci">constexpr callable_swap_adjacent_groups_ swap_adjacent_groups</div><div class="ttdoc">swap adjacent groups of elements of chosen number.</div><div class="ttdef"><b>Definition:</b> swap_adjacent_groups.hpp:137</div></div>
-<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
+<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition:</b> all.hpp:70</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>

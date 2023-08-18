@@ -32,8 +32,9 @@ var searchData=
   ['bitincrement_29',['bitincrement',['../group__core__constants_ga2a7b9727dd6e38b4230d14630abc3adb.html#ga2a7b9727dd6e38b4230d14630abc3adb',1,'eve']]],
   ['bitofsign_30',['bitofsign',['../group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246',1,'eve']]],
   ['bits_5fper_5felement_31',['bits_per_element',['../structeve_1_1top__bits.html#a9fb25bada3fffe9175449d6f905d1607',1,'eve::top_bits']]],
-  ['broadcast_32',['broadcast',['../group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]],
-  ['broadcast_5fgroup_33',['broadcast_group',['../group__core__simd_ga5817b773d143fea4fec4e6cd923b6e6e.html#ga5817b773d143fea4fec4e6cd923b6e6e',1,'eve']]],
-  ['byte_5freverse_34',['byte_reverse',['../group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50',1,'eve']]],
-  ['byte_5fswap_5fadjacent_35',['byte_swap_adjacent',['../group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07',1,'eve']]]
+  ['blend_32',['blend',['../group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69',1,'eve']]],
+  ['broadcast_33',['broadcast',['../group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]],
+  ['broadcast_5fgroup_34',['broadcast_group',['../group__core__simd_ga5817b773d143fea4fec4e6cd923b6e6e.html#ga5817b773d143fea4fec4e6cd923b6e6e',1,'eve']]],
+  ['byte_5freverse_35',['byte_reverse',['../group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50',1,'eve']]],
+  ['byte_5fswap_5fadjacent_36',['byte_swap_adjacent',['../group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07',1,'eve']]]
 ];

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Namespace Members</title>
+<title>E.V.E: Named Shuffles</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('namespacemembers_h.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__named__shuffles.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -120,18 +120,24 @@ $(document).ready(function(){initNavTree('namespacemembers_h.html',''); initResi
 </div>
 </div>
 
+<div class="header">
+  <div class="summary">
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Named Shuffles<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a> &raquo; <a class="el" href="group__core.html">Core functions</a></div></div></div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented namespace members with links to the namespaces they belong to:</div>
-
-<h3><a id="index_h" name="index_h"></a>- h -</h3><ul>
-<li>half&#160;:&#160;<a class="el" href="group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5">eve</a></li>
-<li>half_circle&#160;:&#160;<a class="el" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">eve</a></li>
-<li>has_equal_in&#160;:&#160;<a class="el" href="group__core__simd_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0">eve</a></li>
-<li>hermite&#160;:&#160;<a class="el" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve</a></li>
-<li>hi&#160;:&#160;<a class="el" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve</a></li>
-<li>horner&#160;:&#160;<a class="el" href="group__polynomial_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve</a></li>
-<li>hypot&#160;:&#160;<a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve</a></li>
-</ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Functions that are just shuffles with a different api. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gae93d09601f86249bbd239747c107cb69"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69">eve::blend</a> = detail::named_shuffle_2&lt;blend_t&gt; {}</td></tr>
+<tr class="memdesc:gae93d09601f86249bbd239747c107cb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for mixing 2 registers together, without changing positions.  <br /></td></tr>
+<tr class="separator:gae93d09601f86249bbd239747c107cb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a> = detail::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td></tr>
+<tr class="memdesc:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1, 0, 3, 2] Can do that for group sizes instead of elements. Group size has to be 0 &lt; G &lt; T::size()  <br /></td></tr>
+<tr class="separator:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

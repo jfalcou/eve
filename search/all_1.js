@@ -42,9 +42,10 @@ var searchData=
   ['bits_5fper_5felement_39',['bits_per_element',['../structeve_1_1top__bits.html#a9fb25bada3fffe9175449d6f905d1607',1,'eve::top_bits']]],
   ['bits_5ftype_40',['bits_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a12f93e894ed656207297404449381d25',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::bits_type()'],['../structeve_1_1logical_3_01T_01_4.html#a6c3a677f7954119681e55c6e342188bc',1,'eve::logical&lt; T &gt;::bits_type()']]],
   ['bitwise_20functions_41',['Bitwise functions',['../group__core__bitops.html',1,'']]],
-  ['broadcast_42',['broadcast',['../group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]],
-  ['broadcast_5fgroup_43',['broadcast_group',['../group__core__simd_ga5817b773d143fea4fec4e6cd923b6e6e.html#ga5817b773d143fea4fec4e6cd923b6e6e',1,'eve']]],
-  ['building_20for_20testing_44',['Building for Testing',['../dev_cmake.html',1,'eve-dev']]],
-  ['byte_5freverse_45',['byte_reverse',['../group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50',1,'eve']]],
-  ['byte_5fswap_5fadjacent_46',['byte_swap_adjacent',['../group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07',1,'eve']]]
+  ['blend_42',['blend',['../group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69',1,'eve']]],
+  ['broadcast_43',['broadcast',['../group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]],
+  ['broadcast_5fgroup_44',['broadcast_group',['../group__core__simd_ga5817b773d143fea4fec4e6cd923b6e6e.html#ga5817b773d143fea4fec4e6cd923b6e6e',1,'eve']]],
+  ['building_20for_20testing_45',['Building for Testing',['../dev_cmake.html',1,'eve-dev']]],
+  ['byte_5freverse_46',['byte_reverse',['../group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50',1,'eve']]],
+  ['byte_5fswap_5fadjacent_47',['byte_swap_adjacent',['../group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07',1,'eve']]]
 ];
